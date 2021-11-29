@@ -1,3 +1,70 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsComputedMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@0..3 "foo" [] [],
+                },
+                optional_chain_token_token: missing (optional),
+                l_brack_token: L_BRACK@3..4 "[" [] [],
+                r_brack_token: R_BRACK@7..8 "]" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsComputedMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@8..12 "foo" [Whitespace("\n")] [],
+                },
+                optional_chain_token_token: missing (optional),
+                l_brack_token: L_BRACK@12..13 "[" [] [],
+                r_brack_token: R_BRACK@18..19 "]" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsComputedMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@19..23 "foo" [Whitespace("\n")] [],
+                },
+                optional_chain_token_token: missing (optional),
+                l_brack_token: L_BRACK@23..24 "[" [] [],
+                r_brack_token: R_BRACK@29..30 "]" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsComputedMemberExpression {
+                object: JsComputedMemberExpression {
+                    object: JsReferenceIdentifierExpression {
+                        name_token: IDENT@30..34 "foo" [Whitespace("\n")] [],
+                    },
+                    optional_chain_token_token: missing (optional),
+                    l_brack_token: L_BRACK@34..35 "[" [] [],
+                    r_brack_token: R_BRACK@38..39 "]" [] [],
+                },
+                optional_chain_token_token: missing (optional),
+                l_brack_token: L_BRACK@39..40 "[" [] [],
+                r_brack_token: R_BRACK@43..44 "]" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsComputedMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@44..48 "foo" [Whitespace("\n")] [],
+                },
+                optional_chain_token_token: QUESTIONDOT@48..50 "?." [] [],
+                l_brack_token: L_BRACK@50..51 "[" [] [],
+                r_brack_token: R_BRACK@54..55 "]" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..56
   0: (empty)
   1: LIST@0..0

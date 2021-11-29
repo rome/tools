@@ -1,3 +1,71 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@8..9 "{" [] [],
+                                members: [],
+                                r_curly_token: R_CURLY@9..10 "}" [] [],
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: SEMICOLON@10..11 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@11..16 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@16..18 "b" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@18..20 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@20..21 "{" [] [],
+                                members: [
+                                    JsShorthandPropertyObjectMember {
+                                        name: JsReferenceIdentifierExpression {
+                                            name_token: IDENT@21..24 "foo" [] [],
+                                        },
+                                    }
+                                    COMMA@24..25 "," [] [],
+                                ],
+                                r_curly_token: R_CURLY@25..26 "}" [] [],
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..27
   0: (empty)
   1: LIST@0..0

@@ -1,3 +1,37 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: CallExpr {
+                type_args: missing (optional),
+                callee: JsParenthesizedExpression {
+                    l_paren_token: L_PAREN@0..1 "(" [] [],
+                    expression: JsParenthesizedExpression {
+                        l_paren_token: L_PAREN@1..2 "(" [] [],
+                        expression: JsReferenceIdentifierExpression {
+                            name_token: IDENT@2..5 "foo" [] [],
+                        },
+                        r_paren_token: R_PAREN@5..6 ")" [] [],
+                    },
+                    r_paren_token: R_PAREN@6..7 ")" [] [],
+                },
+                arguments: ArgList {
+                    l_paren_token: L_PAREN@7..9 "(" [Whitespace("\n")] [],
+                    args: [
+                        JsReferenceIdentifierExpression {
+                            name_token: IDENT@9..12 "foo" [] [],
+                        }
+                        ,
+                    ],
+                    r_paren_token: R_PAREN@12..13 ")" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..14
   0: (empty)
   1: LIST@0..0

@@ -1,3 +1,14 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsDebuggerStatement {
+            debugger_token: DEBUGGER_KW@0..8 "debugger" [] [],
+            semicolon_token: SEMICOLON@8..9 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..10
   0: (empty)
   1: LIST@0..0

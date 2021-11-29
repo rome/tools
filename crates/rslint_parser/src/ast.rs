@@ -11,6 +11,8 @@ mod stmt_ext;
 mod ts_ext;
 
 use crate::{syntax_node::*, util::SyntaxNodeExt, SyntaxKind, SyntaxList, TextRange};
+use std::error::Error;
+use std::fmt::{Debug, Formatter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
@@ -86,7 +88,7 @@ impl<N: AstNode> Iterator for AstChildren<N> {
 }
 
 /// List of homogenous nodes
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct AstNodeList<N> {
 	inner: SyntaxList,
 	ph: PhantomData<N>,
@@ -98,6 +100,12 @@ impl<N> Default for AstNodeList<N> {
 			inner: SyntaxList::default(),
 			ph: PhantomData,
 		}
+	}
+}
+
+impl<N: AstNode + Debug> Debug for AstNodeList<N> {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		f.debug_list().entries(self.iter()).finish()
 	}
 }
 
@@ -185,18 +193,35 @@ impl<N: AstNode> IntoIterator for AstNodeList<N> {
 	}
 }
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct AstSeparatedElement<N> {
 	node: N,
 	trailing_separator: Option<SyntaxToken>,
 }
 
+impl<N: Debug> Debug for AstSeparatedElement<N> {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		N::fmt(&self.node, f)?;
+		f.write_str("\n")?;
+		match &self.trailing_separator {
+			Some(separator) => separator.fmt(f),
+			None => Ok(()),
+		}
+	}
+}
+
 /// List of nodes where every two nodes are separated by a token.
 /// For example, the elements of an array where every two elements are separated by a comma token.
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct AstSeparatedList<N> {
 	list: SyntaxList,
 	ph: PhantomData<N>,
+}
+
+impl<N: AstNode + Debug> Debug for AstSeparatedList<N> {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		f.debug_list().entries(self.elements()).finish()
+	}
 }
 
 impl<N: AstNode> AstSeparatedList<N> {
@@ -355,6 +380,16 @@ pub enum SyntaxError {
 	MissingRequiredChild(SyntaxNode),
 }
 
+impl Error for SyntaxError {}
+
+impl std::fmt::Display for SyntaxError {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		match self {
+			SyntaxError::MissingRequiredChild(_) => write!(f, "missing required child"),
+		}
+	}
+}
+
 mod support {
 	use super::{
 		AstNode, AstNodeList, AstSeparatedList, SyntaxElementChildren, SyntaxKind, SyntaxNode,
@@ -363,6 +398,7 @@ mod support {
 	use crate::ast::AstChildren;
 	use crate::SyntaxList;
 	use crate::{SyntaxError, SyntaxResult};
+	use std::fmt::{Debug, Formatter};
 
 	pub(super) fn node<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
 		parent.children().find_map(N::cast)
@@ -434,6 +470,32 @@ mod support {
 	) -> SyntaxResult<SyntaxToken> {
 		find_token(parent, possible_kinds)
 			.ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
+	}
+
+	/// New-type wrapper to flatten the debug output of syntax result fields when printing [AstNode]s.
+	/// Omits the [Ok] if the node is present and prints `missing (required)` if the child is missing
+	pub(super) struct DebugSyntaxResult<N>(pub(super) SyntaxResult<N>);
+
+	impl<N: Debug> Debug for DebugSyntaxResult<N> {
+		fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+			match &self.0 {
+				Ok(node) => std::fmt::Debug::fmt(node, f),
+				Err(SyntaxError::MissingRequiredChild(_)) => f.write_str("missing (required)"),
+			}
+		}
+	}
+
+	/// New-type wrapper to flatten the debug output of optional children when printing [AstNode]s.
+	/// Omits the [Some] if the node is present and prints `missing (optional)` if the child is missing
+	pub(super) struct DebugOptionalNode<N>(pub(super) Option<N>);
+
+	impl<N: Debug> Debug for DebugOptionalNode<N> {
+		fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+			match &self.0 {
+				Some(node) => std::fmt::Debug::fmt(node, f),
+				None => f.write_str("missing (optional)"),
+			}
+		}
 	}
 }
 

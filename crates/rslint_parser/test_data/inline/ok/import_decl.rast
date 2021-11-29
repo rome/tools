@@ -1,3 +1,26 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        ImportDecl {
+            import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
+            imports: [
+                WildcardImport {
+                    star_token: STAR@7..9 "*" [] [Whitespace(" ")],
+                    as_token: AS_KW@9..12 "as" [] [Whitespace(" ")],
+                    ident: missing (optional),
+                },
+            ],
+            type_token: missing (optional),
+            from_token: FROM_KW@16..21 "from" [] [Whitespace(" ")],
+            source_token: JS_STRING_LITERAL@21..26 "\"bla\"" [] [],
+            asserted_object: missing (required),
+            assert_token: missing (optional),
+            semicolon_token: SEMICOLON@26..27 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..28
   0: (empty)
   1: LIST@0..0

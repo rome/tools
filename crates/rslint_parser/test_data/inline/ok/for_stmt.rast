@@ -1,3 +1,149 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        ForStmt {
+            for_token: FOR_KW@0..4 "for" [] [Whitespace(" ")],
+            l_paren_token: L_PAREN@4..5 "(" [] [],
+            init: ForStmtInit {
+                inner: JsVariableDeclaration {
+                    kind_token: LET_KW@5..9 "let" [] [Whitespace(" ")],
+                    declarators: [
+                        JsVariableDeclarator {
+                            id: SinglePattern {
+                                name: Name {
+                                    ident_token: IDENT@9..11 "i" [] [Whitespace(" ")],
+                                },
+                                question_mark_token: missing (optional),
+                                excl_token: missing (optional),
+                                ty: missing (optional),
+                            },
+                            init: JsEqualValueClause {
+                                eq_token: EQ@11..13 "=" [] [Whitespace(" ")],
+                                expression: JsNumberLiteralExpression {
+                                    value_token: JS_NUMBER_LITERAL@13..14 "5" [] [],
+                                },
+                            },
+                        }
+                        ,
+                    ],
+                },
+                semicolon_token: missing (required),
+            },
+            test: ForStmtTest {
+                expr: JsBinaryExpression {
+                    left: JsReferenceIdentifierExpression {
+                        name_token: IDENT@16..18 "i" [] [Whitespace(" ")],
+                    },
+                    operator: L_ANGLE@18..20 "<" [] [Whitespace(" ")],
+                },
+                semicolon_token: missing (required),
+            },
+            update: ForStmtUpdate {
+                expr: JsPostUpdateExpression {
+                    operand: JsReferenceIdentifierExpression {
+                        name_token: IDENT@24..25 "i" [] [],
+                    },
+                    operator: PLUS2@25..27 "++" [] [],
+                },
+            },
+            r_paren_token: R_PAREN@27..29 ")" [] [Whitespace(" ")],
+            cons: JsBlockStatement {
+                l_curly_token: L_CURLY@29..30 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@30..31 "}" [] [],
+            },
+        },
+        ForOfStmt {
+            for_token: FOR_KW@31..36 "for" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@36..37 "(" [] [],
+            left: ForStmtInit {
+                inner: JsVariableDeclaration {
+                    kind_token: LET_KW@37..41 "let" [] [Whitespace(" ")],
+                    declarators: [
+                        JsVariableDeclarator {
+                            id: ObjectPattern {
+                                l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],
+                                elements: [
+                                    SinglePattern {
+                                        name: Name {
+                                            ident_token: IDENT@43..46 "foo" [] [],
+                                        },
+                                        question_mark_token: missing (optional),
+                                        excl_token: missing (optional),
+                                        ty: missing (optional),
+                                    }
+                                    COMMA@46..48 "," [] [Whitespace(" ")],
+                                    SinglePattern {
+                                        name: Name {
+                                            ident_token: IDENT@48..52 "bar" [] [Whitespace(" ")],
+                                        },
+                                        question_mark_token: missing (optional),
+                                        excl_token: missing (optional),
+                                        ty: missing (optional),
+                                    }
+                                    ,
+                                ],
+                                r_curly_token: R_CURLY@52..54 "}" [] [Whitespace(" ")],
+                            },
+                            init: missing (optional),
+                        }
+                        ,
+                    ],
+                },
+                semicolon_token: missing (required),
+            },
+            of_token: missing (required),
+            right: JsObjectExpression {
+                l_curly_token: L_CURLY@57..58 "{" [] [],
+                members: [],
+                r_curly_token: R_CURLY@58..59 "}" [] [],
+            },
+            r_paren_token: R_PAREN@59..61 ")" [] [Whitespace(" ")],
+            cons: JsBlockStatement {
+                l_curly_token: L_CURLY@61..62 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@62..63 "}" [] [],
+            },
+        },
+        ForInStmt {
+            for_token: FOR_KW@63..68 "for" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@68..69 "(" [] [],
+            left: ForStmtInit {
+                inner: JsReferenceIdentifierExpression {
+                    name_token: IDENT@69..73 "foo" [] [Whitespace(" ")],
+                },
+                semicolon_token: missing (required),
+            },
+            in_token: IN_KW@73..76 "in" [] [Whitespace(" ")],
+            right: JsObjectExpression {
+                l_curly_token: L_CURLY@76..77 "{" [] [],
+                members: [],
+                r_curly_token: R_CURLY@77..78 "}" [] [],
+            },
+            r_paren_token: R_PAREN@78..80 ")" [] [Whitespace(" ")],
+            cons: JsBlockStatement {
+                l_curly_token: L_CURLY@80..81 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@81..82 "}" [] [],
+            },
+        },
+        ForStmt {
+            for_token: FOR_KW@82..87 "for" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@87..88 "(" [] [],
+            init: missing (optional),
+            test: missing (optional),
+            update: missing (optional),
+            r_paren_token: R_PAREN@90..92 ")" [] [Whitespace(" ")],
+            cons: JsBlockStatement {
+                l_curly_token: L_CURLY@92..93 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@93..94 "}" [] [],
+            },
+        },
+    ],
+}
+
 0: JS_ROOT@0..95
   0: (empty)
   1: LIST@0..0

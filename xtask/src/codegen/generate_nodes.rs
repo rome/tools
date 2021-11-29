@@ -9,25 +9,25 @@ use crate::{
 use quote::{format_ident, quote};
 
 // these node won't generate any code
-const BUILT_IN_TYPE: &str = "SyntaxElement";
+const SYNTAX_ELEMENT_TYPE: &str = "SyntaxElement";
 
 pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 	let filtered_enums: Vec<_> = ast
 		.enums
 		.iter()
-		.filter(|e| e.name.as_str() != BUILT_IN_TYPE)
+		.filter(|e| e.name.as_str() != SYNTAX_ELEMENT_TYPE)
 		.collect();
 
 	let filtered_nodes: Vec<_> = ast
 		.nodes
 		.iter()
-		.filter(|e| e.name.as_str() != BUILT_IN_TYPE)
+		.filter(|e| e.name.as_str() != SYNTAX_ELEMENT_TYPE)
 		.collect();
 
 	let (node_defs, node_boilerplate_impls): (Vec<_>, Vec<_>) = filtered_nodes
 		.iter()
 		.filter_map(|node| {
-			if node.name.as_str() == BUILT_IN_TYPE {
+			if node.name.as_str() == SYNTAX_ELEMENT_TYPE {
 				return None;
 			}
 
@@ -85,16 +85,16 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					separated,
 					..
 				} => {
-					let is_built_in_tpe = &ty.eq(BUILT_IN_TYPE);
+					let is_syntax_type = &ty.eq(SYNTAX_ELEMENT_TYPE);
 					let ty = format_ident!("{}", &ty);
 
 					let method_name = field.method_name();
 					// this is when we encounter a node that has "Unknown" in its name
 					// it will return tokens a and nodes regardless because there's an error
 					// inside the code
-					if *is_built_in_tpe {
+					if *is_syntax_type {
 						quote! {
-							pub fn #method_name(&self) -> SyntaxElementChildren {
+							pub fn items(&self) -> SyntaxElementChildren {
 								support::elements(&self.syntax)
 							}
 						}
@@ -130,11 +130,42 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					}
 				}
 			});
+
+			let fields = node.fields.iter().map(|field| {
+				let name = match field {
+					Field::Token {
+						name,
+						kind: TokenKind::Many(_),
+						..
+					} => format_ident!("{}", name),
+					Field::Node { ty, .. } if ty == SYNTAX_ELEMENT_TYPE => format_ident!("items"),
+					_ => field.method_name(),
+				};
+
+				let string_name = name.to_string();
+
+				if field.is_many() {
+					quote! {
+						.field(#string_name, &self.#name())
+					}
+				} else if field.is_optional() {
+					quote! {
+						.field(#string_name, &support::DebugOptionalNode(self.#name()))
+					}
+				} else {
+					quote! {
+						.field(#string_name, &support::DebugSyntaxResult(self.#name()))
+					}
+				}
+			});
+
+			let string_name = name.to_string();
+
 			Some((
 				quote! {
 					// TODO: review documentation
 					// #[doc = #documentation]
-					#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+					#[derive(Clone, PartialEq, Eq, Hash)]
 					pub struct #name {
 						pub(crate) syntax: SyntaxNode,
 					}
@@ -142,6 +173,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					impl #name {
 						#(#methods)*
 					}
+
 				},
 				quote! {
 					impl AstNode for #name {
@@ -152,6 +184,14 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 							if Self::can_cast(syntax.kind()) { Some(Self { syntax }) } else { None }
 						}
 						fn syntax(&self) -> &SyntaxNode { &self.syntax }
+					}
+
+					impl std::fmt::Debug for #name {
+						fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+							f.debug_struct(#string_name)
+								#(#fields)*
+								.finish()
+						}
 					}
 				},
 			))
@@ -317,10 +357,15 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				})
 				.collect();
 
+			let all_variant_names = en
+				.variants
+				.iter()
+				.map(|variant| format_ident!("{}", variant));
+
 			(
 				quote! {
 					// #[doc = #doc]
-					#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+					#[derive(Clone, PartialEq, Eq, Hash)]
 					pub enum #name {
 						#(#variants_for_enum),*
 					}
@@ -352,6 +397,16 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 							}
 						}
+					}
+
+					impl std::fmt::Debug for #name {
+						fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+							match self {
+							#(
+								#name::#all_variant_names(it) => std::fmt::Debug::fmt(it, f),
+							)*
+						}
+							}
 					}
 				},
 			)

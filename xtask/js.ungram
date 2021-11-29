@@ -865,7 +865,7 @@ JsReferencePrivateMember =
 
 JsParameterList =
 	'('
-	parameters: (Pattern (',' Pattern)* ','?)
+	parameters: (JsAnyParameter (',' JsAnyParameter)* ','?)
 	')'
 
 JsAnyParameter = Pattern | JsRestParameter

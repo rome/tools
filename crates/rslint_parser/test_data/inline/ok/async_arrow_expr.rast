@@ -1,3 +1,129 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
+                            expression: JsArrowFunctionExpression {
+                                async_token: ASYNC_KW@8..14 "async" [] [Whitespace(" ")],
+                                type_parameters: missing (optional),
+                                parameter_list: JsIdentifierBinding {
+                                    name_token: IDENT@14..18 "foo" [] [Whitespace(" ")],
+                                },
+                                fat_arrow_token: FAT_ARROW@18..21 "=>" [] [Whitespace(" ")],
+                                return_type: missing (optional),
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@23..28 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@28..30 "b" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@30..32 "=" [] [Whitespace(" ")],
+                            expression: JsArrowFunctionExpression {
+                                async_token: ASYNC_KW@32..38 "async" [] [Whitespace(" ")],
+                                type_parameters: missing (optional),
+                                parameter_list: JsParameterList {
+                                    l_paren_token: L_PAREN@38..39 "(" [] [],
+                                    parameters: [
+                                        SinglePattern {
+                                            name: Name {
+                                                ident_token: IDENT@39..42 "bar" [] [],
+                                            },
+                                            question_mark_token: missing (optional),
+                                            excl_token: missing (optional),
+                                            ty: missing (optional),
+                                        }
+                                        ,
+                                    ],
+                                    r_paren_token: R_PAREN@42..44 ")" [] [Whitespace(" ")],
+                                },
+                                fat_arrow_token: FAT_ARROW@44..47 "=>" [] [Whitespace(" ")],
+                                return_type: missing (optional),
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsArrowFunctionExpression {
+                async_token: ASYNC_KW@49..56 "async" [Whitespace("\n")] [Whitespace(" ")],
+                type_parameters: missing (optional),
+                parameter_list: JsParameterList {
+                    l_paren_token: L_PAREN@56..57 "(" [] [],
+                    parameters: [
+                        SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@57..60 "foo" [] [],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        }
+                        COMMA@60..62 "," [] [Whitespace(" ")],
+                        SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@62..65 "bar" [] [],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        }
+                        COMMA@65..67 "," [] [Whitespace(" ")],
+                        JsRestParameter {
+                            dotdotdot_token: DOT2@67..70 "..." [] [],
+                            binding: SinglePattern {
+                                name: Name {
+                                    ident_token: IDENT@70..73 "baz" [] [],
+                                },
+                                question_mark_token: missing (optional),
+                                excl_token: missing (optional),
+                                ty: missing (optional),
+                            },
+                        }
+                        ,
+                    ],
+                    r_paren_token: R_PAREN@73..75 ")" [] [Whitespace(" ")],
+                },
+                fat_arrow_token: FAT_ARROW@75..78 "=>" [] [Whitespace(" ")],
+                return_type: missing (optional),
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..82
   0: (empty)
   1: LIST@0..0

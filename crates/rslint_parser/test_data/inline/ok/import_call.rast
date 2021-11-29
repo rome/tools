@@ -1,3 +1,21 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsImportCallExpression {
+                import_token: IMPORT_KW@0..6 "import" [] [],
+                l_paren_token: L_PAREN@6..7 "(" [] [],
+                argument: JsStringLiteralExpression {
+                    value_token: JS_STRING_LITERAL@7..12 "\"foo\"" [] [],
+                },
+                r_paren_token: R_PAREN@12..13 ")" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..14
   0: (empty)
   1: LIST@0..0

@@ -1,3 +1,37 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsLogicalExpression {
+                left: JsReferenceIdentifierExpression {
+                    name_token: IDENT@0..4 "foo" [] [Whitespace(" ")],
+                },
+                operator: QUESTION2@4..7 "??" [] [Whitespace(" ")],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsLogicalExpression {
+                left: JsReferenceIdentifierExpression {
+                    name_token: IDENT@10..13 "a" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                operator: PIPE2@13..16 "||" [] [Whitespace(" ")],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsLogicalExpression {
+                left: JsReferenceIdentifierExpression {
+                    name_token: IDENT@17..20 "a" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                operator: AMP2@20..23 "&&" [] [Whitespace(" ")],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..25
   0: (empty)
   1: LIST@0..0

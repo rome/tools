@@ -1,3 +1,110 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
+                            expression: Template {
+                                backtick_token: BACKTICK@8..9 "`" [] [],
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: SEMICOLON@20..21 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@21..26 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@26..28 "a" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
+                            expression: Template {
+                                backtick_token: BACKTICK@30..31 "`" [] [],
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: SEMICOLON@32..33 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@33..38 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@38..40 "a" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@40..42 "=" [] [Whitespace(" ")],
+                            expression: Template {
+                                backtick_token: BACKTICK@42..43 "`" [] [],
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: SEMICOLON@50..51 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@51..56 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@56..58 "a" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@58..60 "=" [] [Whitespace(" ")],
+                            expression: Template {
+                                backtick_token: BACKTICK@60..61 "`" [] [],
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: SEMICOLON@65..66 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..67
   0: (empty)
   1: LIST@0..0

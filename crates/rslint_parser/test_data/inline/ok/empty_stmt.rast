@@ -1,3 +1,13 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsEmptyStatement {
+            semicolon_token: SEMICOLON@0..1 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..2
   0: (empty)
   1: LIST@0..0

@@ -1,3 +1,73 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@8..9 "{" [] [],
+                                members: [
+                                    JsPropertyObjectMember {
+                                        name: JsLiteralMemberName {
+                                            value: JS_STRING_LITERAL@9..14 "\"foo\"" [] [],
+                                        },
+                                        colon_token: COLON@14..16 ":" [] [Whitespace(" ")],
+                                    }
+                                    COMMA@19..21 "," [] [Whitespace(" ")],
+                                    JsPropertyObjectMember {
+                                        name: JsComputedMemberName {
+                                            l_brack_token: L_BRACK@21..22 "[" [] [],
+                                            expression: JsBinaryExpression {
+                                                left: JsNumberLiteralExpression {
+                                                    value_token: JS_NUMBER_LITERAL@22..24 "6" [] [Whitespace(" ")],
+                                                },
+                                                operator: PLUS@24..26 "+" [] [Whitespace(" ")],
+                                            },
+                                            r_brack_token: R_BRACK@27..28 "]" [] [],
+                                        },
+                                        colon_token: COLON@28..30 ":" [] [Whitespace(" ")],
+                                    }
+                                    COMMA@33..35 "," [] [Whitespace(" ")],
+                                    JsPropertyObjectMember {
+                                        name: JsLiteralMemberName {
+                                            value: IDENT@35..38 "bar" [] [],
+                                        },
+                                        colon_token: COLON@38..40 ":" [] [Whitespace(" ")],
+                                    }
+                                    COMMA@43..45 "," [] [Whitespace(" ")],
+                                    JsPropertyObjectMember {
+                                        name: JsLiteralMemberName {
+                                            value: JS_NUMBER_LITERAL@45..46 "7" [] [],
+                                        },
+                                        colon_token: COLON@46..48 ":" [] [Whitespace(" ")],
+                                    }
+                                    ,
+                                ],
+                                r_curly_token: R_CURLY@51..52 "}" [] [],
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..53
   0: (empty)
   1: LIST@0..0

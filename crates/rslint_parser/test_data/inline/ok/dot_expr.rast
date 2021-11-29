@@ -1,3 +1,82 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@0..3 "foo" [] [],
+                },
+                operator: DOT@3..4 "." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@4..7 "bar" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@7..11 "foo" [Whitespace("\n")] [],
+                },
+                operator: DOT@11..12 "." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@12..17 "await" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@17..21 "foo" [Whitespace("\n")] [],
+                },
+                operator: DOT@21..22 "." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@22..27 "yield" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@27..31 "foo" [Whitespace("\n")] [],
+                },
+                operator: DOT@31..32 "." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@32..35 "for" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@35..39 "foo" [Whitespace("\n")] [],
+                },
+                operator: QUESTIONDOT@39..41 "?." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@41..44 "for" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@44..48 "foo" [Whitespace("\n")] [],
+                },
+                operator: QUESTIONDOT@48..50 "?." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@50..53 "bar" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..54
   0: (empty)
   1: LIST@0..0

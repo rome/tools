@@ -1,3 +1,28 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsThisExpression {
+                this_token: THIS_KW@0..4 "this" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsThisExpression {
+                    this_token: THIS_KW@4..9 "this" [Whitespace("\n")] [],
+                },
+                operator: DOT@9..10 "." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@10..13 "foo" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..14
   0: (empty)
   1: LIST@0..0

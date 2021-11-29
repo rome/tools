@@ -1,3 +1,583 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsClassDeclaration {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..11 "Test" [] [Whitespace(" ")],
+            },
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@11..12 "{" [] [],
+            members: [
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@12..20 "method" [Whitespace("\n\t")] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@20..21 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@21..23 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@23..24 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@24..25 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: ASYNC_KW@25..33 "async" [Whitespace("\n\t")] [Whitespace(" ")],
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@33..44 "asyncMethod" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@44..45 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@45..47 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@47..48 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@48..49 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: ASYNC_KW@49..56 "async" [Whitespace("\n\t")] [],
+                    star_token: STAR@56..58 "*" [] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@58..78 "asyncGeneratorMethod" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@78..79 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@79..81 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@81..82 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@82..83 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: STAR@83..87 "*" [Whitespace("\n\t")] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@87..102 "generatorMethod" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@102..103 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@103..105 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@105..106 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@106..107 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: JS_STRING_LITERAL@107..115 "\"foo\"" [Whitespace("\n\n\t")] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@115..116 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@116..118 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@118..119 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@119..120 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsComputedMemberName {
+                        l_brack_token: L_BRACK@120..123 "[" [Whitespace("\n\t")] [],
+                        expression: JsBinaryExpression {
+                            left: JsStringLiteralExpression {
+                                value_token: JS_STRING_LITERAL@123..129 "\"foo\"" [] [Whitespace(" ")],
+                            },
+                            operator: PLUS@129..131 "+" [] [Whitespace(" ")],
+                        },
+                        r_brack_token: R_BRACK@136..137 "]" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@137..138 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@138..140 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@140..141 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@141..142 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: JS_NUMBER_LITERAL@142..145 "5" [Whitespace("\n\t")] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@145..146 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@146..148 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@148..149 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@149..150 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsPrivateClassMemberName {
+                        hash_token: HASH@150..154 "#" [Whitespace("\n\n\t")] [],
+                        id_token: IDENT@154..161 "private" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@161..162 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@162..164 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@164..165 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@165..166 "}" [] [],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@166..168 "}" [Whitespace("\n")] [],
+        },
+        JsClassDeclaration {
+            class_token: CLASS_KW@168..176 "class" [Whitespace("\n\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@176..195 "ContextualKeywords" [] [Whitespace(" ")],
+            },
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@195..196 "{" [] [],
+            members: [
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@196..230 "static" [Whitespace("\n\t"), Comments("// Methods called static"), Whitespace("\n\t")] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@230..231 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@231..233 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@233..234 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@234..235 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: ASYNC_KW@235..243 "async" [Whitespace("\n\t")] [Whitespace(" ")],
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@243..249 "static" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@249..250 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@250..252 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@252..253 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@253..254 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: STAR@254..258 "*" [Whitespace("\n\t")] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@258..264 "static" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@264..265 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@265..267 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@267..268 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@268..269 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: ASYNC_KW@269..276 "async" [Whitespace("\n\t")] [],
+                    star_token: STAR@276..278 "*" [] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@278..284 "static" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@284..285 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@285..287 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@287..288 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@288..289 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@289..299 "declare" [Whitespace("\n\n\t")] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@299..300 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@300..302 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@302..303 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@303..304 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@304..310 "get" [Whitespace("\n\n\t")] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@310..311 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@311..313 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@313..314 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@314..336 "}" [] [Whitespace(" "), Comments("// Method called get")],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@336..341 "set" [Whitespace("\n\t")] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@341..342 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@342..344 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@344..345 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@345..367 "}" [] [Whitespace(" "), Comments("// Method called set")],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@367..369 "}" [Whitespace("\n")] [],
+        },
+        JsClassDeclaration {
+            class_token: CLASS_KW@369..377 "class" [Whitespace("\n\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@377..384 "Static" [] [Whitespace(" ")],
+            },
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@384..385 "{" [] [],
+            members: [
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: STATIC_KW@385..394 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@394..400 "method" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@400..401 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@401..403 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@403..404 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@404..405 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: STATIC_KW@405..414 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    abstract_token: missing (optional),
+                    async_token: ASYNC_KW@414..420 "async" [] [Whitespace(" ")],
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@420..431 "asyncMethod" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@431..432 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@432..434 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@434..435 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@435..436 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: STATIC_KW@436..445 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    abstract_token: missing (optional),
+                    async_token: ASYNC_KW@445..450 "async" [] [],
+                    star_token: STAR@450..452 "*" [] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@452..472 "asyncGeneratorMethod" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@472..473 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@473..475 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@475..476 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@476..477 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: STATIC_KW@477..486 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: STAR@486..488 "*" [] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@488..503 "generatorMethod" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@503..504 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@504..506 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@506..507 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@507..508 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: STATIC_KW@508..518 "static" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@518..524 "static" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@524..525 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@525..527 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@527..528 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@528..529 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: STATIC_KW@529..538 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    abstract_token: missing (optional),
+                    async_token: ASYNC_KW@538..544 "async" [] [Whitespace(" ")],
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@544..550 "static" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@550..551 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@551..553 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@553..554 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@554..555 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: STATIC_KW@555..564 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    abstract_token: missing (optional),
+                    async_token: ASYNC_KW@564..569 "async" [] [],
+                    star_token: STAR@569..571 "*" [] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@571..577 "static" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@577..578 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@578..580 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@580..581 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@581..582 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: STATIC_KW@582..591 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: STAR@591..593 "*" [] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@593..599 "static" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@599..600 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@600..602 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@602..603 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@603..604 "}" [] [],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@604..606 "}" [Whitespace("\n")] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..607
   0: (empty)
   1: LIST@0..0
@@ -124,7 +704,8 @@
       2: L_CURLY@195..196 "{" [] []
       3: LIST@196..367
         0: JS_METHOD_CLASS_MEMBER@196..235
-          0: IDENT@196..230 "static" [Whitespace("\n\t"), Comments("// Methods called static"), Whitespace("\n\t")] []
+          0: JS_LITERAL_MEMBER_NAME@196..230
+            0: IDENT@196..230 "static" [Whitespace("\n\t"), Comments("// Methods called static"), Whitespace("\n\t")] []
           1: JS_PARAMETER_LIST@230..233
             0: L_PAREN@230..231 "(" [] []
             1: LIST@231..231

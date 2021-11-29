@@ -893,6 +893,7 @@ fn consume_modifiers(
 	if static_ && !dont_remap_static {
 		p.bump_remap(STATIC_KW);
 	} else if static_ && dont_remap_static {
-		p.bump_any();
+		// Guaranteed to be at the static keyword, parsing a class member must succeed
+		class_member_name(p).ok().unwrap();
 	}
 }

@@ -1,3 +1,60 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsFunctionDeclaration {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")],
+            star_token: STAR@9..10 "*" [] [],
+            id: JsIdentifierBinding {
+                name_token: IDENT@10..13 "foo" [] [],
+            },
+            type_parameters: missing (optional),
+            parameter_list: JsParameterList {
+                l_paren_token: L_PAREN@13..14 "(" [] [],
+                parameters: [],
+                r_paren_token: R_PAREN@14..16 ")" [] [Whitespace(" ")],
+            },
+            return_type: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@16..17 "{" [] [],
+                directives: [],
+                statements: [
+                    JsExpressionStatement {
+                        expression: JsYieldExpression {
+                            yield_token: YIELD_KW@17..25 "yield" [Whitespace("\n ")] [Whitespace(" ")],
+                            star_token: missing (optional),
+                            argument: JsReferenceIdentifierExpression {
+                                name_token: IDENT@25..28 "foo" [] [],
+                            },
+                        },
+                        semicolon_token: SEMICOLON@28..29 ";" [] [],
+                    },
+                    JsExpressionStatement {
+                        expression: JsYieldExpression {
+                            yield_token: YIELD_KW@29..36 "yield" [Whitespace("\n ")] [],
+                            star_token: STAR@36..38 "*" [] [Whitespace(" ")],
+                            argument: JsReferenceIdentifierExpression {
+                                name_token: IDENT@38..41 "foo" [] [],
+                            },
+                        },
+                        semicolon_token: SEMICOLON@41..42 ";" [] [],
+                    },
+                    JsExpressionStatement {
+                        expression: JsYieldExpression {
+                            yield_token: YIELD_KW@42..49 "yield" [Whitespace("\n ")] [],
+                            star_token: missing (optional),
+                            argument: missing (optional),
+                        },
+                        semicolon_token: SEMICOLON@49..50 ";" [] [],
+                    },
+                ],
+                r_curly_token: R_CURLY@50..52 "}" [Whitespace("\n")] [],
+            },
+        },
+    ],
+}
+
 0: JS_ROOT@0..53
   0: (empty)
   1: LIST@0..0

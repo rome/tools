@@ -1,3 +1,48 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsLabeledStatement {
+            label_token: IDENT@0..3 "foo" [] [],
+            colon_token: COLON@3..5 ":" [] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@5..6 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@6..7 "}" [] [],
+            },
+        },
+        JsWhileStatement {
+            while_token: WHILE_KW@7..14 "while" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@14..15 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@15..19 "true" [] [],
+            },
+            r_paren_token: R_PAREN@19..21 ")" [] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@21..22 "{" [] [],
+                statements: [
+                    JsContinueStatement {
+                        continue_token: CONTINUE_KW@22..33 "continue" [Whitespace("\n  ")] [],
+                        label_token: missing (optional),
+                        semicolon_token: SEMICOLON@33..34 ";" [] [],
+                    },
+                    JsContinueStatement {
+                        continue_token: CONTINUE_KW@34..46 "continue" [Whitespace("\n  ")] [Whitespace(" ")],
+                        label_token: IDENT@46..49 "foo" [] [],
+                        semicolon_token: SEMICOLON@49..50 ";" [] [],
+                    },
+                    JsContinueStatement {
+                        continue_token: CONTINUE_KW@50..61 "continue" [Whitespace("\n  ")] [],
+                        label_token: missing (optional),
+                        semicolon_token: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@61..63 "}" [Whitespace("\n")] [],
+            },
+        },
+    ],
+}
+
 0: JS_ROOT@0..64
   0: (empty)
   1: LIST@0..0

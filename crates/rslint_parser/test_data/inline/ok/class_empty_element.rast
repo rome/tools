@@ -1,3 +1,82 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsClassDeclaration {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..10 "foo" [] [Whitespace(" ")],
+            },
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@10..12 "{" [] [Whitespace(" ")],
+            members: [
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@12..13 ";" [] [],
+                },
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@13..14 ";" [] [],
+                },
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@14..15 ";" [] [],
+                },
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@15..16 ";" [] [],
+                },
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@16..17 ";" [] [],
+                },
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@17..18 ";" [] [],
+                },
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@18..19 ";" [] [],
+                },
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@19..20 ";" [] [],
+                },
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@20..21 ";" [] [],
+                },
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@21..23 ";" [] [Whitespace(" ")],
+                },
+                JsGetterClassMember {
+                    access_modifier: missing (optional),
+                    abstract_token: missing (optional),
+                    static_token: missing (optional),
+                    get_token: GET_KW@23..27 "get" [] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@27..30 "foo" [] [],
+                    },
+                    l_paren_token: L_PAREN@30..31 "(" [] [],
+                    r_paren_token: R_PAREN@31..33 ")" [] [Whitespace(" ")],
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@33..34 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@34..35 "}" [] [],
+                    },
+                },
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@35..36 ";" [] [],
+                },
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@36..37 ";" [] [],
+                },
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@37..38 ";" [] [],
+                },
+                JsEmptyClassMember {
+                    semicolon_token: SEMICOLON@38..39 ";" [] [],
+                },
+            ],
+            r_curly_token: R_CURLY@39..40 "}" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..41
   0: (empty)
   1: LIST@0..0

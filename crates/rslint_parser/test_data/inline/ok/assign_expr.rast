@@ -1,3 +1,48 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: AssignExpr {
+                operator: PLUSEQ@4..7 "+=" [] [Whitespace(" ")],
+            },
+            semicolon_token: SEMICOLON@20..21 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: AssignExpr {
+                operator: MINUSEQ@26..29 "-=" [] [Whitespace(" ")],
+            },
+            semicolon_token: SEMICOLON@32..33 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: AssignExpr {
+                operator: EQ@45..47 "=" [] [Whitespace(" ")],
+            },
+            semicolon_token: SEMICOLON@50..51 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsParenthesizedExpression {
+                l_paren_token: L_PAREN@51..53 "(" [Whitespace("\n")] [],
+                expression: AssignExpr {
+                    operator: EQ@66..68 "=" [] [Whitespace(" ")],
+                },
+                r_paren_token: R_PAREN@70..71 ")" [] [],
+            },
+            semicolon_token: SEMICOLON@71..72 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsParenthesizedExpression {
+                l_paren_token: L_PAREN@72..74 "(" [Whitespace("\n")] [],
+                expression: AssignExpr {
+                    operator: EQ@94..96 "=" [] [Whitespace(" ")],
+                },
+                r_paren_token: R_PAREN@98..99 ")" [] [],
+            },
+            semicolon_token: SEMICOLON@99..100 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..101
   0: (empty)
   1: LIST@0..0

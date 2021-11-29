@@ -1,3 +1,52 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsNumberLiteralExpression {
+                value_token: JS_NUMBER_LITERAL@0..1 "5" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@1..6 "true" [Whitespace("\n")] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsBooleanLiteralExpression {
+                value_token: FALSE_KW@6..12 "false" [Whitespace("\n")] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsBigIntLiteralExpression {
+                value_token: JS_BIG_INT_LITERAL@12..15 "5n" [Whitespace("\n")] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStringLiteralExpression {
+                value_token: JS_STRING_LITERAL@15..21 "\"foo\"" [Whitespace("\n")] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStringLiteralExpression {
+                value_token: JS_STRING_LITERAL@21..27 "'bar'" [Whitespace("\n")] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsNullLiteralExpression {
+                value_token: NULL_KW@27..32 "null" [Whitespace("\n")] [],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..33
   0: (empty)
   1: LIST@0..0
