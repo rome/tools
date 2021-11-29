@@ -83,7 +83,7 @@ fn parser_tests() {
 			path.file_name().unwrap().to_string_lossy().to_string(),
 			text.to_string(),
 		);
-		let mut ret = format!("{:#?}", parse.syntax());
+		let mut ret = format!("{:#?}\n\n{:#?}", parse.tree(), parse.syntax());
 
 		for diag in parse.errors() {
 			let mut write = rslint_errors::termcolor::Buffer::no_color();

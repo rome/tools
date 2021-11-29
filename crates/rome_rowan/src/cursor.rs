@@ -81,7 +81,7 @@
 //      when the tree is mutable.
 //    - TBD
 
-use std::iter::{Enumerate, FusedIterator};
+use std::iter::FusedIterator;
 use std::{
 	borrow::Cow,
 	cell::Cell,
@@ -95,7 +95,7 @@ use std::{
 
 use countme::Count;
 
-use crate::green::{Slot, Slots};
+use crate::green::Slot;
 use crate::{
 	green::{Child, Children},
 	TriviaPiece,
@@ -713,10 +713,7 @@ impl SyntaxNode {
 	}
 
 	pub(crate) fn slots(&self) -> SyntaxSlots {
-		SyntaxSlots {
-			parent: self,
-			raw: self.green_ref().slots().enumerate(),
-		}
+		SyntaxSlots::new(self.clone())
 	}
 
 	#[inline]
@@ -1557,16 +1554,21 @@ impl From<SyntaxElement> for SyntaxSlot {
 }
 
 /// Iterator over a node's slots
-pub(crate) struct SyntaxSlots<'a> {
-	parent: &'a SyntaxNode,
-	raw: Enumerate<Slots<'a>>,
+#[derive(Debug, Clone)]
+pub(crate) struct SyntaxSlots {
+	next_position: u32,
+	parent: SyntaxNode,
 }
 
-impl<'a> SyntaxSlots<'a> {
-	fn map_item(&self, item: (usize, &Slot)) -> SyntaxSlot {
-		let (slot_index, slot) = item;
-		let slot_index = slot_index as u32;
+impl SyntaxSlots {
+	fn new(parent: SyntaxNode) -> Self {
+		Self {
+			next_position: 0,
+			parent,
+		}
+	}
 
+	fn map_slot(&self, slot: &Slot, slot_index: u32) -> SyntaxSlot {
 		match slot {
 			Slot::Empty { .. } => SyntaxSlot::Empty {
 				parent: self.parent.clone(),
@@ -1588,26 +1590,33 @@ impl<'a> SyntaxSlots<'a> {
 	}
 }
 
-impl<'a> Iterator for SyntaxSlots<'a> {
+impl<'a> Iterator for SyntaxSlots {
 	type Item = SyntaxSlot;
 
 	fn next(&mut self) -> Option<Self::Item> {
-		let next = self.raw.next()?;
-		Some(self.map_item(next))
+		let mut slots = self.parent.green_ref().slots();
+		let current_position = self.next_position as usize;
+		if current_position < slots.len() {
+			let next_slot = slots.nth(current_position);
+			self.next_position += 1;
+			next_slot.map(|slot| self.map_slot(slot, current_position as u32))
+		} else {
+			None
+		}
 	}
 
 	fn nth(&mut self, n: usize) -> Option<Self::Item> {
-		let nth = self.raw.nth(n)?;
-		Some(self.map_item(nth))
+		self.next_position += n as u32;
+		self.next()
 	}
 }
 
-impl<'a> ExactSizeIterator for SyntaxSlots<'a> {
+impl ExactSizeIterator for SyntaxSlots {
 	fn len(&self) -> usize {
-		self.raw.len()
+		self.parent.green_ref().slots().len()
 	}
 }
-impl<'a> FusedIterator for SyntaxSlots<'a> {}
+impl FusedIterator for SyntaxSlots {}
 
 /// Iterator to visit a node's slots in pre-order.
 pub(crate) struct SlotsPreorder {

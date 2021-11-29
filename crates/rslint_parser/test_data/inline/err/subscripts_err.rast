@@ -1,3 +1,16 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: Template {
+                backtick_token: BACKTICK@17..18 "`" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..20
   0: (empty)
   1: LIST@0..0

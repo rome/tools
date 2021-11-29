@@ -151,7 +151,7 @@ impl<N: AstNode> AstNodeList<N> {
 
 #[derive(Debug, Clone)]
 pub struct AstNodeListIterator<N> {
-	inner: SyntaxElementChildren,
+	inner: SyntaxSlots,
 	ph: PhantomData<N>,
 }
 
@@ -195,23 +195,41 @@ impl<N: AstNode> IntoIterator for AstNodeList<N> {
 
 #[derive(Clone)]
 pub struct AstSeparatedElement<N> {
-	node: N,
-	trailing_separator: Option<SyntaxToken>,
+	node: SyntaxResult<N>,
+	trailing_separator: SyntaxResult<Option<SyntaxToken>>,
+}
+
+impl<N: AstNode + Clone> AstSeparatedElement<N> {
+	pub fn node(&self) -> SyntaxResult<N> {
+		self.node.clone()
+	}
+
+	pub fn trailing_separator(&self) -> SyntaxResult<Option<SyntaxToken>> {
+		self.trailing_separator.clone()
+	}
 }
 
 impl<N: Debug> Debug for AstSeparatedElement<N> {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		N::fmt(&self.node, f)?;
+		match &self.node {
+			Ok(node) => N::fmt(node, f)?,
+			Err(_) => f.write_str("missing element")?,
+		};
 		f.write_str("\n")?;
 		match &self.trailing_separator {
-			Some(separator) => separator.fmt(f),
-			None => Ok(()),
+			Ok(Some(separator)) => separator.fmt(f),
+			Err(_) => f.write_str("missing separator"),
+			Ok(None) => Ok(()),
 		}
 	}
 }
 
 /// List of nodes where every two nodes are separated by a token.
 /// For example, the elements of an array where every two elements are separated by a comma token.
+/// The list expects that the underlying syntax node has a slot for every node and separator
+/// even if they are missing from the source code. For example, a list for `a b` where the `,` separator
+/// is missing contains the slots `Node(a), Empty, Node(b)`. This also applies for missing nodes:
+/// the list for `, b,` must have the slots `Empty, Token(,), Node(b), Token(,)`.
 #[derive(Clone)]
 pub struct AstSeparatedList<N> {
 	list: SyntaxList,
@@ -234,16 +252,17 @@ impl<N: AstNode> AstSeparatedList<N> {
 
 	/// Returns an iterator over all nodes with their trailing separator
 	pub fn elements(&self) -> AstSeparatedListElementsIterator<N> {
-		AstSeparatedListElementsIterator {
-			next: self.list.iter(),
-			ph: PhantomData,
-		}
+		AstSeparatedListElementsIterator::new(&self.list)
 	}
 
 	/// Returns an iterator over all separator tokens
-	pub fn separators(&self) -> impl Iterator<Item = SyntaxToken> {
+	pub fn separators(&self) -> impl Iterator<Item = SyntaxResult<SyntaxToken>> {
 		self.elements()
-			.flat_map(|element| element.trailing_separator)
+			.filter_map(|element| match element.trailing_separator {
+				Ok(Some(separator)) => Some(Ok(separator)),
+				Err(missing) => Some(Err(missing)),
+				_ => None,
+			})
 	}
 
 	/// Returns an iterator over all nodes
@@ -259,46 +278,31 @@ impl<N: AstNode> AstSeparatedList<N> {
 	}
 
 	pub fn len(&self) -> usize {
-		// TODO 1724 replace with (self.list.len() + 1) << 2 once trivia are attached to tokens
-		self.iter().count()
+		(self.list.len() + 1) / 2
 	}
 
 	pub fn trailing_separator(&self) -> Option<SyntaxToken> {
-		// TODO 1724: Replace with simple match once trivia is no longer stored in the body
-		// match self.list.last() {
-		// 	NodeOrToken::Token(token) => Some(token),
-		// 	_ => None
-		// }
-
-		self.elements().last()?.trailing_separator
+		match self.list.last()? {
+			SyntaxSlot::Token(token) => Some(token),
+			_ => None,
+		}
 	}
 }
 
 #[derive(Debug, Clone)]
 pub struct AstSeparatedListElementsIterator<N> {
-	next: SyntaxElementChildren,
+	slots: SyntaxSlots,
+	parent: Option<SyntaxNode>,
 	ph: PhantomData<N>,
 }
 
-impl<N> AstSeparatedListElementsIterator<N> {
-	// TODO 1724: Replace with call to next once trivia are no longer stored in tokens and errors are part of the union types.
-	fn next_non_trivia_or_error(&mut self) -> Option<SyntaxElement> {
-		self.next.find_map(|element| match &element {
-			NodeOrToken::Node(node) => {
-				if node.kind() == SyntaxKind::ERROR {
-					None
-				} else {
-					Some(element)
-				}
-			}
-			NodeOrToken::Token(token) => {
-				if token.kind().is_trivia() {
-					None
-				} else {
-					Some(element)
-				}
-			}
-		})
+impl<N: AstNode> AstSeparatedListElementsIterator<N> {
+	fn new(list: &SyntaxList) -> Self {
+		Self {
+			slots: list.iter(),
+			parent: list.node().cloned(),
+			ph: PhantomData,
+		}
 	}
 }
 
@@ -306,34 +310,32 @@ impl<N: AstNode> Iterator for AstSeparatedListElementsIterator<N> {
 	type Item = AstSeparatedElement<N>;
 
 	fn next(&mut self) -> Option<Self::Item> {
-		let node_or_token = self.next_non_trivia_or_error()?;
+		let slot = self.slots.next()?;
 
-		let element = match node_or_token {
+		let node = match slot {
 			// The node for this element is missing if the next child is a token instead of a node.
-			NodeOrToken::Token(token) => panic!(
-				"Missing element in separated list, found {:?} token instead",
-				token
-			),
-			NodeOrToken::Node(node) => {
-				let separator = self.next.find_map(|element| {
-					match element {
-						NodeOrToken::Node(_) => panic!("Expected separator but found node. Two nodes must always be separated by a separator token."),
-						NodeOrToken::Token(token) => if token.kind().is_trivia() {
-							None
-						} else {
-							Some(token)
-						}
-					}
-				});
-
-				AstSeparatedElement {
-					node: node.to::<N>(),
-					trailing_separator: separator,
-				}
-			}
+			SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
+			// Missing element
+			SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild(
+					self.parent.as_ref().unwrap().clone(),
+				)),
+			SyntaxSlot::Node(node) => Ok(node.to::<N>())
 		};
 
-		Some(element)
+		let separator = match self.slots.next() {
+			Some(SyntaxSlot::Empty) => Err(
+				SyntaxError::MissingRequiredChild(self.parent.as_ref().unwrap().clone()),
+			),
+			Some(SyntaxSlot::Token(token)) => Ok(Some(token)),
+			// End of list, no trailing separator
+			None => Ok(None),
+			Some(SyntaxSlot::Node(node)) => panic!("Malformed separated list, separator expected but found node {:?} instead. You must add missing markers for missing separators.", node),
+		};
+
+		Some(AstSeparatedElement {
+			node,
+			trailing_separator: separator,
+		})
 	}
 }
 
@@ -345,16 +347,16 @@ pub struct AstSeparatedListNodesIterator<N> {
 }
 
 impl<N: AstNode> Iterator for AstSeparatedListNodesIterator<N> {
-	type Item = N;
+	type Item = SyntaxResult<N>;
 	fn next(&mut self) -> Option<Self::Item> {
-		Some(self.inner.next()?.node)
+		self.inner.next().map(|element| element.node)
 	}
 }
 
 impl<N: AstNode> FusedIterator for AstSeparatedListNodesIterator<N> {}
 
 impl<N: AstNode> IntoIterator for AstSeparatedList<N> {
-	type Item = N;
+	type Item = SyntaxResult<N>;
 	type IntoIter = AstSeparatedListNodesIterator<N>;
 
 	fn into_iter(self) -> Self::IntoIter {
@@ -363,7 +365,7 @@ impl<N: AstNode> IntoIterator for AstSeparatedList<N> {
 }
 
 impl<N: AstNode> IntoIterator for &AstSeparatedList<N> {
-	type Item = N;
+	type Item = SyntaxResult<N>;
 	type IntoIter = AstSeparatedListNodesIterator<N>;
 
 	fn into_iter(self) -> Self::IntoIter {
@@ -502,7 +504,7 @@ mod support {
 #[cfg(test)]
 mod tests {
 	use crate::ast::{AstSeparatedElement, AstSeparatedList, JsNumberLiteralExpression};
-	use crate::{JsLanguage, SyntaxKind};
+	use crate::{JsLanguage, SyntaxKind, SyntaxResult};
 	use rome_rowan::TreeBuilder;
 
 	/// Creates a ast separated list over a sequence of numbers separated by ",".
@@ -514,15 +516,26 @@ mod tests {
 
 		builder.start_node(SyntaxKind::LIST);
 
+		let mut had_missing_separator = false;
+
 		for (node, separator) in elements.into_iter() {
+			if had_missing_separator {
+				builder.missing();
+				had_missing_separator = false;
+			}
+
 			if let Some(node) = node {
 				builder.start_node(SyntaxKind::JS_NUMBER_LITERAL_EXPRESSION);
 				builder.token(SyntaxKind::JS_NUMBER_LITERAL, node.to_string().as_str());
 				builder.finish_node();
+			} else {
+				builder.missing()
 			}
 
 			if let Some(separator) = separator {
 				builder.token(SyntaxKind::COMMA, separator);
+			} else {
+				had_missing_separator = true;
 			}
 		}
 
@@ -535,13 +548,15 @@ mod tests {
 
 	fn assert_elements<'a>(
 		actual: impl Iterator<Item = AstSeparatedElement<JsNumberLiteralExpression>>,
-		expected: impl IntoIterator<Item = (f64, Option<&'a str>)>,
+		expected: impl IntoIterator<Item = (Option<f64>, Option<&'a str>)>,
 	) {
 		let actual = actual.map(|element| {
 			(
-				element.node.as_number().unwrap(),
+				element.node.ok().map(|n| n.as_number().unwrap()),
 				element
 					.trailing_separator
+					.ok()
+					.flatten()
 					.map(|separator| separator.text().to_string()),
 			)
 		});
@@ -555,12 +570,12 @@ mod tests {
 	}
 
 	fn assert_nodes(
-		actual: impl Iterator<Item = JsNumberLiteralExpression>,
+		actual: impl Iterator<Item = SyntaxResult<JsNumberLiteralExpression>>,
 		expected: impl IntoIterator<Item = f64>,
 	) {
 		assert_eq!(
 			actual
-				.map(|literal| literal.as_number().unwrap())
+				.map(|literal| literal.unwrap().as_number().unwrap())
 				.collect::<Vec<_>>(),
 			expected.into_iter().collect::<Vec<_>>()
 		);
@@ -596,10 +611,10 @@ mod tests {
 		assert_elements(
 			list.elements(),
 			vec![
-				(1., Some(",")),
-				(2., Some(",")),
-				(3., Some(",")),
-				(4., None),
+				(Some(1.), Some(",")),
+				(Some(2.), Some(",")),
+				(Some(3.), Some(",")),
+				(Some(4.), None),
 			],
 		);
 		assert_eq!(list.trailing_separator(), None);
@@ -623,49 +638,61 @@ mod tests {
 		assert_elements(
 			list.elements(),
 			vec![
-				(1., Some(",")),
-				(2., Some(",")),
-				(3., Some(",")),
-				(4., Some(",")),
+				(Some(1.), Some(",")),
+				(Some(2.), Some(",")),
+				(Some(3.), Some(",")),
+				(Some(4.), Some(",")),
 			],
 		);
 		assert!(list.trailing_separator().is_some());
 	}
 
 	#[test]
-	#[should_panic(
-		expected = "Missing element in separated list, found COMMA@2..3 \",\" [] [] token instead"
-	)]
 	fn separated_with_two_successive_separators() {
 		// list([1,,])
 		let list = build_list(vec![(Some(1), Some(",")), (None, Some(","))]);
 
-		// This should panic because having two successive separators is invalid.
-		// Grammars should instead model a "hole" node if this is a valid language construct.
-		let _ = list.elements().collect::<Vec<_>>();
+		assert_eq!(list.len(), 2);
+		assert!(!list.is_empty());
+		assert_eq!(list.separators().count(), 2);
+
+		assert_elements(
+			list.elements(),
+			vec![(Some(1.), Some(",")), (None, Some(","))],
+		);
 	}
 
 	#[test]
-	#[should_panic(
-		expected = "Missing element in separated list, found COMMA@0..1 \",\" [] [] token instead"
-	)]
 	fn separated_with_leading_separator() {
 		// list([,3])
 		let list = build_list(vec![(None, Some(",")), (Some(3), None)]);
 
-		// This should panic because the first element is a separator instead of a node.
-		let _ = list.elements().collect::<Vec<_>>();
+		assert_eq!(list.len(), 2);
+		assert!(!list.is_empty());
+		assert_eq!(list.separators().count(), 1);
+
+		assert_elements(
+			list.elements(),
+			vec![
+				// missing first element
+				(None, Some(",")),
+				(Some(3.), None),
+			],
+		);
 	}
 
 	#[test]
-	#[should_panic(
-		expected = "Expected separator but found node. Two nodes must always be separated by a separator token."
-	)]
 	fn separated_with_two_successive_nodes() {
 		// list([1 2,])
 		let list = build_list(vec![(Some(1), None), (Some(2), Some(","))]);
 
-		// This should panic because having two successive nodes is invalid.
-		let _ = list.elements().collect::<Vec<_>>();
+		assert_eq!(list.len(), 2);
+		assert!(!list.is_empty());
+		assert_eq!(list.separators().count(), 2);
+
+		assert_elements(
+			list.elements(),
+			vec![(Some(1.), None), (Some(2.), Some(","))],
+		);
 	}
 }

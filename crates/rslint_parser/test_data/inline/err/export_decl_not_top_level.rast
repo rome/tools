@@ -1,3 +1,15 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsBlockStatement {
+            l_curly_token: L_CURLY@0..1 "{" [] [],
+            statements: [],
+            r_curly_token: R_CURLY@31..33 "}" [Whitespace("\n")] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..34
   0: (empty)
   1: LIST@0..0

@@ -1,3 +1,53 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsLogicalExpression {
+                left: JsReferenceIdentifierExpression {
+                    name_token: IDENT@0..4 "foo" [] [Whitespace(" ")],
+                },
+                operator: QUESTION2@4..7 "??" [] [Whitespace(" ")],
+            },
+            semicolon_token: SEMICOLON@10..11 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsLogicalExpression {
+                left: JsUnaryExpression {
+                    operator: BANG@11..13 "!" [Whitespace("\n")] [],
+                    argument: JsReferenceIdentifierExpression {
+                        name_token: IDENT@13..17 "foo" [] [Whitespace(" ")],
+                    },
+                },
+                operator: AMP2@17..20 "&&" [] [Whitespace(" ")],
+            },
+            semicolon_token: SEMICOLON@23..24 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: CallExpr {
+                type_args: missing (optional),
+                callee: JsReferenceIdentifierExpression {
+                    name_token: IDENT@24..28 "foo" [Whitespace("\n")] [],
+                },
+                arguments: ArgList {
+                    l_paren_token: L_PAREN@28..29 "(" [] [],
+                    args: [
+                        JsLogicalExpression {
+                            left: JsReferenceIdentifierExpression {
+                                name_token: IDENT@29..33 "foo" [] [Whitespace(" ")],
+                            },
+                            operator: PIPE2@33..35 "||" [] [],
+                        }
+                        ,
+                    ],
+                    r_paren_token: R_PAREN@35..36 ")" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..37
   0: (empty)
   1: LIST@0..0

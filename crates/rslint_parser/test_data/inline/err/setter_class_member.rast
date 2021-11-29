@@ -1,3 +1,40 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsClassDeclaration {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..14 "Setters" [] [Whitespace(" ")],
+            },
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@14..15 "{" [] [],
+            members: [
+                JsSetterClassMember {
+                    access_modifier: missing (optional),
+                    abstract_token: missing (optional),
+                    static_token: missing (optional),
+                    set_token: SET_KW@15..22 "set" [Whitespace("\n  ")] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@22..25 "foo" [] [],
+                    },
+                    l_paren_token: L_PAREN@25..26 "(" [] [],
+                    parameter: missing (required),
+                    r_paren_token: R_PAREN@26..28 ")" [] [Whitespace(" ")],
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@28..29 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@29..30 "}" [] [],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@30..32 "}" [Whitespace("\n")] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..33
   0: (empty)
   1: LIST@0..0
@@ -13,11 +50,9 @@
           1: JS_LITERAL_MEMBER_NAME@22..25
             0: IDENT@22..25 "foo" [] []
           2: L_PAREN@25..26 "(" [] []
-          3: JS_UNKNOWN_PATTERN@26..28
-            0: R_PAREN@26..28 ")" [] [Whitespace(" ")]
-          4: (empty)
-          5: (empty)
-          6: JS_FUNCTION_BODY@28..30
+          3: (empty)
+          4: R_PAREN@26..28 ")" [] [Whitespace(" ")]
+          5: JS_FUNCTION_BODY@28..30
             0: L_CURLY@28..29 "{" [] []
             1: LIST@29..29
             2: LIST@29..29
@@ -32,18 +67,11 @@ error[SyntaxError]: Expected an identifier or pattern, but found none
   │           ^
 
 --
-error[SyntaxError]: expected a parameter but instead found '{'
-  ┌─ setter_class_member.js:2:13
+error[SyntaxError]: expected a parameter but instead found ')'
+  ┌─ setter_class_member.js:2:11
   │
 2 │   set foo() {}
-  │             ^ Expected a parameter here
-
---
-error[SyntaxError]: expected `')'` but instead found `{`
-  ┌─ setter_class_member.js:2:13
-  │
-2 │   set foo() {}
-  │             ^ unexpected
+  │           ^ Expected a parameter here
 
 --
 class Setters {

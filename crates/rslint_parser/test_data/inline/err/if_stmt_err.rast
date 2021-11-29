@@ -1,3 +1,115 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsIfStatement {
+            if_token: IF_KW@0..3 "if" [] [Whitespace(" ")],
+            l_paren_token: L_PAREN@3..4 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@4..8 "true" [] [],
+            },
+            r_paren_token: R_PAREN@8..10 ")" [] [Whitespace(" ")],
+            consequent: missing (required),
+            else_clause: JsElseClause {
+                else_token: ELSE_KW@10..15 "else" [] [Whitespace(" ")],
+                alternate: JsBlockStatement {
+                    l_curly_token: L_CURLY@15..16 "{" [] [],
+                    statements: [],
+                    r_curly_token: R_CURLY@16..17 "}" [] [],
+                },
+            },
+        },
+        JsIfStatement {
+            if_token: IF_KW@17..21 "if" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@21..22 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@22..26 "true" [] [],
+            },
+            r_paren_token: R_PAREN@26..28 ")" [] [Whitespace(" ")],
+            consequent: missing (required),
+            else_clause: JsElseClause {
+                else_token: ELSE_KW@28..32 "else" [] [],
+                alternate: JsIfStatement {
+                    if_token: IF_KW@32..36 "if" [Whitespace("\n")] [Whitespace(" ")],
+                    l_paren_token: missing (required),
+                    test: missing (required),
+                    r_paren_token: missing (required),
+                    consequent: missing (required),
+                    else_clause: JsElseClause {
+                        else_token: ELSE_KW@36..41 "else" [] [Whitespace(" ")],
+                        alternate: JsBlockStatement {
+                            l_curly_token: L_CURLY@41..42 "{" [] [],
+                            statements: [],
+                            r_curly_token: R_CURLY@42..43 "}" [] [],
+                        },
+                    },
+                },
+            },
+        },
+        JsIfStatement {
+            if_token: IF_KW@43..47 "if" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@47..48 "(" [] [],
+            test: missing (required),
+            r_paren_token: R_PAREN@48..50 ")" [] [Whitespace(" ")],
+            consequent: JsBlockStatement {
+                l_curly_token: L_CURLY@50..51 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@51..53 "}" [] [Whitespace(" ")],
+            },
+            else_clause: JsElseClause {
+                else_token: ELSE_KW@53..58 "else" [] [Whitespace(" ")],
+                alternate: JsBlockStatement {
+                    l_curly_token: L_CURLY@58..59 "{" [] [],
+                    statements: [],
+                    r_curly_token: R_CURLY@59..60 "}" [] [],
+                },
+            },
+        },
+        JsIfStatement {
+            if_token: IF_KW@60..64 "if" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@64..65 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@65..69 "true" [] [],
+            },
+            r_paren_token: R_PAREN@69..70 ")" [] [],
+            consequent: JsUnknownStatement {
+                items: [
+                    Token(
+                        R_CURLY@70..71 "}" [] [],
+                    ),
+                ],
+            },
+            else_clause: missing (optional),
+        },
+        JsUnknownStatement {
+            items: [
+                Token(
+                    R_CURLY@71..72 "}" [] [],
+                ),
+            ],
+        },
+        JsUnknownStatement {
+            items: [
+                Token(
+                    R_CURLY@72..73 "}" [] [],
+                ),
+            ],
+        },
+        JsUnknownStatement {
+            items: [
+                Token(
+                    R_CURLY@73..75 "}" [] [Whitespace(" ")],
+                ),
+            ],
+        },
+        JsBlockStatement {
+            l_curly_token: L_CURLY@75..76 "{" [] [],
+            statements: [],
+            r_curly_token: R_CURLY@76..77 "}" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..78
   0: (empty)
   1: LIST@0..0

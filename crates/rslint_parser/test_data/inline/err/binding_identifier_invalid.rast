@@ -1,3 +1,92 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsArrowFunctionExpression {
+                async_token: ASYNC_KW@0..6 "async" [] [Whitespace(" ")],
+                type_parameters: missing (optional),
+                parameter_list: JsParameterList {
+                    l_paren_token: L_PAREN@6..7 "(" [] [],
+                    parameters: [],
+                    r_paren_token: R_PAREN@7..9 ")" [] [Whitespace(" ")],
+                },
+                fat_arrow_token: FAT_ARROW@9..12 "=>" [] [Whitespace(" ")],
+                return_type: missing (optional),
+            },
+            semicolon_token: missing (optional),
+        },
+        JsFunctionDeclaration {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@30..40 "function" [Whitespace("\n")] [Whitespace(" ")],
+            star_token: STAR@40..41 "*" [] [],
+            id: JsIdentifierBinding {
+                name_token: IDENT@41..44 "foo" [] [],
+            },
+            type_parameters: missing (optional),
+            parameter_list: JsParameterList {
+                l_paren_token: L_PAREN@44..45 "(" [] [],
+                parameters: [],
+                r_paren_token: R_PAREN@45..47 ")" [] [Whitespace(" ")],
+            },
+            return_type: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@47..48 "{" [] [],
+                directives: [],
+                statements: [
+                    JsVariableDeclarationStatement {
+                        declaration: JsVariableDeclaration {
+                            kind_token: LET_KW@48..56 "let" [Whitespace("\n   ")] [Whitespace(" ")],
+                            declarators: [
+                                JsVariableDeclarator {
+                                    id: SinglePattern {
+                                        name: missing (required),
+                                        question_mark_token: missing (optional),
+                                        excl_token: missing (optional),
+                                        ty: missing (optional),
+                                    },
+                                    init: JsEqualValueClause {
+                                        eq_token: EQ@62..64 "=" [] [Whitespace(" ")],
+                                        expression: JsNumberLiteralExpression {
+                                            value_token: JS_NUMBER_LITERAL@64..65 "5" [] [],
+                                        },
+                                    },
+                                }
+                                ,
+                            ],
+                        },
+                        semicolon_token: SEMICOLON@65..66 ";" [] [],
+                    },
+                ],
+                r_curly_token: R_CURLY@66..68 "}" [Whitespace("\n")] [],
+            },
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@68..73 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: missing (required),
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@78..80 "=" [] [Whitespace(" ")],
+                            expression: JsNumberLiteralExpression {
+                                value_token: JS_NUMBER_LITERAL@80..81 "5" [] [],
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: SEMICOLON@81..82 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..83
   0: (empty)
   1: LIST@0..0

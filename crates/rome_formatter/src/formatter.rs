@@ -1,10 +1,10 @@
 use crate::printer::Printer;
 use crate::{
-	concat_elements, token, FormatElement, FormatError, FormatOptions, FormatResult, Formatted,
-	ToFormatElement,
+	concat_elements, format_elements, if_group_breaks, token, FormatElement, FormatOptions,
+	FormatResult, Formatted, ToFormatElement,
 };
 use rome_rowan::SyntaxElement;
-use rslint_parser::{AstNode, SyntaxNode, SyntaxToken};
+use rslint_parser::{AstNode, AstSeparatedList, SyntaxNode, SyntaxToken};
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
 /// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
@@ -109,7 +109,7 @@ impl Formatter {
 	pub fn format_nodes<T: AstNode + ToFormatElement>(
 		&self,
 		nodes: impl IntoIterator<Item = T>,
-	) -> Result<impl Iterator<Item = FormatElement>, FormatError> {
+	) -> FormatResult<impl Iterator<Item = FormatElement>> {
 		let mut result = Vec::new();
 
 		for node in nodes {
@@ -118,6 +118,29 @@ impl Formatter {
 					result.push(formatted);
 				}
 				Err(err) => return Err(err),
+			}
+		}
+
+		Ok(result.into_iter())
+	}
+
+	pub fn format_separated<T: AstNode + ToFormatElement + Clone>(
+		&self,
+		list: AstSeparatedList<T>,
+	) -> FormatResult<impl Iterator<Item = FormatElement>> {
+		let mut result = Vec::with_capacity(list.len());
+
+		for (index, element) in list.elements().enumerate() {
+			let node = self.format_node(element.node()?)?;
+			if let Some(separator) = element.trailing_separator()? {
+				let formatted_separator = self.format_token(&separator)?;
+				if index == list.len() - 1 {
+					result.push(format_elements![node, if_group_breaks(formatted_separator)])
+				} else {
+					result.push(format_elements![node, formatted_separator]);
+				}
+			} else {
+				result.push(node);
 			}
 		}
 

@@ -17,16 +17,12 @@ impl ToFormatElement for JsVariableDeclarationStatement {
 
 impl ToFormatElement for JsVariableDeclaration {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let mut declarators = Vec::with_capacity(self.declarators().len());
-
-		for declarator in self.declarators().iter() {
-			declarators.push(formatter.format_node(declarator)?);
-		}
+		let declarators = formatter.format_separated(self.declarators())?;
 
 		Ok(format_elements![
 			formatter.format_token(&self.kind_token()?)?,
 			space_token(),
-			join_elements(format_elements![token(","), space_token()], declarators),
+			join_elements(space_token(), declarators),
 		])
 	}
 }

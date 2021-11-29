@@ -89,13 +89,18 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			let err = p
 				.err_builder("Expected an identifier or pattern, but found none")
 				.primary(p.cur_tok().range, "");
-			let mut ts = token_set![T![ident], T![yield], T![await], T!['['],];
+			let mut ts = token_set![T![ident], T![yield], T![await], T!['['], T![;]];
 			if p.state.allow_object_expr {
 				ts = ts.union(token_set![T!['{']]);
 			}
-			#[allow(deprecated)]
-			SingleTokenParseRecovery::with_error(ts, JS_UNKNOWN_PATTERN, err).recover(p);
-			return None;
+			if parameters {
+				ts = ts.union(token_set![T![,], T![')']])
+			}
+			p.error(err);
+			return match ParseRecovery::new(JS_UNKNOWN_PATTERN, ts).recover(p) {
+				Ok(recovered) => Some(recovered),
+				Err(_) => None,
+			};
 		}
 	})
 }
@@ -276,12 +281,13 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 
 	if name.kind() != NAME {
 		m.abandon(p);
+		name.change_kind(p, JS_UNKNOWN_PATTERN);
 		let err = p
 			.err_builder("Expected an identifier for a pattern, but found none")
 			.primary(name.range(p), "");
 
 		p.error(err);
-		return None;
+		return Some(name);
 	}
 
 	let sp_marker = name.precede(p).complete(p, SINGLE_PATTERN);

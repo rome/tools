@@ -1,6 +1,7 @@
+use std::fmt::{Debug, Formatter};
+use std::iter::FusedIterator;
 use std::{fmt, iter, marker::PhantomData, ops::Range};
 
-use crate::cursor::SyntaxSlot;
 use crate::{
 	cursor::{self},
 	Direction, GreenNode, NodeOrToken, SyntaxKind, SyntaxText, TextRange, TextSize, TokenAtOffset,
@@ -235,16 +236,18 @@ impl<L: Language> fmt::Debug for SyntaxNode<L> {
 							write!(f, "  ")?;
 						}
 						match element {
-							SyntaxSlot::Node(node) => {
+							cursor::SyntaxSlot::Node(node) => {
 								writeln!(f, "{}: {:?}", node.index(), SyntaxNode::<L>::from(node))?
 							}
-							SyntaxSlot::Token(token) => writeln!(
+							cursor::SyntaxSlot::Token(token) => writeln!(
 								f,
 								"{}: {:?}",
 								token.index(),
 								SyntaxToken::<L>::from(token)
 							)?,
-							SyntaxSlot::Empty { index, .. } => writeln!(f, "{}: (empty)", index)?,
+							cursor::SyntaxSlot::Empty { index, .. } => {
+								writeln!(f, "{}: (empty)", index)?
+							}
 						}
 						level += 1;
 					}
@@ -267,8 +270,8 @@ impl<L: Language> fmt::Display for SyntaxNode<L> {
 
 fn print_debug_str<S: AsRef<str>>(text: S, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 	let text = text.as_ref();
-	if text.len() < 25 {
-		return write!(f, "{:?}", text);
+	return if text.len() < 25 {
+		write!(f, "{:?}", text)
 	} else {
 		for idx in 21..25 {
 			if text.is_char_boundary(idx) {
@@ -276,8 +279,8 @@ fn print_debug_str<S: AsRef<str>>(text: S, f: &mut fmt::Formatter<'_>) -> fmt::R
 				return write!(f, "{:?}", text);
 			}
 		}
-		return write!(f, "");
-	}
+		write!(f, "")
+	};
 }
 
 fn print_debug_trivia_piece<L: Language>(
@@ -615,6 +618,13 @@ impl<L: Language> SyntaxNode<L> {
 	pub fn children(&self) -> SyntaxNodeChildren<L> {
 		SyntaxNodeChildren {
 			raw: self.raw.children(),
+			_p: PhantomData,
+		}
+	}
+
+	pub fn slots(&self) -> SyntaxSlots<L> {
+		SyntaxSlots {
+			raw: Some(self.raw.slots()),
 			_p: PhantomData,
 		}
 	}
@@ -990,10 +1000,16 @@ impl<L: Language> Iterator for SyntaxNodeChildren<L> {
 	}
 }
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct SyntaxElementChildren<L: Language> {
 	raw: cursor::SyntaxElementChildren,
 	_p: PhantomData<L>,
+}
+
+impl<L: Language> Debug for SyntaxElementChildren<L> {
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+		f.debug_list().entries(self.clone()).finish()
+	}
 }
 
 impl<L: Language> Default for SyntaxElementChildren<L> {
@@ -1096,6 +1112,74 @@ impl<L: Language> From<SyntaxElement<L>> for cursor::SyntaxElement {
 	}
 }
 
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub enum SyntaxSlot<L: Language> {
+	Node(SyntaxNode<L>),
+	Token(SyntaxToken<L>),
+	Empty,
+}
+
+impl<L: Language> SyntaxSlot<L> {
+	pub fn into_node(self) -> Option<SyntaxNode<L>> {
+		match self {
+			SyntaxSlot::Node(node) => Some(node),
+			_ => None,
+		}
+	}
+
+	pub fn kind(&self) -> Option<L::Kind> {
+		match self {
+			SyntaxSlot::Node(node) => Some(node.kind()),
+			SyntaxSlot::Token(token) => Some(token.kind()),
+			SyntaxSlot::Empty => None,
+		}
+	}
+}
+
+impl<L: Language> From<cursor::SyntaxSlot> for SyntaxSlot<L> {
+	fn from(raw: cursor::SyntaxSlot) -> Self {
+		match raw {
+			cursor::SyntaxSlot::Node(node) => SyntaxSlot::Node(node.into()),
+			cursor::SyntaxSlot::Token(token) => SyntaxSlot::Token(token.into()),
+			cursor::SyntaxSlot::Empty { .. } => SyntaxSlot::Empty,
+		}
+	}
+}
+
+#[derive(Debug, Clone)]
+pub struct SyntaxSlots<L> {
+	raw: Option<cursor::SyntaxSlots>,
+	_p: PhantomData<L>,
+}
+
+impl<L> Default for SyntaxSlots<L> {
+	fn default() -> Self {
+		SyntaxSlots {
+			raw: None,
+			_p: PhantomData,
+		}
+	}
+}
+
+impl<L: Language> Iterator for SyntaxSlots<L> {
+	type Item = SyntaxSlot<L>;
+
+	fn next(&mut self) -> Option<Self::Item> {
+		self.raw.as_mut()?.next().map(|raw| raw.into())
+	}
+}
+
+impl<'a, L: Language> FusedIterator for SyntaxSlots<L> {}
+
+impl<'a, L: Language> ExactSizeIterator for SyntaxSlots<L> {
+	fn len(&self) -> usize {
+		match &self.raw {
+			None => 0,
+			Some(raw) => raw.len(),
+		}
+	}
+}
+
 /// A list of `SyntaxNode`s and/or `SyntaxToken`s
 #[derive(Debug, Clone, Default)]
 pub struct SyntaxList<L: Language> {
@@ -1111,18 +1195,18 @@ impl<L: Language> SyntaxList<L> {
 	}
 
 	/// Iterates over the elements in the list.
-	pub fn iter(&self) -> SyntaxElementChildren<L> {
+	pub fn iter(&self) -> SyntaxSlots<L> {
 		if let Some(list) = &self.list {
-			list.children_with_tokens()
+			list.slots()
 		} else {
-			SyntaxElementChildren::<L>::default()
+			SyntaxSlots::<L>::default()
 		}
 	}
 
 	/// Returns the number of items in this list
 	pub fn len(&self) -> usize {
 		if let Some(list) = &self.list {
-			list.raw.green().slots().len()
+			list.slots().len()
 		} else {
 			0
 		}
@@ -1132,26 +1216,30 @@ impl<L: Language> SyntaxList<L> {
 		self.len() == 0
 	}
 
-	pub fn first(&self) -> Option<SyntaxElement<L>> {
+	pub fn first(&self) -> Option<SyntaxSlot<L>> {
 		if let Some(list) = &self.list {
-			list.first_child_or_token()
+			list.slots().next()
 		} else {
 			None
 		}
 	}
 
-	pub fn last(&self) -> Option<SyntaxElement<L>> {
+	pub fn last(&self) -> Option<SyntaxSlot<L>> {
 		if let Some(list) = &self.list {
-			list.last_child_or_token()
+			list.slots().last()
 		} else {
 			None
 		}
+	}
+
+	pub fn node(&self) -> Option<&SyntaxNode<L>> {
+		self.list.as_ref()
 	}
 }
 
 impl<L: Language> IntoIterator for &SyntaxList<L> {
-	type Item = SyntaxElement<L>;
-	type IntoIter = SyntaxElementChildren<L>;
+	type Item = SyntaxSlot<L>;
+	type IntoIter = SyntaxSlots<L>;
 
 	fn into_iter(self) -> Self::IntoIter {
 		self.iter()
@@ -1159,8 +1247,8 @@ impl<L: Language> IntoIterator for &SyntaxList<L> {
 }
 
 impl<L: Language> IntoIterator for SyntaxList<L> {
-	type Item = SyntaxElement<L>;
-	type IntoIter = SyntaxElementChildren<L>;
+	type Item = SyntaxSlot<L>;
+	type IntoIter = SyntaxSlots<L>;
 
 	fn into_iter(self) -> Self::IntoIter {
 		self.iter()
@@ -1262,7 +1350,14 @@ mod tests {
 
 		let kinds: Vec<_> = list.iter().map(|e| e.kind()).collect();
 
-		assert_eq!(kinds, vec![SyntaxKind(1), SyntaxKind(3), SyntaxKind(1)])
+		assert_eq!(
+			kinds,
+			vec![
+				Some(SyntaxKind(1)),
+				Some(SyntaxKind(3)),
+				Some(SyntaxKind(1))
+			]
+		)
 	}
 
 	#[test]
