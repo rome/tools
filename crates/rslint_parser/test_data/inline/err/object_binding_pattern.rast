@@ -7,7 +7,7 @@
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..10
           0: JS_VARIABLE_DECLARATOR@4..10
-            0: OBJECT_PATTERN@4..10
+            0: JS_OBJECT_BINDING@4..10
               0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
               1: LIST@6..8
                 0: JS_UNKNOWN_BINDING@6..8
@@ -36,7 +36,7 @@
         0: LET_KW@30..35 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@35..61
           0: JS_VARIABLE_DECLARATOR@35..61
-            0: OBJECT_PATTERN@35..44
+            0: JS_OBJECT_BINDING@35..44
               0: L_CURLY@35..37 "{" [] [Whitespace(" ")]
               1: LIST@37..42
                 0: JS_UNKNOWN_BINDING@37..42
@@ -60,7 +60,7 @@
         0: LET_KW@62..67 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@67..93
           0: JS_VARIABLE_DECLARATOR@67..93
-            0: OBJECT_PATTERN@67..76
+            0: JS_OBJECT_BINDING@67..76
               0: L_CURLY@67..69 "{" [] [Whitespace(" ")]
               1: LIST@69..74
                 0: JS_UNKNOWN_BINDING@69..70
@@ -87,7 +87,7 @@
         0: LET_KW@94..99 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@99..122
           0: JS_VARIABLE_DECLARATOR@99..122
-            0: OBJECT_PATTERN@99..118
+            0: JS_OBJECT_BINDING@99..118
               0: L_CURLY@99..101 "{" [] [Whitespace(" ")]
               1: LIST@101..116
                 0: JS_PROPERTY_BINDING@101..112

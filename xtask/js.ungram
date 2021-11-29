@@ -725,9 +725,8 @@ JsAnyBinding =
 	JsIdentifierBinding
 	| RestPattern
 	| AssignPattern
-	| ObjectPattern
+	| JsObjectBinding
 	| ArrayPattern
-	| ExprPattern
 	| JsUnknownBinding
 
 
@@ -746,11 +745,14 @@ RestPattern = '...' pat:JsAnyBinding
 // array pattern
 ArrayPattern = '[' elements:JsAnyBinding* ']' '!' ty: TsTypeAnnotation?
 
-// object pattern
-ObjectPattern = '{' elements:(ObjectPatternProp (',' ObjectPatternProp)* ','?) '}'
+// let { a, b} = c;
+//     ^^^^^^^
+JsObjectBinding =
+	'{'
+	properties: (JsAnyPropertyBinding (',' JsAnyPropertyBinding)* ','?)
+	'}'
 
-// object pattern prop
-ObjectPatternProp =
+JsAnyPropertyBinding =
 	AssignPattern
 	| JsPropertyBinding
 	| RestPattern
@@ -767,9 +769,6 @@ JsPropertyBinding =
 	':'
 	binding: JsAnyBinding
 
-
-// expression pattern
-ExprPattern = expr: JsAnyExpression
 
 ///////////////
 // MISCELLANEOUS

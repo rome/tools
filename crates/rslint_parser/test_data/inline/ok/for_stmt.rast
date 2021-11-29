@@ -57,9 +57,9 @@ JsRoot {
                 kind_token: LET_KW@37..41 "let" [] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: ObjectPattern {
+                        id: JsObjectBinding {
                             l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],
-                            elements: [
+                            properties: [
                                 JsIdentifierBinding {
                                     name_token: IDENT@43..46 "foo" [] [],
                                     question_mark_token: missing (optional),
@@ -173,7 +173,7 @@ JsRoot {
         0: LET_KW@37..41 "let" [] [Whitespace(" ")]
         1: LIST@41..54
           0: JS_VARIABLE_DECLARATOR@41..54
-            0: OBJECT_PATTERN@41..54
+            0: JS_OBJECT_BINDING@41..54
               0: L_CURLY@41..43 "{" [] [Whitespace(" ")]
               1: LIST@43..52
                 0: JS_IDENTIFIER_BINDING@43..46

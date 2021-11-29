@@ -203,7 +203,7 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 	props_list.complete(p, LIST);
 
 	p.expect_required(T!['}']);
-	m.complete(p, OBJECT_PATTERN)
+	m.complete(p, JS_OBJECT_BINDING)
 }
 
 // test object_binding_prop

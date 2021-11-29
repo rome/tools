@@ -54,9 +54,9 @@ JsRoot {
                 parameter_list: JsParameterList {
                     l_paren_token: L_PAREN@28..30 "(" [Whitespace("\n")] [],
                     parameters: [
-                        ObjectPattern {
+                        JsObjectBinding {
                             l_curly_token: L_CURLY@30..31 "{" [] [],
-                            elements: [
+                            properties: [
                                 JsIdentifierBinding {
                                     name_token: IDENT@31..34 "foo" [] [],
                                     question_mark_token: missing (optional),
@@ -190,7 +190,7 @@ JsRoot {
         0: JS_PARAMETER_LIST@28..58
           0: L_PAREN@28..30 "(" [Whitespace("\n")] []
           1: LIST@30..56
-            0: OBJECT_PATTERN@30..56
+            0: JS_OBJECT_BINDING@30..56
               0: L_CURLY@30..31 "{" [] []
               1: LIST@31..55
                 0: JS_IDENTIFIER_BINDING@31..34
