@@ -3,7 +3,8 @@ use super::expr::expr_or_assignment;
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::syntax::expr::parse_identifier;
 use crate::syntax::js_parse_error::{
-	expected_object_binding_member, expected_object_binding_member_name, expected_object_member,
+	expected_identifier_binding, expected_object_binding_member,
+	expected_object_binding_member_name, expected_object_member,
 };
 use crate::syntax::object::object_member_name;
 use crate::JsSyntaxFeature::StrictMode;
@@ -181,7 +182,9 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 			let m = p.start();
 			p.bump_any();
 
-			pattern(p, parameters);
+			// TODO should we parse any binding identifier here and wrap it in an unknown
+			// if it isn't a binding identifier or unknown_binding?
+			parse_identifier_binding(p).or_missing_with_error(p, expected_identifier_binding);
 			m.complete(p, REST_PATTERN);
 			break;
 		}

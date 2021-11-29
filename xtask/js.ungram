@@ -755,7 +755,7 @@ JsObjectBinding =
 JsAnyPropertyBinding =
 	AssignPattern
 	| JsPropertyBinding
-	| RestPattern
+	| JsObjectRestBinding
 	| JsShorthandPropertyBinding
 	| JsIdentifierBinding
 	| JsUnknownBinding
@@ -774,6 +774,12 @@ JsPropertyBinding =
 //       ^
 JsShorthandPropertyBinding =
 	identifier: JsIdentifierBinding
+
+// let { ...a } = c
+//       ^^^^
+JsObjectRestBinding =
+	'...'
+	binding: JsIdentifierBinding
 
 
 ///////////////

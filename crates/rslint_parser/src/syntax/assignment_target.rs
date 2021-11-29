@@ -354,6 +354,7 @@ fn parse_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
 // ({ ...{a} } = b);
 // ({ ...rest, other_assignment } = a);
 // ({ ...rest, } = a);
+// ({ ...{a}} = b);
 fn parse_object_rest_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![...]) {
 		return Absent;

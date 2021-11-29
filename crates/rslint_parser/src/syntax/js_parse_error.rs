@@ -85,6 +85,10 @@ pub(crate) fn expected_array_assignment_target_element(
 	expected_any(&["assignment target", "rest element", "comma"], range).to_diagnostic(p)
 }
 
+pub(crate) fn expected_identifier_binding(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_node("identifier", range).to_diagnostic(p)
+}
+
 pub(crate) fn expected_object_binding_member(p: &Parser, range: Range<usize>) -> Diagnostic {
 	expected_any(
 		&[
