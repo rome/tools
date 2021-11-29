@@ -176,20 +176,20 @@ pub(super) fn parse_parameters_list(
 				m.complete(p, ERROR);
 			}
 
+			m.complete(p, JS_REST_PARAMETER);
+
 			// FIXME: this should be handled better, we should keep trying to parse params but issue an error for each one
 			// which would allow for better recovery from `foo, ...bar, foo`
 			if p.at(T![,]) {
 				let m = p.start();
 				let range = p.cur_tok().range;
 				p.bump_any();
-				m.complete(p, JS_UNKNOWN_PATTERN);
+				m.complete(p, ERROR);
 				let err = p
 					.err_builder("rest elements may not have trailing commas")
 					.primary(range, "");
 
 				p.error(err);
-			} else {
-				m.complete(p, JS_REST_PARAMETER);
 			}
 		} else {
 			// test_err formal_params_no_binding_element
