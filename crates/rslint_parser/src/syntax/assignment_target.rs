@@ -178,7 +178,7 @@ fn parse_array_assignment_target(p: &mut Parser) -> ParsedSyntax {
 		}
 
 		if !p.at(T![']']) {
-			p.expect(T![,]);
+			p.expect_required(T![,]);
 		}
 	}
 
@@ -230,6 +230,12 @@ fn parse_object_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	let elements = p.start();
 
 	while !p.at(T!['}']) {
+		if p.at(T![,]) {
+			p.missing(); // missing element
+			p.bump_any();
+			continue;
+		}
+
 		let recovery = ParseRecovery::new(
 			JS_UNKNOWN_ASSIGNMENT_TARGET,
 			token_set!(EOF, T![,], T!['}'], T![...], T![;]),
@@ -253,7 +259,7 @@ fn parse_object_assignment_target(p: &mut Parser) -> ParsedSyntax {
 		}
 
 		if !p.at(T!['}']) {
-			p.expect(T![,]);
+			p.expect_required(T![,]);
 		}
 	}
 
@@ -280,6 +286,7 @@ const PROPERTY_ASSIGNMENT_TARGET_START_TOKENS: TokenSet =
 // ({=y} = {});
 // ({:="test"} = {});
 // ({:=} = {});
+// ({ a b } = {});
 fn parse_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	if !p.at_ts(PROPERTY_ASSIGNMENT_TARGET_START_TOKENS) {
 		return Absent;
