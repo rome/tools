@@ -47,6 +47,16 @@ impl ParsedSyntax {
 		}
 	}
 
+	pub fn map<F>(self, mapper: F) -> ParsedSyntax
+	where
+		F: FnOnce(CompletedMarker) -> CompletedMarker,
+	{
+		match self {
+			Absent => Absent,
+			Present(marker) => Present(mapper(marker)),
+		}
+	}
+
 	/// Returns `true` if the parsed syntax is [Present]
 	#[must_use]
 	pub fn is_present(&self) -> bool {

@@ -6,7 +6,7 @@ impl ToFormatElement for JsAnyBinding {
 		match self {
 			JsAnyBinding::RestPattern(_) => todo!(),
 			JsAnyBinding::AssignPattern(pattern) => pattern.to_format_element(formatter),
-			JsAnyBinding::ObjectPattern(_) => todo!(),
+			JsAnyBinding::JsObjectBinding(_) => todo!(),
 			JsAnyBinding::ArrayPattern(array_pattern) => array_pattern.to_format_element(formatter),
 			JsAnyBinding::JsIdentifierBinding(single) => single.to_format_element(formatter),
 			JsAnyBinding::JsUnknownBinding(_) => todo!(),

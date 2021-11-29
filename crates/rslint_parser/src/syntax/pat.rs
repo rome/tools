@@ -186,7 +186,7 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 			break;
 		}
 
-		let recovery_result = object_binding_prop(p, parameters).or_recover(
+		let recovery_result = parse_property_binding(p, parameters).or_recover(
 			p,
 			ParseRecovery::new(
 				JS_UNKNOWN_BINDING,
@@ -209,7 +209,7 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 // test object_binding_prop
 // let { default: foo, bar } = {}
 // let { foo = bar, baz } = {}
-fn object_binding_prop(p: &mut Parser, parameters: bool) -> ParsedSyntax {
+fn parse_property_binding(p: &mut Parser, parameters: bool) -> ParsedSyntax {
 	let inner = if p.nth_at(1, T![:]) {
 		let m = p.start();
 		object_member_name(p).or_missing_with_error(p, expected_object_member);
@@ -217,7 +217,10 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> ParsedSyntax {
 		binding_element(p, parameters);
 		Present(m.complete(p, JS_PROPERTY_BINDING))
 	} else {
-		parse_identifier_binding(p)
+		parse_identifier_binding(p).map(|identifier| {
+			let m = identifier.precede(p);
+			m.complete(p, JS_SHORTHAND_PROPERTY_BINDING)
+		})
 	};
 
 	if p.at(T![=]) {

@@ -23,11 +23,13 @@ JsRoot {
                                     },
                                 }
                                 COMMA@18..20 "," [] [Whitespace(" ")],
-                                JsIdentifierBinding {
-                                    name_token: IDENT@20..24 "bar" [] [Whitespace(" ")],
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
+                                JsShorthandPropertyBinding {
+                                    identifier: JsIdentifierBinding {
+                                        name_token: IDENT@20..24 "bar" [] [Whitespace(" ")],
+                                        question_mark_token: missing (optional),
+                                        excl_token: missing (optional),
+                                        ty: missing (optional),
+                                    },
                                 }
                                 ,
                             ],
@@ -56,12 +58,7 @@ JsRoot {
                             l_curly_token: L_CURLY@35..37 "{" [] [Whitespace(" ")],
                             properties: [
                                 AssignPattern {
-                                    key: JsIdentifierBinding {
-                                        name_token: IDENT@37..41 "foo" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
-                                    },
+                                    key: missing (required),
                                     ty: missing (optional),
                                     eq_token: EQ@41..43 "=" [] [Whitespace(" ")],
                                     value: JsReferenceIdentifierExpression {
@@ -69,11 +66,13 @@ JsRoot {
                                     },
                                 }
                                 COMMA@46..48 "," [] [Whitespace(" ")],
-                                JsIdentifierBinding {
-                                    name_token: IDENT@48..52 "baz" [] [Whitespace(" ")],
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
+                                JsShorthandPropertyBinding {
+                                    identifier: JsIdentifierBinding {
+                                        name_token: IDENT@48..52 "baz" [] [Whitespace(" ")],
+                                        question_mark_token: missing (optional),
+                                        excl_token: missing (optional),
+                                        ty: missing (optional),
+                                    },
                                 }
                                 ,
                             ],
@@ -115,8 +114,9 @@ JsRoot {
                   2: JS_IDENTIFIER_BINDING@15..18
                     0: IDENT@15..18 "foo" [] []
                 1: COMMA@18..20 "," [] [Whitespace(" ")]
-                2: JS_IDENTIFIER_BINDING@20..24
-                  0: IDENT@20..24 "bar" [] [Whitespace(" ")]
+                2: JS_SHORTHAND_PROPERTY_BINDING@20..24
+                  0: JS_IDENTIFIER_BINDING@20..24
+                    0: IDENT@20..24 "bar" [] [Whitespace(" ")]
               2: R_CURLY@24..26 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@26..30
               0: EQ@26..28 "=" [] [Whitespace(" ")]
@@ -134,14 +134,16 @@ JsRoot {
               0: L_CURLY@35..37 "{" [] [Whitespace(" ")]
               1: LIST@37..52
                 0: ASSIGN_PATTERN@37..46
-                  0: JS_IDENTIFIER_BINDING@37..41
-                    0: IDENT@37..41 "foo" [] [Whitespace(" ")]
+                  0: JS_SHORTHAND_PROPERTY_BINDING@37..41
+                    0: JS_IDENTIFIER_BINDING@37..41
+                      0: IDENT@37..41 "foo" [] [Whitespace(" ")]
                   1: EQ@41..43 "=" [] [Whitespace(" ")]
                   2: JS_REFERENCE_IDENTIFIER_EXPRESSION@43..46
                     0: IDENT@43..46 "bar" [] []
                 1: COMMA@46..48 "," [] [Whitespace(" ")]
-                2: JS_IDENTIFIER_BINDING@48..52
-                  0: IDENT@48..52 "baz" [] [Whitespace(" ")]
+                2: JS_SHORTHAND_PROPERTY_BINDING@48..52
+                  0: JS_IDENTIFIER_BINDING@48..52
+                    0: IDENT@48..52 "baz" [] [Whitespace(" ")]
               2: R_CURLY@52..54 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@54..58
               0: EQ@54..56 "=" [] [Whitespace(" ")]

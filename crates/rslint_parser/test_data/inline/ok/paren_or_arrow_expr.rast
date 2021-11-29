@@ -57,18 +57,22 @@ JsRoot {
                         JsObjectBinding {
                             l_curly_token: L_CURLY@30..31 "{" [] [],
                             properties: [
-                                JsIdentifierBinding {
-                                    name_token: IDENT@31..34 "foo" [] [],
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
+                                JsShorthandPropertyBinding {
+                                    identifier: JsIdentifierBinding {
+                                        name_token: IDENT@31..34 "foo" [] [],
+                                        question_mark_token: missing (optional),
+                                        excl_token: missing (optional),
+                                        ty: missing (optional),
+                                    },
                                 }
                                 COMMA@34..36 "," [] [Whitespace(" ")],
-                                JsIdentifierBinding {
-                                    name_token: IDENT@36..39 "bar" [] [],
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
+                                JsShorthandPropertyBinding {
+                                    identifier: JsIdentifierBinding {
+                                        name_token: IDENT@36..39 "bar" [] [],
+                                        question_mark_token: missing (optional),
+                                        excl_token: missing (optional),
+                                        ty: missing (optional),
+                                    },
                                 }
                                 COMMA@39..41 "," [] [Whitespace(" ")],
                                 JsPropertyBinding {
@@ -193,11 +197,13 @@ JsRoot {
             0: JS_OBJECT_BINDING@30..56
               0: L_CURLY@30..31 "{" [] []
               1: LIST@31..55
-                0: JS_IDENTIFIER_BINDING@31..34
-                  0: IDENT@31..34 "foo" [] []
+                0: JS_SHORTHAND_PROPERTY_BINDING@31..34
+                  0: JS_IDENTIFIER_BINDING@31..34
+                    0: IDENT@31..34 "foo" [] []
                 1: COMMA@34..36 "," [] [Whitespace(" ")]
-                2: JS_IDENTIFIER_BINDING@36..39
-                  0: IDENT@36..39 "bar" [] []
+                2: JS_SHORTHAND_PROPERTY_BINDING@36..39
+                  0: JS_IDENTIFIER_BINDING@36..39
+                    0: IDENT@36..39 "bar" [] []
                 3: COMMA@39..41 "," [] [Whitespace(" ")]
                 4: JS_PROPERTY_BINDING@41..55
                   0: JS_LITERAL_MEMBER_NAME@41..42

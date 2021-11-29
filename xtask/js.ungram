@@ -756,6 +756,7 @@ JsAnyPropertyBinding =
 	AssignPattern
 	| JsPropertyBinding
 	| RestPattern
+	| JsShorthandPropertyBinding
 	| JsIdentifierBinding
 	| JsUnknownBinding
 
@@ -768,6 +769,11 @@ JsPropertyBinding =
 	member: JsAnyObjectMemberName
 	':'
 	binding: JsAnyBinding
+
+// let { a } = c
+//       ^
+JsShorthandPropertyBinding =
+	identifier: JsIdentifierBinding
 
 
 ///////////////
