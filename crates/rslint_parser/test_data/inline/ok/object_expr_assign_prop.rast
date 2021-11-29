@@ -6,54 +6,46 @@ JsRoot {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: [
-                    AstSeparatedElement {
-                        node: JsVariableDeclarator {
-                            id: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@4..6 "b" [] [Whitespace(" ")],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@4..6 "b" [] [Whitespace(" ")],
                             },
-                            init: JsEqualValueClause {
-                                eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
-                                expression: JsObjectExpression {
-                                    l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
-                                    members: [
-                                        AstSeparatedElement {
-                                            node: InitializedProp {
-                                                key: Name {
-                                                    ident_token: IDENT@10..14 "foo" [] [Whitespace(" ")],
-                                                },
-                                                eq_token: EQ@14..16 "=" [] [Whitespace(" ")],
-                                                value: JsNumberLiteralExpression {
-                                                    value_token: JS_NUMBER_LITERAL@16..17 "4" [] [],
-                                                },
-                                            },
-                                            trailing_separator: Some(
-                                                COMMA@17..19 "," [] [Whitespace(" ")],
-                                            ),
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
+                                members: [
+                                    InitializedProp {
+                                        key: Name {
+                                            ident_token: IDENT@10..14 "foo" [] [Whitespace(" ")],
                                         },
-                                        AstSeparatedElement {
-                                            node: InitializedProp {
-                                                key: Name {
-                                                    ident_token: IDENT@19..23 "foo" [] [Whitespace(" ")],
-                                                },
-                                                eq_token: EQ@23..25 "=" [] [Whitespace(" ")],
-                                                value: JsReferenceIdentifierExpression {
-                                                    name_token: IDENT@25..29 "bar" [] [Whitespace(" ")],
-                                                },
-                                            },
-                                            trailing_separator: None,
+                                        eq_token: EQ@14..16 "=" [] [Whitespace(" ")],
+                                        value: JsNumberLiteralExpression {
+                                            value_token: JS_NUMBER_LITERAL@16..17 "4" [] [],
                                         },
-                                    ],
-                                    r_curly_token: R_CURLY@29..30 "}" [] [],
-                                },
+                                    }
+                                    COMMA@17..19 "," [] [Whitespace(" ")],
+                                    InitializedProp {
+                                        key: Name {
+                                            ident_token: IDENT@19..23 "foo" [] [Whitespace(" ")],
+                                        },
+                                        eq_token: EQ@23..25 "=" [] [Whitespace(" ")],
+                                        value: JsReferenceIdentifierExpression {
+                                            name_token: IDENT@25..29 "bar" [] [Whitespace(" ")],
+                                        },
+                                    }
+                                    ,
+                                ],
+                                r_curly_token: R_CURLY@29..30 "}" [] [],
                             },
                         },
-                        trailing_separator: None,
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: missing (optional),

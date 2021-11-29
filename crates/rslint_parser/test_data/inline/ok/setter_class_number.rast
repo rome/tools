@@ -219,17 +219,15 @@ JsRoot {
                     parameter_list: JsParameterList {
                         l_paren_token: L_PAREN@169..170 "(" [] [],
                         parameters: [
-                            AstSeparatedElement {
-                                node: SinglePattern {
-                                    name: Name {
-                                        ident_token: IDENT@170..171 "a" [] [],
-                                    },
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
+                            SinglePattern {
+                                name: Name {
+                                    ident_token: IDENT@170..171 "a" [] [],
                                 },
-                                trailing_separator: None,
-                            },
+                                question_mark_token: missing (optional),
+                                excl_token: missing (optional),
+                                ty: missing (optional),
+                            }
+                            ,
                         ],
                         r_paren_token: R_PAREN@171..173 ")" [] [Whitespace(" ")],
                     },
@@ -254,17 +252,15 @@ JsRoot {
                     parameter_list: JsParameterList {
                         l_paren_token: L_PAREN@186..187 "(" [] [],
                         parameters: [
-                            AstSeparatedElement {
-                                node: SinglePattern {
-                                    name: Name {
-                                        ident_token: IDENT@187..188 "a" [] [],
-                                    },
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
+                            SinglePattern {
+                                name: Name {
+                                    ident_token: IDENT@187..188 "a" [] [],
                                 },
-                                trailing_separator: None,
-                            },
+                                question_mark_token: missing (optional),
+                                excl_token: missing (optional),
+                                ty: missing (optional),
+                            }
+                            ,
                         ],
                         r_paren_token: R_PAREN@188..190 ")" [] [Whitespace(" ")],
                     },
@@ -289,17 +285,15 @@ JsRoot {
                     parameter_list: JsParameterList {
                         l_paren_token: L_PAREN@204..205 "(" [] [],
                         parameters: [
-                            AstSeparatedElement {
-                                node: SinglePattern {
-                                    name: Name {
-                                        ident_token: IDENT@205..206 "a" [] [],
-                                    },
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
+                            SinglePattern {
+                                name: Name {
+                                    ident_token: IDENT@205..206 "a" [] [],
                                 },
-                                trailing_separator: None,
-                            },
+                                question_mark_token: missing (optional),
+                                excl_token: missing (optional),
+                                ty: missing (optional),
+                            }
+                            ,
                         ],
                         r_paren_token: R_PAREN@206..208 ")" [] [Whitespace(" ")],
                     },

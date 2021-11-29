@@ -19,12 +19,10 @@ JsRoot {
                 arguments: ArgList {
                     l_paren_token: L_PAREN@7..9 "(" [Whitespace("\n")] [],
                     args: [
-                        AstSeparatedElement {
-                            node: JsReferenceIdentifierExpression {
-                                name_token: IDENT@9..12 "foo" [] [],
-                            },
-                            trailing_separator: None,
-                        },
+                        JsReferenceIdentifierExpression {
+                            name_token: IDENT@9..12 "foo" [] [],
+                        }
+                        ,
                     ],
                     r_paren_token: R_PAREN@12..13 ")" [] [],
                 },

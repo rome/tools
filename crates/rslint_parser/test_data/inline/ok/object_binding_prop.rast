@@ -6,47 +6,39 @@ JsRoot {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: [
-                    AstSeparatedElement {
-                        node: JsVariableDeclarator {
-                            id: ObjectPattern {
-                                l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
-                                elements: [
-                                    AstSeparatedElement {
-                                        node: KeyValuePattern {
-                                            key: Name {
-                                                ident_token: IDENT@6..13 "default" [] [],
-                                            },
-                                            colon_token: COLON@13..15 ":" [] [Whitespace(" ")],
-                                        },
-                                        trailing_separator: Some(
-                                            COMMA@18..20 "," [] [Whitespace(" ")],
-                                        ),
+                    JsVariableDeclarator {
+                        id: ObjectPattern {
+                            l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
+                            elements: [
+                                KeyValuePattern {
+                                    key: Name {
+                                        ident_token: IDENT@6..13 "default" [] [],
                                     },
-                                    AstSeparatedElement {
-                                        node: SinglePattern {
-                                            name: Name {
-                                                ident_token: IDENT@20..24 "bar" [] [Whitespace(" ")],
-                                            },
-                                            question_mark_token: missing (optional),
-                                            excl_token: missing (optional),
-                                            ty: missing (optional),
-                                        },
-                                        trailing_separator: None,
+                                    colon_token: COLON@13..15 ":" [] [Whitespace(" ")],
+                                }
+                                COMMA@18..20 "," [] [Whitespace(" ")],
+                                SinglePattern {
+                                    name: Name {
+                                        ident_token: IDENT@20..24 "bar" [] [Whitespace(" ")],
                                     },
-                                ],
-                                r_curly_token: R_CURLY@24..26 "}" [] [Whitespace(" ")],
-                            },
-                            init: JsEqualValueClause {
-                                eq_token: EQ@26..28 "=" [] [Whitespace(" ")],
-                                expression: JsObjectExpression {
-                                    l_curly_token: L_CURLY@28..29 "{" [] [],
-                                    members: [],
-                                    r_curly_token: R_CURLY@29..30 "}" [] [],
-                                },
+                                    question_mark_token: missing (optional),
+                                    excl_token: missing (optional),
+                                    ty: missing (optional),
+                                }
+                                ,
+                            ],
+                            r_curly_token: R_CURLY@24..26 "}" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@26..28 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@28..29 "{" [] [],
+                                members: [],
+                                r_curly_token: R_CURLY@29..30 "}" [] [],
                             },
                         },
-                        trailing_separator: None,
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: missing (optional),
@@ -55,56 +47,48 @@ JsRoot {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@30..35 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
-                    AstSeparatedElement {
-                        node: JsVariableDeclarator {
-                            id: ObjectPattern {
-                                l_curly_token: L_CURLY@35..37 "{" [] [Whitespace(" ")],
-                                elements: [
-                                    AstSeparatedElement {
-                                        node: AssignPattern {
-                                            key: SinglePattern {
-                                                name: Name {
-                                                    ident_token: IDENT@37..41 "foo" [] [Whitespace(" ")],
-                                                },
-                                                question_mark_token: missing (optional),
-                                                excl_token: missing (optional),
-                                                ty: missing (optional),
-                                            },
-                                            ty: missing (optional),
-                                            eq_token: EQ@41..43 "=" [] [Whitespace(" ")],
-                                            value: JsReferenceIdentifierExpression {
-                                                name_token: IDENT@43..46 "bar" [] [],
-                                            },
+                    JsVariableDeclarator {
+                        id: ObjectPattern {
+                            l_curly_token: L_CURLY@35..37 "{" [] [Whitespace(" ")],
+                            elements: [
+                                AssignPattern {
+                                    key: SinglePattern {
+                                        name: Name {
+                                            ident_token: IDENT@37..41 "foo" [] [Whitespace(" ")],
                                         },
-                                        trailing_separator: Some(
-                                            COMMA@46..48 "," [] [Whitespace(" ")],
-                                        ),
+                                        question_mark_token: missing (optional),
+                                        excl_token: missing (optional),
+                                        ty: missing (optional),
                                     },
-                                    AstSeparatedElement {
-                                        node: SinglePattern {
-                                            name: Name {
-                                                ident_token: IDENT@48..52 "baz" [] [Whitespace(" ")],
-                                            },
-                                            question_mark_token: missing (optional),
-                                            excl_token: missing (optional),
-                                            ty: missing (optional),
-                                        },
-                                        trailing_separator: None,
+                                    ty: missing (optional),
+                                    eq_token: EQ@41..43 "=" [] [Whitespace(" ")],
+                                    value: JsReferenceIdentifierExpression {
+                                        name_token: IDENT@43..46 "bar" [] [],
                                     },
-                                ],
-                                r_curly_token: R_CURLY@52..54 "}" [] [Whitespace(" ")],
-                            },
-                            init: JsEqualValueClause {
-                                eq_token: EQ@54..56 "=" [] [Whitespace(" ")],
-                                expression: JsObjectExpression {
-                                    l_curly_token: L_CURLY@56..57 "{" [] [],
-                                    members: [],
-                                    r_curly_token: R_CURLY@57..58 "}" [] [],
-                                },
+                                }
+                                COMMA@46..48 "," [] [Whitespace(" ")],
+                                SinglePattern {
+                                    name: Name {
+                                        ident_token: IDENT@48..52 "baz" [] [Whitespace(" ")],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    excl_token: missing (optional),
+                                    ty: missing (optional),
+                                }
+                                ,
+                            ],
+                            r_curly_token: R_CURLY@52..54 "}" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@54..56 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@56..57 "{" [] [],
+                                members: [],
+                                r_curly_token: R_CURLY@57..58 "}" [] [],
                             },
                         },
-                        trailing_separator: None,
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: missing (optional),

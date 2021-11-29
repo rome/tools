@@ -55,17 +55,15 @@ JsRoot {
             parameter_list: JsParameterList {
                 l_paren_token: L_PAREN@49..50 "(" [] [],
                 parameters: [
-                    AstSeparatedElement {
-                        node: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@50..55 "await" [] [],
-                            },
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
+                    SinglePattern {
+                        name: Name {
+                            ident_token: IDENT@50..55 "await" [] [],
                         },
-                        trailing_separator: None,
-                    },
+                        question_mark_token: missing (optional),
+                        excl_token: missing (optional),
+                        ty: missing (optional),
+                    }
+                    ,
                 ],
                 r_paren_token: R_PAREN@55..57 ")" [] [Whitespace(" ")],
             },

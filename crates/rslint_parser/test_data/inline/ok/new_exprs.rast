@@ -76,47 +76,33 @@ JsRoot {
                 arguments: ArgList {
                     l_paren_token: L_PAREN@60..61 "(" [] [],
                     args: [
-                        AstSeparatedElement {
-                            node: JsReferenceIdentifierExpression {
-                                name_token: IDENT@61..64 "bar" [] [],
+                        JsReferenceIdentifierExpression {
+                            name_token: IDENT@61..64 "bar" [] [],
+                        }
+                        COMMA@64..66 "," [] [Whitespace(" ")],
+                        JsReferenceIdentifierExpression {
+                            name_token: IDENT@66..69 "baz" [] [],
+                        }
+                        COMMA@69..71 "," [] [Whitespace(" ")],
+                        JsBinaryExpression {
+                            left: JsNumberLiteralExpression {
+                                value_token: JS_NUMBER_LITERAL@71..73 "6" [] [Whitespace(" ")],
                             },
-                            trailing_separator: Some(
-                                COMMA@64..66 "," [] [Whitespace(" ")],
-                            ),
-                        },
-                        AstSeparatedElement {
-                            node: JsReferenceIdentifierExpression {
-                                name_token: IDENT@66..69 "baz" [] [],
-                            },
-                            trailing_separator: Some(
-                                COMMA@69..71 "," [] [Whitespace(" ")],
-                            ),
-                        },
-                        AstSeparatedElement {
-                            node: JsBinaryExpression {
-                                left: JsNumberLiteralExpression {
-                                    value_token: JS_NUMBER_LITERAL@71..73 "6" [] [Whitespace(" ")],
+                            operator: PLUS@73..75 "+" [] [Whitespace(" ")],
+                        }
+                        COMMA@76..78 "," [] [Whitespace(" ")],
+                        JsBinaryExpression {
+                            left: JsComputedMemberExpression {
+                                object: JsReferenceIdentifierExpression {
+                                    name_token: IDENT@78..81 "foo" [] [],
                                 },
-                                operator: PLUS@73..75 "+" [] [Whitespace(" ")],
+                                optional_chain_token_token: missing (optional),
+                                l_brack_token: L_BRACK@81..82 "[" [] [],
+                                r_brack_token: R_BRACK@85..87 "]" [] [Whitespace(" ")],
                             },
-                            trailing_separator: Some(
-                                COMMA@76..78 "," [] [Whitespace(" ")],
-                            ),
-                        },
-                        AstSeparatedElement {
-                            node: JsBinaryExpression {
-                                left: JsComputedMemberExpression {
-                                    object: JsReferenceIdentifierExpression {
-                                        name_token: IDENT@78..81 "foo" [] [],
-                                    },
-                                    optional_chain_token_token: missing (optional),
-                                    l_brack_token: L_BRACK@81..82 "[" [] [],
-                                    r_brack_token: R_BRACK@85..87 "]" [] [Whitespace(" ")],
-                                },
-                                operator: PLUS@87..89 "+" [] [Whitespace(" ")],
-                            },
-                            trailing_separator: None,
-                        },
+                            operator: PLUS@87..89 "+" [] [Whitespace(" ")],
+                        }
+                        ,
                     ],
                     r_paren_token: R_PAREN@111..112 ")" [] [],
                 },

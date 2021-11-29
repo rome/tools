@@ -11,25 +11,23 @@ JsRoot {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@20..26 "let" [Whitespace("\n\n")] [Whitespace(" ")],
                 declarators: [
-                    AstSeparatedElement {
-                        node: JsVariableDeclarator {
-                            id: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@26..28 "a" [] [Whitespace(" ")],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@26..28 "a" [] [Whitespace(" ")],
                             },
-                            init: JsEqualValueClause {
-                                eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
-                                expression: JsNumberLiteralExpression {
-                                    value_token: JS_NUMBER_LITERAL@30..32 "10" [] [],
-                                },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
+                            expression: JsNumberLiteralExpression {
+                                value_token: JS_NUMBER_LITERAL@30..32 "10" [] [],
                             },
                         },
-                        trailing_separator: None,
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: SEMICOLON@32..33 ";" [] [],
@@ -67,25 +65,23 @@ JsRoot {
                         declaration: JsVariableDeclaration {
                             kind_token: LET_KW@101..108 "let" [Whitespace("\n\n\t")] [Whitespace(" ")],
                             declarators: [
-                                AstSeparatedElement {
-                                    node: JsVariableDeclarator {
-                                        id: SinglePattern {
-                                            name: Name {
-                                                ident_token: IDENT@108..110 "a" [] [Whitespace(" ")],
-                                            },
-                                            question_mark_token: missing (optional),
-                                            excl_token: missing (optional),
-                                            ty: missing (optional),
+                                JsVariableDeclarator {
+                                    id: SinglePattern {
+                                        name: Name {
+                                            ident_token: IDENT@108..110 "a" [] [Whitespace(" ")],
                                         },
-                                        init: JsEqualValueClause {
-                                            eq_token: EQ@110..112 "=" [] [Whitespace(" ")],
-                                            expression: JsNumberLiteralExpression {
-                                                value_token: JS_NUMBER_LITERAL@112..114 "10" [] [],
-                                            },
+                                        question_mark_token: missing (optional),
+                                        excl_token: missing (optional),
+                                        ty: missing (optional),
+                                    },
+                                    init: JsEqualValueClause {
+                                        eq_token: EQ@110..112 "=" [] [Whitespace(" ")],
+                                        expression: JsNumberLiteralExpression {
+                                            value_token: JS_NUMBER_LITERAL@112..114 "10" [] [],
                                         },
                                     },
-                                    trailing_separator: None,
-                                },
+                                }
+                                ,
                             ],
                         },
                         semicolon_token: SEMICOLON@114..115 ";" [] [],
@@ -128,25 +124,23 @@ JsRoot {
                                 declaration: JsVariableDeclaration {
                                     kind_token: LET_KW@183..190 "let" [Whitespace("\n\n\t")] [Whitespace(" ")],
                                     declarators: [
-                                        AstSeparatedElement {
-                                            node: JsVariableDeclarator {
-                                                id: SinglePattern {
-                                                    name: Name {
-                                                        ident_token: IDENT@190..192 "a" [] [Whitespace(" ")],
-                                                    },
-                                                    question_mark_token: missing (optional),
-                                                    excl_token: missing (optional),
-                                                    ty: missing (optional),
+                                        JsVariableDeclarator {
+                                            id: SinglePattern {
+                                                name: Name {
+                                                    ident_token: IDENT@190..192 "a" [] [Whitespace(" ")],
                                                 },
-                                                init: JsEqualValueClause {
-                                                    eq_token: EQ@192..194 "=" [] [Whitespace(" ")],
-                                                    expression: JsNumberLiteralExpression {
-                                                        value_token: JS_NUMBER_LITERAL@194..196 "10" [] [],
-                                                    },
+                                                question_mark_token: missing (optional),
+                                                excl_token: missing (optional),
+                                                ty: missing (optional),
+                                            },
+                                            init: JsEqualValueClause {
+                                                eq_token: EQ@192..194 "=" [] [Whitespace(" ")],
+                                                expression: JsNumberLiteralExpression {
+                                                    value_token: JS_NUMBER_LITERAL@194..196 "10" [] [],
                                                 },
                                             },
-                                            trailing_separator: None,
-                                        },
+                                        }
+                                        ,
                                     ],
                                 },
                                 semicolon_token: SEMICOLON@196..197 ";" [] [],
@@ -169,33 +163,31 @@ JsRoot {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@236..242 "let" [Whitespace("\n\n")] [Whitespace(" ")],
                 declarators: [
-                    AstSeparatedElement {
-                        node: JsVariableDeclarator {
-                            id: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@242..244 "b" [] [Whitespace(" ")],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@242..244 "b" [] [Whitespace(" ")],
                             },
-                            init: JsEqualValueClause {
-                                eq_token: EQ@244..246 "=" [] [Whitespace(" ")],
-                                expression: JsArrowFunctionExpression {
-                                    async_token: missing (optional),
-                                    type_parameters: missing (optional),
-                                    parameter_list: JsParameterList {
-                                        l_paren_token: L_PAREN@246..247 "(" [] [],
-                                        parameters: [],
-                                        r_paren_token: R_PAREN@247..249 ")" [] [Whitespace(" ")],
-                                    },
-                                    fat_arrow_token: FAT_ARROW@249..252 "=>" [] [Whitespace(" ")],
-                                    return_type: missing (optional),
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@244..246 "=" [] [Whitespace(" ")],
+                            expression: JsArrowFunctionExpression {
+                                async_token: missing (optional),
+                                type_parameters: missing (optional),
+                                parameter_list: JsParameterList {
+                                    l_paren_token: L_PAREN@246..247 "(" [] [],
+                                    parameters: [],
+                                    r_paren_token: R_PAREN@247..249 ")" [] [Whitespace(" ")],
                                 },
+                                fat_arrow_token: FAT_ARROW@249..252 "=>" [] [Whitespace(" ")],
+                                return_type: missing (optional),
                             },
                         },
-                        trailing_separator: None,
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: missing (optional),

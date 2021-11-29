@@ -6,25 +6,23 @@ JsRoot {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: [
-                    AstSeparatedElement {
-                        node: JsVariableDeclarator {
-                            id: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@4..8 "foo" [] [Whitespace(" ")],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@4..8 "foo" [] [Whitespace(" ")],
                             },
-                            init: JsEqualValueClause {
-                                eq_token: EQ@8..10 "=" [] [Whitespace(" ")],
-                                expression: JsReferenceIdentifierExpression {
-                                    name_token: IDENT@10..13 "bar" [] [],
-                                },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@8..10 "=" [] [Whitespace(" ")],
+                            expression: JsReferenceIdentifierExpression {
+                                name_token: IDENT@10..13 "bar" [] [],
                             },
                         },
-                        trailing_separator: None,
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: SEMICOLON@13..14 ";" [] [],
@@ -33,25 +31,23 @@ JsRoot {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@14..19 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
-                    AstSeparatedElement {
-                        node: JsVariableDeclarator {
-                            id: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@19..23 "foo" [] [Whitespace(" ")],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@19..23 "foo" [] [Whitespace(" ")],
                             },
-                            init: JsEqualValueClause {
-                                eq_token: EQ@23..25 "=" [] [Whitespace(" ")],
-                                expression: JsReferenceIdentifierExpression {
-                                    name_token: IDENT@25..26 "b" [] [],
-                                },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@23..25 "=" [] [Whitespace(" ")],
+                            expression: JsReferenceIdentifierExpression {
+                                name_token: IDENT@25..26 "b" [] [],
                             },
                         },
-                        trailing_separator: None,
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: SEMICOLON@26..27 ";" [] [],
@@ -60,20 +56,18 @@ JsRoot {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@27..32 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
-                    AstSeparatedElement {
-                        node: JsVariableDeclarator {
-                            id: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@32..35 "foo" [] [],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@32..35 "foo" [] [],
                             },
-                            init: missing (optional),
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
                         },
-                        trailing_separator: None,
-                    },
+                        init: missing (optional),
+                    }
+                    ,
                 ],
             },
             semicolon_token: SEMICOLON@35..36 ";" [] [],
@@ -82,20 +76,18 @@ JsRoot {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@36..41 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
-                    AstSeparatedElement {
-                        node: JsVariableDeclarator {
-                            id: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@41..44 "foo" [] [],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@41..44 "foo" [] [],
                             },
-                            init: missing (optional),
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
                         },
-                        trailing_separator: None,
-                    },
+                        init: missing (optional),
+                    }
+                    ,
                 ],
             },
             semicolon_token: missing (optional),
@@ -104,20 +96,18 @@ JsRoot {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@44..49 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
-                    AstSeparatedElement {
-                        node: JsVariableDeclarator {
-                            id: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@49..52 "foo" [] [],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@49..52 "foo" [] [],
                             },
-                            init: missing (optional),
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
                         },
-                        trailing_separator: None,
-                    },
+                        init: missing (optional),
+                    }
+                    ,
                 ],
             },
             semicolon_token: missing (optional),

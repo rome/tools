@@ -6,37 +6,33 @@ JsRoot {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: [
-                    AstSeparatedElement {
-                        node: JsVariableDeclarator {
-                            id: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                             },
-                            init: JsEqualValueClause {
-                                eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
-                                expression: JsObjectExpression {
-                                    l_curly_token: L_CURLY@8..9 "{" [] [],
-                                    members: [
-                                        AstSeparatedElement {
-                                            node: JsSpread {
-                                                dotdotdot_token: DOT2@9..12 "..." [] [],
-                                                argument: JsReferenceIdentifierExpression {
-                                                    name_token: IDENT@12..15 "foo" [] [],
-                                                },
-                                            },
-                                            trailing_separator: None,
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@8..9 "{" [] [],
+                                members: [
+                                    JsSpread {
+                                        dotdotdot_token: DOT2@9..12 "..." [] [],
+                                        argument: JsReferenceIdentifierExpression {
+                                            name_token: IDENT@12..15 "foo" [] [],
                                         },
-                                    ],
-                                    r_curly_token: R_CURLY@15..16 "}" [] [],
-                                },
+                                    }
+                                    ,
+                                ],
+                                r_curly_token: R_CURLY@15..16 "}" [] [],
                             },
                         },
-                        trailing_separator: None,
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: missing (optional),

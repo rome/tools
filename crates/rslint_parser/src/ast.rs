@@ -193,10 +193,21 @@ impl<N: AstNode> IntoIterator for AstNodeList<N> {
 	}
 }
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct AstSeparatedElement<N> {
 	node: N,
 	trailing_separator: Option<SyntaxToken>,
+}
+
+impl<N: Debug> Debug for AstSeparatedElement<N> {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		N::fmt(&self.node, f)?;
+		f.write_str("\n")?;
+		match &self.trailing_separator {
+			Some(separator) => separator.fmt(f),
+			None => Ok(()),
+		}
+	}
 }
 
 /// List of nodes where every two nodes are separated by a token.

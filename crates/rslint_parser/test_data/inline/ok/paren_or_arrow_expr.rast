@@ -19,17 +19,15 @@ JsRoot {
                 parameter_list: JsParameterList {
                     l_paren_token: L_PAREN@6..8 "(" [Whitespace("\n")] [],
                     parameters: [
-                        AstSeparatedElement {
-                            node: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@8..11 "foo" [] [],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                        SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@8..11 "foo" [] [],
                             },
-                            trailing_separator: None,
-                        },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        }
+                        ,
                     ],
                     r_paren_token: R_PAREN@11..13 ")" [] [Whitespace(" ")],
                 },
@@ -58,50 +56,38 @@ JsRoot {
                 parameter_list: JsParameterList {
                     l_paren_token: L_PAREN@28..30 "(" [Whitespace("\n")] [],
                     parameters: [
-                        AstSeparatedElement {
-                            node: ObjectPattern {
-                                l_curly_token: L_CURLY@30..31 "{" [] [],
-                                elements: [
-                                    AstSeparatedElement {
-                                        node: SinglePattern {
-                                            name: Name {
-                                                ident_token: IDENT@31..34 "foo" [] [],
-                                            },
-                                            question_mark_token: missing (optional),
-                                            excl_token: missing (optional),
-                                            ty: missing (optional),
-                                        },
-                                        trailing_separator: Some(
-                                            COMMA@34..36 "," [] [Whitespace(" ")],
-                                        ),
+                        ObjectPattern {
+                            l_curly_token: L_CURLY@30..31 "{" [] [],
+                            elements: [
+                                SinglePattern {
+                                    name: Name {
+                                        ident_token: IDENT@31..34 "foo" [] [],
                                     },
-                                    AstSeparatedElement {
-                                        node: SinglePattern {
-                                            name: Name {
-                                                ident_token: IDENT@36..39 "bar" [] [],
-                                            },
-                                            question_mark_token: missing (optional),
-                                            excl_token: missing (optional),
-                                            ty: missing (optional),
-                                        },
-                                        trailing_separator: Some(
-                                            COMMA@39..41 "," [] [Whitespace(" ")],
-                                        ),
+                                    question_mark_token: missing (optional),
+                                    excl_token: missing (optional),
+                                    ty: missing (optional),
+                                }
+                                COMMA@34..36 "," [] [Whitespace(" ")],
+                                SinglePattern {
+                                    name: Name {
+                                        ident_token: IDENT@36..39 "bar" [] [],
                                     },
-                                    AstSeparatedElement {
-                                        node: KeyValuePattern {
-                                            key: Name {
-                                                ident_token: IDENT@41..42 "b" [] [],
-                                            },
-                                            colon_token: COLON@42..44 ":" [] [Whitespace(" ")],
-                                        },
-                                        trailing_separator: None,
+                                    question_mark_token: missing (optional),
+                                    excl_token: missing (optional),
+                                    ty: missing (optional),
+                                }
+                                COMMA@39..41 "," [] [Whitespace(" ")],
+                                KeyValuePattern {
+                                    key: Name {
+                                        ident_token: IDENT@41..42 "b" [] [],
                                     },
-                                ],
-                                r_curly_token: R_CURLY@55..56 "}" [] [],
-                            },
-                            trailing_separator: None,
-                        },
+                                    colon_token: COLON@42..44 ":" [] [Whitespace(" ")],
+                                }
+                                ,
+                            ],
+                            r_curly_token: R_CURLY@55..56 "}" [] [],
+                        }
+                        ,
                     ],
                     r_paren_token: R_PAREN@56..58 ")" [] [Whitespace(" ")],
                 },
@@ -117,33 +103,27 @@ JsRoot {
                 parameter_list: JsParameterList {
                     l_paren_token: L_PAREN@64..66 "(" [Whitespace("\n")] [],
                     parameters: [
-                        AstSeparatedElement {
-                            node: SinglePattern {
+                        SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@66..69 "foo" [] [],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        }
+                        COMMA@69..71 "," [] [Whitespace(" ")],
+                        JsRestParameter {
+                            dotdotdot_token: DOT2@71..74 "..." [] [],
+                            binding: SinglePattern {
                                 name: Name {
-                                    ident_token: IDENT@66..69 "foo" [] [],
+                                    ident_token: IDENT@74..77 "bar" [] [],
                                 },
                                 question_mark_token: missing (optional),
                                 excl_token: missing (optional),
                                 ty: missing (optional),
                             },
-                            trailing_separator: Some(
-                                COMMA@69..71 "," [] [Whitespace(" ")],
-                            ),
-                        },
-                        AstSeparatedElement {
-                            node: JsRestParameter {
-                                dotdotdot_token: DOT2@71..74 "..." [] [],
-                                binding: SinglePattern {
-                                    name: Name {
-                                        ident_token: IDENT@74..77 "bar" [] [],
-                                    },
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
-                                },
-                            },
-                            trailing_separator: None,
-                        },
+                        }
+                        ,
                     ],
                     r_paren_token: R_PAREN@77..79 ")" [] [Whitespace(" ")],
                 },

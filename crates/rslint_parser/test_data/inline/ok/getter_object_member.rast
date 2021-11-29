@@ -6,181 +6,161 @@ JsRoot {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: [
-                    AstSeparatedElement {
-                        node: JsVariableDeclarator {
-                            id: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                             },
-                            init: JsEqualValueClause {
-                                eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
-                                expression: JsObjectExpression {
-                                    l_curly_token: L_CURLY@8..9 "{" [] [],
-                                    members: [
-                                        AstSeparatedElement {
-                                            node: JsGetterObjectMember {
-                                                get_token: GET_KW@9..15 "get" [Whitespace("\n ")] [Whitespace(" ")],
-                                                name: JsLiteralMemberName {
-                                                    value: IDENT@15..18 "foo" [] [],
-                                                },
-                                                l_paren_token: L_PAREN@18..19 "(" [] [],
-                                                r_paren_token: R_PAREN@19..21 ")" [] [Whitespace(" ")],
-                                                return_type: missing (optional),
-                                                body: JsFunctionBody {
-                                                    l_curly_token: L_CURLY@21..22 "{" [] [],
-                                                    directives: [],
-                                                    statements: [
-                                                        JsReturnStatement {
-                                                            return_token: RETURN_KW@22..33 "return" [Whitespace("\n   ")] [Whitespace(" ")],
-                                                            argument: JsReferenceIdentifierExpression {
-                                                                name_token: IDENT@33..36 "foo" [] [],
-                                                            },
-                                                            semicolon_token: SEMICOLON@36..37 ";" [] [],
-                                                        },
-                                                    ],
-                                                    r_curly_token: R_CURLY@37..40 "}" [Whitespace("\n ")] [],
-                                                },
-                                            },
-                                            trailing_separator: Some(
-                                                COMMA@40..41 "," [] [],
-                                            ),
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@8..9 "{" [] [],
+                                members: [
+                                    JsGetterObjectMember {
+                                        get_token: GET_KW@9..15 "get" [Whitespace("\n ")] [Whitespace(" ")],
+                                        name: JsLiteralMemberName {
+                                            value: IDENT@15..18 "foo" [] [],
                                         },
-                                        AstSeparatedElement {
-                                            node: JsGetterObjectMember {
-                                                get_token: GET_KW@41..48 "get" [Whitespace("\n\n ")] [Whitespace(" ")],
-                                                name: JsLiteralMemberName {
-                                                    value: JS_STRING_LITERAL@48..53 "\"bar\"" [] [],
-                                                },
-                                                l_paren_token: L_PAREN@53..54 "(" [] [],
-                                                r_paren_token: R_PAREN@54..56 ")" [] [Whitespace(" ")],
-                                                return_type: missing (optional),
-                                                body: JsFunctionBody {
-                                                    l_curly_token: L_CURLY@56..57 "{" [] [],
-                                                    directives: [],
-                                                    statements: [
-                                                        JsReturnStatement {
-                                                            return_token: RETURN_KW@57..67 "return" [Whitespace("\n\t ")] [Whitespace(" ")],
-                                                            argument: JsStringLiteralExpression {
-                                                                value_token: JS_STRING_LITERAL@67..72 "\"bar\"" [] [],
-                                                            },
-                                                            semicolon_token: SEMICOLON@72..73 ";" [] [],
-                                                        },
-                                                    ],
-                                                    r_curly_token: R_CURLY@73..76 "}" [Whitespace("\n ")] [],
-                                                },
-                                            },
-                                            trailing_separator: Some(
-                                                COMMA@76..77 "," [] [],
-                                            ),
-                                        },
-                                        AstSeparatedElement {
-                                            node: JsGetterObjectMember {
-                                                get_token: GET_KW@77..84 "get" [Whitespace("\n\n ")] [Whitespace(" ")],
-                                                name: JsComputedMemberName {
-                                                    l_brack_token: L_BRACK@84..85 "[" [] [],
-                                                    expression: JsBinaryExpression {
-                                                        left: JsStringLiteralExpression {
-                                                            value_token: JS_STRING_LITERAL@85..89 "\"a\"" [] [Whitespace(" ")],
-                                                        },
-                                                        operator: PLUS@89..91 "+" [] [Whitespace(" ")],
+                                        l_paren_token: L_PAREN@18..19 "(" [] [],
+                                        r_paren_token: R_PAREN@19..21 ")" [] [Whitespace(" ")],
+                                        return_type: missing (optional),
+                                        body: JsFunctionBody {
+                                            l_curly_token: L_CURLY@21..22 "{" [] [],
+                                            directives: [],
+                                            statements: [
+                                                JsReturnStatement {
+                                                    return_token: RETURN_KW@22..33 "return" [Whitespace("\n   ")] [Whitespace(" ")],
+                                                    argument: JsReferenceIdentifierExpression {
+                                                        name_token: IDENT@33..36 "foo" [] [],
                                                     },
-                                                    r_brack_token: R_BRACK@94..95 "]" [] [],
+                                                    semicolon_token: SEMICOLON@36..37 ";" [] [],
                                                 },
-                                                l_paren_token: L_PAREN@95..96 "(" [] [],
-                                                r_paren_token: R_PAREN@96..98 ")" [] [Whitespace(" ")],
-                                                return_type: missing (optional),
-                                                body: JsFunctionBody {
-                                                    l_curly_token: L_CURLY@98..99 "{" [] [],
-                                                    directives: [],
-                                                    statements: [
-                                                        JsReturnStatement {
-                                                            return_token: RETURN_KW@99..109 "return" [Whitespace("\n\t ")] [Whitespace(" ")],
-                                                            argument: JsBinaryExpression {
-                                                                left: JsStringLiteralExpression {
-                                                                    value_token: JS_STRING_LITERAL@109..113 "\"a\"" [] [Whitespace(" ")],
-                                                                },
-                                                                operator: PLUS@113..115 "+" [] [Whitespace(" ")],
-                                                            },
-                                                            semicolon_token: missing (optional),
-                                                        },
-                                                    ],
-                                                    r_curly_token: R_CURLY@118..121 "}" [Whitespace("\n ")] [],
-                                                },
-                                            },
-                                            trailing_separator: Some(
-                                                COMMA@121..122 "," [] [],
-                                            ),
+                                            ],
+                                            r_curly_token: R_CURLY@37..40 "}" [Whitespace("\n ")] [],
                                         },
-                                        AstSeparatedElement {
-                                            node: JsGetterObjectMember {
-                                                get_token: GET_KW@122..129 "get" [Whitespace("\n\n\t")] [Whitespace(" ")],
-                                                name: JsLiteralMemberName {
-                                                    value: JS_NUMBER_LITERAL@129..130 "5" [] [],
-                                                },
-                                                l_paren_token: L_PAREN@130..131 "(" [] [],
-                                                r_paren_token: R_PAREN@131..133 ")" [] [Whitespace(" ")],
-                                                return_type: missing (optional),
-                                                body: JsFunctionBody {
-                                                    l_curly_token: L_CURLY@133..134 "{" [] [],
-                                                    directives: [],
-                                                    statements: [
-                                                        JsReturnStatement {
-                                                            return_token: RETURN_KW@134..144 "return" [Whitespace("\n\t ")] [Whitespace(" ")],
-                                                            argument: JsNumberLiteralExpression {
-                                                                value_token: JS_NUMBER_LITERAL@144..145 "5" [] [],
-                                                            },
-                                                            semicolon_token: SEMICOLON@145..146 ";" [] [],
-                                                        },
-                                                    ],
-                                                    r_curly_token: R_CURLY@146..149 "}" [Whitespace("\n\t")] [],
-                                                },
-                                            },
-                                            trailing_separator: Some(
-                                                COMMA@149..150 "," [] [],
-                                            ),
+                                    }
+                                    COMMA@40..41 "," [] [],
+                                    JsGetterObjectMember {
+                                        get_token: GET_KW@41..48 "get" [Whitespace("\n\n ")] [Whitespace(" ")],
+                                        name: JsLiteralMemberName {
+                                            value: JS_STRING_LITERAL@48..53 "\"bar\"" [] [],
                                         },
-                                        AstSeparatedElement {
-                                            node: JsMethodObjectMember {
-                                                async_token: missing (optional),
-                                                star_token: missing (optional),
-                                                name: JsLiteralMemberName {
-                                                    value: IDENT@150..156 "get" [Whitespace("\n\n\t")] [],
+                                        l_paren_token: L_PAREN@53..54 "(" [] [],
+                                        r_paren_token: R_PAREN@54..56 ")" [] [Whitespace(" ")],
+                                        return_type: missing (optional),
+                                        body: JsFunctionBody {
+                                            l_curly_token: L_CURLY@56..57 "{" [] [],
+                                            directives: [],
+                                            statements: [
+                                                JsReturnStatement {
+                                                    return_token: RETURN_KW@57..67 "return" [Whitespace("\n\t ")] [Whitespace(" ")],
+                                                    argument: JsStringLiteralExpression {
+                                                        value_token: JS_STRING_LITERAL@67..72 "\"bar\"" [] [],
+                                                    },
+                                                    semicolon_token: SEMICOLON@72..73 ";" [] [],
                                                 },
-                                                type_params: missing (optional),
-                                                parameter_list: JsParameterList {
-                                                    l_paren_token: L_PAREN@156..157 "(" [] [],
-                                                    parameters: [],
-                                                    r_paren_token: R_PAREN@157..159 ")" [] [Whitespace(" ")],
-                                                },
-                                                return_type: missing (optional),
-                                                body: JsFunctionBody {
-                                                    l_curly_token: L_CURLY@159..160 "{" [] [],
-                                                    directives: [],
-                                                    statements: [
-                                                        JsReturnStatement {
-                                                            return_token: RETURN_KW@160..170 "return" [Whitespace("\n\t ")] [Whitespace(" ")],
-                                                            argument: JsStringLiteralExpression {
-                                                                value_token: JS_STRING_LITERAL@170..205 "\"This is a method and not a getter\"" [] [],
-                                                            },
-                                                            semicolon_token: SEMICOLON@205..206 ";" [] [],
-                                                        },
-                                                    ],
-                                                    r_curly_token: R_CURLY@206..209 "}" [Whitespace("\n\t")] [],
-                                                },
-                                            },
-                                            trailing_separator: None,
+                                            ],
+                                            r_curly_token: R_CURLY@73..76 "}" [Whitespace("\n ")] [],
                                         },
-                                    ],
-                                    r_curly_token: R_CURLY@209..211 "}" [Whitespace("\n")] [],
-                                },
+                                    }
+                                    COMMA@76..77 "," [] [],
+                                    JsGetterObjectMember {
+                                        get_token: GET_KW@77..84 "get" [Whitespace("\n\n ")] [Whitespace(" ")],
+                                        name: JsComputedMemberName {
+                                            l_brack_token: L_BRACK@84..85 "[" [] [],
+                                            expression: JsBinaryExpression {
+                                                left: JsStringLiteralExpression {
+                                                    value_token: JS_STRING_LITERAL@85..89 "\"a\"" [] [Whitespace(" ")],
+                                                },
+                                                operator: PLUS@89..91 "+" [] [Whitespace(" ")],
+                                            },
+                                            r_brack_token: R_BRACK@94..95 "]" [] [],
+                                        },
+                                        l_paren_token: L_PAREN@95..96 "(" [] [],
+                                        r_paren_token: R_PAREN@96..98 ")" [] [Whitespace(" ")],
+                                        return_type: missing (optional),
+                                        body: JsFunctionBody {
+                                            l_curly_token: L_CURLY@98..99 "{" [] [],
+                                            directives: [],
+                                            statements: [
+                                                JsReturnStatement {
+                                                    return_token: RETURN_KW@99..109 "return" [Whitespace("\n\t ")] [Whitespace(" ")],
+                                                    argument: JsBinaryExpression {
+                                                        left: JsStringLiteralExpression {
+                                                            value_token: JS_STRING_LITERAL@109..113 "\"a\"" [] [Whitespace(" ")],
+                                                        },
+                                                        operator: PLUS@113..115 "+" [] [Whitespace(" ")],
+                                                    },
+                                                    semicolon_token: missing (optional),
+                                                },
+                                            ],
+                                            r_curly_token: R_CURLY@118..121 "}" [Whitespace("\n ")] [],
+                                        },
+                                    }
+                                    COMMA@121..122 "," [] [],
+                                    JsGetterObjectMember {
+                                        get_token: GET_KW@122..129 "get" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                                        name: JsLiteralMemberName {
+                                            value: JS_NUMBER_LITERAL@129..130 "5" [] [],
+                                        },
+                                        l_paren_token: L_PAREN@130..131 "(" [] [],
+                                        r_paren_token: R_PAREN@131..133 ")" [] [Whitespace(" ")],
+                                        return_type: missing (optional),
+                                        body: JsFunctionBody {
+                                            l_curly_token: L_CURLY@133..134 "{" [] [],
+                                            directives: [],
+                                            statements: [
+                                                JsReturnStatement {
+                                                    return_token: RETURN_KW@134..144 "return" [Whitespace("\n\t ")] [Whitespace(" ")],
+                                                    argument: JsNumberLiteralExpression {
+                                                        value_token: JS_NUMBER_LITERAL@144..145 "5" [] [],
+                                                    },
+                                                    semicolon_token: SEMICOLON@145..146 ";" [] [],
+                                                },
+                                            ],
+                                            r_curly_token: R_CURLY@146..149 "}" [Whitespace("\n\t")] [],
+                                        },
+                                    }
+                                    COMMA@149..150 "," [] [],
+                                    JsMethodObjectMember {
+                                        async_token: missing (optional),
+                                        star_token: missing (optional),
+                                        name: JsLiteralMemberName {
+                                            value: IDENT@150..156 "get" [Whitespace("\n\n\t")] [],
+                                        },
+                                        type_params: missing (optional),
+                                        parameter_list: JsParameterList {
+                                            l_paren_token: L_PAREN@156..157 "(" [] [],
+                                            parameters: [],
+                                            r_paren_token: R_PAREN@157..159 ")" [] [Whitespace(" ")],
+                                        },
+                                        return_type: missing (optional),
+                                        body: JsFunctionBody {
+                                            l_curly_token: L_CURLY@159..160 "{" [] [],
+                                            directives: [],
+                                            statements: [
+                                                JsReturnStatement {
+                                                    return_token: RETURN_KW@160..170 "return" [Whitespace("\n\t ")] [Whitespace(" ")],
+                                                    argument: JsStringLiteralExpression {
+                                                        value_token: JS_STRING_LITERAL@170..205 "\"This is a method and not a getter\"" [] [],
+                                                    },
+                                                    semicolon_token: SEMICOLON@205..206 ";" [] [],
+                                                },
+                                            ],
+                                            r_curly_token: R_CURLY@206..209 "}" [Whitespace("\n\t")] [],
+                                        },
+                                    }
+                                    ,
+                                ],
+                                r_curly_token: R_CURLY@209..211 "}" [Whitespace("\n")] [],
                             },
                         },
-                        trailing_separator: None,
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: missing (optional),

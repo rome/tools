@@ -24,17 +24,15 @@ JsRoot {
                     parameter_list: JsParameterList {
                         l_paren_token: L_PAREN@23..24 "(" [] [],
                         parameters: [
-                            AstSeparatedElement {
-                                node: SinglePattern {
-                                    name: Name {
-                                        ident_token: IDENT@24..27 "bar" [] [],
-                                    },
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
+                            SinglePattern {
+                                name: Name {
+                                    ident_token: IDENT@24..27 "bar" [] [],
                                 },
-                                trailing_separator: None,
-                            },
+                                question_mark_token: missing (optional),
+                                excl_token: missing (optional),
+                                ty: missing (optional),
+                            }
+                            ,
                         ],
                         r_paren_token: R_PAREN@27..29 ")" [] [Whitespace(" ")],
                     },

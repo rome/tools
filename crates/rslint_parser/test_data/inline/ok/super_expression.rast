@@ -83,20 +83,14 @@ JsRoot {
                                     arguments: ArgList {
                                         l_paren_token: L_PAREN@77..78 "(" [] [],
                                         args: [
-                                            AstSeparatedElement {
-                                                node: JsReferenceIdentifierExpression {
-                                                    name_token: IDENT@78..79 "a" [] [],
-                                                },
-                                                trailing_separator: Some(
-                                                    COMMA@79..81 "," [] [Whitespace(" ")],
-                                                ),
-                                            },
-                                            AstSeparatedElement {
-                                                node: JsReferenceIdentifierExpression {
-                                                    name_token: IDENT@81..82 "b" [] [],
-                                                },
-                                                trailing_separator: None,
-                                            },
+                                            JsReferenceIdentifierExpression {
+                                                name_token: IDENT@78..79 "a" [] [],
+                                            }
+                                            COMMA@79..81 "," [] [Whitespace(" ")],
+                                            JsReferenceIdentifierExpression {
+                                                name_token: IDENT@81..82 "b" [] [],
+                                            }
+                                            ,
                                         ],
                                         r_paren_token: R_PAREN@82..83 ")" [] [],
                                     },
