@@ -10,10 +10,8 @@ JsRoot {
                     kind_token: LET_KW@5..9 "let" [] [Whitespace(" ")],
                     declarators: [
                         JsVariableDeclarator {
-                            id: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@9..11 "i" [] [Whitespace(" ")],
-                                },
+                            id: JsIdentifierBinding {
+                                name_token: IDENT@9..11 "i" [] [Whitespace(" ")],
                                 question_mark_token: missing (optional),
                                 excl_token: missing (optional),
                                 ty: missing (optional),
@@ -62,19 +60,15 @@ JsRoot {
                         id: ObjectPattern {
                             l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],
                             elements: [
-                                SinglePattern {
-                                    name: Name {
-                                        ident_token: IDENT@43..46 "foo" [] [],
-                                    },
+                                JsIdentifierBinding {
+                                    name_token: IDENT@43..46 "foo" [] [],
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
                                 },
                                 COMMA@46..48 "," [] [Whitespace(" ")],
-                                SinglePattern {
-                                    name: Name {
-                                        ident_token: IDENT@48..52 "bar" [] [Whitespace(" ")],
-                                    },
+                                JsIdentifierBinding {
+                                    name_token: IDENT@48..52 "bar" [] [Whitespace(" ")],
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),

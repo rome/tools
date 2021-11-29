@@ -30,10 +30,8 @@ JsRoot {
                 catch_token: CATCH_KW@23..29 "catch" [] [Whitespace(" ")],
                 declaration: JsCatchDeclaration {
                     l_paren_token: L_PAREN@29..30 "(" [] [],
-                    binding: SinglePattern {
-                        name: Name {
-                            ident_token: IDENT@30..31 "e" [] [],
-                        },
+                    binding: JsIdentifierBinding {
+                        name_token: IDENT@30..31 "e" [] [],
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
@@ -83,10 +81,8 @@ JsRoot {
                 catch_token: CATCH_KW@70..76 "catch" [] [Whitespace(" ")],
                 declaration: JsCatchDeclaration {
                     l_paren_token: L_PAREN@76..77 "(" [] [],
-                    binding: SinglePattern {
-                        name: Name {
-                            ident_token: IDENT@77..78 "e" [] [],
-                        },
+                    binding: JsIdentifierBinding {
+                        name_token: IDENT@77..78 "e" [] [],
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),

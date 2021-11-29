@@ -7,10 +7,8 @@ JsRoot {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
-                            },
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
@@ -26,10 +24,8 @@ JsRoot {
                                             value: IDENT@15..18 "foo" [] [],
                                         },
                                         l_paren_token: L_PAREN@18..19 "(" [] [],
-                                        parameter: SinglePattern {
-                                            name: Name {
-                                                ident_token: IDENT@19..24 "value" [] [],
-                                            },
+                                        parameter: JsIdentifierBinding {
+                                            name_token: IDENT@19..24 "value" [] [],
                                             question_mark_token: missing (optional),
                                             excl_token: missing (optional),
                                             ty: missing (optional),
@@ -49,10 +45,8 @@ JsRoot {
                                             value: JS_STRING_LITERAL@38..43 "\"bar\"" [] [],
                                         },
                                         l_paren_token: L_PAREN@43..44 "(" [] [],
-                                        parameter: SinglePattern {
-                                            name: Name {
-                                                ident_token: IDENT@44..49 "value" [] [],
-                                            },
+                                        parameter: JsIdentifierBinding {
+                                            name_token: IDENT@44..49 "value" [] [],
                                             question_mark_token: missing (optional),
                                             excl_token: missing (optional),
                                             ty: missing (optional),
@@ -79,10 +73,8 @@ JsRoot {
                                             r_brack_token: R_BRACK@73..74 "]" [] [],
                                         },
                                         l_paren_token: L_PAREN@74..75 "(" [] [],
-                                        parameter: SinglePattern {
-                                            name: Name {
-                                                ident_token: IDENT@75..80 "value" [] [],
-                                            },
+                                        parameter: JsIdentifierBinding {
+                                            name_token: IDENT@75..80 "value" [] [],
                                             question_mark_token: missing (optional),
                                             excl_token: missing (optional),
                                             ty: missing (optional),
@@ -102,10 +94,8 @@ JsRoot {
                                             value: JS_NUMBER_LITERAL@94..95 "5" [] [],
                                         },
                                         l_paren_token: L_PAREN@95..96 "(" [] [],
-                                        parameter: SinglePattern {
-                                            name: Name {
-                                                ident_token: IDENT@96..101 "value" [] [],
-                                            },
+                                        parameter: JsIdentifierBinding {
+                                            name_token: IDENT@96..101 "value" [] [],
                                             question_mark_token: missing (optional),
                                             excl_token: missing (optional),
                                             ty: missing (optional),

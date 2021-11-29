@@ -6,6 +6,9 @@ JsRoot {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..10 "foo" [] [Whitespace(" ")],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: missing (optional),
@@ -24,10 +27,8 @@ JsRoot {
                     parameter_list: JsParameterList {
                         l_paren_token: L_PAREN@23..24 "(" [] [],
                         parameters: [
-                            SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@24..27 "bar" [] [],
-                                },
+                            JsIdentifierBinding {
+                                name_token: IDENT@24..27 "bar" [] [],
                                 question_mark_token: missing (optional),
                                 excl_token: missing (optional),
                                 ty: missing (optional),

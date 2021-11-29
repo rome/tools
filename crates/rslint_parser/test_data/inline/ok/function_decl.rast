@@ -8,6 +8,9 @@ JsRoot {
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@9..12 "foo" [] [],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -29,6 +32,9 @@ JsRoot {
             star_token: STAR@27..28 "*" [] [],
             id: JsIdentifierBinding {
                 name_token: IDENT@28..31 "foo" [] [],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -50,15 +56,16 @@ JsRoot {
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@46..49 "foo" [] [],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
                 l_paren_token: L_PAREN@49..50 "(" [] [],
                 parameters: [
-                    SinglePattern {
-                        name: Name {
-                            ident_token: IDENT@50..55 "await" [] [],
-                        },
+                    JsIdentifierBinding {
+                        name_token: IDENT@50..55 "await" [] [],
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
@@ -80,6 +87,9 @@ JsRoot {
             star_token: STAR@75..76 "*" [] [],
             id: JsIdentifierBinding {
                 name_token: IDENT@76..79 "foo" [] [],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -101,6 +111,9 @@ JsRoot {
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@100..103 "foo" [] [],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -122,6 +135,9 @@ JsRoot {
             star_token: STAR@118..119 "*" [] [],
             id: JsIdentifierBinding {
                 name_token: IDENT@119..122 "foo" [] [],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {

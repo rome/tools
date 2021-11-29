@@ -17,10 +17,8 @@ JsRoot {
                                     colon_token: COLON@13..15 ":" [] [Whitespace(" ")],
                                 },
                                 COMMA@18..20 "," [] [Whitespace(" ")],
-                                SinglePattern {
-                                    name: Name {
-                                        ident_token: IDENT@20..24 "bar" [] [Whitespace(" ")],
-                                    },
+                                JsIdentifierBinding {
+                                    name_token: IDENT@20..24 "bar" [] [Whitespace(" ")],
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
@@ -50,10 +48,8 @@ JsRoot {
                             l_curly_token: L_CURLY@35..37 "{" [] [Whitespace(" ")],
                             elements: [
                                 AssignPattern {
-                                    key: SinglePattern {
-                                        name: Name {
-                                            ident_token: IDENT@37..41 "foo" [] [Whitespace(" ")],
-                                        },
+                                    key: JsIdentifierBinding {
+                                        name_token: IDENT@37..41 "foo" [] [Whitespace(" ")],
                                         question_mark_token: missing (optional),
                                         excl_token: missing (optional),
                                         ty: missing (optional),
@@ -65,10 +61,8 @@ JsRoot {
                                     },
                                 },
                                 COMMA@46..48 "," [] [Whitespace(" ")],
-                                SinglePattern {
-                                    name: Name {
-                                        ident_token: IDENT@48..52 "baz" [] [Whitespace(" ")],
-                                    },
+                                JsIdentifierBinding {
+                                    name_token: IDENT@48..52 "baz" [] [Whitespace(" ")],
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),

@@ -59,7 +59,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 						.insert(p.cur_src().to_string(), p.cur_tok().range);
 				}
 			}
-			parse_identifier_binding(p).ok()
+			parse_identifier_binding(p).ok().unwrap()
 		}
 		_ => {
 			let err = p
@@ -242,7 +242,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 		return Some(m.complete(p, KEY_VALUE_PATTERN));
 	}
 
-	let mut name = if let Some(n) = name {
+	let name = if let Some(n) = name {
 		n
 	} else {
 		m.abandon(p);
@@ -255,11 +255,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 		return None;
 	};
 
-	if name.kind() == JS_IDENTIFIER_BINDING {
-		name.change_kind(p, NAME);
-	}
-
-	if name.kind() != NAME {
+	if name.kind() != JS_IDENTIFIER_BINDING {
 		m.abandon(p);
 		name.change_kind(p, JS_UNKNOWN_PATTERN);
 		let err = p

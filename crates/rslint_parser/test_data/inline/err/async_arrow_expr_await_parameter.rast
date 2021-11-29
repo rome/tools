@@ -1,85 +1,49 @@
-JsRoot {
-    interpreter_token: missing (optional),
-    directives: [],
-    statements: [
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
-                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
-                            },
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
-                        },
-                        init: JsEqualValueClause {
-                            eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
-                            expression: JsReferenceIdentifierExpression {
-                                name_token: IDENT@8..14 "async" [] [Whitespace(" ")],
-                            },
-                        },
-                    },
-                ],
-            },
-            semicolon_token: missing (optional),
-        },
-        JsExpressionStatement {
-            expression: JsArrowFunctionExpression {
-                async_token: missing (optional),
-                type_parameters: missing (optional),
-                parameter_list: JsIdentifierBinding {
-                    name_token: IDENT@14..20 "await" [] [Whitespace(" ")],
-                },
-                fat_arrow_token: FAT_ARROW@20..23 "=>" [] [Whitespace(" ")],
-                return_type: missing (optional),
-            },
-            semicolon_token: missing (optional),
-        },
-    ],
-}
-
-0: JS_ROOT@0..26
+0: JS_ROOT@0..46
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..25
-    0: JS_VARIABLE_DECLARATION_STATEMENT@0..14
-      0: JS_VARIABLE_DECLARATION@0..14
+  2: LIST@0..45
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..25
+      0: JS_VARIABLE_DECLARATION@0..25
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: LIST@4..14
-          0: JS_VARIABLE_DECLARATOR@4..14
+        1: LIST@4..25
+          0: JS_VARIABLE_DECLARATOR@4..25
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@6..14
+            1: JS_EQUAL_VALUE_CLAUSE@6..25
               0: EQ@6..8 "=" [] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@8..14
-                0: IDENT@8..14 "async" [] [Whitespace(" ")]
+              1: JS_ARROW_FUNCTION_EXPRESSION@8..25
+                0: ASYNC_KW@8..14 "async" [] [Whitespace(" ")]
+                1: JS_UNKNOWN_BINDING@14..20
+                  0: IDENT@14..20 "await" [] [Whitespace(" ")]
+                2: FAT_ARROW@20..23 "=>" [] [Whitespace(" ")]
+                3: JS_FUNCTION_BODY@23..25
+                  0: L_CURLY@23..24 "{" [] []
+                  1: LIST@24..24
+                  2: LIST@24..24
+                  3: R_CURLY@24..25 "}" [] []
       1: (empty)
-    1: JS_EXPRESSION_STATEMENT@14..25
-      0: JS_ARROW_FUNCTION_EXPRESSION@14..25
-        0: JS_IDENTIFIER_BINDING@14..20
-          0: IDENT@14..20 "await" [] [Whitespace(" ")]
-        1: FAT_ARROW@20..23 "=>" [] [Whitespace(" ")]
-        2: JS_FUNCTION_BODY@23..25
-          0: L_CURLY@23..24 "{" [] []
-          1: LIST@24..24
-          2: LIST@24..24
-          3: R_CURLY@24..25 "}" [] []
+    1: JS_VARIABLE_DECLARATION_STATEMENT@25..45
+      0: JS_VARIABLE_DECLARATION@25..45
+        0: LET_KW@25..30 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@30..45
+          0: JS_VARIABLE_DECLARATOR@30..45
+            0: JS_IDENTIFIER_BINDING@30..32
+              0: IDENT@30..32 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@32..45
+              0: EQ@32..34 "=" [] [Whitespace(" ")]
+              1: JS_ARROW_FUNCTION_EXPRESSION@34..45
+                0: JS_IDENTIFIER_BINDING@34..40
+                  0: IDENT@34..40 "await" [] [Whitespace(" ")]
+                1: FAT_ARROW@40..43 "=>" [] [Whitespace(" ")]
+                2: JS_FUNCTION_BODY@43..45
+                  0: L_CURLY@43..44 "{" [] []
+                  1: LIST@44..44
+                  2: LIST@44..44
+                  3: R_CURLY@44..45 "}" [] []
       1: (empty)
-  3: EOF@25..26 "" [Whitespace("\n")] []
+  3: EOF@45..46 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ async_arrow_expr_await_parameter.js:1:15
-  │
-1 │ let a = async await => {}
-  │ --------------^^^^^ An explicit or implicit semicolon is expected here...
-  │ │              
-  │ ...Which is required to end this statement
-
---
-error[SyntaxError]: Illegal use of `await` as an identifier in strict mode
+error[SyntaxError]: Illegal use of `await` as an identifier in an async context
   ┌─ async_arrow_expr_await_parameter.js:1:15
   │
 1 │ let a = async await => {}
@@ -87,3 +51,4 @@ error[SyntaxError]: Illegal use of `await` as an identifier in strict mode
 
 --
 let a = async await => {}
+let a = await => {}

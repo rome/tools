@@ -7,10 +7,8 @@ JsRoot {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
-                            },
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
@@ -36,10 +34,8 @@ JsRoot {
                 kind_token: LET_KW@17..22 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@22..24 "a" [] [Whitespace(" ")],
-                            },
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@22..24 "a" [] [Whitespace(" ")],
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
@@ -50,6 +46,9 @@ JsRoot {
                                 class_token: CLASS_KW@26..32 "class" [] [Whitespace(" ")],
                                 id: JsIdentifierBinding {
                                     name_token: IDENT@32..36 "foo" [] [Whitespace(" ")],
+                                    question_mark_token: missing (optional),
+                                    excl_token: missing (optional),
+                                    ty: missing (optional),
                                 },
                                 extends_clause: missing (optional),
                                 l_curly_token: L_CURLY@36..37 "{" [] [],

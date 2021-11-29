@@ -6,6 +6,9 @@ JsRoot {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..14 "Getters" [] [Whitespace(" ")],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: missing (optional),
@@ -152,6 +155,9 @@ JsRoot {
             class_token: CLASS_KW@138..145 "class" [Whitespace("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@145..156 "NotGetters" [] [Whitespace(" ")],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: missing (optional),

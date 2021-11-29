@@ -6,6 +6,9 @@ JsRoot {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..14 "Setters" [] [Whitespace(" ")],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: missing (optional),
@@ -20,10 +23,8 @@ JsRoot {
                         value: IDENT@21..24 "foo" [] [],
                     },
                     l_paren_token: L_PAREN@24..25 "(" [] [],
-                    parameter: SinglePattern {
-                        name: Name {
-                            ident_token: IDENT@25..26 "a" [] [],
-                        },
+                    parameter: JsIdentifierBinding {
+                        name_token: IDENT@25..26 "a" [] [],
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
@@ -45,10 +46,8 @@ JsRoot {
                         value: IDENT@36..42 "static" [] [],
                     },
                     l_paren_token: L_PAREN@42..43 "(" [] [],
-                    parameter: SinglePattern {
-                        name: Name {
-                            ident_token: IDENT@43..44 "a" [] [],
-                        },
+                    parameter: JsIdentifierBinding {
+                        name_token: IDENT@43..44 "a" [] [],
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
@@ -70,10 +69,8 @@ JsRoot {
                         value: IDENT@61..64 "bar" [] [],
                     },
                     l_paren_token: L_PAREN@64..65 "(" [] [],
-                    parameter: SinglePattern {
-                        name: Name {
-                            ident_token: IDENT@65..66 "a" [] [],
-                        },
+                    parameter: JsIdentifierBinding {
+                        name_token: IDENT@65..66 "a" [] [],
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
@@ -95,10 +92,8 @@ JsRoot {
                         value: JS_STRING_LITERAL@77..82 "\"baz\"" [] [],
                     },
                     l_paren_token: L_PAREN@82..83 "(" [] [],
-                    parameter: SinglePattern {
-                        name: Name {
-                            ident_token: IDENT@83..84 "a" [] [],
-                        },
+                    parameter: JsIdentifierBinding {
+                        name_token: IDENT@83..84 "a" [] [],
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
@@ -127,10 +122,8 @@ JsRoot {
                         r_brack_token: R_BRACK@105..106 "]" [] [],
                     },
                     l_paren_token: L_PAREN@106..107 "(" [] [],
-                    parameter: SinglePattern {
-                        name: Name {
-                            ident_token: IDENT@107..108 "a" [] [],
-                        },
+                    parameter: JsIdentifierBinding {
+                        name_token: IDENT@107..108 "a" [] [],
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
@@ -152,10 +145,8 @@ JsRoot {
                         value: JS_NUMBER_LITERAL@119..120 "5" [] [],
                     },
                     l_paren_token: L_PAREN@120..121 "(" [] [],
-                    parameter: SinglePattern {
-                        name: Name {
-                            ident_token: IDENT@121..122 "a" [] [],
-                        },
+                    parameter: JsIdentifierBinding {
+                        name_token: IDENT@121..122 "a" [] [],
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
@@ -178,10 +169,8 @@ JsRoot {
                         id_token: IDENT@134..141 "private" [] [],
                     },
                     l_paren_token: L_PAREN@141..142 "(" [] [],
-                    parameter: SinglePattern {
-                        name: Name {
-                            ident_token: IDENT@142..143 "a" [] [],
-                        },
+                    parameter: JsIdentifierBinding {
+                        name_token: IDENT@142..143 "a" [] [],
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
@@ -201,6 +190,9 @@ JsRoot {
             class_token: CLASS_KW@149..157 "class" [Whitespace("\n\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@157..168 "NotSetters" [] [Whitespace(" ")],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: missing (optional),
@@ -219,10 +211,8 @@ JsRoot {
                     parameter_list: JsParameterList {
                         l_paren_token: L_PAREN@174..175 "(" [] [],
                         parameters: [
-                            SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@175..176 "a" [] [],
-                                },
+                            JsIdentifierBinding {
+                                name_token: IDENT@175..176 "a" [] [],
                                 question_mark_token: missing (optional),
                                 excl_token: missing (optional),
                                 ty: missing (optional),
@@ -252,10 +242,8 @@ JsRoot {
                     parameter_list: JsParameterList {
                         l_paren_token: L_PAREN@191..192 "(" [] [],
                         parameters: [
-                            SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@192..193 "a" [] [],
-                                },
+                            JsIdentifierBinding {
+                                name_token: IDENT@192..193 "a" [] [],
                                 question_mark_token: missing (optional),
                                 excl_token: missing (optional),
                                 ty: missing (optional),
@@ -285,10 +273,8 @@ JsRoot {
                     parameter_list: JsParameterList {
                         l_paren_token: L_PAREN@209..210 "(" [] [],
                         parameters: [
-                            SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@210..211 "a" [] [],
-                                },
+                            JsIdentifierBinding {
+                                name_token: IDENT@210..211 "a" [] [],
                                 question_mark_token: missing (optional),
                                 excl_token: missing (optional),
                                 ty: missing (optional),

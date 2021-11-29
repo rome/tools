@@ -6,6 +6,9 @@ JsRoot {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..10 "Foo" [] [Whitespace(" ")],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: missing (optional),
@@ -19,10 +22,8 @@ JsRoot {
                     parameter_list: JsConstructorParameterList {
                         l_paren_token: L_PAREN@24..25 "(" [] [],
                         parameters: [
-                            SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@25..26 "a" [] [],
-                                },
+                            JsIdentifierBinding {
+                                name_token: IDENT@25..26 "a" [] [],
                                 question_mark_token: missing (optional),
                                 excl_token: missing (optional),
                                 ty: missing (optional),
@@ -63,6 +64,9 @@ JsRoot {
             class_token: CLASS_KW@48..56 "class" [Whitespace("\n\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@56..60 "Bar" [] [Whitespace(" ")],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: missing (optional),
@@ -76,10 +80,8 @@ JsRoot {
                     parameter_list: JsConstructorParameterList {
                         l_paren_token: L_PAREN@76..77 "(" [] [],
                         parameters: [
-                            SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@77..78 "b" [] [],
-                                },
+                            JsIdentifierBinding {
+                                name_token: IDENT@77..78 "b" [] [],
                                 question_mark_token: missing (optional),
                                 excl_token: missing (optional),
                                 ty: missing (optional),

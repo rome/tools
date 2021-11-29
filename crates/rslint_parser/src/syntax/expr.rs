@@ -23,7 +23,7 @@ use crate::syntax::pat::parse_identifier_binding;
 use crate::syntax::stmt::is_semi;
 use crate::ConditionalParsedSyntax::{Invalid, Valid};
 use crate::JsSyntaxFeature::StrictMode;
-use crate::ParsedSyntax::{Absent, Present};
+use crate::ParsedSyntax::Absent;
 use crate::{SyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -898,7 +898,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			} else {
 				// `async a => {}` and `async (a) => {}`
 				if p.state.potential_arrow_start
-					&& token_set![T![ident], T![yield], T!['(']].contains(p.nth(1))
+					&& token_set![T![ident], T![yield], T![await], T!['(']].contains(p.nth(1))
 				{
 					// test async_arrow_expr
 					// let a = async foo => {}
@@ -906,32 +906,34 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 					// async (foo, bar, ...baz) => foo
 					let m = p.start();
 					p.bump_remap(T![async]);
-					let parsed_parameters = parse_parameter_list(p);
-					if parsed_parameters.is_absent() {
-						// test_err async_arrow_expr_await_parameter
-						// let a = async await => {}
-						parse_identifier_binding(p).or_missing_with_error(p, expected_parameter);
-					}
-
-					if p.at(T![:]) {
-						let complete = ts_type_or_type_predicate_ann(p, T![:]);
-						if let Some(mut complete) = complete {
-							complete.err_if_not_ts(
-								p,
-								"arrow functions can only have return types in TypeScript files",
-							);
-						}
-					}
-					p.expect_required(T![=>]);
 					{
-						let mut guard = p.with_state(ParserState {
+						let in_async_p = &mut *p.with_state(ParserState {
 							in_async: true,
 							..p.state.clone()
 						});
-						parse_arrow_body(&mut *guard).or_missing_with_error(
-							&mut *guard,
-							js_parse_error::expected_arrow_body,
-						);
+
+						let parsed_parameters = parse_parameter_list(in_async_p);
+						if parsed_parameters.is_absent() {
+							// test_err async_arrow_expr_await_parameter
+							// let a = async await => {}
+							parse_identifier_binding(in_async_p)
+								.or_missing_with_error(in_async_p, expected_parameter);
+						}
+
+						if in_async_p.at(T![:]) {
+							let complete = ts_type_or_type_predicate_ann(in_async_p, T![:]);
+							if let Some(mut complete) = complete {
+								complete.err_if_not_ts(
+									in_async_p,
+								"arrow functions can only have return types in TypeScript files",
+							);
+							}
+						}
+
+						in_async_p.expect_required(T![=>]);
+
+						parse_arrow_body(in_async_p)
+							.or_missing_with_error(in_async_p, js_parse_error::expected_arrow_body);
 					}
 
 					m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)

@@ -12,10 +12,8 @@ JsRoot {
                 kind_token: LET_KW@20..26 "let" [Whitespace("\n\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@26..28 "a" [] [Whitespace(" ")],
-                            },
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@26..28 "a" [] [Whitespace(" ")],
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
@@ -43,6 +41,9 @@ JsRoot {
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@78..82 "test" [] [],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -65,10 +66,8 @@ JsRoot {
                             kind_token: LET_KW@101..108 "let" [Whitespace("\n\n\t")] [Whitespace(" ")],
                             declarators: [
                                 JsVariableDeclarator {
-                                    id: SinglePattern {
-                                        name: Name {
-                                            ident_token: IDENT@108..110 "a" [] [Whitespace(" ")],
-                                        },
+                                    id: JsIdentifierBinding {
+                                        name_token: IDENT@108..110 "a" [] [Whitespace(" ")],
                                         question_mark_token: missing (optional),
                                         excl_token: missing (optional),
                                         ty: missing (optional),
@@ -123,10 +122,8 @@ JsRoot {
                                     kind_token: LET_KW@183..190 "let" [Whitespace("\n\n\t")] [Whitespace(" ")],
                                     declarators: [
                                         JsVariableDeclarator {
-                                            id: SinglePattern {
-                                                name: Name {
-                                                    ident_token: IDENT@190..192 "a" [] [Whitespace(" ")],
-                                                },
+                                            id: JsIdentifierBinding {
+                                                name_token: IDENT@190..192 "a" [] [Whitespace(" ")],
                                                 question_mark_token: missing (optional),
                                                 excl_token: missing (optional),
                                                 ty: missing (optional),
@@ -161,10 +158,8 @@ JsRoot {
                 kind_token: LET_KW@236..242 "let" [Whitespace("\n\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@242..244 "b" [] [Whitespace(" ")],
-                            },
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@242..244 "b" [] [Whitespace(" ")],
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),

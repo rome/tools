@@ -111,9 +111,8 @@
       2: JS_PARAMETER_LIST@153..161
         0: L_PAREN@153..154 "(" [] []
         1: LIST@154..159
-          0: SINGLE_PATTERN@154..159
-            0: NAME@154..159
-              0: IDENT@154..159 "await" [] []
+          0: JS_IDENTIFIER_BINDING@154..159
+            0: IDENT@154..159 "await" [] []
         2: R_PAREN@159..161 ")" [] [Whitespace(" ")]
       3: JS_FUNCTION_BODY@161..163
         0: L_CURLY@161..162 "{" [] []
@@ -127,9 +126,8 @@
       2: JS_PARAMETER_LIST@176..184
         0: L_PAREN@176..177 "(" [] []
         1: LIST@177..182
-          0: SINGLE_PATTERN@177..182
-            0: JS_UNKNOWN_PATTERN@177..182
-              0: IDENT@177..182 "yield" [] []
+          0: JS_UNKNOWN_BINDING@177..182
+            0: IDENT@177..182 "yield" [] []
         2: R_PAREN@182..184 ")" [] [Whitespace(" ")]
       3: JS_FUNCTION_BODY@184..186
         0: L_CURLY@184..185 "{" [] []

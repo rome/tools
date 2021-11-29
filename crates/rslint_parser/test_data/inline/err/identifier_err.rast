@@ -87,9 +87,8 @@ JsRoot {
       3: JS_PARAMETER_LIST@26..34
         0: L_PAREN@26..27 "(" [] []
         1: LIST@27..32
-          0: SINGLE_PATTERN@27..32
-            0: JS_UNKNOWN_PATTERN@27..32
-              0: IDENT@27..32 "await" [] []
+          0: JS_UNKNOWN_BINDING@27..32
+            0: IDENT@27..32 "await" [] []
         2: R_PAREN@32..34 ")" [] [Whitespace(" ")]
       4: JS_FUNCTION_BODY@34..36
         0: L_CURLY@34..35 "{" [] []
@@ -104,9 +103,8 @@ JsRoot {
       3: JS_PARAMETER_LIST@51..59
         0: L_PAREN@51..52 "(" [] []
         1: LIST@52..57
-          0: SINGLE_PATTERN@52..57
-            0: JS_UNKNOWN_PATTERN@52..57
-              0: IDENT@52..57 "yield" [] []
+          0: JS_UNKNOWN_BINDING@52..57
+            0: IDENT@52..57 "yield" [] []
         2: R_PAREN@57..59 ")" [] [Whitespace(" ")]
       4: JS_FUNCTION_BODY@59..61
         0: L_CURLY@59..60 "{" [] []

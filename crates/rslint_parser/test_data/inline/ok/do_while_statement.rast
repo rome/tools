@@ -81,10 +81,8 @@ JsRoot {
                 kind_token: LET_KW@78..84 "let" [Whitespace("\n\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@84..86 "a" [] [Whitespace(" ")],
-                            },
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@84..86 "a" [] [Whitespace(" ")],
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),

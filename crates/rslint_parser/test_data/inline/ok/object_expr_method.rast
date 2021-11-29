@@ -7,10 +7,8 @@ JsRoot {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@4..6 "b" [] [Whitespace(" ")],
-                            },
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@4..6 "b" [] [Whitespace(" ")],
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
@@ -51,28 +49,22 @@ JsRoot {
                                         parameter_list: JsParameterList {
                                             l_paren_token: L_PAREN@25..26 "(" [] [],
                                             parameters: [
-                                                SinglePattern {
-                                                    name: Name {
-                                                        ident_token: IDENT@26..27 "a" [] [],
-                                                    },
+                                                JsIdentifierBinding {
+                                                    name_token: IDENT@26..27 "a" [] [],
                                                     question_mark_token: missing (optional),
                                                     excl_token: missing (optional),
                                                     ty: missing (optional),
                                                 },
                                                 COMMA@27..29 "," [] [Whitespace(" ")],
-                                                SinglePattern {
-                                                    name: Name {
-                                                        ident_token: IDENT@29..30 "b" [] [],
-                                                    },
+                                                JsIdentifierBinding {
+                                                    name_token: IDENT@29..30 "b" [] [],
                                                     question_mark_token: missing (optional),
                                                     excl_token: missing (optional),
                                                     ty: missing (optional),
                                                 },
                                                 COMMA@30..32 "," [] [Whitespace(" ")],
-                                                SinglePattern {
-                                                    name: Name {
-                                                        ident_token: IDENT@32..33 "c" [] [],
-                                                    },
+                                                JsIdentifierBinding {
+                                                    name_token: IDENT@32..33 "c" [] [],
                                                     question_mark_token: missing (optional),
                                                     excl_token: missing (optional),
                                                     ty: missing (optional),
@@ -106,10 +98,8 @@ JsRoot {
                                         parameter_list: JsParameterList {
                                             l_paren_token: L_PAREN@54..55 "(" [] [],
                                             parameters: [
-                                                SinglePattern {
-                                                    name: Name {
-                                                        ident_token: IDENT@55..56 "a" [] [],
-                                                    },
+                                                JsIdentifierBinding {
+                                                    name_token: IDENT@55..56 "a" [] [],
                                                     question_mark_token: missing (optional),
                                                     excl_token: missing (optional),
                                                     ty: missing (optional),
@@ -138,10 +128,8 @@ JsRoot {
                                             parameters: [
                                                 JsRestParameter {
                                                     dotdotdot_token: DOT2@64..67 "..." [] [],
-                                                    binding: SinglePattern {
-                                                        name: Name {
-                                                            ident_token: IDENT@67..71 "rest" [] [],
-                                                        },
+                                                    binding: JsIdentifierBinding {
+                                                        name_token: IDENT@67..71 "rest" [] [],
                                                         question_mark_token: missing (optional),
                                                         excl_token: missing (optional),
                                                         ty: missing (optional),

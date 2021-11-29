@@ -22,13 +22,6 @@ impl JsUnknownExpression {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsUnknownPattern {
-	pub(crate) syntax: SyntaxNode,
-}
-impl JsUnknownPattern {
-	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -758,7 +751,7 @@ impl JsCatchDeclaration {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn binding(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
+	pub fn binding(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![')'])
 	}
@@ -1235,6 +1228,11 @@ impl JsIdentifierBinding {
 	pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![ident])
 	}
+	pub fn question_mark_token(&self) -> Option<SyntaxToken> {
+		support::token(&self.syntax, T ! [?])
+	}
+	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
+	pub fn ty(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeParams {
@@ -1393,7 +1391,7 @@ impl JsSetterObjectMember {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn parameter(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
+	pub fn parameter(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![')'])
 	}
@@ -1600,7 +1598,7 @@ impl JsSetterClassMember {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn parameter(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
+	pub fn parameter(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![')'])
 	}
@@ -1626,7 +1624,7 @@ impl TsIndexSignature {
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['['])
 	}
-	pub fn pat(&self) -> SyntaxResult<SinglePattern> { support::required_node(&self.syntax) }
+	pub fn pat(&self) -> SyntaxResult<JsIdentifierBinding> { support::required_node(&self.syntax) }
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [:])
 	}
@@ -1670,7 +1668,7 @@ impl TsConstructorParam {
 	pub fn readonly_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![readonly])
 	}
-	pub fn pat(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
+	pub fn pat(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsEqualValueClause {
@@ -1838,6 +1836,77 @@ impl JsReferenceIdentifierMember {
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct RestPattern {
+	pub(crate) syntax: SyntaxNode,
+}
+impl RestPattern {
+	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [...])
+	}
+	pub fn pat(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct AssignPattern {
+	pub(crate) syntax: SyntaxNode,
+}
+impl AssignPattern {
+	pub fn key(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
+	pub fn ty(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
+	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [=])
+	}
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct ObjectPattern {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ObjectPattern {
+	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['{'])
+	}
+	pub fn elements(&self) -> AstSeparatedList<ObjectPatternProp> {
+		support::separated_list(&self.syntax, 0usize)
+	}
+	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['}'])
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct ArrayPattern {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ArrayPattern {
+	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['['])
+	}
+	pub fn elements(&self) -> AstNodeList<JsAnyBinding> { support::node_list(&self.syntax, 0usize) }
+	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![']'])
+	}
+	pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![!])
+	}
+	pub fn ty(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct ExprPattern {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ExprPattern {
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct KeyValuePattern {
+	pub(crate) syntax: SyntaxNode,
+}
+impl KeyValuePattern {
+	pub fn key(&self) -> SyntaxResult<PropName> { support::required_node(&self.syntax) }
+	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [:])
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsBigIntLiteralExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1874,94 +1943,11 @@ impl JsRegexLiteralExpression {
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct SinglePattern {
-	pub(crate) syntax: SyntaxNode,
-}
-impl SinglePattern {
-	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
-	pub fn question_mark_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [?])
-	}
-	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
-	pub fn ty(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct RestPattern {
-	pub(crate) syntax: SyntaxNode,
-}
-impl RestPattern {
-	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [...])
-	}
-	pub fn pat(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct AssignPattern {
-	pub(crate) syntax: SyntaxNode,
-}
-impl AssignPattern {
-	pub fn key(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
-	pub fn ty(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
-	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [=])
-	}
-	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct ObjectPattern {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ObjectPattern {
-	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['{'])
-	}
-	pub fn elements(&self) -> AstSeparatedList<ObjectPatternProp> {
-		support::separated_list(&self.syntax, 0usize)
-	}
-	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['}'])
-	}
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct ArrayPattern {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ArrayPattern {
-	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['['])
-	}
-	pub fn elements(&self) -> AstNodeList<Pattern> { support::node_list(&self.syntax, 0usize) }
-	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![']'])
-	}
-	pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![!])
-	}
-	pub fn ty(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct ExprPattern {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ExprPattern {
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct KeyValuePattern {
-	pub(crate) syntax: SyntaxNode,
-}
-impl KeyValuePattern {
-	pub fn key(&self) -> SyntaxResult<PropName> { support::required_node(&self.syntax) }
-	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [:])
-	}
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclarator {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsVariableDeclarator {
-	pub fn id(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
+	pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
 	pub fn init(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2026,7 +2012,7 @@ impl JsRestParameter {
 	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [...])
 	}
-	pub fn binding(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
+	pub fn binding(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExternalModuleRef {
@@ -2652,14 +2638,14 @@ pub enum JsAnySwitchClause {
 	JsDefaultClause(JsDefaultClause),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub enum Pattern {
-	SinglePattern(SinglePattern),
+pub enum JsAnyBinding {
+	JsIdentifierBinding(JsIdentifierBinding),
 	RestPattern(RestPattern),
 	AssignPattern(AssignPattern),
 	ObjectPattern(ObjectPattern),
 	ArrayPattern(ArrayPattern),
 	ExprPattern(ExprPattern),
-	JsUnknownPattern(JsUnknownPattern),
+	JsUnknownBinding(JsUnknownBinding),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyLiteralExpression {
@@ -2685,11 +2671,6 @@ pub enum JsAnyArrayElement {
 	JsAnyExpression(JsAnyExpression),
 	SpreadElement(SpreadElement),
 	JsArrayHole(JsArrayHole),
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub enum PatternOrExpr {
-	Pattern(Pattern),
-	JsAnyExpression(JsAnyExpression),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyReferenceMember {
@@ -2748,7 +2729,7 @@ pub enum JsAnyClassMemberName {
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyConstructorParameter {
 	TsConstructorParam(TsConstructorParam),
-	Pattern(Pattern),
+	JsAnyBinding(JsAnyBinding),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrayAssignmentTargetElement {
@@ -2770,8 +2751,8 @@ pub enum ObjectPatternProp {
 	AssignPattern(AssignPattern),
 	KeyValuePattern(KeyValuePattern),
 	RestPattern(RestPattern),
-	SinglePattern(SinglePattern),
-	JsUnknownPattern(JsUnknownPattern),
+	JsIdentifierBinding(JsIdentifierBinding),
+	JsUnknownBinding(JsUnknownBinding),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsType {
@@ -2832,7 +2813,7 @@ pub enum JsAnyExportDeclaration {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyParameter {
-	Pattern(Pattern),
+	JsAnyBinding(JsAnyBinding),
 	JsRestParameter(JsRestParameter),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2895,24 +2876,6 @@ impl AstNode for JsUnknownExpression {
 impl std::fmt::Debug for JsUnknownExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownExpression")
-			.field("items", &self.items())
-			.finish()
-	}
-}
-impl AstNode for JsUnknownPattern {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_PATTERN }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsUnknownPattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsUnknownPattern")
 			.field("items", &self.items())
 			.finish()
 	}
@@ -5114,6 +5077,12 @@ impl std::fmt::Debug for JsIdentifierBinding {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsIdentifierBinding")
 			.field("name_token", &support::DebugSyntaxResult(self.name_token()))
+			.field(
+				"question_mark_token",
+				&support::DebugOptionalNode(self.question_mark_token()),
+			)
+			.field("excl_token", &support::DebugOptionalNode(self.excl_token()))
+			.field("ty", &support::DebugOptionalNode(self.ty()))
 			.finish()
 	}
 }
@@ -6251,114 +6220,6 @@ impl std::fmt::Debug for JsReferenceIdentifierMember {
 			.finish()
 	}
 }
-impl AstNode for JsBigIntLiteralExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BIG_INT_LITERAL_EXPRESSION }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsBigIntLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsBigIntLiteralExpression")
-			.field(
-				"value_token",
-				&support::DebugSyntaxResult(self.value_token()),
-			)
-			.finish()
-	}
-}
-impl AstNode for JsBooleanLiteralExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOOLEAN_LITERAL_EXPRESSION }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsBooleanLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsBooleanLiteralExpression")
-			.field(
-				"value_token",
-				&support::DebugSyntaxResult(self.value_token()),
-			)
-			.finish()
-	}
-}
-impl AstNode for JsNullLiteralExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NULL_LITERAL_EXPRESSION }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsNullLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsNullLiteralExpression")
-			.field(
-				"value_token",
-				&support::DebugSyntaxResult(self.value_token()),
-			)
-			.finish()
-	}
-}
-impl AstNode for JsRegexLiteralExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REGEX_LITERAL_EXPRESSION }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsRegexLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsRegexLiteralExpression")
-			.field(
-				"value_token",
-				&support::DebugSyntaxResult(self.value_token()),
-			)
-			.finish()
-	}
-}
-impl AstNode for SinglePattern {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == SINGLE_PATTERN }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for SinglePattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("SinglePattern")
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.field(
-				"question_mark_token",
-				&support::DebugOptionalNode(self.question_mark_token()),
-			)
-			.field("excl_token", &support::DebugOptionalNode(self.excl_token()))
-			.field("ty", &support::DebugOptionalNode(self.ty()))
-			.finish()
-	}
-}
 impl AstNode for RestPattern {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == REST_PATTERN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6492,6 +6353,90 @@ impl std::fmt::Debug for KeyValuePattern {
 			.field(
 				"colon_token",
 				&support::DebugSyntaxResult(self.colon_token()),
+			)
+			.finish()
+	}
+}
+impl AstNode for JsBigIntLiteralExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BIG_INT_LITERAL_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsBigIntLiteralExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsBigIntLiteralExpression")
+			.field(
+				"value_token",
+				&support::DebugSyntaxResult(self.value_token()),
+			)
+			.finish()
+	}
+}
+impl AstNode for JsBooleanLiteralExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOOLEAN_LITERAL_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsBooleanLiteralExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsBooleanLiteralExpression")
+			.field(
+				"value_token",
+				&support::DebugSyntaxResult(self.value_token()),
+			)
+			.finish()
+	}
+}
+impl AstNode for JsNullLiteralExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NULL_LITERAL_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsNullLiteralExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsNullLiteralExpression")
+			.field(
+				"value_token",
+				&support::DebugSyntaxResult(self.value_token()),
+			)
+			.finish()
+	}
+}
+impl AstNode for JsRegexLiteralExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REGEX_LITERAL_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsRegexLiteralExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsRegexLiteralExpression")
+			.field(
+				"value_token",
+				&support::DebugSyntaxResult(self.value_token()),
 			)
 			.finish()
 	}
@@ -8563,72 +8508,74 @@ impl std::fmt::Debug for JsAnySwitchClause {
 		}
 	}
 }
-impl From<SinglePattern> for Pattern {
-	fn from(node: SinglePattern) -> Pattern { Pattern::SinglePattern(node) }
+impl From<JsIdentifierBinding> for JsAnyBinding {
+	fn from(node: JsIdentifierBinding) -> JsAnyBinding { JsAnyBinding::JsIdentifierBinding(node) }
 }
-impl From<RestPattern> for Pattern {
-	fn from(node: RestPattern) -> Pattern { Pattern::RestPattern(node) }
+impl From<RestPattern> for JsAnyBinding {
+	fn from(node: RestPattern) -> JsAnyBinding { JsAnyBinding::RestPattern(node) }
 }
-impl From<AssignPattern> for Pattern {
-	fn from(node: AssignPattern) -> Pattern { Pattern::AssignPattern(node) }
+impl From<AssignPattern> for JsAnyBinding {
+	fn from(node: AssignPattern) -> JsAnyBinding { JsAnyBinding::AssignPattern(node) }
 }
-impl From<ObjectPattern> for Pattern {
-	fn from(node: ObjectPattern) -> Pattern { Pattern::ObjectPattern(node) }
+impl From<ObjectPattern> for JsAnyBinding {
+	fn from(node: ObjectPattern) -> JsAnyBinding { JsAnyBinding::ObjectPattern(node) }
 }
-impl From<ArrayPattern> for Pattern {
-	fn from(node: ArrayPattern) -> Pattern { Pattern::ArrayPattern(node) }
+impl From<ArrayPattern> for JsAnyBinding {
+	fn from(node: ArrayPattern) -> JsAnyBinding { JsAnyBinding::ArrayPattern(node) }
 }
-impl From<ExprPattern> for Pattern {
-	fn from(node: ExprPattern) -> Pattern { Pattern::ExprPattern(node) }
+impl From<ExprPattern> for JsAnyBinding {
+	fn from(node: ExprPattern) -> JsAnyBinding { JsAnyBinding::ExprPattern(node) }
 }
-impl From<JsUnknownPattern> for Pattern {
-	fn from(node: JsUnknownPattern) -> Pattern { Pattern::JsUnknownPattern(node) }
+impl From<JsUnknownBinding> for JsAnyBinding {
+	fn from(node: JsUnknownBinding) -> JsAnyBinding { JsAnyBinding::JsUnknownBinding(node) }
 }
-impl AstNode for Pattern {
+impl AstNode for JsAnyBinding {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		matches!(
 			kind,
-			SINGLE_PATTERN
+			JS_IDENTIFIER_BINDING
 				| REST_PATTERN | ASSIGN_PATTERN
 				| OBJECT_PATTERN | ARRAY_PATTERN
-				| EXPR_PATTERN | JS_UNKNOWN_PATTERN
+				| EXPR_PATTERN | JS_UNKNOWN_BINDING
 		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			SINGLE_PATTERN => Pattern::SinglePattern(SinglePattern { syntax }),
-			REST_PATTERN => Pattern::RestPattern(RestPattern { syntax }),
-			ASSIGN_PATTERN => Pattern::AssignPattern(AssignPattern { syntax }),
-			OBJECT_PATTERN => Pattern::ObjectPattern(ObjectPattern { syntax }),
-			ARRAY_PATTERN => Pattern::ArrayPattern(ArrayPattern { syntax }),
-			EXPR_PATTERN => Pattern::ExprPattern(ExprPattern { syntax }),
-			JS_UNKNOWN_PATTERN => Pattern::JsUnknownPattern(JsUnknownPattern { syntax }),
+			JS_IDENTIFIER_BINDING => {
+				JsAnyBinding::JsIdentifierBinding(JsIdentifierBinding { syntax })
+			}
+			REST_PATTERN => JsAnyBinding::RestPattern(RestPattern { syntax }),
+			ASSIGN_PATTERN => JsAnyBinding::AssignPattern(AssignPattern { syntax }),
+			OBJECT_PATTERN => JsAnyBinding::ObjectPattern(ObjectPattern { syntax }),
+			ARRAY_PATTERN => JsAnyBinding::ArrayPattern(ArrayPattern { syntax }),
+			EXPR_PATTERN => JsAnyBinding::ExprPattern(ExprPattern { syntax }),
+			JS_UNKNOWN_BINDING => JsAnyBinding::JsUnknownBinding(JsUnknownBinding { syntax }),
 			_ => return None,
 		};
 		Some(res)
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			Pattern::SinglePattern(it) => &it.syntax,
-			Pattern::RestPattern(it) => &it.syntax,
-			Pattern::AssignPattern(it) => &it.syntax,
-			Pattern::ObjectPattern(it) => &it.syntax,
-			Pattern::ArrayPattern(it) => &it.syntax,
-			Pattern::ExprPattern(it) => &it.syntax,
-			Pattern::JsUnknownPattern(it) => &it.syntax,
+			JsAnyBinding::JsIdentifierBinding(it) => &it.syntax,
+			JsAnyBinding::RestPattern(it) => &it.syntax,
+			JsAnyBinding::AssignPattern(it) => &it.syntax,
+			JsAnyBinding::ObjectPattern(it) => &it.syntax,
+			JsAnyBinding::ArrayPattern(it) => &it.syntax,
+			JsAnyBinding::ExprPattern(it) => &it.syntax,
+			JsAnyBinding::JsUnknownBinding(it) => &it.syntax,
 		}
 	}
 }
-impl std::fmt::Debug for Pattern {
+impl std::fmt::Debug for JsAnyBinding {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
-			Pattern::SinglePattern(it) => std::fmt::Debug::fmt(it, f),
-			Pattern::RestPattern(it) => std::fmt::Debug::fmt(it, f),
-			Pattern::AssignPattern(it) => std::fmt::Debug::fmt(it, f),
-			Pattern::ObjectPattern(it) => std::fmt::Debug::fmt(it, f),
-			Pattern::ArrayPattern(it) => std::fmt::Debug::fmt(it, f),
-			Pattern::ExprPattern(it) => std::fmt::Debug::fmt(it, f),
-			Pattern::JsUnknownPattern(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyBinding::JsIdentifierBinding(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyBinding::RestPattern(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyBinding::AssignPattern(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyBinding::ObjectPattern(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyBinding::ArrayPattern(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyBinding::ExprPattern(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyBinding::JsUnknownBinding(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -8853,38 +8800,6 @@ impl std::fmt::Debug for JsAnyArrayElement {
 			JsAnyArrayElement::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyArrayElement::SpreadElement(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyArrayElement::JsArrayHole(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
-impl AstNode for PatternOrExpr {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			k if Pattern::can_cast(k) => true,
-			k if JsAnyExpression::can_cast(k) => true,
-			_ => false,
-		}
-	}
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if let Some(pattern) = Pattern::cast(syntax.clone()) {
-			return Some(PatternOrExpr::Pattern(pattern));
-		}
-		if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
-			return Some(PatternOrExpr::JsAnyExpression(js_any_expression));
-		}
-		None
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			PatternOrExpr::Pattern(it) => it.syntax(),
-			PatternOrExpr::JsAnyExpression(it) => it.syntax(),
-		}
-	}
-}
-impl std::fmt::Debug for PatternOrExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			PatternOrExpr::Pattern(it) => std::fmt::Debug::fmt(it, f),
-			PatternOrExpr::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -9397,7 +9312,7 @@ impl AstNode for JsAnyConstructorParameter {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			TS_CONSTRUCTOR_PARAM => true,
-			k if Pattern::can_cast(k) => true,
+			k if JsAnyBinding::can_cast(k) => true,
 			_ => false,
 		}
 	}
@@ -9407,8 +9322,8 @@ impl AstNode for JsAnyConstructorParameter {
 				JsAnyConstructorParameter::TsConstructorParam(TsConstructorParam { syntax })
 			}
 			_ => {
-				if let Some(pattern) = Pattern::cast(syntax) {
-					return Some(JsAnyConstructorParameter::Pattern(pattern));
+				if let Some(js_any_binding) = JsAnyBinding::cast(syntax) {
+					return Some(JsAnyConstructorParameter::JsAnyBinding(js_any_binding));
 				}
 				return None;
 			}
@@ -9418,7 +9333,7 @@ impl AstNode for JsAnyConstructorParameter {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			JsAnyConstructorParameter::TsConstructorParam(it) => &it.syntax,
-			JsAnyConstructorParameter::Pattern(it) => it.syntax(),
+			JsAnyConstructorParameter::JsAnyBinding(it) => it.syntax(),
 		}
 	}
 }
@@ -9426,7 +9341,7 @@ impl std::fmt::Debug for JsAnyConstructorParameter {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
 			JsAnyConstructorParameter::TsConstructorParam(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyConstructorParameter::Pattern(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyConstructorParameter::JsAnyBinding(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -9611,19 +9526,24 @@ impl From<KeyValuePattern> for ObjectPatternProp {
 impl From<RestPattern> for ObjectPatternProp {
 	fn from(node: RestPattern) -> ObjectPatternProp { ObjectPatternProp::RestPattern(node) }
 }
-impl From<SinglePattern> for ObjectPatternProp {
-	fn from(node: SinglePattern) -> ObjectPatternProp { ObjectPatternProp::SinglePattern(node) }
+impl From<JsIdentifierBinding> for ObjectPatternProp {
+	fn from(node: JsIdentifierBinding) -> ObjectPatternProp {
+		ObjectPatternProp::JsIdentifierBinding(node)
+	}
 }
-impl From<JsUnknownPattern> for ObjectPatternProp {
-	fn from(node: JsUnknownPattern) -> ObjectPatternProp {
-		ObjectPatternProp::JsUnknownPattern(node)
+impl From<JsUnknownBinding> for ObjectPatternProp {
+	fn from(node: JsUnknownBinding) -> ObjectPatternProp {
+		ObjectPatternProp::JsUnknownBinding(node)
 	}
 }
 impl AstNode for ObjectPatternProp {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		matches!(
 			kind,
-			ASSIGN_PATTERN | KEY_VALUE_PATTERN | REST_PATTERN | SINGLE_PATTERN | JS_UNKNOWN_PATTERN
+			ASSIGN_PATTERN
+				| KEY_VALUE_PATTERN
+				| REST_PATTERN | JS_IDENTIFIER_BINDING
+				| JS_UNKNOWN_BINDING
 		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -9631,8 +9551,10 @@ impl AstNode for ObjectPatternProp {
 			ASSIGN_PATTERN => ObjectPatternProp::AssignPattern(AssignPattern { syntax }),
 			KEY_VALUE_PATTERN => ObjectPatternProp::KeyValuePattern(KeyValuePattern { syntax }),
 			REST_PATTERN => ObjectPatternProp::RestPattern(RestPattern { syntax }),
-			SINGLE_PATTERN => ObjectPatternProp::SinglePattern(SinglePattern { syntax }),
-			JS_UNKNOWN_PATTERN => ObjectPatternProp::JsUnknownPattern(JsUnknownPattern { syntax }),
+			JS_IDENTIFIER_BINDING => {
+				ObjectPatternProp::JsIdentifierBinding(JsIdentifierBinding { syntax })
+			}
+			JS_UNKNOWN_BINDING => ObjectPatternProp::JsUnknownBinding(JsUnknownBinding { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -9642,8 +9564,8 @@ impl AstNode for ObjectPatternProp {
 			ObjectPatternProp::AssignPattern(it) => &it.syntax,
 			ObjectPatternProp::KeyValuePattern(it) => &it.syntax,
 			ObjectPatternProp::RestPattern(it) => &it.syntax,
-			ObjectPatternProp::SinglePattern(it) => &it.syntax,
-			ObjectPatternProp::JsUnknownPattern(it) => &it.syntax,
+			ObjectPatternProp::JsIdentifierBinding(it) => &it.syntax,
+			ObjectPatternProp::JsUnknownBinding(it) => &it.syntax,
 		}
 	}
 }
@@ -9653,8 +9575,8 @@ impl std::fmt::Debug for ObjectPatternProp {
 			ObjectPatternProp::AssignPattern(it) => std::fmt::Debug::fmt(it, f),
 			ObjectPatternProp::KeyValuePattern(it) => std::fmt::Debug::fmt(it, f),
 			ObjectPatternProp::RestPattern(it) => std::fmt::Debug::fmt(it, f),
-			ObjectPatternProp::SinglePattern(it) => std::fmt::Debug::fmt(it, f),
-			ObjectPatternProp::JsUnknownPattern(it) => std::fmt::Debug::fmt(it, f),
+			ObjectPatternProp::JsIdentifierBinding(it) => std::fmt::Debug::fmt(it, f),
+			ObjectPatternProp::JsUnknownBinding(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -10086,7 +10008,7 @@ impl AstNode for JsAnyParameter {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			JS_REST_PARAMETER => true,
-			k if Pattern::can_cast(k) => true,
+			k if JsAnyBinding::can_cast(k) => true,
 			_ => false,
 		}
 	}
@@ -10094,8 +10016,8 @@ impl AstNode for JsAnyParameter {
 		let res = match syntax.kind() {
 			JS_REST_PARAMETER => JsAnyParameter::JsRestParameter(JsRestParameter { syntax }),
 			_ => {
-				if let Some(pattern) = Pattern::cast(syntax) {
-					return Some(JsAnyParameter::Pattern(pattern));
+				if let Some(js_any_binding) = JsAnyBinding::cast(syntax) {
+					return Some(JsAnyParameter::JsAnyBinding(js_any_binding));
 				}
 				return None;
 			}
@@ -10105,14 +10027,14 @@ impl AstNode for JsAnyParameter {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			JsAnyParameter::JsRestParameter(it) => &it.syntax,
-			JsAnyParameter::Pattern(it) => it.syntax(),
+			JsAnyParameter::JsAnyBinding(it) => it.syntax(),
 		}
 	}
 }
 impl std::fmt::Debug for JsAnyParameter {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
-			JsAnyParameter::Pattern(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyParameter::JsAnyBinding(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyParameter::JsRestParameter(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
@@ -10346,7 +10268,7 @@ impl std::fmt::Display for JsAnySwitchClause {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for Pattern {
+impl std::fmt::Display for JsAnyBinding {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -10367,11 +10289,6 @@ impl std::fmt::Display for JsAnyArrowFunctionBody {
 	}
 }
 impl std::fmt::Display for JsAnyArrayElement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for PatternOrExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -10487,11 +10404,6 @@ impl std::fmt::Display for JsUnknownStatement {
 	}
 }
 impl std::fmt::Display for JsUnknownExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsUnknownPattern {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -11146,31 +11058,6 @@ impl std::fmt::Display for JsReferenceIdentifierMember {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsBigIntLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsBooleanLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsNullLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsRegexLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for SinglePattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for RestPattern {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -11197,6 +11084,26 @@ impl std::fmt::Display for ExprPattern {
 	}
 }
 impl std::fmt::Display for KeyValuePattern {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsBigIntLiteralExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsBooleanLiteralExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsNullLiteralExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsRegexLiteralExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
