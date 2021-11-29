@@ -1015,21 +1015,46 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
-fn parse_switch_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_switch_clause(
+	p: &mut Parser,
+	first_default: &mut Option<CompletedMarker>,
+) -> ParsedSyntax {
 	let m = p.start();
 	match p.cur() {
 		T![default] => {
-			p.bump_any();
+			// in case we have two `default` expression, we mark the second one
+			// as `JS_CASE_CLAUSE` where the the "default" keyword is an Unknown node
+			let syntax_kind = if first_default.is_some() {
+				// we bump the "default" keyword but we mark it as unknown
+				p.bump_remap(JS_UNKNOWN_PATTERN);
+				JS_CASE_CLAUSE
+			} else {
+				p.bump_any();
+				JS_DEFAULT_CLAUSE
+			};
+
 			p.expect_required(T![:]);
-			// We stop the range here because we dont want to include the entire clause
-			// including the statement list following it
 			let cons_list = p.start();
 			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
 				stmt(p, None);
 			}
 			cons_list.complete(p, LIST);
+			let default = m.complete(p, syntax_kind);
+			if first_default.is_some() {
+				let err = p
+					.err_builder(
+						"Multiple default clauses inside of a switch statement are not allowed",
+					)
+					.secondary(
+						first_default.unwrap().range(p),
+						"the first default clause is defined here",
+					)
+					.primary(default.range(p), "a second clause here is not allowed");
 
-			Present(m.complete(p, JS_DEFAULT_CLAUSE))
+				p.error(err);
+			}
+
+			Present(default)
 		}
 		T![case] => {
 			p.bump_any();
@@ -1075,7 +1100,7 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 	parenthesized_expression(p);
 	p.expect_required(T!['{']);
 	let cases_list = p.start();
-	let mut default_found: Option<CompletedMarker> = None;
+	let mut first_default: Option<CompletedMarker> = None;
 
 	while !p.at(EOF) && !p.at(T!['}']) {
 		let mut temp = p.with_state(ParserState {
@@ -1083,29 +1108,11 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 			..p.state.clone()
 		});
 
-		let clause = parse_switch_clause(&mut *temp);
+		let clause = parse_switch_clause(&mut *temp, &mut first_default);
 
-		if let Present(mut marker) = clause {
-			if marker.kind() == JS_DEFAULT_CLAUSE {
-				match default_found {
-					Some(default_found) => {
-						marker.change_kind(&mut *temp, JS_UNKNOWN_STATEMENT);
-						let err = temp
-						.err_builder(
-							"Multiple default clauses inside of a switch statement are not allowed",
-						)
-							.secondary(
-								default_found.range(&temp),
-								"the first default clause is defined here",
-							)
-							.primary(marker.range(&temp), "a second clause here is not allowed");
-
-						temp.error(err);
-					}
-					None => {
-						default_found = Some(marker);
-					}
-				}
+		if let Present(marker) = clause {
+			if marker.kind() == JS_DEFAULT_CLAUSE && first_default == None {
+				first_default = Some(marker);
 			}
 		} else {
 			let recovered_element = clause.or_recover(

@@ -18,8 +18,8 @@
               0: L_CURLY@25..26 "{" [] []
               1: LIST@26..26
               2: R_CURLY@26..27 "}" [] []
-        1: JS_UNKNOWN_STATEMENT@27..40
-          0: DEFAULT_KW@27..36 "default" [Whitespace("\n\t")] []
+        1: JS_CASE_CLAUSE@27..40
+          0: JS_UNKNOWN_PATTERN@27..36 "default" [Whitespace("\n\t")] []
           1: COLON@36..38 ":" [] [Whitespace(" ")]
           2: LIST@38..40
             0: JS_BLOCK_STATEMENT@38..40
