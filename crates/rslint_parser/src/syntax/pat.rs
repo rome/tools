@@ -73,6 +73,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			}
 
 			if let Present(mut identifier) = parse_identifier_binding(p) {
+				// TODO 1725 remove after changing patterns to use binding identifiers
 				let mapped_ident_kind = match identifier.kind() {
 					JS_IDENTIFIER_BINDING => NAME,
 					JS_UNKNOWN_BINDING => JS_UNKNOWN_PATTERN,
