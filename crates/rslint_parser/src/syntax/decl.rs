@@ -4,9 +4,9 @@ use super::expr::assign_expr;
 use super::pat::pattern;
 use super::typescript::*;
 #[allow(deprecated)]
-use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::syntax::function::function_body;
+use crate::syntax::js_parse_error;
 use crate::{SyntaxKind::*, *};
 
 pub const BASE_METHOD_RECOVERY_SET: TokenSet = token_set![
@@ -193,22 +193,13 @@ pub(super) fn parse_parameters_list(
 		} else {
 			// test_err formal_params_no_binding_element
 			// function foo(true) {}
-			if let Present(res) = parse_param(p) {
-				if res.kind() == ASSIGN_PATTERN && p.state.in_binding_list_for_signature {
-					let err = p
-						.err_builder(
-							"assignment patterns cannot be used in function/constructor types",
-						)
-						.primary(res.range(p), "");
 
-					p.error(err);
-				}
-				Some(res)
-			} else {
-				// test_err formal_params_invalid
-				// function (a++, c) {}
-				#[allow(deprecated)]
-				SingleTokenParseRecovery::new(
+			// test_err formal_params_invalid
+			// function (a++, c) {}
+			let recovered_result = parse_param(p).or_recover(
+				p,
+				ParseRecovery::new(
+					JS_UNKNOWN_PATTERN,
 					token_set![
 						T![ident],
 						T![await],
@@ -218,10 +209,24 @@ pub(super) fn parse_parameters_list(
 						T![...],
 						T![')'],
 					],
-					JS_UNKNOWN_PATTERN,
 				)
-				.enabled_braces_check()
-				.recover(p);
+				.enable_recovery_on_line_break(),
+				js_parse_error::expected_parameter,
+			);
+			if let Ok(recovered_result) = recovered_result {
+				if recovered_result.kind() == ASSIGN_PATTERN
+					&& p.state.in_binding_list_for_signature
+				{
+					let err = p
+						.err_builder(
+							"assignment patterns cannot be used in function/constructor types",
+						)
+						.primary(recovered_result.range(p), "");
+
+					p.error(err);
+				}
+				Some(recovered_result)
+			} else {
 				None
 			}
 		};
