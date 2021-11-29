@@ -1,3 +1,28 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsReferenceIdentifierExpression {
+                name_token: IDENT@0..13 "foo" [Comments("// SCRIPT"), Whitespace("\n")] [],
+            },
+            semicolon_token: SEMICOLON@13..14 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsReferenceIdentifierExpression {
+                name_token: IDENT@14..20 "yield" [Whitespace("\n")] [],
+            },
+            semicolon_token: SEMICOLON@20..21 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsReferenceIdentifierExpression {
+                name_token: IDENT@21..27 "await" [Whitespace("\n")] [],
+            },
+            semicolon_token: SEMICOLON@27..28 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..29
   0: (empty)
   1: LIST@0..0

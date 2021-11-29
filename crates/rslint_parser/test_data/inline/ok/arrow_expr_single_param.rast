@@ -1,3 +1,58 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsArrowFunctionExpression {
+                async_token: missing (optional),
+                type_parameters: missing (optional),
+                parameter_list: JsIdentifierBinding {
+                    name_token: IDENT@0..14 "foo" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
+                },
+                fat_arrow_token: FAT_ARROW@14..17 "=>" [] [Whitespace(" ")],
+                return_type: missing (optional),
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsArrowFunctionExpression {
+                async_token: missing (optional),
+                type_parameters: missing (optional),
+                parameter_list: JsIdentifierBinding {
+                    name_token: IDENT@19..26 "yield" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                fat_arrow_token: FAT_ARROW@26..29 "=>" [] [Whitespace(" ")],
+                return_type: missing (optional),
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsArrowFunctionExpression {
+                async_token: missing (optional),
+                type_parameters: missing (optional),
+                parameter_list: JsIdentifierBinding {
+                    name_token: IDENT@31..38 "await" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                fat_arrow_token: FAT_ARROW@38..41 "=>" [] [Whitespace(" ")],
+                return_type: missing (optional),
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsArrowFunctionExpression {
+                async_token: missing (optional),
+                type_parameters: missing (optional),
+                parameter_list: JsIdentifierBinding {
+                    name_token: IDENT@43..48 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                fat_arrow_token: FAT_ARROW@48..50 "=>" [] [],
+                return_type: missing (optional),
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..54
   0: (empty)
   1: LIST@0..0
