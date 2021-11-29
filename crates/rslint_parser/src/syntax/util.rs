@@ -137,11 +137,9 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 			}
 		}
 		JsAnyExpression::JsArrayExpression(expr) => {
-			let elem_count = expr.elements().iter().count();
-
 			for (idx, elem) in expr.elements().iter().flatten().enumerate() {
 				if let ast::JsAnyArrayElement::SpreadElement(ref spread) = elem {
-					if idx != elem_count - 1 {
+					if idx != expr.elements().len() - 1 {
 						let err = p.err_builder("Spread element may only occur as the last element of an assignment target")
                             .primary(marker.offset_range(p, spread.syntax().text_trimmed_range()), "");
 
@@ -164,7 +162,6 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 				p.error(err);
 			}
 
-			let members_count = expr.members().iter().count();
 			for (idx, prop) in expr.members().iter().flatten().enumerate() {
 				match prop {
 					ast::JsAnyObjectMember::JsPropertyObjectMember(prop) => {
@@ -172,7 +169,7 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 							check_for_stmt_lhs(p, expr, marker);
 						}
 					}
-					ast::JsAnyObjectMember::JsSpread(prop) if idx != members_count - 1 => {
+					ast::JsAnyObjectMember::JsSpread(prop) if idx != expr.members().len() - 1 => {
 						if let Ok(lhs) = prop.argument() {
 							check_spread_element(p, lhs, marker);
 						}
