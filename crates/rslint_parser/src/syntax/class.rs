@@ -6,13 +6,13 @@ use crate::syntax::expr::assign_expr;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::syntax::js_parse_error;
 use crate::syntax::object::{computed_member_name, literal_member_name};
-use crate::syntax::pat::opt_binding_identifier;
+use crate::syntax::pat::parse_identifier_binding;
 use crate::syntax::stmt::{block_impl, is_semi, optional_semi};
 use crate::syntax::typescript::{
 	abstract_readonly_modifiers, maybe_ts_type_annotation, try_parse_index_signature,
 	ts_heritage_clause, ts_modifier, ts_type_params, DISALLOWED_TYPE_NAMES,
 };
-use crate::ParsedSyntax::Present;
+use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Event, Marker, Parser, ParserState, StrictMode, TokenSet};
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::{SyntaxKind, T};
@@ -68,14 +68,12 @@ fn class(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
 
 	// parse class id
 	let id = if guard.cur_src() != "implements" {
-		opt_binding_identifier(&mut *guard)
+		parse_identifier_binding(&mut *guard)
 	} else {
-		None
+		Absent
 	};
 
-	if let Some(mut id) = id {
-		id.change_kind(&mut *guard, JS_IDENTIFIER_BINDING);
-
+	if let Present(id) = id {
 		let text = guard.span_text(id.range(&*guard));
 		if guard.typescript() && DISALLOWED_TYPE_NAMES.contains(&text) {
 			let err = guard

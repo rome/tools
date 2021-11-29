@@ -39,7 +39,7 @@
             0: OBJECT_PATTERN@35..44
               0: L_CURLY@35..37 "{" [] [Whitespace(" ")]
               1: LIST@37..42
-                0: JS_UNKNOWN_PATTERN@37..42
+                0: JS_UNKNOWN_BINDING@37..42
                   0: IDENT@37..42 "eval" [] [Whitespace(" ")]
               2: R_CURLY@42..44 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@44..61

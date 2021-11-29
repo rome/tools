@@ -31,7 +31,7 @@ JsRoot {
         0: WILDCARD_IMPORT@7..16
           0: STAR@7..9 "*" [] [Whitespace(" ")]
           1: AS_KW@9..12 "as" [] [Whitespace(" ")]
-          2: NAME@12..16
+          2: JS_IDENTIFIER_BINDING@12..16
             0: IDENT@12..16 "foo" [] [Whitespace(" ")]
       2: FROM_KW@16..21 "from" [] [Whitespace(" ")]
       3: JS_STRING_LITERAL@21..26 "\"bla\"" [] []

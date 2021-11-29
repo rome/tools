@@ -85,13 +85,6 @@ error[SyntaxError]: Illegal use of `yield` as an identifier in generator functio
   │        ^^^^^
 
 --
-error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode
-  ┌─ binding_identifier_invalid.js:3:8
-  │
-3 │    let yield = 5;
-  │        ^^^^^
-
---
 error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
   ┌─ binding_identifier_invalid.js:5:5
   │

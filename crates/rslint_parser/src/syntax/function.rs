@@ -2,7 +2,7 @@ use crate::parser::ConditionalParsedSyntax::Valid;
 use crate::parser::ParsedSyntax;
 use crate::syntax::decl::parameter_list;
 use crate::syntax::js_parse_error;
-use crate::syntax::pat::opt_binding_identifier;
+use crate::syntax::pat::parse_identifier_binding;
 use crate::syntax::stmt::{block_impl, is_semi};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::ConditionalParsedSyntax::Invalid;
@@ -12,7 +12,7 @@ use crate::{CompletedMarker, Parser, ParserState};
 use crate::{ConditionalParsedSyntax, SyntaxFeature};
 use rslint_syntax::SyntaxKind::{
 	ERROR, JS_FUNCTION_BODY, JS_FUNCTION_DECLARATION, JS_FUNCTION_EXPRESSION,
-	JS_IDENTIFIER_BINDING, JS_UNKNOWN_EXPRESSION, JS_UNKNOWN_STATEMENT, TS_TYPE_ANNOTATION,
+	JS_UNKNOWN_EXPRESSION, JS_UNKNOWN_STATEMENT, TS_TYPE_ANNOTATION,
 };
 use rslint_syntax::{SyntaxKind, T};
 use std::collections::HashMap;
@@ -38,6 +38,8 @@ use std::collections::HashMap;
 // function *foo() {}
 // yield foo;
 // function test(): number {}
+// function foo(await) {}
+// function foo(yield) {}
 pub(super) fn function_declaration(p: &mut Parser) -> CompletedMarker {
 	function(p, JS_FUNCTION_DECLARATION)
 		.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
@@ -73,18 +75,17 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 		..p.state.clone()
 	});
 
-	let id = opt_binding_identifier(guard);
+	let id = parse_identifier_binding(guard);
 
-	if let Some(mut identifier_marker) = id {
-		identifier_marker.change_kind(guard, JS_IDENTIFIER_BINDING);
-	} else if kind == JS_FUNCTION_DECLARATION {
-		let err = guard
-			.err_builder(
+	if kind == JS_FUNCTION_DECLARATION {
+		id.or_missing_with_error(guard, |p, range| {
+			p.err_builder(
 				"expected a name for the function in a function declaration, but found none",
 			)
-			.primary(guard.cur_tok().range, "");
-
-		guard.error(err);
+			.primary(range, "")
+		});
+	} else {
+		id.or_missing(guard);
 	}
 
 	let type_parameters =

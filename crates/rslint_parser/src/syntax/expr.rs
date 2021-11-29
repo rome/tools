@@ -14,6 +14,9 @@ use crate::syntax::function::function_expression;
 use crate::syntax::js_parse_error;
 use crate::syntax::object::object_expr;
 use crate::syntax::stmt::is_semi;
+use crate::ConditionalParsedSyntax::{Invalid, Valid};
+use crate::JsSyntaxFeature::StrictMode;
+use crate::ParsedSyntax::Absent;
 use crate::{SyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -1018,12 +1021,14 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		}
 		T![ident] | T![yield] | T![await] => {
 			// test identifier_reference
+			// // SCRIPT
 			// foo;
 			// yield;
 			// await;
 			let mut ident = reference_identifier_expression(p)?;
 			if p.state.potential_arrow_start && p.at(T![=>]) && !p.has_linebreak_before_n(0) {
 				// test arrow_expr_single_param
+				// // SCRIPT
 				// foo => {}
 				// yield => {}
 				// await => {}
@@ -1118,13 +1123,10 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 }
 
 pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker> {
-	match p.cur() {
-		T![ident] | T![yield] | T![await] => {
-			let m = p.start();
-			p.bump_remap(T![ident]);
-			Some(m.complete(p, JS_REFERENCE_IDENTIFIER_EXPRESSION))
-		}
-		_ => {
+	parse_identifier(p, JS_REFERENCE_IDENTIFIER_EXPRESSION)
+		.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
+		.ok()
+		.or_else(|| {
 			let err = p
 				.err_builder("Expected an identifier, but found none")
 				.primary(p.cur_tok().range, "");
@@ -1138,7 +1140,63 @@ pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker
 			.enabled_braces_check()
 			.recover(p);
 			None
+		})
+}
+
+// test identifier_loose_mode
+// // SCRIPT
+// foo;
+// yield;
+// await;
+//
+// test identifier
+// foo;
+// await;
+//
+// test_err identifier_err
+// yield;
+// async function test(await) {}
+// function* test(yield) {}
+pub(crate) fn parse_identifier(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
+	match p.cur() {
+		T![yield] | T![await] | T![ident] => {
+			let m = p.start();
+			let name = p.cur_src();
+
+			let mut valid = false;
+
+			if name == "await" && p.state.in_async {
+				let err = p
+					.err_builder("Illegal use of `await` as an identifier in an async context")
+					.primary(p.cur_tok().range, "");
+				p.error(err);
+			} else if name == "yield" && p.state.in_generator {
+				let err = p
+					.err_builder("Illegal use of `yield` as an identifier in generator function")
+					.primary(p.cur_tok().range, "");
+				p.error(err);
+			} else if StrictMode.is_supported(p) && (name == "yield") {
+				let err = p
+					.err_builder(&format!(
+						"Illegal use of `{}` as an identifier in strict mode",
+						name
+					))
+					.primary(p.cur_tok().range, "");
+				p.error(err);
+			} else {
+				valid = true;
+			}
+
+			p.bump_remap(T![ident]);
+			let completed = m.complete(p, kind);
+
+			if valid {
+				Valid(completed.into())
+			} else {
+				Invalid(completed.into())
+			}
 		}
+		_ => Invalid(Absent.into()),
 	}
 }
 

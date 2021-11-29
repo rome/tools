@@ -1,21 +1,23 @@
-0: JS_ROOT@0..141
+0: JS_ROOT@0..187
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..140
+  2: LIST@0..186
     0: JS_FUNCTION_DECLARATION@0..13
       0: FUNCTION_KW@0..8 "function" [] []
-      1: JS_PARAMETER_LIST@8..11
+      1: (empty)
+      2: JS_PARAMETER_LIST@8..11
         0: L_PAREN@8..9 "(" [] []
         1: LIST@9..9
         2: R_PAREN@9..11 ")" [] [Whitespace(" ")]
-      2: JS_FUNCTION_BODY@11..13
+      3: JS_FUNCTION_BODY@11..13
         0: L_CURLY@11..12 "{" [] []
         1: LIST@12..12
         2: LIST@12..12
         3: R_CURLY@12..13 "}" [] []
     1: JS_FUNCTION_DECLARATION@13..41
       0: FUNCTION_KW@13..23 "function" [Whitespace("\n")] [Whitespace(" ")]
-      1: JS_PARAMETER_LIST@23..39
+      1: (empty)
+      2: JS_PARAMETER_LIST@23..39
         0: (empty)
         1: LIST@23..37
           0: JS_UNKNOWN_PATTERN@23..24
@@ -31,7 +33,7 @@
           6: JS_UNKNOWN_PATTERN@36..37
             0: L_PAREN@36..37 "(" [] []
         2: R_PAREN@37..39 ")" [] [Whitespace(" ")]
-      2: JS_FUNCTION_BODY@39..41
+      3: JS_FUNCTION_BODY@39..41
         0: L_CURLY@39..40 "{" [] []
         1: LIST@40..40
         2: LIST@40..40
@@ -39,11 +41,12 @@
     2: JS_FUNCTION_DECLARATION@41..61
       0: ASYNC_KW@41..48 "async" [Whitespace("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@48..56 "function" [] []
-      2: JS_PARAMETER_LIST@56..59
+      2: (empty)
+      3: JS_PARAMETER_LIST@56..59
         0: L_PAREN@56..57 "(" [] []
         1: LIST@57..57
         2: R_PAREN@57..59 ")" [] [Whitespace(" ")]
-      3: JS_FUNCTION_BODY@59..61
+      4: JS_FUNCTION_BODY@59..61
         0: L_CURLY@59..60 "{" [] []
         1: LIST@60..60
         2: LIST@60..60
@@ -52,11 +55,12 @@
       0: ASYNC_KW@61..68 "async" [Whitespace("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@68..77 "function" [] [Whitespace(" ")]
       2: STAR@77..78 "*" [] []
-      3: JS_PARAMETER_LIST@78..81
+      3: (empty)
+      4: JS_PARAMETER_LIST@78..81
         0: L_PAREN@78..79 "(" [] []
         1: LIST@79..79
         2: R_PAREN@79..81 ")" [] [Whitespace(" ")]
-      4: JS_FUNCTION_BODY@81..83
+      5: JS_FUNCTION_BODY@81..83
         0: L_CURLY@81..82 "{" [] []
         1: LIST@82..82
         2: LIST@82..82
@@ -76,7 +80,7 @@
         2: LIST@101..101
         3: R_CURLY@101..102 "}" [] []
     5: JS_EXPRESSION_STATEMENT@102..109
-      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@102..109
+      0: JS_UNKNOWN_EXPRESSION@102..109
         0: IDENT@102..109 "yield" [Whitespace("\n")] [Whitespace(" ")]
       1: (empty)
     6: JS_EXPRESSION_STATEMENT@109..113
@@ -100,7 +104,39 @@
         1: LIST@139..139
         2: LIST@139..139
         3: R_CURLY@139..140 "}" [] []
-  3: EOF@140..141 "" [Whitespace("\n")] []
+    8: JS_FUNCTION_DECLARATION@140..163
+      0: FUNCTION_KW@140..150 "function" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@150..153
+        0: IDENT@150..153 "foo" [] []
+      2: JS_PARAMETER_LIST@153..161
+        0: L_PAREN@153..154 "(" [] []
+        1: LIST@154..159
+          0: SINGLE_PATTERN@154..159
+            0: NAME@154..159
+              0: IDENT@154..159 "await" [] []
+        2: R_PAREN@159..161 ")" [] [Whitespace(" ")]
+      3: JS_FUNCTION_BODY@161..163
+        0: L_CURLY@161..162 "{" [] []
+        1: LIST@162..162
+        2: LIST@162..162
+        3: R_CURLY@162..163 "}" [] []
+    9: JS_FUNCTION_DECLARATION@163..186
+      0: FUNCTION_KW@163..173 "function" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@173..176
+        0: IDENT@173..176 "foo" [] []
+      2: JS_PARAMETER_LIST@176..184
+        0: L_PAREN@176..177 "(" [] []
+        1: LIST@177..182
+          0: SINGLE_PATTERN@177..182
+            0: JS_UNKNOWN_PATTERN@177..182
+              0: IDENT@177..182 "yield" [] []
+        2: R_PAREN@182..184 ")" [] [Whitespace(" ")]
+      3: JS_FUNCTION_BODY@184..186
+        0: L_CURLY@184..185 "{" [] []
+        1: LIST@185..185
+        2: LIST@185..185
+        3: R_CURLY@185..186 "}" [] []
+  3: EOF@186..187 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected a name for the function in a function declaration, but found none
   ┌─ function_decl_err.js:1:9
@@ -172,6 +208,13 @@ error[SyntaxError]: expected a name for the function in a function declaration, 
   │                 ^
 
 --
+error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode
+  ┌─ function_decl_err.js:7:1
+  │
+7 │ yield foo;
+  │ ^^^^^
+
+--
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ function_decl_err.js:7:7
   │
@@ -189,6 +232,13 @@ error[SyntaxError]: return types can only be used in TypeScript files
   │                ^^^^^^^^
 
 --
+error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode
+   ┌─ function_decl_err.js:10:14
+   │
+10 │ function foo(yield) {}
+   │              ^^^^^
+
+--
 function() {}
 function {}
 function *() {}
@@ -197,3 +247,5 @@ async function *() {}
 function *foo() {}
 yield foo;
 function test(): number {}
+function foo(await) {}
+function foo(yield) {}

@@ -1,7 +1,10 @@
-use super::expr::{assign_expr, identifier_name, lhs_expr, reference_identifier_expression};
+use super::expr::{assign_expr, identifier_name, lhs_expr};
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::syntax::object::object_prop_name;
+use crate::syntax::expr::{literal_expression, parse_identifier};
+use crate::syntax::object::computed_member_name;
+use crate::JsSyntaxFeature::StrictMode;
+use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
 
 pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<CompletedMarker> {
@@ -68,7 +71,18 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 						.insert(p.cur_src().to_string(), p.cur_tok().range);
 				}
 			}
-			binding_identifier(p);
+
+			if let Present(mut identifier) = parse_identifier_binding(p) {
+				// TODO 1725 remove after changing patterns to use binding identifiers
+				let mapped_ident_kind = match identifier.kind() {
+					JS_IDENTIFIER_BINDING => NAME,
+					JS_UNKNOWN_BINDING => JS_UNKNOWN_PATTERN,
+					k => k,
+				};
+
+				identifier.change_kind(p, mapped_ident_kind);
+			}
+
 			m.complete(p, SINGLE_PATTERN)
 		}
 		_ => {
@@ -86,13 +100,13 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 	})
 }
 
-pub fn opt_binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
-	const BINDING_IDENTS: TokenSet = token_set![T![ident], T![yield], T![await]];
-
-	if p.at_ts(BINDING_IDENTS) {
-		binding_identifier(p)
-	} else {
-		None
+// test object_prop_name
+// let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
+pub fn object_binding_prop_name(p: &mut Parser) -> Option<CompletedMarker> {
+	match p.cur() {
+		JS_STRING_LITERAL | JS_NUMBER_LITERAL => literal_expression(p),
+		T!['['] => computed_member_name(p).ok(),
+		_ => parse_identifier_binding(p).ok(),
 	}
 }
 
@@ -102,41 +116,30 @@ pub fn opt_binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 //    let yield = 5;
 // }
 // let eval = 5;
-pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
-	let mut kind_to_change = NAME;
-	if p.at(T![yield]) && p.state.in_generator {
-		let err = p
-			.err_builder("Illegal use of `yield` as an identifier in generator function")
-			.primary(p.cur_tok().range, "");
+pub fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
+	let parsed =
+		parse_identifier(p, JS_IDENTIFIER_BINDING).or_invalid_to_unknown(p, JS_UNKNOWN_BINDING);
 
-		kind_to_change = JS_UNKNOWN_PATTERN;
-		p.error(err);
+	if let Present(mut identifier) = parsed {
+		let identifier_name = identifier.text(p);
+
+		if StrictMode.is_supported(p)
+			&& (identifier_name == "eval" || identifier_name == "arguments")
+		{
+			let err = p
+				.err_builder(&format!(
+					"Illegal use of `{}` as an identifier in strict mode",
+					identifier_name
+				))
+				.primary(identifier.range(p), "");
+			p.error(err);
+
+			identifier.change_kind(p, JS_UNKNOWN_BINDING);
+		}
+		Present(identifier)
+	} else {
+		Absent
 	}
-
-	if p.at(T![await]) && p.state.in_async {
-		let err = p
-			.err_builder("Illegal use of `await` as an identifier in an async context")
-			.primary(p.cur_tok().range, "");
-		kind_to_change = JS_UNKNOWN_PATTERN;
-		p.error(err);
-	}
-
-	if p.state.strict.is_some()
-		&& (p.cur_src() == "eval" || p.cur_src() == "arguments" || p.cur_src() == "yield")
-	{
-		let err = p
-			.err_builder(&format!(
-				"Illegal use of `{}` as an identifier in strict mode",
-				p.cur_src()
-			))
-			.primary(p.cur_tok().range, "");
-		kind_to_change = JS_UNKNOWN_PATTERN;
-		p.error(err);
-	}
-
-	let mut m = reference_identifier_expression(p)?;
-	m.change_kind(p, kind_to_change);
-	Some(m)
 }
 
 pub fn binding_element(
@@ -246,7 +249,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	let name = if (p.cur().is_keyword() || p.cur() == T![ident]) && p.nth(1) == T![:] {
 		identifier_name(p)
 	} else {
-		object_prop_name(p, true)
+		object_binding_prop_name(p)
 	};
 
 	if p.eat(T![:]) {
@@ -254,7 +257,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 		return Some(m.complete(p, KEY_VALUE_PATTERN));
 	}
 
-	let name = if let Some(n) = name {
+	let mut name = if let Some(n) = name {
 		n
 	} else {
 		m.abandon(p);
@@ -266,6 +269,10 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 		.recover(p);
 		return None;
 	};
+
+	if name.kind() == JS_IDENTIFIER_BINDING {
+		name.change_kind(p, NAME);
+	}
 
 	if name.kind() != NAME {
 		m.abandon(p);

@@ -8,6 +8,7 @@ use crate::parser::SingleTokenParseRecovery;
 use crate::syntax::class::class_declaration;
 use crate::syntax::expr::any_reference_member;
 use crate::syntax::function::function_declaration;
+use crate::syntax::pat::parse_identifier_binding;
 use crate::{SyntaxKind::*, *};
 
 pub const BASE_TS_RECOVERY_SET: TokenSet = token_set![
@@ -534,8 +535,8 @@ pub(crate) fn try_parse_index_signature(
 		return Err(m);
 	}
 
-	let pat_m = p.start();
-	identifier_name(p);
+	let pat_m = parse_identifier_binding(p).ok().unwrap().undo_completion(p);
+
 	if p.expect_no_recover(T![:]).is_none() {
 		return Err(m);
 	}
