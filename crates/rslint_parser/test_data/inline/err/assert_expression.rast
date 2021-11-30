@@ -1,3 +1,31 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        ImportDecl {
+            import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
+            imports: [
+                NamedImports {
+                    l_curly_token: L_CURLY@7..9 "{" [] [Whitespace(" ")],
+                    specifiers: [
+                        Specifier {
+                            name: missing (required),
+                        }
+                        ,
+                    ],
+                    r_curly_token: R_CURLY@11..13 "}" [] [Whitespace(" ")],
+                },
+            ],
+            type_token: missing (optional),
+            from_token: FROM_KW@13..18 "from" [] [Whitespace(" ")],
+            source_token: JS_STRING_LITERAL@18..27 "\"a.json\"" [] [Whitespace(" ")],
+            asserted_object: missing (required),
+            assert_token: ASSERT_KW@27..33 "assert" [] [],
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..34
   0: (empty)
   1: LIST@0..0

@@ -194,14 +194,13 @@ pub fn import_decl(p: &mut Parser) -> CompletedMarker {
 	// test_err assert_expression
 	// import { a } from "a.json" assert
 	if p.cur_src() == "assert" {
-		let start_range = p.cur_tok().range;
+		let assert_token_range = p.cur_tok().range;
 		p.bump_remap(T![assert]);
 		let parsed_object_expression = parse_object_expression(p);
 		if parsed_object_expression.is_absent() {
 			let err = p
 				.err_builder("assert clauses in import declarations require an object expression")
-				// we apply -1 because the current token is a newline
-				.primary(start_range.start..p.cur_tok().range.end - 1, "");
+				.primary(assert_token_range, "");
 
 			p.error(err);
 		}
