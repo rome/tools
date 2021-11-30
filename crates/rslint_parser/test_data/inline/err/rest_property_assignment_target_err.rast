@@ -48,7 +48,11 @@
                 0: DOT2@46..49 "..." [] []
                 1: JS_UNKNOWN_ASSIGNMENT_TARGET@49..53
                   0: L_CURLY@49..50 "{" [] []
-                  1: IDENT@50..51 "a" [] []
+                  1: LIST@50..51
+                    0: JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@50..51
+                      0: JS_IDENTIFIER_ASSIGNMENT_TARGET@50..51
+                        0: IDENT@50..51 "a" [] []
+                      1: (empty)
                   2: R_CURLY@51..53 "}" [] [Whitespace(" ")]
             2: R_CURLY@53..55 "}" [] [Whitespace(" ")]
           1: EQ@55..57 "=" [] [Whitespace(" ")]
@@ -114,11 +118,11 @@ error[SyntaxError]: rest element cannot have a default
   │    Rest element
 
 --
-error[SyntaxError]: Invalid assignment to `{a}`
+error[SyntaxError]: object and array assignment targets are not allowed in rest patterns
   ┌─ rest_property_assignment_target_err.js:3:7
   │
 3 │ ({ ...{a} } = b);
-  │       ^^^ This expression cannot be assigned to
+  │       ^^^
 
 --
 error[SyntaxError]: rest element must be the last element

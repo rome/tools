@@ -129,11 +129,11 @@ error[SyntaxError]: expected `,` but instead found `;`
   │                ^ unexpected
 
 --
-error[SyntaxError]: expected an identifier, or an assignment target but instead found ';'
+error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found ';'
   ┌─ rest_property_binding_err.js:1:16
   │
 1 │ let { ... } = a;
-  │                ^ Expected an identifier, or an assignment target here
+  │                ^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
 
 --
 error[SyntaxError]: expected `'}'` but instead found `;`

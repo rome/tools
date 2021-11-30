@@ -1,10 +1,11 @@
 use crate::parser::{ParsedSyntax, RecoveryError};
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::{
-	conditional_expr, expr, expr_or_assignment, identifier_name, unary_expr, EXPR_RECOVERY_SET,
+	conditional_expr, expr, expr_or_assignment, is_at_reference_identifier_member,
+	parse_reference_identifier_member, unary_expr, EXPR_RECOVERY_SET,
 };
 use crate::syntax::js_parse_error::{
-	expected_array_assignment_target_element, expected_assignment_target,
+	expected_array_assignment_target_element, expected_assignment_target, expected_identifier,
 	expected_property_assignment_target, expected_simple_assignment_target,
 };
 use crate::ParsedSyntax::{Absent, Present};
@@ -215,7 +216,41 @@ fn parse_array_assignment_target_rest_element(p: &mut Parser) -> ParsedSyntax {
 	Present(m.complete(p, JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT))
 }
 
-pub(crate) trait ParseObjectPattern {
+fn parse_identifier_assignment_target(p: &mut Parser) -> ParsedSyntax {
+	match p.cur() {
+		T![yield] | T![await] | T![ident] => {
+			let m = p.start();
+			let name = p.cur_src();
+
+			let mut valid = false;
+
+			if name == "await" && p.state.in_async {
+				let err = p
+					.err_builder("Illegal use of `await` as an identifier in an async context")
+					.primary(p.cur_tok().range, "");
+				p.error(err);
+			} else if name == "yield" && p.state.in_generator {
+				let err = p
+					.err_builder("Illegal use of `yield` as an identifier in a generator function")
+					.primary(p.cur_tok().range, "");
+				p.error(err);
+			} else {
+				valid = true;
+			}
+
+			p.bump_remap(T![ident]);
+
+			if valid {
+				Present(m.complete(p, JS_IDENTIFIER_ASSIGNMENT_TARGET))
+			} else {
+				Present(m.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET))
+			}
+		}
+		_ => Absent,
+	}
+}
+
+pub(crate) trait ObjectPattern {
 	fn parse_object_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		if !p.at(T!['{']) {
 			return Absent;
@@ -303,151 +338,131 @@ pub(crate) trait ParseObjectPattern {
 	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax;
 }
 
+fn parse_object_assignment_target(p: &mut Parser) -> ParsedSyntax {
+	ObjectAssignmentTarget.parse_object_pattern(p)
+}
+
+struct ObjectAssignmentTarget;
+
 // test object_assignment_target
 // ({} = {});
 // ({ bar, baz } = {});
 // ({ bar: [baz = "baz"], foo = "foo", ...rest } = {});
-fn parse_object_assignment_target(p: &mut Parser) -> ParsedSyntax {
-	if !p.at(T!['{']) {
-		return Absent;
+impl ObjectPattern for ObjectAssignmentTarget {
+	fn unknown_pattern_kind(&self) -> SyntaxKind {
+		JS_UNKNOWN_ASSIGNMENT_TARGET
 	}
 
-	let m = p.start();
+	fn object_pattern_kind(&self) -> SyntaxKind {
+		JS_OBJECT_ASSIGNMENT_TARGET
+	}
 
-	p.bump(T!['{']);
-	let elements = p.start();
+	fn expected_property_pattern_error(&self, p: &Parser, range: Range<usize>) -> Diagnostic {
+		expected_property_assignment_target(p, range)
+	}
 
-	while !p.at(T!['}']) {
-		if p.at(T![,]) {
-			p.missing(); // missing element
-			p.bump_any();
-			continue;
+	// test property_assignment_target
+	// ({x}= {});
+	// ({x: y}= {});
+	// ({x: y.test().z}= {});
+	// ({x: ((z))}= {});
+	// ({x: z["computed"]}= {});
+	// ({x = "default"}= {});
+	// ({x: y = "default"}= {});
+	//
+	// test_err property_assignment_target_err
+	// ({:y} = {});
+	// ({=y} = {});
+	// ({:="test"} = {});
+	// ({:=} = {});
+	// ({ a b } = {});
+	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		if !is_at_reference_identifier_member(p) && !p.at_ts(token_set![T![:], T![=]]) {
+			return Absent;
 		}
 
-		let recovery = ParseRecovery::new(
-			JS_UNKNOWN_ASSIGNMENT_TARGET,
-			token_set!(EOF, T![,], T!['}'], T![...], T![;]),
-		)
-		.enable_recovery_on_line_break();
+		let m = p.start();
+		parse_reference_identifier_member(p).or_missing_with_error(p, expected_identifier);
 
-		if let Present(rest) = parse_object_rest_property_assignment_target(p) {
-			if validate_rest_pattern(p, rest, T!['}'], &recovery, JS_UNKNOWN_ASSIGNMENT_TARGET) {
-				break;
-			}
-		} else {
-			let element = parse_property_assignment_target(p).or_recover(
-				p,
-				&recovery,
-				expected_property_assignment_target,
-			);
+		p.expect_required(T![:]);
 
-			if element.is_err() {
-				break;
-			}
-		}
-
-		if !p.at(T!['}']) {
-			p.expect_required(T![,]);
-		}
-	}
-
-	elements.complete(p, LIST);
-	p.expect(T!['}']);
-
-	Present(m.complete(p, JS_OBJECT_ASSIGNMENT_TARGET))
-}
-
-const PROPERTY_ASSIGNMENT_TARGET_START_TOKENS: TokenSet =
-	token_set![T![ident], T![yield], T![await], T![:], T![=]];
-
-// test property_assignment_target
-// ({x}= {});
-// ({x: y}= {});
-// ({x: y.test().z}= {});
-// ({x: ((z))}= {});
-// ({x: z["computed"]}= {});
-// ({x = "default"}= {});
-// ({x: y = "default"}= {});
-//
-// test_err property_assignment_target_err
-// ({:y} = {});
-// ({=y} = {});
-// ({:="test"} = {});
-// ({:=} = {});
-// ({ a b } = {});
-fn parse_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
-	if !p.at_ts(PROPERTY_ASSIGNMENT_TARGET_START_TOKENS) {
-		return Absent;
-	}
-
-	let m = p.start();
-	let property_name = identifier_name(p);
-	let is_shorthand_property = !p.at(T![:]);
-
-	if let Some(mut property_name) = property_name {
-		property_name.change_kind(
-			p,
-			if is_shorthand_property {
-				JS_IDENTIFIER_ASSIGNMENT_TARGET
-			} else {
-				JS_REFERENCE_IDENTIFIER_MEMBER
-			},
-		);
-	} else {
-		p.missing();
-	}
-
-	if !is_shorthand_property {
-		p.bump(T![:]);
 		parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
 			.or_missing_with_error(p, expected_assignment_target);
+
+		{
+			// TODO remove after migrating expression to `ParsedSyntax`
+			let mut guard = p.with_state(ParserState {
+				expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...]]),
+				..p.state.clone()
+			});
+			parse_equal_value_clause(&mut *guard).or_missing(&mut *guard);
+		}
+
+		Present(m.complete(p, JS_OBJECT_PROPERTY_ASSIGNMENT_TARGET))
 	}
 
-	{
-		// TODO remove after migrating expression to `ParsedSyntax`
-		let mut guard = p.with_state(ParserState {
-			expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...]]),
-			..p.state.clone()
-		});
-		parse_equal_value_clause(&mut *guard).or_missing(&mut *guard);
-	}
+	fn parse_shorthand_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		let identifier = parse_identifier_assignment_target(p);
 
-	Present(m.complete(
-		p,
-		if is_shorthand_property {
-			JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET
+		if p.at(T![=]) || identifier.is_present() {
+			let shorthand_prop = identifier.precede_or_missing_with_error(p, expected_identifier);
+
+			{
+				// TODO remove after migrating expression to `ParsedSyntax`
+				let mut guard = p.with_state(ParserState {
+					expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...]]),
+					..p.state.clone()
+				});
+				parse_equal_value_clause(&mut *guard).or_missing(&mut *guard);
+			}
+
+			Present(shorthand_prop.complete(p, JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET))
 		} else {
-			JS_OBJECT_PROPERTY_ASSIGNMENT_TARGET
-		},
-	))
-}
-
-// test rest_property_assignment_target
-// ({ ...abcd } = a);
-// ({ ...(abcd) } = a);
-// ({ ...m.test } = c);
-// ({ ...m[call()] } = c);
-// ({ ...any.expression().b } = c);
-// ({ b: { ...a } } = c);
-//
-// test_err rest_property_assignment_target_err
-// ({ ... } = a);
-// ({ ...c = "default" } = a);
-// ({ ...{a} } = b);
-// ({ ...rest, other_assignment } = a);
-// ({ ...rest, } = a);
-fn parse_object_rest_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
-	if !p.at(T![...]) {
-		return Absent;
+			Absent
+		}
 	}
 
-	let m = p.start();
-	p.bump(T![...]);
+	// test rest_property_assignment_target
+	// ({ ...abcd } = a);
+	// ({ ...(abcd) } = a);
+	// ({ ...m.test } = c);
+	// ({ ...m[call()] } = c);
+	// ({ ...any.expression().b } = c);
+	// ({ b: { ...a } } = c);
+	//
+	// test_err rest_property_assignment_target_err
+	// ({ ... } = a);
+	// ({ ...c = "default" } = a);
+	// ({ ...{a} } = b);
+	// ({ ...rest, other_assignment } = a);
+	// ({ ...rest, } = a);
+	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		if !p.at(T![...]) {
+			return Absent;
+		}
 
-	parse_simple_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
-		.or_missing_with_error(p, expected_assignment_target);
+		let m = p.start();
+		p.bump(T![...]);
 
-	Present(m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET))
+		let target = parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
+			.or_missing_with_error(p, expected_assignment_target);
+		if let Some(mut target) = target {
+			if matches!(
+				target.kind(),
+				JS_OBJECT_ASSIGNMENT_TARGET | JS_ARRAY_ASSIGNMENT_TARGET
+			) {
+				target.change_kind(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+				p.error(
+					p.err_builder(
+						"object and array assignment targets are not allowed in rest patterns",
+					)
+					.primary(target.range(p), ""),
+				);
+			}
+		}
+
+		Present(m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET))
+	}
 }
 
 fn try_expression_to_simple_assignment_target(

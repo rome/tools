@@ -110,11 +110,11 @@
       1: SEMICOLON@122..123 ";" [] []
   3: EOF@123..124 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected an identifier, or an assignment target but instead found '5'
+error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found '5'
   ┌─ object_binding_pattern.js:1:7
   │
 1 │ let { 5 } } = { eval: "foo" };
-  │       ^ Expected an identifier, or an assignment target here
+  │       ^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
 
 --
 error[SyntaxError]: Object and Array patterns require initializers
@@ -145,25 +145,25 @@ error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
   │       ^^^^
 
 --
-error[SyntaxError]: expected an identifier, or an assignment target but instead found '5'
+error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found '5'
   ┌─ object_binding_pattern.js:3:7
   │
 3 │ let { 5, 6 } = { eval: "foo" };
-  │       ^ Expected an identifier, or an assignment target here
+  │       ^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
 
 --
-error[SyntaxError]: expected an identifier, or an assignment target but instead found '6'
+error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found '6'
   ┌─ object_binding_pattern.js:3:10
   │
 3 │ let { 5, 6 } = { eval: "foo" };
-  │          ^ Expected an identifier, or an assignment target here
+  │          ^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
 
 --
-error[SyntaxError]: expected an identifier, or an assignment target but instead found 'default:'
+error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found 'default:'
   ┌─ object_binding_pattern.js:4:7
   │
 4 │ let { default: , bar } = {};
-  │       ^^^^^^^^ Expected an identifier, or an assignment target here
+  │       ^^^^^^^^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
 
 --
 let { 5 } } = { eval: "foo" };

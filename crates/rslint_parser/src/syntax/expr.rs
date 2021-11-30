@@ -23,7 +23,7 @@ use crate::syntax::pat::parse_identifier_binding;
 use crate::syntax::stmt::is_semi;
 use crate::ConditionalParsedSyntax::{Invalid, Valid};
 use crate::JsSyntaxFeature::StrictMode;
-use crate::ParsedSyntax::Absent;
+use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -539,15 +539,28 @@ pub(super) fn any_reference_member(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![#]) {
 		Some(reference_private_member(p))
 	} else {
-		reference_identifier_member(p)
+		parse_reference_identifier_member(p).ok()
 	}
 }
 
-fn reference_identifier_member(p: &mut Parser) -> Option<CompletedMarker> {
-	identifier_name(p).map(|mut ident| {
-		ident.change_kind(p, JS_REFERENCE_IDENTIFIER_MEMBER);
-		ident
-	})
+pub(super) fn is_at_reference_identifier_member(p: &Parser) -> bool {
+	p.at(T![ident]) || p.cur().is_keyword()
+}
+
+pub(super) fn parse_reference_identifier_member(p: &mut Parser) -> ParsedSyntax {
+	match p.cur() {
+		T![ident] => {
+			let m = p.start();
+			p.bump_any();
+			Present(m.complete(p, JS_REFERENCE_IDENTIFIER_MEMBER))
+		}
+		t if t.is_keyword() => {
+			let m = p.start();
+			p.bump_remap(T![ident]);
+			Present(m.complete(p, JS_REFERENCE_IDENTIFIER_MEMBER))
+		}
+		_ => Absent,
+	}
 }
 
 fn reference_private_member(p: &mut Parser) -> CompletedMarker {

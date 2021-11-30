@@ -96,18 +96,18 @@ error[SyntaxError]: expected `,` but instead found `bar`
   │              ^^^ unexpected
 
 --
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found ':'
+error[SyntaxError]: expected an identifier, a string literal, a number literal, or a computed property but instead found ':'
   ┌─ object_property_binding_err.js:2:7
   │
 2 │ let { : bar = "test" } = {}
-  │       ^ Expected a property, a shorthand property, a getter, a setter, or a method here
+  │       ^ Expected an identifier, a string literal, a number literal, or a computed property here
 
 --
-error[SyntaxError]: expected an identifier, or an assignment target but instead found ','
+error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found ','
   ┌─ object_property_binding_err.js:3:7
   │
 3 │ let { , foo: bar } = {}
-  │       ^ Expected an identifier, or an assignment target here
+  │       ^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
 
 --
 let { foo: , bar } = {}
