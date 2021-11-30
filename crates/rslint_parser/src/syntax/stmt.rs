@@ -14,7 +14,7 @@ use crate::syntax::assignment_target::{
 	expression_to_assignment_target, SimpleAssignmentTargetExprKind,
 };
 use crate::syntax::class::class_declaration;
-use crate::syntax::function::function_declaration;
+use crate::syntax::function::parse_function_declaration;
 use crate::syntax::js_parse_error;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
@@ -117,14 +117,14 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 		T![continue] => parse_continue_statement(p).ok().unwrap(), // It is only ever Err if there's no continue keyword
 		T![throw] => parse_throw_statement(p).ok().unwrap(),
 		T![debugger] => parse_debugger_statement(p).ok().unwrap(),
-		T![function] => function_declaration(p),
+		T![function] => parse_function_declaration(p).ok().unwrap(),
 		T![class] => class_declaration(p),
 		T![ident]
 			if p.cur_src() == "async"
 				&& p.nth_at(1, T![function])
 				&& !p.has_linebreak_before_n(1) =>
 		{
-			function_declaration(p)
+			parse_function_declaration(p).ok().unwrap()
 		}
 
 		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {

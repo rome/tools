@@ -41,11 +41,8 @@ use std::collections::HashMap;
 // function test(): number {}
 // function foo(await) {}
 // function foo(yield) {}
-pub(super) fn function_declaration(p: &mut Parser) -> CompletedMarker {
-	function(p, JS_FUNCTION_DECLARATION)
-		.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
-		.ok()
-		.unwrap()
+pub(super) fn parse_function_declaration(p: &mut Parser) -> ParsedSyntax {
+	function(p, JS_FUNCTION_DECLARATION).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
 }
 
 pub(super) fn function_expression(p: &mut Parser) -> CompletedMarker {

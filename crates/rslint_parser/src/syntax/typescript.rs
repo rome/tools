@@ -8,7 +8,7 @@ use crate::parser::ParserProgress;
 use crate::parser::SingleTokenParseRecovery;
 use crate::syntax::class::class_declaration;
 use crate::syntax::expr::any_reference_member;
-use crate::syntax::function::function_declaration;
+use crate::syntax::function::parse_function_declaration;
 use crate::syntax::js_parse_error;
 use crate::syntax::pat::parse_identifier_binding;
 use crate::{SyntaxKind::*, *};
@@ -150,7 +150,7 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 		..p.state.clone()
 	});
 	Some(match p.nth(1) {
-		T![function] => function_declaration(p),
+		T![function] => parse_function_declaration(p).ok().unwrap(),
 		T![class] => {
 			let m = p.start();
 			p.bump_remap(T![declare]);
