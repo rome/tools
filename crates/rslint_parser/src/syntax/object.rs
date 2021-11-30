@@ -6,7 +6,7 @@ use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
 use crate::syntax::expr::{expr, expr_or_assignment};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::syntax::js_parse_error;
-use crate::{CompletedMarker, ParseRecovery, Parser, ParserState, TokenSet};
+use crate::{ParseRecovery, Parser, ParserState, TokenSet};
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::T;
 
@@ -19,7 +19,6 @@ const STARTS_MEMBER_NAME: TokenSet = token_set![
 	T!['[']
 ];
 
-/// An object literal such as `{ a: b, "b": 5 + 5 }`.
 // test object_expr
 // let a = {};
 // let b = {foo,}
@@ -27,9 +26,14 @@ const STARTS_MEMBER_NAME: TokenSet = token_set![
 // test_err object_expr_err
 // let a = {, foo}
 // let b = { foo bar }
-pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
+
+/// An object literal such as `{ a: b, "b": 5 + 5 }`.
+pub(super) fn parse_object_expression(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T!['{']) {
+		return Absent;
+	}
 	let m = p.start();
-	p.expect_required(T!['{']);
+	p.bump(T!['{']);
 	let props_list = p.start();
 	let mut first = true;
 
@@ -50,7 +54,7 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 			continue;
 		}
 
-		let recovered_member = object_member(p).or_recover(
+		let recovered_member = parse_object_member(p).or_recover(
 			p,
 			ParseRecovery::new(JS_UNKNOWN_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
 				.enable_recovery_on_line_break(),
@@ -65,11 +69,11 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 	props_list.complete(p, LIST);
 
 	p.expect_required(T!['}']);
-	m.complete(p, JS_OBJECT_EXPRESSION)
+	Present(m.complete(p, JS_OBJECT_EXPRESSION))
 }
 
 /// An individual object property such as `"a": b` or `5: 6 + 6`.
-fn object_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		// test object_expr_getter
 		// let a = {
@@ -103,7 +107,7 @@ fn object_member(p: &mut Parser) -> ParsedSyntax {
 				&& !p.has_linebreak_before_n(1)
 				&& STARTS_MEMBER_NAME.contains(p.nth(1)) =>
 		{
-			setter_object_member(p)
+			parse_setter_object_member(p)
 		}
 
 		// test object_expr_async_method
@@ -111,7 +115,7 @@ fn object_member(p: &mut Parser) -> ParsedSyntax {
 		//   async foo() {},
 		//   async *foo() {}
 		// }
-		T![ident] if is_parser_at_async_method_member(p) => method_object_member(p),
+		T![ident] if is_parser_at_async_method_member(p) => parse_method_object_member(p),
 
 		// test object_expr_spread_prop
 		// let a = {...foo}
@@ -125,14 +129,14 @@ fn object_member(p: &mut Parser) -> ParsedSyntax {
 		T![*] => {
 			// test object_expr_generator_method
 			// let b = { *foo() {} }
-			method_object_member(p)
+			parse_method_object_member(p)
 		}
 
 		_ => {
 			let checkpoint = p.checkpoint();
 			let m = p.start();
 			let identifier_member_name = p.at(T![ident]) || p.cur().is_keyword();
-			let member_name = object_member_name(p)
+			let member_name = parse_object_member_name(p)
 				.or_missing_with_error(p, js_parse_error::expected_object_member);
 
 			// test object_expr_method
@@ -146,7 +150,7 @@ fn object_member(p: &mut Parser) -> ParsedSyntax {
 			// test_err object_expr_method
 			// let b = { foo) }
 			if p.at(T!['(']) || p.at(T![<]) {
-				method_object_member_body(p);
+				parse_method_object_member_body(p);
 				Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 			} else if let Some(mut member_name) = member_name {
 				// test object_expr_assign_prop
@@ -207,7 +211,8 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_remap(T![get]);
 
-	object_member_name(p).or_missing_with_error(p, js_parse_error::expected_object_member_name);
+	parse_object_member_name(p)
+		.or_missing_with_error(p, js_parse_error::expected_object_member_name);
 
 	p.expect_required(T!['(']);
 	p.expect_required(T![')']);
@@ -220,7 +225,7 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// Parses a setter object member like `{ set a(value) { .. } }`
-fn setter_object_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![ident]) || p.cur_src() != "set" {
 		return Absent;
 	}
@@ -228,7 +233,8 @@ fn setter_object_member(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_remap(T![set]);
 
-	object_member_name(p).or_missing_with_error(p, js_parse_error::expected_object_member_name);
+	parse_object_member_name(p)
+		.or_missing_with_error(p, js_parse_error::expected_object_member_name);
 
 	p.state.allow_object_expr = p.expect_required(T!['(']);
 	parse_formal_param_pat(p).or_missing_with_error(p, js_parse_error::expected_parameter);
@@ -243,18 +249,14 @@ fn setter_object_member(p: &mut Parser) -> ParsedSyntax {
 // test object_member_name
 // let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
 /// Parses a `JsAnyObjectMemberName` and returns its completion marker
-fn object_member_name(p: &mut Parser) -> ParsedSyntax {
+fn parse_object_member_name(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
-		T!['['] => computed_member_name(p),
-		_ => literal_member_name(p),
+		T!['['] => parse_computed_member_name(p),
+		_ => parse_literal_member_name(p),
 	}
 }
 
-fn is_at_object_member_name(p: &Parser) -> bool {
-	p.at_ts(STARTS_MEMBER_NAME)
-}
-
-pub(crate) fn computed_member_name(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T!['[']) {
 		return Absent;
 	}
@@ -266,7 +268,7 @@ pub(crate) fn computed_member_name(p: &mut Parser) -> ParsedSyntax {
 	Present(m.complete(p, JS_COMPUTED_MEMBER_NAME))
 }
 
-pub(super) fn literal_member_name(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	match p.cur() {
 		JS_STRING_LITERAL | JS_NUMBER_LITERAL | T![ident] => {
@@ -284,7 +286,7 @@ pub(super) fn literal_member_name(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// Parses a method object member
-fn method_object_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 	let is_async = is_parser_at_async_method_member(p);
 	if !is_async && !p.at(T![*]) && !is_at_object_member_name(p) {
 		return Absent;
@@ -304,7 +306,8 @@ fn method_object_member(p: &mut Parser) -> ParsedSyntax {
 	}
 
 	let in_generator = p.eat_optional(T![*]);
-	object_member_name(p).or_missing_with_error(p, js_parse_error::expected_object_member_name);
+	parse_object_member_name(p)
+		.or_missing_with_error(p, js_parse_error::expected_object_member_name);
 
 	{
 		let mut guard = p.with_state(ParserState {
@@ -312,14 +315,14 @@ fn method_object_member(p: &mut Parser) -> ParsedSyntax {
 			in_generator,
 			..p.state.clone()
 		});
-		method_object_member_body(&mut *guard);
+		parse_method_object_member_body(&mut *guard);
 	}
 
 	Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 }
 
 /// Parses the body of a method object member starting right after the member name.
-fn method_object_member_body(p: &mut Parser) {
+fn parse_method_object_member_body(p: &mut Parser) {
 	let old = p.state.to_owned();
 	p.state.in_function = true;
 
@@ -329,6 +332,10 @@ fn method_object_member_body(p: &mut Parser) {
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
 	p.state = old;
+}
+
+fn is_at_object_member_name(p: &Parser) -> bool {
+	p.at_ts(STARTS_MEMBER_NAME)
 }
 
 fn is_parser_at_async_method_member(p: &Parser) -> bool {

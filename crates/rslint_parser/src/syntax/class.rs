@@ -5,7 +5,7 @@ use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_pa
 use crate::syntax::expr::expr_or_assignment;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::syntax::js_parse_error;
-use crate::syntax::object::{computed_member_name, literal_member_name};
+use crate::syntax::object::{parse_computed_member_name, parse_literal_member_name};
 use crate::syntax::pat::parse_identifier_binding;
 use crate::syntax::stmt::{is_semi, optional_semi, parse_block_impl};
 use crate::syntax::typescript::{
@@ -231,10 +231,10 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 	if declare && !has_access_modifier {
 		// declare() and declare: foo
 		if is_method_class_member(p, offset) {
-			literal_member_name(p).ok().unwrap(); // bump declare as identifier
+			parse_literal_member_name(p).ok().unwrap(); // bump declare as identifier
 			return method_class_member_body(p, member_marker);
 		} else if is_property_class_member(p, offset) {
-			literal_member_name(p).ok().unwrap(); // bump declare as identifier
+			parse_literal_member_name(p).ok().unwrap(); // bump declare as identifier
 			return property_class_member_body(p, member_marker);
 		} else {
 			let msg = if p.typescript() {
@@ -852,8 +852,8 @@ fn ts_access_modifier<'a>(p: &'a Parser) -> Option<&'a str> {
 fn class_member_name(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		T![#] => Present(private_class_member_name(p)),
-		T!['['] => computed_member_name(p),
-		_ => literal_member_name(p),
+		T!['['] => parse_computed_member_name(p),
+		_ => parse_literal_member_name(p),
 	}
 }
 
