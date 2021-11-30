@@ -17,7 +17,7 @@ use crate::syntax::class::class_expression;
 use crate::syntax::function::function_expression;
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_simple_assignment_target;
-use crate::syntax::object::object_expr;
+use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::is_semi;
 use crate::ConditionalParsedSyntax::{Invalid, Valid};
 use crate::JsSyntaxFeature::StrictMode;
@@ -972,7 +972,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		// (foo)
 		T!['('] => paren_or_arrow_expr(p, p.state.potential_arrow_start),
 		T!['['] => array_expr(p),
-		T!['{'] if p.state.allow_object_expr => object_expr(p),
+		T!['{'] if p.state.allow_object_expr => parse_object_expression(p).or_missing(p).unwrap(),
 		T![import] => {
 			let m = p.start();
 			p.bump_any();

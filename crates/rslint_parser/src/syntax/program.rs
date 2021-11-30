@@ -8,7 +8,7 @@ use super::stmt::{semi, statements, variable_declaration_statement};
 use super::typescript::*;
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
-use crate::syntax::object::object_expr;
+use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::directives;
 use crate::{SyntaxKind::*, *};
 
@@ -191,16 +191,19 @@ pub fn import_decl(p: &mut Parser) -> CompletedMarker {
 		p.error(err);
 	}
 
+	// test_err assert_expression
+	// import { a } from "a.json" assert
 	if p.cur_src() == "assert" {
+		let start_range = p.cur_tok().range;
 		p.bump_remap(T![assert]);
-		if !p.at(T!['{']) {
+		let parsed_object_expression = parse_object_expression(p);
+		if parsed_object_expression.is_absent() {
 			let err = p
 				.err_builder("assert clauses in import declarations require an object expression")
-				.primary(p.cur_tok().range, "");
+				// we apply -1 because the current token is a newline
+				.primary(start_range.start..p.cur_tok().range.end - 1, "");
 
 			p.error(err);
-		} else {
-			object_expr(p);
 		}
 	}
 

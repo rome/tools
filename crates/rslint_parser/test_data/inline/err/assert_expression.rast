@@ -1,0 +1,28 @@
+0: JS_ROOT@0..34
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..33
+    0: IMPORT_DECL@0..33
+      0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
+      1: LIST@7..13
+        0: NAMED_IMPORTS@7..13
+          0: L_CURLY@7..9 "{" [] [Whitespace(" ")]
+          1: LIST@9..11
+            0: SPECIFIER@9..11
+              0: NAME@9..11
+                0: IDENT@9..11 "a" [] [Whitespace(" ")]
+          2: R_CURLY@11..13 "}" [] [Whitespace(" ")]
+      2: FROM_KW@13..18 "from" [] [Whitespace(" ")]
+      3: JS_STRING_LITERAL@18..27 "\"a.json\"" [] [Whitespace(" ")]
+      4: ASSERT_KW@27..33 "assert" [] []
+      5: (empty)
+  3: EOF@33..34 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: assert clauses in import declarations require an object expression
+  ┌─ assert_expression.js:1:28
+  │
+1 │ import { a } from "a.json" assert
+  │                            ^^^^^^
+
+--
+import { a } from "a.json" assert

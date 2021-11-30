@@ -6,7 +6,7 @@ use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
 use crate::syntax::expr::{expr, expr_or_assignment};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::syntax::js_parse_error;
-use crate::{CompletedMarker, ParseRecovery, Parser, ParserState, TokenSet};
+use crate::{ParseRecovery, Parser, ParserState, TokenSet};
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::T;
 
@@ -19,7 +19,6 @@ const STARTS_MEMBER_NAME: TokenSet = token_set![
 	T!['[']
 ];
 
-/// An object literal such as `{ a: b, "b": 5 + 5 }`.
 // test object_expr
 // let a = {};
 // let b = {foo,}
@@ -27,9 +26,14 @@ const STARTS_MEMBER_NAME: TokenSet = token_set![
 // test_err object_expr_err
 // let a = {, foo}
 // let b = { foo bar }
-pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
+
+/// An object literal such as `{ a: b, "b": 5 + 5 }`.
+pub(super) fn parse_object_expression(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T!['{']) {
+		return Absent;
+	}
 	let m = p.start();
-	p.expect_required(T!['{']);
+	p.bump(T!['{']);
 	let props_list = p.start();
 	let mut first = true;
 
@@ -65,7 +69,7 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 	props_list.complete(p, LIST);
 
 	p.expect_required(T!['}']);
-	m.complete(p, JS_OBJECT_EXPRESSION)
+	Present(m.complete(p, JS_OBJECT_EXPRESSION))
 }
 
 /// An individual object property such as `"a": b` or `5: 6 + 6`.
