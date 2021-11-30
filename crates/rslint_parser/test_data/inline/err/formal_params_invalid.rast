@@ -18,14 +18,16 @@ JsRoot {
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
-                    }missing separator,
+                    },
+                    missing separator,
                     JsUnknownPattern {
                         items: [
                             Token(
                                 PLUS2@11..13 "++" [] [],
                             ),
                         ],
-                    }COMMA@13..15 "," [] [Whitespace(" ")],
+                    },
+                    COMMA@13..15 "," [] [Whitespace(" ")],
                     SinglePattern {
                         name: Name {
                             ident_token: IDENT@15..16 "c" [] [],

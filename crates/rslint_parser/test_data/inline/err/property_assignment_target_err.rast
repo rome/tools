@@ -135,7 +135,8 @@ JsRoot {
                                     name_token: IDENT@61..63 "a" [] [Whitespace(" ")],
                                 },
                                 init: missing (optional),
-                            }missing separator,
+                            },
+                            missing separator,
                             JsShorthandPropertyAssignmentTarget {
                                 identifier: JsIdentifierAssignmentTarget {
                                     name_token: IDENT@63..65 "b" [] [Whitespace(" ")],

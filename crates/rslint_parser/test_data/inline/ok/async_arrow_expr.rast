@@ -87,7 +87,8 @@ JsRoot {
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
-                        }COMMA@60..62 "," [] [Whitespace(" ")],
+                        },
+                        COMMA@60..62 "," [] [Whitespace(" ")],
                         SinglePattern {
                             name: Name {
                                 ident_token: IDENT@62..65 "bar" [] [],
@@ -95,7 +96,8 @@ JsRoot {
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
-                        }COMMA@65..67 "," [] [Whitespace(" ")],
+                        },
+                        COMMA@65..67 "," [] [Whitespace(" ")],
                         JsRestParameter {
                             dotdotdot_token: DOT2@67..70 "..." [] [],
                             binding: SinglePattern {

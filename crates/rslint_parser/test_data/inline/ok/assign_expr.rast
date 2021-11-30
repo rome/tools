@@ -61,7 +61,8 @@ JsRoot {
                     elements: [
                         JsIdentifierAssignmentTarget {
                             name_token: IDENT@48..51 "foo" [] [],
-                        }COMMA@51..53 "," [] [Whitespace(" ")],
+                        },
+                        COMMA@51..53 "," [] [Whitespace(" ")],
                         JsIdentifierAssignmentTarget {
                             name_token: IDENT@53..56 "bar" [] [],
                         },
@@ -82,7 +83,8 @@ JsRoot {
                     elements: [
                         JsIdentifierAssignmentTarget {
                             name_token: IDENT@66..69 "foo" [] [],
-                        }COMMA@69..71 "," [] [Whitespace(" ")],
+                        },
+                        COMMA@69..71 "," [] [Whitespace(" ")],
                         JsAssignmentTargetWithDefault {
                             target: JsIdentifierAssignmentTarget {
                                 name_token: IDENT@71..75 "bar" [] [Whitespace(" ")],
@@ -91,7 +93,8 @@ JsRoot {
                             default: JsStringLiteralExpression {
                                 value_token: JS_STRING_LITERAL@77..86 "\"default\"" [] [],
                             },
-                        }COMMA@86..88 "," [] [Whitespace(" ")],
+                        },
+                        COMMA@86..88 "," [] [Whitespace(" ")],
                         JsArrayAssignmentTargetRestElement {
                             dotdotdot_token: DOT2@88..91 "..." [] [],
                             target: JsIdentifierAssignmentTarget {
@@ -113,12 +116,16 @@ JsRoot {
                 left: JsArrayAssignmentTarget {
                     l_brack_token: L_BRACK@103..105 "[" [Whitespace("\n")] [],
                     elements: [
-                        JsArrayHoleCOMMA@105..106 "," [] [],
-                        JsArrayHoleCOMMA@106..107 "," [] [],
-                        JsArrayHoleCOMMA@107..108 "," [] [],
+                        JsArrayHole,
+                        COMMA@105..106 "," [] [],
+                        JsArrayHole,
+                        COMMA@106..107 "," [] [],
+                        JsArrayHole,
+                        COMMA@107..108 "," [] [],
                         JsIdentifierAssignmentTarget {
                             name_token: IDENT@108..111 "foo" [] [],
-                        }COMMA@111..112 "," [] [],
+                        },
+                        COMMA@111..112 "," [] [],
                         JsIdentifierAssignmentTarget {
                             name_token: IDENT@112..115 "bar" [] [],
                         },
@@ -144,7 +151,8 @@ JsRoot {
                                     name_token: IDENT@127..130 "bar" [] [],
                                 },
                                 init: missing (optional),
-                            }COMMA@130..132 "," [] [Whitespace(" ")],
+                            },
+                            COMMA@130..132 "," [] [Whitespace(" ")],
                             JsShorthandPropertyAssignmentTarget {
                                 identifier: JsIdentifierAssignmentTarget {
                                     name_token: IDENT@132..136 "baz" [] [Whitespace(" ")],
@@ -193,7 +201,8 @@ JsRoot {
                                     r_brack_token: R_BRACK@165..166 "]" [] [],
                                 },
                                 init: missing (optional),
-                            }COMMA@166..168 "," [] [Whitespace(" ")],
+                            },
+                            COMMA@166..168 "," [] [Whitespace(" ")],
                             JsShorthandPropertyAssignmentTarget {
                                 identifier: JsIdentifierAssignmentTarget {
                                     name_token: IDENT@168..172 "foo" [] [Whitespace(" ")],
@@ -204,7 +213,8 @@ JsRoot {
                                         value_token: JS_STRING_LITERAL@174..179 "\"foo\"" [] [],
                                     },
                                 },
-                            }COMMA@179..181 "," [] [Whitespace(" ")],
+                            },
+                            COMMA@179..181 "," [] [Whitespace(" ")],
                             JsObjectRestPropertyAssignmentTarget {
                                 dotdotdot_token: DOT2@181..184 "..." [] [],
                                 target: JsIdentifierAssignmentTarget {

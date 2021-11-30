@@ -103,7 +103,8 @@ JsRoot {
                                         ,
                                     ),
                                 ],
-                            }COMMA@71..73 "," [] [Whitespace(" ")],
+                            },
+                            COMMA@71..73 "," [] [Whitespace(" ")],
                             JsShorthandPropertyAssignmentTarget {
                                 identifier: JsIdentifierAssignmentTarget {
                                     name_token: IDENT@73..90 "other_assignment" [] [Whitespace(" ")],
@@ -140,7 +141,8 @@ JsRoot {
                                         ,
                                     ),
                                 ],
-                            }COMMA@108..110 "," [] [Whitespace(" ")],
+                            },
+                            COMMA@108..110 "," [] [Whitespace(" ")],
                         ],
                         r_curly_token: R_CURLY@110..112 "}" [] [Whitespace(" ")],
                     },

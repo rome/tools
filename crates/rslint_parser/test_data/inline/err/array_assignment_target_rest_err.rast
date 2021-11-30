@@ -80,7 +80,8 @@ JsRoot {
                                         ,
                                     ),
                                 ],
-                            }COMMA@53..55 "," [] [Whitespace(" ")],
+                            },
+                            COMMA@53..55 "," [] [Whitespace(" ")],
                             JsIdentifierAssignmentTarget {
                                 name_token: IDENT@55..72 "other_assignment" [] [Whitespace(" ")],
                             },

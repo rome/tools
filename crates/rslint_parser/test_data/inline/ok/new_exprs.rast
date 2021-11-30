@@ -78,16 +78,19 @@ JsRoot {
                     args: [
                         JsReferenceIdentifierExpression {
                             name_token: IDENT@61..64 "bar" [] [],
-                        }COMMA@64..66 "," [] [Whitespace(" ")],
+                        },
+                        COMMA@64..66 "," [] [Whitespace(" ")],
                         JsReferenceIdentifierExpression {
                             name_token: IDENT@66..69 "baz" [] [],
-                        }COMMA@69..71 "," [] [Whitespace(" ")],
+                        },
+                        COMMA@69..71 "," [] [Whitespace(" ")],
                         JsBinaryExpression {
                             left: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@71..73 "6" [] [Whitespace(" ")],
                             },
                             operator: PLUS@73..75 "+" [] [Whitespace(" ")],
-                        }COMMA@76..78 "," [] [Whitespace(" ")],
+                        },
+                        COMMA@76..78 "," [] [Whitespace(" ")],
                         JsBinaryExpression {
                             left: JsComputedMemberExpression {
                                 object: JsReferenceIdentifierExpression {

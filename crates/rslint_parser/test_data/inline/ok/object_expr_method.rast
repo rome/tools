@@ -39,7 +39,8 @@ JsRoot {
                                             statements: [],
                                             r_curly_token: R_CURLY@17..18 "}" [] [],
                                         },
-                                    }COMMA@18..19 "," [] [],
+                                    },
+                                    COMMA@18..19 "," [] [],
                                     JsMethodObjectMember {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
@@ -57,7 +58,8 @@ JsRoot {
                                                     question_mark_token: missing (optional),
                                                     excl_token: missing (optional),
                                                     ty: missing (optional),
-                                                }COMMA@27..29 "," [] [Whitespace(" ")],
+                                                },
+                                                COMMA@27..29 "," [] [Whitespace(" ")],
                                                 SinglePattern {
                                                     name: Name {
                                                         ident_token: IDENT@29..30 "b" [] [],
@@ -65,7 +67,8 @@ JsRoot {
                                                     question_mark_token: missing (optional),
                                                     excl_token: missing (optional),
                                                     ty: missing (optional),
-                                                }COMMA@30..32 "," [] [Whitespace(" ")],
+                                                },
+                                                COMMA@30..32 "," [] [Whitespace(" ")],
                                                 SinglePattern {
                                                     name: Name {
                                                         ident_token: IDENT@32..33 "c" [] [],
@@ -84,7 +87,8 @@ JsRoot {
                                             statements: [],
                                             r_curly_token: R_CURLY@36..37 "}" [] [],
                                         },
-                                    }COMMA@37..38 "," [] [],
+                                    },
+                                    COMMA@37..38 "," [] [],
                                     JsMethodObjectMember {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
@@ -120,7 +124,8 @@ JsRoot {
                                             statements: [],
                                             r_curly_token: R_CURLY@59..60 "}" [] [],
                                         },
-                                    }COMMA@60..61 "," [] [],
+                                    },
+                                    COMMA@60..61 "," [] [],
                                     JsMethodObjectMember {
                                         async_token: missing (optional),
                                         star_token: missing (optional),

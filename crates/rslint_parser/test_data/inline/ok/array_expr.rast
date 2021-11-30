@@ -8,7 +8,8 @@ JsRoot {
                 elements: [
                     JsReferenceIdentifierExpression {
                         name_token: IDENT@1..4 "foo" [] [],
-                    }COMMA@4..6 "," [] [Whitespace(" ")],
+                    },
+                    COMMA@4..6 "," [] [Whitespace(" ")],
                     JsReferenceIdentifierExpression {
                         name_token: IDENT@6..9 "bar" [] [],
                     },
@@ -33,7 +34,8 @@ JsRoot {
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@18..20 "[" [Whitespace("\n")] [],
                 elements: [
-                    JsArrayHoleCOMMA@20..21 "," [] [],
+                    JsArrayHole,
+                    COMMA@20..21 "," [] [],
                     JsReferenceIdentifierExpression {
                         name_token: IDENT@21..24 "foo" [] [],
                     },
@@ -48,7 +50,8 @@ JsRoot {
                 elements: [
                     JsReferenceIdentifierExpression {
                         name_token: IDENT@28..31 "foo" [] [],
-                    }COMMA@31..32 "," [] [],
+                    },
+                    COMMA@31..32 "," [] [],
                 ],
                 r_brack_token: R_BRACK@32..33 "]" [] [],
             },
@@ -58,17 +61,26 @@ JsRoot {
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@34..36 "[" [Whitespace("\n")] [],
                 elements: [
-                    JsArrayHoleCOMMA@36..37 "," [] [],
-                    JsArrayHoleCOMMA@37..38 "," [] [],
-                    JsArrayHoleCOMMA@38..39 "," [] [],
-                    JsArrayHoleCOMMA@39..40 "," [] [],
-                    JsArrayHoleCOMMA@40..41 "," [] [],
+                    JsArrayHole,
+                    COMMA@36..37 "," [] [],
+                    JsArrayHole,
+                    COMMA@37..38 "," [] [],
+                    JsArrayHole,
+                    COMMA@38..39 "," [] [],
+                    JsArrayHole,
+                    COMMA@39..40 "," [] [],
+                    JsArrayHole,
+                    COMMA@40..41 "," [] [],
                     JsReferenceIdentifierExpression {
                         name_token: IDENT@41..44 "foo" [] [],
-                    }COMMA@44..45 "," [] [],
-                    JsArrayHoleCOMMA@45..46 "," [] [],
-                    JsArrayHoleCOMMA@46..47 "," [] [],
-                    JsArrayHoleCOMMA@47..48 "," [] [],
+                    },
+                    COMMA@44..45 "," [] [],
+                    JsArrayHole,
+                    COMMA@45..46 "," [] [],
+                    JsArrayHole,
+                    COMMA@46..47 "," [] [],
+                    JsArrayHole,
+                    COMMA@47..48 "," [] [],
                 ],
                 r_brack_token: R_BRACK@48..49 "]" [] [],
             },
@@ -83,7 +95,8 @@ JsRoot {
                         element: JsReferenceIdentifierExpression {
                             name_token: IDENT@55..56 "a" [] [],
                         },
-                    }COMMA@56..58 "," [] [Whitespace(" ")],
+                    },
+                    COMMA@56..58 "," [] [Whitespace(" ")],
                     SpreadElement {
                         dotdotdot_token: DOT2@58..61 "..." [] [],
                         element: JsReferenceIdentifierExpression {

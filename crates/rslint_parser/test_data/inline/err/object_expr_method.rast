@@ -25,7 +25,8 @@ JsRoot {
                                             value: IDENT@10..13 "foo" [] [],
                                         },
                                         colon_token: missing (required),
-                                    }missing separator,
+                                    },
+                                    missing separator,
                                     JsUnknownMember {
                                         items: [
                                             Token(

@@ -15,7 +15,8 @@ JsRoot {
                                         ident_token: IDENT@6..13 "default" [] [],
                                     },
                                     colon_token: COLON@13..15 ":" [] [Whitespace(" ")],
-                                }COMMA@18..20 "," [] [Whitespace(" ")],
+                                },
+                                COMMA@18..20 "," [] [Whitespace(" ")],
                                 SinglePattern {
                                     name: Name {
                                         ident_token: IDENT@20..24 "bar" [] [Whitespace(" ")],
@@ -62,7 +63,8 @@ JsRoot {
                                     value: JsReferenceIdentifierExpression {
                                         name_token: IDENT@43..46 "bar" [] [],
                                     },
-                                }COMMA@46..48 "," [] [Whitespace(" ")],
+                                },
+                                COMMA@46..48 "," [] [Whitespace(" ")],
                                 SinglePattern {
                                     name: Name {
                                         ident_token: IDENT@48..52 "baz" [] [Whitespace(" ")],

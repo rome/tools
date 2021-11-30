@@ -20,7 +20,8 @@ JsRoot {
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
-                    }COMMA@23..25 "," [] [Whitespace(" ")],
+                    },
+                    COMMA@23..25 "," [] [Whitespace(" ")],
                     SinglePattern {
                         name: Name {
                             ident_token: IDENT@25..26 "o" [] [],

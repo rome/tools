@@ -20,7 +20,8 @@ JsRoot {
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@8..9 "{" [] [],
                                 members: [
-                                    missing elementCOMMA@9..11 "," [] [Whitespace(" ")],
+                                    missing element,
+                                    COMMA@9..11 "," [] [Whitespace(" ")],
                                     JsShorthandPropertyObjectMember {
                                         name: JsReferenceIdentifierExpression {
                                             name_token: IDENT@11..14 "foo" [] [],

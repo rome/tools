@@ -41,7 +41,8 @@ JsRoot {
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                }COMMA@20..22 "," [] [Whitespace(" ")],
+                                },
+                                COMMA@20..22 "," [] [Whitespace(" ")],
                                 SinglePattern {
                                     name: Name {
                                         ident_token: IDENT@22..26 "bar" [] [Whitespace(" ")],
@@ -78,7 +79,8 @@ JsRoot {
                             ty: missing (optional),
                         },
                         init: missing (optional),
-                    }COMMA@40..42 "," [] [Whitespace(" ")],
+                    },
+                    COMMA@40..42 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
                         id: SinglePattern {
                             name: Name {
@@ -131,7 +133,8 @@ JsRoot {
                                         ident_token: IDENT@68..71 "foo" [] [],
                                     },
                                     colon_token: COLON@71..73 ":" [] [Whitespace(" ")],
-                                }COMMA@78..80 "," [] [Whitespace(" ")],
+                                },
+                                COMMA@78..80 "," [] [Whitespace(" ")],
                                 SinglePattern {
                                     name: Name {
                                         ident_token: IDENT@80..84 "baz" [] [Whitespace(" ")],
@@ -175,7 +178,8 @@ JsRoot {
                                 value_token: JS_STRING_LITERAL@102..109 "\"lorem\"" [] [],
                             },
                         },
-                    }COMMA@109..111 "," [] [Whitespace(" ")],
+                    },
+                    COMMA@109..111 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
                         id: SinglePattern {
                             name: Name {
@@ -191,7 +195,8 @@ JsRoot {
                                 value_token: JS_STRING_LITERAL@117..124 "\"ipsum\"" [] [],
                             },
                         },
-                    }COMMA@124..126 "," [] [Whitespace(" ")],
+                    },
+                    COMMA@124..126 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
                         id: SinglePattern {
                             name: Name {
@@ -207,7 +212,8 @@ JsRoot {
                                 value_token: JS_STRING_LITERAL@134..141 "\"value\"" [] [],
                             },
                         },
-                    }COMMA@141..143 "," [] [Whitespace(" ")],
+                    },
+                    COMMA@141..143 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
                         id: SinglePattern {
                             name: Name {

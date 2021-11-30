@@ -28,7 +28,8 @@ JsRoot {
                                         value: JsNumberLiteralExpression {
                                             value_token: JS_NUMBER_LITERAL@16..17 "4" [] [],
                                         },
-                                    }COMMA@17..19 "," [] [Whitespace(" ")],
+                                    },
+                                    COMMA@17..19 "," [] [Whitespace(" ")],
                                     InitializedProp {
                                         key: Name {
                                             ident_token: IDENT@19..23 "foo" [] [Whitespace(" ")],

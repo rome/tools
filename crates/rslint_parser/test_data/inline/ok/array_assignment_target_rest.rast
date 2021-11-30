@@ -178,7 +178,8 @@ JsRoot {
                                     elements: [
                                         JsIdentifierAssignmentTarget {
                                             name_token: IDENT@125..126 "x" [] [],
-                                        }COMMA@126..128 "," [] [Whitespace(" ")],
+                                        },
+                                        COMMA@126..128 "," [] [Whitespace(" ")],
                                         JsIdentifierAssignmentTarget {
                                             name_token: IDENT@128..129 "y" [] [],
                                         },

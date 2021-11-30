@@ -65,7 +65,8 @@ JsRoot {
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                }COMMA@34..36 "," [] [Whitespace(" ")],
+                                },
+                                COMMA@34..36 "," [] [Whitespace(" ")],
                                 SinglePattern {
                                     name: Name {
                                         ident_token: IDENT@36..39 "bar" [] [],
@@ -73,7 +74,8 @@ JsRoot {
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                }COMMA@39..41 "," [] [Whitespace(" ")],
+                                },
+                                COMMA@39..41 "," [] [Whitespace(" ")],
                                 KeyValuePattern {
                                     key: Name {
                                         ident_token: IDENT@41..42 "b" [] [],
@@ -105,7 +107,8 @@ JsRoot {
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
-                        }COMMA@69..71 "," [] [Whitespace(" ")],
+                        },
+                        COMMA@69..71 "," [] [Whitespace(" ")],
                         JsRestParameter {
                             dotdotdot_token: DOT2@71..74 "..." [] [],
                             binding: SinglePattern {
