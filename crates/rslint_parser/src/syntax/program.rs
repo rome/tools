@@ -408,7 +408,9 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		}
 
 		if p.cur_src() == "async" && p.nth_at(1, T![function]) && !p.has_linebreak_before_n(1) {
-			parse_function_declaration(p);
+			parse_function_declaration(p)
+				// it's fine to not handle the error the because the check on tokens are done beforehand
+				.or_missing(p);
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
 
@@ -432,7 +434,9 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 				&& p.nth_at(1, T![function])
 				&& !p.has_linebreak_before_n(1)))
 	{
-		parse_function_declaration(p);
+		parse_function_declaration(p)
+			// it's fine to not handle the error the because the check on tokens are done beforehand
+			.or_missing(p);
 	} else if !only_ty && p.at(T![const]) && p.nth_src(1) == "enum" {
 		ts_enum(p).err_if_not_ts(p, "enums can only be used in TypeScript files");
 	} else if !only_ty

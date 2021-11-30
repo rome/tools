@@ -15,7 +15,7 @@ use crate::syntax::assignment_target::{
 	parse_simple_assignment_target, SimpleAssignmentTargetExprKind,
 };
 use crate::syntax::class::class_expression;
-use crate::syntax::function::function_expression;
+use crate::syntax::function::parse_function_expression;
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_simple_assignment_target;
 use crate::syntax::object::parse_object_expression;
@@ -894,7 +894,10 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			// let a = async function() {};
 			// let b = async function foo() {};
 			if p.nth_at(1, T![function]) {
-				function_expression(p)
+				parse_function_expression(p)
+					// it's fine to not handle the error the because the check on tokens are done beforehand
+					.or_missing(p)
+					.unwrap()
 			} else {
 				// `async a => {}` and `async (a) => {}`
 				if p.state.potential_arrow_start
@@ -946,7 +949,9 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			// test function_expr
 			// let a = function() {}
 			// let b = function foo() {}
-			function_expression(p)
+
+			// it's fine to not handle the error because the check on the tokens is done beforehand
+			parse_function_expression(p).or_missing(p).unwrap()
 		}
 		T![ident] | T![yield] | T![await] => {
 			// test identifier_reference

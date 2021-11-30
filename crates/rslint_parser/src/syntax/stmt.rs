@@ -117,14 +117,18 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 		T![continue] => parse_continue_statement(p).ok().unwrap(), // It is only ever Err if there's no continue keyword
 		T![throw] => parse_throw_statement(p).ok().unwrap(),
 		T![debugger] => parse_debugger_statement(p).ok().unwrap(),
-		T![function] => parse_function_declaration(p).ok().unwrap(),
+		T![function] => parse_function_declaration(p)
+			// it's fine to not handle the error the because the check on tokens are done beforehand
+			.or_missing(p)
+			.unwrap(),
 		T![class] => class_declaration(p),
 		T![ident]
 			if p.cur_src() == "async"
 				&& p.nth_at(1, T![function])
 				&& !p.has_linebreak_before_n(1) =>
 		{
-			parse_function_declaration(p).ok().unwrap()
+			// it's fine to not handle the error the because the check on tokens are done beforehand
+			parse_function_declaration(p).or_missing(p).unwrap()
 		}
 
 		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {

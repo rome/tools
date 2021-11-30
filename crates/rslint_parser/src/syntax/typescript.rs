@@ -150,7 +150,10 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 		..p.state.clone()
 	});
 	Some(match p.nth(1) {
-		T![function] => parse_function_declaration(p).ok().unwrap(),
+		T![function] => parse_function_declaration(p)
+			// it's fine to not handle the error the because the check on tokens are done beforehand
+			.or_missing(p)
+			.unwrap(),
 		T![class] => {
 			let m = p.start();
 			p.bump_remap(T![declare]);
