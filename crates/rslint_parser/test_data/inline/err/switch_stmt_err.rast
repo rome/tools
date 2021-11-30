@@ -33,7 +33,24 @@ JsRoot {
                     case_token: missing (required),
                     test: missing (required),
                     colon_token: missing (required),
-                    consequent: [],
+                    consequent: [
+                        JsUnknownStatement {
+                            items: [
+                                Token(
+                                    VAR_KW@33..37 "var" [] [Whitespace(" ")],
+                                ),
+                                Token(
+                                    IDENT@37..39 "i" [] [Whitespace(" ")],
+                                ),
+                                Token(
+                                    EQ@39..41 "=" [] [Whitespace(" ")],
+                                ),
+                                Token(
+                                    JS_NUMBER_LITERAL@41..43 "0" [] [Whitespace(" ")],
+                                ),
+                            ],
+                        },
+                    ],
                 },
             ],
             r_curly_token: R_CURLY@43..44 "}" [] [],
@@ -49,7 +66,27 @@ JsRoot {
                     case_token: missing (required),
                     test: missing (required),
                     colon_token: missing (required),
-                    consequent: [],
+                    consequent: [
+                        JsUnknownStatement {
+                            items: [
+                                Token(
+                                    VAR_KW@54..58 "var" [] [Whitespace(" ")],
+                                ),
+                                Token(
+                                    IDENT@58..60 "i" [] [Whitespace(" ")],
+                                ),
+                                Token(
+                                    EQ@60..62 "=" [] [Whitespace(" ")],
+                                ),
+                                Token(
+                                    JS_NUMBER_LITERAL@62..63 "0" [] [],
+                                ),
+                                Token(
+                                    SEMICOLON@63..65 ";" [] [Whitespace(" ")],
+                                ),
+                            ],
+                        },
+                    ],
                 },
                 JsCaseClause {
                     case_token: CASE_KW@65..70 "case" [] [Whitespace(" ")],
@@ -139,11 +176,12 @@ JsRoot {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: JS_UNKNOWN_STATEMENT@33..43
-            0: VAR_KW@33..37 "var" [] [Whitespace(" ")]
-            1: IDENT@37..39 "i" [] [Whitespace(" ")]
-            2: EQ@39..41 "=" [] [Whitespace(" ")]
-            3: JS_NUMBER_LITERAL@41..43 "0" [] [Whitespace(" ")]
+          3: LIST@33..43
+            0: JS_UNKNOWN_STATEMENT@33..43
+              0: VAR_KW@33..37 "var" [] [Whitespace(" ")]
+              1: IDENT@37..39 "i" [] [Whitespace(" ")]
+              2: EQ@39..41 "=" [] [Whitespace(" ")]
+              3: JS_NUMBER_LITERAL@41..43 "0" [] [Whitespace(" ")]
       5: R_CURLY@43..44 "}" [] []
     3: JS_SWITCH_STATEMENT@44..81
       0: SWITCH_KW@44..52 "switch" [Whitespace("\n")] [Whitespace(" ")]
@@ -155,12 +193,13 @@ JsRoot {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: JS_UNKNOWN_STATEMENT@54..65
-            0: VAR_KW@54..58 "var" [] [Whitespace(" ")]
-            1: IDENT@58..60 "i" [] [Whitespace(" ")]
-            2: EQ@60..62 "=" [] [Whitespace(" ")]
-            3: JS_NUMBER_LITERAL@62..63 "0" [] []
-            4: SEMICOLON@63..65 ";" [] [Whitespace(" ")]
+          3: LIST@54..65
+            0: JS_UNKNOWN_STATEMENT@54..65
+              0: VAR_KW@54..58 "var" [] [Whitespace(" ")]
+              1: IDENT@58..60 "i" [] [Whitespace(" ")]
+              2: EQ@60..62 "=" [] [Whitespace(" ")]
+              3: JS_NUMBER_LITERAL@62..63 "0" [] []
+              4: SEMICOLON@63..65 ";" [] [Whitespace(" ")]
         1: JS_CASE_CLAUSE@65..80
           0: CASE_KW@65..70 "case" [] [Whitespace(" ")]
           1: JS_STRING_LITERAL_EXPRESSION@70..75

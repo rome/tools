@@ -1129,6 +1129,8 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 			temp.missing(); // discriminant
 			temp.missing(); // colon
 
+			let statements = temp.start();
+
 			let recovered_element = clause.or_recover(
 				&mut *temp,
 				ParseRecovery::new(
@@ -1140,9 +1142,11 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 			);
 
 			if recovered_element.is_err() {
+				statements.abandon(&mut *temp);
 				m.abandon(&mut *temp);
 				break;
 			} else {
+				statements.complete(&mut *temp, LIST);
 				m.complete(&mut *temp, JS_CASE_CLAUSE);
 			}
 		}
