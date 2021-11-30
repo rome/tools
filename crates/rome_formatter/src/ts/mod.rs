@@ -7,11 +7,13 @@ mod class;
 mod declarators;
 mod expressions;
 mod ident;
+mod import;
 mod name;
 mod object_members;
 mod parameter_list;
 mod script;
 mod statements;
+mod template;
 
 #[cfg(test)]
 mod test {
