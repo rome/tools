@@ -127,11 +127,12 @@ pub(super) fn parse_parameters_list(
 	while !p.at(EOF) && !p.at(T![')']) {
 		if first {
 			first = false;
-		} else if p.nth_at(1, T![')']) {
-			p.eat(T![,]);
-			break;
 		} else {
 			p.expect_required(T![,]);
+		}
+
+		if p.at(T![')']) {
+			break;
 		}
 
 		if p.at(T![...]) {
@@ -148,7 +149,7 @@ pub(super) fn parse_parameters_list(
 				p.error(err);
 				let m = p.start();
 				p.bump_any();
-				m.complete(p, ERROR);
+				m.complete(p, JS_UNKNOWN_PATTERN);
 			}
 
 			// type annotation `...foo: number[]`
@@ -174,7 +175,8 @@ pub(super) fn parse_parameters_list(
 				p.error(err);
 				m.complete(p, ERROR);
 			}
-			let complete = m.complete(p, JS_REST_PARAMETER);
+
+			m.complete(p, JS_REST_PARAMETER);
 
 			// FIXME: this should be handled better, we should keep trying to parse params but issue an error for each one
 			// which would allow for better recovery from `foo, ...bar, foo`
@@ -189,7 +191,6 @@ pub(super) fn parse_parameters_list(
 
 				p.error(err);
 			}
-			Some(complete)
 		} else {
 			// test_err formal_params_no_binding_element
 			// function foo(true) {}
@@ -225,11 +226,8 @@ pub(super) fn parse_parameters_list(
 
 					p.error(err);
 				}
-				Some(recovered_result)
-			} else {
-				None
 			}
-		};
+		}
 	}
 
 	parameters_list.complete(p, LIST);

@@ -1,3 +1,35 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsUnknownStatement {
+            items: [
+                Token(
+                    RETURN_KW@0..6 "return" [] [],
+                ),
+                Token(
+                    SEMICOLON@6..7 ";" [] [],
+                ),
+            ],
+        },
+        JsUnknownStatement {
+            items: [
+                Token(
+                    RETURN_KW@7..15 "return" [Whitespace("\n")] [Whitespace(" ")],
+                ),
+                Node(
+                    1: JS_REFERENCE_IDENTIFIER_EXPRESSION@15..18
+                      0: IDENT@15..18 "foo" [] []
+                    ,
+                ),
+                Token(
+                    SEMICOLON@18..19 ";" [] [],
+                ),
+            ],
+        },
+    ],
+}
+
 0: JS_ROOT@0..20
   0: (empty)
   1: LIST@0..0

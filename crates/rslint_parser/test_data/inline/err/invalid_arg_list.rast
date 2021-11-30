@@ -1,3 +1,63 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: CallExpr {
+                type_args: missing (optional),
+                callee: JsReferenceIdentifierExpression {
+                    name_token: IDENT@0..3 "foo" [] [],
+                },
+                arguments: ArgList {
+                    l_paren_token: L_PAREN@3..4 "(" [] [],
+                    args: [
+                        JsReferenceIdentifierExpression {
+                            name_token: IDENT@4..5 "a" [] [],
+                        }
+                        COMMA@5..6 "," [] [],
+                        JsReferenceIdentifierExpression {
+                            name_token: IDENT@6..7 "b" [] [],
+                        }
+                        ,
+                    ],
+                    r_paren_token: missing (required),
+                },
+            },
+            semicolon_token: SEMICOLON@7..8 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: CallExpr {
+                type_args: missing (optional),
+                callee: JsReferenceIdentifierExpression {
+                    name_token: IDENT@8..12 "foo" [Whitespace("\n")] [],
+                },
+                arguments: ArgList {
+                    l_paren_token: L_PAREN@12..13 "(" [] [],
+                    args: [
+                        JsReferenceIdentifierExpression {
+                            name_token: IDENT@13..14 "a" [] [],
+                        }
+                        COMMA@14..15 "," [] [],
+                        JsReferenceIdentifierExpression {
+                            name_token: IDENT@15..17 "b" [] [Whitespace(" ")],
+                        }
+                        ,
+                    ],
+                    r_paren_token: missing (required),
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: VAR_KW@17..20 "var" [] [],
+                declarators: [],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..21
   0: (empty)
   1: LIST@0..0

@@ -1,3 +1,33 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@4..6 "s" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
+                            expression: missing (required),
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: SEMICOLON@16..17 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..18
   0: (empty)
   1: LIST@0..0

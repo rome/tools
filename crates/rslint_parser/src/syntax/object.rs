@@ -23,6 +23,10 @@ const STARTS_MEMBER_NAME: TokenSet = token_set![
 // test object_expr
 // let a = {};
 // let b = {foo,}
+//
+// test_err object_expr_err
+// let a = {, foo}
+// let b = { foo bar }
 pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect_required(T!['{']);
@@ -33,11 +37,17 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 		if first {
 			first = false;
 		} else {
-			p.expect(T![,]);
+			p.expect_required(T![,]);
 
 			if p.at(T!['}']) {
 				break;
 			}
+		}
+
+		// missing member
+		if p.at(T![,]) {
+			p.missing();
+			continue;
 		}
 
 		let recovered_member = object_member(p).or_recover(

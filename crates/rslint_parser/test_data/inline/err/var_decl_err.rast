@@ -1,3 +1,89 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: VAR_KW@0..4 "var" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@6..7 "=" [] [],
+                            expression: JsUnknownExpression {
+                                items: [
+                                    Token(
+                                        SEMICOLON@7..8 ";" [] [],
+                                    ),
+                                ],
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: CONST_KW@8..15 "const" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@15..17 "a" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@17..19 "=" [] [Whitespace(" ")],
+                            expression: JsNumberLiteralExpression {
+                                value_token: JS_NUMBER_LITERAL@19..21 "5" [] [Whitespace(" ")],
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@21..25 "let" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@25..27 "b" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@27..29 "=" [] [Whitespace(" ")],
+                            expression: JsNumberLiteralExpression {
+                                value_token: JS_NUMBER_LITERAL@29..30 "5" [] [],
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: SEMICOLON@30..31 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..32
   0: (empty)
   1: LIST@0..0

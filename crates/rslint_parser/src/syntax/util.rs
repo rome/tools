@@ -137,11 +137,9 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 			}
 		}
 		JsAnyExpression::JsArrayExpression(expr) => {
-			let elem_count = expr.elements().len();
-
-			for (idx, elem) in expr.elements().iter().enumerate() {
+			for (idx, elem) in expr.elements().iter().flatten().enumerate() {
 				if let ast::JsAnyArrayElement::SpreadElement(ref spread) = elem {
-					if idx != elem_count - 1 {
+					if idx != expr.elements().len() - 1 {
 						let err = p.err_builder("Spread element may only occur as the last element of an assignment target")
                             .primary(marker.offset_range(p, spread.syntax().text_trimmed_range()), "");
 
@@ -164,7 +162,7 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 				p.error(err);
 			}
 
-			for (idx, prop) in expr.members().iter().enumerate() {
+			for (idx, prop) in expr.members().iter().flatten().enumerate() {
 				match prop {
 					ast::JsAnyObjectMember::JsPropertyObjectMember(prop) => {
 						if let Ok(expr) = prop.value() {
@@ -241,10 +239,28 @@ pub fn check_for_stmt_declaration(p: &mut Parser, marker: &CompletedMarker) {
 
 	if !excess.is_empty() {
 		let start = marker
-			.offset_range(p, excess.first().unwrap().syntax().text_trimmed_range())
+			.offset_range(
+				p,
+				excess
+					.first()
+					.unwrap()
+					.as_ref()
+					.unwrap()
+					.syntax()
+					.text_trimmed_range(),
+			)
 			.start();
 		let end = marker
-			.offset_range(p, excess.last().unwrap().syntax().text_trimmed_range())
+			.offset_range(
+				p,
+				excess
+					.last()
+					.unwrap()
+					.as_ref()
+					.unwrap()
+					.syntax()
+					.text_trimmed_range(),
+			)
 			.end();
 
 		let err = p

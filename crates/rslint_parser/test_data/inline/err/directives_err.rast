@@ -1,3 +1,111 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsFunctionDeclaration {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@0..20 "function" [Comments("// SCRIPT"), Whitespace("\n\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@20..24 "test" [] [],
+            },
+            type_parameters: missing (optional),
+            parameter_list: JsParameterList {
+                l_paren_token: L_PAREN@24..25 "(" [] [],
+                parameters: [],
+                r_paren_token: R_PAREN@25..27 ")" [] [Whitespace(" ")],
+            },
+            return_type: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@27..28 "{" [] [],
+                directives: [
+                    JsDirective {
+                        value_token: JS_STRING_LITERAL@28..42 "\"use strict\"" [Whitespace("\n\t")] [],
+                        semicolon_token: SEMICOLON@42..43 ";" [] [],
+                    },
+                ],
+                statements: [
+                    JsFunctionDeclaration {
+                        async_token: missing (optional),
+                        function_token: FUNCTION_KW@43..54 "function" [Whitespace("\n\t")] [Whitespace(" ")],
+                        star_token: missing (optional),
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@54..61 "inner_a" [] [],
+                        },
+                        type_parameters: missing (optional),
+                        parameter_list: JsParameterList {
+                            l_paren_token: L_PAREN@61..62 "(" [] [],
+                            parameters: [],
+                            r_paren_token: R_PAREN@62..64 ")" [] [Whitespace(" ")],
+                        },
+                        return_type: missing (optional),
+                        body: JsFunctionBody {
+                            l_curly_token: L_CURLY@64..65 "{" [] [],
+                            directives: [
+                                JsDirective {
+                                    value_token: JS_STRING_LITERAL@65..80 "\"use strict\"" [Whitespace("\n\t\t")] [],
+                                    semicolon_token: SEMICOLON@80..81 ";" [] [],
+                                },
+                            ],
+                            statements: [],
+                            r_curly_token: R_CURLY@81..84 "}" [Whitespace("\n\t")] [],
+                        },
+                    },
+                    JsFunctionDeclaration {
+                        async_token: missing (optional),
+                        function_token: FUNCTION_KW@84..96 "function" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                        star_token: missing (optional),
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@96..103 "inner_b" [] [],
+                        },
+                        type_parameters: missing (optional),
+                        parameter_list: JsParameterList {
+                            l_paren_token: L_PAREN@103..104 "(" [] [],
+                            parameters: [],
+                            r_paren_token: R_PAREN@104..106 ")" [] [Whitespace(" ")],
+                        },
+                        return_type: missing (optional),
+                        body: JsFunctionBody {
+                            l_curly_token: L_CURLY@106..107 "{" [] [],
+                            directives: [],
+                            statements: [
+                                JsFunctionDeclaration {
+                                    async_token: missing (optional),
+                                    function_token: FUNCTION_KW@107..119 "function" [Whitespace("\n\t\t")] [Whitespace(" ")],
+                                    star_token: missing (optional),
+                                    id: JsIdentifierBinding {
+                                        name_token: IDENT@119..130 "inner_inner" [] [],
+                                    },
+                                    type_parameters: missing (optional),
+                                    parameter_list: JsParameterList {
+                                        l_paren_token: L_PAREN@130..131 "(" [] [],
+                                        parameters: [],
+                                        r_paren_token: R_PAREN@131..133 ")" [] [Whitespace(" ")],
+                                    },
+                                    return_type: missing (optional),
+                                    body: JsFunctionBody {
+                                        l_curly_token: L_CURLY@133..134 "{" [] [],
+                                        directives: [
+                                            JsDirective {
+                                                value_token: JS_STRING_LITERAL@134..150 "\"use strict\"" [Whitespace("\n\t\t\t")] [],
+                                                semicolon_token: SEMICOLON@150..151 ";" [] [],
+                                            },
+                                        ],
+                                        statements: [],
+                                        r_curly_token: R_CURLY@151..155 "}" [Whitespace("\n\t\t")] [],
+                                    },
+                                },
+                            ],
+                            r_curly_token: R_CURLY@155..158 "}" [Whitespace("\n\t")] [],
+                        },
+                    },
+                ],
+                r_curly_token: R_CURLY@158..160 "}" [Whitespace("\n")] [],
+            },
+        },
+    ],
+}
+
 0: JS_ROOT@0..161
   0: (empty)
   1: LIST@0..0

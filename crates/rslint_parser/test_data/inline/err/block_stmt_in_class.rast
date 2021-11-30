@@ -1,3 +1,38 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsClassDeclaration {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..7 "S" [] [],
+            },
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@7..8 "{" [] [],
+            members: [
+                JsUnknownMember {
+                    items: [
+                        Node(
+                            1: JS_UNKNOWN_MEMBER@8..9
+                              0: L_CURLY@8..9 "{" [] []
+                            ,
+                        ),
+                    ],
+                },
+            ],
+            r_curly_token: R_CURLY@9..10 "}" [] [],
+        },
+        JsUnknownStatement {
+            items: [
+                Token(
+                    R_CURLY@10..11 "}" [] [],
+                ),
+            ],
+        },
+    ],
+}
+
 0: JS_ROOT@0..12
   0: (empty)
   1: LIST@0..0

@@ -5,7 +5,7 @@ mod token;
 
 pub(crate) use self::{
 	element::{GreenElement, GreenElementRef},
-	node::{Child, Children, GreenNode, GreenNodeData, Slot, Slots},
+	node::{Child, Children, GreenNode, GreenNodeData, Slot},
 	token::{GreenToken, GreenTokenData},
 };
 

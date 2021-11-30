@@ -1,3 +1,128 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        ForStmt {
+            for_token: FOR_KW@0..4 "for" [] [Whitespace(" ")],
+            l_paren_token: missing (required),
+            init: missing (optional),
+            test: missing (optional),
+            update: ForStmtUpdate {
+                expr: JsObjectExpression {
+                    l_curly_token: L_CURLY@7..8 "{" [] [],
+                    members: [],
+                    r_curly_token: R_CURLY@8..9 "}" [] [],
+                },
+            },
+            r_paren_token: missing (required),
+            cons: ForStmt {
+                for_token: FOR_KW@9..14 "for" [Whitespace("\n")] [Whitespace(" ")],
+                l_paren_token: missing (required),
+                init: ForStmtInit {
+                    inner: JsVariableDeclaration {
+                        kind_token: LET_KW@14..18 "let" [] [Whitespace(" ")],
+                        declarators: [
+                            JsVariableDeclarator {
+                                id: SinglePattern {
+                                    name: Name {
+                                        ident_token: IDENT@18..20 "i" [] [Whitespace(" ")],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    excl_token: missing (optional),
+                                    ty: missing (optional),
+                                },
+                                init: JsEqualValueClause {
+                                    eq_token: EQ@20..22 "=" [] [Whitespace(" ")],
+                                    expression: JsNumberLiteralExpression {
+                                        value_token: JS_NUMBER_LITERAL@22..23 "5" [] [],
+                                    },
+                                },
+                            }
+                            ,
+                        ],
+                    },
+                    semicolon_token: missing (required),
+                },
+                test: ForStmtTest {
+                    expr: JsBinaryExpression {
+                        left: JsReferenceIdentifierExpression {
+                            name_token: IDENT@25..27 "i" [] [Whitespace(" ")],
+                        },
+                        operator: L_ANGLE@27..29 "<" [] [Whitespace(" ")],
+                    },
+                    semicolon_token: missing (required),
+                },
+                update: ForStmtUpdate {
+                    expr: JsPostUpdateExpression {
+                        operand: JsReferenceIdentifierExpression {
+                            name_token: IDENT@33..34 "i" [] [],
+                        },
+                        operator: PLUS2@34..37 "++" [] [Whitespace(" ")],
+                    },
+                },
+                r_paren_token: missing (required),
+                cons: JsBlockStatement {
+                    l_curly_token: L_CURLY@37..38 "{" [] [],
+                    statements: [],
+                    r_curly_token: R_CURLY@38..39 "}" [] [],
+                },
+            },
+        },
+        ForStmt {
+            for_token: FOR_KW@39..44 "for" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: missing (required),
+            init: ForStmtInit {
+                inner: JsVariableDeclaration {
+                    kind_token: LET_KW@44..48 "let" [] [Whitespace(" ")],
+                    declarators: [
+                        JsVariableDeclarator {
+                            id: SinglePattern {
+                                name: Name {
+                                    ident_token: IDENT@48..50 "i" [] [Whitespace(" ")],
+                                },
+                                question_mark_token: missing (optional),
+                                excl_token: missing (optional),
+                                ty: missing (optional),
+                            },
+                            init: JsEqualValueClause {
+                                eq_token: EQ@50..52 "=" [] [Whitespace(" ")],
+                                expression: JsNumberLiteralExpression {
+                                    value_token: JS_NUMBER_LITERAL@52..53 "5" [] [],
+                                },
+                            },
+                        }
+                        ,
+                    ],
+                },
+                semicolon_token: missing (required),
+            },
+            test: ForStmtTest {
+                expr: JsBinaryExpression {
+                    left: JsReferenceIdentifierExpression {
+                        name_token: IDENT@55..57 "i" [] [Whitespace(" ")],
+                    },
+                    operator: L_ANGLE@57..59 "<" [] [Whitespace(" ")],
+                },
+                semicolon_token: missing (required),
+            },
+            update: ForStmtUpdate {
+                expr: JsPreUpdateExpression {
+                    operator: PLUS2@63..65 "++" [] [],
+                    operand: JsReferenceIdentifierExpression {
+                        name_token: IDENT@65..67 "i" [] [Whitespace(" ")],
+                    },
+                },
+            },
+            r_paren_token: missing (required),
+            cons: JsBlockStatement {
+                l_curly_token: L_CURLY@67..68 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@68..69 "}" [] [],
+            },
+        },
+    ],
+}
+
 0: JS_ROOT@0..70
   0: (empty)
   1: LIST@0..0

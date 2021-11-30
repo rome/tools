@@ -64,18 +64,38 @@ fn try_parse(path: &str, text: &str) -> Parse<JsRoot> {
 	res.unwrap()
 }
 
+fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<JsRoot>, String) {
+	catch_unwind(|| {
+		let parse = try_parse(path, text);
+		let formatted = format!("{:#?}", &parse.tree());
+		(parse, formatted)
+	})
+	.unwrap_or_else(|_| {
+		// Re-parsing the source here seems silly. But the problem is, that `SyntaxNode`s aren't
+		// unwind safe. That's why the same `ParseResult` can't be reused here.
+		// This should be fine because this code is only executed for local tests. No checked-in
+		// test should ever hit this line.
+		let re_parsed = try_parse(path, text);
+		panic!(
+			"Printing the AST for `{}` panicked. That means it is malformed.\n{:#?}",
+			path,
+			re_parsed.syntax()
+		);
+	})
+}
+
 #[test]
 fn parser_tests() {
 	dir_tests(&test_data_dir(), &["inline/ok"], "rast", |text, path| {
-		let parse = try_parse(path.to_str().unwrap(), text);
+		let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), text);
 		let errors = parse.errors();
 		assert_errors_are_absent(errors, path, &parse.syntax());
 
-		format!("{:#?}\n\n{:#?}", parse.tree(), parse.syntax())
+		format!("{}\n\n{:#?}", ast, parse.syntax())
 	});
 
 	dir_tests(&test_data_dir(), &["inline/err"], "rast", |text, path| {
-		let parse = try_parse(path.to_str().unwrap(), text);
+		let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), text);
 		let errors = parse.errors();
 		assert_errors_are_present(errors, path, &parse.syntax());
 		let mut files = SimpleFiles::new();
@@ -83,7 +103,7 @@ fn parser_tests() {
 			path.file_name().unwrap().to_string_lossy().to_string(),
 			text.to_string(),
 		);
-		let mut ret = format!("{:#?}", parse.syntax());
+		let mut ret = format!("{}\n\n{:#?}", ast, parse.syntax());
 
 		for diag in parse.errors() {
 			let mut write = rslint_errors::termcolor::Buffer::no_color();

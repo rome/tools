@@ -1,3 +1,18 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: missing (required),
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: missing (required),
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..24
   0: (empty)
   1: LIST@0..0

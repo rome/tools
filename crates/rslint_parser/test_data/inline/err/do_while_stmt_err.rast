@@ -1,3 +1,57 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsDoWhileStatement {
+            do_token: DO_KW@0..3 "do" [] [Whitespace(" ")],
+            body: JsWhileStatement {
+                while_token: WHILE_KW@3..9 "while" [] [Whitespace(" ")],
+                l_paren_token: L_PAREN@9..10 "(" [] [],
+                test: JsBooleanLiteralExpression {
+                    value_token: TRUE_KW@10..14 "true" [] [],
+                },
+                r_paren_token: R_PAREN@14..15 ")" [] [],
+                body: JsDoWhileStatement {
+                    do_token: DO_KW@15..19 "do" [Whitespace("\n")] [Whitespace(" ")],
+                    body: JsWhileStatement {
+                        while_token: WHILE_KW@19..25 "while" [] [Whitespace(" ")],
+                        l_paren_token: L_PAREN@25..26 "(" [] [],
+                        test: missing (required),
+                        r_paren_token: R_PAREN@26..27 ")" [] [],
+                        body: JsDoWhileStatement {
+                            do_token: DO_KW@27..31 "do" [Whitespace("\n")] [Whitespace(" ")],
+                            body: JsWhileStatement {
+                                while_token: WHILE_KW@31..37 "while" [] [Whitespace(" ")],
+                                l_paren_token: missing (required),
+                                test: JsBooleanLiteralExpression {
+                                    value_token: TRUE_KW@37..41 "true" [] [],
+                                },
+                                r_paren_token: missing (required),
+                                body: missing (required),
+                            },
+                            while_token: missing (required),
+                            l_paren_token: missing (required),
+                            test: missing (required),
+                            r_paren_token: missing (required),
+                            semicolon_token: missing (optional),
+                        },
+                    },
+                    while_token: missing (required),
+                    l_paren_token: missing (required),
+                    test: missing (required),
+                    r_paren_token: missing (required),
+                    semicolon_token: missing (optional),
+                },
+            },
+            while_token: missing (required),
+            l_paren_token: missing (required),
+            test: missing (required),
+            r_paren_token: missing (required),
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..42
   0: (empty)
   1: LIST@0..0

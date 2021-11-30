@@ -1,3 +1,52 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsIfStatement {
+            if_token: IF_KW@0..3 "if" [] [Whitespace(" ")],
+            l_paren_token: L_PAREN@3..4 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@4..8 "true" [] [],
+            },
+            r_paren_token: R_PAREN@8..9 ")" [] [],
+            consequent: JsUnknownStatement {
+                items: [
+                    Token(
+                        R_CURLY@9..10 "}" [] [],
+                    ),
+                ],
+            },
+            else_clause: missing (optional),
+        },
+        JsUnknownStatement {
+            items: [
+                Token(
+                    R_CURLY@10..11 "}" [] [],
+                ),
+            ],
+        },
+        JsUnknownStatement {
+            items: [
+                Token(
+                    R_CURLY@11..12 "}" [] [],
+                ),
+            ],
+        },
+        JsUnknownStatement {
+            items: [
+                Token(
+                    R_CURLY@12..14 "}" [] [Whitespace(" ")],
+                ),
+            ],
+        },
+        JsBlockStatement {
+            l_curly_token: L_CURLY@14..15 "{" [] [],
+            statements: [],
+            r_curly_token: R_CURLY@15..16 "}" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..17
   0: (empty)
   1: LIST@0..0

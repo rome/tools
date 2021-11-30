@@ -1,3 +1,62 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsWhileStatement {
+            while_token: WHILE_KW@0..6 "while" [] [Whitespace(" ")],
+            l_paren_token: missing (required),
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@6..11 "true" [] [Whitespace(" ")],
+            },
+            r_paren_token: missing (required),
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@11..12 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@12..13 "}" [] [],
+            },
+        },
+        JsWhileStatement {
+            while_token: WHILE_KW@13..20 "while" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: missing (required),
+            test: missing (required),
+            r_paren_token: missing (required),
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@20..21 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@21..22 "}" [] [],
+            },
+        },
+        JsWhileStatement {
+            while_token: WHILE_KW@22..29 "while" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@29..30 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@30..35 "true" [] [Whitespace(" ")],
+            },
+            r_paren_token: missing (required),
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@35..36 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@36..37 "}" [] [],
+            },
+        },
+        JsWhileStatement {
+            while_token: WHILE_KW@37..44 "while" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: missing (required),
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@44..48 "true" [] [],
+            },
+            r_paren_token: R_PAREN@48..50 ")" [] [Whitespace(" ")],
+            body: JsUnknownStatement {
+                items: [
+                    Token(
+                        R_CURLY@50..51 "}" [] [],
+                    ),
+                ],
+            },
+        },
+    ],
+}
+
 0: JS_ROOT@0..52
   0: (empty)
   1: LIST@0..0

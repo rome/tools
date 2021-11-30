@@ -1,3 +1,151 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsSwitchStatement {
+            switch_token: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")],
+            l_paren_token: missing (required),
+            discriminant: JsReferenceIdentifierExpression {
+                name_token: IDENT@7..11 "foo" [] [Whitespace(" ")],
+            },
+            r_paren_token: missing (required),
+            l_curly_token: L_CURLY@11..12 "{" [] [],
+            cases: [],
+            r_curly_token: R_CURLY@12..13 "}" [] [],
+        },
+        JsSwitchStatement {
+            switch_token: SWITCH_KW@13..21 "switch" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: missing (required),
+            discriminant: missing (required),
+            r_paren_token: missing (required),
+            l_curly_token: L_CURLY@21..22 "{" [] [],
+            cases: [],
+            r_curly_token: R_CURLY@22..23 "}" [] [],
+        },
+        JsSwitchStatement {
+            switch_token: SWITCH_KW@23..31 "switch" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: missing (required),
+            discriminant: missing (required),
+            r_paren_token: missing (required),
+            l_curly_token: L_CURLY@31..33 "{" [] [Whitespace(" ")],
+            cases: [
+                JsCaseClause {
+                    case_token: missing (required),
+                    test: missing (required),
+                    colon_token: missing (required),
+                    consequent: [
+                        JsUnknownStatement {
+                            items: [
+                                Token(
+                                    VAR_KW@33..37 "var" [] [Whitespace(" ")],
+                                ),
+                                Token(
+                                    IDENT@37..39 "i" [] [Whitespace(" ")],
+                                ),
+                                Token(
+                                    EQ@39..41 "=" [] [Whitespace(" ")],
+                                ),
+                                Token(
+                                    JS_NUMBER_LITERAL@41..43 "0" [] [Whitespace(" ")],
+                                ),
+                            ],
+                        },
+                    ],
+                },
+            ],
+            r_curly_token: R_CURLY@43..44 "}" [] [],
+        },
+        JsSwitchStatement {
+            switch_token: SWITCH_KW@44..52 "switch" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: missing (required),
+            discriminant: missing (required),
+            r_paren_token: missing (required),
+            l_curly_token: L_CURLY@52..54 "{" [] [Whitespace(" ")],
+            cases: [
+                JsCaseClause {
+                    case_token: missing (required),
+                    test: missing (required),
+                    colon_token: missing (required),
+                    consequent: [
+                        JsUnknownStatement {
+                            items: [
+                                Token(
+                                    VAR_KW@54..58 "var" [] [Whitespace(" ")],
+                                ),
+                                Token(
+                                    IDENT@58..60 "i" [] [Whitespace(" ")],
+                                ),
+                                Token(
+                                    EQ@60..62 "=" [] [Whitespace(" ")],
+                                ),
+                                Token(
+                                    JS_NUMBER_LITERAL@62..63 "0" [] [],
+                                ),
+                                Token(
+                                    SEMICOLON@63..65 ";" [] [Whitespace(" ")],
+                                ),
+                            ],
+                        },
+                    ],
+                },
+                JsCaseClause {
+                    case_token: CASE_KW@65..70 "case" [] [Whitespace(" ")],
+                    test: JsStringLiteralExpression {
+                        value_token: JS_STRING_LITERAL@70..75 "\"bar\"" [] [],
+                    },
+                    colon_token: COLON@75..77 ":" [] [Whitespace(" ")],
+                    consequent: [
+                        JsBlockStatement {
+                            l_curly_token: L_CURLY@77..78 "{" [] [],
+                            statements: [],
+                            r_curly_token: R_CURLY@78..80 "}" [] [Whitespace(" ")],
+                        },
+                    ],
+                },
+            ],
+            r_curly_token: R_CURLY@80..81 "}" [] [],
+        },
+        JsSwitchStatement {
+            switch_token: SWITCH_KW@81..89 "switch" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@89..90 "(" [] [],
+            discriminant: JsReferenceIdentifierExpression {
+                name_token: IDENT@90..93 "foo" [] [],
+            },
+            r_paren_token: R_PAREN@93..95 ")" [] [Whitespace(" ")],
+            l_curly_token: L_CURLY@95..96 "{" [] [],
+            cases: [
+                JsDefaultClause {
+                    default_token: DEFAULT_KW@96..105 "default" [Whitespace("\n\t")] [],
+                    colon_token: COLON@105..107 ":" [] [Whitespace(" ")],
+                    consequent: [
+                        JsBlockStatement {
+                            l_curly_token: L_CURLY@107..108 "{" [] [],
+                            statements: [],
+                            r_curly_token: R_CURLY@108..109 "}" [] [],
+                        },
+                    ],
+                },
+                JsCaseClause {
+                    case_token: missing (required),
+                    test: JsUnaryExpression {
+                        operator: missing (required),
+                        argument: missing (required),
+                    },
+                    colon_token: COLON@118..120 ":" [] [Whitespace(" ")],
+                    consequent: [
+                        JsBlockStatement {
+                            l_curly_token: L_CURLY@120..121 "{" [] [],
+                            statements: [],
+                            r_curly_token: R_CURLY@121..122 "}" [] [],
+                        },
+                    ],
+                },
+            ],
+            r_curly_token: R_CURLY@122..124 "}" [Whitespace("\n")] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..125
   0: (empty)
   1: LIST@0..0
@@ -28,11 +176,12 @@
           0: (empty)
           1: (empty)
           2: (empty)
-          3: JS_UNKNOWN_STATEMENT@33..43
-            0: VAR_KW@33..37 "var" [] [Whitespace(" ")]
-            1: IDENT@37..39 "i" [] [Whitespace(" ")]
-            2: EQ@39..41 "=" [] [Whitespace(" ")]
-            3: JS_NUMBER_LITERAL@41..43 "0" [] [Whitespace(" ")]
+          3: LIST@33..43
+            0: JS_UNKNOWN_STATEMENT@33..43
+              0: VAR_KW@33..37 "var" [] [Whitespace(" ")]
+              1: IDENT@37..39 "i" [] [Whitespace(" ")]
+              2: EQ@39..41 "=" [] [Whitespace(" ")]
+              3: JS_NUMBER_LITERAL@41..43 "0" [] [Whitespace(" ")]
       5: R_CURLY@43..44 "}" [] []
     3: JS_SWITCH_STATEMENT@44..81
       0: SWITCH_KW@44..52 "switch" [Whitespace("\n")] [Whitespace(" ")]
@@ -44,12 +193,13 @@
           0: (empty)
           1: (empty)
           2: (empty)
-          3: JS_UNKNOWN_STATEMENT@54..65
-            0: VAR_KW@54..58 "var" [] [Whitespace(" ")]
-            1: IDENT@58..60 "i" [] [Whitespace(" ")]
-            2: EQ@60..62 "=" [] [Whitespace(" ")]
-            3: JS_NUMBER_LITERAL@62..63 "0" [] []
-            4: SEMICOLON@63..65 ";" [] [Whitespace(" ")]
+          3: LIST@54..65
+            0: JS_UNKNOWN_STATEMENT@54..65
+              0: VAR_KW@54..58 "var" [] [Whitespace(" ")]
+              1: IDENT@58..60 "i" [] [Whitespace(" ")]
+              2: EQ@60..62 "=" [] [Whitespace(" ")]
+              3: JS_NUMBER_LITERAL@62..63 "0" [] []
+              4: SEMICOLON@63..65 ";" [] [Whitespace(" ")]
         1: JS_CASE_CLAUSE@65..80
           0: CASE_KW@65..70 "case" [] [Whitespace(" ")]
           1: JS_STRING_LITERAL_EXPRESSION@70..75

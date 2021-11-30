@@ -1,3 +1,62 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@4..6 "b" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@8..9 "{" [] [],
+                                members: [
+                                    JsSetterObjectMember {
+                                        set_token: SET_KW@9..15 "set" [Whitespace("\n ")] [Whitespace(" ")],
+                                        name: JsLiteralMemberName {
+                                            value: IDENT@15..18 "foo" [] [],
+                                        },
+                                        l_paren_token: L_PAREN@18..19 "(" [] [],
+                                        parameter: missing (required),
+                                        r_paren_token: R_PAREN@19..21 ")" [] [Whitespace(" ")],
+                                        body: JsFunctionBody {
+                                            l_curly_token: L_CURLY@21..22 "{" [] [],
+                                            directives: [],
+                                            statements: [
+                                                JsReturnStatement {
+                                                    return_token: RETURN_KW@22..34 "return" [Whitespace("\n    ")] [Whitespace(" ")],
+                                                    argument: JsNumberLiteralExpression {
+                                                        value_token: JS_NUMBER_LITERAL@34..35 "5" [] [],
+                                                    },
+                                                    semicolon_token: SEMICOLON@35..36 ";" [] [],
+                                                },
+                                            ],
+                                            r_curly_token: R_CURLY@36..39 "}" [Whitespace("\n ")] [],
+                                        },
+                                    }
+                                    ,
+                                ],
+                                r_curly_token: R_CURLY@39..41 "}" [Whitespace("\n")] [],
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..42
   0: (empty)
   1: LIST@0..0
@@ -20,11 +79,9 @@
                     1: JS_LITERAL_MEMBER_NAME@15..18
                       0: IDENT@15..18 "foo" [] []
                     2: L_PAREN@18..19 "(" [] []
-                    3: JS_UNKNOWN_PATTERN@19..21
-                      0: R_PAREN@19..21 ")" [] [Whitespace(" ")]
-                    4: (empty)
-                    5: (empty)
-                    6: JS_FUNCTION_BODY@21..39
+                    3: (empty)
+                    4: R_PAREN@19..21 ")" [] [Whitespace(" ")]
+                    5: JS_FUNCTION_BODY@21..39
                       0: L_CURLY@21..22 "{" [] []
                       1: LIST@22..22
                       2: LIST@22..36
@@ -45,18 +102,11 @@ error[SyntaxError]: Expected an identifier or pattern, but found none
   │          ^
 
 --
-error[SyntaxError]: expected a parameter but instead found '{'
-  ┌─ object_expr_setter.js:2:12
+error[SyntaxError]: expected a parameter but instead found ')'
+  ┌─ object_expr_setter.js:2:10
   │
 2 │  set foo() {
-  │            ^ Expected a parameter here
-
---
-error[SyntaxError]: expected `')'` but instead found `{`
-  ┌─ object_expr_setter.js:2:12
-  │
-2 │  set foo() {
-  │            ^ unexpected
+  │          ^ Expected a parameter here
 
 --
 let b = {

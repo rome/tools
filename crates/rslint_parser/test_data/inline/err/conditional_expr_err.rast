@@ -1,3 +1,30 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsConditionalExpression {
+                test: JsReferenceIdentifierExpression {
+                    name_token: IDENT@0..4 "foo" [] [Whitespace(" ")],
+                },
+                question_mark_token: QUESTION@4..6 "?" [] [Whitespace(" ")],
+                colon_token: missing (required),
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsConditionalExpression {
+                test: JsReferenceIdentifierExpression {
+                    name_token: IDENT@13..18 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                question_mark_token: QUESTION@18..20 "?" [] [Whitespace(" ")],
+                colon_token: missing (required),
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..40
   0: (empty)
   1: LIST@0..0

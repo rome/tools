@@ -1,3 +1,35 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsThrowStatement {
+            throw_token: THROW_KW@0..5 "throw" [] [],
+            argument: missing (required),
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: NewExpr {
+                new_token: NEW_KW@5..10 "new" [Whitespace("\n")] [Whitespace(" ")],
+                type_args: missing (optional),
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@10..15 "Error" [] [],
+                },
+                arguments: ArgList {
+                    l_paren_token: L_PAREN@15..16 "(" [] [],
+                    args: [
+                        JsStringLiteralExpression {
+                            value_token: JS_STRING_LITERAL@16..26 "\"oh no :(\"" [] [],
+                        }
+                        ,
+                    ],
+                    r_paren_token: R_PAREN@26..27 ")" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..28
   0: (empty)
   1: LIST@0..0
