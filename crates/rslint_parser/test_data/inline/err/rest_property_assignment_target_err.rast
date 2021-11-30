@@ -1,7 +1,7 @@
-0: JS_ROOT@0..135
+0: JS_ROOT@0..118
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..134
+  2: LIST@0..117
     0: JS_EXPRESSION_STATEMENT@0..14
       0: JS_PARENTHESIZED_EXPRESSION@0..13
         0: L_PAREN@0..1 "(" [] []
@@ -96,26 +96,7 @@
             0: IDENT@114..115 "a" [] []
         2: R_PAREN@115..116 ")" [] []
       1: SEMICOLON@116..117 ";" [] []
-    5: JS_EXPRESSION_STATEMENT@117..134
-      0: JS_PARENTHESIZED_EXPRESSION@117..133
-        0: L_PAREN@117..119 "(" [Whitespace("\n")] []
-        1: JS_ASSIGNMENT_EXPRESSION@119..132
-          0: JS_OBJECT_ASSIGNMENT_TARGET@119..129
-            0: L_CURLY@119..121 "{" [] [Whitespace(" ")]
-            1: LIST@121..127
-              0: JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET@121..127
-                0: DOT2@121..124 "..." [] []
-                1: JS_UNKNOWN_ASSIGNMENT_TARGET@124..127
-                  0: L_CURLY@124..125 "{" [] []
-                  1: IDENT@125..126 "a" [] []
-                  2: R_CURLY@126..127 "}" [] []
-            2: R_CURLY@127..129 "}" [] [Whitespace(" ")]
-          1: EQ@129..131 "=" [] [Whitespace(" ")]
-          2: JS_REFERENCE_IDENTIFIER_EXPRESSION@131..132
-            0: IDENT@131..132 "b" [] []
-        2: R_PAREN@132..133 ")" [] []
-      1: SEMICOLON@133..134 ";" [] []
-  3: EOF@134..135 "" [Whitespace("\n")] []
+  3: EOF@117..118 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected an identifier, or an assignment target but instead found '}'
   ┌─ rest_property_assignment_target_err.js:1:8
@@ -156,16 +137,8 @@ error[SyntaxError]: rest element may not have a trailing comma
   │    Rest element
 
 --
-error[SyntaxError]: Invalid assignment to `{a}`
-  ┌─ rest_property_assignment_target_err.js:6:7
-  │
-6 │ ({ ...{a}} = b);
-  │       ^^^ This expression cannot be assigned to
-
---
 ({ ... } = a);
 ({ ...c = "default" } = a);
 ({ ...{a} } = b);
 ({ ...rest, other_assignment } = a);
 ({ ...rest, } = a);
-({ ...{a}} = b);

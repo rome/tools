@@ -59,7 +59,7 @@ pub(super) fn parse_object_expression(p: &mut Parser) -> ParsedSyntax {
 
 		let recovered_member = parse_object_member(p).or_recover(
 			p,
-			ParseRecovery::new(JS_UNKNOWN_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
+			&ParseRecovery::new(JS_UNKNOWN_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
 				.enable_recovery_on_line_break(),
 			js_parse_error::expected_object_member,
 		);
@@ -258,6 +258,10 @@ pub(crate) fn parse_object_member_name(p: &mut Parser) -> ParsedSyntax {
 		T!['['] => parse_computed_member_name(p),
 		_ => parse_literal_member_name(p),
 	}
+}
+
+pub(crate) fn is_at_object_member_name(p: &Parser) -> bool {
+	p.at_ts(STARTS_MEMBER_NAME)
 }
 
 pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax {

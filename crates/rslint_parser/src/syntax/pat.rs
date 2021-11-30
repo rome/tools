@@ -1,13 +1,14 @@
 use super::expr::expr_or_assignment;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
+use crate::syntax::assignment_target::ParseObjectPattern;
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::parse_identifier;
 use crate::syntax::js_parse_error::{
-	expected_identifier_binding, expected_object_binding_member,
-	expected_object_binding_member_name, expected_object_member,
+	expected_assignment_target, expected_identifier_binding, expected_object_binding_member_name,
+	expected_object_member,
 };
-use crate::syntax::object::object_member_name;
+use crate::syntax::object::{is_at_object_member_name, object_member_name};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
@@ -20,7 +21,7 @@ pub fn pattern(p: &mut Parser, parameters: bool) -> Option<CompletedMarker> {
 			m.complete(p, JS_IDENTIFIER_BINDING)
 		}
 		T!['['] => array_binding_pattern(p, parameters),
-		T!['{'] if p.state.allow_object_expr => object_binding_pattern(p, parameters),
+		T!['{'] if p.state.allow_object_expr => object_binding_pattern(p, parameters).ok().unwrap(),
 		T![ident] | T![yield] | T![await] => {
 			if p.state.should_record_names {
 				let string = p.cur_src().to_string();
@@ -102,17 +103,18 @@ pub fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 }
 
 pub fn binding_element(p: &mut Parser, parameters: bool) -> Option<CompletedMarker> {
-	let left = pattern(p, parameters);
-
-	if p.at(T![=]) {
-		let m = left.map(|m| m.precede(p)).unwrap_or_else(|| p.start());
-		p.bump_any();
-
-		expr_or_assignment(p);
-		return Some(m.complete(p, ASSIGN_PATTERN));
-	}
-
-	left
+	pattern(p, parameters)
+	// let left = pattern(p, parameters);
+	//
+	// if p.at(T![=]) {
+	// 	let m = left.map(|m| m.precede(p)).unwrap_or_else(|| p.start());
+	// 	p.bump_any();
+	//
+	// 	expr_or_assignment(p);
+	// 	return Some(m.complete(p, ASSIGN_PATTERN));
+	// }
+	//
+	// left
 }
 
 // test_err
@@ -158,82 +160,95 @@ fn array_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMarker {
 // let { eval } = { eval: "foo" };
 // let { 5, 6 } = { eval: "foo" };
 // let { default: , bar } = {};
-pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMarker {
-	let m = p.start();
-	p.expect_required(T!['{']);
-	let props_list = p.start();
-	let mut first = true;
-
-	while !p.at(EOF) && !p.at(T!['}']) {
-		if first {
-			first = false;
-		} else {
-			p.expect_required(T![,]);
-			if p.at(T!['}']) {
-				break;
-			}
-		}
-
-		if p.at(T![,]) {
-			p.missing(); // missing element
-			continue;
-		}
-
-		if p.at(T![...]) {
-			let m = p.start();
-			p.bump_any();
-
-			// TODO should we parse any binding identifier here and wrap it in an unknown
-			// if it isn't a binding identifier or unknown_binding?
-			parse_identifier_binding(p).or_missing_with_error(p, expected_identifier_binding);
-			m.complete(p, REST_PATTERN);
-			break;
-		}
-
-		let recovery_result = parse_property_binding(p, parameters).or_recover(
-			p,
-			ParseRecovery::new(
-				JS_UNKNOWN_BINDING,
-				token_set![T![,], T!['}'], T![=], T![...], T![=],],
-			)
-			.enable_recovery_on_line_break(),
-			expected_object_binding_member,
-		);
-
-		if recovery_result.is_err() {
-			break;
-		}
-	}
-	props_list.complete(p, LIST);
-
-	p.expect_required(T!['}']);
-	m.complete(p, JS_OBJECT_BINDING)
+pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> ParsedSyntax {
+	ObjectBindingPattern { parameters }.parse_object_pattern(p)
 }
 
-// test object_binding_prop
-// let { default: foo, bar } = {}
-// let { foo = bar, baz } = {}
-fn parse_property_binding(p: &mut Parser, parameters: bool) -> ParsedSyntax {
-	if p.nth_at(1, T![:]) {
-		// property binding
+struct ObjectBindingPattern {
+	parameters: bool,
+}
+
+impl ParseObjectPattern for ObjectBindingPattern {
+	fn unknown_pattern_kind(&self) -> SyntaxKind {
+		JS_UNKNOWN_BINDING
+	}
+
+	fn object_pattern_kind(&self) -> SyntaxKind {
+		JS_OBJECT_BINDING
+	}
+
+	fn expected_property_pattern_error(&self, p: &Parser, range: Range<usize>) -> Diagnostic {
+		expected_assignment_target(p, range)
+	}
+
+	// test object_property_binding
+	// let { foo: bar  } = {}
+	// let { foo: bar = baz } = {}
+	//
+	// test_err object_property_binding_err
+	// let { foo: , bar } = {}
+	// let { : bar = "test" } = {}
+	// let { , foo: bar } = {}
+	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		if !is_at_object_member_name(p) && !p.at_ts(token_set![T![:], T![=]]) {
+			return Absent;
+		}
+
 		let m = p.start();
 		object_member_name(p).or_missing_with_error(p, expected_object_member);
 		p.bump(T![:]);
-		binding_element(p, parameters);
+		binding_element(p, self.parameters);
 		parse_equal_value_clause(p).or_missing(p);
 		Present(m.complete(p, JS_PROPERTY_BINDING))
-	} else {
-		// shorthand property
-		let m = if let Present(identifier) = parse_identifier_binding(p) {
-			identifier.precede(p)
-		} else if p.at(T![=]) {
-			p.start()
+	}
+
+	// test object_shorthand_property
+	// let { a, b } = c
+	// let { a = "default", b = call() } = c
+	//
+	// test_err object_shorthand_property_err
+	// let { a b } = c
+	// let { = "test" } = c
+	// let { , a } = c
+	fn parse_shorthand_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		let identifier = parse_identifier_binding(p);
+		if p.at(T![=]) || identifier.is_present() {
+			let shorthand_prop =
+				identifier.precede_or_missing_with_error(p, expected_identifier_binding);
+			parse_equal_value_clause(p).or_missing(p);
+			Present(shorthand_prop.complete(p, JS_SHORTHAND_PROPERTY_BINDING))
 		} else {
-			return Absent;
-		};
+			Absent
+		}
+	}
 
-		parse_equal_value_clause(p).or_missing(p);
+	// test rest_property_binding
+	// let { ...abcd } = a;
+	// let { b: { ...a } } = c;
+	//
+	// test_err rest_property_binding_err
+	// let { ... } = a;
+	// let { ...c = "default" } = a;
+	// let { ...{a} } = b;
+	// let { ...rest, other_assignment } = a;
+	// let { ...rest, } = a;
+	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		if p.at(T![...]) {
+			let m = p.start();
+			p.bump(T![...]);
 
-		Present(m.complete(p, JS_SHORTHAND_PROPERTY_BINDING))
+			let inner = pattern(p, self.parameters);
+
+			if let Some(mut inner) = inner {
+				if inner.kind() != JS_IDENTIFIER_BINDING {
+					inner.change_kind(p, JS_UNKNOWN_BINDING);
+					p.error(p.err_builder("Expected identifier binding").primary(inner.range(p), "Object rest patterns must bind to an identifier, other patterns are not allowed."))
+				}
+			}
+
+			Present(m.complete(p, JS_OBJECT_REST_BINDING))
+		} else {
+			Absent
+		}
 	}
 }

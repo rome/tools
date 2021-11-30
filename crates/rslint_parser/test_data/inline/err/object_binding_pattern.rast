@@ -92,14 +92,10 @@
             0: JS_OBJECT_BINDING@99..118
               0: L_CURLY@99..101 "{" [] [Whitespace(" ")]
               1: LIST@101..116
-                0: JS_PROPERTY_BINDING@101..112
-                  0: JS_LITERAL_MEMBER_NAME@101..108
-                    0: IDENT@101..108 "default" [] []
+                0: JS_UNKNOWN_BINDING@101..110
+                  0: DEFAULT_KW@101..108 "default" [] []
                   1: COLON@108..110 ":" [] [Whitespace(" ")]
-                  2: JS_UNKNOWN_BINDING@110..112
-                    0: COMMA@110..112 "," [] [Whitespace(" ")]
-                  3: (empty)
-                1: (empty)
+                1: COMMA@110..112 "," [] [Whitespace(" ")]
                 2: JS_SHORTHAND_PROPERTY_BINDING@112..116
                   0: JS_IDENTIFIER_BINDING@112..116
                     0: IDENT@112..116 "bar" [] [Whitespace(" ")]
@@ -114,11 +110,11 @@
       1: SEMICOLON@122..123 ";" [] []
   3: EOF@123..124 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected an identifier, a string literal, a number literal, an object pattern, or an array pattern but instead found '5'
+error[SyntaxError]: expected an identifier, or an assignment target but instead found '5'
   ┌─ object_binding_pattern.js:1:7
   │
 1 │ let { 5 } } = { eval: "foo" };
-  │       ^ Expected an identifier, a string literal, a number literal, an object pattern, or an array pattern here
+  │       ^ Expected an identifier, or an assignment target here
 
 --
 error[SyntaxError]: Object and Array patterns require initializers
@@ -149,32 +145,25 @@ error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
   │       ^^^^
 
 --
-error[SyntaxError]: expected an identifier, a string literal, a number literal, an object pattern, or an array pattern but instead found '5'
+error[SyntaxError]: expected an identifier, or an assignment target but instead found '5'
   ┌─ object_binding_pattern.js:3:7
   │
 3 │ let { 5, 6 } = { eval: "foo" };
-  │       ^ Expected an identifier, a string literal, a number literal, an object pattern, or an array pattern here
+  │       ^ Expected an identifier, or an assignment target here
 
 --
-error[SyntaxError]: expected an identifier, a string literal, a number literal, an object pattern, or an array pattern but instead found '6'
+error[SyntaxError]: expected an identifier, or an assignment target but instead found '6'
   ┌─ object_binding_pattern.js:3:10
   │
 3 │ let { 5, 6 } = { eval: "foo" };
-  │          ^ Expected an identifier, a string literal, a number literal, an object pattern, or an array pattern here
+  │          ^ Expected an identifier, or an assignment target here
 
 --
-error[SyntaxError]: Expected an identifier or pattern, but found none
-  ┌─ object_binding_pattern.js:4:16
+error[SyntaxError]: expected an identifier, or an assignment target but instead found 'default:'
+  ┌─ object_binding_pattern.js:4:7
   │
 4 │ let { default: , bar } = {};
-  │                ^
-
---
-error[SyntaxError]: expected `,` but instead found `bar`
-  ┌─ object_binding_pattern.js:4:18
-  │
-4 │ let { default: , bar } = {};
-  │                  ^^^ unexpected
+  │       ^^^^^^^^ Expected an identifier, or an assignment target here
 
 --
 let { 5 } } = { eval: "foo" };

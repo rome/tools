@@ -1,4 +1,4 @@
-use crate::parser::{ParsedSyntax, ParserProgress};
+use crate::parser::{ParsedSyntax, RecoveryError};
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::{
 	conditional_expr, expr, expr_or_assignment, identifier_name, unary_expr, EXPR_RECOVERY_SET,
@@ -140,10 +140,7 @@ fn parse_array_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	p.bump(T!['[']);
 	let elements = p.start();
 
-	let mut progress = ParserProgress::default();
 	while !p.at(EOF) && !p.at(T![']']) {
-		progress.assert_progressing(p);
-
 		if p.at(T![,]) {
 			p.start().complete(p, SyntaxKind::JS_ARRAY_HOLE);
 			p.bump_any();
@@ -157,7 +154,7 @@ fn parse_array_assignment_target(p: &mut Parser) -> ParsedSyntax {
 		.enable_recovery_on_line_break();
 
 		if let Present(rest) = parse_array_assignment_target_rest_element(p) {
-			if valid_rest_or_to_unknown(p, rest, T![']'], &recovery) {
+			if validate_rest_pattern(p, rest, T![']'], &recovery, JS_UNKNOWN_ASSIGNMENT_TARGET) {
 				break;
 			}
 		} else {
@@ -169,7 +166,7 @@ fn parse_array_assignment_target(p: &mut Parser) -> ParsedSyntax {
 
 				parse_assignment_target_with_optional_default(&mut *guard).or_recover(
 					&mut *guard,
-					recovery,
+					&recovery,
 					expected_array_assignment_target_element,
 				)
 			};
@@ -218,6 +215,94 @@ fn parse_array_assignment_target_rest_element(p: &mut Parser) -> ParsedSyntax {
 	Present(m.complete(p, JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT))
 }
 
+pub(crate) trait ParseObjectPattern {
+	fn parse_object_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		if !p.at(T!['{']) {
+			return Absent;
+		}
+
+		let m = p.start();
+
+		p.bump(T!['{']);
+		let elements = p.start();
+
+		let recovery_set = ParseRecovery::new(
+			self.unknown_pattern_kind(),
+			token_set!(EOF, T![,], T!['}'], T![...], T![;]),
+		)
+		.enable_recovery_on_line_break();
+
+		while !p.at(T!['}']) {
+			if p.at(T![,]) {
+				// missing element
+				p.missing();
+				p.error(self.expected_property_pattern_error(p, p.cur_tok().range));
+				p.bump_any(); // bump ,
+				continue;
+			}
+
+			if let Present(rest) = self.parse_rest_property_pattern(p) {
+				if validate_rest_pattern(
+					p,
+					rest,
+					T!['}'],
+					&recovery_set,
+					self.unknown_pattern_kind(),
+				) {
+					break;
+				}
+			} else {
+				let recover_result =
+					self.parse_any_property_pattern(p)
+						.or_recover(p, &recovery_set, |p, range| {
+							self.expected_property_pattern_error(p, range)
+						});
+
+				if recover_result.is_err() {
+					break;
+				}
+
+				match recover_result {
+					Err(RecoveryError::Eof) => break,
+					Err(RecoveryError::AlreadyRecovered) => {
+						p.error(expected_assignment_target(p, p.cur_tok().range));
+						break;
+					}
+					_ => {}
+				}
+			}
+
+			if !p.at(T!['}']) {
+				p.expect_required(T![,]);
+			}
+		}
+
+		elements.complete(p, LIST);
+		p.expect(T!['}']);
+
+		Present(m.complete(p, self.object_pattern_kind()))
+	}
+
+	fn unknown_pattern_kind(&self) -> SyntaxKind;
+	fn object_pattern_kind(&self) -> SyntaxKind;
+
+	fn expected_property_pattern_error(&self, p: &Parser, range: Range<usize>) -> Diagnostic;
+
+	fn parse_any_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		if p.at(T![:]) || p.nth_at(1, T![:]) {
+			self.parse_property_pattern(p)
+		} else {
+			self.parse_shorthand_property_pattern(p)
+		}
+	}
+
+	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+
+	fn parse_shorthand_property_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+
+	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+}
+
 // test object_assignment_target
 // ({} = {});
 // ({ bar, baz } = {});
@@ -231,11 +316,8 @@ fn parse_object_assignment_target(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump(T!['{']);
 	let elements = p.start();
-	let mut progress = ParserProgress::default();
 
 	while !p.at(T!['}']) {
-		progress.assert_progressing(p);
-
 		if p.at(T![,]) {
 			p.missing(); // missing element
 			p.bump_any();
@@ -249,13 +331,13 @@ fn parse_object_assignment_target(p: &mut Parser) -> ParsedSyntax {
 		.enable_recovery_on_line_break();
 
 		if let Present(rest) = parse_object_rest_property_assignment_target(p) {
-			if valid_rest_or_to_unknown(p, rest, T!['}'], &recovery) {
+			if validate_rest_pattern(p, rest, T!['}'], &recovery, JS_UNKNOWN_ASSIGNMENT_TARGET) {
 				break;
 			}
 		} else {
 			let element = parse_property_assignment_target(p).or_recover(
 				p,
-				recovery,
+				&recovery,
 				expected_property_assignment_target,
 			);
 
@@ -354,7 +436,6 @@ fn parse_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
 // ({ ...{a} } = b);
 // ({ ...rest, other_assignment } = a);
 // ({ ...rest, } = a);
-// ({ ...{a}} = b);
 fn parse_object_rest_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![...]) {
 		return Absent;
@@ -430,11 +511,12 @@ fn try_expression_to_simple_assignment_target(
 /// * not followed by a trailing comma
 /// * not have a default value
 #[must_use]
-fn valid_rest_or_to_unknown(
+fn validate_rest_pattern(
 	p: &mut Parser,
 	mut rest: CompletedMarker,
 	end_token: SyntaxKind,
 	recovery: &ParseRecovery,
+	unknown_kind: SyntaxKind,
 ) -> bool {
 	if p.at(end_token) {
 		return true;
@@ -458,7 +540,8 @@ fn valid_rest_or_to_unknown(
 				.secondary(rest_range, "Rest element"),
 		);
 
-		rest_marker.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+		rest_marker.complete(p, unknown_kind);
+		return false;
 	} else if p.at(T![,]) && p.nth_at(1, end_token) {
 		p.error(
 			p.err_builder("rest element may not have a trailing comma")
@@ -472,7 +555,7 @@ fn valid_rest_or_to_unknown(
 		);
 	}
 
-	rest.change_kind(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+	rest.change_kind(p, unknown_kind);
 
 	false
 }

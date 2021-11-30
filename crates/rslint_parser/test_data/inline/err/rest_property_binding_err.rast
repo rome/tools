@@ -1,0 +1,189 @@
+0: JS_ROOT@0..128
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..127
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..16
+      0: JS_VARIABLE_DECLARATION@0..15
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..15
+          0: JS_VARIABLE_DECLARATOR@4..15
+            0: JS_OBJECT_BINDING@4..15
+              0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
+              1: LIST@6..15
+                0: JS_UNKNOWN_BINDING@6..15
+                  0: DOT2@6..10 "..." [] [Whitespace(" ")]
+                  1: JS_UNKNOWN_BINDING@10..12
+                    0: R_CURLY@10..12 "}" [] [Whitespace(" ")]
+                  2: EQ@12..14 "=" [] [Whitespace(" ")]
+                  3: IDENT@14..15 "a" [] []
+                1: (empty)
+      1: SEMICOLON@15..16 ";" [] []
+    1: JS_VARIABLE_DECLARATION_STATEMENT@16..46
+      0: JS_VARIABLE_DECLARATION@16..45
+        0: LET_KW@16..21 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@21..45
+          0: JS_VARIABLE_DECLARATOR@21..45
+            0: JS_OBJECT_BINDING@21..42
+              0: L_CURLY@21..23 "{" [] [Whitespace(" ")]
+              1: LIST@23..40
+                0: JS_UNKNOWN_BINDING@23..40
+                  0: DOT2@23..26 "..." [] []
+                  1: JS_IDENTIFIER_BINDING@26..28
+                    0: IDENT@26..28 "c" [] [Whitespace(" ")]
+                  2: EQ@28..30 "=" [] [Whitespace(" ")]
+                  3: JS_STRING_LITERAL@30..40 "\"default\"" [] [Whitespace(" ")]
+              2: R_CURLY@40..42 "}" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@42..45
+              0: EQ@42..44 "=" [] [Whitespace(" ")]
+              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@44..45
+                0: IDENT@44..45 "a" [] []
+      1: SEMICOLON@45..46 ";" [] []
+    2: JS_VARIABLE_DECLARATION_STATEMENT@46..66
+      0: JS_VARIABLE_DECLARATION@46..65
+        0: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@51..65
+          0: JS_VARIABLE_DECLARATOR@51..65
+            0: JS_OBJECT_BINDING@51..62
+              0: L_CURLY@51..53 "{" [] [Whitespace(" ")]
+              1: LIST@53..60
+                0: JS_OBJECT_REST_BINDING@53..60
+                  0: DOT2@53..56 "..." [] []
+                  1: JS_UNKNOWN_BINDING@56..60
+                    0: L_CURLY@56..57 "{" [] []
+                    1: LIST@57..58
+                      0: JS_SHORTHAND_PROPERTY_BINDING@57..58
+                        0: JS_IDENTIFIER_BINDING@57..58
+                          0: IDENT@57..58 "a" [] []
+                        1: (empty)
+                    2: R_CURLY@58..60 "}" [] [Whitespace(" ")]
+              2: R_CURLY@60..62 "}" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@62..65
+              0: EQ@62..64 "=" [] [Whitespace(" ")]
+              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@64..65
+                0: IDENT@64..65 "b" [] []
+      1: SEMICOLON@65..66 ";" [] []
+    3: JS_VARIABLE_DECLARATION_STATEMENT@66..105
+      0: JS_VARIABLE_DECLARATION@66..104
+        0: LET_KW@66..71 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@71..104
+          0: JS_VARIABLE_DECLARATOR@71..104
+            0: JS_OBJECT_BINDING@71..101
+              0: L_CURLY@71..73 "{" [] [Whitespace(" ")]
+              1: LIST@73..99
+                0: JS_UNKNOWN_BINDING@73..80
+                  0: DOT2@73..76 "..." [] []
+                  1: JS_IDENTIFIER_BINDING@76..80
+                    0: IDENT@76..80 "rest" [] []
+                1: COMMA@80..82 "," [] [Whitespace(" ")]
+                2: JS_SHORTHAND_PROPERTY_BINDING@82..99
+                  0: JS_IDENTIFIER_BINDING@82..99
+                    0: IDENT@82..99 "other_assignment" [] [Whitespace(" ")]
+                  1: (empty)
+              2: R_CURLY@99..101 "}" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@101..104
+              0: EQ@101..103 "=" [] [Whitespace(" ")]
+              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@103..104
+                0: IDENT@103..104 "a" [] []
+      1: SEMICOLON@104..105 ";" [] []
+    4: JS_VARIABLE_DECLARATION_STATEMENT@105..127
+      0: JS_VARIABLE_DECLARATION@105..126
+        0: LET_KW@105..110 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@110..126
+          0: JS_VARIABLE_DECLARATOR@110..126
+            0: JS_OBJECT_BINDING@110..123
+              0: L_CURLY@110..112 "{" [] [Whitespace(" ")]
+              1: LIST@112..121
+                0: JS_UNKNOWN_BINDING@112..119
+                  0: DOT2@112..115 "..." [] []
+                  1: JS_IDENTIFIER_BINDING@115..119
+                    0: IDENT@115..119 "rest" [] []
+                1: COMMA@119..121 "," [] [Whitespace(" ")]
+              2: R_CURLY@121..123 "}" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@123..126
+              0: EQ@123..125 "=" [] [Whitespace(" ")]
+              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@125..126
+                0: IDENT@125..126 "a" [] []
+      1: SEMICOLON@126..127 ";" [] []
+  3: EOF@127..128 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: Expected an identifier or pattern, but found none
+  ┌─ rest_property_binding_err.js:1:11
+  │
+1 │ let { ... } = a;
+  │           ^
+
+--
+error[SyntaxError]: rest element cannot have a default
+  ┌─ rest_property_binding_err.js:1:13
+  │
+1 │ let { ... } = a;
+  │       ----- ^^^ Remove the default value here
+  │       │      
+  │       Rest element
+
+--
+error[SyntaxError]: expected `,` but instead found `;`
+  ┌─ rest_property_binding_err.js:1:16
+  │
+1 │ let { ... } = a;
+  │                ^ unexpected
+
+--
+error[SyntaxError]: expected an identifier, or an assignment target but instead found ';'
+  ┌─ rest_property_binding_err.js:1:16
+  │
+1 │ let { ... } = a;
+  │                ^ Expected an identifier, or an assignment target here
+
+--
+error[SyntaxError]: expected `'}'` but instead found `;`
+  ┌─ rest_property_binding_err.js:1:16
+  │
+1 │ let { ... } = a;
+  │                ^ unexpected
+
+--
+error[SyntaxError]: Object and Array patterns require initializers
+  ┌─ rest_property_binding_err.js:1:5
+  │
+1 │ let { ... } = a;
+  │     ^^^^^^^^^^^ this pattern is declared, but it is not given an initialized value
+
+--
+error[SyntaxError]: rest element cannot have a default
+  ┌─ rest_property_binding_err.js:2:12
+  │
+2 │ let { ...c = "default" } = a;
+  │       ---- ^^^^^^^^^^^^ Remove the default value here
+  │       │     
+  │       Rest element
+
+--
+error[SyntaxError]: Expected identifier binding
+  ┌─ rest_property_binding_err.js:3:10
+  │
+3 │ let { ...{a} } = b;
+  │          ^^^ Object rest patterns must bind to an identifier, other patterns are not allowed.
+
+--
+error[SyntaxError]: rest element must be the last element
+  ┌─ rest_property_binding_err.js:4:7
+  │
+4 │ let { ...rest, other_assignment } = a;
+  │       ^^^^^^^ Move the rest element to the end
+
+--
+error[SyntaxError]: rest element may not have a trailing comma
+  ┌─ rest_property_binding_err.js:5:14
+  │
+5 │ let { ...rest, } = a;
+  │       -------^ Remove the trailing comma here
+  │       │       
+  │       Rest element
+
+--
+let { ... } = a;
+let { ...c = "default" } = a;
+let { ...{a} } = b;
+let { ...rest, other_assignment } = a;
+let { ...rest, } = a;
