@@ -24,10 +24,8 @@ JsRoot {
                         kind_token: LET_KW@14..18 "let" [] [Whitespace(" ")],
                         declarators: [
                             JsVariableDeclarator {
-                                id: SinglePattern {
-                                    name: Name {
-                                        ident_token: IDENT@18..20 "i" [] [Whitespace(" ")],
-                                    },
+                                id: JsIdentifierBinding {
+                                    name_token: IDENT@18..20 "i" [] [Whitespace(" ")],
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
@@ -75,10 +73,8 @@ JsRoot {
                     kind_token: LET_KW@44..48 "let" [] [Whitespace(" ")],
                     declarators: [
                         JsVariableDeclarator {
-                            id: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@48..50 "i" [] [Whitespace(" ")],
-                                },
+                            id: JsIdentifierBinding {
+                                name_token: IDENT@48..50 "i" [] [Whitespace(" ")],
                                 question_mark_token: missing (optional),
                                 excl_token: missing (optional),
                                 ty: missing (optional),

@@ -1173,7 +1173,7 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 
 			let recovered_element = clause.or_recover(
 				&mut *temp,
-				ParseRecovery::new(
+				&ParseRecovery::new(
 					JS_UNKNOWN_STATEMENT,
 					token_set![T![default], T![case], T!['}']],
 				)

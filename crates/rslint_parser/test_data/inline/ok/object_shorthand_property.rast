@@ -18,7 +18,7 @@ JsRoot {
                                         ty: missing (optional),
                                     },
                                     init: missing (optional),
-                                }
+                                },
                                 COMMA@7..9 "," [] [Whitespace(" ")],
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
@@ -28,8 +28,7 @@ JsRoot {
                                         ty: missing (optional),
                                     },
                                     init: missing (optional),
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@11..13 "}" [] [Whitespace(" ")],
                         },
@@ -39,8 +38,7 @@ JsRoot {
                                 name_token: IDENT@15..16 "c" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),
@@ -66,7 +64,7 @@ JsRoot {
                                             value_token: JS_STRING_LITERAL@27..36 "\"default\"" [] [],
                                         },
                                     },
-                                }
+                                },
                                 COMMA@36..38 "," [] [Whitespace(" ")],
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
@@ -89,8 +87,7 @@ JsRoot {
                                             },
                                         },
                                     },
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@49..51 "}" [] [Whitespace(" ")],
                         },
@@ -100,8 +97,7 @@ JsRoot {
                                 name_token: IDENT@53..54 "c" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

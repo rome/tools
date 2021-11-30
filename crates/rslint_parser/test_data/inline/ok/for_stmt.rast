@@ -22,8 +22,7 @@ JsRoot {
                                     value_token: JS_NUMBER_LITERAL@13..14 "5" [] [],
                                 },
                             },
-                        }
-                        ,
+                        },
                     ],
                 },
             },
@@ -69,7 +68,7 @@ JsRoot {
                                         ty: missing (optional),
                                     },
                                     init: missing (optional),
-                                }
+                                },
                                 COMMA@46..48 "," [] [Whitespace(" ")],
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
@@ -79,14 +78,12 @@ JsRoot {
                                         ty: missing (optional),
                                     },
                                     init: missing (optional),
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@52..54 "}" [] [Whitespace(" ")],
                         },
                         init: missing (optional),
-                    }
-                    ,
+                    },
                 ],
             },
             of_token: missing (required),

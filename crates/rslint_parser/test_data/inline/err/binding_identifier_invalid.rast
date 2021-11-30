@@ -22,6 +22,9 @@ JsRoot {
             star_token: STAR@40..41 "*" [] [],
             id: JsIdentifierBinding {
                 name_token: IDENT@41..44 "foo" [] [],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -39,11 +42,12 @@ JsRoot {
                             kind_token: LET_KW@48..56 "let" [Whitespace("\n   ")] [Whitespace(" ")],
                             declarators: [
                                 JsVariableDeclarator {
-                                    id: SinglePattern {
-                                        name: missing (required),
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
+                                    id: JsUnknownBinding {
+                                        items: [
+                                            Token(
+                                                IDENT@56..62 "yield" [] [Whitespace(" ")],
+                                            ),
+                                        ],
                                     },
                                     init: JsEqualValueClause {
                                         eq_token: EQ@62..64 "=" [] [Whitespace(" ")],
@@ -65,11 +69,12 @@ JsRoot {
                 kind_token: LET_KW@68..73 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: missing (required),
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
+                        id: JsUnknownBinding {
+                            items: [
+                                Token(
+                                    IDENT@73..78 "eval" [] [Whitespace(" ")],
+                                ),
+                            ],
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@78..80 "=" [] [Whitespace(" ")],

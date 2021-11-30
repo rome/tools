@@ -1,3 +1,192 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsObjectBinding {
+                            l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
+                            properties: [
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            JS_NUMBER_LITERAL@6..8 "5" [] [Whitespace(" ")],
+                                        ),
+                                    ],
+                                },
+                            ],
+                            r_curly_token: R_CURLY@8..10 "}" [] [Whitespace(" ")],
+                        },
+                        init: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsUnknownStatement {
+            items: [
+                Token(
+                    R_CURLY@10..12 "}" [] [Whitespace(" ")],
+                ),
+            ],
+        },
+        JsUnknownStatement {
+            items: [
+                Token(
+                    EQ@12..14 "=" [] [Whitespace(" ")],
+                ),
+            ],
+        },
+        JsBlockStatement {
+            l_curly_token: L_CURLY@14..16 "{" [] [Whitespace(" ")],
+            statements: [
+                JsLabeledStatement {
+                    label_token: IDENT@16..20 "eval" [] [],
+                    colon_token: COLON@20..22 ":" [] [Whitespace(" ")],
+                    body: JsExpressionStatement {
+                        expression: JsStringLiteralExpression {
+                            value_token: JS_STRING_LITERAL@22..28 "\"foo\"" [] [Whitespace(" ")],
+                        },
+                        semicolon_token: missing (optional),
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@28..29 "}" [] [],
+        },
+        JsEmptyStatement {
+            semicolon_token: SEMICOLON@29..30 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@30..35 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsObjectBinding {
+                            l_curly_token: L_CURLY@35..37 "{" [] [Whitespace(" ")],
+                            properties: [
+                                JsShorthandPropertyBinding {
+                                    identifier: missing (required),
+                                    init: missing (optional),
+                                },
+                            ],
+                            r_curly_token: R_CURLY@42..44 "}" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@44..46 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@46..48 "{" [] [Whitespace(" ")],
+                                members: [
+                                    JsPropertyObjectMember {
+                                        name: JsLiteralMemberName {
+                                            value: IDENT@48..52 "eval" [] [],
+                                        },
+                                        colon_token: COLON@52..54 ":" [] [Whitespace(" ")],
+                                    },
+                                ],
+                                r_curly_token: R_CURLY@60..61 "}" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@61..62 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@62..67 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsObjectBinding {
+                            l_curly_token: L_CURLY@67..69 "{" [] [Whitespace(" ")],
+                            properties: [
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            JS_NUMBER_LITERAL@69..70 "5" [] [],
+                                        ),
+                                    ],
+                                },
+                                COMMA@70..72 "," [] [Whitespace(" ")],
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            JS_NUMBER_LITERAL@72..74 "6" [] [Whitespace(" ")],
+                                        ),
+                                    ],
+                                },
+                            ],
+                            r_curly_token: R_CURLY@74..76 "}" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@76..78 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@78..80 "{" [] [Whitespace(" ")],
+                                members: [
+                                    JsPropertyObjectMember {
+                                        name: JsLiteralMemberName {
+                                            value: IDENT@80..84 "eval" [] [],
+                                        },
+                                        colon_token: COLON@84..86 ":" [] [Whitespace(" ")],
+                                    },
+                                ],
+                                r_curly_token: R_CURLY@92..93 "}" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@93..94 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@94..99 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsObjectBinding {
+                            l_curly_token: L_CURLY@99..101 "{" [] [Whitespace(" ")],
+                            properties: [
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            DEFAULT_KW@101..108 "default" [] [],
+                                        ),
+                                        Token(
+                                            COLON@108..110 ":" [] [Whitespace(" ")],
+                                        ),
+                                    ],
+                                },
+                                COMMA@110..112 "," [] [Whitespace(" ")],
+                                JsShorthandPropertyBinding {
+                                    identifier: JsIdentifierBinding {
+                                        name_token: IDENT@112..116 "bar" [] [Whitespace(" ")],
+                                        question_mark_token: missing (optional),
+                                        excl_token: missing (optional),
+                                        ty: missing (optional),
+                                    },
+                                    init: missing (optional),
+                                },
+                            ],
+                            r_curly_token: R_CURLY@116..118 "}" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@118..120 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@120..121 "{" [] [],
+                                members: [],
+                                r_curly_token: R_CURLY@121..122 "}" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@122..123 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..124
   0: (empty)
   1: LIST@0..0

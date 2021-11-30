@@ -18,16 +18,20 @@ JsRoot {
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@22..26 "test" [] [],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
                 l_paren_token: L_PAREN@26..27 "(" [] [],
                 parameters: [
-                    SinglePattern {
-                        name: missing (required),
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
+                    JsUnknownBinding {
+                        items: [
+                            Token(
+                                IDENT@27..32 "await" [] [],
+                            ),
+                        ],
                     },
                 ],
                 r_paren_token: R_PAREN@32..34 ")" [] [Whitespace(" ")],
@@ -46,16 +50,20 @@ JsRoot {
             star_token: STAR@45..47 "*" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@47..51 "test" [] [],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
                 l_paren_token: L_PAREN@51..52 "(" [] [],
                 parameters: [
-                    SinglePattern {
-                        name: missing (required),
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
+                    JsUnknownBinding {
+                        items: [
+                            Token(
+                                IDENT@52..57 "yield" [] [],
+                            ),
+                        ],
                     },
                 ],
                 r_paren_token: R_PAREN@57..59 ")" [] [Whitespace(" ")],

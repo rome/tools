@@ -1,3 +1,26 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsUnknownExpression {
+                items: [
+                    Token(
+                        IDENT@0..5 "yield" [] [],
+                    ),
+                ],
+            },
+            semicolon_token: SEMICOLON@5..6 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsReferenceIdentifierExpression {
+                name_token: IDENT@6..12 "await" [Whitespace("\n")] [],
+            },
+            semicolon_token: SEMICOLON@12..13 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..14
   0: (empty)
   1: LIST@0..0

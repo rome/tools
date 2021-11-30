@@ -1,3 +1,191 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsObjectBinding {
+                            l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
+                            properties: [
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            DOT2@6..10 "..." [] [Whitespace(" ")],
+                                        ),
+                                        Node(
+                                            1: JS_UNKNOWN_BINDING@10..12
+                                              0: R_CURLY@10..12 "}" [] [Whitespace(" ")]
+                                            ,
+                                        ),
+                                        Token(
+                                            EQ@12..14 "=" [] [Whitespace(" ")],
+                                        ),
+                                        Token(
+                                            IDENT@14..15 "a" [] [],
+                                        ),
+                                    ],
+                                },
+                                missing separator,
+                            ],
+                            r_curly_token: missing (required),
+                        },
+                        init: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@15..16 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@16..21 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsObjectBinding {
+                            l_curly_token: L_CURLY@21..23 "{" [] [Whitespace(" ")],
+                            properties: [
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            DOT2@23..26 "..." [] [],
+                                        ),
+                                        Node(
+                                            1: JS_IDENTIFIER_BINDING@26..28
+                                              0: IDENT@26..28 "c" [] [Whitespace(" ")]
+                                            ,
+                                        ),
+                                        Token(
+                                            EQ@28..30 "=" [] [Whitespace(" ")],
+                                        ),
+                                        Token(
+                                            JS_STRING_LITERAL@30..40 "\"default\"" [] [Whitespace(" ")],
+                                        ),
+                                    ],
+                                },
+                            ],
+                            r_curly_token: R_CURLY@40..42 "}" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@42..44 "=" [] [Whitespace(" ")],
+                            expression: JsReferenceIdentifierExpression {
+                                name_token: IDENT@44..45 "a" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@45..46 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsObjectBinding {
+                            l_curly_token: L_CURLY@51..53 "{" [] [Whitespace(" ")],
+                            properties: [
+                                JsObjectRestBinding {
+                                    dotdotdot_token: DOT2@53..56 "..." [] [],
+                                    binding: missing (required),
+                                },
+                            ],
+                            r_curly_token: R_CURLY@60..62 "}" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@62..64 "=" [] [Whitespace(" ")],
+                            expression: JsReferenceIdentifierExpression {
+                                name_token: IDENT@64..65 "b" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@65..66 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@66..71 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsObjectBinding {
+                            l_curly_token: L_CURLY@71..73 "{" [] [Whitespace(" ")],
+                            properties: [
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            DOT2@73..76 "..." [] [],
+                                        ),
+                                        Node(
+                                            1: JS_IDENTIFIER_BINDING@76..80
+                                              0: IDENT@76..80 "rest" [] []
+                                            ,
+                                        ),
+                                    ],
+                                },
+                                COMMA@80..82 "," [] [Whitespace(" ")],
+                                JsShorthandPropertyBinding {
+                                    identifier: JsIdentifierBinding {
+                                        name_token: IDENT@82..99 "other_assignment" [] [Whitespace(" ")],
+                                        question_mark_token: missing (optional),
+                                        excl_token: missing (optional),
+                                        ty: missing (optional),
+                                    },
+                                    init: missing (optional),
+                                },
+                            ],
+                            r_curly_token: R_CURLY@99..101 "}" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@101..103 "=" [] [Whitespace(" ")],
+                            expression: JsReferenceIdentifierExpression {
+                                name_token: IDENT@103..104 "a" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@104..105 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@105..110 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsObjectBinding {
+                            l_curly_token: L_CURLY@110..112 "{" [] [Whitespace(" ")],
+                            properties: [
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            DOT2@112..115 "..." [] [],
+                                        ),
+                                        Node(
+                                            1: JS_IDENTIFIER_BINDING@115..119
+                                              0: IDENT@115..119 "rest" [] []
+                                            ,
+                                        ),
+                                    ],
+                                },
+                                COMMA@119..121 "," [] [Whitespace(" ")],
+                            ],
+                            r_curly_token: R_CURLY@121..123 "}" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@123..125 "=" [] [Whitespace(" ")],
+                            expression: JsReferenceIdentifierExpression {
+                                name_token: IDENT@125..126 "a" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@126..127 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..128
   0: (empty)
   1: LIST@0..0

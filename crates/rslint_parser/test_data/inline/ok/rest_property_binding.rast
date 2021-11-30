@@ -18,8 +18,7 @@ JsRoot {
                                         excl_token: missing (optional),
                                         ty: missing (optional),
                                     },
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@14..16 "}" [] [Whitespace(" ")],
                         },
@@ -29,8 +28,7 @@ JsRoot {
                                 name_token: IDENT@18..19 "a" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@19..20 ";" [] [],
@@ -59,14 +57,12 @@ JsRoot {
                                                     excl_token: missing (optional),
                                                     ty: missing (optional),
                                                 },
-                                            }
-                                            ,
+                                            },
                                         ],
                                         r_curly_token: R_CURLY@37..39 "}" [] [Whitespace(" ")],
                                     },
                                     init: missing (optional),
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@39..41 "}" [] [Whitespace(" ")],
                         },
@@ -76,8 +72,7 @@ JsRoot {
                                 name_token: IDENT@43..44 "c" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@44..45 ";" [] [],

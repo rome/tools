@@ -8,12 +8,15 @@ JsRoot {
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@9..12 "foo" [] [],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
                 l_paren_token: L_PAREN@12..13 "(" [] [],
                 parameters: [
-                    JsUnknownPattern {
+                    JsUnknownBinding {
                         items: [
                             Token(
                                 TRUE_KW@13..17 "true" [] [],

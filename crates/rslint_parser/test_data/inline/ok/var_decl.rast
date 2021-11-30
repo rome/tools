@@ -19,8 +19,7 @@ JsRoot {
                                 value_token: JS_NUMBER_LITERAL@8..9 "5" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@9..10 ";" [] [],
@@ -41,7 +40,7 @@ JsRoot {
                                         ty: missing (optional),
                                     },
                                     init: missing (optional),
-                                }
+                                },
                                 COMMA@20..22 "," [] [Whitespace(" ")],
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
@@ -51,8 +50,7 @@ JsRoot {
                                         ty: missing (optional),
                                     },
                                     init: missing (optional),
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@26..28 "}" [] [Whitespace(" ")],
                         },
@@ -62,8 +60,7 @@ JsRoot {
                                 value_token: JS_NUMBER_LITERAL@30..31 "5" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@31..32 ";" [] [],
@@ -80,7 +77,7 @@ JsRoot {
                             ty: missing (optional),
                         },
                         init: missing (optional),
-                    }
+                    },
                     COMMA@40..42 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
@@ -90,8 +87,7 @@ JsRoot {
                             ty: missing (optional),
                         },
                         init: missing (optional),
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@45..46 ";" [] [],
@@ -113,8 +109,7 @@ JsRoot {
                                 value_token: JS_NUMBER_LITERAL@57..58 "5" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@58..59 ";" [] [],
@@ -147,7 +142,7 @@ JsRoot {
                                         ty: missing (optional),
                                     },
                                     init: missing (optional),
-                                }
+                                },
                                 COMMA@78..80 "," [] [Whitespace(" ")],
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
@@ -157,8 +152,7 @@ JsRoot {
                                         ty: missing (optional),
                                     },
                                     init: missing (optional),
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@84..86 "}" [] [Whitespace(" ")],
                         },
@@ -170,8 +164,7 @@ JsRoot {
                                 r_curly_token: R_CURLY@89..90 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@90..91 ";" [] [],
@@ -193,7 +186,7 @@ JsRoot {
                                 value_token: JS_STRING_LITERAL@102..109 "\"lorem\"" [] [],
                             },
                         },
-                    }
+                    },
                     COMMA@109..111 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
@@ -208,7 +201,7 @@ JsRoot {
                                 value_token: JS_STRING_LITERAL@117..124 "\"ipsum\"" [] [],
                             },
                         },
-                    }
+                    },
                     COMMA@124..126 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
@@ -223,7 +216,7 @@ JsRoot {
                                 value_token: JS_STRING_LITERAL@134..141 "\"value\"" [] [],
                             },
                         },
-                    }
+                    },
                     COMMA@141..143 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
@@ -238,8 +231,7 @@ JsRoot {
                                 value_token: JS_NUMBER_LITERAL@152..153 "6" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@153..154 ";" [] [],

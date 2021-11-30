@@ -83,9 +83,9 @@ JsRoot {
                     set_token: SET_KW@65..69 "set" [] [Whitespace(" ")],
                     name: missing (required),
                     l_paren_token: missing (required),
-                    parameter: ObjectPattern {
+                    parameter: JsObjectBinding {
                         l_curly_token: L_CURLY@69..70 "{" [] [],
-                        elements: [],
+                        properties: [],
                         r_curly_token: R_CURLY@70..72 "}" [] [Whitespace(" ")],
                     },
                     r_paren_token: missing (required),
@@ -98,6 +98,9 @@ JsRoot {
             class_token: CLASS_KW@73..80 "class" [Whitespace("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@80..82 "A" [] [Whitespace(" ")],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
@@ -114,6 +117,9 @@ JsRoot {
             class_token: CLASS_KW@108..115 "class" [Whitespace("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@115..117 "A" [] [Whitespace(" ")],
+                question_mark_token: missing (optional),
+                excl_token: missing (optional),
+                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
