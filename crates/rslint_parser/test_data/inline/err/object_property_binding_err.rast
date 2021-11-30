@@ -15,16 +15,10 @@ JsRoot {
                                         value: IDENT@6..9 "foo" [] [],
                                     },
                                     colon_token: COLON@9..11 ":" [] [Whitespace(" ")],
-                                    binding: JsUnknownBinding {
-                                        items: [
-                                            Token(
-                                                COMMA@11..13 "," [] [Whitespace(" ")],
-                                            ),
-                                        ],
-                                    },
+                                    binding: missing (required),
                                     init: missing (optional),
                                 },
-                                missing separator,
+                                COMMA@11..13 "," [] [Whitespace(" ")],
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@13..17 "bar" [] [Whitespace(" ")],
@@ -144,14 +138,13 @@ JsRoot {
             0: JS_OBJECT_BINDING@4..19
               0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
               1: LIST@6..17
-                0: JS_PROPERTY_BINDING@6..13
+                0: JS_PROPERTY_BINDING@6..11
                   0: JS_LITERAL_MEMBER_NAME@6..9
                     0: IDENT@6..9 "foo" [] []
                   1: COLON@9..11 ":" [] [Whitespace(" ")]
-                  2: JS_UNKNOWN_BINDING@11..13
-                    0: COMMA@11..13 "," [] [Whitespace(" ")]
+                  2: (empty)
                   3: (empty)
-                1: (empty)
+                1: COMMA@11..13 "," [] [Whitespace(" ")]
                 2: JS_SHORTHAND_PROPERTY_BINDING@13..17
                   0: JS_IDENTIFIER_BINDING@13..17
                     0: IDENT@13..17 "bar" [] [Whitespace(" ")]
@@ -216,18 +209,11 @@ JsRoot {
       1: (empty)
   3: EOF@75..76 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected an identifier or pattern, but found none
+error[SyntaxError]: expected a pattern but instead found ','
   ┌─ object_property_binding_err.js:1:12
   │
 1 │ let { foo: , bar } = {}
-  │            ^
-
---
-error[SyntaxError]: expected `,` but instead found `bar`
-  ┌─ object_property_binding_err.js:1:14
-  │
-1 │ let { foo: , bar } = {}
-  │              ^^^ unexpected
+  │            ^ Expected a pattern here
 
 --
 error[SyntaxError]: expected an identifier, a string literal, a number literal, or a computed property but instead found ':'

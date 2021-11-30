@@ -131,3 +131,7 @@ pub(crate) fn expected_property_binding(p: &Parser, range: Range<usize>) -> Diag
 	)
 	.to_diagnostic(p)
 }
+
+pub(crate) fn expected_pattern(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_node("pattern", range).to_diagnostic(p)
+}

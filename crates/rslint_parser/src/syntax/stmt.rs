@@ -15,6 +15,7 @@ use crate::syntax::assignment_target::{
 use crate::syntax::class::parse_class_declaration;
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
+use crate::syntax::js_parse_error::expected_pattern;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
@@ -790,74 +791,72 @@ pub(crate) fn variable_declarator(
 	for_stmt: bool,
 	is_let: bool,
 ) -> Option<CompletedMarker> {
-	let m = p.start();
 	p.state.should_record_names = is_const.is_some() || is_let;
-	let pat = if let Some(pattern) = pattern(p, false) {
-		pattern
-	} else {
-		m.abandon(p);
-		return None;
-	};
+	let m = p.start();
+	if let Present(pattern) = parse_binding(p, false) {
+		let pat_m = pattern.undo_completion(p);
+		p.state.should_record_names = false;
+		let kind = pattern.kind();
 
-	let pat_m = pat.undo_completion(p);
-	p.state.should_record_names = false;
-	let kind = pat.kind();
-
-	let cur = p.cur_tok().range;
-	let opt = p.eat(T![!]);
-	if opt && !p.typescript() {
-		let err = p
-			.err_builder("definite assignment assertions can only be used in TypeScript files")
-			.primary(cur, "");
-
-		p.error(err);
-	}
-
-	if p.eat(T![:]) {
-		let start = p.cur_tok().range.start;
-		let ty = ts_type(p);
-		let end = ty
-			.map(|x| usize::from(x.range(p).end()))
-			.unwrap_or(p.cur_tok().range.start);
-		if !p.typescript() {
+		let cur = p.cur_tok().range;
+		let opt = p.eat(T![!]);
+		if opt && !p.typescript() {
 			let err = p
-				.err_builder("type annotations can only be used in TypeScript files")
-				.primary(start..end, "");
+				.err_builder("definite assignment assertions can only be used in TypeScript files")
+				.primary(cur, "");
 
 			p.error(err);
 		}
-		if p.typescript() && for_stmt {
-			let err = p
-				.err_builder("`for` statement declarators cannot have a type annotation")
-				.primary(start..end, "");
 
-			p.state.for_head_error = Some(err);
+		if p.eat(T![:]) {
+			let start = p.cur_tok().range.start;
+			let ty = ts_type(p);
+			let end = ty
+				.map(|x| usize::from(x.range(p).end()))
+				.unwrap_or(p.cur_tok().range.start);
+			if !p.typescript() {
+				let err = p
+					.err_builder("type annotations can only be used in TypeScript files")
+					.primary(start..end, "");
+
+				p.error(err);
+			}
+			if p.typescript() && for_stmt {
+				let err = p
+					.err_builder("`for` statement declarators cannot have a type annotation")
+					.primary(start..end, "");
+
+				p.state.for_head_error = Some(err);
+			}
 		}
+
+		let marker = pat_m.complete(p, kind);
+
+		if p.at(T![=]) {
+			variable_initializer(p);
+		} else if marker.kind() != JS_IDENTIFIER_BINDING && !for_stmt && !p.state.in_declare {
+			let err = p
+				.err_builder("Object and Array patterns require initializers")
+				.primary(
+					marker.range(p),
+					"this pattern is declared, but it is not given an initialized value",
+				);
+
+			p.error(err);
+		// FIXME: does ts allow const var declarations without initializers in .d.ts files?
+		} else if is_const.is_some() && !for_stmt && !p.state.in_declare {
+			let err = p
+				.err_builder("Const var declarations must have an initialized value")
+				.primary(marker.range(p), "this variable needs to be initialized");
+
+			p.error(err);
+		}
+
+		Some(m.complete(p, JS_VARIABLE_DECLARATOR))
+	} else {
+		m.abandon(p);
+		None
 	}
-
-	let marker = pat_m.complete(p, kind);
-
-	if p.at(T![=]) {
-		variable_initializer(p);
-	} else if marker.kind() != JS_IDENTIFIER_BINDING && !for_stmt && !p.state.in_declare {
-		let err = p
-			.err_builder("Object and Array patterns require initializers")
-			.primary(
-				marker.range(p),
-				"this pattern is declared, but it is not given an initialized value",
-			);
-
-		p.error(err);
-	// FIXME: does ts allow const var declarations without initializers in .d.ts files?
-	} else if is_const.is_some() && !for_stmt && !p.state.in_declare {
-		let err = p
-			.err_builder("Const var declarations must have an initialized value")
-			.primary(marker.range(p), "this variable needs to be initialized");
-
-		p.error(err);
-	}
-
-	Some(m.complete(p, JS_VARIABLE_DECLARATOR))
 }
 
 #[allow(deprecated)]
@@ -1219,7 +1218,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_any(); // bump (
 
-	let pattern_marker = pattern(p, false);
+	let pattern_marker = parse_binding(p, false).or_missing_with_error(p, expected_pattern);
 	let pattern_kind = pattern_marker.map(|x| x.kind());
 
 	if p.at(T![:]) {

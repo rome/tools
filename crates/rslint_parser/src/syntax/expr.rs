@@ -4,7 +4,7 @@
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
 use super::decl::{parse_arrow_body, parse_parameter_list};
-use super::pat::pattern;
+use super::pat::parse_binding;
 use super::typescript::*;
 use super::util::*;
 #[allow(deprecated)]
@@ -17,7 +17,9 @@ use crate::syntax::assignment_target::{
 use crate::syntax::class::class_expression;
 use crate::syntax::function::parse_function_expression;
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{expected_parameter, expected_simple_assignment_target};
+use crate::syntax::js_parse_error::{
+	expected_parameter, expected_pattern, expected_simple_assignment_target,
+};
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::pat::parse_identifier_binding;
 use crate::syntax::stmt::is_semi;
@@ -688,7 +690,8 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			if temp.at(T![...]) {
 				let m = temp.start();
 				temp.bump_any();
-				pattern(&mut *temp, false);
+				parse_binding(&mut *temp, false)
+					.or_missing_with_error(&mut *temp, expected_pattern);
 				if temp.eat(T![:]) {
 					if let Some(mut ty) = ts_type(&mut *temp) {
 						ty.err_if_not_ts(
