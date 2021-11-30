@@ -1901,6 +1901,7 @@ impl JsPropertyBinding {
 		support::required_token(&self.syntax, T ! [:])
 	}
 	pub fn binding(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
+	pub fn init(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectRestBinding {
@@ -1922,6 +1923,7 @@ impl JsShorthandPropertyBinding {
 	pub fn identifier(&self) -> SyntaxResult<JsIdentifierBinding> {
 		support::required_node(&self.syntax)
 	}
+	pub fn init(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsBigIntLiteralExpression {
@@ -2764,7 +2766,6 @@ pub enum JsAnyPropertyAssignmentTarget {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyPropertyBinding {
-	AssignPattern(AssignPattern),
 	JsPropertyBinding(JsPropertyBinding),
 	JsObjectRestBinding(JsObjectRestBinding),
 	JsShorthandPropertyBinding(JsShorthandPropertyBinding),
@@ -6354,6 +6355,7 @@ impl std::fmt::Debug for JsPropertyBinding {
 				&support::DebugSyntaxResult(self.colon_token()),
 			)
 			.field("binding", &support::DebugSyntaxResult(self.binding()))
+			.field("init", &support::DebugOptionalNode(self.init()))
 			.finish()
 	}
 }
@@ -6394,6 +6396,7 @@ impl std::fmt::Debug for JsShorthandPropertyBinding {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsShorthandPropertyBinding")
 			.field("identifier", &support::DebugSyntaxResult(self.identifier()))
+			.field("init", &support::DebugOptionalNode(self.init()))
 			.finish()
 	}
 }
@@ -9551,11 +9554,6 @@ impl std::fmt::Debug for JsAnyPropertyAssignmentTarget {
 		}
 	}
 }
-impl From<AssignPattern> for JsAnyPropertyBinding {
-	fn from(node: AssignPattern) -> JsAnyPropertyBinding {
-		JsAnyPropertyBinding::AssignPattern(node)
-	}
-}
 impl From<JsPropertyBinding> for JsAnyPropertyBinding {
 	fn from(node: JsPropertyBinding) -> JsAnyPropertyBinding {
 		JsAnyPropertyBinding::JsPropertyBinding(node)
@@ -9585,8 +9583,7 @@ impl AstNode for JsAnyPropertyBinding {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		matches!(
 			kind,
-			ASSIGN_PATTERN
-				| JS_PROPERTY_BINDING
+			JS_PROPERTY_BINDING
 				| JS_OBJECT_REST_BINDING
 				| JS_SHORTHAND_PROPERTY_BINDING
 				| JS_IDENTIFIER_BINDING
@@ -9595,7 +9592,6 @@ impl AstNode for JsAnyPropertyBinding {
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			ASSIGN_PATTERN => JsAnyPropertyBinding::AssignPattern(AssignPattern { syntax }),
 			JS_PROPERTY_BINDING => {
 				JsAnyPropertyBinding::JsPropertyBinding(JsPropertyBinding { syntax })
 			}
@@ -9619,7 +9615,6 @@ impl AstNode for JsAnyPropertyBinding {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			JsAnyPropertyBinding::AssignPattern(it) => &it.syntax,
 			JsAnyPropertyBinding::JsPropertyBinding(it) => &it.syntax,
 			JsAnyPropertyBinding::JsObjectRestBinding(it) => &it.syntax,
 			JsAnyPropertyBinding::JsShorthandPropertyBinding(it) => &it.syntax,
@@ -9631,7 +9626,6 @@ impl AstNode for JsAnyPropertyBinding {
 impl std::fmt::Debug for JsAnyPropertyBinding {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
-			JsAnyPropertyBinding::AssignPattern(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyPropertyBinding::JsPropertyBinding(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyPropertyBinding::JsObjectRestBinding(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyPropertyBinding::JsShorthandPropertyBinding(it) => std::fmt::Debug::fmt(it, f),

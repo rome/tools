@@ -753,8 +753,7 @@ JsObjectBinding =
 	'}'
 
 JsAnyPropertyBinding =
-	AssignPattern
-	| JsPropertyBinding
+	JsPropertyBinding
 	| JsObjectRestBinding
 	| JsShorthandPropertyBinding
 	| JsIdentifierBinding
@@ -765,15 +764,21 @@ AssignPattern = key:JsAnyBinding ty: TsTypeAnnotation? '=' value:JsAnyExpression
 
 // let { a: b.m } = {}
 //       ^^^^^^
+// let { a: b.m = "test" } = {}
+//       ^^^^^^^^^^^^^^^
 JsPropertyBinding =
 	member: JsAnyObjectMemberName
 	':'
 	binding: JsAnyBinding
+	init: JsEqualValueClause?
 
 // let { a } = c
 //       ^
+// let { a = "test" } = c
+//       ^^^^^^^^^^
 JsShorthandPropertyBinding =
 	identifier: JsIdentifierBinding
+	init: JsEqualValueClause?
 
 // let { ...a } = c
 //       ^^^^

@@ -42,6 +42,7 @@
                 0: JS_SHORTHAND_PROPERTY_BINDING@37..42
                   0: JS_UNKNOWN_BINDING@37..42
                     0: IDENT@37..42 "eval" [] [Whitespace(" ")]
+                  1: (empty)
               2: R_CURLY@42..44 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@44..61
               0: EQ@44..46 "=" [] [Whitespace(" ")]
@@ -97,10 +98,12 @@
                   1: COLON@108..110 ":" [] [Whitespace(" ")]
                   2: JS_UNKNOWN_BINDING@110..112
                     0: COMMA@110..112 "," [] [Whitespace(" ")]
+                  3: (empty)
                 1: (empty)
                 2: JS_SHORTHAND_PROPERTY_BINDING@112..116
                   0: JS_IDENTIFIER_BINDING@112..116
                     0: IDENT@112..116 "bar" [] [Whitespace(" ")]
+                  1: (empty)
               2: R_CURLY@116..118 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@118..122
               0: EQ@118..120 "=" [] [Whitespace(" ")]

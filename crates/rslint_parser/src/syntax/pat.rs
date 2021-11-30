@@ -1,6 +1,7 @@
 use super::expr::expr_or_assignment;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
+use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::parse_identifier;
 use crate::syntax::js_parse_error::{
 	expected_identifier_binding, expected_object_binding_member,
@@ -213,26 +214,26 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 // let { default: foo, bar } = {}
 // let { foo = bar, baz } = {}
 fn parse_property_binding(p: &mut Parser, parameters: bool) -> ParsedSyntax {
-	let inner = if p.nth_at(1, T![:]) {
+	if p.nth_at(1, T![:]) {
+		// property binding
 		let m = p.start();
 		object_member_name(p).or_missing_with_error(p, expected_object_member);
 		p.bump(T![:]);
 		binding_element(p, parameters);
+		parse_equal_value_clause(p).or_missing(p);
 		Present(m.complete(p, JS_PROPERTY_BINDING))
 	} else {
-		parse_identifier_binding(p).map(|identifier| {
-			let m = identifier.precede(p);
-			m.complete(p, JS_SHORTHAND_PROPERTY_BINDING)
-		})
-	};
+		// shorthand property
+		let m = if let Present(identifier) = parse_identifier_binding(p) {
+			identifier.precede(p)
+		} else if p.at(T![=]) {
+			p.start()
+		} else {
+			return Absent;
+		};
 
-	if p.at(T![=]) {
-		let assign_pattern =
-			inner.precede_or_missing_with_error(p, expected_object_binding_member_name);
-		p.bump(T![=]);
-		expr_or_assignment(p);
-		Present(assign_pattern.complete(p, ASSIGN_PATTERN))
-	} else {
-		inner
+		parse_equal_value_clause(p).or_missing(p);
+
+		Present(m.complete(p, JS_SHORTHAND_PROPERTY_BINDING))
 	}
 }

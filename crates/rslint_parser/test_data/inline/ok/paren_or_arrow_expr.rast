@@ -64,6 +64,7 @@ JsRoot {
                                         excl_token: missing (optional),
                                         ty: missing (optional),
                                     },
+                                    init: missing (optional),
                                 }
                                 COMMA@34..36 "," [] [Whitespace(" ")],
                                 JsShorthandPropertyBinding {
@@ -73,6 +74,7 @@ JsRoot {
                                         excl_token: missing (optional),
                                         ty: missing (optional),
                                     },
+                                    init: missing (optional),
                                 }
                                 COMMA@39..41 "," [] [Whitespace(" ")],
                                 JsPropertyBinding {
@@ -103,6 +105,7 @@ JsRoot {
                                         excl_token: missing (required),
                                         ty: missing (optional),
                                     },
+                                    init: missing (optional),
                                 }
                                 ,
                             ],
@@ -200,10 +203,12 @@ JsRoot {
                 0: JS_SHORTHAND_PROPERTY_BINDING@31..34
                   0: JS_IDENTIFIER_BINDING@31..34
                     0: IDENT@31..34 "foo" [] []
+                  1: (empty)
                 1: COMMA@34..36 "," [] [Whitespace(" ")]
                 2: JS_SHORTHAND_PROPERTY_BINDING@36..39
                   0: JS_IDENTIFIER_BINDING@36..39
                     0: IDENT@36..39 "bar" [] []
+                  1: (empty)
                 3: COMMA@39..41 "," [] [Whitespace(" ")]
                 4: JS_PROPERTY_BINDING@41..55
                   0: JS_LITERAL_MEMBER_NAME@41..42
@@ -220,6 +225,7 @@ JsRoot {
                         1: JS_IDENTIFIER_BINDING@51..54
                           0: IDENT@51..54 "baz" [] []
                     2: R_BRACK@54..55 "]" [] []
+                  3: (empty)
               2: R_CURLY@55..56 "}" [] []
           2: R_PAREN@56..58 ")" [] [Whitespace(" ")]
         1: FAT_ARROW@58..61 "=>" [] [Whitespace(" ")]
