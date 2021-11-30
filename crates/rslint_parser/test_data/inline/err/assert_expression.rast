@@ -10,8 +10,7 @@ JsRoot {
                     specifiers: [
                         Specifier {
                             name: missing (required),
-                        }
-                        ,
+                        },
                     ],
                     r_curly_token: R_CURLY@11..13 "}" [] [Whitespace(" ")],
                 },
