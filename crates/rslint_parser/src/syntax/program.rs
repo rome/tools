@@ -11,6 +11,7 @@ use crate::syntax::class::class_declaration;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::directives;
+use crate::syntax::util::is_at_async_function;
 use crate::{SyntaxKind::*, *};
 
 #[macro_export]
@@ -407,7 +408,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
 
-		if p.cur_src() == "async" && p.nth_at(1, T![function]) && !p.has_linebreak_before_n(1) {
+		if is_at_async_function(p, true) {
 			parse_function_declaration(p)
 				// it's fine to not handle the error the because the check on tokens are done beforehand
 				.or_missing(p);
@@ -429,10 +430,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		// function ...
 		&& (p.at(T![function])
 			||
-		// async function ...
-		(p.cur_src() == "async"
-				&& p.nth_at(1, T![function])
-				&& !p.has_linebreak_before_n(1)))
+		is_at_async_function(p, true))
 	{
 		parse_function_declaration(p)
 			// it's fine to not handle the error the because the check on tokens are done beforehand

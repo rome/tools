@@ -16,6 +16,7 @@ use crate::syntax::assignment_target::{
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::js_parse_error;
+use crate::syntax::util::is_at_async_function;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
@@ -117,25 +118,15 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 		T![continue] => parse_continue_statement(p).ok().unwrap(), // It is only ever Err if there's no continue keyword
 		T![throw] => parse_throw_statement(p).ok().unwrap(),
 		T![debugger] => parse_debugger_statement(p).ok().unwrap(),
-		T![function] => parse_function_declaration(p)
-			// it's fine to not handle the error the because the check on tokens are done beforehand
-			.or_missing(p)
-			.unwrap(),
+		T![function] => parse_function_declaration(p).ok().unwrap(),
 		T![class] => class_declaration(p),
-		T![ident]
-			if p.cur_src() == "async"
-				&& p.nth_at(1, T![function])
-				&& !p.has_linebreak_before_n(1) =>
-		{
-			// it's fine to not handle the error the because the check on tokens are done beforehand
-			parse_function_declaration(p).or_missing(p).unwrap()
-		}
+		T![ident] if is_at_async_function(p, true) => parse_function_declaration(p).ok().unwrap(),
 
 		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
 			variable_declaration_statement(p)
 		}
 		// TODO: handle `<T>() => {};` with less of a hack
-		_ if p.at_ts(STARTS_EXPR) || p.at(T![<]) => return expr_statement(p),
+		_ if p.at_ts(STARTS_EXPR) || p.at(T![<]) => return parse_expression_statement(p).ok(),
 		_ => {
 			let err = p
 				.err_builder("Expected a statement or declaration, but found none")
@@ -170,7 +161,7 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 // }
 
 #[allow(deprecated)]
-fn expr_statement(p: &mut Parser) -> Option<CompletedMarker> {
+fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
 	let start = p.cur_tok().range.start;
 	// this is *technically* wrong because it would be an expr stmt in js but for our purposes
 	// we treat these as always being ts declarations since ambiguity is inefficient in this style of
@@ -186,7 +177,7 @@ fn expr_statement(p: &mut Parser) -> Option<CompletedMarker> {
 				p,
 				"TypeScript declarations can only be used in TypeScript files",
 			);
-			return Some(res);
+			return Present(res);
 		}
 	}
 
@@ -197,7 +188,7 @@ fn expr_statement(p: &mut Parser) -> Option<CompletedMarker> {
 				p,
 				"TypeScript declarations can only be used in TypeScript files",
 			);
-			return Some(res);
+			return Present(res);
 		}
 	}
 	if p.typescript()
@@ -216,7 +207,7 @@ fn expr_statement(p: &mut Parser) -> Option<CompletedMarker> {
 		m.complete(p, ERROR);
 	}
 
-	let mut expr = p.expr_with_semi_recovery(false)?;
+	let mut expr = p.expr_with_semi_recovery(false).unwrap();
 	// Labelled stmt
 	if expr.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION && p.at(T![:]) {
 		expr.change_kind(p, NAME);
@@ -257,12 +248,12 @@ fn expr_statement(p: &mut Parser) -> Option<CompletedMarker> {
 		let m = expr.undo_completion(p);
 		p.bump_any();
 		stmt(p, None);
-		return Some(m.complete(p, JS_LABELED_STATEMENT));
+		return Present(m.complete(p, JS_LABELED_STATEMENT));
 	}
 
 	let m = expr.precede(p);
 	semi(p, start..p.cur_tok().range.end);
-	Some(m.complete(p, JS_EXPRESSION_STATEMENT))
+	Present(m.complete(p, JS_EXPRESSION_STATEMENT))
 }
 
 /// A debugger statement such as `debugger;`
@@ -1195,13 +1186,13 @@ fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	p.bump_any(); // bump catch
 
-	catch_declaration(p).or_missing(p);
+	parse_catch_declaration(p).or_missing(p);
 	parse_block_stmt(p).or_missing_with_error(p, js_parse_error::expected_block_statement);
 
 	Present(m.complete(p, JS_CATCH_CLAUSE))
 }
 
-fn catch_declaration(p: &mut Parser) -> ParsedSyntax {
+fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T!['(']) {
 		return Absent;
 	}

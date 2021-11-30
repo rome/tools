@@ -77,3 +77,14 @@ pub fn check_for_stmt_declaration(p: &mut Parser, marker: &CompletedMarker) {
 		p.error(err);
 	}
 }
+
+#[inline]
+/// Checks if the parser is inside a "async function"
+pub(super) fn is_at_async_function(p: &mut Parser, check_line_break: bool) -> bool {
+	let async_function_tokens = p.cur_src() == "async" && p.nth_at(1, T![function]);
+	if check_line_break {
+		async_function_tokens && !p.has_linebreak_before_n(1)
+	} else {
+		async_function_tokens
+	}
+}

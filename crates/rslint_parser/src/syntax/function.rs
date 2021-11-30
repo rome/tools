@@ -5,6 +5,7 @@ use crate::syntax::js_parse_error;
 use crate::syntax::pat::parse_identifier_binding;
 use crate::syntax::stmt::{is_semi, parse_block_impl};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
+use crate::syntax::util::is_at_async_function;
 use crate::ConditionalParsedSyntax::Invalid;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
@@ -54,7 +55,7 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 
 	let mut uses_ts_syntax = kind == JS_FUNCTION_DECLARATION && p.eat(T![declare]);
 
-	let in_async = p.at(T![ident]) && p.cur_src() == "async";
+	let in_async = is_at_async_function(p, false);
 	if in_async {
 		p.bump_remap(T![async]);
 	}
