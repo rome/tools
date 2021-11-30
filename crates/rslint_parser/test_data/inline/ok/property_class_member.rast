@@ -230,10 +230,12 @@ JsRoot {
           0: JS_LITERAL_MEMBER_NAME@11..21
             0: IDENT@11..21 "property" [Whitespace("\n\t")] []
           1: (empty)
+          2: (empty)
         1: JS_PROPERTY_CLASS_MEMBER@21..31
           0: JS_LITERAL_MEMBER_NAME@21..30
             0: IDENT@21..30 "declare" [Whitespace("\n\t")] []
-          1: SEMICOLON@30..31 ";" [] []
+          1: (empty)
+          2: SEMICOLON@30..31 ";" [] []
         2: JS_PROPERTY_CLASS_MEMBER@31..58
           0: JS_LITERAL_MEMBER_NAME@31..53
             0: IDENT@31..53 "initializedProperty" [Whitespace("\n\t")] [Whitespace(" ")]
@@ -245,11 +247,13 @@ JsRoot {
         3: JS_PROPERTY_CLASS_MEMBER@58..65
           0: JS_LITERAL_MEMBER_NAME@58..64
             0: JS_STRING_LITERAL@58..64 "\"a\"" [Whitespace("\n\n\t")] []
-          1: SEMICOLON@64..65 ";" [] []
+          1: (empty)
+          2: SEMICOLON@64..65 ";" [] []
         4: JS_PROPERTY_CLASS_MEMBER@65..68
           0: JS_LITERAL_MEMBER_NAME@65..68
             0: JS_NUMBER_LITERAL@65..68 "5" [Whitespace("\n\t")] []
           1: (empty)
+          2: (empty)
         5: JS_PROPERTY_CLASS_MEMBER@68..81
           0: JS_COMPUTED_MEMBER_NAME@68..81
             0: L_BRACK@68..71 "[" [Whitespace("\n\t")] []
@@ -261,11 +265,13 @@ JsRoot {
                 0: JS_STRING_LITERAL@77..80 "\"b\"" [] []
             2: R_BRACK@80..81 "]" [] []
           1: (empty)
+          2: (empty)
         6: JS_PROPERTY_CLASS_MEMBER@81..105
           0: STATIC_KW@81..91 "static" [Whitespace("\n\n\t")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@91..105
             0: IDENT@91..105 "staticProperty" [] []
           2: (empty)
+          3: (empty)
         7: JS_PROPERTY_CLASS_MEMBER@105..143
           0: STATIC_KW@105..114 "static" [Whitespace("\n\t")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@114..140
@@ -280,6 +286,7 @@ JsRoot {
             0: HASH@143..147 "#" [Whitespace("\n\n\t")] []
             1: IDENT@147..154 "private" [] []
           1: (empty)
+          2: (empty)
         9: JS_PROPERTY_CLASS_MEMBER@154..181
           0: JS_PRIVATE_CLASS_MEMBER_NAME@154..176
             0: HASH@154..157 "#" [Whitespace("\n\t")] []
@@ -295,6 +302,7 @@ JsRoot {
             0: HASH@191..192 "#" [] []
             1: IDENT@192..205 "staticPrivate" [] []
           2: (empty)
+          3: (empty)
         11: JS_PROPERTY_CLASS_MEMBER@205..251
           0: STATIC_KW@205..214 "static" [Whitespace("\n\t")] [Whitespace(" ")]
           1: JS_PRIVATE_CLASS_MEMBER_NAME@214..248

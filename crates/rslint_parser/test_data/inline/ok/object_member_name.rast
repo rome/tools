@@ -25,7 +25,7 @@ JsRoot {
                                             value: JS_STRING_LITERAL@9..14 "\"foo\"" [] [],
                                         },
                                         colon_token: COLON@14..16 ":" [] [Whitespace(" ")],
-                                    }
+                                    },
                                     COMMA@19..21 "," [] [Whitespace(" ")],
                                     JsPropertyObjectMember {
                                         name: JsComputedMemberName {
@@ -39,28 +39,26 @@ JsRoot {
                                             r_brack_token: R_BRACK@27..28 "]" [] [],
                                         },
                                         colon_token: COLON@28..30 ":" [] [Whitespace(" ")],
-                                    }
+                                    },
                                     COMMA@33..35 "," [] [Whitespace(" ")],
                                     JsPropertyObjectMember {
                                         name: JsLiteralMemberName {
                                             value: IDENT@35..38 "bar" [] [],
                                         },
                                         colon_token: COLON@38..40 ":" [] [Whitespace(" ")],
-                                    }
+                                    },
                                     COMMA@43..45 "," [] [Whitespace(" ")],
                                     JsPropertyObjectMember {
                                         name: JsLiteralMemberName {
                                             value: JS_NUMBER_LITERAL@45..46 "7" [] [],
                                         },
                                         colon_token: COLON@46..48 ":" [] [Whitespace(" ")],
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@51..52 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

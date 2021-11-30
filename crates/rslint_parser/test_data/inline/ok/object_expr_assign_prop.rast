@@ -28,7 +28,7 @@ JsRoot {
                                         value: JsNumberLiteralExpression {
                                             value_token: JS_NUMBER_LITERAL@16..17 "4" [] [],
                                         },
-                                    }
+                                    },
                                     COMMA@17..19 "," [] [Whitespace(" ")],
                                     InitializedProp {
                                         key: Name {
@@ -38,14 +38,12 @@ JsRoot {
                                         value: JsReferenceIdentifierExpression {
                                             name_token: IDENT@25..29 "bar" [] [Whitespace(" ")],
                                         },
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@29..30 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

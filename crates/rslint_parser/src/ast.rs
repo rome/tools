@@ -215,10 +215,12 @@ impl<N: Debug> Debug for AstSeparatedElement<N> {
 			Ok(node) => N::fmt(node, f)?,
 			Err(_) => f.write_str("missing element")?,
 		};
-		f.write_str("\n")?;
 		match &self.trailing_separator {
-			Ok(Some(separator)) => separator.fmt(f),
-			Err(_) => f.write_str("missing separator"),
+			Ok(Some(separator)) => {
+				f.write_str(",\n")?;
+				separator.fmt(f)
+			}
+			Err(_) => f.write_str(",\nmissing separator"),
 			Ok(None) => Ok(()),
 		}
 	}

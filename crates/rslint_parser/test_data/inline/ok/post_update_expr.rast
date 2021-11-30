@@ -4,7 +4,7 @@ JsRoot {
     statements: [
         JsExpressionStatement {
             expression: JsPostUpdateExpression {
-                operand: JsReferenceIdentifierExpression {
+                operand: JsIdentifierAssignmentTarget {
                     name_token: IDENT@0..3 "foo" [] [],
                 },
                 operator: PLUS2@3..5 "++" [] [],
@@ -13,7 +13,7 @@ JsRoot {
         },
         JsExpressionStatement {
             expression: JsPostUpdateExpression {
-                operand: JsReferenceIdentifierExpression {
+                operand: JsIdentifierAssignmentTarget {
                     name_token: IDENT@5..9 "foo" [Whitespace("\n")] [],
                 },
                 operator: MINUS2@9..11 "--" [] [],
@@ -29,13 +29,13 @@ JsRoot {
   2: LIST@0..11
     0: JS_EXPRESSION_STATEMENT@0..5
       0: JS_POST_UPDATE_EXPRESSION@0..5
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
+        0: JS_IDENTIFIER_ASSIGNMENT_TARGET@0..3
           0: IDENT@0..3 "foo" [] []
         1: PLUS2@3..5 "++" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@5..11
       0: JS_POST_UPDATE_EXPRESSION@5..11
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@5..9
+        0: JS_IDENTIFIER_ASSIGNMENT_TARGET@5..9
           0: IDENT@5..9 "foo" [Whitespace("\n")] []
         1: MINUS2@9..11 "--" [] []
       1: (empty)

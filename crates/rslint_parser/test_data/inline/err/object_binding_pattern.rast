@@ -16,14 +16,12 @@ JsRoot {
                                             JS_NUMBER_LITERAL@6..8 "5" [] [Whitespace(" ")],
                                         ),
                                     ],
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@8..10 "}" [] [Whitespace(" ")],
                         },
                         init: missing (optional),
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),
@@ -75,8 +73,7 @@ JsRoot {
                                             IDENT@37..42 "eval" [] [Whitespace(" ")],
                                         ),
                                     ],
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@42..44 "}" [] [Whitespace(" ")],
                         },
@@ -90,14 +87,12 @@ JsRoot {
                                             value: IDENT@48..52 "eval" [] [],
                                         },
                                         colon_token: COLON@52..54 ":" [] [Whitespace(" ")],
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@60..61 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@61..62 ";" [] [],
@@ -116,7 +111,7 @@ JsRoot {
                                             JS_NUMBER_LITERAL@69..70 "5" [] [],
                                         ),
                                     ],
-                                }
+                                },
                                 COMMA@70..72 "," [] [Whitespace(" ")],
                                 JsUnknownPattern {
                                     items: [
@@ -124,8 +119,7 @@ JsRoot {
                                             JS_NUMBER_LITERAL@72..74 "6" [] [Whitespace(" ")],
                                         ),
                                     ],
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@74..76 "}" [] [Whitespace(" ")],
                         },
@@ -139,14 +133,12 @@ JsRoot {
                                             value: IDENT@80..84 "eval" [] [],
                                         },
                                         colon_token: COLON@84..86 ":" [] [Whitespace(" ")],
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@92..93 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@93..94 ";" [] [],
@@ -164,7 +156,7 @@ JsRoot {
                                         ident_token: IDENT@101..108 "default" [] [],
                                     },
                                     colon_token: COLON@108..110 ":" [] [Whitespace(" ")],
-                                }
+                                },
                                 missing separator,
                                 SinglePattern {
                                     name: Name {
@@ -173,8 +165,7 @@ JsRoot {
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@116..118 "}" [] [Whitespace(" ")],
                         },
@@ -186,8 +177,7 @@ JsRoot {
                                 r_curly_token: R_CURLY@121..122 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@122..123 ";" [] [],

@@ -1,4 +1,4 @@
-use super::expr::{assign_expr, identifier_name, lhs_expr};
+use super::expr::{expr_or_assignment, identifier_name, lhs_expr};
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::syntax::expr::{parse_identifier, parse_literal_expression};
@@ -158,7 +158,7 @@ pub fn binding_element(
 		let m = left.map(|m| m.precede(p)).unwrap_or_else(|| p.start());
 		p.bump_any();
 
-		assign_expr(p);
+		expr_or_assignment(p);
 		return Some(m.complete(p, ASSIGN_PATTERN));
 	}
 
@@ -292,7 +292,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 
 	let sp_marker = name.precede(p).complete(p, SINGLE_PATTERN);
 	if p.eat(T![=]) {
-		assign_expr(p);
+		expr_or_assignment(p);
 		Some(m.complete(p, ASSIGN_PATTERN))
 	} else {
 		m.abandon(p);

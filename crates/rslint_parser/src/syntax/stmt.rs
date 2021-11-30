@@ -2,14 +2,17 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
-use super::expr::{assign_expr, expr, EXPR_RECOVERY_SET, STARTS_EXPR};
+use super::expr::{expr, expr_or_assignment, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
-use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
+use super::util::{check_for_stmt_declaration, check_label_use};
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax;
+use crate::syntax::assignment_target::{
+	expression_to_assignment_target, SimpleAssignmentTargetExprKind,
+};
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::syntax::js_parse_error;
@@ -887,9 +890,8 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 	Present(m.complete(p, JS_DO_WHILE_STATEMENT))
 }
 
-#[allow(deprecated)]
 fn for_head(p: &mut Parser) -> SyntaxKind {
-	let m = p.start();
+	let init_or_left = p.start();
 	if p.at(T![const]) || p.at(T![var]) || (p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)))
 	{
 		let mut guard = p.with_state(ParserState {
@@ -898,12 +900,13 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 		});
 		let decl = variable_declaration(&mut *guard, true);
 		drop(guard);
-		m.complete(p, FOR_STMT_INIT);
 
 		if p.at(T![in]) || p.cur_src() == "of" {
 			if let Some(err) = p.state.for_head_error.take() {
 				p.error(err);
 			}
+			// left is a union, no need for wrapping
+			init_or_left.abandon(p);
 			let is_in = p.at(T![in]);
 			p.bump_any();
 
@@ -911,6 +914,7 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 
 			for_each_head(p, is_in)
 		} else {
+			init_or_left.complete(p, FOR_STMT_INIT);
 			p.state.for_head_error = None;
 			p.expect_required(T![;]);
 			normal_for_head(p);
@@ -918,35 +922,48 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 		}
 	} else {
 		if p.eat(T![;]) {
-			m.abandon(p);
+			init_or_left.abandon(p);
 			normal_for_head(p);
 			return FOR_STMT;
 		}
-		let mut guard = p.with_state(ParserState {
-			include_in: false,
-			..p.state.clone()
-		});
-		let complete = expr(&mut *guard);
-		drop(guard);
-		m.complete(p, FOR_STMT_INIT);
+
+		let checkpoint = p.checkpoint();
+		let init_expr = {
+			let mut guard = p.with_state(ParserState {
+				include_in: false,
+				..p.state.clone()
+			});
+			expr(&mut *guard)
+		};
 
 		if p.at(T![in]) || p.cur_src() == "of" {
-			let is_in = p.at(T![in]);
-			p.bump_any();
+			if let Some(assignment_expr) = init_expr {
+				let mut assignment = expression_to_assignment_target(
+					p,
+					assignment_expr,
+					checkpoint,
+					SimpleAssignmentTargetExprKind::Any,
+				);
 
-			if let Some(ref expr) = complete {
-				check_lhs(p, p.parse_marker(expr), &complete.unwrap());
 				if p.typescript()
-					&& matches!(expr.kind(), JS_ARRAY_EXPRESSION | JS_OBJECT_EXPRESSION)
-				{
-					let err = p.err_builder("the left hand side of a `for..in` or `for..of` statement cannot be a destructuring pattern")
-                        .primary(expr.range(p), "");
-
+					&& p.at(T![in]) && matches!(
+					assignment.kind(),
+					JS_ARRAY_ASSIGNMENT_TARGET | JS_OBJECT_ASSIGNMENT_TARGET
+				) {
+					let err = p.err_builder("the left hand side of a `for..in` statement cannot be a destructuring pattern")
+							.primary(assignment.range(p), "");
 					p.error(err);
+					assignment.change_kind(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
 				}
 			}
 
+			// left is a union, no need for wrapping
+			init_or_left.abandon(p);
+			let is_in = p.at(T![in]);
+			p.bump_any();
 			return for_each_head(p, is_in);
+		} else {
+			init_or_left.complete(p, FOR_STMT_INIT);
 		}
 
 		p.expect_required(T![;]);
@@ -960,7 +977,7 @@ fn for_each_head(p: &mut Parser, is_in: bool) -> SyntaxKind {
 		expr(p);
 		FOR_IN_STMT
 	} else {
-		assign_expr(p);
+		expr_or_assignment(p);
 		FOR_OF_STMT
 	}
 }

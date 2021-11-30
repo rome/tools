@@ -21,8 +21,7 @@ JsRoot {
                         args: [
                             JsStringLiteralExpression {
                                 value_token: JS_STRING_LITERAL@15..21 "\"test\"" [] [],
-                            }
-                            ,
+                            },
                         ],
                         r_paren_token: R_PAREN@21..22 ")" [] [],
                     },
@@ -59,8 +58,7 @@ JsRoot {
                                 args: [
                                     JsStringLiteralExpression {
                                         value_token: JS_STRING_LITERAL@55..61 "\"test\"" [] [],
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_paren_token: R_PAREN@61..62 ")" [] [],
                             },
@@ -97,8 +95,7 @@ JsRoot {
                                 value_token: JS_NUMBER_LITERAL@88..89 "1" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@89..90 ";" [] [],
@@ -111,8 +108,17 @@ JsRoot {
                     l_curly_token: L_CURLY@98..99 "{" [] [],
                     statements: [
                         JsExpressionStatement {
-                            expression: AssignExpr {
-                                operator: EQ@104..106 "=" [] [Whitespace(" ")],
+                            expression: JsAssignmentExpression {
+                                left: JsIdentifierAssignmentTarget {
+                                    name_token: IDENT@99..104 "a" [Whitespace("\n\t\t")] [Whitespace(" ")],
+                                },
+                                operator_token: EQ@104..106 "=" [] [Whitespace(" ")],
+                                right: JsBinaryExpression {
+                                    left: JsReferenceIdentifierExpression {
+                                        name_token: IDENT@106..108 "a" [] [Whitespace(" ")],
+                                    },
+                                    operator: PLUS@108..110 "+" [] [Whitespace(" ")],
+                                },
                             },
                             semicolon_token: missing (optional),
                         },
@@ -219,8 +225,8 @@ JsRoot {
           0: L_CURLY@98..99 "{" [] []
           1: LIST@99..111
             0: JS_EXPRESSION_STATEMENT@99..111
-              0: ASSIGN_EXPR@99..111
-                0: JS_REFERENCE_IDENTIFIER_EXPRESSION@99..104
+              0: JS_ASSIGNMENT_EXPRESSION@99..111
+                0: JS_IDENTIFIER_ASSIGNMENT_TARGET@99..104
                   0: IDENT@99..104 "a" [Whitespace("\n\t\t")] [Whitespace(" ")]
                 1: EQ@104..106 "=" [] [Whitespace(" ")]
                 2: JS_BINARY_EXPRESSION@106..111

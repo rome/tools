@@ -24,12 +24,11 @@ JsRoot {
                                     value_token: JS_NUMBER_LITERAL@13..14 "5" [] [],
                                 },
                             },
-                        }
-                        ,
+                        },
                     ],
                 },
-                semicolon_token: missing (required),
             },
+            first_semi_token: SEMICOLON@14..16 ";" [] [Whitespace(" ")],
             test: ForStmtTest {
                 expr: JsBinaryExpression {
                     left: JsReferenceIdentifierExpression {
@@ -37,11 +36,10 @@ JsRoot {
                     },
                     operator: L_ANGLE@18..20 "<" [] [Whitespace(" ")],
                 },
-                semicolon_token: missing (required),
             },
             update: ForStmtUpdate {
                 expr: JsPostUpdateExpression {
-                    operand: JsReferenceIdentifierExpression {
+                    operand: JsIdentifierAssignmentTarget {
                         name_token: IDENT@24..25 "i" [] [],
                     },
                     operator: PLUS2@25..27 "++" [] [],
@@ -57,41 +55,36 @@ JsRoot {
         ForOfStmt {
             for_token: FOR_KW@31..36 "for" [Whitespace("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@36..37 "(" [] [],
-            left: ForStmtInit {
-                inner: JsVariableDeclaration {
-                    kind_token: LET_KW@37..41 "let" [] [Whitespace(" ")],
-                    declarators: [
-                        JsVariableDeclarator {
-                            id: ObjectPattern {
-                                l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],
-                                elements: [
-                                    SinglePattern {
-                                        name: Name {
-                                            ident_token: IDENT@43..46 "foo" [] [],
-                                        },
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
-                                    }
-                                    COMMA@46..48 "," [] [Whitespace(" ")],
-                                    SinglePattern {
-                                        name: Name {
-                                            ident_token: IDENT@48..52 "bar" [] [Whitespace(" ")],
-                                        },
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
-                                    }
-                                    ,
-                                ],
-                                r_curly_token: R_CURLY@52..54 "}" [] [Whitespace(" ")],
-                            },
-                            init: missing (optional),
-                        }
-                        ,
-                    ],
-                },
-                semicolon_token: missing (required),
+            left: JsVariableDeclaration {
+                kind_token: LET_KW@37..41 "let" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: ObjectPattern {
+                            l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],
+                            elements: [
+                                SinglePattern {
+                                    name: Name {
+                                        ident_token: IDENT@43..46 "foo" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    excl_token: missing (optional),
+                                    ty: missing (optional),
+                                },
+                                COMMA@46..48 "," [] [Whitespace(" ")],
+                                SinglePattern {
+                                    name: Name {
+                                        ident_token: IDENT@48..52 "bar" [] [Whitespace(" ")],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    excl_token: missing (optional),
+                                    ty: missing (optional),
+                                },
+                            ],
+                            r_curly_token: R_CURLY@52..54 "}" [] [Whitespace(" ")],
+                        },
+                        init: missing (optional),
+                    },
+                ],
             },
             of_token: missing (required),
             right: JsObjectExpression {
@@ -109,11 +102,8 @@ JsRoot {
         ForInStmt {
             for_token: FOR_KW@63..68 "for" [Whitespace("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@68..69 "(" [] [],
-            left: ForStmtInit {
-                inner: JsReferenceIdentifierExpression {
-                    name_token: IDENT@69..73 "foo" [] [Whitespace(" ")],
-                },
-                semicolon_token: missing (required),
+            left: JsIdentifierAssignmentTarget {
+                name_token: IDENT@69..73 "foo" [] [Whitespace(" ")],
             },
             in_token: IN_KW@73..76 "in" [] [Whitespace(" ")],
             right: JsObjectExpression {
@@ -132,6 +122,7 @@ JsRoot {
             for_token: FOR_KW@82..87 "for" [Whitespace("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@87..88 "(" [] [],
             init: missing (optional),
+            first_semi_token: SEMICOLON@88..89 ";" [] [],
             test: missing (optional),
             update: missing (optional),
             r_paren_token: R_PAREN@90..92 ")" [] [Whitespace(" ")],
@@ -174,7 +165,7 @@ JsRoot {
       5: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
       6: FOR_STMT_UPDATE@24..27
         0: JS_POST_UPDATE_EXPRESSION@24..27
-          0: JS_REFERENCE_IDENTIFIER_EXPRESSION@24..25
+          0: JS_IDENTIFIER_ASSIGNMENT_TARGET@24..25
             0: IDENT@24..25 "i" [] []
           1: PLUS2@25..27 "++" [] []
       7: R_PAREN@27..29 ")" [] [Whitespace(" ")]
@@ -185,22 +176,21 @@ JsRoot {
     1: FOR_OF_STMT@31..63
       0: FOR_KW@31..36 "for" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@36..37 "(" [] []
-      2: FOR_STMT_INIT@37..54
-        0: JS_VARIABLE_DECLARATION@37..54
-          0: LET_KW@37..41 "let" [] [Whitespace(" ")]
-          1: LIST@41..54
-            0: JS_VARIABLE_DECLARATOR@41..54
-              0: OBJECT_PATTERN@41..54
-                0: L_CURLY@41..43 "{" [] [Whitespace(" ")]
-                1: LIST@43..52
-                  0: SINGLE_PATTERN@43..46
-                    0: NAME@43..46
-                      0: IDENT@43..46 "foo" [] []
-                  1: COMMA@46..48 "," [] [Whitespace(" ")]
-                  2: SINGLE_PATTERN@48..52
-                    0: NAME@48..52
-                      0: IDENT@48..52 "bar" [] [Whitespace(" ")]
-                2: R_CURLY@52..54 "}" [] [Whitespace(" ")]
+      2: JS_VARIABLE_DECLARATION@37..54
+        0: LET_KW@37..41 "let" [] [Whitespace(" ")]
+        1: LIST@41..54
+          0: JS_VARIABLE_DECLARATOR@41..54
+            0: OBJECT_PATTERN@41..54
+              0: L_CURLY@41..43 "{" [] [Whitespace(" ")]
+              1: LIST@43..52
+                0: SINGLE_PATTERN@43..46
+                  0: NAME@43..46
+                    0: IDENT@43..46 "foo" [] []
+                1: COMMA@46..48 "," [] [Whitespace(" ")]
+                2: SINGLE_PATTERN@48..52
+                  0: NAME@48..52
+                    0: IDENT@48..52 "bar" [] [Whitespace(" ")]
+              2: R_CURLY@52..54 "}" [] [Whitespace(" ")]
       3: IDENT@54..57 "of" [] [Whitespace(" ")]
       4: JS_OBJECT_EXPRESSION@57..59
         0: L_CURLY@57..58 "{" [] []
@@ -214,9 +204,8 @@ JsRoot {
     2: FOR_IN_STMT@63..82
       0: FOR_KW@63..68 "for" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@68..69 "(" [] []
-      2: FOR_STMT_INIT@69..73
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@69..73
-          0: IDENT@69..73 "foo" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_ASSIGNMENT_TARGET@69..73
+        0: IDENT@69..73 "foo" [] [Whitespace(" ")]
       3: IN_KW@73..76 "in" [] [Whitespace(" ")]
       4: JS_OBJECT_EXPRESSION@76..78
         0: L_CURLY@76..77 "{" [] []

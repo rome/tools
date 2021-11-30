@@ -9,6 +9,17 @@ pub enum JsVariableKind {
 	Var,
 }
 
+impl ForStmt {
+	pub fn second_semi_token(&self) -> SyntaxResult<SyntaxToken> {
+		self.syntax
+			.children_with_tokens()
+			.filter_map(|e| e.into_token())
+			.filter(|t| t.kind() == T![;])
+			.nth(1)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
+	}
+}
+
 impl JsVariableDeclaration {
 	/// Whether the declaration is a const declaration
 	pub fn is_const(&self) -> bool {

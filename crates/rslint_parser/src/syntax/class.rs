@@ -2,7 +2,7 @@
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax;
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
-use crate::syntax::expr::assign_expr;
+use crate::syntax::expr::expr_or_assignment;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::syntax::js_parse_error;
 use crate::syntax::object::{computed_member_name, literal_member_name};
@@ -647,7 +647,7 @@ fn property_class_member_body(p: &mut Parser, member_marker: Marker) -> Complete
 	}
 
 	maybe_ts_type_annotation(p);
-	optional_equals_value_clause(p);
+	parse_equal_value_clause(p).or_missing(p);
 
 	if !optional_semi(p) {
 		// Gets the start of the member
@@ -696,16 +696,16 @@ fn optional_member_token(p: &mut Parser) -> Option<Range<usize>> {
 	}
 }
 
-fn optional_equals_value_clause(p: &mut Parser) -> Option<CompletedMarker> {
+pub(crate) fn parse_equal_value_clause(p: &mut Parser) -> ParsedSyntax {
 	if p.at(T![=]) {
 		let m = p.start();
-		p.bump_any(); // eat the = token
+		p.bump(T![=]);
 
-		assign_expr(p);
+		expr_or_assignment(p);
 
-		Some(m.complete(p, JS_EQUAL_VALUE_CLAUSE))
+		Present(m.complete(p, JS_EQUAL_VALUE_CLAUSE))
 	} else {
-		None
+		Absent
 	}
 }
 

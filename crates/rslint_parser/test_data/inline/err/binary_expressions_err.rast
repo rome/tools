@@ -16,8 +16,7 @@ JsRoot {
                                 name_token: IDENT@4..8 "foo" [] [Whitespace(" ")],
                             },
                             operator: PLUS@8..9 "+" [] [],
-                        }
-                        ,
+                        },
                     ],
                     r_paren_token: R_PAREN@9..10 ")" [] [],
                 },

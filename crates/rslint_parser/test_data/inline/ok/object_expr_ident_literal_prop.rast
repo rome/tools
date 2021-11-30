@@ -25,14 +25,12 @@ JsRoot {
                                             value: IDENT@10..11 "a" [] [],
                                         },
                                         colon_token: COLON@11..13 ":" [] [Whitespace(" ")],
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@18..19 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

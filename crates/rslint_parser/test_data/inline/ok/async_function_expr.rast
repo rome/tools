@@ -37,8 +37,7 @@ JsRoot {
                                 },
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@27..28 ";" [] [],
@@ -80,8 +79,7 @@ JsRoot {
                                 },
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@60..61 ";" [] [],

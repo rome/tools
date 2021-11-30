@@ -142,24 +142,25 @@ ForStmt =
 	'for'
 	'('
 	init:ForStmtInit?
+	first_semi: ';'
 	test:ForStmtTest?
+	manual__second_semi: ';'
 	update:ForStmtUpdate?
 	')'
 	cons:JsAnyStatement
 
-ForStmtInit = inner:ForHead ';'
+ForStmtInit = inner: ForHead
 ForHead = JsVariableDeclaration | JsAnyExpression
-
-ForStmtTest = expr:JsAnyExpression ';'
-
+ForStmtTest = expr:JsAnyExpression
 ForStmtUpdate = expr:JsAnyExpression
 
 
 // for..in statement
-ForInStmt = 'for' '(' left:ForStmtInit 'in' right:JsAnyExpression ')' cons:JsAnyStatement
+ForInStmt = 'for' '(' left:ForLeft 'in' right:JsAnyExpression ')' cons:JsAnyStatement
 
 // for..of statement
-ForOfStmt = 'for' '(' left:ForStmtInit 'of' right:JsAnyExpression ')' cons:JsAnyStatement
+ForOfStmt = 'for' '(' left:ForLeft 'of' right:JsAnyExpression ')' cons:JsAnyStatement
+ForLeft = JsAnyAssignmentTarget | JsVariableDeclaration
 
 
 JsBreakStatement =
@@ -244,6 +245,7 @@ JsAnyExpression =
 	JsAnyLiteralExpression
 	| JsArrayExpression
 	| JsArrowFunctionExpression
+	| JsAssignmentExpression
 	| JsAwaitExpression
 	| JsBinaryExpression
 	| JsClassExpression
@@ -266,7 +268,6 @@ JsAnyExpression =
 	| Template
 	| NewExpr
 	| CallExpr
-	| AssignExpr
 	| NewTarget
 	| ImportMeta
 	| TsNonNull
@@ -354,15 +355,14 @@ JsAnyArrayElement =
 
 JsArrayHole = manual__hole: ''
 
-// assign expression
-AssignExpr =
-  manual__lhs:PatternOrExpr
-  operator:(
+JsAssignmentExpression =
+  left: JsAnyAssignmentTarget
+  operator_token: (
 		'=' |'+=' | '-=' | '*=' | '%=' |
 		'**=' | '>>=' | '<<=' | '>>>=' | '&=' |
 		'|=' | '^=' | '&&=' | '||=' | '??='
   )
-  manual__rhs:PatternOrExpr
+  right: JsAnyExpression
 
 
 PatternOrExpr = Pattern | JsAnyExpression
@@ -411,12 +411,12 @@ JsUnaryExpression =
   argument: JsAnyExpression
 
 JsPreUpdateExpression =
-    operator:('++' | '--')
-    operand:JsAnyExpression
+    operator: ('++' | '--')
+    operand: JsAnySimpleAssignmentTarget
 
 JsPostUpdateExpression =
-    operand:JsAnyExpression
-    operator:('++' | '--')
+    operand: JsAnySimpleAssignmentTarget
+    operator: ('++' | '--')
 
 
 ///////////////
@@ -620,6 +620,103 @@ JsSetterClassMember =
 	body: JsFunctionBody
 
 JsEmptyClassMember = ';'
+
+///////////////
+// ASSIGNMENT TARGETS
+///////////////
+
+JsAnyAssignmentTarget =
+	JsAnySimpleAssignmentTarget
+	| JsArrayAssignmentTarget
+	| JsObjectAssignmentTarget
+
+JsAnySimpleAssignmentTarget =
+	JsIdentifierAssignmentTarget
+	| JsStaticMemberAssignmentTarget
+	| JsComputedMemberAssignmentTarget
+	| JsParenthesizedAssignmentTarget
+
+JsAssignmentTargetWithDefault =
+	target: JsAnyAssignmentTarget
+	'='
+	default: JsAnyExpression
+
+JsParenthesizedAssignmentTarget =
+	'('
+	target: JsAnySimpleAssignmentTarget
+	')'
+
+// b = "test"
+// ^
+JsIdentifierAssignmentTarget = name: 'ident'
+
+// a.b = a.#b = "test"
+// ^^^   ^^^^
+JsStaticMemberAssignmentTarget =
+	object: JsAnyExpression
+	'.'
+	member: JsAnyReferenceMember
+
+// a['b'] = a[expr] = "test"
+// ^^^^^^   ^^^^^^^
+JsComputedMemberAssignmentTarget =
+	object: JsAnyExpression
+	'['
+	member: JsAnyExpression
+	']'
+
+// [a, b = "b"", ...rest] = bar
+// ^^^^^^^^^^^^^^^^^^^^^^
+JsArrayAssignmentTarget =
+	'['
+	elements: (JsAnyArrayAssignmentTargetElement (',' JsAnyArrayAssignmentTargetElement)* ','?)
+	']'
+
+JsAnyArrayAssignmentTargetElement =
+	JsAssignmentTargetWithDefault
+	| JsAnyAssignmentTarget
+	| JsArrayAssignmentTargetRestElement
+	| JsArrayHole
+	| JsUnknownAssignmentTarget
+
+// [a, b, ...rest] = [];
+//        ^^^^^^^
+JsArrayAssignmentTargetRestElement =
+	'...'
+	target: JsAnyAssignmentTarget
+
+// ({a, b: x, ...rest} = c)
+//  ^^^^^^^^^^^^^^^^^^
+JsObjectAssignmentTarget =
+	'{'
+	properties: (JsAnyPropertyAssignmentTarget (',' JsAnyPropertyAssignmentTarget)* ','?)
+	'}'
+
+JsAnyPropertyAssignmentTarget =
+	JsShorthandPropertyAssignmentTarget
+	| JsObjectPropertyAssignmentTarget
+	| JsObjectRestPropertyAssignmentTarget
+	| JsUnknownAssignmentTarget
+
+// ({ x } = b) or ({ x = "test" } = b)
+//    ^              ^^^^^^^^^^
+JsShorthandPropertyAssignmentTarget =
+	identifier: JsIdentifierAssignmentTarget
+	init: JsEqualValueClause?
+
+// ({ x: a } = b) or ({ x: a = "test" } = b)
+//    ^^^^              ^^^^^^^^^^^^^
+JsObjectPropertyAssignmentTarget =
+	member: JsReferenceIdentifierMember
+	':'
+	target: JsAnyAssignmentTarget
+	init: JsEqualValueClause?
+
+// ({ a, ...b } = a)
+//       ^^^^
+JsObjectRestPropertyAssignmentTarget =
+	'...'
+	target: JsAnySimpleAssignmentTarget
 
 ///////////////
 // LITERALS

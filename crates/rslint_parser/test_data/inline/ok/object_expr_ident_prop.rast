@@ -24,14 +24,12 @@ JsRoot {
                                         name: JsReferenceIdentifierExpression {
                                             name_token: IDENT@9..12 "foo" [] [],
                                         },
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@12..13 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

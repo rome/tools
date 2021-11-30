@@ -26,8 +26,7 @@ JsRoot {
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
-                        }
-                        ,
+                        },
                     ],
                     r_paren_token: R_PAREN@11..13 ")" [] [Whitespace(" ")],
                 },
@@ -66,7 +65,7 @@ JsRoot {
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                }
+                                },
                                 COMMA@34..36 "," [] [Whitespace(" ")],
                                 SinglePattern {
                                     name: Name {
@@ -75,19 +74,17 @@ JsRoot {
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                }
+                                },
                                 COMMA@39..41 "," [] [Whitespace(" ")],
                                 KeyValuePattern {
                                     key: Name {
                                         ident_token: IDENT@41..42 "b" [] [],
                                     },
                                     colon_token: COLON@42..44 ":" [] [Whitespace(" ")],
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@55..56 "}" [] [],
-                        }
-                        ,
+                        },
                     ],
                     r_paren_token: R_PAREN@56..58 ")" [] [Whitespace(" ")],
                 },
@@ -110,7 +107,7 @@ JsRoot {
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
-                        }
+                        },
                         COMMA@69..71 "," [] [Whitespace(" ")],
                         JsRestParameter {
                             dotdotdot_token: DOT2@71..74 "..." [] [],
@@ -122,8 +119,7 @@ JsRoot {
                                 excl_token: missing (optional),
                                 ty: missing (optional),
                             },
-                        }
-                        ,
+                        },
                     ],
                     r_paren_token: R_PAREN@77..79 ")" [] [Whitespace(" ")],
                 },

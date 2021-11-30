@@ -6,6 +6,7 @@ JsRoot {
             for_token: FOR_KW@0..4 "for" [] [Whitespace(" ")],
             l_paren_token: missing (required),
             init: missing (optional),
+            first_semi_token: SEMICOLON@4..5 ";" [] [],
             test: missing (optional),
             update: ForStmtUpdate {
                 expr: JsObjectExpression {
@@ -37,12 +38,11 @@ JsRoot {
                                         value_token: JS_NUMBER_LITERAL@22..23 "5" [] [],
                                     },
                                 },
-                            }
-                            ,
+                            },
                         ],
                     },
-                    semicolon_token: missing (required),
                 },
+                first_semi_token: SEMICOLON@23..25 ";" [] [Whitespace(" ")],
                 test: ForStmtTest {
                     expr: JsBinaryExpression {
                         left: JsReferenceIdentifierExpression {
@@ -50,11 +50,10 @@ JsRoot {
                         },
                         operator: L_ANGLE@27..29 "<" [] [Whitespace(" ")],
                     },
-                    semicolon_token: missing (required),
                 },
                 update: ForStmtUpdate {
                     expr: JsPostUpdateExpression {
-                        operand: JsReferenceIdentifierExpression {
+                        operand: JsIdentifierAssignmentTarget {
                             name_token: IDENT@33..34 "i" [] [],
                         },
                         operator: PLUS2@34..37 "++" [] [Whitespace(" ")],
@@ -90,12 +89,11 @@ JsRoot {
                                     value_token: JS_NUMBER_LITERAL@52..53 "5" [] [],
                                 },
                             },
-                        }
-                        ,
+                        },
                     ],
                 },
-                semicolon_token: missing (required),
             },
+            first_semi_token: SEMICOLON@53..55 ";" [] [Whitespace(" ")],
             test: ForStmtTest {
                 expr: JsBinaryExpression {
                     left: JsReferenceIdentifierExpression {
@@ -103,12 +101,11 @@ JsRoot {
                     },
                     operator: L_ANGLE@57..59 "<" [] [Whitespace(" ")],
                 },
-                semicolon_token: missing (required),
             },
             update: ForStmtUpdate {
                 expr: JsPreUpdateExpression {
                     operator: PLUS2@63..65 "++" [] [],
-                    operand: JsReferenceIdentifierExpression {
+                    operand: JsIdentifierAssignmentTarget {
                         name_token: IDENT@65..67 "i" [] [Whitespace(" ")],
                     },
                 },
@@ -164,7 +161,7 @@ JsRoot {
         5: SEMICOLON@31..33 ";" [] [Whitespace(" ")]
         6: FOR_STMT_UPDATE@33..37
           0: JS_POST_UPDATE_EXPRESSION@33..37
-            0: JS_REFERENCE_IDENTIFIER_EXPRESSION@33..34
+            0: JS_IDENTIFIER_ASSIGNMENT_TARGET@33..34
               0: IDENT@33..34 "i" [] []
             1: PLUS2@34..37 "++" [] [Whitespace(" ")]
         7: (empty)
@@ -199,7 +196,7 @@ JsRoot {
       6: FOR_STMT_UPDATE@63..67
         0: JS_PRE_UPDATE_EXPRESSION@63..67
           0: PLUS2@63..65 "++" [] []
-          1: JS_REFERENCE_IDENTIFIER_EXPRESSION@65..67
+          1: JS_IDENTIFIER_ASSIGNMENT_TARGET@65..67
             0: IDENT@65..67 "i" [] [Whitespace(" ")]
       7: (empty)
       8: JS_BLOCK_STATEMENT@67..69

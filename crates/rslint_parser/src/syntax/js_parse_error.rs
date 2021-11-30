@@ -73,3 +73,22 @@ pub(crate) fn expected_parameters(p: &Parser, range: Range<usize>) -> Diagnostic
 pub(crate) fn expected_case_or_default(p: &Parser, range: Range<usize>) -> Diagnostic {
 	expected_any(&["default", "case"], range).to_diagnostic(p)
 }
+
+pub(crate) fn expected_assignment_target(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_any(&["identifier", "assignment target"], range).to_diagnostic(p)
+}
+
+pub(crate) fn expected_array_assignment_target_element(
+	p: &Parser,
+	range: Range<usize>,
+) -> Diagnostic {
+	expected_any(&["assignment target", "rest element", "comma"], range).to_diagnostic(p)
+}
+
+pub(crate) fn expected_property_assignment_target(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_any(&["assignment target", "rest property"], range).to_diagnostic(p)
+}
+
+pub(crate) fn expected_simple_assignment_target(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_any(&["identifier", "member expression"], range).to_diagnostic(p)
+}

@@ -23,14 +23,12 @@ JsRoot {
                                     JsPropertyObjectMember {
                                         name: missing (required),
                                         colon_token: COLON@17..19 ":" [] [Whitespace(" ")],
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@25..26 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),
@@ -59,14 +57,12 @@ JsRoot {
                                                 L_CURLY@36..37 "{" [] [],
                                             ),
                                         ],
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@37..38 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),
@@ -113,14 +109,12 @@ JsRoot {
                                             value: JS_NUMBER_LITERAL@93..94 "5" [] [],
                                         },
                                         colon_token: missing (required),
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@94..95 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

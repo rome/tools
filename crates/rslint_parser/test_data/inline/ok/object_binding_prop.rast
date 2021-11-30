@@ -15,7 +15,7 @@ JsRoot {
                                         ident_token: IDENT@6..13 "default" [] [],
                                     },
                                     colon_token: COLON@13..15 ":" [] [Whitespace(" ")],
-                                }
+                                },
                                 COMMA@18..20 "," [] [Whitespace(" ")],
                                 SinglePattern {
                                     name: Name {
@@ -24,8 +24,7 @@ JsRoot {
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@24..26 "}" [] [Whitespace(" ")],
                         },
@@ -37,8 +36,7 @@ JsRoot {
                                 r_curly_token: R_CURLY@29..30 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),
@@ -65,7 +63,7 @@ JsRoot {
                                     value: JsReferenceIdentifierExpression {
                                         name_token: IDENT@43..46 "bar" [] [],
                                     },
-                                }
+                                },
                                 COMMA@46..48 "," [] [Whitespace(" ")],
                                 SinglePattern {
                                     name: Name {
@@ -74,8 +72,7 @@ JsRoot {
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@52..54 "}" [] [Whitespace(" ")],
                         },
@@ -87,8 +84,7 @@ JsRoot {
                                 r_curly_token: R_CURLY@57..58 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

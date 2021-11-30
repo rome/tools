@@ -34,8 +34,14 @@ JsRoot {
             l_curly_token: L_CURLY@11..14 "{" [Whitespace("\n")] [Whitespace(" ")],
             statements: [
                 JsExpressionStatement {
-                    expression: AssignExpr {
-                        operator: EQ@18..20 "=" [] [Whitespace(" ")],
+                    expression: JsAssignmentExpression {
+                        left: JsIdentifierAssignmentTarget {
+                            name_token: IDENT@14..18 "foo" [] [Whitespace(" ")],
+                        },
+                        operator_token: EQ@18..20 "=" [] [Whitespace(" ")],
+                        right: JsReferenceIdentifierExpression {
+                            name_token: IDENT@20..23 "bar" [] [],
+                        },
                     },
                     semicolon_token: SEMICOLON@23..25 ";" [] [Whitespace(" ")],
                 },
@@ -73,8 +79,8 @@ JsRoot {
       0: L_CURLY@11..14 "{" [Whitespace("\n")] [Whitespace(" ")]
       1: LIST@14..25
         0: JS_EXPRESSION_STATEMENT@14..25
-          0: ASSIGN_EXPR@14..23
-            0: JS_REFERENCE_IDENTIFIER_EXPRESSION@14..18
+          0: JS_ASSIGNMENT_EXPRESSION@14..23
+            0: JS_IDENTIFIER_ASSIGNMENT_TARGET@14..18
               0: IDENT@14..18 "foo" [] [Whitespace(" ")]
             1: EQ@18..20 "=" [] [Whitespace(" ")]
             2: JS_REFERENCE_IDENTIFIER_EXPRESSION@20..23

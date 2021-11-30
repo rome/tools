@@ -39,7 +39,7 @@ JsRoot {
                                             statements: [],
                                             r_curly_token: R_CURLY@25..26 "}" [] [],
                                         },
-                                    }
+                                    },
                                     COMMA@26..27 "," [] [],
                                     JsMethodObjectMember {
                                         async_token: ASYNC_KW@27..36 "async" [Whitespace("\n  ")] [Whitespace(" ")],
@@ -60,14 +60,12 @@ JsRoot {
                                             statements: [],
                                             r_curly_token: R_CURLY@44..45 "}" [] [],
                                         },
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@45..47 "}" [Whitespace("\n")] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

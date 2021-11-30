@@ -1,6 +1,6 @@
 use crate::{
 	concat_elements, format_elements, group_elements, soft_indent, soft_line_break_or_space,
-	space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+	space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{ForHead, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate};
 
@@ -12,14 +12,14 @@ impl ToFormatElement for ForStmt {
 				inner.push(formatter.format_node(init)?);
 			}
 
-			inner.push(token(";"));
+			inner.push(formatter.format_token(&self.first_semi_token()?)?);
 			inner.push(soft_line_break_or_space());
 
 			if let Some(test) = self.test() {
 				inner.push(formatter.format_node(test)?);
 			}
 
-			inner.push(token(";"));
+			inner.push(formatter.format_token(&self.second_semi_token()?)?);
 			inner.push(soft_line_break_or_space());
 
 			if let Some(update) = self.update() {
@@ -28,7 +28,10 @@ impl ToFormatElement for ForStmt {
 
 			concat_elements(inner)
 		} else {
-			token(";;")
+			format_elements![
+				formatter.format_token(&self.first_semi_token()?)?,
+				formatter.format_token(&self.second_semi_token()?)?
+			]
 		};
 
 		Ok(group_elements(format_elements![

@@ -23,8 +23,7 @@ JsRoot {
                                 r_curly_token: R_CURLY@9..10 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@10..11 ";" [] [],
@@ -51,14 +50,13 @@ JsRoot {
                                         name: JsReferenceIdentifierExpression {
                                             name_token: IDENT@21..24 "foo" [] [],
                                         },
-                                    }
+                                    },
                                     COMMA@24..25 "," [] [],
                                 ],
                                 r_curly_token: R_CURLY@25..26 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

@@ -1,6 +1,6 @@
 //! Class and function declarations.
 
-use super::expr::assign_expr;
+use super::expr::expr_or_assignment;
 use super::pat::pattern;
 use super::typescript::*;
 #[allow(deprecated)]
@@ -8,17 +8,6 @@ use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::syntax::function::function_body;
 use crate::syntax::js_parse_error;
 use crate::{SyntaxKind::*, *};
-
-pub const BASE_METHOD_RECOVERY_SET: TokenSet = token_set![
-	T!['['],
-	T![ident],
-	T![yield],
-	T![await],
-	T![;],
-	T!['}'],
-	JS_NUMBER_LITERAL,
-	JS_STRING_LITERAL
-];
 
 #[allow(clippy::unnecessary_unwrap)]
 pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
@@ -85,7 +74,7 @@ pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
 		let start = p.cur_tok().range.start;
 		p.bump_any();
 
-		let expr = assign_expr(p);
+		let expr = expr_or_assignment(p);
 		let end = expr
 			.map(|x| usize::from(x.range(p).end()))
 			.unwrap_or_else(|| p.cur_tok().range.start);
@@ -164,7 +153,7 @@ pub(super) fn parse_parameters_list(
 				let start = p.cur_tok().range.start;
 				let m = p.start();
 				p.bump_any();
-				let expr = assign_expr(&mut *p);
+				let expr = expr_or_assignment(&mut *p);
 				let end = expr
 					.map(|x| usize::from(x.range(p).end()))
 					.unwrap_or_else(|| p.cur_tok().range.start);
@@ -243,6 +232,6 @@ pub(super) fn parse_arrow_body(p: &mut Parser) -> ParsedSyntax {
 	if guard.at(T!['{']) {
 		function_body(&mut *guard)
 	} else {
-		assign_expr(&mut *guard).into()
+		expr_or_assignment(&mut *guard).into()
 	}
 }

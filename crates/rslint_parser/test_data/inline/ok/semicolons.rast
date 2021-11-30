@@ -21,8 +21,7 @@ JsRoot {
                                 name_token: IDENT@10..13 "bar" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@13..14 ";" [] [],
@@ -46,8 +45,7 @@ JsRoot {
                                 name_token: IDENT@25..26 "b" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@26..27 ";" [] [],
@@ -66,8 +64,7 @@ JsRoot {
                             ty: missing (optional),
                         },
                         init: missing (optional),
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@35..36 ";" [] [],
@@ -86,8 +83,7 @@ JsRoot {
                             ty: missing (optional),
                         },
                         init: missing (optional),
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),
@@ -106,8 +102,7 @@ JsRoot {
                             ty: missing (optional),
                         },
                         init: missing (optional),
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),
