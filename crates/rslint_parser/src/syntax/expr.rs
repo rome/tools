@@ -3,8 +3,8 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
+use super::binding::parse_binding;
 use super::decl::{parse_arrow_body, parse_parameter_list};
-use super::pat::parse_binding;
 use super::typescript::*;
 use super::util::*;
 #[allow(deprecated)]
@@ -14,6 +14,7 @@ use crate::syntax::assignment_target::{
 	expression_to_assignment_target, expression_to_simple_assignment_target,
 	parse_simple_assignment_target, SimpleAssignmentTargetExprKind,
 };
+use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::class::class_expression;
 use crate::syntax::function::parse_function_expression;
 use crate::syntax::js_parse_error;
@@ -21,7 +22,6 @@ use crate::syntax::js_parse_error::{
 	expected_parameter, expected_pattern, expected_simple_assignment_target,
 };
 use crate::syntax::object::parse_object_expression;
-use crate::syntax::pat::parse_identifier_binding;
 use crate::syntax::stmt::is_semi;
 use crate::ConditionalParsedSyntax::{Invalid, Valid};
 use crate::JsSyntaxFeature::StrictMode;

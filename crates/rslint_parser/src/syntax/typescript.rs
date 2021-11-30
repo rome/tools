@@ -10,7 +10,7 @@ use crate::syntax::class::parse_class_declaration;
 use crate::syntax::expr::any_reference_member;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::js_parse_error;
-use crate::syntax::pat::parse_identifier_binding;
+use crate::syntax::binding::parse_identifier_binding;
 use crate::{SyntaxKind::*, *};
 
 pub const BASE_TS_RECOVERY_SET: TokenSet = token_set![

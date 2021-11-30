@@ -1,6 +1,4 @@
 #[allow(deprecated)]
-use crate::syntax::assignment_target::ObjectPattern;
-use crate::syntax::assignment_target::{ArrayPattern, PatternWithDefault};
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::{parse_identifier, EXPR_RECOVERY_SET};
 use crate::syntax::js_parse_error::{
@@ -8,6 +6,7 @@ use crate::syntax::js_parse_error::{
 	expected_property_binding,
 };
 use crate::syntax::object::{is_at_object_member_name, object_member_name};
+use crate::syntax::pattern::{ArrayPattern, ObjectPattern, PatternWithDefault};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
@@ -134,6 +133,10 @@ impl ArrayPattern<BindingWithDefault> for ArrayBinding {
 		JS_ARRAY_BINDING
 	}
 
+	fn rest_pattern_kind(&self) -> SyntaxKind {
+		JS_ARRAY_REST_BINDING
+	}
+
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic {
 		// TODO
 		expected_assignment_target(p, range)
@@ -143,21 +146,6 @@ impl ArrayPattern<BindingWithDefault> for ArrayBinding {
 		BindingWithDefault {
 			parameters: self.parameters,
 		}
-	}
-
-	// TODO unify?
-	fn parse_rest_pattern(&self, p: &mut Parser) -> ParsedSyntax {
-		if !p.at(T![...]) {
-			return Absent;
-		}
-
-		let m = p.start();
-		p.bump_any();
-
-		// TODO error
-		parse_binding(p, self.parameters).or_missing_with_error(p, expected_pattern);
-
-		Present(m.complete(p, JS_ARRAY_REST_BINDING))
 	}
 }
 

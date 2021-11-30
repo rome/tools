@@ -1,12 +1,12 @@
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::{ParsedSyntax, ParserProgress};
+use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
 use crate::syntax::expr::expr_or_assignment;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::syntax::js_parse_error;
 use crate::syntax::object::{parse_computed_member_name, parse_literal_member_name};
-use crate::syntax::pat::parse_identifier_binding;
 use crate::syntax::stmt::{is_semi, optional_semi, parse_block_impl};
 use crate::syntax::typescript::{
 	abstract_readonly_modifiers, maybe_ts_type_annotation, try_parse_index_signature,

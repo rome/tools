@@ -2,7 +2,7 @@ use crate::parser::ConditionalParsedSyntax::Valid;
 use crate::parser::ParsedSyntax;
 use crate::syntax::decl::parse_parameter_list;
 use crate::syntax::js_parse_error;
-use crate::syntax::pat::parse_identifier_binding;
+use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::stmt::{is_semi, parse_block_impl};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::ConditionalParsedSyntax::Invalid;

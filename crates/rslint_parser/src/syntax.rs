@@ -8,13 +8,14 @@
 //! Functions emit markers, see `CompletedMarker` and `Marker` docs for more info.
 
 mod assignment_target;
+mod binding;
 mod class;
 mod decl;
 pub mod expr;
 mod function;
 mod js_parse_error;
 mod object;
-mod pat;
+mod pattern;
 pub mod program;
 mod stmt;
 mod typescript;

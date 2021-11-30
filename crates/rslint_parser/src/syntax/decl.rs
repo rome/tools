@@ -1,7 +1,7 @@
 //! Class and function declarations.
 
 use super::expr::expr_or_assignment;
-use super::pat::parse_binding;
+use super::binding::parse_binding;
 use super::typescript::*;
 #[allow(deprecated)]
 use crate::parser::ParsedSyntax::{Absent, Present};
@@ -9,7 +9,7 @@ use crate::parser::ParserProgress;
 use crate::syntax::function::function_body;
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_pattern;
-use crate::syntax::pat::parse_binding_with_optional_default;
+use crate::syntax::binding::parse_binding_with_optional_default;
 use crate::{SyntaxKind::*, *};
 
 #[allow(clippy::unnecessary_unwrap)]

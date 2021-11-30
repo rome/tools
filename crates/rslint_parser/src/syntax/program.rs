@@ -1,7 +1,7 @@
 //! Top level functions for parsing a script or module, also includes module specific items.
 
+use super::binding::parse_identifier_binding;
 use super::expr::{expr, expr_or_assignment, identifier_name, primary_expr};
-use super::pat::parse_identifier_binding;
 use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use super::typescript::*;
 use crate::parser::ParserProgress;
