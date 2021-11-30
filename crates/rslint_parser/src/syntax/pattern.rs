@@ -1,4 +1,4 @@
-use crate::parser::RecoveryError;
+use crate::parser::{ParserProgress, RecoveryError};
 use crate::syntax::expr::{expr_or_assignment, EXPR_RECOVERY_SET};
 use crate::syntax::js_parse_error::expected_assignment_target;
 use crate::ParsedSyntax::{Absent, Present};
@@ -39,8 +39,11 @@ pub(crate) trait ArrayPattern<P: PatternWithDefault> {
 
 		p.bump(T!['[']);
 		let elements = p.start();
+		let mut progress = ParserProgress::default();
 
 		while !p.at(EOF) && !p.at(T![']']) {
+			progress.assert_progressing(p);
+
 			let recovery = ParseRecovery::new(
 				self.unknown_pattern_kind(),
 				token_set!(EOF, T![,], T![']'], T![=], T![;], T![...]),
@@ -130,6 +133,7 @@ pub(crate) trait ObjectPattern {
 
 		p.bump(T!['{']);
 		let elements = p.start();
+		let mut progress = ParserProgress::default();
 
 		let recovery_set = ParseRecovery::new(
 			self.unknown_pattern_kind(),
@@ -138,6 +142,8 @@ pub(crate) trait ObjectPattern {
 		.enable_recovery_on_line_break();
 
 		while !p.at(T!['}']) {
+			progress.assert_progressing(p);
+
 			if p.at(T![,]) {
 				// missing element
 				p.missing();
