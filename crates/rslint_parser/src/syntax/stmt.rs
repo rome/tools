@@ -13,7 +13,8 @@ use crate::syntax::assignment_target::{
 	expression_to_assignment_target, SimpleAssignmentTargetExprKind,
 };
 use crate::syntax::class::{parse_class_declaration, parse_equal_value_clause};
-use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
+use crate::syntax::function::parse_function_declaration;
+use crate::syntax::function::{is_at_async_function, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_binding;
 use crate::JsSyntaxFeature::StrictMode;

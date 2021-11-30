@@ -58,8 +58,9 @@ JsRoot {
   2: LIST@0..47
     0: JS_CLASS_DECLARATION@0..46
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      1: L_CURLY@6..7 "{" [] []
-      2: LIST@7..44
+      1: (empty)
+      2: L_CURLY@6..7 "{" [] []
+      3: LIST@7..44
         0: JS_PROPERTY_CLASS_MEMBER@7..44
           0: JS_COMPUTED_MEMBER_NAME@7..18
             0: L_BRACK@7..11 "[" [Whitespace("\n  ")] []
@@ -96,16 +97,16 @@ JsRoot {
                     1: (empty)
                 3: R_CURLY@39..43 "}" [Whitespace("\n  ")] []
           2: SEMICOLON@43..44 ";" [] []
-      3: R_CURLY@44..46 "}" [Whitespace("\n")] []
+      4: R_CURLY@44..46 "}" [Whitespace("\n")] []
     1: JS_EMPTY_STATEMENT@46..47
       0: SEMICOLON@46..47 ";" [] []
   3: EOF@47..48 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: class declarations must have a name
-  ┌─ invalid_method_recover.js:1:7
+  ┌─ invalid_method_recover.js:1:1
   │
 1 │ class {
-  │       ^
+  │ ^^^^^^
 
 --
 error[SyntaxError]: Expected an expression, but found none

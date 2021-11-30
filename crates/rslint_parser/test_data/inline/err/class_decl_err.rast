@@ -27,281 +27,165 @@ JsRoot {
         },
         JsClassDeclaration {
             class_token: CLASS_KW@29..36 "class" [Whitespace("\n")] [Whitespace(" ")],
-            id: missing (required),
-            implements_clause: missing (optional),
-            extends_clause: JsExtendsClause {
-                extends_token: EXTENDS_KW@36..44 "extends" [] [Whitespace(" ")],
-                super_class: JsObjectExpression {
-                    l_curly_token: L_CURLY@44..45 "{" [] [],
-                    members: [],
-                    r_curly_token: R_CURLY@45..46 "}" [] [],
-                },
+            id: JsIdentifierBinding {
+                name_token: IDENT@36..40 "foo" [] [Whitespace(" ")],
             },
-            l_curly_token: missing (required),
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@40..42 "{" [] [Whitespace(" ")],
             members: [
-                JsPropertyClassMember {
-                    declare_token: missing (optional),
-                    access_modifier: missing (optional),
-                    abstract_token: missing (optional),
-                    static_token: missing (optional),
-                    name: JsLiteralMemberName {
-                        value: IDENT@46..52 "class" [Whitespace("\n")] [],
-                    },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
-                    value: missing (optional),
-                    semicolon_token: missing (optional),
-                },
-                JsUnknownMember {
-                    items: [
-                        Node(
-                            0: JS_LITERAL_MEMBER_NAME@52..59
-                              0: IDENT@52..59 "class" [Whitespace("\n")] [Whitespace(" ")]
-                            ,
-                        ),
-                    ],
-                },
-                JsUnknownMember {
-                    items: [
-                        Node(
-                            0: JS_LITERAL_MEMBER_NAME@59..63
-                              0: IDENT@59..63 "foo" [] [Whitespace(" ")]
-                            ,
-                        ),
-                        Node(
-                            1: JS_UNKNOWN_MEMBER@63..65
-                              0: L_CURLY@63..65 "{" [] [Whitespace(" ")]
-                            ,
-                        ),
-                    ],
-                },
                 JsSetterClassMember {
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: missing (optional),
-                    set_token: SET_KW@65..69 "set" [] [Whitespace(" ")],
+                    set_token: SET_KW@42..46 "set" [] [Whitespace(" ")],
                     name: missing (required),
                     l_paren_token: missing (required),
                     parameter: JsObjectBinding {
-                        l_curly_token: L_CURLY@69..70 "{" [] [],
+                        l_curly_token: L_CURLY@46..47 "{" [] [],
                         properties: [],
-                        r_curly_token: R_CURLY@70..72 "}" [] [Whitespace(" ")],
+                        r_curly_token: R_CURLY@47..49 "}" [] [Whitespace(" ")],
                     },
                     r_paren_token: missing (required),
                     body: missing (required),
                 },
             ],
-            r_curly_token: R_CURLY@72..73 "}" [] [],
+            r_curly_token: R_CURLY@49..50 "}" [] [],
         },
         JsClassDeclaration {
-            class_token: CLASS_KW@73..80 "class" [Whitespace("\n")] [Whitespace(" ")],
-            id: JsIdentifierBinding {
-                name_token: IDENT@80..82 "A" [] [Whitespace(" ")],
-            },
+            class_token: CLASS_KW@50..57 "class" [Whitespace("\n")] [Whitespace(" ")],
+            id: missing (required),
             implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
-                extends_token: EXTENDS_KW@82..90 "extends" [] [Whitespace(" ")],
-                super_class: JsReferenceIdentifierExpression {
-                    name_token: IDENT@90..94 "bar" [] [Whitespace(" ")],
+                extends_token: EXTENDS_KW@57..65 "extends" [] [Whitespace(" ")],
+                super_class: JsObjectExpression {
+                    l_curly_token: L_CURLY@65..66 "{" [] [],
+                    members: [],
+                    r_curly_token: R_CURLY@66..67 "}" [] [],
                 },
             },
-            l_curly_token: L_CURLY@106..107 "{" [] [],
+            l_curly_token: missing (required),
             members: [],
-            r_curly_token: R_CURLY@107..108 "}" [] [],
-        },
-        JsClassDeclaration {
-            class_token: CLASS_KW@108..115 "class" [Whitespace("\n")] [Whitespace(" ")],
-            id: JsIdentifierBinding {
-                name_token: IDENT@115..117 "A" [] [Whitespace(" ")],
-            },
-            implements_clause: missing (optional),
-            extends_clause: JsExtendsClause {
-                extends_token: EXTENDS_KW@117..125 "extends" [] [Whitespace(" ")],
-                super_class: JsReferenceIdentifierExpression {
-                    name_token: IDENT@125..128 "bar" [] [],
-                },
-            },
-            l_curly_token: L_CURLY@134..135 "{" [] [],
-            members: [],
-            r_curly_token: R_CURLY@135..136 "}" [] [],
+            r_curly_token: missing (required),
         },
     ],
 }
 
-0: JS_ROOT@0..137
+0: JS_ROOT@0..68
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..136
+  2: LIST@0..67
     0: JS_CLASS_DECLARATION@0..8
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      1: L_CURLY@6..7 "{" [] []
-      2: LIST@7..7
-      3: R_CURLY@7..8 "}" [] []
+      1: (empty)
+      2: L_CURLY@6..7 "{" [] []
+      3: LIST@7..7
+      4: R_CURLY@7..8 "}" [] []
     1: JS_CLASS_DECLARATION@8..29
       0: CLASS_KW@8..15 "class" [Whitespace("\n")] [Whitespace(" ")]
-      1: JS_EXTENDS_CLAUSE@15..27
+      1: (empty)
+      2: JS_EXTENDS_CLAUSE@15..27
         0: EXTENDS_KW@15..23 "extends" [] [Whitespace(" ")]
         1: JS_REFERENCE_IDENTIFIER_EXPRESSION@23..27
           0: IDENT@23..27 "bar" [] [Whitespace(" ")]
-      2: L_CURLY@27..28 "{" [] []
-      3: LIST@28..28
-      4: R_CURLY@28..29 "}" [] []
-    2: JS_CLASS_DECLARATION@29..73
+      3: L_CURLY@27..28 "{" [] []
+      4: LIST@28..28
+      5: R_CURLY@28..29 "}" [] []
+    2: JS_CLASS_DECLARATION@29..50
       0: CLASS_KW@29..36 "class" [Whitespace("\n")] [Whitespace(" ")]
-      1: JS_EXTENDS_CLAUSE@36..46
-        0: EXTENDS_KW@36..44 "extends" [] [Whitespace(" ")]
-        1: JS_OBJECT_EXPRESSION@44..46
-          0: L_CURLY@44..45 "{" [] []
-          1: LIST@45..45
-          2: R_CURLY@45..46 "}" [] []
-      2: (empty)
-      3: LIST@46..72
-        0: JS_PROPERTY_CLASS_MEMBER@46..52
-          0: JS_LITERAL_MEMBER_NAME@46..52
-            0: IDENT@46..52 "class" [Whitespace("\n")] []
+      1: JS_IDENTIFIER_BINDING@36..40
+        0: IDENT@36..40 "foo" [] [Whitespace(" ")]
+      2: L_CURLY@40..42 "{" [] [Whitespace(" ")]
+      3: LIST@42..49
+        0: JS_SETTER_CLASS_MEMBER@42..49
+          0: SET_KW@42..46 "set" [] [Whitespace(" ")]
           1: (empty)
           2: (empty)
-        1: JS_UNKNOWN_MEMBER@52..59
-          0: JS_LITERAL_MEMBER_NAME@52..59
-            0: IDENT@52..59 "class" [Whitespace("\n")] [Whitespace(" ")]
-        2: JS_UNKNOWN_MEMBER@59..65
-          0: JS_LITERAL_MEMBER_NAME@59..63
-            0: IDENT@59..63 "foo" [] [Whitespace(" ")]
-          1: JS_UNKNOWN_MEMBER@63..65
-            0: L_CURLY@63..65 "{" [] [Whitespace(" ")]
-        3: JS_SETTER_CLASS_MEMBER@65..72
-          0: SET_KW@65..69 "set" [] [Whitespace(" ")]
-          1: (empty)
-          2: (empty)
-          3: JS_OBJECT_BINDING@69..72
-            0: L_CURLY@69..70 "{" [] []
-            1: LIST@70..70
-            2: R_CURLY@70..72 "}" [] [Whitespace(" ")]
+          3: JS_OBJECT_BINDING@46..49
+            0: L_CURLY@46..47 "{" [] []
+            1: LIST@47..47
+            2: R_CURLY@47..49 "}" [] [Whitespace(" ")]
           4: (empty)
           5: (empty)
-      4: R_CURLY@72..73 "}" [] []
-    3: JS_CLASS_DECLARATION@73..108
-      0: CLASS_KW@73..80 "class" [Whitespace("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@80..82
-        0: IDENT@80..82 "A" [] [Whitespace(" ")]
-      2: JS_EXTENDS_CLAUSE@82..106
-        0: EXTENDS_KW@82..90 "extends" [] [Whitespace(" ")]
-        1: JS_REFERENCE_IDENTIFIER_EXPRESSION@90..94
-          0: IDENT@90..94 "bar" [] [Whitespace(" ")]
-        2: ERROR@94..106
-          0: EXTENDS_KW@94..102 "extends" [] [Whitespace(" ")]
-          1: TS_EXPR_WITH_TYPE_ARGS@102..106
-            0: JS_REFERENCE_IDENTIFIER_EXPRESSION@102..106
-              0: IDENT@102..106 "foo" [] [Whitespace(" ")]
-      3: L_CURLY@106..107 "{" [] []
-      4: LIST@107..107
-      5: R_CURLY@107..108 "}" [] []
-    4: JS_CLASS_DECLARATION@108..136
-      0: CLASS_KW@108..115 "class" [Whitespace("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@115..117
-        0: IDENT@115..117 "A" [] [Whitespace(" ")]
-      2: JS_EXTENDS_CLAUSE@117..134
-        0: EXTENDS_KW@117..125 "extends" [] [Whitespace(" ")]
-        1: JS_REFERENCE_IDENTIFIER_EXPRESSION@125..128
-          0: IDENT@125..128 "bar" [] []
-        2: COMMA@128..130 "," [] [Whitespace(" ")]
-        3: TS_EXPR_WITH_TYPE_ARGS@130..134
-          0: JS_REFERENCE_IDENTIFIER_EXPRESSION@130..134
-            0: IDENT@130..134 "foo" [] [Whitespace(" ")]
-      3: L_CURLY@134..135 "{" [] []
-      4: LIST@135..135
-      5: R_CURLY@135..136 "}" [] []
-  3: EOF@136..137 "" [Whitespace("\n")] []
+      4: R_CURLY@49..50 "}" [] []
+    3: JS_CLASS_DECLARATION@50..67
+      0: CLASS_KW@50..57 "class" [Whitespace("\n")] [Whitespace(" ")]
+      1: (empty)
+      2: JS_EXTENDS_CLAUSE@57..67
+        0: EXTENDS_KW@57..65 "extends" [] [Whitespace(" ")]
+        1: JS_OBJECT_EXPRESSION@65..67
+          0: L_CURLY@65..66 "{" [] []
+          1: LIST@66..66
+          2: R_CURLY@66..67 "}" [] []
+      3: (empty)
+      4: LIST@67..67
+      5: (empty)
+  3: EOF@67..68 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: class declarations must have a name
-  ┌─ class_decl_err.js:1:7
+  ┌─ class_decl_err.js:1:1
   │
 1 │ class {}
-  │       ^
+  │ ^^^^^^
 
 --
 error[SyntaxError]: class declarations must have a name
-  ┌─ class_decl_err.js:2:7
+  ┌─ class_decl_err.js:2:1
   │
 2 │ class extends bar {}
-  │       ^^^^^^^
-
---
-error[SyntaxError]: class declarations must have a name
-  ┌─ class_decl_err.js:3:7
-  │
-3 │ class extends {}
-  │       ^^^^^^^
-
---
-error[SyntaxError]: expected `'{'` but instead found `class`
-  ┌─ class_decl_err.js:4:1
-  │
-4 │ class
-  │ ^^^^^ unexpected
-
---
-error[SyntaxError]: expected `;`, a property, or a method for a class body, but found none
-  ┌─ class_decl_err.js:5:7
-  │
-5 │ class foo { set {} }
-  │       ^^^
-
---
-error[SyntaxError]: expected `;`, a property, or a method for a class body, but found none
-  ┌─ class_decl_err.js:5:11
-  │
-5 │ class foo { set {} }
-  │           ^
+  │ ^^^^^^
 
 --
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
-  ┌─ class_decl_err.js:5:17
+  ┌─ class_decl_err.js:3:17
   │
-5 │ class foo { set {} }
+3 │ class foo { set {} }
   │                 ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
 --
 error[SyntaxError]: expected `'('` but instead found `{`
-  ┌─ class_decl_err.js:5:17
+  ┌─ class_decl_err.js:3:17
   │
-5 │ class foo { set {} }
+3 │ class foo { set {} }
   │                 ^ unexpected
 
 --
 error[SyntaxError]: expected `')'` but instead found `}`
-  ┌─ class_decl_err.js:5:20
+  ┌─ class_decl_err.js:3:20
   │
-5 │ class foo { set {} }
+3 │ class foo { set {} }
   │                    ^ unexpected
 
 --
 error[SyntaxError]: expected a function body but instead found '}'
-  ┌─ class_decl_err.js:5:20
+  ┌─ class_decl_err.js:3:20
   │
-5 │ class foo { set {} }
+3 │ class foo { set {} }
   │                    ^ Expected a function body here
 
 --
-error[SyntaxError]: classes cannot extend multiple classes
-  ┌─ class_decl_err.js:6:29
+error[SyntaxError]: class declarations must have a name
+  ┌─ class_decl_err.js:4:1
   │
-6 │ class A extends bar extends foo {}
-  │                             ^^^
+4 │ class extends {}
+  │ ^^^^^^
 
 --
-error[SyntaxError]: classes cannot extend multiple classes
-  ┌─ class_decl_err.js:7:22
+error[SyntaxError]: expected `'{'` but instead the file ends
+  ┌─ class_decl_err.js:5:1
   │
-7 │ class A extends bar, foo {}
-  │                      ^^^
+5 │ 
+  │ ^ the file ends here
+
+--
+error[SyntaxError]: expected `'}'` but instead the file ends
+  ┌─ class_decl_err.js:5:1
+  │
+5 │ 
+  │ ^ the file ends here
 
 --
 class {}
 class extends bar {}
-class extends {}
-class
 class foo { set {} }
-class A extends bar extends foo {}
-class A extends bar, foo {}
+class extends {}

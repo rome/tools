@@ -12,11 +12,12 @@ JsRoot {
             l_curly_token: L_CURLY@7..8 "{" [] [],
             members: [
                 JsUnknownMember {
+                    items: [],
+                },
+                JsUnknownMember {
                     items: [
-                        Node(
-                            1: JS_UNKNOWN_MEMBER@8..9
-                              0: L_CURLY@8..9 "{" [] []
-                            ,
+                        Token(
+                            L_CURLY@8..9 "{" [] [],
                         ),
                     ],
                 },
@@ -43,10 +44,10 @@ JsRoot {
         0: IDENT@6..7 "S" [] []
       2: L_CURLY@7..8 "{" [] []
       3: LIST@8..9
-        0: JS_UNKNOWN_MEMBER@8..9
+        0: JS_UNKNOWN_MEMBER@8..8
           0: (empty)
-          1: JS_UNKNOWN_MEMBER@8..9
-            0: L_CURLY@8..9 "{" [] []
+        1: JS_UNKNOWN_MEMBER@8..9
+          0: L_CURLY@8..9 "{" [] []
       4: R_CURLY@9..10 "}" [] []
     1: JS_UNKNOWN_STATEMENT@10..11
       0: R_CURLY@10..11 "}" [] []
@@ -59,11 +60,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
   │         ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
 --
-error[SyntaxError]: expected `;`, a property, or a method for a class body, but found none
+error[SyntaxError]: expected a semicolon (';'), or a method for a class body but instead found '{'
   ┌─ block_stmt_in_class.js:1:9
   │
 1 │ class S{{}}
-  │         ^
+  │         ^ Expected a semicolon (';'), or a method for a class body here
 
 --
 error[SyntaxError]: Expected a statement or declaration, but found none

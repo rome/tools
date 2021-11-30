@@ -1,0 +1,70 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsClassDeclaration {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
+            },
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
+            members: [
+                JsConstructorClassMember {
+                    access_modifier: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@17..28 "constructor" [] [],
+                    },
+                    parameter_list: JsConstructorParameterList {
+                        l_paren_token: L_PAREN@28..29 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@29..31 ")" [] [Whitespace(" ")],
+                    },
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@31..32 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@32..34 "}" [] [Whitespace(" ")],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@34..35 "}" [] [],
+        },
+    ],
+}
+
+0: JS_ROOT@0..36
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..35
+    0: JS_CLASS_DECLARATION@0..35
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..8
+        0: IDENT@6..8 "B" [] [Whitespace(" ")]
+      2: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      3: LIST@10..34
+        0: JS_CONSTRUCTOR_CLASS_MEMBER@10..34
+          0: STATIC_KW@10..17 "static" [] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@17..28
+            0: IDENT@17..28 "constructor" [] []
+          2: JS_CONSTRUCTOR_PARAMETER_LIST@28..31
+            0: L_PAREN@28..29 "(" [] []
+            1: LIST@29..29
+            2: R_PAREN@29..31 ")" [] [Whitespace(" ")]
+          3: JS_FUNCTION_BODY@31..34
+            0: L_CURLY@31..32 "{" [] []
+            1: LIST@32..32
+            2: LIST@32..32
+            3: R_CURLY@32..34 "}" [] [Whitespace(" ")]
+      4: R_CURLY@34..35 "}" [] []
+  3: EOF@35..36 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: constructors cannot be static
+  ┌─ class_constructor_err.js:1:11
+  │
+1 │ class B { static constructor() {} }
+  │           ^^^^^^^^^^^^^^^^^^^^^^^
+
+--
+class B { static constructor() {} }
