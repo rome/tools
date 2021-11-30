@@ -2,7 +2,7 @@
 
 use super::decl::*;
 use super::expr::{expr_or_assignment, identifier_name, lhs_expr, parse_literal_expression};
-use super::stmt::{semi, statements, variable_declaration_statement};
+use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
@@ -157,7 +157,11 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 		T![class] => {
 			let m = p.start();
 			p.bump_remap(T![declare]);
-			class_declaration(p).undo_completion(p).abandon(p);
+			class_declaration(p)
+				.ok()
+				.unwrap()
+				.undo_completion(p)
+				.abandon(p);
 			m.complete(p, JS_LITERAL_MEMBER_NAME)
 		}
 		t if (t == T![const] && p.nth_at(2, T![enum])) || t == T![enum] => {
@@ -171,6 +175,8 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 			p.bump_remap(T![declare]);
 			// unwrap the marker so its children go to `m`
 			variable_declaration_statement(p)
+				.or_missing_with_error(p, js_parse_error::expected_variable_declaration)
+				.unwrap()
 				.undo_completion(p)
 				.abandon(p);
 			m.complete(p, JS_VARIABLE_DECLARATION_STATEMENT)
@@ -179,6 +185,8 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 			let m = p.start();
 			p.bump_remap(T![declare]);
 			variable_declaration_statement(p)
+				.or_missing_with_error(p, js_parse_error::expected_variable_declaration)
+				.unwrap()
 				.undo_completion(p)
 				.abandon(p);
 			m.complete(p, JS_VARIABLE_DECLARATION_STATEMENT)
@@ -221,7 +229,11 @@ pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 			p.error(err);
 			return None;
 		}
-		class_declaration(p).undo_completion(p).abandon(p);
+		class_declaration(p)
+			.ok()
+			.unwrap()
+			.undo_completion(p)
+			.abandon(p);
 		return Some(m.complete(p, JS_LITERAL_MEMBER_NAME));
 	}
 
@@ -350,7 +362,7 @@ pub fn ts_module_block(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
 	p.expect_no_recover(T!['{'])?;
 	// module blocks are considered top level
-	statements(p, true, true, None);
+	parse_statements(p, true, true, None);
 	p.expect_no_recover(T!['}'])?;
 	Some(m.complete(p, TS_MODULE_BLOCK))
 }
