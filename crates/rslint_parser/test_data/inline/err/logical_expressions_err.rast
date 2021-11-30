@@ -37,8 +37,7 @@ JsRoot {
                                 name_token: IDENT@29..33 "foo" [] [Whitespace(" ")],
                             },
                             operator: PIPE2@33..35 "||" [] [],
-                        }
-                        ,
+                        },
                     ],
                     r_paren_token: R_PAREN@35..36 ")" [] [],
                 },

@@ -25,22 +25,19 @@ JsRoot {
                                             value: IDENT@10..13 "foo" [] [],
                                         },
                                         colon_token: missing (required),
-                                    }
-                                    missing separator,
+                                    }missing separator,
                                     JsUnknownMember {
                                         items: [
                                             Token(
                                                 R_PAREN@13..15 ")" [] [Whitespace(" ")],
                                             ),
                                         ],
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@15..16 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

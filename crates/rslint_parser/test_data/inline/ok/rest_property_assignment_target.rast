@@ -14,8 +14,7 @@ JsRoot {
                                 target: JsIdentifierAssignmentTarget {
                                     name_token: IDENT@6..11 "abcd" [] [Whitespace(" ")],
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_curly_token: R_CURLY@11..13 "}" [] [Whitespace(" ")],
                     },
@@ -44,8 +43,7 @@ JsRoot {
                                     },
                                     r_paren_token: R_PAREN@30..32 ")" [] [Whitespace(" ")],
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_curly_token: R_CURLY@32..34 "}" [] [Whitespace(" ")],
                     },
@@ -76,8 +74,7 @@ JsRoot {
                                         name_token: IDENT@48..53 "test" [] [Whitespace(" ")],
                                     },
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_curly_token: R_CURLY@53..55 "}" [] [Whitespace(" ")],
                     },
@@ -109,8 +106,7 @@ JsRoot {
                                     },
                                     r_brack_token: R_BRACK@75..77 "]" [] [Whitespace(" ")],
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_curly_token: R_CURLY@77..79 "}" [] [Whitespace(" ")],
                     },
@@ -155,8 +151,7 @@ JsRoot {
                                         name_token: IDENT@108..110 "b" [] [Whitespace(" ")],
                                     },
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_curly_token: R_CURLY@110..112 "}" [] [Whitespace(" ")],
                     },
@@ -189,14 +184,12 @@ JsRoot {
                                             target: JsIdentifierAssignmentTarget {
                                                 name_token: IDENT@129..131 "a" [] [Whitespace(" ")],
                                             },
-                                        }
-                                        ,
+                                        },
                                     ],
                                     r_curly_token: R_CURLY@131..133 "}" [] [Whitespace(" ")],
                                 },
                                 init: missing (optional),
-                            }
-                            ,
+                            },
                         ],
                         r_curly_token: R_CURLY@133..135 "}" [] [Whitespace(" ")],
                     },

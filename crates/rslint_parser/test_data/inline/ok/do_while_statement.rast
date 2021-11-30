@@ -21,8 +21,7 @@ JsRoot {
                         args: [
                             JsStringLiteralExpression {
                                 value_token: JS_STRING_LITERAL@15..21 "\"test\"" [] [],
-                            }
-                            ,
+                            },
                         ],
                         r_paren_token: R_PAREN@21..22 ")" [] [],
                     },
@@ -59,8 +58,7 @@ JsRoot {
                                 args: [
                                     JsStringLiteralExpression {
                                         value_token: JS_STRING_LITERAL@55..61 "\"test\"" [] [],
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_paren_token: R_PAREN@61..62 ")" [] [],
                             },
@@ -97,8 +95,7 @@ JsRoot {
                                 value_token: JS_NUMBER_LITERAL@88..89 "1" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@89..90 ";" [] [],

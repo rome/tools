@@ -51,8 +51,7 @@ JsRoot {
                                             value_token: JS_NUMBER_LITERAL@64..65 "5" [] [],
                                         },
                                     },
-                                }
-                                ,
+                                },
                             ],
                         },
                         semicolon_token: SEMICOLON@65..66 ";" [] [],
@@ -78,8 +77,7 @@ JsRoot {
                                 value_token: JS_NUMBER_LITERAL@80..81 "5" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@81..82 ";" [] [],

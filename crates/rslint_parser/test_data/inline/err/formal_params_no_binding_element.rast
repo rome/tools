@@ -19,8 +19,7 @@ JsRoot {
                                 TRUE_KW@13..17 "true" [] [],
                             ),
                         ],
-                    }
-                    ,
+                    },
                 ],
                 r_paren_token: R_PAREN@17..19 ")" [] [Whitespace(" ")],
             },

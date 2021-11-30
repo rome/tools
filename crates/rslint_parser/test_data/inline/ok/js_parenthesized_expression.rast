@@ -21,8 +21,7 @@ JsRoot {
                     args: [
                         JsReferenceIdentifierExpression {
                             name_token: IDENT@9..12 "foo" [] [],
-                        }
-                        ,
+                        },
                     ],
                     r_paren_token: R_PAREN@12..13 ")" [] [],
                 },

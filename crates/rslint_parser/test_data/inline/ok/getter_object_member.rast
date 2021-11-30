@@ -42,8 +42,7 @@ JsRoot {
                                             ],
                                             r_curly_token: R_CURLY@37..40 "}" [Whitespace("\n ")] [],
                                         },
-                                    }
-                                    COMMA@40..41 "," [] [],
+                                    }COMMA@40..41 "," [] [],
                                     JsGetterObjectMember {
                                         get_token: GET_KW@41..48 "get" [Whitespace("\n\n ")] [Whitespace(" ")],
                                         name: JsLiteralMemberName {
@@ -66,8 +65,7 @@ JsRoot {
                                             ],
                                             r_curly_token: R_CURLY@73..76 "}" [Whitespace("\n ")] [],
                                         },
-                                    }
-                                    COMMA@76..77 "," [] [],
+                                    }COMMA@76..77 "," [] [],
                                     JsGetterObjectMember {
                                         get_token: GET_KW@77..84 "get" [Whitespace("\n\n ")] [Whitespace(" ")],
                                         name: JsComputedMemberName {
@@ -100,8 +98,7 @@ JsRoot {
                                             ],
                                             r_curly_token: R_CURLY@118..121 "}" [Whitespace("\n ")] [],
                                         },
-                                    }
-                                    COMMA@121..122 "," [] [],
+                                    }COMMA@121..122 "," [] [],
                                     JsGetterObjectMember {
                                         get_token: GET_KW@122..129 "get" [Whitespace("\n\n\t")] [Whitespace(" ")],
                                         name: JsLiteralMemberName {
@@ -124,8 +121,7 @@ JsRoot {
                                             ],
                                             r_curly_token: R_CURLY@146..149 "}" [Whitespace("\n\t")] [],
                                         },
-                                    }
-                                    COMMA@149..150 "," [] [],
+                                    }COMMA@149..150 "," [] [],
                                     JsMethodObjectMember {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
@@ -153,14 +149,12 @@ JsRoot {
                                             ],
                                             r_curly_token: R_CURLY@206..209 "}" [Whitespace("\n\t")] [],
                                         },
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@209..211 "}" [Whitespace("\n")] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

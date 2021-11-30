@@ -15,8 +15,7 @@ JsRoot {
                     args: [
                         JsStringLiteralExpression {
                             value_token: JS_STRING_LITERAL@16..21 "\"foo\"" [] [],
-                        }
-                        ,
+                        },
                     ],
                     r_paren_token: R_PAREN@21..22 ")" [] [],
                 },

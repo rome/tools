@@ -13,12 +13,10 @@ JsRoot {
                     args: [
                         JsReferenceIdentifierExpression {
                             name_token: IDENT@4..5 "a" [] [],
-                        }
-                        COMMA@5..6 "," [] [],
+                        }COMMA@5..6 "," [] [],
                         JsReferenceIdentifierExpression {
                             name_token: IDENT@6..7 "b" [] [],
-                        }
-                        ,
+                        },
                     ],
                     r_paren_token: missing (required),
                 },
@@ -36,12 +34,10 @@ JsRoot {
                     args: [
                         JsReferenceIdentifierExpression {
                             name_token: IDENT@13..14 "a" [] [],
-                        }
-                        COMMA@14..15 "," [] [],
+                        }COMMA@14..15 "," [] [],
                         JsReferenceIdentifierExpression {
                             name_token: IDENT@15..17 "b" [] [Whitespace(" ")],
-                        }
-                        ,
+                        },
                     ],
                     r_paren_token: missing (required),
                 },

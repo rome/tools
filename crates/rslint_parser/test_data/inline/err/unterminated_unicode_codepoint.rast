@@ -19,8 +19,7 @@ JsRoot {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: missing (required),
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@16..17 ";" [] [],

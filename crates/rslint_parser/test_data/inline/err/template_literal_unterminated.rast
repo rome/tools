@@ -21,8 +21,7 @@ JsRoot {
                                 backtick_token: BACKTICK@8..9 "`" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

@@ -28,8 +28,7 @@ JsRoot {
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
-                    }
-                    ,
+                    },
                 ],
                 r_paren_token: R_PAREN@32..34 ")" [] [Whitespace(" ")],
             },
@@ -57,8 +56,7 @@ JsRoot {
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
-                    }
-                    ,
+                    },
                 ],
                 r_paren_token: R_PAREN@57..59 ")" [] [Whitespace(" ")],
             },

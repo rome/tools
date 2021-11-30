@@ -1,3 +1,50 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsAssignmentExpression {
+                left: missing (required),
+                operator_token: EQ@4..6 "=" [] [Whitespace(" ")],
+                right: JsReferenceIdentifierExpression {
+                    name_token: IDENT@6..7 "b" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@7..8 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsAssignmentExpression {
+                left: JsParenthesizedAssignmentTarget {
+                    l_paren_token: L_PAREN@8..10 "(" [Whitespace("\n")] [],
+                    target: missing (required),
+                    r_paren_token: R_PAREN@13..15 ")" [] [Whitespace(" ")],
+                },
+                operator_token: EQ@15..17 "=" [] [Whitespace(" ")],
+                right: JsReferenceIdentifierExpression {
+                    name_token: IDENT@17..18 "b" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@18..19 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsParenthesizedExpression {
+                l_paren_token: L_PAREN@19..21 "(" [Whitespace("\n")] [],
+                expression: JsAssignmentExpression {
+                    left: JsIdentifierAssignmentTarget {
+                        name_token: IDENT@21..23 "a" [] [Whitespace(" ")],
+                    },
+                    operator_token: EQ@23..25 "=" [] [Whitespace(" ")],
+                    right: JsReferenceIdentifierExpression {
+                        name_token: IDENT@25..26 "b" [] [],
+                    },
+                },
+                r_paren_token: missing (required),
+            },
+            semicolon_token: SEMICOLON@26..27 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..28
   0: (empty)
   1: LIST@0..0

@@ -226,8 +226,7 @@ JsRoot {
                                 question_mark_token: missing (optional),
                                 excl_token: missing (optional),
                                 ty: missing (optional),
-                            }
-                            ,
+                            },
                         ],
                         r_paren_token: R_PAREN@171..173 ")" [] [Whitespace(" ")],
                     },
@@ -259,8 +258,7 @@ JsRoot {
                                 question_mark_token: missing (optional),
                                 excl_token: missing (optional),
                                 ty: missing (optional),
-                            }
-                            ,
+                            },
                         ],
                         r_paren_token: R_PAREN@188..190 ")" [] [Whitespace(" ")],
                     },
@@ -292,8 +290,7 @@ JsRoot {
                                 question_mark_token: missing (optional),
                                 excl_token: missing (optional),
                                 ty: missing (optional),
-                            }
-                            ,
+                            },
                         ],
                         r_paren_token: R_PAREN@206..208 ")" [] [Whitespace(" ")],
                     },

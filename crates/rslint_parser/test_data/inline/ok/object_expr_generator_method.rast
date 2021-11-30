@@ -39,14 +39,12 @@ JsRoot {
                                             statements: [],
                                             r_curly_token: R_CURLY@18..20 "}" [] [Whitespace(" ")],
                                         },
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@20..21 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

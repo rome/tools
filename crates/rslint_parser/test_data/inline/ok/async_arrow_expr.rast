@@ -27,8 +27,7 @@ JsRoot {
                                 return_type: missing (optional),
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),
@@ -61,8 +60,7 @@ JsRoot {
                                             question_mark_token: missing (optional),
                                             excl_token: missing (optional),
                                             ty: missing (optional),
-                                        }
-                                        ,
+                                        },
                                     ],
                                     r_paren_token: R_PAREN@42..44 ")" [] [Whitespace(" ")],
                                 },
@@ -70,8 +68,7 @@ JsRoot {
                                 return_type: missing (optional),
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),
@@ -90,8 +87,7 @@ JsRoot {
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
-                        }
-                        COMMA@60..62 "," [] [Whitespace(" ")],
+                        }COMMA@60..62 "," [] [Whitespace(" ")],
                         SinglePattern {
                             name: Name {
                                 ident_token: IDENT@62..65 "bar" [] [],
@@ -99,8 +95,7 @@ JsRoot {
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
-                        }
-                        COMMA@65..67 "," [] [Whitespace(" ")],
+                        }COMMA@65..67 "," [] [Whitespace(" ")],
                         JsRestParameter {
                             dotdotdot_token: DOT2@67..70 "..." [] [],
                             binding: SinglePattern {
@@ -111,8 +106,7 @@ JsRoot {
                                 excl_token: missing (optional),
                                 ty: missing (optional),
                             },
-                        }
-                        ,
+                        },
                     ],
                     r_paren_token: R_PAREN@73..75 ")" [] [Whitespace(" ")],
                 },

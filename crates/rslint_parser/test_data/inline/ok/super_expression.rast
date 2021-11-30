@@ -85,12 +85,10 @@ JsRoot {
                                         args: [
                                             JsReferenceIdentifierExpression {
                                                 name_token: IDENT@78..79 "a" [] [],
-                                            }
-                                            COMMA@79..81 "," [] [Whitespace(" ")],
+                                            }COMMA@79..81 "," [] [Whitespace(" ")],
                                             JsReferenceIdentifierExpression {
                                                 name_token: IDENT@81..82 "b" [] [],
-                                            }
-                                            ,
+                                            },
                                         ],
                                         r_paren_token: R_PAREN@82..83 ")" [] [],
                                     },

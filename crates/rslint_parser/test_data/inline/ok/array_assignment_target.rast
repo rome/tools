@@ -9,12 +9,10 @@ JsRoot {
                     elements: [
                         JsIdentifierAssignmentTarget {
                             name_token: IDENT@1..4 "foo" [] [],
-                        }
-                        COMMA@4..6 "," [] [Whitespace(" ")],
+                        }COMMA@4..6 "," [] [Whitespace(" ")],
                         JsIdentifierAssignmentTarget {
                             name_token: IDENT@6..9 "bar" [] [],
-                        }
-                        ,
+                        },
                     ],
                     r_brack_token: R_BRACK@9..11 "]" [] [Whitespace(" ")],
                 },
@@ -30,22 +28,16 @@ JsRoot {
                 left: JsArrayAssignmentTarget {
                     l_brack_token: L_BRACK@17..19 "[" [Whitespace("\n")] [],
                     elements: [
-                        JsArrayHole
-                        COMMA@19..20 "," [] [],
-                        JsArrayHole
-                        COMMA@20..21 "," [] [],
-                        JsArrayHole
-                        COMMA@21..22 "," [] [],
+                        JsArrayHoleCOMMA@19..20 "," [] [],
+                        JsArrayHoleCOMMA@20..21 "," [] [],
+                        JsArrayHoleCOMMA@21..22 "," [] [],
                         JsIdentifierAssignmentTarget {
                             name_token: IDENT@22..23 "b" [] [],
-                        }
-                        COMMA@23..24 "," [] [],
-                        JsArrayHole
-                        COMMA@24..25 "," [] [],
+                        }COMMA@23..24 "," [] [],
+                        JsArrayHoleCOMMA@24..25 "," [] [],
                         JsIdentifierAssignmentTarget {
                             name_token: IDENT@25..26 "c" [] [],
-                        }
-                        COMMA@26..27 "," [] [],
+                        }COMMA@26..27 "," [] [],
                     ],
                     r_brack_token: R_BRACK@27..29 "]" [] [Whitespace(" ")],
                 },
@@ -69,8 +61,7 @@ JsRoot {
                             default: JsStringLiteralExpression {
                                 value_token: JS_STRING_LITERAL@41..47 "\"test\"" [] [],
                             },
-                        }
-                        COMMA@47..49 "," [] [Whitespace(" ")],
+                        }COMMA@47..49 "," [] [Whitespace(" ")],
                         JsStaticMemberAssignmentTarget {
                             object: JsReferenceIdentifierExpression {
                                 name_token: IDENT@49..50 "a" [] [],
@@ -79,8 +70,7 @@ JsRoot {
                             member: JsReferenceIdentifierMember {
                                 name_token: IDENT@51..52 "b" [] [],
                             },
-                        }
-                        COMMA@52..54 "," [] [Whitespace(" ")],
+                        }COMMA@52..54 "," [] [Whitespace(" ")],
                         JsStaticMemberAssignmentTarget {
                             object: CallExpr {
                                 type_args: missing (optional),
@@ -97,8 +87,7 @@ JsRoot {
                             member: JsReferenceIdentifierMember {
                                 name_token: IDENT@61..62 "b" [] [],
                             },
-                        }
-                        ,
+                        },
                     ],
                     r_brack_token: R_BRACK@62..64 "]" [] [Whitespace(" ")],
                 },
@@ -124,8 +113,7 @@ JsRoot {
                                 r_paren_token: R_PAREN@75..76 ")" [] [],
                             },
                             r_paren_token: R_PAREN@76..77 ")" [] [],
-                        }
-                        ,
+                        },
                     ],
                     r_brack_token: R_BRACK@77..79 "]" [] [Whitespace(" ")],
                 },

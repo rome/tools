@@ -24,8 +24,7 @@ JsRoot {
                                 r_paren_token: R_PAREN@15..16 ")" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@16..17 ";" [] [],

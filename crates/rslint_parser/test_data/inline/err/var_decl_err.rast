@@ -25,8 +25,7 @@ JsRoot {
                                 ],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),
@@ -50,8 +49,7 @@ JsRoot {
                                 value_token: JS_NUMBER_LITERAL@19..21 "5" [] [Whitespace(" ")],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),
@@ -75,8 +73,7 @@ JsRoot {
                                 value_token: JS_NUMBER_LITERAL@29..30 "5" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@30..31 ";" [] [],

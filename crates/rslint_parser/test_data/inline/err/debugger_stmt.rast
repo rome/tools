@@ -46,8 +46,7 @@ JsRoot {
                                                     value_token: JS_STRING_LITERAL@47..54 "\"lorem\"" [] [],
                                                 },
                                             },
-                                        }
-                                        ,
+                                        },
                                     ],
                                 },
                                 semicolon_token: SEMICOLON@54..55 ";" [] [],

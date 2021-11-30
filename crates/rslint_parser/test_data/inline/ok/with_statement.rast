@@ -20,8 +20,7 @@ JsRoot {
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
-                    }
-                    COMMA@23..25 "," [] [Whitespace(" ")],
+                    }COMMA@23..25 "," [] [Whitespace(" ")],
                     SinglePattern {
                         name: Name {
                             ident_token: IDENT@25..26 "o" [] [],
@@ -29,8 +28,7 @@ JsRoot {
                         question_mark_token: missing (optional),
                         excl_token: missing (optional),
                         ty: missing (optional),
-                    }
-                    ,
+                    },
                 ],
                 r_paren_token: R_PAREN@26..28 ")" [] [Whitespace(" ")],
             },
@@ -66,8 +64,7 @@ JsRoot {
                                             args: [
                                                 JsReferenceIdentifierExpression {
                                                     name_token: IDENT@56..57 "x" [] [],
-                                                }
-                                                ,
+                                                },
                                             ],
                                             r_paren_token: R_PAREN@57..58 ")" [] [],
                                         },

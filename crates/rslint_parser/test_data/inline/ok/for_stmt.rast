@@ -24,8 +24,7 @@ JsRoot {
                                     value_token: JS_NUMBER_LITERAL@13..14 "5" [] [],
                                 },
                             },
-                        }
-                        ,
+                        },
                     ],
                 },
             },
@@ -70,8 +69,7 @@ JsRoot {
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                }
-                                COMMA@46..48 "," [] [Whitespace(" ")],
+                                }COMMA@46..48 "," [] [Whitespace(" ")],
                                 SinglePattern {
                                     name: Name {
                                         ident_token: IDENT@48..52 "bar" [] [Whitespace(" ")],
@@ -79,14 +77,12 @@ JsRoot {
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                }
-                                ,
+                                },
                             ],
                             r_curly_token: R_CURLY@52..54 "}" [] [Whitespace(" ")],
                         },
                         init: missing (optional),
-                    }
-                    ,
+                    },
                 ],
             },
             of_token: missing (required),

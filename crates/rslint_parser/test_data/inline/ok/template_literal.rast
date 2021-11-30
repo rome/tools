@@ -21,8 +21,7 @@ JsRoot {
                                 backtick_token: BACKTICK@8..9 "`" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@20..21 ";" [] [],
@@ -46,8 +45,7 @@ JsRoot {
                                 backtick_token: BACKTICK@30..31 "`" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@32..33 ";" [] [],
@@ -71,8 +69,7 @@ JsRoot {
                                 backtick_token: BACKTICK@42..43 "`" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@50..51 ";" [] [],
@@ -96,8 +93,7 @@ JsRoot {
                                 backtick_token: BACKTICK@60..61 "`" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: SEMICOLON@65..66 ";" [] [],

@@ -42,14 +42,12 @@ JsRoot {
                                             ],
                                             r_curly_token: R_CURLY@37..40 "}" [Whitespace("\n ")] [],
                                         },
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@40..42 "}" [Whitespace("\n")] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

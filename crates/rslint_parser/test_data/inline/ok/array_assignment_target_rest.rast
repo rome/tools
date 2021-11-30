@@ -14,8 +14,7 @@ JsRoot {
                                 target: JsIdentifierAssignmentTarget {
                                     name_token: IDENT@6..11 "abcd" [] [Whitespace(" ")],
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_brack_token: R_BRACK@11..13 "]" [] [Whitespace(" ")],
                     },
@@ -44,8 +43,7 @@ JsRoot {
                                     },
                                     r_paren_token: R_PAREN@30..32 ")" [] [Whitespace(" ")],
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_brack_token: R_BRACK@32..34 "]" [] [Whitespace(" ")],
                     },
@@ -76,8 +74,7 @@ JsRoot {
                                         name_token: IDENT@48..53 "test" [] [Whitespace(" ")],
                                     },
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_brack_token: R_BRACK@53..55 "]" [] [Whitespace(" ")],
                     },
@@ -109,8 +106,7 @@ JsRoot {
                                     },
                                     r_brack_token: R_BRACK@75..77 "]" [] [Whitespace(" ")],
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_brack_token: R_BRACK@77..79 "]" [] [Whitespace(" ")],
                     },
@@ -155,8 +151,7 @@ JsRoot {
                                         name_token: IDENT@108..110 "b" [] [Whitespace(" ")],
                                     },
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_brack_token: R_BRACK@110..112 "]" [] [Whitespace(" ")],
                     },
@@ -183,17 +178,14 @@ JsRoot {
                                     elements: [
                                         JsIdentifierAssignmentTarget {
                                             name_token: IDENT@125..126 "x" [] [],
-                                        }
-                                        COMMA@126..128 "," [] [Whitespace(" ")],
+                                        }COMMA@126..128 "," [] [Whitespace(" ")],
                                         JsIdentifierAssignmentTarget {
                                             name_token: IDENT@128..129 "y" [] [],
-                                        }
-                                        ,
+                                        },
                                     ],
                                     r_brack_token: R_BRACK@129..131 "]" [] [Whitespace(" ")],
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_brack_token: R_BRACK@131..133 "]" [] [Whitespace(" ")],
                     },
@@ -223,13 +215,11 @@ JsRoot {
                                             target: JsIdentifierAssignmentTarget {
                                                 name_token: IDENT@150..152 "a" [] [Whitespace(" ")],
                                             },
-                                        }
-                                        ,
+                                        },
                                     ],
                                     r_brack_token: R_BRACK@152..154 "]" [] [Whitespace(" ")],
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_brack_token: R_BRACK@154..156 "]" [] [Whitespace(" ")],
                     },

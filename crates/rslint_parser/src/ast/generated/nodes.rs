@@ -2756,12 +2756,14 @@ pub enum JsAnyArrayAssignmentTargetElement {
 	JsAnyAssignmentTarget(JsAnyAssignmentTarget),
 	JsArrayAssignmentTargetRestElement(JsArrayAssignmentTargetRestElement),
 	JsArrayHole(JsArrayHole),
+	JsUnknownAssignmentTarget(JsUnknownAssignmentTarget),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyPropertyAssignmentTarget {
 	JsShorthandPropertyAssignmentTarget(JsShorthandPropertyAssignmentTarget),
 	JsObjectPropertyAssignmentTarget(JsObjectPropertyAssignmentTarget),
 	JsObjectRestPropertyAssignmentTarget(JsObjectRestPropertyAssignmentTarget),
+	JsUnknownAssignmentTarget(JsUnknownAssignmentTarget),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum ObjectPatternProp {
@@ -9443,12 +9445,18 @@ impl From<JsArrayHole> for JsAnyArrayAssignmentTargetElement {
 		JsAnyArrayAssignmentTargetElement::JsArrayHole(node)
 	}
 }
+impl From<JsUnknownAssignmentTarget> for JsAnyArrayAssignmentTargetElement {
+	fn from(node: JsUnknownAssignmentTarget) -> JsAnyArrayAssignmentTargetElement {
+		JsAnyArrayAssignmentTargetElement::JsUnknownAssignmentTarget(node)
+	}
+}
 impl AstNode for JsAnyArrayAssignmentTargetElement {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			JS_ASSIGNMENT_TARGET_WITH_DEFAULT
 			| JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT
-			| JS_ARRAY_HOLE => true,
+			| JS_ARRAY_HOLE
+			| JS_UNKNOWN_ASSIGNMENT_TARGET => true,
 			k if JsAnyAssignmentTarget::can_cast(k) => true,
 			_ => false,
 		}
@@ -9466,6 +9474,11 @@ impl AstNode for JsAnyArrayAssignmentTargetElement {
 				)
 			}
 			JS_ARRAY_HOLE => JsAnyArrayAssignmentTargetElement::JsArrayHole(JsArrayHole { syntax }),
+			JS_UNKNOWN_ASSIGNMENT_TARGET => {
+				JsAnyArrayAssignmentTargetElement::JsUnknownAssignmentTarget(
+					JsUnknownAssignmentTarget { syntax },
+				)
+			}
 			_ => {
 				if let Some(js_any_assignment_target) = JsAnyAssignmentTarget::cast(syntax) {
 					return Some(JsAnyArrayAssignmentTargetElement::JsAnyAssignmentTarget(
@@ -9482,6 +9495,7 @@ impl AstNode for JsAnyArrayAssignmentTargetElement {
 			JsAnyArrayAssignmentTargetElement::JsAssignmentTargetWithDefault(it) => &it.syntax,
 			JsAnyArrayAssignmentTargetElement::JsArrayAssignmentTargetRestElement(it) => &it.syntax,
 			JsAnyArrayAssignmentTargetElement::JsArrayHole(it) => &it.syntax,
+			JsAnyArrayAssignmentTargetElement::JsUnknownAssignmentTarget(it) => &it.syntax,
 			JsAnyArrayAssignmentTargetElement::JsAnyAssignmentTarget(it) => it.syntax(),
 		}
 	}
@@ -9499,6 +9513,9 @@ impl std::fmt::Debug for JsAnyArrayAssignmentTargetElement {
 				std::fmt::Debug::fmt(it, f)
 			}
 			JsAnyArrayAssignmentTargetElement::JsArrayHole(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyArrayAssignmentTargetElement::JsUnknownAssignmentTarget(it) => {
+				std::fmt::Debug::fmt(it, f)
+			}
 		}
 	}
 }
@@ -9517,6 +9534,11 @@ impl From<JsObjectRestPropertyAssignmentTarget> for JsAnyPropertyAssignmentTarge
 		JsAnyPropertyAssignmentTarget::JsObjectRestPropertyAssignmentTarget(node)
 	}
 }
+impl From<JsUnknownAssignmentTarget> for JsAnyPropertyAssignmentTarget {
+	fn from(node: JsUnknownAssignmentTarget) -> JsAnyPropertyAssignmentTarget {
+		JsAnyPropertyAssignmentTarget::JsUnknownAssignmentTarget(node)
+	}
+}
 impl AstNode for JsAnyPropertyAssignmentTarget {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		matches!(
@@ -9524,6 +9546,7 @@ impl AstNode for JsAnyPropertyAssignmentTarget {
 			JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET
 				| JS_OBJECT_PROPERTY_ASSIGNMENT_TARGET
 				| JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET
+				| JS_UNKNOWN_ASSIGNMENT_TARGET
 		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -9543,6 +9566,11 @@ impl AstNode for JsAnyPropertyAssignmentTarget {
 					JsObjectRestPropertyAssignmentTarget { syntax },
 				)
 			}
+			JS_UNKNOWN_ASSIGNMENT_TARGET => {
+				JsAnyPropertyAssignmentTarget::JsUnknownAssignmentTarget(
+					JsUnknownAssignmentTarget { syntax },
+				)
+			}
 			_ => return None,
 		};
 		Some(res)
@@ -9552,6 +9580,7 @@ impl AstNode for JsAnyPropertyAssignmentTarget {
 			JsAnyPropertyAssignmentTarget::JsShorthandPropertyAssignmentTarget(it) => &it.syntax,
 			JsAnyPropertyAssignmentTarget::JsObjectPropertyAssignmentTarget(it) => &it.syntax,
 			JsAnyPropertyAssignmentTarget::JsObjectRestPropertyAssignmentTarget(it) => &it.syntax,
+			JsAnyPropertyAssignmentTarget::JsUnknownAssignmentTarget(it) => &it.syntax,
 		}
 	}
 }
@@ -9565,6 +9594,9 @@ impl std::fmt::Debug for JsAnyPropertyAssignmentTarget {
 				std::fmt::Debug::fmt(it, f)
 			}
 			JsAnyPropertyAssignmentTarget::JsObjectRestPropertyAssignmentTarget(it) => {
+				std::fmt::Debug::fmt(it, f)
+			}
+			JsAnyPropertyAssignmentTarget::JsUnknownAssignmentTarget(it) => {
 				std::fmt::Debug::fmt(it, f)
 			}
 		}

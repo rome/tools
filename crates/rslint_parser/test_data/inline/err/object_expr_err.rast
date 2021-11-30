@@ -20,20 +20,17 @@ JsRoot {
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@8..9 "{" [] [],
                                 members: [
-                                    missing element
-                                    COMMA@9..11 "," [] [Whitespace(" ")],
+                                    missing elementCOMMA@9..11 "," [] [Whitespace(" ")],
                                     JsShorthandPropertyObjectMember {
                                         name: JsReferenceIdentifierExpression {
                                             name_token: IDENT@11..14 "foo" [] [],
                                         },
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@14..15 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),
@@ -61,14 +58,12 @@ JsRoot {
                                             value: IDENT@26..30 "foo" [] [Whitespace(" ")],
                                         },
                                         colon_token: missing (required),
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_curly_token: R_CURLY@34..35 "}" [] [],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

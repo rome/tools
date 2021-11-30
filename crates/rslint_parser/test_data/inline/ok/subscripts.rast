@@ -24,8 +24,7 @@ JsRoot {
                                 args: [
                                     JsReferenceIdentifierExpression {
                                         name_token: IDENT@13..16 "bar" [] [],
-                                    }
-                                    ,
+                                    },
                                 ],
                                 r_paren_token: R_PAREN@16..17 ")" [] [],
                             },
@@ -35,8 +34,7 @@ JsRoot {
                             args: [
                                 JsReferenceIdentifierExpression {
                                     name_token: IDENT@18..21 "baz" [] [],
-                                }
-                                ,
+                                },
                             ],
                             r_paren_token: R_PAREN@21..22 ")" [] [],
                         },
@@ -46,8 +44,7 @@ JsRoot {
                         args: [
                             JsReferenceIdentifierExpression {
                                 name_token: IDENT@23..26 "baz" [] [],
-                            }
-                            ,
+                            },
                         ],
                         r_paren_token: R_PAREN@26..27 ")" [] [],
                     },

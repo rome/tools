@@ -14,8 +14,7 @@ JsRoot {
                                     name_token: IDENT@2..3 "x" [] [],
                                 },
                                 init: missing (optional),
-                            }
-                            ,
+                            },
                         ],
                         r_curly_token: R_CURLY@3..4 "}" [] [],
                     },
@@ -46,8 +45,7 @@ JsRoot {
                                     name_token: IDENT@16..17 "y" [] [],
                                 },
                                 init: missing (optional),
-                            }
-                            ,
+                            },
                         ],
                         r_curly_token: R_CURLY@17..18 "}" [] [],
                     },
@@ -98,8 +96,7 @@ JsRoot {
                                     },
                                 },
                                 init: missing (optional),
-                            }
-                            ,
+                            },
                         ],
                         r_curly_token: R_CURLY@40..41 "}" [] [],
                     },
@@ -138,8 +135,7 @@ JsRoot {
                                     r_paren_token: R_PAREN@57..58 ")" [] [],
                                 },
                                 init: missing (optional),
-                            }
-                            ,
+                            },
                         ],
                         r_curly_token: R_CURLY@58..59 "}" [] [],
                     },
@@ -177,8 +173,7 @@ JsRoot {
                                     r_brack_token: R_BRACK@83..84 "]" [] [],
                                 },
                                 init: missing (optional),
-                            }
-                            ,
+                            },
                         ],
                         r_curly_token: R_CURLY@84..85 "}" [] [],
                     },
@@ -210,8 +205,7 @@ JsRoot {
                                         value_token: JS_STRING_LITERAL@98..107 "\"default\"" [] [],
                                     },
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_curly_token: R_CURLY@107..108 "}" [] [],
                     },
@@ -247,8 +241,7 @@ JsRoot {
                                         value_token: JS_STRING_LITERAL@124..133 "\"default\"" [] [],
                                     },
                                 },
-                            }
-                            ,
+                            },
                         ],
                         r_curly_token: R_CURLY@133..134 "}" [] [],
                     },

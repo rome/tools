@@ -21,8 +21,7 @@ JsRoot {
                                 name_token: IDENT@8..14 "async" [] [Whitespace(" ")],
                             },
                         },
-                    }
-                    ,
+                    },
                 ],
             },
             semicolon_token: missing (optional),

@@ -677,6 +677,7 @@ JsAnyArrayAssignmentTargetElement =
 	| JsAnyAssignmentTarget
 	| JsArrayAssignmentTargetRestElement
 	| JsArrayHole
+	| JsUnknownAssignmentTarget
 
 // [a, b, ...rest] = [];
 //        ^^^^^^^
@@ -695,6 +696,7 @@ JsAnyPropertyAssignmentTarget =
 	JsShorthandPropertyAssignmentTarget
 	| JsObjectPropertyAssignmentTarget
 	| JsObjectRestPropertyAssignmentTarget
+	| JsUnknownAssignmentTarget
 
 // ({ x } = b) or ({ x = "test" } = b)
 //    ^              ^^^^^^^^^^
