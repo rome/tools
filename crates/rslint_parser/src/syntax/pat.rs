@@ -1,15 +1,17 @@
 #[allow(deprecated)]
 use crate::syntax::assignment_target::ObjectPattern;
-use crate::syntax::assignment_target::PatternWithDefault;
+use crate::syntax::assignment_target::{ArrayPattern, PatternWithDefault};
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::{parse_identifier, EXPR_RECOVERY_SET};
 use crate::syntax::js_parse_error::{
-	expected_identifier, expected_object_member_name, expected_pattern, expected_property_binding,
+	expected_assignment_target, expected_identifier, expected_object_member_name, expected_pattern,
+	expected_property_binding,
 };
 use crate::syntax::object::{is_at_object_member_name, object_member_name};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
+use rslint_errors::Span;
 
 pub(crate) fn parse_binding(p: &mut Parser, parameters: bool) -> ParsedSyntax {
 	match p.cur() {
@@ -18,42 +20,72 @@ pub(crate) fn parse_binding(p: &mut Parser, parameters: bool) -> ParsedSyntax {
 			p.bump_remap(T![ident]);
 			Present(m.complete(p, JS_IDENTIFIER_BINDING))
 		}
-		T!['['] => Present(array_binding_pattern(p, parameters)),
+		T!['['] => array_binding_pattern(p, parameters),
 		T!['{'] if p.state.allow_object_expr => object_binding_pattern(p, parameters),
-		T![ident] | T![yield] | T![await] => {
-			if p.state.should_record_names {
-				let string = p.cur_src().to_string();
-				if string == "let" {
-					let err = p
-						.err_builder(
-							"`let` cannot be declared as a variable name inside of a declaration",
-						)
-						.primary(p.cur_tok().range, "");
-
-					p.error(err);
-				} else if let Some(existing) = p.state.name_map.get(&string) {
-					let err = p
-                    .err_builder(
-                        "Declarations inside of a `let` or `const` declaration may not have duplicates",
-                    )
-                    .secondary(
-                        existing.to_owned(),
-                        &format!("{} is first declared here", string),
-                    )
-                    .primary(
-                        p.cur_tok().range,
-                        &format!("a second declaration of {} is not allowed", string),
-                    );
-					p.error(err);
-				} else {
-					p.state
-						.name_map
-						.insert(p.cur_src().to_string(), p.cur_tok().range);
-				}
-			}
-			parse_identifier_binding(p)
-		}
+		T![ident] | T![yield] | T![await] => parse_identifier_binding(p),
 		_ => Absent,
+	}
+}
+
+// test_err binding_identifier_invalid
+// async () => { let await = 5; }
+// function *foo() {
+//    let yield = 5;
+// }
+// let eval = 5;
+pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
+	let parsed =
+		parse_identifier(p, JS_IDENTIFIER_BINDING).or_invalid_to_unknown(p, JS_UNKNOWN_BINDING);
+
+	if let Present(mut identifier) = parsed {
+		let identifier_name = identifier.text(p);
+
+		if StrictMode.is_supported(p)
+			&& (identifier_name == "eval" || identifier_name == "arguments")
+		{
+			let err = p
+				.err_builder(&format!(
+					"Illegal use of `{}` as an identifier in strict mode",
+					identifier_name
+				))
+				.primary(identifier.range(p), "");
+			p.error(err);
+
+			identifier.change_kind(p, JS_UNKNOWN_BINDING);
+		} else if p.state.should_record_names {
+			if identifier_name == "let" {
+				let err = p
+					.err_builder(
+						"`let` cannot be declared as a variable name inside of a declaration",
+					)
+					.primary(identifier.range(p), "");
+
+				p.error(err);
+			} else if let Some(existing) = p.state.name_map.get(identifier_name) {
+				let err = p
+					.err_builder(
+						"Declarations inside of a `let` or `const` declaration may not have duplicates",
+					)
+					.secondary(
+						existing.to_owned(),
+						&format!("{} is first declared here", identifier_name),
+					)
+					.primary(
+						identifier.range(p),
+						&format!("a second declaration of {} is not allowed", identifier_name),
+					);
+				p.error(err);
+			} else {
+				let identifier_name = String::from(identifier_name);
+				p.state
+					.name_map
+					.insert(identifier_name, identifier.range(p).as_range());
+			}
+		}
+
+		Present(identifier)
+	} else {
+		Absent
 	}
 }
 
@@ -83,82 +115,50 @@ impl PatternWithDefault for BindingWithDefault {
 	}
 }
 
-// test_err binding_identifier_invalid
-// async () => { let await = 5; }
-// function *foo() {
-//    let yield = 5;
-// }
-// let eval = 5;
-pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
-	let parsed =
-		parse_identifier(p, JS_IDENTIFIER_BINDING).or_invalid_to_unknown(p, JS_UNKNOWN_BINDING);
-
-	if let Present(mut identifier) = parsed {
-		let identifier_name = identifier.text(p);
-
-		if StrictMode.is_supported(p)
-			&& (identifier_name == "eval" || identifier_name == "arguments")
-		{
-			let err = p
-				.err_builder(&format!(
-					"Illegal use of `{}` as an identifier in strict mode",
-					identifier_name
-				))
-				.primary(identifier.range(p), "");
-			p.error(err);
-
-			identifier.change_kind(p, JS_UNKNOWN_BINDING);
-		}
-		Present(identifier)
-	} else {
-		Absent
-	}
-}
-
 // test_err
 // let [ default: , hey , ] = []
-fn array_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMarker {
-	let m = p.start();
-	p.expect_required(T!['[']);
+fn array_binding_pattern(p: &mut Parser, parameters: bool) -> ParsedSyntax {
+	ArrayBinding { parameters }.parse_array_pattern(p)
+}
 
-	let elements_list = p.start();
+struct ArrayBinding {
+	parameters: bool,
+}
 
-	while !p.at(EOF) && !p.at(T![']']) {
-		if p.eat(T![,]) {
-			continue;
-		}
-		if p.at(T![...]) {
-			let m = p.start();
-			p.bump_any();
+impl ArrayPattern<BindingWithDefault> for ArrayBinding {
+	fn unknown_pattern_kind(&self) -> SyntaxKind {
+		JS_UNKNOWN_BINDING
+	}
 
-			parse_binding(p, parameters).or_missing_with_error(p, expected_pattern);
+	fn array_pattern_kind(&self) -> SyntaxKind {
+		JS_ARRAY_BINDING
+	}
 
-			m.complete(p, JS_ARRAY_REST_BINDING);
-			break;
-		} else {
-			let recovery = parse_binding(p, parameters).or_recover(
-				p,
-				&ParseRecovery::new(
-					JS_UNKNOWN_BINDING,
-					token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
-				)
-				.enable_recovery_on_line_break(),
-				expected_pattern,
-			);
+	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+		// TODO
+		expected_assignment_target(p, range)
+	}
 
-			if recovery.is_err() {
-				break;
-			}
-		}
-		if !p.at(T![']']) {
-			p.expect_required(T![,]);
+	fn pattern_with_default(&self) -> BindingWithDefault {
+		BindingWithDefault {
+			parameters: self.parameters,
 		}
 	}
 
-	elements_list.complete(p, LIST);
+	// TODO unify?
+	fn parse_rest_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		if !p.at(T![...]) {
+			return Absent;
+		}
 
-	p.expect_required(T![']']);
-	m.complete(p, JS_ARRAY_BINDING)
+		let m = p.start();
+		p.bump_any();
+
+		// TODO error
+		parse_binding(p, self.parameters).or_missing_with_error(p, expected_pattern);
+
+		Present(m.complete(p, JS_ARRAY_REST_BINDING))
+	}
 }
 
 // test_err object_binding_pattern
