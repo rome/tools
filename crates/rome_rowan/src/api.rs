@@ -622,6 +622,7 @@ impl<L: Language> SyntaxNode<L> {
 		}
 	}
 
+	/// Returns an iterator over all the slots of this syntax node.
 	pub fn slots(&self) -> SyntaxSlots<L> {
 		SyntaxSlots {
 			raw: Some(self.raw.slots()),
@@ -1112,10 +1113,16 @@ impl<L: Language> From<SyntaxElement<L>> for cursor::SyntaxElement {
 	}
 }
 
+/// Each node has a slot for each of its children regardless if the child is present or not.
+/// A child that isn't present either because it's optional or because of a syntax error
+/// is stored in an [SyntaxSlot::Empty] to preserve the index of each child.
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub enum SyntaxSlot<L: Language> {
+	/// Slot that stores a node child
 	Node(SyntaxNode<L>),
+	/// Slot that stores a token child
 	Token(SyntaxToken<L>),
+	/// Slot that marks that the child in this position isn't present in the source code.
 	Empty,
 }
 
@@ -1146,6 +1153,7 @@ impl<L: Language> From<cursor::SyntaxSlot> for SyntaxSlot<L> {
 	}
 }
 
+/// Iterator over the slots of a node.
 #[derive(Debug, Clone)]
 pub struct SyntaxSlots<L> {
 	raw: Option<cursor::SyntaxSlots>,
