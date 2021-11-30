@@ -1,0 +1,66 @@
+0: JS_ROOT@0..42
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..41
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..41
+      0: JS_VARIABLE_DECLARATION@0..41
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..41
+          0: JS_VARIABLE_DECLARATOR@4..41
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "b" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..41
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@8..41
+                0: L_CURLY@8..9 "{" [] []
+                1: LIST@9..39
+                  0: JS_SETTER_OBJECT_MEMBER@9..39
+                    0: SET_KW@9..15 "set" [Whitespace("\n ")] [Whitespace(" ")]
+                    1: JS_LITERAL_MEMBER_NAME@15..18
+                      0: IDENT@15..18 "foo" [] []
+                    2: L_PAREN@18..19 "(" [] []
+                    3: JS_UNKNOWN_PATTERN@19..21
+                      0: R_PAREN@19..21 ")" [] [Whitespace(" ")]
+                    4: (empty)
+                    5: (empty)
+                    6: JS_FUNCTION_BODY@21..39
+                      0: L_CURLY@21..22 "{" [] []
+                      1: LIST@22..22
+                      2: LIST@22..36
+                        0: JS_RETURN_STATEMENT@22..36
+                          0: RETURN_KW@22..34 "return" [Whitespace("\n    ")] [Whitespace(" ")]
+                          1: JS_NUMBER_LITERAL_EXPRESSION@34..35
+                            0: JS_NUMBER_LITERAL@34..35 "5" [] []
+                          2: SEMICOLON@35..36 ";" [] []
+                      3: R_CURLY@36..39 "}" [Whitespace("\n ")] []
+                2: R_CURLY@39..41 "}" [Whitespace("\n")] []
+      1: (empty)
+  3: EOF@41..42 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: Expected an identifier or pattern, but found none
+  ┌─ object_expr_setter.js:2:10
+  │
+2 │  set foo() {
+  │          ^
+
+--
+error[SyntaxError]: expected a parameter but instead found '{'
+  ┌─ object_expr_setter.js:2:12
+  │
+2 │  set foo() {
+  │            ^ Expected a parameter here
+
+--
+error[SyntaxError]: expected `')'` but instead found `{`
+  ┌─ object_expr_setter.js:2:12
+  │
+2 │  set foo() {
+  │            ^ unexpected
+
+--
+let b = {
+ set foo() {
+    return 5;
+ }
+}

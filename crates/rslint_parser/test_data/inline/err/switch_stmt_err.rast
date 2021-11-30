@@ -1,7 +1,7 @@
-0: JS_ROOT@0..24
+0: JS_ROOT@0..125
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..23
+  2: LIST@0..124
     0: JS_SWITCH_STATEMENT@0..13
       0: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")]
       1: (empty)
@@ -18,7 +18,77 @@
       3: L_CURLY@21..22 "{" [] []
       4: LIST@22..22
       5: R_CURLY@22..23 "}" [] []
-  3: EOF@23..24 "" [Whitespace("\n")] []
+    2: JS_SWITCH_STATEMENT@23..44
+      0: SWITCH_KW@23..31 "switch" [Whitespace("\n")] [Whitespace(" ")]
+      1: (empty)
+      2: (empty)
+      3: L_CURLY@31..33 "{" [] [Whitespace(" ")]
+      4: LIST@33..43
+        0: JS_CASE_CLAUSE@33..43
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: JS_UNKNOWN_STATEMENT@33..43
+            0: VAR_KW@33..37 "var" [] [Whitespace(" ")]
+            1: IDENT@37..39 "i" [] [Whitespace(" ")]
+            2: EQ@39..41 "=" [] [Whitespace(" ")]
+            3: JS_NUMBER_LITERAL@41..43 "0" [] [Whitespace(" ")]
+      5: R_CURLY@43..44 "}" [] []
+    3: JS_SWITCH_STATEMENT@44..81
+      0: SWITCH_KW@44..52 "switch" [Whitespace("\n")] [Whitespace(" ")]
+      1: (empty)
+      2: (empty)
+      3: L_CURLY@52..54 "{" [] [Whitespace(" ")]
+      4: LIST@54..80
+        0: JS_CASE_CLAUSE@54..65
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: JS_UNKNOWN_STATEMENT@54..65
+            0: VAR_KW@54..58 "var" [] [Whitespace(" ")]
+            1: IDENT@58..60 "i" [] [Whitespace(" ")]
+            2: EQ@60..62 "=" [] [Whitespace(" ")]
+            3: JS_NUMBER_LITERAL@62..63 "0" [] []
+            4: SEMICOLON@63..65 ";" [] [Whitespace(" ")]
+        1: JS_CASE_CLAUSE@65..80
+          0: CASE_KW@65..70 "case" [] [Whitespace(" ")]
+          1: JS_STRING_LITERAL_EXPRESSION@70..75
+            0: JS_STRING_LITERAL@70..75 "\"bar\"" [] []
+          2: COLON@75..77 ":" [] [Whitespace(" ")]
+          3: LIST@77..80
+            0: JS_BLOCK_STATEMENT@77..80
+              0: L_CURLY@77..78 "{" [] []
+              1: LIST@78..78
+              2: R_CURLY@78..80 "}" [] [Whitespace(" ")]
+      5: R_CURLY@80..81 "}" [] []
+    4: JS_SWITCH_STATEMENT@81..124
+      0: SWITCH_KW@81..89 "switch" [Whitespace("\n")] [Whitespace(" ")]
+      1: L_PAREN@89..90 "(" [] []
+      2: JS_REFERENCE_IDENTIFIER_EXPRESSION@90..93
+        0: IDENT@90..93 "foo" [] []
+      3: R_PAREN@93..95 ")" [] [Whitespace(" ")]
+      4: L_CURLY@95..96 "{" [] []
+      5: LIST@96..122
+        0: JS_DEFAULT_CLAUSE@96..109
+          0: DEFAULT_KW@96..105 "default" [Whitespace("\n\t")] []
+          1: COLON@105..107 ":" [] [Whitespace(" ")]
+          2: LIST@107..109
+            0: JS_BLOCK_STATEMENT@107..109
+              0: L_CURLY@107..108 "{" [] []
+              1: LIST@108..108
+              2: R_CURLY@108..109 "}" [] []
+        1: JS_CASE_CLAUSE@109..122
+          0: (empty)
+          1: JS_UNARY_EXPRESSION@109..118
+            0: DEFAULT_KW@109..118 "default" [Whitespace("\n\t")] []
+          2: COLON@118..120 ":" [] [Whitespace(" ")]
+          3: LIST@120..122
+            0: JS_BLOCK_STATEMENT@120..122
+              0: L_CURLY@120..121 "{" [] []
+              1: LIST@121..121
+              2: R_CURLY@121..122 "}" [] []
+      6: R_CURLY@122..124 "}" [Whitespace("\n")] []
+  3: EOF@124..125 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `'('` but instead found `foo`
   ┌─ switch_stmt_err.js:1:8
@@ -55,5 +125,76 @@ error[SyntaxError]: expected `')'` but instead found `{`
   │        ^ unexpected
 
 --
+error[SyntaxError]: expected `'('` but instead found `{`
+  ┌─ switch_stmt_err.js:3:8
+  │
+3 │ switch { var i = 0 }
+  │        ^ unexpected
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ switch_stmt_err.js:3:8
+  │
+3 │ switch { var i = 0 }
+  │        ^ Expected an expression here
+
+--
+error[SyntaxError]: expected `')'` but instead found `{`
+  ┌─ switch_stmt_err.js:3:8
+  │
+3 │ switch { var i = 0 }
+  │        ^ unexpected
+
+--
+error[SyntaxError]: expected a default, or a case but instead found 'var i = 0'
+  ┌─ switch_stmt_err.js:3:10
+  │
+3 │ switch { var i = 0 }
+  │          ^^^^^^^^^ Expected a default, or a case here
+
+--
+error[SyntaxError]: expected `'('` but instead found `{`
+  ┌─ switch_stmt_err.js:4:8
+  │
+4 │ switch { var i = 0; case "bar": {} }
+  │        ^ unexpected
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ switch_stmt_err.js:4:8
+  │
+4 │ switch { var i = 0; case "bar": {} }
+  │        ^ Expected an expression here
+
+--
+error[SyntaxError]: expected `')'` but instead found `{`
+  ┌─ switch_stmt_err.js:4:8
+  │
+4 │ switch { var i = 0; case "bar": {} }
+  │        ^ unexpected
+
+--
+error[SyntaxError]: expected a default, or a case but instead found 'var i = 0;'
+  ┌─ switch_stmt_err.js:4:10
+  │
+4 │ switch { var i = 0; case "bar": {} }
+  │          ^^^^^^^^^^ Expected a default, or a case here
+
+--
+error[SyntaxError]: Multiple default clauses inside of a switch statement are not allowed
+  ┌─ switch_stmt_err.js:7:2
+  │
+6 │     default: {}
+  │     ----------- the first default clause is defined here
+7 │     default: {}
+  │     ^^^^^^^^^^^ a second clause here is not allowed
+
+--
 switch foo {}
 switch {}
+switch { var i = 0 }
+switch { var i = 0; case "bar": {} }
+switch (foo) {
+	default: {}
+	default: {}
+}

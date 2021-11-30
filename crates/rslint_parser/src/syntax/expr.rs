@@ -3,7 +3,7 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
-use super::decl::{arrow_body, parameter_list};
+use super::decl::{parse_arrow_body, parse_parameter_list};
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
@@ -17,6 +17,7 @@ use crate::syntax::stmt::is_semi;
 use crate::ConditionalParsedSyntax::{Invalid, Valid};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::Absent;
+use crate::ParsedSyntax::Present;
 use crate::{SyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -84,13 +85,13 @@ pub const STARTS_EXPR: TokenSet = token_set![
 // "foo"
 // 'bar'
 // null
-pub fn literal_expression(p: &mut Parser) -> Option<CompletedMarker> {
+pub fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
 	let literal_kind = match p.cur_tok().kind {
 		SyntaxKind::JS_NUMBER_LITERAL => {
 			if p.cur_src().ends_with('n') {
 				let m = p.start();
 				p.bump_remap(SyntaxKind::JS_BIG_INT_LITERAL);
-				return Some(m.complete(p, JS_BIG_INT_LITERAL_EXPRESSION));
+				return Present(m.complete(p, JS_BIG_INT_LITERAL_EXPRESSION));
 			};
 
 			SyntaxKind::JS_NUMBER_LITERAL_EXPRESSION
@@ -99,12 +100,12 @@ pub fn literal_expression(p: &mut Parser) -> Option<CompletedMarker> {
 		SyntaxKind::NULL_KW => SyntaxKind::JS_NULL_LITERAL_EXPRESSION,
 		SyntaxKind::TRUE_KW | SyntaxKind::FALSE_KW => SyntaxKind::JS_BOOLEAN_LITERAL_EXPRESSION,
 		SyntaxKind::JS_REGEX_LITERAL => SyntaxKind::JS_REGEX_LITERAL_EXPRESSION,
-		_ => return None,
+		_ => return Absent,
 	};
 
 	let m = p.start();
 	p.bump_any();
-	Some(m.complete(p, literal_kind))
+	Present(m.complete(p, literal_kind))
 }
 
 /// An assignment expression such as `foo += bar` or `foo = 5`.
@@ -713,6 +714,7 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 // test_err paren_or_arrow_expr_invalid_params
 // (5 + 5) => {}
 // (a, ,b) => {}
+// (a, b) =>
 pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarker {
 	let m = p.start();
 	let checkpoint = p.checkpoint();
@@ -771,7 +773,8 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			let expr = assign_expr(&mut *temp);
 			if expr.is_some() && temp.at(T![:]) {
 				temp.rewind(checkpoint);
-				params_marker = Some(parameter_list(&mut *temp));
+				// TODO: review this when `paren_or_arrow_expr` is refactored to use the new API
+				params_marker = Some(parse_parameter_list(&mut *temp).ok().unwrap());
 				break;
 			}
 
@@ -812,7 +815,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				..p.state.clone()
 			});
 			p.rewind(checkpoint);
-			parameter_list(p);
+			parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_parameters);
 			if p.at(T![:]) {
 				if let Some(mut ret) = ts_type_or_type_predicate_ann(p, T![:]) {
 					ret.err_if_not_ts(
@@ -822,7 +825,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				}
 			}
 			p.expect_no_recover(T![=>])?;
-			arrow_body(p).ok()
+			parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body)
 		};
 		// we can't just rewind the parser, since the function rewinds, and cloning and replacing the
 		// events does not work apparently, therefore we need to clone the entire parser
@@ -849,7 +852,8 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			if params_marker.is_none() {
 				// Rewind the parser so we can reparse as formal parameters
 				p.rewind(checkpoint);
-				parameter_list(p);
+				parse_parameter_list(p)
+					.or_missing_with_error(p, js_parse_error::expected_parameters);
 			}
 
 			if p.at(T![:]) {
@@ -863,7 +867,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			}
 
 			p.bump_any();
-			arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
+			parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
 			return m.complete(p, JS_ARROW_FUNCTION_EXPRESSION);
 		}
 	}
@@ -936,7 +940,7 @@ pub fn expr(p: &mut Parser) -> Option<CompletedMarker> {
 
 /// A primary expression such as a literal, an object, an array, or `this`.
 pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
-	if let Some(m) = literal_expression(p) {
+	if let Present(m) = parse_literal_expression(p) {
 		return Some(m);
 	}
 
@@ -977,15 +981,15 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 					// async (foo, bar, ...baz) => foo
 					let m = p.start();
 					p.bump_remap(T![async]);
-					if p.at(T!['(']) {
-						parameter_list(p);
-					} else {
+					let parsed_parameters = parse_parameter_list(p);
+					if parsed_parameters.is_absent() {
 						let m = p.start();
 						// test_err async_arrow_expr_await_parameter
 						// let a = async await => {}
 						p.bump_remap(T![ident]);
 						m.complete(p, JS_IDENTIFIER_BINDING);
 					}
+
 					if p.at(T![:]) {
 						let complete = ts_type_or_type_predicate_ann(p, T![:]);
 						if let Some(mut complete) = complete {
@@ -1001,7 +1005,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 							in_async: true,
 							..p.state.clone()
 						});
-						arrow_body(&mut *guard).or_missing_with_error(
+						parse_arrow_body(&mut *guard).or_missing_with_error(
 							&mut *guard,
 							js_parse_error::expected_arrow_body,
 						);
@@ -1039,7 +1043,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				ident.change_kind(p, JS_IDENTIFIER_BINDING);
 				let m = ident.precede(p);
 				p.bump_any();
-				arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
+				parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
 				m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 			} else {
 				ident

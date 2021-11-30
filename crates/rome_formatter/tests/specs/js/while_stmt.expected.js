@@ -1,7 +1,7 @@
 while (true) {
-	return 4;
+	var foo = 4;
 }
 while (true) {
-	return 4;
+	var foo = 4;
 }
 while (true) {}

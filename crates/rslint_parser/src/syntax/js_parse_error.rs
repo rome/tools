@@ -61,3 +61,15 @@ pub(crate) fn expected_block_statement(p: &Parser, range: Range<usize>) -> Diagn
 pub(crate) fn expected_catch_clause(p: &Parser, range: Range<usize>) -> Diagnostic {
 	expected_node("catch clause", range).to_diagnostic(p)
 }
+
+pub(crate) fn expected_parameter(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_node("parameter", range).to_diagnostic(p)
+}
+
+pub(crate) fn expected_parameters(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_node("parenthesis '('", range).to_diagnostic(p)
+}
+
+pub(crate) fn expected_case_or_default(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_any(&["default", "case"], range).to_diagnostic(p)
+}

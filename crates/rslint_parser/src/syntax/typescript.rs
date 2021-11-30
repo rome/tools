@@ -1,13 +1,14 @@
 //! TypeScript specific functions.
 
 use super::decl::*;
-use super::expr::{assign_expr, identifier_name, lhs_expr, literal_expression};
+use super::expr::{assign_expr, identifier_name, lhs_expr, parse_literal_expression};
 use super::stmt::{semi, statements, variable_declaration_statement};
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
 use crate::syntax::class::class_declaration;
 use crate::syntax::expr::any_reference_member;
 use crate::syntax::function::function_declaration;
+use crate::syntax::js_parse_error;
 use crate::syntax::pat::parse_identifier_binding;
 use crate::{SyntaxKind::*, *};
 
@@ -483,7 +484,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 	} else {
 		match p.cur() {
 			JS_STRING_LITERAL | JS_NUMBER_LITERAL => {
-				literal_expression(p);
+				parse_literal_expression(p).ok();
 			}
 			_ => {
 				let mut complete = any_reference_member(p)?;
@@ -504,7 +505,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 		if p.at(T![<]) {
 			no_recover!(p, ts_type_params(p));
 		}
-		parameter_list(p);
+		parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_parameters);
 		if p.at(T![:]) {
 			ts_type_or_type_predicate_ann(p, T![:]);
 		}
@@ -569,10 +570,13 @@ pub fn ts_signature_member(p: &mut Parser, construct_sig: bool) -> Option<Comple
 		no_recover!(p, ts_type_params(p));
 	}
 
-	parameter_list(&mut *p.with_state(ParserState {
-		in_binding_list_for_signature: true,
-		..p.state.clone()
-	}));
+	{
+		let guard = &mut *p.with_state(ParserState {
+			in_binding_list_for_signature: true,
+			..p.state.clone()
+		});
+		parse_parameter_list(guard).or_missing(guard);
+	}
 	if p.at(T![:]) {
 		no_recover!(p, ts_type_or_type_predicate_ann(p, T![:]));
 	}
@@ -703,7 +707,7 @@ pub fn ts_fn_or_constructor_type(p: &mut Parser, fn_type: bool) -> Option<Comple
 	if p.at(T![<]) {
 		ts_type_params(p);
 	}
-	parameter_list(p);
+	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_parameters);
 	if ts_type_or_type_predicate_ann(p, T![=>]).is_none() && p.state.no_recovery {
 		m.abandon(p);
 		return None;
@@ -982,9 +986,8 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 			}
 		}
 		JS_NUMBER_LITERAL | JS_STRING_LITERAL | TRUE_KW | FALSE_KW | JS_REGEX_LITERAL => Some(
-			literal_expression(p)
-				.unwrap()
-				.precede(p)
+			parse_literal_expression(p)
+				.precede_or_missing(p)
 				.complete(p, TS_LITERAL),
 		),
 		BACKTICK => {

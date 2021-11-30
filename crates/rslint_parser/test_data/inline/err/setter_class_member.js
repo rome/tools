@@ -1,0 +1,3 @@
+class Setters {
+  set foo() {}
+}

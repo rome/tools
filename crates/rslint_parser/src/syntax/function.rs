@@ -1,9 +1,9 @@
 use crate::parser::ConditionalParsedSyntax::Valid;
 use crate::parser::ParsedSyntax;
-use crate::syntax::decl::parameter_list;
+use crate::syntax::decl::parse_parameter_list;
 use crate::syntax::js_parse_error;
 use crate::syntax::pat::parse_identifier_binding;
-use crate::syntax::stmt::{block_impl, is_semi};
+use crate::syntax::stmt::{is_semi, parse_block_impl};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::ConditionalParsedSyntax::Invalid;
 use crate::JsSyntaxFeature::TypeScript;
@@ -31,6 +31,7 @@ use std::collections::HashMap;
 //
 // test_err function_decl_err
 // function() {}
+// function foo {}
 // function {}
 // function *() {}
 // async function() {}
@@ -100,7 +101,7 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 		type_parameters.or_missing(guard);
 	}
 
-	parameter_list(guard);
+	parse_parameter_list(guard).or_missing_with_error(guard, js_parse_error::expected_parameters);
 
 	let return_type = parse_ts_return_type(guard).exclusive_for(&TypeScript, guard, |p, marker| {
 		p.err_builder("return types can only be used in TypeScript files")
@@ -135,7 +136,7 @@ pub(super) fn function_body(p: &mut Parser) -> ParsedSyntax {
 		..p.state.clone()
 	});
 
-	block_impl(&mut *guard, JS_FUNCTION_BODY)
+	parse_block_impl(&mut *guard, JS_FUNCTION_BODY)
 }
 
 // TODO 1725 This is probably not ideal (same with the `declare` keyword). We should

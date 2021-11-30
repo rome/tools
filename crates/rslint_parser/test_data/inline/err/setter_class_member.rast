@@ -1,0 +1,51 @@
+0: JS_ROOT@0..33
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..32
+    0: JS_CLASS_DECLARATION@0..32
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..14
+        0: IDENT@6..14 "Setters" [] [Whitespace(" ")]
+      2: L_CURLY@14..15 "{" [] []
+      3: LIST@15..30
+        0: JS_SETTER_CLASS_MEMBER@15..30
+          0: SET_KW@15..22 "set" [Whitespace("\n  ")] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@22..25
+            0: IDENT@22..25 "foo" [] []
+          2: L_PAREN@25..26 "(" [] []
+          3: JS_UNKNOWN_PATTERN@26..28
+            0: R_PAREN@26..28 ")" [] [Whitespace(" ")]
+          4: (empty)
+          5: (empty)
+          6: JS_FUNCTION_BODY@28..30
+            0: L_CURLY@28..29 "{" [] []
+            1: LIST@29..29
+            2: LIST@29..29
+            3: R_CURLY@29..30 "}" [] []
+      4: R_CURLY@30..32 "}" [Whitespace("\n")] []
+  3: EOF@32..33 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: Expected an identifier or pattern, but found none
+  ┌─ setter_class_member.js:2:11
+  │
+2 │   set foo() {}
+  │           ^
+
+--
+error[SyntaxError]: expected a parameter but instead found '{'
+  ┌─ setter_class_member.js:2:13
+  │
+2 │   set foo() {}
+  │             ^ Expected a parameter here
+
+--
+error[SyntaxError]: expected `')'` but instead found `{`
+  ┌─ setter_class_member.js:2:13
+  │
+2 │   set foo() {}
+  │             ^ unexpected
+
+--
+class Setters {
+  set foo() {}
+}

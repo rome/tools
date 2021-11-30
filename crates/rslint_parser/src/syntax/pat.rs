@@ -1,7 +1,7 @@
 use super::expr::{assign_expr, identifier_name, lhs_expr};
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::syntax::expr::{literal_expression, parse_identifier};
+use crate::syntax::expr::{parse_identifier, parse_literal_expression};
 use crate::syntax::object::computed_member_name;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
@@ -104,7 +104,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 // let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
 pub fn object_binding_prop_name(p: &mut Parser) -> Option<CompletedMarker> {
 	match p.cur() {
-		JS_STRING_LITERAL | JS_NUMBER_LITERAL => literal_expression(p),
+		JS_STRING_LITERAL | JS_NUMBER_LITERAL => parse_literal_expression(p).ok(),
 		T!['['] => computed_member_name(p).ok(),
 		_ => parse_identifier_binding(p).ok(),
 	}

@@ -1,13 +1,13 @@
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax;
-use crate::syntax::decl::{formal_param_pat, parameter_list, parameters_list};
+use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
 use crate::syntax::expr::assign_expr;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::syntax::js_parse_error;
 use crate::syntax::object::{computed_member_name, literal_member_name};
 use crate::syntax::pat::parse_identifier_binding;
-use crate::syntax::stmt::{block_impl, is_semi, optional_semi};
+use crate::syntax::stmt::{is_semi, optional_semi, parse_block_impl};
 use crate::syntax::typescript::{
 	abstract_readonly_modifiers, maybe_ts_type_annotation, try_parse_index_signature,
 	ts_heritage_clause, ts_modifier, ts_type_params, DISALLOWED_TYPE_NAMES,
@@ -504,7 +504,7 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				// 	static get() {}
 				// }
 
-				// test setter_class_number
+				// test setter_class_member
 				// class Setters {
 				// 	set foo(a) {}
 				// 	set static(a) {}
@@ -518,6 +518,11 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				// 	set(a) {}
 				// 	async set(a) {}
 				// 	static set(a) {}
+				// }
+
+				// test_err setter_class_member
+				// class Setters {
+				//   set foo() {}
 				// }
 
 				// The tree currently holds a STATIC_MEMBER_NAME node that wraps a ident token but we now found
@@ -553,7 +558,9 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
-					formal_param_pat(p);
+					// TODO: review error handling once the pattern functions is refactored
+					parse_formal_param_pat(p)
+						.or_missing_with_error(p, js_parse_error::expected_parameter);
 					p.expect_required(T![')']);
 					function_body(p)
 						.or_missing_with_error(p, js_parse_error::expected_function_body);
@@ -719,7 +726,7 @@ fn method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
 fn method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
 	optional_member_token(p);
 	ts_parameter_types(p);
-	parameter_list(p);
+	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_parameters);
 	ts_return_type(p);
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
@@ -767,7 +774,7 @@ fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> Compl
 
 		let p = &mut *guard;
 
-		block_impl(p, JS_FUNCTION_BODY)
+		parse_block_impl(p, JS_FUNCTION_BODY)
 			.or_missing_with_error(p, js_parse_error::expected_function_body);
 	}
 
@@ -779,12 +786,12 @@ fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> Compl
 
 fn constructor_parameter_list(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	parameters_list(p, constructor_parameter);
+	parse_parameters_list(p, constructor_parameter);
 	m.complete(p, JS_CONSTRUCTOR_PARAMETER_LIST)
 }
 
-fn constructor_parameter(p: &mut Parser) -> Option<CompletedMarker> {
-	let m = p.start();
+fn constructor_parameter(p: &mut Parser) -> ParsedSyntax {
+	let modifiers_marker = p.start();
 	let has_accessibility = if ts_access_modifier(p).is_some() {
 		let range = p.cur_tok().range;
 		let maybe_err = p.start();
@@ -823,13 +830,13 @@ fn constructor_parameter(p: &mut Parser) -> Option<CompletedMarker> {
 	};
 
 	if !has_accessibility && !has_readonly {
-		m.abandon(p);
-		formal_param_pat(p)
+		modifiers_marker.abandon(p);
+		parse_formal_param_pat(p)
 	} else {
-		if let Some(ref mut pat) = formal_param_pat(p) {
+		if let Present(ref mut pat) = parse_formal_param_pat(p) {
 			pat.undo_completion(p).abandon(p);
 		}
-		Some(m.complete(p, TS_CONSTRUCTOR_PARAM))
+		Present(modifiers_marker.complete(p, TS_CONSTRUCTOR_PARAM))
 	}
 }
 

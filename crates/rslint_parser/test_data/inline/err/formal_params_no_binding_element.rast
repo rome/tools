@@ -26,4 +26,11 @@ error[SyntaxError]: Expected an identifier or pattern, but found none
   │              ^^^^
 
 --
+error[SyntaxError]: expected a parameter but instead found ')'
+  ┌─ formal_params_no_binding_element.js:1:18
+  │
+1 │ function foo(true) {}
+  │                  ^ Expected a parameter here
+
+--
 function foo(true) {}
