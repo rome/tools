@@ -92,11 +92,11 @@ error[SyntaxError]: expected `,` but instead found `++`
   │            ^^ unexpected
 
 --
-error[SyntaxError]: Expected an identifier or pattern, but found none
+error[SyntaxError]: expected a parameter but instead found '++'
   ┌─ formal_params_invalid.js:1:12
   │
 1 │ function (a++, c) {}
-  │            ^^
+  │            ^^ Expected a parameter here
 
 --
 function (a++, c) {}

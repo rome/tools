@@ -93,13 +93,6 @@ JsRoot {
       1: (empty)
   3: EOF@41..42 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected an identifier or pattern, but found none
-  ┌─ object_expr_setter.js:2:10
-  │
-2 │  set foo() {
-  │          ^
-
---
 error[SyntaxError]: expected a parameter but instead found ')'
   ┌─ object_expr_setter.js:2:10
   │

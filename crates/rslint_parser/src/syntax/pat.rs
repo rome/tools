@@ -94,13 +94,11 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 				ts = ts.union(token_set![T!['{']]);
 			}
 			if parameters {
-				ts = ts.union(token_set![T![,], T![')']])
+				ts = ts.union(token_set![T![,], T![')']]);
 			}
-			p.error(err);
-			return match ParseRecovery::new(JS_UNKNOWN_PATTERN, ts).recover(p) {
-				Ok(recovered) => Some(recovered),
-				Err(_) => None,
-			};
+			#[allow(deprecated)]
+			SingleTokenParseRecovery::with_error(ts, JS_UNKNOWN_PATTERN, err).recover(p);
+			return None;
 		}
 	})
 }

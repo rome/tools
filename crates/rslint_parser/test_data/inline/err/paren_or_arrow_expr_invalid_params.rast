@@ -165,11 +165,11 @@ JsRoot {
       1: (empty)
   3: EOF@37..38 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected an identifier or pattern, but found none
+error[SyntaxError]: expected a parameter but instead found '5 + 5'
   ┌─ paren_or_arrow_expr_invalid_params.js:1:2
   │
 1 │ (5 + 5) => {}
-  │  ^
+  │  ^^^^^ Expected a parameter here
 
 --
 error[SyntaxError]: Expected an expression, but found none
