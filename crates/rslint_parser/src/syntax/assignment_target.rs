@@ -106,16 +106,150 @@ pub(crate) fn parse_simple_assignment_target(
 	}
 }
 
-fn parse_assignment_target_with_optional_default(p: &mut Parser) -> ParsedSyntax {
-	let target = parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional);
+pub(crate) trait ArrayPattern {
+	fn parse_array_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		if !p.at(T!['[']) {
+			return Absent;
+		}
 
-	if p.at(T![=]) {
-		let with_default = target.precede_or_missing_with_error(p, expected_assignment_target);
-		p.bump_any(); // eat the = token
-		expr_or_assignment(p);
-		Present(with_default.complete(p, JS_ASSIGNMENT_TARGET_WITH_DEFAULT))
-	} else {
-		target
+		let m = p.start();
+
+		p.bump(T!['[']);
+		let elements = p.start();
+
+		while !p.at(EOF) && !p.at(T![']']) {
+			let recovery = ParseRecovery::new(
+				self.unknown_pattern_kind(),
+				token_set!(EOF, T![,], T![']'], T![=], T![;], T![...]),
+			)
+			.enable_recovery_on_line_break();
+
+			if let Present(rest) = self.parse_rest_pattern(p) {
+				if validate_rest_pattern(p, rest, T![']'], &recovery, self.unknown_pattern_kind()) {
+					break;
+				}
+			} else {
+				let element = {
+					let mut guard = p.with_state(ParserState {
+						expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![
+							T![,],
+							T![...],
+							T![=]
+						]),
+						..p.state.clone()
+					});
+
+					self.parse_any_array_element(&mut *guard).or_recover(
+						&mut *guard,
+						&recovery,
+						Self::expected_element_error,
+					)
+				};
+
+				if element.is_err() {
+					// Failed to recover
+					break;
+				}
+			}
+
+			if !p.at(T![']']) {
+				p.expect_required(T![,]);
+			}
+		}
+
+		elements.complete(p, LIST);
+		p.expect(T![']']);
+
+		Present(m.complete(p, self.array_pattern_kind()))
+	}
+
+	fn unknown_pattern_kind(&self) -> SyntaxKind;
+	fn pattern_with_default_kind(&self) -> SyntaxKind;
+	fn array_pattern_kind(&self) -> SyntaxKind;
+
+	fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic;
+	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic;
+
+	fn parse_any_array_element(&self, p: &mut Parser) -> ParsedSyntax {
+		match p.cur() {
+			T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
+			_ => self.parse_element_with_optional_default(p),
+		}
+	}
+
+	fn parse_element_with_optional_default(&self, p: &mut Parser) -> ParsedSyntax {
+		let pattern = self.parse_pattern(p);
+
+		if p.at(T![=]) {
+			let with_default =
+				pattern.precede_or_missing_with_error(p, Self::expected_pattern_error);
+			p.bump_any(); // eat the = token
+			expr_or_assignment(p);
+			Present(with_default.complete(p, self.pattern_with_default_kind()))
+		} else {
+			pattern
+		}
+	}
+
+	fn parse_rest_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+
+	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+}
+
+struct ArrayAssignmentTarget;
+
+impl ArrayPattern for ArrayAssignmentTarget {
+	fn unknown_pattern_kind(&self) -> SyntaxKind {
+		JS_UNKNOWN_ASSIGNMENT_TARGET
+	}
+
+	fn pattern_with_default_kind(&self) -> SyntaxKind {
+		JS_ASSIGNMENT_TARGET_WITH_DEFAULT
+	}
+
+	fn array_pattern_kind(&self) -> SyntaxKind {
+		JS_ARRAY_ASSIGNMENT_TARGET
+	}
+
+	#[inline]
+	fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+		expected_assignment_target(p, range)
+	}
+
+	#[inline]
+	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+		expected_array_assignment_target_element(p, range)
+	}
+
+	// test array_assignment_target_rest
+	// ([ ...abcd ] = a);
+	// ([ ...(abcd) ] = a);
+	// ([ ...m.test ] = c);
+	// ([ ...m[call()] ] = c);
+	// ([ ...any.expression().b ] = c);
+	// ([ ...[x, y] ] = b);
+	// ([ ...[ ...a ] ] = c);
+	//
+	// test_err array_assignment_target_rest_err
+	// ([ ... ] = a);
+	// ([ ...c = "default" ] = a);
+	// ([ ...rest, other_assignment ] = a);
+	fn parse_rest_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		if !p.at(T![...]) {
+			return Absent;
+		}
+
+		let m = p.start();
+		p.bump(T![...]);
+
+		parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
+			.or_missing_with_error(p, expected_assignment_target);
+
+		Present(m.complete(p, JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT))
+	}
+
+	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
 	}
 }
 
@@ -132,88 +266,7 @@ fn parse_assignment_target_with_optional_default(p: &mut Parser) -> ParsedSyntax
 // [[a b] [c]]= test;
 // [a: b] = c
 fn parse_array_assignment_target(p: &mut Parser) -> ParsedSyntax {
-	if !p.at(T!['[']) {
-		return Absent;
-	}
-
-	let m = p.start();
-
-	p.bump(T!['[']);
-	let elements = p.start();
-
-	while !p.at(EOF) && !p.at(T![']']) {
-		if p.at(T![,]) {
-			p.start().complete(p, SyntaxKind::JS_ARRAY_HOLE);
-			p.bump_any();
-			continue;
-		}
-
-		let recovery = ParseRecovery::new(
-			JS_UNKNOWN_ASSIGNMENT_TARGET,
-			token_set!(EOF, T![,], T![']'], T![=], T![;], T![...]),
-		)
-		.enable_recovery_on_line_break();
-
-		if let Present(rest) = parse_array_assignment_target_rest_element(p) {
-			if validate_rest_pattern(p, rest, T![']'], &recovery, JS_UNKNOWN_ASSIGNMENT_TARGET) {
-				break;
-			}
-		} else {
-			let element = {
-				let mut guard = p.with_state(ParserState {
-					expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...], T![=]]),
-					..p.state.clone()
-				});
-
-				parse_assignment_target_with_optional_default(&mut *guard).or_recover(
-					&mut *guard,
-					&recovery,
-					expected_array_assignment_target_element,
-				)
-			};
-
-			if element.is_err() {
-				// Failed to recover
-				break;
-			}
-		}
-
-		if !p.at(T![']']) {
-			p.expect_required(T![,]);
-		}
-	}
-
-	elements.complete(p, LIST);
-	p.expect(T![']']);
-
-	Present(m.complete(p, JS_ARRAY_ASSIGNMENT_TARGET))
-}
-
-// test array_assignment_target_rest
-// ([ ...abcd ] = a);
-// ([ ...(abcd) ] = a);
-// ([ ...m.test ] = c);
-// ([ ...m[call()] ] = c);
-// ([ ...any.expression().b ] = c);
-// ([ ...[x, y] ] = b);
-// ([ ...[ ...a ] ] = c);
-//
-// test_err array_assignment_target_rest_err
-// ([ ... ] = a);
-// ([ ...c = "default" ] = a);
-// ([ ...rest, other_assignment ] = a);
-fn parse_array_assignment_target_rest_element(p: &mut Parser) -> ParsedSyntax {
-	if !p.at(T![...]) {
-		return Absent;
-	}
-
-	let m = p.start();
-	p.bump(T![...]);
-
-	parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
-		.or_missing_with_error(p, expected_assignment_target);
-
-	Present(m.complete(p, JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT))
+	ArrayAssignmentTarget.parse_array_pattern(p)
 }
 
 fn parse_identifier_assignment_target(p: &mut Parser) -> ParsedSyntax {
