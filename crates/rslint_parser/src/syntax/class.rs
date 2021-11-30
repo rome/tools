@@ -1,6 +1,6 @@
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::ParsedSyntax;
+use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
 use crate::syntax::expr::expr_or_assignment;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
@@ -136,7 +136,9 @@ fn implements_clause(p: &mut Parser) {
 		maybe_err.abandon(&mut *p)
 	}
 
+	let mut progress = ParserProgress::default();
 	while p.cur_src() == "implements" {
+		progress.assert_progressing(p);
 		let start = p.cur_tok().range.start;
 		let m = p.start();
 		p.bump_any();
@@ -177,7 +179,9 @@ fn extends_clause(p: &mut Parser) {
 	}
 
 	// handle `extends foo extends bar` explicitly
+	let mut progress = ParserProgress::default();
 	while p.at(T![extends]) {
+		progress.assert_progressing(p);
 		let m = p.start();
 		p.bump_any();
 
@@ -196,7 +200,9 @@ fn extends_clause(p: &mut Parser) {
 fn class_members(p: &mut Parser) -> CompletedMarker {
 	let members = p.start();
 
+	let mut progress = ParserProgress::default();
 	while !p.at(EOF) && !p.at(T!['}']) {
+		progress.assert_progressing(p);
 		class_member(p);
 	}
 

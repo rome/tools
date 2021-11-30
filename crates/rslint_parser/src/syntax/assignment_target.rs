@@ -1,4 +1,4 @@
-use crate::parser::ParsedSyntax;
+use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::{
 	conditional_expr, expr, expr_or_assignment, identifier_name, unary_expr, EXPR_RECOVERY_SET,
@@ -140,7 +140,10 @@ fn parse_array_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	p.bump(T!['[']);
 	let elements = p.start();
 
+	let mut progress = ParserProgress::default();
 	while !p.at(EOF) && !p.at(T![']']) {
+		progress.assert_progressing(p);
+
 		if p.at(T![,]) {
 			p.start().complete(p, SyntaxKind::JS_ARRAY_HOLE);
 			p.bump_any();
@@ -228,8 +231,11 @@ fn parse_object_assignment_target(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump(T!['{']);
 	let elements = p.start();
+	let mut progress = ParserProgress::default();
 
 	while !p.at(T!['}']) {
+		progress.assert_progressing(p);
+
 		if p.at(T![,]) {
 			p.missing(); // missing element
 			p.bump_any();

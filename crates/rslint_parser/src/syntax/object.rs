@@ -1,7 +1,7 @@
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::ParsedSyntax;
 use crate::parser::ParsedSyntax::{Absent, Present};
+use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
 use crate::syntax::expr::{expr, expr_or_assignment};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
@@ -33,6 +33,7 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 	let props_list = p.start();
 	let mut first = true;
 
+	let mut progress = ParserProgress::default();
 	while !p.at(EOF) && !p.at(T!['}']) {
 		if first {
 			first = false;
@@ -43,6 +44,8 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 				break;
 			}
 		}
+
+		progress.assert_progressing(p);
 
 		// missing member
 		if p.at(T![,]) {
