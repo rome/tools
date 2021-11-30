@@ -1858,8 +1858,8 @@ impl JsArrayBinding {
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['['])
 	}
-	pub fn elements(&self) -> AstNodeList<JsAnyArrayElementBinding> {
-		support::node_list(&self.syntax, 0usize)
+	pub fn elements(&self) -> AstSeparatedList<JsAnyArrayElementBinding> {
+		support::separated_list(&self.syntax, 0usize)
 	}
 	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![']'])
@@ -2834,6 +2834,7 @@ pub enum JsAnyExportDeclaration {
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyParameter {
 	JsAnyBinding(JsAnyBinding),
+	JsBindingWithDefault(JsBindingWithDefault),
 	JsRestParameter(JsRestParameter),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -10099,19 +10100,27 @@ impl std::fmt::Debug for JsAnyExportDeclaration {
 		}
 	}
 }
+impl From<JsBindingWithDefault> for JsAnyParameter {
+	fn from(node: JsBindingWithDefault) -> JsAnyParameter {
+		JsAnyParameter::JsBindingWithDefault(node)
+	}
+}
 impl From<JsRestParameter> for JsAnyParameter {
 	fn from(node: JsRestParameter) -> JsAnyParameter { JsAnyParameter::JsRestParameter(node) }
 }
 impl AstNode for JsAnyParameter {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			JS_REST_PARAMETER => true,
+			JS_BINDING_WITH_DEFAULT | JS_REST_PARAMETER => true,
 			k if JsAnyBinding::can_cast(k) => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
+			JS_BINDING_WITH_DEFAULT => {
+				JsAnyParameter::JsBindingWithDefault(JsBindingWithDefault { syntax })
+			}
 			JS_REST_PARAMETER => JsAnyParameter::JsRestParameter(JsRestParameter { syntax }),
 			_ => {
 				if let Some(js_any_binding) = JsAnyBinding::cast(syntax) {
@@ -10124,6 +10133,7 @@ impl AstNode for JsAnyParameter {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
+			JsAnyParameter::JsBindingWithDefault(it) => &it.syntax,
 			JsAnyParameter::JsRestParameter(it) => &it.syntax,
 			JsAnyParameter::JsAnyBinding(it) => it.syntax(),
 		}
@@ -10133,6 +10143,7 @@ impl std::fmt::Debug for JsAnyParameter {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
 			JsAnyParameter::JsAnyBinding(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyParameter::JsBindingWithDefault(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyParameter::JsRestParameter(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}

@@ -90,6 +90,7 @@ JsRoot {
                                                 excl_token: missing (optional),
                                                 ty: missing (optional),
                                             },
+                                            COMMA@46..48 "," [] [Whitespace(" ")],
                                             JsArrayRestBinding {
                                                 dotdotdot_token: DOT2@48..51 "..." [] [],
                                                 binding: JsIdentifierBinding {

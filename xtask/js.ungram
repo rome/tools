@@ -748,7 +748,7 @@ JsBindingWithDefault =
 //     ^^^^^^
 JsArrayBinding =
 	'['
-	elements: JsAnyArrayElementBinding*
+	elements: (JsAnyArrayElementBinding (',' JsAnyArrayElementBinding)* ','?)
 	']'
 
 JsAnyArrayElementBinding =

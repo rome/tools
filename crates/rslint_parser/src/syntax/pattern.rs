@@ -107,13 +107,14 @@ pub(crate) trait ArrayPattern<P: PatternWithDefault> {
 		}
 
 		let m = p.start();
+		let rest_end = p.cur_tok().range.end;
 		p.bump(T![...]);
 
 		let with_default = self.pattern_with_default();
 
 		with_default
 			.parse_pattern(p)
-			.or_missing_with_error(p, P::expected_pattern_error);
+			.or_missing_with_error(p, |p, _| P::expected_pattern_error(p, rest_end..rest_end));
 
 		Present(m.complete(p, self.rest_pattern_kind()))
 	}

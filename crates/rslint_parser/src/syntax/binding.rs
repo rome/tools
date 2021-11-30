@@ -19,8 +19,10 @@ pub(crate) fn parse_binding(p: &mut Parser, parameters: bool) -> ParsedSyntax {
 			p.bump_remap(T![ident]);
 			Present(m.complete(p, JS_IDENTIFIER_BINDING))
 		}
-		T!['['] => array_binding_pattern(p, parameters),
-		T!['{'] if p.state.allow_object_expr => object_binding_pattern(p, parameters),
+		T!['['] => ArrayBinding { parameters }.parse_array_pattern(p),
+		T!['{'] if p.state.allow_object_expr => {
+			ObjectBindingPattern { parameters }.parse_object_pattern(p)
+		}
 		T![ident] | T![yield] | T![await] => parse_identifier_binding(p),
 		_ => Absent,
 	}
@@ -105,8 +107,7 @@ impl PatternWithDefault for BindingWithDefault {
 	}
 
 	fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic {
-		// TODO
-		expected_property_binding(p, range)
+		expected_pattern(p, range)
 	}
 
 	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
@@ -114,16 +115,33 @@ impl PatternWithDefault for BindingWithDefault {
 	}
 }
 
-// test_err
-// let [ default: , hey , ] = []
-fn array_binding_pattern(p: &mut Parser, parameters: bool) -> ParsedSyntax {
-	ArrayBinding { parameters }.parse_array_pattern(p)
-}
-
 struct ArrayBinding {
 	parameters: bool,
 }
 
+// test array_binding
+// let a = "b";
+// let [a, b] = [1, 2];
+// let [a, ...abcd] = [1];
+// let [a = "default", b] = []
+// let [, a, ...rest] = []
+// let [[...rest], { a }] = []
+//
+// test_err array_binding_err
+// let [a b] = [1, 2];
+// let [="default"] = [1, 2];
+// let ["default"] = [1, 2];
+// let [[a ] = [];
+//
+// test array_binding_rest
+// let [ ...abcd ] = a;
+// let [ ...[x, y] ] = b;
+// let [ ...[ ...a ] ] = c;
+//
+// test_err array_binding_rest_err
+// let [ ... ] = a;
+// let [ ...c = "default" ] = a;
+// let [ ...rest, other_assignment ] = a;
 impl ArrayPattern<BindingWithDefault> for ArrayBinding {
 	fn unknown_pattern_kind(&self) -> SyntaxKind {
 		JS_UNKNOWN_BINDING
@@ -154,10 +172,6 @@ impl ArrayPattern<BindingWithDefault> for ArrayBinding {
 // let { eval } = { eval: "foo" };
 // let { 5, 6 } = { eval: "foo" };
 // let { default: , bar } = {};
-pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> ParsedSyntax {
-	ObjectBindingPattern { parameters }.parse_object_pattern(p)
-}
-
 struct ObjectBindingPattern {
 	parameters: bool,
 }

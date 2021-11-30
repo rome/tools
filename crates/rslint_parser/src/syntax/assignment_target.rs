@@ -125,6 +125,19 @@ impl PatternWithDefault for AssignmentTargetWithDefault {
 
 struct ArrayAssignmentTarget;
 
+// test array_assignment_target_rest
+// ([ ...abcd ] = a);
+// ([ ...(abcd) ] = a);
+// ([ ...m.test ] = c);
+// ([ ...m[call()] ] = c);
+// ([ ...any.expression().b ] = c);
+// ([ ...[x, y] ] = b);
+// ([ ...[ ...a ] ] = c);
+//
+// test_err array_assignment_target_rest_err
+// ([ ... ] = a);
+// ([ ...c = "default" ] = a);
+// ([ ...rest, other_assignment ] = a);
 impl ArrayPattern<AssignmentTargetWithDefault> for ArrayAssignmentTarget {
 	fn unknown_pattern_kind(&self) -> SyntaxKind {
 		JS_UNKNOWN_ASSIGNMENT_TARGET
@@ -134,19 +147,6 @@ impl ArrayPattern<AssignmentTargetWithDefault> for ArrayAssignmentTarget {
 		JS_ARRAY_ASSIGNMENT_TARGET
 	}
 
-	// test array_assignment_target_rest
-	// ([ ...abcd ] = a);
-	// ([ ...(abcd) ] = a);
-	// ([ ...m.test ] = c);
-	// ([ ...m[call()] ] = c);
-	// ([ ...any.expression().b ] = c);
-	// ([ ...[x, y] ] = b);
-	// ([ ...[ ...a ] ] = c);
-	//
-	// test_err array_assignment_target_rest_err
-	// ([ ... ] = a);
-	// ([ ...c = "default" ] = a);
-	// ([ ...rest, other_assignment ] = a);
 	fn rest_pattern_kind(&self) -> SyntaxKind {
 		JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT
 	}
