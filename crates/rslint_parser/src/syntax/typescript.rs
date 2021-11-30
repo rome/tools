@@ -987,9 +987,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 		}
 		JS_NUMBER_LITERAL | JS_STRING_LITERAL | TRUE_KW | FALSE_KW | JS_REGEX_LITERAL => Some(
 			parse_literal_expression(p)
-				.ok()
-				.unwrap()
-				.precede(p)
+				.precede_or_missing(p)
 				.complete(p, TS_LITERAL),
 		),
 		BACKTICK => {

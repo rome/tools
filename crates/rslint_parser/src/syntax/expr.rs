@@ -988,9 +988,6 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 						// let a = async await => {}
 						p.bump_remap(T![ident]);
 						m.complete(p, JS_IDENTIFIER_BINDING);
-					} else {
-						parsed_parameters
-							.or_missing_with_error(p, js_parse_error::expected_parameters);
 					}
 
 					if p.at(T![:]) {
