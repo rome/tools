@@ -154,6 +154,58 @@ fn assign_expr_base(p: &mut Parser) -> Option<CompletedMarker> {
 	assign_expr_recursive(&mut *guard, target, checkpoint)
 }
 
+pub(crate) fn is_valid_target(p: &mut Parser, marker: &CompletedMarker) -> bool {
+	match marker.kind() {
+		JS_STATIC_MEMBER_EXPRESSION
+		| JS_COMPUTED_MEMBER_EXPRESSION
+		| JS_REFERENCE_IDENTIFIER_EXPRESSION
+		| TS_CONST_ASSERTION
+		| TS_ASSERTION
+		| TS_NON_NULL => true,
+		JS_PARENTHESIZED_EXPRESSION => {
+			// avoid parsing the marker because it is incredibly expensive and this is a hot path
+			for (idx, event) in p.events.skip(marker.start_pos as usize).iter().enumerate() {
+				match event {
+					Event::Finish { .. } if marker.finish_pos as usize == idx => return true,
+					Event::Start {
+						kind: SyntaxKind::JS_PARENTHESIZED_EXPRESSION,
+						..
+					} => {}
+					Event::Start {
+						kind: SyntaxKind::TOMBSTONE,
+						..
+					} => {}
+					Event::Start { kind, .. } => {
+						return matches!(
+							kind,
+							JS_STATIC_MEMBER_EXPRESSION
+								| JS_COMPUTED_MEMBER_EXPRESSION | JS_REFERENCE_IDENTIFIER_EXPRESSION
+								| TS_CONST_ASSERTION | TS_ASSERTION
+								| TS_NON_NULL
+						);
+					}
+					_ => {}
+				}
+			}
+			true
+		}
+		_ => false,
+	}
+}
+
+fn check_assign_target_from_marker(p: &mut Parser, marker: &CompletedMarker) {
+	if !is_valid_target(p, marker) {
+		let err = p
+			.err_builder(&format!(
+				"Invalid assignment to `{}`",
+				p.source(marker.range(p))
+			))
+			.primary(marker.range(p), "This expression cannot be assigned to");
+		p.error(err);
+	}
+}
+
+>>>>>>> a37da1cd2 (making parser::events and tokensource cloning cheaper)
 // test assign_expr
 // foo += bar = b ??= 3;
 // foo -= bar;

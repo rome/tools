@@ -61,7 +61,7 @@ impl Event {
 
 /// Generate the syntax tree with the control of events.
 #[inline]
-pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<ParserError>) {
+pub fn process(sink: &mut impl TreeSink, mut events: im_rc::Vector<Event>, errors: Vec<ParserError>) {
 	sink.errors(errors);
 	let mut forward_parents = Vec::new();
 

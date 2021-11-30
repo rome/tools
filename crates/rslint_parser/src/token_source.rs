@@ -1,10 +1,10 @@
 use crate::{SyntaxKind::EOF, TextRange, TextSize, Token};
 use rslint_lexer::is_linebreak;
-use std::collections::HashSet;
+use std::{collections::HashSet, sync::Arc};
 
 /// The source of tokens for the parser
 #[derive(Clone)]
-pub struct TokenSource<'t> {
+pub struct TokenSourceData<'t> {
 	source: &'t str,
 	/// Hashset of offsets for tokens which occur after a linebreak.
 	/// This is required for things such as ASI and postfix expressions
@@ -14,6 +14,12 @@ pub struct TokenSource<'t> {
 	token_offset_pairs: Vec<(rslint_lexer::Token, TextSize)>,
 	/// A list of the tokens including whitespace.
 	pub raw_tokens: &'t [rslint_lexer::Token],
+}
+
+/// The source of tokens for the parser
+#[derive(Clone)]
+pub struct TokenSource<'t> {
+	pub data: Arc<TokenSourceData<'t>>,
 
 	/// Current token and position
 	cur: (Token, usize),
@@ -82,25 +88,28 @@ impl<'t> TokenSource<'t> {
 		}
 
 		let first = mk_token(0, token_offset_pairs.as_slice());
-		TokenSource {
+		let data = TokenSourceData {
 			source,
 			token_offset_pairs,
-			cur: (first, 0),
 			tokens_after_linebreaks,
 			raw_tokens,
+		};
+		TokenSource {
+			data: Arc::new(data),
+			cur: (first, 0),
 		}
 	}
 
 	/// Rewind the current position to a former position.
 	pub fn rewind(&mut self, pos: usize) {
-		self.cur = (mk_token(pos, &self.token_offset_pairs), pos);
+		self.cur = (mk_token(pos, &self.data.token_offset_pairs), pos);
 	}
 
 	pub fn last_tok(&self) -> Option<Token> {
 		if self.cur.1 == 0 {
 			return None;
 		}
-		Some(mk_token(self.cur.1 - 1, &self.token_offset_pairs))
+		Some(mk_token(self.cur.1 - 1, &self.data.token_offset_pairs))
 	}
 
 	pub fn current(&self) -> Token {
@@ -108,11 +117,11 @@ impl<'t> TokenSource<'t> {
 	}
 
 	pub fn source(&self) -> &str {
-		self.source
+		self.data.source
 	}
 
 	pub fn lookahead_nth(&self, n: usize) -> Token {
-		mk_token(self.cur.1 + n, &self.token_offset_pairs)
+		mk_token(self.cur.1 + n, &self.data.token_offset_pairs)
 	}
 
 	pub fn bump(&mut self) {
@@ -121,28 +130,28 @@ impl<'t> TokenSource<'t> {
 		}
 
 		let pos = self.cur.1 + 1;
-		self.cur = (mk_token(pos, &self.token_offset_pairs), pos);
+		self.cur = (mk_token(pos, &self.data.token_offset_pairs), pos);
 	}
 
 	pub fn is_keyword(&self, kw: &str) -> bool {
-		self.token_offset_pairs
+		self.data.token_offset_pairs
 			.get(self.cur.1)
 			.map(|(token, offset)| {
-				&self.source[TextRange::at(*offset, TextSize::from(token.len as u32))] == kw
+				&self.data.source[TextRange::at(*offset, TextSize::from(token.len as u32))] == kw
 			})
 			.unwrap_or(false)
 	}
 
 	pub fn had_linebreak_before_nth(&self, n: usize) -> bool {
-		if let Some(i) = self.token_offset_pairs.get(self.cur.1 + n) {
-			self.tokens_after_linebreaks.contains(&i.1)
+		if let Some(i) = self.data.token_offset_pairs.get(self.cur.1 + n) {
+			self.data.tokens_after_linebreaks.contains(&i.1)
 		} else {
 			false
 		}
 	}
 
 	pub fn cur_pos(&self) -> usize {
-		self.token_offset_pairs[self.cur.1].1.into()
+		self.data.token_offset_pairs[self.cur.1].1.into()
 	}
 
 	pub fn cur_token_idx(&self) -> usize {
@@ -150,7 +159,7 @@ impl<'t> TokenSource<'t> {
 	}
 
 	pub fn size_hint(&self) -> usize {
-		self.token_offset_pairs.len()
+		self.data.token_offset_pairs.len()
 	}
 }
 

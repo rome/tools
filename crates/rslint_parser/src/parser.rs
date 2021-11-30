@@ -119,7 +119,14 @@ impl ParserProgress {
 pub struct Parser<'t> {
 	pub file_id: usize,
 	tokens: TokenSource<'t>,
+<<<<<<< HEAD
 	pub(crate) events: Vec<Event>,
+=======
+	pub(crate) events: im_rc::Vector<Event>,
+	// This is for tracking if the parser is infinitely recursing.
+	// We use a cell so we dont need &mut self on `nth()`
+	steps: Cell<u32>,
+>>>>>>> a37da1cd2 (making parser::events and tokensource cloning cheaper)
 	pub state: ParserState,
 	pub syntax: Syntax,
 	pub errors: Vec<ParserError>,
@@ -143,7 +150,12 @@ impl<'t> Parser<'t> {
 		Parser {
 			file_id,
 			tokens,
+<<<<<<< HEAD
 			events: vec![],
+=======
+			events: im_rc::vector![],
+			steps: Cell::new(0),
+>>>>>>> a37da1cd2 (making parser::events and tokensource cloning cheaper)
 			state,
 			syntax,
 			errors: vec![],
@@ -163,7 +175,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Consume the parser and return the list of events it produced
-	pub fn finish(self) -> (Vec<Event>, Vec<ParserError>) {
+	pub fn finish(self) -> (im_rc::Vector<Event>, Vec<ParserError>) {
 		(self.events, self.errors)
 	}
 
@@ -278,7 +290,7 @@ impl<'t> Parser<'t> {
 	}
 
 	fn push_event(&mut self, event: Event) {
-		self.events.push(event)
+		self.events.push_back(event)
 	}
 
 	/// Get the source code of the parser's current token.
@@ -355,11 +367,12 @@ impl<'t> Parser<'t> {
 	/// Panics if the AST node represented by the marker does not match the generic
 	#[deprecated(note = "Unsafe and fairly expensive.")]
 	pub fn parse_marker<T: AstNode>(&self, marker: &CompletedMarker) -> T {
+		let start = marker.old_start as usize;
+		let end = marker.finish_pos as usize + 1; 
 		let events = self
 			.events
-			.get(marker.old_start as usize..(marker.finish_pos as usize + 1))
-			.expect("Marker out of bounds")
-			.to_vec();
+			.skip(start)
+			.take(end - start);
 
 		let start = match self.events[marker.old_start as usize] {
 			Event::Start { start, .. } => start,
@@ -367,7 +380,7 @@ impl<'t> Parser<'t> {
 		};
 
 		let mut sink =
-			LosslessTreeSink::with_offset(self.tokens.source(), self.tokens.raw_tokens, start);
+			LosslessTreeSink::with_offset(self.tokens.source(), self.tokens.data.raw_tokens, start);
 		process(&mut sink, events, vec![]);
 		T::cast(sink.finish().0).expect("Marker was parsed to the wrong ast node")
 	}
@@ -575,7 +588,7 @@ impl Marker {
 		self.bomb.defuse();
 		let idx = self.pos as usize;
 		if idx == p.events.len() - 1 {
-			match p.events.pop() {
+			match p.events.pop_back() {
 				Some(Event::Start {
 					kind: SyntaxKind::TOMBSTONE,
 					forward_parent: None,

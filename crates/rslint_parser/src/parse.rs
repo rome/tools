@@ -113,7 +113,7 @@ fn parse_common(
 	text: &str,
 	file_id: usize,
 	syntax: Syntax,
-) -> (Vec<Event>, Vec<ParserError>, Vec<rslint_lexer::Token>) {
+) -> (im_rc::Vector<Event>, Vec<ParserError>, Vec<rslint_lexer::Token>) {
 	let (tokens, mut errors) = tokenize(text, file_id);
 
 	let tok_source = TokenSource::new(text, &tokens);

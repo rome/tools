@@ -22,7 +22,7 @@ rslint_errors = { path = "../crates/rslint_errors", version = "0.2.0" }
 ascii_table = "3.0.1"
 colored = "2.0.0"
 indicatif = { version = "0.15.0", features = ["improved_unicode"] }
-walkdir = "2.3.1"
+walkdir = "2.2.5"
 serde_json = "1.0.59"
 schemars = "0.8"
 yastl = "0.1"
