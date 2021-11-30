@@ -12,7 +12,6 @@ use drop_bomb::DropBomb;
 use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::EOF;
 use std::borrow::BorrowMut;
-use std::cell::Cell;
 use std::ops::Range;
 
 pub use parse_error::*;
@@ -29,6 +28,7 @@ pub struct ParserProgress(Option<usize>);
 
 impl ParserProgress {
 	/// Returns true if the current parser position is passed this position
+	#[inline]
 	pub fn has_progressed(&self, p: &Parser) -> bool {
 		match self.0 {
 			None => true,
@@ -40,11 +40,12 @@ impl ParserProgress {
 	/// ## Panics
 	///
 	/// Panics if the parser is still at this position
+	#[inline]
 	pub fn assert_progressing(&mut self, p: &Parser) {
 		assert!(
 			self.has_progressed(p),
 			"The parser is no longer progressing. Stuck at {:?}",
-			p.cur_src()
+			p.cur_tok()
 		);
 
 		self.0 = Some(p.token_pos());
