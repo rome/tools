@@ -1,6 +1,7 @@
 use super::expr::{expr_or_assignment, identifier_name, lhs_expr};
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
+use crate::parser::ParserProgress;
 use crate::syntax::expr::{parse_identifier, parse_literal_expression};
 use crate::syntax::object::parse_computed_member_name;
 use crate::JsSyntaxFeature::StrictMode;
@@ -175,8 +176,11 @@ pub fn array_binding_pattern(
 	p.expect_required(T!['[']);
 
 	let elements_list = p.start();
+	let mut progress = ParserProgress::default();
 
 	while !p.at(EOF) && !p.at(T![']']) {
+		progress.assert_progressing(p);
+
 		if p.eat(T![,]) {
 			continue;
 		}
@@ -216,8 +220,11 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 	p.expect_required(T!['{']);
 	let props_list = p.start();
 	let mut first = true;
+	let mut progress = ParserProgress::default();
 
 	while !p.at(EOF) && !p.at(T!['}']) {
+		progress.assert_progressing(p);
+
 		if first {
 			first = false;
 		} else {

@@ -6,6 +6,7 @@ use super::expr::{expr, expr_or_assignment, identifier_name, primary_expr};
 use super::pat::parse_identifier_binding;
 use super::stmt::{semi, statements, variable_declaration_statement};
 use super::typescript::*;
+use crate::parser::ParserProgress;
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::syntax::object::parse_object_expression;
@@ -41,7 +42,11 @@ fn named_list(p: &mut Parser) -> Marker {
 	p.expect_required(T!['{']);
 	let mut first = true;
 	let specifiers_list = p.start();
+	let mut progress = ParserProgress::default();
+
 	while !p.at(EOF) && !p.at(T!['}']) {
+		progress.assert_progressing(p);
+
 		if first {
 			first = false;
 		} else if p.at(T![,]) && p.nth_at(1, T!['}']) {
@@ -470,8 +475,11 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 
 		let mut first = true;
 		let specifiers = p.start();
+		let mut progress = ParserProgress::default();
 
 		while (!p.at(EOF) && p.at(T![,])) || crate::at_ident_name!(p) {
+			progress.assert_progressing(p);
+
 			if first {
 				first = false;
 			} else if p.eat(T![,]) && p.at(T!['}']) {

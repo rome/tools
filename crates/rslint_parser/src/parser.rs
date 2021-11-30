@@ -12,7 +12,6 @@ use drop_bomb::DropBomb;
 use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::EOF;
 use std::borrow::BorrowMut;
-use std::cell::Cell;
 use std::ops::Range;
 
 pub use parse_error::*;
@@ -22,6 +21,36 @@ pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
 pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::*;
+
+/// Captures the progress of the parser and allows to test if the parsing is still making progress
+#[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Hash, Default)]
+pub struct ParserProgress(Option<usize>);
+
+impl ParserProgress {
+	/// Returns true if the current parser position is passed this position
+	#[inline]
+	pub fn has_progressed(&self, p: &Parser) -> bool {
+		match self.0 {
+			None => true,
+			Some(pos) => pos < p.token_pos(),
+		}
+	}
+
+	/// Asserts that the parsing is still making progress.
+	/// ## Panics
+	///
+	/// Panics if the parser is still at this position
+	#[inline]
+	pub fn assert_progressing(&mut self, p: &Parser) {
+		assert!(
+			self.has_progressed(p),
+			"The parser is no longer progressing. Stuck at {:?}",
+			p.cur_tok()
+		);
+
+		self.0 = Some(p.token_pos());
+	}
+}
 
 /// An extremely fast, error tolerant, completely lossless JavaScript parser
 ///
@@ -91,9 +120,6 @@ pub struct Parser<'t> {
 	pub file_id: usize,
 	tokens: TokenSource<'t>,
 	pub(crate) events: Vec<Event>,
-	// This is for tracking if the parser is infinitely recursing.
-	// We use a cell so we dont need &mut self on `nth()`
-	steps: Cell<u32>,
 	pub state: ParserState,
 	pub syntax: Syntax,
 	pub errors: Vec<ParserError>,
@@ -118,7 +144,6 @@ impl<'t> Parser<'t> {
 			file_id,
 			tokens,
 			events: vec![],
-			steps: Cell::new(0),
 			state,
 			syntax,
 			errors: vec![],
@@ -127,15 +152,6 @@ impl<'t> Parser<'t> {
 
 	pub(crate) fn typescript(&self) -> bool {
 		self.syntax.file_kind == FileKind::TypeScript
-	}
-
-	fn overflow_check(&self) {
-		let steps = self.steps.get();
-		assert!(
-			steps <= 10_000_000,
-			"The parser seems to be recursing forever",
-		);
-		self.steps.set(steps + 1);
 	}
 
 	/// Get the source code of a token
@@ -168,7 +184,6 @@ impl<'t> Parser<'t> {
 
 	/// Look ahead at a token, **The max lookahead is 4**.
 	pub fn nth_tok(&self, n: usize) -> Token {
-		self.overflow_check();
 		self.tokens.lookahead_nth(n)
 	}
 

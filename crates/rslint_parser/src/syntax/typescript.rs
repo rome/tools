@@ -3,6 +3,7 @@
 use super::decl::*;
 use super::expr::{expr_or_assignment, identifier_name, lhs_expr, parse_literal_expression};
 use super::stmt::{semi, statements, variable_declaration_statement};
+use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
 use crate::syntax::class::class_declaration;
@@ -389,7 +390,10 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 		ts_heritage_clause(p, false);
 	};
 
+	let mut progress = ParserProgress::default();
 	while p.cur_src() == "extends" {
+		progress.assert_progressing(p);
+
 		let m = p.start();
 		p.bump_any();
 		let mut complete = ts_heritage_clause(p, false);
@@ -412,7 +416,10 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 	p.expect_required(T!['{']);
 
 	let members_list = p.start();
+	let mut progress = ParserProgress::default();
+
 	while !p.at(EOF) && !p.at(T!['}']) {
+		progress.assert_progressing(p);
 		ts_type_member(p);
 	}
 	members_list.complete(p, LIST);
@@ -439,7 +446,9 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
 	// the first expr with be "unwrapped" to go to the class' node and the rest are errors
 	elems.push(m.complete(p, TS_EXPR_WITH_TYPE_ARGS));
 
+	let mut progress = ParserProgress::default();
 	while p.eat(T![,]) {
+		progress.assert_progressing(p);
 		let m = p.start();
 		if exprs {
 			lhs_expr(p);
@@ -608,8 +617,9 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 	let mut first = true;
 
 	let members_list = p.start();
-
+	let mut progress = ParserProgress::default();
 	while !p.at(EOF) && !p.at(T!['}']) {
+		progress.assert_progressing(p);
 		if first {
 			first = false;
 		} else if p.at(T![,]) && p.nth_at(1, T!['}']) {
@@ -887,8 +897,10 @@ pub fn ts_array_type_or_higher(p: &mut Parser) -> Option<CompletedMarker> {
 	let t = p.checkpoint();
 
 	let mut ty = ts_non_array_type(p);
+	let mut progress = ParserProgress::default();
 
 	while !p.has_linebreak_before_n(0) && p.at(T!['[']) {
+		progress.assert_progressing(p);
 		let m = ty.map(|x| x.precede(p)).unwrap_or_else(|| p.start());
 		p.bump_any();
 		if p.eat(T![']']) {
@@ -909,8 +921,9 @@ pub fn ts_array_type_or_higher(p: &mut Parser) -> Option<CompletedMarker> {
 pub fn ts_tuple(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
 	p.expect_no_recover(T!['['])?;
-
+	let mut progress = ParserProgress::default();
 	while !p.at(EOF) && !p.at(T![']']) {
+		progress.assert_progressing(p);
 		let m = p.start();
 		let rest_range = p.cur_tok().range;
 		let rest = p.eat(T![...]);
@@ -1046,7 +1059,9 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 				let m = p.start();
 				p.bump_any();
 				let members_list = p.start();
+				let mut progress = ParserProgress::default();
 				while !p.at(EOF) && !p.at(T!['}']) {
+					progress.assert_progressing(p);
 					ts_type_member(p);
 					type_member_semi(p);
 				}
@@ -1111,8 +1126,10 @@ pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
 	let mut first = true;
 
 	let args_list = p.start();
+	let mut progress = ParserProgress::default();
 
 	while !p.at(EOF) && !p.at(T![>]) {
+		progress.assert_progressing(p);
 		if first {
 			first = false;
 		} else if p.at(T![,]) && p.nth_at(1, T![>]) {
@@ -1154,7 +1171,9 @@ pub fn ts_type_params(p: &mut Parser) -> Option<CompletedMarker> {
 	let mut first = true;
 
 	let params_list = p.start();
+	let mut progress = ParserProgress::default();
 	while !p.at(EOF) && !p.at(T![>]) {
+		progress.assert_progressing(p);
 		if first {
 			first = false;
 		} else {

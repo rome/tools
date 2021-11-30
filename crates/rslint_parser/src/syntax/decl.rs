@@ -5,6 +5,7 @@ use super::pat::pattern;
 use super::typescript::*;
 #[allow(deprecated)]
 use crate::parser::ParsedSyntax::{Absent, Present};
+use crate::parser::ParserProgress;
 use crate::syntax::function::function_body;
 use crate::syntax::js_parse_error;
 use crate::{SyntaxKind::*, *};
@@ -115,8 +116,11 @@ pub(super) fn parse_parameters_list(
 	p.state.allow_object_expr = p.expect_required(T!['(']);
 
 	let parameters_list = p.start();
+	let mut progress = ParserProgress::default();
 
 	while !p.at(EOF) && !p.at(T![')']) {
+		progress.assert_progressing(p);
+
 		if first {
 			first = false;
 		} else {

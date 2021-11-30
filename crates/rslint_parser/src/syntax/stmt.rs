@@ -9,7 +9,7 @@ use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use};
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::ParsedSyntax;
+use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::syntax::assignment_target::{
 	expression_to_assignment_target, SimpleAssignmentTargetExprKind,
 };
@@ -502,8 +502,9 @@ pub(crate) fn directives(p: &mut Parser) -> Option<ParserState> {
 			matches!(next, T![;] | EOF | T!['}']) || p.has_linebreak_before_n(1)
 		}
 	}
-
+	let mut progress = ParserProgress::default();
 	while is_directive(p) {
+		progress.assert_progressing(p);
 		let directive_token = p.cur_tok();
 
 		let directive = p.start();
@@ -544,8 +545,10 @@ pub(crate) fn statements(
 	let recovery_set = recovery_set.into();
 
 	let list_start = p.start();
+	let mut progress = ParserProgress::default();
 
 	while !p.at(EOF) {
+		progress.assert_progressing(p);
 		if stop_on_r_curly && p.at(T!['}']) {
 			break;
 		}
@@ -1055,7 +1058,9 @@ fn parse_switch_clause(
 
 			p.expect_required(T![:]);
 			let cons_list = p.start();
+			let mut progress = ParserProgress::default();
 			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
+				progress.assert_progressing(p);
 				stmt(p, None);
 			}
 			cons_list.complete(p, LIST);
@@ -1081,7 +1086,10 @@ fn parse_switch_clause(
 			expr(p);
 			p.expect_required(T![:]);
 			let cons_list = p.start();
+			let mut progress = ParserProgress::default();
+
 			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
+				progress.assert_progressing(p);
 				stmt(p, None);
 			}
 			cons_list.complete(p, LIST);
@@ -1127,8 +1135,10 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 	p.expect_required(T!['{']);
 	let cases_list = p.start();
 	let mut first_default: Option<CompletedMarker> = None;
+	let mut progress = ParserProgress::default();
 
 	while !p.at(EOF) && !p.at(T!['}']) {
+		progress.assert_progressing(p);
 		let mut temp = p.with_state(ParserState {
 			break_allowed: true,
 			..p.state.clone()

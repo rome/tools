@@ -9,6 +9,7 @@ use super::typescript::*;
 use super::util::*;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
+use crate::parser::ParserProgress;
 use crate::syntax::assignment_target::{
 	expression_to_assignment_target, expression_to_simple_assignment_target,
 	parse_simple_assignment_target, SimpleAssignmentTargetExprKind,
@@ -436,7 +437,10 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 	// foo()?.baz[].
 	// BAR`b
 	let mut should_try_parsing_ts = true;
+	let mut progress = ParserProgress::default();
 	while !p.at(EOF) {
+		progress.assert_progressing(p);
+
 		match p.cur() {
 			T![?.] if p.nth_at(1, T!['(']) => {
 				lhs = {
@@ -613,8 +617,11 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect_required(T!['(']);
 	let args_list = p.start();
+	let mut progress = ParserProgress::default();
 
 	while !p.at(EOF) && !p.at(T![')']) {
+		progress.assert_progressing(p);
+
 		if p.at(T![...]) {
 			spread_element(p);
 		} else {
@@ -1169,8 +1176,11 @@ pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect_required(T!['[']);
 	let elements_list = p.start();
+	let mut progress = ParserProgress::default();
 
 	while !p.at(EOF) {
+		progress.assert_progressing(p);
+
 		while p.at(T![,]) {
 			p.start().complete(p, SyntaxKind::JS_ARRAY_HOLE);
 			p.eat(T![,]);
