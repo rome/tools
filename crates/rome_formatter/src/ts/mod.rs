@@ -10,7 +10,6 @@ mod ident;
 mod name;
 mod object_members;
 mod parameter_list;
-mod patterns;
 mod script;
 mod spread;
 mod statements;

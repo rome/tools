@@ -81,7 +81,7 @@ JsRoot {
                                         value: IDENT@41..42 "b" [] [],
                                     },
                                     colon_token: COLON@42..44 ":" [] [Whitespace(" ")],
-                                    binding: ArrayPattern {
+                                    binding: JsArrayBinding {
                                         l_brack_token: L_BRACK@44..45 "[" [] [],
                                         elements: [
                                             JsIdentifierBinding {
@@ -90,9 +90,9 @@ JsRoot {
                                                 excl_token: missing (optional),
                                                 ty: missing (optional),
                                             },
-                                            RestPattern {
+                                            JsArrayRestBinding {
                                                 dotdotdot_token: DOT2@48..51 "..." [] [],
-                                                pat: JsIdentifierBinding {
+                                                binding: JsIdentifierBinding {
                                                     name_token: IDENT@51..54 "baz" [] [],
                                                     question_mark_token: missing (optional),
                                                     excl_token: missing (optional),
@@ -101,8 +101,6 @@ JsRoot {
                                             },
                                         ],
                                         r_brack_token: R_BRACK@54..55 "]" [] [],
-                                        excl_token: missing (required),
-                                        ty: missing (optional),
                                     },
                                     init: missing (optional),
                                 },
@@ -210,13 +208,13 @@ JsRoot {
                   0: JS_LITERAL_MEMBER_NAME@41..42
                     0: IDENT@41..42 "b" [] []
                   1: COLON@42..44 ":" [] [Whitespace(" ")]
-                  2: ARRAY_PATTERN@44..55
+                  2: JS_ARRAY_BINDING@44..55
                     0: L_BRACK@44..45 "[" [] []
                     1: LIST@45..54
                       0: JS_IDENTIFIER_BINDING@45..46
                         0: IDENT@45..46 "f" [] []
                       1: COMMA@46..48 "," [] [Whitespace(" ")]
-                      2: REST_PATTERN@48..54
+                      2: JS_ARRAY_REST_BINDING@48..54
                         0: DOT2@48..51 "..." [] []
                         1: JS_IDENTIFIER_BINDING@51..54
                           0: IDENT@51..54 "baz" [] []

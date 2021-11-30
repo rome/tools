@@ -127,7 +127,7 @@ JsRoot {
                                         value: IDENT@68..71 "foo" [] [],
                                     },
                                     colon_token: COLON@71..73 ":" [] [Whitespace(" ")],
-                                    binding: ArrayPattern {
+                                    binding: JsArrayBinding {
                                         l_brack_token: L_BRACK@73..74 "[" [] [],
                                         elements: [
                                             JsIdentifierBinding {
@@ -138,8 +138,6 @@ JsRoot {
                                             },
                                         ],
                                         r_brack_token: R_BRACK@77..78 "]" [] [],
-                                        excl_token: missing (required),
-                                        ty: missing (optional),
                                     },
                                     init: missing (optional),
                                 },
@@ -314,7 +312,7 @@ JsRoot {
                   0: JS_LITERAL_MEMBER_NAME@68..71
                     0: IDENT@68..71 "foo" [] []
                   1: COLON@71..73 ":" [] [Whitespace(" ")]
-                  2: ARRAY_PATTERN@73..78
+                  2: JS_ARRAY_BINDING@73..78
                     0: L_BRACK@73..74 "[" [] []
                     1: LIST@74..77
                       0: JS_IDENTIFIER_BINDING@74..77

@@ -700,7 +700,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 						);
 					}
 				}
-				let complete = m.complete(&mut *temp, REST_PATTERN);
+				let complete = m.complete(&mut *temp, JS_REST_PARAMETER);
 				spread_range = Some(complete.range(&*temp));
 				if !temp.eat(T![')']) {
 					if temp.eat(T![=]) {

@@ -723,10 +723,8 @@ JsObjectRestPropertyAssignmentTarget =
 
 JsAnyBinding =
 	JsIdentifierBinding
-	| RestPattern
-	| AssignPattern
 	| JsObjectBinding
-	| ArrayPattern
+	| JsArrayBinding
 	| JsUnknownBinding
 
 
@@ -739,11 +737,29 @@ JsIdentifierBinding =
 	'!'?
 	ty: TsTypeAnnotation?
 
-// rest pattern
-RestPattern = '...' pat:JsAnyBinding
+// [ a = "b"] = [];
+//   ^^^^^^^
+JsBindingWithDefault =
+	binding: JsAnyBinding
+	'='
+	default: JsAnyExpression
 
-// array pattern
-ArrayPattern = '[' elements:JsAnyBinding* ']' '!' ty: TsTypeAnnotation?
+// let [a, b] = [1, 2];
+//     ^^^^^^
+JsArrayBinding =
+	'['
+	elements: JsAnyArrayElementBinding*
+	']'
+
+JsAnyArrayElementBinding =
+	JsArrayHole
+	| JsAnyBinding
+	| JsBindingWithDefault
+	| JsArrayRestBinding
+
+JsArrayRestBinding =
+	'...'
+	binding: JsAnyBinding
 
 // let { a, b} = c;
 //     ^^^^^^^
@@ -758,9 +774,6 @@ JsAnyPropertyBinding =
 	| JsShorthandPropertyBinding
 	| JsIdentifierBinding
 	| JsUnknownBinding
-
-// assign pattern
-AssignPattern = key:JsAnyBinding ty: TsTypeAnnotation? '=' value:JsAnyExpression
 
 // let { a: b.m } = {}
 //       ^^^^^^
@@ -980,7 +993,7 @@ JsParameterList =
 	parameters: (JsAnyParameter (',' JsAnyParameter)* ','?)
 	')'
 
-JsAnyParameter = JsAnyBinding | JsRestParameter
+JsAnyParameter = JsAnyBinding | JsBindingWithDefault | JsRestParameter
 
 JsRestParameter =
 	'...'

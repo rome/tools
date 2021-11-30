@@ -1,5 +1,6 @@
 #[allow(deprecated)]
 use crate::syntax::assignment_target::ObjectPattern;
+use crate::syntax::assignment_target::PatternWithDefault;
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::{parse_identifier, EXPR_RECOVERY_SET};
 use crate::syntax::js_parse_error::{
@@ -56,6 +57,32 @@ pub(crate) fn parse_binding(p: &mut Parser, parameters: bool) -> ParsedSyntax {
 	}
 }
 
+pub(crate) fn parse_binding_with_optional_default(
+	p: &mut Parser,
+	parameters: bool,
+) -> ParsedSyntax {
+	BindingWithDefault { parameters }.parse_pattern_with_optional_default(p)
+}
+
+struct BindingWithDefault {
+	parameters: bool,
+}
+
+impl PatternWithDefault for BindingWithDefault {
+	fn pattern_with_default_kind(&self) -> SyntaxKind {
+		JS_BINDING_WITH_DEFAULT
+	}
+
+	fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+		// TODO
+		expected_property_binding(p, range)
+	}
+
+	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		parse_binding(p, self.parameters)
+	}
+}
+
 // test_err binding_identifier_invalid
 // async () => { let await = 5; }
 // function *foo() {
@@ -106,7 +133,7 @@ fn array_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMarker {
 
 			parse_binding(p, parameters).or_missing_with_error(p, expected_pattern);
 
-			m.complete(p, REST_PATTERN);
+			m.complete(p, JS_ARRAY_REST_BINDING);
 			break;
 		} else {
 			let recovery = parse_binding(p, parameters).or_recover(
@@ -131,7 +158,7 @@ fn array_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMarker {
 	elements_list.complete(p, LIST);
 
 	p.expect_required(T![']']);
-	m.complete(p, ARRAY_PATTERN)
+	m.complete(p, JS_ARRAY_BINDING)
 }
 
 // test_err object_binding_pattern

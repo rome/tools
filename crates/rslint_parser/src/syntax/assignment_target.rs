@@ -106,7 +106,27 @@ pub(crate) fn parse_simple_assignment_target(
 	}
 }
 
-pub(crate) trait ArrayPattern {
+pub(crate) trait PatternWithDefault {
+	fn parse_pattern_with_optional_default(&self, p: &mut Parser) -> ParsedSyntax {
+		let pattern = self.parse_pattern(p);
+
+		if p.at(T![=]) {
+			let with_default =
+				pattern.precede_or_missing_with_error(p, Self::expected_pattern_error);
+			p.bump_any(); // eat the = token
+			expr_or_assignment(p);
+			Present(with_default.complete(p, self.pattern_with_default_kind()))
+		} else {
+			pattern
+		}
+	}
+
+	fn pattern_with_default_kind(&self) -> SyntaxKind;
+	fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic;
+	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+}
+
+pub(crate) trait ArrayPattern<P: PatternWithDefault> {
 	fn parse_array_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		if !p.at(T!['[']) {
 			return Absent;
@@ -164,47 +184,43 @@ pub(crate) trait ArrayPattern {
 	}
 
 	fn unknown_pattern_kind(&self) -> SyntaxKind;
-	fn pattern_with_default_kind(&self) -> SyntaxKind;
 	fn array_pattern_kind(&self) -> SyntaxKind;
-
-	fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic;
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic;
+	fn pattern_with_default(&self) -> P;
 
 	fn parse_any_array_element(&self, p: &mut Parser) -> ParsedSyntax {
 		match p.cur() {
 			T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
-			_ => self.parse_element_with_optional_default(p),
-		}
-	}
-
-	fn parse_element_with_optional_default(&self, p: &mut Parser) -> ParsedSyntax {
-		let pattern = self.parse_pattern(p);
-
-		if p.at(T![=]) {
-			let with_default =
-				pattern.precede_or_missing_with_error(p, Self::expected_pattern_error);
-			p.bump_any(); // eat the = token
-			expr_or_assignment(p);
-			Present(with_default.complete(p, self.pattern_with_default_kind()))
-		} else {
-			pattern
+			_ => self
+				.pattern_with_default()
+				.parse_pattern_with_optional_default(p),
 		}
 	}
 
 	fn parse_rest_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+}
 
-	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+struct AssignmentTargetWithDefault;
+
+impl PatternWithDefault for AssignmentTargetWithDefault {
+	fn pattern_with_default_kind(&self) -> SyntaxKind {
+		JS_ASSIGNMENT_TARGET_WITH_DEFAULT
+	}
+
+	fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+		expected_assignment_target(p, range)
+	}
+
+	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
+	}
 }
 
 struct ArrayAssignmentTarget;
 
-impl ArrayPattern for ArrayAssignmentTarget {
+impl ArrayPattern<AssignmentTargetWithDefault> for ArrayAssignmentTarget {
 	fn unknown_pattern_kind(&self) -> SyntaxKind {
 		JS_UNKNOWN_ASSIGNMENT_TARGET
-	}
-
-	fn pattern_with_default_kind(&self) -> SyntaxKind {
-		JS_ASSIGNMENT_TARGET_WITH_DEFAULT
 	}
 
 	fn array_pattern_kind(&self) -> SyntaxKind {
@@ -212,13 +228,12 @@ impl ArrayPattern for ArrayAssignmentTarget {
 	}
 
 	#[inline]
-	fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic {
-		expected_assignment_target(p, range)
-	}
-
-	#[inline]
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic {
 		expected_array_assignment_target_element(p, range)
+	}
+
+	fn pattern_with_default(&self) -> AssignmentTargetWithDefault {
+		AssignmentTargetWithDefault
 	}
 
 	// test array_assignment_target_rest
@@ -246,10 +261,6 @@ impl ArrayPattern for ArrayAssignmentTarget {
 			.or_missing_with_error(p, expected_assignment_target);
 
 		Present(m.complete(p, JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT))
-	}
-
-	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
-		parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
 	}
 }
 
