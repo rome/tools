@@ -5,7 +5,7 @@ use crate::syntax::js_parse_error::{
 	expected_assignment_target, expected_identifier, expected_object_member_name, expected_pattern,
 	expected_property_binding,
 };
-use crate::syntax::object::{is_at_object_member_name, object_member_name};
+use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ArrayPattern, ObjectPattern, PatternWithDefault};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
@@ -203,7 +203,7 @@ impl ObjectPattern for ObjectBindingPattern {
 		}
 
 		let m = p.start();
-		object_member_name(p).or_missing_with_error(p, expected_object_member_name);
+		parse_object_member_name(p).or_missing_with_error(p, expected_object_member_name);
 		p.expect_required(T![:]);
 		let parameters_argument = self.parameters;
 		parse_binding(p, parameters_argument).or_missing_with_error(p, expected_pattern);

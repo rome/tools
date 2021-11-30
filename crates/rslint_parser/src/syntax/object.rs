@@ -342,10 +342,6 @@ fn parse_method_object_member_body(p: &mut Parser) {
 	p.state = old;
 }
 
-fn is_at_object_member_name(p: &Parser) -> bool {
-	p.at_ts(STARTS_MEMBER_NAME)
-}
-
 fn is_parser_at_async_method_member(p: &Parser) -> bool {
 	p.cur() == T![ident]
 		&& p.cur_src() == "async"
