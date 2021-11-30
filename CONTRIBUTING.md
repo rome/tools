@@ -34,82 +34,35 @@ npm start
 
 ## Checks
 
-When working on Rome you will want to run the tests and linter to validate your changes. You can do both of these with a single command:
 
-```bash
-./rome ci
-```
-
-This is the main command we run when you submit a PR, so running it locally and making sure it passes will make it easier to review and merge your changes.
-
-To automatically update test snapshots, apply formatting and autofixes, add the `--fix` flag.
-
-```bash
-./rome ci --fix
-```
-
-You can alternatively run more specific commands if you need to, but they shouldn't be necessary.
-
-### Linting
-
-To run just the linter use:
-
-```bash
-./rome check
-```
-
-And to automatically apply formatting and autofixes:
-
-```bash
-./rome check --apply
-```
-
-### Testing
-
-If you would like to run only the test runner:
-
-```bash
-./rome test
-```
-
-To run specific files:
-
-```bash
-./rome test path/to/files
-```
-
-And to update snapshots:
-
-```bash
-./rome test --update-snapshots
-```
-
-To enable logging:
-
-```bash
-./rome test --no-suppress-logs
-```
+- `cargo lint` is a cargo alias that runs [`clippy'](https://github.com/rust-lang/rust-clippy) - rust official linter - under the hood;
+- `cargo format` is a cargo alias that runs [`rust-fmt`](https://github.com/rust-lang/rustfmt) - rust official formatter - under the hood;
+- `cargo test` will run the suite; make sure to run this command from the root of the project, so it will run the tests of all the internal crates;
 
 ### Generated files
 
-If you are adding a new lint rule, or modifying some core code, you might need to regenerate some files. We have generated files to avoid having to write a lot of boilerplate and automate common tasks.
+If you work on some parser and you create new nodes or modify existing ones, will need to run a command to update some files that are auto-generated.
 
-```bash
-./script generate-all-files
-```
+#### `cargo xtask syntax`
 
-Or if using Windows:
+This command will update the syntax of the parsers.
 
-```
-.\script generate-all-files
-```
+The source is generated from the [`ungram` files](https://github.com/rome/tools/blob/main/xtask/js.ungram).
 
-It's strongly advised to **run this command before commit new changes**.
+#### `cargo xtask codegen`
+
+
+This command will create new tests for your parser. We currently have a neat infrastructure
+where tests for parser are generated com inline comments found inside
+the source code. Please read [the proper chapter for more information](#write-tests-for-a-parser)
+
+
+It's strongly advised to **run this command before committing new changes**.
 
 ## Commit messages
 
 Internally, the Rome team adheres as closely as possible to the [conventional commit specification](https://www.conventionalcommits.org/en/v1.0.0-beta.2/).
-Following this convention encourages commit best-practices and facilitates commit-powered features like change log generation.
+The following this convention encourages commit best-practices and facilitates commit-powered features like change log generation.
 
 The following commit prefixes are supported:
 
@@ -134,29 +87,7 @@ test(lint): add more cases to handle invalid rules
 
 When creating a new pull request, it's preferable to use a conventional commit-formatted title, as this title will be used as the default commit message on the squashed commit after merging.
 
-## Scripts
-
 Here are some other scripts that you might find useful.
-
-### `lint-create-rule`
-
-This is used to generate new lint rules and boilerplate.
-
-```bash
-./script lint-create-rule [category]/[ruleName]
-```
-
-The `category` is one of the lint category folders defined in [`internal/compiler/lint/rules`](https://github.com/rome/tools/tree/main/internal/compiler/lint/rules). Some of these represent specific languages, or general themes.
-
-The `ruleName` should start with either `use` or `no`.
-
-For example, to create a rule in the `js` category called `useCamelCase` run:
-
-```bash
-./script lint-create-rule js/useCamelCase
-```
-
-The created files will be listed in the console output. See those files for inline comments on what to insert. Use other lint rules as a reference.
 
 #### Naming patterns
 
@@ -176,114 +107,76 @@ The created files will be listed in the console output. See those files for inli
 
  	When a rule's sole intention is to **mandate a single concept** - such as forcing the use of camel-casing - the rule should be named using the `use` prefix. For example, the rule to mandating the use of camel-cased variable names is named `useCamelCase`.
 
-### `ast-create-node`
+### Write tests for a parser
 
-This is used to generate new ast nodes and boilerplate.
+If you want to create a new test for an existing parser, you will have to inline
+the code that you want to test in a comment that is created in a specific way.
+
+Let's say that you created a new parsing feature and you need new tests from scratch,
+just go to the source code where you parse this new feature if JavaScript, and add the following comment:
+
+```rust
+// test feature_name
+// let a = { new_feature : "" }
+// let b = { new_feature : "" }
+fn parse_new_feature(p: &mut Parser) -> ParsedSyntax {}
+```
+
+The first line, `// test feature_name` the important one. This will tell to the
+testing infrastructure to create a **positive test** (without parsing errors), called
+`feature_name.js` inside the `test_data/inline/ok` folder.
+
+The content of this file will be:
+
+```js
+let a = { new_feature : "" }
+let b = { new_feature : "" }
+```
+
+Basically, everything after the key comment will be the content of the new file.
+
+Now you need to run `cargo xtask codegen` and the task will actually generate this file for you.
+
+In case you want to create a **negative test** (*with* parsing errors), you will
+create a new comment like this:
+
+```diff
+// test feature_name
+// let a = { new_feature : "" }
+// let b = { new_feature : "" }
+
++ // test_err feature_name
++ // let a = {  : "" }
++ // let b = { new_feature :  }
+fn parse_new_feature(p: &mut Parser) -> ParsedSyntax {}
+```
+
+Mind the different comment **`test_err`**, which marks the error for the test suite
+as a test that has to fail.
+
+Run the command `cargo xtask codegen` and you will see a new file called
+`feature_name.js` inside the `test_data/inline/err` folder.
+
+The content of this file will be:
+
+```js
+let a = {  : "" }
+let b = { new_feature :  }
+```
+
+Now run the command:
+Unix/macOS
 
 ```bash
-./script ast-create-node [language]/[category]/[nodeType]
+env UPDATE_EXPECT=1 cargo test
 ```
 
-The `language` is one of the language folders defined in [`https://github.com/rome/tools/tree/main/internal/ast/`]
+Windows
 
-The `category` is one of the category folders inside the `language` folders.
-
-```bash
-./script ast-create-node js/typescript/JSArrayType
+```powershell
+set UPDATE_EXPECT=1 & cargo test
 ```
+The command will tell the test suite to generate and update the `.rast` files.
 
-The created files will be displayed in the console output.
-
-### `compiler-create-prefix`
-
-This is used to generate a new prefix boilerplate
-
-```bash
-./script compiler-create-prefix [prefixName]
-```
-
-Prefix names with dashes are preferable.
-
-### Creating tests
-
-Rome uses its own test suite to run tests. Internally, we use different way to run tests.
-
-#### Testing the parsers
-
-Most of the parsers contain a file called `index.test.ts` and a folder called `test-fixtures`.
-
-We have an internal utility function called `declareParserTests`. When placed inside
-a `index.test.ts` file and called, it will browse the files and folders inside `test-fixtures`.
-
-When you want to test a new feature, generally when a new syntax is implemented, just create
-a new folder inside `test-fixtures` (doesn't matter where, you can also nest folders).
-When you're satisfied with the level of folder, you have to create a file called `input.*`.
-
-> The extension of `input.*` depends on the type of file you're testing
-
-Once created the file, run `./rome test ./path/to/parser/index.test.ts` and Rome will create a snapshot
-beside your `input.*` file. If the new implementation has errors, the test won't pass.
-
-On the other hand, you need to test also error cases; this is because Rome throw fancy diagnostics that
-we need to show to the developer, followed by the reason the grammar was incorrect.
-
-In order to do so, you have to create a file called `options.json` beside your `input.*` file. Inside this
-new JSON file, paste:
-
-```json
-{
-	"throws": true
-}
-```
-
-Doing so, Rome will expect diagnostics from your invalid syntax. If there aren't diagnostic,
-Rome will  fail the test. Rome will create a snapshot where it will print the diagnostic. Please check the
-snapshot test because you will likely want to see the end result of your diagnostic and making that:
-
-- the error message is clear enough;
-- the diagnostic highlight correctly the error;
-- the developer will understand what they need to do in order to fix the issue;
-
-The diagnostics should look like this:
-
-```
-
- invalid/var/input.css:2:13 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Invalid custom property found inside the "var" function.
-
-    1 │ .style {
-  > 2 │   border: var(#fff);
-      │               ^^^^
-    3 │   border: var(calc(10px + 10px));
-    4 │   border: var(90rem);
-
-
-```
-
-#### Testing single functions
-
-Sometimes you need to test single functions in order to check if it handles edge cases.
-
-Just create a file that has the suffix `.test.ts` and Rome will pick it up automatically.
-
-A boilerplate of your test could look like this:
-
-```ts
-import {test} from "rome";
-import {toSnakeCase} from "./toSnakeCase";
-
-test("toSnakeCase", async (t) => {
-    t.is(toSnakeCase("SomethingGood"), "something_good");
-    t.inlineSnapshot(toSnakeCase("SomethingGood"))
-})
-
-```
-
-Check the interface [`TestHelper`](https://github.com/rome/tools/blob/main/internal/virtual-packages/rome/test.ts#L49) to learn the available methods that the
-testing suite provides.
-
-
-### Integration tests
-
-At the moment integration tests are turned off,
+If tests that are inside the `ok/` folder fail or if tests that are inside the `err/`
+folder don't emit, the whole test suite will fail.
