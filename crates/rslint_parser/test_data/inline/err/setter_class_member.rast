@@ -60,13 +60,6 @@ JsRoot {
       4: R_CURLY@30..32 "}" [Whitespace("\n")] []
   3: EOF@32..33 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected an identifier or pattern, but found none
-  ┌─ setter_class_member.js:2:11
-  │
-2 │   set foo() {}
-  │           ^
-
---
 error[SyntaxError]: expected a parameter but instead found ')'
   ┌─ setter_class_member.js:2:11
   │

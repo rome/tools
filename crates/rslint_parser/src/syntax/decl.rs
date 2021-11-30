@@ -22,9 +22,12 @@ pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
 		}
 	}
 
+	let checkpoint = p.checkpoint();
 	let pat = if let Some(pattern) = pattern(p, true, false) {
 		pattern
 	} else {
+		p.rewind(checkpoint);
+
 		m.abandon(p);
 		// TODO: not correct in case there was any typescript modifier. Revisit when patterns are refactored
 		return ParsedSyntax::Absent;
