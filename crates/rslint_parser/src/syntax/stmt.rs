@@ -797,8 +797,8 @@ pub(crate) fn variable_declarator(
 	p.state.should_record_names = false;
 
 	if let Present(binding) = id {
-		let pat_m = binding.undo_completion(p);
-		let kind = binding.kind();
+		let binding_marker = binding.undo_completion(p);
+		let binding_kind = binding.kind();
 
 		let cur = p.cur_tok().range;
 		let opt = p.eat(T![!]);
@@ -832,10 +832,10 @@ pub(crate) fn variable_declarator(
 			}
 		}
 
-		let marker = pat_m.complete(p, kind);
+		let marker = binding_marker.complete(p, binding_kind);
 		let initializer = parse_equal_value_clause(p).or_missing(p);
 		if initializer.is_none()
-			&& marker.kind() != JS_IDENTIFIER_BINDING
+			&& matches!(marker.kind(), JS_ARRAY_BINDING | JS_OBJECT_BINDING)
 			&& !for_stmt && !p.state.in_declare
 		{
 			let err = p

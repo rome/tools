@@ -20,16 +20,6 @@ fn parser_smoke_test() {
 }
 
 #[test]
-fn lib_tests() {
-	let src = r#"
-    function evalInComputedPropertyKey({ [computed]: ignored }) {}
-    "#;
-
-	let parsed = parse_module(src, 0);
-	assert_errors_are_absent(parsed.errors(), &Path::new(""), &parsed.syntax());
-}
-
-#[test]
 fn parser_missing_smoke_test() {
 	let src = r#"
 		console.log("Hello world";

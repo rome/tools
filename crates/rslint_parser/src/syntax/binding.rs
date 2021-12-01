@@ -31,6 +31,9 @@ pub(crate) fn parse_binding_with_optional_default(p: &mut Parser) -> ParsedSynta
 //    let yield = 5;
 // }
 // let eval = 5;
+// let let = 5;
+// const let = 5;
+// let a, a;
 pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 	let parsed =
 		parse_identifier(p, JS_IDENTIFIER_BINDING).or_invalid_to_unknown(p, JS_UNKNOWN_BINDING);
@@ -54,11 +57,13 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 			if identifier_name == "let" {
 				let err = p
 					.err_builder(
-						"`let` cannot be declared as a variable name inside of a declaration",
+						"`let` cannot be declared as a variable name inside of a let or const declaration",
 					)
-					.primary(identifier.range(p), "");
+					.primary(identifier.range(p), "Rename the let variable here");
 
 				p.error(err);
+
+				identifier.change_kind(p, JS_UNKNOWN_BINDING);
 			} else if let Some(existing) = p.state.name_map.get(identifier_name) {
 				let err = p
 					.err_builder(
@@ -73,6 +78,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 						&format!("a second declaration of {} is not allowed", identifier_name),
 					);
 				p.error(err);
+				identifier.change_kind(p, JS_UNKNOWN_BINDING);
 			} else {
 				let identifier_name = String::from(identifier_name);
 				p.state
@@ -224,7 +230,6 @@ impl ParseObjectPattern for ObjectBindingPattern {
 
 			parse_object_member_name(p).or_missing_with_error(p, expected_object_member_name);
 			if p.expect_required(T![:]) {
-				// TODO
 				parse_binding(p).or_missing_with_error(p, expected_binding);
 			} else {
 				p.missing();
