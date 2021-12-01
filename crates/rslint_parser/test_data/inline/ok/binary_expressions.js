@@ -6,5 +6,7 @@
 74 in foo
 foo instanceof Array
 foo ?? bar
+a >> b
+a >>> b
 1 + 1 + 1 + 1
 5 + 6 - 1 * 2 / 1 ** 6

@@ -241,6 +241,8 @@ pub fn binary_or_logical_expression(p: &mut Parser) -> Option<CompletedMarker> {
 // 74 in foo
 // foo instanceof Array
 // foo ?? bar
+// a >> b
+// a >>> b
 // 1 + 1 + 1 + 1
 // 5 + 6 - 1 * 2 / 1 ** 6
 

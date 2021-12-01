@@ -47,11 +47,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 				.sum::<usize>() as u32,
 		);
 
-		let range = TextRange::at(self.text_pos, len);
-		let text = &self.text[range];
-		self.text_pos += len;
-		self.token_pos += amount as usize;
-		self.inner.token(kind, text);
+		self.do_tokens(kind, len, amount)
 	}
 
 	fn token(&mut self, kind: SyntaxKind) {
@@ -160,15 +156,20 @@ impl<'a> LosslessTreeSink<'a> {
 		(self.inner.finish(), self.errors)
 	}
 
+	#[inline]
 	fn do_token(&mut self, kind: SyntaxKind, len: TextSize) {
 		if kind == SyntaxKind::EOF {
 			self.needs_eof = false;
 		}
 
+		self.do_tokens(kind, len, 1)
+	}
+
+	fn do_tokens(&mut self, kind: SyntaxKind, len: TextSize, token_count: u8) {
 		let token_range = TextRange::at(self.text_pos, len);
 
 		self.text_pos += len;
-		self.token_pos += 1;
+		self.token_pos += token_count as usize;
 
 		// Everything until the next linebreak (but not including it)
 		// will be the trailing trivia...
