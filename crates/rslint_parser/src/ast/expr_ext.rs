@@ -1,5 +1,5 @@
 //! Extensions for things which are not easily generated in ast expr nodes
-use crate::{ast::*, numbers::*, util::*, TextRange, T};
+use crate::{ast::*, numbers::*, TextRange, T};
 use rome_rowan::{SyntaxText, TextSize};
 use SyntaxKind::*;
 
@@ -263,23 +263,6 @@ impl JsUnaryExpression {
 	}
 }
 
-impl JsPropertyBinding {
-	pub fn value(&self) -> Option<JsAnyBinding> {
-		// This is to easily handle both `NAME NAME` and `: NAME`
-		if self.syntax().children().count() == 2 {
-			JsAnyBinding::cast(self.syntax().last_child().unwrap())
-		} else {
-			match self.colon_token() {
-				Ok(colon_token) => colon_token
-					.next_sibling_or_token()?
-					.into_node()?
-					.try_to::<JsAnyBinding>(),
-				Err(_) => None,
-			}
-		}
-	}
-}
-
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum JsAssignmentOperator {
 	Assign,
@@ -374,33 +357,6 @@ impl JsStringLiteralExpression {
 impl JsArrowFunctionExpression {
 	pub fn body(&self) -> Option<JsAnyArrowFunctionBody> {
 		JsAnyArrowFunctionBody::cast(self.syntax().children().last()?)
-	}
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum PatternOrExpr {
-	Pattern(JsAnyBinding),
-	Expr(JsAnyExpression),
-}
-
-impl AstNode for PatternOrExpr {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		JsAnyExpression::can_cast(kind) || JsAnyBinding::can_cast(kind)
-	}
-
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		Some(if JsAnyBinding::can_cast(syntax.kind()) {
-			PatternOrExpr::Pattern(JsAnyBinding::cast(syntax).unwrap())
-		} else {
-			PatternOrExpr::Expr(JsAnyExpression::cast(syntax).unwrap())
-		})
-	}
-
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			PatternOrExpr::Pattern(it) => it.syntax(),
-			PatternOrExpr::Expr(it) => it.syntax(),
-		}
 	}
 }
 

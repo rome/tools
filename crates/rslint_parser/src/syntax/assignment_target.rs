@@ -1,4 +1,4 @@
-use crate::parser::{expected_any, ParsedSyntax};
+use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::{
 	conditional_expr, expr, is_at_reference_identifier_member, parse_reference_identifier_member,
