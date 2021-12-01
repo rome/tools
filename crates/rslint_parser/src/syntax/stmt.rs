@@ -221,12 +221,13 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
 		m.complete(p, ERROR);
 	}
 
-	let mut expr = p.expr_with_semi_recovery(false).unwrap();
+	let expr = p.expr_with_semi_recovery(false);
 	// Labelled stmt
-	if expr.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION && p.at(T![:]) {
-		expr.change_kind(p, NAME);
-		// Its not possible to have a name without an inner ident token
-		let range = p.events[expr.start_pos as usize..]
+	if let Some(mut expr) = expr {
+		if expr.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION && p.at(T![:]) {
+			expr.change_kind(p, NAME);
+			// Its not possible to have a name without an inner ident token
+			let range = p.events[expr.start_pos as usize..]
 			.iter()
 			.find_map(|x| match x {
 				Event::Token {
@@ -239,35 +240,37 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
 				"Tried to get the ident of a name node, but there was no ident. This is erroneous",
 			);
 
-		let text_range = TextRange::new((range.start as u32).into(), (range.end as u32).into());
-		let text = p.source(text_range);
-		if let Some(range) = p.state.labels.get(text) {
-			let err = p
-				.err_builder("Duplicate statement labels are not allowed")
-				.secondary(
-					range.to_owned(),
-					&format!("`{}` is first used as a label here", text),
-				)
-				.primary(
-					text_range,
-					&format!("a second use of `{}` here is not allowed", text),
-				);
+			let text_range = TextRange::new((range.start as u32).into(), (range.end as u32).into());
+			let text = p.source(text_range);
+			if let Some(range) = p.state.labels.get(text) {
+				let err = p
+					.err_builder("Duplicate statement labels are not allowed")
+					.secondary(
+						range.to_owned(),
+						&format!("`{}` is first used as a label here", text),
+					)
+					.primary(
+						text_range,
+						&format!("a second use of `{}` here is not allowed", text),
+					);
 
-			p.error(err);
-		} else {
-			let string = text.to_string();
-			p.state.labels.insert(string, range.to_owned());
+				p.error(err);
+			} else {
+				let string = text.to_string();
+				p.state.labels.insert(string, range.to_owned());
+			}
+
+			let m = expr.undo_completion(p);
+			p.bump_any();
+			parse_statement(p, None);
+			return Present(m.complete(p, JS_LABELED_STATEMENT));
 		}
-
-		let m = expr.undo_completion(p);
-		p.bump_any();
-		parse_statement(p, None);
-		return Present(m.complete(p, JS_LABELED_STATEMENT));
+		let m = expr.precede(p);
+		semi(p, start..p.cur_tok().range.end);
+		Present(m.complete(p, JS_EXPRESSION_STATEMENT))
+	} else {
+		Absent
 	}
-
-	let m = expr.precede(p);
-	semi(p, start..p.cur_tok().range.end);
-	Present(m.complete(p, JS_EXPRESSION_STATEMENT))
 }
 
 // test debugger_stmt
