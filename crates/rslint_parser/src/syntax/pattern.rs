@@ -45,7 +45,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 	fn array_pattern_kind() -> SyntaxKind;
 	/// The kind of the rest pattern
 	fn rest_pattern_kind() -> SyntaxKind;
-	/// Creates a diagnostic saying that the parser expected an element at the passed in position
+	///  Creates a diagnostic saying that the parser expected an element at the position passed as an argument.
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic;
 	/// Creates a pattern with default instance. Used to parse the array elements.
 	fn pattern_with_default(&self) -> P;

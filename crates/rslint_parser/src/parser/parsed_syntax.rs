@@ -47,13 +47,14 @@ impl ParsedSyntax {
 		}
 	}
 
-	pub fn map<F>(self, mapper: F) -> ParsedSyntax
+	/// Calls `op` if the syntax is present and otherwise returns [Absent]
+	pub fn and_then<F>(self, op: F) -> ParsedSyntax
 	where
 		F: FnOnce(CompletedMarker) -> CompletedMarker,
 	{
 		match self {
 			Absent => Absent,
-			Present(marker) => Present(mapper(marker)),
+			Present(marker) => Present(op(marker)),
 		}
 	}
 

@@ -1,5 +1,4 @@
 use crate::parser::{expected_any, ToDiagnostic};
-#[allow(deprecated)]
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::parse_identifier;
 use crate::syntax::js_parse_error::{

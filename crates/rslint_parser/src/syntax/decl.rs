@@ -69,6 +69,7 @@ pub(super) fn parse_parameters_list(
 			p.bump_any();
 			parse_binding(p).or_missing_with_error(p, expected_binding);
 
+			// TODO #1725 Review error handling and recovery
 			// rest patterns cannot be optional: `...foo?: number[]`
 			if p.at(T![?]) {
 				let err = p
