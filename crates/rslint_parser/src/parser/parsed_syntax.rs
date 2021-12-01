@@ -94,11 +94,11 @@ impl ParsedSyntax {
 	///
 	/// # Panics
 	///
-	/// The current syntax is [ParsedSyntax::Absent]
+	///  Panics if the current syntax is [ParsedSyntax::Absent]
 	pub fn unwrap(self) -> CompletedMarker {
 		match self {
 			Absent => {
-				panic!("Can't call unwrap on a missing marker");
+				panic!("Called `unwrap` on an `Absent` syntax");
 			}
 			Present(marker) => marker,
 		}

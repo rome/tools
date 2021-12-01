@@ -5,7 +5,6 @@ use crate::syntax::js_parse_error;
 use crate::syntax::pat::parse_identifier_binding;
 use crate::syntax::stmt::{is_semi, parse_block_impl};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
-use crate::syntax::util::{is_at_async_function, LineBreak};
 use crate::ConditionalParsedSyntax::Invalid;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
@@ -198,5 +197,25 @@ pub(crate) fn ts_return_type(p: &mut Parser) {
 			ty.err_if_not_ts(p, "return types can only be used in TypeScript files");
 		}
 		return_type.complete(p, TS_TYPE_ANNOTATION);
+	}
+}
+
+/// Tells [is_at_async_function] if it needs to check line breaks
+#[derive(PartialEq)]
+pub(super) enum LineBreak {
+	// check line breaks
+	DoCheck,
+	// do not check line break
+	DoNotCheck,
+}
+
+#[inline]
+/// Checks if the parser is inside a "async function"
+pub(super) fn is_at_async_function(p: &mut Parser, should_check_line_break: LineBreak) -> bool {
+	let async_function_tokens = p.cur_src() == "async" && p.nth_at(1, T![function]);
+	if should_check_line_break == LineBreak::DoCheck {
+		async_function_tokens && !p.has_linebreak_before_n(1)
+	} else {
+		async_function_tokens
 	}
 }

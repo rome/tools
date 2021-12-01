@@ -155,7 +155,6 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 			let m = p.start();
 			p.bump_remap(T![declare]);
 			parse_class_declaration(p)
-				.ok()
 				.unwrap()
 				.undo_completion(p)
 				.abandon(p);
@@ -225,7 +224,6 @@ pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 			return None;
 		}
 		parse_class_declaration(p)
-			.ok()
 			.unwrap()
 			.undo_completion(p)
 			.abandon(p);

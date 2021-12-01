@@ -13,9 +13,8 @@ use crate::syntax::assignment_target::{
 	expression_to_assignment_target, SimpleAssignmentTargetExprKind,
 };
 use crate::syntax::class::parse_class_declaration;
-use crate::syntax::function::parse_function_declaration;
+use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
-use crate::syntax::util::{is_at_async_function, LineBreak};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
@@ -711,13 +710,15 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	p.bump_any(); // while
 	parenthesized_expression(p);
-	let mut guard = p.with_state(ParserState {
-		break_allowed: true,
-		continue_allowed: true,
-		..p.state.clone()
-	});
-	parse_statement(&mut *guard, None);
-	Present(m.complete(&mut *guard, JS_WHILE_STATEMENT))
+	parse_statement(
+		&mut *p.with_state(ParserState {
+			break_allowed: true,
+			continue_allowed: true,
+			..p.state.clone()
+		}),
+		None,
+	);
+	Present(m.complete(p, JS_WHILE_STATEMENT))
 }
 
 /// A var, const, or let declaration statement such as `var a = 5, b;` or `let {a, b} = foo;`
@@ -764,13 +765,6 @@ fn parse_variable_declaration(p: &mut Parser, no_semi: bool) -> ParsedSyntax {
 			is_let = true;
 		}
 		_ => {
-			let err = p
-				.err_builder(
-					"Expected `var`, `let`, or `const` for a variable declaration, but found none",
-				)
-				.primary(p.cur_tok().range, "");
-
-			p.error(err);
 			m.abandon(p);
 			return Absent;
 		}
@@ -897,17 +891,19 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 	let start = p.cur_tok().range.start;
 	p.bump_any(); // do keyword
 
-	let mut guard = p.with_state(ParserState {
-		continue_allowed: true,
-		break_allowed: true,
-		..p.state.clone()
-	});
-	parse_statement(&mut *guard, None);
-	guard.expect_required(T![while]);
-	parenthesized_expression(&mut *guard);
-	let end_range = guard.cur_tok().range.end;
-	semi(&mut *guard, start..end_range);
-	Present(m.complete(&mut *guard, JS_DO_WHILE_STATEMENT))
+	parse_statement(
+		&mut *p.with_state(ParserState {
+			continue_allowed: true,
+			break_allowed: true,
+			..p.state.clone()
+		}),
+		None,
+	);
+	p.expect_required(T![while]);
+	parenthesized_expression(p);
+	let end_range = p.cur_tok().range.end;
+	semi(p, start..end_range);
+	Present(m.complete(p, JS_DO_WHILE_STATEMENT))
 }
 
 fn for_head(p: &mut Parser) -> SyntaxKind {
@@ -1040,13 +1036,15 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 	p.expect_required(T!['(']);
 	let kind = for_head(p);
 	p.expect_required(T![')']);
-	let mut guard = p.with_state(ParserState {
-		continue_allowed: true,
-		break_allowed: true,
-		..p.state.clone()
-	});
-	parse_statement(&mut *guard, None);
-	Present(m.complete(&mut *guard, kind))
+	parse_statement(
+		&mut *p.with_state(ParserState {
+			continue_allowed: true,
+			break_allowed: true,
+			..p.state.clone()
+		}),
+		None,
+	);
+	Present(m.complete(p, kind))
 }
 
 // We return the range in case its a default clause so we can report multiple default clauses in a better way

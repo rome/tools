@@ -947,8 +947,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			// let a = function() {}
 			// let b = function foo() {}
 
-			// it's fine to not handle the error because the check on the tokens is done beforehand
-			parse_function_expression(p).or_missing(p).unwrap()
+			parse_function_expression(p).unwrap()
 		}
 		T![ident] | T![yield] | T![await] => {
 			// test identifier_reference

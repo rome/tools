@@ -77,23 +77,3 @@ pub fn check_for_stmt_declaration(p: &mut Parser, marker: &CompletedMarker) {
 		p.error(err);
 	}
 }
-
-/// Tells [is_at_async_function] if it needs to check line breaks
-#[derive(PartialEq)]
-pub(super) enum LineBreak {
-	// check line breaks
-	DoCheck,
-	// do not check line break
-	DoNotCheck,
-}
-
-#[inline]
-/// Checks if the parser is inside a "async function"
-pub(super) fn is_at_async_function(p: &mut Parser, should_check_line_break: LineBreak) -> bool {
-	let async_function_tokens = p.cur_src() == "async" && p.nth_at(1, T![function]);
-	if should_check_line_break == LineBreak::DoCheck {
-		async_function_tokens && !p.has_linebreak_before_n(1)
-	} else {
-		async_function_tokens
-	}
-}
