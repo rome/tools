@@ -122,6 +122,8 @@ pub fn run(filter: String) {
 					};
 					println!("\tTime");
 					println!("\t\ttook {:?}", parser_timing.stop());
+
+					println!("{:?}", errors);
 					#[cfg(feature = "dhat-on")]
 					let stats = print_diff(stats, dhat::get_stats().unwrap());
 

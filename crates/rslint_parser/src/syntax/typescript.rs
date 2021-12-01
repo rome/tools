@@ -685,16 +685,19 @@ pub fn try_parse_ts(
 	p: &mut Parser,
 	func: impl FnOnce(&mut Parser) -> Option<CompletedMarker>,
 ) -> Option<CompletedMarker> {
-	// FIXME: simply rewinding doesnt work for `new A < T;` and it makes the parser enter unreachable
-	// code, and i really cant be bothered to debug incorrect event code because i don't have enough sanity
-	// left in me
-	let old = p.to_owned();
-	let res = func(&mut *p.with_state(ParserState {
-		no_recovery: true,
-		..p.state.clone()
-	}));
+	let checkpoint = p.checkpoint();
+
+	let res = if p.state.no_recovery {
+		func(p)
+	} else {
+		func(&mut *p.with_state(ParserState {
+			no_recovery: true,
+			..p.state.clone()
+		}))
+	};
+
 	if res.is_none() {
-		*p = old;
+		p.rewind(checkpoint);
 	}
 	res
 }
