@@ -6,11 +6,11 @@ use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
+use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::class::parse_class_declaration;
 use crate::syntax::expr::any_reference_member;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::js_parse_error;
-use crate::syntax::binding::parse_identifier_binding;
 use crate::{SyntaxKind::*, *};
 
 pub const BASE_TS_RECOVERY_SET: TokenSet = token_set![
