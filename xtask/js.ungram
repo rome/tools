@@ -549,6 +549,7 @@ JsConstructorParameterList =
 JsAnyConstructorParameter =
 	TsConstructorParam
 	| JsAnyBinding
+	| JsBindingWithDefault
 
 // class Test { a; b = 1; static c; }
 //              ^^ ^^^^^^ ^^^^^^^^^

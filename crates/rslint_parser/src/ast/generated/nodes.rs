@@ -1618,6 +1618,17 @@ impl TsConstructorParam {
 	pub fn pat(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsBindingWithDefault {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsBindingWithDefault {
+	pub fn binding(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
+	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [=])
+	}
+	pub fn default(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsEqualValueClause {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1811,17 +1822,6 @@ impl JsArrayBinding {
 	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![']'])
 	}
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsBindingWithDefault {
-	pub(crate) syntax: SyntaxNode,
-}
-impl JsBindingWithDefault {
-	pub fn binding(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
-	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [=])
-	}
-	pub fn default(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayRestBinding {
@@ -2707,6 +2707,7 @@ pub enum JsAnyClassMemberName {
 pub enum JsAnyConstructorParameter {
 	TsConstructorParam(TsConstructorParam),
 	JsAnyBinding(JsAnyBinding),
+	JsBindingWithDefault(JsBindingWithDefault),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrayAssignmentTargetElement {
@@ -5807,6 +5808,26 @@ impl std::fmt::Debug for TsConstructorParam {
 			.finish()
 	}
 }
+impl AstNode for JsBindingWithDefault {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BINDING_WITH_DEFAULT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsBindingWithDefault {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsBindingWithDefault")
+			.field("binding", &support::DebugSyntaxResult(self.binding()))
+			.field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
+			.field("default", &support::DebugSyntaxResult(self.default()))
+			.finish()
+	}
+}
 impl AstNode for JsEqualValueClause {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EQUAL_VALUE_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6143,26 +6164,6 @@ impl std::fmt::Debug for JsArrayBinding {
 				"r_brack_token",
 				&support::DebugSyntaxResult(self.r_brack_token()),
 			)
-			.finish()
-	}
-}
-impl AstNode for JsBindingWithDefault {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BINDING_WITH_DEFAULT }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsBindingWithDefault {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsBindingWithDefault")
-			.field("binding", &support::DebugSyntaxResult(self.binding()))
-			.field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
-			.field("default", &support::DebugSyntaxResult(self.default()))
 			.finish()
 	}
 }
@@ -9166,10 +9167,15 @@ impl From<TsConstructorParam> for JsAnyConstructorParameter {
 		JsAnyConstructorParameter::TsConstructorParam(node)
 	}
 }
+impl From<JsBindingWithDefault> for JsAnyConstructorParameter {
+	fn from(node: JsBindingWithDefault) -> JsAnyConstructorParameter {
+		JsAnyConstructorParameter::JsBindingWithDefault(node)
+	}
+}
 impl AstNode for JsAnyConstructorParameter {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			TS_CONSTRUCTOR_PARAM => true,
+			TS_CONSTRUCTOR_PARAM | JS_BINDING_WITH_DEFAULT => true,
 			k if JsAnyBinding::can_cast(k) => true,
 			_ => false,
 		}
@@ -9178,6 +9184,9 @@ impl AstNode for JsAnyConstructorParameter {
 		let res = match syntax.kind() {
 			TS_CONSTRUCTOR_PARAM => {
 				JsAnyConstructorParameter::TsConstructorParam(TsConstructorParam { syntax })
+			}
+			JS_BINDING_WITH_DEFAULT => {
+				JsAnyConstructorParameter::JsBindingWithDefault(JsBindingWithDefault { syntax })
 			}
 			_ => {
 				if let Some(js_any_binding) = JsAnyBinding::cast(syntax) {
@@ -9191,6 +9200,7 @@ impl AstNode for JsAnyConstructorParameter {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			JsAnyConstructorParameter::TsConstructorParam(it) => &it.syntax,
+			JsAnyConstructorParameter::JsBindingWithDefault(it) => &it.syntax,
 			JsAnyConstructorParameter::JsAnyBinding(it) => it.syntax(),
 		}
 	}
@@ -9200,6 +9210,7 @@ impl std::fmt::Debug for JsAnyConstructorParameter {
 		match self {
 			JsAnyConstructorParameter::TsConstructorParam(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyConstructorParameter::JsAnyBinding(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyConstructorParameter::JsBindingWithDefault(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -10913,6 +10924,11 @@ impl std::fmt::Display for TsConstructorParam {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsBindingWithDefault {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsEqualValueClause {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -10984,11 +11000,6 @@ impl std::fmt::Display for JsObjectBinding {
 	}
 }
 impl std::fmt::Display for JsArrayBinding {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsBindingWithDefault {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

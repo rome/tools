@@ -35,8 +35,11 @@ impl ToFormatElement for JsAnyConstructorParameter {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
 			JsAnyConstructorParameter::TsConstructorParam(_) => todo!(),
-			JsAnyConstructorParameter::JsAnyBinding(pattern) => {
-				pattern.to_format_element(formatter)
+			JsAnyConstructorParameter::JsBindingWithDefault(binding) => {
+				binding.to_format_element(formatter)
+			}
+			JsAnyConstructorParameter::JsAnyBinding(binding) => {
+				binding.to_format_element(formatter)
 			}
 		}
 	}
