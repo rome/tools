@@ -9,7 +9,7 @@ use crate::parser::ParserProgress;
 use crate::syntax::binding::parse_binding_with_optional_default;
 use crate::syntax::function::function_body;
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::expected_pattern;
+use crate::syntax::js_parse_error::expected_binding;
 use crate::{SyntaxKind::*, *};
 
 #[allow(clippy::unnecessary_unwrap)]
@@ -67,7 +67,7 @@ pub(super) fn parse_parameters_list(
 		if p.at(T![...]) {
 			let m = p.start();
 			p.bump_any();
-			parse_binding(p).or_missing_with_error(p, expected_pattern);
+			parse_binding(p).or_missing_with_error(p, expected_binding);
 
 			// rest patterns cannot be optional: `...foo?: number[]`
 			if p.at(T![?]) {

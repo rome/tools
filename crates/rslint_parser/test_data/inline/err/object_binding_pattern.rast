@@ -209,6 +209,7 @@ JsRoot {
                   2: (empty)
                   3: (empty)
               2: R_CURLY@8..10 "}" [] [Whitespace(" ")]
+            1: (empty)
       1: (empty)
     1: JS_UNKNOWN_STATEMENT@10..12
       0: R_CURLY@10..12 "}" [] [Whitespace(" ")]
@@ -363,11 +364,11 @@ error[SyntaxError]: expected `:` but instead found `}`
   │            ^ unexpected
 
 --
-error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found 'default:'
+error[SyntaxError]: expected an identifier, a member name, or a rest pattern but instead found 'default:'
   ┌─ object_binding_pattern.js:4:7
   │
 4 │ let { default: , bar } = {};
-  │       ^^^^^^^^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
+  │       ^^^^^^^^ Expected an identifier, a member name, or a rest pattern here
 
 --
 let { 5 } } = { eval: "foo" };

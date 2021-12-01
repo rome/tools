@@ -1,9 +1,9 @@
+use crate::parser::{expected_any, ToDiagnostic};
 #[allow(deprecated)]
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::parse_identifier;
 use crate::syntax::js_parse_error::{
-	expected_assignment_target, expected_identifier, expected_object_member_name, expected_pattern,
-	expected_property_binding,
+	expected_binding, expected_identifier, expected_object_member_name,
 };
 use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
@@ -90,14 +90,17 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 struct BindingWithDefault;
 
 impl ParseWithDefaultPattern for BindingWithDefault {
-	fn pattern_with_default_kind(&self) -> SyntaxKind {
+	#[inline]
+	fn pattern_with_default_kind() -> SyntaxKind {
 		JS_BINDING_WITH_DEFAULT
 	}
 
+	#[inline]
 	fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic {
-		expected_pattern(p, range)
+		expected_binding(p, range)
 	}
 
+	#[inline]
 	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		parse_binding(p)
 	}
@@ -129,23 +132,36 @@ struct ArrayBinding;
 // let [ ...c = "default" ] = a;
 // let [ ...rest, other_assignment ] = a;
 impl ParseArrayPattern<BindingWithDefault> for ArrayBinding {
-	fn unknown_pattern_kind(&self) -> SyntaxKind {
+	#[inline]
+	fn unknown_pattern_kind() -> SyntaxKind {
 		JS_UNKNOWN_BINDING
 	}
 
-	fn array_pattern_kind(&self) -> SyntaxKind {
+	#[inline]
+	fn array_pattern_kind() -> SyntaxKind {
 		JS_ARRAY_BINDING
 	}
 
-	fn rest_pattern_kind(&self) -> SyntaxKind {
+	#[inline]
+	fn rest_pattern_kind() -> SyntaxKind {
 		JS_ARRAY_REST_BINDING
 	}
 
+	#[inline]
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic {
-		// TODO
-		expected_assignment_target(p, range)
+		expected_any(
+			&[
+				"identifier",
+				"object pattern",
+				"array pattern",
+				"rest pattern",
+			],
+			range,
+		)
+		.to_diagnostic(p)
 	}
 
+	#[inline]
 	fn pattern_with_default(&self) -> BindingWithDefault {
 		BindingWithDefault
 	}
@@ -159,16 +175,19 @@ impl ParseArrayPattern<BindingWithDefault> for ArrayBinding {
 struct ObjectBindingPattern;
 
 impl ParseObjectPattern for ObjectBindingPattern {
-	fn unknown_pattern_kind(&self) -> SyntaxKind {
+	#[inline]
+	fn unknown_pattern_kind() -> SyntaxKind {
 		JS_UNKNOWN_BINDING
 	}
 
-	fn object_pattern_kind(&self) -> SyntaxKind {
+	#[inline]
+	fn object_pattern_kind() -> SyntaxKind {
 		JS_OBJECT_BINDING
 	}
 
-	fn expected_property_pattern_error(&self, p: &Parser, range: Range<usize>) -> Diagnostic {
-		expected_property_binding(p, range)
+	#[inline]
+	fn expected_property_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+		expected_any(&["identifier", "member name", "rest pattern"], range).to_diagnostic(p)
 	}
 
 	// test object_property_binding
@@ -206,7 +225,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
 			parse_object_member_name(p).or_missing_with_error(p, expected_object_member_name);
 			if p.expect_required(T![:]) {
 				// TODO
-				parse_binding(p).or_missing_with_error(p, expected_pattern);
+				parse_binding(p).or_missing_with_error(p, expected_binding);
 			} else {
 				p.missing();
 			}

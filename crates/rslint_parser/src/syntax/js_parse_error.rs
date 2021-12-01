@@ -78,31 +78,6 @@ pub(crate) fn expected_assignment_target(p: &Parser, range: Range<usize>) -> Dia
 	expected_any(&["identifier", "assignment target"], range).to_diagnostic(p)
 }
 
-pub(crate) fn expected_array_assignment_target_element(
-	p: &Parser,
-	range: Range<usize>,
-) -> Diagnostic {
-	expected_any(&["assignment target", "rest element", "comma"], range).to_diagnostic(p)
-}
-
-pub(crate) fn expected_object_binding_member(p: &Parser, range: Range<usize>) -> Diagnostic {
-	expected_any(
-		&[
-			"identifier",
-			"string literal",
-			"number literal",
-			"object pattern",
-			"array pattern",
-		],
-		range,
-	)
-	.to_diagnostic(p)
-}
-
-pub(crate) fn expected_property_assignment_target(p: &Parser, range: Range<usize>) -> Diagnostic {
-	expected_any(&["assignment target", "rest property"], range).to_diagnostic(p)
-}
-
 pub(crate) fn expected_simple_assignment_target(p: &Parser, range: Range<usize>) -> Diagnostic {
 	expected_any(&["identifier", "member expression"], range).to_diagnostic(p)
 }
@@ -119,19 +94,6 @@ pub(crate) fn expected_statement(p: &Parser, range: Range<usize>) -> Diagnostic 
 	expected_node("statement", range).to_diagnostic(p)
 }
 
-pub(crate) fn expected_property_binding(p: &Parser, range: Range<usize>) -> Diagnostic {
-	expected_any(
-		&[
-			"identifier",
-			"object pattern",
-			"array pattern",
-			"rest pattern",
-		],
-		range,
-	)
-	.to_diagnostic(p)
-}
-
-pub(crate) fn expected_pattern(p: &Parser, range: Range<usize>) -> Diagnostic {
-	expected_node("pattern", range).to_diagnostic(p)
+pub(crate) fn expected_binding(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_any(&["identifier", "array pattern", "object pattern"], range).to_diagnostic(p)
 }

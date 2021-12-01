@@ -19,7 +19,7 @@ use crate::syntax::class::class_expression;
 use crate::syntax::function::parse_function_expression;
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
-	expected_parameter, expected_pattern, expected_simple_assignment_target,
+	expected_parameter, expected_binding, expected_simple_assignment_target,
 };
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::is_semi;
@@ -690,7 +690,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			if temp.at(T![...]) {
 				let m = temp.start();
 				temp.bump_any();
-				parse_binding(&mut *temp).or_missing_with_error(&mut *temp, expected_pattern);
+				parse_binding(&mut *temp).or_missing_with_error(&mut *temp, expected_binding);
 				if temp.eat(T![:]) {
 					if let Some(mut ty) = ts_type(&mut *temp) {
 						ty.err_if_not_ts(

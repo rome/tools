@@ -192,6 +192,7 @@ JsRoot {
                     0: IDENT@48..52 "bar" [] [Whitespace(" ")]
                   1: (empty)
               2: R_CURLY@52..54 "}" [] [Whitespace(" ")]
+            1: (empty)
       3: IDENT@54..57 "of" [] [Whitespace(" ")]
       4: JS_OBJECT_EXPRESSION@57..59
         0: L_CURLY@57..58 "{" [] []

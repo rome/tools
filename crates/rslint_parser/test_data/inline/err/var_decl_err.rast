@@ -117,11 +117,11 @@ JsRoot {
       1: SEMICOLON@30..31 ";" [] []
   3: EOF@31..32 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected an expression, but found `;` instead
+error[SyntaxError]: Expected an expression, but found none
   ┌─ var_decl_err.js:1:8
   │
 1 │ var a =;
-  │        ^
+  │        ^ Expected an expression here
 
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none

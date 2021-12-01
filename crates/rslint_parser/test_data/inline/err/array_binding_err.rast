@@ -266,6 +266,7 @@ JsRoot {
                     1: LIST@86..86
                     2: R_BRACK@86..87 "]" [] []
                 1: (empty)
+            1: (empty)
       1: SEMICOLON@87..88 ";" [] []
   3: EOF@88..89 "" [Whitespace("\n")] []
 --
@@ -276,18 +277,18 @@ error[SyntaxError]: expected `,` but instead found `b`
   │        ^ unexpected
 
 --
-error[SyntaxError]: expected a pattern but instead found '='
+error[SyntaxError]: expected an identifier, an array pattern, or an object pattern but instead found '='
   ┌─ array_binding_err.js:2:6
   │
 2 │ let [="default"] = [1, 2];
-  │      ^ Expected a pattern here
+  │      ^ Expected an identifier, an array pattern, or an object pattern here
 
 --
-error[SyntaxError]: expected an identifier, or an assignment target but instead found '"default"'
+error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found '"default"'
   ┌─ array_binding_err.js:3:6
   │
 3 │ let ["default"] = [1, 2];
-  │      ^^^^^^^^^ Expected an identifier, or an assignment target here
+  │      ^^^^^^^^^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
 
 --
 error[SyntaxError]: expected `,` but instead found `;`
@@ -297,11 +298,11 @@ error[SyntaxError]: expected `,` but instead found `;`
   │               ^ unexpected
 
 --
-error[SyntaxError]: expected an identifier, or an assignment target but instead found ';'
+error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found ';'
   ┌─ array_binding_err.js:4:15
   │
 4 │ let [[a ] = [];
-  │               ^ Expected an identifier, or an assignment target here
+  │               ^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
 
 --
 error[SyntaxError]: expected `']'` but instead found `;`

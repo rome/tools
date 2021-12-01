@@ -167,6 +167,7 @@ JsRoot {
           0: JS_VARIABLE_DECLARATOR@32..35
             0: JS_IDENTIFIER_BINDING@32..35
               0: IDENT@32..35 "foo" [] []
+            1: (empty)
       1: SEMICOLON@35..36 ";" [] []
     3: JS_VARIABLE_DECLARATION_STATEMENT@36..44
       0: JS_VARIABLE_DECLARATION@36..44
@@ -175,6 +176,7 @@ JsRoot {
           0: JS_VARIABLE_DECLARATOR@41..44
             0: JS_IDENTIFIER_BINDING@41..44
               0: IDENT@41..44 "foo" [] []
+            1: (empty)
       1: (empty)
     4: JS_VARIABLE_DECLARATION_STATEMENT@44..52
       0: JS_VARIABLE_DECLARATION@44..52
@@ -183,6 +185,7 @@ JsRoot {
           0: JS_VARIABLE_DECLARATOR@49..52
             0: JS_IDENTIFIER_BINDING@49..52
               0: IDENT@49..52 "foo" [] []
+            1: (empty)
       1: (empty)
     5: JS_FUNCTION_DECLARATION@52..83
       0: FUNCTION_KW@52..62 "function" [Whitespace("\n")] [Whitespace(" ")]

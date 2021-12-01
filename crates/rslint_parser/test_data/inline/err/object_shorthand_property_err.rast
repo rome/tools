@@ -193,11 +193,11 @@ error[SyntaxError]: expected an identifier but instead found '='
   │       ^ Expected an identifier here
 
 --
-error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found ','
+error[SyntaxError]: expected an identifier, a member name, or a rest pattern but instead found ','
   ┌─ object_shorthand_property_err.js:3:7
   │
 3 │ let { , a } = c
-  │       ^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
+  │       ^ Expected an identifier, a member name, or a rest pattern here
 
 --
 let { a b } = c

@@ -209,11 +209,11 @@ JsRoot {
       1: (empty)
   3: EOF@75..76 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected a pattern but instead found ','
+error[SyntaxError]: expected an identifier, an array pattern, or an object pattern but instead found ','
   ┌─ object_property_binding_err.js:1:12
   │
 1 │ let { foo: , bar } = {}
-  │            ^ Expected a pattern here
+  │            ^ Expected an identifier, an array pattern, or an object pattern here
 
 --
 error[SyntaxError]: expected an identifier, a string literal, a number literal, or a computed property but instead found ':'
@@ -223,11 +223,11 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
   │       ^ Expected an identifier, a string literal, a number literal, or a computed property here
 
 --
-error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found ','
+error[SyntaxError]: expected an identifier, a member name, or a rest pattern but instead found ','
   ┌─ object_property_binding_err.js:3:7
   │
 3 │ let { , foo: bar } = {}
-  │       ^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
+  │       ^ Expected an identifier, a member name, or a rest pattern here
 
 --
 let { foo: , bar } = {}

@@ -15,7 +15,7 @@ use crate::syntax::assignment_target::{
 use crate::syntax::class::{parse_class_declaration, parse_equal_value_clause};
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::expected_pattern;
+use crate::syntax::js_parse_error::expected_binding;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
@@ -862,16 +862,6 @@ pub(crate) fn variable_declarator(
 	}
 }
 
-#[allow(deprecated)]
-fn variable_initializer(p: &mut Parser) {
-	let m = p.start();
-
-	p.expect_required(T![=]);
-	p.expr_with_semi_recovery(true);
-
-	m.complete(p, SyntaxKind::JS_EQUAL_VALUE_CLAUSE);
-}
-
 // A do.. while statement, such as `do {} while (true)`
 // test do_while_stmtR
 // do { } while (true)
@@ -1221,7 +1211,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_any(); // bump (
 
-	let pattern_marker = parse_binding(p).or_missing_with_error(p, expected_pattern);
+	let pattern_marker = parse_binding(p).or_missing_with_error(p, expected_binding);
 	let pattern_kind = pattern_marker.map(|x| x.kind());
 
 	if p.at(T![:]) {

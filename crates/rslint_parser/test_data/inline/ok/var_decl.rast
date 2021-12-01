@@ -283,10 +283,12 @@ JsRoot {
           0: JS_VARIABLE_DECLARATOR@37..40
             0: JS_IDENTIFIER_BINDING@37..40
               0: IDENT@37..40 "bar" [] []
+            1: (empty)
           1: COMMA@40..42 "," [] [Whitespace(" ")]
           2: JS_VARIABLE_DECLARATOR@42..45
             0: JS_IDENTIFIER_BINDING@42..45
               0: IDENT@42..45 "foo" [] []
+            1: (empty)
       1: SEMICOLON@45..46 ";" [] []
     3: JS_VARIABLE_DECLARATION_STATEMENT@46..59
       0: JS_VARIABLE_DECLARATION@46..58

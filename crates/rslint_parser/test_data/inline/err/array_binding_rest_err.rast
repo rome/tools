@@ -176,11 +176,11 @@ JsRoot {
       1: SEMICOLON@84..85 ";" [] []
   3: EOF@85..86 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected a pattern but instead found ''
+error[SyntaxError]: expected an identifier, an array pattern, or an object pattern but instead found ''
   ┌─ array_binding_rest_err.js:1:10
   │
 1 │ let [ ... ] = a;
-  │          ^ Expected a pattern here
+  │          ^ Expected an identifier, an array pattern, or an object pattern here
 
 --
 error[SyntaxError]: rest element cannot have a default

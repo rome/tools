@@ -1,12 +1,11 @@
-use crate::parser::ParsedSyntax;
+use crate::parser::{expected_any, ParsedSyntax};
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::{
 	conditional_expr, expr, is_at_reference_identifier_member, parse_reference_identifier_member,
 	unary_expr,
 };
 use crate::syntax::js_parse_error::{
-	expected_array_assignment_target_element, expected_assignment_target, expected_identifier,
-	expected_property_assignment_target, expected_simple_assignment_target,
+	expected_assignment_target, expected_identifier, expected_simple_assignment_target,
 };
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::ParsedSyntax::{Absent, Present};
@@ -110,14 +109,17 @@ pub(crate) fn parse_simple_assignment_target(
 struct AssignmentTargetWithDefault;
 
 impl ParseWithDefaultPattern for AssignmentTargetWithDefault {
-	fn pattern_with_default_kind(&self) -> SyntaxKind {
+	#[inline]
+	fn pattern_with_default_kind() -> SyntaxKind {
 		JS_ASSIGNMENT_TARGET_WITH_DEFAULT
 	}
 
+	#[inline]
 	fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic {
 		expected_assignment_target(p, range)
 	}
 
+	#[inline]
 	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
 	}
@@ -139,23 +141,27 @@ struct ArrayAssignmentTarget;
 // ([ ...c = "default" ] = a);
 // ([ ...rest, other_assignment ] = a);
 impl ParseArrayPattern<AssignmentTargetWithDefault> for ArrayAssignmentTarget {
-	fn unknown_pattern_kind(&self) -> SyntaxKind {
+	#[inline]
+	fn unknown_pattern_kind() -> SyntaxKind {
 		JS_UNKNOWN_ASSIGNMENT_TARGET
 	}
 
-	fn array_pattern_kind(&self) -> SyntaxKind {
+	#[inline]
+	fn array_pattern_kind() -> SyntaxKind {
 		JS_ARRAY_ASSIGNMENT_TARGET
 	}
 
-	fn rest_pattern_kind(&self) -> SyntaxKind {
+	#[inline]
+	fn rest_pattern_kind() -> SyntaxKind {
 		JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT
 	}
 
 	#[inline]
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic {
-		expected_array_assignment_target_element(p, range)
+		expected_any(&["assignment target", "rest element", "comma"], range).to_diagnostic(p)
 	}
 
+	#[inline]
 	fn pattern_with_default(&self) -> AssignmentTargetWithDefault {
 		AssignmentTargetWithDefault
 	}
@@ -202,16 +208,19 @@ struct ObjectAssignmentTarget;
 // ({ bar, baz } = {});
 // ({ bar: [baz = "baz"], foo = "foo", ...rest } = {});
 impl ParseObjectPattern for ObjectAssignmentTarget {
-	fn unknown_pattern_kind(&self) -> SyntaxKind {
+	#[inline]
+	fn unknown_pattern_kind() -> SyntaxKind {
 		JS_UNKNOWN_ASSIGNMENT_TARGET
 	}
 
-	fn object_pattern_kind(&self) -> SyntaxKind {
+	#[inline]
+	fn object_pattern_kind() -> SyntaxKind {
 		JS_OBJECT_ASSIGNMENT_TARGET
 	}
 
-	fn expected_property_pattern_error(&self, p: &Parser, range: Range<usize>) -> Diagnostic {
-		expected_property_assignment_target(p, range)
+	#[inline]
+	fn expected_property_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+		expected_any(&["assignment target", "rest property"], range).to_diagnostic(p)
 	}
 
 	// test property_assignment_target
