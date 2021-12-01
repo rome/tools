@@ -1,6 +1,6 @@
 use crate::{SyntaxKind::EOF, TextRange, TextSize, Token};
 use rslint_lexer::is_linebreak;
-use std::{collections::HashSet, sync::Arc};
+use std::{collections::HashSet, rc::Rc};
 
 /// The source of tokens for the parser
 #[derive(Clone)]
@@ -19,7 +19,7 @@ pub struct TokenSourceData<'t> {
 /// The source of tokens for the parser
 #[derive(Clone)]
 pub struct TokenSource<'t> {
-	pub data: Arc<TokenSourceData<'t>>,
+	pub data: Rc<TokenSourceData<'t>>,
 
 	/// Current token and position
 	cur: (Token, usize),
@@ -95,7 +95,7 @@ impl<'t> TokenSource<'t> {
 			raw_tokens,
 		};
 		TokenSource {
-			data: Arc::new(data),
+			data: Rc::new(data),
 			cur: (first, 0),
 		}
 	}
