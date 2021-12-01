@@ -205,7 +205,6 @@ fn check_assign_target_from_marker(p: &mut Parser, marker: &CompletedMarker) {
 	}
 }
 
->>>>>>> a37da1cd2 (making parser::events and tokensource cloning cheaper)
 // test assign_expr
 // foo += bar = b ??= 3;
 // foo -= bar;

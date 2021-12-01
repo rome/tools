@@ -379,10 +379,12 @@ fn try_expression_to_simple_assignment_target(
 		// This code traverses through all descendants of the parenthesized expression and tries to
 		// convert them to valid assignment targets. It returns the converted parenthesized expression if
 		// everything is valid and otherwise re-parses the parenthesized expression only:
-		let events = &mut p.events[target.start_pos as usize..target.finish_pos as usize];
+		let start = target.start_pos as usize;
+		let end = target.finish_pos as usize;
+		let events = &mut p.events.skip(start).take(end - start);
 		let mut children_valid = true;
 
-		for event in events {
+		for event in events.iter_mut() {
 			match event {
 				Event::Start {
 					kind: TOMBSTONE, ..

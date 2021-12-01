@@ -119,14 +119,7 @@ impl ParserProgress {
 pub struct Parser<'t> {
 	pub file_id: usize,
 	tokens: TokenSource<'t>,
-<<<<<<< HEAD
-	pub(crate) events: Vec<Event>,
-=======
 	pub(crate) events: im_rc::Vector<Event>,
-	// This is for tracking if the parser is infinitely recursing.
-	// We use a cell so we dont need &mut self on `nth()`
-	steps: Cell<u32>,
->>>>>>> a37da1cd2 (making parser::events and tokensource cloning cheaper)
 	pub state: ParserState,
 	pub syntax: Syntax,
 	pub errors: Vec<ParserError>,
@@ -150,12 +143,7 @@ impl<'t> Parser<'t> {
 		Parser {
 			file_id,
 			tokens,
-<<<<<<< HEAD
-			events: vec![],
-=======
 			events: im_rc::vector![],
-			steps: Cell::new(0),
->>>>>>> a37da1cd2 (making parser::events and tokensource cloning cheaper)
 			state,
 			syntax,
 			errors: vec![],
