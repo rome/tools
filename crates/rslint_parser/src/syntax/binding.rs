@@ -12,27 +12,17 @@ use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
 use rslint_errors::Span;
 
-pub(crate) fn parse_binding(p: &mut Parser, parameters: bool) -> ParsedSyntax {
+pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
-		T![this] if parameters => {
-			let m = p.start();
-			p.bump_remap(T![ident]);
-			Present(m.complete(p, JS_IDENTIFIER_BINDING))
-		}
-		T!['['] => ArrayBinding { parameters }.parse_array_pattern(p),
-		T!['{'] if p.state.allow_object_expr => {
-			ObjectBindingPattern { parameters }.parse_object_pattern(p)
-		}
+		T!['['] => ArrayBinding.parse_array_pattern(p),
+		T!['{'] if p.state.allow_object_expr => ObjectBindingPattern.parse_object_pattern(p),
 		T![ident] | T![yield] | T![await] => parse_identifier_binding(p),
 		_ => Absent,
 	}
 }
 
-pub(crate) fn parse_binding_with_optional_default(
-	p: &mut Parser,
-	parameters: bool,
-) -> ParsedSyntax {
-	BindingWithDefault { parameters }.parse_pattern_with_optional_default(p)
+pub(crate) fn parse_binding_with_optional_default(p: &mut Parser) -> ParsedSyntax {
+	BindingWithDefault.parse_pattern_with_optional_default(p)
 }
 
 // test_err binding_identifier_invalid
@@ -97,9 +87,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 	}
 }
 
-struct BindingWithDefault {
-	parameters: bool,
-}
+struct BindingWithDefault;
 
 impl ParseWithDefaultPattern for BindingWithDefault {
 	fn pattern_with_default_kind(&self) -> SyntaxKind {
@@ -111,13 +99,11 @@ impl ParseWithDefaultPattern for BindingWithDefault {
 	}
 
 	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
-		parse_binding(p, self.parameters)
+		parse_binding(p)
 	}
 }
 
-struct ArrayBinding {
-	parameters: bool,
-}
+struct ArrayBinding;
 
 // test array_binding
 // let a = "b";
@@ -161,9 +147,7 @@ impl ParseArrayPattern<BindingWithDefault> for ArrayBinding {
 	}
 
 	fn pattern_with_default(&self) -> BindingWithDefault {
-		BindingWithDefault {
-			parameters: self.parameters,
-		}
+		BindingWithDefault
 	}
 }
 
@@ -172,9 +156,7 @@ impl ParseArrayPattern<BindingWithDefault> for ArrayBinding {
 // let { eval } = { eval: "foo" };
 // let { 5, 6 } = { eval: "foo" };
 // let { default: , bar } = {};
-struct ObjectBindingPattern {
-	parameters: bool,
-}
+struct ObjectBindingPattern;
 
 impl ParseObjectPattern for ObjectBindingPattern {
 	fn unknown_pattern_kind(&self) -> SyntaxKind {
@@ -224,7 +206,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
 			parse_object_member_name(p).or_missing_with_error(p, expected_object_member_name);
 			if p.expect_required(T![:]) {
 				// TODO
-				parse_binding(p, self.parameters).or_missing_with_error(p, expected_pattern);
+				parse_binding(p).or_missing_with_error(p, expected_pattern);
 			} else {
 				p.missing();
 			}
@@ -250,7 +232,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
 			let m = p.start();
 			p.bump(T![...]);
 
-			let inner = parse_binding(p, self.parameters);
+			let inner = parse_binding(p);
 
 			if let Present(mut inner) = inner {
 				if inner.kind() != JS_IDENTIFIER_BINDING {

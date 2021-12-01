@@ -24,7 +24,7 @@ pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
 		}
 	}
 
-	parse_binding_with_optional_default(p, true)
+	parse_binding_with_optional_default(p)
 }
 
 // test parameter_list
@@ -67,7 +67,7 @@ pub(super) fn parse_parameters_list(
 		if p.at(T![...]) {
 			let m = p.start();
 			p.bump_any();
-			parse_binding(p, true).or_missing_with_error(p, expected_pattern);
+			parse_binding(p).or_missing_with_error(p, expected_pattern);
 
 			// rest patterns cannot be optional: `...foo?: number[]`
 			if p.at(T![?]) {

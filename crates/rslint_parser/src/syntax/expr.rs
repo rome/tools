@@ -690,8 +690,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			if temp.at(T![...]) {
 				let m = temp.start();
 				temp.bump_any();
-				parse_binding(&mut *temp, false)
-					.or_missing_with_error(&mut *temp, expected_pattern);
+				parse_binding(&mut *temp).or_missing_with_error(&mut *temp, expected_pattern);
 				if temp.eat(T![:]) {
 					if let Some(mut ty) = ts_type(&mut *temp) {
 						ty.err_if_not_ts(

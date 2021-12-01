@@ -2,8 +2,8 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
-use super::expr::{expr, expr_or_assignment, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::binding::*;
+use super::expr::{expr, expr_or_assignment, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use};
@@ -12,7 +12,7 @@ use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::syntax::assignment_target::{
 	expression_to_assignment_target, SimpleAssignmentTargetExprKind,
 };
-use crate::syntax::class::parse_class_declaration;
+use crate::syntax::class::{parse_class_declaration, parse_equal_value_clause};
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_pattern;
@@ -793,10 +793,12 @@ pub(crate) fn variable_declarator(
 ) -> Option<CompletedMarker> {
 	p.state.should_record_names = is_const.is_some() || is_let;
 	let m = p.start();
-	if let Present(pattern) = parse_binding(p, false) {
-		let pat_m = pattern.undo_completion(p);
-		p.state.should_record_names = false;
-		let kind = pattern.kind();
+	let id = parse_binding(p);
+	p.state.should_record_names = false;
+
+	if let Present(binding) = id {
+		let pat_m = binding.undo_completion(p);
+		let kind = binding.kind();
 
 		let cur = p.cur_tok().range;
 		let opt = p.eat(T![!]);
@@ -831,10 +833,11 @@ pub(crate) fn variable_declarator(
 		}
 
 		let marker = pat_m.complete(p, kind);
-
-		if p.at(T![=]) {
-			variable_initializer(p);
-		} else if marker.kind() != JS_IDENTIFIER_BINDING && !for_stmt && !p.state.in_declare {
+		let initializer = parse_equal_value_clause(p).or_missing(p);
+		if initializer.is_none()
+			&& marker.kind() != JS_IDENTIFIER_BINDING
+			&& !for_stmt && !p.state.in_declare
+		{
 			let err = p
 				.err_builder("Object and Array patterns require initializers")
 				.primary(
@@ -844,7 +847,7 @@ pub(crate) fn variable_declarator(
 
 			p.error(err);
 		// FIXME: does ts allow const var declarations without initializers in .d.ts files?
-		} else if is_const.is_some() && !for_stmt && !p.state.in_declare {
+		} else if initializer.is_none() && is_const.is_some() && !for_stmt && !p.state.in_declare {
 			let err = p
 				.err_builder("Const var declarations must have an initialized value")
 				.primary(marker.range(p), "this variable needs to be initialized");
@@ -1218,7 +1221,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_any(); // bump (
 
-	let pattern_marker = parse_binding(p, false).or_missing_with_error(p, expected_pattern);
+	let pattern_marker = parse_binding(p).or_missing_with_error(p, expected_pattern);
 	let pattern_kind = pattern_marker.map(|x| x.kind());
 
 	if p.at(T![:]) {
