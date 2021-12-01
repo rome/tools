@@ -8,9 +8,6 @@ JsRoot {
                 type_parameters: missing (optional),
                 parameter_list: JsIdentifierBinding {
                     name_token: IDENT@0..14 "foo" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
                 },
                 fat_arrow_token: FAT_ARROW@14..17 "=>" [] [Whitespace(" ")],
                 return_type: missing (optional),
@@ -23,9 +20,6 @@ JsRoot {
                 type_parameters: missing (optional),
                 parameter_list: JsIdentifierBinding {
                     name_token: IDENT@19..26 "yield" [Whitespace("\n")] [Whitespace(" ")],
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
                 },
                 fat_arrow_token: FAT_ARROW@26..29 "=>" [] [Whitespace(" ")],
                 return_type: missing (optional),
@@ -38,9 +32,6 @@ JsRoot {
                 type_parameters: missing (optional),
                 parameter_list: JsIdentifierBinding {
                     name_token: IDENT@31..38 "await" [Whitespace("\n")] [Whitespace(" ")],
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
                 },
                 fat_arrow_token: FAT_ARROW@38..41 "=>" [] [Whitespace(" ")],
                 return_type: missing (optional),
@@ -53,9 +44,6 @@ JsRoot {
                 type_parameters: missing (optional),
                 parameter_list: JsIdentifierBinding {
                     name_token: IDENT@43..48 "foo" [Whitespace("\n")] [Whitespace(" ")],
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
                 },
                 fat_arrow_token: FAT_ARROW@48..50 "=>" [] [],
                 return_type: missing (optional),

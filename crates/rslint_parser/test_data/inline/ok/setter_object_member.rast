@@ -9,9 +9,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
@@ -26,9 +23,6 @@ JsRoot {
                                         l_paren_token: L_PAREN@18..19 "(" [] [],
                                         parameter: JsIdentifierBinding {
                                             name_token: IDENT@19..24 "value" [] [],
-                                            question_mark_token: missing (optional),
-                                            excl_token: missing (optional),
-                                            ty: missing (optional),
                                         },
                                         r_paren_token: R_PAREN@24..26 ")" [] [Whitespace(" ")],
                                         body: JsFunctionBody {
@@ -47,9 +41,6 @@ JsRoot {
                                         l_paren_token: L_PAREN@43..44 "(" [] [],
                                         parameter: JsIdentifierBinding {
                                             name_token: IDENT@44..49 "value" [] [],
-                                            question_mark_token: missing (optional),
-                                            excl_token: missing (optional),
-                                            ty: missing (optional),
                                         },
                                         r_paren_token: R_PAREN@49..51 ")" [] [Whitespace(" ")],
                                         body: JsFunctionBody {
@@ -75,9 +66,6 @@ JsRoot {
                                         l_paren_token: L_PAREN@74..75 "(" [] [],
                                         parameter: JsIdentifierBinding {
                                             name_token: IDENT@75..80 "value" [] [],
-                                            question_mark_token: missing (optional),
-                                            excl_token: missing (optional),
-                                            ty: missing (optional),
                                         },
                                         r_paren_token: R_PAREN@80..82 ")" [] [Whitespace(" ")],
                                         body: JsFunctionBody {
@@ -96,9 +84,6 @@ JsRoot {
                                         l_paren_token: L_PAREN@95..96 "(" [] [],
                                         parameter: JsIdentifierBinding {
                                             name_token: IDENT@96..101 "value" [] [],
-                                            question_mark_token: missing (optional),
-                                            excl_token: missing (optional),
-                                            ty: missing (optional),
                                         },
                                         r_paren_token: R_PAREN@101..103 ")" [] [Whitespace(" ")],
                                         body: JsFunctionBody {

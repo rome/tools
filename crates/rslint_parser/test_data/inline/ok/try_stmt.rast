@@ -32,9 +32,6 @@ JsRoot {
                     l_paren_token: L_PAREN@29..30 "(" [] [],
                     binding: JsIdentifierBinding {
                         name_token: IDENT@30..31 "e" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                     r_paren_token: R_PAREN@31..33 ")" [] [Whitespace(" ")],
                 },
@@ -83,9 +80,6 @@ JsRoot {
                     l_paren_token: L_PAREN@76..77 "(" [] [],
                     binding: JsIdentifierBinding {
                         name_token: IDENT@77..78 "e" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                     r_paren_token: R_PAREN@78..80 ")" [] [Whitespace(" ")],
                 },

@@ -98,9 +98,6 @@ JsRoot {
             class_token: CLASS_KW@73..80 "class" [Whitespace("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@80..82 "A" [] [Whitespace(" ")],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
@@ -117,9 +114,6 @@ JsRoot {
             class_token: CLASS_KW@108..115 "class" [Whitespace("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@115..117 "A" [] [Whitespace(" ")],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: JsExtendsClause {

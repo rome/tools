@@ -91,9 +91,6 @@ JsRoot {
                                 COMMA@60..62 "," [] [Whitespace(" ")],
                                 JsIdentifierBinding {
                                     name_token: IDENT@62..79 "other_assignment" [] [Whitespace(" ")],
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
                                 },
                             ],
                             r_brack_token: R_BRACK@79..81 "]" [] [Whitespace(" ")],

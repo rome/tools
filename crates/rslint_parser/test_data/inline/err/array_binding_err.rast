@@ -12,16 +12,10 @@ JsRoot {
                             elements: [
                                 JsIdentifierBinding {
                                     name_token: IDENT@5..7 "a" [] [Whitespace(" ")],
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
                                 },
                                 missing separator,
                                 JsIdentifierBinding {
                                     name_token: IDENT@7..8 "b" [] [],
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
                                 },
                             ],
                             r_brack_token: R_BRACK@8..10 "]" [] [Whitespace(" ")],
@@ -139,9 +133,6 @@ JsRoot {
                                         elements: [
                                             JsIdentifierBinding {
                                                 name_token: IDENT@79..81 "a" [] [Whitespace(" ")],
-                                                question_mark_token: missing (optional),
-                                                excl_token: missing (optional),
-                                                ty: missing (optional),
                                             },
                                         ],
                                         r_brack_token: R_BRACK@81..83 "]" [] [Whitespace(" ")],

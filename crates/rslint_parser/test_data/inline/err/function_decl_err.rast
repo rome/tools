@@ -27,9 +27,6 @@ JsRoot {
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@23..27 "foo" [] [Whitespace(" ")],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: missing (required),
@@ -119,9 +116,6 @@ JsRoot {
             star_token: STAR@109..110 "*" [] [],
             id: JsIdentifierBinding {
                 name_token: IDENT@110..113 "foo" [] [],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -193,9 +187,6 @@ JsRoot {
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@166..169 "foo" [] [],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -203,9 +194,6 @@ JsRoot {
                 parameters: [
                     JsIdentifierBinding {
                         name_token: IDENT@170..175 "await" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@175..177 ")" [] [Whitespace(" ")],
@@ -224,9 +212,6 @@ JsRoot {
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@189..192 "foo" [] [],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -463,6 +448,13 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ │     │
   │ │     An explicit or implicit semicolon is expected here...
   │ ...Which is required to end this statement
+
+--
+error[SyntaxError]: return types can only be used in TypeScript files
+  ┌─ function_decl_err.js:9:16
+  │
+9 │ function test(): number {}
+  │                ^^^^^^^^
 
 --
 error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode

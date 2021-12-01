@@ -9,9 +9,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
@@ -20,9 +17,6 @@ JsRoot {
                                 type_parameters: missing (optional),
                                 parameter_list: JsIdentifierBinding {
                                     name_token: IDENT@14..18 "foo" [] [Whitespace(" ")],
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
                                 },
                                 fat_arrow_token: FAT_ARROW@18..21 "=>" [] [Whitespace(" ")],
                                 return_type: missing (optional),
@@ -40,9 +34,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@28..30 "b" [] [Whitespace(" ")],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@30..32 "=" [] [Whitespace(" ")],
@@ -54,9 +45,6 @@ JsRoot {
                                     parameters: [
                                         JsIdentifierBinding {
                                             name_token: IDENT@39..42 "bar" [] [],
-                                            question_mark_token: missing (optional),
-                                            excl_token: missing (optional),
-                                            ty: missing (optional),
                                         },
                                     ],
                                     r_paren_token: R_PAREN@42..44 ")" [] [Whitespace(" ")],
@@ -79,25 +67,16 @@ JsRoot {
                     parameters: [
                         JsIdentifierBinding {
                             name_token: IDENT@57..60 "foo" [] [],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         COMMA@60..62 "," [] [Whitespace(" ")],
                         JsIdentifierBinding {
                             name_token: IDENT@62..65 "bar" [] [],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         COMMA@65..67 "," [] [Whitespace(" ")],
                         JsRestParameter {
                             dotdotdot_token: DOT2@67..70 "..." [] [],
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@70..73 "baz" [] [],
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
                             },
                         },
                     ],

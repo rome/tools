@@ -6,9 +6,6 @@ JsRoot {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..10 "foo" [] [Whitespace(" ")],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: missing (optional),
@@ -20,9 +17,6 @@ JsRoot {
             class_token: CLASS_KW@12..19 "class" [Whitespace("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@19..23 "foo" [] [Whitespace(" ")],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
@@ -39,9 +33,6 @@ JsRoot {
             class_token: CLASS_KW@37..44 "class" [Whitespace("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@44..48 "foo" [] [Whitespace(" ")],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: JsExtendsClause {

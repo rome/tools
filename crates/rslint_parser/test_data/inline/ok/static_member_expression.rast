@@ -78,9 +78,6 @@ JsRoot {
             class_token: CLASS_KW@53..61 "class" [Whitespace("\n\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@61..66 "Test" [] [Whitespace(" ")],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: missing (optional),
@@ -116,9 +113,6 @@ JsRoot {
                         parameters: [
                             JsIdentifierBinding {
                                 name_token: IDENT@81..86 "other" [] [],
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@86..88 ")" [] [Whitespace(" ")],

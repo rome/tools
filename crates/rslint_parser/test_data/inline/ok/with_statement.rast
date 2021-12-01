@@ -8,9 +8,6 @@ JsRoot {
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@20..21 "f" [] [],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -18,16 +15,10 @@ JsRoot {
                 parameters: [
                     JsIdentifierBinding {
                         name_token: IDENT@22..23 "x" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                     COMMA@23..25 "," [] [Whitespace(" ")],
                     JsIdentifierBinding {
                         name_token: IDENT@25..26 "o" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@26..28 ")" [] [Whitespace(" ")],

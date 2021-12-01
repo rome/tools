@@ -13,9 +13,6 @@ JsRoot {
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@6..8 "a" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: missing (optional),
                                 },
@@ -23,9 +20,6 @@ JsRoot {
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@8..10 "b" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: missing (optional),
                                 },
@@ -87,9 +81,6 @@ JsRoot {
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@45..47 "a" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: missing (optional),
                                 },

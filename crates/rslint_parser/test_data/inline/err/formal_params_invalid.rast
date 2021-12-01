@@ -13,9 +13,6 @@ JsRoot {
                 parameters: [
                     JsIdentifierBinding {
                         name_token: IDENT@10..11 "a" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                     missing separator,
                     JsUnknownBinding {
@@ -28,9 +25,6 @@ JsRoot {
                     COMMA@13..15 "," [] [Whitespace(" ")],
                     JsIdentifierBinding {
                         name_token: IDENT@15..16 "c" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@16..18 ")" [] [Whitespace(" ")],

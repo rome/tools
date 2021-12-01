@@ -165,9 +165,6 @@ JsRoot {
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@112..116 "bar" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: missing (optional),
                                 },

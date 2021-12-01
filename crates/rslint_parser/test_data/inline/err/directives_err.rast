@@ -8,9 +8,6 @@ JsRoot {
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@20..24 "test" [] [],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -34,9 +31,6 @@ JsRoot {
                         star_token: missing (optional),
                         id: JsIdentifierBinding {
                             name_token: IDENT@54..61 "inner_a" [] [],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         type_parameters: missing (optional),
                         parameter_list: JsParameterList {
@@ -63,9 +57,6 @@ JsRoot {
                         star_token: missing (optional),
                         id: JsIdentifierBinding {
                             name_token: IDENT@96..103 "inner_b" [] [],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         type_parameters: missing (optional),
                         parameter_list: JsParameterList {
@@ -84,9 +75,6 @@ JsRoot {
                                     star_token: missing (optional),
                                     id: JsIdentifierBinding {
                                         name_token: IDENT@119..130 "inner_inner" [] [],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     type_parameters: missing (optional),
                                     parameter_list: JsParameterList {

@@ -6,9 +6,6 @@ JsRoot {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..10 "foo" [] [Whitespace(" ")],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: missing (optional),

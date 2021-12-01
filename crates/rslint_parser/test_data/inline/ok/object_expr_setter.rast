@@ -9,9 +9,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "b" [] [Whitespace(" ")],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
@@ -30,9 +27,6 @@ JsRoot {
                                         l_paren_token: L_PAREN@20..21 "(" [] [],
                                         parameter: JsIdentifierBinding {
                                             name_token: IDENT@21..24 "bar" [] [],
-                                            question_mark_token: missing (optional),
-                                            excl_token: missing (optional),
-                                            ty: missing (optional),
                                         },
                                         r_paren_token: R_PAREN@24..26 ")" [] [Whitespace(" ")],
                                         body: JsFunctionBody {

@@ -22,9 +22,6 @@ JsRoot {
             star_token: STAR@40..41 "*" [] [],
             id: JsIdentifierBinding {
                 name_token: IDENT@41..44 "foo" [] [],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -140,9 +137,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@115..116 "a" [] [],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: missing (optional),
                     },

@@ -118,9 +118,6 @@ JsRoot {
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@82..99 "other_assignment" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: missing (optional),
                                 },

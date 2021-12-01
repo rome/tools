@@ -83,9 +83,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@84..86 "a" [] [Whitespace(" ")],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@86..88 "=" [] [Whitespace(" ")],

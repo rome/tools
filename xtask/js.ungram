@@ -720,9 +720,6 @@ JsAnyBinding =
 //     ^               ^^^^
 JsIdentifierBinding =
 	name: 'ident'
-	'?'?
-	'!'?
-	ty: TsTypeAnnotation?
 
 // [ a = "b"] = [];
 //   ^^^^^^^

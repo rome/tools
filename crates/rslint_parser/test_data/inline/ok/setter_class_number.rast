@@ -6,9 +6,6 @@ JsRoot {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..14 "Setters" [] [Whitespace(" ")],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: missing (optional),
@@ -25,9 +22,6 @@ JsRoot {
                     l_paren_token: L_PAREN@24..25 "(" [] [],
                     parameter: JsIdentifierBinding {
                         name_token: IDENT@25..26 "a" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                     r_paren_token: R_PAREN@26..28 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -48,9 +42,6 @@ JsRoot {
                     l_paren_token: L_PAREN@42..43 "(" [] [],
                     parameter: JsIdentifierBinding {
                         name_token: IDENT@43..44 "a" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                     r_paren_token: R_PAREN@44..46 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -71,9 +62,6 @@ JsRoot {
                     l_paren_token: L_PAREN@64..65 "(" [] [],
                     parameter: JsIdentifierBinding {
                         name_token: IDENT@65..66 "a" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                     r_paren_token: R_PAREN@66..68 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -94,9 +82,6 @@ JsRoot {
                     l_paren_token: L_PAREN@81..82 "(" [] [],
                     parameter: JsIdentifierBinding {
                         name_token: IDENT@82..83 "a" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                     r_paren_token: R_PAREN@83..85 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -124,9 +109,6 @@ JsRoot {
                     l_paren_token: L_PAREN@104..105 "(" [] [],
                     parameter: JsIdentifierBinding {
                         name_token: IDENT@105..106 "a" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                     r_paren_token: R_PAREN@106..108 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -147,9 +129,6 @@ JsRoot {
                     l_paren_token: L_PAREN@117..118 "(" [] [],
                     parameter: JsIdentifierBinding {
                         name_token: IDENT@118..119 "a" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                     r_paren_token: R_PAREN@119..121 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -171,9 +150,6 @@ JsRoot {
                     l_paren_token: L_PAREN@137..138 "(" [] [],
                     parameter: JsIdentifierBinding {
                         name_token: IDENT@138..139 "a" [] [],
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
                     },
                     r_paren_token: R_PAREN@139..141 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -190,9 +166,6 @@ JsRoot {
             class_token: CLASS_KW@145..152 "class" [Whitespace("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@152..163 "NotSetters" [] [Whitespace(" ")],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             implements_clause: missing (optional),
             extends_clause: missing (optional),
@@ -213,9 +186,6 @@ JsRoot {
                         parameters: [
                             JsIdentifierBinding {
                                 name_token: IDENT@170..171 "a" [] [],
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@171..173 ")" [] [Whitespace(" ")],
@@ -243,9 +213,6 @@ JsRoot {
                         parameters: [
                             JsIdentifierBinding {
                                 name_token: IDENT@187..188 "a" [] [],
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@188..190 ")" [] [Whitespace(" ")],
@@ -273,9 +240,6 @@ JsRoot {
                         parameters: [
                             JsIdentifierBinding {
                                 name_token: IDENT@205..206 "a" [] [],
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@206..208 ")" [] [Whitespace(" ")],

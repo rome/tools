@@ -14,9 +14,6 @@ JsRoot {
                                     dotdotdot_token: DOT2@6..9 "..." [] [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@9..14 "abcd" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                 },
                             ],
@@ -48,16 +45,10 @@ JsRoot {
                                         elements: [
                                             JsIdentifierBinding {
                                                 name_token: IDENT@31..32 "x" [] [],
-                                                question_mark_token: missing (optional),
-                                                excl_token: missing (optional),
-                                                ty: missing (optional),
                                             },
                                             COMMA@32..34 "," [] [Whitespace(" ")],
                                             JsIdentifierBinding {
                                                 name_token: IDENT@34..35 "y" [] [],
-                                                question_mark_token: missing (optional),
-                                                excl_token: missing (optional),
-                                                ty: missing (optional),
                                             },
                                         ],
                                         r_brack_token: R_BRACK@35..37 "]" [] [Whitespace(" ")],
@@ -94,9 +85,6 @@ JsRoot {
                                                 dotdotdot_token: DOT2@55..58 "..." [] [],
                                                 binding: JsIdentifierBinding {
                                                     name_token: IDENT@58..60 "a" [] [Whitespace(" ")],
-                                                    question_mark_token: missing (optional),
-                                                    excl_token: missing (optional),
-                                                    ty: missing (optional),
                                                 },
                                             },
                                         ],

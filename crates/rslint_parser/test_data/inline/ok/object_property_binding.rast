@@ -17,9 +17,6 @@ JsRoot {
                                     colon_token: COLON@9..11 ":" [] [Whitespace(" ")],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@11..16 "bar" [] [Whitespace("  ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: missing (optional),
                                 },
@@ -54,9 +51,6 @@ JsRoot {
                                     colon_token: COLON@32..34 ":" [] [Whitespace(" ")],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@34..38 "bar" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: JsEqualValueClause {
                                         eq_token: EQ@38..40 "=" [] [Whitespace(" ")],

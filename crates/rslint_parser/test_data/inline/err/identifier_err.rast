@@ -18,9 +18,6 @@ JsRoot {
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@22..26 "test" [] [],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -50,9 +47,6 @@ JsRoot {
             star_token: STAR@45..47 "*" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@47..51 "test" [] [],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {

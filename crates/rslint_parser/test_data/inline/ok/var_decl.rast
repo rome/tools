@@ -9,9 +9,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
@@ -35,9 +32,6 @@ JsRoot {
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@17..20 "foo" [] [],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: missing (optional),
                                 },
@@ -45,9 +39,6 @@ JsRoot {
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@22..26 "bar" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: missing (optional),
                                 },
@@ -72,9 +63,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@37..40 "bar" [] [],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: missing (optional),
                     },
@@ -82,9 +70,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@42..45 "foo" [] [],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: missing (optional),
                     },
@@ -99,9 +84,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@53..55 "a" [] [Whitespace(" ")],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@55..57 "=" [] [Whitespace(" ")],
@@ -132,9 +114,6 @@ JsRoot {
                                         elements: [
                                             JsIdentifierBinding {
                                                 name_token: IDENT@74..77 "bar" [] [],
-                                                question_mark_token: missing (optional),
-                                                excl_token: missing (optional),
-                                                ty: missing (optional),
                                             },
                                         ],
                                         r_brack_token: R_BRACK@77..78 "]" [] [],
@@ -145,9 +124,6 @@ JsRoot {
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@80..84 "baz" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: missing (optional),
                                 },
@@ -174,9 +150,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@96..100 "foo" [] [Whitespace(" ")],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@100..102 "=" [] [Whitespace(" ")],
@@ -189,9 +162,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@111..115 "bar" [] [Whitespace(" ")],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@115..117 "=" [] [Whitespace(" ")],
@@ -204,9 +174,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@126..132 "third" [] [Whitespace(" ")],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@132..134 "=" [] [Whitespace(" ")],
@@ -219,9 +186,6 @@ JsRoot {
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
                             name_token: IDENT@143..150 "fourth" [] [Whitespace(" ")],
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@150..152 "=" [] [Whitespace(" ")],

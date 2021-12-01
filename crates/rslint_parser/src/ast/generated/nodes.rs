@@ -1228,11 +1228,6 @@ impl JsIdentifierBinding {
 	pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![ident])
 	}
-	pub fn question_mark_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [?])
-	}
-	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
-	pub fn ty(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeParams {
@@ -5067,12 +5062,6 @@ impl std::fmt::Debug for JsIdentifierBinding {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsIdentifierBinding")
 			.field("name_token", &support::DebugSyntaxResult(self.name_token()))
-			.field(
-				"question_mark_token",
-				&support::DebugOptionalNode(self.question_mark_token()),
-			)
-			.field("excl_token", &support::DebugOptionalNode(self.excl_token()))
-			.field("ty", &support::DebugOptionalNode(self.ty()))
 			.finish()
 	}
 }

@@ -14,9 +14,6 @@ JsRoot {
                                     dotdotdot_token: DOT2@6..9 "..." [] [],
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@9..14 "abcd" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                 },
                             ],
@@ -53,9 +50,6 @@ JsRoot {
                                                 dotdotdot_token: DOT2@32..35 "..." [] [],
                                                 binding: JsIdentifierBinding {
                                                     name_token: IDENT@35..37 "a" [] [Whitespace(" ")],
-                                                    question_mark_token: missing (optional),
-                                                    excl_token: missing (optional),
-                                                    ty: missing (optional),
                                                 },
                                             },
                                         ],

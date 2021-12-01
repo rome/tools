@@ -13,9 +13,6 @@ JsRoot {
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@6..7 "a" [] [],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: missing (optional),
                                 },
@@ -23,9 +20,6 @@ JsRoot {
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@9..11 "b" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: missing (optional),
                                 },
@@ -54,9 +48,6 @@ JsRoot {
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@23..25 "a" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: JsEqualValueClause {
                                         eq_token: EQ@25..27 "=" [] [Whitespace(" ")],
@@ -69,9 +60,6 @@ JsRoot {
                                 JsShorthandPropertyBinding {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@38..40 "b" [] [Whitespace(" ")],
-                                        question_mark_token: missing (optional),
-                                        excl_token: missing (optional),
-                                        ty: missing (optional),
                                     },
                                     init: JsEqualValueClause {
                                         eq_token: EQ@40..42 "=" [] [Whitespace(" ")],

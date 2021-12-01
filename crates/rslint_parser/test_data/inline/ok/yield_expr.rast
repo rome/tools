@@ -8,9 +8,6 @@ JsRoot {
             star_token: STAR@9..10 "*" [] [],
             id: JsIdentifierBinding {
                 name_token: IDENT@10..13 "foo" [] [],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {

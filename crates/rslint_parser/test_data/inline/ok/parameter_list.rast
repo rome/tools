@@ -8,9 +8,6 @@ JsRoot {
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@9..34 "evalInComputedPropertyKey" [] [],
-                question_mark_token: missing (optional),
-                excl_token: missing (optional),
-                ty: missing (optional),
             },
             type_parameters: missing (optional),
             parameter_list: JsParameterList {
@@ -30,9 +27,6 @@ JsRoot {
                                 colon_token: COLON@47..49 ":" [] [Whitespace(" ")],
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@49..57 "ignored" [] [Whitespace(" ")],
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
                                 },
                                 init: missing (optional),
                             },
