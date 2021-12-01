@@ -10,12 +10,13 @@ JsRoot {
                         id: JsObjectBinding {
                             l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
                             properties: [
-                                JsUnknownBinding {
-                                    items: [
-                                        Token(
-                                            JS_NUMBER_LITERAL@6..8 "5" [] [Whitespace(" ")],
-                                        ),
-                                    ],
+                                JsPropertyBinding {
+                                    member: JsLiteralMemberName {
+                                        value: JS_NUMBER_LITERAL@6..8 "5" [] [Whitespace(" ")],
+                                    },
+                                    colon_token: missing (required),
+                                    binding: missing (required),
+                                    init: missing (optional),
                                 },
                             ],
                             r_curly_token: R_CURLY@8..10 "}" [] [Whitespace(" ")],
@@ -102,20 +103,22 @@ JsRoot {
                         id: JsObjectBinding {
                             l_curly_token: L_CURLY@67..69 "{" [] [Whitespace(" ")],
                             properties: [
-                                JsUnknownBinding {
-                                    items: [
-                                        Token(
-                                            JS_NUMBER_LITERAL@69..70 "5" [] [],
-                                        ),
-                                    ],
+                                JsPropertyBinding {
+                                    member: JsLiteralMemberName {
+                                        value: JS_NUMBER_LITERAL@69..70 "5" [] [],
+                                    },
+                                    colon_token: missing (required),
+                                    binding: missing (required),
+                                    init: missing (optional),
                                 },
                                 COMMA@70..72 "," [] [Whitespace(" ")],
-                                JsUnknownBinding {
-                                    items: [
-                                        Token(
-                                            JS_NUMBER_LITERAL@72..74 "6" [] [Whitespace(" ")],
-                                        ),
-                                    ],
+                                JsPropertyBinding {
+                                    member: JsLiteralMemberName {
+                                        value: JS_NUMBER_LITERAL@72..74 "6" [] [Whitespace(" ")],
+                                    },
+                                    colon_token: missing (required),
+                                    binding: missing (required),
+                                    init: missing (optional),
                                 },
                             ],
                             r_curly_token: R_CURLY@74..76 "}" [] [Whitespace(" ")],
@@ -199,8 +202,12 @@ JsRoot {
             0: JS_OBJECT_BINDING@4..10
               0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
               1: LIST@6..8
-                0: JS_UNKNOWN_BINDING@6..8
-                  0: JS_NUMBER_LITERAL@6..8 "5" [] [Whitespace(" ")]
+                0: JS_PROPERTY_BINDING@6..8
+                  0: JS_LITERAL_MEMBER_NAME@6..8
+                    0: JS_NUMBER_LITERAL@6..8 "5" [] [Whitespace(" ")]
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
               2: R_CURLY@8..10 "}" [] [Whitespace(" ")]
       1: (empty)
     1: JS_UNKNOWN_STATEMENT@10..12
@@ -254,11 +261,19 @@ JsRoot {
             0: JS_OBJECT_BINDING@67..76
               0: L_CURLY@67..69 "{" [] [Whitespace(" ")]
               1: LIST@69..74
-                0: JS_UNKNOWN_BINDING@69..70
-                  0: JS_NUMBER_LITERAL@69..70 "5" [] []
+                0: JS_PROPERTY_BINDING@69..70
+                  0: JS_LITERAL_MEMBER_NAME@69..70
+                    0: JS_NUMBER_LITERAL@69..70 "5" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
                 1: COMMA@70..72 "," [] [Whitespace(" ")]
-                2: JS_UNKNOWN_BINDING@72..74
-                  0: JS_NUMBER_LITERAL@72..74 "6" [] [Whitespace(" ")]
+                2: JS_PROPERTY_BINDING@72..74
+                  0: JS_LITERAL_MEMBER_NAME@72..74
+                    0: JS_NUMBER_LITERAL@72..74 "6" [] [Whitespace(" ")]
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
               2: R_CURLY@74..76 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@76..93
               0: EQ@76..78 "=" [] [Whitespace(" ")]
@@ -299,11 +314,11 @@ JsRoot {
       1: SEMICOLON@122..123 ";" [] []
   3: EOF@123..124 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found '5'
-  ┌─ object_binding_pattern.js:1:7
+error[SyntaxError]: expected `:` but instead found `}`
+  ┌─ object_binding_pattern.js:1:9
   │
 1 │ let { 5 } } = { eval: "foo" };
-  │       ^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
+  │         ^ unexpected
 
 --
 error[SyntaxError]: Object and Array patterns require initializers
@@ -334,18 +349,18 @@ error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
   │       ^^^^
 
 --
-error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found '5'
-  ┌─ object_binding_pattern.js:3:7
+error[SyntaxError]: expected `:` but instead found `,`
+  ┌─ object_binding_pattern.js:3:8
   │
 3 │ let { 5, 6 } = { eval: "foo" };
-  │       ^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
+  │        ^ unexpected
 
 --
-error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found '6'
-  ┌─ object_binding_pattern.js:3:10
+error[SyntaxError]: expected `:` but instead found `}`
+  ┌─ object_binding_pattern.js:3:12
   │
 3 │ let { 5, 6 } = { eval: "foo" };
-  │          ^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
+  │            ^ unexpected
 
 --
 error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found 'default:'

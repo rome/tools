@@ -1,15 +1,15 @@
 //! Class and function declarations.
 
-use super::expr::expr_or_assignment;
 use super::binding::parse_binding;
+use super::expr::expr_or_assignment;
 use super::typescript::*;
 #[allow(deprecated)]
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::ParserProgress;
+use crate::syntax::binding::parse_binding_with_optional_default;
 use crate::syntax::function::function_body;
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_pattern;
-use crate::syntax::binding::parse_binding_with_optional_default;
 use crate::{SyntaxKind::*, *};
 
 #[allow(clippy::unnecessary_unwrap)]
@@ -27,6 +27,8 @@ pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
 	parse_binding_with_optional_default(p, true)
 }
 
+// test parameter_list
+// function evalInComputedPropertyKey({ [computed]: ignored }) {}
 /// parse the whole list of parameters, brackets included
 pub(super) fn parse_parameter_list(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T!['(']) {

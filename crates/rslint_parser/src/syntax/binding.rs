@@ -1,12 +1,12 @@
 #[allow(deprecated)]
 use crate::syntax::class::parse_equal_value_clause;
-use crate::syntax::expr::{parse_identifier, EXPR_RECOVERY_SET};
+use crate::syntax::expr::parse_identifier;
 use crate::syntax::js_parse_error::{
 	expected_assignment_target, expected_identifier, expected_object_member_name, expected_pattern,
 	expected_property_binding,
 };
 use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
-use crate::syntax::pattern::{ArrayPattern, ObjectPattern, PatternWithDefault};
+use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
@@ -26,6 +26,13 @@ pub(crate) fn parse_binding(p: &mut Parser, parameters: bool) -> ParsedSyntax {
 		T![ident] | T![yield] | T![await] => parse_identifier_binding(p),
 		_ => Absent,
 	}
+}
+
+pub(crate) fn parse_binding_with_optional_default(
+	p: &mut Parser,
+	parameters: bool,
+) -> ParsedSyntax {
+	BindingWithDefault { parameters }.parse_pattern_with_optional_default(p)
 }
 
 // test_err binding_identifier_invalid
@@ -90,18 +97,11 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 	}
 }
 
-pub(crate) fn parse_binding_with_optional_default(
-	p: &mut Parser,
-	parameters: bool,
-) -> ParsedSyntax {
-	BindingWithDefault { parameters }.parse_pattern_with_optional_default(p)
-}
-
 struct BindingWithDefault {
 	parameters: bool,
 }
 
-impl PatternWithDefault for BindingWithDefault {
+impl ParseWithDefaultPattern for BindingWithDefault {
 	fn pattern_with_default_kind(&self) -> SyntaxKind {
 		JS_BINDING_WITH_DEFAULT
 	}
@@ -142,7 +142,7 @@ struct ArrayBinding {
 // let [ ... ] = a;
 // let [ ...c = "default" ] = a;
 // let [ ...rest, other_assignment ] = a;
-impl ArrayPattern<BindingWithDefault> for ArrayBinding {
+impl ParseArrayPattern<BindingWithDefault> for ArrayBinding {
 	fn unknown_pattern_kind(&self) -> SyntaxKind {
 		JS_UNKNOWN_BINDING
 	}
@@ -176,7 +176,7 @@ struct ObjectBindingPattern {
 	parameters: bool,
 }
 
-impl ObjectPattern for ObjectBindingPattern {
+impl ParseObjectPattern for ObjectBindingPattern {
 	fn unknown_pattern_kind(&self) -> SyntaxKind {
 		JS_UNKNOWN_BINDING
 	}
@@ -197,27 +197,7 @@ impl ObjectPattern for ObjectBindingPattern {
 	// let { foo: , bar } = {}
 	// let { : bar = "test" } = {}
 	// let { , foo: bar } = {}
-	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
-		if !is_at_object_member_name(p) && !p.at_ts(token_set![T![:], T![=]]) {
-			return Absent;
-		}
-
-		let m = p.start();
-		parse_object_member_name(p).or_missing_with_error(p, expected_object_member_name);
-		p.expect_required(T![:]);
-		let parameters_argument = self.parameters;
-		parse_binding(p, parameters_argument).or_missing_with_error(p, expected_pattern);
-		{
-			// TODO remove after migrating expression to `ParsedSyntax`
-			let mut guard = p.with_state(ParserState {
-				expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...]]),
-				..p.state.clone()
-			});
-			parse_equal_value_clause(&mut *guard).or_missing(&mut *guard);
-		}
-		Present(m.complete(p, JS_PROPERTY_BINDING))
-	}
-
+	//
 	// test object_shorthand_property
 	// let { a, b } = c
 	// let { a = "default", b = call() } = c
@@ -226,22 +206,33 @@ impl ObjectPattern for ObjectBindingPattern {
 	// let { a b } = c
 	// let { = "test" } = c
 	// let { , a } = c
-	fn parse_shorthand_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
-		let identifier = parse_identifier_binding(p);
-		if p.at(T![=]) || identifier.is_present() {
-			let shorthand_prop = identifier.precede_or_missing_with_error(p, expected_identifier);
-			{
-				// TODO remove after migrating expression to `ParsedSyntax`
-				let mut guard = p.with_state(ParserState {
-					expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...]]),
-					..p.state.clone()
-				});
-				parse_equal_value_clause(&mut *guard).or_missing(&mut *guard);
-			}
-			Present(shorthand_prop.complete(p, JS_SHORTHAND_PROPERTY_BINDING))
-		} else {
-			Absent
+	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+		if !is_at_object_member_name(p) && !p.at_ts(token_set![T![:], T![=]]) {
+			return Absent;
 		}
+
+		let m = p.start();
+		let checkpoint = p.checkpoint();
+		let identifier_binding = parse_identifier_binding(p);
+
+		let kind = if (p.at(T![=]) || identifier_binding.is_present()) && !p.at(T![:]) {
+			identifier_binding.or_missing_with_error(p, expected_identifier);
+			JS_SHORTHAND_PROPERTY_BINDING
+		} else {
+			p.rewind(checkpoint);
+
+			parse_object_member_name(p).or_missing_with_error(p, expected_object_member_name);
+			if p.expect_required(T![:]) {
+				// TODO
+				parse_binding(p, self.parameters).or_missing_with_error(p, expected_pattern);
+			} else {
+				p.missing();
+			}
+			JS_PROPERTY_BINDING
+		};
+
+		parse_equal_value_clause(p).or_missing(p);
+		Present(m.complete(p, kind))
 	}
 
 	// test rest_property_binding

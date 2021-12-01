@@ -2,13 +2,13 @@ use crate::parser::ParsedSyntax;
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::{
 	conditional_expr, expr, is_at_reference_identifier_member, parse_reference_identifier_member,
-	unary_expr, EXPR_RECOVERY_SET,
+	unary_expr,
 };
 use crate::syntax::js_parse_error::{
 	expected_array_assignment_target_element, expected_assignment_target, expected_identifier,
 	expected_property_assignment_target, expected_simple_assignment_target,
 };
-use crate::syntax::pattern::{ArrayPattern, ObjectPattern, PatternWithDefault};
+use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Parser};
 use crate::{SyntaxKind::*, *};
@@ -109,7 +109,7 @@ pub(crate) fn parse_simple_assignment_target(
 
 struct AssignmentTargetWithDefault;
 
-impl PatternWithDefault for AssignmentTargetWithDefault {
+impl ParseWithDefaultPattern for AssignmentTargetWithDefault {
 	fn pattern_with_default_kind(&self) -> SyntaxKind {
 		JS_ASSIGNMENT_TARGET_WITH_DEFAULT
 	}
@@ -138,7 +138,7 @@ struct ArrayAssignmentTarget;
 // ([ ... ] = a);
 // ([ ...c = "default" ] = a);
 // ([ ...rest, other_assignment ] = a);
-impl ArrayPattern<AssignmentTargetWithDefault> for ArrayAssignmentTarget {
+impl ParseArrayPattern<AssignmentTargetWithDefault> for ArrayAssignmentTarget {
 	fn unknown_pattern_kind(&self) -> SyntaxKind {
 		JS_UNKNOWN_ASSIGNMENT_TARGET
 	}
@@ -201,7 +201,7 @@ struct ObjectAssignmentTarget;
 // ({} = {});
 // ({ bar, baz } = {});
 // ({ bar: [baz = "baz"], foo = "foo", ...rest } = {});
-impl ObjectPattern for ObjectAssignmentTarget {
+impl ParseObjectPattern for ObjectAssignmentTarget {
 	fn unknown_pattern_kind(&self) -> SyntaxKind {
 		JS_UNKNOWN_ASSIGNMENT_TARGET
 	}
@@ -230,49 +230,28 @@ impl ObjectPattern for ObjectAssignmentTarget {
 	// ({:=} = {});
 	// ({ a b } = {});
 	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
-		if !is_at_reference_identifier_member(p) && !p.at_ts(token_set![T![:], T![=]]) {
+		if !is_at_reference_identifier_member(p)
+			&& !p.at_ts(token_set![T![:], T![=], T![ident], T![await], T![yield]])
+		{
 			return Absent;
 		}
 
 		let m = p.start();
-		parse_reference_identifier_member(p).or_missing_with_error(p, expected_identifier);
 
-		p.expect_required(T![:]);
-
-		parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
-			.or_missing_with_error(p, expected_assignment_target);
-
-		{
-			// TODO remove after migrating expression to `ParsedSyntax`
-			let mut guard = p.with_state(ParserState {
-				expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...]]),
-				..p.state.clone()
-			});
-			parse_equal_value_clause(&mut *guard).or_missing(&mut *guard);
-		}
-
-		Present(m.complete(p, JS_OBJECT_PROPERTY_ASSIGNMENT_TARGET))
-	}
-
-	fn parse_shorthand_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
-		let identifier = parse_identifier_assignment_target(p);
-
-		if p.at(T![=]) || identifier.is_present() {
-			let shorthand_prop = identifier.precede_or_missing_with_error(p, expected_identifier);
-
-			{
-				// TODO remove after migrating expression to `ParsedSyntax`
-				let mut guard = p.with_state(ParserState {
-					expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...]]),
-					..p.state.clone()
-				});
-				parse_equal_value_clause(&mut *guard).or_missing(&mut *guard);
-			}
-
-			Present(shorthand_prop.complete(p, JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET))
+		let kind = if p.at(T![:]) || p.nth_at(1, T![:]) {
+			parse_reference_identifier_member(p).or_missing_with_error(p, expected_identifier);
+			p.expect_required(T![:]);
+			parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
+				.or_missing_with_error(p, expected_assignment_target);
+			JS_OBJECT_PROPERTY_ASSIGNMENT_TARGET
 		} else {
-			Absent
-		}
+			parse_identifier_assignment_target(p).or_missing_with_error(p, expected_identifier);
+			JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET
+		};
+
+		parse_equal_value_clause(p).or_missing(p);
+
+		Present(m.complete(p, kind))
 	}
 
 	// test rest_property_assignment_target

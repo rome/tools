@@ -9,7 +9,7 @@ use rslint_syntax::SyntaxKind::{EOF, JS_ARRAY_HOLE, LIST};
 use rslint_syntax::{SyntaxKind, T};
 use std::ops::Range;
 
-pub(crate) trait PatternWithDefault {
+pub(crate) trait ParseWithDefaultPattern {
 	fn parse_pattern_with_optional_default(&self, p: &mut Parser) -> ParsedSyntax {
 		let pattern = self.parse_pattern(p);
 
@@ -29,7 +29,7 @@ pub(crate) trait PatternWithDefault {
 	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax;
 }
 
-pub(crate) trait ArrayPattern<P: PatternWithDefault> {
+pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 	fn parse_array_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		if !p.at(T!['[']) {
 			return Absent;
@@ -41,45 +41,35 @@ pub(crate) trait ArrayPattern<P: PatternWithDefault> {
 		let elements = p.start();
 		let mut progress = ParserProgress::default();
 
-		while !p.at(EOF) && !p.at(T![']']) {
-			progress.assert_progressing(p);
+		{
+			let guard = &mut *p.with_state(ParserState {
+				expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...], T![=]]),
+				..p.state.clone()
+			});
 
-			let recovery = ParseRecovery::new(
-				self.unknown_pattern_kind(),
-				token_set!(EOF, T![,], T![']'], T![=], T![;], T![...]),
-			)
-			.enable_recovery_on_line_break();
+			while !guard.at(EOF) && !guard.at(T![']']) {
+				progress.assert_progressing(guard);
 
-			if let Present(rest) = self.parse_rest_pattern(p) {
-				if validate_rest_pattern(p, rest, T![']'], &recovery, self.unknown_pattern_kind()) {
-					break;
-				}
-			} else {
-				let element = {
-					let mut guard = p.with_state(ParserState {
-						expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![
-							T![,],
-							T![...],
-							T![=]
-						]),
-						..p.state.clone()
-					});
+				let recovery = ParseRecovery::new(
+					self.unknown_pattern_kind(),
+					token_set!(EOF, T![,], T![']'], T![=], T![;], T![...]),
+				)
+				.enable_recovery_on_line_break();
 
-					self.parse_any_array_element(&mut *guard).or_recover(
-						&mut *guard,
-						&recovery,
-						Self::expected_element_error,
-					)
-				};
+				let element = self.parse_any_array_element(guard, &recovery).or_recover(
+					guard,
+					&recovery,
+					Self::expected_element_error,
+				);
 
 				if element.is_err() {
 					// Failed to recover
 					break;
 				}
-			}
 
-			if !p.at(T![']']) {
-				p.expect_required(T![,]);
+				if !guard.at(T![']']) {
+					guard.expect_required(T![,]);
+				}
 			}
 		}
 
@@ -95,9 +85,22 @@ pub(crate) trait ArrayPattern<P: PatternWithDefault> {
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic;
 	fn pattern_with_default(&self) -> P;
 
-	fn parse_any_array_element(&self, p: &mut Parser) -> ParsedSyntax {
+	fn parse_any_array_element(&self, p: &mut Parser, recovery: &ParseRecovery) -> ParsedSyntax {
 		match p.cur() {
 			T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
+			T![...] => match self.parse_rest_pattern(p) {
+				Present(rest_pattern) => {
+					validate_rest_pattern(
+						p,
+						rest_pattern,
+						T![']'],
+						recovery,
+						self.unknown_pattern_kind(),
+					);
+					Present(rest_pattern)
+				}
+				Absent => Absent,
+			},
 			_ => self
 				.pattern_with_default()
 				.parse_pattern_with_optional_default(p),
@@ -123,7 +126,7 @@ pub(crate) trait ArrayPattern<P: PatternWithDefault> {
 	}
 }
 
-pub(crate) trait ObjectPattern {
+pub(crate) trait ParseObjectPattern {
 	fn parse_object_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		if !p.at(T!['{']) {
 			return Absent;
@@ -135,39 +138,34 @@ pub(crate) trait ObjectPattern {
 		let elements = p.start();
 		let mut progress = ParserProgress::default();
 
-		let recovery_set = ParseRecovery::new(
-			self.unknown_pattern_kind(),
-			token_set!(EOF, T![,], T!['}'], T![...], T![;]),
-		)
-		.enable_recovery_on_line_break();
+		{
+			// TODO remove after migrating expression to `ParsedSyntax`
+			let guard = &mut *p.with_state(ParserState {
+				expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...]]),
+				..p.state.clone()
+			});
 
-		while !p.at(T!['}']) {
-			progress.assert_progressing(p);
+			while !guard.at(T!['}']) {
+				progress.assert_progressing(guard);
 
-			if p.at(T![,]) {
-				// missing element
-				p.missing();
-				p.error(self.expected_property_pattern_error(p, p.cur_tok().range));
-				p.bump_any(); // bump ,
-				continue;
-			}
-
-			if let Present(rest) = self.parse_rest_property_pattern(p) {
-				if validate_rest_pattern(
-					p,
-					rest,
-					T!['}'],
-					&recovery_set,
-					self.unknown_pattern_kind(),
-				) {
-					break;
+				if guard.at(T![,]) {
+					// missing element
+					guard.missing();
+					guard.error(self.expected_property_pattern_error(guard, guard.cur_tok().range));
+					guard.bump_any(); // bump ,
+					continue;
 				}
-			} else {
-				let recover_result =
-					self.parse_any_property_pattern(p)
-						.or_recover(p, &recovery_set, |p, range| {
-							self.expected_property_pattern_error(p, range)
-						});
+				let recovery_set = ParseRecovery::new(
+					self.unknown_pattern_kind(),
+					token_set!(EOF, T![,], T!['}'], T![...], T![;]),
+				)
+				.enable_recovery_on_line_break();
+
+				let recover_result = self
+					.parse_any_property_pattern(guard, &recovery_set)
+					.or_recover(guard, &recovery_set, |p, range| {
+						self.expected_property_pattern_error(p, range)
+					});
 
 				if recover_result.is_err() {
 					break;
@@ -177,15 +175,15 @@ pub(crate) trait ObjectPattern {
 					Err(RecoveryError::Eof) => break,
 					Err(RecoveryError::AlreadyRecovered) => {
 						// TODO
-						p.error(expected_assignment_target(p, p.cur_tok().range));
+						guard.error(expected_assignment_target(guard, guard.cur_tok().range));
 						break;
 					}
 					_ => {}
 				}
-			}
 
-			if !p.at(T!['}']) {
-				p.expect_required(T![,]);
+				if !guard.at(T!['}']) {
+					guard.expect_required(T![,]);
+				}
 			}
 		}
 
@@ -200,17 +198,27 @@ pub(crate) trait ObjectPattern {
 
 	fn expected_property_pattern_error(&self, p: &Parser, range: Range<usize>) -> Diagnostic;
 
-	fn parse_any_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
-		if p.at(T![:]) || p.nth_at(1, T![:]) {
-			self.parse_property_pattern(p)
+	fn parse_any_property_pattern(&self, p: &mut Parser, recovery: &ParseRecovery) -> ParsedSyntax {
+		if p.at(T![...]) {
+			match self.parse_rest_property_pattern(p) {
+				Present(rest_pattern) => {
+					validate_rest_pattern(
+						p,
+						rest_pattern,
+						T!['}'],
+						recovery,
+						self.unknown_pattern_kind(),
+					);
+					Present(rest_pattern)
+				}
+				Absent => Absent,
+			}
 		} else {
-			self.parse_shorthand_property_pattern(p)
+			self.parse_property_pattern(p)
 		}
 	}
 
 	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax;
-
-	fn parse_shorthand_property_pattern(&self, p: &mut Parser) -> ParsedSyntax;
 
 	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax;
 }
@@ -222,16 +230,15 @@ pub(crate) trait ObjectPattern {
 /// * the last element
 /// * not followed by a trailing comma
 /// * not have a default value
-#[must_use]
 fn validate_rest_pattern(
 	p: &mut Parser,
 	mut rest: CompletedMarker,
 	end_token: SyntaxKind,
 	recovery: &ParseRecovery,
 	unknown_kind: SyntaxKind,
-) -> bool {
+) {
 	if p.at(end_token) {
-		return true;
+		return;
 	}
 
 	if p.at(T![=]) {
@@ -253,7 +260,7 @@ fn validate_rest_pattern(
 		);
 
 		rest_marker.complete(p, unknown_kind);
-		return false;
+		return;
 	} else if p.at(T![,]) && p.nth_at(1, end_token) {
 		p.error(
 			p.err_builder("rest element may not have a trailing comma")
@@ -268,6 +275,4 @@ fn validate_rest_pattern(
 	}
 
 	rest.change_kind(p, unknown_kind);
-
-	false
 }
