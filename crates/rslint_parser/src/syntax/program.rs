@@ -5,7 +5,7 @@ use super::pat::parse_identifier_binding;
 use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use super::typescript::*;
 use crate::parser::ParserProgress;
-use crate::syntax::class::class_declaration;
+use crate::syntax::class::parse_class_declaration;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::js_parse_error;
 use crate::syntax::object::parse_object_expression;
@@ -385,7 +385,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			} else {
 				p.bump_remap(T![abstract]);
 			}
-			let decl = class_declaration(&mut *p.with_state(ParserState {
+			let decl = parse_class_declaration(&mut *p.with_state(ParserState {
 				in_default: true,
 				..p.state.clone()
 			}));
@@ -405,7 +405,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 
 		if p.at(T![class]) {
 			// TODO: handle possible error later
-			class_declaration(&mut *p.with_state(ParserState {
+			parse_class_declaration(&mut *p.with_state(ParserState {
 				in_default: true,
 				..p.state.clone()
 			}))
@@ -432,7 +432,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 
 	if !only_ty && p.at(T![class]) {
 		// TODO: handle possible error later
-		class_declaration(p).ok().unwrap();
+		parse_class_declaration(p).ok().unwrap();
 	} else if !only_ty
 		// function ...
 		&& (p.at(T![function])

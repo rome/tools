@@ -6,7 +6,7 @@ use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
-use crate::syntax::class::class_declaration;
+use crate::syntax::class::parse_class_declaration;
 use crate::syntax::expr::any_reference_member;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::js_parse_error;
@@ -157,7 +157,7 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 		T![class] => {
 			let m = p.start();
 			p.bump_remap(T![declare]);
-			class_declaration(p)
+			parse_class_declaration(p)
 				.ok()
 				.unwrap()
 				.undo_completion(p)
@@ -229,7 +229,7 @@ pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 			p.error(err);
 			return None;
 		}
-		class_declaration(p)
+		parse_class_declaration(p)
 			.ok()
 			.unwrap()
 			.undo_completion(p)

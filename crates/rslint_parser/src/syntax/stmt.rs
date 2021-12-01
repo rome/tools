@@ -12,7 +12,7 @@ use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::syntax::assignment_target::{
 	expression_to_assignment_target, SimpleAssignmentTargetExprKind,
 };
-use crate::syntax::class::class_declaration;
+use crate::syntax::class::parse_class_declaration;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::js_parse_error;
 use crate::syntax::util::is_at_async_function;
@@ -125,7 +125,7 @@ pub fn parse_statement(
 		T![throw] => parse_throw_statement(p),
 		T![debugger] => parse_debugger_statement(p),
 		T![function] => parse_function_declaration(p),
-		T![class] => class_declaration(p),
+		T![class] => parse_class_declaration(p),
 		T![ident] if is_at_async_function(p, true) => parse_function_declaration(p),
 
 		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
@@ -158,7 +158,7 @@ pub fn parse_statement(
 			);
 
 			if recovered.is_ok() {
-				return recovered.ok();
+				recovered.ok()
 			} else {
 				None
 			}
