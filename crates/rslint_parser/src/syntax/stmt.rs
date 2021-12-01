@@ -8,7 +8,7 @@ use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use};
 #[allow(deprecated)]
-use crate::parser::{ParsedSyntax, ParserProgress};
+use crate::parser::{ParseList, ParsedSyntax, ParserProgress};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_declaration, parse_equal_value_clause};
 use crate::syntax::expr::parse_identifier;
@@ -1105,14 +1105,13 @@ fn parse_switch_clause(
 			p.bump_any();
 			expr(p);
 			p.expect_required(T![:]);
-			let cons_list = p.start();
-			let mut progress = ParserProgress::default();
 
-			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
-				progress.assert_progressing(p);
-				parse_statement(p, None);
-			}
-			cons_list.complete(p, LIST);
+			ParseList::new()
+				.set_condition(|p| !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]))
+				.set_create_element(|p| Present(parse_statement(p, None).unwrap()))
+				.set_list_kind(LIST)
+				.create_list(p)
+				.unwrap();
 			Present(m.complete(p, JS_CASE_CLAUSE))
 		}
 		_ => {
