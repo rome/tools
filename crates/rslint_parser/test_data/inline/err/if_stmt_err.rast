@@ -156,18 +156,18 @@ JsRoot {
       2: R_CURLY@76..77 "}" [] []
   3: EOF@77..78 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected a statement, or a declaration but instead found 'else'
+error[SyntaxError]: expected a statement but instead found 'else'
   ┌─ if_stmt_err.js:1:11
   │
 1 │ if (true) else {}
-  │           ^^^^ Expected a statement, or a declaration here
+  │           ^^^^ Expected a statement here
 
 --
-error[SyntaxError]: expected a statement, or a declaration but instead found 'else'
+error[SyntaxError]: expected a statement but instead found 'else'
   ┌─ if_stmt_err.js:2:11
   │
 2 │ if (true) else
-  │           ^^^^ Expected a statement, or a declaration here
+  │           ^^^^ Expected a statement here
 
 --
 error[SyntaxError]: expected `'('` but instead found `else`
@@ -191,11 +191,11 @@ error[SyntaxError]: expected `')'` but instead found `else`
   │    ^^^^ unexpected
 
 --
-error[SyntaxError]: expected a statement, or a declaration but instead found 'else'
+error[SyntaxError]: expected a statement but instead found 'else'
   ┌─ if_stmt_err.js:3:4
   │
 3 │ if else {}
-  │    ^^^^ Expected a statement, or a declaration here
+  │    ^^^^ Expected a statement here
 
 --
 error[SyntaxError]: Expected an expression, but found none
@@ -212,11 +212,11 @@ error[SyntaxError]: Expected a statement or declaration, but found none
   │          ^ Expected a statement or declaration here
 
 --
-error[SyntaxError]: expected a statement, or a declaration but instead found '}}}'
+error[SyntaxError]: expected a statement but instead found '}}}'
   ┌─ if_stmt_err.js:5:11
   │
 5 │ if (true)}}}} {}
-  │           ^^^ Expected a statement, or a declaration here
+  │           ^^^ Expected a statement here
 
 --
 if (true) else {}

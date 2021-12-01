@@ -201,11 +201,11 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │      ...Which is required to end this statement
 
 --
-error[SyntaxError]: expected a statement, or a declaration but instead found ') =>'
+error[SyntaxError]: expected a statement but instead found ') =>'
   ┌─ paren_or_arrow_expr_invalid_params.js:2:7
   │
 2 │ (a, ,b) => {}
-  │       ^^^^ Expected a statement, or a declaration here
+  │       ^^^^ Expected a statement here
 
 --
 error[SyntaxError]: Expected an expression, but found none

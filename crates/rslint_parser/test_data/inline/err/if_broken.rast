@@ -56,11 +56,11 @@ error[SyntaxError]: Expected a statement or declaration, but found none
   │          ^ Expected a statement or declaration here
 
 --
-error[SyntaxError]: expected a statement, or a declaration but instead found '}}}'
+error[SyntaxError]: expected a statement but instead found '}}}'
   ┌─ if_broken.js:1:11
   │
 1 │ if (true)}}}} {}
-  │           ^^^ Expected a statement, or a declaration here
+  │           ^^^ Expected a statement here
 
 --
 if (true)}}}} {}

@@ -155,11 +155,11 @@ error[SyntaxError]: Expected a statement or declaration, but found none
   │             ^ Expected a statement or declaration here
 
 --
-error[SyntaxError]: expected a statement, or a declaration but instead found ''
+error[SyntaxError]: expected a statement but instead found ''
   ┌─ while_stmt_err.js:5:1
   │
 5 │ 
-  │ ^ Expected a statement, or a declaration here
+  │ ^ Expected a statement here
 
 --
 while true {}

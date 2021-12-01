@@ -894,10 +894,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			// let a = async function() {};
 			// let b = async function foo() {};
 			if p.nth_at(1, T![function]) {
-				parse_function_expression(p)
-					// it's fine to not handle the error the because the check on tokens is done beforehand
-					.or_missing(p)
-					.unwrap()
+				parse_function_expression(p).unwrap()
 			} else {
 				// `async a => {}` and `async (a) => {}`
 				if p.state.potential_arrow_start
@@ -984,9 +981,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		// (foo)
 		T!['('] => paren_or_arrow_expr(p, p.state.potential_arrow_start),
 		T!['['] => array_expr(p),
-		T!['{'] if p.state.allow_object_expr => parse_object_expression(p)
-			.or_missing_with_error(p, js_parse_error::expected_object_expression)
-			.unwrap(),
+		T!['{'] if p.state.allow_object_expr => parse_object_expression(p).unwrap(),
 		T![import] => {
 			let m = p.start();
 			p.bump_any();

@@ -15,7 +15,7 @@ use crate::syntax::assignment_target::{
 use crate::syntax::class::parse_class_declaration;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::js_parse_error;
-use crate::syntax::util::is_at_async_function;
+use crate::syntax::util::{is_at_async_function, LineBreak};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
@@ -99,6 +99,8 @@ pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
 /// caller has to pass a recovery set.
 ///
 /// If not passed, [STMT_RECOVERY_SET] will be used as recovery set
+// TODO: change return type to `ParsedSyntax` once `expr_or_assignment` returns `ParsedSyntax`
+// TODO: move error recovery to callers once `expr_with_semi_recovery` is refactored/gone
 pub fn parse_statement(
 	p: &mut Parser,
 	recovery_set: impl Into<Option<TokenSet>>,
@@ -126,7 +128,7 @@ pub fn parse_statement(
 		T![debugger] => parse_debugger_statement(p),
 		T![function] => parse_function_declaration(p),
 		T![class] => parse_class_declaration(p),
-		T![ident] if is_at_async_function(p, true) => parse_function_declaration(p),
+		T![ident] if is_at_async_function(p, LineBreak::DoCheck) => parse_function_declaration(p),
 
 		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
 			variable_declaration_statement(p)
@@ -148,20 +150,15 @@ pub fn parse_statement(
 					);
 				p.err_and_bump(err, JS_UNKNOWN_STATEMENT);
 			}
-			let recovered = res.or_recover(
+			res.or_recover(
 				p,
 				ParseRecovery::new(
 					JS_UNKNOWN_STATEMENT,
 					recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
 				),
 				js_parse_error::expected_statement,
-			);
-
-			if recovered.is_ok() {
-				recovered.ok()
-			} else {
-				None
-			}
+			)
+			.ok()
 		}
 		Present(marker) => Some(marker),
 	}
@@ -735,19 +732,20 @@ pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err var_decl_err
 	// var a =;
 	// const a = 5 let b = 5;
-	let m = p.start();
 	let start = p.cur_tok().range.start;
 
-	parse_variable_declaration(p, false).or_missing(p);
-
-	semi(p, start..p.cur_tok().range.start);
-
-	Present(m.complete(p, JS_VARIABLE_DECLARATION_STATEMENT))
+	let declaration = parse_variable_declaration(p, false)
+		.or_missing_with_error(p, js_parse_error::expected_variable);
+	if let Some(declaration) = declaration {
+		let m = declaration.precede(p);
+		semi(p, start..p.cur_tok().range.start);
+		Present(m.complete(p, JS_VARIABLE_DECLARATION_STATEMENT))
+	} else {
+		Absent
+	}
 }
 
 /// Parses a list of JS_VARIABLE_DECLARATION
-///
-/// Error handling is delegated to the subsequent functions, so it's safe to call `or_missing`
 fn parse_variable_declaration(p: &mut Parser, no_semi: bool) -> ParsedSyntax {
 	let m = p.start();
 	let mut is_const = None;
@@ -773,6 +771,8 @@ fn parse_variable_declaration(p: &mut Parser, no_semi: bool) -> ParsedSyntax {
 				.primary(p.cur_tok().range, "");
 
 			p.error(err);
+			m.abandon(p);
+			return Absent;
 		}
 	}
 
@@ -880,17 +880,23 @@ fn variable_initializer(p: &mut Parser) {
 // test do_while_stmtR
 // do { } while (true)
 // do throw Error("foo") while (true)
+// do { break; } while (true)
 pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err do_while_stmt_err
 	// do while (true)
 	// do while ()
 	// do while true
+
+	// test_err do_while_no_continue_break
+	// do { } break (continue)
+	// do { } continue (break)
 	if !p.at(T![do]) {
 		return Absent;
 	}
 	let m = p.start();
 	let start = p.cur_tok().range.start;
 	p.bump_any(); // do keyword
+
 	let mut guard = p.with_state(ParserState {
 		continue_allowed: true,
 		break_allowed: true,
@@ -912,9 +918,7 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 			include_in: false,
 			..p.state.clone()
 		});
-		let decl = parse_variable_declaration(&mut *guard, true)
-			.or_missing(&mut *guard)
-			.unwrap();
+		let decl = parse_variable_declaration(&mut *guard, true).unwrap();
 		drop(guard);
 
 		if p.at(T![in]) || p.cur_src() == "of" {

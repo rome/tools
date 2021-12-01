@@ -7,10 +7,9 @@ use super::typescript::*;
 use crate::parser::ParserProgress;
 use crate::syntax::class::parse_class_declaration;
 use crate::syntax::function::parse_function_declaration;
-use crate::syntax::js_parse_error;
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::directives;
-use crate::syntax::util::is_at_async_function;
+use crate::syntax::util::{is_at_async_function, LineBreak};
 use crate::ParsedSyntax::Present;
 use crate::{SyntaxKind::*, *};
 use syntax::stmt::FOLLOWS_LET;
@@ -404,21 +403,18 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		}
 
 		if p.at(T![class]) {
-			// TODO: handle possible error later
 			parse_class_declaration(&mut *p.with_state(ParserState {
 				in_default: true,
 				..p.state.clone()
 			}))
-			.ok()
 			.unwrap();
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
 
-		if is_at_async_function(p, true) {
-			parse_function_declaration(p)
-				// it's fine to not handle the error the because the check on tokens is done beforehand
-				.or_missing(p);
-			return m.complete(p, EXPORT_DEFAULT_DECL);
+		if is_at_async_function(p, LineBreak::DoCheck) {
+			if let Present(_) = parse_function_declaration(p) {
+				return m.complete(p, EXPORT_DEFAULT_DECL);
+			}
 		}
 
 		if p.cur_src() == "from" || (p.at(T![,]) && p.nth_at(1, T!['{'])) {
@@ -431,17 +427,14 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	}
 
 	if !only_ty && p.at(T![class]) {
-		// TODO: handle possible error later
-		parse_class_declaration(p).ok().unwrap();
+		parse_class_declaration(p).unwrap();
 	} else if !only_ty
 		// function ...
 		&& (p.at(T![function])
 			||
-		is_at_async_function(p, true))
+		is_at_async_function(p, LineBreak::DoCheck))
 	{
-		parse_function_declaration(p)
-			// it's fine to not handle the error the because the check on tokens is done beforehand
-			.or_missing(p);
+		parse_function_declaration(p).unwrap();
 	} else if !only_ty && p.at(T![const]) && p.nth_src(1) == "enum" {
 		ts_enum(p).err_if_not_ts(p, "enums can only be used in TypeScript files");
 	} else if !only_ty
@@ -449,8 +442,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			|| p.at(T![const])
 			|| (p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1))))
 	{
-		variable_declaration_statement(p)
-			.or_missing_with_error(p, js_parse_error::expected_variable_declaration);
+		variable_declaration_statement(p).unwrap();
 	} else {
 		let m = p.start();
 

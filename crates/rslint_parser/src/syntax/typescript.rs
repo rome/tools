@@ -150,10 +150,7 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 		..p.state.clone()
 	});
 	Some(match p.nth(1) {
-		T![function] => parse_function_declaration(p)
-			// it's fine to not handle the error the because the check on tokens is done beforehand
-			.or_missing(p)
-			.unwrap(),
+		T![function] => parse_function_declaration(p).unwrap(),
 		T![class] => {
 			let m = p.start();
 			p.bump_remap(T![declare]);
@@ -175,7 +172,6 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 			p.bump_remap(T![declare]);
 			// unwrap the marker so its children go to `m`
 			variable_declaration_statement(p)
-				.or_missing_with_error(p, js_parse_error::expected_variable_declaration)
 				.unwrap()
 				.undo_completion(p)
 				.abandon(p);
@@ -185,7 +181,6 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 			let m = p.start();
 			p.bump_remap(T![declare]);
 			variable_declaration_statement(p)
-				.or_missing_with_error(p, js_parse_error::expected_variable_declaration)
 				.unwrap()
 				.undo_completion(p)
 				.abandon(p);
