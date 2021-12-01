@@ -381,10 +381,9 @@ fn try_expression_to_simple_assignment_target(
 		// everything is valid and otherwise re-parses the parenthesized expression only:
 		let start = target.start_pos as usize;
 		let end = target.finish_pos as usize;
-		let events = &mut p.events.skip(start).take(end - start);
 		let mut children_valid = true;
 
-		for event in events.iter_mut() {
+		for event in p.events.iter_mut().skip(start).take(end - start) {
 			match event {
 				Event::Start {
 					kind: TOMBSTONE, ..
