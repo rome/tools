@@ -151,7 +151,7 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 	});
 	Some(match p.nth(1) {
 		T![function] => parse_function_declaration(p)
-			// it's fine to not handle the error the because the check on tokens are done beforehand
+			// it's fine to not handle the error the because the check on tokens is done beforehand
 			.or_missing(p)
 			.unwrap(),
 		T![class] => {

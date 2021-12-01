@@ -416,7 +416,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 
 		if is_at_async_function(p, true) {
 			parse_function_declaration(p)
-				// it's fine to not handle the error the because the check on tokens are done beforehand
+				// it's fine to not handle the error the because the check on tokens is done beforehand
 				.or_missing(p);
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
@@ -440,7 +440,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		is_at_async_function(p, true))
 	{
 		parse_function_declaration(p)
-			// it's fine to not handle the error the because the check on tokens are done beforehand
+			// it's fine to not handle the error the because the check on tokens is done beforehand
 			.or_missing(p);
 	} else if !only_ty && p.at(T![const]) && p.nth_src(1) == "enum" {
 		ts_enum(p).err_if_not_ts(p, "enums can only be used in TypeScript files");

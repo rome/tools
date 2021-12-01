@@ -895,7 +895,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			// let b = async function foo() {};
 			if p.nth_at(1, T![function]) {
 				parse_function_expression(p)
-					// it's fine to not handle the error the because the check on tokens are done beforehand
+					// it's fine to not handle the error the because the check on tokens is done beforehand
 					.or_missing(p)
 					.unwrap()
 			} else {
