@@ -318,11 +318,11 @@ error[SyntaxError]: Expected a statement or declaration, but found none
   │           ^ Expected a statement or declaration here
 
 --
-error[SyntaxError]: Expected a statement or declaration, but found none
+error[SyntaxError]: expected a statement but instead found '='
   ┌─ object_binding_pattern.js:1:13
   │
 1 │ let { 5 } } = { eval: "foo" };
-  │             ^ Expected a statement or declaration here
+  │             ^ Expected a statement here
 
 --
 error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode

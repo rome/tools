@@ -73,4 +73,11 @@ error[SyntaxError]: Expected a statement or declaration, but found none
   │           ^ Expected a statement or declaration here
 
 --
+error[SyntaxError]: expected a statement but instead found ''
+  ┌─ block_stmt_in_class.js:2:1
+  │
+2 │ 
+  │ ^ Expected a statement here
+
+--
 class S{{}}

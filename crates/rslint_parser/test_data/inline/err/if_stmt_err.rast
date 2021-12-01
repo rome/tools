@@ -81,27 +81,6 @@ JsRoot {
             },
             else_clause: missing (optional),
         },
-        JsUnknownStatement {
-            items: [
-                Token(
-                    R_CURLY@71..72 "}" [] [],
-                ),
-            ],
-        },
-        JsUnknownStatement {
-            items: [
-                Token(
-                    R_CURLY@72..73 "}" [] [],
-                ),
-            ],
-        },
-        JsUnknownStatement {
-            items: [
-                Token(
-                    R_CURLY@73..75 "}" [] [Whitespace(" ")],
-                ),
-            ],
-        },
         JsBlockStatement {
             l_curly_token: L_CURLY@75..76 "{" [] [],
             statements: [],
@@ -158,7 +137,7 @@ JsRoot {
           0: L_CURLY@58..59 "{" [] []
           1: LIST@59..59
           2: R_CURLY@59..60 "}" [] []
-    3: JS_IF_STATEMENT@60..71
+    3: JS_IF_STATEMENT@60..75
       0: IF_KW@60..64 "if" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@64..65 "(" [] []
       2: JS_BOOLEAN_LITERAL_EXPRESSION@65..69
@@ -166,31 +145,29 @@ JsRoot {
       3: R_PAREN@69..70 ")" [] []
       4: JS_UNKNOWN_STATEMENT@70..71
         0: R_CURLY@70..71 "}" [] []
-      5: (empty)
-    4: JS_UNKNOWN_STATEMENT@71..72
-      0: R_CURLY@71..72 "}" [] []
-    5: JS_UNKNOWN_STATEMENT@72..73
-      0: R_CURLY@72..73 "}" [] []
-    6: JS_UNKNOWN_STATEMENT@73..75
-      0: R_CURLY@73..75 "}" [] [Whitespace(" ")]
-    7: JS_BLOCK_STATEMENT@75..77
+      5: JS_UNKNOWN_STATEMENT@71..75
+        0: R_CURLY@71..72 "}" [] []
+        1: R_CURLY@72..73 "}" [] []
+        2: R_CURLY@73..75 "}" [] [Whitespace(" ")]
+      6: (empty)
+    4: JS_BLOCK_STATEMENT@75..77
       0: L_CURLY@75..76 "{" [] []
       1: LIST@76..76
       2: R_CURLY@76..77 "}" [] []
   3: EOF@77..78 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected a statement or declaration, but found none
+error[SyntaxError]: expected a statement but instead found 'else'
   ┌─ if_stmt_err.js:1:11
   │
 1 │ if (true) else {}
-  │           ^^^^ Expected a statement or declaration here
+  │           ^^^^ Expected a statement here
 
 --
-error[SyntaxError]: Expected a statement or declaration, but found none
+error[SyntaxError]: expected a statement but instead found 'else'
   ┌─ if_stmt_err.js:2:11
   │
 2 │ if (true) else
-  │           ^^^^ Expected a statement or declaration here
+  │           ^^^^ Expected a statement here
 
 --
 error[SyntaxError]: expected `'('` but instead found `else`
@@ -214,11 +191,11 @@ error[SyntaxError]: expected `')'` but instead found `else`
   │    ^^^^ unexpected
 
 --
-error[SyntaxError]: Expected a statement or declaration, but found none
+error[SyntaxError]: expected a statement but instead found 'else'
   ┌─ if_stmt_err.js:3:4
   │
 3 │ if else {}
-  │    ^^^^ Expected a statement or declaration here
+  │    ^^^^ Expected a statement here
 
 --
 error[SyntaxError]: Expected an expression, but found none
@@ -235,25 +212,11 @@ error[SyntaxError]: Expected a statement or declaration, but found none
   │          ^ Expected a statement or declaration here
 
 --
-error[SyntaxError]: Expected a statement or declaration, but found none
+error[SyntaxError]: expected a statement but instead found '}}}'
   ┌─ if_stmt_err.js:5:11
   │
 5 │ if (true)}}}} {}
-  │           ^ Expected a statement or declaration here
-
---
-error[SyntaxError]: Expected a statement or declaration, but found none
-  ┌─ if_stmt_err.js:5:12
-  │
-5 │ if (true)}}}} {}
-  │            ^ Expected a statement or declaration here
-
---
-error[SyntaxError]: Expected a statement or declaration, but found none
-  ┌─ if_stmt_err.js:5:13
-  │
-5 │ if (true)}}}} {}
-  │             ^ Expected a statement or declaration here
+  │           ^^^ Expected a statement here
 
 --
 if (true) else {}

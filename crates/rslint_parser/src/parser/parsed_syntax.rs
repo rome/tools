@@ -90,6 +90,20 @@ impl ParsedSyntax {
 		}
 	}
 
+	/// It returns a [CompletedMarker] from the current syntax
+	///
+	/// # Panics
+	///
+	///  Panics if the current syntax is [ParsedSyntax::Absent]
+	pub fn unwrap(self) -> CompletedMarker {
+		match self {
+			Absent => {
+				panic!("Called `unwrap` on an `Absent` syntax");
+			}
+			Present(marker) => marker,
+		}
+	}
+
 	/// It creates and returns a marker preceding this parsed syntax if it is present or starts
 	/// a new marker, marks the first slot as missing and adds an error to the current parser position.
 	/// See [CompletedMarker.precede]

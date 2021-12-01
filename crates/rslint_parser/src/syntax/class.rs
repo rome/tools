@@ -37,8 +37,9 @@ pub(super) fn class_expression(p: &mut Parser) -> CompletedMarker {
 // class A extends bar extends foo {}
 // class A extends bar, foo {}
 /// Parses a class declaration
-pub(super) fn class_declaration(p: &mut Parser) -> CompletedMarker {
-	class(p, ClassKind::Declaration)
+pub(super) fn parse_class_declaration(p: &mut Parser) -> ParsedSyntax {
+	// TODO:: to remove `Present` when this file is moved to use `ParsedSyntax`
+	Present(class(p, ClassKind::Declaration))
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]

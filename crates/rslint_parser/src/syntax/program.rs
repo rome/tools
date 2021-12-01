@@ -1,17 +1,17 @@
 //! Top level functions for parsing a script or module, also includes module specific items.
 
-use syntax::stmt::FOLLOWS_LET;
-
 use super::expr::{expr, expr_or_assignment, identifier_name, primary_expr};
 use super::pat::parse_identifier_binding;
-use super::stmt::{semi, statements, variable_declaration_statement};
+use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use super::typescript::*;
 use crate::parser::ParserProgress;
-use crate::syntax::class::class_declaration;
-use crate::syntax::function::function_declaration;
+use crate::syntax::class::parse_class_declaration;
+use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::directives;
+use crate::ParsedSyntax::Present;
 use crate::{SyntaxKind::*, *};
+use syntax::stmt::FOLLOWS_LET;
 
 #[macro_export]
 macro_rules! at_ident_name {
@@ -28,7 +28,7 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 	p.eat_optional(T![js_shebang]);
 
 	let old_parser_state = directives(p);
-	statements(p, true, false, None);
+	parse_statements(p, true, false, None);
 
 	if let Some(old_parser_state) = old_parser_state {
 		p.state = old_parser_state;
@@ -383,11 +383,13 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			} else {
 				p.bump_remap(T![abstract]);
 			}
-			let decl = class_declaration(&mut *p.with_state(ParserState {
+			let decl = parse_class_declaration(&mut *p.with_state(ParserState {
 				in_default: true,
 				..p.state.clone()
 			}));
-			decl.undo_completion(p).abandon(p);
+			if let Present(decl) = decl {
+				decl.undo_completion(p).abandon(p);
+			}
 			inner.complete(p, JS_CLASS_DECLARATION);
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
@@ -400,16 +402,18 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		}
 
 		if p.at(T![class]) {
-			class_declaration(&mut *p.with_state(ParserState {
+			parse_class_declaration(&mut *p.with_state(ParserState {
 				in_default: true,
 				..p.state.clone()
-			}));
+			}))
+			.unwrap();
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
 
-		if p.cur_src() == "async" && p.nth_at(1, T![function]) && !p.has_linebreak_before_n(1) {
-			function_declaration(p);
-			return m.complete(p, EXPORT_DEFAULT_DECL);
+		if is_at_async_function(p, LineBreak::DoCheck) {
+			if let Present(_) = parse_function_declaration(p) {
+				return m.complete(p, EXPORT_DEFAULT_DECL);
+			}
 		}
 
 		if p.cur_src() == "from" || (p.at(T![,]) && p.nth_at(1, T!['{'])) {
@@ -422,17 +426,14 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	}
 
 	if !only_ty && p.at(T![class]) {
-		class_declaration(p);
+		parse_class_declaration(p).unwrap();
 	} else if !only_ty
 		// function ...
 		&& (p.at(T![function])
 			||
-		// async function ...
-		(p.cur_src() == "async"
-				&& p.nth_at(1, T![function])
-				&& !p.has_linebreak_before_n(1)))
+		is_at_async_function(p, LineBreak::DoCheck))
 	{
-		function_declaration(p);
+		parse_function_declaration(p).unwrap();
 	} else if !only_ty && p.at(T![const]) && p.nth_src(1) == "enum" {
 		ts_enum(p).err_if_not_ts(p, "enums can only be used in TypeScript files");
 	} else if !only_ty
@@ -440,7 +441,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			|| p.at(T![const])
 			|| (p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1))))
 	{
-		variable_declaration_statement(p);
+		variable_declaration_statement(p).unwrap();
 	} else {
 		let m = p.start();
 

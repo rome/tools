@@ -23,24 +23,12 @@ JsRoot {
                 Token(
                     R_PAREN@14..15 ")" [] [],
                 ),
-            ],
-        },
-        JsUnknownStatement {
-            items: [
                 Token(
                     R_CURLY@15..16 "}" [] [],
                 ),
-            ],
-        },
-        JsUnknownStatement {
-            items: [
                 Token(
                     R_PAREN@16..17 ")" [] [],
                 ),
-            ],
-        },
-        JsUnknownStatement {
-            items: [
                 Token(
                     R_CURLY@17..18 "}" [] [],
                 ),
@@ -85,15 +73,12 @@ JsRoot {
         1: LIST@13..13
         2: R_PAREN@13..14 ")" [] []
       3: (empty)
-    1: JS_UNKNOWN_STATEMENT@14..15
+    1: JS_UNKNOWN_STATEMENT@14..18
       0: R_PAREN@14..15 ")" [] []
-    2: JS_UNKNOWN_STATEMENT@15..16
-      0: R_CURLY@15..16 "}" [] []
-    3: JS_UNKNOWN_STATEMENT@16..17
-      0: R_PAREN@16..17 ")" [] []
-    4: JS_UNKNOWN_STATEMENT@17..18
-      0: R_CURLY@17..18 "}" [] []
-    5: JS_BLOCK_STATEMENT@18..25
+      1: R_CURLY@15..16 "}" [] []
+      2: R_PAREN@16..17 ")" [] []
+      3: R_CURLY@17..18 "}" [] []
+    2: JS_BLOCK_STATEMENT@18..25
       0: L_CURLY@18..19 "{" [] []
       1: LIST@19..25
         0: JS_BLOCK_STATEMENT@19..25
@@ -118,32 +103,11 @@ error[SyntaxError]: expected a function body but instead found ')'
   │               ^ Expected a function body here
 
 --
-error[SyntaxError]: Expected a statement or declaration, but found none
+error[SyntaxError]: expected a statement but instead found ')})}'
   ┌─ function_broken.js:1:15
   │
 1 │ function foo())})}{{{  {}
-  │               ^ Expected a statement or declaration here
-
---
-error[SyntaxError]: Expected a statement or declaration, but found none
-  ┌─ function_broken.js:1:16
-  │
-1 │ function foo())})}{{{  {}
-  │                ^ Expected a statement or declaration here
-
---
-error[SyntaxError]: Expected a statement or declaration, but found none
-  ┌─ function_broken.js:1:17
-  │
-1 │ function foo())})}{{{  {}
-  │                 ^ Expected a statement or declaration here
-
---
-error[SyntaxError]: Expected a statement or declaration, but found none
-  ┌─ function_broken.js:1:18
-  │
-1 │ function foo())})}{{{  {}
-  │                  ^ Expected a statement or declaration here
+  │               ^^^^ Expected a statement here
 
 --
 error[SyntaxError]: expected `'}'` but instead the file ends

@@ -8,8 +8,8 @@ use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::ConditionalParsedSyntax::Invalid;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, Parser, ParserState};
 use crate::{ConditionalParsedSyntax, SyntaxFeature};
+use crate::{Parser, ParserState};
 use rslint_syntax::SyntaxKind::{
 	ERROR, JS_FUNCTION_BODY, JS_FUNCTION_DECLARATION, JS_FUNCTION_EXPRESSION,
 	JS_UNKNOWN_EXPRESSION, JS_UNKNOWN_STATEMENT, TS_TYPE_ANNOTATION,
@@ -41,26 +41,20 @@ use std::collections::HashMap;
 // function test(): number {}
 // function foo(await) {}
 // function foo(yield) {}
-pub(super) fn function_declaration(p: &mut Parser) -> CompletedMarker {
-	function(p, JS_FUNCTION_DECLARATION)
-		.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
-		.ok()
-		.unwrap()
+pub(super) fn parse_function_declaration(p: &mut Parser) -> ParsedSyntax {
+	parse_function(p, JS_FUNCTION_DECLARATION).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
 }
 
-pub(super) fn function_expression(p: &mut Parser) -> CompletedMarker {
-	function(p, JS_FUNCTION_EXPRESSION)
-		.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
-		.ok()
-		.unwrap()
+pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
+	parse_function(p, JS_FUNCTION_EXPRESSION).or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
 }
 
-fn function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
+fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 	let m = p.start();
 
 	let mut uses_ts_syntax = kind == JS_FUNCTION_DECLARATION && p.eat(T![declare]);
 
-	let in_async = p.at(T![ident]) && p.cur_src() == "async";
+	let in_async = is_at_async_function(p, LineBreak::DoNotCheck);
 	if in_async {
 		p.bump_remap(T![async]);
 	}
@@ -203,5 +197,25 @@ pub(crate) fn ts_return_type(p: &mut Parser) {
 			ty.err_if_not_ts(p, "return types can only be used in TypeScript files");
 		}
 		return_type.complete(p, TS_TYPE_ANNOTATION);
+	}
+}
+
+/// Tells [is_at_async_function] if it needs to check line breaks
+#[derive(PartialEq)]
+pub(super) enum LineBreak {
+	// check line breaks
+	DoCheck,
+	// do not check line break
+	DoNotCheck,
+}
+
+#[inline]
+/// Checks if the parser is inside a "async function"
+pub(super) fn is_at_async_function(p: &mut Parser, should_check_line_break: LineBreak) -> bool {
+	let async_function_tokens = p.cur_src() == "async" && p.nth_at(1, T![function]);
+	if should_check_line_break == LineBreak::DoCheck {
+		async_function_tokens && !p.has_linebreak_before_n(1)
+	} else {
+		async_function_tokens
 	}
 }

@@ -92,3 +92,11 @@ pub(crate) fn expected_property_assignment_target(p: &Parser, range: Range<usize
 pub(crate) fn expected_simple_assignment_target(p: &Parser, range: Range<usize>) -> Diagnostic {
 	expected_any(&["identifier", "member expression"], range).to_diagnostic(p)
 }
+
+pub(crate) fn expected_variable(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_any(&["let", "const", "var"], range).to_diagnostic(p)
+}
+
+pub(crate) fn expected_statement(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_node("statement", range).to_diagnostic(p)
+}
