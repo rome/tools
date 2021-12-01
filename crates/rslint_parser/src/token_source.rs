@@ -134,7 +134,8 @@ impl<'t> TokenSource<'t> {
 	}
 
 	pub fn is_keyword(&self, kw: &str) -> bool {
-		self.data.token_offset_pairs
+		self.data
+			.token_offset_pairs
 			.get(self.cur.1)
 			.map(|(token, offset)| {
 				&self.data.source[TextRange::at(*offset, TextSize::from(token.len as u32))] == kw

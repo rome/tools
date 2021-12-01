@@ -216,10 +216,10 @@ fn expr_statement(p: &mut Parser) -> Option<CompletedMarker> {
 	// Labelled stmt
 	if expr.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION && p.at(T![:]) {
 		expr.change_kind(p, NAME);
-		let range = p.events
-			.skip(expr.start_pos as usize);
+		let range = p.events.skip(expr.start_pos as usize);
 		// Its not possible to have a name without an inner ident token
-		let range = range.iter()
+		let range = range
+			.iter()
 			.find_map(|x| match x {
 				Event::Token {
 					kind: T![ident],

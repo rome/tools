@@ -356,11 +356,8 @@ impl<'t> Parser<'t> {
 	#[deprecated(note = "Unsafe and fairly expensive.")]
 	pub fn parse_marker<T: AstNode>(&self, marker: &CompletedMarker) -> T {
 		let start = marker.old_start as usize;
-		let end = marker.finish_pos as usize + 1; 
-		let events = self
-			.events
-			.skip(start)
-			.take(end - start);
+		let end = marker.finish_pos as usize + 1;
+		let events = self.events.skip(start).take(end - start);
 
 		let start = match self.events[marker.old_start as usize] {
 			Event::Start { start, .. } => start,
