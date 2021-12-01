@@ -54,10 +54,6 @@ JsRoot {
                 Token(
                     R_PAREN@20..22 ")" [] [Whitespace(" ")],
                 ),
-            ],
-        },
-        JsUnknownStatement {
-            items: [
                 Token(
                     FAT_ARROW@22..25 "=>" [] [Whitespace(" ")],
                 ),
@@ -139,15 +135,14 @@ JsRoot {
       0: JS_REFERENCE_IDENTIFIER_EXPRESSION@19..20
         0: IDENT@19..20 "b" [] []
       1: (empty)
-    3: JS_UNKNOWN_STATEMENT@20..22
+    3: JS_UNKNOWN_STATEMENT@20..25
       0: R_PAREN@20..22 ")" [] [Whitespace(" ")]
-    4: JS_UNKNOWN_STATEMENT@22..25
-      0: FAT_ARROW@22..25 "=>" [] [Whitespace(" ")]
-    5: JS_BLOCK_STATEMENT@25..27
+      1: FAT_ARROW@22..25 "=>" [] [Whitespace(" ")]
+    4: JS_BLOCK_STATEMENT@25..27
       0: L_CURLY@25..26 "{" [] []
       1: LIST@26..26
       2: R_CURLY@26..27 "}" [] []
-    6: JS_EXPRESSION_STATEMENT@27..37
+    5: JS_EXPRESSION_STATEMENT@27..37
       0: JS_ARROW_FUNCTION_EXPRESSION@27..37
         0: JS_PARAMETER_LIST@27..35
           0: L_PAREN@27..29 "(" [Whitespace("\n")] []
@@ -206,18 +201,11 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │      ...Which is required to end this statement
 
 --
-error[SyntaxError]: Expected a statement or declaration, but found none
+error[SyntaxError]: expected a statement, or a declaration but instead found ') =>'
   ┌─ paren_or_arrow_expr_invalid_params.js:2:7
   │
 2 │ (a, ,b) => {}
-  │       ^ Expected a statement or declaration here
-
---
-error[SyntaxError]: Expected a statement or declaration, but found none
-  ┌─ paren_or_arrow_expr_invalid_params.js:2:9
-  │
-2 │ (a, ,b) => {}
-  │         ^^ Expected a statement or declaration here
+  │       ^^^^ Expected a statement, or a declaration here
 
 --
 error[SyntaxError]: Expected an expression, but found none

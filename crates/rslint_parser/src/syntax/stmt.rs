@@ -8,7 +8,6 @@ use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use};
 #[allow(deprecated)]
-use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::syntax::assignment_target::{
 	expression_to_assignment_target, SimpleAssignmentTargetExprKind,
@@ -95,8 +94,8 @@ pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
 }
 
 /// A generic statement such as a block, if, while, with, etc
-pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> ParsedSyntax {
-	let res = match p.cur() {
+pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option<CompletedMarker> {
+	let mut res = match p.cur() {
 		T![;] => parse_empty_statement(p), // It is only ever Err if there's no ;
 		T!['{'] => parse_block_stmt(p),    // It is only ever None if there is no `{`,
 		T![if] => parse_if_statement(p),   // It is only ever Err if there's no if
@@ -124,9 +123,17 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Parsed
 		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
 			variable_declaration_statement(p)
 		}
-		// TODO: handle `<T>() => {};` with less of a hack
-		_ if p.at_ts(STARTS_EXPR) || p.at(T![<]) => return parse_expression_statement(p),
-		_ => {
+		_ => Absent,
+	};
+
+	match res {
+		Absent => {
+			// TODO: handle `<T>() => {};` with less of a hack
+			if p.at_ts(STARTS_EXPR) || p.at(T![<]) {
+				return parse_expression_statement(p)
+					.or_missing_with_error(p, js_parse_error::expected_statement);
+			}
+
 			// We must explicitly handle this case or else infinite recursion can happen
 			if p.at_ts(token_set![T!['}'], T![import], T![export]]) {
 				let err = p
@@ -137,22 +144,22 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Parsed
 					);
 				p.err_and_bump(err, JS_UNKNOWN_STATEMENT);
 			}
-			return Absent;
+			let recovered = res.or_recover(
+				p,
+				ParseRecovery::new(
+					JS_UNKNOWN_STATEMENT,
+					recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
+				),
+				js_parse_error::expected_statement,
+			);
+
+			if recovered.is_ok() {
+				return recovered.ok();
+			} else {
+				None
+			}
 		}
-	};
-
-	let recovered = res.or_recover(
-		p,
-		ParseRecovery::new(
-			JS_UNKNOWN_STATEMENT,
-			recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
-		),
-		js_parse_error::expected_statement,
-	);
-
-	match recovered {
-		Ok(marker) => Present(marker),
-		Err(_) => Absent,
+		Present(marker) => Some(marker),
 	}
 }
 
@@ -250,7 +257,7 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
 
 		let m = expr.undo_completion(p);
 		p.bump_any();
-		stmt(p, None).or_missing_with_error(p, js_parse_error::expected_statement);
+		stmt(p, None);
 		return Present(m.complete(p, JS_LABELED_STATEMENT));
 	}
 
@@ -601,7 +608,7 @@ pub(crate) fn parse_statements(
 				}
 			}
 			_ => {
-				stmt(p, recovery_set).or_missing_with_error(p, js_parse_error::expected_statement);
+				stmt(p, recovery_set);
 			}
 		};
 	}
@@ -646,14 +653,13 @@ pub fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
 	// body
 	// allows us to recover from `if (true) else {}`
 	// TODO replace with statement(p).or_recover(STMT_RECOVERY_SET.union(...))
-	stmt(p, STMT_RECOVERY_SET.union(token_set![T![else]]))
-		.or_missing_with_error(p, js_parse_error::expected_statement);
+	stmt(p, STMT_RECOVERY_SET.union(token_set![T![else]]));
 
 	// else clause
 	if p.at(T![else]) {
 		let else_clause = p.start();
 		p.bump_any(); // bump else
-		stmt(p, None).or_missing_with_error(p, js_parse_error::expected_statement); // stmt(p).into_required();
+		stmt(p, None); // stmt(p).into_required();
 		else_clause.complete(p, JS_ELSE_CLAUSE);
 	} else {
 		p.missing();
@@ -672,7 +678,7 @@ pub fn parse_with_statement(p: &mut Parser) -> ParsedSyntax {
 	p.bump_any(); // with
 	parenthesized_expression(p);
 
-	stmt(p, None).or_missing_with_error(p, js_parse_error::expected_statement);
+	stmt(p, None);
 
 	let with_stmt = m.complete(p, JS_WITH_STATEMENT);
 
@@ -707,7 +713,7 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 		continue_allowed: true,
 		..p.state.clone()
 	});
-	stmt(&mut *guard, None).or_missing_with_error(&mut *guard, js_parse_error::expected_statement);
+	stmt(&mut *guard, None);
 	Present(m.complete(&mut *guard, JS_WHILE_STATEMENT))
 }
 
@@ -884,7 +890,7 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 		break_allowed: true,
 		..p.state.clone()
 	});
-	stmt(&mut *guard, None).or_missing_with_error(&mut *guard, js_parse_error::expected_statement);
+	stmt(&mut *guard, None);
 	guard.expect_required(T![while]);
 	parenthesized_expression(&mut *guard);
 	let end_range = guard.cur_tok().range.end;
@@ -1029,7 +1035,7 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 		break_allowed: true,
 		..p.state.clone()
 	});
-	stmt(&mut *guard, None).or_missing_with_error(&mut *guard, js_parse_error::expected_statement);
+	stmt(&mut *guard, None);
 	Present(m.complete(&mut *guard, kind))
 }
 
@@ -1060,7 +1066,7 @@ fn parse_switch_clause(
 			let mut progress = ParserProgress::default();
 			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
 				progress.assert_progressing(p);
-				stmt(p, None).or_missing_with_error(p, js_parse_error::expected_statement);
+				stmt(p, None);
 			}
 			cons_list.complete(p, LIST);
 			let default = m.complete(p, syntax_kind);
@@ -1089,7 +1095,7 @@ fn parse_switch_clause(
 
 			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
 				progress.assert_progressing(p);
-				stmt(p, None).or_missing_with_error(p, js_parse_error::expected_statement);
+				stmt(p, None);
 			}
 			cons_list.complete(p, LIST);
 			Present(m.complete(p, JS_CASE_CLAUSE))

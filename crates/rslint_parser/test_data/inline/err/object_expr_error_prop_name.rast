@@ -74,50 +74,36 @@ JsRoot {
                 ),
             ],
         },
-        JsExpressionStatement {
-            expression: JsReferenceIdentifierExpression {
-                name_token: IDENT@39..49 "test_err" [Whitespace("\n")] [Whitespace(" ")],
-            },
-            semicolon_token: missing (optional),
+        JsUnknownStatement {
+            items: [
+                Token(
+                    IDENT@39..49 "test_err" [Whitespace("\n")] [Whitespace(" ")],
+                ),
+                Token(
+                    IDENT@49..83 "object_expr_non_ident_literal_prop" [] [],
+                ),
+                Token(
+                    IDENT@83..88 "let" [Whitespace("\n")] [Whitespace(" ")],
+                ),
+                Token(
+                    IDENT@88..90 "b" [] [Whitespace(" ")],
+                ),
+                Token(
+                    EQ@90..92 "=" [] [Whitespace(" ")],
+                ),
+            ],
         },
-        JsExpressionStatement {
-            expression: JsReferenceIdentifierExpression {
-                name_token: IDENT@49..83 "object_expr_non_ident_literal_prop" [] [],
-            },
-            semicolon_token: missing (optional),
-        },
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
-                kind_token: LET_KW@83..88 "let" [Whitespace("\n")] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@88..90 "b" [] [Whitespace(" ")],
-                            },
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
-                        },
-                        init: JsEqualValueClause {
-                            eq_token: EQ@90..92 "=" [] [Whitespace(" ")],
-                            expression: JsObjectExpression {
-                                l_curly_token: L_CURLY@92..93 "{" [] [],
-                                members: [
-                                    JsPropertyObjectMember {
-                                        name: JsLiteralMemberName {
-                                            value: JS_NUMBER_LITERAL@93..94 "5" [] [],
-                                        },
-                                        colon_token: missing (required),
-                                    },
-                                ],
-                                r_curly_token: R_CURLY@94..95 "}" [] [],
-                            },
-                        },
+        JsBlockStatement {
+            l_curly_token: L_CURLY@92..93 "{" [] [],
+            statements: [
+                JsExpressionStatement {
+                    expression: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@93..94 "5" [] [],
                     },
-                ],
-            },
-            semicolon_token: missing (optional),
+                    semicolon_token: missing (optional),
+                },
+            ],
+            r_curly_token: R_CURLY@94..95 "}" [] [],
         },
     ],
 }
@@ -167,33 +153,20 @@ JsRoot {
       1: (empty)
     2: JS_UNKNOWN_STATEMENT@38..39
       0: R_CURLY@38..39 "}" [] []
-    3: JS_EXPRESSION_STATEMENT@39..49
-      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@39..49
-        0: IDENT@39..49 "test_err" [Whitespace("\n")] [Whitespace(" ")]
-      1: (empty)
-    4: JS_EXPRESSION_STATEMENT@49..83
-      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@49..83
-        0: IDENT@49..83 "object_expr_non_ident_literal_prop" [] []
-      1: (empty)
-    5: JS_VARIABLE_DECLARATION_STATEMENT@83..95
-      0: JS_VARIABLE_DECLARATION@83..95
-        0: LET_KW@83..88 "let" [Whitespace("\n")] [Whitespace(" ")]
-        1: LIST@88..95
-          0: JS_VARIABLE_DECLARATOR@88..95
-            0: SINGLE_PATTERN@88..90
-              0: NAME@88..90
-                0: IDENT@88..90 "b" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@90..95
-              0: EQ@90..92 "=" [] [Whitespace(" ")]
-              1: JS_OBJECT_EXPRESSION@92..95
-                0: L_CURLY@92..93 "{" [] []
-                1: LIST@93..94
-                  0: JS_PROPERTY_OBJECT_MEMBER@93..94
-                    0: JS_LITERAL_MEMBER_NAME@93..94
-                      0: JS_NUMBER_LITERAL@93..94 "5" [] []
-                    1: (empty)
-                2: R_CURLY@94..95 "}" [] []
-      1: (empty)
+    3: JS_UNKNOWN_STATEMENT@39..92
+      0: IDENT@39..49 "test_err" [Whitespace("\n")] [Whitespace(" ")]
+      1: IDENT@49..83 "object_expr_non_ident_literal_prop" [] []
+      2: IDENT@83..88 "let" [Whitespace("\n")] [Whitespace(" ")]
+      3: IDENT@88..90 "b" [] [Whitespace(" ")]
+      4: EQ@90..92 "=" [] [Whitespace(" ")]
+    4: JS_BLOCK_STATEMENT@92..95
+      0: L_CURLY@92..93 "{" [] []
+      1: LIST@93..94
+        0: JS_EXPRESSION_STATEMENT@93..94
+          0: JS_NUMBER_LITERAL_EXPRESSION@93..94
+            0: JS_NUMBER_LITERAL@93..94 "5" [] []
+          1: (empty)
+      2: R_CURLY@94..95 "}" [] []
   3: EOF@95..96 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '/: 6, /'
@@ -217,28 +190,13 @@ error[SyntaxError]: Expected a statement or declaration, but found none
   │            ^ Expected a statement or declaration here
 
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ object_expr_error_prop_name.js:3:10
-  │
-3 │ test_err object_expr_non_ident_literal_prop
-  │ ---------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  │ │        │
-  │ │        An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
-
---
-error[SyntaxError]: expected `:` but instead found `}`
-  ┌─ object_expr_error_prop_name.js:4:11
-  │
-4 │ let b = {5}
-  │           ^ unexpected
-
---
-error[SyntaxError]: Expected an expression, but found none
-  ┌─ object_expr_error_prop_name.js:4:11
-  │
-4 │ let b = {5}
-  │           ^ Expected an expression here
+error[SyntaxError]: expected a statement, or a declaration but instead found 'test_err object_expr_non_ident_literal_prop
+let b ='
+  ┌─ object_expr_error_prop_name.js:3:1
+  │  
+3 │ ┌ test_err object_expr_non_ident_literal_prop
+4 │ │ let b = {5}
+  │ └───────^ Expected a statement, or a declaration here
 
 --
 let a = { /: 6, /: /foo/ }
