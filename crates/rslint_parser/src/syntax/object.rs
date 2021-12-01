@@ -156,14 +156,6 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 				parse_method_object_member_body(p);
 				Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 			} else if let Some(mut member_name) = member_name {
-				// test object_expr_assign_prop
-				// let b = { foo = 4, foo = bar }
-				if p.eat(T![=]) {
-					member_name.change_kind(p, NAME);
-					expr_or_assignment(p);
-					return Present(m.complete(p, INITIALIZED_PROP));
-				}
-
 				// ({foo})
 				// test object_expr_ident_prop
 				if identifier_member_name

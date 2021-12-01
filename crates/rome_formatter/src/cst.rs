@@ -9,8 +9,9 @@ use rslint_parser::ast::{
 	JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression, JsParameterList,
 	JsPropertyClassMember, JsPropertyObjectMember, JsReferenceIdentifierExpression,
 	JsReturnStatement, JsRoot, JsSequenceExpression, JsSetterClassMember,
-	JsShorthandPropertyObjectMember, JsStringLiteralExpression, JsSwitchStatement, JsTryStatement,
-	JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement, JsWithStatement, Name,
+	JsShorthandPropertyObjectMember, JsSpread, JsStringLiteralExpression, JsSwitchStatement,
+	JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement,
+	JsWithStatement, Name,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
@@ -35,6 +36,9 @@ impl ToFormatElement for SyntaxNode {
 					.unwrap()
 					.to_format_element(formatter)
 			}
+			SyntaxKind::JS_IDENTIFIER_BINDING => JsIdentifierBinding::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
 			SyntaxKind::JS_NULL_LITERAL_EXPRESSION => JsNullLiteralExpression::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
@@ -57,7 +61,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_ROOT => JsRoot::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::SPREAD_ELEMENT => JsIdentifierBinding::cast(self.clone())
+			SyntaxKind::JS_SPREAD => JsSpread::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_VARIABLE_DECLARATION_STATEMENT => {

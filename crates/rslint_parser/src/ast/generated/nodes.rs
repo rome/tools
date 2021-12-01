@@ -1287,14 +1287,14 @@ impl JsFunctionBody {
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct SpreadElement {
+pub struct JsSpread {
 	pub(crate) syntax: SyntaxNode,
 }
-impl SpreadElement {
+impl JsSpread {
 	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [...])
 	}
-	pub fn element(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayHole {
@@ -1398,60 +1398,12 @@ impl JsSetterObjectMember {
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct InitializedProp {
-	pub(crate) syntax: SyntaxNode,
-}
-impl InitializedProp {
-	pub fn key(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
-	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [=])
-	}
-	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsShorthandPropertyObjectMember {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsShorthandPropertyObjectMember {
 	pub fn name(&self) -> SyntaxResult<JsReferenceIdentifierExpression> {
 		support::required_node(&self.syntax)
-	}
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsSpread {
-	pub(crate) syntax: SyntaxNode,
-}
-impl JsSpread {
-	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [...])
-	}
-	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsStringLiteralExpression {
-	pub(crate) syntax: SyntaxNode,
-}
-impl JsStringLiteralExpression {
-	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal])
-	}
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsNumberLiteralExpression {
-	pub(crate) syntax: SyntaxNode,
-}
-impl JsNumberLiteralExpression {
-	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_number_literal])
-	}
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct Name {
-	pub(crate) syntax: SyntaxNode,
-}
-impl Name {
-	pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![ident])
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1921,6 +1873,33 @@ impl JsShorthandPropertyBinding {
 		support::required_node(&self.syntax)
 	}
 	pub fn init(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct Name {
+	pub(crate) syntax: SyntaxNode,
+}
+impl Name {
+	pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![ident])
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsStringLiteralExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsStringLiteralExpression {
+	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![js_string_literal])
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsNumberLiteralExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsNumberLiteralExpression {
+	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![js_number_literal])
+	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsBigIntLiteralExpression {
@@ -2682,7 +2661,7 @@ pub enum JsAnyArrowFunctionBody {
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrayElement {
 	JsAnyExpression(JsAnyExpression),
-	SpreadElement(SpreadElement),
+	JsSpread(JsSpread),
 	JsArrayHole(JsArrayHole),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2708,19 +2687,9 @@ pub enum JsAnyObjectMember {
 	JsMethodObjectMember(JsMethodObjectMember),
 	JsGetterObjectMember(JsGetterObjectMember),
 	JsSetterObjectMember(JsSetterObjectMember),
-	InitializedProp(InitializedProp),
 	JsShorthandPropertyObjectMember(JsShorthandPropertyObjectMember),
 	JsSpread(JsSpread),
 	JsUnknownMember(JsUnknownMember),
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub enum PropName {
-	JsComputedMemberName(JsComputedMemberName),
-	JsStringLiteralExpression(JsStringLiteralExpression),
-	JsNumberLiteralExpression(JsNumberLiteralExpression),
-	Ident(Ident),
-	Name(Name),
-	JsUnknownBinding(JsUnknownBinding),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyClassMember {
@@ -5208,8 +5177,8 @@ impl std::fmt::Debug for JsFunctionBody {
 			.finish()
 	}
 }
-impl AstNode for SpreadElement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == SPREAD_ELEMENT }
+impl AstNode for JsSpread {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SPREAD }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5219,14 +5188,14 @@ impl AstNode for SpreadElement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for SpreadElement {
+impl std::fmt::Debug for JsSpread {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("SpreadElement")
+		f.debug_struct("JsSpread")
 			.field(
 				"dotdotdot_token",
 				&support::DebugSyntaxResult(self.dotdotdot_token()),
 			)
-			.field("element", &support::DebugSyntaxResult(self.element()))
+			.field("argument", &support::DebugSyntaxResult(self.argument()))
 			.finish()
 	}
 }
@@ -5409,26 +5378,6 @@ impl std::fmt::Debug for JsSetterObjectMember {
 			.finish()
 	}
 }
-impl AstNode for InitializedProp {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == INITIALIZED_PROP }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for InitializedProp {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("InitializedProp")
-			.field("key", &support::DebugSyntaxResult(self.key()))
-			.field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
-			.field("value", &support::DebugSyntaxResult(self.value()))
-			.finish()
-	}
-}
 impl AstNode for JsShorthandPropertyObjectMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SHORTHAND_PROPERTY_OBJECT_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5444,91 +5393,6 @@ impl std::fmt::Debug for JsShorthandPropertyObjectMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsShorthandPropertyObjectMember")
 			.field("name", &support::DebugSyntaxResult(self.name()))
-			.finish()
-	}
-}
-impl AstNode for JsSpread {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SPREAD }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsSpread {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsSpread")
-			.field(
-				"dotdotdot_token",
-				&support::DebugSyntaxResult(self.dotdotdot_token()),
-			)
-			.field("argument", &support::DebugSyntaxResult(self.argument()))
-			.finish()
-	}
-}
-impl AstNode for JsStringLiteralExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STRING_LITERAL_EXPRESSION }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsStringLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsStringLiteralExpression")
-			.field(
-				"value_token",
-				&support::DebugSyntaxResult(self.value_token()),
-			)
-			.finish()
-	}
-}
-impl AstNode for JsNumberLiteralExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NUMBER_LITERAL_EXPRESSION }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsNumberLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsNumberLiteralExpression")
-			.field(
-				"value_token",
-				&support::DebugSyntaxResult(self.value_token()),
-			)
-			.finish()
-	}
-}
-impl AstNode for Name {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == NAME }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for Name {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("Name")
-			.field(
-				"ident_token",
-				&support::DebugSyntaxResult(self.ident_token()),
-			)
 			.finish()
 	}
 }
@@ -6397,6 +6261,69 @@ impl std::fmt::Debug for JsShorthandPropertyBinding {
 		f.debug_struct("JsShorthandPropertyBinding")
 			.field("identifier", &support::DebugSyntaxResult(self.identifier()))
 			.field("init", &support::DebugOptionalNode(self.init()))
+			.finish()
+	}
+}
+impl AstNode for Name {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == NAME }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for Name {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("Name")
+			.field(
+				"ident_token",
+				&support::DebugSyntaxResult(self.ident_token()),
+			)
+			.finish()
+	}
+}
+impl AstNode for JsStringLiteralExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STRING_LITERAL_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsStringLiteralExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsStringLiteralExpression")
+			.field(
+				"value_token",
+				&support::DebugSyntaxResult(self.value_token()),
+			)
+			.finish()
+	}
+}
+impl AstNode for JsNumberLiteralExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NUMBER_LITERAL_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsNumberLiteralExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsNumberLiteralExpression")
+			.field(
+				"value_token",
+				&support::DebugSyntaxResult(self.value_token()),
+			)
 			.finish()
 	}
 }
@@ -8781,8 +8708,8 @@ impl std::fmt::Debug for JsAnyArrowFunctionBody {
 		}
 	}
 }
-impl From<SpreadElement> for JsAnyArrayElement {
-	fn from(node: SpreadElement) -> JsAnyArrayElement { JsAnyArrayElement::SpreadElement(node) }
+impl From<JsSpread> for JsAnyArrayElement {
+	fn from(node: JsSpread) -> JsAnyArrayElement { JsAnyArrayElement::JsSpread(node) }
 }
 impl From<JsArrayHole> for JsAnyArrayElement {
 	fn from(node: JsArrayHole) -> JsAnyArrayElement { JsAnyArrayElement::JsArrayHole(node) }
@@ -8790,14 +8717,14 @@ impl From<JsArrayHole> for JsAnyArrayElement {
 impl AstNode for JsAnyArrayElement {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			SPREAD_ELEMENT | JS_ARRAY_HOLE => true,
+			JS_SPREAD | JS_ARRAY_HOLE => true,
 			k if JsAnyExpression::can_cast(k) => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			SPREAD_ELEMENT => JsAnyArrayElement::SpreadElement(SpreadElement { syntax }),
+			JS_SPREAD => JsAnyArrayElement::JsSpread(JsSpread { syntax }),
 			JS_ARRAY_HOLE => JsAnyArrayElement::JsArrayHole(JsArrayHole { syntax }),
 			_ => {
 				if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
@@ -8810,7 +8737,7 @@ impl AstNode for JsAnyArrayElement {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			JsAnyArrayElement::SpreadElement(it) => &it.syntax,
+			JsAnyArrayElement::JsSpread(it) => &it.syntax,
 			JsAnyArrayElement::JsArrayHole(it) => &it.syntax,
 			JsAnyArrayElement::JsAnyExpression(it) => it.syntax(),
 		}
@@ -8820,7 +8747,7 @@ impl std::fmt::Debug for JsAnyArrayElement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
 			JsAnyArrayElement::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyArrayElement::SpreadElement(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyArrayElement::JsSpread(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyArrayElement::JsArrayHole(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
@@ -9015,9 +8942,6 @@ impl From<JsSetterObjectMember> for JsAnyObjectMember {
 		JsAnyObjectMember::JsSetterObjectMember(node)
 	}
 }
-impl From<InitializedProp> for JsAnyObjectMember {
-	fn from(node: InitializedProp) -> JsAnyObjectMember { JsAnyObjectMember::InitializedProp(node) }
-}
 impl From<JsShorthandPropertyObjectMember> for JsAnyObjectMember {
 	fn from(node: JsShorthandPropertyObjectMember) -> JsAnyObjectMember {
 		JsAnyObjectMember::JsShorthandPropertyObjectMember(node)
@@ -9037,7 +8961,6 @@ impl AstNode for JsAnyObjectMember {
 				| JS_METHOD_OBJECT_MEMBER
 				| JS_GETTER_OBJECT_MEMBER
 				| JS_SETTER_OBJECT_MEMBER
-				| INITIALIZED_PROP
 				| JS_SHORTHAND_PROPERTY_OBJECT_MEMBER
 				| JS_SPREAD | JS_UNKNOWN_MEMBER
 		)
@@ -9056,7 +8979,6 @@ impl AstNode for JsAnyObjectMember {
 			JS_SETTER_OBJECT_MEMBER => {
 				JsAnyObjectMember::JsSetterObjectMember(JsSetterObjectMember { syntax })
 			}
-			INITIALIZED_PROP => JsAnyObjectMember::InitializedProp(InitializedProp { syntax }),
 			JS_SHORTHAND_PROPERTY_OBJECT_MEMBER => {
 				JsAnyObjectMember::JsShorthandPropertyObjectMember(
 					JsShorthandPropertyObjectMember { syntax },
@@ -9074,7 +8996,6 @@ impl AstNode for JsAnyObjectMember {
 			JsAnyObjectMember::JsMethodObjectMember(it) => &it.syntax,
 			JsAnyObjectMember::JsGetterObjectMember(it) => &it.syntax,
 			JsAnyObjectMember::JsSetterObjectMember(it) => &it.syntax,
-			JsAnyObjectMember::InitializedProp(it) => &it.syntax,
 			JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => &it.syntax,
 			JsAnyObjectMember::JsSpread(it) => &it.syntax,
 			JsAnyObjectMember::JsUnknownMember(it) => &it.syntax,
@@ -9088,83 +9009,9 @@ impl std::fmt::Debug for JsAnyObjectMember {
 			JsAnyObjectMember::JsMethodObjectMember(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyObjectMember::JsGetterObjectMember(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyObjectMember::JsSetterObjectMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyObjectMember::InitializedProp(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyObjectMember::JsSpread(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyObjectMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
-impl From<JsComputedMemberName> for PropName {
-	fn from(node: JsComputedMemberName) -> PropName { PropName::JsComputedMemberName(node) }
-}
-impl From<JsStringLiteralExpression> for PropName {
-	fn from(node: JsStringLiteralExpression) -> PropName {
-		PropName::JsStringLiteralExpression(node)
-	}
-}
-impl From<JsNumberLiteralExpression> for PropName {
-	fn from(node: JsNumberLiteralExpression) -> PropName {
-		PropName::JsNumberLiteralExpression(node)
-	}
-}
-impl From<Ident> for PropName {
-	fn from(node: Ident) -> PropName { PropName::Ident(node) }
-}
-impl From<Name> for PropName {
-	fn from(node: Name) -> PropName { PropName::Name(node) }
-}
-impl From<JsUnknownBinding> for PropName {
-	fn from(node: JsUnknownBinding) -> PropName { PropName::JsUnknownBinding(node) }
-}
-impl AstNode for PropName {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		matches!(
-			kind,
-			JS_COMPUTED_MEMBER_NAME
-				| JS_STRING_LITERAL_EXPRESSION
-				| JS_NUMBER_LITERAL_EXPRESSION
-				| IDENT | NAME | JS_UNKNOWN_BINDING
-		)
-	}
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			JS_COMPUTED_MEMBER_NAME => {
-				PropName::JsComputedMemberName(JsComputedMemberName { syntax })
-			}
-			JS_STRING_LITERAL_EXPRESSION => {
-				PropName::JsStringLiteralExpression(JsStringLiteralExpression { syntax })
-			}
-			JS_NUMBER_LITERAL_EXPRESSION => {
-				PropName::JsNumberLiteralExpression(JsNumberLiteralExpression { syntax })
-			}
-			IDENT => PropName::Ident(Ident { syntax }),
-			NAME => PropName::Name(Name { syntax }),
-			JS_UNKNOWN_BINDING => PropName::JsUnknownBinding(JsUnknownBinding { syntax }),
-			_ => return None,
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			PropName::JsComputedMemberName(it) => &it.syntax,
-			PropName::JsStringLiteralExpression(it) => &it.syntax,
-			PropName::JsNumberLiteralExpression(it) => &it.syntax,
-			PropName::Ident(it) => &it.syntax,
-			PropName::Name(it) => &it.syntax,
-			PropName::JsUnknownBinding(it) => &it.syntax,
-		}
-	}
-}
-impl std::fmt::Debug for PropName {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			PropName::JsComputedMemberName(it) => std::fmt::Debug::fmt(it, f),
-			PropName::JsStringLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-			PropName::JsNumberLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-			PropName::Ident(it) => std::fmt::Debug::fmt(it, f),
-			PropName::Name(it) => std::fmt::Debug::fmt(it, f),
-			PropName::JsUnknownBinding(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -10422,11 +10269,6 @@ impl std::fmt::Display for JsAnyObjectMember {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for PropName {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for JsAnyClassMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -10967,7 +10809,7 @@ impl std::fmt::Display for JsFunctionBody {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for SpreadElement {
+impl std::fmt::Display for JsSpread {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -11007,32 +10849,7 @@ impl std::fmt::Display for JsSetterObjectMember {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for InitializedProp {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for JsShorthandPropertyObjectMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsSpread {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsStringLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsNumberLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for Name {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -11203,6 +11020,21 @@ impl std::fmt::Display for JsObjectRestBinding {
 	}
 }
 impl std::fmt::Display for JsShorthandPropertyBinding {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for Name {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsStringLiteralExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsNumberLiteralExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

@@ -349,7 +349,7 @@ JsArrayExpression =
 
 JsAnyArrayElement =
 	JsAnyExpression
-	| SpreadElement
+	| JsSpread
 	| JsArrayHole
 
 JsArrayHole = manual__hole: ''
@@ -433,7 +433,6 @@ JsAnyObjectMember =
 	| JsMethodObjectMember
 	| JsGetterObjectMember
 	| JsSetterObjectMember
-	| InitializedProp // TODO #1725 Delete after finishing assignment targets work
 	| JsShorthandPropertyObjectMember
 	| JsSpread
 	| JsUnknownMember
@@ -479,18 +478,6 @@ JsMethodObjectMember =
 // { a }
 //   ^
 JsShorthandPropertyObjectMember = name: JsReferenceIdentifierExpression
-
-// TODO #1725 Delete after finishing work around Classes & Assignment targets
-PropName =
-	JsComputedMemberName
-	| JsStringLiteralExpression
-	| JsNumberLiteralExpression
-	| Ident
-	| Name
-	| JsUnknownBinding
-
-// initialised property
-InitializedProp = key:Name '=' value:JsAnyExpression
 
 ///////////////
 // CLASSES
@@ -803,8 +790,6 @@ JsObjectRestBinding =
 ///////////////
 // MISCELLANEOUS
 ///////////////
-
-SpreadElement = '...' element:JsAnyExpression
 
 Name = 'ident'
 

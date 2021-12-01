@@ -9,8 +9,7 @@ impl ToFormatElement for JsAnyObjectMember {
 			}
 			JsAnyObjectMember::JsGetterObjectMember(getter) => getter.to_format_element(formatter),
 			JsAnyObjectMember::JsSetterObjectMember(setter) => setter.to_format_element(formatter),
-			JsAnyObjectMember::JsSpread(_) => todo!(),
-			JsAnyObjectMember::InitializedProp(_) => todo!(),
+			JsAnyObjectMember::JsSpread(spread) => spread.to_format_element(formatter),
 			JsAnyObjectMember::JsShorthandPropertyObjectMember(ident) => {
 				ident.to_format_element(formatter)
 			}

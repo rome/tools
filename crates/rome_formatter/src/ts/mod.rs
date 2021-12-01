@@ -11,7 +11,6 @@ mod name;
 mod object_members;
 mod parameter_list;
 mod script;
-mod spread;
 mod statements;
 
 #[cfg(test)]

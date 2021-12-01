@@ -19,7 +19,7 @@ use crate::syntax::class::class_expression;
 use crate::syntax::function::parse_function_expression;
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
-	expected_parameter, expected_binding, expected_simple_assignment_target,
+	expected_binding, expected_parameter, expected_simple_assignment_target,
 };
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::is_semi;
@@ -1229,7 +1229,7 @@ pub fn spread_element(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect_required(T![...]);
 	expr_or_assignment(p);
-	m.complete(p, SPREAD_ELEMENT)
+	m.complete(p, JS_SPREAD)
 }
 
 /// A left hand side expression, either a member expression or a call expression such as `foo()`.
