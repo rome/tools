@@ -13,9 +13,7 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
 	let src = r#"
-var count = 0;
-
-export default class {} if (true) { count += 1; }
+    console.log("hello world");
     "#;
 
 	assert!(parse_module(src, 0).ok().is_ok());
