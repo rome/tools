@@ -1098,6 +1098,10 @@ fn parse_reference_identifier_expression(p: &mut Parser) -> ParsedSyntax {
 // yield;
 // async function test(await) {}
 // function* test(yield) {}
+/// Parses an identifier if it is valid in this context or returns `Invalid` if the context isn't valid in this context.
+/// An identifier is invalid if:
+/// * It is named `await` inside of an async function
+/// * It is named `yield` inside of a generator function or in strict mode
 pub(crate) fn parse_identifier(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 	match p.cur() {
 		T![yield] | T![await] | T![ident] => {
