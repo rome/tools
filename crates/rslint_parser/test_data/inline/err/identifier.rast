@@ -3,12 +3,8 @@ JsRoot {
     directives: [],
     statements: [
         JsExpressionStatement {
-            expression: JsUnknownExpression {
-                items: [
-                    Token(
-                        IDENT@0..5 "yield" [] [],
-                    ),
-                ],
+            expression: JsReferenceIdentifierExpression {
+                name_token: IDENT@0..5 "yield" [] [],
             },
             semicolon_token: SEMICOLON@5..6 ";" [] [],
         },
@@ -26,7 +22,7 @@ JsRoot {
   1: LIST@0..0
   2: LIST@0..13
     0: JS_EXPRESSION_STATEMENT@0..6
-      0: JS_UNKNOWN_EXPRESSION@0..5
+      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..5
         0: IDENT@0..5 "yield" [] []
       1: SEMICOLON@5..6 ";" [] []
     1: JS_EXPRESSION_STATEMENT@6..13

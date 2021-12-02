@@ -15,7 +15,9 @@ JsRoot {
                             expression: JsArrowFunctionExpression {
                                 async_token: ASYNC_KW@8..14 "async" [] [Whitespace(" ")],
                                 type_parameters: missing (optional),
-                                parameter_list: missing (optional),
+                                parameter_list: JsIdentifierBinding {
+                                    name_token: IDENT@14..20 "await" [] [Whitespace(" ")],
+                                },
                                 fat_arrow_token: FAT_ARROW@20..23 "=>" [] [Whitespace(" ")],
                                 return_type: missing (optional),
                             },
@@ -43,7 +45,7 @@ JsRoot {
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_ARROW_FUNCTION_EXPRESSION@8..25
                 0: ASYNC_KW@8..14 "async" [] [Whitespace(" ")]
-                1: JS_UNKNOWN_BINDING@14..20
+                1: JS_IDENTIFIER_BINDING@14..20
                   0: IDENT@14..20 "await" [] [Whitespace(" ")]
                 2: FAT_ARROW@20..23 "=>" [] [Whitespace(" ")]
                 3: JS_FUNCTION_BODY@23..25

@@ -132,12 +132,8 @@ JsRoot {
             },
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
-                items: [
-                    Token(
-                        IDENT@118..125 "yield" [Whitespace("\n")] [Whitespace(" ")],
-                    ),
-                ],
+            expression: JsReferenceIdentifierExpression {
+                name_token: IDENT@118..125 "yield" [Whitespace("\n")] [Whitespace(" ")],
             },
             semicolon_token: missing (optional),
         },
@@ -217,12 +213,8 @@ JsRoot {
             parameter_list: JsParameterList {
                 l_paren_token: L_PAREN@192..193 "(" [] [],
                 parameters: [
-                    JsUnknownBinding {
-                        items: [
-                            Token(
-                                IDENT@193..198 "yield" [] [],
-                            ),
-                        ],
+                    JsIdentifierBinding {
+                        name_token: IDENT@193..198 "yield" [] [],
                     },
                 ],
                 r_paren_token: R_PAREN@198..200 ")" [] [Whitespace(" ")],
@@ -328,7 +320,7 @@ JsRoot {
         2: LIST@117..117
         3: R_CURLY@117..118 "}" [] []
     7: JS_EXPRESSION_STATEMENT@118..125
-      0: JS_UNKNOWN_EXPRESSION@118..125
+      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@118..125
         0: IDENT@118..125 "yield" [Whitespace("\n")] [Whitespace(" ")]
       1: (empty)
     8: JS_EXPRESSION_STATEMENT@125..129
@@ -374,7 +366,7 @@ JsRoot {
       2: JS_PARAMETER_LIST@192..200
         0: L_PAREN@192..193 "(" [] []
         1: LIST@193..198
-          0: JS_UNKNOWN_BINDING@193..198
+          0: JS_IDENTIFIER_BINDING@193..198
             0: IDENT@193..198 "yield" [] []
         2: R_PAREN@198..200 ")" [] [Whitespace(" ")]
       3: JS_FUNCTION_BODY@200..202

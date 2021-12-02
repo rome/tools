@@ -1,6 +1,6 @@
 use crate::parser::{expected_any, ToDiagnostic};
 use crate::syntax::class::parse_equal_value_clause;
-use crate::syntax::expr::parse_identifier;
+use crate::syntax::expr::{is_at_identifier, parse_identifier};
 use crate::syntax::js_parse_error::{
 	expected_binding, expected_identifier, expected_object_member_name,
 };
@@ -24,6 +24,10 @@ pub(crate) fn parse_binding_with_optional_default(p: &mut Parser) -> ParsedSynta
 	BindingWithDefault.parse_pattern_with_optional_default(p)
 }
 
+fn is_at_identifier_binding(p: &Parser) -> bool {
+	is_at_identifier(p)
+}
+
 // test_err binding_identifier_invalid
 // async () => { let await = 5; }
 // function *foo() {
@@ -34,10 +38,9 @@ pub(crate) fn parse_binding_with_optional_default(p: &mut Parser) -> ParsedSynta
 // const let = 5;
 // let a, a;
 pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
-	let parsed =
-		parse_identifier(p, JS_IDENTIFIER_BINDING).or_invalid_to_unknown(p, JS_UNKNOWN_BINDING);
+	let parsed = parse_identifier(p, JS_IDENTIFIER_BINDING);
 
-	if let Present(mut identifier) = parsed {
+	if let Present(identifier) = parsed {
 		let identifier_name = identifier.text(p);
 
 		if StrictMode.is_supported(p)
@@ -50,8 +53,6 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 				))
 				.primary(identifier.range(p), "");
 			p.error(err);
-
-			identifier.change_kind(p, JS_UNKNOWN_BINDING);
 		} else if p.state.should_record_names {
 			if identifier_name == "let" {
 				let err = p
@@ -61,8 +62,6 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 					.primary(identifier.range(p), "Rename the let variable here");
 
 				p.error(err);
-
-				identifier.change_kind(p, JS_UNKNOWN_BINDING);
 			} else if let Some(existing) = p.state.name_map.get(identifier_name) {
 				let err = p
 					.err_builder(
@@ -77,7 +76,6 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 						&format!("a second declaration of {} is not allowed", identifier_name),
 					);
 				p.error(err);
-				identifier.change_kind(p, JS_UNKNOWN_BINDING);
 			} else {
 				let identifier_name = String::from(identifier_name);
 				p.state
@@ -218,15 +216,11 @@ impl ParseObjectPattern for ObjectBindingPattern {
 		}
 
 		let m = p.start();
-		let checkpoint = p.checkpoint();
-		let identifier_binding = parse_identifier_binding(p);
 
-		let kind = if (p.at(T![=]) || identifier_binding.is_present()) && !p.at(T![:]) {
-			identifier_binding.or_missing_with_error(p, expected_identifier);
+		let kind = if p.at(T![=]) || (is_at_identifier_binding(p) && !p.nth_at(1, T![:])) {
+			parse_identifier_binding(p).or_missing_with_error(p, expected_identifier);
 			JS_SHORTHAND_PROPERTY_BINDING
 		} else {
-			p.rewind(checkpoint);
-
 			parse_object_member_name(p).or_missing_with_error(p, expected_object_member_name);
 			if p.expect_required(T![:]) {
 				parse_binding(p).or_missing_with_error(p, expected_binding);

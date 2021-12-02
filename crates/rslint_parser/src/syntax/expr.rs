@@ -19,11 +19,10 @@ use crate::syntax::class::class_expression;
 use crate::syntax::function::parse_function_expression;
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
-	expected_binding, expected_parameter, expected_simple_assignment_target,
+	expected_binding, expected_identifier, expected_parameter, expected_simple_assignment_target,
 };
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::is_semi;
-use crate::ConditionalParsedSyntax::{Invalid, Valid};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
@@ -953,7 +952,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 
 					m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 				} else {
-					reference_identifier_expression(p)?
+					parse_reference_identifier_expression(p).unwrap()
 				}
 			}
 		}
@@ -970,8 +969,8 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			// foo;
 			// yield;
 			// await;
-			let mut ident = reference_identifier_expression(p)?;
-			if p.state.potential_arrow_start && p.at(T![=>]) && !p.has_linebreak_before_n(0) {
+			if p.state.potential_arrow_start && p.nth_at(1, T![=>]) && !p.has_linebreak_before_n(1)
+			{
 				// test arrow_expr_single_param
 				// // SCRIPT
 				// foo => {}
@@ -979,15 +978,13 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				// await => {}
 				// foo =>
 				// {}
-
-				// parameters are binding so we need to change the kind from NAME_REF to JS_IDENTIFIER_BINDING
-				ident.change_kind(p, JS_IDENTIFIER_BINDING);
-				let m = ident.precede(p);
-				p.bump_any();
+				let m = p.start();
+				parse_identifier_binding(p).or_missing_with_error(p, expected_identifier);
+				p.bump(T![=>]);
 				parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
 				m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 			} else {
-				ident
+				parse_reference_identifier_expression(p).unwrap()
 			}
 		}
 		// test grouping_expr
@@ -1067,25 +1064,8 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	Some(complete)
 }
 
-pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker> {
+fn parse_reference_identifier_expression(p: &mut Parser) -> ParsedSyntax {
 	parse_identifier(p, JS_REFERENCE_IDENTIFIER_EXPRESSION)
-		.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
-		.ok()
-		.or_else(|| {
-			let err = p
-				.err_builder("Expected an identifier, but found none")
-				.primary(p.cur_tok().range, "");
-
-			#[allow(deprecated)]
-			SingleTokenParseRecovery::with_error(
-				p.state.expr_recovery_set,
-				JS_UNKNOWN_EXPRESSION,
-				err,
-			)
-			.enabled_braces_check()
-			.recover(p);
-			None
-		})
 }
 
 // test identifier_loose_mode
@@ -1102,13 +1082,11 @@ pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker
 // yield;
 // async function test(await) {}
 // function* test(yield) {}
-pub(crate) fn parse_identifier(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
+pub(crate) fn parse_identifier(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax {
 	match p.cur() {
 		T![yield] | T![await] | T![ident] => {
 			let m = p.start();
 			let name = p.cur_src();
-
-			let mut valid = false;
 
 			if name == "await" && p.state.in_async {
 				let err = p
@@ -1128,21 +1106,19 @@ pub(crate) fn parse_identifier(p: &mut Parser, kind: SyntaxKind) -> ConditionalP
 					))
 					.primary(p.cur_tok().range, "");
 				p.error(err);
-			} else {
-				valid = true;
 			}
 
 			p.bump_remap(T![ident]);
 			let completed = m.complete(p, kind);
 
-			if valid {
-				Valid(completed.into())
-			} else {
-				Invalid(completed.into())
-			}
+			Present(completed)
 		}
-		_ => Invalid(Absent.into()),
+		_ => Absent,
 	}
+}
+
+pub(crate) fn is_at_identifier(p: &Parser) -> bool {
+	matches!(p.cur(), T![ident] | T![await] | T![yield])
 }
 
 /// A template literal such as "`abcd ${efg}`"

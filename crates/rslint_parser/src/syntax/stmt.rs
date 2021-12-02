@@ -730,6 +730,14 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 // const a = 5;
 // const { foo: [bar], baz } = {};
 // let foo = "lorem", bar = "ipsum", third = "value", fourth = 6;
+// var a, a, a, a, a;
+//
+// test_err variable_declaration_statement_err
+// let a, { a } = { a: 10 }
+// const a = 1, { a } = { a: 10 }
+// const a;
+// let [a];
+// const { b };
 pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err var_decl_err
 	// var a =;

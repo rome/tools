@@ -198,13 +198,55 @@ JsRoot {
             },
             semicolon_token: SEMICOLON@153..154 ";" [] [],
         },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: VAR_KW@154..159 "var" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@159..160 "a" [] [],
+                        },
+                        init: missing (optional),
+                    },
+                    COMMA@160..162 "," [] [Whitespace(" ")],
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@162..163 "a" [] [],
+                        },
+                        init: missing (optional),
+                    },
+                    COMMA@163..165 "," [] [Whitespace(" ")],
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@165..166 "a" [] [],
+                        },
+                        init: missing (optional),
+                    },
+                    COMMA@166..168 "," [] [Whitespace(" ")],
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@168..169 "a" [] [],
+                        },
+                        init: missing (optional),
+                    },
+                    COMMA@169..171 "," [] [Whitespace(" ")],
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@171..172 "a" [] [],
+                        },
+                        init: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@172..173 ";" [] [],
+        },
     ],
 }
 
-0: JS_ROOT@0..155
+0: JS_ROOT@0..174
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..154
+  2: LIST@0..173
     0: JS_VARIABLE_DECLARATION_STATEMENT@0..10
       0: JS_VARIABLE_DECLARATION@0..9
         0: VAR_KW@0..4 "var" [] [Whitespace(" ")]
@@ -334,4 +376,33 @@ JsRoot {
               1: JS_NUMBER_LITERAL_EXPRESSION@152..153
                 0: JS_NUMBER_LITERAL@152..153 "6" [] []
       1: SEMICOLON@153..154 ";" [] []
-  3: EOF@154..155 "" [Whitespace("\n")] []
+    6: JS_VARIABLE_DECLARATION_STATEMENT@154..173
+      0: JS_VARIABLE_DECLARATION@154..172
+        0: VAR_KW@154..159 "var" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@159..172
+          0: JS_VARIABLE_DECLARATOR@159..160
+            0: JS_IDENTIFIER_BINDING@159..160
+              0: IDENT@159..160 "a" [] []
+            1: (empty)
+          1: COMMA@160..162 "," [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATOR@162..163
+            0: JS_IDENTIFIER_BINDING@162..163
+              0: IDENT@162..163 "a" [] []
+            1: (empty)
+          3: COMMA@163..165 "," [] [Whitespace(" ")]
+          4: JS_VARIABLE_DECLARATOR@165..166
+            0: JS_IDENTIFIER_BINDING@165..166
+              0: IDENT@165..166 "a" [] []
+            1: (empty)
+          5: COMMA@166..168 "," [] [Whitespace(" ")]
+          6: JS_VARIABLE_DECLARATOR@168..169
+            0: JS_IDENTIFIER_BINDING@168..169
+              0: IDENT@168..169 "a" [] []
+            1: (empty)
+          7: COMMA@169..171 "," [] [Whitespace(" ")]
+          8: JS_VARIABLE_DECLARATOR@171..172
+            0: JS_IDENTIFIER_BINDING@171..172
+              0: IDENT@171..172 "a" [] []
+            1: (empty)
+      1: SEMICOLON@172..173 ";" [] []
+  3: EOF@173..174 "" [Whitespace("\n")] []
