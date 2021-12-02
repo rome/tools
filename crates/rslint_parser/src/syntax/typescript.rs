@@ -6,11 +6,11 @@ use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
+use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::class::parse_class_declaration;
 use crate::syntax::expr::any_reference_member;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::js_parse_error;
-use crate::syntax::pat::parse_identifier_binding;
 use crate::{SyntaxKind::*, *};
 
 pub const BASE_TS_RECOVERY_SET: TokenSet = token_set![
@@ -553,7 +553,11 @@ pub(crate) fn try_parse_index_signature(
 		return Err(m);
 	}
 
-	let pat_m = parse_identifier_binding(p).ok().unwrap().undo_completion(p);
+	let pat_m = parse_identifier_binding(p)
+		.or_invalid_to_unknown(p, JS_UNKNOWN_BINDING)
+		.ok()
+		.unwrap()
+		.undo_completion(p);
 
 	if p.expect_no_recover(T![:]).is_none() {
 		return Err(m);
@@ -563,7 +567,7 @@ pub(crate) fn try_parse_index_signature(
 		return Err(m);
 	}
 
-	pat_m.complete(p, SINGLE_PATTERN);
+	pat_m.complete(p, JS_IDENTIFIER_BINDING);
 
 	if p.expect_no_recover(T![']']).is_none() {
 		return Err(m);

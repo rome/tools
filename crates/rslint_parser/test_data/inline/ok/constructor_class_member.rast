@@ -19,13 +19,8 @@ JsRoot {
                     parameter_list: JsConstructorParameterList {
                         l_paren_token: L_PAREN@24..25 "(" [] [],
                         parameters: [
-                            SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@25..26 "a" [] [],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                            JsIdentifierBinding {
+                                name_token: IDENT@25..26 "a" [] [],
                             },
                         ],
                         r_paren_token: R_PAREN@26..28 ")" [] [Whitespace(" ")],
@@ -76,13 +71,8 @@ JsRoot {
                     parameter_list: JsConstructorParameterList {
                         l_paren_token: L_PAREN@76..77 "(" [] [],
                         parameters: [
-                            SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@77..78 "b" [] [],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                            JsIdentifierBinding {
+                                name_token: IDENT@77..78 "b" [] [],
                             },
                         ],
                         r_paren_token: R_PAREN@78..80 ")" [] [Whitespace(" ")],
@@ -135,9 +125,8 @@ JsRoot {
           1: JS_CONSTRUCTOR_PARAMETER_LIST@24..28
             0: L_PAREN@24..25 "(" [] []
             1: LIST@25..26
-              0: SINGLE_PATTERN@25..26
-                0: NAME@25..26
-                  0: IDENT@25..26 "a" [] []
+              0: JS_IDENTIFIER_BINDING@25..26
+                0: IDENT@25..26 "a" [] []
             2: R_PAREN@26..28 ")" [] [Whitespace(" ")]
           2: JS_FUNCTION_BODY@28..46
             0: L_CURLY@28..29 "{" [] []
@@ -169,9 +158,8 @@ JsRoot {
           1: JS_CONSTRUCTOR_PARAMETER_LIST@76..80
             0: L_PAREN@76..77 "(" [] []
             1: LIST@77..78
-              0: SINGLE_PATTERN@77..78
-                0: NAME@77..78
-                  0: IDENT@77..78 "b" [] []
+              0: JS_IDENTIFIER_BINDING@77..78
+                0: IDENT@77..78 "b" [] []
             2: R_PAREN@78..80 ")" [] [Whitespace(" ")]
           2: JS_FUNCTION_BODY@80..98
             0: L_CURLY@80..81 "{" [] []

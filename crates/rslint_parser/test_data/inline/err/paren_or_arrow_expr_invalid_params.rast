@@ -9,7 +9,7 @@ JsRoot {
                 parameter_list: JsParameterList {
                     l_paren_token: L_PAREN@0..1 "(" [] [],
                     parameters: [
-                        JsUnknownPattern {
+                        JsUnknownBinding {
                             items: [
                                 Token(
                                     JS_NUMBER_LITERAL@1..3 "5" [] [Whitespace(" ")],
@@ -71,22 +71,12 @@ JsRoot {
                 parameter_list: JsParameterList {
                     l_paren_token: L_PAREN@27..29 "(" [Whitespace("\n")] [],
                     parameters: [
-                        SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@29..30 "a" [] [],
-                            },
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
+                        JsIdentifierBinding {
+                            name_token: IDENT@29..30 "a" [] [],
                         },
                         COMMA@30..32 "," [] [Whitespace(" ")],
-                        SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@32..33 "b" [] [],
-                            },
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
+                        JsIdentifierBinding {
+                            name_token: IDENT@32..33 "b" [] [],
                         },
                     ],
                     r_paren_token: R_PAREN@33..35 ")" [] [Whitespace(" ")],
@@ -108,7 +98,7 @@ JsRoot {
         0: JS_PARAMETER_LIST@0..8
           0: L_PAREN@0..1 "(" [] []
           1: LIST@1..6
-            0: JS_UNKNOWN_PATTERN@1..6
+            0: JS_UNKNOWN_BINDING@1..6
               0: JS_NUMBER_LITERAL@1..3 "5" [] [Whitespace(" ")]
               1: PLUS@3..5 "+" [] [Whitespace(" ")]
               2: JS_NUMBER_LITERAL@5..6 "5" [] []
@@ -147,13 +137,11 @@ JsRoot {
         0: JS_PARAMETER_LIST@27..35
           0: L_PAREN@27..29 "(" [Whitespace("\n")] []
           1: LIST@29..33
-            0: SINGLE_PATTERN@29..30
-              0: NAME@29..30
-                0: IDENT@29..30 "a" [] []
+            0: JS_IDENTIFIER_BINDING@29..30
+              0: IDENT@29..30 "a" [] []
             1: COMMA@30..32 "," [] [Whitespace(" ")]
-            2: SINGLE_PATTERN@32..33
-              0: NAME@32..33
-                0: IDENT@32..33 "b" [] []
+            2: JS_IDENTIFIER_BINDING@32..33
+              0: IDENT@32..33 "b" [] []
           2: R_PAREN@33..35 ")" [] [Whitespace(" ")]
         1: FAT_ARROW@35..37 "=>" [] []
         2: (empty)

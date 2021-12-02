@@ -10,13 +10,8 @@ JsRoot {
                     kind_token: LET_KW@5..9 "let" [] [Whitespace(" ")],
                     declarators: [
                         JsVariableDeclarator {
-                            id: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@9..11 "i" [] [Whitespace(" ")],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                            id: JsIdentifierBinding {
+                                name_token: IDENT@9..11 "i" [] [Whitespace(" ")],
                             },
                             init: JsEqualValueClause {
                                 eq_token: EQ@11..13 "=" [] [Whitespace(" ")],
@@ -59,25 +54,21 @@ JsRoot {
                 kind_token: LET_KW@37..41 "let" [] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: ObjectPattern {
+                        id: JsObjectBinding {
                             l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],
-                            elements: [
-                                SinglePattern {
-                                    name: Name {
-                                        ident_token: IDENT@43..46 "foo" [] [],
+                            properties: [
+                                JsShorthandPropertyBinding {
+                                    identifier: JsIdentifierBinding {
+                                        name_token: IDENT@43..46 "foo" [] [],
                                     },
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
+                                    init: missing (optional),
                                 },
                                 COMMA@46..48 "," [] [Whitespace(" ")],
-                                SinglePattern {
-                                    name: Name {
-                                        ident_token: IDENT@48..52 "bar" [] [Whitespace(" ")],
+                                JsShorthandPropertyBinding {
+                                    identifier: JsIdentifierBinding {
+                                        name_token: IDENT@48..52 "bar" [] [Whitespace(" ")],
                                     },
-                                    question_mark_token: missing (optional),
-                                    excl_token: missing (optional),
-                                    ty: missing (optional),
+                                    init: missing (optional),
                                 },
                             ],
                             r_curly_token: R_CURLY@52..54 "}" [] [Whitespace(" ")],
@@ -147,9 +138,8 @@ JsRoot {
           0: LET_KW@5..9 "let" [] [Whitespace(" ")]
           1: LIST@9..14
             0: JS_VARIABLE_DECLARATOR@9..14
-              0: SINGLE_PATTERN@9..11
-                0: NAME@9..11
-                  0: IDENT@9..11 "i" [] [Whitespace(" ")]
+              0: JS_IDENTIFIER_BINDING@9..11
+                0: IDENT@9..11 "i" [] [Whitespace(" ")]
               1: JS_EQUAL_VALUE_CLAUSE@11..14
                 0: EQ@11..13 "=" [] [Whitespace(" ")]
                 1: JS_NUMBER_LITERAL_EXPRESSION@13..14
@@ -180,17 +170,20 @@ JsRoot {
         0: LET_KW@37..41 "let" [] [Whitespace(" ")]
         1: LIST@41..54
           0: JS_VARIABLE_DECLARATOR@41..54
-            0: OBJECT_PATTERN@41..54
+            0: JS_OBJECT_BINDING@41..54
               0: L_CURLY@41..43 "{" [] [Whitespace(" ")]
               1: LIST@43..52
-                0: SINGLE_PATTERN@43..46
-                  0: NAME@43..46
+                0: JS_SHORTHAND_PROPERTY_BINDING@43..46
+                  0: JS_IDENTIFIER_BINDING@43..46
                     0: IDENT@43..46 "foo" [] []
+                  1: (empty)
                 1: COMMA@46..48 "," [] [Whitespace(" ")]
-                2: SINGLE_PATTERN@48..52
-                  0: NAME@48..52
+                2: JS_SHORTHAND_PROPERTY_BINDING@48..52
+                  0: JS_IDENTIFIER_BINDING@48..52
                     0: IDENT@48..52 "bar" [] [Whitespace(" ")]
+                  1: (empty)
               2: R_CURLY@52..54 "}" [] [Whitespace(" ")]
+            1: (empty)
       3: IDENT@54..57 "of" [] [Whitespace(" ")]
       4: JS_OBJECT_EXPRESSION@57..59
         0: L_CURLY@57..58 "{" [] []

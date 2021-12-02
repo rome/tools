@@ -1,0 +1,52 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsFunctionDeclaration {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@19..23 "test" [] [],
+            },
+            type_parameters: missing (optional),
+            parameter_list: JsParameterList {
+                l_paren_token: L_PAREN@23..24 "(" [] [],
+                parameters: [
+                    JsIdentifierBinding {
+                        name_token: IDENT@24..29 "await" [] [],
+                    },
+                ],
+                r_paren_token: R_PAREN@29..31 ")" [] [Whitespace(" ")],
+            },
+            return_type: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@31..32 "{" [] [],
+                directives: [],
+                statements: [],
+                r_curly_token: R_CURLY@32..33 "}" [] [],
+            },
+        },
+    ],
+}
+
+0: JS_ROOT@0..34
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..33
+    0: JS_FUNCTION_DECLARATION@0..33
+      0: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@19..23
+        0: IDENT@19..23 "test" [] []
+      2: JS_PARAMETER_LIST@23..31
+        0: L_PAREN@23..24 "(" [] []
+        1: LIST@24..29
+          0: JS_IDENTIFIER_BINDING@24..29
+            0: IDENT@24..29 "await" [] []
+        2: R_PAREN@29..31 ")" [] [Whitespace(" ")]
+      3: JS_FUNCTION_BODY@31..33
+        0: L_CURLY@31..32 "{" [] []
+        1: LIST@32..32
+        2: LIST@32..32
+        3: R_CURLY@32..33 "}" [] []
+  3: EOF@33..34 "" [Whitespace("\n")] []

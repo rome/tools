@@ -192,13 +192,12 @@ JsRoot {
             parameter_list: JsParameterList {
                 l_paren_token: L_PAREN@169..170 "(" [] [],
                 parameters: [
-                    SinglePattern {
-                        name: Name {
-                            ident_token: IDENT@170..175 "await" [] [],
-                        },
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
+                    JsUnknownBinding {
+                        items: [
+                            Token(
+                                IDENT@170..175 "await" [] [],
+                            ),
+                        ],
                     },
                 ],
                 r_paren_token: R_PAREN@175..177 ")" [] [Whitespace(" ")],
@@ -222,11 +221,12 @@ JsRoot {
             parameter_list: JsParameterList {
                 l_paren_token: L_PAREN@192..193 "(" [] [],
                 parameters: [
-                    SinglePattern {
-                        name: missing (required),
-                        question_mark_token: missing (optional),
-                        excl_token: missing (optional),
-                        ty: missing (optional),
+                    JsUnknownBinding {
+                        items: [
+                            Token(
+                                IDENT@193..198 "yield" [] [],
+                            ),
+                        ],
                     },
                 ],
                 r_paren_token: R_PAREN@198..200 ")" [] [Whitespace(" ")],
@@ -363,9 +363,8 @@ JsRoot {
       2: JS_PARAMETER_LIST@169..177
         0: L_PAREN@169..170 "(" [] []
         1: LIST@170..175
-          0: SINGLE_PATTERN@170..175
-            0: NAME@170..175
-              0: IDENT@170..175 "await" [] []
+          0: JS_UNKNOWN_BINDING@170..175
+            0: IDENT@170..175 "await" [] []
         2: R_PAREN@175..177 ")" [] [Whitespace(" ")]
       3: JS_FUNCTION_BODY@177..179
         0: L_CURLY@177..178 "{" [] []
@@ -379,9 +378,8 @@ JsRoot {
       2: JS_PARAMETER_LIST@192..200
         0: L_PAREN@192..193 "(" [] []
         1: LIST@193..198
-          0: SINGLE_PATTERN@193..198
-            0: JS_UNKNOWN_PATTERN@193..198
-              0: IDENT@193..198 "yield" [] []
+          0: JS_UNKNOWN_BINDING@193..198
+            0: IDENT@193..198 "yield" [] []
         2: R_PAREN@198..200 ")" [] [Whitespace(" ")]
       3: JS_FUNCTION_BODY@200..202
         0: L_CURLY@200..201 "{" [] []
@@ -461,6 +459,13 @@ error[SyntaxError]: return types can only be used in TypeScript files
   │
 9 │ function test(): number {}
   │                ^^^^^^^^
+
+--
+error[SyntaxError]: Illegal use of `await` as an identifier inside of a module
+   ┌─ function_decl_err.js:10:14
+   │
+10 │ function foo(await) {}
+   │              ^^^^^
 
 --
 error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode

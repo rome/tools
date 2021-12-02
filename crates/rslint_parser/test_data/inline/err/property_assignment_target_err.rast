@@ -276,25 +276,25 @@ JsRoot {
       1: SEMICOLON@72..73 ";" [] []
   3: EOF@73..74 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected an identifier or keyword
+error[SyntaxError]: expected an identifier but instead found ':'
   ┌─ property_assignment_target_err.js:1:3
   │
 1 │ ({:y} = {});
-  │   ^ Expected an identifier or keyword here
+  │   ^ Expected an identifier here
 
 --
-error[SyntaxError]: Expected an identifier or keyword
+error[SyntaxError]: expected an identifier but instead found '='
   ┌─ property_assignment_target_err.js:2:3
   │
 2 │ ({=y} = {});
-  │   ^ Expected an identifier or keyword here
+  │   ^ Expected an identifier here
 
 --
-error[SyntaxError]: Expected an identifier or keyword
+error[SyntaxError]: expected an identifier but instead found ':'
   ┌─ property_assignment_target_err.js:3:3
   │
 3 │ ({:="test"} = {});
-  │   ^ Expected an identifier or keyword here
+  │   ^ Expected an identifier here
 
 --
 error[SyntaxError]: expected an identifier, or an assignment target but instead found '='
@@ -304,11 +304,11 @@ error[SyntaxError]: expected an identifier, or an assignment target but instead 
   │    ^ Expected an identifier, or an assignment target here
 
 --
-error[SyntaxError]: Expected an identifier or keyword
+error[SyntaxError]: expected an identifier but instead found ':'
   ┌─ property_assignment_target_err.js:4:3
   │
 4 │ ({:=} = {});
-  │   ^ Expected an identifier or keyword here
+  │   ^ Expected an identifier here
 
 --
 error[SyntaxError]: expected an identifier, or an assignment target but instead found '='

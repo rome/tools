@@ -1,0 +1,201 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsArrayBinding {
+                            l_brack_token: L_BRACK@4..6 "[" [] [Whitespace(" ")],
+                            elements: [
+                                JsArrayRestBinding {
+                                    dotdotdot_token: DOT2@6..10 "..." [] [Whitespace(" ")],
+                                    binding: missing (required),
+                                },
+                            ],
+                            r_brack_token: R_BRACK@10..12 "]" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@12..14 "=" [] [Whitespace(" ")],
+                            expression: JsReferenceIdentifierExpression {
+                                name_token: IDENT@14..15 "a" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@15..16 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@16..21 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsArrayBinding {
+                            l_brack_token: L_BRACK@21..23 "[" [] [Whitespace(" ")],
+                            elements: [
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            DOT2@23..26 "..." [] [],
+                                        ),
+                                        Node(
+                                            1: JS_IDENTIFIER_BINDING@26..28
+                                              0: IDENT@26..28 "c" [] [Whitespace(" ")]
+                                            ,
+                                        ),
+                                        Token(
+                                            EQ@28..30 "=" [] [Whitespace(" ")],
+                                        ),
+                                        Token(
+                                            JS_STRING_LITERAL@30..40 "\"default\"" [] [Whitespace(" ")],
+                                        ),
+                                    ],
+                                },
+                            ],
+                            r_brack_token: R_BRACK@40..42 "]" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@42..44 "=" [] [Whitespace(" ")],
+                            expression: JsReferenceIdentifierExpression {
+                                name_token: IDENT@44..45 "a" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@45..46 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsArrayBinding {
+                            l_brack_token: L_BRACK@51..53 "[" [] [Whitespace(" ")],
+                            elements: [
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            DOT2@53..56 "..." [] [],
+                                        ),
+                                        Node(
+                                            1: JS_IDENTIFIER_BINDING@56..60
+                                              0: IDENT@56..60 "rest" [] []
+                                            ,
+                                        ),
+                                    ],
+                                },
+                                COMMA@60..62 "," [] [Whitespace(" ")],
+                                JsIdentifierBinding {
+                                    name_token: IDENT@62..79 "other_assignment" [] [Whitespace(" ")],
+                                },
+                            ],
+                            r_brack_token: R_BRACK@79..81 "]" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@81..83 "=" [] [Whitespace(" ")],
+                            expression: JsReferenceIdentifierExpression {
+                                name_token: IDENT@83..84 "a" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@84..85 ";" [] [],
+        },
+    ],
+}
+
+0: JS_ROOT@0..86
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..85
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..16
+      0: JS_VARIABLE_DECLARATION@0..15
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..15
+          0: JS_VARIABLE_DECLARATOR@4..15
+            0: JS_ARRAY_BINDING@4..12
+              0: L_BRACK@4..6 "[" [] [Whitespace(" ")]
+              1: LIST@6..10
+                0: JS_ARRAY_REST_BINDING@6..10
+                  0: DOT2@6..10 "..." [] [Whitespace(" ")]
+                  1: (empty)
+              2: R_BRACK@10..12 "]" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@12..15
+              0: EQ@12..14 "=" [] [Whitespace(" ")]
+              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@14..15
+                0: IDENT@14..15 "a" [] []
+      1: SEMICOLON@15..16 ";" [] []
+    1: JS_VARIABLE_DECLARATION_STATEMENT@16..46
+      0: JS_VARIABLE_DECLARATION@16..45
+        0: LET_KW@16..21 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@21..45
+          0: JS_VARIABLE_DECLARATOR@21..45
+            0: JS_ARRAY_BINDING@21..42
+              0: L_BRACK@21..23 "[" [] [Whitespace(" ")]
+              1: LIST@23..40
+                0: JS_UNKNOWN_BINDING@23..40
+                  0: DOT2@23..26 "..." [] []
+                  1: JS_IDENTIFIER_BINDING@26..28
+                    0: IDENT@26..28 "c" [] [Whitespace(" ")]
+                  2: EQ@28..30 "=" [] [Whitespace(" ")]
+                  3: JS_STRING_LITERAL@30..40 "\"default\"" [] [Whitespace(" ")]
+              2: R_BRACK@40..42 "]" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@42..45
+              0: EQ@42..44 "=" [] [Whitespace(" ")]
+              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@44..45
+                0: IDENT@44..45 "a" [] []
+      1: SEMICOLON@45..46 ";" [] []
+    2: JS_VARIABLE_DECLARATION_STATEMENT@46..85
+      0: JS_VARIABLE_DECLARATION@46..84
+        0: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@51..84
+          0: JS_VARIABLE_DECLARATOR@51..84
+            0: JS_ARRAY_BINDING@51..81
+              0: L_BRACK@51..53 "[" [] [Whitespace(" ")]
+              1: LIST@53..79
+                0: JS_UNKNOWN_BINDING@53..60
+                  0: DOT2@53..56 "..." [] []
+                  1: JS_IDENTIFIER_BINDING@56..60
+                    0: IDENT@56..60 "rest" [] []
+                1: COMMA@60..62 "," [] [Whitespace(" ")]
+                2: JS_IDENTIFIER_BINDING@62..79
+                  0: IDENT@62..79 "other_assignment" [] [Whitespace(" ")]
+              2: R_BRACK@79..81 "]" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@81..84
+              0: EQ@81..83 "=" [] [Whitespace(" ")]
+              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@83..84
+                0: IDENT@83..84 "a" [] []
+      1: SEMICOLON@84..85 ";" [] []
+  3: EOF@85..86 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: expected an identifier, an array pattern, or an object pattern but instead found ''
+  ┌─ array_binding_rest_err.js:1:10
+  │
+1 │ let [ ... ] = a;
+  │          ^ Expected an identifier, an array pattern, or an object pattern here
+
+--
+error[SyntaxError]: rest element cannot have a default
+  ┌─ array_binding_rest_err.js:2:12
+  │
+2 │ let [ ...c = "default" ] = a;
+  │       ---- ^^^^^^^^^^^^ Remove the default value here
+  │       │     
+  │       Rest element
+
+--
+error[SyntaxError]: rest element must be the last element
+  ┌─ array_binding_rest_err.js:3:7
+  │
+3 │ let [ ...rest, other_assignment ] = a;
+  │       ^^^^^^^ Move the rest element to the end of the pattern, right before the closing ']'
+
+--
+let [ ... ] = a;
+let [ ...c = "default" ] = a;
+let [ ...rest, other_assignment ] = a;

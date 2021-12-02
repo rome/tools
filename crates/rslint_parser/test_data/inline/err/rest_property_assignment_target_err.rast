@@ -69,9 +69,26 @@ JsRoot {
                     left: JsObjectAssignmentTarget {
                         l_curly_token: L_CURLY@44..46 "{" [] [Whitespace(" ")],
                         properties: [
-                            JsObjectRestPropertyAssignmentTarget {
-                                dotdotdot_token: DOT2@46..49 "..." [] [],
-                                target: missing (required),
+                            JsUnknownAssignmentTarget {
+                                items: [
+                                    Token(
+                                        DOT2@46..49 "..." [] [],
+                                    ),
+                                    Token(
+                                        L_CURLY@49..50 "{" [] [],
+                                    ),
+                                    Node(
+                                        2: LIST@50..51
+                                          0: JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@50..51
+                                            0: JS_IDENTIFIER_ASSIGNMENT_TARGET@50..51
+                                              0: IDENT@50..51 "a" [] []
+                                            1: (empty)
+                                        ,
+                                    ),
+                                    Token(
+                                        R_CURLY@51..53 "}" [] [Whitespace(" ")],
+                                    ),
+                                ],
                             },
                         ],
                         r_curly_token: R_CURLY@53..55 "}" [] [Whitespace(" ")],
@@ -204,12 +221,15 @@ JsRoot {
           0: JS_OBJECT_ASSIGNMENT_TARGET@44..55
             0: L_CURLY@44..46 "{" [] [Whitespace(" ")]
             1: LIST@46..53
-              0: JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET@46..53
+              0: JS_UNKNOWN_ASSIGNMENT_TARGET@46..53
                 0: DOT2@46..49 "..." [] []
-                1: JS_UNKNOWN_ASSIGNMENT_TARGET@49..53
-                  0: L_CURLY@49..50 "{" [] []
-                  1: IDENT@50..51 "a" [] []
-                  2: R_CURLY@51..53 "}" [] [Whitespace(" ")]
+                1: L_CURLY@49..50 "{" [] []
+                2: LIST@50..51
+                  0: JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@50..51
+                    0: JS_IDENTIFIER_ASSIGNMENT_TARGET@50..51
+                      0: IDENT@50..51 "a" [] []
+                    1: (empty)
+                3: R_CURLY@51..53 "}" [] [Whitespace(" ")]
             2: R_CURLY@53..55 "}" [] [Whitespace(" ")]
           1: EQ@55..57 "=" [] [Whitespace(" ")]
           2: JS_REFERENCE_IDENTIFIER_EXPRESSION@57..58
@@ -274,18 +294,18 @@ error[SyntaxError]: rest element cannot have a default
   │    Rest element
 
 --
-error[SyntaxError]: Invalid assignment to `{a}`
-  ┌─ rest_property_assignment_target_err.js:3:7
+error[SyntaxError]: object and array assignment targets are not allowed in rest patterns
+  ┌─ rest_property_assignment_target_err.js:3:4
   │
 3 │ ({ ...{a} } = b);
-  │       ^^^ This expression cannot be assigned to
+  │    ^^^^^^
 
 --
 error[SyntaxError]: rest element must be the last element
   ┌─ rest_property_assignment_target_err.js:4:4
   │
 4 │ ({ ...rest, other_assignment } = a);
-  │    ^^^^^^^ Move the rest element to the end
+  │    ^^^^^^^ Move the rest element to the end of the pattern, right before the closing '}'
 
 --
 error[SyntaxError]: rest element may not have a trailing comma

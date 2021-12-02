@@ -1,0 +1,2 @@
+// SCRIPT
+function test(await) {}

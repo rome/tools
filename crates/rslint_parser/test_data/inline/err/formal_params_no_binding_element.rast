@@ -13,7 +13,7 @@ JsRoot {
             parameter_list: JsParameterList {
                 l_paren_token: L_PAREN@12..13 "(" [] [],
                 parameters: [
-                    JsUnknownPattern {
+                    JsUnknownBinding {
                         items: [
                             Token(
                                 TRUE_KW@13..17 "true" [] [],
@@ -45,7 +45,7 @@ JsRoot {
       2: JS_PARAMETER_LIST@12..19
         0: L_PAREN@12..13 "(" [] []
         1: LIST@13..17
-          0: JS_UNKNOWN_PATTERN@13..17
+          0: JS_UNKNOWN_BINDING@13..17
             0: TRUE_KW@13..17 "true" [] []
         2: R_PAREN@17..19 ")" [] [Whitespace(" ")]
       3: JS_FUNCTION_BODY@19..21

@@ -1,17 +1,17 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	ArgList, ArrayPattern, AssignPattern, CallExpr, ForInStmt, ForStmt, ForStmtInit, ForStmtTest,
-	ForStmtUpdate, JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement,
-	JsBooleanLiteralExpression, JsCaseClause, JsCatchClause, JsClassDeclaration,
-	JsConstructorParameterList, JsContinueStatement, JsDebuggerStatement, JsDefaultClause,
-	JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause,
-	JsFunctionDeclaration, JsGetterClassMember, JsIfStatement, JsLabeledStatement,
+	ArgList, CallExpr, ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, JsArrayBinding,
+	JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement, JsBooleanLiteralExpression,
+	JsCaseClause, JsCatchClause, JsClassDeclaration, JsConstructorParameterList,
+	JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
+	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsFunctionDeclaration,
+	JsGetterClassMember, JsIdentifierBinding, JsIfStatement, JsLabeledStatement,
 	JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression, JsParameterList,
 	JsPropertyClassMember, JsPropertyObjectMember, JsReferenceIdentifierExpression,
 	JsReturnStatement, JsRoot, JsSequenceExpression, JsSetterClassMember,
-	JsShorthandPropertyObjectMember, JsStringLiteralExpression, JsSwitchStatement, JsTryStatement,
-	JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement, JsWithStatement, Name,
-	SinglePattern,
+	JsShorthandPropertyObjectMember, JsSpread, JsStringLiteralExpression, JsSwitchStatement,
+	JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement,
+	JsWithStatement, Name,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
@@ -26,9 +26,6 @@ impl ToFormatElement for SyntaxNode {
 					.unwrap()
 					.to_format_element(formatter)
 			}
-			SyntaxKind::ASSIGN_PATTERN => AssignPattern::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
 			SyntaxKind::JS_BOOLEAN_LITERAL_EXPRESSION => {
 				JsBooleanLiteralExpression::cast(self.clone())
 					.unwrap()
@@ -39,6 +36,9 @@ impl ToFormatElement for SyntaxNode {
 					.unwrap()
 					.to_format_element(formatter)
 			}
+			SyntaxKind::JS_IDENTIFIER_BINDING => JsIdentifierBinding::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
 			SyntaxKind::JS_NULL_LITERAL_EXPRESSION => JsNullLiteralExpression::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
@@ -61,10 +61,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_ROOT => JsRoot::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::SINGLE_PATTERN => SinglePattern::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
-			SyntaxKind::SPREAD_ELEMENT => SinglePattern::cast(self.clone())
+			SyntaxKind::JS_SPREAD => JsSpread::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_VARIABLE_DECLARATION_STATEMENT => {
@@ -155,7 +152,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::FOR_IN_STMT => ForInStmt::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::ARRAY_PATTERN => ArrayPattern::cast(self.clone())
+			SyntaxKind::JS_ARRAY_BINDING => JsArrayBinding::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::CALL_EXPR => CallExpr::cast(self.clone())

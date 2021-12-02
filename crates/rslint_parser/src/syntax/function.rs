@@ -1,8 +1,8 @@
 use crate::parser::ConditionalParsedSyntax::Valid;
 use crate::parser::ParsedSyntax;
+use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::decl::parse_parameter_list;
 use crate::syntax::js_parse_error;
-use crate::syntax::pat::parse_identifier_binding;
 use crate::syntax::stmt::{is_semi, parse_block_impl};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::ConditionalParsedSyntax::Invalid;
@@ -22,12 +22,15 @@ use std::collections::HashMap;
 // test function_decl
 // function foo() {}
 // function *foo() {}
-// function foo(await) {}
 // async function *foo() {}
 // async function foo() {}
 // function *foo() {
 //   yield foo;
 // }
+//
+// test function_declaration_script
+// // SCRIPT
+// function test(await) {}
 //
 // test_err function_decl_err
 // function() {}
@@ -52,7 +55,8 @@ pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
 fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 	let m = p.start();
 
-	let mut uses_ts_syntax = kind == JS_FUNCTION_DECLARATION && p.eat(T![declare]);
+	let mut uses_invalid_syntax =
+		kind == JS_FUNCTION_DECLARATION && p.eat(T![declare]) && TypeScript.is_unsupported(p);
 
 	let in_async = is_at_async_function(p, LineBreak::DoNotCheck);
 	if in_async {
@@ -72,15 +76,19 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 
 	let id = parse_identifier_binding(guard);
 
-	if kind == JS_FUNCTION_DECLARATION {
-		id.or_missing_with_error(guard, |p, range| {
-			p.err_builder(
-				"expected a name for the function in a function declaration, but found none",
-			)
-			.primary(range, "")
-		});
+	if let Valid(id) = id {
+		if kind == JS_FUNCTION_DECLARATION {
+			id.or_missing_with_error(guard, |p, range| {
+				p.err_builder(
+					"expected a name for the function in a function declaration, but found none",
+				)
+				.primary(range, "")
+			});
+		} else {
+			id.or_missing(guard);
+		}
 	} else {
-		id.or_missing(guard);
+		uses_invalid_syntax = true;
 	}
 
 	let type_parameters =
@@ -89,7 +97,7 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 				.primary(marker.range(p), "")
 		});
 
-	uses_ts_syntax |= type_parameters.is_present();
+	uses_invalid_syntax |= type_parameters.is_present() && TypeScript.is_unsupported(guard);
 
 	if let Valid(type_parameters) = type_parameters {
 		type_parameters.or_missing(guard);
@@ -102,7 +110,7 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 			.primary(marker.range(p), "")
 	});
 
-	uses_ts_syntax |= return_type.is_present();
+	uses_invalid_syntax |= return_type.is_present() && TypeScript.is_unsupported(guard);
 
 	if let Valid(return_type) = return_type {
 		return_type.or_missing(guard);
@@ -116,7 +124,7 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 
 	let function = m.complete(guard, kind);
 
-	if uses_ts_syntax && TypeScript.is_unsupported(guard) {
+	if uses_invalid_syntax {
 		Invalid(function.into())
 	} else {
 		Valid(function.into())

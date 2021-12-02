@@ -1,0 +1,81 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsFunctionDeclaration {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@9..34 "evalInComputedPropertyKey" [] [],
+            },
+            type_parameters: missing (optional),
+            parameter_list: JsParameterList {
+                l_paren_token: L_PAREN@34..35 "(" [] [],
+                parameters: [
+                    JsObjectBinding {
+                        l_curly_token: L_CURLY@35..37 "{" [] [Whitespace(" ")],
+                        properties: [
+                            JsPropertyBinding {
+                                member: JsComputedMemberName {
+                                    l_brack_token: L_BRACK@37..38 "[" [] [],
+                                    expression: JsReferenceIdentifierExpression {
+                                        name_token: IDENT@38..46 "computed" [] [],
+                                    },
+                                    r_brack_token: R_BRACK@46..47 "]" [] [],
+                                },
+                                colon_token: COLON@47..49 ":" [] [Whitespace(" ")],
+                                binding: JsIdentifierBinding {
+                                    name_token: IDENT@49..57 "ignored" [] [Whitespace(" ")],
+                                },
+                                init: missing (optional),
+                            },
+                        ],
+                        r_curly_token: R_CURLY@57..58 "}" [] [],
+                    },
+                ],
+                r_paren_token: R_PAREN@58..60 ")" [] [Whitespace(" ")],
+            },
+            return_type: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@60..61 "{" [] [],
+                directives: [],
+                statements: [],
+                r_curly_token: R_CURLY@61..62 "}" [] [],
+            },
+        },
+    ],
+}
+
+0: JS_ROOT@0..63
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..62
+    0: JS_FUNCTION_DECLARATION@0..62
+      0: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@9..34
+        0: IDENT@9..34 "evalInComputedPropertyKey" [] []
+      2: JS_PARAMETER_LIST@34..60
+        0: L_PAREN@34..35 "(" [] []
+        1: LIST@35..58
+          0: JS_OBJECT_BINDING@35..58
+            0: L_CURLY@35..37 "{" [] [Whitespace(" ")]
+            1: LIST@37..57
+              0: JS_PROPERTY_BINDING@37..57
+                0: JS_COMPUTED_MEMBER_NAME@37..47
+                  0: L_BRACK@37..38 "[" [] []
+                  1: JS_REFERENCE_IDENTIFIER_EXPRESSION@38..46
+                    0: IDENT@38..46 "computed" [] []
+                  2: R_BRACK@46..47 "]" [] []
+                1: COLON@47..49 ":" [] [Whitespace(" ")]
+                2: JS_IDENTIFIER_BINDING@49..57
+                  0: IDENT@49..57 "ignored" [] [Whitespace(" ")]
+                3: (empty)
+            2: R_CURLY@57..58 "}" [] []
+        2: R_PAREN@58..60 ")" [] [Whitespace(" ")]
+      3: JS_FUNCTION_BODY@60..62
+        0: L_CURLY@60..61 "{" [] []
+        1: LIST@61..61
+        2: LIST@61..61
+        3: R_CURLY@61..62 "}" [] []
+  3: EOF@62..63 "" [Whitespace("\n")] []

@@ -1,0 +1,134 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsObjectBinding {
+                            l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
+                            properties: [
+                                JsPropertyBinding {
+                                    member: JsLiteralMemberName {
+                                        value: IDENT@6..9 "foo" [] [],
+                                    },
+                                    colon_token: COLON@9..11 ":" [] [Whitespace(" ")],
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@11..16 "bar" [] [Whitespace("  ")],
+                                    },
+                                    init: missing (optional),
+                                },
+                            ],
+                            r_curly_token: R_CURLY@16..18 "}" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@18..20 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@20..21 "{" [] [],
+                                members: [],
+                                r_curly_token: R_CURLY@21..22 "}" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@22..27 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsObjectBinding {
+                            l_curly_token: L_CURLY@27..29 "{" [] [Whitespace(" ")],
+                            properties: [
+                                JsPropertyBinding {
+                                    member: JsLiteralMemberName {
+                                        value: IDENT@29..32 "foo" [] [],
+                                    },
+                                    colon_token: COLON@32..34 ":" [] [Whitespace(" ")],
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@34..38 "bar" [] [Whitespace(" ")],
+                                    },
+                                    init: JsEqualValueClause {
+                                        eq_token: EQ@38..40 "=" [] [Whitespace(" ")],
+                                        expression: JsReferenceIdentifierExpression {
+                                            name_token: IDENT@40..44 "baz" [] [Whitespace(" ")],
+                                        },
+                                    },
+                                },
+                            ],
+                            r_curly_token: R_CURLY@44..46 "}" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@46..48 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@48..49 "{" [] [],
+                                members: [],
+                                r_curly_token: R_CURLY@49..50 "}" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
+0: JS_ROOT@0..51
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..50
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..22
+      0: JS_VARIABLE_DECLARATION@0..22
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..22
+          0: JS_VARIABLE_DECLARATOR@4..22
+            0: JS_OBJECT_BINDING@4..18
+              0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
+              1: LIST@6..16
+                0: JS_PROPERTY_BINDING@6..16
+                  0: JS_LITERAL_MEMBER_NAME@6..9
+                    0: IDENT@6..9 "foo" [] []
+                  1: COLON@9..11 ":" [] [Whitespace(" ")]
+                  2: JS_IDENTIFIER_BINDING@11..16
+                    0: IDENT@11..16 "bar" [] [Whitespace("  ")]
+                  3: (empty)
+              2: R_CURLY@16..18 "}" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@18..22
+              0: EQ@18..20 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@20..22
+                0: L_CURLY@20..21 "{" [] []
+                1: LIST@21..21
+                2: R_CURLY@21..22 "}" [] []
+      1: (empty)
+    1: JS_VARIABLE_DECLARATION_STATEMENT@22..50
+      0: JS_VARIABLE_DECLARATION@22..50
+        0: LET_KW@22..27 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@27..50
+          0: JS_VARIABLE_DECLARATOR@27..50
+            0: JS_OBJECT_BINDING@27..46
+              0: L_CURLY@27..29 "{" [] [Whitespace(" ")]
+              1: LIST@29..44
+                0: JS_PROPERTY_BINDING@29..44
+                  0: JS_LITERAL_MEMBER_NAME@29..32
+                    0: IDENT@29..32 "foo" [] []
+                  1: COLON@32..34 ":" [] [Whitespace(" ")]
+                  2: JS_IDENTIFIER_BINDING@34..38
+                    0: IDENT@34..38 "bar" [] [Whitespace(" ")]
+                  3: JS_EQUAL_VALUE_CLAUSE@38..44
+                    0: EQ@38..40 "=" [] [Whitespace(" ")]
+                    1: JS_REFERENCE_IDENTIFIER_EXPRESSION@40..44
+                      0: IDENT@40..44 "baz" [] [Whitespace(" ")]
+              2: R_CURLY@44..46 "}" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@46..50
+              0: EQ@46..48 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@48..50
+                0: L_CURLY@48..49 "{" [] []
+                1: LIST@49..49
+                2: R_CURLY@49..50 "}" [] []
+      1: (empty)
+  3: EOF@50..51 "" [Whitespace("\n")] []

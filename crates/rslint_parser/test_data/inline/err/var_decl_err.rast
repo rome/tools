@@ -7,13 +7,8 @@ JsRoot {
                 kind_token: VAR_KW@0..4 "var" [] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
-                            },
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@6..7 "=" [] [],
@@ -35,13 +30,8 @@ JsRoot {
                 kind_token: CONST_KW@8..15 "const" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@15..17 "a" [] [Whitespace(" ")],
-                            },
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@15..17 "a" [] [Whitespace(" ")],
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@17..19 "=" [] [Whitespace(" ")],
@@ -59,13 +49,8 @@ JsRoot {
                 kind_token: LET_KW@21..25 "let" [] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@25..27 "b" [] [Whitespace(" ")],
-                            },
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@25..27 "b" [] [Whitespace(" ")],
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@27..29 "=" [] [Whitespace(" ")],
@@ -90,9 +75,8 @@ JsRoot {
         0: VAR_KW@0..4 "var" [] [Whitespace(" ")]
         1: LIST@4..8
           0: JS_VARIABLE_DECLARATOR@4..8
-            0: SINGLE_PATTERN@4..6
-              0: NAME@4..6
-                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@4..6
+              0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@6..8
               0: EQ@6..7 "=" [] []
               1: JS_UNKNOWN_EXPRESSION@7..8
@@ -103,9 +87,8 @@ JsRoot {
         0: CONST_KW@8..15 "const" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@15..21
           0: JS_VARIABLE_DECLARATOR@15..21
-            0: SINGLE_PATTERN@15..17
-              0: NAME@15..17
-                0: IDENT@15..17 "a" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@15..17
+              0: IDENT@15..17 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@17..21
               0: EQ@17..19 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@19..21
@@ -116,9 +99,8 @@ JsRoot {
         0: LET_KW@21..25 "let" [] [Whitespace(" ")]
         1: LIST@25..30
           0: JS_VARIABLE_DECLARATOR@25..30
-            0: SINGLE_PATTERN@25..27
-              0: NAME@25..27
-                0: IDENT@25..27 "b" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@25..27
+              0: IDENT@25..27 "b" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@27..30
               0: EQ@27..29 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@29..30
@@ -126,11 +108,11 @@ JsRoot {
       1: SEMICOLON@30..31 ";" [] []
   3: EOF@31..32 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected an expression, but found `;` instead
+error[SyntaxError]: Expected an expression, but found none
   ┌─ var_decl_err.js:1:8
   │
 1 │ var a =;
-  │        ^
+  │        ^ Expected an expression here
 
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none

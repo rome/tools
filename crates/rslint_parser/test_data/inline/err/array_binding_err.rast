@@ -1,0 +1,316 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsArrayBinding {
+                            l_brack_token: L_BRACK@4..5 "[" [] [],
+                            elements: [
+                                JsIdentifierBinding {
+                                    name_token: IDENT@5..7 "a" [] [Whitespace(" ")],
+                                },
+                                missing separator,
+                                JsIdentifierBinding {
+                                    name_token: IDENT@7..8 "b" [] [],
+                                },
+                            ],
+                            r_brack_token: R_BRACK@8..10 "]" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@10..12 "=" [] [Whitespace(" ")],
+                            expression: JsArrayExpression {
+                                l_brack_token: L_BRACK@12..13 "[" [] [],
+                                elements: [
+                                    JsNumberLiteralExpression {
+                                        value_token: JS_NUMBER_LITERAL@13..14 "1" [] [],
+                                    },
+                                    COMMA@14..16 "," [] [Whitespace(" ")],
+                                    JsNumberLiteralExpression {
+                                        value_token: JS_NUMBER_LITERAL@16..17 "2" [] [],
+                                    },
+                                ],
+                                r_brack_token: R_BRACK@17..18 "]" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@18..19 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@19..24 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsArrayBinding {
+                            l_brack_token: L_BRACK@24..25 "[" [] [],
+                            elements: [
+                                JsBindingWithDefault {
+                                    binding: missing (required),
+                                    eq_token: EQ@25..26 "=" [] [],
+                                    default: JsStringLiteralExpression {
+                                        value_token: JS_STRING_LITERAL@26..35 "\"default\"" [] [],
+                                    },
+                                },
+                            ],
+                            r_brack_token: R_BRACK@35..37 "]" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@37..39 "=" [] [Whitespace(" ")],
+                            expression: JsArrayExpression {
+                                l_brack_token: L_BRACK@39..40 "[" [] [],
+                                elements: [
+                                    JsNumberLiteralExpression {
+                                        value_token: JS_NUMBER_LITERAL@40..41 "1" [] [],
+                                    },
+                                    COMMA@41..43 "," [] [Whitespace(" ")],
+                                    JsNumberLiteralExpression {
+                                        value_token: JS_NUMBER_LITERAL@43..44 "2" [] [],
+                                    },
+                                ],
+                                r_brack_token: R_BRACK@44..45 "]" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@45..46 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsArrayBinding {
+                            l_brack_token: L_BRACK@51..52 "[" [] [],
+                            elements: [
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            JS_STRING_LITERAL@52..61 "\"default\"" [] [],
+                                        ),
+                                    ],
+                                },
+                            ],
+                            r_brack_token: R_BRACK@61..63 "]" [] [Whitespace(" ")],
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@63..65 "=" [] [Whitespace(" ")],
+                            expression: JsArrayExpression {
+                                l_brack_token: L_BRACK@65..66 "[" [] [],
+                                elements: [
+                                    JsNumberLiteralExpression {
+                                        value_token: JS_NUMBER_LITERAL@66..67 "1" [] [],
+                                    },
+                                    COMMA@67..69 "," [] [Whitespace(" ")],
+                                    JsNumberLiteralExpression {
+                                        value_token: JS_NUMBER_LITERAL@69..70 "2" [] [],
+                                    },
+                                ],
+                                r_brack_token: R_BRACK@70..71 "]" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@71..72 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@72..77 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: JsArrayBinding {
+                            l_brack_token: L_BRACK@77..78 "[" [] [],
+                            elements: [
+                                JsBindingWithDefault {
+                                    binding: JsArrayBinding {
+                                        l_brack_token: L_BRACK@78..79 "[" [] [],
+                                        elements: [
+                                            JsIdentifierBinding {
+                                                name_token: IDENT@79..81 "a" [] [Whitespace(" ")],
+                                            },
+                                        ],
+                                        r_brack_token: R_BRACK@81..83 "]" [] [Whitespace(" ")],
+                                    },
+                                    eq_token: EQ@83..85 "=" [] [Whitespace(" ")],
+                                    default: JsArrayExpression {
+                                        l_brack_token: L_BRACK@85..86 "[" [] [],
+                                        elements: [],
+                                        r_brack_token: R_BRACK@86..87 "]" [] [],
+                                    },
+                                },
+                                missing separator,
+                            ],
+                            r_brack_token: missing (required),
+                        },
+                        init: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@87..88 ";" [] [],
+        },
+    ],
+}
+
+0: JS_ROOT@0..89
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..88
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..19
+      0: JS_VARIABLE_DECLARATION@0..18
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..18
+          0: JS_VARIABLE_DECLARATOR@4..18
+            0: JS_ARRAY_BINDING@4..10
+              0: L_BRACK@4..5 "[" [] []
+              1: LIST@5..8
+                0: JS_IDENTIFIER_BINDING@5..7
+                  0: IDENT@5..7 "a" [] [Whitespace(" ")]
+                1: (empty)
+                2: JS_IDENTIFIER_BINDING@7..8
+                  0: IDENT@7..8 "b" [] []
+              2: R_BRACK@8..10 "]" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@10..18
+              0: EQ@10..12 "=" [] [Whitespace(" ")]
+              1: JS_ARRAY_EXPRESSION@12..18
+                0: L_BRACK@12..13 "[" [] []
+                1: LIST@13..17
+                  0: JS_NUMBER_LITERAL_EXPRESSION@13..14
+                    0: JS_NUMBER_LITERAL@13..14 "1" [] []
+                  1: COMMA@14..16 "," [] [Whitespace(" ")]
+                  2: JS_NUMBER_LITERAL_EXPRESSION@16..17
+                    0: JS_NUMBER_LITERAL@16..17 "2" [] []
+                2: R_BRACK@17..18 "]" [] []
+      1: SEMICOLON@18..19 ";" [] []
+    1: JS_VARIABLE_DECLARATION_STATEMENT@19..46
+      0: JS_VARIABLE_DECLARATION@19..45
+        0: LET_KW@19..24 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@24..45
+          0: JS_VARIABLE_DECLARATOR@24..45
+            0: JS_ARRAY_BINDING@24..37
+              0: L_BRACK@24..25 "[" [] []
+              1: LIST@25..35
+                0: JS_BINDING_WITH_DEFAULT@25..35
+                  0: (empty)
+                  1: EQ@25..26 "=" [] []
+                  2: JS_STRING_LITERAL_EXPRESSION@26..35
+                    0: JS_STRING_LITERAL@26..35 "\"default\"" [] []
+              2: R_BRACK@35..37 "]" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@37..45
+              0: EQ@37..39 "=" [] [Whitespace(" ")]
+              1: JS_ARRAY_EXPRESSION@39..45
+                0: L_BRACK@39..40 "[" [] []
+                1: LIST@40..44
+                  0: JS_NUMBER_LITERAL_EXPRESSION@40..41
+                    0: JS_NUMBER_LITERAL@40..41 "1" [] []
+                  1: COMMA@41..43 "," [] [Whitespace(" ")]
+                  2: JS_NUMBER_LITERAL_EXPRESSION@43..44
+                    0: JS_NUMBER_LITERAL@43..44 "2" [] []
+                2: R_BRACK@44..45 "]" [] []
+      1: SEMICOLON@45..46 ";" [] []
+    2: JS_VARIABLE_DECLARATION_STATEMENT@46..72
+      0: JS_VARIABLE_DECLARATION@46..71
+        0: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@51..71
+          0: JS_VARIABLE_DECLARATOR@51..71
+            0: JS_ARRAY_BINDING@51..63
+              0: L_BRACK@51..52 "[" [] []
+              1: LIST@52..61
+                0: JS_UNKNOWN_BINDING@52..61
+                  0: JS_STRING_LITERAL@52..61 "\"default\"" [] []
+              2: R_BRACK@61..63 "]" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@63..71
+              0: EQ@63..65 "=" [] [Whitespace(" ")]
+              1: JS_ARRAY_EXPRESSION@65..71
+                0: L_BRACK@65..66 "[" [] []
+                1: LIST@66..70
+                  0: JS_NUMBER_LITERAL_EXPRESSION@66..67
+                    0: JS_NUMBER_LITERAL@66..67 "1" [] []
+                  1: COMMA@67..69 "," [] [Whitespace(" ")]
+                  2: JS_NUMBER_LITERAL_EXPRESSION@69..70
+                    0: JS_NUMBER_LITERAL@69..70 "2" [] []
+                2: R_BRACK@70..71 "]" [] []
+      1: SEMICOLON@71..72 ";" [] []
+    3: JS_VARIABLE_DECLARATION_STATEMENT@72..88
+      0: JS_VARIABLE_DECLARATION@72..87
+        0: LET_KW@72..77 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@77..87
+          0: JS_VARIABLE_DECLARATOR@77..87
+            0: JS_ARRAY_BINDING@77..87
+              0: L_BRACK@77..78 "[" [] []
+              1: LIST@78..87
+                0: JS_BINDING_WITH_DEFAULT@78..87
+                  0: JS_ARRAY_BINDING@78..83
+                    0: L_BRACK@78..79 "[" [] []
+                    1: LIST@79..81
+                      0: JS_IDENTIFIER_BINDING@79..81
+                        0: IDENT@79..81 "a" [] [Whitespace(" ")]
+                    2: R_BRACK@81..83 "]" [] [Whitespace(" ")]
+                  1: EQ@83..85 "=" [] [Whitespace(" ")]
+                  2: JS_ARRAY_EXPRESSION@85..87
+                    0: L_BRACK@85..86 "[" [] []
+                    1: LIST@86..86
+                    2: R_BRACK@86..87 "]" [] []
+                1: (empty)
+            1: (empty)
+      1: SEMICOLON@87..88 ";" [] []
+  3: EOF@88..89 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: expected `,` but instead found `b`
+  ┌─ array_binding_err.js:1:8
+  │
+1 │ let [a b] = [1, 2];
+  │        ^ unexpected
+
+--
+error[SyntaxError]: expected an identifier, an array pattern, or an object pattern but instead found '='
+  ┌─ array_binding_err.js:2:6
+  │
+2 │ let [="default"] = [1, 2];
+  │      ^ Expected an identifier, an array pattern, or an object pattern here
+
+--
+error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found '"default"'
+  ┌─ array_binding_err.js:3:6
+  │
+3 │ let ["default"] = [1, 2];
+  │      ^^^^^^^^^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
+
+--
+error[SyntaxError]: expected `,` but instead found `;`
+  ┌─ array_binding_err.js:4:15
+  │
+4 │ let [[a ] = [];
+  │               ^ unexpected
+
+--
+error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found ';'
+  ┌─ array_binding_err.js:4:15
+  │
+4 │ let [[a ] = [];
+  │               ^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
+
+--
+error[SyntaxError]: expected `']'` but instead found `;`
+  ┌─ array_binding_err.js:4:15
+  │
+4 │ let [[a ] = [];
+  │               ^ unexpected
+
+--
+error[SyntaxError]: Object and Array patterns require initializers
+  ┌─ array_binding_err.js:4:5
+  │
+4 │ let [[a ] = [];
+  │     ^^^^^^^^^^ this pattern is declared, but it is not given an initialized value
+
+--
+let [a b] = [1, 2];
+let [="default"] = [1, 2];
+let ["default"] = [1, 2];
+let [[a ] = [];

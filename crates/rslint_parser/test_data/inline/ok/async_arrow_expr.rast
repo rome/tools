@@ -7,13 +7,8 @@ JsRoot {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
-                            },
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
@@ -37,13 +32,8 @@ JsRoot {
                 kind_token: LET_KW@23..28 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@28..30 "b" [] [Whitespace(" ")],
-                            },
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@28..30 "b" [] [Whitespace(" ")],
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@30..32 "=" [] [Whitespace(" ")],
@@ -53,13 +43,8 @@ JsRoot {
                                 parameter_list: JsParameterList {
                                     l_paren_token: L_PAREN@38..39 "(" [] [],
                                     parameters: [
-                                        SinglePattern {
-                                            name: Name {
-                                                ident_token: IDENT@39..42 "bar" [] [],
-                                            },
-                                            question_mark_token: missing (optional),
-                                            excl_token: missing (optional),
-                                            ty: missing (optional),
+                                        JsIdentifierBinding {
+                                            name_token: IDENT@39..42 "bar" [] [],
                                         },
                                     ],
                                     r_paren_token: R_PAREN@42..44 ")" [] [Whitespace(" ")],
@@ -80,33 +65,18 @@ JsRoot {
                 parameter_list: JsParameterList {
                     l_paren_token: L_PAREN@56..57 "(" [] [],
                     parameters: [
-                        SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@57..60 "foo" [] [],
-                            },
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
+                        JsIdentifierBinding {
+                            name_token: IDENT@57..60 "foo" [] [],
                         },
                         COMMA@60..62 "," [] [Whitespace(" ")],
-                        SinglePattern {
-                            name: Name {
-                                ident_token: IDENT@62..65 "bar" [] [],
-                            },
-                            question_mark_token: missing (optional),
-                            excl_token: missing (optional),
-                            ty: missing (optional),
+                        JsIdentifierBinding {
+                            name_token: IDENT@62..65 "bar" [] [],
                         },
                         COMMA@65..67 "," [] [Whitespace(" ")],
                         JsRestParameter {
                             dotdotdot_token: DOT2@67..70 "..." [] [],
-                            binding: SinglePattern {
-                                name: Name {
-                                    ident_token: IDENT@70..73 "baz" [] [],
-                                },
-                                question_mark_token: missing (optional),
-                                excl_token: missing (optional),
-                                ty: missing (optional),
+                            binding: JsIdentifierBinding {
+                                name_token: IDENT@70..73 "baz" [] [],
                             },
                         },
                     ],
@@ -129,9 +99,8 @@ JsRoot {
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..23
           0: JS_VARIABLE_DECLARATOR@4..23
-            0: SINGLE_PATTERN@4..6
-              0: NAME@4..6
-                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@4..6
+              0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@6..23
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_ARROW_FUNCTION_EXPRESSION@8..23
@@ -150,9 +119,8 @@ JsRoot {
         0: LET_KW@23..28 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@28..49
           0: JS_VARIABLE_DECLARATOR@28..49
-            0: SINGLE_PATTERN@28..30
-              0: NAME@28..30
-                0: IDENT@28..30 "b" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@28..30
+              0: IDENT@28..30 "b" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@30..49
               0: EQ@30..32 "=" [] [Whitespace(" ")]
               1: JS_ARROW_FUNCTION_EXPRESSION@32..49
@@ -160,9 +128,8 @@ JsRoot {
                 1: JS_PARAMETER_LIST@38..44
                   0: L_PAREN@38..39 "(" [] []
                   1: LIST@39..42
-                    0: SINGLE_PATTERN@39..42
-                      0: NAME@39..42
-                        0: IDENT@39..42 "bar" [] []
+                    0: JS_IDENTIFIER_BINDING@39..42
+                      0: IDENT@39..42 "bar" [] []
                   2: R_PAREN@42..44 ")" [] [Whitespace(" ")]
                 2: FAT_ARROW@44..47 "=>" [] [Whitespace(" ")]
                 3: JS_FUNCTION_BODY@47..49
@@ -177,19 +144,16 @@ JsRoot {
         1: JS_PARAMETER_LIST@56..75
           0: L_PAREN@56..57 "(" [] []
           1: LIST@57..73
-            0: SINGLE_PATTERN@57..60
-              0: NAME@57..60
-                0: IDENT@57..60 "foo" [] []
+            0: JS_IDENTIFIER_BINDING@57..60
+              0: IDENT@57..60 "foo" [] []
             1: COMMA@60..62 "," [] [Whitespace(" ")]
-            2: SINGLE_PATTERN@62..65
-              0: NAME@62..65
-                0: IDENT@62..65 "bar" [] []
+            2: JS_IDENTIFIER_BINDING@62..65
+              0: IDENT@62..65 "bar" [] []
             3: COMMA@65..67 "," [] [Whitespace(" ")]
             4: JS_REST_PARAMETER@67..73
               0: DOT2@67..70 "..." [] []
-              1: SINGLE_PATTERN@70..73
-                0: NAME@70..73
-                  0: IDENT@70..73 "baz" [] []
+              1: JS_IDENTIFIER_BINDING@70..73
+                0: IDENT@70..73 "baz" [] []
           2: R_PAREN@73..75 ")" [] [Whitespace(" ")]
         2: FAT_ARROW@75..78 "=>" [] [Whitespace(" ")]
         3: JS_REFERENCE_IDENTIFIER_EXPRESSION@78..81

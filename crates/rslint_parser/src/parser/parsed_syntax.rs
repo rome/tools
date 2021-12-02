@@ -47,6 +47,17 @@ impl ParsedSyntax {
 		}
 	}
 
+	/// Calls `op` if the syntax is present and otherwise returns [Absent]
+	pub fn and_then<F>(self, op: F) -> ParsedSyntax
+	where
+		F: FnOnce(CompletedMarker) -> CompletedMarker,
+	{
+		match self {
+			Absent => Absent,
+			Present(marker) => Present(op(marker)),
+		}
+	}
+
 	/// Returns `true` if the parsed syntax is [Present]
 	#[must_use]
 	pub fn is_present(&self) -> bool {
@@ -57,6 +68,14 @@ impl ParsedSyntax {
 	#[must_use]
 	pub fn is_absent(&self) -> bool {
 		matches!(self, Absent)
+	}
+
+	/// Returns the kind of the syntax if it is present or [None] otherwise
+	pub fn kind(&self) -> Option<SyntaxKind> {
+		match self {
+			Absent => None,
+			Present(marker) => Some(marker.kind()),
+		}
 	}
 
 	/// It returns the syntax if present or adds a missing marker and a diagnostic at the current parser position.
@@ -107,7 +126,6 @@ impl ParsedSyntax {
 	/// It creates and returns a marker preceding this parsed syntax if it is present or starts
 	/// a new marker, marks the first slot as missing and adds an error to the current parser position.
 	/// See [CompletedMarker.precede]
-	#[must_use]
 	pub fn precede_or_missing_with_error<E>(self, p: &mut Parser, error_builder: E) -> Marker
 	where
 		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
@@ -129,7 +147,6 @@ impl ParsedSyntax {
 	/// and marks its first slot as missing.
 	///
 	/// See [CompletedMarker.precede]
-	#[must_use]
 	pub fn precede_or_missing(self, p: &mut Parser) -> Marker {
 		match self {
 			Present(completed) => completed.precede(p),
@@ -138,6 +155,14 @@ impl ParsedSyntax {
 				p.missing();
 				m
 			}
+		}
+	}
+
+	/// Creates a new marker that precedes this syntax or starts a new marker
+	pub fn precede(self, p: &mut Parser) -> Marker {
+		match self {
+			Present(marker) => marker.precede(p),
+			Absent => p.start(),
 		}
 	}
 
@@ -153,7 +178,7 @@ impl ParsedSyntax {
 	pub fn or_recover<E>(
 		self,
 		p: &mut Parser,
-		recovery: ParseRecovery,
+		recovery: &ParseRecovery,
 		error_builder: E,
 	) -> RecoveryResult
 	where
@@ -174,6 +199,13 @@ impl ParsedSyntax {
 					Err(recovery_error)
 				}
 			},
+		}
+	}
+
+	/// Undoes the completion and abandons the marker if the syntax is present.
+	pub fn abandon(self, p: &mut Parser) {
+		if let Present(marker) = self {
+			marker.undo_completion(p).abandon(p)
 		}
 	}
 
@@ -310,13 +342,13 @@ impl ConditionalParsedSyntax {
 	#[allow(unused)]
 	#[must_use]
 	pub fn is_valid(&self) -> bool {
-		matches!(self, Invalid(_))
+		matches!(self, Valid(_))
 	}
 
 	/// Returns `true` if this syntax is invalid in this parsing context.
 	#[allow(unused)]
 	pub fn is_invalid(&self) -> bool {
-		matches!(self, Valid(_))
+		matches!(self, Invalid(_))
 	}
 
 	/// Returns `true` if this syntax is present in the source text.
@@ -340,6 +372,19 @@ impl ConditionalParsedSyntax {
 			Invalid(unsupported) => unsupported.or_to_unknown(p, unknown_kind),
 		}
 	}
+
+	/// It returns a [CompletedMarker] from the current syntax
+	///
+	/// # Panics
+	///
+	///  Panics if the current syntax is [ConditionalParsedSyntax::Invalid] or [ConditionalParsedSyntax::Valid(Absent)]
+	pub fn unwrap(self) -> CompletedMarker {
+		if let Valid(syntax) = self {
+			syntax.unwrap()
+		} else {
+			panic!("Called `unwrap` on an `Invalid` syntax");
+		}
+	}
 }
 
 /// Parsed syntax that is invalid in this parsing context.
@@ -361,6 +406,21 @@ impl InvalidParsedSyntax {
 				unsupported.change_kind(p, unknown_kind);
 				Present(unsupported)
 			}
+		}
+	}
+
+	/// Undoes the completion and abandons the marker if the syntax is present.
+	pub fn abandon(self, p: &mut Parser) {
+		if let Present(unsupported) = self.0 {
+			unsupported.undo_completion(p).abandon(p)
+		}
+	}
+
+	/// Creates a new marker that precedes this syntax or starts a new marker
+	pub fn precede(self, p: &mut Parser) -> Marker {
+		match self.0 {
+			Present(marker) => marker.precede(p),
+			Absent => p.start(),
 		}
 	}
 }

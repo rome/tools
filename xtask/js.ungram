@@ -41,7 +41,6 @@ SyntaxElement = SyntaxElement
 
 JsUnknownStatement = SyntaxElement*
 JsUnknownExpression = SyntaxElement*
-JsUnknownPattern = SyntaxElement*
 JsUnknownMember = SyntaxElement*
 JsUnknownBinding = SyntaxElement*
 JsUnknownAssignmentTarget = SyntaxElement*
@@ -224,7 +223,7 @@ JsCatchClause =
     body: JsBlockStatement
 
 JsCatchDeclaration =
-    '(' binding: Pattern ')'
+    '(' binding: JsAnyBinding ')'
 
 JsFinallyClause =
     'finally'
@@ -350,7 +349,7 @@ JsArrayExpression =
 
 JsAnyArrayElement =
 	JsAnyExpression
-	| SpreadElement
+	| JsSpread
 	| JsArrayHole
 
 JsArrayHole = manual__hole: ''
@@ -364,8 +363,6 @@ JsAssignmentExpression =
   )
   right: JsAnyExpression
 
-
-PatternOrExpr = Pattern | JsAnyExpression
 
 JsSequenceExpression =
 	left: JsAnyExpression
@@ -436,7 +433,6 @@ JsAnyObjectMember =
 	| JsMethodObjectMember
 	| JsGetterObjectMember
 	| JsSetterObjectMember
-	| InitializedProp // TODO #1725 Delete after finishing assignment targets work
 	| JsShorthandPropertyObjectMember
 	| JsSpread
 	| JsUnknownMember
@@ -464,7 +460,7 @@ JsSetterObjectMember =
 	'set'
 	name: JsAnyObjectMemberName
 	'('
-	parameter: Pattern
+	parameter: JsAnyBinding
 	')'
 	body: JsFunctionBody
 
@@ -482,18 +478,6 @@ JsMethodObjectMember =
 // { a }
 //   ^
 JsShorthandPropertyObjectMember = name: JsReferenceIdentifierExpression
-
-// TODO #1725 Delete after finishing work around Classes & Assignment targets
-PropName =
-	JsComputedMemberName
-	| JsStringLiteralExpression
-	| JsNumberLiteralExpression
-	| Ident
-	| Name
-	| JsUnknownBinding
-
-// initialised property
-InitializedProp = key:Name '=' value:JsAnyExpression
 
 ///////////////
 // CLASSES
@@ -564,7 +548,8 @@ JsConstructorParameterList =
 
 JsAnyConstructorParameter =
 	TsConstructorParam
-	| Pattern
+	| JsAnyBinding
+	| JsBindingWithDefault
 
 // class Test { a; b = 1; static c; }
 //              ^^ ^^^^^^ ^^^^^^^^^
@@ -615,7 +600,7 @@ JsSetterClassMember =
 	'set'
 	name: JsAnyClassMemberName
 	'('
-	parameter: Pattern
+	parameter: JsAnyBinding
 	')'
 	body: JsFunctionBody
 
@@ -641,6 +626,8 @@ JsAssignmentTargetWithDefault =
 	'='
 	default: JsAnyExpression
 
+// (a) = "test"
+// ^^^
 JsParenthesizedAssignmentTarget =
 	'('
 	target: JsAnySimpleAssignmentTarget
@@ -719,6 +706,94 @@ JsObjectRestPropertyAssignmentTarget =
 	target: JsAnySimpleAssignmentTarget
 
 ///////////////
+// BINDINGS
+///////////////
+
+JsAnyBinding =
+	JsIdentifierBinding
+	| JsObjectBinding
+	| JsArrayBinding
+	| JsUnknownBinding
+
+
+// Binds a value to an identifier.
+// let x = OR function(test) {}
+//     ^               ^^^^
+JsIdentifierBinding =
+	name: 'ident'
+
+// [ a = "b"] = [];
+//   ^^^^^^^
+JsBindingWithDefault =
+	binding: JsAnyBinding
+	'='
+	default: JsAnyExpression
+
+// let [a, b] = [1, 2];
+//     ^^^^^^
+JsArrayBinding =
+	'['
+	elements: (JsAnyArrayElementBinding (',' JsAnyArrayElementBinding)* ','?)
+	']'
+
+JsAnyArrayElementBinding =
+	JsArrayHole
+	| JsAnyBinding
+	| JsBindingWithDefault
+	| JsArrayRestBinding
+
+JsArrayRestBinding =
+	'...'
+	binding: JsAnyBinding
+
+// let { a, b} = c;
+//     ^^^^^^^
+JsObjectBinding =
+	'{'
+	properties: (JsAnyPropertyBinding (',' JsAnyPropertyBinding)* ','?)
+	'}'
+
+JsAnyPropertyBinding =
+	JsPropertyBinding
+	| JsObjectRestBinding
+	| JsShorthandPropertyBinding
+	| JsIdentifierBinding
+	| JsUnknownBinding
+
+// let { a: b.m } = {}
+//       ^^^^^^
+// let { a: b.m = "test" } = {}
+//       ^^^^^^^^^^^^^^^
+JsPropertyBinding =
+	member: JsAnyObjectMemberName
+	':'
+	binding: JsAnyBinding
+	init: JsEqualValueClause?
+
+// let { a } = c
+//       ^
+// let { a = "test" } = c
+//       ^^^^^^^^^^
+JsShorthandPropertyBinding =
+	identifier: JsIdentifierBinding
+	init: JsEqualValueClause?
+
+// let { ...a } = c
+//       ^^^^
+JsObjectRestBinding =
+	'...'
+	binding: JsIdentifierBinding
+
+
+///////////////
+// MISCELLANEOUS
+///////////////
+
+Name = 'ident'
+
+JsReferenceIdentifierExpression = name: 'ident'
+
+///////////////
 // LITERALS
 ///////////////
 
@@ -749,60 +824,6 @@ JsRegexLiteralExpression = value: 'js_regex_literal'
 
 
 ///////////////
-// PATTERNS
-///////////////
-
-Pattern =
-	SinglePattern
-	| RestPattern
-	| AssignPattern
-	| ObjectPattern
-	| ArrayPattern
-	| ExprPattern
-	| JsUnknownPattern
-
-// single pattern
-SinglePattern
-	= name:Name '?'? '!'? ty: TsTypeAnnotation?
-
-// rest pattern
-RestPattern = '...' pat:Pattern
-
-// array pattern
-ArrayPattern = '[' elements:Pattern* ']' '!' ty: TsTypeAnnotation?
-
-// object pattern
-ObjectPattern = '{' elements:(ObjectPatternProp (',' ObjectPatternProp)* ','?) '}'
-
-// object pattern prop
-ObjectPatternProp =
-	AssignPattern
-	| KeyValuePattern
-	| RestPattern
-	| SinglePattern
-	| JsUnknownPattern
-
-// assign pattern
-AssignPattern = key:Pattern ty: TsTypeAnnotation? '=' value:JsAnyExpression
-
-// key value pattern
-KeyValuePattern = key:PropName ':' manual__value:Pattern
-
-
-// expression pattern
-ExprPattern = expr: JsAnyExpression
-
-///////////////
-// MISCELLANEOUS
-///////////////
-
-SpreadElement = '...' element:JsAnyExpression
-
-Name = 'ident'
-
-JsReferenceIdentifierExpression = name: 'ident'
-
-///////////////
 // DECLARATIONS
 ///////////////
 
@@ -828,8 +849,7 @@ JsVariableDeclaration =
     declarators: (JsVariableDeclarator (',' JsVariableDeclarator)*)
 
 JsVariableDeclarator =
-		// TODO #1725 change to `JsAnyBinding`
-    id: Pattern
+    id: JsAnyBinding
     init: JsEqualValueClause?
 
 
@@ -905,15 +925,6 @@ WildcardImport = '*' 'as'? ident: Ident?
 ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:(Specifier (',' Specifier)* ','?) * '}'
 
 ///////////////
-// BINDINGS
-///////////////
-
-// Binds a value to an identifier.
-// let x = OR function(test) {}
-//     ^               ^^^^
-JsIdentifierBinding = name: 'ident'
-
-///////////////
 // AUXILIARY
 ///////////////
 
@@ -965,11 +976,11 @@ JsParameterList =
 	parameters: (JsAnyParameter (',' JsAnyParameter)* ','?)
 	')'
 
-JsAnyParameter = Pattern | JsRestParameter
+JsAnyParameter = JsAnyBinding | JsBindingWithDefault | JsRestParameter
 
 JsRestParameter =
 	'...'
-	binding: Pattern
+	binding: JsAnyBinding
 
 ArgList = '(' args:(JsAnyExpression (',' JsAnyExpression)* ','?) ')'
 
@@ -1227,13 +1238,13 @@ TsMethodSignature =
 TsImport = 'import' type_args:TsTypeArgs '.'? '(' qualifier:TsEntityName ')'
 
 // typescript index signature
-TsIndexSignature = 'readonly'? '[' pat:SinglePattern ':' ty:TsType ']'
+TsIndexSignature = 'readonly'? '[' pat:JsIdentifierBinding ':' ty:TsType ']'
 
 // typescript type of access
 TsAccessibility = 'private' | 'readonly'
 
 
-TsConstructorParam = 'readonly' pat:Pattern
+TsConstructorParam = 'readonly' pat:JsAnyBinding
 
 TsNonNull = expr:JsAnyExpression '!'
 

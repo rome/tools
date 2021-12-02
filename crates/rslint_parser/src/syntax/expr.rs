@@ -3,8 +3,8 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
+use super::binding::parse_binding;
 use super::decl::{parse_arrow_body, parse_parameter_list};
-use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
 #[allow(deprecated)]
@@ -14,16 +14,18 @@ use crate::syntax::assignment_target::{
 	expression_to_assignment_target, expression_to_simple_assignment_target,
 	parse_simple_assignment_target, SimpleAssignmentTargetExprKind,
 };
+use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::class::class_expression;
 use crate::syntax::function::parse_function_expression;
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::expected_simple_assignment_target;
+use crate::syntax::js_parse_error::{
+	expected_binding, expected_identifier, expected_parameter, expected_simple_assignment_target,
+};
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::is_semi;
 use crate::ConditionalParsedSyntax::{Invalid, Valid};
 use crate::JsSyntaxFeature::StrictMode;
-use crate::ParsedSyntax::Absent;
-use crate::ParsedSyntax::Present;
+use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -541,15 +543,28 @@ pub(super) fn any_reference_member(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![#]) {
 		Some(reference_private_member(p))
 	} else {
-		reference_identifier_member(p)
+		parse_reference_identifier_member(p).ok()
 	}
 }
 
-fn reference_identifier_member(p: &mut Parser) -> Option<CompletedMarker> {
-	identifier_name(p).map(|mut ident| {
-		ident.change_kind(p, JS_REFERENCE_IDENTIFIER_MEMBER);
-		ident
-	})
+pub(super) fn is_at_reference_identifier_member(p: &Parser) -> bool {
+	p.at(T![ident]) || p.cur().is_keyword()
+}
+
+pub(super) fn parse_reference_identifier_member(p: &mut Parser) -> ParsedSyntax {
+	match p.cur() {
+		T![ident] => {
+			let m = p.start();
+			p.bump_any();
+			Present(m.complete(p, JS_REFERENCE_IDENTIFIER_MEMBER))
+		}
+		t if t.is_keyword() => {
+			let m = p.start();
+			p.bump_remap(T![ident]);
+			Present(m.complete(p, JS_REFERENCE_IDENTIFIER_MEMBER))
+		}
+		_ => Absent,
+	}
 }
 
 fn reference_private_member(p: &mut Parser) -> CompletedMarker {
@@ -677,7 +692,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			if temp.at(T![...]) {
 				let m = temp.start();
 				temp.bump_any();
-				pattern(&mut *temp, false, false);
+				parse_binding(&mut *temp).or_missing_with_error(&mut *temp, expected_binding);
 				if temp.eat(T![:]) {
 					if let Some(mut ty) = ts_type(&mut *temp) {
 						ty.err_if_not_ts(
@@ -686,7 +701,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 						);
 					}
 				}
-				let complete = m.complete(&mut *temp, REST_PATTERN);
+				let complete = m.complete(&mut *temp, JS_REST_PARAMETER);
 				spread_range = Some(complete.range(&*temp));
 				if !temp.eat(T![')']) {
 					if temp.eat(T![=]) {
@@ -700,7 +715,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 						#[allow(deprecated)]
 						SingleTokenParseRecovery::with_error(
 							EXPR_RECOVERY_SET,
-							JS_UNKNOWN_PATTERN,
+							JS_UNKNOWN_BINDING,
 							err,
 						)
 						.recover(&mut temp);
@@ -900,7 +915,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			} else {
 				// `async a => {}` and `async (a) => {}`
 				if p.state.potential_arrow_start
-					&& token_set![T![ident], T![yield], T!['(']].contains(p.nth(1))
+					&& token_set![T![ident], T![yield], T![await], T!['(']].contains(p.nth(1))
 				{
 					// test async_arrow_expr
 					// let a = async foo => {}
@@ -908,39 +923,51 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 					// async (foo, bar, ...baz) => foo
 					let m = p.start();
 					p.bump_remap(T![async]);
-					let parsed_parameters = parse_parameter_list(p);
-					if parsed_parameters.is_absent() {
-						let m = p.start();
-						// test_err async_arrow_expr_await_parameter
-						// let a = async await => {}
-						p.bump_remap(T![ident]);
-						m.complete(p, JS_IDENTIFIER_BINDING);
-					}
-
-					if p.at(T![:]) {
-						let complete = ts_type_or_type_predicate_ann(p, T![:]);
-						if let Some(mut complete) = complete {
-							complete.err_if_not_ts(
-								p,
-								"arrow functions can only have return types in TypeScript files",
-							);
-						}
-					}
-					p.expect_required(T![=>]);
 					{
-						let mut guard = p.with_state(ParserState {
+						let in_async_p = &mut *p.with_state(ParserState {
 							in_async: true,
 							..p.state.clone()
 						});
-						parse_arrow_body(&mut *guard).or_missing_with_error(
-							&mut *guard,
-							js_parse_error::expected_arrow_body,
-						);
+
+						let parsed_parameters = parse_parameter_list(in_async_p);
+						if parsed_parameters.is_absent() {
+							// test_err async_arrow_expr_await_parameter
+							// let a = async await => {}
+							match parse_identifier_binding(in_async_p) {
+								Valid(identifier) => {
+									identifier
+										.or_missing_with_error(in_async_p, expected_parameter);
+								}
+								Invalid(invalid) => {
+									let identifier =
+										invalid.or_to_unknown(in_async_p, JS_UNKNOWN_BINDING);
+									let list =
+										identifier.precede(in_async_p).complete(in_async_p, LIST);
+									let parameter_list = list.precede(in_async_p);
+									parameter_list.complete(in_async_p, JS_PARAMETER_LIST);
+								}
+							}
+						}
+
+						if in_async_p.at(T![:]) {
+							let complete = ts_type_or_type_predicate_ann(in_async_p, T![:]);
+							if let Some(mut complete) = complete {
+								complete.err_if_not_ts(
+									in_async_p,
+								"arrow functions can only have return types in TypeScript files",
+							);
+							}
+						}
+
+						in_async_p.expect_required(T![=>]);
+
+						parse_arrow_body(in_async_p)
+							.or_missing_with_error(in_async_p, js_parse_error::expected_arrow_body);
 					}
 
 					m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 				} else {
-					reference_identifier_expression(p)?
+					parse_reference_identifier_expression(p).unwrap()
 				}
 			}
 		}
@@ -957,8 +984,8 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			// foo;
 			// yield;
 			// await;
-			let mut ident = reference_identifier_expression(p)?;
-			if p.state.potential_arrow_start && p.at(T![=>]) && !p.has_linebreak_before_n(0) {
+			if p.state.potential_arrow_start && p.nth_at(1, T![=>]) && !p.has_linebreak_before_n(1)
+			{
 				// test arrow_expr_single_param
 				// // SCRIPT
 				// foo => {}
@@ -966,15 +993,15 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				// await => {}
 				// foo =>
 				// {}
-
-				// parameters are binding so we need to change the kind from NAME_REF to JS_IDENTIFIER_BINDING
-				ident.change_kind(p, JS_IDENTIFIER_BINDING);
-				let m = ident.precede(p);
-				p.bump_any();
+				let m = p.start();
+				parse_identifier_binding(p)
+					.or_invalid_to_unknown(p, JS_UNKNOWN_BINDING)
+					.or_missing_with_error(p, expected_identifier);
+				p.bump(T![=>]);
 				parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
 				m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 			} else {
-				ident
+				parse_reference_identifier_expression(p).unwrap()
 			}
 		}
 		// test grouping_expr
@@ -1054,25 +1081,9 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	Some(complete)
 }
 
-pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker> {
+fn parse_reference_identifier_expression(p: &mut Parser) -> ParsedSyntax {
 	parse_identifier(p, JS_REFERENCE_IDENTIFIER_EXPRESSION)
 		.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
-		.ok()
-		.or_else(|| {
-			let err = p
-				.err_builder("Expected an identifier, but found none")
-				.primary(p.cur_tok().range, "");
-
-			#[allow(deprecated)]
-			SingleTokenParseRecovery::with_error(
-				p.state.expr_recovery_set,
-				JS_UNKNOWN_EXPRESSION,
-				err,
-			)
-			.enabled_braces_check()
-			.recover(p);
-			None
-		})
 }
 
 // test identifier_loose_mode
@@ -1083,53 +1094,62 @@ pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker
 //
 // test identifier
 // foo;
-// await;
 //
 // test_err identifier_err
 // yield;
+// await;
 // async function test(await) {}
 // function* test(yield) {}
+/// Parses an identifier if it is valid in this context or returns `Invalid` if the context isn't valid in this context.
+/// An identifier is invalid if:
+/// * It is named `await` inside of an async function
+/// * It is named `yield` inside of a generator function or in strict mode
 pub(crate) fn parse_identifier(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 	match p.cur() {
 		T![yield] | T![await] | T![ident] => {
 			let m = p.start();
 			let name = p.cur_src();
 
-			let mut valid = false;
-
-			if name == "await" && p.state.in_async {
-				let err = p
-					.err_builder("Illegal use of `await` as an identifier in an async context")
-					.primary(p.cur_tok().range, "");
-				p.error(err);
-			} else if name == "yield" && p.state.in_generator {
-				let err = p
-					.err_builder("Illegal use of `yield` as an identifier in generator function")
-					.primary(p.cur_tok().range, "");
-				p.error(err);
-			} else if StrictMode.is_supported(p) && (name == "yield") {
-				let err = p
-					.err_builder(&format!(
+			let error = match name {
+				"await" if p.state.in_async => Some(
+					p.err_builder("Illegal use of `await` as an identifier in an async context")
+						.primary(p.cur_tok().range, ""),
+				),
+				"await" if p.syntax.file_kind == FileKind::Module => Some(
+					p.err_builder("Illegal use of `await` as an identifier inside of a module")
+						.primary(p.cur_tok().range, ""),
+				),
+				"yield" if p.state.in_generator => Some(
+					p.err_builder("Illegal use of `yield` as an identifier in generator function")
+						.primary(p.cur_tok().range, ""),
+				),
+				"yield" | "let" if StrictMode.is_supported(p) => Some(
+					p.err_builder(&format!(
 						"Illegal use of `{}` as an identifier in strict mode",
 						name
 					))
-					.primary(p.cur_tok().range, "");
-				p.error(err);
-			} else {
-				valid = true;
-			}
+					.primary(p.cur_tok().range, ""),
+				),
+
+				_ => None,
+			};
 
 			p.bump_remap(T![ident]);
 			let completed = m.complete(p, kind);
 
-			if valid {
-				Valid(completed.into())
-			} else {
+			if let Some(error) = error {
+				p.error(error);
 				Invalid(completed.into())
+			} else {
+				Valid(completed.into())
 			}
 		}
-		_ => Invalid(Absent.into()),
+		_ => Valid(Absent),
 	}
+}
+
+pub(crate) fn is_at_identifier(p: &Parser) -> bool {
+	matches!(p.cur(), T![ident] | T![await] | T![yield])
 }
 
 /// A template literal such as "`abcd ${efg}`"
@@ -1216,7 +1236,7 @@ pub fn spread_element(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect_required(T![...]);
 	expr_or_assignment(p);
-	m.complete(p, SPREAD_ELEMENT)
+	m.complete(p, JS_SPREAD)
 }
 
 /// A left hand side expression, either a member expression or a call expression such as `foo()`.

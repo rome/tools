@@ -188,9 +188,8 @@ JsRoot {
                   0: JS_PARAMETER_LIST@89..95
                     0: L_PAREN@89..90 "(" [] []
                     1: LIST@90..93
-                      0: SINGLE_PATTERN@90..93
-                        0: NAME@90..93
-                          0: IDENT@90..93 "foo" [] []
+                      0: JS_IDENTIFIER_BINDING@90..93
+                        0: IDENT@90..93 "foo" [] []
                     2: R_PAREN@93..95 ")" [] [Whitespace(" ")]
                   1: FAT_ARROW@95..98 "=>" [] [Whitespace(" ")]
                   2: JS_FUNCTION_BODY@98..101

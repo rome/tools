@@ -219,7 +219,6 @@ impl<'t> Parser<'t> {
 	/// Starts a new node in the syntax tree. All nodes and tokens
 	/// consumed between the `start` and the corresponding `Marker::complete`
 	/// belong to the same node.
-	#[must_use]
 	pub fn start(&mut self) -> Marker {
 		let pos = self.events.len() as u32;
 		self.push_event(Event::tombstone(self.tokens.cur_pos()));
@@ -519,6 +518,7 @@ impl<'t> Parser<'t> {
 
 /// A structure signifying the start of parsing of a syntax tree node
 #[derive(Debug)]
+#[must_use = "Marker must either be `completed` or `abandoned`"]
 pub struct Marker {
 	/// The index in the events list
 	pub pos: u32,
@@ -678,7 +678,6 @@ impl CompletedMarker {
 	/// Append a new `START` events as `[START, FINISH, NEWSTART]`,
 	/// then mark `NEWSTART` as `START`'s parent with saving its relative
 	/// distance to `NEWSTART` into forward_parent(=2 in this case);
-	#[must_use]
 	pub fn precede(self, p: &mut Parser) -> Marker {
 		let mut new_pos = p.start();
 		let idx = self.start_pos as usize;

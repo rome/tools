@@ -4,7 +4,7 @@ use rslint_syntax::SyntaxKind::EOF;
 use std::error::Error;
 use std::fmt::{Display, Formatter};
 
-#[derive(Debug)]
+#[derive(Debug, Eq, PartialEq)]
 pub enum RecoveryError {
 	/// Recovery failed because the parser reached the end of file
 	Eof,

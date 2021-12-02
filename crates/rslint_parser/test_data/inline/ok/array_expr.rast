@@ -90,16 +90,16 @@ JsRoot {
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@50..52 "[" [Whitespace("\n")] [],
                 elements: [
-                    SpreadElement {
+                    JsSpread {
                         dotdotdot_token: DOT2@52..55 "..." [] [],
-                        element: JsReferenceIdentifierExpression {
+                        argument: JsReferenceIdentifierExpression {
                             name_token: IDENT@55..56 "a" [] [],
                         },
                     },
                     COMMA@56..58 "," [] [Whitespace(" ")],
-                    SpreadElement {
+                    JsSpread {
                         dotdotdot_token: DOT2@58..61 "..." [] [],
-                        element: JsReferenceIdentifierExpression {
+                        argument: JsReferenceIdentifierExpression {
                             name_token: IDENT@61..62 "b" [] [],
                         },
                     },
@@ -182,12 +182,12 @@ JsRoot {
       0: JS_ARRAY_EXPRESSION@50..63
         0: L_BRACK@50..52 "[" [Whitespace("\n")] []
         1: LIST@52..62
-          0: SPREAD_ELEMENT@52..56
+          0: JS_SPREAD@52..56
             0: DOT2@52..55 "..." [] []
             1: JS_REFERENCE_IDENTIFIER_EXPRESSION@55..56
               0: IDENT@55..56 "a" [] []
           1: COMMA@56..58 "," [] [Whitespace(" ")]
-          2: SPREAD_ELEMENT@58..62
+          2: JS_SPREAD@58..62
             0: DOT2@58..61 "..." [] []
             1: JS_REFERENCE_IDENTIFIER_EXPRESSION@61..62
               0: IDENT@61..62 "b" [] []

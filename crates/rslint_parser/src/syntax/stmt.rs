@@ -2,8 +2,8 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
+use super::binding::*;
 use super::expr::{expr, expr_or_assignment, EXPR_RECOVERY_SET, STARTS_EXPR};
-use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use};
@@ -12,9 +12,10 @@ use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::syntax::assignment_target::{
 	expression_to_assignment_target, SimpleAssignmentTargetExprKind,
 };
-use crate::syntax::class::parse_class_declaration;
+use crate::syntax::class::{parse_class_declaration, parse_equal_value_clause};
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
+use crate::syntax::js_parse_error::expected_binding;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
@@ -126,7 +127,7 @@ pub fn parse_statement(
 		T![throw] => parse_throw_statement(p),
 		T![debugger] => parse_debugger_statement(p),
 		T![function] => parse_function_declaration(p),
-		T![class] => parse_class_declaration(p),
+		T![class] => parse_class_declaration(p).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT),
 		T![ident] if is_at_async_function(p, LineBreak::DoCheck) => parse_function_declaration(p),
 
 		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
@@ -151,7 +152,7 @@ pub fn parse_statement(
 			}
 			res.or_recover(
 				p,
-				ParseRecovery::new(
+				&ParseRecovery::new(
 					JS_UNKNOWN_STATEMENT,
 					recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
 				),
@@ -729,6 +730,14 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 // const a = 5;
 // const { foo: [bar], baz } = {};
 // let foo = "lorem", bar = "ipsum", third = "value", fourth = 6;
+// var a, a, a, a, a;
+//
+// test_err variable_declaration_statement_err
+// let a, { a } = { a: 10 }
+// const a = 1, { a } = { a: 10 }
+// const a;
+// let [a];
+// const { b };
 pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err var_decl_err
 	// var a =;
@@ -790,84 +799,75 @@ pub(crate) fn variable_declarator(
 	for_stmt: bool,
 	is_let: bool,
 ) -> Option<CompletedMarker> {
-	let m = p.start();
 	p.state.should_record_names = is_const.is_some() || is_let;
-	let pat = if let Some(pattern) = pattern(p, false, false) {
-		pattern
-	} else {
-		m.abandon(p);
-		return None;
-	};
-
-	let pat_m = pat.undo_completion(p);
+	let m = p.start();
+	let id = parse_binding(p);
 	p.state.should_record_names = false;
-	let kind = pat.kind();
 
-	let cur = p.cur_tok().range;
-	let opt = p.eat(T![!]);
-	if opt && !p.typescript() {
-		let err = p
-			.err_builder("definite assignment assertions can only be used in TypeScript files")
-			.primary(cur, "");
+	if let Present(binding) = id {
+		let binding_marker = binding.undo_completion(p);
+		let binding_kind = binding.kind();
 
-		p.error(err);
-	}
-
-	if p.eat(T![:]) {
-		let start = p.cur_tok().range.start;
-		let ty = ts_type(p);
-		let end = ty
-			.map(|x| usize::from(x.range(p).end()))
-			.unwrap_or(p.cur_tok().range.start);
-		if !p.typescript() {
+		let cur = p.cur_tok().range;
+		let opt = p.eat(T![!]);
+		if opt && !p.typescript() {
 			let err = p
-				.err_builder("type annotations can only be used in TypeScript files")
-				.primary(start..end, "");
+				.err_builder("definite assignment assertions can only be used in TypeScript files")
+				.primary(cur, "");
 
 			p.error(err);
 		}
-		if p.typescript() && for_stmt {
-			let err = p
-				.err_builder("`for` statement declarators cannot have a type annotation")
-				.primary(start..end, "");
 
-			p.state.for_head_error = Some(err);
+		if p.eat(T![:]) {
+			let start = p.cur_tok().range.start;
+			let ty = ts_type(p);
+			let end = ty
+				.map(|x| usize::from(x.range(p).end()))
+				.unwrap_or(p.cur_tok().range.start);
+			if !p.typescript() {
+				let err = p
+					.err_builder("type annotations can only be used in TypeScript files")
+					.primary(start..end, "");
+
+				p.error(err);
+			}
+			if p.typescript() && for_stmt {
+				let err = p
+					.err_builder("`for` statement declarators cannot have a type annotation")
+					.primary(start..end, "");
+
+				p.state.for_head_error = Some(err);
+			}
 		}
+
+		let marker = binding_marker.complete(p, binding_kind);
+		let initializer = parse_equal_value_clause(p).or_missing(p);
+		if initializer.is_none()
+			&& matches!(marker.kind(), JS_ARRAY_BINDING | JS_OBJECT_BINDING)
+			&& !for_stmt && !p.state.in_declare
+		{
+			let err = p
+				.err_builder("Object and Array patterns require initializers")
+				.primary(
+					marker.range(p),
+					"this pattern is declared, but it is not given an initialized value",
+				);
+
+			p.error(err);
+		// FIXME: does ts allow const var declarations without initializers in .d.ts files?
+		} else if initializer.is_none() && is_const.is_some() && !for_stmt && !p.state.in_declare {
+			let err = p
+				.err_builder("Const var declarations must have an initialized value")
+				.primary(marker.range(p), "this variable needs to be initialized");
+
+			p.error(err);
+		}
+
+		Some(m.complete(p, JS_VARIABLE_DECLARATOR))
+	} else {
+		m.abandon(p);
+		None
 	}
-
-	let marker = pat_m.complete(p, kind);
-
-	if p.at(T![=]) {
-		variable_initializer(p);
-	} else if marker.kind() != SINGLE_PATTERN && !for_stmt && !p.state.in_declare {
-		let err = p
-			.err_builder("Object and Array patterns require initializers")
-			.primary(
-				marker.range(p),
-				"this pattern is declared, but it is not given an initialized value",
-			);
-
-		p.error(err);
-	// FIXME: does ts allow const var declarations without initializers in .d.ts files?
-	} else if is_const.is_some() && !for_stmt && !p.state.in_declare {
-		let err = p
-			.err_builder("Const var declarations must have an initialized value")
-			.primary(marker.range(p), "this variable needs to be initialized");
-
-		p.error(err);
-	}
-
-	Some(m.complete(p, JS_VARIABLE_DECLARATOR))
-}
-
-#[allow(deprecated)]
-fn variable_initializer(p: &mut Parser) {
-	let m = p.start();
-
-	p.expect_required(T![=]);
-	p.expr_with_semi_recovery(true);
-
-	m.complete(p, SyntaxKind::JS_EQUAL_VALUE_CLAUSE);
 }
 
 // A do.. while statement, such as `do {} while (true)`
@@ -1173,7 +1173,7 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 
 			let recovered_element = clause.or_recover(
 				&mut *temp,
-				ParseRecovery::new(
+				&ParseRecovery::new(
 					JS_UNKNOWN_STATEMENT,
 					token_set![T![default], T![case], T!['}']],
 				)
@@ -1219,7 +1219,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_any(); // bump (
 
-	let pattern_marker = pattern(p, false, false);
+	let pattern_marker = parse_binding(p).or_missing_with_error(p, expected_binding);
 	let pattern_kind = pattern_marker.map(|x| x.kind());
 
 	if p.at(T![:]) {

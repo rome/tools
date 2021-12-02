@@ -161,11 +161,11 @@ JsRoot {
       1: SEMICOLON@78..79 ";" [] []
   3: EOF@79..80 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected an identifier, or an assignment target but instead found ']'
-  ┌─ array_assignment_target_rest_err.js:1:8
+error[SyntaxError]: expected an identifier, or an assignment target but instead found ''
+  ┌─ array_assignment_target_rest_err.js:1:7
   │
 1 │ ([ ... ] = a);
-  │        ^ Expected an identifier, or an assignment target here
+  │       ^ Expected an identifier, or an assignment target here
 
 --
 error[SyntaxError]: rest element cannot have a default
@@ -181,7 +181,7 @@ error[SyntaxError]: rest element must be the last element
   ┌─ array_assignment_target_rest_err.js:3:4
   │
 3 │ ([ ...rest, other_assignment ] = a);
-  │    ^^^^^^^ Move the rest element to the end
+  │    ^^^^^^^ Move the rest element to the end of the pattern, right before the closing ']'
 
 --
 ([ ... ] = a);

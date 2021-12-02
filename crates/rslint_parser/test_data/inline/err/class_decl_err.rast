@@ -83,9 +83,9 @@ JsRoot {
                     set_token: SET_KW@65..69 "set" [] [Whitespace(" ")],
                     name: missing (required),
                     l_paren_token: missing (required),
-                    parameter: ObjectPattern {
+                    parameter: JsObjectBinding {
                         l_curly_token: L_CURLY@69..70 "{" [] [],
-                        elements: [],
+                        properties: [],
                         r_curly_token: R_CURLY@70..72 "}" [] [Whitespace(" ")],
                     },
                     r_paren_token: missing (required),
@@ -174,7 +174,7 @@ JsRoot {
           0: SET_KW@65..69 "set" [] [Whitespace(" ")]
           1: (empty)
           2: (empty)
-          3: OBJECT_PATTERN@69..72
+          3: JS_OBJECT_BINDING@69..72
             0: L_CURLY@69..70 "{" [] []
             1: LIST@70..70
             2: R_CURLY@70..72 "}" [] [Whitespace(" ")]
