@@ -118,7 +118,6 @@ impl ParsedSyntax {
 	/// It creates and returns a marker preceding this parsed syntax if it is present or starts
 	/// a new marker, marks the first slot as missing and adds an error to the current parser position.
 	/// See [CompletedMarker.precede]
-	#[must_use]
 	pub fn precede_or_missing_with_error<E>(self, p: &mut Parser, error_builder: E) -> Marker
 	where
 		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
@@ -140,7 +139,6 @@ impl ParsedSyntax {
 	/// and marks its first slot as missing.
 	///
 	/// See [CompletedMarker.precede]
-	#[must_use]
 	pub fn precede_or_missing(self, p: &mut Parser) -> Marker {
 		match self {
 			Present(completed) => completed.precede(p),

@@ -98,7 +98,8 @@ fn class(p: &mut Parser, kind: ClassKind) -> ConditionalParsedSyntax {
 
 				guard.error(err);
 			}
-			_ => uses_invalid_syntax = true,
+			id if id.is_present() => uses_invalid_syntax = true,
+			_ => {}
 		}
 	}
 

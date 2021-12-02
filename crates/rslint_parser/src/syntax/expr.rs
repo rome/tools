@@ -1134,7 +1134,7 @@ pub(crate) fn parse_identifier(p: &mut Parser, kind: SyntaxKind) -> ConditionalP
 				Valid(completed.into())
 			}
 		}
-		_ => Valid(Absent.into()),
+		_ => Valid(Absent),
 	}
 }
 
