@@ -53,9 +53,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ConditionalParsedSynta
 	if let Valid(Present(identifier)) = parsed {
 		let identifier_name = identifier.text(p);
 
-		if StrictMode.is_supported(p)
-			&& (identifier_name == "eval" || identifier_name == "arguments")
-		{
+		if StrictMode.is_supported(p) && matches!(identifier_name, "eval" | "arguments") {
 			let err = p
 				.err_builder(&format!(
 					"Illegal use of `{}` as an identifier in strict mode",

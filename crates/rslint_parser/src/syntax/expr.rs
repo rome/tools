@@ -1121,7 +1121,7 @@ pub(crate) fn parse_identifier(p: &mut Parser, kind: SyntaxKind) -> ConditionalP
 					p.err_builder("Illegal use of `yield` as an identifier in generator function")
 						.primary(p.cur_tok().range, ""),
 				),
-				"yield" if StrictMode.is_supported(p) => Some(
+				"yield" | "let" if StrictMode.is_supported(p) => Some(
 					p.err_builder(&format!(
 						"Illegal use of `{}` as an identifier in strict mode",
 						name
