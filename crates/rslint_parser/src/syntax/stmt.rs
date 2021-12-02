@@ -152,7 +152,7 @@ pub fn parse_statement(
 			}
 			res.or_recover(
 				p,
-				ParseRecovery::new(
+				&ParseRecovery::new(
 					JS_UNKNOWN_STATEMENT,
 					recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
 				),
