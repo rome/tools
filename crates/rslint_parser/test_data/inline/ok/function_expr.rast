@@ -92,11 +92,12 @@ JsRoot {
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_FUNCTION_EXPRESSION@8..21
                 0: FUNCTION_KW@8..16 "function" [] []
-                1: JS_PARAMETER_LIST@16..19
+                1: (empty)
+                2: JS_PARAMETER_LIST@16..19
                   0: L_PAREN@16..17 "(" [] []
                   1: LIST@17..17
                   2: R_PAREN@17..19 ")" [] [Whitespace(" ")]
-                2: JS_FUNCTION_BODY@19..21
+                3: JS_FUNCTION_BODY@19..21
                   0: L_CURLY@19..20 "{" [] []
                   1: LIST@20..20
                   2: LIST@20..20

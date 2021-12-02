@@ -248,11 +248,12 @@ JsRoot {
   2: LIST@0..202
     0: JS_FUNCTION_DECLARATION@0..13
       0: FUNCTION_KW@0..8 "function" [] []
-      1: JS_PARAMETER_LIST@8..11
+      1: (empty)
+      2: JS_PARAMETER_LIST@8..11
         0: L_PAREN@8..9 "(" [] []
         1: LIST@9..9
         2: R_PAREN@9..11 ")" [] [Whitespace(" ")]
-      2: JS_FUNCTION_BODY@11..13
+      3: JS_FUNCTION_BODY@11..13
         0: L_CURLY@11..12 "{" [] []
         1: LIST@12..12
         2: LIST@12..12
@@ -270,7 +271,8 @@ JsRoot {
     2: JS_FUNCTION_DECLARATION@29..41
       0: FUNCTION_KW@29..39 "function" [Whitespace("\n")] [Whitespace(" ")]
       1: (empty)
-      2: JS_FUNCTION_BODY@39..41
+      2: (empty)
+      3: JS_FUNCTION_BODY@39..41
         0: L_CURLY@39..40 "{" [] []
         1: LIST@40..40
         2: LIST@40..40
@@ -278,11 +280,12 @@ JsRoot {
     3: JS_FUNCTION_DECLARATION@41..57
       0: FUNCTION_KW@41..51 "function" [Whitespace("\n")] [Whitespace(" ")]
       1: STAR@51..52 "*" [] []
-      2: JS_PARAMETER_LIST@52..55
+      2: (empty)
+      3: JS_PARAMETER_LIST@52..55
         0: L_PAREN@52..53 "(" [] []
         1: LIST@53..53
         2: R_PAREN@53..55 ")" [] [Whitespace(" ")]
-      3: JS_FUNCTION_BODY@55..57
+      4: JS_FUNCTION_BODY@55..57
         0: L_CURLY@55..56 "{" [] []
         1: LIST@56..56
         2: LIST@56..56
@@ -290,11 +293,12 @@ JsRoot {
     4: JS_FUNCTION_DECLARATION@57..77
       0: ASYNC_KW@57..64 "async" [Whitespace("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@64..72 "function" [] []
-      2: JS_PARAMETER_LIST@72..75
+      2: (empty)
+      3: JS_PARAMETER_LIST@72..75
         0: L_PAREN@72..73 "(" [] []
         1: LIST@73..73
         2: R_PAREN@73..75 ")" [] [Whitespace(" ")]
-      3: JS_FUNCTION_BODY@75..77
+      4: JS_FUNCTION_BODY@75..77
         0: L_CURLY@75..76 "{" [] []
         1: LIST@76..76
         2: LIST@76..76
@@ -303,11 +307,12 @@ JsRoot {
       0: ASYNC_KW@77..84 "async" [Whitespace("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@84..93 "function" [] [Whitespace(" ")]
       2: STAR@93..94 "*" [] []
-      3: JS_PARAMETER_LIST@94..97
+      3: (empty)
+      4: JS_PARAMETER_LIST@94..97
         0: L_PAREN@94..95 "(" [] []
         1: LIST@95..95
         2: R_PAREN@95..97 ")" [] [Whitespace(" ")]
-      4: JS_FUNCTION_BODY@97..99
+      5: JS_FUNCTION_BODY@97..99
         0: L_CURLY@97..98 "{" [] []
         1: LIST@98..98
         2: LIST@98..98

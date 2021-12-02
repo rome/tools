@@ -85,9 +85,7 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 				);
 			}
 
-			if TypeScript.is_supported(guard) {
-				guard.missing();
-			}
+			guard.missing();
 		}
 		Present(Invalid(_)) => uses_invalid_syntax = true,
 		_ => {}
