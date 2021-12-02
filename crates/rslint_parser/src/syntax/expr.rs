@@ -759,36 +759,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 	}
 
 	drop(temp);
-	// if we are in a ternary expression, then we need to try and see if parsing as an arrow worked
-	// if it did then we just return it, otherwise it should be interpreted as a grouping expr
-	if p.state.in_cond_expr && p.at(T![:]) && params_marker.is_none() {
-		let func = |p: &mut Parser| {
-			let p = &mut *p.with_state(ParserState {
-				no_recovery: true,
-				..p.state.clone()
-			});
-			p.rewind(checkpoint);
-			parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_parameters);
-			if p.at(T![:]) {
-				if let Some(mut ret) = ts_type_or_type_predicate_ann(p, T![:]) {
-					ret.err_if_not_ts(
-						p,
-						"arrow functions can only have return types in TypeScript files",
-					);
-				}
-			}
-			p.expect_no_recover(T![=>])?;
-			parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body)
-		};
-		// we can't just rewind the parser, since the function rewinds, and cloning and replacing the
-		// events does not work apparently, therefore we need to clone the entire parser
-		let cloned = p.clone();
-		if func(p).is_some() {
-			return m.complete(p, JS_ARROW_FUNCTION_EXPRESSION);
-		} else {
-			*p = cloned;
-		}
-	}
+
 	let has_ret_type = !p.state.in_cond_expr && p.at(T![:]) && !p.state.in_case_cond;
 
 	// This is an arrow expr, so we rewind the parser and reparse as parameters

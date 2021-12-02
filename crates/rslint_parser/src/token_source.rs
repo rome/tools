@@ -3,7 +3,6 @@ use rslint_lexer::is_linebreak;
 use std::collections::HashSet;
 
 /// The source of tokens for the parser
-#[derive(Clone)]
 pub struct TokenSource<'t> {
 	source: &'t str,
 	/// Hashset of offsets for tokens which occur after a linebreak.

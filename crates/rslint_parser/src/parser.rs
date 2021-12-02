@@ -115,7 +115,6 @@ impl ParserProgress {
 ///
 /// assert_eq!(typed_expr.expression().unwrap().syntax().text(), "delete b");
 /// ```
-#[derive(Clone)]
 pub struct Parser<'t> {
 	pub file_id: usize,
 	tokens: TokenSource<'t>,
