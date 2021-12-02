@@ -1,6 +1,6 @@
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::{InvalidParsedSyntax, ParsedSyntax, ParserProgress};
+use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
 use crate::syntax::expr::expr_or_assignment;
