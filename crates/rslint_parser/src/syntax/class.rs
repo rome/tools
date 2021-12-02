@@ -102,7 +102,6 @@ fn class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSyntax> {
 
 					guard.error(err);
 				}
-				guard.missing();
 			}
 		}
 	}
