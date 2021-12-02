@@ -358,7 +358,7 @@ JsArrayHole = manual__hole: ''
 JsAssignmentExpression =
   left: JsAnyAssignmentPattern
   operator_token: (
-		'=' |'+=' | '-=' | '*=' | '%=' |
+		'=' |'+=' | '-=' | '*=' | '/=' | '%=' |
 		'**=' | '>>=' | '<<=' | '>>>=' | '&=' |
 		'|=' | '^=' | '&&=' | '||=' | '??='
   )

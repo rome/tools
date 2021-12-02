@@ -34,6 +34,7 @@ pub const ASSIGN_TOKENS: TokenSet = token_set![
 	T![+=],
 	T![-=],
 	T![*=],
+	T![/=],
 	T![%=],
 	T![<<=],
 	T![>>=],
@@ -44,8 +45,7 @@ pub const ASSIGN_TOKENS: TokenSet = token_set![
 	T![&&=],
 	T![||=],
 	T![??=],
-	T![/=],
-	T![>>=]
+	T![**=],
 ];
 
 pub const STARTS_EXPR: TokenSet = token_set![
