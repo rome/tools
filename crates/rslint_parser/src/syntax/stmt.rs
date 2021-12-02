@@ -127,7 +127,7 @@ pub fn parse_statement(
 		T![throw] => parse_throw_statement(p),
 		T![debugger] => parse_debugger_statement(p),
 		T![function] => parse_function_declaration(p),
-		T![class] => parse_class_declaration(p).or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION),
+		T![class] => parse_class_declaration(p).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT),
 		T![ident] if is_at_async_function(p, LineBreak::DoCheck) => parse_function_declaration(p),
 
 		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
