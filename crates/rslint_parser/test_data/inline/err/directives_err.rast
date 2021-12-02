@@ -114,11 +114,13 @@ JsRoot {
       0: FUNCTION_KW@0..20 "function" [Comments("// SCRIPT"), Whitespace("\n\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@20..24
         0: IDENT@20..24 "test" [] []
-      2: JS_PARAMETER_LIST@24..27
+      2: (empty)
+      3: JS_PARAMETER_LIST@24..27
         0: L_PAREN@24..25 "(" [] []
         1: LIST@25..25
         2: R_PAREN@25..27 ")" [] [Whitespace(" ")]
-      3: JS_FUNCTION_BODY@27..160
+      4: (empty)
+      5: JS_FUNCTION_BODY@27..160
         0: L_CURLY@27..28 "{" [] []
         1: LIST@28..43
           0: JS_DIRECTIVE@28..43
@@ -129,11 +131,13 @@ JsRoot {
             0: FUNCTION_KW@43..54 "function" [Whitespace("\n\t")] [Whitespace(" ")]
             1: JS_IDENTIFIER_BINDING@54..61
               0: IDENT@54..61 "inner_a" [] []
-            2: JS_PARAMETER_LIST@61..64
+            2: (empty)
+            3: JS_PARAMETER_LIST@61..64
               0: L_PAREN@61..62 "(" [] []
               1: LIST@62..62
               2: R_PAREN@62..64 ")" [] [Whitespace(" ")]
-            3: JS_FUNCTION_BODY@64..84
+            4: (empty)
+            5: JS_FUNCTION_BODY@64..84
               0: L_CURLY@64..65 "{" [] []
               1: LIST@65..81
                 0: JS_DIRECTIVE@65..81
@@ -145,11 +149,13 @@ JsRoot {
             0: FUNCTION_KW@84..96 "function" [Whitespace("\n\n\t")] [Whitespace(" ")]
             1: JS_IDENTIFIER_BINDING@96..103
               0: IDENT@96..103 "inner_b" [] []
-            2: JS_PARAMETER_LIST@103..106
+            2: (empty)
+            3: JS_PARAMETER_LIST@103..106
               0: L_PAREN@103..104 "(" [] []
               1: LIST@104..104
               2: R_PAREN@104..106 ")" [] [Whitespace(" ")]
-            3: JS_FUNCTION_BODY@106..158
+            4: (empty)
+            5: JS_FUNCTION_BODY@106..158
               0: L_CURLY@106..107 "{" [] []
               1: LIST@107..107
               2: LIST@107..155
@@ -157,11 +163,13 @@ JsRoot {
                   0: FUNCTION_KW@107..119 "function" [Whitespace("\n\t\t")] [Whitespace(" ")]
                   1: JS_IDENTIFIER_BINDING@119..130
                     0: IDENT@119..130 "inner_inner" [] []
-                  2: JS_PARAMETER_LIST@130..133
+                  2: (empty)
+                  3: JS_PARAMETER_LIST@130..133
                     0: L_PAREN@130..131 "(" [] []
                     1: LIST@131..131
                     2: R_PAREN@131..133 ")" [] [Whitespace(" ")]
-                  3: JS_FUNCTION_BODY@133..155
+                  4: (empty)
+                  5: JS_FUNCTION_BODY@133..155
                     0: L_CURLY@133..134 "{" [] []
                     1: LIST@134..151
                       0: JS_DIRECTIVE@134..151

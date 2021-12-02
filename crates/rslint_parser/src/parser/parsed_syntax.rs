@@ -226,15 +226,18 @@ impl ParsedSyntax {
 		F: SyntaxFeature,
 		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
 	{
-		if feature.is_supported(p) {
-			Valid(self)
-		} else {
-			if let Present(marker) = &self {
-				let diagnostic = error_builder(p, marker);
-				p.error(diagnostic);
-			}
+		match self {
+			Present(marker) => {
+				if feature.is_supported(p) {
+					Valid(marker.into())
+				} else {
+					let diagnostic = error_builder(p, &marker);
+					p.error(diagnostic);
 
-			Invalid(InvalidParsedSyntax(self))
+					Invalid(marker.into())
+				}
+			}
+			Absent => Valid(Absent),
 		}
 	}
 
@@ -249,8 +252,10 @@ impl ParsedSyntax {
 	{
 		if feature.is_supported(p) {
 			Valid(self)
+		} else if let Present(syntax) = self {
+			Invalid(InvalidParsedSyntax(syntax))
 		} else {
-			Invalid(InvalidParsedSyntax(self))
+			Valid(Absent)
 		}
 	}
 
@@ -271,15 +276,17 @@ impl ParsedSyntax {
 		F: SyntaxFeature,
 		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
 	{
-		if feature.is_unsupported(p) {
-			Valid(self)
-		} else {
-			if let Present(marker) = &self {
-				let diagnostic = error_builder(p, marker);
-				p.error(diagnostic);
+		match self {
+			Present(marker) => {
+				if feature.is_unsupported(p) {
+					Valid(marker.into())
+				} else {
+					let diagnostic = error_builder(p, &marker);
+					p.error(diagnostic);
+					Invalid(InvalidParsedSyntax(marker))
+				}
 			}
-
-			Invalid(InvalidParsedSyntax(self))
+			Absent => Valid(Absent),
 		}
 	}
 
@@ -292,10 +299,15 @@ impl ParsedSyntax {
 	where
 		F: SyntaxFeature,
 	{
-		if feature.is_unsupported(p) {
-			Valid(self)
-		} else {
-			Invalid(InvalidParsedSyntax(self))
+		match self {
+			Present(marker) => {
+				if feature.is_unsupported(p) {
+					Valid(marker.into())
+				} else {
+					Invalid(marker.into())
+				}
+			}
+			Absent => Valid(Absent),
 		}
 	}
 }
@@ -351,18 +363,15 @@ impl ConditionalParsedSyntax {
 		matches!(self, Invalid(_))
 	}
 
-	/// Returns `true` if this syntax is present in the source text.
+	/// Returns `true` if this syntax is present in the source text regardless if it's valid or not
 	#[must_use]
 	pub fn is_present(&self) -> bool {
-		matches!(
-			self,
-			Valid(Present(_)) | Invalid(InvalidParsedSyntax(Present(_)))
-		)
+		matches!(self, Valid(Present(_)) | Invalid(_))
 	}
 
 	/// Returns `true` if this syntax is absent from the source text.
 	pub fn is_absent(&self) -> bool {
-		matches!(self, Valid(Absent) | Invalid(InvalidParsedSyntax(Absent)))
+		matches!(self, Valid(Absent))
 	}
 
 	/// Converts this into a parsed syntax by wrapping any present invalid syntax in an unknown node.
@@ -390,49 +399,33 @@ impl ConditionalParsedSyntax {
 /// Parsed syntax that is invalid in this parsing context.
 #[must_use = "this 'UnsupportedParsedSyntax' contains syntax not supported in this parsing context, which must be handled."]
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct InvalidParsedSyntax(ParsedSyntax);
+pub struct InvalidParsedSyntax(CompletedMarker);
 
 impl InvalidParsedSyntax {
-	pub fn new(syntax: ParsedSyntax) -> Self {
+	pub fn new(syntax: CompletedMarker) -> Self {
 		Self(syntax)
 	}
 
 	/// Converts this into a parsed syntax by wrapping any present invalid syntax in an unknown node.
 	/// Is a no-op if the syntax is absent in the source text.
-	pub fn or_to_unknown(self, p: &mut Parser, unknown_kind: SyntaxKind) -> ParsedSyntax {
-		match self.0 {
-			Absent => Absent,
-			Present(mut unsupported) => {
-				unsupported.change_kind(p, unknown_kind);
-				Present(unsupported)
-			}
-		}
+	pub fn or_to_unknown(mut self, p: &mut Parser, unknown_kind: SyntaxKind) -> ParsedSyntax {
+		self.0.change_kind(p, unknown_kind);
+		Present(self.0)
 	}
 
 	/// Undoes the completion and abandons the marker if the syntax is present.
 	pub fn abandon(self, p: &mut Parser) {
-		if let Present(unsupported) = self.0 {
-			unsupported.undo_completion(p).abandon(p)
-		}
+		self.0.undo_completion(p).abandon(p)
 	}
 
 	/// Creates a new marker that precedes this syntax or starts a new marker
 	pub fn precede(self, p: &mut Parser) -> Marker {
-		match self.0 {
-			Present(marker) => marker.precede(p),
-			Absent => p.start(),
-		}
-	}
-}
-
-impl From<ParsedSyntax> for InvalidParsedSyntax {
-	fn from(syntax: ParsedSyntax) -> Self {
-		InvalidParsedSyntax::new(syntax)
+		self.0.precede(p)
 	}
 }
 
 impl From<CompletedMarker> for InvalidParsedSyntax {
 	fn from(marker: CompletedMarker) -> Self {
-		InvalidParsedSyntax::new(Present(marker))
+		InvalidParsedSyntax::new(marker)
 	}
 }

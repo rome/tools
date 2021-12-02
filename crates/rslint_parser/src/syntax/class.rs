@@ -94,15 +94,16 @@ fn class(p: &mut Parser, kind: ClassKind) -> ConditionalParsedSyntax {
 					guard.error(err);
 				}
 			}
-			id if id.is_absent() && kind == ClassKind::Declaration && !guard.state.in_default => {
-				let err = guard
-					.err_builder("class declarations must have a name")
-					.primary(guard.cur_tok().range, "");
+			Valid(Absent) => {
+				if kind == ClassKind::Declaration && !guard.state.in_default {
+					let err = guard
+						.err_builder("class declarations must have a name")
+						.primary(guard.cur_tok().range, "");
 
-				guard.error(err);
+					guard.error(err);
+				}
 			}
-			t if t.is_invalid() && t.is_present() => uses_invalid_syntax = true,
-			_ => {}
+			Invalid(_) => uses_invalid_syntax = true,
 		}
 	}
 
