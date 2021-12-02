@@ -23,6 +23,7 @@ use crate::syntax::js_parse_error::{
 };
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::is_semi;
+use crate::ConditionalParsedSyntax::{Invalid, Valid};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
@@ -930,8 +931,20 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 						if parsed_parameters.is_absent() {
 							// test_err async_arrow_expr_await_parameter
 							// let a = async await => {}
-							parse_identifier_binding(in_async_p)
-								.or_missing_with_error(in_async_p, expected_parameter);
+							match parse_identifier_binding(in_async_p) {
+								Valid(identifier) => {
+									identifier
+										.or_missing_with_error(in_async_p, expected_parameter);
+								}
+								Invalid(invalid) => {
+									let identifier =
+										invalid.or_to_unknown(in_async_p, JS_UNKNOWN_BINDING);
+									let list =
+										identifier.precede(in_async_p).complete(in_async_p, LIST);
+									let parameter_list = list.precede(in_async_p);
+									parameter_list.complete(in_async_p, JS_PARAMETER_LIST);
+								}
+							}
 						}
 
 						if in_async_p.at(T![:]) {
@@ -979,7 +992,9 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				// foo =>
 				// {}
 				let m = p.start();
-				parse_identifier_binding(p).or_missing_with_error(p, expected_identifier);
+				parse_identifier_binding(p)
+					.or_invalid_to_unknown(p, JS_UNKNOWN_BINDING)
+					.or_missing_with_error(p, expected_identifier);
 				p.bump(T![=>]);
 				parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
 				m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
@@ -1066,6 +1081,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 
 fn parse_reference_identifier_expression(p: &mut Parser) -> ParsedSyntax {
 	parse_identifier(p, JS_REFERENCE_IDENTIFIER_EXPRESSION)
+		.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
 }
 
 // test identifier_loose_mode
@@ -1082,38 +1098,43 @@ fn parse_reference_identifier_expression(p: &mut Parser) -> ParsedSyntax {
 // yield;
 // async function test(await) {}
 // function* test(yield) {}
-pub(crate) fn parse_identifier(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax {
+pub(crate) fn parse_identifier(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 	match p.cur() {
 		T![yield] | T![await] | T![ident] => {
 			let m = p.start();
 			let name = p.cur_src();
 
-			if name == "await" && p.state.in_async {
-				let err = p
-					.err_builder("Illegal use of `await` as an identifier in an async context")
-					.primary(p.cur_tok().range, "");
-				p.error(err);
-			} else if name == "yield" && p.state.in_generator {
-				let err = p
-					.err_builder("Illegal use of `yield` as an identifier in generator function")
-					.primary(p.cur_tok().range, "");
-				p.error(err);
-			} else if StrictMode.is_supported(p) && (name == "yield") {
-				let err = p
-					.err_builder(&format!(
+			let error = match name {
+				"await" if p.state.in_async => Some(
+					p.err_builder("Illegal use of `await` as an identifier in an async context")
+						.primary(p.cur_tok().range, ""),
+				),
+				"yield" if p.state.in_generator => Some(
+					p.err_builder("Illegal use of `yield` as an identifier in generator function")
+						.primary(p.cur_tok().range, ""),
+				),
+				"yield" if StrictMode.is_supported(p) => Some(
+					p.err_builder(&format!(
 						"Illegal use of `{}` as an identifier in strict mode",
 						name
 					))
-					.primary(p.cur_tok().range, "");
-				p.error(err);
-			}
+					.primary(p.cur_tok().range, ""),
+				),
+
+				_ => None,
+			};
 
 			p.bump_remap(T![ident]);
 			let completed = m.complete(p, kind);
 
-			Present(completed)
+			if let Some(error) = error {
+				p.error(error);
+				Invalid(completed.into())
+			} else {
+				Valid(completed.into())
+			}
 		}
-		_ => Absent,
+		_ => Valid(Absent.into()),
 	}
 }
 

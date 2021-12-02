@@ -12,8 +12,12 @@ use crate::syntax::typescript::{
 	abstract_readonly_modifiers, maybe_ts_type_annotation, try_parse_index_signature,
 	ts_heritage_clause, ts_modifier, ts_type_params, DISALLOWED_TYPE_NAMES,
 };
+use crate::ConditionalParsedSyntax::{Invalid, Valid};
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, Event, Marker, Parser, ParserState, StrictMode, TokenSet};
+use crate::{
+	CompletedMarker, ConditionalParsedSyntax, Event, Marker, Parser, ParserState, StrictMode,
+	TokenSet,
+};
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::{SyntaxKind, T};
 use std::ops::Range;
@@ -21,6 +25,8 @@ use std::ops::Range;
 /// Parses a class expression, e.g. let a = class {}
 pub(super) fn class_expression(p: &mut Parser) -> CompletedMarker {
 	class(p, ClassKind::Expression)
+		.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
+		.unwrap()
 }
 
 // test class_decl
@@ -37,9 +43,9 @@ pub(super) fn class_expression(p: &mut Parser) -> CompletedMarker {
 // class A extends bar extends foo {}
 // class A extends bar, foo {}
 /// Parses a class declaration
-pub(super) fn parse_class_declaration(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_class_declaration(p: &mut Parser) -> ConditionalParsedSyntax {
 	// TODO:: to remove `Present` when this file is moved to use `ParsedSyntax`
-	Present(class(p, ClassKind::Declaration))
+	class(p, ClassKind::Declaration)
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
@@ -57,7 +63,7 @@ impl From<ClassKind> for SyntaxKind {
 	}
 }
 
-fn class(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
+fn class(p: &mut Parser, kind: ClassKind) -> ConditionalParsedSyntax {
 	let m = p.start();
 	p.expect_required(T![class]);
 
@@ -67,31 +73,33 @@ fn class(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
 		..p.state.clone()
 	});
 
+	let mut uses_invalid_syntax = false;
+
 	// parse class id
-	let id = if guard.cur_src() != "implements" {
-		parse_identifier_binding(&mut *guard)
-	} else {
-		Absent
-	};
+	if guard.cur_src() != "implements" {
+		match parse_identifier_binding(&mut *guard) {
+			Valid(Present(id)) => {
+				let text = guard.span_text(id.range(&*guard));
+				if guard.typescript() && DISALLOWED_TYPE_NAMES.contains(&text) {
+					let err = guard
+						.err_builder(&format!(
+							"`{}` cannot be used as a class name because it is already reserved as a type",
+							text
+						))
+						.primary(id.range(&*guard), "");
 
-	if let Present(id) = id {
-		let text = guard.span_text(id.range(&*guard));
-		if guard.typescript() && DISALLOWED_TYPE_NAMES.contains(&text) {
-			let err = guard
-				.err_builder(&format!(
-					"`{}` cannot be used as a class name because it is already reserved as a type",
-					text
-				))
-				.primary(id.range(&*guard), "");
+					guard.error(err);
+				}
+			}
+			id if id.is_absent() && kind == ClassKind::Declaration && !guard.state.in_default => {
+				let err = guard
+					.err_builder("class declarations must have a name")
+					.primary(guard.cur_tok().range, "");
 
-			guard.error(err);
+				guard.error(err);
+			}
+			_ => uses_invalid_syntax = true,
 		}
-	} else if kind == ClassKind::Declaration && !guard.state.in_default {
-		let err = guard
-			.err_builder("class declarations must have a name")
-			.primary(guard.cur_tok().range, "");
-
-		guard.error(err);
 	}
 
 	if guard.at(T![<]) {
@@ -110,7 +118,12 @@ fn class(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
 	class_members(&mut *guard);
 	guard.expect_required(T!['}']);
 
-	m.complete(&mut *guard, kind.into())
+	let completed = m.complete(&mut *guard, kind.into());
+	if uses_invalid_syntax {
+		Invalid(completed.into())
+	} else {
+		Valid(completed.into())
+	}
 }
 
 fn implements_clause(p: &mut Parser) {

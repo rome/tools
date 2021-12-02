@@ -17,11 +17,12 @@ JsRoot {
                         id: JsObjectBinding {
                             l_curly_token: L_CURLY@7..9 "{" [] [Whitespace(" ")],
                             properties: [
-                                JsShorthandPropertyBinding {
-                                    identifier: JsIdentifierBinding {
-                                        name_token: IDENT@9..11 "a" [] [Whitespace(" ")],
-                                    },
-                                    init: missing (optional),
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            IDENT@9..11 "a" [] [Whitespace(" ")],
+                                        ),
+                                    ],
                                 },
                             ],
                             r_curly_token: R_CURLY@11..13 "}" [] [Whitespace(" ")],
@@ -66,11 +67,12 @@ JsRoot {
                         id: JsObjectBinding {
                             l_curly_token: L_CURLY@38..40 "{" [] [Whitespace(" ")],
                             properties: [
-                                JsShorthandPropertyBinding {
-                                    identifier: JsIdentifierBinding {
-                                        name_token: IDENT@40..42 "a" [] [Whitespace(" ")],
-                                    },
-                                    init: missing (optional),
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            IDENT@40..42 "a" [] [Whitespace(" ")],
+                                        ),
+                                    ],
                                 },
                             ],
                             r_curly_token: R_CURLY@42..44 "}" [] [Whitespace(" ")],
@@ -172,9 +174,8 @@ JsRoot {
             0: JS_OBJECT_BINDING@7..13
               0: L_CURLY@7..9 "{" [] [Whitespace(" ")]
               1: LIST@9..11
-                0: JS_SHORTHAND_PROPERTY_BINDING@9..11
-                  0: JS_IDENTIFIER_BINDING@9..11
-                    0: IDENT@9..11 "a" [] [Whitespace(" ")]
+                0: JS_UNKNOWN_BINDING@9..11
+                  0: IDENT@9..11 "a" [] [Whitespace(" ")]
                   1: (empty)
               2: R_CURLY@11..13 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@13..24
@@ -206,9 +207,8 @@ JsRoot {
             0: JS_OBJECT_BINDING@38..44
               0: L_CURLY@38..40 "{" [] [Whitespace(" ")]
               1: LIST@40..42
-                0: JS_SHORTHAND_PROPERTY_BINDING@40..42
-                  0: JS_IDENTIFIER_BINDING@40..42
-                    0: IDENT@40..42 "a" [] [Whitespace(" ")]
+                0: JS_UNKNOWN_BINDING@40..42
+                  0: IDENT@40..42 "a" [] [Whitespace(" ")]
                   1: (empty)
               2: R_CURLY@42..44 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@44..55

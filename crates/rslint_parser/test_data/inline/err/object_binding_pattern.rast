@@ -68,11 +68,12 @@ JsRoot {
                         id: JsObjectBinding {
                             l_curly_token: L_CURLY@35..37 "{" [] [Whitespace(" ")],
                             properties: [
-                                JsShorthandPropertyBinding {
-                                    identifier: JsIdentifierBinding {
-                                        name_token: IDENT@37..42 "eval" [] [Whitespace(" ")],
-                                    },
-                                    init: missing (optional),
+                                JsUnknownBinding {
+                                    items: [
+                                        Token(
+                                            IDENT@37..42 "eval" [] [Whitespace(" ")],
+                                        ),
+                                    ],
                                 },
                             ],
                             r_curly_token: R_CURLY@42..44 "}" [] [Whitespace(" ")],
@@ -235,9 +236,8 @@ JsRoot {
             0: JS_OBJECT_BINDING@35..44
               0: L_CURLY@35..37 "{" [] [Whitespace(" ")]
               1: LIST@37..42
-                0: JS_SHORTHAND_PROPERTY_BINDING@37..42
-                  0: JS_IDENTIFIER_BINDING@37..42
-                    0: IDENT@37..42 "eval" [] [Whitespace(" ")]
+                0: JS_UNKNOWN_BINDING@37..42
+                  0: IDENT@37..42 "eval" [] [Whitespace(" ")]
                   1: (empty)
               2: R_CURLY@42..44 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@44..61

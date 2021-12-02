@@ -3,8 +3,12 @@ JsRoot {
     directives: [],
     statements: [
         JsExpressionStatement {
-            expression: JsReferenceIdentifierExpression {
-                name_token: IDENT@0..5 "yield" [] [],
+            expression: JsUnknownExpression {
+                items: [
+                    Token(
+                        IDENT@0..5 "yield" [] [],
+                    ),
+                ],
             },
             semicolon_token: SEMICOLON@5..6 ";" [] [],
         },
@@ -19,8 +23,12 @@ JsRoot {
             parameter_list: JsParameterList {
                 l_paren_token: L_PAREN@26..27 "(" [] [],
                 parameters: [
-                    JsIdentifierBinding {
-                        name_token: IDENT@27..32 "await" [] [],
+                    JsUnknownBinding {
+                        items: [
+                            Token(
+                                IDENT@27..32 "await" [] [],
+                            ),
+                        ],
                     },
                 ],
                 r_paren_token: R_PAREN@32..34 ")" [] [Whitespace(" ")],
@@ -44,8 +52,12 @@ JsRoot {
             parameter_list: JsParameterList {
                 l_paren_token: L_PAREN@51..52 "(" [] [],
                 parameters: [
-                    JsIdentifierBinding {
-                        name_token: IDENT@52..57 "yield" [] [],
+                    JsUnknownBinding {
+                        items: [
+                            Token(
+                                IDENT@52..57 "yield" [] [],
+                            ),
+                        ],
                     },
                 ],
                 r_paren_token: R_PAREN@57..59 ")" [] [Whitespace(" ")],
@@ -66,7 +78,7 @@ JsRoot {
   1: LIST@0..0
   2: LIST@0..61
     0: JS_EXPRESSION_STATEMENT@0..6
-      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..5
+      0: JS_UNKNOWN_EXPRESSION@0..5
         0: IDENT@0..5 "yield" [] []
       1: SEMICOLON@5..6 ";" [] []
     1: JS_FUNCTION_DECLARATION@6..36
@@ -77,7 +89,7 @@ JsRoot {
       3: JS_PARAMETER_LIST@26..34
         0: L_PAREN@26..27 "(" [] []
         1: LIST@27..32
-          0: JS_IDENTIFIER_BINDING@27..32
+          0: JS_UNKNOWN_BINDING@27..32
             0: IDENT@27..32 "await" [] []
         2: R_PAREN@32..34 ")" [] [Whitespace(" ")]
       4: JS_FUNCTION_BODY@34..36
@@ -93,7 +105,7 @@ JsRoot {
       3: JS_PARAMETER_LIST@51..59
         0: L_PAREN@51..52 "(" [] []
         1: LIST@52..57
-          0: JS_IDENTIFIER_BINDING@52..57
+          0: JS_UNKNOWN_BINDING@52..57
             0: IDENT@52..57 "yield" [] []
         2: R_PAREN@57..59 ")" [] [Whitespace(" ")]
       4: JS_FUNCTION_BODY@59..61

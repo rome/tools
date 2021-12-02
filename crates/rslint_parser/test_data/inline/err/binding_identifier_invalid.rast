@@ -39,8 +39,12 @@ JsRoot {
                             kind_token: LET_KW@48..56 "let" [Whitespace("\n   ")] [Whitespace(" ")],
                             declarators: [
                                 JsVariableDeclarator {
-                                    id: JsIdentifierBinding {
-                                        name_token: IDENT@56..62 "yield" [] [Whitespace(" ")],
+                                    id: JsUnknownBinding {
+                                        items: [
+                                            Token(
+                                                IDENT@56..62 "yield" [] [Whitespace(" ")],
+                                            ),
+                                        ],
                                     },
                                     init: JsEqualValueClause {
                                         eq_token: EQ@62..64 "=" [] [Whitespace(" ")],
@@ -62,8 +66,12 @@ JsRoot {
                 kind_token: LET_KW@68..73 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: JsIdentifierBinding {
-                            name_token: IDENT@73..78 "eval" [] [Whitespace(" ")],
+                        id: JsUnknownBinding {
+                            items: [
+                                Token(
+                                    IDENT@73..78 "eval" [] [Whitespace(" ")],
+                                ),
+                            ],
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@78..80 "=" [] [Whitespace(" ")],
@@ -81,8 +89,12 @@ JsRoot {
                 kind_token: LET_KW@82..87 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: JsIdentifierBinding {
-                            name_token: IDENT@87..91 "let" [] [Whitespace(" ")],
+                        id: JsUnknownBinding {
+                            items: [
+                                Token(
+                                    IDENT@87..91 "let" [] [Whitespace(" ")],
+                                ),
+                            ],
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@91..93 "=" [] [Whitespace(" ")],
@@ -100,8 +112,12 @@ JsRoot {
                 kind_token: CONST_KW@95..102 "const" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: JsIdentifierBinding {
-                            name_token: IDENT@102..106 "let" [] [Whitespace(" ")],
+                        id: JsUnknownBinding {
+                            items: [
+                                Token(
+                                    IDENT@102..106 "let" [] [Whitespace(" ")],
+                                ),
+                            ],
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@106..108 "=" [] [Whitespace(" ")],
@@ -126,8 +142,12 @@ JsRoot {
                     },
                     COMMA@116..118 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
-                        id: JsIdentifierBinding {
-                            name_token: IDENT@118..119 "a" [] [],
+                        id: JsUnknownBinding {
+                            items: [
+                                Token(
+                                    IDENT@118..119 "a" [] [],
+                                ),
+                            ],
                         },
                         init: missing (optional),
                     },
@@ -159,7 +179,7 @@ JsRoot {
                 0: LET_KW@14..18 "let" [] [Whitespace(" ")]
                 1: LIST@18..27
                   0: JS_VARIABLE_DECLARATOR@18..27
-                    0: JS_IDENTIFIER_BINDING@18..24
+                    0: JS_UNKNOWN_BINDING@18..24
                       0: IDENT@18..24 "await" [] [Whitespace(" ")]
                     1: JS_EQUAL_VALUE_CLAUSE@24..27
                       0: EQ@24..26 "=" [] [Whitespace(" ")]
@@ -186,7 +206,7 @@ JsRoot {
               0: LET_KW@48..56 "let" [Whitespace("\n   ")] [Whitespace(" ")]
               1: LIST@56..65
                 0: JS_VARIABLE_DECLARATOR@56..65
-                  0: JS_IDENTIFIER_BINDING@56..62
+                  0: JS_UNKNOWN_BINDING@56..62
                     0: IDENT@56..62 "yield" [] [Whitespace(" ")]
                   1: JS_EQUAL_VALUE_CLAUSE@62..65
                     0: EQ@62..64 "=" [] [Whitespace(" ")]
@@ -199,7 +219,7 @@ JsRoot {
         0: LET_KW@68..73 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@73..81
           0: JS_VARIABLE_DECLARATOR@73..81
-            0: JS_IDENTIFIER_BINDING@73..78
+            0: JS_UNKNOWN_BINDING@73..78
               0: IDENT@73..78 "eval" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@78..81
               0: EQ@78..80 "=" [] [Whitespace(" ")]
@@ -211,7 +231,7 @@ JsRoot {
         0: LET_KW@82..87 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@87..94
           0: JS_VARIABLE_DECLARATOR@87..94
-            0: JS_IDENTIFIER_BINDING@87..91
+            0: JS_UNKNOWN_BINDING@87..91
               0: IDENT@87..91 "let" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@91..94
               0: EQ@91..93 "=" [] [Whitespace(" ")]
@@ -223,7 +243,7 @@ JsRoot {
         0: CONST_KW@95..102 "const" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@102..109
           0: JS_VARIABLE_DECLARATOR@102..109
-            0: JS_IDENTIFIER_BINDING@102..106
+            0: JS_UNKNOWN_BINDING@102..106
               0: IDENT@102..106 "let" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@106..109
               0: EQ@106..108 "=" [] [Whitespace(" ")]
@@ -240,7 +260,7 @@ JsRoot {
             1: (empty)
           1: COMMA@116..118 "," [] [Whitespace(" ")]
           2: JS_VARIABLE_DECLARATOR@118..119
-            0: JS_IDENTIFIER_BINDING@118..119
+            0: JS_UNKNOWN_BINDING@118..119
               0: IDENT@118..119 "a" [] []
             1: (empty)
       1: SEMICOLON@119..120 ";" [] []

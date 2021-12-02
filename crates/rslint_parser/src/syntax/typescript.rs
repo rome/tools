@@ -553,7 +553,11 @@ pub(crate) fn try_parse_index_signature(
 		return Err(m);
 	}
 
-	let pat_m = parse_identifier_binding(p).ok().unwrap().undo_completion(p);
+	let pat_m = parse_identifier_binding(p)
+		.or_invalid_to_unknown(p, JS_UNKNOWN_BINDING)
+		.ok()
+		.unwrap()
+		.undo_completion(p);
 
 	if p.expect_no_recover(T![:]).is_none() {
 		return Err(m);

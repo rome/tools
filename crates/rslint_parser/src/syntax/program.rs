@@ -9,6 +9,7 @@ use crate::syntax::class::parse_class_declaration;
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::directives;
+use crate::ConditionalParsedSyntax::{Invalid, Valid};
 use crate::ParsedSyntax::Present;
 use crate::{SyntaxKind::*, *};
 use syntax::stmt::FOLLOWS_LET;
@@ -221,7 +222,9 @@ fn imported_binding(p: &mut Parser) {
 		in_generator: false,
 		..p.state.clone()
 	});
-	parse_identifier_binding(p).ok();
+	parse_identifier_binding(p)
+		.or_invalid_to_unknown(p, JS_UNKNOWN_BINDING)
+		.ok();
 }
 
 pub fn export_decl(p: &mut Parser) -> CompletedMarker {
@@ -387,11 +390,19 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 				in_default: true,
 				..p.state.clone()
 			}));
-			if let Present(decl) = decl {
-				decl.undo_completion(p).abandon(p);
-			}
-			inner.complete(p, JS_CLASS_DECLARATION);
-			return m.complete(p, EXPORT_DEFAULT_DECL);
+
+			return match decl {
+				Valid(decl) => {
+					decl.abandon(p);
+					inner.complete(p, JS_CLASS_DECLARATION);
+					m.complete(p, EXPORT_DEFAULT_DECL)
+				}
+				Invalid(invalid) => {
+					invalid.abandon(p);
+					inner.complete(p, JS_CLASS_DECLARATION);
+					m.complete(p, JS_UNKNOWN_STATEMENT)
+				}
+			};
 		}
 
 		if p.cur_src() == "interface" {

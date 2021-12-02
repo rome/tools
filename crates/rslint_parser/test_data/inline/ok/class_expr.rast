@@ -12,13 +12,22 @@ JsRoot {
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
-                            expression: JsClassExpression {
-                                class_token: CLASS_KW@8..14 "class" [] [Whitespace(" ")],
-                                id: missing (optional),
-                                extends_clause: missing (optional),
-                                l_curly_token: L_CURLY@14..15 "{" [] [],
-                                members: [],
-                                r_curly_token: R_CURLY@15..16 "}" [] [],
+                            expression: JsUnknownExpression {
+                                items: [
+                                    Token(
+                                        CLASS_KW@8..14 "class" [] [Whitespace(" ")],
+                                    ),
+                                    Token(
+                                        L_CURLY@14..15 "{" [] [],
+                                    ),
+                                    Node(
+                                        2: LIST@15..15
+                                        ,
+                                    ),
+                                    Token(
+                                        R_CURLY@15..16 "}" [] [],
+                                    ),
+                                ],
                             },
                         },
                     },
@@ -97,7 +106,7 @@ JsRoot {
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@6..16
               0: EQ@6..8 "=" [] [Whitespace(" ")]
-              1: JS_CLASS_EXPRESSION@8..16
+              1: JS_UNKNOWN_EXPRESSION@8..16
                 0: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
                 1: L_CURLY@14..15 "{" [] []
                 2: LIST@15..15
@@ -137,7 +146,7 @@ JsRoot {
         0: JS_REFERENCE_IDENTIFIER_EXPRESSION@57..61
           0: IDENT@57..61 "foo" [Whitespace("\n")] []
         1: L_BRACK@61..62 "[" [] []
-        2: JS_CLASS_EXPRESSION@62..70
+        2: JS_UNKNOWN_EXPRESSION@62..70
           0: CLASS_KW@62..68 "class" [] [Whitespace(" ")]
           1: L_CURLY@68..69 "{" [] []
           2: LIST@69..69

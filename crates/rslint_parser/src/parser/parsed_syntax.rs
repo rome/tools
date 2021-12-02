@@ -152,6 +152,14 @@ impl ParsedSyntax {
 		}
 	}
 
+	/// Creates a new marker that precedes this syntax or starts a new marker
+	pub fn precede(self, p: &mut Parser) -> Marker {
+		match self {
+			Present(marker) => marker.precede(p),
+			Absent => p.start(),
+		}
+	}
+
 	/// Returns this Syntax if it is present in the source text or tries to recover the
 	/// parser if the syntax is absent. The recovery...
 	///
@@ -185,6 +193,13 @@ impl ParsedSyntax {
 					Err(recovery_error)
 				}
 			},
+		}
+	}
+
+	/// Undoes the completion and abandons the marker if the syntax is present.
+	pub fn abandon(self, p: &mut Parser) {
+		if let Present(marker) = self {
+			marker.undo_completion(p).abandon(p)
 		}
 	}
 
@@ -351,6 +366,19 @@ impl ConditionalParsedSyntax {
 			Invalid(unsupported) => unsupported.or_to_unknown(p, unknown_kind),
 		}
 	}
+
+	/// It returns a [CompletedMarker] from the current syntax
+	///
+	/// # Panics
+	///
+	///  Panics if the current syntax is [ConditionalParsedSyntax::Invalid] or [ConditionalParsedSyntax::Valid(Absent)]
+	pub fn unwrap(self) -> CompletedMarker {
+		if let Valid(syntax) = self {
+			syntax.unwrap()
+		} else {
+			panic!("Called `unwrap` on an `Invalid` syntax");
+		}
+	}
 }
 
 /// Parsed syntax that is invalid in this parsing context.
@@ -372,6 +400,21 @@ impl InvalidParsedSyntax {
 				unsupported.change_kind(p, unknown_kind);
 				Present(unsupported)
 			}
+		}
+	}
+
+	/// Undoes the completion and abandons the marker if the syntax is present.
+	pub fn abandon(self, p: &mut Parser) {
+		if let Present(unsupported) = self.0 {
+			unsupported.undo_completion(p).abandon(p)
+		}
+	}
+
+	/// Creates a new marker that precedes this syntax or starts a new marker
+	pub fn precede(self, p: &mut Parser) -> Marker {
+		match self.0 {
+			Present(marker) => marker.precede(p),
+			Absent => p.start(),
 		}
 	}
 }

@@ -519,6 +519,7 @@ impl<'t> Parser<'t> {
 
 /// A structure signifying the start of parsing of a syntax tree node
 #[derive(Debug)]
+#[must_use = "Marker must either be `completed` or `abandoned`"]
 pub struct Marker {
 	/// The index in the events list
 	pub pos: u32,
