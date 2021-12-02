@@ -355,13 +355,11 @@ JsRoot {
       1: FUNCTION_KW@134..143 "function" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@143..147
         0: IDENT@143..147 "test" [] []
-      3: (empty)
-      4: JS_PARAMETER_LIST@147..150
+      3: JS_PARAMETER_LIST@147..150
         0: L_PAREN@147..148 "(" [] []
         1: LIST@148..148
         2: R_PAREN@148..150 ")" [] [Whitespace(" ")]
-      5: (empty)
-      6: JS_FUNCTION_BODY@150..177
+      4: JS_FUNCTION_BODY@150..177
         0: L_CURLY@150..151 "{" [] []
         1: LIST@151..151
         2: LIST@151..175

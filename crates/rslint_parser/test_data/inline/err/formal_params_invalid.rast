@@ -46,9 +46,7 @@ JsRoot {
   2: LIST@0..20
     0: JS_FUNCTION_DECLARATION@0..20
       0: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
-      1: (empty)
-      2: (empty)
-      3: JS_PARAMETER_LIST@9..18
+      1: JS_PARAMETER_LIST@9..18
         0: L_PAREN@9..10 "(" [] []
         1: LIST@10..16
           0: JS_IDENTIFIER_BINDING@10..11
@@ -60,8 +58,7 @@ JsRoot {
           4: JS_IDENTIFIER_BINDING@15..16
             0: IDENT@15..16 "c" [] []
         2: R_PAREN@16..18 ")" [] [Whitespace(" ")]
-      4: (empty)
-      5: JS_FUNCTION_BODY@18..20
+      2: JS_FUNCTION_BODY@18..20
         0: L_CURLY@18..19 "{" [] []
         1: LIST@19..19
         2: LIST@19..19

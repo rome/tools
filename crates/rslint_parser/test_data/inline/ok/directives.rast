@@ -209,13 +209,11 @@ JsRoot {
       0: FUNCTION_KW@67..78 "function" [Whitespace("\n\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@78..82
         0: IDENT@78..82 "test" [] []
-      2: (empty)
-      3: JS_PARAMETER_LIST@82..85
+      2: JS_PARAMETER_LIST@82..85
         0: L_PAREN@82..83 "(" [] []
         1: LIST@83..83
         2: R_PAREN@83..85 ")" [] [Whitespace(" ")]
-      4: (empty)
-      5: JS_FUNCTION_BODY@85..152
+      3: JS_FUNCTION_BODY@85..152
         0: L_CURLY@85..86 "{" [] []
         1: LIST@86..101
           0: JS_DIRECTIVE@86..101
@@ -244,14 +242,11 @@ JsRoot {
         0: L_PAREN@152..155 "(" [Whitespace("\n\n")] []
         1: JS_FUNCTION_EXPRESSION@155..234
           0: FUNCTION_KW@155..164 "function" [] [Whitespace(" ")]
-          1: (empty)
-          2: (empty)
-          3: JS_PARAMETER_LIST@164..167
+          1: JS_PARAMETER_LIST@164..167
             0: L_PAREN@164..165 "(" [] []
             1: LIST@165..165
             2: R_PAREN@165..167 ")" [] [Whitespace(" ")]
-          4: (empty)
-          5: JS_FUNCTION_BODY@167..234
+          2: JS_FUNCTION_BODY@167..234
             0: L_CURLY@167..168 "{" [] []
             1: LIST@168..183
               0: JS_DIRECTIVE@168..183

@@ -193,13 +193,11 @@ JsRoot {
       1: STAR@40..41 "*" [] []
       2: JS_IDENTIFIER_BINDING@41..44
         0: IDENT@41..44 "foo" [] []
-      3: (empty)
-      4: JS_PARAMETER_LIST@44..47
+      3: JS_PARAMETER_LIST@44..47
         0: L_PAREN@44..45 "(" [] []
         1: LIST@45..45
         2: R_PAREN@45..47 ")" [] [Whitespace(" ")]
-      5: (empty)
-      6: JS_FUNCTION_BODY@47..68
+      4: JS_FUNCTION_BODY@47..68
         0: L_CURLY@47..48 "{" [] []
         1: LIST@48..48
         2: LIST@48..66

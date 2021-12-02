@@ -76,7 +76,6 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 
 	match id {
 		Absent => {
-			guard.missing();
 			if kind == JS_FUNCTION_DECLARATION {
 				guard.error(
 					guard.err_builder(
@@ -84,6 +83,10 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 					)
 						.primary(guard.cur_tok().range, "")
 				);
+			}
+
+			if TypeScript.is_supported(guard) {
+				guard.missing();
 			}
 		}
 		Present(Invalid(_)) => uses_invalid_syntax = true,
@@ -98,7 +101,7 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 
 	match type_parameters {
 		Present(Invalid(_)) => uses_invalid_syntax = true,
-		Absent => guard.missing(),
+		Absent if TypeScript.is_supported(guard) => guard.missing(),
 		_ => (),
 	}
 
@@ -112,7 +115,7 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 
 	match return_type {
 		Present(Invalid(_)) => uses_invalid_syntax = true,
-		Absent => guard.missing(),
+		Absent if TypeScript.is_supported(guard) => guard.missing(),
 		_ => (),
 	}
 

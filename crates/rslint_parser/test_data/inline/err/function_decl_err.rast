@@ -158,21 +158,21 @@ JsRoot {
                     ,
                 ),
                 Node(
-                    3: JS_PARAMETER_LIST@143..145
+                    2: JS_PARAMETER_LIST@143..145
                       0: L_PAREN@143..144 "(" [] []
                       1: LIST@144..144
                       2: R_PAREN@144..145 ")" [] []
                     ,
                 ),
                 Node(
-                    4: TS_TYPE_ANNOTATION@145..154
+                    3: TS_TYPE_ANNOTATION@145..154
                       0: COLON@145..147 ":" [] [Whitespace(" ")]
                       1: TS_NUMBER@147..154
                         0: IDENT@147..154 "number" [] [Whitespace(" ")]
                     ,
                 ),
                 Node(
-                    5: JS_FUNCTION_BODY@154..156
+                    4: JS_FUNCTION_BODY@154..156
                       0: L_CURLY@154..155 "{" [] []
                       1: LIST@155..155
                       2: LIST@155..155
@@ -248,14 +248,11 @@ JsRoot {
   2: LIST@0..202
     0: JS_FUNCTION_DECLARATION@0..13
       0: FUNCTION_KW@0..8 "function" [] []
-      1: (empty)
-      2: (empty)
-      3: JS_PARAMETER_LIST@8..11
+      1: JS_PARAMETER_LIST@8..11
         0: L_PAREN@8..9 "(" [] []
         1: LIST@9..9
         2: R_PAREN@9..11 ")" [] [Whitespace(" ")]
-      4: (empty)
-      5: JS_FUNCTION_BODY@11..13
+      2: JS_FUNCTION_BODY@11..13
         0: L_CURLY@11..12 "{" [] []
         1: LIST@12..12
         2: LIST@12..12
@@ -265,9 +262,7 @@ JsRoot {
       1: JS_IDENTIFIER_BINDING@23..27
         0: IDENT@23..27 "foo" [] [Whitespace(" ")]
       2: (empty)
-      3: (empty)
-      4: (empty)
-      5: JS_FUNCTION_BODY@27..29
+      3: JS_FUNCTION_BODY@27..29
         0: L_CURLY@27..28 "{" [] []
         1: LIST@28..28
         2: LIST@28..28
@@ -275,10 +270,7 @@ JsRoot {
     2: JS_FUNCTION_DECLARATION@29..41
       0: FUNCTION_KW@29..39 "function" [Whitespace("\n")] [Whitespace(" ")]
       1: (empty)
-      2: (empty)
-      3: (empty)
-      4: (empty)
-      5: JS_FUNCTION_BODY@39..41
+      2: JS_FUNCTION_BODY@39..41
         0: L_CURLY@39..40 "{" [] []
         1: LIST@40..40
         2: LIST@40..40
@@ -286,14 +278,11 @@ JsRoot {
     3: JS_FUNCTION_DECLARATION@41..57
       0: FUNCTION_KW@41..51 "function" [Whitespace("\n")] [Whitespace(" ")]
       1: STAR@51..52 "*" [] []
-      2: (empty)
-      3: (empty)
-      4: JS_PARAMETER_LIST@52..55
+      2: JS_PARAMETER_LIST@52..55
         0: L_PAREN@52..53 "(" [] []
         1: LIST@53..53
         2: R_PAREN@53..55 ")" [] [Whitespace(" ")]
-      5: (empty)
-      6: JS_FUNCTION_BODY@55..57
+      3: JS_FUNCTION_BODY@55..57
         0: L_CURLY@55..56 "{" [] []
         1: LIST@56..56
         2: LIST@56..56
@@ -301,14 +290,11 @@ JsRoot {
     4: JS_FUNCTION_DECLARATION@57..77
       0: ASYNC_KW@57..64 "async" [Whitespace("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@64..72 "function" [] []
-      2: (empty)
-      3: (empty)
-      4: JS_PARAMETER_LIST@72..75
+      2: JS_PARAMETER_LIST@72..75
         0: L_PAREN@72..73 "(" [] []
         1: LIST@73..73
         2: R_PAREN@73..75 ")" [] [Whitespace(" ")]
-      5: (empty)
-      6: JS_FUNCTION_BODY@75..77
+      3: JS_FUNCTION_BODY@75..77
         0: L_CURLY@75..76 "{" [] []
         1: LIST@76..76
         2: LIST@76..76
@@ -317,14 +303,11 @@ JsRoot {
       0: ASYNC_KW@77..84 "async" [Whitespace("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@84..93 "function" [] [Whitespace(" ")]
       2: STAR@93..94 "*" [] []
-      3: (empty)
-      4: (empty)
-      5: JS_PARAMETER_LIST@94..97
+      3: JS_PARAMETER_LIST@94..97
         0: L_PAREN@94..95 "(" [] []
         1: LIST@95..95
         2: R_PAREN@95..97 ")" [] [Whitespace(" ")]
-      6: (empty)
-      7: JS_FUNCTION_BODY@97..99
+      4: JS_FUNCTION_BODY@97..99
         0: L_CURLY@97..98 "{" [] []
         1: LIST@98..98
         2: LIST@98..98
@@ -334,13 +317,11 @@ JsRoot {
       1: STAR@109..110 "*" [] []
       2: JS_IDENTIFIER_BINDING@110..113
         0: IDENT@110..113 "foo" [] []
-      3: (empty)
-      4: JS_PARAMETER_LIST@113..116
+      3: JS_PARAMETER_LIST@113..116
         0: L_PAREN@113..114 "(" [] []
         1: LIST@114..114
         2: R_PAREN@114..116 ")" [] [Whitespace(" ")]
-      5: (empty)
-      6: JS_FUNCTION_BODY@116..118
+      4: JS_FUNCTION_BODY@116..118
         0: L_CURLY@116..117 "{" [] []
         1: LIST@117..117
         2: LIST@117..117
@@ -357,16 +338,15 @@ JsRoot {
       0: FUNCTION_KW@129..139 "function" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@139..143
         0: IDENT@139..143 "test" [] []
-      2: (empty)
-      3: JS_PARAMETER_LIST@143..145
+      2: JS_PARAMETER_LIST@143..145
         0: L_PAREN@143..144 "(" [] []
         1: LIST@144..144
         2: R_PAREN@144..145 ")" [] []
-      4: TS_TYPE_ANNOTATION@145..154
+      3: TS_TYPE_ANNOTATION@145..154
         0: COLON@145..147 ":" [] [Whitespace(" ")]
         1: TS_NUMBER@147..154
           0: IDENT@147..154 "number" [] [Whitespace(" ")]
-      5: JS_FUNCTION_BODY@154..156
+      4: JS_FUNCTION_BODY@154..156
         0: L_CURLY@154..155 "{" [] []
         1: LIST@155..155
         2: LIST@155..155
@@ -375,15 +355,13 @@ JsRoot {
       0: FUNCTION_KW@156..166 "function" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@166..169
         0: IDENT@166..169 "foo" [] []
-      2: (empty)
-      3: JS_PARAMETER_LIST@169..177
+      2: JS_PARAMETER_LIST@169..177
         0: L_PAREN@169..170 "(" [] []
         1: LIST@170..175
           0: JS_UNKNOWN_BINDING@170..175
             0: IDENT@170..175 "await" [] []
         2: R_PAREN@175..177 ")" [] [Whitespace(" ")]
-      4: (empty)
-      5: JS_FUNCTION_BODY@177..179
+      3: JS_FUNCTION_BODY@177..179
         0: L_CURLY@177..178 "{" [] []
         1: LIST@178..178
         2: LIST@178..178
@@ -392,15 +370,13 @@ JsRoot {
       0: FUNCTION_KW@179..189 "function" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@189..192
         0: IDENT@189..192 "foo" [] []
-      2: (empty)
-      3: JS_PARAMETER_LIST@192..200
+      2: JS_PARAMETER_LIST@192..200
         0: L_PAREN@192..193 "(" [] []
         1: LIST@193..198
           0: JS_UNKNOWN_BINDING@193..198
             0: IDENT@193..198 "yield" [] []
         2: R_PAREN@198..200 ")" [] [Whitespace(" ")]
-      4: (empty)
-      5: JS_FUNCTION_BODY@200..202
+      3: JS_FUNCTION_BODY@200..202
         0: L_CURLY@200..201 "{" [] []
         1: LIST@201..201
         2: LIST@201..201
