@@ -334,13 +334,13 @@ impl ConditionalParsedSyntax {
 	#[allow(unused)]
 	#[must_use]
 	pub fn is_valid(&self) -> bool {
-		matches!(self, Invalid(_))
+		matches!(self, Valid(_))
 	}
 
 	/// Returns `true` if this syntax is invalid in this parsing context.
 	#[allow(unused)]
 	pub fn is_invalid(&self) -> bool {
-		matches!(self, Valid(_))
+		matches!(self, Invalid(_))
 	}
 
 	/// Returns `true` if this syntax is present in the source text.
