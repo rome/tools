@@ -70,6 +70,14 @@ impl ParsedSyntax {
 		matches!(self, Absent)
 	}
 
+	/// Returns the kind of the syntax if it is present or [None] otherwise
+	pub fn kind(&self) -> Option<SyntaxKind> {
+		match self {
+			Absent => None,
+			Present(marker) => Some(marker.kind()),
+		}
+	}
+
 	/// It returns the syntax if present or adds a missing marker and a diagnostic at the current parser position.
 	pub fn or_missing_with_error<E>(
 		self,

@@ -193,7 +193,7 @@ error[SyntaxError]: rest element must be the last element
   ┌─ array_binding_rest_err.js:3:7
   │
 3 │ let [ ...rest, other_assignment ] = a;
-  │       ^^^^^^^ Move the rest element to the end
+  │       ^^^^^^^ Move the rest element to the end of the pattern, right before the closing ']'
 
 --
 let [ ... ] = a;

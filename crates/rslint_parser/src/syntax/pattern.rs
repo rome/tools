@@ -1,5 +1,5 @@
 ///! Provides traits for parsing pattern like nodes
-use crate::parser::{ParserProgress, RecoveryError};
+use crate::parser::ParserProgress;
 use crate::syntax::expr::{expr_or_assignment, EXPR_RECOVERY_SET};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::TokenSet;
@@ -199,18 +199,6 @@ pub(crate) trait ParseObjectPattern {
 					break;
 				}
 
-				match recover_result {
-					Err(RecoveryError::Eof) => break,
-					Err(RecoveryError::AlreadyRecovered) => {
-						guard.error(Self::expected_property_pattern_error(
-							guard,
-							guard.cur_tok().range,
-						));
-						break;
-					}
-					_ => {}
-				}
-
 				if !guard.at(T!['}']) {
 					guard.expect_required(T![,]);
 				}
@@ -298,7 +286,13 @@ fn validate_rest_pattern(
 	} else {
 		p.error(
 			p.err_builder("rest element must be the last element")
-				.primary(rest.range(p), "Move the rest element to the end"),
+				.primary(
+					rest.range(p),
+					&format!(
+					"Move the rest element to the end of the pattern, right before the closing {}",
+					end_token.to_string().unwrap(),
+				),
+				),
 		);
 	}
 

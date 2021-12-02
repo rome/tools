@@ -40,6 +40,13 @@ fn is_at_identifier_binding(p: &Parser) -> bool {
 // let let = 5;
 // const let = 5;
 // let a, a;
+/// Parses an identifier binding or returns an invalid syntax if the identifier isn't valid in this context.
+/// An identifier may not be valid if:
+/// * it is named "eval" or "arguments" inside of strict mode
+/// * it is named "let" inside of a "let" or "const" declaration
+/// * the same identifier is bound multiple times inside of a `let` or const` declaration
+/// * it is named "yield" inside of a generator function or in strict mode
+/// * it is named "await" inside of an async function
 pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ConditionalParsedSyntax {
 	let parsed = parse_identifier(p, JS_IDENTIFIER_BINDING);
 
@@ -263,6 +270,9 @@ impl ParseObjectPattern for ObjectBindingPattern {
 	// let { ...{a} } = b;
 	// let { ...rest, other_assignment } = a;
 	// let { ...rest, } = a;
+	// async function test() {
+	//   let { ...await } = a;
+	// }
 	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		if p.at(T![...]) {
 			let m = p.start();
@@ -270,12 +280,21 @@ impl ParseObjectPattern for ObjectBindingPattern {
 
 			let inner = parse_binding(p);
 
-			if let Present(mut inner) = inner {
+			if let Present(inner) = inner {
 				if inner.kind() != JS_IDENTIFIER_BINDING {
-					inner.change_kind(p, JS_UNKNOWN_BINDING);
-					p.error(p.err_builder("Expected identifier binding").primary(inner.range(p), "Object rest patterns must bind to an identifier, other patterns are not allowed."))
+					let inner_range = inner.range(p);
+					inner.undo_completion(p).abandon(p);
+					let completed = m.complete(p, JS_UNKNOWN_BINDING);
+
+					// Don't add multiple errors
+					if inner.kind() != JS_UNKNOWN_BINDING {
+						p.error(p.err_builder("Expected identifier binding").primary(inner_range, "Object rest patterns must bind to an identifier, other patterns are not allowed."));
+					}
+					return Present(completed);
 				}
 			}
+
+			inner.or_missing_with_error(p, expected_identifier);
 
 			Present(m.complete(p, JS_OBJECT_REST_BINDING))
 		} else {

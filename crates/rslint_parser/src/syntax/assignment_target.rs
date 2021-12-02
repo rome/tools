@@ -285,22 +285,26 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 		let m = p.start();
 		p.bump(T![...]);
 
-		let target = parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
-			.or_missing_with_error(p, expected_assignment_target);
-		if let Some(mut target) = target {
-			if matches!(
-				target.kind(),
-				JS_OBJECT_ASSIGNMENT_TARGET | JS_ARRAY_ASSIGNMENT_TARGET
-			) {
-				target.change_kind(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
-				p.error(
-					p.err_builder(
-						"object and array assignment targets are not allowed in rest patterns",
-					)
-					.primary(target.range(p), ""),
-				);
-			}
+		let target = parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional);
+
+		if matches!(
+			target.kind(),
+			Some(JS_OBJECT_ASSIGNMENT_TARGET | JS_ARRAY_ASSIGNMENT_TARGET)
+		) {
+			target.abandon(p);
+			let completed = m.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+
+			p.error(
+				p.err_builder(
+					"object and array assignment targets are not allowed in rest patterns",
+				)
+				.primary(completed.range(p), ""),
+			);
+
+			return Present(completed);
 		}
+
+		target.or_missing_with_error(p, expected_assignment_target);
 
 		Present(m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET))
 	}
