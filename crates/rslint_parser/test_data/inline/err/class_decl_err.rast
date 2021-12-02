@@ -135,31 +135,28 @@ JsRoot {
   2: LIST@0..136
     0: JS_CLASS_DECLARATION@0..8
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      1: (empty)
-      2: L_CURLY@6..7 "{" [] []
-      3: LIST@7..7
-      4: R_CURLY@7..8 "}" [] []
+      1: L_CURLY@6..7 "{" [] []
+      2: LIST@7..7
+      3: R_CURLY@7..8 "}" [] []
     1: JS_CLASS_DECLARATION@8..29
       0: CLASS_KW@8..15 "class" [Whitespace("\n")] [Whitespace(" ")]
-      1: (empty)
-      2: JS_EXTENDS_CLAUSE@15..27
+      1: JS_EXTENDS_CLAUSE@15..27
         0: EXTENDS_KW@15..23 "extends" [] [Whitespace(" ")]
         1: JS_REFERENCE_IDENTIFIER_EXPRESSION@23..27
           0: IDENT@23..27 "bar" [] [Whitespace(" ")]
-      3: L_CURLY@27..28 "{" [] []
-      4: LIST@28..28
-      5: R_CURLY@28..29 "}" [] []
+      2: L_CURLY@27..28 "{" [] []
+      3: LIST@28..28
+      4: R_CURLY@28..29 "}" [] []
     2: JS_CLASS_DECLARATION@29..73
       0: CLASS_KW@29..36 "class" [Whitespace("\n")] [Whitespace(" ")]
-      1: (empty)
-      2: JS_EXTENDS_CLAUSE@36..46
+      1: JS_EXTENDS_CLAUSE@36..46
         0: EXTENDS_KW@36..44 "extends" [] [Whitespace(" ")]
         1: JS_OBJECT_EXPRESSION@44..46
           0: L_CURLY@44..45 "{" [] []
           1: LIST@45..45
           2: R_CURLY@45..46 "}" [] []
-      3: (empty)
-      4: LIST@46..72
+      2: (empty)
+      3: LIST@46..72
         0: JS_PROPERTY_CLASS_MEMBER@46..52
           0: JS_LITERAL_MEMBER_NAME@46..52
             0: IDENT@46..52 "class" [Whitespace("\n")] []
@@ -183,7 +180,7 @@ JsRoot {
             2: R_CURLY@70..72 "}" [] [Whitespace(" ")]
           4: (empty)
           5: (empty)
-      5: R_CURLY@72..73 "}" [] []
+      4: R_CURLY@72..73 "}" [] []
     3: JS_CLASS_DECLARATION@73..108
       0: CLASS_KW@73..80 "class" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@80..82
