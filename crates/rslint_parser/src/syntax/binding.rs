@@ -67,7 +67,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax<Condition
 				.primary(identifier.range(p), "");
 			p.error(err);
 
-			return Present(Invalid(identifier.into()));
+			return Present(identifier).into_invalid();
 		}
 
 		if p.state.should_record_names {
@@ -79,7 +79,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax<Condition
 					.primary(identifier.range(p), "Rename the let variable here");
 
 				p.error(err);
-				return Present(Invalid(identifier.into()));
+				return Present(identifier).into_invalid();
 			}
 
 			if let Some(existing) = p.state.name_map.get(identifier_name) {
@@ -96,7 +96,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax<Condition
 						&format!("a second declaration of {} is not allowed", identifier_name),
 					);
 				p.error(err);
-				return Present(Invalid(identifier.into()));
+				return Present(identifier).into_invalid();
 			}
 
 			let identifier_name = String::from(identifier_name);
@@ -105,7 +105,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax<Condition
 				.insert(identifier_name, identifier.range(p).as_range());
 		}
 
-		Present(Valid(identifier.into()))
+		Present(identifier).into_valid()
 	} else {
 		parsed
 	}
@@ -264,10 +264,12 @@ impl ParseObjectPattern for ObjectBindingPattern {
 
 		parse_equal_value_clause(p).or_missing(p);
 
+		let property = Present(m.complete(p, kind));
+
 		if invalid_syntax {
-			Present(Invalid(m.complete(p, kind).into()))
+			property.into_invalid()
 		} else {
-			Present(Valid(m.complete(p, kind).into()))
+			property.into_valid()
 		}
 	}
 
@@ -300,13 +302,13 @@ impl ParseObjectPattern for ObjectBindingPattern {
 					if inner.kind() != JS_UNKNOWN_BINDING {
 						p.error(p.err_builder("Expected identifier binding").primary(inner_range, "Object rest patterns must bind to an identifier, other patterns are not allowed."));
 					}
-					return Present(Invalid(m.complete(p, JS_OBJECT_REST_BINDING).into()));
+					return Present(m.complete(p, JS_OBJECT_REST_BINDING)).into_invalid();
 				}
 			}
 
 			inner.or_missing_with_error(p, expected_identifier);
 
-			Present(Valid(m.complete(p, JS_OBJECT_REST_BINDING)))
+			Present(m.complete(p, JS_OBJECT_REST_BINDING)).into_valid()
 		} else {
 			Absent
 		}

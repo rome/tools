@@ -1,4 +1,3 @@
-use crate::parser::ConditionalSyntax::Valid;
 use crate::parser::ParsedSyntax;
 use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::decl::parse_parameter_list;
@@ -123,12 +122,12 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 		function_body(guard).or_missing_with_error(guard, js_parse_error::expected_function_body);
 	}
 
-	let function = m.complete(guard, kind);
+	let function = Present(m.complete(guard, kind));
 
 	if uses_invalid_syntax {
-		Present(Invalid(function.into()))
+		function.into_invalid()
 	} else {
-		Present(Valid(function))
+		function.into_valid()
 	}
 }
 

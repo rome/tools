@@ -222,7 +222,11 @@ impl ParsedSyntax<CompletedMarker> {
 	}
 
 	pub fn into_valid(self) -> ParsedSyntax<ConditionalSyntax> {
-		self.map(|marker| Valid(marker))
+		self.map(Valid)
+	}
+
+	pub fn into_invalid(self) -> ParsedSyntax<ConditionalSyntax> {
+		self.map(|marker| Invalid(marker.into()))
 	}
 
 	/// Restricts this parsed syntax to only be valid if the current parsing context supports the passed in language feature
@@ -245,12 +249,12 @@ impl ParsedSyntax<CompletedMarker> {
 		match self {
 			Present(marker) => {
 				if feature.is_supported(p) {
-					Present(Valid(marker.into()))
+					Present(marker).into_valid()
 				} else {
 					let diagnostic = error_builder(p, &marker);
 					p.error(diagnostic);
 
-					Present(Invalid(marker.into()))
+					Present(marker).into_invalid()
 				}
 			}
 			Absent => Absent,
@@ -273,9 +277,9 @@ impl ParsedSyntax<CompletedMarker> {
 		match self {
 			Present(marker) => {
 				if feature.is_supported(p) {
-					Present(Valid(marker))
+					Present(marker).into_valid()
 				} else {
-					Present(Invalid(marker.into()))
+					Present(marker).into_invalid()
 				}
 			}
 			Absent => Absent,
@@ -302,11 +306,11 @@ impl ParsedSyntax<CompletedMarker> {
 		match self {
 			Present(marker) => {
 				if feature.is_unsupported(p) {
-					Present(Valid(marker.into()))
+					Present(marker).into_valid()
 				} else {
 					let diagnostic = error_builder(p, &marker);
 					p.error(diagnostic);
-					Present(Invalid(InvalidParsedSyntax(marker)))
+					Present(marker).into_invalid()
 				}
 			}
 			Absent => Absent,
@@ -325,9 +329,9 @@ impl ParsedSyntax<CompletedMarker> {
 		match self {
 			Present(marker) => {
 				if feature.is_unsupported(p) {
-					Present(Valid(marker.into()))
+					Present(marker).into_valid()
 				} else {
-					Present(Invalid(marker.into()))
+					Present(marker).into_invalid()
 				}
 			}
 			Absent => Absent,

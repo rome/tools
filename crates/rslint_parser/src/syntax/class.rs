@@ -102,6 +102,7 @@ fn class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSyntax> {
 
 					guard.error(err);
 				}
+				guard.missing();
 			}
 		}
 	}
@@ -122,11 +123,11 @@ fn class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSyntax> {
 	class_members(&mut *guard);
 	guard.expect_required(T!['}']);
 
-	let completed = m.complete(&mut *guard, kind.into());
+	let result = Present(m.complete(&mut *guard, kind.into()));
 	if uses_invalid_syntax {
-		Present(Invalid(completed.into()))
+		result.into_invalid()
 	} else {
-		Present(Valid(completed.into()))
+		result.into_valid()
 	}
 }
 

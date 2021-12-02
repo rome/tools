@@ -191,12 +191,12 @@ fn parse_identifier_assignment_target(p: &mut Parser) -> ParsedSyntax<Conditiona
 
 			p.bump_remap(T![ident]);
 
-			let target = m.complete(p, JS_IDENTIFIER_ASSIGNMENT_TARGET);
+			let target = Present(m.complete(p, JS_IDENTIFIER_ASSIGNMENT_TARGET));
 
 			if valid {
-				Present(Valid(target))
+				target.into_valid()
 			} else {
-				Present(Invalid(target.into()))
+				target.into_invalid()
 			}
 		}
 		_ => Absent,
@@ -273,11 +273,13 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 
 		parse_equal_value_clause(p).or_missing(p);
 
-		Present(if valid {
-			Valid(m.complete(p, kind))
+		let completed = Present(m.complete(p, kind));
+
+		if valid {
+			completed.into_valid()
 		} else {
-			Invalid(m.complete(p, kind).into())
-		})
+			completed.into_invalid()
+		}
 	}
 
 	// test rest_property_assignment_target
@@ -318,14 +320,12 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 				.primary(completed.range(p), ""),
 			);
 
-			return Present(Invalid(completed.into()));
+			return Present(completed).into_invalid();
 		}
 
 		target.or_missing_with_error(p, expected_assignment_target);
 
-		Present(Valid(
-			m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET),
-		))
+		Present(m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET)).into_valid()
 	}
 }
 

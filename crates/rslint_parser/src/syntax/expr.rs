@@ -23,7 +23,7 @@ use crate::syntax::js_parse_error::{
 };
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::is_semi;
-use crate::ConditionalSyntax::{Invalid, Valid};
+use crate::ConditionalSyntax::Invalid;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
@@ -1120,13 +1120,13 @@ pub(crate) fn parse_identifier(
 			};
 
 			p.bump_remap(T![ident]);
-			let completed = m.complete(p, kind);
+			let identifier = Present(m.complete(p, kind));
 
 			if let Some(error) = error {
 				p.error(error);
-				Present(Invalid(completed.into()))
+				identifier.into_invalid()
 			} else {
-				Present(Valid(completed))
+				identifier.into_valid()
 			}
 		}
 		_ => Absent,

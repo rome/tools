@@ -99,9 +99,10 @@ JsRoot {
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_CLASS_EXPRESSION@8..16
                 0: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
-                1: L_CURLY@14..15 "{" [] []
-                2: LIST@15..15
-                3: R_CURLY@15..16 "}" [] []
+                1: (empty)
+                2: L_CURLY@14..15 "{" [] []
+                3: LIST@15..15
+                4: R_CURLY@15..16 "}" [] []
       1: SEMICOLON@16..17 ";" [] []
     1: JS_VARIABLE_DECLARATION_STATEMENT@17..57
       0: JS_VARIABLE_DECLARATION@17..57
@@ -139,9 +140,10 @@ JsRoot {
         1: L_BRACK@61..62 "[" [] []
         2: JS_CLASS_EXPRESSION@62..70
           0: CLASS_KW@62..68 "class" [] [Whitespace(" ")]
-          1: L_CURLY@68..69 "{" [] []
-          2: LIST@69..69
-          3: R_CURLY@69..70 "}" [] []
+          1: (empty)
+          2: L_CURLY@68..69 "{" [] []
+          3: LIST@69..69
+          4: R_CURLY@69..70 "}" [] []
         3: R_BRACK@70..71 "]" [] []
       1: (empty)
   3: EOF@71..72 "" [Whitespace("\n")] []

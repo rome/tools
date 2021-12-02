@@ -301,7 +301,7 @@ pub trait SyntaxFeature: Sized {
 				Present(syntax) => {
 					let diagnostic = error_builder(p, &syntax);
 					p.error(diagnostic);
-					Present(Invalid(syntax.into()))
+					Present(syntax).into_invalid()
 				}
 				_ => Absent,
 			}
