@@ -13,8 +13,12 @@ JsRoot {
             semicolon_token: SEMICOLON@5..6 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsReferenceIdentifierExpression {
-                name_token: IDENT@6..12 "await" [Whitespace("\n")] [],
+            expression: JsUnknownExpression {
+                items: [
+                    Token(
+                        IDENT@6..12 "await" [Whitespace("\n")] [],
+                    ),
+                ],
             },
             semicolon_token: SEMICOLON@12..13 ";" [] [],
         },
@@ -30,7 +34,7 @@ JsRoot {
         0: IDENT@0..5 "yield" [] []
       1: SEMICOLON@5..6 ";" [] []
     1: JS_EXPRESSION_STATEMENT@6..13
-      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@6..12
+      0: JS_UNKNOWN_EXPRESSION@6..12
         0: IDENT@6..12 "await" [Whitespace("\n")] []
       1: SEMICOLON@12..13 ";" [] []
   3: EOF@13..14 "" [Whitespace("\n")] []
@@ -39,6 +43,13 @@ error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode
   ┌─ identifier.js:1:1
   │
 1 │ yield;
+  │ ^^^^^
+
+--
+error[SyntaxError]: Illegal use of `await` as an identifier inside of a module
+  ┌─ identifier.js:2:1
+  │
+2 │ await;
   │ ^^^^^
 
 --

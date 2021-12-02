@@ -1092,10 +1092,10 @@ fn parse_reference_identifier_expression(p: &mut Parser) -> ParsedSyntax {
 //
 // test identifier
 // foo;
-// await;
 //
 // test_err identifier_err
 // yield;
+// await;
 // async function test(await) {}
 // function* test(yield) {}
 /// Parses an identifier if it is valid in this context or returns `Invalid` if the context isn't valid in this context.
@@ -1111,6 +1111,10 @@ pub(crate) fn parse_identifier(p: &mut Parser, kind: SyntaxKind) -> ConditionalP
 			let error = match name {
 				"await" if p.state.in_async => Some(
 					p.err_builder("Illegal use of `await` as an identifier in an async context")
+						.primary(p.cur_tok().range, ""),
+				),
+				"await" if p.syntax.file_kind == FileKind::Module => Some(
+					p.err_builder("Illegal use of `await` as an identifier inside of a module")
 						.primary(p.cur_tok().range, ""),
 				),
 				"yield" if p.state.in_generator => Some(

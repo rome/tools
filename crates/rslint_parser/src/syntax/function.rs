@@ -22,12 +22,15 @@ use std::collections::HashMap;
 // test function_decl
 // function foo() {}
 // function *foo() {}
-// function foo(await) {}
 // async function *foo() {}
 // async function foo() {}
 // function *foo() {
 //   yield foo;
 // }
+//
+// test function_declaration_script
+// // SCRIPT
+// function test(await) {}
 //
 // test_err function_decl_err
 // function() {}

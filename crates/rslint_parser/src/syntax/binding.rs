@@ -70,7 +70,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ConditionalParsedSynta
 		if p.state.should_record_names {
 			if identifier_name == "let" {
 				let err = p
-					.err_builder(
+					.err_builder(	
 						"`let` cannot be declared as a variable name inside of a let or const declaration",
 					)
 					.primary(identifier.range(p), "Rename the let variable here");
