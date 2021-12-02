@@ -1,6 +1,6 @@
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::{ParsedSyntax, ParserProgress};
+use crate::parser::{InvalidParsedSyntax, ParsedSyntax, ParserProgress};
 use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
 use crate::syntax::expr::expr_or_assignment;
@@ -98,7 +98,7 @@ fn class(p: &mut Parser, kind: ClassKind) -> ConditionalParsedSyntax {
 
 				guard.error(err);
 			}
-			id if id.is_present() => uses_invalid_syntax = true,
+			t if t.is_invalid() && t.is_present() => uses_invalid_syntax = true,
 			_ => {}
 		}
 	}
