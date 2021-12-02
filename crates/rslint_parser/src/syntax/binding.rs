@@ -40,6 +40,11 @@ fn is_at_identifier_binding(p: &Parser) -> bool {
 // let let = 5;
 // const let = 5;
 // let a, a;
+//
+// test_err binding_identifier_invalid_script
+// // SCRIPT
+// let let = 5;
+// const let = 5;
 /// Parses an identifier binding or returns an invalid syntax if the identifier isn't valid in this context.
 /// An identifier may not be valid if:
 /// * it is named "eval" or "arguments" inside of strict mode
