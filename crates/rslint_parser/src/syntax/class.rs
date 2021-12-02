@@ -12,11 +12,10 @@ use crate::syntax::typescript::{
 	abstract_readonly_modifiers, maybe_ts_type_annotation, try_parse_index_signature,
 	ts_heritage_clause, ts_modifier, ts_type_params, DISALLOWED_TYPE_NAMES,
 };
-use crate::ConditionalParsedSyntax::{Invalid, Valid};
+use crate::ConditionalSyntax::{Invalid, Valid};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-	CompletedMarker, ConditionalParsedSyntax, Event, Marker, Parser, ParserState, StrictMode,
-	TokenSet,
+	CompletedMarker, ConditionalSyntax, Event, Marker, Parser, ParserState, StrictMode, TokenSet,
 };
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::{SyntaxKind, T};
@@ -46,7 +45,7 @@ pub(super) fn class_expression(p: &mut Parser) -> CompletedMarker {
 ///
 /// A class can be invalid if
 /// * It uses an illegal identifier name
-pub(super) fn parse_class_declaration(p: &mut Parser) -> ConditionalParsedSyntax {
+pub(super) fn parse_class_declaration(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	// TODO:: to remove `Present` when this file is moved to use `ParsedSyntax`
 	class(p, ClassKind::Declaration)
 }
@@ -66,7 +65,7 @@ impl From<ClassKind> for SyntaxKind {
 	}
 }
 
-fn class(p: &mut Parser, kind: ClassKind) -> ConditionalParsedSyntax {
+fn class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSyntax> {
 	let m = p.start();
 	p.expect_required(T![class]);
 
@@ -81,7 +80,7 @@ fn class(p: &mut Parser, kind: ClassKind) -> ConditionalParsedSyntax {
 	// parse class id
 	if guard.cur_src() != "implements" {
 		match parse_identifier_binding(&mut *guard) {
-			Valid(Present(id)) => {
+			Present(Valid(id)) => {
 				let text = guard.span_text(id.range(&*guard));
 				if guard.typescript() && DISALLOWED_TYPE_NAMES.contains(&text) {
 					let err = guard
@@ -94,7 +93,8 @@ fn class(p: &mut Parser, kind: ClassKind) -> ConditionalParsedSyntax {
 					guard.error(err);
 				}
 			}
-			Valid(Absent) => {
+			Present(Invalid(_)) => uses_invalid_syntax = true,
+			Absent => {
 				if kind == ClassKind::Declaration && !guard.state.in_default {
 					let err = guard
 						.err_builder("class declarations must have a name")
@@ -103,7 +103,6 @@ fn class(p: &mut Parser, kind: ClassKind) -> ConditionalParsedSyntax {
 					guard.error(err);
 				}
 			}
-			Invalid(_) => uses_invalid_syntax = true,
 		}
 	}
 
@@ -125,9 +124,9 @@ fn class(p: &mut Parser, kind: ClassKind) -> ConditionalParsedSyntax {
 
 	let completed = m.complete(&mut *guard, kind.into());
 	if uses_invalid_syntax {
-		Invalid(completed.into())
+		Present(Invalid(completed.into()))
 	} else {
-		Valid(completed.into())
+		Present(Valid(completed.into()))
 	}
 }
 
@@ -721,7 +720,7 @@ fn optional_member_token(p: &mut Parser) -> Option<Range<usize>> {
 	}
 }
 
-pub(crate) fn parse_equal_value_clause(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_equal_value_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if p.at(T![=]) {
 		let m = p.start();
 		p.bump(T![=]);
@@ -815,7 +814,7 @@ fn constructor_parameter_list(p: &mut Parser) -> CompletedMarker {
 	m.complete(p, JS_CONSTRUCTOR_PARAMETER_LIST)
 }
 
-fn constructor_parameter(p: &mut Parser) -> ParsedSyntax {
+fn constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let modifiers_marker = p.start();
 	let has_accessibility = if ts_access_modifier(p).is_some() {
 		let range = p.cur_tok().range;
@@ -874,7 +873,7 @@ fn ts_access_modifier<'a>(p: &'a Parser) -> Option<&'a str> {
 }
 
 /// Parses a `JsAnyClassMemberName` and returns its completion marker
-fn class_member_name(p: &mut Parser) -> ParsedSyntax {
+fn class_member_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
 		T![#] => Present(private_class_member_name(p)),
 		T!['['] => parse_computed_member_name(p),

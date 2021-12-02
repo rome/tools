@@ -9,7 +9,7 @@ use crate::syntax::class::parse_class_declaration;
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::directives;
-use crate::ConditionalParsedSyntax::{Invalid, Valid};
+use crate::ConditionalSyntax::{Invalid, Valid};
 use crate::ParsedSyntax::Present;
 use crate::{SyntaxKind::*, *};
 use syntax::stmt::FOLLOWS_LET;
@@ -389,11 +389,12 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			let decl = parse_class_declaration(&mut *p.with_state(ParserState {
 				in_default: true,
 				..p.state.clone()
-			}));
+			}))
+			.unwrap();
 
 			return match decl {
 				Valid(decl) => {
-					decl.abandon(p);
+					decl.undo_completion(p).abandon(p);
 					inner.complete(p, JS_CLASS_DECLARATION);
 					m.complete(p, EXPORT_DEFAULT_DECL)
 				}
@@ -417,6 +418,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 				in_default: true,
 				..p.state.clone()
 			}))
+			.unwrap()
 			.unwrap();
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
@@ -437,14 +439,14 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	}
 
 	if !only_ty && p.at(T![class]) {
-		parse_class_declaration(p).unwrap();
+		parse_class_declaration(p).unwrap().unwrap();
 	} else if !only_ty
 		// function ...
 		&& (p.at(T![function])
 			||
 		is_at_async_function(p, LineBreak::DoCheck))
 	{
-		parse_function_declaration(p).unwrap();
+		parse_function_declaration(p).unwrap().unwrap();
 	} else if !only_ty && p.at(T![const]) && p.nth_src(1) == "enum" {
 		ts_enum(p).err_if_not_ts(p, "enums can only be used in TypeScript files");
 	} else if !only_ty

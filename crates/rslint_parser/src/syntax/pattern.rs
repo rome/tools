@@ -2,8 +2,8 @@
 use crate::parser::ParserProgress;
 use crate::syntax::expr::{expr_or_assignment, EXPR_RECOVERY_SET};
 use crate::ParsedSyntax::{Absent, Present};
-use crate::TokenSet;
-use crate::{CompletedMarker, ParseRecovery, ParsedSyntax, Parser, ParserState};
+use crate::{CompletedMarker, Invalid, ParseRecovery, ParsedSyntax, Parser, ParserState, Valid};
+use crate::{ConditionalSyntax, TokenSet};
 use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::{EOF, JS_ARRAY_HOLE, LIST};
 use rslint_syntax::{SyntaxKind, T};
@@ -19,10 +19,10 @@ pub(crate) trait ParseWithDefaultPattern {
 	fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic;
 
 	/// Parses a pattern (without its default value)
-	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker>;
 
 	/// Parses a pattern and wraps it in a pattern with default if a `=` token follows the pattern
-	fn parse_pattern_with_optional_default(&self, p: &mut Parser) -> ParsedSyntax {
+	fn parse_pattern_with_optional_default(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		let pattern = self.parse_pattern(p);
 
 		if p.at(T![=]) {
@@ -51,7 +51,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 	fn pattern_with_default(&self) -> P;
 
 	/// Tries to parse an array like pattern
-	fn parse_array_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+	fn parse_array_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		if !p.at(T!['[']) {
 			return Absent;
 		}
@@ -77,11 +77,10 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 				)
 				.enable_recovery_on_line_break();
 
-				let element = self.parse_any_array_element(guard, &recovery).or_recover(
-					guard,
-					&recovery,
-					Self::expected_element_error,
-				);
+				let element = self
+					.parse_any_array_element(guard, &recovery)
+					.or_invalid_to_unknown(guard, Self::unknown_pattern_kind())
+					.or_recover(guard, &recovery, Self::expected_element_error);
 
 				if element.is_err() {
 					// Failed to recover
@@ -101,30 +100,31 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 	}
 
 	/// Parses a single array element
-	fn parse_any_array_element(&self, p: &mut Parser, recovery: &ParseRecovery) -> ParsedSyntax {
+	fn parse_any_array_element(
+		&self,
+		p: &mut Parser,
+		recovery: &ParseRecovery,
+	) -> ParsedSyntax<ConditionalSyntax> {
 		match p.cur() {
-			T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
+			T![,] => Present(Valid(p.start().complete(p, JS_ARRAY_HOLE))),
 			T![...] => match self.parse_rest_pattern(p) {
-				Present(rest_pattern) => {
-					validate_rest_pattern(
-						p,
-						rest_pattern,
-						T![']'],
-						recovery,
-						Self::unknown_pattern_kind(),
-					);
-					Present(rest_pattern)
-				}
+				Present(rest_pattern) => Present(validate_rest_pattern(
+					p,
+					Valid(rest_pattern),
+					T![']'],
+					recovery,
+				)),
 				Absent => Absent,
 			},
 			_ => self
 				.pattern_with_default()
-				.parse_pattern_with_optional_default(p),
+				.parse_pattern_with_optional_default(p)
+				.into_valid(),
 		}
 	}
 
 	/// Parses a rest element
-	fn parse_rest_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+	fn parse_rest_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		if !p.at(T![...]) {
 			return Absent;
 		}
@@ -154,7 +154,7 @@ pub(crate) trait ParseObjectPattern {
 	fn expected_property_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic;
 
 	/// Parses the object pattern like node
-	fn parse_object_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+	fn parse_object_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		if !p.at(T!['{']) {
 			return Absent;
 		}
@@ -193,6 +193,7 @@ pub(crate) trait ParseObjectPattern {
 
 				let recover_result = self
 					.parse_any_property_pattern(guard, &recovery_set)
+					.or_invalid_to_unknown(guard, Self::unknown_pattern_kind())
 					.or_recover(guard, &recovery_set, Self::expected_property_pattern_error);
 
 				if recover_result.is_err() {
@@ -212,18 +213,15 @@ pub(crate) trait ParseObjectPattern {
 	}
 
 	/// Parses a single property
-	fn parse_any_property_pattern(&self, p: &mut Parser, recovery: &ParseRecovery) -> ParsedSyntax {
+	fn parse_any_property_pattern(
+		&self,
+		p: &mut Parser,
+		recovery: &ParseRecovery,
+	) -> ParsedSyntax<ConditionalSyntax> {
 		if p.at(T![...]) {
 			match self.parse_rest_property_pattern(p) {
 				Present(rest_pattern) => {
-					validate_rest_pattern(
-						p,
-						rest_pattern,
-						T!['}'],
-						recovery,
-						Self::unknown_pattern_kind(),
-					);
-					Present(rest_pattern)
+					Present(validate_rest_pattern(p, rest_pattern, T!['}'], recovery))
 				}
 				Absent => Absent,
 			}
@@ -233,10 +231,10 @@ pub(crate) trait ParseObjectPattern {
 	}
 
 	/// Parses a shorthand `{ a }` or a "named" `{ a: b }` property
-	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<ConditionalSyntax>;
 
 	/// Parses a rest property `{ ...a }`
-	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<ConditionalSyntax>;
 }
 
 /// Validates if the parsed completed rest marker is a valid rest element inside of a
@@ -248,53 +246,56 @@ pub(crate) trait ParseObjectPattern {
 /// * not have a default value
 fn validate_rest_pattern(
 	p: &mut Parser,
-	mut rest: CompletedMarker,
+	rest: ConditionalSyntax,
 	end_token: SyntaxKind,
 	recovery: &ParseRecovery,
-	unknown_kind: SyntaxKind,
-) {
+) -> ConditionalSyntax {
 	if p.at(end_token) {
-		return;
+		return rest;
 	}
 
-	if p.at(T![=]) {
-		let rest_range = rest.range(p);
-		let rest_marker = rest.undo_completion(p);
-		let default_start = p.cur_tok().range.start;
-		p.bump(T![=]);
+	if let Valid(rest) = rest {
+		if p.at(T![=]) {
+			let rest_range = rest.range(p);
+			let rest_marker = rest.undo_completion(p);
+			let default_start = p.cur_tok().range.start;
+			let kind = rest.kind();
+			p.bump(T![=]);
 
-		if let Ok(recovered) = recovery.recover(p) {
-			recovered.undo_completion(p).abandon(p); // append recovered content to parent
+			if let Ok(recovered) = recovery.recover(p) {
+				recovered.undo_completion(p).abandon(p); // append recovered content to parent
+			}
+			p.error(
+				p.err_builder("rest element cannot have a default")
+					.primary(
+						default_start..p.cur_tok().range.start,
+						"Remove the default value here",
+					)
+					.secondary(rest_range, "Rest element"),
+			);
+
+			Invalid(rest_marker.complete(p, kind).into())
+		} else if p.at(T![,]) && p.nth_at(1, end_token) {
+			p.error(
+				p.err_builder("rest element may not have a trailing comma")
+					.primary(p.cur_tok().range, "Remove the trailing comma here")
+					.secondary(rest.range(p), "Rest element"),
+			);
+			Invalid(rest.into())
+		} else {
+			p.error(
+				p.err_builder("rest element must be the last element")
+					.primary(
+						rest.range(p),
+						&format!(
+							"Move the rest element to the end of the pattern, right before the closing {}",
+							end_token.to_string().unwrap(),
+						),
+					),
+			);
+			Invalid(rest.into())
 		}
-		p.error(
-			p.err_builder("rest element cannot have a default")
-				.primary(
-					default_start..p.cur_tok().range.start,
-					"Remove the default value here",
-				)
-				.secondary(rest_range, "Rest element"),
-		);
-
-		rest_marker.complete(p, unknown_kind);
-		return;
-	} else if p.at(T![,]) && p.nth_at(1, end_token) {
-		p.error(
-			p.err_builder("rest element may not have a trailing comma")
-				.primary(p.cur_tok().range, "Remove the trailing comma here")
-				.secondary(rest.range(p), "Rest element"),
-		);
 	} else {
-		p.error(
-			p.err_builder("rest element must be the last element")
-				.primary(
-					rest.range(p),
-					&format!(
-					"Move the rest element to the end of the pattern, right before the closing {}",
-					end_token.to_string().unwrap(),
-				),
-				),
-		);
+		rest
 	}
-
-	rest.change_kind(p, unknown_kind);
 }

@@ -1,5 +1,5 @@
 use crate::parser::parse_recovery::RecoveryResult;
-use crate::parser::ConditionalParsedSyntax::{Invalid, Valid};
+use crate::parser::ConditionalSyntax::{Invalid, Valid};
 use crate::parser::ParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Marker, Parser, SyntaxFeature};
@@ -27,20 +27,20 @@ use std::ops::Range;
 /// This is a custom enum over using `Option` because [Absent] values must be handled by the caller.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[must_use = "this `ParsedSyntax` may be an `Absent` variant, which should be handled"]
-pub enum ParsedSyntax {
+pub enum ParsedSyntax<T> {
 	/// A syntax that isn't present in the source code. Used when a parse rule can't match the current
 	/// token of the parser.
 	Absent,
 
 	/// A completed syntax node with all or some of its children.
-	Present(CompletedMarker),
+	Present(T),
 }
 
-impl ParsedSyntax {
+impl<T> ParsedSyntax<T> {
 	/// Converts from `ParsedSyntax` to `Option<CompletedMarker>`.
 	///
 	/// Converts `self` into an `Option<CompletedMarker>`, consuming `self`
-	pub fn ok(self) -> Option<CompletedMarker> {
+	pub fn ok(self) -> Option<T> {
 		match self {
 			Absent => None,
 			Present(marker) => Some(marker),
@@ -48,9 +48,9 @@ impl ParsedSyntax {
 	}
 
 	/// Calls `op` if the syntax is present and otherwise returns [Absent]
-	pub fn and_then<F>(self, op: F) -> ParsedSyntax
+	pub fn and_then<F>(self, op: F) -> ParsedSyntax<T>
 	where
-		F: FnOnce(CompletedMarker) -> CompletedMarker,
+		F: FnOnce(T) -> T,
 	{
 		match self {
 			Absent => Absent,
@@ -70,6 +70,32 @@ impl ParsedSyntax {
 		matches!(self, Absent)
 	}
 
+	/// It returns a [CompletedMarker] from the current syntax
+	///
+	/// # Panics
+	///
+	///  Panics if the current syntax is [ParsedSyntax::Absent]
+	pub fn unwrap(self) -> T {
+		match self {
+			Absent => {
+				panic!("Called `unwrap` on an `Absent` syntax");
+			}
+			Present(marker) => marker,
+		}
+	}
+
+	pub fn map<F, U>(self, mapper: F) -> ParsedSyntax<U>
+	where
+		F: FnOnce(T) -> U,
+	{
+		match self {
+			Absent => Absent,
+			Present(element) => Present(mapper(element)),
+		}
+	}
+}
+
+impl ParsedSyntax<CompletedMarker> {
 	/// Returns the kind of the syntax if it is present or [None] otherwise
 	pub fn kind(&self) -> Option<SyntaxKind> {
 		match self {
@@ -106,20 +132,6 @@ impl ParsedSyntax {
 				p.missing();
 				None
 			}
-		}
-	}
-
-	/// It returns a [CompletedMarker] from the current syntax
-	///
-	/// # Panics
-	///
-	///  Panics if the current syntax is [ParsedSyntax::Absent]
-	pub fn unwrap(self) -> CompletedMarker {
-		match self {
-			Absent => {
-				panic!("Called `unwrap` on an `Absent` syntax");
-			}
-			Present(marker) => marker,
 		}
 	}
 
@@ -209,6 +221,10 @@ impl ParsedSyntax {
 		}
 	}
 
+	pub fn into_valid(self) -> ParsedSyntax<ConditionalSyntax> {
+		self.map(|marker| Valid(marker))
+	}
+
 	/// Restricts this parsed syntax to only be valid if the current parsing context supports the passed in language feature
 	/// and adds a diagnostic if not.
 	///
@@ -221,7 +237,7 @@ impl ParsedSyntax {
 		feature: &F,
 		p: &mut Parser,
 		error_builder: E,
-	) -> ConditionalParsedSyntax
+	) -> ParsedSyntax<ConditionalSyntax>
 	where
 		F: SyntaxFeature,
 		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
@@ -229,15 +245,15 @@ impl ParsedSyntax {
 		match self {
 			Present(marker) => {
 				if feature.is_supported(p) {
-					Valid(marker.into())
+					Present(Valid(marker.into()))
 				} else {
 					let diagnostic = error_builder(p, &marker);
 					p.error(diagnostic);
 
-					Invalid(marker.into())
+					Present(Invalid(marker.into()))
 				}
 			}
-			Absent => Valid(Absent),
+			Absent => Absent,
 		}
 	}
 
@@ -246,16 +262,23 @@ impl ParsedSyntax {
 	/// Returns [Valid] if the parsing context supports the passed syntax feature.
 	///
 	/// Returns [Invalid] if the parsing context doesn't support the passed syntax feature.
-	pub fn exclusive_for_no_error<F>(self, feature: &F, p: &Parser) -> ConditionalParsedSyntax
+	pub fn exclusive_for_no_error<F>(
+		self,
+		feature: &F,
+		p: &Parser,
+	) -> ParsedSyntax<ConditionalSyntax>
 	where
 		F: SyntaxFeature,
 	{
-		if feature.is_supported(p) {
-			Valid(self)
-		} else if let Present(syntax) = self {
-			Invalid(InvalidParsedSyntax(syntax))
-		} else {
-			Valid(Absent)
+		match self {
+			Present(marker) => {
+				if feature.is_supported(p) {
+					Present(Valid(marker))
+				} else {
+					Present(Invalid(marker.into()))
+				}
+			}
+			Absent => Absent,
 		}
 	}
 
@@ -271,7 +294,7 @@ impl ParsedSyntax {
 		feature: &F,
 		p: &mut Parser,
 		error_builder: E,
-	) -> ConditionalParsedSyntax
+	) -> ParsedSyntax<ConditionalSyntax>
 	where
 		F: SyntaxFeature,
 		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
@@ -279,14 +302,14 @@ impl ParsedSyntax {
 		match self {
 			Present(marker) => {
 				if feature.is_unsupported(p) {
-					Valid(marker.into())
+					Present(Valid(marker.into()))
 				} else {
 					let diagnostic = error_builder(p, &marker);
 					p.error(diagnostic);
-					Invalid(InvalidParsedSyntax(marker))
+					Present(Invalid(InvalidParsedSyntax(marker)))
 				}
 			}
-			Absent => Valid(Absent),
+			Absent => Absent,
 		}
 	}
 
@@ -295,30 +318,30 @@ impl ParsedSyntax {
 	/// Returns [Valid] if the parsing context doesn't support the passed syntax feature.
 	///
 	/// Returns [Invalid] if the parsing context does support the passed syntax feature.
-	pub fn excluding_no_error<F>(self, feature: &F, p: &Parser) -> ConditionalParsedSyntax
+	pub fn excluding_no_error<F>(self, feature: &F, p: &Parser) -> ParsedSyntax<ConditionalSyntax>
 	where
 		F: SyntaxFeature,
 	{
 		match self {
 			Present(marker) => {
 				if feature.is_unsupported(p) {
-					Valid(marker.into())
+					Present(Valid(marker.into()))
 				} else {
-					Invalid(marker.into())
+					Present(Invalid(marker.into()))
 				}
 			}
-			Absent => Valid(Absent),
+			Absent => Absent,
 		}
 	}
 }
 
-impl From<CompletedMarker> for ParsedSyntax {
+impl From<CompletedMarker> for ParsedSyntax<CompletedMarker> {
 	fn from(marker: CompletedMarker) -> Self {
 		Present(marker)
 	}
 }
 
-impl From<Option<CompletedMarker>> for ParsedSyntax {
+impl From<Option<CompletedMarker>> for ParsedSyntax<CompletedMarker> {
 	fn from(option: Option<CompletedMarker>) -> Self {
 		match option {
 			Some(completed) => Present(completed),
@@ -327,10 +350,9 @@ impl From<Option<CompletedMarker>> for ParsedSyntax {
 	}
 }
 
-/// A parsed syntax that is only valid in some parsing contexts but not in others.
-/// One use case for this is for syntax that is only valid if the parsing context supports
-/// a certain language feature, for example:
-///
+/// A parsed syntax that may be invalid because of a syntax error (the whole node, node one of its children).
+/// Examples
+/// * Parsing an identifier that turns out to not be valid. For example, `await` isn't a valid identifier in async functions or strict mode
 /// * Syntax that is only supported in strict or sloppy mode: for example, `with` statements
 /// * Syntax that is only supported in certain file types: Typescript, JSX, Import / Export statements
 /// * Syntax that is only available in certain language versions: experimental features, private field existence test
@@ -340,42 +362,40 @@ impl From<Option<CompletedMarker>> for ParsedSyntax {
 /// `Unknown*` node or one of its parent.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[must_use = "this `ConditionalParsedSyntax` may be an `Invalid` variant, which should be handled"]
-pub enum ConditionalParsedSyntax {
+pub enum ConditionalSyntax {
 	/// Syntax that is valid in the current parsing context
-	Valid(ParsedSyntax),
+	Valid(CompletedMarker),
 
 	/// Syntax that is invalid in the current parsing context because it doesn't support a specific
 	/// language feature.
 	Invalid(InvalidParsedSyntax),
 }
 
-impl ConditionalParsedSyntax {
+impl ConditionalSyntax {
 	/// Returns `true` if this syntax is valid in this parsing context.
-	#[allow(unused)]
 	#[must_use]
 	pub fn is_valid(&self) -> bool {
 		matches!(self, Valid(_))
 	}
 
 	/// Returns `true` if this syntax is invalid in this parsing context.
-	#[allow(unused)]
 	pub fn is_invalid(&self) -> bool {
 		matches!(self, Invalid(_))
 	}
 
-	/// Returns `true` if this syntax is present in the source text regardless if it's valid or not
-	#[must_use]
-	pub fn is_present(&self) -> bool {
-		matches!(self, Valid(Present(_)) | Invalid(_))
-	}
-
-	/// Returns `true` if this syntax is absent from the source text.
-	pub fn is_absent(&self) -> bool {
-		matches!(self, Valid(Absent))
+	pub fn completed_marker(&self) -> &CompletedMarker {
+		match self {
+			Valid(marker) => marker,
+			Invalid(syntax) => &syntax.0,
+		}
 	}
 
 	/// Converts this into a parsed syntax by wrapping any present invalid syntax in an unknown node.
-	pub fn or_invalid_to_unknown(self, p: &mut Parser, unknown_kind: SyntaxKind) -> ParsedSyntax {
+	pub fn or_invalid_to_unknown(
+		self,
+		p: &mut Parser,
+		unknown_kind: SyntaxKind,
+	) -> CompletedMarker {
 		match self {
 			Valid(parsed) => parsed,
 			Invalid(unsupported) => unsupported.or_to_unknown(p, unknown_kind),
@@ -386,12 +406,31 @@ impl ConditionalParsedSyntax {
 	///
 	/// # Panics
 	///
-	///  Panics if the current syntax is [ConditionalParsedSyntax::Invalid] or [ConditionalParsedSyntax::Valid(Absent)]
+	///  Panics if the current syntax is [ConditionalParsedSyntax::Invalid]
 	pub fn unwrap(self) -> CompletedMarker {
 		if let Valid(syntax) = self {
-			syntax.unwrap()
+			syntax
 		} else {
 			panic!("Called `unwrap` on an `Invalid` syntax");
+		}
+	}
+}
+
+impl From<ConditionalSyntax> for ParsedSyntax<ConditionalSyntax> {
+	fn from(syntax: ConditionalSyntax) -> Self {
+		Present(syntax)
+	}
+}
+
+impl ParsedSyntax<ConditionalSyntax> {
+	pub fn or_invalid_to_unknown(
+		self,
+		p: &mut Parser,
+		unknown_kind: SyntaxKind,
+	) -> ParsedSyntax<CompletedMarker> {
+		match self {
+			Absent => Absent,
+			Present(syntax) => Present(syntax.or_invalid_to_unknown(p, unknown_kind)),
 		}
 	}
 }
@@ -406,11 +445,10 @@ impl InvalidParsedSyntax {
 		Self(syntax)
 	}
 
-	/// Converts this into a parsed syntax by wrapping any present invalid syntax in an unknown node.
-	/// Is a no-op if the syntax is absent in the source text.
-	pub fn or_to_unknown(mut self, p: &mut Parser, unknown_kind: SyntaxKind) -> ParsedSyntax {
+	/// Converts this into a completed marker by changing the node kind to the passed in `unknown_kind`
+	pub fn or_to_unknown(mut self, p: &mut Parser, unknown_kind: SyntaxKind) -> CompletedMarker {
 		self.0.change_kind(p, unknown_kind);
-		Present(self.0)
+		self.0
 	}
 
 	/// Undoes the completion and abandons the marker if the syntax is present.

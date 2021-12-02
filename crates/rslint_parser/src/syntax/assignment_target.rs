@@ -52,7 +52,7 @@ pub(crate) fn expression_to_assignment_target(
 pub(crate) fn parse_assignment_target(
 	p: &mut Parser,
 	expression_kind: SimpleAssignmentTargetExprKind,
-) -> ParsedSyntax {
+) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
 		T!['['] => ArrayAssignmentTarget.parse_array_pattern(p),
 		T!['{'] if p.state.allow_object_expr => ObjectAssignmentTarget.parse_object_pattern(p),
@@ -87,7 +87,7 @@ pub(crate) enum SimpleAssignmentTargetExprKind {
 pub(crate) fn parse_simple_assignment_target(
 	p: &mut Parser,
 	expr_kind: SimpleAssignmentTargetExprKind,
-) -> ParsedSyntax {
+) -> ParsedSyntax<CompletedMarker> {
 	let checkpoint = p.checkpoint();
 
 	// TODO remove the rewind inside of the error handle once the `unary_expr` returns a ParsedSyntax
@@ -120,7 +120,7 @@ impl ParseWithDefaultPattern for AssignmentTargetWithDefault {
 	}
 
 	#[inline]
-	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
 	}
 }
@@ -167,7 +167,7 @@ impl ParseArrayPattern<AssignmentTargetWithDefault> for ArrayAssignmentTarget {
 	}
 }
 
-fn parse_identifier_assignment_target(p: &mut Parser) -> ParsedSyntax {
+fn parse_identifier_assignment_target(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	match p.cur() {
 		T![yield] | T![await] | T![ident] => {
 			let m = p.start();
@@ -191,10 +191,12 @@ fn parse_identifier_assignment_target(p: &mut Parser) -> ParsedSyntax {
 
 			p.bump_remap(T![ident]);
 
+			let target = m.complete(p, JS_IDENTIFIER_ASSIGNMENT_TARGET);
+
 			if valid {
-				Present(m.complete(p, JS_IDENTIFIER_ASSIGNMENT_TARGET))
+				Present(Valid(target))
 			} else {
-				Present(m.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET))
+				Present(Invalid(target.into()))
 			}
 		}
 		_ => Absent,
@@ -238,7 +240,7 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 	// ({:="test"} = {});
 	// ({:=} = {});
 	// ({ a b } = {});
-	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		if !is_at_reference_identifier_member(p)
 			&& !p.at_ts(token_set![T![:], T![=], T![ident], T![await], T![yield]])
 		{
@@ -246,6 +248,7 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 		}
 
 		let m = p.start();
+		let mut valid = true;
 
 		let kind = if p.at(T![:]) || p.nth_at(1, T![:]) {
 			parse_reference_identifier_member(p).or_missing_with_error(p, expected_identifier);
@@ -254,13 +257,27 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 				.or_missing_with_error(p, expected_assignment_target);
 			JS_OBJECT_PROPERTY_ASSIGNMENT_TARGET
 		} else {
-			parse_identifier_assignment_target(p).or_missing_with_error(p, expected_identifier);
+			match parse_identifier_assignment_target(p) {
+				Present(Invalid(identifier)) => {
+					valid = false;
+					identifier.abandon(p);
+				}
+				Absent => {
+					p.missing();
+					p.error(expected_identifier(p, p.cur_tok().range))
+				}
+				_ => {}
+			}
 			JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET
 		};
 
 		parse_equal_value_clause(p).or_missing(p);
 
-		Present(m.complete(p, kind))
+		Present(if valid {
+			Valid(m.complete(p, kind))
+		} else {
+			Invalid(m.complete(p, kind).into())
+		})
 	}
 
 	// test rest_property_assignment_target
@@ -277,7 +294,7 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 	// ({ ...{a} } = b);
 	// ({ ...rest, other_assignment } = a);
 	// ({ ...rest, } = a);
-	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		if !p.at(T![...]) {
 			return Absent;
 		}
@@ -292,7 +309,7 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 			Some(JS_OBJECT_ASSIGNMENT_TARGET | JS_ARRAY_ASSIGNMENT_TARGET)
 		) {
 			target.abandon(p);
-			let completed = m.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+			let completed = m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET);
 
 			p.error(
 				p.err_builder(
@@ -301,12 +318,14 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 				.primary(completed.range(p), ""),
 			);
 
-			return Present(completed);
+			return Present(Invalid(completed.into()));
 		}
 
 		target.or_missing_with_error(p, expected_assignment_target);
 
-		Present(m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET))
+		Present(Valid(
+			m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET),
+		))
 	}
 }
 
@@ -314,7 +333,7 @@ fn try_expression_to_simple_assignment_target(
 	p: &mut Parser,
 	mut target: CompletedMarker,
 	checkpoint: Checkpoint,
-) -> ParsedSyntax {
+) -> ParsedSyntax<CompletedMarker> {
 	if target.kind() == JS_PARENTHESIZED_EXPRESSION {
 		// Special treatment for parenthesized expressions because they can be nested and an error
 		// should only cover the sub-expressions that are indeed invalid assignment targets.
@@ -350,7 +369,7 @@ fn try_expression_to_simple_assignment_target(
 
 			// You're wondering why this is OK? The reason is, that there's a valid outermost parenthesized
 			// assignment target. The problem is with one of the inner assignment targets and this is why we
-			// reparse it to add the necessariy diagnostics
+			// reparse it to add the necessary diagnostics
 			Present(re_parse_parenthesized_expression_as_assignment_target(p))
 		}
 	} else if let Some(assignment_target_kind) =
