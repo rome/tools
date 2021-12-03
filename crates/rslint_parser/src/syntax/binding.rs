@@ -6,13 +6,13 @@ use crate::syntax::js_parse_error::{
 };
 use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
-use crate::ConditionalParsedSyntax::{Invalid, Valid};
+use crate::ConditionalSyntax::{Invalid, Valid};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
 use rslint_errors::Span;
 
-pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
 		T!['['] => ArrayBinding.parse_array_pattern(p),
 		T!['{'] if p.state.allow_object_expr => ObjectBindingPattern.parse_object_pattern(p),
@@ -23,7 +23,7 @@ pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax {
 	}
 }
 
-pub(crate) fn parse_binding_with_optional_default(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_binding_with_optional_default(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	BindingWithDefault.parse_pattern_with_optional_default(p)
 }
 
@@ -52,10 +52,10 @@ fn is_at_identifier_binding(p: &Parser) -> bool {
 /// * the same identifier is bound multiple times inside of a `let` or const` declaration
 /// * it is named "yield" inside of a generator function or in strict mode
 /// * it is named "await" inside of an async function
-pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ConditionalParsedSyntax {
+pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	let parsed = parse_identifier(p, JS_IDENTIFIER_BINDING);
 
-	if let Valid(Present(identifier)) = parsed {
+	if let Present(Valid(identifier)) = parsed {
 		let identifier_name = identifier.text(p);
 
 		if StrictMode.is_supported(p) && matches!(identifier_name, "eval" | "arguments") {
@@ -67,7 +67,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ConditionalParsedSynta
 				.primary(identifier.range(p), "");
 			p.error(err);
 
-			return Invalid(identifier.into());
+			return Present(identifier).into_invalid();
 		}
 
 		if p.state.should_record_names {
@@ -79,7 +79,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ConditionalParsedSynta
 					.primary(identifier.range(p), "Rename the let variable here");
 
 				p.error(err);
-				return Invalid(identifier.into());
+				return Present(identifier).into_invalid();
 			}
 
 			if let Some(existing) = p.state.name_map.get(identifier_name) {
@@ -96,7 +96,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ConditionalParsedSynta
 						&format!("a second declaration of {} is not allowed", identifier_name),
 					);
 				p.error(err);
-				return Invalid(identifier.into());
+				return Present(identifier).into_invalid();
 			}
 
 			let identifier_name = String::from(identifier_name);
@@ -105,7 +105,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ConditionalParsedSynta
 				.insert(identifier_name, identifier.range(p).as_range());
 		}
 
-		Valid(identifier.into())
+		Present(identifier).into_valid()
 	} else {
 		parsed
 	}
@@ -125,7 +125,7 @@ impl ParseWithDefaultPattern for BindingWithDefault {
 	}
 
 	#[inline]
-	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		parse_binding(p)
 	}
 }
@@ -231,24 +231,27 @@ impl ParseObjectPattern for ObjectBindingPattern {
 	// let { a b } = c
 	// let { = "test" } = c
 	// let { , a } = c
-	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		if !is_at_object_member_name(p) && !p.at_ts(token_set![T![:], T![=]]) {
 			return Absent;
 		}
 
 		let m = p.start();
+		let mut invalid_syntax = false;
 
 		let kind = if p.at(T![=]) || (is_at_identifier_binding(p) && !p.nth_at(1, T![:])) {
 			match parse_identifier_binding(p) {
-				Valid(identifier) => {
-					identifier.or_missing_with_error(p, expected_identifier);
-					JS_SHORTHAND_PROPERTY_BINDING
-				}
-				Invalid(identifier) => {
+				Present(Invalid(identifier)) => {
 					identifier.abandon(p);
-					JS_UNKNOWN_BINDING
+					invalid_syntax = true;
 				}
-			}
+				Absent => {
+					p.error(expected_identifier(p, p.cur_tok().range));
+					p.missing();
+				}
+				_ => (),
+			};
+			JS_SHORTHAND_PROPERTY_BINDING
 		} else {
 			parse_object_member_name(p).or_missing_with_error(p, expected_object_member_name);
 			if p.expect_required(T![:]) {
@@ -260,7 +263,14 @@ impl ParseObjectPattern for ObjectBindingPattern {
 		};
 
 		parse_equal_value_clause(p).or_missing(p);
-		Present(m.complete(p, kind))
+
+		let property = Present(m.complete(p, kind));
+
+		if invalid_syntax {
+			property.into_invalid()
+		} else {
+			property.into_valid()
+		}
 	}
 
 	// test rest_property_binding
@@ -276,7 +286,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
 	// async function test() {
 	//   let { ...await } = a;
 	// }
-	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		if p.at(T![...]) {
 			let m = p.start();
 			p.bump(T![...]);
@@ -287,19 +297,18 @@ impl ParseObjectPattern for ObjectBindingPattern {
 				if inner.kind() != JS_IDENTIFIER_BINDING {
 					let inner_range = inner.range(p);
 					inner.undo_completion(p).abandon(p);
-					let completed = m.complete(p, JS_UNKNOWN_BINDING);
 
 					// Don't add multiple errors
 					if inner.kind() != JS_UNKNOWN_BINDING {
 						p.error(p.err_builder("Expected identifier binding").primary(inner_range, "Object rest patterns must bind to an identifier, other patterns are not allowed."));
 					}
-					return Present(completed);
+					return Present(m.complete(p, JS_OBJECT_REST_BINDING)).into_invalid();
 				}
 			}
 
 			inner.or_missing_with_error(p, expected_identifier);
 
-			Present(m.complete(p, JS_OBJECT_REST_BINDING))
+			Present(m.complete(p, JS_OBJECT_REST_BINDING)).into_valid()
 		} else {
 			Absent
 		}

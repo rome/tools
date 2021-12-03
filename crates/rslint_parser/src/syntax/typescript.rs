@@ -150,11 +150,14 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 		..p.state.clone()
 	});
 	Some(match p.nth(1) {
-		T![function] => parse_function_declaration(p).unwrap(),
+		T![function] => parse_function_declaration(p)
+			.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
+			.unwrap(),
 		T![class] => {
 			let m = p.start();
 			p.bump_remap(T![declare]);
 			parse_class_declaration(p)
+				.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
 				.unwrap()
 				.undo_completion(p)
 				.abandon(p);
@@ -224,6 +227,7 @@ pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 			return None;
 		}
 		parse_class_declaration(p)
+			.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
 			.unwrap()
 			.undo_completion(p)
 			.abandon(p);

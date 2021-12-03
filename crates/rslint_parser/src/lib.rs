@@ -99,7 +99,9 @@ pub use rslint_syntax::*;
 /// It also includes labels and possibly notes
 pub type ParserError = rslint_errors::Diagnostic;
 
-use crate::parser::{ConditionalParsedSyntax, ParsedSyntax};
+use crate::parser::{ConditionalSyntax, ParsedSyntax};
+use crate::ConditionalSyntax::{Invalid, Valid};
+use crate::ParsedSyntax::{Absent, Present};
 use rslint_errors::Diagnostic;
 use std::ops::Range;
 
@@ -261,30 +263,73 @@ pub trait SyntaxFeature: Sized {
 	/// Creates a syntax that is only valid if this syntax feature is supported in the current
 	/// parsing context, adds a diagnostic if not.
 	///
-	/// Returns [Valid] if this syntax feature is supported.
+	/// Returns [Present(Valid)] if this syntax feature is supported and the `syntax` is [Present]
 	///
-	/// Returns [Invalid], creates a diagnostic with the passed in error builder,
-	/// and adds it to the parsing diagnostics if this syntax feature isn't supported.
+	/// Returns [Present(Invalid)], creates a diagnostic with the passed in error builder,
+	/// and adds it to the parsing diagnostics if the syntax is [Present] and the `syntax` feature isn't supported
+	///
+	/// Returns [Absent] if the `syntax` is [Absent]
 	fn exclusive_syntax<S, E>(
 		&self,
 		p: &mut Parser,
 		syntax: S,
 		error_builder: E,
-	) -> ConditionalParsedSyntax
+	) -> ParsedSyntax<ConditionalSyntax>
 	where
-		S: Into<ParsedSyntax>,
+		S: Into<ParsedSyntax<CompletedMarker>>,
 		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
 	{
 		syntax.into().exclusive_for(self, p, error_builder)
 	}
 
+	/// Parses a syntax that is only valid if this syntax feature is supported in the current parsing context
+	/// and ensures that any errors added while parsing the syntax are reverted if the syntax is not supported.
+	///
+	/// Returns [Present(Valid)] if this syntax feature is supported and the `syntax` is [Present]
+	///
+	/// Returns [Present(Invalid)], creates a diagnostic with the passed in error builder,
+	/// and adds it to the parsing diagnostics if the syntax is [Present] and the `syntax` feature isn't supported
+	///
+	/// Returns [Absent] if the `syntax` is [Absent]
+	fn parse_exclusive_syntax<P, E>(
+		&self,
+		p: &mut Parser,
+		parse: P,
+		error_builder: E,
+	) -> ParsedSyntax<ConditionalSyntax>
+	where
+		P: FnOnce(&mut Parser) -> ParsedSyntax<CompletedMarker>,
+		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+	{
+		if self.is_supported(p) {
+			parse(p).into_valid()
+		} else {
+			let diagnostics_checkpoint = p.errors.len();
+			let syntax = parse(p);
+			p.errors.truncate(diagnostics_checkpoint);
+
+			match syntax {
+				Present(syntax) => {
+					let diagnostic = error_builder(p, &syntax);
+					p.error(diagnostic);
+					Present(syntax).into_invalid()
+				}
+				_ => Absent,
+			}
+		}
+	}
+
 	/// Creates a syntax that is only valid if this syntax feature is supported in the current
 	/// parsing context.
 	///
-	/// Returns [Valid] if this syntax feature is supported and [Invalid] if this syntax isn't supported.
-	fn exclusive_syntax_no_error<S>(&self, p: &Parser, syntax: S) -> ConditionalParsedSyntax
+	/// Returns [Present(Valid)] if this syntax feature is supported and the `syntax` is [Present]
+	///
+	/// Returns [Present(Invalid)] if the syntax is [Present] and the `syntax` feature isn't supported
+	///
+	/// Returns [Absent] if the `syntax` is [Absent]
+	fn exclusive_syntax_no_error<S>(&self, p: &Parser, syntax: S) -> ParsedSyntax<ConditionalSyntax>
 	where
-		S: Into<ParsedSyntax>,
+		S: Into<ParsedSyntax<CompletedMarker>>,
 	{
 		syntax.into().exclusive_for_no_error(self, p)
 	}
@@ -292,18 +337,21 @@ pub trait SyntaxFeature: Sized {
 	/// Creates a syntax that is only valid if the current parsing context doesn't support this syntax feature,
 	/// and adds a diagnostic if it does.
 	///
-	/// Returns [Valid] if the parsing context doesn't support this syntax feature
+	/// Returns [Present(Valid)] if the parsing context doesn't support this syntax feature and `syntax` is [Present].
 	///
-	/// Creates a diagnostic using the passed error builder, adds it to the parsing diagnostics, and returns
-	/// [Invalid] if the parsing context does support this syntax feature.
+	/// Returns [Present(Invalid)], calls the `error_builder` to create a diagnostic,
+	/// adds the diagnostic to the parsing diagnostics, and returns [Present(Invalid)]
+	/// if the parsing context does support this syntax feature and the `syntax` is [Present].
+	///
+	/// Returns [Absent] if the `syntax` is [Absent]
 	fn excluding_syntax<S, E>(
 		&self,
 		p: &mut Parser,
 		syntax: S,
 		error_builder: E,
-	) -> ConditionalParsedSyntax
+	) -> ParsedSyntax<ConditionalSyntax>
 	where
-		S: Into<ParsedSyntax>,
+		S: Into<ParsedSyntax<CompletedMarker>>,
 		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
 	{
 		syntax.into().excluding(self, p, error_builder)
@@ -312,10 +360,12 @@ pub trait SyntaxFeature: Sized {
 	/// Creates a syntax that is only valid if this syntax feature isn't supported in the current
 	/// parsing context.
 	///
-	/// Returns [Valid] if this syntax feature isn't supported and [Invalid] if it is.
-	fn excluding_syntax_no_error<S>(&self, p: &Parser, syntax: S) -> ConditionalParsedSyntax
+	/// * Returns [Valid(Present)] if this syntax feature isn't supported and the `syntax` is [Present]
+	/// * Returns [Invalid(Present]) if this syntax feature is supported by the current parsing context and `syntax` is [Present]
+	/// * Returns [Absent] if the `syntax` is [Absent].
+	fn excluding_syntax_no_error<S>(&self, p: &Parser, syntax: S) -> ParsedSyntax<ConditionalSyntax>
 	where
-		S: Into<ParsedSyntax>,
+		S: Into<ParsedSyntax<CompletedMarker>>,
 	{
 		syntax.into().excluding_no_error(self, p)
 	}

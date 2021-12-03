@@ -13,7 +13,7 @@ use crate::syntax::js_parse_error::expected_binding;
 use crate::{SyntaxKind::*, *};
 
 #[allow(clippy::unnecessary_unwrap)]
-pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if p.typescript() {
 		if let Some(modifier) = maybe_eat_incorrect_modifier(p) {
 			let err = p
@@ -30,7 +30,7 @@ pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
 // test parameter_list
 // function evalInComputedPropertyKey({ [computed]: ignored }) {}
 /// parse the whole list of parameters, brackets included
-pub(super) fn parse_parameter_list(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_parameter_list(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T!['(']) {
 		return Absent;
 	}
@@ -42,7 +42,7 @@ pub(super) fn parse_parameter_list(p: &mut Parser) -> ParsedSyntax {
 /// Parses a (param, param) list into the current active node
 pub(super) fn parse_parameters_list(
 	p: &mut Parser,
-	parse_param: impl Fn(&mut Parser) -> ParsedSyntax,
+	parse_param: impl Fn(&mut Parser) -> ParsedSyntax<CompletedMarker>,
 ) {
 	let mut first = true;
 
@@ -156,7 +156,7 @@ pub(super) fn parse_parameters_list(
 	p.expect_required(T![')']);
 }
 
-pub(super) fn parse_arrow_body(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_arrow_body(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let mut guard = p.with_state(ParserState {
 		in_function: true,
 		..p.state.clone()
