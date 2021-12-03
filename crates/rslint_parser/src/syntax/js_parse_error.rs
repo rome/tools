@@ -106,10 +106,6 @@ pub(crate) fn expected_class_parameters(p: &Parser, range: Range<usize>) -> Diag
 	expected_node("class parameters", range).to_diagnostic(p)
 }
 
-pub(crate) fn expected_class_body(p: &Parser, range: Range<usize>) -> Diagnostic {
-	expected_node("class body", range).to_diagnostic(p)
-}
-
 pub(crate) fn expected_constructor_parameters(p: &Parser, range: Range<usize>) -> Diagnostic {
 	expected_node("constructor parameters", range).to_diagnostic(p)
 }

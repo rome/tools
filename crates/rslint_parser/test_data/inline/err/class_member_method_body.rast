@@ -62,11 +62,11 @@ JsRoot {
       4: (empty)
   3: EOF@16..17 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected a class body but instead found ''
+error[SyntaxError]: expected a class method body but instead found ''
   ┌─ class_member_method_body.js:2:1
   │
 2 │ 
-  │ ^ Expected a class body here
+  │ ^ Expected a class method body here
 
 --
 error[SyntaxError]: expected `'}'` but instead the file ends

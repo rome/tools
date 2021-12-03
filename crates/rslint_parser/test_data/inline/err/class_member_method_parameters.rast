@@ -112,11 +112,11 @@ error[SyntaxError]: expected `')'` but instead the file ends
   │ ^ the file ends here
 
 --
-error[SyntaxError]: expected a class body but instead found ''
+error[SyntaxError]: expected a class method body but instead found ''
   ┌─ class_member_method_parameters.js:2:1
   │
 2 │ 
-  │ ^ Expected a class body here
+  │ ^ Expected a class method body here
 
 --
 error[SyntaxError]: expected `'}'` but instead the file ends

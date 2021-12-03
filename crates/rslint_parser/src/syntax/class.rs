@@ -634,7 +634,8 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 					p.expect_required(T!['(']);
 					p.expect_required(T![')']);
 					ts_return_type(p);
-					function_body(p).or_missing_with_error(p, js_parse_error::expected_class_body);
+					function_body(p)
+						.or_missing_with_error(p, js_parse_error::expected_class_method_body);
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
@@ -643,7 +644,7 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 						.or_missing_with_error(p, js_parse_error::expected_parameter);
 					p.expect_required(T![')']);
 					function_body(p)
-						.or_missing_with_error(p, js_parse_error::expected_function_body);
+						.or_missing_with_error(p, js_parse_error::expected_class_method_body);
 
 					p.state.allow_object_expr = true;
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
@@ -784,7 +785,7 @@ fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker 
 	ts_parameter_types(p);
 	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_class_parameters);
 	ts_return_type(p);
-	function_body(p).or_missing_with_error(p, js_parse_error::expected_class_body);
+	function_body(p).or_missing_with_error(p, js_parse_error::expected_class_method_body);
 
 	m.complete(p, JS_METHOD_CLASS_MEMBER)
 }
@@ -832,7 +833,7 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
 		let p = &mut *guard;
 
 		parse_block_impl(p, JS_FUNCTION_BODY)
-			.or_missing_with_error(p, js_parse_error::expected_function_body);
+			.or_missing_with_error(p, js_parse_error::expected_class_method_body);
 	}
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
