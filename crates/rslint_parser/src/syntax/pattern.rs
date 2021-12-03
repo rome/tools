@@ -107,15 +107,9 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 	) -> ParsedSyntax<ConditionalSyntax> {
 		match p.cur() {
 			T![,] => Present(Valid(p.start().complete(p, JS_ARRAY_HOLE))),
-			T![...] => match self.parse_rest_pattern(p) {
-				Present(rest_pattern) => Present(validate_rest_pattern(
-					p,
-					Valid(rest_pattern),
-					T![']'],
-					recovery,
-				)),
-				Absent => Absent,
-			},
+			T![...] => self.parse_rest_pattern(p).map(|rest_pattern| {
+				validate_rest_pattern(p, Valid(rest_pattern), T![']'], recovery)
+			}),
 			_ => self
 				.pattern_with_default()
 				.parse_pattern_with_optional_default(p)
@@ -219,12 +213,8 @@ pub(crate) trait ParseObjectPattern {
 		recovery: &ParseRecovery,
 	) -> ParsedSyntax<ConditionalSyntax> {
 		if p.at(T![...]) {
-			match self.parse_rest_property_pattern(p) {
-				Present(rest_pattern) => {
-					Present(validate_rest_pattern(p, rest_pattern, T!['}'], recovery))
-				}
-				Absent => Absent,
-			}
+			self.parse_rest_property_pattern(p)
+				.map(|rest_pattern| validate_rest_pattern(p, rest_pattern, T!['}'], recovery))
 		} else {
 			self.parse_property_pattern(p)
 		}

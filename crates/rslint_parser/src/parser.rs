@@ -15,7 +15,7 @@ use std::borrow::BorrowMut;
 use std::ops::Range;
 
 pub use parse_error::*;
-pub use parsed_syntax::{ConditionalSyntax, InvalidParsedSyntax, ParsedSyntax};
+pub use parsed_syntax::{ConditionalSyntax, InvalidSyntax, ParsedSyntax};
 #[allow(deprecated)]
 pub use single_token_parse_recovery::SingleTokenParseRecovery;
 

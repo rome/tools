@@ -6,7 +6,7 @@ use crate::syntax::js_parse_error::{
 };
 use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
-use crate::ConditionalSyntax::{Invalid, Valid};
+use crate::ConditionalSyntax::Valid;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
@@ -240,17 +240,13 @@ impl ParseObjectPattern for ObjectBindingPattern {
 		let mut invalid_syntax = false;
 
 		let kind = if p.at(T![=]) || (is_at_identifier_binding(p) && !p.nth_at(1, T![:])) {
-			match parse_identifier_binding(p) {
-				Present(Invalid(identifier)) => {
-					identifier.abandon(p);
-					invalid_syntax = true;
-				}
-				Absent => {
-					p.error(expected_identifier(p, p.cur_tok().range));
-					p.missing();
-				}
-				_ => (),
-			};
+			if let Err(invalid) =
+				parse_identifier_binding(p).or_missing_with_error(p, expected_identifier)
+			{
+				invalid.abandon(p);
+				invalid_syntax = true;
+			}
+
 			JS_SHORTHAND_PROPERTY_BINDING
 		} else {
 			parse_object_member_name(p).or_missing_with_error(p, expected_object_member_name);
