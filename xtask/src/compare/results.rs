@@ -1,7 +1,9 @@
 use crate::coverage::files::{Outcome, TestResult, TestResults};
 use ascii_table::{AsciiTable, Column};
 use colored::Colorize;
-use std::{collections::HashMap, ffi::OsStr, fs::File, path::Path};
+use std::collections::{HashMap, HashSet};
+use std::fs::File;
+use std::path::{Path, PathBuf};
 
 pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 	let base_results: TestResults =
@@ -125,61 +127,40 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 			),
 		);
 
-		if !report_diff.fixed.is_empty() {
-			println!();
-			println!(
-				"<details><summary><b>Fixed tests ({}):</b></summary>",
-				report_diff.fixed.len()
-			);
-			println!("\n```");
-			for test in report_diff.fixed {
-				println!("{}", test);
+		fn summary(title: &str, tests: &[&TestResult]) {
+			if !tests.is_empty() {
+				println!();
+				println!(
+					"<details><summary><b>{} ({}):</b></summary>",
+					title,
+					tests.len()
+				);
+				println!("\n```");
+				let mut paths = tests
+					.iter()
+					.map(|test| test.path.as_os_str().to_str().unwrap())
+					.collect::<Vec<&str>>();
+				paths.sort_unstable();
+				for path in paths {
+					println!("{}", path);
+				}
+				println!("```");
+				println!("</details>");
 			}
-			println!("```");
-			println!("</details>");
 		}
 
-		if !report_diff.failed.is_empty() {
-			println!();
-			println!(
-				"<details><summary><b>Failed tests ({}):</b></summary>",
-				report_diff.failed.len()
-			);
-			println!("\n```");
-			for test in report_diff.failed {
-				println!("{}", test);
-			}
-			println!("```");
-			println!("</details>");
-		}
-
-		if !report_diff.new_panics.is_empty() {
-			println!();
-			println!(
-				"<details><summary><b>New panics ({}):</b></summary>",
-				report_diff.new_panics.len()
-			);
-			println!("\n```");
-			for test in report_diff.new_panics {
-				println!("{}", test);
-			}
-			println!("```");
-			println!("</details>");
-		}
-
-		if !report_diff.panic_fixed.is_empty() {
-			println!();
-			println!(
-				"<details><summary><b>Panics fixed ({}):</b></summary>",
-				report_diff.panic_fixed.len()
-			);
-			println!("\n```");
-			for test in report_diff.panic_fixed {
-				println!("{}", test);
-			}
-			println!("```");
-			println!("</details>");
-		}
+		summary(":fire: Regression", &report_diff.regression);
+		summary(":tada: Fixed", &report_diff.fixed);
+		summary(":boom: Failed to Panic", &report_diff.failed_to_panic);
+		summary(
+			":interrobang: Panic To Failed",
+			&report_diff.panic_to_failed,
+		);
+		summary(":heavy_plus_sign: Added Tests", &report_diff.added_tests);
+		summary(
+			":heavy_minus_sign: Removed Tests",
+			&report_diff.removed_tests,
+		);
 	} else {
 		let mut table = AsciiTable::default();
 		let mut counter = 0usize;
@@ -215,19 +196,23 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 }
 
 struct ReportDiff<'a> {
-	pub fixed: Vec<&'a str>,
-	pub failed: Vec<&'a str>,
-	pub new_panics: Vec<&'a str>,
-	pub panic_fixed: Vec<&'a str>,
+	pub regression: Vec<&'a TestResult>,
+	pub fixed: Vec<&'a TestResult>,
+	pub failed_to_panic: Vec<&'a TestResult>,
+	pub panic_to_failed: Vec<&'a TestResult>,
+	pub added_tests: Vec<&'a TestResult>,
+	pub removed_tests: Vec<&'a TestResult>,
 }
 
 impl<'a> ReportDiff<'a> {
 	pub fn new() -> Self {
 		Self {
+			regression: vec![],
 			fixed: vec![],
-			failed: vec![],
-			new_panics: vec![],
-			panic_fixed: vec![],
+			failed_to_panic: vec![],
+			panic_to_failed: vec![],
+			added_tests: vec![],
+			removed_tests: vec![],
 		}
 	}
 }
@@ -237,37 +222,48 @@ fn compare_diffs<'a>(
 	new_results: &'a TestResults,
 ) -> ReportDiff<'a> {
 	let mut report_diff = ReportDiff::new();
-	let new_paths: HashMap<&OsStr, &TestResult> = new_results
-		.details
-		.iter()
-		.map(|detail| return (detail.path.as_os_str(), detail))
-		.collect();
-	for base_result in &base_results.details {
-		let test_to_analyze = new_paths.get(base_result.path.as_os_str());
 
-		if let Some(test_to_analyze) = test_to_analyze {
-			match (&base_result.outcome, &test_to_analyze.outcome) {
-				// we want to ignore cases where both results yield the same enum
-				// this means that their status hasn't changed, not worth tracking
-				(b, n) if b == n => {}
-				// the new result passed
-				(_, Outcome::Passed) => report_diff
-					.fixed
-					.push(test_to_analyze.path.as_os_str().to_str().unwrap()),
-				// an old test passed but now failed
-				(Outcome::Passed, Outcome::Failed) => report_diff
-					.failed
-					.push(test_to_analyze.path.as_os_str().to_str().unwrap()),
-				// an existing test now panics
-				(_, Outcome::Panicked) => report_diff
-					.new_panics
-					.push(test_to_analyze.path.as_os_str().to_str().unwrap()),
-				// a panic error is now fixed
-				(Outcome::Panicked, _) => report_diff
-					.panic_fixed
-					.push(test_to_analyze.path.as_os_str().to_str().unwrap()),
-				_ => {}
+	let mut all_paths: HashSet<&PathBuf> = HashSet::new();
+
+	let mut base_by_path: HashMap<&PathBuf, &TestResult> = HashMap::new();
+	for detail in base_results.details.iter() {
+		all_paths.insert(&detail.path);
+		base_by_path.insert(&detail.path, detail);
+	}
+
+	let mut new_by_path: HashMap<&PathBuf, &TestResult> = HashMap::new();
+	for detail in new_results.details.iter() {
+		all_paths.insert(&detail.path);
+		new_by_path.insert(&detail.path, detail);
+	}
+
+	for path in all_paths {
+		let base_result = base_by_path.get(path);
+		let new_result = new_by_path.get(path);
+
+		match (base_result, new_result) {
+			(None, Some(new)) => {
+				report_diff.added_tests.push(new);
 			}
+			(Some(base), None) => {
+				report_diff.removed_tests.push(base);
+			}
+			(Some(base), Some(new)) => {
+				match (&base.outcome, &new.outcome) {
+					(Outcome::Passed, Outcome::Failed | Outcome::Panicked) => {
+						report_diff.regression.push(new)
+					}
+					(Outcome::Failed | Outcome::Panicked, Outcome::Passed) => {
+						report_diff.fixed.push(new)
+					}
+					(Outcome::Failed, Outcome::Panicked) => report_diff.failed_to_panic.push(new),
+					(Outcome::Panicked, Outcome::Failed) => report_diff.panic_to_failed.push(new),
+					// we want to ignore cases where both results yield the same enum
+					// this means that their status hasn't changed, not worth tracking
+					_ => {}
+				}
+			}
+			_ => unreachable!(),
 		}
 	}
 
