@@ -263,10 +263,12 @@ pub trait SyntaxFeature: Sized {
 	/// Creates a syntax that is only valid if this syntax feature is supported in the current
 	/// parsing context, adds a diagnostic if not.
 	///
-	/// Returns [Valid] if this syntax feature is supported.
+	/// Returns [Present(Valid)] if this syntax feature is supported and the `syntax` is [Present]
 	///
-	/// Returns [Invalid], creates a diagnostic with the passed in error builder,
-	/// and adds it to the parsing diagnostics if this syntax feature isn't supported.
+	/// Returns [Present(Invalid)], creates a diagnostic with the passed in error builder,
+	/// and adds it to the parsing diagnostics if the syntax is [Present] and the `syntax` feature isn't supported
+	///
+	/// Returns [Absent] if the `syntax` is [Absent]
 	fn exclusive_syntax<S, E>(
 		&self,
 		p: &mut Parser,
@@ -280,6 +282,15 @@ pub trait SyntaxFeature: Sized {
 		syntax.into().exclusive_for(self, p, error_builder)
 	}
 
+	/// Parses a syntax that is only valid if this syntax feature is supported in the current parsing context
+	/// and ensures that any errors added while parsing the syntax are reverted if the syntax is not supported.
+	///
+	/// Returns [Present(Valid)] if this syntax feature is supported and the `syntax` is [Present]
+	///
+	/// Returns [Present(Invalid)], creates a diagnostic with the passed in error builder,
+	/// and adds it to the parsing diagnostics if the syntax is [Present] and the `syntax` feature isn't supported
+	///
+	/// Returns [Absent] if the `syntax` is [Absent]
 	fn parse_exclusive_syntax<P, E>(
 		&self,
 		p: &mut Parser,
@@ -311,7 +322,11 @@ pub trait SyntaxFeature: Sized {
 	/// Creates a syntax that is only valid if this syntax feature is supported in the current
 	/// parsing context.
 	///
-	/// Returns [Valid] if this syntax feature is supported and [Invalid] if this syntax isn't supported.
+	/// Returns [Present(Valid)] if this syntax feature is supported and the `syntax` is [Present]
+	///
+	/// Returns [Present(Invalid)] if the syntax is [Present] and the `syntax` feature isn't supported
+	///
+	/// Returns [Absent] if the `syntax` is [Absent]
 	fn exclusive_syntax_no_error<S>(&self, p: &Parser, syntax: S) -> ParsedSyntax<ConditionalSyntax>
 	where
 		S: Into<ParsedSyntax<CompletedMarker>>,
@@ -322,10 +337,13 @@ pub trait SyntaxFeature: Sized {
 	/// Creates a syntax that is only valid if the current parsing context doesn't support this syntax feature,
 	/// and adds a diagnostic if it does.
 	///
-	/// Returns [Valid] if the parsing context doesn't support this syntax feature
+	/// Returns [Present(Valid)] if the parsing context doesn't support this syntax feature and `syntax` is [Present].
 	///
-	/// Creates a diagnostic using the passed error builder, adds it to the parsing diagnostics, and returns
-	/// [Invalid] if the parsing context does support this syntax feature.
+	/// Returns [Present(Invalid)], calls the `error_builder` to create a diagnostic,
+	/// adds the diagnostic to the parsing diagnostics, and returns [Present(Invalid)]
+	/// if the parsing context does support this syntax feature and the `syntax` is [Present].
+	///
+	/// Returns [Absent] if the `syntax` is [Absent]
 	fn excluding_syntax<S, E>(
 		&self,
 		p: &mut Parser,
@@ -342,7 +360,9 @@ pub trait SyntaxFeature: Sized {
 	/// Creates a syntax that is only valid if this syntax feature isn't supported in the current
 	/// parsing context.
 	///
-	/// Returns [Valid] if this syntax feature isn't supported and [Invalid] if it is.
+	/// * Returns [Valid(Present)] if this syntax feature isn't supported and the `syntax` is [Present]
+	/// * Returns [Invalid(Present]) if this syntax feature is supported by the current parsing context and `syntax` is [Present]
+	/// * Returns [Absent] if the `syntax` is [Absent].
 	fn excluding_syntax_no_error<S>(&self, p: &Parser, syntax: S) -> ParsedSyntax<ConditionalSyntax>
 	where
 		S: Into<ParsedSyntax<CompletedMarker>>,

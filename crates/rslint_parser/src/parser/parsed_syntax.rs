@@ -7,22 +7,32 @@ use rslint_errors::{Diagnostic, Span};
 use rslint_syntax::SyntaxKind;
 use std::ops::Range;
 
-/// Result of a parse function.
+/// Syntax that is either present in the source tree or absent.
 ///
-/// A parse rule should return [Present] if it is able to parse a node or at least parts of it. For example,
+/// This type is commonly used as the return type of a parse function with the following types for `T`
+///
+/// * [CompletedMarker]: Most commonly used type. Parse function that either returns [Absent]
+///   if the syntax isn't present or [Present] with a valid syntax.
+/// * [ConditionalSyntax]: Used for parse functions where the parsed syntax may be invalid (a syntax error)
+///   depending on the parse context. Examples are: 1) Use of a `with` statement in strict mode,
+///   2) use of `await` as an identifier inside of an `async` function, and so on. That's why these
+///   parse functions must differentiate between syntax that is [Absent] in the source text,
+///   syntax that is [Present] and [Valid], and syntax that is [Present] but [Invalid].
+///
+///
+/// ## Parse Rule conventions
+/// * A parse rule must return [Present] if it is able to parse a node or at least parts of it. For example,
 /// the `parse_for_statement` should return [Present] for `for (` even tough many of the required children are missing
 /// because it is still able to parse parts of the for statement.
-///
-/// A parse rule must return [Absent] if the expected node isn't present in the source code.
+/// * A parse rule must return [Absent] if the expected node isn't present in the source code.
 /// In most cases, this means if the first expected token isn't present, for example,
 /// if the `for` keyword isn't present when parsing a for statement.
 /// However, it can be possible for rules to recover even if the first token doesn't match. One example
 /// is when parsing an assignment target that has an optional default. The rule can recover even
 /// if the assignment target is missing as long as the cursor is then positioned at an `=` token.
 /// The rule must then return [Present] with the partial parsed node.
-///
-/// A parse rule must rewind the parser and return [Absent] if it started parsing an incomplete node but
-/// in the end can't determine its type to ensure that the caller can do a proper error recovery.
+/// * A parse rule must not eat any tokens when it returns [Absent]
+/// * A parse rule must not add any errors when it returns [Absent]
 ///
 /// This is a custom enum over using `Option` because [Absent] values must be handled by the caller.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -37,9 +47,9 @@ pub enum ParsedSyntax<T> {
 }
 
 impl<T> ParsedSyntax<T> {
-	/// Converts from `ParsedSyntax` to `Option<CompletedMarker>`.
+	/// Converts from `ParsedSyntax<T>` to `Option<T>`.
 	///
-	/// Converts `self` into an `Option<CompletedMarker>`, consuming `self`
+	/// Converts `self` into an `Option<T>`, consuming `self`
 	pub fn ok(self) -> Option<T> {
 		match self {
 			Absent => None,
@@ -70,7 +80,7 @@ impl<T> ParsedSyntax<T> {
 		matches!(self, Absent)
 	}
 
-	/// It returns a [CompletedMarker] from the current syntax
+	/// It returns the contained [Present] value, consuming the `self` value
 	///
 	/// # Panics
 	///
@@ -84,6 +94,10 @@ impl<T> ParsedSyntax<T> {
 		}
 	}
 
+	/// Maps a `ParsedSyntax<T>` to `ParsedSyntax<U>` by applying a function to a contained [Present] value,
+	/// leaving an [Absent] value untouched.
+	///
+	/// This function can be used to compose the results of two functions.
 	pub fn map<F, U>(self, mapper: F) -> ParsedSyntax<U>
 	where
 		F: FnOnce(T) -> U,
@@ -221,10 +235,12 @@ impl ParsedSyntax<CompletedMarker> {
 		}
 	}
 
+	/// Converts this syntax into a [Valid] syntax if it is present
 	pub fn into_valid(self) -> ParsedSyntax<ConditionalSyntax> {
 		self.map(Valid)
 	}
 
+	/// Converts this syntax into an [Invalid] if the syntax is present without adding an error
 	pub fn into_invalid(self) -> ParsedSyntax<ConditionalSyntax> {
 		self.map(|marker| Invalid(marker.into()))
 	}
@@ -362,16 +378,15 @@ impl From<Option<CompletedMarker>> for ParsedSyntax<CompletedMarker> {
 /// * Syntax that is only available in certain language versions: experimental features, private field existence test
 ///
 /// A parse rule must explicitly handle conditional syntax in the case it is invalid because it
-/// represents content that shouldn't be there. This normally involves to wrap this syntax in an
-/// `Unknown*` node or one of its parent.
+/// represents content that shouldn't be there. This normally involves to wrap this syntax (or one of its parents) in an
+/// `Unknown*` node.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[must_use = "this `ConditionalParsedSyntax` may be an `Invalid` variant, which should be handled"]
 pub enum ConditionalSyntax {
 	/// Syntax that is valid in the current parsing context
 	Valid(CompletedMarker),
 
-	/// Syntax that is invalid in the current parsing context because it doesn't support a specific
-	/// language feature.
+	/// Syntax that is invalid in the current parsing context.
 	Invalid(InvalidParsedSyntax),
 }
 
@@ -387,14 +402,7 @@ impl ConditionalSyntax {
 		matches!(self, Invalid(_))
 	}
 
-	pub fn completed_marker(&self) -> &CompletedMarker {
-		match self {
-			Valid(marker) => marker,
-			Invalid(syntax) => &syntax.0,
-		}
-	}
-
-	/// Converts this into a parsed syntax by wrapping any present invalid syntax in an unknown node.
+	/// Wraps the parsed syntax in an unknown node if the syntax is [Invalid] or returns the valid syntax
 	pub fn or_invalid_to_unknown(
 		self,
 		p: &mut Parser,
@@ -427,6 +435,8 @@ impl From<ConditionalSyntax> for ParsedSyntax<ConditionalSyntax> {
 }
 
 impl ParsedSyntax<ConditionalSyntax> {
+	/// Wraps the parsed syntax in an unknown node if it is [Present(Invalid)]. Otherwise returns
+	/// the parsed syntax.
 	pub fn or_invalid_to_unknown(
 		self,
 		p: &mut Parser,
@@ -455,12 +465,12 @@ impl InvalidParsedSyntax {
 		self.0
 	}
 
-	/// Undoes the completion and abandons the marker if the syntax is present.
+	/// Undoes the completion and abandons the marker.
 	pub fn abandon(self, p: &mut Parser) {
 		self.0.undo_completion(p).abandon(p)
 	}
 
-	/// Creates a new marker that precedes this syntax or starts a new marker
+	/// Creates a new marker that precedes this syntax.
 	pub fn precede(self, p: &mut Parser) -> Marker {
 		self.0.precede(p)
 	}
