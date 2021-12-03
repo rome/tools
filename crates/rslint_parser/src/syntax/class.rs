@@ -508,13 +508,14 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		// test_err class_constructor_err
 		// class B { static constructor() {} }
 		return if is_constructor {
-			let constructor = parse_constructor_class_member_body(p, member_marker);
+			let mut constructor = parse_constructor_class_member_body(p, member_marker);
 
 			if is_static {
 				let err = p
 					.err_builder("constructors cannot be static")
 					.primary(constructor.range(p), "");
 
+				constructor.change_kind(p, JS_UNKNOWN_MEMBER);
 				p.error(err);
 			}
 
@@ -925,7 +926,7 @@ fn consume_modifiers(
 	p: &mut Parser,
 	declare: bool,
 	accessibility: bool,
-	static_: bool,
+	is_static: bool,
 	dont_remap_static: bool,
 ) {
 	if accessibility {
@@ -952,9 +953,9 @@ fn consume_modifiers(
 	if declare {
 		p.bump_remap(T![declare]);
 	}
-	if static_ && !dont_remap_static {
+	if is_static && !dont_remap_static {
 		p.bump_remap(STATIC_KW);
-	} else if static_ && dont_remap_static {
+	} else if is_static && dont_remap_static {
 		// Guaranteed to be at the static keyword, parsing a class member must succeed
 		parse_class_member_name(p).ok().unwrap();
 	}
