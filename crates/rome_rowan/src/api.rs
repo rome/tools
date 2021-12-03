@@ -54,6 +54,34 @@ impl TriviaPiece {
 pub struct SyntaxTriviaPieceWhitespace<L: Language>(SyntaxTriviaPiece<L>);
 pub struct SyntaxTriviaPieceComments<L: Language>(SyntaxTriviaPiece<L>);
 
+impl<L: Language> SyntaxTriviaPieceWhitespace<L> {
+	pub fn text(&self) -> &str {
+		self.0.text()
+	}
+
+	pub fn text_len(&self) -> TextSize {
+		self.0.text_len()
+	}
+
+	pub fn text_range(&self) -> TextRange {
+		self.0.text_range()
+	}
+}
+
+impl<L: Language> SyntaxTriviaPieceComments<L> {
+	pub fn text(&self) -> &str {
+		self.0.text()
+	}
+
+	pub fn text_len(&self) -> TextSize {
+		self.0.text_len()
+	}
+
+	pub fn text_range(&self) -> TextRange {
+		self.0.text_range()
+	}
+}
+
 /// [SyntaxTriviaPiece] gives access to the most granular information about the trivia
 /// that was specified by the lexer at the token creation time.
 ///
