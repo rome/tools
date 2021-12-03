@@ -1,7 +1,9 @@
 use crate::coverage::files::{Outcome, TestResult, TestResults};
 use ascii_table::{AsciiTable, Column};
 use colored::Colorize;
-use std::{collections::HashMap, ffi::OsStr, fs::File, path::Path};
+use std::collections::HashSet;
+use std::iter::FromIterator;
+use std::{fs::File, path::Path};
 
 pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 	let base_results: TestResults =
@@ -125,61 +127,40 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 			),
 		);
 
-		if !report_diff.fixed.is_empty() {
-			println!();
-			println!(
-				"<details><summary><b>Fixed tests ({}):</b></summary>",
-				report_diff.fixed.len()
-			);
-			println!("\n```");
-			for test in report_diff.fixed {
-				println!("{}", test);
+		fn summary(title: &str, tests: &HashSet<&TestResult>) {
+			if !tests.is_empty() {
+				println!();
+				println!(
+					"<details><summary><b>{} ({}):</b></summary>",
+					title,
+					tests.len()
+				);
+				println!("\n```");
+				let mut paths = tests
+					.iter()
+					.map(|test| test.path.as_os_str().to_str().unwrap())
+					.collect::<Vec<&str>>();
+				paths.sort();
+				for path in paths {
+					println!("{}", path);
+				}
+				println!("```");
+				println!("</details>");
 			}
-			println!("```");
-			println!("</details>");
 		}
 
-		if !report_diff.failed.is_empty() {
-			println!();
-			println!(
-				"<details><summary><b>Failed tests ({}):</b></summary>",
-				report_diff.failed.len()
-			);
-			println!("\n```");
-			for test in report_diff.failed {
-				println!("{}", test);
-			}
-			println!("```");
-			println!("</details>");
-		}
-
-		if !report_diff.new_panics.is_empty() {
-			println!();
-			println!(
-				"<details><summary><b>New panics ({}):</b></summary>",
-				report_diff.new_panics.len()
-			);
-			println!("\n```");
-			for test in report_diff.new_panics {
-				println!("{}", test);
-			}
-			println!("```");
-			println!("</details>");
-		}
-
-		if !report_diff.panic_fixed.is_empty() {
-			println!();
-			println!(
-				"<details><summary><b>Panics fixed ({}):</b></summary>",
-				report_diff.panic_fixed.len()
-			);
-			println!("\n```");
-			for test in report_diff.panic_fixed {
-				println!("{}", test);
-			}
-			println!("```");
-			println!("</details>");
-		}
+		summary(":fire: Regression", &report_diff.regression);
+		summary(":tada: Fixed", &report_diff.newly_fixed);
+		summary(":boom: Failed to Panic", &report_diff.failed_to_panic);
+		summary(
+			":interrobang: Panic To Failed",
+			&report_diff.panic_to_failed,
+		);
+		summary(":heavy_plus_sign: Added Tests", &report_diff.added_tests);
+		summary(
+			":heavy_minus_sign: Removed Tests",
+			&report_diff.removed_tests,
+		);
 	} else {
 		let mut table = AsciiTable::default();
 		let mut counter = 0usize;
@@ -215,61 +196,79 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 }
 
 struct ReportDiff<'a> {
-	pub fixed: Vec<&'a str>,
-	pub failed: Vec<&'a str>,
-	pub new_panics: Vec<&'a str>,
-	pub panic_fixed: Vec<&'a str>,
-}
-
-impl<'a> ReportDiff<'a> {
-	pub fn new() -> Self {
-		Self {
-			fixed: vec![],
-			failed: vec![],
-			new_panics: vec![],
-			panic_fixed: vec![],
-		}
-	}
+	pub regression: HashSet<&'a TestResult>,
+	pub newly_fixed: HashSet<&'a TestResult>,
+	pub failed_to_panic: HashSet<&'a TestResult>,
+	pub panic_to_failed: HashSet<&'a TestResult>,
+	pub added_tests: HashSet<&'a TestResult>,
+	pub removed_tests: HashSet<&'a TestResult>,
 }
 
 fn compare_diffs<'a>(
 	base_results: &'a TestResults,
 	new_results: &'a TestResults,
 ) -> ReportDiff<'a> {
-	let mut report_diff = ReportDiff::new();
-	let new_paths: HashMap<&OsStr, &TestResult> = new_results
+	let (base_passed, base_not_passed): (Vec<&TestResult>, Vec<&TestResult>) = base_results
 		.details
 		.iter()
-		.map(|detail| return (detail.path.as_os_str(), detail))
+		.partition(|result| result.outcome == Outcome::Passed);
+	let (new_passed, new_not_passed): (Vec<&TestResult>, Vec<&TestResult>) = new_results
+		.details
+		.iter()
+		.partition(|result| result.outcome == Outcome::Passed);
+
+	let base_all: HashSet<&TestResult> = HashSet::from_iter(base_results.details.iter());
+	let base_passed: HashSet<&TestResult> = HashSet::from_iter(base_passed);
+	let base_not_passed: HashSet<&TestResult> = HashSet::from_iter(base_not_passed);
+	let base_failed: HashSet<&TestResult> = base_results
+		.details
+		.iter()
+		.filter(|result| result.outcome == Outcome::Failed)
 		.collect();
-	for base_result in &base_results.details {
-		let test_to_analyze = new_paths.get(base_result.path.as_os_str());
+	let base_panicked: HashSet<&TestResult> = base_results
+		.details
+		.iter()
+		.filter(|result| result.outcome == Outcome::Panicked)
+		.collect();
 
-		if let Some(test_to_analyze) = test_to_analyze {
-			match (&base_result.outcome, &test_to_analyze.outcome) {
-				// we want to ignore cases where both results yield the same enum
-				// this means that their status hasn't changed, not worth tracking
-				(b, n) if b == n => {}
-				// the new result passed
-				(_, Outcome::Passed) => report_diff
-					.fixed
-					.push(test_to_analyze.path.as_os_str().to_str().unwrap()),
-				// an old test passed but now failed
-				(Outcome::Passed, Outcome::Failed) => report_diff
-					.failed
-					.push(test_to_analyze.path.as_os_str().to_str().unwrap()),
-				// an existing test now panics
-				(_, Outcome::Panicked) => report_diff
-					.new_panics
-					.push(test_to_analyze.path.as_os_str().to_str().unwrap()),
-				// a panic error is now fixed
-				(Outcome::Panicked, _) => report_diff
-					.panic_fixed
-					.push(test_to_analyze.path.as_os_str().to_str().unwrap()),
-				_ => {}
-			}
-		}
+	let new_all: HashSet<&TestResult> = HashSet::from_iter(new_results.details.iter());
+	let new_passed: HashSet<&TestResult> = HashSet::from_iter(new_passed);
+	let new_not_passed: HashSet<&TestResult> = HashSet::from_iter(new_not_passed);
+	let new_failed: HashSet<&TestResult> = new_results
+		.details
+		.iter()
+		.filter(|result| result.outcome == Outcome::Failed)
+		.collect();
+	let new_panicked: HashSet<&TestResult> = new_results
+		.details
+		.iter()
+		.filter(|result| result.outcome == Outcome::Panicked)
+		.collect();
+
+	// Regression: passed on main, failing or panicking on the feature branch (bad)
+	let regression = base_passed.intersection(&new_not_passed);
+
+	// Fixed: panicked or failed on main, passing on the feature branch (good)
+	let newly_fixed = base_not_passed.intersection(&new_passed);
+
+	// FailedToPanic: failed on main, panicking on the feature branch (kind of bad)
+	let failed_to_panic = base_failed.intersection(&new_panicked);
+
+	// PanicToFailed: panicked on main, failing on the feature branch (kind of good?)
+	let panic_to_failed = base_panicked.intersection(&new_failed);
+
+	// New: Newly added tests
+	let added_tests = new_all.difference(&base_all);
+
+	// Removed: Removed tests
+	let removed_tests = base_all.difference(&new_all);
+
+	ReportDiff {
+		regression: regression.copied().collect(),
+		newly_fixed: newly_fixed.copied().collect(),
+		failed_to_panic: failed_to_panic.copied().collect(),
+		panic_to_failed: panic_to_failed.copied().collect(),
+		added_tests: added_tests.copied().collect(),
+		removed_tests: removed_tests.copied().collect(),
 	}
-
-	report_diff
 }

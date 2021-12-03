@@ -5,6 +5,7 @@ use rslint_parser::ParserError;
 use serde::{Deserialize, Serialize};
 use std::any::Any;
 use std::fs::read_to_string;
+use std::hash::{Hash, Hasher};
 use std::io;
 use std::path::PathBuf;
 use walkdir::WalkDir;
@@ -200,6 +201,19 @@ pub struct Summary {
 	pub panics: u32,
 	#[serde(rename = "c")]
 	pub coverage: f64,
+}
+
+impl PartialEq for TestResult {
+	fn eq(&self, other: &Self) -> bool {
+		self.path == other.path
+	}
+}
+impl Eq for TestResult {}
+
+impl Hash for TestResult {
+	fn hash<H: Hasher>(&self, state: &mut H) {
+		self.path.hash(state);
+	}
 }
 
 impl Default for TestResults {
