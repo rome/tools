@@ -12,9 +12,6 @@ JsRoot {
             l_curly_token: L_CURLY@7..8 "{" [] [],
             members: [
                 JsUnknownMember {
-                    items: [],
-                },
-                JsUnknownMember {
                     items: [
                         Token(
                             L_CURLY@8..9 "{" [] [],
@@ -44,8 +41,7 @@ JsRoot {
         0: IDENT@6..7 "S" [] []
       2: L_CURLY@7..8 "{" [] []
       3: LIST@8..9
-        0: JS_UNKNOWN_MEMBER@8..8
-          0: (empty)
+        0: (empty)
         1: JS_UNKNOWN_MEMBER@8..9
           0: L_CURLY@8..9 "{" [] []
       4: R_CURLY@9..10 "}" [] []

@@ -1,0 +1,129 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsClassDeclaration {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
+            },
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
+            members: [
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@10..13 "foo" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@13..14 "(" [] [],
+                        parameters: [
+                            JsIdentifierBinding {
+                                name_token: IDENT@14..16 "a" [] [Whitespace(" ")],
+                            },
+                            missing separator,
+                            JsObjectBinding {
+                                l_curly_token: L_CURLY@16..17 "{" [] [],
+                                properties: [],
+                                r_curly_token: R_CURLY@17..19 "}" [] [Whitespace(" ")],
+                            },
+                            missing separator,
+                            JsUnknownBinding {
+                                items: [
+                                    Token(
+                                        R_CURLY@19..20 "}" [] [],
+                                    ),
+                                ],
+                            },
+                        ],
+                        r_paren_token: missing (required),
+                    },
+                    return_type: missing (optional),
+                    body: missing (required),
+                },
+            ],
+            r_curly_token: missing (required),
+        },
+    ],
+}
+
+0: JS_ROOT@0..21
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..20
+    0: JS_CLASS_DECLARATION@0..20
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..8
+        0: IDENT@6..8 "B" [] [Whitespace(" ")]
+      2: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      3: LIST@10..20
+        0: JS_METHOD_CLASS_MEMBER@10..20
+          0: JS_LITERAL_MEMBER_NAME@10..13
+            0: IDENT@10..13 "foo" [] []
+          1: JS_PARAMETER_LIST@13..20
+            0: L_PAREN@13..14 "(" [] []
+            1: LIST@14..20
+              0: JS_IDENTIFIER_BINDING@14..16
+                0: IDENT@14..16 "a" [] [Whitespace(" ")]
+              1: (empty)
+              2: JS_OBJECT_BINDING@16..19
+                0: L_CURLY@16..17 "{" [] []
+                1: LIST@17..17
+                2: R_CURLY@17..19 "}" [] [Whitespace(" ")]
+              3: (empty)
+              4: JS_UNKNOWN_BINDING@19..20
+                0: R_CURLY@19..20 "}" [] []
+            2: (empty)
+          2: (empty)
+      4: (empty)
+  3: EOF@20..21 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: expected `,` but instead found `{`
+  ┌─ class_member_method_parameters.js:1:17
+  │
+1 │ class B { foo(a {} }
+  │                 ^ unexpected
+
+--
+error[SyntaxError]: expected `,` but instead found `}`
+  ┌─ class_member_method_parameters.js:1:20
+  │
+1 │ class B { foo(a {} }
+  │                    ^ unexpected
+
+--
+error[SyntaxError]: expected a parameter but instead found '}'
+  ┌─ class_member_method_parameters.js:1:20
+  │
+1 │ class B { foo(a {} }
+  │                    ^ Expected a parameter here
+
+--
+error[SyntaxError]: expected `')'` but instead the file ends
+  ┌─ class_member_method_parameters.js:2:1
+  │
+2 │ 
+  │ ^ the file ends here
+
+--
+error[SyntaxError]: expected a class body but instead found ''
+  ┌─ class_member_method_parameters.js:2:1
+  │
+2 │ 
+  │ ^ Expected a class body here
+
+--
+error[SyntaxError]: expected `'}'` but instead the file ends
+  ┌─ class_member_method_parameters.js:2:1
+  │
+2 │ 
+  │ ^ the file ends here
+
+--
+class B { foo(a {} }
