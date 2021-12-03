@@ -687,17 +687,7 @@ fn property_class_member_body(p: &mut Parser, member_marker: Marker) -> Complete
 		p.error(err);
 	}
 
-	let complete = member_marker.complete(p, JS_PROPERTY_CLASS_MEMBER);
-
-	if !p.syntax.class_fields {
-		let err = p
-			.err_builder("class fields are unsupported")
-			.primary(complete.range(p), "");
-
-		p.error(err);
-	}
-
-	complete
+	member_marker.complete(p, JS_PROPERTY_CLASS_MEMBER)
 }
 
 /// Eats the ? token for optional member. Emits an error if this isn't typescript
