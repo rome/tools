@@ -300,6 +300,8 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		} else if is_at_property_class_member(p, offset) {
 			parse_literal_member_name(p).ok().unwrap(); // bump declare as identifier
 			return Present(Valid(parse_property_class_member_body(p, member_marker)));
+		// TODO: the logic in the else branch need to be reviewed:
+		// More information here: https://github.com/rome/tools/pull/1846#discussion_r761692190
 		} else {
 			let msg = if p.typescript() {
 				"a `declare` modifier cannot be applied to a class element"
