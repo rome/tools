@@ -38,13 +38,15 @@ JsRoot {
       0: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@19..23
         0: IDENT@19..23 "test" [] []
-      2: JS_PARAMETER_LIST@23..31
+      2: (empty)
+      3: JS_PARAMETER_LIST@23..31
         0: L_PAREN@23..24 "(" [] []
         1: LIST@24..29
           0: JS_IDENTIFIER_BINDING@24..29
             0: IDENT@24..29 "await" [] []
         2: R_PAREN@29..31 ")" [] [Whitespace(" ")]
-      3: JS_FUNCTION_BODY@31..33
+      4: (empty)
+      5: JS_FUNCTION_BODY@31..33
         0: L_CURLY@31..32 "{" [] []
         1: LIST@32..32
         2: LIST@32..32

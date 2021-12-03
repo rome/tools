@@ -55,7 +55,8 @@ JsRoot {
       0: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@9..34
         0: IDENT@9..34 "evalInComputedPropertyKey" [] []
-      2: JS_PARAMETER_LIST@34..60
+      2: (empty)
+      3: JS_PARAMETER_LIST@34..60
         0: L_PAREN@34..35 "(" [] []
         1: LIST@35..58
           0: JS_OBJECT_BINDING@35..58
@@ -73,7 +74,8 @@ JsRoot {
                 3: (empty)
             2: R_CURLY@57..58 "}" [] []
         2: R_PAREN@58..60 ")" [] [Whitespace(" ")]
-      3: JS_FUNCTION_BODY@60..62
+      4: (empty)
+      5: JS_FUNCTION_BODY@60..62
         0: L_CURLY@60..61 "{" [] []
         1: LIST@61..61
         2: LIST@61..61

@@ -387,7 +387,7 @@ pub enum ConditionalSyntax {
 	Valid(CompletedMarker),
 
 	/// Syntax that is invalid in the current parsing context.
-	Invalid(InvalidParsedSyntax),
+	Invalid(InvalidSyntax),
 }
 
 impl ConditionalSyntax {
@@ -447,14 +447,50 @@ impl ParsedSyntax<ConditionalSyntax> {
 			Present(syntax) => Present(syntax.or_invalid_to_unknown(p, unknown_kind)),
 		}
 	}
+
+	/// It adds a `missing` marker if the syntax is absent and returns `Ok(None)`.
+	/// It returns [Err(InvalidSyntax)] if this syntax is [Invalid] and [Ok] if this syntax is [Valid]
+	pub fn or_missing(self, p: &mut Parser) -> Result<Option<CompletedMarker>, InvalidSyntax> {
+		match self {
+			Absent => {
+				p.missing();
+				Ok(None)
+			}
+			Present(Valid(marker)) => Ok(Some(marker)),
+			Present(Invalid(invalid)) => Err(invalid),
+		}
+	}
+
+	/// It adds a `missing` marker if the syntax is absent, creates a diagnostic with the `error_builder`,
+	/// adds the diagnostic to the parsing context and returns `Ok(None)`.
+	/// It returns [Err(InvalidSyntax)] if this syntax is [Invalid] and [Ok] if this syntax is [Valid]
+	pub fn or_missing_with_error<E>(
+		self,
+		p: &mut Parser,
+		error_builder: E,
+	) -> Result<Option<CompletedMarker>, InvalidSyntax>
+	where
+		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
+	{
+		match self {
+			Absent => {
+				p.missing();
+				p.error(error_builder(p, p.cur_tok().range));
+
+				Ok(None)
+			}
+			Present(Valid(marker)) => Ok(Some(marker)),
+			Present(Invalid(invalid)) => Err(invalid),
+		}
+	}
 }
 
 /// Parsed syntax that is invalid in this parsing context.
-#[must_use = "this 'UnsupportedParsedSyntax' contains syntax not supported in this parsing context, which must be handled."]
+#[must_use = "this 'InvalidSyntax' contains syntax not supported in this parsing context, which must be handled."]
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct InvalidParsedSyntax(CompletedMarker);
+pub struct InvalidSyntax(CompletedMarker);
 
-impl InvalidParsedSyntax {
+impl InvalidSyntax {
 	pub fn new(syntax: CompletedMarker) -> Self {
 		Self(syntax)
 	}
@@ -476,8 +512,8 @@ impl InvalidParsedSyntax {
 	}
 }
 
-impl From<CompletedMarker> for InvalidParsedSyntax {
+impl From<CompletedMarker> for InvalidSyntax {
 	fn from(marker: CompletedMarker) -> Self {
-		InvalidParsedSyntax::new(marker)
+		InvalidSyntax::new(marker)
 	}
 }

@@ -4,7 +4,6 @@ use crate::syntax::decl::parse_parameter_list;
 use crate::syntax::js_parse_error;
 use crate::syntax::stmt::{is_semi, parse_block_impl};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
-use crate::ConditionalSyntax::Invalid;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, ConditionalSyntax, SyntaxFeature};
@@ -74,22 +73,20 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 
 	let id = parse_identifier_binding(guard);
 
-	match id {
-		Absent => {
-			if kind == JS_FUNCTION_DECLARATION {
-				guard.error(
-					guard.err_builder(
-						"expected a name for the function in a function declaration, but found none",
-					)
-						.primary(guard.cur_tok().range, "")
-				);
-			}
-
-			guard.missing();
-		}
-		Present(Invalid(_)) => uses_invalid_syntax = true,
-		_ => {}
+	let id_result = if kind == JS_FUNCTION_DECLARATION {
+		id.or_missing_with_error(guard, |p, range| {
+			p.err_builder(
+				"expected a name for the function in a function declaration, but found none",
+			)
+			.primary(range, "")
+		})
+	} else {
+		id.or_missing(guard)
 	};
+
+	if id_result.is_err() {
+		uses_invalid_syntax = true;
+	}
 
 	let type_parameters =
 		TypeScript.parse_exclusive_syntax(guard, parse_ts_parameter_types, |p, marker| {
@@ -97,10 +94,8 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 				.primary(marker.range(p), "")
 		});
 
-	match type_parameters {
-		Present(Invalid(_)) => uses_invalid_syntax = true,
-		Absent if TypeScript.is_supported(guard) => guard.missing(),
-		_ => (),
+	if type_parameters.or_missing(guard).is_err() {
+		uses_invalid_syntax = true;
 	}
 
 	parse_parameter_list(guard).or_missing_with_error(guard, js_parse_error::expected_parameters);
@@ -111,10 +106,8 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 				.primary(marker.range(p), "")
 		});
 
-	match return_type {
-		Present(Invalid(_)) => uses_invalid_syntax = true,
-		Absent if TypeScript.is_supported(guard) => guard.missing(),
-		_ => (),
+	if return_type.or_missing(guard).is_err() {
+		uses_invalid_syntax = true;
 	}
 
 	if kind == JS_FUNCTION_DECLARATION {

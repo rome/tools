@@ -100,13 +100,15 @@ JsRoot {
       1: FUNCTION_KW@20..29 "function" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@29..33
         0: IDENT@29..33 "test" [] []
-      3: JS_PARAMETER_LIST@33..41
+      3: (empty)
+      4: JS_PARAMETER_LIST@33..41
         0: L_PAREN@33..34 "(" [] []
         1: LIST@34..39
           0: JS_UNKNOWN_BINDING@34..39
             0: IDENT@34..39 "await" [] []
         2: R_PAREN@39..41 ")" [] [Whitespace(" ")]
-      4: JS_FUNCTION_BODY@41..43
+      5: (empty)
+      6: JS_FUNCTION_BODY@41..43
         0: L_CURLY@41..42 "{" [] []
         1: LIST@42..42
         2: LIST@42..42
@@ -116,13 +118,15 @@ JsRoot {
       1: STAR@52..54 "*" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@54..58
         0: IDENT@54..58 "test" [] []
-      3: JS_PARAMETER_LIST@58..66
+      3: (empty)
+      4: JS_PARAMETER_LIST@58..66
         0: L_PAREN@58..59 "(" [] []
         1: LIST@59..64
           0: JS_UNKNOWN_BINDING@59..64
             0: IDENT@59..64 "yield" [] []
         2: R_PAREN@64..66 ")" [] [Whitespace(" ")]
-      4: JS_FUNCTION_BODY@66..68
+      5: (empty)
+      6: JS_FUNCTION_BODY@66..68
         0: L_CURLY@66..67 "{" [] []
         1: LIST@67..67
         2: LIST@67..67

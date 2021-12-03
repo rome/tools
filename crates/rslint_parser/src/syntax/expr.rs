@@ -23,7 +23,6 @@ use crate::syntax::js_parse_error::{
 };
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::is_semi;
-use crate::ConditionalSyntax::Invalid;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
@@ -906,23 +905,15 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 						if parsed_parameters.is_absent() {
 							// test_err async_arrow_expr_await_parameter
 							// let a = async await => {}
-							match parse_identifier_binding(in_async_p) {
-								Absent => {
-									in_async_p.missing();
-									in_async_p.error(expected_parameter(
-										in_async_p,
-										in_async_p.cur_tok().range,
-									))
-								}
-								Present(Invalid(invalid)) => {
-									let identifier =
-										invalid.or_to_unknown(in_async_p, JS_UNKNOWN_BINDING);
-									let list =
-										identifier.precede(in_async_p).complete(in_async_p, LIST);
-									let parameter_list = list.precede(in_async_p);
-									parameter_list.complete(in_async_p, JS_PARAMETER_LIST);
-								}
-								_ => {}
+							if let Err(invalid) = parse_identifier_binding(in_async_p)
+								.or_missing_with_error(in_async_p, expected_parameter)
+							{
+								let identifier =
+									invalid.or_to_unknown(in_async_p, JS_UNKNOWN_BINDING);
+								let list =
+									identifier.precede(in_async_p).complete(in_async_p, LIST);
+								let parameter_list = list.precede(in_async_p);
+								parameter_list.complete(in_async_p, JS_PARAMETER_LIST);
 							}
 						}
 

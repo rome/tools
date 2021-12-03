@@ -257,16 +257,11 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 				.or_missing_with_error(p, expected_assignment_target);
 			JS_OBJECT_PROPERTY_ASSIGNMENT_TARGET
 		} else {
-			match parse_identifier_assignment_target(p) {
-				Present(Invalid(identifier)) => {
-					valid = false;
-					identifier.abandon(p);
-				}
-				Absent => {
-					p.missing();
-					p.error(expected_identifier(p, p.cur_tok().range))
-				}
-				_ => {}
+			if let Err(invalid) =
+				parse_identifier_assignment_target(p).or_missing_with_error(p, expected_identifier)
+			{
+				valid = false;
+				invalid.abandon(p);
 			}
 			JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET
 		};
