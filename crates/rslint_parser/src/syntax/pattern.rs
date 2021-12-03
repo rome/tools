@@ -73,7 +73,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 
 				let recovery = ParseRecovery::new(
 					Self::unknown_pattern_kind(),
-					token_set!(EOF, T![,], T![']'], T![=], T![;], T![...]),
+					token_set!(EOF, T![,], T![']'], T![=], T![;], T![...], T![')']),
 				)
 				.enable_recovery_on_line_break();
 
@@ -187,7 +187,7 @@ pub(crate) trait ParseObjectPattern {
 				}
 				let recovery_set = ParseRecovery::new(
 					Self::unknown_pattern_kind(),
-					token_set!(EOF, T![,], T!['}'], T![...], T![;]),
+					token_set!(EOF, T![,], T!['}'], T![...], T![;], T![')']),
 				)
 				.enable_recovery_on_line_break();
 
