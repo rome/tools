@@ -41,13 +41,14 @@ JsRoot {
                     set_token: SET_KW@42..46 "set" [] [Whitespace(" ")],
                     name: missing (required),
                     l_paren_token: missing (required),
-                    parameter: JsObjectBinding {
+                    parameter: missing (required),
+                    r_paren_token: missing (required),
+                    body: JsFunctionBody {
                         l_curly_token: L_CURLY@46..47 "{" [] [],
-                        properties: [],
+                        directives: [],
+                        statements: [],
                         r_curly_token: R_CURLY@47..49 "}" [] [Whitespace(" ")],
                     },
-                    r_paren_token: missing (required),
-                    body: missing (required),
                 },
             ],
             r_curly_token: R_CURLY@49..50 "}" [] [],
@@ -101,12 +102,13 @@ JsRoot {
           0: SET_KW@42..46 "set" [] [Whitespace(" ")]
           1: (empty)
           2: (empty)
-          3: JS_OBJECT_BINDING@46..49
+          3: (empty)
+          4: (empty)
+          5: JS_FUNCTION_BODY@46..49
             0: L_CURLY@46..47 "{" [] []
             1: LIST@47..47
-            2: R_CURLY@47..49 "}" [] [Whitespace(" ")]
-          4: (empty)
-          5: (empty)
+            2: LIST@47..47
+            3: R_CURLY@47..49 "}" [] [Whitespace(" ")]
       4: R_CURLY@49..50 "}" [] []
     3: JS_CLASS_DECLARATION@50..67
       0: CLASS_KW@50..57 "class" [Whitespace("\n")] [Whitespace(" ")]
@@ -150,18 +152,18 @@ error[SyntaxError]: expected `'('` but instead found `{`
   │                 ^ unexpected
 
 --
-error[SyntaxError]: expected `')'` but instead found `}`
-  ┌─ class_decl_err.js:3:20
+error[SyntaxError]: expected a parameter but instead found '{'
+  ┌─ class_decl_err.js:3:17
   │
 3 │ class foo { set {} }
-  │                    ^ unexpected
+  │                 ^ Expected a parameter here
 
 --
-error[SyntaxError]: expected a function body but instead found '}'
-  ┌─ class_decl_err.js:3:20
+error[SyntaxError]: expected `')'` but instead found `{`
+  ┌─ class_decl_err.js:3:17
   │
 3 │ class foo { set {} }
-  │                    ^ Expected a function body here
+  │                 ^ unexpected
 
 --
 error[SyntaxError]: class declarations must have a name

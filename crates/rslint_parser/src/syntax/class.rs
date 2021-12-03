@@ -626,22 +626,23 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 				// So we've seen a get that now must be followed by a getter/setter name
 				parse_class_member_name(p)
 					.or_missing_with_error(p, js_parse_error::expected_class_member_name);
-				p.expect_required(T!['(']);
 
 				let completed = if is_getter {
+					p.expect_required(T!['(']);
 					p.expect_required(T![')']);
 					ts_return_type(p);
 					function_body(p).or_missing_with_error(p, js_parse_error::expected_class_body);
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
-					// TODO: review error handling once the pattern functions is refactored
+					p.state.allow_object_expr = p.expect_required(T!['(']);
 					parse_formal_param_pat(p)
 						.or_missing_with_error(p, js_parse_error::expected_parameter);
 					p.expect_required(T![')']);
 					function_body(p)
 						.or_missing_with_error(p, js_parse_error::expected_function_body);
 
+					p.state.allow_object_expr = true;
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
 				};
 
