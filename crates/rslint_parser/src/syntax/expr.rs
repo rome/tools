@@ -514,6 +514,7 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 // foo.for
 // foo?.for
 // foo?.bar
+// foo.#bar
 pub fn static_member_expression(
 	p: &mut Parser,
 	lhs: CompletedMarker,
