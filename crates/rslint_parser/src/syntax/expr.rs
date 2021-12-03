@@ -514,6 +514,7 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 // foo.for
 // foo?.for
 // foo?.bar
+// foo.#bar
 pub fn static_member_expression(
 	p: &mut Parser,
 	lhs: CompletedMarker,
@@ -522,18 +523,7 @@ pub fn static_member_expression(
 	let m = lhs.precede(p);
 	p.expect_required(operator);
 
-	let member_name = any_reference_member(p);
-
-	if !p.syntax.class_fields {
-		if let Some(priv_range) = member_name.filter(|x| x.kind() == JS_REFERENCE_PRIVATE_MEMBER) {
-			let err = p
-				.err_builder("private identifiers are unsupported")
-				.primary(priv_range.range(p), "");
-
-			p.error(err);
-			return m.complete(p, ERROR);
-		}
-	}
+	any_reference_member(p);
 
 	m.complete(p, JS_STATIC_MEMBER_EXPRESSION)
 }

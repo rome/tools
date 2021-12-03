@@ -74,13 +74,26 @@ JsRoot {
             },
             semicolon_token: missing (optional),
         },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@53..57 "foo" [Whitespace("\n")] [],
+                },
+                operator: DOT@57..58 "." [] [],
+                member: JsReferencePrivateMember {
+                    hash_token: HASH@58..59 "#" [] [],
+                    name_token: IDENT@59..62 "bar" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
     ],
 }
 
-0: JS_ROOT@0..54
+0: JS_ROOT@0..63
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..53
+  2: LIST@0..62
     0: JS_EXPRESSION_STATEMENT@0..7
       0: JS_STATIC_MEMBER_EXPRESSION@0..7
         0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
@@ -129,4 +142,13 @@ JsRoot {
         2: JS_REFERENCE_IDENTIFIER_MEMBER@50..53
           0: IDENT@50..53 "bar" [] []
       1: (empty)
-  3: EOF@53..54 "" [Whitespace("\n")] []
+    6: JS_EXPRESSION_STATEMENT@53..62
+      0: JS_STATIC_MEMBER_EXPRESSION@53..62
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@53..57
+          0: IDENT@53..57 "foo" [Whitespace("\n")] []
+        1: DOT@57..58 "." [] []
+        2: JS_REFERENCE_PRIVATE_MEMBER@58..62
+          0: HASH@58..59 "#" [] []
+          1: IDENT@59..62 "bar" [] []
+      1: (empty)
+  3: EOF@62..63 "" [Whitespace("\n")] []

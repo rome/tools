@@ -171,15 +171,12 @@ macro_rules! match_ast {
     }};
 }
 
-/// A structure describing the syntax features the parser will accept. The
-/// default is an ECMAScript 2021 Script without any proposals.
+/// A structure describing the syntax features the parser will accept.
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Syntax {
 	pub file_kind: FileKind,
 	pub top_level_await: bool,
 	pub global_return: bool,
-	pub class_fields: bool,
-	pub decorators: bool,
 }
 
 impl Syntax {
@@ -204,16 +201,6 @@ impl Syntax {
 		self
 	}
 
-	pub fn class_fields(mut self) -> Self {
-		self.class_fields = true;
-		self
-	}
-
-	pub fn decorators(mut self) -> Self {
-		self.decorators = true;
-		self
-	}
-
 	pub fn script(mut self) -> Self {
 		self.file_kind = FileKind::Script;
 		self
@@ -221,12 +208,12 @@ impl Syntax {
 
 	pub fn module(mut self) -> Self {
 		self.file_kind = FileKind::Module;
-		self.class_fields()
+		self
 	}
 
 	pub fn typescript(mut self) -> Self {
 		self.file_kind = FileKind::TypeScript;
-		self.class_fields().decorators().top_level_await()
+		self.top_level_await()
 	}
 }
 
