@@ -997,12 +997,12 @@ impl JsParenthesizedExpression {
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsReferenceIdentifierExpression {
+pub struct JsIdentifierExpression {
 	pub(crate) syntax: SyntaxNode,
 }
-impl JsReferenceIdentifierExpression {
-	pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![ident])
+impl JsIdentifierExpression {
+	pub fn name(&self) -> SyntaxResult<JsReferenceIdentifier> {
+		support::required_node(&self.syntax)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1024,9 +1024,7 @@ impl JsStaticMemberExpression {
 	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
 		support::find_required_token(&self.syntax, &[T ! [.], T ! [?.]])
 	}
-	pub fn member(&self) -> SyntaxResult<JsAnyReferenceMember> {
-		support::required_node(&self.syntax)
-	}
+	pub fn member(&self) -> SyntaxResult<JsAnyName> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsSuperExpression {
@@ -1293,6 +1291,15 @@ pub struct JsArrayHole {
 }
 impl JsArrayHole {}
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsReferenceIdentifier {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsReferenceIdentifier {
+	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![ident])
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsLiteralMemberName {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1395,7 +1402,7 @@ pub struct JsShorthandPropertyObjectMember {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsShorthandPropertyObjectMember {
-	pub fn name(&self) -> SyntaxResult<JsReferenceIdentifierExpression> {
+	pub fn name(&self) -> SyntaxResult<JsReferenceIdentifier> {
 		support::required_node(&self.syntax)
 	}
 }
@@ -1667,9 +1674,7 @@ impl JsStaticMemberAssignment {
 	pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [.])
 	}
-	pub fn member(&self) -> SyntaxResult<JsAnyReferenceMember> {
-		support::required_node(&self.syntax)
-	}
+	pub fn member(&self) -> SyntaxResult<JsAnyName> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsComputedMemberAssignment {
@@ -1770,9 +1775,7 @@ pub struct JsObjectAssignmentPatternProperty {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsObjectAssignmentPatternProperty {
-	pub fn member(&self) -> SyntaxResult<JsReferenceIdentifierMember> {
-		support::required_node(&self.syntax)
-	}
+	pub fn member(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax) }
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [:])
 	}
@@ -1792,11 +1795,11 @@ impl JsObjectAssignmentPatternRest {
 	pub fn target(&self) -> SyntaxResult<JsAnyAssignment> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsReferenceIdentifierMember {
+pub struct JsName {
 	pub(crate) syntax: SyntaxNode,
 }
-impl JsReferenceIdentifierMember {
-	pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
+impl JsName {
+	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![ident])
 	}
 }
@@ -1884,15 +1887,6 @@ pub struct JsObjectBindingPatternShorthandProperty {
 impl JsObjectBindingPatternShorthandProperty {
 	pub fn identifier(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
 	pub fn init(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct Name {
-	pub(crate) syntax: SyntaxNode,
-}
-impl Name {
-	pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![ident])
-	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsStringLiteralExpression {
@@ -1983,6 +1977,15 @@ impl NamedImports {
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct Name {
+	pub(crate) syntax: SyntaxNode,
+}
+impl Name {
+	pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![ident])
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct ImportStringSpecifier {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1999,14 +2002,14 @@ impl Specifier {
 	pub fn name(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsReferencePrivateMember {
+pub struct JsPrivateName {
 	pub(crate) syntax: SyntaxNode,
 }
-impl JsReferencePrivateMember {
+impl JsPrivateName {
 	pub fn hash_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [#])
 	}
-	pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
+	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![ident])
 	}
 }
@@ -2605,7 +2608,7 @@ pub enum JsAnyExpression {
 	JsLogicalExpression(JsLogicalExpression),
 	JsObjectExpression(JsObjectExpression),
 	JsParenthesizedExpression(JsParenthesizedExpression),
-	JsReferenceIdentifierExpression(JsReferenceIdentifierExpression),
+	JsIdentifierExpression(JsIdentifierExpression),
 	JsSequenceExpression(JsSequenceExpression),
 	JsStaticMemberExpression(JsStaticMemberExpression),
 	JsSuperExpression(JsSuperExpression),
@@ -2690,9 +2693,9 @@ pub enum JsAnyAssignmentPattern {
 	JsObjectAssignmentPattern(JsObjectAssignmentPattern),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub enum JsAnyReferenceMember {
-	JsReferenceIdentifierMember(JsReferenceIdentifierMember),
-	JsReferencePrivateMember(JsReferencePrivateMember),
+pub enum JsAnyName {
+	JsName(JsName),
+	JsPrivateName(JsPrivateName),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectMemberName {
@@ -4678,8 +4681,8 @@ impl std::fmt::Debug for JsParenthesizedExpression {
 			.finish()
 	}
 }
-impl AstNode for JsReferenceIdentifierExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REFERENCE_IDENTIFIER_EXPRESSION }
+impl AstNode for JsIdentifierExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IDENTIFIER_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4689,10 +4692,10 @@ impl AstNode for JsReferenceIdentifierExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsReferenceIdentifierExpression {
+impl std::fmt::Debug for JsIdentifierExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsReferenceIdentifierExpression")
-			.field("name_token", &support::DebugSyntaxResult(self.name_token()))
+		f.debug_struct("JsIdentifierExpression")
+			.field("name", &support::DebugSyntaxResult(self.name()))
 			.finish()
 	}
 }
@@ -5231,6 +5234,27 @@ impl AstNode for JsArrayHole {
 impl std::fmt::Debug for JsArrayHole {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsArrayHole").finish()
+	}
+}
+impl AstNode for JsReferenceIdentifier {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REFERENCE_IDENTIFIER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsReferenceIdentifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsReferenceIdentifier")
+			.field(
+				"value_token",
+				&support::DebugSyntaxResult(self.value_token()),
+			)
+			.finish()
 	}
 }
 impl AstNode for JsLiteralMemberName {
@@ -6145,8 +6169,8 @@ impl std::fmt::Debug for JsObjectAssignmentPatternRest {
 			.finish()
 	}
 }
-impl AstNode for JsReferenceIdentifierMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REFERENCE_IDENTIFIER_MEMBER }
+impl AstNode for JsName {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6156,10 +6180,13 @@ impl AstNode for JsReferenceIdentifierMember {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsReferenceIdentifierMember {
+impl std::fmt::Debug for JsName {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsReferenceIdentifierMember")
-			.field("name_token", &support::DebugSyntaxResult(self.name_token()))
+		f.debug_struct("JsName")
+			.field(
+				"value_token",
+				&support::DebugSyntaxResult(self.value_token()),
+			)
 			.finish()
 	}
 }
@@ -6317,27 +6344,6 @@ impl std::fmt::Debug for JsObjectBindingPatternShorthandProperty {
 		f.debug_struct("JsObjectBindingPatternShorthandProperty")
 			.field("identifier", &support::DebugSyntaxResult(self.identifier()))
 			.field("init", &support::DebugOptionalNode(self.init()))
-			.finish()
-	}
-}
-impl AstNode for Name {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == NAME }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for Name {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("Name")
-			.field(
-				"ident_token",
-				&support::DebugSyntaxResult(self.ident_token()),
-			)
 			.finish()
 	}
 }
@@ -6532,6 +6538,27 @@ impl std::fmt::Debug for NamedImports {
 			.finish()
 	}
 }
+impl AstNode for Name {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == NAME }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for Name {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("Name")
+			.field(
+				"ident_token",
+				&support::DebugSyntaxResult(self.ident_token()),
+			)
+			.finish()
+	}
+}
 impl AstNode for ImportStringSpecifier {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == IMPORT_STRING_SPECIFIER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6571,8 +6598,8 @@ impl std::fmt::Debug for Specifier {
 			.finish()
 	}
 }
-impl AstNode for JsReferencePrivateMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REFERENCE_PRIVATE_MEMBER }
+impl AstNode for JsPrivateName {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PRIVATE_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6582,11 +6609,14 @@ impl AstNode for JsReferencePrivateMember {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsReferencePrivateMember {
+impl std::fmt::Debug for JsPrivateName {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsReferencePrivateMember")
+		f.debug_struct("JsPrivateName")
 			.field("hash_token", &support::DebugSyntaxResult(self.hash_token()))
-			.field("name_token", &support::DebugSyntaxResult(self.name_token()))
+			.field(
+				"value_token",
+				&support::DebugSyntaxResult(self.value_token()),
+			)
 			.finish()
 	}
 }
@@ -8110,9 +8140,9 @@ impl From<JsParenthesizedExpression> for JsAnyExpression {
 		JsAnyExpression::JsParenthesizedExpression(node)
 	}
 }
-impl From<JsReferenceIdentifierExpression> for JsAnyExpression {
-	fn from(node: JsReferenceIdentifierExpression) -> JsAnyExpression {
-		JsAnyExpression::JsReferenceIdentifierExpression(node)
+impl From<JsIdentifierExpression> for JsAnyExpression {
+	fn from(node: JsIdentifierExpression) -> JsAnyExpression {
+		JsAnyExpression::JsIdentifierExpression(node)
 	}
 }
 impl From<JsSequenceExpression> for JsAnyExpression {
@@ -8192,7 +8222,7 @@ impl AstNode for JsAnyExpression {
 			| JS_LOGICAL_EXPRESSION
 			| JS_OBJECT_EXPRESSION
 			| JS_PARENTHESIZED_EXPRESSION
-			| JS_REFERENCE_IDENTIFIER_EXPRESSION
+			| JS_IDENTIFIER_EXPRESSION
 			| JS_SEQUENCE_EXPRESSION
 			| JS_STATIC_MEMBER_EXPRESSION
 			| JS_SUPER_EXPRESSION
@@ -8249,10 +8279,8 @@ impl AstNode for JsAnyExpression {
 			JS_PARENTHESIZED_EXPRESSION => {
 				JsAnyExpression::JsParenthesizedExpression(JsParenthesizedExpression { syntax })
 			}
-			JS_REFERENCE_IDENTIFIER_EXPRESSION => {
-				JsAnyExpression::JsReferenceIdentifierExpression(JsReferenceIdentifierExpression {
-					syntax,
-				})
+			JS_IDENTIFIER_EXPRESSION => {
+				JsAnyExpression::JsIdentifierExpression(JsIdentifierExpression { syntax })
 			}
 			JS_SEQUENCE_EXPRESSION => {
 				JsAnyExpression::JsSequenceExpression(JsSequenceExpression { syntax })
@@ -8307,7 +8335,7 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::JsLogicalExpression(it) => &it.syntax,
 			JsAnyExpression::JsObjectExpression(it) => &it.syntax,
 			JsAnyExpression::JsParenthesizedExpression(it) => &it.syntax,
-			JsAnyExpression::JsReferenceIdentifierExpression(it) => &it.syntax,
+			JsAnyExpression::JsIdentifierExpression(it) => &it.syntax,
 			JsAnyExpression::JsSequenceExpression(it) => &it.syntax,
 			JsAnyExpression::JsStaticMemberExpression(it) => &it.syntax,
 			JsAnyExpression::JsSuperExpression(it) => &it.syntax,
@@ -8346,7 +8374,7 @@ impl std::fmt::Debug for JsAnyExpression {
 			JsAnyExpression::JsLogicalExpression(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::JsObjectExpression(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::JsParenthesizedExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsReferenceIdentifierExpression(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyExpression::JsIdentifierExpression(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::JsSequenceExpression(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::JsStaticMemberExpression(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::JsSuperExpression(it) => std::fmt::Debug::fmt(it, f),
@@ -8924,49 +8952,34 @@ impl std::fmt::Debug for JsAnyAssignmentPattern {
 		}
 	}
 }
-impl From<JsReferenceIdentifierMember> for JsAnyReferenceMember {
-	fn from(node: JsReferenceIdentifierMember) -> JsAnyReferenceMember {
-		JsAnyReferenceMember::JsReferenceIdentifierMember(node)
-	}
+impl From<JsName> for JsAnyName {
+	fn from(node: JsName) -> JsAnyName { JsAnyName::JsName(node) }
 }
-impl From<JsReferencePrivateMember> for JsAnyReferenceMember {
-	fn from(node: JsReferencePrivateMember) -> JsAnyReferenceMember {
-		JsAnyReferenceMember::JsReferencePrivateMember(node)
-	}
+impl From<JsPrivateName> for JsAnyName {
+	fn from(node: JsPrivateName) -> JsAnyName { JsAnyName::JsPrivateName(node) }
 }
-impl AstNode for JsAnyReferenceMember {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		matches!(
-			kind,
-			JS_REFERENCE_IDENTIFIER_MEMBER | JS_REFERENCE_PRIVATE_MEMBER
-		)
-	}
+impl AstNode for JsAnyName {
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_NAME | JS_PRIVATE_NAME) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			JS_REFERENCE_IDENTIFIER_MEMBER => {
-				JsAnyReferenceMember::JsReferenceIdentifierMember(JsReferenceIdentifierMember {
-					syntax,
-				})
-			}
-			JS_REFERENCE_PRIVATE_MEMBER => {
-				JsAnyReferenceMember::JsReferencePrivateMember(JsReferencePrivateMember { syntax })
-			}
+			JS_NAME => JsAnyName::JsName(JsName { syntax }),
+			JS_PRIVATE_NAME => JsAnyName::JsPrivateName(JsPrivateName { syntax }),
 			_ => return None,
 		};
 		Some(res)
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			JsAnyReferenceMember::JsReferenceIdentifierMember(it) => &it.syntax,
-			JsAnyReferenceMember::JsReferencePrivateMember(it) => &it.syntax,
+			JsAnyName::JsName(it) => &it.syntax,
+			JsAnyName::JsPrivateName(it) => &it.syntax,
 		}
 	}
 }
-impl std::fmt::Debug for JsAnyReferenceMember {
+impl std::fmt::Debug for JsAnyName {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
-			JsAnyReferenceMember::JsReferenceIdentifierMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyReferenceMember::JsReferencePrivateMember(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyName::JsName(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyName::JsPrivateName(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -10427,7 +10440,7 @@ impl std::fmt::Display for JsAnyAssignmentPattern {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsAnyReferenceMember {
+impl std::fmt::Display for JsAnyName {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -10872,7 +10885,7 @@ impl std::fmt::Display for JsParenthesizedExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsReferenceIdentifierExpression {
+impl std::fmt::Display for JsIdentifierExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -10993,6 +11006,11 @@ impl std::fmt::Display for JsSpread {
 	}
 }
 impl std::fmt::Display for JsArrayHole {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsReferenceIdentifier {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -11172,7 +11190,7 @@ impl std::fmt::Display for JsObjectAssignmentPatternRest {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsReferenceIdentifierMember {
+impl std::fmt::Display for JsName {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -11208,11 +11226,6 @@ impl std::fmt::Display for JsObjectBindingPatternRest {
 	}
 }
 impl std::fmt::Display for JsObjectBindingPatternShorthandProperty {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for Name {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -11262,6 +11275,11 @@ impl std::fmt::Display for NamedImports {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for Name {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for ImportStringSpecifier {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -11272,7 +11290,7 @@ impl std::fmt::Display for Specifier {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsReferencePrivateMember {
+impl std::fmt::Display for JsPrivateName {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

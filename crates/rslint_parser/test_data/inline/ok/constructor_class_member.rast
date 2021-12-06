@@ -36,13 +36,15 @@ JsRoot {
                                             this_token: THIS_KW@29..36 "this" [Whitespace("\n\t\t")] [],
                                         },
                                         dot_token: DOT@36..37 "." [] [],
-                                        member: JsReferenceIdentifierMember {
-                                            name_token: IDENT@37..39 "a" [] [Whitespace(" ")],
+                                        member: JsName {
+                                            value_token: IDENT@37..39 "a" [] [Whitespace(" ")],
                                         },
                                     },
                                     operator_token: EQ@39..41 "=" [] [Whitespace(" ")],
-                                    right: JsReferenceIdentifierExpression {
-                                        name_token: IDENT@41..42 "a" [] [],
+                                    right: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@41..42 "a" [] [],
+                                        },
                                     },
                                 },
                                 semicolon_token: SEMICOLON@42..43 ";" [] [],
@@ -88,13 +90,15 @@ JsRoot {
                                             this_token: THIS_KW@81..88 "this" [Whitespace("\n\t\t")] [],
                                         },
                                         dot_token: DOT@88..89 "." [] [],
-                                        member: JsReferenceIdentifierMember {
-                                            name_token: IDENT@89..91 "b" [] [Whitespace(" ")],
+                                        member: JsName {
+                                            value_token: IDENT@89..91 "b" [] [Whitespace(" ")],
                                         },
                                     },
                                     operator_token: EQ@91..93 "=" [] [Whitespace(" ")],
-                                    right: JsReferenceIdentifierExpression {
-                                        name_token: IDENT@93..94 "b" [] [],
+                                    right: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@93..94 "b" [] [],
+                                        },
                                     },
                                 },
                                 semicolon_token: SEMICOLON@94..95 ";" [] [],
@@ -138,11 +142,12 @@ JsRoot {
                     0: JS_THIS_EXPRESSION@29..36
                       0: THIS_KW@29..36 "this" [Whitespace("\n\t\t")] []
                     1: DOT@36..37 "." [] []
-                    2: JS_REFERENCE_IDENTIFIER_MEMBER@37..39
+                    2: JS_NAME@37..39
                       0: IDENT@37..39 "a" [] [Whitespace(" ")]
                   1: EQ@39..41 "=" [] [Whitespace(" ")]
-                  2: JS_REFERENCE_IDENTIFIER_EXPRESSION@41..42
-                    0: IDENT@41..42 "a" [] []
+                  2: JS_IDENTIFIER_EXPRESSION@41..42
+                    0: JS_REFERENCE_IDENTIFIER@41..42
+                      0: IDENT@41..42 "a" [] []
                 1: SEMICOLON@42..43 ";" [] []
             3: R_CURLY@43..46 "}" [Whitespace("\n\t")] []
       4: R_CURLY@46..48 "}" [Whitespace("\n")] []
@@ -171,11 +176,12 @@ JsRoot {
                     0: JS_THIS_EXPRESSION@81..88
                       0: THIS_KW@81..88 "this" [Whitespace("\n\t\t")] []
                     1: DOT@88..89 "." [] []
-                    2: JS_REFERENCE_IDENTIFIER_MEMBER@89..91
+                    2: JS_NAME@89..91
                       0: IDENT@89..91 "b" [] [Whitespace(" ")]
                   1: EQ@91..93 "=" [] [Whitespace(" ")]
-                  2: JS_REFERENCE_IDENTIFIER_EXPRESSION@93..94
-                    0: IDENT@93..94 "b" [] []
+                  2: JS_IDENTIFIER_EXPRESSION@93..94
+                    0: JS_REFERENCE_IDENTIFIER@93..94
+                      0: IDENT@93..94 "b" [] []
                 1: SEMICOLON@94..95 ";" [] []
             3: R_CURLY@95..98 "}" [Whitespace("\n\t")] []
       4: R_CURLY@98..100 "}" [Whitespace("\n")] []

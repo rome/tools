@@ -54,8 +54,10 @@ JsRoot {
                                     },
                                     init: JsEqualValueClause {
                                         eq_token: EQ@38..40 "=" [] [Whitespace(" ")],
-                                        expression: JsReferenceIdentifierExpression {
-                                            name_token: IDENT@40..44 "baz" [] [Whitespace(" ")],
+                                        expression: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@40..44 "baz" [] [Whitespace(" ")],
+                                            },
                                         },
                                     },
                                 },
@@ -121,8 +123,9 @@ JsRoot {
                     0: IDENT@34..38 "bar" [] [Whitespace(" ")]
                   3: JS_EQUAL_VALUE_CLAUSE@38..44
                     0: EQ@38..40 "=" [] [Whitespace(" ")]
-                    1: JS_REFERENCE_IDENTIFIER_EXPRESSION@40..44
-                      0: IDENT@40..44 "baz" [] [Whitespace(" ")]
+                    1: JS_IDENTIFIER_EXPRESSION@40..44
+                      0: JS_REFERENCE_IDENTIFIER@40..44
+                        0: IDENT@40..44 "baz" [] [Whitespace(" ")]
               2: R_CURLY@44..46 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@46..50
               0: EQ@46..48 "=" [] [Whitespace(" ")]

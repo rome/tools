@@ -34,8 +34,10 @@ JsRoot {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@13..15 "(" [Whitespace("\n")] [],
                 expression: JsSequenceExpression {
-                    left: JsReferenceIdentifierExpression {
-                        name_token: IDENT@15..16 "a" [] [],
+                    left: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@15..16 "a" [] [],
+                        },
                     },
                     comma_token: COMMA@16..18 "," [] [Whitespace(" ")],
                 },
@@ -44,8 +46,10 @@ JsRoot {
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: JsReferenceIdentifierExpression {
-                name_token: IDENT@19..20 "b" [] [],
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@19..20 "b" [] [],
+                },
             },
             semicolon_token: missing (optional),
         },
@@ -114,16 +118,18 @@ JsRoot {
       0: JS_PARENTHESIZED_EXPRESSION@13..19
         0: L_PAREN@13..15 "(" [Whitespace("\n")] []
         1: JS_SEQUENCE_EXPRESSION@15..19
-          0: JS_REFERENCE_IDENTIFIER_EXPRESSION@15..16
-            0: IDENT@15..16 "a" [] []
+          0: JS_IDENTIFIER_EXPRESSION@15..16
+            0: JS_REFERENCE_IDENTIFIER@15..16
+              0: IDENT@15..16 "a" [] []
           1: COMMA@16..18 "," [] [Whitespace(" ")]
           2: JS_UNKNOWN_EXPRESSION@18..19
             0: COMMA@18..19 "," [] []
           3: (empty)
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@19..20
-      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@19..20
-        0: IDENT@19..20 "b" [] []
+      0: JS_IDENTIFIER_EXPRESSION@19..20
+        0: JS_REFERENCE_IDENTIFIER@19..20
+          0: IDENT@19..20 "b" [] []
       1: (empty)
     3: JS_UNKNOWN_STATEMENT@20..25
       0: R_PAREN@20..22 ")" [] [Whitespace(" ")]

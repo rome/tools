@@ -6,8 +6,10 @@ JsRoot {
             expression: JsUnaryExpression {
                 operator: DELETE_KW@0..7 "delete" [] [Whitespace(" ")],
                 argument: JsComputedMemberExpression {
-                    object: JsReferenceIdentifierExpression {
-                        name_token: IDENT@7..8 "a" [] [],
+                    object: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@7..8 "a" [] [],
+                        },
                     },
                     optional_chain_token_token: missing (optional),
                     l_brack_token: L_BRACK@8..9 "[" [] [],
@@ -19,8 +21,10 @@ JsRoot {
         JsExpressionStatement {
             expression: JsUnaryExpression {
                 operator: VOID_KW@17..23 "void" [Whitespace("\n")] [Whitespace(" ")],
-                argument: JsReferenceIdentifierExpression {
-                    name_token: IDENT@23..24 "a" [] [],
+                argument: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@23..24 "a" [] [],
+                    },
                 },
             },
             semicolon_token: SEMICOLON@24..25 ";" [] [],
@@ -28,8 +32,10 @@ JsRoot {
         JsExpressionStatement {
             expression: JsUnaryExpression {
                 operator: TYPEOF_KW@25..33 "typeof" [Whitespace("\n")] [Whitespace(" ")],
-                argument: JsReferenceIdentifierExpression {
-                    name_token: IDENT@33..34 "a" [] [],
+                argument: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@33..34 "a" [] [],
+                    },
                 },
             },
             semicolon_token: SEMICOLON@34..35 ";" [] [],
@@ -75,8 +81,10 @@ JsRoot {
                 left: JsBinaryExpression {
                     left: JsUnaryExpression {
                         operator: MINUS@54..57 "-" [Whitespace("\n\n")] [],
-                        argument: JsReferenceIdentifierExpression {
-                            name_token: IDENT@57..59 "a" [] [Whitespace(" ")],
+                        argument: JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@57..59 "a" [] [Whitespace(" ")],
+                            },
                         },
                     },
                     operator: PLUS@59..61 "+" [] [Whitespace(" ")],
@@ -96,8 +104,9 @@ JsRoot {
       0: JS_UNARY_EXPRESSION@0..16
         0: DELETE_KW@0..7 "delete" [] [Whitespace(" ")]
         1: JS_COMPUTED_MEMBER_EXPRESSION@7..16
-          0: JS_REFERENCE_IDENTIFIER_EXPRESSION@7..8
-            0: IDENT@7..8 "a" [] []
+          0: JS_IDENTIFIER_EXPRESSION@7..8
+            0: JS_REFERENCE_IDENTIFIER@7..8
+              0: IDENT@7..8 "a" [] []
           1: L_BRACK@8..9 "[" [] []
           2: JS_STRING_LITERAL_EXPRESSION@9..15
             0: JS_STRING_LITERAL@9..15 "'test'" [] []
@@ -106,14 +115,16 @@ JsRoot {
     1: JS_EXPRESSION_STATEMENT@17..25
       0: JS_UNARY_EXPRESSION@17..24
         0: VOID_KW@17..23 "void" [Whitespace("\n")] [Whitespace(" ")]
-        1: JS_REFERENCE_IDENTIFIER_EXPRESSION@23..24
-          0: IDENT@23..24 "a" [] []
+        1: JS_IDENTIFIER_EXPRESSION@23..24
+          0: JS_REFERENCE_IDENTIFIER@23..24
+            0: IDENT@23..24 "a" [] []
       1: SEMICOLON@24..25 ";" [] []
     2: JS_EXPRESSION_STATEMENT@25..35
       0: JS_UNARY_EXPRESSION@25..34
         0: TYPEOF_KW@25..33 "typeof" [Whitespace("\n")] [Whitespace(" ")]
-        1: JS_REFERENCE_IDENTIFIER_EXPRESSION@33..34
-          0: IDENT@33..34 "a" [] []
+        1: JS_IDENTIFIER_EXPRESSION@33..34
+          0: JS_REFERENCE_IDENTIFIER@33..34
+            0: IDENT@33..34 "a" [] []
       1: SEMICOLON@34..35 ";" [] []
     3: JS_EXPRESSION_STATEMENT@35..39
       0: JS_UNARY_EXPRESSION@35..38
@@ -144,17 +155,20 @@ JsRoot {
         0: JS_BINARY_EXPRESSION@54..64
           0: JS_UNARY_EXPRESSION@54..59
             0: MINUS@54..57 "-" [Whitespace("\n\n")] []
-            1: JS_REFERENCE_IDENTIFIER_EXPRESSION@57..59
-              0: IDENT@57..59 "a" [] [Whitespace(" ")]
+            1: JS_IDENTIFIER_EXPRESSION@57..59
+              0: JS_REFERENCE_IDENTIFIER@57..59
+                0: IDENT@57..59 "a" [] [Whitespace(" ")]
           1: PLUS@59..61 "+" [] [Whitespace(" ")]
           2: JS_UNARY_EXPRESSION@61..64
             0: MINUS@61..62 "-" [] []
-            1: JS_REFERENCE_IDENTIFIER_EXPRESSION@62..64
-              0: IDENT@62..64 "b" [] [Whitespace(" ")]
+            1: JS_IDENTIFIER_EXPRESSION@62..64
+              0: JS_REFERENCE_IDENTIFIER@62..64
+                0: IDENT@62..64 "b" [] [Whitespace(" ")]
         1: PLUS@64..66 "+" [] [Whitespace(" ")]
         2: JS_UNARY_EXPRESSION@66..68
           0: PLUS@66..67 "+" [] []
-          1: JS_REFERENCE_IDENTIFIER_EXPRESSION@67..68
-            0: IDENT@67..68 "a" [] []
+          1: JS_IDENTIFIER_EXPRESSION@67..68
+            0: JS_REFERENCE_IDENTIFIER@67..68
+              0: IDENT@67..68 "a" [] []
       1: SEMICOLON@68..69 ";" [] []
   3: EOF@69..70 "" [Whitespace("\n")] []

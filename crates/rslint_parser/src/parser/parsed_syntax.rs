@@ -402,6 +402,14 @@ impl ConditionalSyntax {
 		matches!(self, Invalid(_))
 	}
 
+	/// Creates a marker that precedes this valid or invalid node
+	pub fn precede(self, p: &mut Parser) -> Marker {
+		match self {
+			Valid(marker) => marker.precede(p),
+			Invalid(marker) => marker.precede(p),
+		}
+	}
+
 	/// Wraps the parsed syntax in an unknown node if the syntax is [Invalid] or returns the valid syntax
 	pub fn or_invalid_to_unknown(
 		self,

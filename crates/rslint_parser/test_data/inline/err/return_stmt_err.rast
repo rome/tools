@@ -18,8 +18,9 @@ JsRoot {
                     RETURN_KW@7..15 "return" [Whitespace("\n")] [Whitespace(" ")],
                 ),
                 Node(
-                    1: JS_REFERENCE_IDENTIFIER_EXPRESSION@15..18
-                      0: IDENT@15..18 "foo" [] []
+                    1: JS_IDENTIFIER_EXPRESSION@15..18
+                      0: JS_REFERENCE_IDENTIFIER@15..18
+                        0: IDENT@15..18 "foo" [] []
                     ,
                 ),
                 Token(
@@ -39,8 +40,9 @@ JsRoot {
       1: SEMICOLON@6..7 ";" [] []
     1: JS_UNKNOWN_STATEMENT@7..19
       0: RETURN_KW@7..15 "return" [Whitespace("\n")] [Whitespace(" ")]
-      1: JS_REFERENCE_IDENTIFIER_EXPRESSION@15..18
-        0: IDENT@15..18 "foo" [] []
+      1: JS_IDENTIFIER_EXPRESSION@15..18
+        0: JS_REFERENCE_IDENTIFIER@15..18
+          0: IDENT@15..18 "foo" [] []
       2: SEMICOLON@18..19 ";" [] []
   3: EOF@19..20 "" [Whitespace("\n")] []
 --

@@ -12,8 +12,10 @@ JsRoot {
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
-                            expression: JsReferenceIdentifierExpression {
-                                name_token: IDENT@8..13 "async" [] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@8..13 "async" [] [],
+                                },
                             },
                         },
                     },
@@ -37,7 +39,8 @@ JsRoot {
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@6..13
               0: EQ@6..8 "=" [] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@8..13
-                0: IDENT@8..13 "async" [] []
+              1: JS_IDENTIFIER_EXPRESSION@8..13
+                0: JS_REFERENCE_IDENTIFIER@8..13
+                  0: IDENT@8..13 "async" [] []
       1: SEMICOLON@13..14 ";" [] []
   3: EOF@14..15 "" [Whitespace("\n")] []

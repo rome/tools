@@ -25,8 +25,10 @@ JsRoot {
                             await_token: AWAIT_KW@23..31 "await" [Whitespace("\n\t")] [Whitespace(" ")],
                             argument: CallExpr {
                                 type_args: missing (optional),
-                                callee: JsReferenceIdentifierExpression {
-                                    name_token: IDENT@31..36 "inner" [] [],
+                                callee: JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@31..36 "inner" [] [],
+                                    },
                                 },
                                 arguments: ArgList {
                                     l_paren_token: L_PAREN@36..37 "(" [] [],
@@ -45,8 +47,10 @@ JsRoot {
                                     l_paren_token: L_PAREN@48..49 "(" [] [],
                                     expression: CallExpr {
                                         type_args: missing (optional),
-                                        callee: JsReferenceIdentifierExpression {
-                                            name_token: IDENT@49..54 "inner" [] [],
+                                        callee: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@49..54 "inner" [] [],
+                                            },
                                         },
                                         arguments: ArgList {
                                             l_paren_token: L_PAREN@54..55 "(" [] [],
@@ -120,8 +124,9 @@ JsRoot {
             0: JS_AWAIT_EXPRESSION@23..38
               0: AWAIT_KW@23..31 "await" [Whitespace("\n\t")] [Whitespace(" ")]
               1: CALL_EXPR@31..38
-                0: JS_REFERENCE_IDENTIFIER_EXPRESSION@31..36
-                  0: IDENT@31..36 "inner" [] []
+                0: JS_IDENTIFIER_EXPRESSION@31..36
+                  0: JS_REFERENCE_IDENTIFIER@31..36
+                    0: IDENT@31..36 "inner" [] []
                 1: ARG_LIST@36..38
                   0: L_PAREN@36..37 "(" [] []
                   1: LIST@37..37
@@ -134,8 +139,9 @@ JsRoot {
                 1: JS_PARENTHESIZED_EXPRESSION@48..58
                   0: L_PAREN@48..49 "(" [] []
                   1: CALL_EXPR@49..56
-                    0: JS_REFERENCE_IDENTIFIER_EXPRESSION@49..54
-                      0: IDENT@49..54 "inner" [] []
+                    0: JS_IDENTIFIER_EXPRESSION@49..54
+                      0: JS_REFERENCE_IDENTIFIER@49..54
+                        0: IDENT@49..54 "inner" [] []
                     1: ARG_LIST@54..56
                       0: L_PAREN@54..55 "(" [] []
                       1: LIST@55..55
@@ -145,8 +151,9 @@ JsRoot {
               2: JS_AWAIT_EXPRESSION@60..73
                 0: AWAIT_KW@60..66 "await" [] [Whitespace(" ")]
                 1: CALL_EXPR@66..73
-                  0: JS_REFERENCE_IDENTIFIER_EXPRESSION@66..71
-                    0: IDENT@66..71 "inner" [] []
+                  0: JS_IDENTIFIER_EXPRESSION@66..71
+                    0: JS_REFERENCE_IDENTIFIER@66..71
+                      0: IDENT@66..71 "inner" [] []
                   1: ARG_LIST@71..73
                     0: L_PAREN@71..72 "(" [] []
                     1: LIST@72..72

@@ -523,44 +523,47 @@ pub fn static_member_expression(
 	let m = lhs.precede(p);
 	p.expect_required(operator);
 
-	any_reference_member(p);
+	parse_any_name(p).or_missing_with_error(p, expected_identifier);
 
 	m.complete(p, JS_STATIC_MEMBER_EXPRESSION)
 }
 
-pub(super) fn any_reference_member(p: &mut Parser) -> Option<CompletedMarker> {
-	if p.at(T![#]) {
-		Some(reference_private_member(p))
-	} else {
-		parse_reference_identifier_member(p).ok()
-	}
-}
-
-pub(super) fn is_at_reference_identifier_member(p: &Parser) -> bool {
+pub(super) fn is_at_name(p: &Parser) -> bool {
 	p.at(T![ident]) || p.cur().is_keyword()
 }
 
-pub(super) fn parse_reference_identifier_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
 		T![ident] => {
 			let m = p.start();
 			p.bump_any();
-			Present(m.complete(p, JS_REFERENCE_IDENTIFIER_MEMBER))
+			Present(m.complete(p, JS_NAME))
 		}
 		t if t.is_keyword() => {
 			let m = p.start();
 			p.bump_remap(T![ident]);
-			Present(m.complete(p, JS_REFERENCE_IDENTIFIER_MEMBER))
+			Present(m.complete(p, JS_NAME))
 		}
 		_ => Absent,
 	}
 }
 
-fn reference_private_member(p: &mut Parser) -> CompletedMarker {
+fn parse_private_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	if !p.at(T![#]) {
+		return Absent;
+	}
+
 	let m = p.start();
 	p.expect_required(T![#]);
 	p.expect_required(T![ident]);
-	m.complete(p, JS_REFERENCE_PRIVATE_MEMBER)
+	Present(m.complete(p, JS_PRIVATE_NAME))
+}
+
+pub(crate) fn parse_any_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	match p.cur() {
+		T![#] => parse_private_name(p),
+		_ => parse_name(p),
+	}
 }
 
 /// An array expression for property access or indexing, such as `foo[0]` or `foo?.["bar"]`
@@ -918,7 +921,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 
 					m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 				} else {
-					parse_reference_identifier_expression(p)
+					parse_identifier_expression(p)
 						.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
 						.unwrap()
 				}
@@ -956,7 +959,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
 				m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 			} else {
-				parse_reference_identifier_expression(p)
+				parse_identifier_expression(p)
 					.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
 					.unwrap()
 			}
@@ -1038,8 +1041,24 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	Some(complete)
 }
 
-fn parse_reference_identifier_expression(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
-	parse_identifier(p, JS_REFERENCE_IDENTIFIER_EXPRESSION)
+fn parse_identifier_expression(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+	if !is_at_identifier(p) {
+		return Absent;
+	}
+
+	let m = p.start();
+	let id = parse_reference_identifier(p).unwrap();
+	let identifier_expr = Present(m.complete(p, JS_IDENTIFIER_EXPRESSION));
+
+	if id.is_valid() {
+		identifier_expr.into_valid()
+	} else {
+		identifier_expr.into_invalid()
+	}
+}
+
+fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+	parse_identifier(p, JS_REFERENCE_IDENTIFIER)
 }
 
 // test identifier_loose_mode

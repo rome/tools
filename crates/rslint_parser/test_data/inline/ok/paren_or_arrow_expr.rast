@@ -5,8 +5,10 @@ JsRoot {
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@0..1 "(" [] [],
-                expression: JsReferenceIdentifierExpression {
-                    name_token: IDENT@1..4 "foo" [] [],
+                expression: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@1..4 "foo" [] [],
+                    },
                 },
                 r_paren_token: R_PAREN@4..5 ")" [] [],
             },
@@ -136,8 +138,9 @@ JsRoot {
     0: JS_EXPRESSION_STATEMENT@0..6
       0: JS_PARENTHESIZED_EXPRESSION@0..5
         0: L_PAREN@0..1 "(" [] []
-        1: JS_REFERENCE_IDENTIFIER_EXPRESSION@1..4
-          0: IDENT@1..4 "foo" [] []
+        1: JS_IDENTIFIER_EXPRESSION@1..4
+          0: JS_REFERENCE_IDENTIFIER@1..4
+            0: IDENT@1..4 "foo" [] []
         2: R_PAREN@4..5 ")" [] []
       1: SEMICOLON@5..6 ";" [] []
     1: JS_EXPRESSION_STATEMENT@6..19

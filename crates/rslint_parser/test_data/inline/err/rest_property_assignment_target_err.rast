@@ -17,8 +17,10 @@ JsRoot {
                         r_curly_token: R_CURLY@7..9 "}" [] [Whitespace(" ")],
                     },
                     operator_token: EQ@9..11 "=" [] [Whitespace(" ")],
-                    right: JsReferenceIdentifierExpression {
-                        name_token: IDENT@11..12 "a" [] [],
+                    right: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@11..12 "a" [] [],
+                        },
                     },
                 },
                 r_paren_token: R_PAREN@12..13 ")" [] [],
@@ -54,8 +56,10 @@ JsRoot {
                         r_curly_token: R_CURLY@35..37 "}" [] [Whitespace(" ")],
                     },
                     operator_token: EQ@37..39 "=" [] [Whitespace(" ")],
-                    right: JsReferenceIdentifierExpression {
-                        name_token: IDENT@39..40 "a" [] [],
+                    right: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@39..40 "a" [] [],
+                        },
                     },
                 },
                 r_paren_token: R_PAREN@40..41 ")" [] [],
@@ -94,8 +98,10 @@ JsRoot {
                         r_curly_token: R_CURLY@53..55 "}" [] [Whitespace(" ")],
                     },
                     operator_token: EQ@55..57 "=" [] [Whitespace(" ")],
-                    right: JsReferenceIdentifierExpression {
-                        name_token: IDENT@57..58 "b" [] [],
+                    right: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@57..58 "b" [] [],
+                        },
                     },
                 },
                 r_paren_token: R_PAREN@58..59 ")" [] [],
@@ -132,8 +138,10 @@ JsRoot {
                         r_curly_token: R_CURLY@90..92 "}" [] [Whitespace(" ")],
                     },
                     operator_token: EQ@92..94 "=" [] [Whitespace(" ")],
-                    right: JsReferenceIdentifierExpression {
-                        name_token: IDENT@94..95 "a" [] [],
+                    right: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@94..95 "a" [] [],
+                        },
                     },
                 },
                 r_paren_token: R_PAREN@95..96 ")" [] [],
@@ -164,8 +172,10 @@ JsRoot {
                         r_curly_token: R_CURLY@110..112 "}" [] [Whitespace(" ")],
                     },
                     operator_token: EQ@112..114 "=" [] [Whitespace(" ")],
-                    right: JsReferenceIdentifierExpression {
-                        name_token: IDENT@114..115 "a" [] [],
+                    right: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@114..115 "a" [] [],
+                        },
                     },
                 },
                 r_paren_token: R_PAREN@115..116 ")" [] [],
@@ -191,8 +201,9 @@ JsRoot {
                 1: (empty)
             2: R_CURLY@7..9 "}" [] [Whitespace(" ")]
           1: EQ@9..11 "=" [] [Whitespace(" ")]
-          2: JS_REFERENCE_IDENTIFIER_EXPRESSION@11..12
-            0: IDENT@11..12 "a" [] []
+          2: JS_IDENTIFIER_EXPRESSION@11..12
+            0: JS_REFERENCE_IDENTIFIER@11..12
+              0: IDENT@11..12 "a" [] []
         2: R_PAREN@12..13 ")" [] []
       1: SEMICOLON@13..14 ";" [] []
     1: JS_EXPRESSION_STATEMENT@14..42
@@ -210,8 +221,9 @@ JsRoot {
                 3: JS_STRING_LITERAL@25..35 "\"default\"" [] [Whitespace(" ")]
             2: R_CURLY@35..37 "}" [] [Whitespace(" ")]
           1: EQ@37..39 "=" [] [Whitespace(" ")]
-          2: JS_REFERENCE_IDENTIFIER_EXPRESSION@39..40
-            0: IDENT@39..40 "a" [] []
+          2: JS_IDENTIFIER_EXPRESSION@39..40
+            0: JS_REFERENCE_IDENTIFIER@39..40
+              0: IDENT@39..40 "a" [] []
         2: R_PAREN@40..41 ")" [] []
       1: SEMICOLON@41..42 ";" [] []
     2: JS_EXPRESSION_STATEMENT@42..60
@@ -233,8 +245,9 @@ JsRoot {
                   2: R_CURLY@51..53 "}" [] [Whitespace(" ")]
             2: R_CURLY@53..55 "}" [] [Whitespace(" ")]
           1: EQ@55..57 "=" [] [Whitespace(" ")]
-          2: JS_REFERENCE_IDENTIFIER_EXPRESSION@57..58
-            0: IDENT@57..58 "b" [] []
+          2: JS_IDENTIFIER_EXPRESSION@57..58
+            0: JS_REFERENCE_IDENTIFIER@57..58
+              0: IDENT@57..58 "b" [] []
         2: R_PAREN@58..59 ")" [] []
       1: SEMICOLON@59..60 ";" [] []
     3: JS_EXPRESSION_STATEMENT@60..97
@@ -255,8 +268,9 @@ JsRoot {
                 1: (empty)
             2: R_CURLY@90..92 "}" [] [Whitespace(" ")]
           1: EQ@92..94 "=" [] [Whitespace(" ")]
-          2: JS_REFERENCE_IDENTIFIER_EXPRESSION@94..95
-            0: IDENT@94..95 "a" [] []
+          2: JS_IDENTIFIER_EXPRESSION@94..95
+            0: JS_REFERENCE_IDENTIFIER@94..95
+              0: IDENT@94..95 "a" [] []
         2: R_PAREN@95..96 ")" [] []
       1: SEMICOLON@96..97 ";" [] []
     4: JS_EXPRESSION_STATEMENT@97..117
@@ -273,8 +287,9 @@ JsRoot {
               1: COMMA@108..110 "," [] [Whitespace(" ")]
             2: R_CURLY@110..112 "}" [] [Whitespace(" ")]
           1: EQ@112..114 "=" [] [Whitespace(" ")]
-          2: JS_REFERENCE_IDENTIFIER_EXPRESSION@114..115
-            0: IDENT@114..115 "a" [] []
+          2: JS_IDENTIFIER_EXPRESSION@114..115
+            0: JS_REFERENCE_IDENTIFIER@114..115
+              0: IDENT@114..115 "a" [] []
         2: R_PAREN@115..116 ")" [] []
       1: SEMICOLON@116..117 ";" [] []
   3: EOF@117..118 "" [Whitespace("\n")] []

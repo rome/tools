@@ -19,8 +19,10 @@ JsRoot {
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@12..14 "=" [] [Whitespace(" ")],
-                            expression: JsReferenceIdentifierExpression {
-                                name_token: IDENT@14..15 "a" [] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@14..15 "a" [] [],
+                                },
                             },
                         },
                     },
@@ -59,8 +61,10 @@ JsRoot {
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@42..44 "=" [] [Whitespace(" ")],
-                            expression: JsReferenceIdentifierExpression {
-                                name_token: IDENT@44..45 "a" [] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@44..45 "a" [] [],
+                                },
                             },
                         },
                     },
@@ -102,8 +106,10 @@ JsRoot {
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@62..64 "=" [] [Whitespace(" ")],
-                            expression: JsReferenceIdentifierExpression {
-                                name_token: IDENT@64..65 "b" [] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@64..65 "b" [] [],
+                                },
                             },
                         },
                     },
@@ -143,8 +149,10 @@ JsRoot {
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@101..103 "=" [] [Whitespace(" ")],
-                            expression: JsReferenceIdentifierExpression {
-                                name_token: IDENT@103..104 "a" [] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@103..104 "a" [] [],
+                                },
                             },
                         },
                     },
@@ -178,8 +186,10 @@ JsRoot {
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@123..125 "=" [] [Whitespace(" ")],
-                            expression: JsReferenceIdentifierExpression {
-                                name_token: IDENT@125..126 "a" [] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@125..126 "a" [] [],
+                                },
                             },
                         },
                     },
@@ -228,8 +238,10 @@ JsRoot {
                                     },
                                     init: JsEqualValueClause {
                                         eq_token: EQ@171..173 "=" [] [Whitespace(" ")],
-                                        expression: JsReferenceIdentifierExpression {
-                                            name_token: IDENT@173..174 "a" [] [],
+                                        expression: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@173..174 "a" [] [],
+                                            },
                                         },
                                     },
                                 },
@@ -262,8 +274,9 @@ JsRoot {
               2: R_CURLY@10..12 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@12..15
               0: EQ@12..14 "=" [] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@14..15
-                0: IDENT@14..15 "a" [] []
+              1: JS_IDENTIFIER_EXPRESSION@14..15
+                0: JS_REFERENCE_IDENTIFIER@14..15
+                  0: IDENT@14..15 "a" [] []
       1: SEMICOLON@15..16 ";" [] []
     1: JS_VARIABLE_DECLARATION_STATEMENT@16..46
       0: JS_VARIABLE_DECLARATION@16..45
@@ -282,8 +295,9 @@ JsRoot {
               2: R_CURLY@40..42 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@42..45
               0: EQ@42..44 "=" [] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@44..45
-                0: IDENT@44..45 "a" [] []
+              1: JS_IDENTIFIER_EXPRESSION@44..45
+                0: JS_REFERENCE_IDENTIFIER@44..45
+                  0: IDENT@44..45 "a" [] []
       1: SEMICOLON@45..46 ";" [] []
     2: JS_VARIABLE_DECLARATION_STATEMENT@46..66
       0: JS_VARIABLE_DECLARATION@46..65
@@ -306,8 +320,9 @@ JsRoot {
               2: R_CURLY@60..62 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@62..65
               0: EQ@62..64 "=" [] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@64..65
-                0: IDENT@64..65 "b" [] []
+              1: JS_IDENTIFIER_EXPRESSION@64..65
+                0: JS_REFERENCE_IDENTIFIER@64..65
+                  0: IDENT@64..65 "b" [] []
       1: SEMICOLON@65..66 ";" [] []
     3: JS_VARIABLE_DECLARATION_STATEMENT@66..105
       0: JS_VARIABLE_DECLARATION@66..104
@@ -329,8 +344,9 @@ JsRoot {
               2: R_CURLY@99..101 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@101..104
               0: EQ@101..103 "=" [] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@103..104
-                0: IDENT@103..104 "a" [] []
+              1: JS_IDENTIFIER_EXPRESSION@103..104
+                0: JS_REFERENCE_IDENTIFIER@103..104
+                  0: IDENT@103..104 "a" [] []
       1: SEMICOLON@104..105 ";" [] []
     4: JS_VARIABLE_DECLARATION_STATEMENT@105..127
       0: JS_VARIABLE_DECLARATION@105..126
@@ -348,8 +364,9 @@ JsRoot {
               2: R_CURLY@121..123 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@123..126
               0: EQ@123..125 "=" [] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@125..126
-                0: IDENT@125..126 "a" [] []
+              1: JS_IDENTIFIER_EXPRESSION@125..126
+                0: JS_REFERENCE_IDENTIFIER@125..126
+                  0: IDENT@125..126 "a" [] []
       1: SEMICOLON@126..127 ";" [] []
     5: JS_FUNCTION_DECLARATION@127..177
       0: ASYNC_KW@127..134 "async" [Whitespace("\n")] [Whitespace(" ")]
@@ -381,8 +398,9 @@ JsRoot {
                     2: R_CURLY@169..171 "}" [] [Whitespace(" ")]
                   1: JS_EQUAL_VALUE_CLAUSE@171..174
                     0: EQ@171..173 "=" [] [Whitespace(" ")]
-                    1: JS_REFERENCE_IDENTIFIER_EXPRESSION@173..174
-                      0: IDENT@173..174 "a" [] []
+                    1: JS_IDENTIFIER_EXPRESSION@173..174
+                      0: JS_REFERENCE_IDENTIFIER@173..174
+                        0: IDENT@173..174 "a" [] []
             1: SEMICOLON@174..175 ";" [] []
         3: R_CURLY@175..177 "}" [Whitespace("\n")] []
   3: EOF@177..178 "" [Whitespace("\n")] []

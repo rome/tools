@@ -4,6 +4,6 @@ mod call_expression;
 mod expression;
 mod literal_expression;
 mod object_expression;
-mod reference_identifier_expression;
+mod identifier_expression;
 mod sequence_expression;
 mod super_expression;

@@ -9,8 +9,8 @@ impl ToFormatElement for JsAnyExpression {
 				literal.to_format_element(formatter)
 			}
 			JsAnyExpression::Template(_) => todo!(),
-			JsAnyExpression::JsReferenceIdentifierExpression(name_ref) => {
-				name_ref.to_format_element(formatter)
+			JsAnyExpression::JsIdentifierExpression(identifier_expr) => {
+				identifier_expr.to_format_element(formatter)
 			}
 			JsAnyExpression::JsThisExpression(_) => todo!(),
 			JsAnyExpression::JsArrayExpression(array_expression) => {

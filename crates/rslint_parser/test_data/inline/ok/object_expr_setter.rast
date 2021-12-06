@@ -19,8 +19,10 @@ JsRoot {
                                         set_token: SET_KW@9..15 "set" [Whitespace("\n ")] [Whitespace(" ")],
                                         name: JsComputedMemberName {
                                             l_brack_token: L_BRACK@15..16 "[" [] [],
-                                            expression: JsReferenceIdentifierExpression {
-                                                name_token: IDENT@16..19 "foo" [] [],
+                                            expression: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@16..19 "foo" [] [],
+                                                },
                                             },
                                             r_brack_token: R_BRACK@19..20 "]" [] [],
                                         },
@@ -76,8 +78,9 @@ JsRoot {
                     0: SET_KW@9..15 "set" [Whitespace("\n ")] [Whitespace(" ")]
                     1: JS_COMPUTED_MEMBER_NAME@15..20
                       0: L_BRACK@15..16 "[" [] []
-                      1: JS_REFERENCE_IDENTIFIER_EXPRESSION@16..19
-                        0: IDENT@16..19 "foo" [] []
+                      1: JS_IDENTIFIER_EXPRESSION@16..19
+                        0: JS_REFERENCE_IDENTIFIER@16..19
+                          0: IDENT@16..19 "foo" [] []
                       2: R_BRACK@19..20 "]" [] []
                     2: L_PAREN@20..21 "(" [] []
                     3: JS_IDENTIFIER_BINDING@21..24

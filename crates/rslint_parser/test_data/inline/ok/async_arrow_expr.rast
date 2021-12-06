@@ -156,7 +156,8 @@ JsRoot {
                 0: IDENT@70..73 "baz" [] []
           2: R_PAREN@73..75 ")" [] [Whitespace(" ")]
         2: FAT_ARROW@75..78 "=>" [] [Whitespace(" ")]
-        3: JS_REFERENCE_IDENTIFIER_EXPRESSION@78..81
-          0: IDENT@78..81 "foo" [] []
+        3: JS_IDENTIFIER_EXPRESSION@78..81
+          0: JS_REFERENCE_IDENTIFIER@78..81
+            0: IDENT@78..81 "foo" [] []
       1: (empty)
   3: EOF@81..82 "" [Whitespace("\n")] []

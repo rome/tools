@@ -10,8 +10,10 @@ JsRoot {
             implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
                 extends_token: EXTENDS_KW@11..19 "extends" [] [Whitespace(" ")],
-                super_class: JsReferenceIdentifierExpression {
-                    name_token: IDENT@19..21 "B" [] [Whitespace(" ")],
+                super_class: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@19..21 "B" [] [Whitespace(" ")],
+                    },
                 },
             },
             l_curly_token: L_CURLY@21..22 "{" [] [],
@@ -66,8 +68,8 @@ JsRoot {
                                             ],
                                         },
                                         operator: QUESTIONDOT@51..53 "?." [] [],
-                                        member: JsReferenceIdentifierMember {
-                                            name_token: IDENT@53..57 "test" [] [],
+                                        member: JsName {
+                                            value_token: IDENT@53..57 "test" [] [],
                                         },
                                     },
                                     arguments: ArgList {
@@ -116,8 +118,9 @@ JsRoot {
         0: IDENT@6..11 "Test" [] [Whitespace(" ")]
       2: JS_EXTENDS_CLAUSE@11..21
         0: EXTENDS_KW@11..19 "extends" [] [Whitespace(" ")]
-        1: JS_REFERENCE_IDENTIFIER_EXPRESSION@19..21
-          0: IDENT@19..21 "B" [] [Whitespace(" ")]
+        1: JS_IDENTIFIER_EXPRESSION@19..21
+          0: JS_REFERENCE_IDENTIFIER@19..21
+            0: IDENT@19..21 "B" [] [Whitespace(" ")]
       3: L_CURLY@21..22 "{" [] []
       4: LIST@22..63
         0: JS_METHOD_CLASS_MEMBER@22..63
@@ -146,7 +149,7 @@ JsRoot {
                     0: JS_UNKNOWN_EXPRESSION@43..51
                       0: SUPER_KW@43..51 "super" [Whitespace("\n\t\t")] []
                     1: QUESTIONDOT@51..53 "?." [] []
-                    2: JS_REFERENCE_IDENTIFIER_MEMBER@53..57
+                    2: JS_NAME@53..57
                       0: IDENT@53..57 "test" [] []
                   1: ARG_LIST@57..59
                     0: L_PAREN@57..58 "(" [] []

@@ -4,8 +4,10 @@ JsRoot {
     statements: [
         JsExpressionStatement {
             expression: JsComputedMemberExpression {
-                object: JsReferenceIdentifierExpression {
-                    name_token: IDENT@0..3 "foo" [] [],
+                object: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@0..3 "foo" [] [],
+                    },
                 },
                 optional_chain_token_token: missing (optional),
                 l_brack_token: L_BRACK@3..4 "[" [] [],
@@ -15,8 +17,10 @@ JsRoot {
         },
         JsExpressionStatement {
             expression: JsComputedMemberExpression {
-                object: JsReferenceIdentifierExpression {
-                    name_token: IDENT@8..12 "foo" [Whitespace("\n")] [],
+                object: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@8..12 "foo" [Whitespace("\n")] [],
+                    },
                 },
                 optional_chain_token_token: missing (optional),
                 l_brack_token: L_BRACK@12..13 "[" [] [],
@@ -26,8 +30,10 @@ JsRoot {
         },
         JsExpressionStatement {
             expression: JsComputedMemberExpression {
-                object: JsReferenceIdentifierExpression {
-                    name_token: IDENT@19..23 "foo" [Whitespace("\n")] [],
+                object: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@19..23 "foo" [Whitespace("\n")] [],
+                    },
                 },
                 optional_chain_token_token: missing (optional),
                 l_brack_token: L_BRACK@23..24 "[" [] [],
@@ -38,8 +44,10 @@ JsRoot {
         JsExpressionStatement {
             expression: JsComputedMemberExpression {
                 object: JsComputedMemberExpression {
-                    object: JsReferenceIdentifierExpression {
-                        name_token: IDENT@30..34 "foo" [Whitespace("\n")] [],
+                    object: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@30..34 "foo" [Whitespace("\n")] [],
+                        },
                     },
                     optional_chain_token_token: missing (optional),
                     l_brack_token: L_BRACK@34..35 "[" [] [],
@@ -53,8 +61,10 @@ JsRoot {
         },
         JsExpressionStatement {
             expression: JsComputedMemberExpression {
-                object: JsReferenceIdentifierExpression {
-                    name_token: IDENT@44..48 "foo" [Whitespace("\n")] [],
+                object: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@44..48 "foo" [Whitespace("\n")] [],
+                    },
                 },
                 optional_chain_token_token: QUESTIONDOT@48..50 "?." [] [],
                 l_brack_token: L_BRACK@50..51 "[" [] [],
@@ -71,17 +81,20 @@ JsRoot {
   2: LIST@0..55
     0: JS_EXPRESSION_STATEMENT@0..8
       0: JS_COMPUTED_MEMBER_EXPRESSION@0..8
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-          0: IDENT@0..3 "foo" [] []
+        0: JS_IDENTIFIER_EXPRESSION@0..3
+          0: JS_REFERENCE_IDENTIFIER@0..3
+            0: IDENT@0..3 "foo" [] []
         1: L_BRACK@3..4 "[" [] []
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@4..7
-          0: IDENT@4..7 "bar" [] []
+        2: JS_IDENTIFIER_EXPRESSION@4..7
+          0: JS_REFERENCE_IDENTIFIER@4..7
+            0: IDENT@4..7 "bar" [] []
         3: R_BRACK@7..8 "]" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@8..19
       0: JS_COMPUTED_MEMBER_EXPRESSION@8..19
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@8..12
-          0: IDENT@8..12 "foo" [Whitespace("\n")] []
+        0: JS_IDENTIFIER_EXPRESSION@8..12
+          0: JS_REFERENCE_IDENTIFIER@8..12
+            0: IDENT@8..12 "foo" [Whitespace("\n")] []
         1: L_BRACK@12..13 "[" [] []
         2: JS_BINARY_EXPRESSION@13..18
           0: JS_NUMBER_LITERAL_EXPRESSION@13..15
@@ -93,8 +106,9 @@ JsRoot {
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@19..30
       0: JS_COMPUTED_MEMBER_EXPRESSION@19..30
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@19..23
-          0: IDENT@19..23 "foo" [Whitespace("\n")] []
+        0: JS_IDENTIFIER_EXPRESSION@19..23
+          0: JS_REFERENCE_IDENTIFIER@19..23
+            0: IDENT@19..23 "foo" [Whitespace("\n")] []
         1: L_BRACK@23..24 "[" [] []
         2: JS_STRING_LITERAL_EXPRESSION@24..29
           0: JS_STRING_LITERAL@24..29 "\"bar\"" [] []
@@ -103,25 +117,30 @@ JsRoot {
     3: JS_EXPRESSION_STATEMENT@30..44
       0: JS_COMPUTED_MEMBER_EXPRESSION@30..44
         0: JS_COMPUTED_MEMBER_EXPRESSION@30..39
-          0: JS_REFERENCE_IDENTIFIER_EXPRESSION@30..34
-            0: IDENT@30..34 "foo" [Whitespace("\n")] []
+          0: JS_IDENTIFIER_EXPRESSION@30..34
+            0: JS_REFERENCE_IDENTIFIER@30..34
+              0: IDENT@30..34 "foo" [Whitespace("\n")] []
           1: L_BRACK@34..35 "[" [] []
-          2: JS_REFERENCE_IDENTIFIER_EXPRESSION@35..38
-            0: IDENT@35..38 "bar" [] []
+          2: JS_IDENTIFIER_EXPRESSION@35..38
+            0: JS_REFERENCE_IDENTIFIER@35..38
+              0: IDENT@35..38 "bar" [] []
           3: R_BRACK@38..39 "]" [] []
         1: L_BRACK@39..40 "[" [] []
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@40..43
-          0: IDENT@40..43 "baz" [] []
+        2: JS_IDENTIFIER_EXPRESSION@40..43
+          0: JS_REFERENCE_IDENTIFIER@40..43
+            0: IDENT@40..43 "baz" [] []
         3: R_BRACK@43..44 "]" [] []
       1: (empty)
     4: JS_EXPRESSION_STATEMENT@44..55
       0: JS_COMPUTED_MEMBER_EXPRESSION@44..55
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@44..48
-          0: IDENT@44..48 "foo" [Whitespace("\n")] []
+        0: JS_IDENTIFIER_EXPRESSION@44..48
+          0: JS_REFERENCE_IDENTIFIER@44..48
+            0: IDENT@44..48 "foo" [Whitespace("\n")] []
         1: QUESTIONDOT@48..50 "?." [] []
         2: L_BRACK@50..51 "[" [] []
-        3: JS_REFERENCE_IDENTIFIER_EXPRESSION@51..54
-          0: IDENT@51..54 "bar" [] []
+        3: JS_IDENTIFIER_EXPRESSION@51..54
+          0: JS_REFERENCE_IDENTIFIER@51..54
+            0: IDENT@51..54 "bar" [] []
         4: R_BRACK@54..55 "]" [] []
       1: (empty)
   3: EOF@55..56 "" [Whitespace("\n")] []

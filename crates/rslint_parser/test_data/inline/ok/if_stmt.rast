@@ -55,8 +55,10 @@ JsRoot {
         JsIfStatement {
             if_token: IF_KW@49..53 "if" [Whitespace("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@53..54 "(" [] [],
-            test: JsReferenceIdentifierExpression {
-                name_token: IDENT@54..57 "bar" [] [],
+            test: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@54..57 "bar" [] [],
+                },
             },
             r_paren_token: R_PAREN@57..59 ")" [] [Whitespace(" ")],
             consequent: JsBlockStatement {
@@ -137,8 +139,9 @@ JsRoot {
     3: JS_IF_STATEMENT@49..87
       0: IF_KW@49..53 "if" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@53..54 "(" [] []
-      2: JS_REFERENCE_IDENTIFIER_EXPRESSION@54..57
-        0: IDENT@54..57 "bar" [] []
+      2: JS_IDENTIFIER_EXPRESSION@54..57
+        0: JS_REFERENCE_IDENTIFIER@54..57
+          0: IDENT@54..57 "bar" [] []
       3: R_PAREN@57..59 ")" [] [Whitespace(" ")]
       4: JS_BLOCK_STATEMENT@59..62
         0: L_CURLY@59..60 "{" [] []

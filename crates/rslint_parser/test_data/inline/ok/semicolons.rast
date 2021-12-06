@@ -12,8 +12,10 @@ JsRoot {
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@8..10 "=" [] [Whitespace(" ")],
-                            expression: JsReferenceIdentifierExpression {
-                                name_token: IDENT@10..13 "bar" [] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@10..13 "bar" [] [],
+                                },
                             },
                         },
                     },
@@ -31,8 +33,10 @@ JsRoot {
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@23..25 "=" [] [Whitespace(" ")],
-                            expression: JsReferenceIdentifierExpression {
-                                name_token: IDENT@25..26 "b" [] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@25..26 "b" [] [],
+                                },
                             },
                         },
                     },
@@ -127,8 +131,9 @@ JsRoot {
               0: IDENT@4..8 "foo" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@8..13
               0: EQ@8..10 "=" [] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@10..13
-                0: IDENT@10..13 "bar" [] []
+              1: JS_IDENTIFIER_EXPRESSION@10..13
+                0: JS_REFERENCE_IDENTIFIER@10..13
+                  0: IDENT@10..13 "bar" [] []
       1: SEMICOLON@13..14 ";" [] []
     1: JS_VARIABLE_DECLARATION_STATEMENT@14..27
       0: JS_VARIABLE_DECLARATION@14..26
@@ -139,8 +144,9 @@ JsRoot {
               0: IDENT@19..23 "foo" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@23..26
               0: EQ@23..25 "=" [] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@25..26
-                0: IDENT@25..26 "b" [] []
+              1: JS_IDENTIFIER_EXPRESSION@25..26
+                0: JS_REFERENCE_IDENTIFIER@25..26
+                  0: IDENT@25..26 "b" [] []
       1: SEMICOLON@26..27 ";" [] []
     2: JS_VARIABLE_DECLARATION_STATEMENT@27..36
       0: JS_VARIABLE_DECLARATION@27..35

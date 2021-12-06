@@ -29,8 +29,10 @@ JsRoot {
                                             statements: [
                                                 JsReturnStatement {
                                                     return_token: RETURN_KW@22..33 "return" [Whitespace("\n   ")] [Whitespace(" ")],
-                                                    argument: JsReferenceIdentifierExpression {
-                                                        name_token: IDENT@33..36 "foo" [] [],
+                                                    argument: JsIdentifierExpression {
+                                                        name: JsReferenceIdentifier {
+                                                            value_token: IDENT@33..36 "foo" [] [],
+                                                        },
                                                     },
                                                     semicolon_token: SEMICOLON@36..37 ";" [] [],
                                                 },
@@ -189,8 +191,9 @@ JsRoot {
                       2: LIST@22..37
                         0: JS_RETURN_STATEMENT@22..37
                           0: RETURN_KW@22..33 "return" [Whitespace("\n   ")] [Whitespace(" ")]
-                          1: JS_REFERENCE_IDENTIFIER_EXPRESSION@33..36
-                            0: IDENT@33..36 "foo" [] []
+                          1: JS_IDENTIFIER_EXPRESSION@33..36
+                            0: JS_REFERENCE_IDENTIFIER@33..36
+                              0: IDENT@33..36 "foo" [] []
                           2: SEMICOLON@36..37 ";" [] []
                       3: R_CURLY@37..40 "}" [Whitespace("\n ")] []
                   1: COMMA@40..41 "," [] []

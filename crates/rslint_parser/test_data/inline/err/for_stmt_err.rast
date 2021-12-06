@@ -40,8 +40,10 @@ JsRoot {
                 first_semi_token: SEMICOLON@23..25 ";" [] [Whitespace(" ")],
                 test: ForStmtTest {
                     expr: JsBinaryExpression {
-                        left: JsReferenceIdentifierExpression {
-                            name_token: IDENT@25..27 "i" [] [Whitespace(" ")],
+                        left: JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@25..27 "i" [] [Whitespace(" ")],
+                            },
                         },
                         operator: L_ANGLE@27..29 "<" [] [Whitespace(" ")],
                     },
@@ -86,8 +88,10 @@ JsRoot {
             first_semi_token: SEMICOLON@53..55 ";" [] [Whitespace(" ")],
             test: ForStmtTest {
                 expr: JsBinaryExpression {
-                    left: JsReferenceIdentifierExpression {
-                        name_token: IDENT@55..57 "i" [] [Whitespace(" ")],
+                    left: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@55..57 "i" [] [Whitespace(" ")],
+                        },
                     },
                     operator: L_ANGLE@57..59 "<" [] [Whitespace(" ")],
                 },
@@ -142,8 +146,9 @@ JsRoot {
         3: SEMICOLON@23..25 ";" [] [Whitespace(" ")]
         4: FOR_STMT_TEST@25..31
           0: JS_BINARY_EXPRESSION@25..31
-            0: JS_REFERENCE_IDENTIFIER_EXPRESSION@25..27
-              0: IDENT@25..27 "i" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_EXPRESSION@25..27
+              0: JS_REFERENCE_IDENTIFIER@25..27
+                0: IDENT@25..27 "i" [] [Whitespace(" ")]
             1: L_ANGLE@27..29 "<" [] [Whitespace(" ")]
             2: JS_NUMBER_LITERAL_EXPRESSION@29..31
               0: JS_NUMBER_LITERAL@29..31 "10" [] []
@@ -175,8 +180,9 @@ JsRoot {
       3: SEMICOLON@53..55 ";" [] [Whitespace(" ")]
       4: FOR_STMT_TEST@55..61
         0: JS_BINARY_EXPRESSION@55..61
-          0: JS_REFERENCE_IDENTIFIER_EXPRESSION@55..57
-            0: IDENT@55..57 "i" [] [Whitespace(" ")]
+          0: JS_IDENTIFIER_EXPRESSION@55..57
+            0: JS_REFERENCE_IDENTIFIER@55..57
+              0: IDENT@55..57 "i" [] [Whitespace(" ")]
           1: L_ANGLE@57..59 "<" [] [Whitespace(" ")]
           2: JS_NUMBER_LITERAL_EXPRESSION@59..61
             0: JS_NUMBER_LITERAL@59..61 "10" [] []

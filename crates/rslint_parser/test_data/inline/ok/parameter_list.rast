@@ -19,8 +19,10 @@ JsRoot {
                             JsObjectBindingPatternProperty {
                                 member: JsComputedMemberName {
                                     l_brack_token: L_BRACK@37..38 "[" [] [],
-                                    expression: JsReferenceIdentifierExpression {
-                                        name_token: IDENT@38..46 "computed" [] [],
+                                    expression: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@38..46 "computed" [] [],
+                                        },
                                     },
                                     r_brack_token: R_BRACK@46..47 "]" [] [],
                                 },
@@ -65,8 +67,9 @@ JsRoot {
               0: JS_OBJECT_BINDING_PATTERN_PROPERTY@37..57
                 0: JS_COMPUTED_MEMBER_NAME@37..47
                   0: L_BRACK@37..38 "[" [] []
-                  1: JS_REFERENCE_IDENTIFIER_EXPRESSION@38..46
-                    0: IDENT@38..46 "computed" [] []
+                  1: JS_IDENTIFIER_EXPRESSION@38..46
+                    0: JS_REFERENCE_IDENTIFIER@38..46
+                      0: IDENT@38..46 "computed" [] []
                   2: R_BRACK@46..47 "]" [] []
                 1: COLON@47..49 ":" [] [Whitespace(" ")]
                 2: JS_IDENTIFIER_BINDING@49..57

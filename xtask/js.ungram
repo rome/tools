@@ -256,7 +256,7 @@ JsAnyExpression =
 	| JsLogicalExpression
 	| JsObjectExpression
 	| JsParenthesizedExpression
-	| JsReferenceIdentifierExpression
+	| JsIdentifierExpression
 	| JsSequenceExpression
 	| JsStaticMemberExpression
 	| JsSuperExpression
@@ -374,12 +374,15 @@ JsSequenceExpression =
 JsParenthesizedExpression =
 	'(' expression: JsAnyExpression ')'
 
+
+JsIdentifierExpression = name: JsReferenceIdentifier
+
 // a.b
 // a.#b
 JsStaticMemberExpression =
 	object: JsAnyExpression
 	operator: ('.' | '?.')
-	member: JsAnyReferenceMember
+	member: JsAnyName
 
 // a[b]
 JsComputedMemberExpression =
@@ -478,7 +481,7 @@ JsMethodObjectMember =
 
 // { a }
 //   ^
-JsShorthandPropertyObjectMember = name: JsReferenceIdentifierExpression
+JsShorthandPropertyObjectMember = name: JsReferenceIdentifier
 
 ///////////////
 // CLASSES
@@ -639,6 +642,7 @@ JsParenthesizedAssignment =
 	assignment: JsAnyAssignment
 	')'
 
+// Assignment to an identifier from the lexical scope
 // b = "test"
 // ^
 JsIdentifierAssignment = name: 'ident'
@@ -648,7 +652,7 @@ JsIdentifierAssignment = name: 'ident'
 JsStaticMemberAssignment =
 	object: JsAnyExpression
 	'.'
-	member: JsAnyReferenceMember
+	member: JsAnyName
 
 // a['b'] = a[expr] = "test"
 // ^^^^^^   ^^^^^^^
@@ -706,7 +710,7 @@ JsObjectAssignmentPatternShorthandProperty =
 // ({ x: a } = b) or ({ x: a = "test" } = b)
 //    ^^^^              ^^^^^^^^^^^^^
 JsObjectAssignmentPatternProperty =
-	member: JsReferenceIdentifierMember
+	member: JsName
 	':'
 	pattern: JsAnyAssignmentPattern
 	init: JsEqualValueClause?
@@ -798,14 +802,6 @@ JsObjectBindingPatternRest =
 	'...'
 	binding: JsAnyBinding
 
-
-///////////////
-// MISCELLANEOUS
-///////////////
-
-Name = 'ident'
-
-JsReferenceIdentifierExpression = name: 'ident'
 
 ///////////////
 // LITERALS
@@ -951,6 +947,25 @@ JsSpread =
 	argument: JsAnyExpression
 
 
+
+Name = 'ident'
+
+// Reference to an identifier from the lexical scope
+JsReferenceIdentifier = value: 'ident'
+
+// A js identifier that is neither a binding, assignment, nor a reference.
+// For example a member name
+JsName = value: 'ident'
+
+JsPrivateName =
+	'#'
+	value: 'ident'
+
+JsAnyName =
+	JsName
+	| JsPrivateName
+
+
 // { a: ..., "b": ..., 4: ... }
 //   ^       ^^^       ^
 JsLiteralMemberName = value: ('ident' | 'js_string_literal' | 'js_number_literal')
@@ -961,28 +976,6 @@ JsComputedMemberName =
 	'['
 	expression: JsAnyExpression
 	']'
-
-
-JsAnyReferenceMember =
-	JsReferenceIdentifierMember
-	| JsReferencePrivateMember
-
-// A reference to a member
-// a.b
-//   ^
-// let { b: c } = a
-//       ^
-JsReferenceIdentifierMember =
-	name: 'ident'
-
-// A reference to a private member
-// a.#b
-//   ^^
-// let { #b: c } = a
-//       ^^
-JsReferencePrivateMember =
-	'#'
-	name: 'ident'
 
 
 JsParameterList =

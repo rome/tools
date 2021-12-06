@@ -37,8 +37,8 @@ JsRoot {
                         l_curly_token: L_CURLY@12..13 "{" [] [],
                         properties: [
                             JsObjectAssignmentPatternProperty {
-                                member: JsReferenceIdentifierMember {
-                                    name_token: IDENT@13..14 "x" [] [],
+                                member: JsName {
+                                    value_token: IDENT@13..14 "x" [] [],
                                 },
                                 colon_token: COLON@14..16 ":" [] [Whitespace(" ")],
                                 pattern: JsIdentifierAssignment {
@@ -68,20 +68,22 @@ JsRoot {
                         l_curly_token: L_CURLY@26..27 "{" [] [],
                         properties: [
                             JsObjectAssignmentPatternProperty {
-                                member: JsReferenceIdentifierMember {
-                                    name_token: IDENT@27..28 "x" [] [],
+                                member: JsName {
+                                    value_token: IDENT@27..28 "x" [] [],
                                 },
                                 colon_token: COLON@28..30 ":" [] [Whitespace(" ")],
                                 pattern: JsStaticMemberAssignment {
                                     object: CallExpr {
                                         type_args: missing (optional),
                                         callee: JsStaticMemberExpression {
-                                            object: JsReferenceIdentifierExpression {
-                                                name_token: IDENT@30..31 "y" [] [],
+                                            object: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@30..31 "y" [] [],
+                                                },
                                             },
                                             operator: DOT@31..32 "." [] [],
-                                            member: JsReferenceIdentifierMember {
-                                                name_token: IDENT@32..36 "test" [] [],
+                                            member: JsName {
+                                                value_token: IDENT@32..36 "test" [] [],
                                             },
                                         },
                                         arguments: ArgList {
@@ -91,8 +93,8 @@ JsRoot {
                                         },
                                     },
                                     dot_token: DOT@38..39 "." [] [],
-                                    member: JsReferenceIdentifierMember {
-                                        name_token: IDENT@39..40 "z" [] [],
+                                    member: JsName {
+                                        value_token: IDENT@39..40 "z" [] [],
                                     },
                                 },
                                 init: missing (optional),
@@ -119,8 +121,8 @@ JsRoot {
                         l_curly_token: L_CURLY@49..50 "{" [] [],
                         properties: [
                             JsObjectAssignmentPatternProperty {
-                                member: JsReferenceIdentifierMember {
-                                    name_token: IDENT@50..51 "x" [] [],
+                                member: JsName {
+                                    value_token: IDENT@50..51 "x" [] [],
                                 },
                                 colon_token: COLON@51..53 ":" [] [Whitespace(" ")],
                                 pattern: JsParenthesizedAssignment {
@@ -158,17 +160,21 @@ JsRoot {
                         l_curly_token: L_CURLY@67..68 "{" [] [],
                         properties: [
                             JsObjectAssignmentPatternProperty {
-                                member: JsReferenceIdentifierMember {
-                                    name_token: IDENT@68..69 "x" [] [],
+                                member: JsName {
+                                    value_token: IDENT@68..69 "x" [] [],
                                 },
                                 colon_token: COLON@69..71 ":" [] [Whitespace(" ")],
                                 pattern: JsComputedMemberAssignment {
-                                    object: JsReferenceIdentifierExpression {
-                                        name_token: IDENT@71..72 "z" [] [],
+                                    object: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@71..72 "z" [] [],
+                                        },
                                     },
                                     l_brack_token: L_BRACK@72..73 "[" [] [],
-                                    member: JsReferenceIdentifierExpression {
-                                        name_token: IDENT@71..72 "z" [] [],
+                                    member: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@71..72 "z" [] [],
+                                        },
                                     },
                                     r_brack_token: R_BRACK@83..84 "]" [] [],
                                 },
@@ -228,8 +234,8 @@ JsRoot {
                         l_curly_token: L_CURLY@116..117 "{" [] [],
                         properties: [
                             JsObjectAssignmentPatternProperty {
-                                member: JsReferenceIdentifierMember {
-                                    name_token: IDENT@117..118 "x" [] [],
+                                member: JsName {
+                                    value_token: IDENT@117..118 "x" [] [],
                                 },
                                 colon_token: COLON@118..120 ":" [] [Whitespace(" ")],
                                 pattern: JsIdentifierAssignment {
@@ -290,7 +296,7 @@ JsRoot {
             0: L_CURLY@12..13 "{" [] []
             1: LIST@13..17
               0: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY@13..17
-                0: JS_REFERENCE_IDENTIFIER_MEMBER@13..14
+                0: JS_NAME@13..14
                   0: IDENT@13..14 "x" [] []
                 1: COLON@14..16 ":" [] [Whitespace(" ")]
                 2: JS_IDENTIFIER_ASSIGNMENT@16..17
@@ -312,23 +318,24 @@ JsRoot {
             0: L_CURLY@26..27 "{" [] []
             1: LIST@27..40
               0: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY@27..40
-                0: JS_REFERENCE_IDENTIFIER_MEMBER@27..28
+                0: JS_NAME@27..28
                   0: IDENT@27..28 "x" [] []
                 1: COLON@28..30 ":" [] [Whitespace(" ")]
                 2: JS_STATIC_MEMBER_ASSIGNMENT@30..40
                   0: CALL_EXPR@30..38
                     0: JS_STATIC_MEMBER_EXPRESSION@30..36
-                      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@30..31
-                        0: IDENT@30..31 "y" [] []
+                      0: JS_IDENTIFIER_EXPRESSION@30..31
+                        0: JS_REFERENCE_IDENTIFIER@30..31
+                          0: IDENT@30..31 "y" [] []
                       1: DOT@31..32 "." [] []
-                      2: JS_REFERENCE_IDENTIFIER_MEMBER@32..36
+                      2: JS_NAME@32..36
                         0: IDENT@32..36 "test" [] []
                     1: ARG_LIST@36..38
                       0: L_PAREN@36..37 "(" [] []
                       1: LIST@37..37
                       2: R_PAREN@37..38 ")" [] []
                   1: DOT@38..39 "." [] []
-                  2: JS_REFERENCE_IDENTIFIER_MEMBER@39..40
+                  2: JS_NAME@39..40
                     0: IDENT@39..40 "z" [] []
                 3: (empty)
             2: R_CURLY@40..41 "}" [] []
@@ -347,7 +354,7 @@ JsRoot {
             0: L_CURLY@49..50 "{" [] []
             1: LIST@50..58
               0: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY@50..58
-                0: JS_REFERENCE_IDENTIFIER_MEMBER@50..51
+                0: JS_NAME@50..51
                   0: IDENT@50..51 "x" [] []
                 1: COLON@51..53 ":" [] [Whitespace(" ")]
                 2: JS_PARENTHESIZED_ASSIGNMENT@53..58
@@ -375,12 +382,13 @@ JsRoot {
             0: L_CURLY@67..68 "{" [] []
             1: LIST@68..84
               0: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY@68..84
-                0: JS_REFERENCE_IDENTIFIER_MEMBER@68..69
+                0: JS_NAME@68..69
                   0: IDENT@68..69 "x" [] []
                 1: COLON@69..71 ":" [] [Whitespace(" ")]
                 2: JS_COMPUTED_MEMBER_ASSIGNMENT@71..84
-                  0: JS_REFERENCE_IDENTIFIER_EXPRESSION@71..72
-                    0: IDENT@71..72 "z" [] []
+                  0: JS_IDENTIFIER_EXPRESSION@71..72
+                    0: JS_REFERENCE_IDENTIFIER@71..72
+                      0: IDENT@71..72 "z" [] []
                   1: L_BRACK@72..73 "[" [] []
                   2: JS_STRING_LITERAL_EXPRESSION@73..83
                     0: JS_STRING_LITERAL@73..83 "\"computed\"" [] []
@@ -424,7 +432,7 @@ JsRoot {
             0: L_CURLY@116..117 "{" [] []
             1: LIST@117..133
               0: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY@117..133
-                0: JS_REFERENCE_IDENTIFIER_MEMBER@117..118
+                0: JS_NAME@117..118
                   0: IDENT@117..118 "x" [] []
                 1: COLON@118..120 ":" [] [Whitespace(" ")]
                 2: JS_IDENTIFIER_ASSIGNMENT@120..122

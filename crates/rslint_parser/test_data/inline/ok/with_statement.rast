@@ -31,8 +31,10 @@ JsRoot {
                     JsWithStatement {
                         with_token: WITH_KW@29..36 "with" [Whitespace("\n\t")] [Whitespace(" ")],
                         l_paren_token: L_PAREN@36..37 "(" [] [],
-                        object: JsReferenceIdentifierExpression {
-                            name_token: IDENT@37..38 "o" [] [],
+                        object: JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@37..38 "o" [] [],
+                            },
                         },
                         r_paren_token: R_PAREN@38..40 ")" [] [Whitespace(" ")],
                         body: JsBlockStatement {
@@ -42,19 +44,23 @@ JsRoot {
                                     expression: CallExpr {
                                         type_args: missing (optional),
                                         callee: JsStaticMemberExpression {
-                                            object: JsReferenceIdentifierExpression {
-                                                name_token: IDENT@41..51 "console" [Whitespace("\n\t\t")] [],
+                                            object: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@41..51 "console" [Whitespace("\n\t\t")] [],
+                                                },
                                             },
                                             operator: DOT@51..52 "." [] [],
-                                            member: JsReferenceIdentifierMember {
-                                                name_token: IDENT@52..55 "log" [] [],
+                                            member: JsName {
+                                                value_token: IDENT@52..55 "log" [] [],
                                             },
                                         },
                                         arguments: ArgList {
                                             l_paren_token: L_PAREN@55..56 "(" [] [],
                                             args: [
-                                                JsReferenceIdentifierExpression {
-                                                    name_token: IDENT@56..57 "x" [] [],
+                                                JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@56..57 "x" [] [],
+                                                    },
                                                 },
                                             ],
                                             r_paren_token: R_PAREN@57..58 ")" [] [],
@@ -99,8 +105,9 @@ JsRoot {
           0: JS_WITH_STATEMENT@29..62
             0: WITH_KW@29..36 "with" [Whitespace("\n\t")] [Whitespace(" ")]
             1: L_PAREN@36..37 "(" [] []
-            2: JS_REFERENCE_IDENTIFIER_EXPRESSION@37..38
-              0: IDENT@37..38 "o" [] []
+            2: JS_IDENTIFIER_EXPRESSION@37..38
+              0: JS_REFERENCE_IDENTIFIER@37..38
+                0: IDENT@37..38 "o" [] []
             3: R_PAREN@38..40 ")" [] [Whitespace(" ")]
             4: JS_BLOCK_STATEMENT@40..62
               0: L_CURLY@40..41 "{" [] []
@@ -108,16 +115,18 @@ JsRoot {
                 0: JS_EXPRESSION_STATEMENT@41..59
                   0: CALL_EXPR@41..58
                     0: JS_STATIC_MEMBER_EXPRESSION@41..55
-                      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@41..51
-                        0: IDENT@41..51 "console" [Whitespace("\n\t\t")] []
+                      0: JS_IDENTIFIER_EXPRESSION@41..51
+                        0: JS_REFERENCE_IDENTIFIER@41..51
+                          0: IDENT@41..51 "console" [Whitespace("\n\t\t")] []
                       1: DOT@51..52 "." [] []
-                      2: JS_REFERENCE_IDENTIFIER_MEMBER@52..55
+                      2: JS_NAME@52..55
                         0: IDENT@52..55 "log" [] []
                     1: ARG_LIST@55..58
                       0: L_PAREN@55..56 "(" [] []
                       1: LIST@56..57
-                        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@56..57
-                          0: IDENT@56..57 "x" [] []
+                        0: JS_IDENTIFIER_EXPRESSION@56..57
+                          0: JS_REFERENCE_IDENTIFIER@56..57
+                            0: IDENT@56..57 "x" [] []
                       2: R_PAREN@57..58 ")" [] []
                   1: SEMICOLON@58..59 ";" [] []
               2: R_CURLY@59..62 "}" [Whitespace("\n\t")] []

@@ -8,7 +8,7 @@ use crate::parser::ParserProgress;
 use crate::parser::SingleTokenParseRecovery;
 use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_class_declaration;
-use crate::syntax::expr::any_reference_member;
+use crate::syntax::expr::parse_any_name;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::js_parse_error;
 use crate::{SyntaxKind::*, *};
@@ -506,7 +506,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 				parse_literal_expression(p).ok();
 			}
 			_ => {
-				let mut complete = any_reference_member(p)?;
+				let mut complete = parse_any_name(p).ok()?;
 				if complete.kind() == JS_PRIVATE_CLASS_MEMBER_NAME {
 					let err = p
 						.err_builder("private names are not allowed outside of class bodies")

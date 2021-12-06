@@ -21,8 +21,10 @@ JsRoot {
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@16..18 "=" [] [Whitespace(" ")],
-                            expression: JsReferenceIdentifierExpression {
-                                name_token: IDENT@18..19 "a" [] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@18..19 "a" [] [],
+                                },
                             },
                         },
                     },
@@ -62,8 +64,10 @@ JsRoot {
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@41..43 "=" [] [Whitespace(" ")],
-                            expression: JsReferenceIdentifierExpression {
-                                name_token: IDENT@43..44 "c" [] [],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@43..44 "c" [] [],
+                                },
                             },
                         },
                     },
@@ -93,8 +97,9 @@ JsRoot {
               2: R_CURLY@14..16 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@16..19
               0: EQ@16..18 "=" [] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@18..19
-                0: IDENT@18..19 "a" [] []
+              1: JS_IDENTIFIER_EXPRESSION@18..19
+                0: JS_REFERENCE_IDENTIFIER@18..19
+                  0: IDENT@18..19 "a" [] []
       1: SEMICOLON@19..20 ";" [] []
     1: JS_VARIABLE_DECLARATION_STATEMENT@20..45
       0: JS_VARIABLE_DECLARATION@20..44
@@ -120,7 +125,8 @@ JsRoot {
               2: R_CURLY@39..41 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@41..44
               0: EQ@41..43 "=" [] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@43..44
-                0: IDENT@43..44 "c" [] []
+              1: JS_IDENTIFIER_EXPRESSION@43..44
+                0: JS_REFERENCE_IDENTIFIER@43..44
+                  0: IDENT@43..44 "c" [] []
       1: SEMICOLON@44..45 ";" [] []
   3: EOF@45..46 "" [Whitespace("\n")] []

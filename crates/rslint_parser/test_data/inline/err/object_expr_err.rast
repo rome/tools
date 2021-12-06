@@ -18,8 +18,8 @@ JsRoot {
                                     missing element,
                                     COMMA@9..11 "," [] [Whitespace(" ")],
                                     JsShorthandPropertyObjectMember {
-                                        name: JsReferenceIdentifierExpression {
-                                            name_token: IDENT@11..14 "foo" [] [],
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@11..14 "foo" [] [],
                                         },
                                     },
                                 ],
@@ -81,7 +81,7 @@ JsRoot {
                   0: (empty)
                   1: COMMA@9..11 "," [] [Whitespace(" ")]
                   2: JS_SHORTHAND_PROPERTY_OBJECT_MEMBER@11..14
-                    0: JS_REFERENCE_IDENTIFIER_EXPRESSION@11..14
+                    0: JS_REFERENCE_IDENTIFIER@11..14
                       0: IDENT@11..14 "foo" [] []
                 2: R_CURLY@14..15 "}" [] []
       1: (empty)
@@ -101,8 +101,9 @@ JsRoot {
                     0: JS_LITERAL_MEMBER_NAME@26..30
                       0: IDENT@26..30 "foo" [] [Whitespace(" ")]
                     1: (empty)
-                    2: JS_REFERENCE_IDENTIFIER_EXPRESSION@30..34
-                      0: IDENT@30..34 "bar" [] [Whitespace(" ")]
+                    2: JS_IDENTIFIER_EXPRESSION@30..34
+                      0: JS_REFERENCE_IDENTIFIER@30..34
+                        0: IDENT@30..34 "bar" [] [Whitespace(" ")]
                 2: R_CURLY@34..35 "}" [] []
       1: (empty)
   3: EOF@35..36 "" [Whitespace("\n")] []

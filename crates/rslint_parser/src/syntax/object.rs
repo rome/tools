@@ -138,7 +138,8 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		_ => {
 			let checkpoint = p.checkpoint();
 			let m = p.start();
-			let identifier_member_name = p.at(T![ident]) || p.cur().is_keyword();
+			let identifier_member_name =
+				matches!(p.cur(), T![ident] | T![await] | T![yield]) || p.cur().is_keyword();
 			let member_name = parse_object_member_name(p)
 				.or_missing_with_error(p, js_parse_error::expected_object_member);
 
@@ -161,7 +162,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 				if identifier_member_name
 					&& (matches!(p.cur(), T![,] | T!['}']) || p.has_linebreak_before_n(0))
 				{
-					member_name.change_kind(p, JS_REFERENCE_IDENTIFIER_EXPRESSION);
+					member_name.change_kind(p, JS_REFERENCE_IDENTIFIER);
 					Present(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER))
 				} else {
 					// let b = { a: true }

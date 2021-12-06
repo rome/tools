@@ -134,16 +134,20 @@ JsRoot {
         JsExpressionStatement {
             expression: JsUnknownExpression {
                 items: [
-                    Token(
-                        IDENT@118..125 "yield" [Whitespace("\n")] [Whitespace(" ")],
+                    Node(
+                        0: JS_REFERENCE_IDENTIFIER@118..125
+                          0: IDENT@118..125 "yield" [Whitespace("\n")] [Whitespace(" ")]
+                        ,
                     ),
                 ],
             },
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: JsReferenceIdentifierExpression {
-                name_token: IDENT@125..128 "foo" [] [],
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@125..128 "foo" [] [],
+                },
             },
             semicolon_token: SEMICOLON@128..129 ";" [] [],
         },
@@ -347,11 +351,13 @@ JsRoot {
         3: R_CURLY@117..118 "}" [] []
     7: JS_EXPRESSION_STATEMENT@118..125
       0: JS_UNKNOWN_EXPRESSION@118..125
-        0: IDENT@118..125 "yield" [Whitespace("\n")] [Whitespace(" ")]
+        0: JS_REFERENCE_IDENTIFIER@118..125
+          0: IDENT@118..125 "yield" [Whitespace("\n")] [Whitespace(" ")]
       1: (empty)
     8: JS_EXPRESSION_STATEMENT@125..129
-      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@125..128
-        0: IDENT@125..128 "foo" [] []
+      0: JS_IDENTIFIER_EXPRESSION@125..128
+        0: JS_REFERENCE_IDENTIFIER@125..128
+          0: IDENT@125..128 "foo" [] []
       1: SEMICOLON@128..129 ";" [] []
     9: JS_UNKNOWN_STATEMENT@129..156
       0: FUNCTION_KW@129..139 "function" [Whitespace("\n")] [Whitespace(" ")]

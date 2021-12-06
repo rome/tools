@@ -4,8 +4,10 @@ JsRoot {
     statements: [
         JsExpressionStatement {
             expression: JsLogicalExpression {
-                left: JsReferenceIdentifierExpression {
-                    name_token: IDENT@0..4 "foo" [] [Whitespace(" ")],
+                left: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@0..4 "foo" [] [Whitespace(" ")],
+                    },
                 },
                 operator: QUESTION2@4..7 "??" [] [Whitespace(" ")],
             },
@@ -13,8 +15,10 @@ JsRoot {
         },
         JsExpressionStatement {
             expression: JsLogicalExpression {
-                left: JsReferenceIdentifierExpression {
-                    name_token: IDENT@10..13 "a" [Whitespace("\n")] [Whitespace(" ")],
+                left: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@10..13 "a" [Whitespace("\n")] [Whitespace(" ")],
+                    },
                 },
                 operator: PIPE2@13..16 "||" [] [Whitespace(" ")],
             },
@@ -22,8 +26,10 @@ JsRoot {
         },
         JsExpressionStatement {
             expression: JsLogicalExpression {
-                left: JsReferenceIdentifierExpression {
-                    name_token: IDENT@17..20 "a" [Whitespace("\n")] [Whitespace(" ")],
+                left: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@17..20 "a" [Whitespace("\n")] [Whitespace(" ")],
+                    },
                 },
                 operator: AMP2@20..23 "&&" [] [Whitespace(" ")],
             },
@@ -38,26 +44,32 @@ JsRoot {
   2: LIST@0..24
     0: JS_EXPRESSION_STATEMENT@0..10
       0: JS_LOGICAL_EXPRESSION@0..10
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..4
-          0: IDENT@0..4 "foo" [] [Whitespace(" ")]
+        0: JS_IDENTIFIER_EXPRESSION@0..4
+          0: JS_REFERENCE_IDENTIFIER@0..4
+            0: IDENT@0..4 "foo" [] [Whitespace(" ")]
         1: QUESTION2@4..7 "??" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@7..10
-          0: IDENT@7..10 "bar" [] []
+        2: JS_IDENTIFIER_EXPRESSION@7..10
+          0: JS_REFERENCE_IDENTIFIER@7..10
+            0: IDENT@7..10 "bar" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@10..17
       0: JS_LOGICAL_EXPRESSION@10..17
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@10..13
-          0: IDENT@10..13 "a" [Whitespace("\n")] [Whitespace(" ")]
+        0: JS_IDENTIFIER_EXPRESSION@10..13
+          0: JS_REFERENCE_IDENTIFIER@10..13
+            0: IDENT@10..13 "a" [Whitespace("\n")] [Whitespace(" ")]
         1: PIPE2@13..16 "||" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@16..17
-          0: IDENT@16..17 "b" [] []
+        2: JS_IDENTIFIER_EXPRESSION@16..17
+          0: JS_REFERENCE_IDENTIFIER@16..17
+            0: IDENT@16..17 "b" [] []
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@17..24
       0: JS_LOGICAL_EXPRESSION@17..24
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@17..20
-          0: IDENT@17..20 "a" [Whitespace("\n")] [Whitespace(" ")]
+        0: JS_IDENTIFIER_EXPRESSION@17..20
+          0: JS_REFERENCE_IDENTIFIER@17..20
+            0: IDENT@17..20 "a" [Whitespace("\n")] [Whitespace(" ")]
         1: AMP2@20..23 "&&" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@23..24
-          0: IDENT@23..24 "b" [] []
+        2: JS_IDENTIFIER_EXPRESSION@23..24
+          0: JS_REFERENCE_IDENTIFIER@23..24
+            0: IDENT@23..24 "b" [] []
       1: (empty)
   3: EOF@24..25 "" [Whitespace("\n")] []

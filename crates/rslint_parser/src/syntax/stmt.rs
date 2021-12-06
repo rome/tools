@@ -11,8 +11,8 @@ use super::util::{check_for_stmt_declaration, check_label_use};
 use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_declaration, parse_equal_value_clause};
-use crate::syntax::function::parse_function_declaration;
-use crate::syntax::function::{is_at_async_function, LineBreak};
+use crate::syntax::expr::parse_identifier;
+use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_binding;
 use crate::JsSyntaxFeature::StrictMode;
@@ -221,50 +221,39 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		m.complete(p, ERROR);
 	}
 
-	let expr = p.expr_with_semi_recovery(false);
-	// Labelled stmt
-	if let Some(mut expr) = expr {
-		if expr.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION && p.at(T![:]) {
-			expr.change_kind(p, NAME);
-			// Its not possible to have a name without an inner ident token
-			let range = p.events[expr.start_pos as usize..]
-			.iter()
-			.find_map(|x| match x {
-				Event::Token {
-					kind: T![ident],
-					range,
-				} => Some(range),
-				_ => None,
-			})
-			.expect(
-				"Tried to get the ident of a name node, but there was no ident. This is erroneous",
-			);
+	// Labelled statement
+	if p.nth_at(1, T![:]) {
+		if let Present(Valid(identifier)) = parse_identifier(p, JS_LABELED_STATEMENT) {
+			let range = identifier.range(p);
+			let label = p.source(range);
 
-			let text_range = TextRange::new((range.start as u32).into(), (range.end as u32).into());
-			let text = p.source(text_range);
-			if let Some(range) = p.state.labels.get(text) {
+			if let Some(first_range) = p.state.labels.get(label) {
 				let err = p
 					.err_builder("Duplicate statement labels are not allowed")
 					.secondary(
-						range.to_owned(),
-						&format!("`{}` is first used as a label here", text),
+						first_range.to_owned(),
+						&format!("`{}` is first used as a label here", label),
 					)
 					.primary(
-						text_range,
-						&format!("a second use of `{}` here is not allowed", text),
+						range,
+						&format!("a second use of `{}` here is not allowed", label),
 					);
 
 				p.error(err);
 			} else {
-				let string = text.to_string();
-				p.state.labels.insert(string, range.to_owned());
+				let string = label.to_string();
+				p.state.labels.insert(string, range.into());
 			}
 
-			let m = expr.undo_completion(p);
+			let labelled_statement = identifier.undo_completion(p);
 			p.bump_any();
 			parse_statement(p, None);
-			return Present(m.complete(p, JS_LABELED_STATEMENT));
+			return Present(labelled_statement.complete(p, JS_LABELED_STATEMENT));
 		}
+	}
+
+	let expr = p.expr_with_semi_recovery(false);
+	if let Some(expr) = expr {
 		let m = expr.precede(p);
 		semi(p, start..p.cur_tok().range.end);
 		Present(m.complete(p, JS_EXPRESSION_STATEMENT))

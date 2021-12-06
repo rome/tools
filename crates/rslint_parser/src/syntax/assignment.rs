@@ -1,9 +1,6 @@
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_equal_value_clause;
-use crate::syntax::expr::{
-	conditional_expr, expr, is_at_reference_identifier_member, parse_reference_identifier_member,
-	unary_expr,
-};
+use crate::syntax::expr::{conditional_expr, expr, is_at_name, parse_name, unary_expr};
 use crate::syntax::js_parse_error::{
 	expected_assignment_target, expected_identifier, expected_simple_assignment_target,
 };
@@ -34,7 +31,7 @@ pub(crate) fn expression_to_assignment_pattern(
 	checkpoint: Checkpoint,
 	expr_kind: AssignmentExprPrecedence,
 ) -> CompletedMarker {
-	if let Present(assignment_target) = try_expression_to_assignment(p, target, checkpoint) {
+	if let Ok(assignment_target) = try_expression_to_assignment(p, target, checkpoint) {
 		return assignment_target;
 	}
 
@@ -64,7 +61,7 @@ pub(crate) fn expression_to_assignment(
 	target: CompletedMarker,
 	checkpoint: Checkpoint,
 ) -> CompletedMarker {
-	if let Present(assignment) = try_expression_to_assignment(p, target, checkpoint) {
+	if let Ok(assignment) = try_expression_to_assignment(p, target, checkpoint) {
 		assignment
 	} else {
 		// Doesn't seem to be a valid assignment target. Recover and create an error.
@@ -201,16 +198,14 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 	// ({:=} = {});
 	// ({ a b } = {});
 	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-		if !is_at_reference_identifier_member(p)
-			&& !p.at_ts(token_set![T![:], T![=], T![ident], T![await], T![yield]])
-		{
+		if !is_at_name(p) && !p.at_ts(token_set![T![:], T![=], T![ident], T![await], T![yield]]) {
 			return Absent;
 		}
 
 		let m = p.start();
 
 		let kind = if p.at(T![:]) || p.nth_at(1, T![:]) {
-			parse_reference_identifier_member(p).or_missing_with_error(p, expected_identifier);
+			parse_name(p).or_missing_with_error(p, expected_identifier);
 			p.expect_required(T![:]);
 			parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
 				.or_missing_with_error(p, expected_assignment_target);
@@ -272,50 +267,96 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 
 fn try_expression_to_assignment(
 	p: &mut Parser,
-	mut target: CompletedMarker,
+	target: CompletedMarker,
 	checkpoint: Checkpoint,
-) -> ParsedSyntax<CompletedMarker> {
-	if target.kind() == JS_PARENTHESIZED_EXPRESSION {
-		// Special treatment for parenthesized expressions because they can be nested and an error
-		// should only cover the sub-expressions that are indeed invalid assignment targets.
-		// This code traverses through all descendants of the parenthesized expression and tries to
-		// convert them to valid assignment targets. It returns the converted parenthesized expression if
-		// everything is valid and otherwise re-parses the parenthesized expression only:
-		let events = &mut p.events[target.start_pos as usize..target.finish_pos as usize];
-		let mut children_valid = true;
+) -> Result<CompletedMarker, ()> {
+	if !matches!(
+		target.kind(),
+		JS_PARENTHESIZED_EXPRESSION
+			| JS_STATIC_MEMBER_EXPRESSION
+			| JS_COMPUTED_MEMBER_EXPRESSION
+			| JS_IDENTIFIER_EXPRESSION
+	) {
+		return Err(());
+	}
 
-		for event in events {
-			match event {
-				Event::Start {
-					kind: TOMBSTONE, ..
-				} => {}
-				Event::Start { kind, .. } => {
-					if let Some(assignment_target_kind) = map_expression_to_assignment_kind(*kind) {
-						*kind = assignment_target_kind
-					} else {
-						children_valid = false;
+	let events = &mut p.events[target.start_pos as usize..target.finish_pos as usize];
+	let mut children_valid = true;
+	let mut identifier_start: Option<usize> = None;
+
+	for event in events {
+		match event {
+			Event::Start {
+				kind: TOMBSTONE, ..
+			}
+			| Event::Token { .. }
+			| Event::MultipleTokens { .. }
+			| Event::Missing => {}
+			Event::Start {
+				kind,
+				forward_parent,
+				start,
+			} => {
+				match *kind {
+					JS_PARENTHESIZED_EXPRESSION => {
+						*kind = JS_PARENTHESIZED_ASSIGNMENT;
+					}
+					JS_STATIC_MEMBER_EXPRESSION => {
+						*kind = JS_STATIC_MEMBER_ASSIGNMENT;
+						// structure is identical, skip the remaining children
+						break;
+					}
+					JS_COMPUTED_MEMBER_EXPRESSION => {
+						*kind = JS_COMPUTED_MEMBER_ASSIGNMENT;
+						// structure is identical, skip the remaining children
+						break;
+					}
+					JS_IDENTIFIER_EXPRESSION => {
+						*kind = JS_IDENTIFIER_ASSIGNMENT;
+					}
+					JS_REFERENCE_IDENTIFIER => {
+						// IdentifierExpression has a nested reference identifier to have a "unique"
+						// node to get all references to an identifier. No such thing exists
+						// for assignment target where the ident is a direct child of the IdentifierAssignment.
+						// That's why we need to "unwrap" the ident here by undoing and abandoning the reference
+						// identifier
+						debug_assert!(
+							forward_parent == &None,
+							"Tombstoning with precede is not supported"
+						);
+						// Delete the identifier and only hold on to the expression.
+						// Abandoning will attach the identifier to the expression.
+						*kind = SyntaxKind::TOMBSTONE;
+						// Remember the identifier start so that we can "tombstone" the finish marker
+						identifier_start = Some(*start);
+					}
+					_ => {
+						children_valid = false
 						// continue to convert other children
 					}
 				}
-				_ => {}
+			}
+			slot @ Event::Finish { .. } => {
+				if let Some(start) = identifier_start {
+					// Tombstone the finish marker of a reference identifier
+					*slot = Event::tombstone(start);
+					identifier_start = None;
+				}
 			}
 		}
+	}
 
-		if children_valid {
-			Present(target)
-		} else {
-			p.rewind(checkpoint);
+	if children_valid {
+		Ok(target)
+	} else if target.kind() == JS_PARENTHESIZED_EXPRESSION {
+		p.rewind(checkpoint);
 
-			// You're wondering why this is OK? The reason is, that there's a valid outermost parenthesized
-			// assignment target. The problem is with one of the inner assignment targets and this is why we
-			// reparse it to add the necessary diagnostics
-			Present(re_parse_parenthesized_expression_as_assignment(p))
-		}
-	} else if let Some(assignment_target_kind) = map_expression_to_assignment_kind(target.kind()) {
-		target.change_kind(p, assignment_target_kind);
-		Present(target)
+		// You're wondering why this is OK? The reason is, that there's a valid outermost parenthesized
+		// assignment. The problem is with one of the inner assignments. Reparse the parenthesized assignment
+		// and wrap the "invalid" inner assignment in an UNKNOWN_ASSIGNMENT (and add the diagnostics).
+		Ok(re_parse_parenthesized_expression_as_assignment(p))
 	} else {
-		Absent
+		Err(())
 	}
 }
 
@@ -341,16 +382,6 @@ fn re_parse_parenthesized_expression_as_assignment(p: &mut Parser) -> CompletedM
 	p.expect_required(T![')']);
 
 	outer.complete(p, JS_PARENTHESIZED_ASSIGNMENT)
-}
-
-fn map_expression_to_assignment_kind(kind: SyntaxKind) -> Option<SyntaxKind> {
-	match kind {
-		JS_STATIC_MEMBER_EXPRESSION => Some(JS_STATIC_MEMBER_ASSIGNMENT),
-		JS_COMPUTED_MEMBER_EXPRESSION => Some(JS_COMPUTED_MEMBER_ASSIGNMENT),
-		JS_REFERENCE_IDENTIFIER_EXPRESSION => Some(JS_IDENTIFIER_ASSIGNMENT),
-		JS_PARENTHESIZED_EXPRESSION => Some(JS_PARENTHESIZED_ASSIGNMENT),
-		_ => None,
-	}
 }
 
 fn wrap_expression_in_invalid_assignment(p: &mut Parser, expression_end: usize) -> CompletedMarker {
