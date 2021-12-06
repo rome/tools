@@ -40,8 +40,8 @@ pub trait ParseList {
 		while !p.at(SyntaxKind::EOF) && !self.is_at(p) {
 			progress.assert_progressing(p);
 
-			if self.is_at_missing_element(p) {
-				self.parse_missing_element(p);
+			if self.is_at_separating_element(p) {
+				self.parse_separating_element(p);
 				continue;
 			}
 
@@ -57,8 +57,9 @@ pub trait ParseList {
 	/// Parses a single element of the list
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker>;
 
-	/// Tells the parser to mark the current token as missing, continuing the loop
-	fn parse_missing_element(&mut self, p: &mut Parser) {
+	/// Tells the parser to mark the current token as missing, continuing the loop.
+	/// This function is used for [parse_separated_list].
+	fn parse_separating_element(&mut self, p: &mut Parser) {
 		p.missing();
 	}
 
@@ -80,8 +81,8 @@ pub trait ParseList {
 	fn is_at(&mut self, p: &mut Parser) -> bool;
 
 	/// When calling [parse_separated_list], this method checks, inside the loop, if the parser
-	/// is inside a token that marks the
-	fn is_at_missing_element(&mut self, _p: &mut Parser) -> bool {
+	/// is at a position where the current token is element that will separate the list
+	fn is_at_separating_element(&mut self, _p: &mut Parser) -> bool {
 		unimplemented!("When calling `parse_separated_list`, you need to implement this method.");
 	}
 
