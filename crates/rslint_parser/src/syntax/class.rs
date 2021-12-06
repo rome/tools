@@ -357,24 +357,22 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 		offset += 1;
 
 		if is_at_method_class_member(p, offset) {
-			Modifiers::new(
-				declare,
-				has_access_modifier,
-				is_static,
-				true,
-				declare_diagnostic,
-			)
-			.consume(p);
+			Modifiers::default()
+				.is_declare(declare)
+				.accessibility(has_access_modifier)
+				.is_static(is_static)
+				.dont_remap_static(true)
+				.declare_err(declare_diagnostic)
+				.consume(p);
 			return Valid(parse_method_class_member_body(p, member_marker));
 		} else if is_at_property_class_member(p, offset) {
-			Modifiers::new(
-				declare,
-				has_access_modifier,
-				is_static,
-				true,
-				declare_diagnostic,
-			)
-			.consume(p);
+			Modifiers::default()
+				.is_declare(declare)
+				.accessibility(has_access_modifier)
+				.is_static(is_static)
+				.dont_remap_static(true)
+				.declare_err(declare_diagnostic)
+				.consume(p);
 
 			return if declare {
 				Valid(property_declaration_class_member_body(
@@ -389,14 +387,13 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 	}
 
 	// Seems that static is a keyword since the parser wasn't able to parse a valid method or property named static
-	Modifiers::new(
-		declare,
-		has_access_modifier,
-		is_static,
-		false,
-		declare_diagnostic,
-	)
-	.consume(p);
+	Modifiers::default()
+		.is_declare(declare)
+		.accessibility(has_access_modifier)
+		.is_static(is_static)
+		.dont_remap_static(false)
+		.declare_err(declare_diagnostic)
+		.consume(p);
 
 	let maybe_err = p.start();
 	let (abstract_range, readonly_range) = abstract_readonly_modifiers(p);
@@ -880,7 +877,7 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 	let has_accessibility = if ts_access_modifier(p).is_some() {
 		let range = p.cur_tok().range;
 		let maybe_err = p.start();
-		Modifiers::new(false, true, false, false, None).consume(p);
+		Modifiers::default().accessibility(true).consume(p);
 		if !p.typescript() {
 			let err = p
 				.err_builder("accessibility modifiers can only be used in TypeScript files")
@@ -962,21 +959,58 @@ pub(crate) struct Modifiers {
 	declare_err: Option<Diagnostic>,
 }
 
-impl Modifiers {
-	pub fn new(
-		declare: bool,
-		accessibility: bool,
-		is_static: bool,
-		dont_remap_static: bool,
-		declare_err: Option<Diagnostic>,
-	) -> Self {
+impl Default for Modifiers {
+	fn default() -> Self {
 		Self {
-			declare,
-			accessibility,
-			is_static,
-			dont_remap_static,
-			declare_err,
+			declare: Default::default(),
+			accessibility: Default::default(),
+			is_static: Default::default(),
+			dont_remap_static: Default::default(),
+			declare_err: Default::default(),
 		}
+	}
+}
+
+impl Modifiers {
+	// pub fn new(
+	// 	declare: bool,
+	// 	accessibility: bool,
+	// 	is_static: bool,
+	// 	dont_remap_static: bool,
+	// 	declare_err: Option<Diagnostic>,
+	// ) -> Self {
+	// 	Self {
+	// 		declare,
+	// 		accessibility,
+	// 		is_static,
+	// 		dont_remap_static,
+	// 		declare_err,
+	// 	}
+	// }
+
+	pub fn is_declare(mut self, is_declare: bool) -> Self {
+		self.declare = is_declare;
+		self
+	}
+
+	pub fn accessibility(mut self, accessibility: bool) -> Self {
+		self.accessibility = accessibility;
+		self
+	}
+
+	pub fn is_static(mut self, is_static: bool) -> Self {
+		self.is_static = is_static;
+		self
+	}
+
+	pub fn dont_remap_static(mut self, should_remap: bool) -> Self {
+		self.dont_remap_static = should_remap;
+		self
+	}
+
+	pub fn declare_err(mut self, diagnostic: Option<Diagnostic>) -> Self {
+		self.declare_err = diagnostic;
+		self
 	}
 
 	/// It consumes modifiers like:
@@ -1017,7 +1051,7 @@ impl Modifiers {
 			p.bump_remap(T![declare]);
 			if let Some(err) = self.declare_err {
 				p.error(err);
-				m.complete(p, JS_UNKNOWN_MEMBER);
+				m.complete(p, JS_UNKNOWN_MODIFIER);
 			} else {
 				m.complete(p, JS_MODIFIER);
 			}
