@@ -8,12 +8,14 @@ use rslint_syntax::SyntaxKind;
 
 /// An utility that gives finer control on how to parse a list of elements
 pub trait ParseList {
+	type FinishedSyntax;
+
 	/// Parses a simple list
 	///
 	/// # Panics
 	///
 	/// It panics if the parser doesn't advance at each cycle of the loop
-	fn parse_list(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_list(&mut self, p: &mut Parser) -> ParsedSyntax<Self::FinishedSyntax> {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
 		while !p.at(SyntaxKind::EOF) && !self.is_at(p) {
@@ -33,7 +35,7 @@ pub trait ParseList {
 	/// # Panics
 	///
 	/// It panics if the parser doesn't advance at each cycle of the loop
-	fn parse_separated_list(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_separated_list(&mut self, p: &mut Parser) -> ParsedSyntax<Self::FinishedSyntax> {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
 		while !p.at(SyntaxKind::EOF) && !self.is_at(p) {
@@ -72,9 +74,7 @@ pub trait ParseList {
 	}
 
 	/// It creates a [ParsedSyntax] that will contain the list
-	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<CompletedMarker> {
-		Present(m.complete(p, self.list_kind()))
-	}
+	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::FinishedSyntax>;
 
 	/// This method is used to check the current token inside the loop. When this method return [false],
 	/// the trait will exit from the loop.
