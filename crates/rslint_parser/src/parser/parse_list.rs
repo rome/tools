@@ -1,183 +1,103 @@
-use super::ParsedSyntax::Present;
-use super::{ParsedSyntax, ParserProgress};
-use crate::{CompletedMarker, ParseRecovery, Parser};
-use rslint_errors::Diagnostic;
-use rslint_syntax::SyntaxKind;
 use std::ops::Range;
 
-/// An utility that gives some control on how to parse a list of elements
-pub struct ParseList<Condition, CreateElement> {
-	/// This is a condition used inside the loop. When it's false, it exists the loop
-	condition: Option<Condition>,
-	/// A closure that is charge of creating the element inside the loop
-	create_element: Option<CreateElement>,
-	/// The [SyntaxKind] of the list
-	list_kind: Option<SyntaxKind>,
-}
+use super::ParsedSyntax::Present;
+use super::{ParsedSyntax, ParserProgress, RecoveryResult};
+use crate::{CompletedMarker, Marker, ParseRecovery, Parser};
+use rslint_errors::Diagnostic;
+use rslint_syntax::SyntaxKind;
 
-impl<Condition, CreateElement> ParseList<Condition, CreateElement>
-where
-	Condition: Fn(&mut Parser) -> bool,
-	CreateElement: Fn(&mut Parser) -> ParsedSyntax<CompletedMarker>,
-{
-	pub fn new() -> Self {
-		Self {
-			condition: None,
-			create_element: None,
-			list_kind: None,
-		}
-	}
-
-	#[must_use = "You need to provide the condition to exit from the loop"]
-	#[inline]
-	pub fn set_condition(mut self, condition: Condition) -> Self {
-		self.condition = Some(condition);
-		self
-	}
-
-	#[must_use = "You need provide the function that creates the single element list"]
-	#[inline]
-	pub fn set_create_element(mut self, create_element: CreateElement) -> Self {
-		self.create_element = Some(create_element);
-		self
-	}
-
-	#[must_use = "You need to tell the struct the [SyntaxKind] of the list"]
-	#[inline]
-	pub fn set_list_kind(mut self, list_kind: SyntaxKind) -> Self {
-		self.list_kind = Some(list_kind);
-		self
-	}
-
-	/// This function is in charge to create a list without any sort of recovering.
+/// An utility that gives finer control on how to parse a list of elements
+pub trait ParseList {
+	/// Parses a simple list
 	///
-	/// When using it, if [create_element] returns a [ParsedSyntax::Absent], it will
-	/// mark it as a missing element
-	pub fn create_list(self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-		let condition = self
-			.condition
-			.expect("`condition` can't be `None`, use set_condition");
-		let create_element = self
-			.create_element
-			.expect("`create_element` can't be `None`, use set_condition");
-
-		let list_kind = self
-			.list_kind
-			.expect("`list_kind` can't be `None`, use set_condition");
-
-		let elements = p.start();
-		let mut progress = ParserProgress::default();
-		while (condition)(p) {
-			progress.assert_progressing(p);
-			(create_element)(p).or_missing(p);
-		}
-
-		Present(elements.complete(p, list_kind))
-	}
-
-	/// This function is in charge to create a list without any sort of recovering.
+	/// # Panics
 	///
-	/// When using it, if [create_element] returns a [ParsedSyntax::Absent], it will
-	/// mark it as a missing and a diagnostic error will be emitted
-	#[allow(unused)]
-	pub fn create_list_with_missing_error<E>(
-		self,
-		p: &mut Parser,
-		error_builder: E,
-	) -> ParsedSyntax<CompletedMarker>
-	where
-		E: FnOnce(&Parser, Range<usize>) -> Diagnostic + Copy,
-	{
-		let condition = self
-			.condition
-			.expect("`condition` can't be `None`, use set_condition");
-		let create_element = self
-			.create_element
-			.expect("`create_element` can't be `None`, use set_condition");
-
-		let list_kind = self
-			.list_kind
-			.expect("`list_kind` can't be `None`, use set_condition");
-
-		let elements = p.start();
+	/// It panics if the parser doesn't advance at each cycle of the loop
+	fn parse_list(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
-		while (condition)(p) {
-			progress.assert_progressing(p);
-			(create_element)(p).or_missing_with_error(p, error_builder);
-		}
-
-		Present(elements.complete(p, list_kind))
-	}
-
-	/// A list that allows the parser to recover from what's returned from [create_element].
-	///
-	/// The function needs to accept a [ParseRecovery] and an error builder.
-	#[allow(unused)]
-	pub fn create_list_with_recover<E>(
-		self,
-		p: &mut Parser,
-		recovery: &ParseRecovery,
-		error_builder: E,
-	) -> ParsedSyntax<CompletedMarker>
-	where
-		E: FnOnce(&Parser, Range<usize>) -> Diagnostic + Copy,
-	{
-		let condition = self
-			.condition
-			.expect("`condition` can't be `None`, use set_condition");
-		let create_element = self
-			.create_element
-			.expect("`create_element` can't be `None`, use set_condition");
-
-		let list_kind = self
-			.list_kind
-			.expect("`list_kind` can't be `None`, use set_condition");
-
-		let elements = p.start();
-		let mut progress = ParserProgress::default();
-		while (condition)(p) {
+		while !p.at(SyntaxKind::EOF) && !self.is_at(p) {
 			progress.assert_progressing(p);
 
-			let parsed_element = (create_element)(p);
+			let parsed_element = self.parse_element(p);
 
-			let recovered_element = parsed_element.or_recover(p, recovery, error_builder);
-
-			if recovered_element.is_err() {
+			if parsed_element.is_absent() && self.recover(p, parsed_element).is_err() {
 				break;
 			}
 		}
-		Present(elements.complete(p, list_kind))
+		self.finish_list(p, elements)
 	}
-}
 
-#[cfg(test)]
-mod test {
-	use super::ParseList;
-	use super::ParsedSyntax::Present;
-	use crate::{Parser, Syntax, TokenSource};
-	use rslint_lexer::Token;
-	use rslint_lexer::T;
-	use rslint_syntax::SyntaxKind;
+	/// Parses a list of elements separated by a recurring element
+	///
+	/// # Panics
+	///
+	/// It panics if the parser doesn't advance at each cycle of the loop
+	fn parse_separated_list(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+		let elements = self.start_list(p);
+		let mut progress = ParserProgress::default();
+		while !p.at(SyntaxKind::EOF) && !self.is_at(p) {
+			progress.assert_progressing(p);
 
-	#[test]
-	fn can_new() {
-		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL, 12)];
-		let token_source = TokenSource::new("await", tokens.as_slice());
+			if self.is_at_missing_element(p) {
+				self.parse_missing_element(p);
+				continue;
+			}
 
-		let mut p = Parser::new(token_source, 0, Syntax::default());
+			let parsed_element = self.parse_element(p);
 
-		let list = ParseList::new()
-			.set_condition(|p| p.at(T![#]))
-			.set_create_element(|p| {
-				let m = p.start();
-				p.bump_any();
-				Present(m.complete(p, rslint_lexer::SyntaxKind::JS_UNARY_EXPRESSION))
-			})
-			.set_list_kind(rslint_lexer::SyntaxKind::LIST)
-			.create_list(&mut p);
-
-		let marker = list.unwrap();
-
-		assert_eq!(marker.kind(), rslint_lexer::SyntaxKind::LIST);
+			if parsed_element.is_absent() && self.recover(p, parsed_element).is_err() {
+				break;
+			}
+		}
+		self.finish_list(p, elements)
 	}
+
+	/// Parses a single element of the list
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker>;
+
+	/// Tells the parser to mark the current token as missing, continuing the loop
+	fn parse_missing_element(&mut self, p: &mut Parser) {
+		p.missing();
+	}
+
+	/// The [SyntaxKind] used to name the list
+	fn list_kind(&mut self) -> SyntaxKind {
+		SyntaxKind::LIST
+	}
+
+	/// It creates a marker just before starting a list
+	fn start_list(&mut self, p: &mut Parser) -> Marker {
+		p.start()
+	}
+
+	/// It creates a [ParsedSyntax] that will contain the list
+	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<CompletedMarker> {
+		Present(m.complete(p, self.list_kind()))
+	}
+
+	/// This method is used to check the current token inside the loop. When this method return [false],
+	/// the trait will exit from the loop.
+	fn is_at(&mut self, p: &mut Parser) -> bool;
+
+	/// When calling [parse_separated_list], this method checks, inside the loop, if the parser
+	/// is inside a token that marks the
+	fn is_at_missing_element(&mut self, _p: &mut Parser) -> bool {
+		unimplemented!("When calling `parse_separated_list`, you need to implement this method.");
+	}
+
+	/// This method is used to recover the parser in case [parse_element] returns [ParsedSyntax::Absent]
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<CompletedMarker>,
+	) -> RecoveryResult {
+		parsed_element.or_recover(p, &Self::recovery(), Self::expected_element_error)
+	}
+
+	/// [Diagnostic] thrown in case the parser is not able to recover
+	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic;
+
+	/// A [TokenSet] that will be given to the parser in order to recover
+	fn recovery() -> ParseRecovery;
 }

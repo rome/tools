@@ -1054,6 +1054,35 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	Present(m.complete(p, kind))
 }
 
+struct SwitchClausesList;
+
+impl SwitchClausesList {
+	pub fn new() -> Self {
+		Self {}
+	}
+}
+
+impl ParseList for SwitchClausesList {
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+		match parse_statement(p, None) {
+			Some(stmt) => Present(stmt),
+			None => Absent,
+		}
+	}
+
+	fn is_at(&mut self, p: &mut Parser) -> bool {
+		p.at_ts(token_set![T![default], T![case], T!['}']])
+	}
+
+	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic {
+		js_parse_error::expected_case(p, range)
+	}
+
+	fn recovery() -> ParseRecovery {
+		ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET)
+	}
+}
+
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
 fn parse_switch_clause(
 	p: &mut Parser,
@@ -1106,12 +1135,8 @@ fn parse_switch_clause(
 			expr(p);
 			p.expect_required(T![:]);
 
-			ParseList::new()
-				.set_condition(|p| !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]))
-				.set_create_element(|p| Present(parse_statement(p, None).unwrap()))
-				.set_list_kind(LIST)
-				.create_list(p)
-				.unwrap();
+			SwitchClausesList::new().parse_list(p).unwrap();
+
 			Present(m.complete(p, JS_CASE_CLAUSE))
 		}
 		_ => {
