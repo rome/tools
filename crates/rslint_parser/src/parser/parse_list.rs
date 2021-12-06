@@ -1,13 +1,12 @@
-use std::ops::Range;
-
-use super::ParsedSyntax::Present;
 use super::{ParsedSyntax, ParserProgress, RecoveryResult};
 use crate::{CompletedMarker, Marker, ParseRecovery, Parser};
 use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind;
+use std::ops::Range;
 
 /// An utility that gives finer control on how to parse a list of elements
 pub trait ParseList {
+	/// The type contained inside [ParsedSyntax]
 	type FinishedSyntax;
 
 	/// Parses a simple list
