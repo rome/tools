@@ -7,19 +7,19 @@ JsRoot {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: JsObjectBinding {
+                        id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
                             properties: [
-                                JsPropertyBinding {
+                                JsObjectBindingPatternProperty {
                                     member: JsLiteralMemberName {
                                         value: IDENT@6..9 "foo" [] [],
                                     },
                                     colon_token: COLON@9..11 ":" [] [Whitespace(" ")],
-                                    binding: missing (required),
+                                    pattern: missing (required),
                                     init: missing (optional),
                                 },
                                 COMMA@11..13 "," [] [Whitespace(" ")],
-                                JsShorthandPropertyBinding {
+                                JsObjectBindingPatternShorthandProperty {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@13..17 "bar" [] [Whitespace(" ")],
                                     },
@@ -46,13 +46,13 @@ JsRoot {
                 kind_token: LET_KW@23..28 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: JsObjectBinding {
+                        id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@28..30 "{" [] [Whitespace(" ")],
                             properties: [
-                                JsPropertyBinding {
+                                JsObjectBindingPatternProperty {
                                     member: missing (required),
                                     colon_token: COLON@30..32 ":" [] [Whitespace(" ")],
-                                    binding: JsIdentifierBinding {
+                                    pattern: JsIdentifierBinding {
                                         name_token: IDENT@32..36 "bar" [] [Whitespace(" ")],
                                     },
                                     init: JsEqualValueClause {
@@ -83,17 +83,17 @@ JsRoot {
                 kind_token: LET_KW@51..56 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: JsObjectBinding {
+                        id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@56..58 "{" [] [Whitespace(" ")],
                             properties: [
                                 missing element,
                                 COMMA@58..60 "," [] [Whitespace(" ")],
-                                JsPropertyBinding {
+                                JsObjectBindingPatternProperty {
                                     member: JsLiteralMemberName {
                                         value: IDENT@60..63 "foo" [] [],
                                     },
                                     colon_token: COLON@63..65 ":" [] [Whitespace(" ")],
-                                    binding: JsIdentifierBinding {
+                                    pattern: JsIdentifierBinding {
                                         name_token: IDENT@65..69 "bar" [] [Whitespace(" ")],
                                     },
                                     init: missing (optional),
@@ -126,17 +126,17 @@ JsRoot {
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..23
           0: JS_VARIABLE_DECLARATOR@4..23
-            0: JS_OBJECT_BINDING@4..19
+            0: JS_OBJECT_BINDING_PATTERN@4..19
               0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
               1: LIST@6..17
-                0: JS_PROPERTY_BINDING@6..11
+                0: JS_OBJECT_BINDING_PATTERN_PROPERTY@6..11
                   0: JS_LITERAL_MEMBER_NAME@6..9
                     0: IDENT@6..9 "foo" [] []
                   1: COLON@9..11 ":" [] [Whitespace(" ")]
                   2: (empty)
                   3: (empty)
                 1: COMMA@11..13 "," [] [Whitespace(" ")]
-                2: JS_SHORTHAND_PROPERTY_BINDING@13..17
+                2: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@13..17
                   0: JS_IDENTIFIER_BINDING@13..17
                     0: IDENT@13..17 "bar" [] [Whitespace(" ")]
                   1: (empty)
@@ -153,10 +153,10 @@ JsRoot {
         0: LET_KW@23..28 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@28..51
           0: JS_VARIABLE_DECLARATOR@28..51
-            0: JS_OBJECT_BINDING@28..47
+            0: JS_OBJECT_BINDING_PATTERN@28..47
               0: L_CURLY@28..30 "{" [] [Whitespace(" ")]
               1: LIST@30..45
-                0: JS_PROPERTY_BINDING@30..45
+                0: JS_OBJECT_BINDING_PATTERN_PROPERTY@30..45
                   0: (empty)
                   1: COLON@30..32 ":" [] [Whitespace(" ")]
                   2: JS_IDENTIFIER_BINDING@32..36
@@ -178,12 +178,12 @@ JsRoot {
         0: LET_KW@51..56 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@56..75
           0: JS_VARIABLE_DECLARATOR@56..75
-            0: JS_OBJECT_BINDING@56..71
+            0: JS_OBJECT_BINDING_PATTERN@56..71
               0: L_CURLY@56..58 "{" [] [Whitespace(" ")]
               1: LIST@58..69
                 0: (empty)
                 1: COMMA@58..60 "," [] [Whitespace(" ")]
-                2: JS_PROPERTY_BINDING@60..69
+                2: JS_OBJECT_BINDING_PATTERN_PROPERTY@60..69
                   0: JS_LITERAL_MEMBER_NAME@60..63
                     0: IDENT@60..63 "foo" [] []
                   1: COLON@63..65 ":" [] [Whitespace(" ")]

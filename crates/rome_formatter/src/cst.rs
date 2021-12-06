@@ -1,17 +1,17 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	ArgList, CallExpr, ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, JsArrayBinding,
-	JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement, JsBooleanLiteralExpression,
-	JsCaseClause, JsCatchClause, JsClassDeclaration, JsConstructorParameterList,
-	JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
-	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsFunctionDeclaration,
-	JsGetterClassMember, JsIdentifierBinding, JsIfStatement, JsLabeledStatement,
-	JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression, JsParameterList,
-	JsPropertyClassMember, JsPropertyObjectMember, JsReferenceIdentifierExpression,
-	JsReturnStatement, JsRoot, JsSequenceExpression, JsSetterClassMember,
-	JsShorthandPropertyObjectMember, JsSpread, JsStringLiteralExpression, JsSwitchStatement,
-	JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement,
-	JsWithStatement, Name,
+	ArgList, CallExpr, ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate,
+	JsArrayBindingPattern, JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement,
+	JsBooleanLiteralExpression, JsCaseClause, JsCatchClause, JsClassDeclaration,
+	JsConstructorParameterList, JsContinueStatement, JsDebuggerStatement, JsDefaultClause,
+	JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause,
+	JsFunctionDeclaration, JsGetterClassMember, JsIdentifierBinding, JsIfStatement,
+	JsLabeledStatement, JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression,
+	JsParameterList, JsPropertyClassMember, JsPropertyObjectMember,
+	JsReferenceIdentifierExpression, JsReturnStatement, JsRoot, JsSequenceExpression,
+	JsSetterClassMember, JsShorthandPropertyObjectMember, JsSpread, JsStringLiteralExpression,
+	JsSwitchStatement, JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator,
+	JsWhileStatement, JsWithStatement, Name,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
@@ -152,7 +152,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::FOR_IN_STMT => ForInStmt::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::JS_ARRAY_BINDING => JsArrayBinding::cast(self.clone())
+			SyntaxKind::JS_ARRAY_BINDING_PATTERN => JsArrayBindingPattern::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::CALL_EXPR => CallExpr::cast(self.clone())

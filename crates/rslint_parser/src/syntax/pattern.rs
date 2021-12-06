@@ -107,9 +107,9 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 	) -> ParsedSyntax<ConditionalSyntax> {
 		match p.cur() {
 			T![,] => Present(Valid(p.start().complete(p, JS_ARRAY_HOLE))),
-			T![...] => self.parse_rest_pattern(p).map(|rest_pattern| {
-				validate_rest_pattern(p, Valid(rest_pattern), T![']'], recovery)
-			}),
+			T![...] => self
+				.parse_rest_pattern(p)
+				.map(|rest_pattern| validate_rest_pattern(p, rest_pattern, T![']'], recovery)),
 			_ => self
 				.pattern_with_default()
 				.parse_pattern_with_optional_default(p)
@@ -216,15 +216,15 @@ pub(crate) trait ParseObjectPattern {
 			self.parse_rest_property_pattern(p)
 				.map(|rest_pattern| validate_rest_pattern(p, rest_pattern, T!['}'], recovery))
 		} else {
-			self.parse_property_pattern(p)
+			self.parse_property_pattern(p).into_valid()
 		}
 	}
 
 	/// Parses a shorthand `{ a }` or a "named" `{ a: b }` property
-	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<ConditionalSyntax>;
+	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker>;
 
 	/// Parses a rest property `{ ...a }`
-	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<ConditionalSyntax>;
+	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker>;
 }
 
 /// Validates if the parsed completed rest marker is a valid rest element inside of a
@@ -236,56 +236,52 @@ pub(crate) trait ParseObjectPattern {
 /// * not have a default value
 fn validate_rest_pattern(
 	p: &mut Parser,
-	rest: ConditionalSyntax,
+	rest: CompletedMarker,
 	end_token: SyntaxKind,
 	recovery: &ParseRecovery,
 ) -> ConditionalSyntax {
 	if p.at(end_token) {
-		return rest;
+		return Valid(rest);
 	}
 
-	if let Valid(rest) = rest {
-		if p.at(T![=]) {
-			let rest_range = rest.range(p);
-			let rest_marker = rest.undo_completion(p);
-			let default_start = p.cur_tok().range.start;
-			let kind = rest.kind();
-			p.bump(T![=]);
+	if p.at(T![=]) {
+		let rest_range = rest.range(p);
+		let rest_marker = rest.undo_completion(p);
+		let default_start = p.cur_tok().range.start;
+		let kind = rest.kind();
+		p.bump(T![=]);
 
-			if let Ok(recovered) = recovery.recover(p) {
-				recovered.undo_completion(p).abandon(p); // append recovered content to parent
-			}
-			p.error(
-				p.err_builder("rest element cannot have a default")
-					.primary(
-						default_start..p.cur_tok().range.start,
-						"Remove the default value here",
-					)
-					.secondary(rest_range, "Rest element"),
-			);
+		if let Ok(recovered) = recovery.recover(p) {
+			recovered.undo_completion(p).abandon(p); // append recovered content to parent
+		}
+		p.error(
+			p.err_builder("rest element cannot have a default")
+				.primary(
+					default_start..p.cur_tok().range.start,
+					"Remove the default value here",
+				)
+				.secondary(rest_range, "Rest element"),
+		);
 
-			Invalid(rest_marker.complete(p, kind).into())
-		} else if p.at(T![,]) && p.nth_at(1, end_token) {
-			p.error(
-				p.err_builder("rest element may not have a trailing comma")
-					.primary(p.cur_tok().range, "Remove the trailing comma here")
-					.secondary(rest.range(p), "Rest element"),
-			);
-			Invalid(rest.into())
-		} else {
-			p.error(
-				p.err_builder("rest element must be the last element")
-					.primary(
-						rest.range(p),
-						&format!(
+		Invalid(rest_marker.complete(p, kind).into())
+	} else if p.at(T![,]) && p.nth_at(1, end_token) {
+		p.error(
+			p.err_builder("rest element may not have a trailing comma")
+				.primary(p.cur_tok().range, "Remove the trailing comma here")
+				.secondary(rest.range(p), "Rest element"),
+		);
+		Invalid(rest.into())
+	} else {
+		p.error(
+			p.err_builder("rest element must be the last element")
+				.primary(
+					rest.range(p),
+					&format!(
 							"Move the rest element to the end of the pattern, right before the closing {}",
 							end_token.to_string().unwrap(),
 						),
-					),
-			);
-			Invalid(rest.into())
-		}
-	} else {
-		rest
+				),
+		);
+		Invalid(rest.into())
 	}
 }

@@ -31,7 +31,7 @@ JsRoot {
                         statements: [
                             JsExpressionStatement {
                                 expression: JsAssignmentExpression {
-                                    left: JsStaticMemberAssignmentTarget {
+                                    left: JsStaticMemberAssignment {
                                         object: JsThisExpression {
                                             this_token: THIS_KW@29..36 "this" [Whitespace("\n\t\t")] [],
                                         },
@@ -83,7 +83,7 @@ JsRoot {
                         statements: [
                             JsExpressionStatement {
                                 expression: JsAssignmentExpression {
-                                    left: JsStaticMemberAssignmentTarget {
+                                    left: JsStaticMemberAssignment {
                                         object: JsThisExpression {
                                             this_token: THIS_KW@81..88 "this" [Whitespace("\n\t\t")] [],
                                         },
@@ -134,7 +134,7 @@ JsRoot {
             2: LIST@29..43
               0: JS_EXPRESSION_STATEMENT@29..43
                 0: JS_ASSIGNMENT_EXPRESSION@29..42
-                  0: JS_STATIC_MEMBER_ASSIGNMENT_TARGET@29..39
+                  0: JS_STATIC_MEMBER_ASSIGNMENT@29..39
                     0: JS_THIS_EXPRESSION@29..36
                       0: THIS_KW@29..36 "this" [Whitespace("\n\t\t")] []
                     1: DOT@36..37 "." [] []
@@ -167,7 +167,7 @@ JsRoot {
             2: LIST@81..95
               0: JS_EXPRESSION_STATEMENT@81..95
                 0: JS_ASSIGNMENT_EXPRESSION@81..94
-                  0: JS_STATIC_MEMBER_ASSIGNMENT_TARGET@81..91
+                  0: JS_STATIC_MEMBER_ASSIGNMENT@81..91
                     0: JS_THIS_EXPRESSION@81..88
                       0: THIS_KW@81..88 "this" [Whitespace("\n\t\t")] []
                     1: DOT@88..89 "." [] []

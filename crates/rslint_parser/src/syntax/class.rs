@@ -1,5 +1,5 @@
 use crate::parser::{ParsedSyntax, ParserProgress};
-use crate::syntax::binding::parse_identifier_binding;
+use crate::syntax::binding::parse_binding;
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
 use crate::syntax::expr::expr_or_assignment;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
@@ -10,11 +10,10 @@ use crate::syntax::typescript::{
 	abstract_readonly_modifiers, maybe_ts_type_annotation, try_parse_index_signature,
 	ts_heritage_clause, ts_modifier, ts_type_params, DISALLOWED_TYPE_NAMES,
 };
-use crate::ConditionalSyntax::{Invalid, Valid};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-	CompletedMarker, ConditionalSyntax, Event, Marker, ParseRecovery, Parser, ParserState,
-	StrictMode, TokenSet,
+	CompletedMarker, ConditionalSyntax, Event, Invalid, Marker, ParseRecovery, Parser, ParserState,
+	StrictMode, TokenSet, Valid,
 };
 use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::*;
@@ -23,7 +22,7 @@ use std::ops::Range;
 
 /// Parses a class expression, e.g. let a = class {}
 pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-	parse_class(p, ClassKind::Expression).or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
+	parse_class(p, ClassKind::Expression)
 }
 
 // test class_decl
@@ -44,7 +43,7 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<CompletedMa
 ///
 /// A class can be invalid if
 /// * It uses an illegal identifier name
-pub(super) fn parse_class_declaration(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+pub(super) fn parse_class_declaration(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	parse_class(p, ClassKind::Declaration)
 }
 
@@ -63,7 +62,7 @@ impl From<ClassKind> for SyntaxKind {
 	}
 }
 
-fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSyntax> {
+fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![class]) {
 		return Absent;
 	}
@@ -77,12 +76,12 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSynta
 		..p.state.clone()
 	});
 
-	let mut uses_invalid_syntax = false;
-
 	// parse class id
 	if guard.cur_src() != "implements" {
-		match parse_identifier_binding(&mut *guard) {
-			Present(Valid(id)) => {
+		let id = parse_binding(&mut *guard);
+
+		match id {
+			Present(id) => {
 				let text = guard.span_text(id.range(&*guard));
 				if guard.typescript() && DISALLOWED_TYPE_NAMES.contains(&text) {
 					let err = guard
@@ -95,7 +94,6 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSynta
 					guard.error(err);
 				}
 			}
-			Present(Invalid(_)) => uses_invalid_syntax = true,
 			Absent => {
 				if kind == ClassKind::Declaration && !guard.state.in_default {
 					let err = guard
@@ -126,12 +124,7 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSynta
 	parse_class_members(&mut *guard);
 	guard.expect_required(T!['}']);
 
-	let result = Present(m.complete(&mut *guard, kind.into()));
-	if uses_invalid_syntax {
-		result.into_invalid()
-	} else {
-		result.into_valid()
-	}
+	Present(m.complete(&mut *guard, kind.into()))
 }
 
 fn implements_clause(p: &mut Parser) {

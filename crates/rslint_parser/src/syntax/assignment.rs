@@ -26,50 +26,46 @@ use crate::{SyntaxKind::*, *};
 // (++a) = b;
 // (a = b;
 
-/// Converts the passed in target (expression) to an assignment target
+/// Converts the passed in lhs expression to an assignment pattern
 /// The passed checkpoint allows to restore the parser to the state before it started parsing the expression.
-pub(crate) fn expression_to_assignment_target(
+pub(crate) fn expression_to_assignment_pattern(
 	p: &mut Parser,
 	target: CompletedMarker,
 	checkpoint: Checkpoint,
-	expr_kind: SimpleAssignmentTargetExprKind,
+	expr_kind: AssignmentExprPrecedence,
 ) -> CompletedMarker {
-	if let Present(assignment_target) =
-		try_expression_to_simple_assignment_target(p, target, checkpoint)
-	{
+	if let Present(assignment_target) = try_expression_to_assignment(p, target, checkpoint) {
 		return assignment_target;
 	}
 
 	let expression_end = p.token_pos();
 	p.rewind(checkpoint);
 
-	match parse_assignment_target(p, expr_kind) {
+	match parse_assignment_pattern(p, expr_kind) {
 		Present(target) => target,
 		Absent => wrap_expression_in_invalid_assignment(p, expression_end),
 	}
 }
 
-pub(crate) fn parse_assignment_target(
+pub(crate) fn parse_assignment_pattern(
 	p: &mut Parser,
-	expression_kind: SimpleAssignmentTargetExprKind,
+	expression_kind: AssignmentExprPrecedence,
 ) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
-		T!['['] => ArrayAssignmentTarget.parse_array_pattern(p),
-		T!['{'] if p.state.allow_object_expr => ObjectAssignmentTarget.parse_object_pattern(p),
-		_ => parse_simple_assignment_target(p, expression_kind),
+		T!['['] => ArrayAssignmentPattern.parse_array_pattern(p),
+		T!['{'] if p.state.allow_object_expr => ObjectAssignmentPattern.parse_object_pattern(p),
+		_ => parse_assignment(p, expression_kind),
 	}
 }
 
-/// Re-parses an expression as a simple assignment target.
-pub(crate) fn expression_to_simple_assignment_target(
+/// Re-parses an expression as an assignment.
+pub(crate) fn expression_to_assignment(
 	p: &mut Parser,
 	target: CompletedMarker,
 	checkpoint: Checkpoint,
 ) -> CompletedMarker {
-	if let Present(assignment_target) =
-		try_expression_to_simple_assignment_target(p, target, checkpoint)
-	{
-		assignment_target
+	if let Present(assignment) = try_expression_to_assignment(p, target, checkpoint) {
+		assignment
 	} else {
 		// Doesn't seem to be a valid assignment target. Recover and create an error.
 		let expression_end = p.token_pos();
@@ -78,27 +74,27 @@ pub(crate) fn expression_to_simple_assignment_target(
 	}
 }
 
-pub(crate) enum SimpleAssignmentTargetExprKind {
+pub(crate) enum AssignmentExprPrecedence {
 	Unary,
 	Conditional,
 	Any,
 }
 
-pub(crate) fn parse_simple_assignment_target(
+pub(crate) fn parse_assignment(
 	p: &mut Parser,
-	expr_kind: SimpleAssignmentTargetExprKind,
+	expr_kind: AssignmentExprPrecedence,
 ) -> ParsedSyntax<CompletedMarker> {
 	let checkpoint = p.checkpoint();
 
 	// TODO remove the rewind inside of the error handle once the `unary_expr` returns a ParsedSyntax
 	let assignment_expression = match expr_kind {
-		SimpleAssignmentTargetExprKind::Unary => unary_expr(p),
-		SimpleAssignmentTargetExprKind::Conditional => conditional_expr(p),
-		SimpleAssignmentTargetExprKind::Any => expr(p),
+		AssignmentExprPrecedence::Unary => unary_expr(p),
+		AssignmentExprPrecedence::Conditional => conditional_expr(p),
+		AssignmentExprPrecedence::Any => expr(p),
 	};
 
 	if let Some(expr) = assignment_expression {
-		Present(expression_to_simple_assignment_target(p, expr, checkpoint))
+		Present(expression_to_assignment(p, expr, checkpoint))
 	} else {
 		// Only necessary because `unary_expr` always adds a "expected an expression" error.
 		p.rewind(checkpoint);
@@ -106,12 +102,12 @@ pub(crate) fn parse_simple_assignment_target(
 	}
 }
 
-struct AssignmentTargetWithDefault;
+struct AssignmentPatternWithDefault;
 
-impl ParseWithDefaultPattern for AssignmentTargetWithDefault {
+impl ParseWithDefaultPattern for AssignmentPatternWithDefault {
 	#[inline]
 	fn pattern_with_default_kind() -> SyntaxKind {
-		JS_ASSIGNMENT_TARGET_WITH_DEFAULT
+		JS_ASSIGNMENT_WITH_DEFAULT
 	}
 
 	#[inline]
@@ -121,21 +117,21 @@ impl ParseWithDefaultPattern for AssignmentTargetWithDefault {
 
 	#[inline]
 	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-		parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
+		parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
 	}
 }
 
-struct ArrayAssignmentTarget;
+struct ArrayAssignmentPattern;
 
-impl ParseArrayPattern<AssignmentTargetWithDefault> for ArrayAssignmentTarget {
+impl ParseArrayPattern<AssignmentPatternWithDefault> for ArrayAssignmentPattern {
 	#[inline]
 	fn unknown_pattern_kind() -> SyntaxKind {
-		JS_UNKNOWN_ASSIGNMENT_TARGET
+		JS_UNKNOWN_ASSIGNMENT
 	}
 
 	#[inline]
 	fn array_pattern_kind() -> SyntaxKind {
-		JS_ARRAY_ASSIGNMENT_TARGET
+		JS_ARRAY_ASSIGNMENT_PATTERN
 	}
 
 	// test array_assignment_target_rest
@@ -153,7 +149,7 @@ impl ParseArrayPattern<AssignmentTargetWithDefault> for ArrayAssignmentTarget {
 	// ([ ...rest, other_assignment ] = a);
 	#[inline]
 	fn rest_pattern_kind() -> SyntaxKind {
-		JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT
+		JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT
 	}
 
 	#[inline]
@@ -162,62 +158,26 @@ impl ParseArrayPattern<AssignmentTargetWithDefault> for ArrayAssignmentTarget {
 	}
 
 	#[inline]
-	fn pattern_with_default(&self) -> AssignmentTargetWithDefault {
-		AssignmentTargetWithDefault
+	fn pattern_with_default(&self) -> AssignmentPatternWithDefault {
+		AssignmentPatternWithDefault
 	}
 }
 
-fn parse_identifier_assignment_target(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
-	match p.cur() {
-		T![yield] | T![await] | T![ident] => {
-			let m = p.start();
-			let name = p.cur_src();
-
-			let mut valid = false;
-
-			if name == "await" && p.state.in_async {
-				let err = p
-					.err_builder("Illegal use of `await` as an identifier in an async context")
-					.primary(p.cur_tok().range, "");
-				p.error(err);
-			} else if name == "yield" && p.state.in_generator {
-				let err = p
-					.err_builder("Illegal use of `yield` as an identifier in a generator function")
-					.primary(p.cur_tok().range, "");
-				p.error(err);
-			} else {
-				valid = true;
-			}
-
-			p.bump_remap(T![ident]);
-
-			let target = Present(m.complete(p, JS_IDENTIFIER_ASSIGNMENT_TARGET));
-
-			if valid {
-				target.into_valid()
-			} else {
-				target.into_invalid()
-			}
-		}
-		_ => Absent,
-	}
-}
-
-struct ObjectAssignmentTarget;
+struct ObjectAssignmentPattern;
 
 // test object_assignment_target
 // ({} = {});
 // ({ bar, baz } = {});
 // ({ bar: [baz = "baz"], foo = "foo", ...rest } = {});
-impl ParseObjectPattern for ObjectAssignmentTarget {
+impl ParseObjectPattern for ObjectAssignmentPattern {
 	#[inline]
 	fn unknown_pattern_kind() -> SyntaxKind {
-		JS_UNKNOWN_ASSIGNMENT_TARGET
+		JS_UNKNOWN_ASSIGNMENT
 	}
 
 	#[inline]
 	fn object_pattern_kind() -> SyntaxKind {
-		JS_OBJECT_ASSIGNMENT_TARGET
+		JS_OBJECT_ASSIGNMENT_PATTERN
 	}
 
 	#[inline]
@@ -240,7 +200,7 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 	// ({:="test"} = {});
 	// ({:=} = {});
 	// ({ a b } = {});
-	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		if !is_at_reference_identifier_member(p)
 			&& !p.at_ts(token_set![T![:], T![=], T![ident], T![await], T![yield]])
 		{
@@ -248,33 +208,22 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 		}
 
 		let m = p.start();
-		let mut valid = true;
 
 		let kind = if p.at(T![:]) || p.nth_at(1, T![:]) {
 			parse_reference_identifier_member(p).or_missing_with_error(p, expected_identifier);
 			p.expect_required(T![:]);
-			parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
+			parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
 				.or_missing_with_error(p, expected_assignment_target);
-			JS_OBJECT_PROPERTY_ASSIGNMENT_TARGET
+			JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
 		} else {
-			if let Err(invalid) =
-				parse_identifier_assignment_target(p).or_missing_with_error(p, expected_identifier)
-			{
-				valid = false;
-				invalid.abandon(p);
-			}
-			JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET
+			parse_assignment(p, AssignmentExprPrecedence::Conditional)
+				.or_missing_with_error(p, expected_identifier);
+			JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY
 		};
 
 		parse_equal_value_clause(p).or_missing(p);
 
-		let completed = Present(m.complete(p, kind));
-
-		if valid {
-			completed.into_valid()
-		} else {
-			completed.into_invalid()
-		}
+		Present(m.complete(p, kind))
 	}
 
 	// test rest_property_assignment_target
@@ -291,7 +240,7 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 	// ({ ...{a} } = b);
 	// ({ ...rest, other_assignment } = a);
 	// ({ ...rest, } = a);
-	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		if !p.at(T![...]) {
 			return Absent;
 		}
@@ -299,32 +248,29 @@ impl ParseObjectPattern for ObjectAssignmentTarget {
 		let m = p.start();
 		p.bump(T![...]);
 
-		let target = parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional);
+		let target = parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
+			.or_missing_with_error(p, expected_assignment_target);
 
-		if matches!(
-			target.kind(),
-			Some(JS_OBJECT_ASSIGNMENT_TARGET | JS_ARRAY_ASSIGNMENT_TARGET)
-		) {
-			target.abandon(p);
-			let completed = m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET);
-
-			p.error(
-				p.err_builder(
-					"object and array assignment targets are not allowed in rest patterns",
-				)
-				.primary(completed.range(p), ""),
-			);
-
-			return Present(completed).into_invalid();
+		if let Some(mut target) = target {
+			if matches!(
+				target.kind(),
+				JS_OBJECT_ASSIGNMENT_PATTERN | JS_ARRAY_ASSIGNMENT_PATTERN
+			) {
+				target.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
+				p.error(
+					p.err_builder(
+						"object and array assignment targets are not allowed in rest patterns",
+					)
+					.primary(target.range(p), ""),
+				);
+			}
 		}
 
-		target.or_missing_with_error(p, expected_assignment_target);
-
-		Present(m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET)).into_valid()
+		Present(m.complete(p, JS_OBJECT_ASSIGNMENT_PATTERN_REST))
 	}
 }
 
-fn try_expression_to_simple_assignment_target(
+fn try_expression_to_assignment(
 	p: &mut Parser,
 	mut target: CompletedMarker,
 	checkpoint: Checkpoint,
@@ -344,9 +290,7 @@ fn try_expression_to_simple_assignment_target(
 					kind: TOMBSTONE, ..
 				} => {}
 				Event::Start { kind, .. } => {
-					if let Some(assignment_target_kind) =
-						map_expression_to_simple_assignment_target_kind(*kind)
-					{
+					if let Some(assignment_target_kind) = map_expression_to_assignment_kind(*kind) {
 						*kind = assignment_target_kind
 					} else {
 						children_valid = false;
@@ -365,11 +309,9 @@ fn try_expression_to_simple_assignment_target(
 			// You're wondering why this is OK? The reason is, that there's a valid outermost parenthesized
 			// assignment target. The problem is with one of the inner assignment targets and this is why we
 			// reparse it to add the necessary diagnostics
-			Present(re_parse_parenthesized_expression_as_assignment_target(p))
+			Present(re_parse_parenthesized_expression_as_assignment(p))
 		}
-	} else if let Some(assignment_target_kind) =
-		map_expression_to_simple_assignment_target_kind(target.kind())
-	{
+	} else if let Some(assignment_target_kind) = map_expression_to_assignment_kind(target.kind()) {
 		target.change_kind(p, assignment_target_kind);
 		Present(target)
 	} else {
@@ -383,30 +325,30 @@ fn try_expression_to_simple_assignment_target(
 ///
 /// # Panics
 /// If the parser isn't positioned at a parenthesized expression.
-fn re_parse_parenthesized_expression_as_assignment_target(p: &mut Parser) -> CompletedMarker {
+fn re_parse_parenthesized_expression_as_assignment(p: &mut Parser) -> CompletedMarker {
 	let outer = p.start();
 	p.bump(T!['(']);
 
 	// re-parse any nested parenthesized assignment targets
 	if p.at(T!['(']) {
-		re_parse_parenthesized_expression_as_assignment_target(p);
+		re_parse_parenthesized_expression_as_assignment(p);
 	} else {
 		// if the parenthesized expression contains any other assignment target, re-parse it too
-		parse_simple_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
+		parse_assignment(p, AssignmentExprPrecedence::Conditional)
 			.or_missing_with_error(p, expected_simple_assignment_target);
 	}
 
 	p.expect_required(T![')']);
 
-	outer.complete(p, JS_PARENTHESIZED_ASSIGNMENT_TARGET)
+	outer.complete(p, JS_PARENTHESIZED_ASSIGNMENT)
 }
 
-fn map_expression_to_simple_assignment_target_kind(kind: SyntaxKind) -> Option<SyntaxKind> {
+fn map_expression_to_assignment_kind(kind: SyntaxKind) -> Option<SyntaxKind> {
 	match kind {
-		JS_STATIC_MEMBER_EXPRESSION => Some(JS_STATIC_MEMBER_ASSIGNMENT_TARGET),
-		JS_COMPUTED_MEMBER_EXPRESSION => Some(JS_COMPUTED_MEMBER_ASSIGNMENT_TARGET),
-		JS_REFERENCE_IDENTIFIER_EXPRESSION => Some(JS_IDENTIFIER_ASSIGNMENT_TARGET),
-		JS_PARENTHESIZED_EXPRESSION => Some(JS_PARENTHESIZED_ASSIGNMENT_TARGET),
+		JS_STATIC_MEMBER_EXPRESSION => Some(JS_STATIC_MEMBER_ASSIGNMENT),
+		JS_COMPUTED_MEMBER_EXPRESSION => Some(JS_COMPUTED_MEMBER_ASSIGNMENT),
+		JS_REFERENCE_IDENTIFIER_EXPRESSION => Some(JS_IDENTIFIER_ASSIGNMENT),
+		JS_PARENTHESIZED_EXPRESSION => Some(JS_PARENTHESIZED_ASSIGNMENT),
 		_ => None,
 	}
 }
@@ -419,7 +361,7 @@ fn wrap_expression_in_invalid_assignment(p: &mut Parser, expression_end: usize) 
 		p.bump_any();
 	}
 
-	let completed = unknown.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+	let completed = unknown.complete(p, JS_UNKNOWN_ASSIGNMENT);
 
 	let expression_range = completed.range(p);
 	p.error(

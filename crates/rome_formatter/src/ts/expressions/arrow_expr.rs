@@ -20,9 +20,9 @@ impl ToFormatElement for JsArrowFunctionExpression {
 
 		if let Some(params) = self.parameter_list() {
 			match params {
-				JsAnyArrowFunctionParameters::JsIdentifierBinding(name) => {
+				JsAnyArrowFunctionParameters::JsAnyBinding(binding) => {
 					tokens.push(token("("));
-					tokens.push(formatter.format_node(name)?);
+					tokens.push(formatter.format_node(binding)?);
 					tokens.push(token(")"));
 				}
 				JsAnyArrowFunctionParameters::JsParameterList(params) => {

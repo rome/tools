@@ -3,18 +3,18 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
-use super::binding::parse_binding;
+use super::binding::parse_binding_pattern;
 use super::decl::{parse_arrow_body, parse_parameter_list};
 use super::typescript::*;
 use super::util::*;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParserProgress;
-use crate::syntax::assignment_target::{
-	expression_to_assignment_target, expression_to_simple_assignment_target,
-	parse_simple_assignment_target, SimpleAssignmentTargetExprKind,
+use crate::syntax::assignment::{
+	expression_to_assignment, expression_to_assignment_pattern, parse_assignment,
+	AssignmentExprPrecedence,
 };
-use crate::syntax::binding::parse_identifier_binding;
+use crate::syntax::binding::{parse_binding, parse_identifier_binding};
 use crate::syntax::class::parse_class_expression;
 use crate::syntax::function::parse_function_expression;
 use crate::syntax::js_parse_error;
@@ -170,11 +170,11 @@ fn assign_expr_recursive(
 	checkpoint: Checkpoint,
 ) -> Option<CompletedMarker> {
 	if p.at_ts(ASSIGN_TOKENS) {
-		let target = expression_to_assignment_target(
+		let target = expression_to_assignment_pattern(
 			p,
 			target,
 			checkpoint,
-			SimpleAssignmentTargetExprKind::Conditional,
+			AssignmentExprPrecedence::Conditional,
 		);
 		let m = target.precede(p);
 		p.bump_any(); // operator
@@ -681,7 +681,8 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			if temp.at(T![...]) {
 				let m = temp.start();
 				temp.bump_any();
-				parse_binding(&mut *temp).or_missing_with_error(&mut *temp, expected_binding);
+				parse_binding_pattern(&mut *temp)
+					.or_missing_with_error(&mut *temp, expected_binding);
 				if temp.eat(T![:]) {
 					if let Some(mut ty) = ts_type(&mut *temp) {
 						ty.err_if_not_ts(
@@ -895,16 +896,8 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 						if parsed_parameters.is_absent() {
 							// test_err async_arrow_expr_await_parameter
 							// let a = async await => {}
-							if let Err(invalid) = parse_identifier_binding(in_async_p)
-								.or_missing_with_error(in_async_p, expected_parameter)
-							{
-								let identifier =
-									invalid.or_to_unknown(in_async_p, JS_UNKNOWN_BINDING);
-								let list =
-									identifier.precede(in_async_p).complete(in_async_p, LIST);
-								let parameter_list = list.precede(in_async_p);
-								parameter_list.complete(in_async_p, JS_PARAMETER_LIST);
-							}
+							parse_binding(in_async_p)
+								.or_missing_with_error(in_async_p, expected_parameter);
 						}
 
 						if in_async_p.at(T![:]) {
@@ -1268,14 +1261,14 @@ pub fn postfix_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if !p.has_linebreak_before_n(0) {
 		match p.cur() {
 			T![++] => {
-				let assignment_target = expression_to_simple_assignment_target(p, lhs?, checkpoint);
+				let assignment_target = expression_to_assignment(p, lhs?, checkpoint);
 				let m = assignment_target.precede(p);
 				p.bump(T![++]);
 				let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
 				Some(complete)
 			}
 			T![--] => {
-				let assignment_target = expression_to_simple_assignment_target(p, lhs?, checkpoint);
+				let assignment_target = expression_to_assignment(p, lhs?, checkpoint);
 				let m = assignment_target.precede(p);
 				p.bump(T![--]);
 				let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
@@ -1323,7 +1316,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![++]) {
 		let m = p.start();
 		p.bump(T![++]);
-		parse_simple_assignment_target(p, SimpleAssignmentTargetExprKind::Unary)
+		parse_assignment(p, AssignmentExprPrecedence::Unary)
 			.or_missing_with_error(p, expected_simple_assignment_target);
 		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
 		return Some(complete);
@@ -1331,7 +1324,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![--]) {
 		let m = p.start();
 		p.bump(T![--]);
-		parse_simple_assignment_target(p, SimpleAssignmentTargetExprKind::Unary)
+		parse_assignment(p, AssignmentExprPrecedence::Unary)
 			.or_missing_with_error(p, expected_simple_assignment_target);
 		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
 		return Some(complete);

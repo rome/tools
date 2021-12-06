@@ -104,7 +104,7 @@ JsRoot {
                     statements: [
                         JsExpressionStatement {
                             expression: JsAssignmentExpression {
-                                left: JsIdentifierAssignmentTarget {
+                                left: JsIdentifierAssignment {
                                     name_token: IDENT@99..104 "a" [Whitespace("\n\t\t")] [Whitespace(" ")],
                                 },
                                 operator_token: EQ@104..106 "=" [] [Whitespace(" ")],
@@ -220,7 +220,7 @@ JsRoot {
           1: LIST@99..111
             0: JS_EXPRESSION_STATEMENT@99..111
               0: JS_ASSIGNMENT_EXPRESSION@99..111
-                0: JS_IDENTIFIER_ASSIGNMENT_TARGET@99..104
+                0: JS_IDENTIFIER_ASSIGNMENT@99..104
                   0: IDENT@99..104 "a" [Whitespace("\n\t\t")] [Whitespace(" ")]
                 1: EQ@104..106 "=" [] [Whitespace(" ")]
                 2: JS_BINARY_EXPRESSION@106..111
