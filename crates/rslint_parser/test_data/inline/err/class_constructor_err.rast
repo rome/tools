@@ -75,6 +75,8 @@ error[SyntaxError]: constructors cannot be static
   │
 1 │ class B { static constructor() {} }
   │           ^^^^^^^^^^^^^^^^^^^^^^^
+  │           │
+  │           Remove the `static` word
 
 --
 class B { static constructor() {} }

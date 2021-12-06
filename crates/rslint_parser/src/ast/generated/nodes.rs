@@ -43,6 +43,13 @@ impl JsUnknownAssignmentTarget {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsUnknownModifier {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsUnknownModifier {
+	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct Ident {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1462,7 +1469,7 @@ pub struct JsPropertyClassMember {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsPropertyClassMember {
-	pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![declare]) }
+	pub fn modifiers(&self) -> Option<JsAnyModifier> { support::node(&self.syntax) }
 	pub fn access_modifier(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
 	pub fn abstract_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![abstract])
@@ -1639,6 +1646,13 @@ impl JsEqualValueClause {
 	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
 		support::required_node(&self.syntax)
 	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsModifier {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsModifier {
+	pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![declare]) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayAssignmentTarget {
@@ -2710,6 +2724,11 @@ pub enum JsAnyConstructorParameter {
 	JsBindingWithDefault(JsBindingWithDefault),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyModifier {
+	JsModifier(JsModifier),
+	JsUnknownModifier(JsUnknownModifier),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrayAssignmentTargetElement {
 	JsAssignmentTargetWithDefault(JsAssignmentTargetWithDefault),
 	JsAnyAssignmentTarget(JsAnyAssignmentTarget),
@@ -2916,6 +2935,24 @@ impl AstNode for JsUnknownAssignmentTarget {
 impl std::fmt::Debug for JsUnknownAssignmentTarget {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownAssignmentTarget")
+			.field("items", &self.items())
+			.finish()
+	}
+}
+impl AstNode for JsUnknownModifier {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_MODIFIER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsUnknownModifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsUnknownModifier")
 			.field("items", &self.items())
 			.finish()
 	}
@@ -5515,10 +5552,7 @@ impl AstNode for JsPropertyClassMember {
 impl std::fmt::Debug for JsPropertyClassMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsPropertyClassMember")
-			.field(
-				"declare_token",
-				&support::DebugOptionalNode(self.declare_token()),
-			)
+			.field("modifiers", &support::DebugOptionalNode(self.modifiers()))
 			.field(
 				"access_modifier",
 				&support::DebugOptionalNode(self.access_modifier()),
@@ -5844,6 +5878,27 @@ impl std::fmt::Debug for JsEqualValueClause {
 		f.debug_struct("JsEqualValueClause")
 			.field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
 			.field("expression", &support::DebugSyntaxResult(self.expression()))
+			.finish()
+	}
+}
+impl AstNode for JsModifier {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_MODIFIER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsModifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsModifier")
+			.field(
+				"declare_token",
+				&support::DebugOptionalNode(self.declare_token()),
+			)
 			.finish()
 	}
 }
@@ -9214,6 +9269,37 @@ impl std::fmt::Debug for JsAnyConstructorParameter {
 		}
 	}
 }
+impl From<JsModifier> for JsAnyModifier {
+	fn from(node: JsModifier) -> JsAnyModifier { JsAnyModifier::JsModifier(node) }
+}
+impl From<JsUnknownModifier> for JsAnyModifier {
+	fn from(node: JsUnknownModifier) -> JsAnyModifier { JsAnyModifier::JsUnknownModifier(node) }
+}
+impl AstNode for JsAnyModifier {
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_MODIFIER | JS_UNKNOWN_MODIFIER) }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_MODIFIER => JsAnyModifier::JsModifier(JsModifier { syntax }),
+			JS_UNKNOWN_MODIFIER => JsAnyModifier::JsUnknownModifier(JsUnknownModifier { syntax }),
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			JsAnyModifier::JsModifier(it) => &it.syntax,
+			JsAnyModifier::JsUnknownModifier(it) => &it.syntax,
+		}
+	}
+}
+impl std::fmt::Debug for JsAnyModifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		match self {
+			JsAnyModifier::JsModifier(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyModifier::JsUnknownModifier(it) => std::fmt::Debug::fmt(it, f),
+		}
+	}
+}
 impl From<JsAssignmentTargetWithDefault> for JsAnyArrayAssignmentTargetElement {
 	fn from(node: JsAssignmentTargetWithDefault) -> JsAnyArrayAssignmentTargetElement {
 		JsAnyArrayAssignmentTargetElement::JsAssignmentTargetWithDefault(node)
@@ -10284,6 +10370,11 @@ impl std::fmt::Display for JsAnyConstructorParameter {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsAnyModifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsAnyArrayAssignmentTargetElement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -10375,6 +10466,11 @@ impl std::fmt::Display for JsUnknownBinding {
 	}
 }
 impl std::fmt::Display for JsUnknownAssignmentTarget {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsUnknownModifier {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -10930,6 +11026,11 @@ impl std::fmt::Display for JsBindingWithDefault {
 	}
 }
 impl std::fmt::Display for JsEqualValueClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsModifier {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

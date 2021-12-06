@@ -10,7 +10,7 @@ JsRoot {
             l_curly_token: L_CURLY@6..7 "{" [] [],
             members: [
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: missing (optional),
