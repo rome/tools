@@ -4,7 +4,7 @@
 //! These events are then applied to a `TreeSink`.
 
 pub(crate) mod parse_error;
-mod parse_list;
+mod parse_lists;
 mod parse_recovery;
 mod parsed_syntax;
 pub(crate) mod single_token_parse_recovery;
@@ -16,7 +16,7 @@ use std::borrow::BorrowMut;
 use std::ops::Range;
 
 pub use parse_error::*;
-pub use parse_list::ParseList;
+pub use parse_lists::{ParseList, ParseSeparatedList};
 pub use parsed_syntax::{ConditionalSyntax, InvalidSyntax, ParsedSyntax};
 #[allow(deprecated)]
 pub use single_token_parse_recovery::SingleTokenParseRecovery;

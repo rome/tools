@@ -1072,8 +1072,8 @@ impl ParseList for SwitchClausesList {
 		}
 	}
 
-	fn is_at(&mut self, p: &mut Parser) -> bool {
-		p.at_ts(token_set![T![default], T![case], T!['}']])
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		!p.at_ts(token_set![T![default], T![case], T!['}']])
 	}
 
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic {

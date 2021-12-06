@@ -11,30 +11,30 @@ use std::ops::Range;
 ///
 /// This type is commonly used as the return type of a parse function with the following types for `T`
 ///
-/// * [CompletedMarker]: Most commonly used type. Parse function that either returns [Absent]
-///   if the syntax isn't present or [Present] with a valid syntax.
+/// * [CompletedMarker]: Most commonly used type. Parse function that either returns [ParsedSyntax::Absent]
+///   if the syntax isn't present or [ParsedSyntax::Present] with a valid syntax.
 /// * [ConditionalSyntax]: Used for parse functions where the parsed syntax may be invalid (a syntax error)
 ///   depending on the parse context. Examples are: 1) Use of a `with` statement in strict mode,
 ///   2) use of `await` as an identifier inside of an `async` function, and so on. That's why these
-///   parse functions must differentiate between syntax that is [Absent] in the source text,
-///   syntax that is [Present] and [Valid], and syntax that is [Present] but [Invalid].
+///   parse functions must differentiate between syntax that is [ParsedSyntax::Absent] in the source text,
+///   syntax that is [ParsedSyntax::Present] and [Valid], and syntax that is [ParsedSyntax::Present] but [Invalid].
 ///
 ///
 /// ## Parse Rule conventions
-/// * A parse rule must return [Present] if it is able to parse a node or at least parts of it. For example,
-/// the `parse_for_statement` should return [Present] for `for (` even tough many of the required children are missing
+/// * A parse rule must return [ParsedSyntax::Present] if it is able to parse a node or at least parts of it. For example,
+/// the `parse_for_statement` should return [ParsedSyntax::Present] for `for (` even tough many of the required children are missing
 /// because it is still able to parse parts of the for statement.
-/// * A parse rule must return [Absent] if the expected node isn't present in the source code.
+/// * A parse rule must return [ParsedSyntax::Absent] if the expected node isn't present in the source code.
 /// In most cases, this means if the first expected token isn't present, for example,
 /// if the `for` keyword isn't present when parsing a for statement.
 /// However, it can be possible for rules to recover even if the first token doesn't match. One example
 /// is when parsing an assignment target that has an optional default. The rule can recover even
 /// if the assignment target is missing as long as the cursor is then positioned at an `=` token.
-/// The rule must then return [Present] with the partial parsed node.
-/// * A parse rule must not eat any tokens when it returns [Absent]
-/// * A parse rule must not add any errors when it returns [Absent]
+/// The rule must then return [ParsedSyntax::Present] with the partial parsed node.
+/// * A parse rule must not eat any tokens when it returns [ParsedSyntax::Absent]
+/// * A parse rule must not add any errors when it returns [ParsedSyntax::Absent]
 ///
-/// This is a custom enum over using `Option` because [Absent] values must be handled by the caller.
+/// This is a custom enum over using `Option` because [ParsedSyntax::Absent] values must be handled by the caller.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[must_use = "this `ParsedSyntax` may be an `Absent` variant, which should be handled"]
 pub enum ParsedSyntax<T> {
@@ -57,7 +57,7 @@ impl<T> ParsedSyntax<T> {
 		}
 	}
 
-	/// Calls `op` if the syntax is present and otherwise returns [Absent]
+	/// Calls `op` if the syntax is present and otherwise returns [ParsedSyntax::Absent]
 	pub fn and_then<F>(self, op: F) -> ParsedSyntax<T>
 	where
 		F: FnOnce(T) -> T,
@@ -68,19 +68,19 @@ impl<T> ParsedSyntax<T> {
 		}
 	}
 
-	/// Returns `true` if the parsed syntax is [Present]
+	/// Returns `true` if the parsed syntax is [ParsedSyntax::Present]
 	#[must_use]
 	pub fn is_present(&self) -> bool {
 		matches!(self, Present(_))
 	}
 
-	/// Returns `true` if the parsed syntax is [Absent]
+	/// Returns `true` if the parsed syntax is [ParsedSyntax::Absent]
 	#[must_use]
 	pub fn is_absent(&self) -> bool {
 		matches!(self, Absent)
 	}
 
-	/// It returns the contained [Present] value, consuming the `self` value
+	/// It returns the contained [ParsedSyntax::Present] value, consuming the `self` value
 	///
 	/// # Panics
 	///
@@ -94,8 +94,8 @@ impl<T> ParsedSyntax<T> {
 		}
 	}
 
-	/// Maps a `ParsedSyntax<T>` to `ParsedSyntax<U>` by applying a function to a contained [Present] value,
-	/// leaving an [Absent] value untouched.
+	/// Maps a `ParsedSyntax<T>` to `ParsedSyntax<U>` by applying a function to a contained [ParsedSyntax::Present] value,
+	/// leaving an [ParsedSyntax::Absent] value untouched.
 	///
 	/// This function can be used to compose the results of two functions.
 	pub fn map<F, U>(self, mapper: F) -> ParsedSyntax<U>
@@ -434,7 +434,7 @@ impl ConditionalSyntax {
 	///
 	/// # Panics
 	///
-	///  Panics if the current syntax is [ConditionalParsedSyntax::Invalid]
+	///  Panics if the current syntax is [ConditionalSyntax::Invalid]
 	pub fn unwrap(self) -> CompletedMarker {
 		if let Valid(syntax) = self {
 			syntax
