@@ -287,7 +287,6 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 	if declare {
 		offset += 1;
 	}
-	let mut declare_remapped = false;
 	let mut declare_diagnostic = None;
 
 	// Let's assume declare is an identifier and not a keyword
@@ -314,13 +313,12 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 			let err = p.err_builder(msg).primary(p.cur_tok().range, "");
 
 			declare_diagnostic = Some(err);
-			declare_remapped = true;
 		}
 	};
 
 	if has_access_modifier {
 		if is_at_method_class_member(p, offset) {
-			if declare && !declare_remapped {
+			if declare && declare_diagnostic.is_some() {
 				// test_err class_declare_method
 				// class B { declare fn() {} }
 				let msg = if p.typescript() {
@@ -340,7 +338,7 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 
 			return Valid(parse_method_class_member(p, member_marker));
 		} else if is_at_property_class_member(p, offset) {
-			if declare && declare_remapped == false {
+			if declare && declare_diagnostic.is_some() {
 				p.bump_remap(T![declare]);
 			}
 			p.bump_any();
@@ -358,20 +356,20 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 
 		if is_at_method_class_member(p, offset) {
 			Modifiers::default()
-				.is_declare(declare)
-				.accessibility(has_access_modifier)
-				.is_static(is_static)
+				.has_declare(declare)
+				.has_accessibility(has_access_modifier)
+				.has_static(is_static)
 				.dont_remap_static(true)
-				.declare_err(declare_diagnostic)
+				.has_declare_err(declare_diagnostic)
 				.consume(p);
 			return Valid(parse_method_class_member_body(p, member_marker));
 		} else if is_at_property_class_member(p, offset) {
 			Modifiers::default()
-				.is_declare(declare)
-				.accessibility(has_access_modifier)
-				.is_static(is_static)
+				.has_declare(declare)
+				.has_accessibility(has_access_modifier)
+				.has_static(is_static)
 				.dont_remap_static(true)
-				.declare_err(declare_diagnostic)
+				.has_declare_err(declare_diagnostic)
 				.consume(p);
 
 			return if declare {
@@ -388,11 +386,11 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 
 	// Seems that static is a keyword since the parser wasn't able to parse a valid method or property named static
 	Modifiers::default()
-		.is_declare(declare)
-		.accessibility(has_access_modifier)
-		.is_static(is_static)
+		.has_declare(declare)
+		.has_accessibility(has_access_modifier)
+		.has_static(is_static)
 		.dont_remap_static(false)
-		.declare_err(declare_diagnostic)
+		.has_declare_err(declare_diagnostic)
 		.consume(p);
 
 	let maybe_err = p.start();
@@ -877,7 +875,7 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 	let has_accessibility = if ts_access_modifier(p).is_some() {
 		let range = p.cur_tok().range;
 		let maybe_err = p.start();
-		Modifiers::default().accessibility(true).consume(p);
+		Modifiers::default().has_accessibility(true).consume(p);
 		if !p.typescript() {
 			let err = p
 				.err_builder("accessibility modifiers can only be used in TypeScript files")
@@ -988,17 +986,17 @@ impl Modifiers {
 	// 	}
 	// }
 
-	pub fn is_declare(mut self, is_declare: bool) -> Self {
+	pub fn has_declare(mut self, is_declare: bool) -> Self {
 		self.declare = is_declare;
 		self
 	}
 
-	pub fn accessibility(mut self, accessibility: bool) -> Self {
+	pub fn has_accessibility(mut self, accessibility: bool) -> Self {
 		self.accessibility = accessibility;
 		self
 	}
 
-	pub fn is_static(mut self, is_static: bool) -> Self {
+	pub fn has_static(mut self, is_static: bool) -> Self {
 		self.is_static = is_static;
 		self
 	}
@@ -1008,7 +1006,7 @@ impl Modifiers {
 		self
 	}
 
-	pub fn declare_err(mut self, diagnostic: Option<Diagnostic>) -> Self {
+	pub fn has_declare_err(mut self, diagnostic: Option<Diagnostic>) -> Self {
 		self.declare_err = diagnostic;
 		self
 	}
