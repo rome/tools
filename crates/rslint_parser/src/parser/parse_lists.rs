@@ -1,21 +1,26 @@
 ///! A set of traits useful to parse various type of lists
 use super::{ParsedSyntax, ParserProgress, RecoveryResult};
-use crate::{CompletedMarker, Marker, ParseRecovery, Parser};
+use crate::{Marker, ParseRecovery, Parser};
 use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind;
 use std::ops::Range;
 
 /// Use this trait to parse simple lists
+///
+///
 pub trait ParseList {
-	/// The type contained inside [ParsedSyntax]
-	type FinishedSyntax;
+	/// The type returned when calling the function [parse_element]
+	type ParsedElement;
+
+	/// The type of syntax that will be returned by [parse_list].
+	type ParsedList;
 
 	/// Parses a simple list
 	///
 	/// # Panics
 	///
 	/// It panics if the parser doesn't advance at each cycle of the loop
-	fn parse_list(&mut self, p: &mut Parser) -> ParsedSyntax<Self::FinishedSyntax> {
+	fn parse_list(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedList> {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
 		while !p.at(SyntaxKind::EOF) && self.is_at_list_end(p) {
@@ -23,7 +28,7 @@ pub trait ParseList {
 
 			let parsed_element = self.parse_element(p);
 
-			if parsed_element.is_absent() && self.recover(p, parsed_element).is_err() {
+			if self.recover(p, parsed_element).is_err() {
 				break;
 			}
 		}
@@ -31,7 +36,7 @@ pub trait ParseList {
 	}
 
 	/// Parses a single element of the list
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker>;
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement>;
 
 	/// Tells the parser to mark the current token as missing, continuing the loop.
 	/// This function is used for [Self::parse_list].
@@ -50,7 +55,7 @@ pub trait ParseList {
 	}
 
 	/// It creates a [ParsedSyntax] that will contain the list
-	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::FinishedSyntax>;
+	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::ParsedList>;
 
 	/// This method is used to check the current token inside the loop. When this method return [false],
 	/// the trait will exit from the loop.
@@ -62,10 +67,8 @@ pub trait ParseList {
 	fn recover(
 		&mut self,
 		p: &mut Parser,
-		parsed_element: ParsedSyntax<CompletedMarker>,
-	) -> RecoveryResult {
-		parsed_element.or_recover(p, &Self::recovery(), Self::expected_element_error)
-	}
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> RecoveryResult;
 
 	/// [Diagnostic] thrown in case the parser is not able to recover
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic;
@@ -76,11 +79,14 @@ pub trait ParseList {
 
 /// A trait to parse lists that will be separated by a recurring element
 pub trait ParseSeparatedList {
-	/// The type contained inside [ParsedSyntax]
-	type FinishedSyntax;
+	/// The type returned by [parse_element]. The type will the generic for [ParsedSyntax]
+	type ParsedElement;
+
+	/// The type of syntax that will be returned by [parse_list]. The type will be the generic for [ParsedSyntax]
+	type ParsedList;
 
 	/// Parses a single element of the list
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker>;
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement>;
 
 	/// Tells the parser to mark the current token as missing, continuing the loop.
 	/// This function is used for [Self::parse_list].
@@ -99,7 +105,7 @@ pub trait ParseSeparatedList {
 	}
 
 	/// It creates a [ParsedSyntax] that will contain the list
-	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::FinishedSyntax>;
+	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::ParsedList>;
 
 	/// This method is used to check if the parser is at the end of the list
 	fn is_at_list_end(&mut self, p: &mut Parser) -> bool;
@@ -115,7 +121,7 @@ pub trait ParseSeparatedList {
 	/// # Panics
 	///
 	/// It panics if the parser doesn't advance at each cycle of the loop
-	fn parse_list(&mut self, p: &mut Parser) -> ParsedSyntax<Self::FinishedSyntax> {
+	fn parse_list(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedList> {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
 		while !p.at(SyntaxKind::EOF) && self.is_at_list_end(p) {
@@ -128,7 +134,7 @@ pub trait ParseSeparatedList {
 
 			let parsed_element = self.parse_element(p);
 
-			if parsed_element.is_absent() && self.recover(p, parsed_element).is_err() {
+			if self.recover(p, parsed_element).is_err() {
 				break;
 			}
 		}
@@ -139,10 +145,8 @@ pub trait ParseSeparatedList {
 	fn recover(
 		&mut self,
 		p: &mut Parser,
-		parsed_element: ParsedSyntax<CompletedMarker>,
-	) -> RecoveryResult {
-		parsed_element.or_recover(p, &Self::recovery(), Self::expected_element_error)
-	}
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> RecoveryResult;
 
 	/// [Diagnostic] thrown in case the parser is not able to recover
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic;

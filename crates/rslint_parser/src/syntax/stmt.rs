@@ -1063,7 +1063,8 @@ impl SwitchClausesList {
 }
 
 impl ParseList for SwitchClausesList {
-	type FinishedSyntax = CompletedMarker;
+	type ParsedElement = CompletedMarker;
+	type ParsedList = CompletedMarker;
 
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		match parse_statement(p, None) {
@@ -1083,8 +1084,16 @@ impl ParseList for SwitchClausesList {
 	fn recovery() -> ParseRecovery {
 		ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET)
 	}
-	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::FinishedSyntax> {
+	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::ParsedList> {
 		Present(m.complete(p, self.list_kind()))
+	}
+
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> parser::RecoveryResult {
+		parsed_element.or_recover(p, &Self::recovery(), Self::expected_element_error)
 	}
 }
 
