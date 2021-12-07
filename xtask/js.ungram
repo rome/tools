@@ -44,6 +44,7 @@ JsUnknownExpression = SyntaxElement*
 JsUnknownMember = SyntaxElement*
 JsUnknownBinding = SyntaxElement*
 JsUnknownAssignment = SyntaxElement*
+JsUnknownSpecifier = SyntaxElement*
 JsUnknownModifier = SyntaxElement*
 
 Ident = 'ident'
@@ -959,6 +960,7 @@ JsNamedImportSpecifierList =
 JsAnyNamedImportSpecifier =
     JsShorthandNamedImportSpecifier
     | JsNamedImportSpecifier
+    | JsUnknownSpecifier
 
 // import { foo as test } from "mod";
 //          ^^^^^^^^^^^

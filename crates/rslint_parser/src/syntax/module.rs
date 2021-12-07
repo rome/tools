@@ -13,6 +13,11 @@ use std::ops::Range;
 
 ///! Implements the parsing logic for ES Module syntax
 
+// test module
+// import a from "b";
+// export { a };
+// c();
+// import { c } from "c";
 pub(crate) fn parse_module_body(p: &mut Parser, m: Marker) -> CompletedMarker {
 	parse_module_items(p);
 
@@ -23,35 +28,13 @@ fn parse_module_items(p: &mut Parser) {
 	let list_marker = p.start();
 	let mut progress = ParserProgress::default();
 	let mut empty = true;
-	let mut seen_statement = false;
 
 	while !p.at(EOF) {
 		progress.assert_progressing(p);
 
-		let item = if seen_statement {
-			let checkpoint = p.checkpoint();
+		let module_item = parse_module_item(p);
 
-			if let Some(statement) = parse_statement(p, None) {
-				Present(statement)
-			} else {
-				// TODO remove once `parse_statement` returns `ParsedSyntax`
-				p.rewind(checkpoint);
-				Absent
-			}
-		} else {
-			let module_item = parse_module_item(p);
-
-			if !matches!(
-				module_item.kind(),
-				Some(JS_IMPORT | EXPORT_DECL | JS_UNKNOWN_STATEMENT)
-			) {
-				seen_statement = true;
-			}
-
-			module_item
-		};
-
-		let recovered = item.or_recover(
+		let recovered = module_item.or_recover(
 			p,
 			&ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
 			expected_statement,
@@ -95,6 +78,7 @@ fn parse_module_item(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // import *;
 // import * as b, { a, b } from "c";
 // import { a + b, d } from "c";
+// import { a, a } from "c";
 // import { default } from "c";
 pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![import]) {
@@ -105,7 +89,8 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let import = p.start();
 	p.bump_any();
 
-	// TODO error recovery?
+	p.state.duplicate_binding_parent = Some("import");
+
 	parse_import_clause(p).or_missing_with_error(p, |p, range| {
 		expected_any(
 			&["default import", "namespace import", "named import"],
@@ -113,6 +98,9 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		)
 		.to_diagnostic(p)
 	});
+
+	p.state.duplicate_binding_parent = None;
+	p.state.name_map.clear();
 
 	let end = p.cur_tok().range.start;
 
@@ -184,7 +172,7 @@ fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker
 
 // test import_named_clause
 // import {} from "a";
-// import { a, b, c } from "b";
+// import { a, b, c, } from "b";
 // import b, { a } from "b";
 // import a, * as b from "c";
 // import { a as b, default as c, "a-b-c" as d } from "b";
@@ -251,16 +239,18 @@ fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<CompletedMa
 			first = false;
 		} else {
 			p.expect_required(T![,]);
+
+			// Has this been a trailing comma and the parser is now at the end of the specifiers list?
+			if p.at(T!['}']) {
+				break;
+			}
 		}
 
 		let specifier = parse_any_named_import_specifier(p);
-
-		// TODO revisit unknown type
 		let recovered = specifier.or_recover(
 			p,
-			&ParseRecovery::new(JS_UNKNOWN_BINDING, token_set![T![,], T!['}'], T![;]]),
-			// TODO
-			expected_statement,
+			&ParseRecovery::new(JS_UNKNOWN_SPECIFIER, token_set![T![,], T!['}'], T![;]]),
+			expected_named_import_specifier,
 		);
 
 		if recovered.is_err() {
@@ -365,4 +355,8 @@ fn expected_named_import(p: &Parser, range: Range<usize>) -> Diagnostic {
 
 fn expected_export_name(p: &Parser, range: Range<usize>) -> Diagnostic {
 	expected_any(&["string literal", "identifier"], range).to_diagnostic(p)
+}
+
+fn expected_named_import_specifier(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_any(&["identifier", "string literal"], range).to_diagnostic(p)
 }

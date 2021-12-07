@@ -333,7 +333,7 @@ error[SyntaxError]: Illegal use of `let` as an identifier in strict mode
   │       ^^^
 
 --
-error[SyntaxError]: Declarations inside of a `let` or `const` declaration may not have duplicates
+error[SyntaxError]: Declarations inside of a `let` declaration may not have duplicates
   ┌─ binding_identifier_invalid.js:8:8
   │
 8 │ let a, a;

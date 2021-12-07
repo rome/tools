@@ -277,7 +277,7 @@ JsModule {
       1: SEMICOLON@85..86 ";" [] []
   3: EOF@86..87 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Declarations inside of a `let` or `const` declaration may not have duplicates
+error[SyntaxError]: Declarations inside of a `let` declaration may not have duplicates
   ┌─ variable_declaration_statement_err.js:1:10
   │
 1 │ let a, { a } = { a: 10 }
@@ -286,7 +286,7 @@ error[SyntaxError]: Declarations inside of a `let` or `const` declaration may no
   │     a is first declared here
 
 --
-error[SyntaxError]: Declarations inside of a `let` or `const` declaration may not have duplicates
+error[SyntaxError]: Declarations inside of a `const` declaration may not have duplicates
   ┌─ variable_declaration_statement_err.js:2:16
   │
 2 │ const a = 1, { a } = { a: 10 }

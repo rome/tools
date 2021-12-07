@@ -76,13 +76,14 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax<Condition
 			return Present(identifier).into_invalid();
 		}
 
-		if p.state.should_record_names {
+		if let Some(parent) = p.state.duplicate_binding_parent {
 			if identifier_name == "let" {
 				let err = p
-					.err_builder(
-						"`let` cannot be declared as a variable name inside of a let or const declaration",
-					)
-					.primary(identifier.range(p), "Rename the let variable here");
+					.err_builder(&format!(
+						"`let` cannot be declared as a variable name inside of a `{}` declaration",
+						parent
+					))
+					.primary(identifier.range(p), "Rename the let identifier here");
 
 				p.error(err);
 				return Present(identifier).into_invalid();
@@ -90,9 +91,10 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax<Condition
 
 			if let Some(existing) = p.state.name_map.get(identifier_name) {
 				let err = p
-					.err_builder(
-						"Declarations inside of a `let` or `const` declaration may not have duplicates",
-					)
+					.err_builder(&format!(
+						"Declarations inside of a `{}` declaration may not have duplicates",
+						parent
+					))
 					.secondary(
 						existing.to_owned(),
 						&format!("{} is first declared here", identifier_name),

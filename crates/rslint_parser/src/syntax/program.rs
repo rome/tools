@@ -31,7 +31,7 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 
 	let result = match p.syntax.file_kind {
 		FileKind::Script => {
-			parse_statements(p, true, false, None);
+			parse_statements(p, false, None);
 			m.complete(p, JS_SCRIPT)
 		}
 		FileKind::Module | FileKind::TypeScript => parse_module_body(p, m),
