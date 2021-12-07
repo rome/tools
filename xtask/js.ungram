@@ -607,10 +607,12 @@ JsSetterClassMember =
 
 JsEmptyClassMember = ';'
 
+// TODO: apply this node to all class members and properties
 JsAnyModifier =
 	JsModifier
 	| JsUnknownModifier
 
+// TODO: move here also the rest of the modifiers
 JsModifier = 'declare'?
 
 ///////////////

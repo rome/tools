@@ -356,20 +356,18 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 
 		if is_at_method_class_member(p, offset) {
 			Modifiers::default()
-				.has_declare(declare)
-				.has_accessibility(has_access_modifier)
-				.has_static(is_static)
-				.dont_remap_static(true)
-				.has_declare_err(declare_diagnostic)
+				.set_declare(declare)
+				.set_accessibility(has_access_modifier)
+				.set_static(is_static)
+				.set_declare_err(declare_diagnostic)
 				.consume(p);
 			return Valid(parse_method_class_member_body(p, member_marker));
 		} else if is_at_property_class_member(p, offset) {
 			Modifiers::default()
-				.has_declare(declare)
-				.has_accessibility(has_access_modifier)
-				.has_static(is_static)
-				.dont_remap_static(true)
-				.has_declare_err(declare_diagnostic)
+				.set_declare(declare)
+				.set_accessibility(has_access_modifier)
+				.set_static(is_static)
+				.set_declare_err(declare_diagnostic)
 				.consume(p);
 
 			return if declare {
@@ -386,11 +384,11 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 
 	// Seems that static is a keyword since the parser wasn't able to parse a valid method or property named static
 	Modifiers::default()
-		.has_declare(declare)
-		.has_accessibility(has_access_modifier)
-		.has_static(is_static)
-		.dont_remap_static(false)
-		.has_declare_err(declare_diagnostic)
+		.set_declare(declare)
+		.set_accessibility(has_access_modifier)
+		.set_static(is_static)
+		.set_remap_static(true)
+		.set_declare_err(declare_diagnostic)
 		.consume(p);
 
 	let maybe_err = p.start();
@@ -875,7 +873,7 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 	let has_accessibility = if ts_access_modifier(p).is_some() {
 		let range = p.cur_tok().range;
 		let maybe_err = p.start();
-		Modifiers::default().has_accessibility(true).consume(p);
+		Modifiers::default().set_accessibility(true).consume(p);
 		if !p.typescript() {
 			let err = p
 				.err_builder("accessibility modifiers can only be used in TypeScript files")
@@ -949,64 +947,37 @@ pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax<Co
 	Present(m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME))
 }
 
+#[derive(Default)]
 pub(crate) struct Modifiers {
 	declare: bool,
 	accessibility: bool,
 	is_static: bool,
-	dont_remap_static: bool,
+	remap_static: bool,
 	declare_err: Option<Diagnostic>,
 }
 
-impl Default for Modifiers {
-	fn default() -> Self {
-		Self {
-			declare: Default::default(),
-			accessibility: Default::default(),
-			is_static: Default::default(),
-			dont_remap_static: Default::default(),
-			declare_err: Default::default(),
-		}
-	}
-}
-
 impl Modifiers {
-	// pub fn new(
-	// 	declare: bool,
-	// 	accessibility: bool,
-	// 	is_static: bool,
-	// 	dont_remap_static: bool,
-	// 	declare_err: Option<Diagnostic>,
-	// ) -> Self {
-	// 	Self {
-	// 		declare,
-	// 		accessibility,
-	// 		is_static,
-	// 		dont_remap_static,
-	// 		declare_err,
-	// 	}
-	// }
-
-	pub fn has_declare(mut self, is_declare: bool) -> Self {
+	pub fn set_declare(mut self, is_declare: bool) -> Self {
 		self.declare = is_declare;
 		self
 	}
 
-	pub fn has_accessibility(mut self, accessibility: bool) -> Self {
+	pub fn set_accessibility(mut self, accessibility: bool) -> Self {
 		self.accessibility = accessibility;
 		self
 	}
 
-	pub fn has_static(mut self, is_static: bool) -> Self {
+	pub fn set_static(mut self, is_static: bool) -> Self {
 		self.is_static = is_static;
 		self
 	}
 
-	pub fn dont_remap_static(mut self, should_remap: bool) -> Self {
-		self.dont_remap_static = should_remap;
+	pub fn set_remap_static(mut self, should_remap: bool) -> Self {
+		self.remap_static = should_remap;
 		self
 	}
 
-	pub fn has_declare_err(mut self, diagnostic: Option<Diagnostic>) -> Self {
+	pub fn set_declare_err(mut self, diagnostic: Option<Diagnostic>) -> Self {
 		self.declare_err = diagnostic;
 		self
 	}
@@ -1054,9 +1025,9 @@ impl Modifiers {
 				m.complete(p, JS_MODIFIER);
 			}
 		}
-		if self.is_static && !self.dont_remap_static {
+		if self.is_static && self.remap_static {
 			p.bump_remap(STATIC_KW);
-		} else if self.is_static && self.dont_remap_static {
+		} else if self.is_static && !self.remap_static {
 			// Guaranteed to be at the static keyword, parsing a class member must succeed
 			parse_class_member_name(p).ok().unwrap();
 		}
