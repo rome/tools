@@ -119,12 +119,12 @@ pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Par
 	}
 }
 
-struct RewriteParseEventsTreeSink<'r, 'p> {
-	reparse: &'r mut dyn RewriteParseEvents,
+struct RewriteParseEventsTreeSink<'r, 'p, T> {
+	reparse: &'r mut T,
 	parser: &'r mut Parser<'p>,
 }
 
-impl<'r, 'p> TreeSink for RewriteParseEventsTreeSink<'r, 'p> {
+impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 'p, T> {
 	fn token(&mut self, kind: SyntaxKind) {
 		self.reparse.token(kind, &mut self.parser);
 	}
@@ -176,12 +176,12 @@ pub trait RewriteParseEvents {
 /// Allows to rewrite the parse events by visiting each event emitted after the checkpoint.
 /// Useful if a node turned out to be of a different kind its subtree must be re-shaped
 /// (adding new nodes, dropping sub nodes, etc).
-pub fn rewrite_events(
-	rewriter: &mut dyn RewriteParseEvents,
+pub fn rewrite_events<T: RewriteParseEvents>(
+	rewriter: &mut T,
 	checkpoint: Checkpoint,
 	p: &mut Parser,
 ) {
-	let events: Vec<_> = p.events[checkpoint.event_pos + 1usize..].to_vec();
+	let events: Vec<_> = p.events.split_off(checkpoint.event_pos + 1);
 	p.rewind(checkpoint);
 
 	let mut sink = RewriteParseEventsTreeSink {
