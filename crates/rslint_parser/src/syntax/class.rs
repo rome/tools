@@ -980,6 +980,8 @@ impl Modifiers {
 	///
 	/// It creates a diagnostic if some modifiers are not correct.
 	pub fn consume(self, p: &mut Parser) {
+		let m = p.start();
+		let mut modifier_kind = JS_MODIFIER;
 		if self.accessibility {
 			let kind = match p.cur_src() {
 				"public" => PUBLIC_KW,
@@ -988,7 +990,8 @@ impl Modifiers {
 				_ => unreachable!(),
 			};
 			if !p.typescript() {
-				let m = p.start();
+				// test_err class_invalid_modifiers
+				// class A { public foo() {} }
 				let range = p.cur_tok().range;
 				let err = p
 					.err_builder("accessibility modifiers can only be used in TypeScript files")
@@ -996,26 +999,33 @@ impl Modifiers {
 
 				p.error(err);
 				p.bump_any();
-				m.complete(p, ERROR);
+				modifier_kind = JS_UNKNOWN_MODIFIER;
 			} else {
 				p.bump_remap(kind);
 			}
 		}
 		if self.declare {
-			let m = p.start();
 			p.bump_remap(T![declare]);
 			if let Some(err) = self.declare_err {
 				p.error(err);
-				m.complete(p, JS_UNKNOWN_MODIFIER);
-			} else {
-				m.complete(p, JS_MODIFIER);
+
+				modifier_kind = JS_UNKNOWN_MODIFIER;
 			}
 		}
 		if self.is_static && self.remap_static {
 			p.bump_remap(STATIC_KW);
+			m.complete(p, modifier_kind);
 		} else if self.is_static && !self.remap_static {
+			m.abandon(p);
 			// Guaranteed to be at the static keyword, parsing a class member must succeed
 			parse_class_member_name(p).ok().unwrap();
+		} else {
+			if self.accessibility || self.declare || self.is_static {
+				m.complete(p, modifier_kind);
+			} else {
+				m.abandon(p);
+				p.missing();
+			}
 		}
 	}
 }

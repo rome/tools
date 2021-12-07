@@ -12,6 +12,7 @@ JsModule {
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: [
                 JsMethodClassMember {
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     abstract_token: missing (optional),

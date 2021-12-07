@@ -125,15 +125,16 @@ JsModule {
       2: L_CURLY@10..11 "{" [] []
       3: LIST@11..46
         0: JS_CONSTRUCTOR_CLASS_MEMBER@11..46
-          0: JS_LITERAL_MEMBER_NAME@11..24
+          0: (empty)
+          1: JS_LITERAL_MEMBER_NAME@11..24
             0: IDENT@11..24 "constructor" [Whitespace("\n\t")] []
-          1: JS_CONSTRUCTOR_PARAMETER_LIST@24..28
+          2: JS_CONSTRUCTOR_PARAMETER_LIST@24..28
             0: L_PAREN@24..25 "(" [] []
             1: LIST@25..26
               0: JS_IDENTIFIER_BINDING@25..26
                 0: IDENT@25..26 "a" [] []
             2: R_PAREN@26..28 ")" [] [Whitespace(" ")]
-          2: JS_FUNCTION_BODY@28..46
+          3: JS_FUNCTION_BODY@28..46
             0: L_CURLY@28..29 "{" [] []
             1: LIST@29..29
             2: LIST@29..43
@@ -159,15 +160,16 @@ JsModule {
       2: L_CURLY@60..61 "{" [] []
       3: LIST@61..98
         0: JS_CONSTRUCTOR_CLASS_MEMBER@61..98
-          0: JS_LITERAL_MEMBER_NAME@61..76
+          0: (empty)
+          1: JS_LITERAL_MEMBER_NAME@61..76
             0: JS_STRING_LITERAL@61..76 "\"constructor\"" [Whitespace("\n\t")] []
-          1: JS_CONSTRUCTOR_PARAMETER_LIST@76..80
+          2: JS_CONSTRUCTOR_PARAMETER_LIST@76..80
             0: L_PAREN@76..77 "(" [] []
             1: LIST@77..78
               0: JS_IDENTIFIER_BINDING@77..78
                 0: IDENT@77..78 "b" [] []
             2: R_PAREN@78..80 ")" [] [Whitespace(" ")]
-          2: JS_FUNCTION_BODY@80..98
+          3: JS_FUNCTION_BODY@80..98
             0: L_CURLY@80..81 "{" [] []
             1: LIST@81..81
             2: LIST@81..95

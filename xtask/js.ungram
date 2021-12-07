@@ -587,8 +587,6 @@ JsAnyConstructorParameter =
 JsPropertyClassMember =
 	modifiers: JsAnyModifier?
 	access_modifier: TsAccessibility?
-	'abstract'?
-	'static'?
 	name: JsAnyClassMemberName
 	'?'?
 	'!'?
@@ -599,9 +597,8 @@ JsPropertyClassMember =
 // class Test { a() {} }
 //              ^^^^^^
 JsMethodClassMember =
+	modifiers: JsAnyModifier?
 	access_modifier: TsAccessibility?
-	'static'?
-	'abstract'?
 	'async'?
 	'*'?
 	name: JsAnyClassMemberName
@@ -613,9 +610,8 @@ JsMethodClassMember =
 // class Test { get a() {} }
 //              ^^^^^^^^^^
 JsGetterClassMember =
+	modifiers: JsAnyModifier?
 	access_modifier: TsAccessibility?
-	'abstract'?
-	'static'?
 	'get'
 	name: JsAnyClassMemberName
 	'(' ')'
@@ -625,9 +621,8 @@ JsGetterClassMember =
 // class Test { set a(v) {} }
 //              ^^^^^^^^^^^
 JsSetterClassMember =
+	modifiers: JsAnyModifier?
 	access_modifier: TsAccessibility?
-	'abstract'?
-	'static'?
 	'set'
 	name: JsAnyClassMemberName
 	'('
@@ -643,7 +638,7 @@ JsAnyModifier =
 	| JsUnknownModifier
 
 // TODO: move here also the rest of the modifiers
-JsModifier = 'declare'?
+JsModifier = 'declare'? 'static'? 'abstract'?
 
 ///////////////
 // ASSIGNMENT TARGETS

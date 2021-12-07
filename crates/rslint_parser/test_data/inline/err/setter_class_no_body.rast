@@ -44,14 +44,15 @@ JsModule {
       2: L_CURLY@14..15 "{" [] []
       3: LIST@15..28
         0: JS_SETTER_CLASS_MEMBER@15..28
-          0: SET_KW@15..22 "set" [Whitespace("\n  ")] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@22..25
+          0: (empty)
+          1: SET_KW@15..22 "set" [Whitespace("\n  ")] [Whitespace(" ")]
+          2: JS_LITERAL_MEMBER_NAME@22..25
             0: IDENT@22..25 "foo" [] []
-          2: L_PAREN@25..26 "(" [] []
-          3: JS_IDENTIFIER_BINDING@26..27
+          3: L_PAREN@25..26 "(" [] []
+          4: JS_IDENTIFIER_BINDING@26..27
             0: IDENT@26..27 "a" [] []
-          4: R_PAREN@27..28 ")" [] []
-          5: (empty)
+          5: R_PAREN@27..28 ")" [] []
+          6: (empty)
       4: (empty)
   3: EOF@28..29 "" [Whitespace("\n")] []
 --
