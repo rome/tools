@@ -48,10 +48,19 @@ JsUnknownModifier = SyntaxElement*
 
 Ident = 'ident'
 
-JsRoot =
+JsAnyRoot =
+	JsScript | JsModule
+
+JsScript =
 	interpreter: 'js_shebang'?
 	directives: JsDirective*
 	statements: JsAnyStatement*
+
+JsModule =
+	interpreter: 'js_shebang'?
+	directives: JsDirective*
+	items: JsAnyModuleItem*
+
 
 JsDirective =
 	value: 'js_string_literal'
@@ -89,15 +98,6 @@ JsAnyStatement =
 	| TsNamespaceDecl
 	| TsModuleDecl
 	| TsInterfaceDecl
-	| ImportDecl
-	| ExportNamed
-	| ExportDefaultDecl
-	| ExportDefaultExpr
-	| ExportWildcard
-	| ExportDecl
-	| TsImportEqualsDecl
-	| TsExportAssignment
-	| TsNamespaceExportDecl
 	| JsUnknownStatement
 
 
@@ -866,6 +866,18 @@ JsVariableDeclarator =
 ///////////////
 // MODULE SYNTAX
 ///////////////
+
+JsAnyModuleItem =
+	JsAnyStatement
+	| ImportDecl
+	| ExportNamed
+	| ExportDefaultDecl
+	| ExportDefaultExpr
+	| ExportWildcard
+	| ExportDecl
+	| TsImportEqualsDecl
+	| TsExportAssignment
+	| TsNamespaceExportDecl
 
 ImportDecl =
 	'import'

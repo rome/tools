@@ -1,4 +1,4 @@
-use crate::ast::{ArgList, JsRoot};
+use crate::ast::{ArgList, JsAnyRoot};
 use crate::{parse_module, parse_text, AstNode, Parse, ParserError, SyntaxNode, SyntaxToken};
 use expect_test::expect_file;
 use rome_rowan::TextSize;
@@ -46,14 +46,14 @@ fn test_data_dir() -> PathBuf {
 	project_dir().join("rslint_parser/test_data")
 }
 
-fn try_parse(path: &str, text: &str) -> Parse<JsRoot> {
+fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
 	let res = catch_unwind(|| {
 		// Files containing a // SCRIPT comment are parsed as script and not as module
 		// This is needed to test features that are restricted in strict mode.
 		if text.contains("// SCRIPT") {
-			parse_text(text, 0)
+			parse_text(text, 0).cast::<JsAnyRoot>().unwrap()
 		} else {
-			parse_module(text, 0)
+			parse_module(text, 0).cast::<JsAnyRoot>().unwrap()
 		}
 	});
 	assert!(
@@ -64,7 +64,7 @@ fn try_parse(path: &str, text: &str) -> Parse<JsRoot> {
 	res.unwrap()
 }
 
-fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<JsRoot>, String) {
+fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<JsAnyRoot>, String) {
 	catch_unwind(|| {
 		let parse = try_parse(path, text);
 		let formatted = format!("{:#?}", &parse.tree());

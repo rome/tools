@@ -1,4 +1,4 @@
-JsRoot {
+JsScript {
     interpreter_token: missing (optional),
     directives: [
         JsDirective {
@@ -183,7 +183,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..360
+0: JS_SCRIPT@0..360
   0: (empty)
   1: LIST@0..20
     0: JS_DIRECTIVE@0..20

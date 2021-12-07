@@ -35,7 +35,12 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 		p.state = old_parser_state;
 	}
 
-	m.complete(p, SyntaxKind::JS_ROOT)
+	let kind = match p.syntax.file_kind {
+		FileKind::Script => JS_SCRIPT,
+		FileKind::Module | FileKind::TypeScript => JS_MODULE,
+	};
+
+	m.complete(p, kind)
 }
 
 fn named_list(p: &mut Parser) -> Marker {
