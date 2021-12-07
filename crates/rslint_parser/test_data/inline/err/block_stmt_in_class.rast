@@ -36,11 +36,12 @@ JsModule {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..7
         0: IDENT@6..7 "S" [] []
-      2: L_CURLY@7..8 "{" [] []
-      3: LIST@8..9
+      2: (empty)
+      3: L_CURLY@7..8 "{" [] []
+      4: LIST@8..9
         0: JS_UNKNOWN_MEMBER@8..9
           0: L_CURLY@8..9 "{" [] []
-      4: R_CURLY@9..10 "}" [] []
+      5: R_CURLY@9..10 "}" [] []
     1: JS_UNKNOWN_STATEMENT@10..11
       0: R_CURLY@10..11 "}" [] []
   3: EOF@11..12 "" [Whitespace("\n")] []

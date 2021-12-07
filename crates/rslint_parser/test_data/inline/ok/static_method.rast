@@ -134,8 +134,9 @@ JsModule {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..10
         0: IDENT@6..10 "foo" [] [Whitespace(" ")]
-      2: L_CURLY@10..11 "{" [] []
-      3: LIST@11..96
+      2: (empty)
+      3: L_CURLY@10..11 "{" [] []
+      4: LIST@11..96
         0: JS_METHOD_CLASS_MEMBER@11..31
           0: JS_MODIFIER@11..20
             0: STATIC_KW@11..20 "static" [Whitespace("\n ")] [Whitespace(" ")]
@@ -202,5 +203,5 @@ JsModule {
             1: LIST@95..95
             2: LIST@95..95
             3: R_CURLY@95..96 "}" [] []
-      4: R_CURLY@96..98 "}" [Whitespace("\n")] []
+      5: R_CURLY@96..98 "}" [Whitespace("\n")] []
   3: EOF@98..99 "" [Whitespace("\n")] []

@@ -47,8 +47,9 @@ JsRoot {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "B" [] [Whitespace(" ")]
-      2: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      3: LIST@10..38
+      2: (empty)
+      3: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      4: LIST@10..38
         0: JS_CONSTRUCTOR_CLASS_MEMBER@10..38
           0: (empty)
           1: JS_LITERAL_MEMBER_NAME@10..21
@@ -67,7 +68,7 @@ JsRoot {
             1: LIST@36..36
             2: LIST@36..36
             3: R_CURLY@36..38 "}" [] [Whitespace(" ")]
-      4: R_CURLY@38..39 "}" [] []
+      5: R_CURLY@38..39 "}" [] []
   3: EOF@39..40 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: accessibility modifiers can only be used in TypeScript files

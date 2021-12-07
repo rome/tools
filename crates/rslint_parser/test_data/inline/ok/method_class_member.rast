@@ -590,8 +590,9 @@ JsModule {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..11
         0: IDENT@6..11 "Test" [] [Whitespace(" ")]
-      2: L_CURLY@11..12 "{" [] []
-      3: LIST@12..166
+      2: (empty)
+      3: L_CURLY@11..12 "{" [] []
+      4: LIST@12..166
         0: JS_METHOD_CLASS_MEMBER@12..25
           0: JS_LITERAL_MEMBER_NAME@12..20
             0: IDENT@12..20 "method" [Whitespace("\n\t")] []
@@ -708,13 +709,14 @@ JsModule {
             1: LIST@165..165
             2: LIST@165..165
             3: R_CURLY@165..166 "}" [] []
-      4: R_CURLY@166..168 "}" [Whitespace("\n")] []
+      5: R_CURLY@166..168 "}" [Whitespace("\n")] []
     1: JS_CLASS_DECLARATION@168..369
       0: CLASS_KW@168..176 "class" [Whitespace("\n\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@176..195
         0: IDENT@176..195 "ContextualKeywords" [] [Whitespace(" ")]
-      2: L_CURLY@195..196 "{" [] []
-      3: LIST@196..367
+      2: (empty)
+      3: L_CURLY@195..196 "{" [] []
+      4: LIST@196..367
         0: JS_METHOD_CLASS_MEMBER@196..235
           0: JS_LITERAL_MEMBER_NAME@196..230
             0: IDENT@196..230 "static" [Whitespace("\n\t"), Comments("// Methods called static"), Whitespace("\n\t")] []
@@ -810,13 +812,14 @@ JsModule {
             1: LIST@345..345
             2: LIST@345..345
             3: R_CURLY@345..367 "}" [] [Whitespace(" "), Comments("// Method called set")]
-      4: R_CURLY@367..369 "}" [Whitespace("\n")] []
+      5: R_CURLY@367..369 "}" [Whitespace("\n")] []
     2: JS_CLASS_DECLARATION@369..606
       0: CLASS_KW@369..377 "class" [Whitespace("\n\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@377..384
         0: IDENT@377..384 "Static" [] [Whitespace(" ")]
-      2: L_CURLY@384..385 "{" [] []
-      3: LIST@385..604
+      2: (empty)
+      3: L_CURLY@384..385 "{" [] []
+      4: LIST@385..604
         0: JS_METHOD_CLASS_MEMBER@385..405
           0: STATIC_KW@385..394 "static" [Whitespace("\n\t")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@394..400
@@ -937,5 +940,5 @@ JsModule {
             1: LIST@603..603
             2: LIST@603..603
             3: R_CURLY@603..604 "}" [] []
-      4: R_CURLY@604..606 "}" [Whitespace("\n")] []
+      5: R_CURLY@604..606 "}" [Whitespace("\n")] []
   3: EOF@606..607 "" [Whitespace("\n")] []

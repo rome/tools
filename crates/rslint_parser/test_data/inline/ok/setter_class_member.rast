@@ -270,8 +270,9 @@ JsModule {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..14
         0: IDENT@6..14 "Setters" [] [Whitespace(" ")]
-      2: L_CURLY@14..15 "{" [] []
-      3: LIST@15..143
+      2: (empty)
+      3: L_CURLY@14..15 "{" [] []
+      4: LIST@15..143
         0: JS_SETTER_CLASS_MEMBER@15..30
           0: SET_KW@15..21 "set" [Whitespace("\n\t")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@21..24
@@ -372,13 +373,14 @@ JsModule {
             1: LIST@142..142
             2: LIST@142..142
             3: R_CURLY@142..143 "}" [] []
-      4: R_CURLY@143..145 "}" [Whitespace("\n")] []
+      5: R_CURLY@143..145 "}" [Whitespace("\n")] []
     1: JS_CLASS_DECLARATION@145..212
       0: CLASS_KW@145..152 "class" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@152..163
         0: IDENT@152..163 "NotSetters" [] [Whitespace(" ")]
-      2: L_CURLY@163..164 "{" [] []
-      3: LIST@164..210
+      2: (empty)
+      3: L_CURLY@163..164 "{" [] []
+      4: LIST@164..210
         0: JS_METHOD_CLASS_MEMBER@164..175
           0: JS_LITERAL_MEMBER_NAME@164..169
             0: IDENT@164..169 "set" [Whitespace("\n\t")] []
@@ -426,5 +428,5 @@ JsModule {
             1: LIST@209..209
             2: LIST@209..209
             3: R_CURLY@209..210 "}" [] []
-      4: R_CURLY@210..212 "}" [Whitespace("\n")] []
+      5: R_CURLY@210..212 "}" [Whitespace("\n")] []
   3: EOF@212..213 "" [Whitespace("\n")] []

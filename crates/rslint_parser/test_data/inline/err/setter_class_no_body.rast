@@ -40,8 +40,9 @@ JsModule {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..14
         0: IDENT@6..14 "Setters" [] [Whitespace(" ")]
-      2: L_CURLY@14..15 "{" [] []
-      3: LIST@15..28
+      2: (empty)
+      3: L_CURLY@14..15 "{" [] []
+      4: LIST@15..28
         0: JS_SETTER_CLASS_MEMBER@15..28
           0: (empty)
           1: SET_KW@15..22 "set" [Whitespace("\n  ")] [Whitespace(" ")]
@@ -52,7 +53,7 @@ JsModule {
             0: IDENT@26..27 "a" [] []
           5: R_PAREN@27..28 ")" [] []
           6: (empty)
-      4: (empty)
+      5: (empty)
   3: EOF@28..29 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected a class method body but instead found ''

@@ -41,8 +41,9 @@ JsModule {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..10
         0: IDENT@6..10 "foo" [] [Whitespace(" ")]
-      2: L_CURLY@10..11 "{" [] []
-      3: LIST@11..19
+      2: (empty)
+      3: L_CURLY@10..11 "{" [] []
+      4: LIST@11..19
         0: JS_GETTER_CLASS_MEMBER@11..19
           0: (empty)
           1: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")]
@@ -54,7 +55,7 @@ JsModule {
             1: LIST@18..18
             2: LIST@18..18
             3: R_CURLY@18..19 "}" [] []
-      4: R_CURLY@19..21 "}" [Whitespace("\n")] []
+      5: R_CURLY@19..21 "}" [Whitespace("\n")] []
   3: EOF@21..22 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'

@@ -43,8 +43,9 @@ JsModule {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..10
         0: IDENT@6..10 "foo" [] [Whitespace(" ")]
-      2: L_CURLY@10..11 "{" [] []
-      3: LIST@11..25
+      2: (empty)
+      3: L_CURLY@10..11 "{" [] []
+      4: LIST@11..25
         0: JS_GETTER_CLASS_MEMBER@11..25
           0: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@17..20
@@ -57,5 +58,5 @@ JsModule {
             1: LIST@24..24
             2: LIST@24..24
             3: R_CURLY@24..25 "}" [] []
-      4: R_CURLY@25..27 "}" [Whitespace("\n")] []
+      5: R_CURLY@25..27 "}" [Whitespace("\n")] []
   3: EOF@27..28 "" [Whitespace("\n")] []

@@ -122,8 +122,9 @@ JsModule {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..10
         0: IDENT@6..10 "Foo" [] [Whitespace(" ")]
-      2: L_CURLY@10..11 "{" [] []
-      3: LIST@11..46
+      2: (empty)
+      3: L_CURLY@10..11 "{" [] []
+      4: LIST@11..46
         0: JS_CONSTRUCTOR_CLASS_MEMBER@11..46
           0: (empty)
           1: JS_LITERAL_MEMBER_NAME@11..24
@@ -152,13 +153,14 @@ JsModule {
                       0: IDENT@41..42 "a" [] []
                 1: SEMICOLON@42..43 ";" [] []
             3: R_CURLY@43..46 "}" [Whitespace("\n\t")] []
-      4: R_CURLY@46..48 "}" [Whitespace("\n")] []
+      5: R_CURLY@46..48 "}" [Whitespace("\n")] []
     1: JS_CLASS_DECLARATION@48..100
       0: CLASS_KW@48..56 "class" [Whitespace("\n\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@56..60
         0: IDENT@56..60 "Bar" [] [Whitespace(" ")]
-      2: L_CURLY@60..61 "{" [] []
-      3: LIST@61..98
+      2: (empty)
+      3: L_CURLY@60..61 "{" [] []
+      4: LIST@61..98
         0: JS_CONSTRUCTOR_CLASS_MEMBER@61..98
           0: (empty)
           1: JS_LITERAL_MEMBER_NAME@61..76
@@ -187,5 +189,5 @@ JsModule {
                       0: IDENT@93..94 "b" [] []
                 1: SEMICOLON@94..95 ";" [] []
             3: R_CURLY@95..98 "}" [Whitespace("\n\t")] []
-      4: R_CURLY@98..100 "}" [Whitespace("\n")] []
+      5: R_CURLY@98..100 "}" [Whitespace("\n")] []
   3: EOF@100..101 "" [Whitespace("\n")] []
