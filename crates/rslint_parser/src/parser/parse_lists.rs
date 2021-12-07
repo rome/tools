@@ -60,7 +60,7 @@ pub trait ParseNormalList: ParseList {
 	fn parse_list(&mut self, p: &mut Parser) {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
-		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
+		while !p.at(SyntaxKind::EOF) && self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
 			let parsed_element = self.parse_element(p);
@@ -138,7 +138,7 @@ pub trait ParseSeparatedList: ParseList {
 	fn parse_list(&mut self, p: &mut Parser) {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
-		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
+		while !p.at(SyntaxKind::EOF) && self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
 			if self.expect_separator(p) && self.is_at_list_end(p) {
