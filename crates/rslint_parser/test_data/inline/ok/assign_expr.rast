@@ -4,17 +4,17 @@ JsRoot {
     statements: [
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsIdentifierAssignmentTarget {
+                left: JsIdentifierAssignment {
                     name_token: IDENT@0..4 "foo" [] [Whitespace(" ")],
                 },
                 operator_token: PLUSEQ@4..7 "+=" [] [Whitespace(" ")],
                 right: JsAssignmentExpression {
-                    left: JsIdentifierAssignmentTarget {
+                    left: JsIdentifierAssignment {
                         name_token: IDENT@7..11 "bar" [] [Whitespace(" ")],
                     },
                     operator_token: EQ@11..13 "=" [] [Whitespace(" ")],
                     right: JsAssignmentExpression {
-                        left: JsIdentifierAssignmentTarget {
+                        left: JsIdentifierAssignment {
                             name_token: IDENT@13..15 "b" [] [Whitespace(" ")],
                         },
                         operator_token: QUESTION2EQ@15..19 "??=" [] [Whitespace(" ")],
@@ -28,12 +28,14 @@ JsRoot {
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsIdentifierAssignmentTarget {
+                left: JsIdentifierAssignment {
                     name_token: IDENT@21..26 "foo" [Whitespace("\n")] [Whitespace(" ")],
                 },
                 operator_token: MINUSEQ@26..29 "-=" [] [Whitespace(" ")],
-                right: JsReferenceIdentifierExpression {
-                    name_token: IDENT@29..32 "bar" [] [],
+                right: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@29..32 "bar" [] [],
+                    },
                 },
             },
             semicolon_token: SEMICOLON@32..33 ";" [] [],
@@ -42,12 +44,14 @@ JsRoot {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@33..35 "(" [Whitespace("\n")] [],
                 expression: JsAssignmentExpression {
-                    left: JsIdentifierAssignmentTarget {
+                    left: JsIdentifierAssignment {
                         name_token: IDENT@35..39 "foo" [] [Whitespace(" ")],
                     },
                     operator_token: EQ@39..41 "=" [] [Whitespace(" ")],
-                    right: JsReferenceIdentifierExpression {
-                        name_token: IDENT@41..44 "bar" [] [],
+                    right: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@41..44 "bar" [] [],
+                        },
                     },
                 },
                 r_paren_token: R_PAREN@44..45 ")" [] [],
@@ -56,37 +60,39 @@ JsRoot {
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsArrayAssignmentTarget {
+                left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@46..48 "[" [Whitespace("\n")] [],
                     elements: [
-                        JsIdentifierAssignmentTarget {
+                        JsIdentifierAssignment {
                             name_token: IDENT@48..51 "foo" [] [],
                         },
                         COMMA@51..53 "," [] [Whitespace(" ")],
-                        JsIdentifierAssignmentTarget {
+                        JsIdentifierAssignment {
                             name_token: IDENT@53..56 "bar" [] [],
                         },
                     ],
                     r_brack_token: R_BRACK@56..58 "]" [] [Whitespace(" ")],
                 },
                 operator_token: EQ@58..60 "=" [] [Whitespace(" ")],
-                right: JsReferenceIdentifierExpression {
-                    name_token: IDENT@60..63 "baz" [] [],
+                right: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@60..63 "baz" [] [],
+                    },
                 },
             },
             semicolon_token: SEMICOLON@63..64 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsArrayAssignmentTarget {
+                left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@64..66 "[" [Whitespace("\n")] [],
                     elements: [
-                        JsIdentifierAssignmentTarget {
+                        JsIdentifierAssignment {
                             name_token: IDENT@66..69 "foo" [] [],
                         },
                         COMMA@69..71 "," [] [Whitespace(" ")],
-                        JsAssignmentTargetWithDefault {
-                            target: JsIdentifierAssignmentTarget {
+                        JsAssignmentWithDefault {
+                            pattern: JsIdentifierAssignment {
                                 name_token: IDENT@71..75 "bar" [] [Whitespace(" ")],
                             },
                             eq_token: EQ@75..77 "=" [] [Whitespace(" ")],
@@ -95,9 +101,9 @@ JsRoot {
                             },
                         },
                         COMMA@86..88 "," [] [Whitespace(" ")],
-                        JsArrayAssignmentTargetRestElement {
+                        JsArrayAssignmentPatternRestElement {
                             dotdotdot_token: DOT2@88..91 "..." [] [],
-                            target: JsIdentifierAssignmentTarget {
+                            pattern: JsIdentifierAssignment {
                                 name_token: IDENT@91..95 "rest" [] [],
                             },
                         },
@@ -105,15 +111,17 @@ JsRoot {
                     r_brack_token: R_BRACK@95..97 "]" [] [Whitespace(" ")],
                 },
                 operator_token: EQ@97..99 "=" [] [Whitespace(" ")],
-                right: JsReferenceIdentifierExpression {
-                    name_token: IDENT@99..102 "baz" [] [],
+                right: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@99..102 "baz" [] [],
+                    },
                 },
             },
             semicolon_token: SEMICOLON@102..103 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsArrayAssignmentTarget {
+                left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@103..105 "[" [Whitespace("\n")] [],
                     elements: [
                         JsArrayHole,
@@ -122,19 +130,21 @@ JsRoot {
                         COMMA@106..107 "," [] [],
                         JsArrayHole,
                         COMMA@107..108 "," [] [],
-                        JsIdentifierAssignmentTarget {
+                        JsIdentifierAssignment {
                             name_token: IDENT@108..111 "foo" [] [],
                         },
                         COMMA@111..112 "," [] [],
-                        JsIdentifierAssignmentTarget {
+                        JsIdentifierAssignment {
                             name_token: IDENT@112..115 "bar" [] [],
                         },
                     ],
                     r_brack_token: R_BRACK@115..117 "]" [] [Whitespace(" ")],
                 },
                 operator_token: EQ@117..119 "=" [] [Whitespace(" ")],
-                right: JsReferenceIdentifierExpression {
-                    name_token: IDENT@119..122 "baz" [] [],
+                right: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@119..122 "baz" [] [],
+                    },
                 },
             },
             semicolon_token: SEMICOLON@122..123 ";" [] [],
@@ -143,18 +153,18 @@ JsRoot {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@123..125 "(" [Whitespace("\n")] [],
                 expression: JsAssignmentExpression {
-                    left: JsObjectAssignmentTarget {
+                    left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@125..127 "{" [] [Whitespace(" ")],
                         properties: [
-                            JsShorthandPropertyAssignmentTarget {
-                                identifier: JsIdentifierAssignmentTarget {
+                            JsObjectAssignmentPatternShorthandProperty {
+                                identifier: JsIdentifierAssignment {
                                     name_token: IDENT@127..130 "bar" [] [],
                                 },
                                 init: missing (optional),
                             },
                             COMMA@130..132 "," [] [Whitespace(" ")],
-                            JsShorthandPropertyAssignmentTarget {
-                                identifier: JsIdentifierAssignmentTarget {
+                            JsObjectAssignmentPatternShorthandProperty {
+                                identifier: JsIdentifierAssignment {
                                     name_token: IDENT@132..136 "baz" [] [Whitespace(" ")],
                                 },
                                 init: missing (optional),
@@ -177,19 +187,19 @@ JsRoot {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@144..146 "(" [Whitespace("\n")] [],
                 expression: JsAssignmentExpression {
-                    left: JsObjectAssignmentTarget {
+                    left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@146..148 "{" [] [Whitespace(" ")],
                         properties: [
-                            JsObjectPropertyAssignmentTarget {
-                                member: JsReferenceIdentifierMember {
-                                    name_token: IDENT@148..151 "bar" [] [],
+                            JsObjectAssignmentPatternProperty {
+                                member: JsName {
+                                    value_token: IDENT@148..151 "bar" [] [],
                                 },
                                 colon_token: COLON@151..153 ":" [] [Whitespace(" ")],
-                                target: JsArrayAssignmentTarget {
+                                pattern: JsArrayAssignmentPattern {
                                     l_brack_token: L_BRACK@153..154 "[" [] [],
                                     elements: [
-                                        JsAssignmentTargetWithDefault {
-                                            target: JsIdentifierAssignmentTarget {
+                                        JsAssignmentWithDefault {
+                                            pattern: JsIdentifierAssignment {
                                                 name_token: IDENT@154..158 "baz" [] [Whitespace(" ")],
                                             },
                                             eq_token: EQ@158..160 "=" [] [Whitespace(" ")],
@@ -203,8 +213,8 @@ JsRoot {
                                 init: missing (optional),
                             },
                             COMMA@166..168 "," [] [Whitespace(" ")],
-                            JsShorthandPropertyAssignmentTarget {
-                                identifier: JsIdentifierAssignmentTarget {
+                            JsObjectAssignmentPatternShorthandProperty {
+                                identifier: JsIdentifierAssignment {
                                     name_token: IDENT@168..172 "foo" [] [Whitespace(" ")],
                                 },
                                 init: JsEqualValueClause {
@@ -215,9 +225,9 @@ JsRoot {
                                 },
                             },
                             COMMA@179..181 "," [] [Whitespace(" ")],
-                            JsObjectRestPropertyAssignmentTarget {
+                            JsObjectAssignmentPatternRest {
                                 dotdotdot_token: DOT2@181..184 "..." [] [],
-                                target: JsIdentifierAssignmentTarget {
+                                target: JsIdentifierAssignment {
                                     name_token: IDENT@184..189 "rest" [] [Whitespace(" ")],
                                 },
                             },
@@ -244,15 +254,15 @@ JsRoot {
   2: LIST@0..197
     0: JS_EXPRESSION_STATEMENT@0..21
       0: JS_ASSIGNMENT_EXPRESSION@0..20
-        0: JS_IDENTIFIER_ASSIGNMENT_TARGET@0..4
+        0: JS_IDENTIFIER_ASSIGNMENT@0..4
           0: IDENT@0..4 "foo" [] [Whitespace(" ")]
         1: PLUSEQ@4..7 "+=" [] [Whitespace(" ")]
         2: JS_ASSIGNMENT_EXPRESSION@7..20
-          0: JS_IDENTIFIER_ASSIGNMENT_TARGET@7..11
+          0: JS_IDENTIFIER_ASSIGNMENT@7..11
             0: IDENT@7..11 "bar" [] [Whitespace(" ")]
           1: EQ@11..13 "=" [] [Whitespace(" ")]
           2: JS_ASSIGNMENT_EXPRESSION@13..20
-            0: JS_IDENTIFIER_ASSIGNMENT_TARGET@13..15
+            0: JS_IDENTIFIER_ASSIGNMENT@13..15
               0: IDENT@13..15 "b" [] [Whitespace(" ")]
             1: QUESTION2EQ@15..19 "??=" [] [Whitespace(" ")]
             2: JS_NUMBER_LITERAL_EXPRESSION@19..20
@@ -260,65 +270,69 @@ JsRoot {
       1: SEMICOLON@20..21 ";" [] []
     1: JS_EXPRESSION_STATEMENT@21..33
       0: JS_ASSIGNMENT_EXPRESSION@21..32
-        0: JS_IDENTIFIER_ASSIGNMENT_TARGET@21..26
+        0: JS_IDENTIFIER_ASSIGNMENT@21..26
           0: IDENT@21..26 "foo" [Whitespace("\n")] [Whitespace(" ")]
         1: MINUSEQ@26..29 "-=" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@29..32
-          0: IDENT@29..32 "bar" [] []
+        2: JS_IDENTIFIER_EXPRESSION@29..32
+          0: JS_REFERENCE_IDENTIFIER@29..32
+            0: IDENT@29..32 "bar" [] []
       1: SEMICOLON@32..33 ";" [] []
     2: JS_EXPRESSION_STATEMENT@33..46
       0: JS_PARENTHESIZED_EXPRESSION@33..45
         0: L_PAREN@33..35 "(" [Whitespace("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@35..44
-          0: JS_IDENTIFIER_ASSIGNMENT_TARGET@35..39
+          0: JS_IDENTIFIER_ASSIGNMENT@35..39
             0: IDENT@35..39 "foo" [] [Whitespace(" ")]
           1: EQ@39..41 "=" [] [Whitespace(" ")]
-          2: JS_REFERENCE_IDENTIFIER_EXPRESSION@41..44
-            0: IDENT@41..44 "bar" [] []
+          2: JS_IDENTIFIER_EXPRESSION@41..44
+            0: JS_REFERENCE_IDENTIFIER@41..44
+              0: IDENT@41..44 "bar" [] []
         2: R_PAREN@44..45 ")" [] []
       1: SEMICOLON@45..46 ";" [] []
     3: JS_EXPRESSION_STATEMENT@46..64
       0: JS_ASSIGNMENT_EXPRESSION@46..63
-        0: JS_ARRAY_ASSIGNMENT_TARGET@46..58
+        0: JS_ARRAY_ASSIGNMENT_PATTERN@46..58
           0: L_BRACK@46..48 "[" [Whitespace("\n")] []
           1: LIST@48..56
-            0: JS_IDENTIFIER_ASSIGNMENT_TARGET@48..51
+            0: JS_IDENTIFIER_ASSIGNMENT@48..51
               0: IDENT@48..51 "foo" [] []
             1: COMMA@51..53 "," [] [Whitespace(" ")]
-            2: JS_IDENTIFIER_ASSIGNMENT_TARGET@53..56
+            2: JS_IDENTIFIER_ASSIGNMENT@53..56
               0: IDENT@53..56 "bar" [] []
           2: R_BRACK@56..58 "]" [] [Whitespace(" ")]
         1: EQ@58..60 "=" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@60..63
-          0: IDENT@60..63 "baz" [] []
+        2: JS_IDENTIFIER_EXPRESSION@60..63
+          0: JS_REFERENCE_IDENTIFIER@60..63
+            0: IDENT@60..63 "baz" [] []
       1: SEMICOLON@63..64 ";" [] []
     4: JS_EXPRESSION_STATEMENT@64..103
       0: JS_ASSIGNMENT_EXPRESSION@64..102
-        0: JS_ARRAY_ASSIGNMENT_TARGET@64..97
+        0: JS_ARRAY_ASSIGNMENT_PATTERN@64..97
           0: L_BRACK@64..66 "[" [Whitespace("\n")] []
           1: LIST@66..95
-            0: JS_IDENTIFIER_ASSIGNMENT_TARGET@66..69
+            0: JS_IDENTIFIER_ASSIGNMENT@66..69
               0: IDENT@66..69 "foo" [] []
             1: COMMA@69..71 "," [] [Whitespace(" ")]
-            2: JS_ASSIGNMENT_TARGET_WITH_DEFAULT@71..86
-              0: JS_IDENTIFIER_ASSIGNMENT_TARGET@71..75
+            2: JS_ASSIGNMENT_WITH_DEFAULT@71..86
+              0: JS_IDENTIFIER_ASSIGNMENT@71..75
                 0: IDENT@71..75 "bar" [] [Whitespace(" ")]
               1: EQ@75..77 "=" [] [Whitespace(" ")]
               2: JS_STRING_LITERAL_EXPRESSION@77..86
                 0: JS_STRING_LITERAL@77..86 "\"default\"" [] []
             3: COMMA@86..88 "," [] [Whitespace(" ")]
-            4: JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT@88..95
+            4: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@88..95
               0: DOT2@88..91 "..." [] []
-              1: JS_IDENTIFIER_ASSIGNMENT_TARGET@91..95
+              1: JS_IDENTIFIER_ASSIGNMENT@91..95
                 0: IDENT@91..95 "rest" [] []
           2: R_BRACK@95..97 "]" [] [Whitespace(" ")]
         1: EQ@97..99 "=" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@99..102
-          0: IDENT@99..102 "baz" [] []
+        2: JS_IDENTIFIER_EXPRESSION@99..102
+          0: JS_REFERENCE_IDENTIFIER@99..102
+            0: IDENT@99..102 "baz" [] []
       1: SEMICOLON@102..103 ";" [] []
     5: JS_EXPRESSION_STATEMENT@103..123
       0: JS_ASSIGNMENT_EXPRESSION@103..122
-        0: JS_ARRAY_ASSIGNMENT_TARGET@103..117
+        0: JS_ARRAY_ASSIGNMENT_PATTERN@103..117
           0: L_BRACK@103..105 "[" [Whitespace("\n")] []
           1: LIST@105..115
             0: JS_ARRAY_HOLE@105..105
@@ -327,30 +341,31 @@ JsRoot {
             3: COMMA@106..107 "," [] []
             4: JS_ARRAY_HOLE@107..107
             5: COMMA@107..108 "," [] []
-            6: JS_IDENTIFIER_ASSIGNMENT_TARGET@108..111
+            6: JS_IDENTIFIER_ASSIGNMENT@108..111
               0: IDENT@108..111 "foo" [] []
             7: COMMA@111..112 "," [] []
-            8: JS_IDENTIFIER_ASSIGNMENT_TARGET@112..115
+            8: JS_IDENTIFIER_ASSIGNMENT@112..115
               0: IDENT@112..115 "bar" [] []
           2: R_BRACK@115..117 "]" [] [Whitespace(" ")]
         1: EQ@117..119 "=" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@119..122
-          0: IDENT@119..122 "baz" [] []
+        2: JS_IDENTIFIER_EXPRESSION@119..122
+          0: JS_REFERENCE_IDENTIFIER@119..122
+            0: IDENT@119..122 "baz" [] []
       1: SEMICOLON@122..123 ";" [] []
     6: JS_EXPRESSION_STATEMENT@123..144
       0: JS_PARENTHESIZED_EXPRESSION@123..143
         0: L_PAREN@123..125 "(" [Whitespace("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@125..142
-          0: JS_OBJECT_ASSIGNMENT_TARGET@125..138
+          0: JS_OBJECT_ASSIGNMENT_PATTERN@125..138
             0: L_CURLY@125..127 "{" [] [Whitespace(" ")]
             1: LIST@127..136
-              0: JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@127..130
-                0: JS_IDENTIFIER_ASSIGNMENT_TARGET@127..130
+              0: JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY@127..130
+                0: JS_IDENTIFIER_ASSIGNMENT@127..130
                   0: IDENT@127..130 "bar" [] []
                 1: (empty)
               1: COMMA@130..132 "," [] [Whitespace(" ")]
-              2: JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@132..136
-                0: JS_IDENTIFIER_ASSIGNMENT_TARGET@132..136
+              2: JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY@132..136
+                0: JS_IDENTIFIER_ASSIGNMENT@132..136
                   0: IDENT@132..136 "baz" [] [Whitespace(" ")]
                 1: (empty)
             2: R_CURLY@136..138 "}" [] [Whitespace(" ")]
@@ -365,18 +380,18 @@ JsRoot {
       0: JS_PARENTHESIZED_EXPRESSION@144..196
         0: L_PAREN@144..146 "(" [Whitespace("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@146..195
-          0: JS_OBJECT_ASSIGNMENT_TARGET@146..191
+          0: JS_OBJECT_ASSIGNMENT_PATTERN@146..191
             0: L_CURLY@146..148 "{" [] [Whitespace(" ")]
             1: LIST@148..189
-              0: JS_OBJECT_PROPERTY_ASSIGNMENT_TARGET@148..166
-                0: JS_REFERENCE_IDENTIFIER_MEMBER@148..151
+              0: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY@148..166
+                0: JS_NAME@148..151
                   0: IDENT@148..151 "bar" [] []
                 1: COLON@151..153 ":" [] [Whitespace(" ")]
-                2: JS_ARRAY_ASSIGNMENT_TARGET@153..166
+                2: JS_ARRAY_ASSIGNMENT_PATTERN@153..166
                   0: L_BRACK@153..154 "[" [] []
                   1: LIST@154..165
-                    0: JS_ASSIGNMENT_TARGET_WITH_DEFAULT@154..165
-                      0: JS_IDENTIFIER_ASSIGNMENT_TARGET@154..158
+                    0: JS_ASSIGNMENT_WITH_DEFAULT@154..165
+                      0: JS_IDENTIFIER_ASSIGNMENT@154..158
                         0: IDENT@154..158 "baz" [] [Whitespace(" ")]
                       1: EQ@158..160 "=" [] [Whitespace(" ")]
                       2: JS_STRING_LITERAL_EXPRESSION@160..165
@@ -384,17 +399,17 @@ JsRoot {
                   2: R_BRACK@165..166 "]" [] []
                 3: (empty)
               1: COMMA@166..168 "," [] [Whitespace(" ")]
-              2: JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@168..179
-                0: JS_IDENTIFIER_ASSIGNMENT_TARGET@168..172
+              2: JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY@168..179
+                0: JS_IDENTIFIER_ASSIGNMENT@168..172
                   0: IDENT@168..172 "foo" [] [Whitespace(" ")]
                 1: JS_EQUAL_VALUE_CLAUSE@172..179
                   0: EQ@172..174 "=" [] [Whitespace(" ")]
                   1: JS_STRING_LITERAL_EXPRESSION@174..179
                     0: JS_STRING_LITERAL@174..179 "\"foo\"" [] []
               3: COMMA@179..181 "," [] [Whitespace(" ")]
-              4: JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET@181..189
+              4: JS_OBJECT_ASSIGNMENT_PATTERN_REST@181..189
                 0: DOT2@181..184 "..." [] []
-                1: JS_IDENTIFIER_ASSIGNMENT_TARGET@184..189
+                1: JS_IDENTIFIER_ASSIGNMENT@184..189
                   0: IDENT@184..189 "rest" [] [Whitespace(" ")]
             2: R_CURLY@189..191 "}" [] [Whitespace(" ")]
           1: EQ@191..193 "=" [] [Whitespace(" ")]

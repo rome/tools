@@ -1,12 +1,12 @@
 //! Class and function declarations.
 
-use super::binding::parse_binding;
+use super::binding::parse_binding_pattern;
 use super::expr::expr_or_assignment;
 use super::typescript::*;
 #[allow(deprecated)]
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::ParserProgress;
-use crate::syntax::binding::parse_binding_with_optional_default;
+use crate::syntax::binding::parse_binding_pattern_with_optional_default;
 use crate::syntax::function::function_body;
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_binding;
@@ -24,7 +24,7 @@ pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax<CompletedMa
 		}
 	}
 
-	parse_binding_with_optional_default(p)
+	parse_binding_pattern_with_optional_default(p)
 }
 
 // test parameter_list
@@ -67,7 +67,7 @@ pub(super) fn parse_parameters_list(
 		if p.at(T![...]) {
 			let m = p.start();
 			p.bump_any();
-			parse_binding(p).or_missing_with_error(p, expected_binding);
+			parse_binding_pattern(p).or_missing_with_error(p, expected_binding);
 
 			// TODO #1725 Review error handling and recovery
 			// rest patterns cannot be optional: `...foo?: number[]`

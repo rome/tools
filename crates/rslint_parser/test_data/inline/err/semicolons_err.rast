@@ -12,8 +12,10 @@ JsRoot {
                         },
                         init: JsEqualValueClause {
                             eq_token: EQ@8..10 "=" [] [Whitespace(" ")],
-                            expression: JsReferenceIdentifierExpression {
-                                name_token: IDENT@10..14 "bar" [] [Whitespace(" ")],
+                            expression: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@10..14 "bar" [] [Whitespace(" ")],
+                                },
                             },
                         },
                     },
@@ -23,8 +25,10 @@ JsRoot {
         },
         JsThrowStatement {
             throw_token: THROW_KW@14..20 "throw" [] [Whitespace(" ")],
-            argument: JsReferenceIdentifierExpression {
-                name_token: IDENT@20..23 "foo" [] [],
+            argument: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@20..23 "foo" [] [],
+                },
             },
             semicolon_token: missing (optional),
         },
@@ -44,13 +48,15 @@ JsRoot {
               0: IDENT@4..8 "foo" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@8..14
               0: EQ@8..10 "=" [] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@10..14
-                0: IDENT@10..14 "bar" [] [Whitespace(" ")]
+              1: JS_IDENTIFIER_EXPRESSION@10..14
+                0: JS_REFERENCE_IDENTIFIER@10..14
+                  0: IDENT@10..14 "bar" [] [Whitespace(" ")]
       1: (empty)
     1: JS_THROW_STATEMENT@14..23
       0: THROW_KW@14..20 "throw" [] [Whitespace(" ")]
-      1: JS_REFERENCE_IDENTIFIER_EXPRESSION@20..23
-        0: IDENT@20..23 "foo" [] []
+      1: JS_IDENTIFIER_EXPRESSION@20..23
+        0: JS_REFERENCE_IDENTIFIER@20..23
+          0: IDENT@20..23 "foo" [] []
       2: (empty)
   3: EOF@23..24 "" [Whitespace("\n")] []
 --

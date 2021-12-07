@@ -10,8 +10,10 @@ JsRoot {
             implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
                 extends_token: EXTENDS_KW@11..19 "extends" [] [Whitespace(" ")],
-                super_class: JsReferenceIdentifierExpression {
-                    name_token: IDENT@19..21 "B" [] [Whitespace(" ")],
+                super_class: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@19..21 "B" [] [Whitespace(" ")],
+                    },
                 },
             },
             l_curly_token: L_CURLY@21..22 "{" [] [],
@@ -76,19 +78,23 @@ JsRoot {
                                             super_token: SUPER_KW@64..72 "super" [Whitespace("\n\t\t")] [],
                                         },
                                         operator: DOT@72..73 "." [] [],
-                                        member: JsReferenceIdentifierMember {
-                                            name_token: IDENT@73..77 "test" [] [],
+                                        member: JsName {
+                                            value_token: IDENT@73..77 "test" [] [],
                                         },
                                     },
                                     arguments: ArgList {
                                         l_paren_token: L_PAREN@77..78 "(" [] [],
                                         args: [
-                                            JsReferenceIdentifierExpression {
-                                                name_token: IDENT@78..79 "a" [] [],
+                                            JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@78..79 "a" [] [],
+                                                },
                                             },
                                             COMMA@79..81 "," [] [Whitespace(" ")],
-                                            JsReferenceIdentifierExpression {
-                                                name_token: IDENT@81..82 "b" [] [],
+                                            JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@81..82 "b" [] [],
+                                                },
                                             },
                                         ],
                                         r_paren_token: R_PAREN@82..83 ")" [] [],
@@ -127,8 +133,9 @@ JsRoot {
         0: IDENT@6..11 "Test" [] [Whitespace(" ")]
       2: JS_EXTENDS_CLAUSE@11..21
         0: EXTENDS_KW@11..19 "extends" [] [Whitespace(" ")]
-        1: JS_REFERENCE_IDENTIFIER_EXPRESSION@19..21
-          0: IDENT@19..21 "B" [] [Whitespace(" ")]
+        1: JS_IDENTIFIER_EXPRESSION@19..21
+          0: JS_REFERENCE_IDENTIFIER@19..21
+            0: IDENT@19..21 "B" [] [Whitespace(" ")]
       3: L_CURLY@21..22 "{" [] []
       4: LIST@22..99
         0: JS_CONSTRUCTOR_CLASS_MEMBER@22..53
@@ -169,16 +176,18 @@ JsRoot {
                     0: JS_SUPER_EXPRESSION@64..72
                       0: SUPER_KW@64..72 "super" [Whitespace("\n\t\t")] []
                     1: DOT@72..73 "." [] []
-                    2: JS_REFERENCE_IDENTIFIER_MEMBER@73..77
+                    2: JS_NAME@73..77
                       0: IDENT@73..77 "test" [] []
                   1: ARG_LIST@77..83
                     0: L_PAREN@77..78 "(" [] []
                     1: LIST@78..82
-                      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@78..79
-                        0: IDENT@78..79 "a" [] []
+                      0: JS_IDENTIFIER_EXPRESSION@78..79
+                        0: JS_REFERENCE_IDENTIFIER@78..79
+                          0: IDENT@78..79 "a" [] []
                       1: COMMA@79..81 "," [] [Whitespace(" ")]
-                      2: JS_REFERENCE_IDENTIFIER_EXPRESSION@81..82
-                        0: IDENT@81..82 "b" [] []
+                      2: JS_IDENTIFIER_EXPRESSION@81..82
+                        0: JS_REFERENCE_IDENTIFIER@81..82
+                          0: IDENT@81..82 "b" [] []
                     2: R_PAREN@82..83 ")" [] []
                 1: SEMICOLON@83..84 ";" [] []
               1: JS_EXPRESSION_STATEMENT@84..96

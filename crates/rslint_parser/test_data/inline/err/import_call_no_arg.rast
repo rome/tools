@@ -27,8 +27,10 @@ JsRoot {
         JsExpressionStatement {
             expression: CallExpr {
                 type_args: missing (optional),
-                callee: JsReferenceIdentifierExpression {
-                    name_token: IDENT@17..21 "foo" [Whitespace("\n")] [],
+                callee: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@17..21 "foo" [Whitespace("\n")] [],
+                    },
                 },
                 arguments: ArgList {
                     l_paren_token: L_PAREN@21..22 "(" [] [],
@@ -61,8 +63,9 @@ JsRoot {
       1: SEMICOLON@16..17 ";" [] []
     1: JS_EXPRESSION_STATEMENT@17..24
       0: CALL_EXPR@17..23
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@17..21
-          0: IDENT@17..21 "foo" [Whitespace("\n")] []
+        0: JS_IDENTIFIER_EXPRESSION@17..21
+          0: JS_REFERENCE_IDENTIFIER@17..21
+            0: IDENT@17..21 "foo" [Whitespace("\n")] []
         1: ARG_LIST@21..23
           0: L_PAREN@21..22 "(" [] []
           1: LIST@22..22

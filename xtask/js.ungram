@@ -43,7 +43,7 @@ JsUnknownStatement = SyntaxElement*
 JsUnknownExpression = SyntaxElement*
 JsUnknownMember = SyntaxElement*
 JsUnknownBinding = SyntaxElement*
-JsUnknownAssignmentTarget = SyntaxElement*
+JsUnknownAssignment = SyntaxElement*
 JsUnknownModifier = SyntaxElement*
 
 Ident = 'ident'
@@ -160,7 +160,7 @@ ForInStmt = 'for' '(' left:ForLeft 'in' right:JsAnyExpression ')' cons:JsAnyStat
 
 // for..of statement
 ForOfStmt = 'for' '(' left:ForLeft 'of' right:JsAnyExpression ')' cons:JsAnyStatement
-ForLeft = JsAnyAssignmentTarget | JsVariableDeclaration
+ForLeft = JsAnyAssignment | JsVariableDeclaration
 
 
 JsBreakStatement =
@@ -224,7 +224,7 @@ JsCatchClause =
     body: JsBlockStatement
 
 JsCatchDeclaration =
-    '(' binding: JsAnyBinding ')'
+    '(' binding: JsAnyBindingPattern ')'
 
 JsFinallyClause =
     'finally'
@@ -256,7 +256,7 @@ JsAnyExpression =
 	| JsLogicalExpression
 	| JsObjectExpression
 	| JsParenthesizedExpression
-	| JsReferenceIdentifierExpression
+	| JsIdentifierExpression
 	| JsSequenceExpression
 	| JsStaticMemberExpression
 	| JsSuperExpression
@@ -324,7 +324,7 @@ JsFunctionExpression =
 	'async'?
 	'function'
 	'*'?
-	id: JsIdentifierBinding?
+	id: JsAnyBinding?
 	type_parameters: TsTypeParams?
 	parameters: JsParameterList
 	return_type: TsTypeAnnotation?
@@ -339,7 +339,7 @@ JsArrowFunctionExpression =
 	return_type: TsTypeAnnotation?
 	manual__body: JsAnyArrowFunctionBody
 
-JsAnyArrowFunctionParameters = JsParameterList | JsIdentifierBinding
+JsAnyArrowFunctionParameters = JsParameterList | JsAnyBinding
 JsAnyArrowFunctionBody = JsAnyExpression | JsFunctionBody
 
 // Array expression\
@@ -356,7 +356,7 @@ JsAnyArrayElement =
 JsArrayHole = manual__hole: ''
 
 JsAssignmentExpression =
-  left: JsAnyAssignmentTarget
+  left: JsAnyAssignmentPattern
   operator_token: (
 		'=' |'+=' | '-=' | '*=' | '%=' |
 		'**=' | '>>=' | '<<=' | '>>>=' | '&=' |
@@ -374,12 +374,15 @@ JsSequenceExpression =
 JsParenthesizedExpression =
 	'(' expression: JsAnyExpression ')'
 
+
+JsIdentifierExpression = name: JsReferenceIdentifier
+
 // a.b
 // a.#b
 JsStaticMemberExpression =
 	object: JsAnyExpression
 	operator: ('.' | '?.')
-	member: JsAnyReferenceMember
+	member: JsAnyName
 
 // a[b]
 JsComputedMemberExpression =
@@ -410,10 +413,10 @@ JsUnaryExpression =
 
 JsPreUpdateExpression =
     operator: ('++' | '--')
-    operand: JsAnySimpleAssignmentTarget
+    operand: JsAnyAssignment
 
 JsPostUpdateExpression =
-    operand: JsAnySimpleAssignmentTarget
+    operand: JsAnyAssignment
     operator: ('++' | '--')
 
 
@@ -461,7 +464,7 @@ JsSetterObjectMember =
 	'set'
 	name: JsAnyObjectMemberName
 	'('
-	parameter: JsAnyBinding
+	parameter: JsAnyBindingPattern
 	')'
 	body: JsFunctionBody
 
@@ -478,7 +481,7 @@ JsMethodObjectMember =
 
 // { a }
 //   ^
-JsShorthandPropertyObjectMember = name: JsReferenceIdentifierExpression
+JsShorthandPropertyObjectMember = name: JsReferenceIdentifier
 
 ///////////////
 // CLASSES
@@ -486,7 +489,7 @@ JsShorthandPropertyObjectMember = name: JsReferenceIdentifierExpression
 
 JsClassDeclaration  =
 	'class'
-	id: JsIdentifierBinding
+	id: JsAnyBinding
 	implements_clause: TsImplementsClause?
 	extends_clause: JsExtendsClause?
 	'{'
@@ -495,7 +498,7 @@ JsClassDeclaration  =
 
 JsClassExpression =
 	'class'
-	id: JsIdentifierBinding?
+	id: JsAnyBinding?
 	extends_clause: JsExtendsClause?
 	'{'
 	members: JsAnyClassMember*
@@ -549,8 +552,8 @@ JsConstructorParameterList =
 
 JsAnyConstructorParameter =
 	TsConstructorParam
-	| JsAnyBinding
-	| JsBindingWithDefault
+	| JsAnyBindingPattern
+	| JsBindingPatternWithDefault
 
 // class Test { a; b = 1; static c; }
 //              ^^ ^^^^^^ ^^^^^^^^^
@@ -601,7 +604,7 @@ JsSetterClassMember =
 	'set'
 	name: JsAnyClassMemberName
 	'('
-	parameter: JsAnyBinding
+	parameter: JsAnyBindingPattern
 	')'
 	body: JsFunctionBody
 
@@ -619,100 +622,104 @@ JsModifier = 'declare'?
 // ASSIGNMENT TARGETS
 ///////////////
 
-JsAnyAssignmentTarget =
-	JsAnySimpleAssignmentTarget
-	| JsArrayAssignmentTarget
-	| JsObjectAssignmentTarget
+JsAnyAssignment =
+	JsIdentifierAssignment
+	| JsStaticMemberAssignment
+	| JsComputedMemberAssignment
+	| JsParenthesizedAssignment
+	| JsUnknownAssignment
 
-JsAnySimpleAssignmentTarget =
-	JsIdentifierAssignmentTarget
-	| JsStaticMemberAssignmentTarget
-	| JsComputedMemberAssignmentTarget
-	| JsParenthesizedAssignmentTarget
 
-JsAssignmentTargetWithDefault =
-	target: JsAnyAssignmentTarget
+JsAssignmentWithDefault =
+	pattern: JsAnyAssignmentPattern
 	'='
 	default: JsAnyExpression
 
 // (a) = "test"
 // ^^^
-JsParenthesizedAssignmentTarget =
+JsParenthesizedAssignment =
 	'('
-	target: JsAnySimpleAssignmentTarget
+	assignment: JsAnyAssignment
 	')'
 
+// Assignment to an identifier from the lexical scope
 // b = "test"
 // ^
-JsIdentifierAssignmentTarget = name: 'ident'
+JsIdentifierAssignment = name: 'ident'
 
 // a.b = a.#b = "test"
 // ^^^   ^^^^
-JsStaticMemberAssignmentTarget =
+JsStaticMemberAssignment =
 	object: JsAnyExpression
 	'.'
-	member: JsAnyReferenceMember
+	member: JsAnyName
 
 // a['b'] = a[expr] = "test"
 // ^^^^^^   ^^^^^^^
-JsComputedMemberAssignmentTarget =
+JsComputedMemberAssignment =
 	object: JsAnyExpression
 	'['
 	member: JsAnyExpression
 	']'
 
+JsAnyAssignmentPattern =
+	JsAnyAssignment
+	| JsArrayAssignmentPattern
+	| JsObjectAssignmentPattern
+
+
 // [a, b = "b"", ...rest] = bar
 // ^^^^^^^^^^^^^^^^^^^^^^
-JsArrayAssignmentTarget =
+JsArrayAssignmentPattern =
 	'['
-	elements: (JsAnyArrayAssignmentTargetElement (',' JsAnyArrayAssignmentTargetElement)* ','?)
+	elements: (JsAnyArrayAssignmentPatternElement (',' JsAnyArrayAssignmentPatternElement)* ','?)
 	']'
 
-JsAnyArrayAssignmentTargetElement =
-	JsAssignmentTargetWithDefault
-	| JsAnyAssignmentTarget
-	| JsArrayAssignmentTargetRestElement
+JsAnyArrayAssignmentPatternElement =
+	JsAssignmentWithDefault
+	| JsAnyAssignmentPattern
+	| JsArrayAssignmentPatternRestElement
 	| JsArrayHole
-	| JsUnknownAssignmentTarget
+	| JsUnknownAssignment
 
 // [a, b, ...rest] = [];
 //        ^^^^^^^
-JsArrayAssignmentTargetRestElement =
+JsArrayAssignmentPatternRestElement =
 	'...'
-	target: JsAnyAssignmentTarget
+	pattern: JsAnyAssignmentPattern
 
 // ({a, b: x, ...rest} = c)
 //  ^^^^^^^^^^^^^^^^^^
-JsObjectAssignmentTarget =
+JsObjectAssignmentPattern =
 	'{'
-	properties: (JsAnyPropertyAssignmentTarget (',' JsAnyPropertyAssignmentTarget)* ','?)
+	properties: (JsAnyObjectAssignmentPatternMember (',' JsAnyObjectAssignmentPatternMember)* ','?)
 	'}'
 
-JsAnyPropertyAssignmentTarget =
-	JsShorthandPropertyAssignmentTarget
-	| JsObjectPropertyAssignmentTarget
-	| JsObjectRestPropertyAssignmentTarget
-	| JsUnknownAssignmentTarget
+JsAnyObjectAssignmentPatternMember =
+	JsObjectAssignmentPatternShorthandProperty
+	| JsObjectAssignmentPatternProperty
+	| JsObjectAssignmentPatternRest
+	| JsUnknownAssignment
 
 // ({ x } = b) or ({ x = "test" } = b)
 //    ^              ^^^^^^^^^^
-JsShorthandPropertyAssignmentTarget =
-	identifier: JsIdentifierAssignmentTarget
+JsObjectAssignmentPatternShorthandProperty =
+	identifier: JsAnyAssignment
 	init: JsEqualValueClause?
 
 // ({ x: a } = b) or ({ x: a = "test" } = b)
 //    ^^^^              ^^^^^^^^^^^^^
-JsObjectPropertyAssignmentTarget =
-	member: JsReferenceIdentifierMember
+JsObjectAssignmentPatternProperty =
+	member: JsName
 	':'
-	target: JsAnyAssignmentTarget
+	pattern: JsAnyAssignmentPattern
 	init: JsEqualValueClause?
 
 // ({ a, ...b } = a)
 //       ^^^^
-JsObjectRestPropertyAssignmentTarget =
+JsObjectAssignmentPatternRest =
 	'...'
-	target: JsAnySimpleAssignmentTarget
+	target: JsAnyAssignment
 
 ///////////////
 // BINDINGS
@@ -720,10 +727,7 @@ JsObjectRestPropertyAssignmentTarget =
 
 JsAnyBinding =
 	JsIdentifierBinding
-	| JsObjectBinding
-	| JsArrayBinding
 	| JsUnknownBinding
-
 
 // Binds a value to an identifier.
 // let x = OR function(test) {}
@@ -733,39 +737,44 @@ JsIdentifierBinding =
 
 // [ a = "b"] = [];
 //   ^^^^^^^
-JsBindingWithDefault =
-	binding: JsAnyBinding
+JsBindingPatternWithDefault =
+	pattern: JsAnyBindingPattern
 	'='
 	default: JsAnyExpression
 
+JsAnyBindingPattern =
+	JsAnyBinding
+	| JsArrayBindingPattern
+	| JsObjectBindingPattern
+
 // let [a, b] = [1, 2];
 //     ^^^^^^
-JsArrayBinding =
+JsArrayBindingPattern =
 	'['
-	elements: (JsAnyArrayElementBinding (',' JsAnyArrayElementBinding)* ','?)
+	elements: (JsAnyArrayBindingPatternElement (',' JsAnyArrayBindingPatternElement)* ','?)
 	']'
 
-JsAnyArrayElementBinding =
+JsAnyArrayBindingPatternElement =
 	JsArrayHole
-	| JsAnyBinding
-	| JsBindingWithDefault
-	| JsArrayRestBinding
+	| JsAnyBindingPattern
+	| JsBindingPatternWithDefault
+	| JsArrayBindingPatternRestElement
 
-JsArrayRestBinding =
+JsArrayBindingPatternRestElement =
 	'...'
-	binding: JsAnyBinding
+	pattern: JsAnyBindingPattern
 
 // let { a, b} = c;
 //     ^^^^^^^
-JsObjectBinding =
+JsObjectBindingPattern =
 	'{'
-	properties: (JsAnyPropertyBinding (',' JsAnyPropertyBinding)* ','?)
+	properties: (JsAnyObjectBindingPatternMember (',' JsAnyObjectBindingPatternMember)* ','?)
 	'}'
 
-JsAnyPropertyBinding =
-	JsPropertyBinding
-	| JsObjectRestBinding
-	| JsShorthandPropertyBinding
+JsAnyObjectBindingPatternMember =
+	JsObjectBindingPatternProperty
+	| JsObjectBindingPatternRest
+	| JsObjectBindingPatternShorthandProperty
 	| JsIdentifierBinding
 	| JsUnknownBinding
 
@@ -773,34 +782,26 @@ JsAnyPropertyBinding =
 //       ^^^^^^
 // let { a: b.m = "test" } = {}
 //       ^^^^^^^^^^^^^^^
-JsPropertyBinding =
+JsObjectBindingPatternProperty =
 	member: JsAnyObjectMemberName
 	':'
-	binding: JsAnyBinding
+	pattern: JsAnyBindingPattern
 	init: JsEqualValueClause?
 
 // let { a } = c
 //       ^
 // let { a = "test" } = c
 //       ^^^^^^^^^^
-JsShorthandPropertyBinding =
-	identifier: JsIdentifierBinding
+JsObjectBindingPatternShorthandProperty =
+	identifier: JsAnyBinding
 	init: JsEqualValueClause?
 
 // let { ...a } = c
 //       ^^^^
-JsObjectRestBinding =
+JsObjectBindingPatternRest =
 	'...'
-	binding: JsIdentifierBinding
+	binding: JsAnyBinding
 
-
-///////////////
-// MISCELLANEOUS
-///////////////
-
-Name = 'ident'
-
-JsReferenceIdentifierExpression = name: 'ident'
 
 ///////////////
 // LITERALS
@@ -840,7 +841,7 @@ JsFunctionDeclaration =
 	'async'?
 	'function'
 	'*'?
-	id: JsIdentifierBinding
+	id: JsAnyBinding
 	type_parameters: TsTypeParams?
 	parameter_list: JsParameterList
 	return_type: TsTypeAnnotation?
@@ -858,7 +859,7 @@ JsVariableDeclaration =
     declarators: (JsVariableDeclarator (',' JsVariableDeclarator)*)
 
 JsVariableDeclarator =
-    id: JsAnyBinding
+    id: JsAnyBindingPattern
     init: JsEqualValueClause?
 
 
@@ -946,6 +947,25 @@ JsSpread =
 	argument: JsAnyExpression
 
 
+
+Name = 'ident'
+
+// Reference to an identifier from the lexical scope
+JsReferenceIdentifier = value: 'ident'
+
+// A js identifier that is neither a binding, assignment, nor a reference.
+// For example a member name
+JsName = value: 'ident'
+
+JsPrivateName =
+	'#'
+	value: 'ident'
+
+JsAnyName =
+	JsName
+	| JsPrivateName
+
+
 // { a: ..., "b": ..., 4: ... }
 //   ^       ^^^       ^
 JsLiteralMemberName = value: ('ident' | 'js_string_literal' | 'js_number_literal')
@@ -958,38 +978,16 @@ JsComputedMemberName =
 	']'
 
 
-JsAnyReferenceMember =
-	JsReferenceIdentifierMember
-	| JsReferencePrivateMember
-
-// A reference to a member
-// a.b
-//   ^
-// let { b: c } = a
-//       ^
-JsReferenceIdentifierMember =
-	name: 'ident'
-
-// A reference to a private member
-// a.#b
-//   ^^
-// let { #b: c } = a
-//       ^^
-JsReferencePrivateMember =
-	'#'
-	name: 'ident'
-
-
 JsParameterList =
 	'('
 	parameters: (JsAnyParameter (',' JsAnyParameter)* ','?)
 	')'
 
-JsAnyParameter = JsAnyBinding | JsBindingWithDefault | JsRestParameter
+JsAnyParameter = JsAnyBindingPattern | JsBindingPatternWithDefault | JsRestParameter
 
 JsRestParameter =
 	'...'
-	binding: JsAnyBinding
+	binding: JsAnyBindingPattern
 
 ArgList = '(' args:(JsAnyExpression (',' JsAnyExpression)* ','?) ')'
 
@@ -1247,13 +1245,13 @@ TsMethodSignature =
 TsImport = 'import' type_args:TsTypeArgs '.'? '(' qualifier:TsEntityName ')'
 
 // typescript index signature
-TsIndexSignature = 'readonly'? '[' pat:JsIdentifierBinding ':' ty:TsType ']'
+TsIndexSignature = 'readonly'? '[' pat:JsAnyBinding ':' ty:TsType ']'
 
 // typescript type of access
 TsAccessibility = 'private' | 'readonly'
 
 
-TsConstructorParam = 'readonly' pat:JsAnyBinding
+TsConstructorParam = 'readonly' pat:JsAnyBindingPattern
 
 TsNonNull = expr:JsAnyExpression '!'
 

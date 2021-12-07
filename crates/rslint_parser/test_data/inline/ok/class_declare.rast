@@ -59,8 +59,10 @@ JsRoot {
                     ty: missing (optional),
                     value: JsEqualValueClause {
                         eq_token: EQ@43..45 "=" [] [Whitespace(" ")],
-                        expression: JsReferenceIdentifierExpression {
-                            name_token: IDENT@45..49 "foo" [] [Whitespace(" ")],
+                        expression: JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@45..49 "foo" [] [Whitespace(" ")],
+                            },
                         },
                     },
                     semicolon_token: missing (optional),
@@ -105,8 +107,9 @@ JsRoot {
             0: IDENT@35..43 "declare" [] [Whitespace(" ")]
           1: JS_EQUAL_VALUE_CLAUSE@43..49
             0: EQ@43..45 "=" [] [Whitespace(" ")]
-            1: JS_REFERENCE_IDENTIFIER_EXPRESSION@45..49
-              0: IDENT@45..49 "foo" [] [Whitespace(" ")]
+            1: JS_IDENTIFIER_EXPRESSION@45..49
+              0: JS_REFERENCE_IDENTIFIER@45..49
+                0: IDENT@45..49 "foo" [] [Whitespace(" ")]
           2: (empty)
       4: R_CURLY@49..50 "}" [] []
   3: EOF@50..51 "" [Whitespace("\n")] []

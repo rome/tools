@@ -42,8 +42,9 @@ JsRoot {
                 1: LIST@9..20
                   0: TEMPLATE_ELEMENT@9..15
                     0: DOLLARCURLY@9..11 "${" [] []
-                    1: JS_REFERENCE_IDENTIFIER_EXPRESSION@11..14
-                      0: IDENT@11..14 "foo" [] []
+                    1: JS_IDENTIFIER_EXPRESSION@11..14
+                      0: JS_REFERENCE_IDENTIFIER@11..14
+                        0: IDENT@11..14 "foo" [] []
                     2: R_CURLY@14..15 "}" [] []
                   1: TEMPLATE_CHUNK@15..20 " bar\n" [] []
       1: (empty)

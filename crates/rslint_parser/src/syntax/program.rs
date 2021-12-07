@@ -1,16 +1,15 @@
 //! Top level functions for parsing a script or module, also includes module specific items.
 
-use super::binding::parse_identifier_binding;
 use super::expr::{expr, expr_or_assignment, identifier_name, primary_expr};
 use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use super::typescript::*;
 use crate::parser::ParserProgress;
+use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_class_declaration;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::function::{is_at_async_function, LineBreak};
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::directives;
-use crate::ConditionalSyntax::{Invalid, Valid};
 use crate::ParsedSyntax::Present;
 use crate::{SyntaxKind::*, *};
 use syntax::stmt::FOLLOWS_LET;
@@ -223,9 +222,7 @@ fn imported_binding(p: &mut Parser) {
 		in_generator: false,
 		..p.state.clone()
 	});
-	parse_identifier_binding(p)
-		.or_invalid_to_unknown(p, JS_UNKNOWN_BINDING)
-		.ok();
+	parse_binding(p).ok();
 }
 
 pub fn export_decl(p: &mut Parser) -> CompletedMarker {
@@ -393,18 +390,9 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			}))
 			.unwrap();
 
-			return match decl {
-				Valid(decl) => {
-					decl.undo_completion(p).abandon(p);
-					inner.complete(p, JS_CLASS_DECLARATION);
-					m.complete(p, EXPORT_DEFAULT_DECL)
-				}
-				Invalid(invalid) => {
-					invalid.abandon(p);
-					inner.complete(p, JS_CLASS_DECLARATION);
-					m.complete(p, JS_UNKNOWN_STATEMENT)
-				}
-			};
+			decl.undo_completion(p).abandon(p);
+			inner.complete(p, JS_CLASS_DECLARATION);
+			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
 
 		if p.cur_src() == "interface" {
@@ -419,7 +407,6 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 				in_default: true,
 				..p.state.clone()
 			}))
-			.unwrap()
 			.unwrap();
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
@@ -440,7 +427,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	}
 
 	if !only_ty && p.at(T![class]) {
-		parse_class_declaration(p).unwrap().unwrap();
+		parse_class_declaration(p).unwrap();
 	} else if !only_ty
 		// function ...
 		&& (p.at(T![function])

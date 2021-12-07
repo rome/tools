@@ -26,15 +26,17 @@ JsRoot {
             first_semi_token: SEMICOLON@14..16 ";" [] [Whitespace(" ")],
             test: ForStmtTest {
                 expr: JsBinaryExpression {
-                    left: JsReferenceIdentifierExpression {
-                        name_token: IDENT@16..18 "i" [] [Whitespace(" ")],
+                    left: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@16..18 "i" [] [Whitespace(" ")],
+                        },
                     },
                     operator: L_ANGLE@18..20 "<" [] [Whitespace(" ")],
                 },
             },
             update: ForStmtUpdate {
                 expr: JsPostUpdateExpression {
-                    operand: JsIdentifierAssignmentTarget {
+                    operand: JsIdentifierAssignment {
                         name_token: IDENT@24..25 "i" [] [],
                     },
                     operator: PLUS2@25..27 "++" [] [],
@@ -54,17 +56,17 @@ JsRoot {
                 kind_token: LET_KW@37..41 "let" [] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: JsObjectBinding {
+                        id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],
                             properties: [
-                                JsShorthandPropertyBinding {
+                                JsObjectBindingPatternShorthandProperty {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@43..46 "foo" [] [],
                                     },
                                     init: missing (optional),
                                 },
                                 COMMA@46..48 "," [] [Whitespace(" ")],
-                                JsShorthandPropertyBinding {
+                                JsObjectBindingPatternShorthandProperty {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@48..52 "bar" [] [Whitespace(" ")],
                                     },
@@ -93,7 +95,7 @@ JsRoot {
         ForInStmt {
             for_token: FOR_KW@63..68 "for" [Whitespace("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@68..69 "(" [] [],
-            left: JsIdentifierAssignmentTarget {
+            left: JsIdentifierAssignment {
                 name_token: IDENT@69..73 "foo" [] [Whitespace(" ")],
             },
             in_token: IN_KW@73..76 "in" [] [Whitespace(" ")],
@@ -147,15 +149,16 @@ JsRoot {
       3: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
       4: FOR_STMT_TEST@16..22
         0: JS_BINARY_EXPRESSION@16..22
-          0: JS_REFERENCE_IDENTIFIER_EXPRESSION@16..18
-            0: IDENT@16..18 "i" [] [Whitespace(" ")]
+          0: JS_IDENTIFIER_EXPRESSION@16..18
+            0: JS_REFERENCE_IDENTIFIER@16..18
+              0: IDENT@16..18 "i" [] [Whitespace(" ")]
           1: L_ANGLE@18..20 "<" [] [Whitespace(" ")]
           2: JS_NUMBER_LITERAL_EXPRESSION@20..22
             0: JS_NUMBER_LITERAL@20..22 "10" [] []
       5: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
       6: FOR_STMT_UPDATE@24..27
         0: JS_POST_UPDATE_EXPRESSION@24..27
-          0: JS_IDENTIFIER_ASSIGNMENT_TARGET@24..25
+          0: JS_IDENTIFIER_ASSIGNMENT@24..25
             0: IDENT@24..25 "i" [] []
           1: PLUS2@25..27 "++" [] []
       7: R_PAREN@27..29 ")" [] [Whitespace(" ")]
@@ -170,15 +173,15 @@ JsRoot {
         0: LET_KW@37..41 "let" [] [Whitespace(" ")]
         1: LIST@41..54
           0: JS_VARIABLE_DECLARATOR@41..54
-            0: JS_OBJECT_BINDING@41..54
+            0: JS_OBJECT_BINDING_PATTERN@41..54
               0: L_CURLY@41..43 "{" [] [Whitespace(" ")]
               1: LIST@43..52
-                0: JS_SHORTHAND_PROPERTY_BINDING@43..46
+                0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@43..46
                   0: JS_IDENTIFIER_BINDING@43..46
                     0: IDENT@43..46 "foo" [] []
                   1: (empty)
                 1: COMMA@46..48 "," [] [Whitespace(" ")]
-                2: JS_SHORTHAND_PROPERTY_BINDING@48..52
+                2: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@48..52
                   0: JS_IDENTIFIER_BINDING@48..52
                     0: IDENT@48..52 "bar" [] [Whitespace(" ")]
                   1: (empty)
@@ -197,7 +200,7 @@ JsRoot {
     2: FOR_IN_STMT@63..82
       0: FOR_KW@63..68 "for" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@68..69 "(" [] []
-      2: JS_IDENTIFIER_ASSIGNMENT_TARGET@69..73
+      2: JS_IDENTIFIER_ASSIGNMENT@69..73
         0: IDENT@69..73 "foo" [] [Whitespace(" ")]
       3: IN_KW@73..76 "in" [] [Whitespace(" ")]
       4: JS_OBJECT_EXPRESSION@76..78

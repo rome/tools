@@ -3,18 +3,18 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
-use super::binding::parse_binding;
+use super::binding::parse_binding_pattern;
 use super::decl::{parse_arrow_body, parse_parameter_list};
 use super::typescript::*;
 use super::util::*;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParserProgress;
-use crate::syntax::assignment_target::{
-	expression_to_assignment_target, expression_to_simple_assignment_target,
-	parse_simple_assignment_target, SimpleAssignmentTargetExprKind,
+use crate::syntax::assignment::{
+	expression_to_assignment, expression_to_assignment_pattern, parse_assignment,
+	AssignmentExprPrecedence,
 };
-use crate::syntax::binding::parse_identifier_binding;
+use crate::syntax::binding::{parse_binding, parse_identifier_binding};
 use crate::syntax::class::parse_class_expression;
 use crate::syntax::function::parse_function_expression;
 use crate::syntax::js_parse_error;
@@ -170,11 +170,11 @@ fn assign_expr_recursive(
 	checkpoint: Checkpoint,
 ) -> Option<CompletedMarker> {
 	if p.at_ts(ASSIGN_TOKENS) {
-		let target = expression_to_assignment_target(
+		let target = expression_to_assignment_pattern(
 			p,
 			target,
 			checkpoint,
-			SimpleAssignmentTargetExprKind::Conditional,
+			AssignmentExprPrecedence::Conditional,
 		);
 		let m = target.precede(p);
 		p.bump_any(); // operator
@@ -523,44 +523,47 @@ pub fn static_member_expression(
 	let m = lhs.precede(p);
 	p.expect_required(operator);
 
-	any_reference_member(p);
+	parse_any_name(p).or_missing_with_error(p, expected_identifier);
 
 	m.complete(p, JS_STATIC_MEMBER_EXPRESSION)
 }
 
-pub(super) fn any_reference_member(p: &mut Parser) -> Option<CompletedMarker> {
-	if p.at(T![#]) {
-		Some(reference_private_member(p))
-	} else {
-		parse_reference_identifier_member(p).ok()
-	}
-}
-
-pub(super) fn is_at_reference_identifier_member(p: &Parser) -> bool {
+pub(super) fn is_at_name(p: &Parser) -> bool {
 	p.at(T![ident]) || p.cur().is_keyword()
 }
 
-pub(super) fn parse_reference_identifier_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
 		T![ident] => {
 			let m = p.start();
 			p.bump_any();
-			Present(m.complete(p, JS_REFERENCE_IDENTIFIER_MEMBER))
+			Present(m.complete(p, JS_NAME))
 		}
 		t if t.is_keyword() => {
 			let m = p.start();
 			p.bump_remap(T![ident]);
-			Present(m.complete(p, JS_REFERENCE_IDENTIFIER_MEMBER))
+			Present(m.complete(p, JS_NAME))
 		}
 		_ => Absent,
 	}
 }
 
-fn reference_private_member(p: &mut Parser) -> CompletedMarker {
+fn parse_private_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	if !p.at(T![#]) {
+		return Absent;
+	}
+
 	let m = p.start();
 	p.expect_required(T![#]);
 	p.expect_required(T![ident]);
-	m.complete(p, JS_REFERENCE_PRIVATE_MEMBER)
+	Present(m.complete(p, JS_PRIVATE_NAME))
+}
+
+pub(crate) fn parse_any_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	match p.cur() {
+		T![#] => parse_private_name(p),
+		_ => parse_name(p),
+	}
 }
 
 /// An array expression for property access or indexing, such as `foo[0]` or `foo?.["bar"]`
@@ -681,7 +684,8 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			if temp.at(T![...]) {
 				let m = temp.start();
 				temp.bump_any();
-				parse_binding(&mut *temp).or_missing_with_error(&mut *temp, expected_binding);
+				parse_binding_pattern(&mut *temp)
+					.or_missing_with_error(&mut *temp, expected_binding);
 				if temp.eat(T![:]) {
 					if let Some(mut ty) = ts_type(&mut *temp) {
 						ty.err_if_not_ts(
@@ -895,16 +899,8 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 						if parsed_parameters.is_absent() {
 							// test_err async_arrow_expr_await_parameter
 							// let a = async await => {}
-							if let Err(invalid) = parse_identifier_binding(in_async_p)
-								.or_missing_with_error(in_async_p, expected_parameter)
-							{
-								let identifier =
-									invalid.or_to_unknown(in_async_p, JS_UNKNOWN_BINDING);
-								let list =
-									identifier.precede(in_async_p).complete(in_async_p, LIST);
-								let parameter_list = list.precede(in_async_p);
-								parameter_list.complete(in_async_p, JS_PARAMETER_LIST);
-							}
+							parse_binding(in_async_p)
+								.or_missing_with_error(in_async_p, expected_parameter);
 						}
 
 						if in_async_p.at(T![:]) {
@@ -925,7 +921,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 
 					m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 				} else {
-					parse_reference_identifier_expression(p)
+					parse_identifier_expression(p)
 						.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
 						.unwrap()
 				}
@@ -963,7 +959,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
 				m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 			} else {
-				parse_reference_identifier_expression(p)
+				parse_identifier_expression(p)
 					.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
 					.unwrap()
 			}
@@ -1045,8 +1041,22 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	Some(complete)
 }
 
-fn parse_reference_identifier_expression(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
-	parse_identifier(p, JS_REFERENCE_IDENTIFIER_EXPRESSION)
+fn parse_identifier_expression(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+	parse_reference_identifier(p).map(|identifier| {
+		let valid = identifier.is_valid();
+
+		let expression = identifier.precede(p).complete(p, JS_IDENTIFIER_EXPRESSION);
+
+		if valid {
+			Valid(expression)
+		} else {
+			Invalid(expression.into())
+		}
+	})
+}
+
+fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+	parse_identifier(p, JS_REFERENCE_IDENTIFIER)
 }
 
 // test identifier_loose_mode
@@ -1089,14 +1099,18 @@ pub(crate) fn parse_identifier(
 					p.err_builder("Illegal use of `yield` as an identifier in generator function")
 						.primary(p.cur_tok().range, ""),
 				),
-				"yield" | "let" if StrictMode.is_supported(p) => Some(
-					p.err_builder(&format!(
-						"Illegal use of `{}` as an identifier in strict mode",
-						name
-					))
-					.primary(p.cur_tok().range, ""),
-				),
-
+				"yield" | "let" | "public" | "protected" | "private" | "package" | "implements"
+				| "interface" | "static"
+					if StrictMode.is_supported(p) =>
+				{
+					Some(
+						p.err_builder(&format!(
+							"Illegal use of `{}` as an identifier in strict mode",
+							name
+						))
+						.primary(p.cur_tok().range, ""),
+					)
+				}
 				_ => None,
 			};
 
@@ -1268,14 +1282,14 @@ pub fn postfix_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if !p.has_linebreak_before_n(0) {
 		match p.cur() {
 			T![++] => {
-				let assignment_target = expression_to_simple_assignment_target(p, lhs?, checkpoint);
+				let assignment_target = expression_to_assignment(p, lhs?, checkpoint);
 				let m = assignment_target.precede(p);
 				p.bump(T![++]);
 				let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
 				Some(complete)
 			}
 			T![--] => {
-				let assignment_target = expression_to_simple_assignment_target(p, lhs?, checkpoint);
+				let assignment_target = expression_to_assignment(p, lhs?, checkpoint);
 				let m = assignment_target.precede(p);
 				p.bump(T![--]);
 				let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
@@ -1323,7 +1337,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![++]) {
 		let m = p.start();
 		p.bump(T![++]);
-		parse_simple_assignment_target(p, SimpleAssignmentTargetExprKind::Unary)
+		parse_assignment(p, AssignmentExprPrecedence::Unary)
 			.or_missing_with_error(p, expected_simple_assignment_target);
 		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
 		return Some(complete);
@@ -1331,7 +1345,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![--]) {
 		let m = p.start();
 		p.bump(T![--]);
-		parse_simple_assignment_target(p, SimpleAssignmentTargetExprKind::Unary)
+		parse_assignment(p, AssignmentExprPrecedence::Unary)
 			.or_missing_with_error(p, expected_simple_assignment_target);
 		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
 		return Some(complete);

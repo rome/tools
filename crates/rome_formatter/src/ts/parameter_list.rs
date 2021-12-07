@@ -19,8 +19,10 @@ impl ToFormatElement for JsParameterList {
 impl ToFormatElement for JsAnyParameter {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
-			JsAnyParameter::JsAnyBinding(binding) => binding.to_format_element(formatter),
-			JsAnyParameter::JsBindingWithDefault(binding) => binding.to_format_element(formatter),
+			JsAnyParameter::JsAnyBindingPattern(binding) => binding.to_format_element(formatter),
+			JsAnyParameter::JsBindingPatternWithDefault(binding) => {
+				binding.to_format_element(formatter)
+			}
 			JsAnyParameter::JsRestParameter(_) => todo!("rest parameter"),
 		}
 	}

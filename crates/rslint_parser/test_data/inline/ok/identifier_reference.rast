@@ -3,20 +3,26 @@ JsRoot {
     directives: [],
     statements: [
         JsExpressionStatement {
-            expression: JsReferenceIdentifierExpression {
-                name_token: IDENT@0..13 "foo" [Comments("// SCRIPT"), Whitespace("\n")] [],
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@0..13 "foo" [Comments("// SCRIPT"), Whitespace("\n")] [],
+                },
             },
             semicolon_token: SEMICOLON@13..14 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsReferenceIdentifierExpression {
-                name_token: IDENT@14..20 "yield" [Whitespace("\n")] [],
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@14..20 "yield" [Whitespace("\n")] [],
+                },
             },
             semicolon_token: SEMICOLON@20..21 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsReferenceIdentifierExpression {
-                name_token: IDENT@21..27 "await" [Whitespace("\n")] [],
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@21..27 "await" [Whitespace("\n")] [],
+                },
             },
             semicolon_token: SEMICOLON@27..28 ";" [] [],
         },
@@ -28,15 +34,18 @@ JsRoot {
   1: LIST@0..0
   2: LIST@0..28
     0: JS_EXPRESSION_STATEMENT@0..14
-      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..13
-        0: IDENT@0..13 "foo" [Comments("// SCRIPT"), Whitespace("\n")] []
+      0: JS_IDENTIFIER_EXPRESSION@0..13
+        0: JS_REFERENCE_IDENTIFIER@0..13
+          0: IDENT@0..13 "foo" [Comments("// SCRIPT"), Whitespace("\n")] []
       1: SEMICOLON@13..14 ";" [] []
     1: JS_EXPRESSION_STATEMENT@14..21
-      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@14..20
-        0: IDENT@14..20 "yield" [Whitespace("\n")] []
+      0: JS_IDENTIFIER_EXPRESSION@14..20
+        0: JS_REFERENCE_IDENTIFIER@14..20
+          0: IDENT@14..20 "yield" [Whitespace("\n")] []
       1: SEMICOLON@20..21 ";" [] []
     2: JS_EXPRESSION_STATEMENT@21..28
-      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@21..27
-        0: IDENT@21..27 "await" [Whitespace("\n")] []
+      0: JS_IDENTIFIER_EXPRESSION@21..27
+        0: JS_REFERENCE_IDENTIFIER@21..27
+          0: IDENT@21..27 "await" [Whitespace("\n")] []
       1: SEMICOLON@27..28 ";" [] []
   3: EOF@28..29 "" [Whitespace("\n")] []

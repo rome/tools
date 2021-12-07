@@ -6,9 +6,9 @@ use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
-use crate::syntax::binding::parse_identifier_binding;
+use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_class_declaration;
-use crate::syntax::expr::any_reference_member;
+use crate::syntax::expr::parse_any_name;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::js_parse_error;
 use crate::{SyntaxKind::*, *};
@@ -157,7 +157,6 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 			let m = p.start();
 			p.bump_remap(T![declare]);
 			parse_class_declaration(p)
-				.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
 				.unwrap()
 				.undo_completion(p)
 				.abandon(p);
@@ -227,7 +226,6 @@ pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 			return None;
 		}
 		parse_class_declaration(p)
-			.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
 			.unwrap()
 			.undo_completion(p)
 			.abandon(p);
@@ -508,7 +506,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 				parse_literal_expression(p).ok();
 			}
 			_ => {
-				let mut complete = any_reference_member(p)?;
+				let mut complete = parse_any_name(p).ok()?;
 				if complete.kind() == JS_PRIVATE_CLASS_MEMBER_NAME {
 					let err = p
 						.err_builder("private names are not allowed outside of class bodies")
@@ -557,11 +555,7 @@ pub(crate) fn try_parse_index_signature(
 		return Err(m);
 	}
 
-	let pat_m = parse_identifier_binding(p)
-		.or_invalid_to_unknown(p, JS_UNKNOWN_BINDING)
-		.ok()
-		.unwrap()
-		.undo_completion(p);
+	let pat_m = parse_binding(p).unwrap().undo_completion(p);
 
 	if p.expect_no_recover(T![:]).is_none() {
 		return Err(m);

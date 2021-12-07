@@ -39,8 +39,9 @@ JsRoot {
               1: SEMICOLON@16..17 ";" [] []
             1: JS_RETURN_STATEMENT@17..31
               0: RETURN_KW@17..27 "return" [Whitespace("\n  ")] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@27..30
-                0: IDENT@27..30 "foo" [] []
+              1: JS_IDENTIFIER_EXPRESSION@27..30
+                0: JS_REFERENCE_IDENTIFIER@27..30
+                  0: IDENT@27..30 "foo" [] []
               2: SEMICOLON@30..31 ";" [] []
             2: JS_RETURN_STATEMENT@31..40
               0: RETURN_KW@31..40 "return" [Whitespace("\n  ")] []

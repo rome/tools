@@ -7,7 +7,7 @@
 //!
 //! Functions emit markers, see `CompletedMarker` and `Marker` docs for more info.
 
-mod assignment_target;
+mod assignment;
 mod binding;
 mod class;
 mod decl;

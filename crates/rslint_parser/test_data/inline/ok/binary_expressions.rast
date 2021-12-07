@@ -49,8 +49,10 @@ JsRoot {
         },
         JsExpressionStatement {
             expression: JsBinaryExpression {
-                left: JsReferenceIdentifierExpression {
-                    name_token: IDENT@55..60 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                left: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@55..60 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                    },
                 },
                 operator: INSTANCEOF_KW@60..71 "instanceof" [] [Whitespace(" ")],
             },
@@ -58,8 +60,10 @@ JsRoot {
         },
         JsExpressionStatement {
             expression: JsLogicalExpression {
-                left: JsReferenceIdentifierExpression {
-                    name_token: IDENT@76..81 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                left: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@76..81 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                    },
                 },
                 operator: QUESTION2@81..84 "??" [] [Whitespace(" ")],
             },
@@ -67,8 +71,10 @@ JsRoot {
         },
         JsExpressionStatement {
             expression: JsBinaryExpression {
-                left: JsReferenceIdentifierExpression {
-                    name_token: IDENT@87..90 "a" [Whitespace("\n")] [Whitespace(" ")],
+                left: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@87..90 "a" [Whitespace("\n")] [Whitespace(" ")],
+                    },
                 },
                 operator: SHR@90..93 ">>" [] [Whitespace(" ")],
             },
@@ -76,8 +82,10 @@ JsRoot {
         },
         JsExpressionStatement {
             expression: JsBinaryExpression {
-                left: JsReferenceIdentifierExpression {
-                    name_token: IDENT@94..97 "a" [Whitespace("\n")] [Whitespace(" ")],
+                left: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@94..97 "a" [Whitespace("\n")] [Whitespace(" ")],
+                    },
                 },
                 operator: USHR@97..101 ">>>" [] [Whitespace(" ")],
             },
@@ -177,40 +185,49 @@ JsRoot {
         0: JS_NUMBER_LITERAL_EXPRESSION@45..49
           0: JS_NUMBER_LITERAL@45..49 "74" [Whitespace("\n")] [Whitespace(" ")]
         1: IN_KW@49..52 "in" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@52..55
-          0: IDENT@52..55 "foo" [] []
+        2: JS_IDENTIFIER_EXPRESSION@52..55
+          0: JS_REFERENCE_IDENTIFIER@52..55
+            0: IDENT@52..55 "foo" [] []
       1: (empty)
     5: JS_EXPRESSION_STATEMENT@55..76
       0: JS_BINARY_EXPRESSION@55..76
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@55..60
-          0: IDENT@55..60 "foo" [Whitespace("\n")] [Whitespace(" ")]
+        0: JS_IDENTIFIER_EXPRESSION@55..60
+          0: JS_REFERENCE_IDENTIFIER@55..60
+            0: IDENT@55..60 "foo" [Whitespace("\n")] [Whitespace(" ")]
         1: INSTANCEOF_KW@60..71 "instanceof" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@71..76
-          0: IDENT@71..76 "Array" [] []
+        2: JS_IDENTIFIER_EXPRESSION@71..76
+          0: JS_REFERENCE_IDENTIFIER@71..76
+            0: IDENT@71..76 "Array" [] []
       1: (empty)
     6: JS_EXPRESSION_STATEMENT@76..87
       0: JS_LOGICAL_EXPRESSION@76..87
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@76..81
-          0: IDENT@76..81 "foo" [Whitespace("\n")] [Whitespace(" ")]
+        0: JS_IDENTIFIER_EXPRESSION@76..81
+          0: JS_REFERENCE_IDENTIFIER@76..81
+            0: IDENT@76..81 "foo" [Whitespace("\n")] [Whitespace(" ")]
         1: QUESTION2@81..84 "??" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@84..87
-          0: IDENT@84..87 "bar" [] []
+        2: JS_IDENTIFIER_EXPRESSION@84..87
+          0: JS_REFERENCE_IDENTIFIER@84..87
+            0: IDENT@84..87 "bar" [] []
       1: (empty)
     7: JS_EXPRESSION_STATEMENT@87..94
       0: JS_BINARY_EXPRESSION@87..94
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@87..90
-          0: IDENT@87..90 "a" [Whitespace("\n")] [Whitespace(" ")]
+        0: JS_IDENTIFIER_EXPRESSION@87..90
+          0: JS_REFERENCE_IDENTIFIER@87..90
+            0: IDENT@87..90 "a" [Whitespace("\n")] [Whitespace(" ")]
         1: SHR@90..93 ">>" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@93..94
-          0: IDENT@93..94 "b" [] []
+        2: JS_IDENTIFIER_EXPRESSION@93..94
+          0: JS_REFERENCE_IDENTIFIER@93..94
+            0: IDENT@93..94 "b" [] []
       1: (empty)
     8: JS_EXPRESSION_STATEMENT@94..102
       0: JS_BINARY_EXPRESSION@94..102
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@94..97
-          0: IDENT@94..97 "a" [Whitespace("\n")] [Whitespace(" ")]
+        0: JS_IDENTIFIER_EXPRESSION@94..97
+          0: JS_REFERENCE_IDENTIFIER@94..97
+            0: IDENT@94..97 "a" [Whitespace("\n")] [Whitespace(" ")]
         1: USHR@97..101 ">>>" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@101..102
-          0: IDENT@101..102 "b" [] []
+        2: JS_IDENTIFIER_EXPRESSION@101..102
+          0: JS_REFERENCE_IDENTIFIER@101..102
+            0: IDENT@101..102 "b" [] []
       1: (empty)
     9: JS_EXPRESSION_STATEMENT@102..116
       0: JS_BINARY_EXPRESSION@102..116

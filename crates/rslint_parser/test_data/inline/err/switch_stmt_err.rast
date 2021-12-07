@@ -5,8 +5,10 @@ JsRoot {
         JsSwitchStatement {
             switch_token: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")],
             l_paren_token: missing (required),
-            discriminant: JsReferenceIdentifierExpression {
-                name_token: IDENT@7..11 "foo" [] [Whitespace(" ")],
+            discriminant: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@7..11 "foo" [] [Whitespace(" ")],
+                },
             },
             r_paren_token: missing (required),
             l_curly_token: L_CURLY@11..12 "{" [] [],
@@ -108,8 +110,10 @@ JsRoot {
         JsSwitchStatement {
             switch_token: SWITCH_KW@81..89 "switch" [Whitespace("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@89..90 "(" [] [],
-            discriminant: JsReferenceIdentifierExpression {
-                name_token: IDENT@90..93 "foo" [] [],
+            discriminant: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@90..93 "foo" [] [],
+                },
             },
             r_paren_token: R_PAREN@93..95 ")" [] [Whitespace(" ")],
             l_curly_token: L_CURLY@95..96 "{" [] [],
@@ -153,8 +157,9 @@ JsRoot {
     0: JS_SWITCH_STATEMENT@0..13
       0: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")]
       1: (empty)
-      2: JS_REFERENCE_IDENTIFIER_EXPRESSION@7..11
-        0: IDENT@7..11 "foo" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_EXPRESSION@7..11
+        0: JS_REFERENCE_IDENTIFIER@7..11
+          0: IDENT@7..11 "foo" [] [Whitespace(" ")]
       3: (empty)
       4: L_CURLY@11..12 "{" [] []
       5: LIST@12..12
@@ -214,8 +219,9 @@ JsRoot {
     4: JS_SWITCH_STATEMENT@81..124
       0: SWITCH_KW@81..89 "switch" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@89..90 "(" [] []
-      2: JS_REFERENCE_IDENTIFIER_EXPRESSION@90..93
-        0: IDENT@90..93 "foo" [] []
+      2: JS_IDENTIFIER_EXPRESSION@90..93
+        0: JS_REFERENCE_IDENTIFIER@90..93
+          0: IDENT@90..93 "foo" [] []
       3: R_PAREN@93..95 ")" [] [Whitespace(" ")]
       4: L_CURLY@95..96 "{" [] []
       5: LIST@96..122

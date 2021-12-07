@@ -10,15 +10,6 @@ use crate::{CompletedMarker, ParseRecovery, Parser, ParserState, TokenSet};
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::T;
 
-const STARTS_MEMBER_NAME: TokenSet = token_set![
-	JS_STRING_LITERAL,
-	JS_NUMBER_LITERAL,
-	T![ident],
-	T![await],
-	T![yield],
-	T!['[']
-];
-
 // test object_expr
 // let a = {};
 // let b = {foo,}
@@ -87,7 +78,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		T![ident]
 			if p.cur_src() == "get"
 				&& !p.has_linebreak_before_n(1)
-				&& STARTS_MEMBER_NAME.contains(p.nth(1)) =>
+				&& is_nth_at_object_member_name(p, 1) =>
 		{
 			parse_getter_object_member(p)
 		}
@@ -108,7 +99,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		T![ident]
 			if p.cur_src() == "set"
 				&& !p.has_linebreak_before_n(1)
-				&& STARTS_MEMBER_NAME.contains(p.nth(1)) =>
+				&& is_nth_at_object_member_name(p, 1) =>
 		{
 			parse_setter_object_member(p)
 		}
@@ -138,7 +129,8 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		_ => {
 			let checkpoint = p.checkpoint();
 			let m = p.start();
-			let identifier_member_name = p.at(T![ident]) || p.cur().is_keyword();
+			let identifier_member_name =
+				matches!(p.cur(), T![ident] | T![await] | T![yield]) || p.cur().is_keyword();
 			let member_name = parse_object_member_name(p)
 				.or_missing_with_error(p, js_parse_error::expected_object_member);
 
@@ -161,7 +153,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 				if identifier_member_name
 					&& (matches!(p.cur(), T![,] | T!['}']) || p.has_linebreak_before_n(0))
 				{
-					member_name.change_kind(p, JS_REFERENCE_IDENTIFIER_EXPRESSION);
+					member_name.change_kind(p, JS_REFERENCE_IDENTIFIER);
 					Present(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER))
 				} else {
 					// let b = { a: true }
@@ -252,8 +244,23 @@ pub(crate) fn parse_object_member_name(p: &mut Parser) -> ParsedSyntax<Completed
 	}
 }
 
+fn is_nth_at_object_member_name(p: &Parser, offset: usize) -> bool {
+	let nth = p.nth(offset);
+
+	let start_names = token_set![
+		JS_STRING_LITERAL,
+		JS_NUMBER_LITERAL,
+		T![ident],
+		T![await],
+		T![yield],
+		T!['[']
+	];
+
+	nth.is_keyword() || start_names.contains(nth)
+}
+
 pub(crate) fn is_at_object_member_name(p: &Parser) -> bool {
-	p.at_ts(STARTS_MEMBER_NAME)
+	is_nth_at_object_member_name(p, 0)
 }
 
 pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
@@ -338,5 +345,5 @@ fn is_parser_at_async_method_member(p: &Parser) -> bool {
 	p.cur() == T![ident]
 		&& p.cur_src() == "async"
 		&& !p.has_linebreak_before_n(1)
-		&& (STARTS_MEMBER_NAME.contains(p.nth(1)) || p.nth_at(1, T![*]))
+		&& (is_nth_at_object_member_name(p, 1) || p.nth_at(1, T![*]))
 }

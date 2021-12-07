@@ -5,16 +5,20 @@ JsRoot {
         JsSwitchStatement {
             switch_token: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@7..8 "(" [] [],
-            discriminant: JsReferenceIdentifierExpression {
-                name_token: IDENT@8..11 "foo" [] [],
+            discriminant: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@8..11 "foo" [] [],
+                },
             },
             r_paren_token: R_PAREN@11..13 ")" [] [Whitespace(" ")],
             l_curly_token: L_CURLY@13..14 "{" [] [],
             cases: [
                 JsCaseClause {
                     case_token: CASE_KW@14..21 "case" [Whitespace("\n ")] [Whitespace(" ")],
-                    test: JsReferenceIdentifierExpression {
-                        name_token: IDENT@21..24 "bar" [] [],
+                    test: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@21..24 "bar" [] [],
+                        },
                     },
                     colon_token: COLON@24..25 ":" [] [],
                     consequent: [],
@@ -37,15 +41,17 @@ JsRoot {
     0: JS_SWITCH_STATEMENT@0..37
       0: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")]
       1: L_PAREN@7..8 "(" [] []
-      2: JS_REFERENCE_IDENTIFIER_EXPRESSION@8..11
-        0: IDENT@8..11 "foo" [] []
+      2: JS_IDENTIFIER_EXPRESSION@8..11
+        0: JS_REFERENCE_IDENTIFIER@8..11
+          0: IDENT@8..11 "foo" [] []
       3: R_PAREN@11..13 ")" [] [Whitespace(" ")]
       4: L_CURLY@13..14 "{" [] []
       5: LIST@14..35
         0: JS_CASE_CLAUSE@14..25
           0: CASE_KW@14..21 "case" [Whitespace("\n ")] [Whitespace(" ")]
-          1: JS_REFERENCE_IDENTIFIER_EXPRESSION@21..24
-            0: IDENT@21..24 "bar" [] []
+          1: JS_IDENTIFIER_EXPRESSION@21..24
+            0: JS_REFERENCE_IDENTIFIER@21..24
+              0: IDENT@21..24 "bar" [] []
           2: COLON@24..25 ":" [] []
           3: LIST@25..25
         1: JS_DEFAULT_CLAUSE@25..35

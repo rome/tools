@@ -3,8 +3,10 @@ JsRoot {
     directives: [],
     statements: [
         JsExpressionStatement {
-            expression: JsReferenceIdentifierExpression {
-                name_token: IDENT@0..3 "foo" [] [],
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@0..3 "foo" [] [],
+                },
             },
             semicolon_token: SEMICOLON@3..4 ";" [] [],
         },
@@ -16,7 +18,8 @@ JsRoot {
   1: LIST@0..0
   2: LIST@0..4
     0: JS_EXPRESSION_STATEMENT@0..4
-      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-        0: IDENT@0..3 "foo" [] []
+      0: JS_IDENTIFIER_EXPRESSION@0..3
+        0: JS_REFERENCE_IDENTIFIER@0..3
+          0: IDENT@0..3 "foo" [] []
       1: SEMICOLON@3..4 ";" [] []
   3: EOF@4..5 "" [Whitespace("\n")] []

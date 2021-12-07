@@ -108,8 +108,10 @@ JsRoot {
                         expression: JsYieldExpression {
                             yield_token: YIELD_KW@103..112 "yield" [Whitespace("\n  ")] [Whitespace(" ")],
                             star_token: missing (optional),
-                            argument: JsReferenceIdentifierExpression {
-                                name_token: IDENT@112..115 "foo" [] [],
+                            argument: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@112..115 "foo" [] [],
+                                },
                             },
                         },
                         semicolon_token: SEMICOLON@115..116 ";" [] [],
@@ -207,8 +209,9 @@ JsRoot {
           0: JS_EXPRESSION_STATEMENT@103..116
             0: JS_YIELD_EXPRESSION@103..115
               0: YIELD_KW@103..112 "yield" [Whitespace("\n  ")] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@112..115
-                0: IDENT@112..115 "foo" [] []
+              1: JS_IDENTIFIER_EXPRESSION@112..115
+                0: JS_REFERENCE_IDENTIFIER@112..115
+                  0: IDENT@112..115 "foo" [] []
             1: SEMICOLON@115..116 ";" [] []
         3: R_CURLY@116..118 "}" [Whitespace("\n")] []
   3: EOF@118..119 "" [Whitespace("\n")] []

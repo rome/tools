@@ -1,5 +1,5 @@
 use crate::parser::ParsedSyntax;
-use crate::syntax::binding::parse_identifier_binding;
+use crate::syntax::binding::parse_binding;
 use crate::syntax::decl::parse_parameter_list;
 use crate::syntax::js_parse_error;
 use crate::syntax::stmt::{is_semi, parse_block_impl};
@@ -71,9 +71,9 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 		..p.state.clone()
 	});
 
-	let id = parse_identifier_binding(guard);
+	let id = parse_binding(guard);
 
-	let id_result = if kind == JS_FUNCTION_DECLARATION {
+	if kind == JS_FUNCTION_DECLARATION {
 		id.or_missing_with_error(guard, |p, range| {
 			p.err_builder(
 				"expected a name for the function in a function declaration, but found none",
@@ -83,10 +83,6 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 	} else {
 		id.or_missing(guard)
 	};
-
-	if id_result.is_err() {
-		uses_invalid_syntax = true;
-	}
 
 	let type_parameters =
 		TypeScript.parse_exclusive_syntax(guard, parse_ts_parameter_types, |p, marker| {

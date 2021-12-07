@@ -231,7 +231,12 @@ impl<'t> Parser<'t> {
 
 	/// Consume the next token if `kind` matches.
 	pub fn bump(&mut self, kind: SyntaxKind) {
-		assert!(self.eat(kind));
+		assert!(
+			self.eat(kind),
+			"expected {:?} but at {:?}",
+			kind,
+			self.cur()
+		);
 	}
 
 	/// Consume any token but cast it as a different kind

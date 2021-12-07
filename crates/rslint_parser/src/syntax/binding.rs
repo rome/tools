@@ -12,9 +12,9 @@ use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
 use rslint_errors::Span;
 
-pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_binding_pattern(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
-		T!['['] => ArrayBinding.parse_array_pattern(p),
+		T!['['] => ArrayBindingPattern.parse_array_pattern(p),
 		T!['{'] if p.state.allow_object_expr => ObjectBindingPattern.parse_object_pattern(p),
 		T![ident] | T![yield] | T![await] => {
 			parse_identifier_binding(p).or_invalid_to_unknown(p, JS_UNKNOWN_BINDING)
@@ -23,12 +23,18 @@ pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	}
 }
 
-pub(crate) fn parse_binding_with_optional_default(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-	BindingWithDefault.parse_pattern_with_optional_default(p)
+pub(crate) fn parse_binding_pattern_with_optional_default(
+	p: &mut Parser,
+) -> ParsedSyntax<CompletedMarker> {
+	BindingPatternWithDefault.parse_pattern_with_optional_default(p)
 }
 
 fn is_at_identifier_binding(p: &Parser) -> bool {
 	is_at_identifier(p)
+}
+
+pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	parse_identifier_binding(p).or_invalid_to_unknown(p, JS_UNKNOWN_BINDING)
 }
 
 // test_err binding_identifier_invalid
@@ -111,12 +117,12 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax<Condition
 	}
 }
 
-struct BindingWithDefault;
+struct BindingPatternWithDefault;
 
-impl ParseWithDefaultPattern for BindingWithDefault {
+impl ParseWithDefaultPattern for BindingPatternWithDefault {
 	#[inline]
 	fn pattern_with_default_kind() -> SyntaxKind {
-		JS_BINDING_WITH_DEFAULT
+		JS_BINDING_PATTERN_WITH_DEFAULT
 	}
 
 	#[inline]
@@ -126,11 +132,11 @@ impl ParseWithDefaultPattern for BindingWithDefault {
 
 	#[inline]
 	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-		parse_binding(p)
+		parse_binding_pattern(p)
 	}
 }
 
-struct ArrayBinding;
+struct ArrayBindingPattern;
 
 // test array_binding
 // let a = "b";
@@ -155,7 +161,7 @@ struct ArrayBinding;
 // let [ ... ] = a;
 // let [ ...c = "default" ] = a;
 // let [ ...rest, other_assignment ] = a;
-impl ParseArrayPattern<BindingWithDefault> for ArrayBinding {
+impl ParseArrayPattern<BindingPatternWithDefault> for ArrayBindingPattern {
 	#[inline]
 	fn unknown_pattern_kind() -> SyntaxKind {
 		JS_UNKNOWN_BINDING
@@ -163,12 +169,12 @@ impl ParseArrayPattern<BindingWithDefault> for ArrayBinding {
 
 	#[inline]
 	fn array_pattern_kind() -> SyntaxKind {
-		JS_ARRAY_BINDING
+		JS_ARRAY_BINDING_PATTERN
 	}
 
 	#[inline]
 	fn rest_pattern_kind() -> SyntaxKind {
-		JS_ARRAY_REST_BINDING
+		JS_ARRAY_BINDING_PATTERN_REST_ELEMENT
 	}
 
 	#[inline]
@@ -186,8 +192,8 @@ impl ParseArrayPattern<BindingWithDefault> for ArrayBinding {
 	}
 
 	#[inline]
-	fn pattern_with_default(&self) -> BindingWithDefault {
-		BindingWithDefault
+	fn pattern_with_default(&self) -> BindingPatternWithDefault {
+		BindingPatternWithDefault
 	}
 }
 
@@ -195,7 +201,7 @@ impl ParseArrayPattern<BindingWithDefault> for ArrayBinding {
 // let { 5 } } = { eval: "foo" };
 // let { eval } = { eval: "foo" };
 // let { 5, 6 } = { eval: "foo" };
-// let { default: , bar } = {};
+// let { default , eval: } = {};
 struct ObjectBindingPattern;
 
 impl ParseObjectPattern for ObjectBindingPattern {
@@ -206,7 +212,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
 
 	#[inline]
 	fn object_pattern_kind() -> SyntaxKind {
-		JS_OBJECT_BINDING
+		JS_OBJECT_BINDING_PATTERN
 	}
 
 	#[inline]
@@ -231,42 +237,29 @@ impl ParseObjectPattern for ObjectBindingPattern {
 	// let { a b } = c
 	// let { = "test" } = c
 	// let { , a } = c
-	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		if !is_at_object_member_name(p) && !p.at_ts(token_set![T![:], T![=]]) {
 			return Absent;
 		}
 
 		let m = p.start();
-		let mut invalid_syntax = false;
 
 		let kind = if p.at(T![=]) || (is_at_identifier_binding(p) && !p.nth_at(1, T![:])) {
-			if let Err(invalid) =
-				parse_identifier_binding(p).or_missing_with_error(p, expected_identifier)
-			{
-				invalid.abandon(p);
-				invalid_syntax = true;
-			}
-
-			JS_SHORTHAND_PROPERTY_BINDING
+			parse_binding(p).or_missing_with_error(p, expected_identifier);
+			JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
 		} else {
 			parse_object_member_name(p).or_missing_with_error(p, expected_object_member_name);
 			if p.expect_required(T![:]) {
-				parse_binding(p).or_missing_with_error(p, expected_binding);
+				parse_binding_pattern(p).or_missing_with_error(p, expected_binding);
 			} else {
 				p.missing();
 			}
-			JS_PROPERTY_BINDING
+			JS_OBJECT_BINDING_PATTERN_PROPERTY
 		};
 
 		parse_equal_value_clause(p).or_missing(p);
 
-		let property = Present(m.complete(p, kind));
-
-		if invalid_syntax {
-			property.into_invalid()
-		} else {
-			property.into_valid()
-		}
+		Present(m.complete(p, kind))
 	}
 
 	// test rest_property_binding
@@ -282,29 +275,26 @@ impl ParseObjectPattern for ObjectBindingPattern {
 	// async function test() {
 	//   let { ...await } = a;
 	// }
-	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		if p.at(T![...]) {
 			let m = p.start();
 			p.bump(T![...]);
 
-			let inner = parse_binding(p);
+			let inner = parse_binding_pattern(p).or_missing_with_error(p, expected_identifier);
 
-			if let Present(inner) = inner {
+			if let Some(mut inner) = inner {
 				if inner.kind() != JS_IDENTIFIER_BINDING {
 					let inner_range = inner.range(p);
-					inner.undo_completion(p).abandon(p);
-
 					// Don't add multiple errors
 					if inner.kind() != JS_UNKNOWN_BINDING {
 						p.error(p.err_builder("Expected identifier binding").primary(inner_range, "Object rest patterns must bind to an identifier, other patterns are not allowed."));
 					}
-					return Present(m.complete(p, JS_OBJECT_REST_BINDING)).into_invalid();
+
+					inner.change_kind(p, JS_UNKNOWN_BINDING);
 				}
 			}
 
-			inner.or_missing_with_error(p, expected_identifier);
-
-			Present(m.complete(p, JS_OBJECT_REST_BINDING)).into_valid()
+			Present(m.complete(p, JS_OBJECT_BINDING_PATTERN_REST))
 		} else {
 			Absent
 		}

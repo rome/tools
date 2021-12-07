@@ -9,12 +9,10 @@ use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use};
 #[allow(deprecated)]
 use crate::parser::{ParsedSyntax, ParserProgress};
-use crate::syntax::assignment_target::{
-	expression_to_assignment_target, SimpleAssignmentTargetExprKind,
-};
+use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_declaration, parse_equal_value_clause};
-use crate::syntax::function::parse_function_declaration;
-use crate::syntax::function::{is_at_async_function, LineBreak};
+use crate::syntax::expr::parse_identifier;
+use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_binding;
 use crate::JsSyntaxFeature::StrictMode;
@@ -130,7 +128,7 @@ pub fn parse_statement(
 		T![function] => {
 			parse_function_declaration(p).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
 		}
-		T![class] => parse_class_declaration(p).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT),
+		T![class] => parse_class_declaration(p),
 		T![ident] if is_at_async_function(p, LineBreak::DoCheck) => {
 			parse_function_declaration(p).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
 		}
@@ -223,50 +221,48 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		m.complete(p, ERROR);
 	}
 
-	let expr = p.expr_with_semi_recovery(false);
-	// Labelled stmt
-	if let Some(mut expr) = expr {
-		if expr.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION && p.at(T![:]) {
-			expr.change_kind(p, NAME);
-			// Its not possible to have a name without an inner ident token
-			let range = p.events[expr.start_pos as usize..]
-			.iter()
-			.find_map(|x| match x {
-				Event::Token {
-					kind: T![ident],
-					range,
-				} => Some(range),
-				_ => None,
-			})
-			.expect(
-				"Tried to get the ident of a name node, but there was no ident. This is erroneous",
-			);
+	// Labelled statement
+	if p.nth_at(1, T![:]) {
+		if let Present(identifier) = parse_identifier(p, JS_LABELED_STATEMENT) {
+			if let Valid(identifier) = &identifier {
+				let range = identifier.range(p);
+				let label = p.source(range);
 
-			let text_range = TextRange::new((range.start as u32).into(), (range.end as u32).into());
-			let text = p.source(text_range);
-			if let Some(range) = p.state.labels.get(text) {
-				let err = p
-					.err_builder("Duplicate statement labels are not allowed")
-					.secondary(
-						range.to_owned(),
-						&format!("`{}` is first used as a label here", text),
-					)
-					.primary(
-						text_range,
-						&format!("a second use of `{}` here is not allowed", text),
-					);
+				if let Some(first_range) = p.state.labels.get(label) {
+					let err = p
+						.err_builder("Duplicate statement labels are not allowed")
+						.secondary(
+							first_range.to_owned(),
+							&format!("`{}` is first used as a label here", label),
+						)
+						.primary(
+							range,
+							&format!("a second use of `{}` here is not allowed", label),
+						);
 
-				p.error(err);
-			} else {
-				let string = text.to_string();
-				p.state.labels.insert(string, range.to_owned());
+					p.error(err);
+				} else {
+					let string = label.to_string();
+					p.state.labels.insert(string, range.into());
+				}
 			}
 
-			let m = expr.undo_completion(p);
+			let kind = if identifier.is_valid() {
+				JS_LABELED_STATEMENT
+			} else {
+				JS_UNKNOWN_STATEMENT
+			};
+
+			let labelled_statement = identifier.undo_completion(p);
 			p.bump_any();
 			parse_statement(p, None);
-			return Present(m.complete(p, JS_LABELED_STATEMENT));
+
+			return Present(labelled_statement.complete(p, kind));
 		}
+	}
+
+	let expr = p.expr_with_semi_recovery(false);
+	if let Some(expr) = expr {
 		let m = expr.precede(p);
 		semi(p, start..p.cur_tok().range.end);
 		Present(m.complete(p, JS_EXPRESSION_STATEMENT))
@@ -809,7 +805,7 @@ pub(crate) fn variable_declarator(
 ) -> Option<CompletedMarker> {
 	p.state.should_record_names = is_const.is_some() || is_let;
 	let m = p.start();
-	let id = parse_binding(p);
+	let id = parse_binding_pattern(p);
 	p.state.should_record_names = false;
 
 	if let Present(binding) = id {
@@ -851,8 +847,11 @@ pub(crate) fn variable_declarator(
 		let marker = binding_marker.complete(p, binding_kind);
 		let initializer = parse_equal_value_clause(p).or_missing(p);
 		if initializer.is_none()
-			&& matches!(marker.kind(), JS_ARRAY_BINDING | JS_OBJECT_BINDING)
-			&& !for_stmt && !p.state.in_declare
+			&& matches!(
+				marker.kind(),
+				JS_ARRAY_BINDING_PATTERN | JS_OBJECT_BINDING_PATTERN
+			) && !for_stmt
+			&& !p.state.in_declare
 		{
 			let err = p
 				.err_builder("Object and Array patterns require initializers")
@@ -962,22 +961,22 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 
 		if p.at(T![in]) || p.cur_src() == "of" {
 			if let Some(assignment_expr) = init_expr {
-				let mut assignment = expression_to_assignment_target(
+				let mut assignment = expression_to_assignment_pattern(
 					p,
 					assignment_expr,
 					checkpoint,
-					SimpleAssignmentTargetExprKind::Any,
+					AssignmentExprPrecedence::Any,
 				);
 
 				if p.typescript()
 					&& p.at(T![in]) && matches!(
 					assignment.kind(),
-					JS_ARRAY_ASSIGNMENT_TARGET | JS_OBJECT_ASSIGNMENT_TARGET
+					JS_ARRAY_ASSIGNMENT_PATTERN | JS_OBJECT_ASSIGNMENT_PATTERN
 				) {
 					let err = p.err_builder("the left hand side of a `for..in` statement cannot be a destructuring pattern")
 							.primary(assignment.range(p), "");
 					p.error(err);
-					assignment.change_kind(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+					assignment.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
 				}
 			}
 
@@ -1227,7 +1226,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 	p.bump_any(); // bump (
 
-	let pattern_marker = parse_binding(p).or_missing_with_error(p, expected_binding);
+	let pattern_marker = parse_binding_pattern(p).or_missing_with_error(p, expected_binding);
 	let pattern_kind = pattern_marker.map(|x| x.kind());
 
 	if p.at(T![:]) {

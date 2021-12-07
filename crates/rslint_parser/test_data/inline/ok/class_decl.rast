@@ -21,8 +21,10 @@ JsRoot {
             implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
                 extends_token: EXTENDS_KW@23..31 "extends" [] [Whitespace(" ")],
-                super_class: JsReferenceIdentifierExpression {
-                    name_token: IDENT@31..35 "bar" [] [Whitespace(" ")],
+                super_class: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@31..35 "bar" [] [Whitespace(" ")],
+                    },
                 },
             },
             l_curly_token: L_CURLY@35..36 "{" [] [],
@@ -38,12 +40,14 @@ JsRoot {
             extends_clause: JsExtendsClause {
                 extends_token: EXTENDS_KW@48..56 "extends" [] [Whitespace(" ")],
                 super_class: JsStaticMemberExpression {
-                    object: JsReferenceIdentifierExpression {
-                        name_token: IDENT@56..59 "foo" [] [],
+                    object: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@56..59 "foo" [] [],
+                        },
                     },
                     operator: DOT@59..60 "." [] [],
-                    member: JsReferenceIdentifierMember {
-                        name_token: IDENT@60..64 "bar" [] [Whitespace(" ")],
+                    member: JsName {
+                        value_token: IDENT@60..64 "bar" [] [Whitespace(" ")],
                     },
                 },
             },
@@ -71,8 +75,9 @@ JsRoot {
         0: IDENT@19..23 "foo" [] [Whitespace(" ")]
       2: JS_EXTENDS_CLAUSE@23..35
         0: EXTENDS_KW@23..31 "extends" [] [Whitespace(" ")]
-        1: JS_REFERENCE_IDENTIFIER_EXPRESSION@31..35
-          0: IDENT@31..35 "bar" [] [Whitespace(" ")]
+        1: JS_IDENTIFIER_EXPRESSION@31..35
+          0: JS_REFERENCE_IDENTIFIER@31..35
+            0: IDENT@31..35 "bar" [] [Whitespace(" ")]
       3: L_CURLY@35..36 "{" [] []
       4: LIST@36..36
       5: R_CURLY@36..37 "}" [] []
@@ -83,10 +88,11 @@ JsRoot {
       2: JS_EXTENDS_CLAUSE@48..64
         0: EXTENDS_KW@48..56 "extends" [] [Whitespace(" ")]
         1: JS_STATIC_MEMBER_EXPRESSION@56..64
-          0: JS_REFERENCE_IDENTIFIER_EXPRESSION@56..59
-            0: IDENT@56..59 "foo" [] []
+          0: JS_IDENTIFIER_EXPRESSION@56..59
+            0: JS_REFERENCE_IDENTIFIER@56..59
+              0: IDENT@56..59 "foo" [] []
           1: DOT@59..60 "." [] []
-          2: JS_REFERENCE_IDENTIFIER_MEMBER@60..64
+          2: JS_NAME@60..64
             0: IDENT@60..64 "bar" [] [Whitespace(" ")]
       3: L_CURLY@64..65 "{" [] []
       4: LIST@65..65

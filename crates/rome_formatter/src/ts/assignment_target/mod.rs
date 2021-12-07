@@ -1,3 +1,0 @@
-mod any_assignment_target;
-mod any_simple_assignment_target;
-mod identifier_assignment_target;

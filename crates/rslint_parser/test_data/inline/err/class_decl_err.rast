@@ -17,8 +17,10 @@ JsRoot {
             implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
                 extends_token: EXTENDS_KW@15..23 "extends" [] [Whitespace(" ")],
-                super_class: JsReferenceIdentifierExpression {
-                    name_token: IDENT@23..27 "bar" [] [Whitespace(" ")],
+                super_class: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@23..27 "bar" [] [Whitespace(" ")],
+                    },
                 },
             },
             l_curly_token: L_CURLY@27..28 "{" [] [],
@@ -87,8 +89,9 @@ JsRoot {
       1: (empty)
       2: JS_EXTENDS_CLAUSE@15..27
         0: EXTENDS_KW@15..23 "extends" [] [Whitespace(" ")]
-        1: JS_REFERENCE_IDENTIFIER_EXPRESSION@23..27
-          0: IDENT@23..27 "bar" [] [Whitespace(" ")]
+        1: JS_IDENTIFIER_EXPRESSION@23..27
+          0: JS_REFERENCE_IDENTIFIER@23..27
+            0: IDENT@23..27 "bar" [] [Whitespace(" ")]
       3: L_CURLY@27..28 "{" [] []
       4: LIST@28..28
       5: R_CURLY@28..29 "}" [] []

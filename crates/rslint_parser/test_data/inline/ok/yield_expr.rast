@@ -24,8 +24,10 @@ JsRoot {
                         expression: JsYieldExpression {
                             yield_token: YIELD_KW@17..25 "yield" [Whitespace("\n ")] [Whitespace(" ")],
                             star_token: missing (optional),
-                            argument: JsReferenceIdentifierExpression {
-                                name_token: IDENT@25..28 "foo" [] [],
+                            argument: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@25..28 "foo" [] [],
+                                },
                             },
                         },
                         semicolon_token: SEMICOLON@28..29 ";" [] [],
@@ -34,8 +36,10 @@ JsRoot {
                         expression: JsYieldExpression {
                             yield_token: YIELD_KW@29..36 "yield" [Whitespace("\n ")] [],
                             star_token: STAR@36..38 "*" [] [Whitespace(" ")],
-                            argument: JsReferenceIdentifierExpression {
-                                name_token: IDENT@38..41 "foo" [] [],
+                            argument: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@38..41 "foo" [] [],
+                                },
                             },
                         },
                         semicolon_token: SEMICOLON@41..42 ";" [] [],
@@ -77,15 +81,17 @@ JsRoot {
           0: JS_EXPRESSION_STATEMENT@17..29
             0: JS_YIELD_EXPRESSION@17..28
               0: YIELD_KW@17..25 "yield" [Whitespace("\n ")] [Whitespace(" ")]
-              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@25..28
-                0: IDENT@25..28 "foo" [] []
+              1: JS_IDENTIFIER_EXPRESSION@25..28
+                0: JS_REFERENCE_IDENTIFIER@25..28
+                  0: IDENT@25..28 "foo" [] []
             1: SEMICOLON@28..29 ";" [] []
           1: JS_EXPRESSION_STATEMENT@29..42
             0: JS_YIELD_EXPRESSION@29..41
               0: YIELD_KW@29..36 "yield" [Whitespace("\n ")] []
               1: STAR@36..38 "*" [] [Whitespace(" ")]
-              2: JS_REFERENCE_IDENTIFIER_EXPRESSION@38..41
-                0: IDENT@38..41 "foo" [] []
+              2: JS_IDENTIFIER_EXPRESSION@38..41
+                0: JS_REFERENCE_IDENTIFIER@38..41
+                  0: IDENT@38..41 "foo" [] []
             1: SEMICOLON@41..42 ";" [] []
           2: JS_EXPRESSION_STATEMENT@42..50
             0: JS_YIELD_EXPRESSION@42..49

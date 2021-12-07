@@ -1,4 +1,5 @@
 mod any_binding;
-mod array_binding;
-mod binding_with_default;
+mod any_binding_pattern;
+mod array_binding_pattern;
+mod binding_pattern_with_default;
 mod identifier_binding;

@@ -17,8 +17,10 @@ JsRoot {
                                 members: [
                                     JsSpread {
                                         dotdotdot_token: DOT2@9..12 "..." [] [],
-                                        argument: JsReferenceIdentifierExpression {
-                                            name_token: IDENT@12..15 "foo" [] [],
+                                        argument: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@12..15 "foo" [] [],
+                                            },
                                         },
                                     },
                                 ],
@@ -51,8 +53,9 @@ JsRoot {
                 1: LIST@9..15
                   0: JS_SPREAD@9..15
                     0: DOT2@9..12 "..." [] []
-                    1: JS_REFERENCE_IDENTIFIER_EXPRESSION@12..15
-                      0: IDENT@12..15 "foo" [] []
+                    1: JS_IDENTIFIER_EXPRESSION@12..15
+                      0: JS_REFERENCE_IDENTIFIER@12..15
+                        0: IDENT@12..15 "foo" [] []
                 2: R_CURLY@15..16 "}" [] []
       1: (empty)
   3: EOF@16..17 "" [Whitespace("\n")] []

@@ -7,7 +7,7 @@ JsRoot {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: JsArrayBinding {
+                        id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@4..5 "[" [] [],
                             elements: [
                                 JsIdentifierBinding {
@@ -46,11 +46,11 @@ JsRoot {
                 kind_token: LET_KW@19..24 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: JsArrayBinding {
+                        id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@24..25 "[" [] [],
                             elements: [
-                                JsBindingWithDefault {
-                                    binding: missing (required),
+                                JsBindingPatternWithDefault {
+                                    pattern: missing (required),
                                     eq_token: EQ@25..26 "=" [] [],
                                     default: JsStringLiteralExpression {
                                         value_token: JS_STRING_LITERAL@26..35 "\"default\"" [] [],
@@ -85,7 +85,7 @@ JsRoot {
                 kind_token: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: JsArrayBinding {
+                        id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@51..52 "[" [] [],
                             elements: [
                                 JsUnknownBinding {
@@ -124,11 +124,11 @@ JsRoot {
                 kind_token: LET_KW@72..77 "let" [Whitespace("\n")] [Whitespace(" ")],
                 declarators: [
                     JsVariableDeclarator {
-                        id: JsArrayBinding {
+                        id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@77..78 "[" [] [],
                             elements: [
-                                JsBindingWithDefault {
-                                    binding: JsArrayBinding {
+                                JsBindingPatternWithDefault {
+                                    pattern: JsArrayBindingPattern {
                                         l_brack_token: L_BRACK@78..79 "[" [] [],
                                         elements: [
                                             JsIdentifierBinding {
@@ -166,7 +166,7 @@ JsRoot {
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..18
           0: JS_VARIABLE_DECLARATOR@4..18
-            0: JS_ARRAY_BINDING@4..10
+            0: JS_ARRAY_BINDING_PATTERN@4..10
               0: L_BRACK@4..5 "[" [] []
               1: LIST@5..8
                 0: JS_IDENTIFIER_BINDING@5..7
@@ -192,10 +192,10 @@ JsRoot {
         0: LET_KW@19..24 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@24..45
           0: JS_VARIABLE_DECLARATOR@24..45
-            0: JS_ARRAY_BINDING@24..37
+            0: JS_ARRAY_BINDING_PATTERN@24..37
               0: L_BRACK@24..25 "[" [] []
               1: LIST@25..35
-                0: JS_BINDING_WITH_DEFAULT@25..35
+                0: JS_BINDING_PATTERN_WITH_DEFAULT@25..35
                   0: (empty)
                   1: EQ@25..26 "=" [] []
                   2: JS_STRING_LITERAL_EXPRESSION@26..35
@@ -218,7 +218,7 @@ JsRoot {
         0: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@51..71
           0: JS_VARIABLE_DECLARATOR@51..71
-            0: JS_ARRAY_BINDING@51..63
+            0: JS_ARRAY_BINDING_PATTERN@51..63
               0: L_BRACK@51..52 "[" [] []
               1: LIST@52..61
                 0: JS_UNKNOWN_BINDING@52..61
@@ -241,11 +241,11 @@ JsRoot {
         0: LET_KW@72..77 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@77..87
           0: JS_VARIABLE_DECLARATOR@77..87
-            0: JS_ARRAY_BINDING@77..87
+            0: JS_ARRAY_BINDING_PATTERN@77..87
               0: L_BRACK@77..78 "[" [] []
               1: LIST@78..87
-                0: JS_BINDING_WITH_DEFAULT@78..87
-                  0: JS_ARRAY_BINDING@78..83
+                0: JS_BINDING_PATTERN_WITH_DEFAULT@78..87
+                  0: JS_ARRAY_BINDING_PATTERN@78..83
                     0: L_BRACK@78..79 "[" [] []
                     1: LIST@79..81
                       0: JS_IDENTIFIER_BINDING@79..81

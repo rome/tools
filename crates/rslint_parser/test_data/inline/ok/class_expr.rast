@@ -72,8 +72,10 @@ JsRoot {
         },
         JsExpressionStatement {
             expression: JsComputedMemberExpression {
-                object: JsReferenceIdentifierExpression {
-                    name_token: IDENT@57..61 "foo" [Whitespace("\n")] [],
+                object: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@57..61 "foo" [Whitespace("\n")] [],
+                    },
                 },
                 optional_chain_token_token: missing (optional),
                 l_brack_token: L_BRACK@61..62 "[" [] [],
@@ -134,8 +136,9 @@ JsRoot {
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@57..71
       0: JS_COMPUTED_MEMBER_EXPRESSION@57..71
-        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@57..61
-          0: IDENT@57..61 "foo" [Whitespace("\n")] []
+        0: JS_IDENTIFIER_EXPRESSION@57..61
+          0: JS_REFERENCE_IDENTIFIER@57..61
+            0: IDENT@57..61 "foo" [Whitespace("\n")] []
         1: L_BRACK@61..62 "[" [] []
         2: JS_CLASS_EXPRESSION@62..70
           0: CLASS_KW@62..68 "class" [] [Whitespace(" ")]

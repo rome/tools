@@ -2,9 +2,9 @@ use crate::{
 	format_elements, group_elements, join_elements, space_token, FormatElement, FormatResult,
 	Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{JsAnyArrayElementBinding, JsArrayBinding};
+use rslint_parser::ast::{JsAnyArrayBindingPatternElement, JsArrayBindingPattern};
 
-impl ToFormatElement for JsArrayBinding {
+impl ToFormatElement for JsArrayBindingPattern {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let l_bracket = formatter.format_token(&self.l_brack_token()?)?;
 		let elements = formatter.format_separated(self.elements())?;
@@ -18,15 +18,17 @@ impl ToFormatElement for JsArrayBinding {
 	}
 }
 
-impl ToFormatElement for JsAnyArrayElementBinding {
+impl ToFormatElement for JsAnyArrayBindingPatternElement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
-			JsAnyArrayElementBinding::JsArrayHole(hole) => hole.to_format_element(formatter),
-			JsAnyArrayElementBinding::JsAnyBinding(binding) => binding.to_format_element(formatter),
-			JsAnyArrayElementBinding::JsBindingWithDefault(with_default) => {
+			JsAnyArrayBindingPatternElement::JsArrayHole(hole) => hole.to_format_element(formatter),
+			JsAnyArrayBindingPatternElement::JsAnyBindingPattern(binding) => {
+				binding.to_format_element(formatter)
+			}
+			JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(with_default) => {
 				with_default.to_format_element(formatter)
 			}
-			JsAnyArrayElementBinding::JsArrayRestBinding(_) => todo!(),
+			JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(_) => todo!(),
 		}
 	}
 }

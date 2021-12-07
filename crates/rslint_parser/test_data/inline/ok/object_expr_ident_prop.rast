@@ -16,8 +16,8 @@ JsRoot {
                                 l_curly_token: L_CURLY@8..9 "{" [] [],
                                 members: [
                                     JsShorthandPropertyObjectMember {
-                                        name: JsReferenceIdentifierExpression {
-                                            name_token: IDENT@9..12 "foo" [] [],
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@9..12 "foo" [] [],
                                         },
                                     },
                                 ],
@@ -49,7 +49,7 @@ JsRoot {
                 0: L_CURLY@8..9 "{" [] []
                 1: LIST@9..12
                   0: JS_SHORTHAND_PROPERTY_OBJECT_MEMBER@9..12
-                    0: JS_REFERENCE_IDENTIFIER_EXPRESSION@9..12
+                    0: JS_REFERENCE_IDENTIFIER@9..12
                       0: IDENT@9..12 "foo" [] []
                 2: R_CURLY@12..13 "}" [] []
       1: (empty)
