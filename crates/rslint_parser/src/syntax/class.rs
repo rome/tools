@@ -19,7 +19,6 @@ use crate::{
 use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::{SyntaxKind, T};
-use std::ops::Range;
 
 /// Parses a class expression, e.g. let a = class {}
 pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
@@ -716,32 +715,42 @@ fn property_declaration_class_member_body(
 
 /// Parses the body of a property class member (anything after the member name)
 fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> CompletedMarker {
-	let optional_range = optional_member_token(p);
-	if p.at(T![!]) {
-		let range = p.cur_tok().range;
-
-		let error = if !p.typescript() {
-			Some(
-				p.err_builder(
-					"definite assignment assertions can only be used in TypeScript files",
-				)
-				.primary(range, ""),
-			)
-		} else {
-			optional_range.map(|optional| {
-				p.err_builder("class properties cannot be both optional and definite")
-					.primary(range.clone(), "")
-					.secondary(optional, "")
-			})
-		};
-
-		if let Some(error) = error {
-			p.error(error);
-			// TODO: remap error to an unknown node
-			p.bump_remap(ERROR);
-		} else {
-			p.bump_any(); // Bump ! token
+	let parsed_syntax = optional_member_token(p);
+	match parsed_syntax {
+		Absent => p.missing(),
+		Present(Invalid(syntax)) => {
+			syntax.or_to_unknown(p, JS_UNKNOWN_EXPRESSION);
 		}
+		Present(Valid(marker)) => {
+			if p.at(T![!]) {
+				let m = p.start();
+
+				let range = p.cur_tok().range;
+
+				let error = p
+					.err_builder("class properties cannot be both optional and definite")
+					.primary(range.clone(), "")
+					.secondary(marker.range(p), "");
+
+				p.error(error);
+				p.bump_any(); // Bump ! token
+				m.complete(p, JS_UNKNOWN_EXPRESSION);
+			}
+		}
+	}
+
+	// test_err class_member_bang
+	// class B { foo!; }
+	if p.at(T![!]) {
+		let m = p.start();
+		let range = p.cur_tok().range;
+		let error = p
+			.err_builder("definite assignment assertions can only be used in TypeScript files")
+			.primary(range, "");
+
+		p.error(error);
+		p.bump_any(); // Bump ! token
+		m.complete(p, JS_UNKNOWN_EXPRESSION);
 	}
 
 	maybe_ts_type_annotation(p);
@@ -765,23 +774,31 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Co
 }
 
 /// Eats the ? token for optional member. Emits an error if this isn't typescript
-fn optional_member_token(p: &mut Parser) -> Option<Range<usize>> {
+fn optional_member_token(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	if p.at(T![?]) {
-		let range = p.cur_tok().range;
+		let m = p.start();
+		let mut is_invalid = false;
+		// test_err optional_member
+		// class B { foo?; }
 		if !p.typescript() {
 			let err = p
 				.err_builder("`?` modifiers can only be used in TypeScript files")
 				.primary(p.cur_tok().range, "");
 
+			is_invalid = true;
 			p.error(err);
-			// TODO: remap error to an unknown node
-			p.bump_remap(ERROR);
-		} else {
-			p.bump_any();
 		}
-		Some(range)
+		p.bump_any();
+
+		let completed_marker = Present(m.complete(p, QUESTION));
+
+		if is_invalid {
+			completed_marker.into_invalid()
+		} else {
+			completed_marker.into_valid()
+		}
 	} else {
-		None
+		Absent
 	}
 }
 
@@ -811,7 +828,17 @@ fn parse_method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
 
 /// Parses the body (everything after the identifier name) of a method class member
 fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
-	optional_member_token(p);
+	let parsed_member = optional_member_token(p);
+	match parsed_member {
+		Present(Invalid(invalid_syntax)) => {
+			invalid_syntax.precede(p).abandon(p);
+		}
+		Absent => p.missing(),
+
+		_ => {}
+	}
+	// .or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
+	// .or_missing(p);
 	ts_parameter_types(p);
 	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_class_parameters);
 	parse_ts_return_type_if_ts(p).or_missing(p);
@@ -821,10 +848,10 @@ fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker 
 }
 
 fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> CompletedMarker {
-	if let Some(range) = optional_member_token(p) {
+	if let Present(Valid(marker)) = optional_member_token(p) {
 		let err = p
 			.err_builder("constructors cannot be optional")
-			.primary(range, "");
+			.primary(marker.range(p), "");
 
 		p.error(err);
 	}
