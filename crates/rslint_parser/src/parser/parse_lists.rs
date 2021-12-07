@@ -48,8 +48,8 @@ pub trait List {
 ///
 /// In order to use this trait, you need to implement the [List] trait too.
 ///
-/// ```rust,no_test
-/// use crate::{List, ParseNormalList}
+/// ```rust,ignore
+/// use rslint_parser::{List, ParseSeparatedList};
 ///
 /// struct MyList;
 ///
@@ -73,7 +73,7 @@ pub trait ParseNormalList: List {
 	fn parse_list(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedList> {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
-		while !p.at(SyntaxKind::EOF) && self.is_at_list_end(p) {
+		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
 			let parsed_element = self.parse_element(p);
@@ -93,8 +93,8 @@ pub trait ParseNormalList: List {
 ///
 /// In order to use this trait, you need to implement the [List] trait too.
 ///
-/// ```rust,no_test
-/// use crate::{List, ParseSeparatedList}
+/// ```rust,ignore
+/// use rslint_parser::{List, ParseSeparatedList};
 ///
 /// struct MyList;
 ///
@@ -133,7 +133,7 @@ pub trait ParseSeparatedList: List {
 	fn parse_list(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedList> {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
-		while !p.at(SyntaxKind::EOF) && self.is_at_list_end(p) {
+		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
 			if self.is_at_separating_element(p) {
