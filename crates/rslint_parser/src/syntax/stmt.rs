@@ -8,7 +8,7 @@ use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use};
 #[allow(deprecated)]
-use crate::parser::{ParseList, ParsedSyntax, ParserProgress};
+use crate::parser::{ParseNormalList, ParsedSyntax, ParserProgress};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_declaration, parse_equal_value_clause};
 use crate::syntax::expr::parse_identifier;
@@ -1054,17 +1054,11 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	Present(m.complete(p, kind))
 }
 
+#[derive(Default)]
 struct SwitchClausesList;
 
-impl SwitchClausesList {
-	pub fn new() -> Self {
-		Self {}
-	}
-}
-
-impl ParseList for SwitchClausesList {
+impl List for SwitchClausesList {
 	type ParsedElement = CompletedMarker;
-	type ParsedList = CompletedMarker;
 
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		match parse_statement(p, None) {
@@ -1084,9 +1078,6 @@ impl ParseList for SwitchClausesList {
 	fn recovery() -> ParseRecovery {
 		ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET)
 	}
-	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::ParsedList> {
-		Present(m.complete(p, self.list_kind()))
-	}
 
 	fn recover(
 		&mut self,
@@ -1094,6 +1085,13 @@ impl ParseList for SwitchClausesList {
 		parsed_element: ParsedSyntax<Self::ParsedElement>,
 	) -> parser::RecoveryResult {
 		parsed_element.or_recover(p, &Self::recovery(), Self::expected_element_error)
+	}
+}
+impl ParseNormalList for SwitchClausesList {
+	type ParsedList = CompletedMarker;
+
+	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::ParsedList> {
+		Present(m.complete(p, self.list_kind()))
 	}
 }
 
@@ -1149,7 +1147,7 @@ fn parse_switch_clause(
 			expr(p);
 			p.expect_required(T![:]);
 
-			SwitchClausesList::new().parse_list(p).unwrap();
+			SwitchClausesList::default().parse_list(p).unwrap();
 
 			Present(m.complete(p, JS_CASE_CLAUSE))
 		}
