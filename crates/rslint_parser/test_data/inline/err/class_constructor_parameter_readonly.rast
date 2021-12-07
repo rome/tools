@@ -1,0 +1,79 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsClassDeclaration {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
+            },
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
+            members: [
+                JsConstructorClassMember {
+                    access_modifier: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@10..21 "constructor" [] [],
+                    },
+                    parameter_list: JsConstructorParameterList {
+                        l_paren_token: L_PAREN@21..22 "(" [] [],
+                        parameters: [
+                            TsConstructorParam {
+                                readonly_token: missing (required),
+                                pat: missing (required),
+                            },
+                        ],
+                        r_paren_token: R_PAREN@32..34 ")" [] [Whitespace(" ")],
+                    },
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@34..35 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@35..37 "}" [] [Whitespace(" ")],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@37..38 "}" [] [],
+        },
+    ],
+}
+
+0: JS_ROOT@0..39
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..38
+    0: JS_CLASS_DECLARATION@0..38
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..8
+        0: IDENT@6..8 "B" [] [Whitespace(" ")]
+      2: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      3: LIST@10..37
+        0: JS_CONSTRUCTOR_CLASS_MEMBER@10..37
+          0: (empty)
+          1: JS_LITERAL_MEMBER_NAME@10..21
+            0: IDENT@10..21 "constructor" [] []
+          2: JS_CONSTRUCTOR_PARAMETER_LIST@21..34
+            0: L_PAREN@21..22 "(" [] []
+            1: LIST@22..32
+              0: TS_CONSTRUCTOR_PARAM@22..32
+                0: ERROR@22..31
+                  0: READONLY_KW@22..31 "readonly" [] [Whitespace(" ")]
+                1: IDENT@31..32 "b" [] []
+            2: R_PAREN@32..34 ")" [] [Whitespace(" ")]
+          3: JS_FUNCTION_BODY@34..37
+            0: L_CURLY@34..35 "{" [] []
+            1: LIST@35..35
+            2: LIST@35..35
+            3: R_CURLY@35..37 "}" [] [Whitespace(" ")]
+      4: R_CURLY@37..38 "}" [] []
+  3: EOF@38..39 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: readonly modifiers for a parameter inside a constructor can only be used in TypeScript files
+  ┌─ class_constructor_parameter_readonly.js:1:23
+  │
+1 │ class B { constructor(readonly b) {} }
+  │                       ^^^^^^^^
+
+--
+class B { constructor(readonly b) {} }

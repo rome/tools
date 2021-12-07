@@ -12,8 +12,6 @@ JsModule {
                 JsPropertyClassMember {
                     modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
-                    static_token: missing (optional),
                     name: JsComputedMemberName {
                         l_brack_token: L_BRACK@7..11 "[" [Whitespace("\n  ")] [],
                         expression: JsBinaryExpression {

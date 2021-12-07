@@ -12,9 +12,8 @@ JsModule {
             l_curly_token: L_CURLY@14..15 "{" [] [],
             members: [
                 JsGetterClassMember {
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
-                    static_token: missing (optional),
                     get_token: GET_KW@15..22 "get" [Whitespace("\n  ")] [Whitespace(" ")],
                     name: JsLiteralMemberName {
                         value: IDENT@22..25 "foo" [] [],

@@ -119,7 +119,9 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<CompletedMarker>
 
 	// TODO: these two functions should return `ParsedSyntax`, so we can handle possible errors/missing/etc.
 	extends_clause(&mut guard);
-	implements_clause(&mut guard);
+	implements_clause(&mut guard)
+		.or_invalid_to_unknown(&mut guard, JS_UNKNOWN_STATEMENT)
+		.or_missing(&mut guard);
 
 	guard.expect_required(T!['{']);
 	ClassMembersList.parse_list(&mut *guard);
@@ -128,9 +130,9 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<CompletedMarker>
 	Present(m.complete(&mut *guard, kind.into()))
 }
 
-fn implements_clause(p: &mut Parser) {
+fn implements_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	if p.cur_src() != "implements" {
-		return;
+		return Absent;
 	}
 
 	let implements_clause = p.start();
@@ -141,6 +143,8 @@ fn implements_clause(p: &mut Parser) {
 
 	let list = p.start();
 	let elems = ts_heritage_clause(&mut *p, false);
+	// test_err class_implements
+	// class B implements C {}
 	if !p.typescript() {
 		let err = p
 			.err_builder("classes can only implement interfaces in TypeScript files")
@@ -170,7 +174,10 @@ fn implements_clause(p: &mut Parser) {
 	}
 
 	list.complete(p, LIST);
-	implements_clause.complete(p, TS_IMPLEMENTS_CLAUSE);
+
+	Present(Valid(
+		implements_clause.complete(p, TS_IMPLEMENTS_CLAUSE).into(),
+	))
 }
 
 fn extends_clause(p: &mut Parser) {
@@ -860,9 +867,11 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 		let range = p.cur_tok().range;
 		let maybe_err = p.start();
 		Modifiers::default().set_accessibility(true).consume(p);
+		// test_err class_constructor_parameter
+		// class B { constructor(protected b) {} }
 		if !p.typescript() {
 			let err = p
-				.err_builder("accessibility modifiers can only be used in TypeScript files")
+				.err_builder("accessibility modifiers for a parameter inside a constructor can only be used in TypeScript files")
 				.primary(range, "");
 
 			p.error(err);
@@ -878,9 +887,11 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 
 	let maybe_err = p.start();
 	let has_readonly = if let Some(range) = ts_modifier(p, &["readonly"]) {
+		// test_err class_constructor_parameter_readonly
+		// class B { constructor(readonly b) {} }
 		if !p.typescript() {
 			let err = p
-				.err_builder("readonly modifiers can only be used in TypeScript files")
+				.err_builder("readonly modifiers for a parameter inside a constructor can only be used in TypeScript files")
 				.primary(range, "");
 
 			p.error(err);

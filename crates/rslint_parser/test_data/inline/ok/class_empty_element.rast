@@ -42,9 +42,8 @@ JsModule {
                     semicolon_token: SEMICOLON@21..23 ";" [] [Whitespace(" ")],
                 },
                 JsGetterClassMember {
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
-                    static_token: missing (optional),
                     get_token: GET_KW@23..27 "get" [] [Whitespace(" ")],
                     name: JsLiteralMemberName {
                         value: IDENT@27..30 "foo" [] [],

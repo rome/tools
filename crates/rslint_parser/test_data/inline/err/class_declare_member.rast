@@ -18,8 +18,6 @@ JsModule {
                         ],
                     },
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
-                    static_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@18..22 "foo" [] [Whitespace(" ")],
                     },

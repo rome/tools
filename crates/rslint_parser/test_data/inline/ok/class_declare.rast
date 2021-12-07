@@ -14,8 +14,6 @@ JsModule {
                 JsMethodClassMember {
                     modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    static_token: missing (optional),
-                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -50,8 +48,6 @@ JsModule {
                 JsPropertyClassMember {
                     modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
-                    static_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@35..43 "declare" [] [Whitespace(" ")],
                     },
