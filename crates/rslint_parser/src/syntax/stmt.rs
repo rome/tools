@@ -1057,7 +1057,7 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 #[derive(Default)]
 struct SwitchClausesList;
 
-impl List for SwitchClausesList {
+impl ParseList for SwitchClausesList {
 	type ParsedElement = CompletedMarker;
 
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
@@ -1071,27 +1071,23 @@ impl List for SwitchClausesList {
 		p.at_ts(token_set![T![default], T![case], T!['}']])
 	}
 
-	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic {
-		js_parse_error::expected_case(p, range)
-	}
-
-	fn recovery() -> ParseRecovery {
-		ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET)
-	}
-
 	fn recover(
 		&mut self,
 		p: &mut Parser,
 		parsed_element: ParsedSyntax<Self::ParsedElement>,
 	) -> parser::RecoveryResult {
-		parsed_element.or_recover(p, &Self::recovery(), Self::expected_element_error)
+		parsed_element.or_recover(
+			p,
+			&ParseRecovery::new(JS_UNKNOWN_EXPRESSION, STMT_RECOVERY_SET),
+			js_parse_error::expected_case,
+		)
 	}
 }
 impl ParseNormalList for SwitchClausesList {
 	type ParsedList = CompletedMarker;
 
 	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::ParsedList> {
-		Present(m.complete(p, self.list_kind()))
+		Present(m.complete(p, LIST))
 	}
 }
 
@@ -1147,7 +1143,7 @@ fn parse_switch_clause(
 			expr(p);
 			p.expect_required(T![:]);
 
-			SwitchClausesList::default().parse_list(p).unwrap();
+			SwitchClausesList::default().parse_list(p);
 
 			Present(m.complete(p, JS_CASE_CLAUSE))
 		}

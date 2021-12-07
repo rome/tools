@@ -1,23 +1,16 @@
 ///! A set of traits useful to parse various types of lists
 use super::{ParsedSyntax, ParserProgress, RecoveryResult};
-use crate::{Marker, ParseRecovery, Parser};
-use rslint_errors::Diagnostic;
+use crate::{Marker, Parser};
 use rslint_syntax::SyntaxKind;
-use std::ops::Range;
 
 /// A generic that defines a generic behaviour for all the possible lists.
 ///
-pub trait List {
+pub trait ParseList {
 	/// The type returned when calling the function [Self::parse_element]
 	type ParsedElement;
 
 	/// Parses a single element of the list
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement>;
-
-	/// The [SyntaxKind] used to name the list
-	fn list_kind(&mut self) -> SyntaxKind {
-		SyntaxKind::LIST
-	}
 
 	/// It creates a marker just before starting a list
 	fn start_list(&mut self, p: &mut Parser) -> Marker {
@@ -36,12 +29,6 @@ pub trait List {
 		p: &mut Parser,
 		parsed_element: ParsedSyntax<Self::ParsedElement>,
 	) -> RecoveryResult;
-
-	/// [Diagnostic] thrown in case the parser is not able to recover
-	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic;
-
-	/// A [crate::TokenSet] that will be given to the parser in order to recover
-	fn recovery() -> ParseRecovery;
 }
 
 /// Use this trait to parse simple lists that don't have particular requirements.
@@ -61,7 +48,7 @@ pub trait List {
 ///   // impl missing members
 /// }
 /// ```
-pub trait ParseNormalList: List {
+pub trait ParseNormalList: ParseList {
 	/// The type of syntax that will be returned by [Self::parse_list]. The type will be the generic for [ParsedSyntax]
 	type ParsedList;
 
@@ -70,7 +57,7 @@ pub trait ParseNormalList: List {
 	/// # Panics
 	///
 	/// It panics if the parser doesn't advance at each cycle of the loop
-	fn parse_list(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedList> {
+	fn parse_list(&mut self, p: &mut Parser) {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
 		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
@@ -82,7 +69,7 @@ pub trait ParseNormalList: List {
 				break;
 			}
 		}
-		self.finish_list(p, elements)
+		self.finish_list(p, elements).unwrap();
 	}
 
 	/// It creates a [ParsedSyntax] that will contain the list
@@ -106,14 +93,32 @@ pub trait ParseNormalList: List {
 ///   // impl missing members
 /// }
 /// ```
-pub trait ParseSeparatedList: List {
+pub trait ParseSeparatedList: ParseList {
 	/// The type of syntax that will be returned by [Self::parse_list]. The type will be the generic for [ParsedSyntax]
 	type ParsedList;
 
-	/// Tells the parser to mark the current token as missing, continuing the loop.
-	/// This function is used for [Self::parse_list].
+	/// Tells the parser to parse the current token, continuing the loop.
+	/// This function is used in [Self::parse_list].
 	fn parse_separating_element(&mut self, p: &mut Parser) {
-		p.missing();
+		// bump the separator
+		p.bump_any();
+	}
+
+	/// The [SyntaxKind] of the element that separates the elements of the list
+	fn separating_element_kind(&mut self) -> SyntaxKind;
+
+	/// Method called at each iteration of the the loop and checks if the expected
+	/// separator is present.
+	///
+	/// If present, it [parses](Self::parse_separating_element) it and continues with loop.
+	/// If not present, it adds a missing marker.
+	fn expect_separator(&mut self, p: &mut Parser) -> bool {
+		if p.expect_required(self.separating_element_kind()) {
+			self.parse_separating_element(p);
+			true
+		} else {
+			false
+		}
 	}
 
 	/// It creates a [ParsedSyntax] that will contain the list
@@ -130,15 +135,14 @@ pub trait ParseSeparatedList: List {
 	/// # Panics
 	///
 	/// It panics if the parser doesn't advance at each cycle of the loop
-	fn parse_list(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedList> {
+	fn parse_list(&mut self, p: &mut Parser) {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
 		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
-			if self.is_at_separating_element(p) {
-				self.parse_separating_element(p);
-				continue;
+			if self.expect_separator(p) && self.is_at_list_end(p) {
+				break;
 			}
 
 			let parsed_element = self.parse_element(p);
@@ -147,6 +151,6 @@ pub trait ParseSeparatedList: List {
 				break;
 			}
 		}
-		self.finish_list(p, elements)
+		self.finish_list(p, elements).unwrap();
 	}
 }

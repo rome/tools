@@ -100,7 +100,7 @@ pub use rslint_syntax::*;
 pub type ParserError = rslint_errors::Diagnostic;
 
 pub use crate::parser::{
-	ConditionalSyntax, List, ParseNormalList, ParseSeparatedList, ParsedSyntax,
+	ConditionalSyntax, ParseList, ParseNormalList, ParseSeparatedList, ParsedSyntax,
 };
 pub use crate::ConditionalSyntax::{Invalid, Valid};
 pub use crate::ParsedSyntax::{Absent, Present};
