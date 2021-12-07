@@ -8,17 +8,11 @@ use std::ops::Range;
 /// A generic that defines a generic behaviour for all the possible lists.
 ///
 pub trait List {
-	/// The type returned when calling the function [parse_element]
+	/// The type returned when calling the function [Self::parse_element]
 	type ParsedElement;
 
 	/// Parses a single element of the list
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement>;
-
-	/// Tells the parser to mark the current token as missing, continuing the loop.
-	/// This function is used for [Self::parse_list].
-	fn parse_separating_element(&mut self, p: &mut Parser) {
-		p.missing();
-	}
 
 	/// The [SyntaxKind] used to name the list
 	fn list_kind(&mut self) -> SyntaxKind {
@@ -68,7 +62,7 @@ pub trait List {
 /// }
 /// ```
 pub trait ParseNormalList: List {
-	/// The type of syntax that will be returned by [parse_list].
+	/// The type of syntax that will be returned by [Self::parse_list]. The type will be the generic for [ParsedSyntax]
 	type ParsedList;
 
 	/// Parses a simple list
@@ -113,8 +107,14 @@ pub trait ParseNormalList: List {
 /// }
 /// ```
 pub trait ParseSeparatedList: List {
-	/// The type of syntax that will be returned by [parse_list]. The type will be the generic for [ParsedSyntax]
+	/// The type of syntax that will be returned by [Self::parse_list]. The type will be the generic for [ParsedSyntax]
 	type ParsedList;
+
+	/// Tells the parser to mark the current token as missing, continuing the loop.
+	/// This function is used for [Self::parse_list].
+	fn parse_separating_element(&mut self, p: &mut Parser) {
+		p.missing();
+	}
 
 	/// It creates a [ParsedSyntax] that will contain the list
 	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::ParsedList>;
