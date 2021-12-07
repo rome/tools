@@ -46,8 +46,9 @@ JsModule {
       1: JS_IDENTIFIER_BINDING@6..10
         0: IDENT@6..10 "foo" [] [Whitespace(" ")]
       2: (empty)
-      3: L_CURLY@10..11 "{" [] []
-      4: LIST@11..26
+      3: (empty)
+      4: L_CURLY@10..11 "{" [] []
+      5: LIST@11..26
         0: JS_SETTER_CLASS_MEMBER@11..26
           0: (empty)
           1: SET_KW@11..17 "set" [Whitespace("\n ")] [Whitespace(" ")]
@@ -62,5 +63,5 @@ JsModule {
             1: LIST@25..25
             2: LIST@25..25
             3: R_CURLY@25..26 "}" [] []
-      5: R_CURLY@26..28 "}" [Whitespace("\n")] []
+      6: R_CURLY@26..28 "}" [Whitespace("\n")] []
   3: EOF@28..29 "" [Whitespace("\n")] []

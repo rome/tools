@@ -48,8 +48,9 @@ JsRoot {
       1: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "B" [] [Whitespace(" ")]
       2: (empty)
-      3: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      4: LIST@10..37
+      3: (empty)
+      4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      5: LIST@10..37
         0: JS_CONSTRUCTOR_CLASS_MEMBER@10..37
           0: (empty)
           1: JS_LITERAL_MEMBER_NAME@10..21
@@ -67,7 +68,7 @@ JsRoot {
             1: LIST@35..35
             2: LIST@35..35
             3: R_CURLY@35..37 "}" [] [Whitespace(" ")]
-      5: R_CURLY@37..38 "}" [] []
+      6: R_CURLY@37..38 "}" [] []
   3: EOF@38..39 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: readonly modifiers for a parameter inside a constructor can only be used in TypeScript files

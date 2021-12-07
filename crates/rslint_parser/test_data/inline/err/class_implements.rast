@@ -7,10 +7,7 @@ JsRoot {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
             },
-            implements_clause: TsImplementsClause {
-                implements_token: missing (required),
-                interfaces: [],
-            },
+            implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@21..22 "{" [] [],
             members: [],
@@ -27,16 +24,16 @@ JsRoot {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "B" [] [Whitespace(" ")]
-      2: TS_IMPLEMENTS_CLAUSE@8..21
-        0: ERROR@8..21
-          0: IMPLEMENTS_KW@8..19 "implements" [] [Whitespace(" ")]
-          1: LIST@19..21
-            0: TS_EXPR_WITH_TYPE_ARGS@19..21
-              0: TS_TYPE_NAME@19..21
-                0: IDENT@19..21 "C" [] [Whitespace(" ")]
-      3: L_CURLY@21..22 "{" [] []
-      4: LIST@22..22
-      5: R_CURLY@22..23 "}" [] []
+      2: (empty)
+      3: JS_UNKNOWN_EXPRESSION@8..21
+        0: IMPLEMENTS_KW@8..19 "implements" [] [Whitespace(" ")]
+        1: LIST@19..21
+          0: TS_EXPR_WITH_TYPE_ARGS@19..21
+            0: TS_TYPE_NAME@19..21
+              0: IDENT@19..21 "C" [] [Whitespace(" ")]
+      4: L_CURLY@21..22 "{" [] []
+      5: LIST@22..22
+      6: R_CURLY@22..23 "}" [] []
   3: EOF@23..24 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: classes can only implement interfaces in TypeScript files

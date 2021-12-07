@@ -50,8 +50,9 @@ JsModule {
       1: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "B" [] [Whitespace(" ")]
       2: (empty)
-      3: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      4: LIST@10..28
+      3: (empty)
+      4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      5: LIST@10..28
         0: JS_PROPERTY_CLASS_MEMBER@10..28
           0: JS_UNKNOWN_MODIFIER@10..18
             0: DECLARE_KW@10..18 "declare" [] [Whitespace(" ")]
@@ -63,7 +64,7 @@ JsModule {
               0: JS_REFERENCE_IDENTIFIER@24..28
                 0: IDENT@24..28 "bar" [] [Whitespace(" ")]
           3: (empty)
-      5: R_CURLY@28..29 "}" [] []
+      6: R_CURLY@28..29 "}" [] []
   3: EOF@29..30 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: `declare` modifiers can only be used in TypeScript files

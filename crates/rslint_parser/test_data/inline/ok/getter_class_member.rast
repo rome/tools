@@ -245,8 +245,9 @@ JsModule {
       1: JS_IDENTIFIER_BINDING@6..14
         0: IDENT@6..14 "Getters" [] [Whitespace(" ")]
       2: (empty)
-      3: L_CURLY@14..15 "{" [] []
-      4: LIST@15..136
+      3: (empty)
+      4: L_CURLY@14..15 "{" [] []
+      5: LIST@15..136
         0: JS_GETTER_CLASS_MEMBER@15..29
           0: GET_KW@15..21 "get" [Whitespace("\n\t")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@21..24
@@ -340,14 +341,15 @@ JsModule {
             1: LIST@135..135
             2: LIST@135..135
             3: R_CURLY@135..136 "}" [] []
-      5: R_CURLY@136..138 "}" [Whitespace("\n")] []
+      6: R_CURLY@136..138 "}" [Whitespace("\n")] []
     1: JS_CLASS_DECLARATION@138..202
       0: CLASS_KW@138..145 "class" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@145..156
         0: IDENT@145..156 "NotGetters" [] [Whitespace(" ")]
       2: (empty)
-      3: L_CURLY@156..157 "{" [] []
-      4: LIST@157..200
+      3: (empty)
+      4: L_CURLY@156..157 "{" [] []
+      5: LIST@157..200
         0: JS_METHOD_CLASS_MEMBER@157..167
           0: JS_LITERAL_MEMBER_NAME@157..162
             0: IDENT@157..162 "get" [Whitespace("\n\t")] []
@@ -389,5 +391,5 @@ JsModule {
             1: LIST@199..199
             2: LIST@199..199
             3: R_CURLY@199..200 "}" [] []
-      5: R_CURLY@200..202 "}" [Whitespace("\n")] []
+      6: R_CURLY@200..202 "}" [Whitespace("\n")] []
   3: EOF@202..203 "" [Whitespace("\n")] []

@@ -117,11 +117,25 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<CompletedMarker>
 		}
 	}
 
-	// TODO: these two functions should return `ParsedSyntax`, so we can handle possible errors/missing/etc.
-	extends_clause(&mut guard);
-	implements_clause(&mut guard)
-		.or_invalid_to_unknown(&mut guard, JS_UNKNOWN_STATEMENT)
-		.or_missing(&mut guard);
+	match extends_clause(&mut guard) {
+		Absent => {
+			guard.missing();
+		}
+		Present(Invalid(syntax)) => {
+			syntax.or_to_unknown(&mut guard, JS_UNKNOWN_EXPRESSION);
+		}
+		_ => {}
+	}
+
+	match implements_clause(&mut guard) {
+		Absent => {
+			guard.missing();
+		}
+		Present(Invalid(syntax)) => {
+			syntax.or_to_unknown(&mut guard, JS_UNKNOWN_EXPRESSION);
+		}
+		_ => {}
+	}
 
 	guard.expect_required(T!['{']);
 	ClassMembersList.parse_list(&mut *guard);
@@ -135,10 +149,10 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		return Absent;
 	}
 
+	let mut is_invalid = false;
 	let implements_clause = p.start();
 
 	let start = p.cur_tok().range.start;
-	let maybe_err = p.start();
 	p.bump_remap(T![implements]);
 
 	let list = p.start();
@@ -151,16 +165,13 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 			.primary(start..(p.marker_vec_range(&elems).end), "");
 
 		p.error(err);
-		maybe_err.complete(&mut *p, ERROR);
-	} else {
-		maybe_err.abandon(&mut *p)
+		is_invalid = true;
 	}
 
 	let mut progress = ParserProgress::default();
 	while p.cur_src() == "implements" {
 		progress.assert_progressing(p);
 		let start = p.cur_tok().range.start;
-		let m = p.start();
 		p.bump_any();
 		let elems = ts_heritage_clause(&mut *p, false);
 
@@ -169,22 +180,25 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 			.primary(start..p.marker_vec_range(&elems).end, "");
 
 		p.error(err);
-		// TODO: remap error to an unknown node
-		m.complete(&mut *p, ERROR);
+		is_invalid = true;
 	}
 
 	list.complete(p, LIST);
 
-	Present(Valid(
-		implements_clause.complete(p, TS_IMPLEMENTS_CLAUSE).into(),
-	))
+	let completed_syntax = Present(implements_clause.complete(p, TS_IMPLEMENTS_CLAUSE));
+	if is_invalid {
+		completed_syntax.into_invalid()
+	} else {
+		completed_syntax.into_valid()
+	}
 }
 
-fn extends_clause(p: &mut Parser) {
+fn extends_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	if p.cur_src() != "extends" {
-		return;
+		return Absent;
 	}
 
+	let mut is_invalid = false;
 	let m = p.start();
 	p.bump_any();
 
@@ -200,13 +214,13 @@ fn extends_clause(p: &mut Parser) {
 			.primary(elem.range(p), "");
 
 		p.error(err);
+		is_invalid = true;
 	}
 
 	// handle `extends foo extends bar` explicitly
 	let mut progress = ParserProgress::default();
 	while p.at(T![extends]) {
 		progress.assert_progressing(p);
-		let m = p.start();
 		p.bump_any();
 
 		let elems = ts_heritage_clause(p, true);
@@ -215,11 +229,15 @@ fn extends_clause(p: &mut Parser) {
 			.primary(p.marker_vec_range(&elems), "");
 
 		p.error(err);
-		// TODO: remap error to an unknown node
-		m.complete(p, ERROR);
+		is_invalid = true;
 	}
 
-	m.complete(p, JS_EXTENDS_CLAUSE);
+	let completed_syntax = Present(m.complete(p, JS_EXTENDS_CLAUSE));
+	if is_invalid {
+		completed_syntax.into_invalid()
+	} else {
+		completed_syntax.into_valid()
+	}
 }
 
 struct ClassMembersList;

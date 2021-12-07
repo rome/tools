@@ -86,8 +86,9 @@ JsModule {
       1: JS_IDENTIFIER_BINDING@6..10
         0: IDENT@6..10 "foo" [] [Whitespace(" ")]
       2: (empty)
-      3: L_CURLY@10..12 "{" [] [Whitespace(" ")]
-      4: LIST@12..39
+      3: (empty)
+      4: L_CURLY@10..12 "{" [] [Whitespace(" ")]
+      5: LIST@12..39
         0: JS_EMPTY_CLASS_MEMBER@12..13
           0: SEMICOLON@12..13 ";" [] []
         1: JS_EMPTY_CLASS_MEMBER@13..14
@@ -128,5 +129,5 @@ JsModule {
           0: SEMICOLON@37..38 ";" [] []
         14: JS_EMPTY_CLASS_MEMBER@38..39
           0: SEMICOLON@38..39 ";" [] []
-      5: R_CURLY@39..40 "}" [] []
+      6: R_CURLY@39..40 "}" [] []
   3: EOF@40..41 "" [Whitespace("\n")] []

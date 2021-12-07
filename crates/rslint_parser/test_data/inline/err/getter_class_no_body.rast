@@ -39,8 +39,9 @@ JsModule {
       1: JS_IDENTIFIER_BINDING@6..14
         0: IDENT@6..14 "Setters" [] [Whitespace(" ")]
       2: (empty)
-      3: L_CURLY@14..15 "{" [] []
-      4: LIST@15..27
+      3: (empty)
+      4: L_CURLY@14..15 "{" [] []
+      5: LIST@15..27
         0: JS_GETTER_CLASS_MEMBER@15..27
           0: GET_KW@15..22 "get" [Whitespace("\n  ")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@22..25
@@ -49,7 +50,7 @@ JsModule {
           3: R_PAREN@26..27 ")" [] []
           4: (empty)
           5: (empty)
-      5: (empty)
+      6: (empty)
   3: EOF@27..28 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected a class method body but instead found ''

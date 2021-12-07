@@ -260,8 +260,9 @@ JsModule {
       1: JS_IDENTIFIER_BINDING@61..66
         0: IDENT@61..66 "Test" [] [Whitespace(" ")]
       2: (empty)
-      3: L_CURLY@66..67 "{" [] []
-      4: LIST@67..149
+      3: (empty)
+      4: L_CURLY@66..67 "{" [] []
+      5: LIST@67..149
         0: JS_PROPERTY_CLASS_MEMBER@67..73
           0: JS_PRIVATE_CLASS_MEMBER_NAME@67..73
             0: HASH@67..70 "#" [Whitespace("\n\t")] []
@@ -321,5 +322,5 @@ JsModule {
                     1: IDENT@142..145 "bar" [] []
                 1: SEMICOLON@145..146 ";" [] []
             3: R_CURLY@146..149 "}" [Whitespace("\n\t")] []
-      5: R_CURLY@149..151 "}" [Whitespace("\n")] []
+      6: R_CURLY@149..151 "}" [Whitespace("\n")] []
   3: EOF@151..152 "" [Whitespace("\n")] []
