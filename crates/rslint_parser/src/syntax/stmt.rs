@@ -4,7 +4,7 @@
 
 use super::binding::*;
 use super::expr::{expr, expr_or_assignment, EXPR_RECOVERY_SET, STARTS_EXPR};
-use super::program::{export_decl, import_decl};
+use super::program::export_decl;
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use};
 #[allow(deprecated)]
@@ -15,6 +15,7 @@ use crate::syntax::expr::parse_identifier;
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_binding;
+use crate::syntax::module::parse_import;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
@@ -39,7 +40,8 @@ pub const STMT_RECOVERY_SET: TokenSet = token_set![
 	FUNCTION_KW,
 	CLASS_KW,
 	IMPORT_KW,
-	EXPORT_KW
+	EXPORT_KW,
+	T![;]
 ];
 
 pub const FOLLOWS_LET: TokenSet = token_set![T!['{'], T!['['], T![ident], T![yield], T![await]];
@@ -144,7 +146,7 @@ pub fn parse_statement(
 	match res {
 		Absent => {
 			// We must explicitly handle this case or else infinite recursion can happen
-			if p.at_ts(token_set![T!['}'], T![import], T![export]]) {
+			if p.at_ts(token_set![T!['}'], T![export]]) {
 				let err = p
 					.err_builder("Expected a statement or declaration, but found none")
 					.primary(
@@ -574,21 +576,23 @@ pub(crate) fn parse_statements(
 
 			// make sure we dont try parsing import.meta or import() as declarations
 			T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => {
-				let mut m = import_decl(p);
-				if !p.state.is_module && !p.typescript() {
+				let import = parse_import(p)
+					.into_invalid()
+					.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
+					.unwrap();
+
+				if p.syntax.file_kind == FileKind::Script {
 					let err = p
 						.err_builder("Illegal use of an import declaration outside of a module")
-						.primary(m.range(p), "not allowed inside scripts");
+						.primary(import.range(p), "not allowed inside scripts");
 
 					p.error(err);
-					m.change_kind(p, JS_UNKNOWN_STATEMENT);
 				} else if !top_level {
 					let err = p
 						.err_builder("Illegal use of an import declaration not at the top level")
-						.primary(m.range(p), "move this declaration to the top level");
+						.primary(import.range(p), "move this declaration to the top level");
 
 					p.error(err);
-					m.change_kind(p, JS_UNKNOWN_STATEMENT);
 				}
 			}
 			// test_err export_decl_not_top_level

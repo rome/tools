@@ -599,7 +599,7 @@ pub fn identifier_name(p: &mut Parser) -> Option<CompletedMarker> {
 	if is_at_identifier_name(p) {
 		let m = p.start();
 		p.bump_remap(T![ident]);
-		Some(m.complete(p, NAME))
+		Some(m.complete(p, JS_NAME))
 	} else {
 		let err = p
 			.err_builder("Expected an identifier or keyword")

@@ -1,0 +1,42 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: [],
+    items: [
+        JsImport {
+            import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
+            import_clause: JsImportBareClause {
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@7..13 "\"test\"" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@13..14 ";" [] [],
+        },
+        JsImport {
+            import_token: IMPORT_KW@14..22 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_clause: JsImportBareClause {
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@22..36 "\"no_semicolon\"" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
+0: JS_MODULE@0..37
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..36
+    0: JS_IMPORT@0..14
+      0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
+      1: JS_IMPORT_BARE_CLAUSE@7..13
+        0: JS_MODULE_SOURCE@7..13
+          0: JS_STRING_LITERAL@7..13 "\"test\"" [] []
+      2: SEMICOLON@13..14 ";" [] []
+    1: JS_IMPORT@14..36
+      0: IMPORT_KW@14..22 "import" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IMPORT_BARE_CLAUSE@22..36
+        0: JS_MODULE_SOURCE@22..36
+          0: JS_STRING_LITERAL@22..36 "\"no_semicolon\"" [] []
+      2: (empty)
+  3: EOF@36..37 "" [Whitespace("\n")] []

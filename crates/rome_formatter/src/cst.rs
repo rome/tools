@@ -11,7 +11,7 @@ use rslint_parser::ast::{
 	JsReturnStatement, JsScript, JsSequenceExpression, JsSetterClassMember,
 	JsShorthandPropertyObjectMember, JsSpread, JsStringLiteralExpression, JsSwitchStatement,
 	JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement,
-	JsWithStatement, Name,
+	JsWithStatement,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
@@ -47,9 +47,6 @@ impl ToFormatElement for SyntaxNode {
 					.unwrap()
 					.to_format_element(formatter)
 			}
-			SyntaxKind::NAME => Name::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
 			SyntaxKind::JS_IDENTIFIER_EXPRESSION => JsIdentifierExpression::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),

@@ -869,7 +869,7 @@ JsVariableDeclarator =
 
 JsAnyModuleItem =
 	JsAnyStatement
-	| ImportDecl
+	| JsImport
 	| ExportNamed
 	| ExportDefaultDecl
 	| ExportDefaultExpr
@@ -879,15 +879,106 @@ JsAnyModuleItem =
 	| TsExportAssignment
 	| TsNamespaceExportDecl
 
-ImportDecl =
-	'import'
-	imports:ImportClause*
-	'type'?
-	'from'
-	source: 'js_string_literal'
-	asserted_object: JsObjectExpression
-	'assert'?
+JsImport = 'import'
+	import_clause: AnyJsImportClause
 	';'?
+
+AnyJsImportClause =
+    JsImportBareClause
+    | JsName
+    | JsImportNamedClause
+    | JsImportDefaultClause
+    | JsImportNamespaceClause
+//    | TsImportRequireClause
+//    | TsImportAliasClause
+
+// import "abcd"
+// import "abcd" assert ...
+JsImportBareClause =
+	source: JsModuleSource
+	// assertion: JsImportAssertion?
+
+// import foo from "mod"
+// import type foo from "mod"
+JsImportDefaultClause =
+		// 'type'?
+		local_name: JsAnyBinding
+		'from'
+		source: JsModuleSource
+		// assertion: JsImportAssertion?
+
+// import * as foo from "mod";
+// import type * as foo from "mod";
+JsImportNamespaceClause =
+	'*'
+	'as'
+	local_name: JsAnyBinding
+	'from'
+	source: JsModuleSource
+	// assertion: JsImportAssertion?
+
+// import { a, b: c } from "d"
+//        ^^^^^^^^^^^^^^^^^^^^
+// import c, { b } from "c"
+//        ^^^^^^^^^^^^^^^^^
+// import { type a } from "c"
+//        ^^^^^^^^^^^^^^^^^^^
+// import foo, * as bar from "mod"
+//        ^^^^^^^^^^^^^^^^^^^^^^^^
+// import type { foo } from "mod";
+//        ^^^^^^^^^^^^^^^^^^^^^^^
+// import foo, { type bar } from "mod";
+JsImportNamedClause =
+    // 'type'?
+    default_specifier: JsDefaultImportSpecifier?
+    named_import: JsAnyNamedImport
+    'from'
+    source: JsModuleSource
+    // assertion: JsImportAssertion?
+
+// import a, { b, c } from "d";
+//        ^^
+JsDefaultImportSpecifier =
+    local_name: JsAnyBinding
+    trailing_comma: ','
+
+JsAnyNamedImport =
+	JsNamedImportSpecifierList
+	|  JsNamespaceImportSpecifier
+
+JsNamespaceImportSpecifier =
+    '*'
+    'as'
+    local_name: JsAnyBinding
+
+JsNamedImportSpecifierList =
+    '{'
+    specifiers: (JsAnyNamedImportSpecifier (',' JsAnyNamedImportSpecifier)* ','?)
+    '}'
+
+JsAnyNamedImportSpecifier =
+    JsShorthandNamedImportSpecifier
+    | JsNamedImportSpecifier
+
+// import { foo as test } from "mod";
+//          ^^^^^^^^^^^
+// import { type foo as test } from "mod";
+//          ^^^^^^^^^^^^^^^^^
+JsNamedImportSpecifier =
+    // 'type'?
+    name: JsLiteralExportName
+    'as'
+    local_name: JsAnyBinding
+
+// import { type foo } from "mod";
+//          ^^^^^^^^
+JsShorthandNamedImportSpecifier =
+    // 'type'?
+    local_name: JsAnyBinding
+
+JsLiteralExportName = value: ('ident' | 'js_string_literal')
+
+JsModuleSource = value: 'js_string_literal'
 
 // export default declaration
 ExportDefaultDecl = 'export' 'default'? 'type'? decl:DefaultDecl
@@ -924,24 +1015,7 @@ TsExportAssignment = 'export' '=' expr: JsAnyExpression ';'?
 // typescript namespace export
 TsNamespaceExportDecl = 'export' 'as' 'namespace' ident: Ident? ';'?
 
-ImportClause =
-	WildcardImport
-	| NamedImports
-	| Name
-	| ImportStringSpecifier
-
-
-NamedImports = '{' specifiers:(Specifier (',' Specifier)* ','?) '}'
-
-
 Specifier = name:Ident 'as'? manual__alias:Name?
-
-
-// this is not currently implemented in rslint parser
-ImportStringSpecifier = source: 'js_string_literal'
-
-
-WildcardImport = '*' 'as'? ident: Ident?
 
 // @ematipico this one is not entirely correct I think..
 ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:(Specifier (',' Specifier)* ','?) * '}'
@@ -958,9 +1032,6 @@ JsSpread =
 	'...'
 	argument: JsAnyExpression
 
-
-
-Name = 'ident'
 
 // Reference to an identifier from the lexical scope
 JsReferenceIdentifier = value: 'ident'

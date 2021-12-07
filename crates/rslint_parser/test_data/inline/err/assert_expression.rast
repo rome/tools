@@ -2,26 +2,34 @@ JsModule {
     interpreter_token: missing (optional),
     directives: [],
     items: [
-        ImportDecl {
+        JsImport {
             import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
-            imports: [
-                NamedImports {
+            import_clause: JsImportNamedClause {
+                default_specifier: missing (optional),
+                named_import: JsNamedImportSpecifierList {
                     l_curly_token: L_CURLY@7..9 "{" [] [Whitespace(" ")],
                     specifiers: [
-                        Specifier {
-                            name: missing (required),
-                            as_token: missing (optional),
-                            alias: missing (optional),
+                        JsShorthandNamedImportSpecifier {
+                            local_name: JsIdentifierBinding {
+                                name_token: IDENT@9..11 "a" [] [Whitespace(" ")],
+                            },
                         },
                     ],
                     r_curly_token: R_CURLY@11..13 "}" [] [Whitespace(" ")],
                 },
-            ],
-            type_token: missing (optional),
-            from_token: FROM_KW@13..18 "from" [] [Whitespace(" ")],
-            source_token: JS_STRING_LITERAL@18..27 "\"a.json\"" [] [Whitespace(" ")],
-            asserted_object: missing (required),
-            assert_token: ASSERT_KW@27..33 "assert" [] [],
+                from_token: FROM_KW@13..18 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@18..27 "\"a.json\"" [] [Whitespace(" ")],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@27..33 "assert" [] [],
+                },
+            },
             semicolon_token: missing (optional),
         },
     ],
@@ -31,27 +39,35 @@ JsModule {
   0: (empty)
   1: LIST@0..0
   2: LIST@0..33
-    0: IMPORT_DECL@0..33
+    0: JS_IMPORT@0..27
       0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
-      1: LIST@7..13
-        0: NAMED_IMPORTS@7..13
+      1: JS_IMPORT_NAMED_CLAUSE@7..27
+        0: (empty)
+        1: JS_NAMED_IMPORT_SPECIFIER_LIST@7..13
           0: L_CURLY@7..9 "{" [] [Whitespace(" ")]
           1: LIST@9..11
-            0: SPECIFIER@9..11
-              0: NAME@9..11
+            0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@9..11
+              0: JS_IDENTIFIER_BINDING@9..11
                 0: IDENT@9..11 "a" [] [Whitespace(" ")]
           2: R_CURLY@11..13 "}" [] [Whitespace(" ")]
-      2: FROM_KW@13..18 "from" [] [Whitespace(" ")]
-      3: JS_STRING_LITERAL@18..27 "\"a.json\"" [] [Whitespace(" ")]
-      4: ASSERT_KW@27..33 "assert" [] []
-      5: (empty)
+        2: FROM_KW@13..18 "from" [] [Whitespace(" ")]
+        3: JS_MODULE_SOURCE@18..27
+          0: JS_STRING_LITERAL@18..27 "\"a.json\"" [] [Whitespace(" ")]
+      2: (empty)
+    1: JS_EXPRESSION_STATEMENT@27..33
+      0: JS_IDENTIFIER_EXPRESSION@27..33
+        0: JS_REFERENCE_IDENTIFIER@27..33
+          0: IDENT@27..33 "assert" [] []
+      1: (empty)
   3: EOF@33..34 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: assert clauses in import declarations require an object expression
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ assert_expression.js:1:28
   │
 1 │ import { a } from "a.json" assert
-  │                            ^^^^^^
+  │ ---------------------------^^^^^^ An explicit or implicit semicolon is expected here...
+  │ │                           
+  │ ...Which is required to end this statement
 
 --
 import { a } from "a.json" assert

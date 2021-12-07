@@ -129,18 +129,11 @@ error[SyntaxError]: expected a property, a shorthand property, a getter, a sette
   │          ^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
 --
-error[SyntaxError]: Expected a statement or declaration, but found none
+error[SyntaxError]: expected a statement but instead found '}'
   ┌─ object_expr_error_prop_name.js:2:12
   │
 2 │ let a = {{}}
-  │            ^ Expected a statement or declaration here
-
---
-error[SyntaxError]: expected a statement but instead found ''
-  ┌─ object_expr_error_prop_name.js:3:1
-  │
-3 │ 
-  │ ^ Expected a statement here
+  │            ^ Expected a statement here
 
 --
 let a = { /: 6, /: /foo/ }

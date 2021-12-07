@@ -55,18 +55,11 @@ error[SyntaxError]: expected a semicolon (';'), or a method for a class body but
   │         ^ Expected a semicolon (';'), or a method for a class body here
 
 --
-error[SyntaxError]: Expected a statement or declaration, but found none
+error[SyntaxError]: expected a statement but instead found '}'
   ┌─ block_stmt_in_class.js:1:11
   │
 1 │ class S{{}}
-  │           ^ Expected a statement or declaration here
-
---
-error[SyntaxError]: expected a statement but instead found ''
-  ┌─ block_stmt_in_class.js:2:1
-  │
-2 │ 
-  │ ^ Expected a statement here
+  │           ^ Expected a statement here
 
 --
 class S{{}}

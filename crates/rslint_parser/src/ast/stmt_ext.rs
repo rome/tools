@@ -49,14 +49,8 @@ impl JsVariableDeclaration {
 }
 
 impl Specifier {
-	pub fn alias(&self) -> Option<Name> {
+	pub fn alias(&self) -> Option<JsName> {
 		self.syntax().children().nth(1).and_then(|x| x.try_to())
-	}
-}
-
-impl WildcardImport {
-	pub fn alias(&self) -> Option<Name> {
-		self.syntax().children().find_map(|x| x.try_to())
 	}
 }
 
