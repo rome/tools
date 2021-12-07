@@ -1,5 +1,3 @@
-#[allow(deprecated)]
-use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
@@ -15,17 +13,17 @@ use crate::syntax::typescript::{
 use crate::ConditionalSyntax::{Invalid, Valid};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-	CompletedMarker, ConditionalSyntax, Event, Marker, Parser, ParserState, StrictMode, TokenSet,
+	CompletedMarker, ConditionalSyntax, Event, Marker, ParseRecovery, Parser, ParserState,
+	StrictMode, TokenSet,
 };
+use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::{SyntaxKind, T};
 use std::ops::Range;
 
 /// Parses a class expression, e.g. let a = class {}
-pub(super) fn class_expression(p: &mut Parser) -> CompletedMarker {
-	class(p, ClassKind::Expression)
-		.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
-		.unwrap()
+pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	parse_class(p, ClassKind::Expression).or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
 }
 
 // test class_decl
@@ -36,9 +34,10 @@ pub(super) fn class_expression(p: &mut Parser) -> CompletedMarker {
 // test_err class_decl_err
 // class {}
 // class extends bar {}
-// class extends {}
-// class
 // class foo { set {} }
+// class extends {}
+
+// test_err class_extends_err
 // class A extends bar extends foo {}
 // class A extends bar, foo {}
 /// Parses a class declaration if it is valid and otherwise returns [Invalid].
@@ -46,8 +45,7 @@ pub(super) fn class_expression(p: &mut Parser) -> CompletedMarker {
 /// A class can be invalid if
 /// * It uses an illegal identifier name
 pub(super) fn parse_class_declaration(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
-	// TODO:: to remove `Present` when this file is moved to use `ParsedSyntax`
-	class(p, ClassKind::Declaration)
+	parse_class(p, ClassKind::Declaration)
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
@@ -65,8 +63,12 @@ impl From<ClassKind> for SyntaxKind {
 	}
 }
 
-fn class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSyntax> {
+fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSyntax> {
+	if !p.at(T![class]) {
+		return Absent;
+	}
 	let m = p.start();
+	let class_token_range = p.cur_tok().range;
 	p.expect_required(T![class]);
 
 	// class bodies are implicitly strict
@@ -98,8 +100,9 @@ fn class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSyntax> {
 				if kind == ClassKind::Declaration && !guard.state.in_default {
 					let err = guard
 						.err_builder("class declarations must have a name")
-						.primary(guard.cur_tok().range, "");
+						.primary(class_token_range.start..guard.cur_tok().range.start, "");
 
+					guard.missing();
 					guard.error(err);
 				}
 			}
@@ -115,11 +118,12 @@ fn class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSyntax> {
 		}
 	}
 
+	// TODO: these two functions should return `ParsedSyntax`, so we can handle possible errors/missing/etc.
 	extends_clause(&mut guard);
 	implements_clause(&mut guard);
 
 	guard.expect_required(T!['{']);
-	class_members(&mut *guard);
+	parse_class_members(&mut *guard);
 	guard.expect_required(T!['}']);
 
 	let result = Present(m.complete(&mut *guard, kind.into()));
@@ -167,6 +171,7 @@ fn implements_clause(p: &mut Parser) {
 			.primary(start..p.marker_vec_range(&elems).end, "");
 
 		p.error(err);
+		// TODO: remap error to an unknown node
 		m.complete(&mut *p, ERROR);
 	}
 
@@ -209,31 +214,63 @@ fn extends_clause(p: &mut Parser) {
 			.primary(p.marker_vec_range(&elems), "");
 
 		p.error(err);
+		// TODO: remap error to an unknown node
 		m.complete(p, ERROR);
 	}
 
 	m.complete(p, JS_EXTENDS_CLAUSE);
 }
 
-fn class_members(p: &mut Parser) -> CompletedMarker {
+/// Parses a list of class members
+fn parse_class_members(p: &mut Parser) {
 	let members = p.start();
 
 	let mut progress = ParserProgress::default();
 	while !p.at(EOF) && !p.at(T!['}']) {
 		progress.assert_progressing(p);
-		class_member(p);
+
+		let checkpoint = p.checkpoint();
+		let parsed_member = parse_class_member(p);
+
+		let to_recover = match parsed_member {
+			Valid(marker) => Present(marker),
+			// In this case we want to mark members that have errors as invalid.
+			//
+			// This is because the parsing of members is incremental and when we encounter
+			// an error down the line, we might have already progressed the parser.
+			//
+			// So when there's an error, we mark the whole marker as invalid
+			// and restore the state of the parser to a previous [Checkpoint].
+			Invalid(_) => {
+				p.rewind(checkpoint);
+				Absent
+			}
+		};
+
+		let member_recovered = to_recover.or_recover(
+			p,
+			&ParseRecovery::new(
+				JS_UNKNOWN_MEMBER,
+				token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
+			),
+			js_parse_error::expected_class_member,
+		);
+
+		if member_recovered.is_err() {
+			break;
+		}
 	}
 
-	members.complete(p, LIST)
+	members.complete(p, LIST);
 }
 
-fn class_member(p: &mut Parser) -> CompletedMarker {
+fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 	let mut member_marker = p.start();
 
 	// test class_empty_element
 	// class foo { ;;;;;;;;;; get foo() {};;;;}
 	if p.eat(T![;]) {
-		return member_marker.complete(p, JS_EMPTY_CLASS_MEMBER);
+		return Valid(member_marker.complete(p, JS_EMPTY_CLASS_MEMBER));
 	}
 
 	// test static_method
@@ -250,17 +287,24 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 	if declare {
 		offset += 1;
 	}
+	let mut declare_diagnostic = None;
 
 	// Let's assume declare is an identifier and not a keyword
 	if declare && !has_access_modifier {
+		// test class_declare
+		// class B { declare() {} }
+		// class B { declare = foo }
+
 		// declare() and declare: foo
-		if is_method_class_member(p, offset) {
+		if is_at_method_class_member(p, offset) {
 			parse_literal_member_name(p).ok().unwrap(); // bump declare as identifier
-			return method_class_member_body(p, member_marker);
-		} else if is_property_class_member(p, offset) {
+			return Valid(parse_method_class_member_body(p, member_marker));
+		} else if is_at_property_class_member(p, offset) {
 			parse_literal_member_name(p).ok().unwrap(); // bump declare as identifier
-			return property_class_member_body(p, member_marker);
+			return Valid(parse_property_class_member_body(p, member_marker));
 		} else {
+			// test_err class_declare_member
+			// class B { declare foo = bar }
 			let msg = if p.typescript() {
 				"a `declare` modifier cannot be applied to a class element"
 			} else {
@@ -268,16 +312,15 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 			};
 			let err = p.err_builder(msg).primary(p.cur_tok().range, "");
 
-			p.error(err);
-			let m = p.start();
-			p.bump_any();
-			m.complete(p, ERROR);
+			declare_diagnostic = Some(err);
 		}
 	};
 
 	if has_access_modifier {
-		if is_method_class_member(p, offset) {
-			if declare {
+		if is_at_method_class_member(p, offset) {
+			if declare && declare_diagnostic.is_some() {
+				// test_err class_declare_method
+				// class B { declare fn() {} }
 				let msg = if p.typescript() {
 					"a `declare` modifier cannot be applied to a class method"
 				} else {
@@ -289,44 +332,64 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				p.error(err);
 
 				let m = p.start();
-				p.bump_any();
-				m.complete(p, ERROR);
+				p.bump_remap(T![declare]);
+				m.complete(p, JS_UNKNOWN_MODIFIER);
 			}
 
-			return method_class_member(p, member_marker);
-		} else if is_property_class_member(p, offset) {
-			if declare {
+			return Valid(parse_method_class_member(p, member_marker));
+		} else if is_at_property_class_member(p, offset) {
+			if declare && declare_diagnostic.is_some() {
 				p.bump_remap(T![declare]);
 			}
 			p.bump_any();
 
-			return property_class_member_body(p, member_marker);
+			return Valid(parse_property_class_member_body(p, member_marker));
 		}
 	}
 
 	let is_static = p.nth_src(offset) == "static";
+	let static_token_range = p.nth_tok(offset).range;
 
 	// Let's assume static is an identifier and not the static keyword
 	if is_static {
 		offset += 1;
 
-		if is_method_class_member(p, offset) {
-			consume_modifiers(p, declare, has_access_modifier, is_static, true);
-			return method_class_member_body(p, member_marker);
-		} else if is_property_class_member(p, offset) {
-			consume_modifiers(p, declare, has_access_modifier, is_static, true);
+		if is_at_method_class_member(p, offset) {
+			Modifiers::default()
+				.set_declare(declare)
+				.set_accessibility(has_access_modifier)
+				.set_static(is_static)
+				.set_declare_err(declare_diagnostic)
+				.consume(p);
+			return Valid(parse_method_class_member_body(p, member_marker));
+		} else if is_at_property_class_member(p, offset) {
+			Modifiers::default()
+				.set_declare(declare)
+				.set_accessibility(has_access_modifier)
+				.set_static(is_static)
+				.set_declare_err(declare_diagnostic)
+				.consume(p);
 
 			return if declare {
-				property_declaration_class_member_body(p, member_marker, JS_LITERAL_MEMBER_NAME)
+				Valid(property_declaration_class_member_body(
+					p,
+					member_marker,
+					JS_LITERAL_MEMBER_NAME,
+				))
 			} else {
-				property_class_member_body(p, member_marker)
+				Valid(parse_property_class_member_body(p, member_marker))
 			};
 		}
-
-		// Seems that static is a keyword since the parser wasn't able to parse a valid method or property named static
 	}
 
-	consume_modifiers(p, declare, has_access_modifier, is_static, false);
+	// Seems that static is a keyword since the parser wasn't able to parse a valid method or property named static
+	Modifiers::default()
+		.set_declare(declare)
+		.set_accessibility(has_access_modifier)
+		.set_static(is_static)
+		.set_remap_static(true)
+		.set_declare_err(declare_diagnostic)
+		.consume(p);
 
 	let maybe_err = p.start();
 	let (abstract_range, readonly_range) = abstract_readonly_modifiers(p);
@@ -348,6 +411,7 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				.primary(range, "");
 
 			p.error(err);
+			// TODO: remap error to an unknown node
 			maybe_err.complete(p, ERROR);
 		} else {
 			maybe_err.abandon(p);
@@ -371,7 +435,7 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 					p,
 					"class index signatures can only be used in TypeScript files",
 				);
-				return sig;
+				return Valid(sig);
 			}
 			Err(m) => {
 				p.rewind(check);
@@ -406,12 +470,12 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 			guard.error(err);
 		}
 
-		return method_class_member(&mut *guard, member_marker);
+		return Valid(parse_method_class_member(&mut *guard, member_marker));
 	};
 
 	if p.cur_src() == "async"
 		&& !p.nth_at(1, T![?])
-		&& !is_method_class_member(p, 1)
+		&& !is_at_method_class_member(p, 1)
 		&& !p.has_linebreak_before_n(1)
 	{
 		let async_range = p.cur_tok().range;
@@ -441,7 +505,7 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 			guard.error(err);
 		}
 
-		return method_class_member(&mut *guard, member_marker);
+		return Valid(parse_method_class_member(&mut *guard, member_marker));
 	}
 
 	let member_name = p.cur_src();
@@ -449,10 +513,10 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 		member_name,
 		"constructor" | "\"constructor\"" | "'constructor'"
 	);
-	let member =
-		class_member_name(p).or_missing_with_error(p, js_parse_error::expected_class_member_name);
+	let member = parse_class_member_name(p)
+		.or_missing_with_error(p, js_parse_error::expected_class_member_name);
 
-	if is_method_class_member(p, 0) {
+	if is_at_method_class_member(p, 0) {
 		if let Some(range) = readonly_range.clone() {
 			let err = p
 				.err_builder("class methods cannot be readonly")
@@ -461,14 +525,18 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 			p.error(err);
 		}
 
+		// test_err class_constructor_err
+		// class B { static constructor() {} }
 		return if is_constructor {
-			let constructor = constructor_class_member_body(p, member_marker);
+			let mut constructor = parse_constructor_class_member_body(p, member_marker);
 
 			if is_static {
 				let err = p
 					.err_builder("constructors cannot be static")
-					.primary(constructor.range(p), "");
+					.primary(constructor.range(p), "")
+					.secondary(static_token_range, "Remove the `static` word");
 
+				constructor.change_kind(p, JS_UNKNOWN_MEMBER);
 				p.error(err);
 			}
 
@@ -481,18 +549,18 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				p.error(err);
 			}
 
-			constructor
+			Valid(constructor)
 		} else {
-			method_class_member_body(p, member_marker)
+			Valid(parse_method_class_member_body(p, member_marker))
 		};
 	}
 
 	if let Some(member) = member {
-		if is_property_class_member(p, 0) {
+		if is_at_property_class_member(p, 0) {
 			let property = if declare {
 				property_declaration_class_member_body(p, member_marker, member.kind())
 			} else {
-				property_class_member_body(p, member_marker)
+				parse_property_class_member_body(p, member_marker)
 			};
 
 			if is_constructor {
@@ -503,7 +571,7 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				p.error(err);
 			}
 
-			return property;
+			return Valid(property);
 		}
 
 		if member.kind() == JS_LITERAL_MEMBER_NAME {
@@ -528,6 +596,10 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				// 	static get() {}
 				// }
 
+				// test_err getter_class_no_body
+				// class Setters {
+				//   get foo()
+
 				// test setter_class_member
 				// class Setters {
 				// 	set foo(a) {}
@@ -548,6 +620,10 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				// class Setters {
 				//   set foo() {}
 				// }
+
+				// test_err setter_class_no_body
+				// class Setters {
+				//   set foo(a)
 
 				// The tree currently holds a STATIC_MEMBER_NAME node that wraps a ident token but we now found
 				// out that the 'get' or 'set' isn't a member name in this context but instead are the
@@ -570,57 +646,34 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				}
 
 				// So we've seen a get that now must be followed by a getter/setter name
-				class_member_name(p)
+				parse_class_member_name(p)
 					.or_missing_with_error(p, js_parse_error::expected_class_member_name);
-				p.expect_required(T!['(']);
 
 				let completed = if is_getter {
+					p.expect_required(T!['(']);
 					p.expect_required(T![')']);
 					ts_return_type(p);
 					function_body(p)
-						.or_missing_with_error(p, js_parse_error::expected_function_body);
+						.or_missing_with_error(p, js_parse_error::expected_class_method_body);
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
-					// TODO: review error handling once the pattern functions is refactored
+					p.state.allow_object_expr = p.expect_required(T!['(']);
 					parse_formal_param_pat(p)
 						.or_missing_with_error(p, js_parse_error::expected_parameter);
 					p.expect_required(T![')']);
 					function_body(p)
-						.or_missing_with_error(p, js_parse_error::expected_function_body);
+						.or_missing_with_error(p, js_parse_error::expected_class_method_body);
 
+					p.state.allow_object_expr = true;
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
 				};
 
-				return completed;
+				return Valid(completed);
 			}
 		}
 	}
-
-	let err = p
-		.err_builder("expected `;`, a property, or a method for a class body, but found none")
-		.primary(p.cur_tok().range, "");
-	#[allow(deprecated)]
-	SingleTokenParseRecovery::with_error(
-		token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
-		JS_UNKNOWN_MEMBER,
-		err,
-	)
-	.recover(p);
-
-	member_marker.complete(p, JS_UNKNOWN_MEMBER)
-}
-
-const PROPERTY_START_SET: TokenSet = token_set![T![!], T![:], T![=], T!['}']];
-
-/// Tests if the parser is currently (considering the offset) at the body of a property member.
-/// The method assumes that the identifier has already been consumed.
-fn is_property_class_member(p: &Parser, mut offset: usize) -> bool {
-	if p.nth_at(offset, T![?]) {
-		offset += 1;
-	}
-
-	PROPERTY_START_SET.contains(p.nth(offset)) || is_semi(p, offset)
+	Invalid(member_marker.complete(p, JS_UNKNOWN_MEMBER).into())
 }
 
 fn property_declaration_class_member_body(
@@ -628,8 +681,7 @@ fn property_declaration_class_member_body(
 	member_marker: Marker,
 	member_name_kind: SyntaxKind,
 ) -> CompletedMarker {
-	let property = property_class_member_body(p, member_marker);
-
+	let property = parse_property_class_member_body(p, member_marker);
 	if member_name_kind == JS_PRIVATE_CLASS_MEMBER_NAME {
 		let err = p
 			.err_builder("private class properties with `declare` are invalid")
@@ -642,7 +694,7 @@ fn property_declaration_class_member_body(
 }
 
 /// Parses the body of a property class member (anything after the member name)
-fn property_class_member_body(p: &mut Parser, member_marker: Marker) -> CompletedMarker {
+fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> CompletedMarker {
 	let optional_range = optional_member_token(p);
 	if p.at(T![!]) {
 		let range = p.cur_tok().range;
@@ -664,6 +716,7 @@ fn property_class_member_body(p: &mut Parser, member_marker: Marker) -> Complete
 
 		if let Some(error) = error {
 			p.error(error);
+			// TODO: remap error to an unknown node
 			p.bump_remap(ERROR);
 		} else {
 			p.bump_any(); // Bump ! token
@@ -700,6 +753,7 @@ fn optional_member_token(p: &mut Parser) -> Option<Range<usize>> {
 				.primary(p.cur_tok().range, "");
 
 			p.error(err);
+			// TODO: remap error to an unknown node
 			p.bump_remap(ERROR);
 		} else {
 			p.bump_any();
@@ -723,31 +777,29 @@ pub(crate) fn parse_equal_value_clause(p: &mut Parser) -> ParsedSyntax<Completed
 	}
 }
 
-fn is_method_class_member(p: &Parser, mut offset: usize) -> bool {
-	if p.nth_at(offset, T![?]) {
-		offset += 1;
-	}
-
-	p.nth_at(offset, T!['(']) || p.nth_at(offset, T![<])
+fn parse_method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
+	parse_class_member_name(p).or_missing_with_error(p, js_parse_error::expected_class_member_name);
+	parse_method_class_member_body(p, m)
 }
 
-fn method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
-	class_member_name(p).or_missing_with_error(p, js_parse_error::expected_function_body);
-	method_class_member_body(p, m)
-}
+// test_err class_member_method_parameters
+// class B { foo(a {} }
+
+// test_err class_member_method_body
+// class B { foo(a)
 
 /// Parses the body (everything after the identifier name) of a method class member
-fn method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
+fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
 	optional_member_token(p);
 	ts_parameter_types(p);
-	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_parameters);
+	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_class_parameters);
 	ts_return_type(p);
-	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
+	function_body(p).or_missing_with_error(p, js_parse_error::expected_class_method_body);
 
 	m.complete(p, JS_METHOD_CLASS_MEMBER)
 }
 
-fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> CompletedMarker {
+fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> CompletedMarker {
 	if let Some(range) = optional_member_token(p) {
 		let err = p
 			.err_builder("constructors cannot be optional")
@@ -765,11 +817,13 @@ fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> Compl
 				.primary(ty.range(p), "");
 
 			p.error(err);
+			// TODO: remap error to an unknown node
 			ty.change_kind(p, ERROR);
 		}
 	}
 
-	constructor_parameter_list(p);
+	parse_constructor_parameter_list(p)
+		.or_missing_with_error(p, js_parse_error::expected_constructor_parameters);
 
 	if let Some(range) = maybe_ts_type_annotation(p) {
 		let err = p
@@ -789,7 +843,7 @@ fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> Compl
 		let p = &mut *guard;
 
 		parse_block_impl(p, JS_FUNCTION_BODY)
-			.or_missing_with_error(p, js_parse_error::expected_function_body);
+			.or_missing_with_error(p, js_parse_error::expected_class_method_body);
 	}
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
@@ -798,24 +852,25 @@ fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> Compl
 	member_marker.complete(p, JS_CONSTRUCTOR_CLASS_MEMBER)
 }
 
-fn constructor_parameter_list(p: &mut Parser) -> CompletedMarker {
+fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let m = p.start();
-	parse_parameters_list(p, constructor_parameter);
-	m.complete(p, JS_CONSTRUCTOR_PARAMETER_LIST)
+	parse_parameters_list(p, parse_constructor_parameter);
+	Present(m.complete(p, JS_CONSTRUCTOR_PARAMETER_LIST))
 }
 
-fn constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let modifiers_marker = p.start();
 	let has_accessibility = if ts_access_modifier(p).is_some() {
 		let range = p.cur_tok().range;
 		let maybe_err = p.start();
-		consume_modifiers(p, false, true, false, false);
+		Modifiers::default().set_accessibility(true).consume(p);
 		if !p.typescript() {
 			let err = p
 				.err_builder("accessibility modifiers can only be used in TypeScript files")
 				.primary(range, "");
 
 			p.error(err);
+			// TODO: remap error to an unknown node
 			maybe_err.complete(p, ERROR);
 		} else {
 			maybe_err.abandon(p);
@@ -833,6 +888,7 @@ fn constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 				.primary(range, "");
 
 			p.error(err);
+			// TODO: remap error to an unknown node
 			maybe_err.complete(p, ERROR);
 		} else {
 			maybe_err.abandon(p);
@@ -863,56 +919,127 @@ fn ts_access_modifier<'a>(p: &'a Parser) -> Option<&'a str> {
 }
 
 /// Parses a `JsAnyClassMemberName` and returns its completion marker
-fn class_member_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_class_member_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
-		T![#] => Present(private_class_member_name(p)),
+		T![#] => parse_private_class_member_name(p),
 		T!['['] => parse_computed_member_name(p),
 		_ => parse_literal_member_name(p),
 	}
 }
 
-pub(crate) fn private_class_member_name(p: &mut Parser) -> CompletedMarker {
+pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	if !p.at(T![#]) {
+		return Absent;
+	}
 	let m = p.start();
 	p.expect_required(T![#]);
 	p.expect_required(T![ident]);
-	m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME)
+	Present(m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME))
 }
 
-fn consume_modifiers(
-	p: &mut Parser,
+#[derive(Default)]
+pub(crate) struct Modifiers {
 	declare: bool,
 	accessibility: bool,
-	static_: bool,
-	dont_remap_static: bool,
-) {
-	if accessibility {
-		let kind = match p.cur_src() {
-			"public" => PUBLIC_KW,
-			"private" => PRIVATE_KW,
-			"protected" => PROTECTED_KW,
-			_ => unreachable!(),
-		};
-		if !p.typescript() {
-			let m = p.start();
-			let range = p.cur_tok().range;
-			let err = p
-				.err_builder("accessibility modifiers can only be used in TypeScript files")
-				.primary(range, "");
+	is_static: bool,
+	remap_static: bool,
+	declare_err: Option<Diagnostic>,
+}
 
-			p.error(err);
-			p.bump_any();
-			m.complete(p, ERROR);
-		} else {
-			p.bump_remap(kind);
+impl Modifiers {
+	pub fn set_declare(mut self, is_declare: bool) -> Self {
+		self.declare = is_declare;
+		self
+	}
+
+	pub fn set_accessibility(mut self, accessibility: bool) -> Self {
+		self.accessibility = accessibility;
+		self
+	}
+
+	pub fn set_static(mut self, is_static: bool) -> Self {
+		self.is_static = is_static;
+		self
+	}
+
+	pub fn set_remap_static(mut self, should_remap: bool) -> Self {
+		self.remap_static = should_remap;
+		self
+	}
+
+	pub fn set_declare_err(mut self, diagnostic: Option<Diagnostic>) -> Self {
+		self.declare_err = diagnostic;
+		self
+	}
+
+	/// It consumes modifiers like:
+	///
+	/// - `public`
+	/// - `private`
+	/// - `protected`
+	/// - `static`
+	/// - `declare`
+	///
+	/// And it advances the parser.
+	///
+	/// It creates a diagnostic if some modifiers are not correct.
+	pub fn consume(self, p: &mut Parser) {
+		if self.accessibility {
+			let kind = match p.cur_src() {
+				"public" => PUBLIC_KW,
+				"private" => PRIVATE_KW,
+				"protected" => PROTECTED_KW,
+				_ => unreachable!(),
+			};
+			if !p.typescript() {
+				let m = p.start();
+				let range = p.cur_tok().range;
+				let err = p
+					.err_builder("accessibility modifiers can only be used in TypeScript files")
+					.primary(range, "");
+
+				p.error(err);
+				p.bump_any();
+				m.complete(p, ERROR);
+			} else {
+				p.bump_remap(kind);
+			}
+		}
+		if self.declare {
+			let m = p.start();
+			p.bump_remap(T![declare]);
+			if let Some(err) = self.declare_err {
+				p.error(err);
+				m.complete(p, JS_UNKNOWN_MODIFIER);
+			} else {
+				m.complete(p, JS_MODIFIER);
+			}
+		}
+		if self.is_static && self.remap_static {
+			p.bump_remap(STATIC_KW);
+		} else if self.is_static && !self.remap_static {
+			// Guaranteed to be at the static keyword, parsing a class member must succeed
+			parse_class_member_name(p).ok().unwrap();
 		}
 	}
-	if declare {
-		p.bump_remap(T![declare]);
+}
+
+const PROPERTY_START_SET: TokenSet = token_set![T![!], T![:], T![=], T!['}'], T![;]];
+
+/// Tests if the parser is currently (considering the offset) at the body of a property member.
+/// The method assumes that the identifier has already been consumed.
+fn is_at_property_class_member(p: &Parser, mut offset: usize) -> bool {
+	if p.nth_at(offset, T![?]) {
+		offset += 1;
 	}
-	if static_ && !dont_remap_static {
-		p.bump_remap(STATIC_KW);
-	} else if static_ && dont_remap_static {
-		// Guaranteed to be at the static keyword, parsing a class member must succeed
-		class_member_name(p).ok().unwrap();
+
+	PROPERTY_START_SET.contains(p.nth(offset)) || is_semi(p, offset)
+}
+
+fn is_at_method_class_member(p: &Parser, mut offset: usize) -> bool {
+	if p.nth_at(offset, T![?]) {
+		offset += 1;
 	}
+
+	p.nth_at(offset, T!['(']) || p.nth_at(offset, T![<])
 }

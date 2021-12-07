@@ -15,7 +15,7 @@ use crate::syntax::assignment_target::{
 	parse_simple_assignment_target, SimpleAssignmentTargetExprKind,
 };
 use crate::syntax::binding::parse_identifier_binding;
-use crate::syntax::class::class_expression;
+use crate::syntax::class::parse_class_expression;
 use crate::syntax::function::parse_function_expression;
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
@@ -862,7 +862,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			//  constructor() {}
 			// }
 			// foo[class {}]
-			class_expression(p)
+			parse_class_expression(p).unwrap()
 		}
 		// test async_ident
 		// let a = async;

@@ -12,7 +12,7 @@ JsRoot {
             l_curly_token: L_CURLY@10..11 "{" [] [],
             members: [
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: missing (optional),
@@ -26,7 +26,7 @@ JsRoot {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: missing (optional),
@@ -40,7 +40,7 @@ JsRoot {
                     semicolon_token: SEMICOLON@30..31 ";" [] [],
                 },
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: missing (optional),
@@ -59,7 +59,7 @@ JsRoot {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: missing (optional),
@@ -73,7 +73,7 @@ JsRoot {
                     semicolon_token: SEMICOLON@64..65 ";" [] [],
                 },
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: missing (optional),
@@ -87,7 +87,7 @@ JsRoot {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: missing (optional),
@@ -108,7 +108,7 @@ JsRoot {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: STATIC_KW@81..91 "static" [Whitespace("\n\n\t")] [Whitespace(" ")],
@@ -122,7 +122,7 @@ JsRoot {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: STATIC_KW@105..114 "static" [Whitespace("\n\t")] [Whitespace(" ")],
@@ -141,7 +141,7 @@ JsRoot {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: missing (optional),
@@ -156,7 +156,7 @@ JsRoot {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: missing (optional),
@@ -176,7 +176,7 @@ JsRoot {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: STATIC_KW@181..191 "static" [Whitespace("\n\n\t")] [Whitespace(" ")],
@@ -191,7 +191,7 @@ JsRoot {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    declare_token: missing (optional),
+                    modifiers: missing (optional),
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
                     static_token: STATIC_KW@205..214 "static" [Whitespace("\n\t")] [Whitespace(" ")],

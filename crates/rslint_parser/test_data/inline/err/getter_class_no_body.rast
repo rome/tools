@@ -1,0 +1,68 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsClassDeclaration {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..14 "Setters" [] [Whitespace(" ")],
+            },
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@14..15 "{" [] [],
+            members: [
+                JsGetterClassMember {
+                    access_modifier: missing (optional),
+                    abstract_token: missing (optional),
+                    static_token: missing (optional),
+                    get_token: GET_KW@15..22 "get" [Whitespace("\n  ")] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@22..25 "foo" [] [],
+                    },
+                    l_paren_token: L_PAREN@25..26 "(" [] [],
+                    r_paren_token: R_PAREN@26..27 ")" [] [],
+                    return_type: missing (optional),
+                    body: missing (required),
+                },
+            ],
+            r_curly_token: missing (required),
+        },
+    ],
+}
+
+0: JS_ROOT@0..28
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..27
+    0: JS_CLASS_DECLARATION@0..27
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..14
+        0: IDENT@6..14 "Setters" [] [Whitespace(" ")]
+      2: L_CURLY@14..15 "{" [] []
+      3: LIST@15..27
+        0: JS_GETTER_CLASS_MEMBER@15..27
+          0: GET_KW@15..22 "get" [Whitespace("\n  ")] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@22..25
+            0: IDENT@22..25 "foo" [] []
+          2: L_PAREN@25..26 "(" [] []
+          3: R_PAREN@26..27 ")" [] []
+          4: (empty)
+      4: (empty)
+  3: EOF@27..28 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: expected a class method body but instead found ''
+  ┌─ getter_class_no_body.js:3:1
+  │
+3 │ 
+  │ ^ Expected a class method body here
+
+--
+error[SyntaxError]: expected `'}'` but instead the file ends
+  ┌─ getter_class_no_body.js:3:1
+  │
+3 │ 
+  │ ^ the file ends here
+
+--
+class Setters {
+  get foo()

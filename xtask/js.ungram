@@ -44,6 +44,7 @@ JsUnknownExpression = SyntaxElement*
 JsUnknownMember = SyntaxElement*
 JsUnknownBinding = SyntaxElement*
 JsUnknownAssignmentTarget = SyntaxElement*
+JsUnknownModifier = SyntaxElement*
 
 Ident = 'ident'
 
@@ -554,7 +555,7 @@ JsAnyConstructorParameter =
 // class Test { a; b = 1; static c; }
 //              ^^ ^^^^^^ ^^^^^^^^^
 JsPropertyClassMember =
-	'declare'?
+	modifiers: JsAnyModifier?
 	access_modifier: TsAccessibility?
 	'abstract'?
 	'static'?
@@ -605,6 +606,14 @@ JsSetterClassMember =
 	body: JsFunctionBody
 
 JsEmptyClassMember = ';'
+
+// TODO: apply this node to all class members and properties
+JsAnyModifier =
+	JsModifier
+	| JsUnknownModifier
+
+// TODO: move here also the rest of the modifiers
+JsModifier = 'declare'?
 
 ///////////////
 // ASSIGNMENT TARGETS
