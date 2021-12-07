@@ -3,10 +3,12 @@
 use std::{mem, ops::Range};
 
 use crate::{
-	ParserError,
+	Parser, ParserError,
 	SyntaxKind::{self, *},
 	TreeSink,
 };
+
+use crate::parser::Checkpoint;
 
 /// Events emitted by the Parser, these events are later
 /// made into a syntax tree with `process` into TreeSink.
@@ -115,4 +117,76 @@ pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Par
 			Event::MultipleTokens { amount, kind } => sink.consume_multiple_tokens(amount, kind),
 		}
 	}
+}
+
+struct RewriteParseEventsTreeSink<'r, 'p> {
+	reparse: &'r mut dyn RewriteParseEvents,
+	parser: &'r mut Parser<'p>,
+}
+
+impl<'r, 'p> TreeSink for RewriteParseEventsTreeSink<'r, 'p> {
+	fn token(&mut self, kind: SyntaxKind) {
+		self.reparse.token(kind, &mut self.parser);
+	}
+
+	fn start_node(&mut self, kind: SyntaxKind) {
+		self.reparse.start_node(kind, &mut self.parser);
+	}
+
+	fn finish_node(&mut self) {
+		self.reparse.finish_node(&mut self.parser);
+	}
+
+	fn missing(&mut self) {
+		self.reparse.missing(&mut self.parser);
+	}
+
+	fn errors(&mut self, _errors: Vec<ParserError>) {}
+
+	fn consume_multiple_tokens(&mut self, amount: u8, kind: SyntaxKind) {
+		self.reparse.multiple_token(amount, kind, &mut self.parser);
+	}
+}
+
+/// Implement this trait if you want to change the tree structure
+/// from already parsed events.
+pub trait RewriteParseEvents {
+	/// Called for a started node in the original tree
+	fn start_node(&mut self, kind: SyntaxKind, p: &mut Parser);
+
+	/// Called for a finished node in the original tree
+	fn finish_node(&mut self, p: &mut Parser);
+
+	/// Called for every token
+	fn token(&mut self, kind: SyntaxKind, p: &mut Parser) {
+		p.bump_remap(kind);
+	}
+
+	/// Called for tokens spawning multiple lexer tokens
+	fn multiple_token(&mut self, amount: u8, kind: SyntaxKind, p: &mut Parser) {
+		p.bump_multiple(amount, kind)
+	}
+
+	/// Called for missing children
+	fn missing(&mut self, p: &mut Parser) {
+		p.missing();
+	}
+}
+
+/// Allows to rewrite the parse events by visiting each event emitted after the checkpoint.
+/// Useful if a node turned out to be of a different kind its subtree must be re-shaped
+/// (adding new nodes, dropping sub nodes, etc).
+pub fn rewrite_events(
+	rewriter: &mut dyn RewriteParseEvents,
+	checkpoint: Checkpoint,
+	p: &mut Parser,
+) {
+	let events: Vec<_> = p.events[checkpoint.event_pos + 1usize..].to_vec();
+	p.rewind(checkpoint);
+
+	let mut sink = RewriteParseEventsTreeSink {
+		parser: p,
+		reparse: rewriter,
+	};
+	process(&mut sink, events, Vec::default());
 }

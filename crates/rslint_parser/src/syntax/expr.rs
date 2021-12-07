@@ -1042,19 +1042,17 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 }
 
 fn parse_identifier_expression(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
-	if !is_at_identifier(p) {
-		return Absent;
-	}
+	parse_reference_identifier(p).map(|identifier| {
+		let valid = identifier.is_valid();
 
-	let m = p.start();
-	let id = parse_reference_identifier(p).unwrap();
-	let identifier_expr = Present(m.complete(p, JS_IDENTIFIER_EXPRESSION));
+		let expression = identifier.precede(p).complete(p, JS_IDENTIFIER_EXPRESSION);
 
-	if id.is_valid() {
-		identifier_expr.into_valid()
-	} else {
-		identifier_expr.into_invalid()
-	}
+		if valid {
+			Valid(expression)
+		} else {
+			Invalid(expression.into())
+		}
+	})
 }
 
 fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
@@ -1101,14 +1099,18 @@ pub(crate) fn parse_identifier(
 					p.err_builder("Illegal use of `yield` as an identifier in generator function")
 						.primary(p.cur_tok().range, ""),
 				),
-				"yield" | "let" if StrictMode.is_supported(p) => Some(
-					p.err_builder(&format!(
-						"Illegal use of `{}` as an identifier in strict mode",
-						name
-					))
-					.primary(p.cur_tok().range, ""),
-				),
-
+				"yield" | "let" | "public" | "protected" | "private" | "package" | "implements"
+				| "interface" | "static"
+					if StrictMode.is_supported(p) =>
+				{
+					Some(
+						p.err_builder(&format!(
+							"Illegal use of `{}` as an identifier in strict mode",
+							name
+						))
+						.primary(p.cur_tok().range, ""),
+					)
+				}
 				_ => None,
 			};
 

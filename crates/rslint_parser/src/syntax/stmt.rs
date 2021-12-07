@@ -223,32 +223,41 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 	// Labelled statement
 	if p.nth_at(1, T![:]) {
-		if let Present(Valid(identifier)) = parse_identifier(p, JS_LABELED_STATEMENT) {
-			let range = identifier.range(p);
-			let label = p.source(range);
+		if let Present(identifier) = parse_identifier(p, JS_LABELED_STATEMENT) {
+			if let Valid(identifier) = &identifier {
+				let range = identifier.range(p);
+				let label = p.source(range);
 
-			if let Some(first_range) = p.state.labels.get(label) {
-				let err = p
-					.err_builder("Duplicate statement labels are not allowed")
-					.secondary(
-						first_range.to_owned(),
-						&format!("`{}` is first used as a label here", label),
-					)
-					.primary(
-						range,
-						&format!("a second use of `{}` here is not allowed", label),
-					);
+				if let Some(first_range) = p.state.labels.get(label) {
+					let err = p
+						.err_builder("Duplicate statement labels are not allowed")
+						.secondary(
+							first_range.to_owned(),
+							&format!("`{}` is first used as a label here", label),
+						)
+						.primary(
+							range,
+							&format!("a second use of `{}` here is not allowed", label),
+						);
 
-				p.error(err);
-			} else {
-				let string = label.to_string();
-				p.state.labels.insert(string, range.into());
+					p.error(err);
+				} else {
+					let string = label.to_string();
+					p.state.labels.insert(string, range.into());
+				}
 			}
+
+			let kind = if identifier.is_valid() {
+				JS_LABELED_STATEMENT
+			} else {
+				JS_UNKNOWN_STATEMENT
+			};
 
 			let labelled_statement = identifier.undo_completion(p);
 			p.bump_any();
 			parse_statement(p, None);
-			return Present(labelled_statement.complete(p, JS_LABELED_STATEMENT));
+
+			return Present(labelled_statement.complete(p, kind));
 		}
 	}
 

@@ -1,9 +1,8 @@
+use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::{conditional_expr, expr, is_at_name, parse_name, unary_expr};
-use crate::syntax::js_parse_error::{
-	expected_assignment_target, expected_identifier, expected_simple_assignment_target,
-};
+use crate::syntax::js_parse_error::{expected_assignment_target, expected_identifier};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Parser};
@@ -22,6 +21,9 @@ use crate::{SyntaxKind::*, *};
 // ++a = b;
 // (++a) = b;
 // (a = b;
+// a?.b = b;
+// a?.["b"] = b;
+// (a +) = b;
 
 /// Converts the passed in lhs expression to an assignment pattern
 /// The passed checkpoint allows to restore the parser to the state before it started parsing the expression.
@@ -280,108 +282,101 @@ fn try_expression_to_assignment(
 		return Err(());
 	}
 
-	let events = &mut p.events[target.start_pos as usize..target.finish_pos as usize];
-	let mut children_valid = true;
-	let mut identifier_start: Option<usize> = None;
+	// At this point it's guaranteed that the root node can be mapped to a assignment
+	// but it's not yet guaranteed if it is valid or not (for example, a static member expression
+	// is valid, except if it uses optional chaining).
+	let mut reparse_assignment = ReparseAssignment::new();
+	rewrite_events(&mut reparse_assignment, checkpoint, p);
 
-	for event in events {
-		match event {
-			Event::Start {
-				kind: TOMBSTONE, ..
-			}
-			| Event::Token { .. }
-			| Event::MultipleTokens { .. }
-			| Event::Missing => {}
-			Event::Start {
-				kind,
-				forward_parent,
-				start,
-			} => {
-				match *kind {
-					JS_PARENTHESIZED_EXPRESSION => {
-						*kind = JS_PARENTHESIZED_ASSIGNMENT;
-					}
-					JS_STATIC_MEMBER_EXPRESSION => {
-						*kind = JS_STATIC_MEMBER_ASSIGNMENT;
-						// structure is identical, skip the remaining children
-						break;
-					}
-					JS_COMPUTED_MEMBER_EXPRESSION => {
-						*kind = JS_COMPUTED_MEMBER_ASSIGNMENT;
-						// structure is identical, skip the remaining children
-						break;
-					}
-					JS_IDENTIFIER_EXPRESSION => {
-						*kind = JS_IDENTIFIER_ASSIGNMENT;
-					}
-					JS_REFERENCE_IDENTIFIER => {
-						// IdentifierExpression has a nested reference identifier to have a "unique"
-						// node to get all references to an identifier. No such thing exists
-						// for assignment target where the ident is a direct child of the IdentifierAssignment.
-						// That's why we need to "unwrap" the ident here by undoing and abandoning the reference
-						// identifier
-						debug_assert!(
-							forward_parent == &None,
-							"Tombstoning with precede is not supported"
-						);
-						// Delete the identifier and only hold on to the expression.
-						// Abandoning will attach the identifier to the expression.
-						*kind = SyntaxKind::TOMBSTONE;
-						// Remember the identifier start so that we can "tombstone" the finish marker
-						identifier_start = Some(*start);
-					}
-					_ => {
-						children_valid = false
-						// continue to convert other children
-					}
-				}
-			}
-			slot @ Event::Finish { .. } => {
-				if let Some(start) = identifier_start {
-					// Tombstone the finish marker of a reference identifier
-					*slot = Event::tombstone(start);
-					identifier_start = None;
-				}
-			}
+	Ok(reparse_assignment.result.unwrap())
+}
+
+struct ReparseAssignment {
+	// Stores the unfinished parents
+	// Index 0: Re-mapped kind of the node
+	// Index 1: Started marker. A `None` marker means that this node should be dropped
+	//          from the re-written tree
+	parents: Vec<(SyntaxKind, Option<Marker>)>,
+	// Stores the completed assignment node (valid or invalid).
+	result: Option<CompletedMarker>,
+	// Tracks if the visitor is still inside of an assignment
+	inside_assignment: bool,
+}
+
+impl ReparseAssignment {
+	pub fn new() -> Self {
+		Self {
+			parents: Vec::default(),
+			result: None,
+			inside_assignment: true,
 		}
-	}
-
-	if children_valid {
-		Ok(target)
-	} else if target.kind() == JS_PARENTHESIZED_EXPRESSION {
-		p.rewind(checkpoint);
-
-		// You're wondering why this is OK? The reason is, that there's a valid outermost parenthesized
-		// assignment. The problem is with one of the inner assignments. Reparse the parenthesized assignment
-		// and wrap the "invalid" inner assignment in an UNKNOWN_ASSIGNMENT (and add the diagnostics).
-		Ok(re_parse_parenthesized_expression_as_assignment(p))
-	} else {
-		Err(())
 	}
 }
 
-/// Re-parses a parenthesized expression as an assignment target.
-/// Only intended to be used if the parser fully rewinds to the position before a valid
-/// parenthesized expression.
-///
-/// # Panics
-/// If the parser isn't positioned at a parenthesized expression.
-fn re_parse_parenthesized_expression_as_assignment(p: &mut Parser) -> CompletedMarker {
-	let outer = p.start();
-	p.bump(T!['(']);
+/// Rewrites expressions to assignments
+/// * Converts parenthesized expression to parenthesized assignment
+/// * Converts computed/static member expressions to computed/static member assignment.
+///   Validates that the operator isn't `?.` .
+/// * Converts identifier expressions to identifier assignment, drops the inner reference identifier
+impl RewriteParseEvents for ReparseAssignment {
+	fn start_node(&mut self, kind: SyntaxKind, p: &mut Parser) {
+		if !self.inside_assignment {
+			self.parents.push((kind, Some(p.start())));
+			return;
+		}
 
-	// re-parse any nested parenthesized assignment targets
-	if p.at(T!['(']) {
-		re_parse_parenthesized_expression_as_assignment(p);
-	} else {
-		// if the parenthesized expression contains any other assignment target, re-parse it too
-		parse_assignment(p, AssignmentExprPrecedence::Conditional)
-			.or_missing_with_error(p, expected_simple_assignment_target);
+		let mapped_kind = match kind {
+			JS_PARENTHESIZED_EXPRESSION => JS_PARENTHESIZED_ASSIGNMENT,
+			JS_STATIC_MEMBER_EXPRESSION => {
+				self.inside_assignment = false;
+				JS_STATIC_MEMBER_ASSIGNMENT
+			}
+			JS_COMPUTED_MEMBER_EXPRESSION => {
+				self.inside_assignment = false;
+				JS_COMPUTED_MEMBER_ASSIGNMENT
+			}
+			JS_IDENTIFIER_EXPRESSION => JS_IDENTIFIER_ASSIGNMENT,
+			JS_REFERENCE_IDENTIFIER => {
+				self.parents.push((kind, None)); // Omit reference identifiers
+				return;
+			}
+			_ => {
+				self.inside_assignment = false;
+				JS_UNKNOWN_ASSIGNMENT
+			}
+		};
+
+		self.parents.push((mapped_kind, Some(p.start())));
 	}
 
-	p.expect_required(T![')']);
+	fn finish_node(&mut self, p: &mut Parser) {
+		let (kind, m) = self.parents.pop().unwrap();
 
-	outer.complete(p, JS_PARENTHESIZED_ASSIGNMENT)
+		if let Some(m) = m {
+			let completed = m.complete(p, kind);
+
+			if kind == JS_UNKNOWN_ASSIGNMENT {
+				p.error(invalid_assignment_error(p, completed.range(p)));
+			}
+			self.result = Some(completed);
+		}
+	}
+
+	fn token(&mut self, kind: SyntaxKind, p: &mut Parser) {
+		let parent = self.parents.last_mut();
+
+		if let Some((parent_kind, _)) = parent {
+			if matches!(
+				*parent_kind,
+				JS_COMPUTED_MEMBER_ASSIGNMENT | JS_STATIC_MEMBER_ASSIGNMENT
+			) && kind == T![?.]
+			{
+				*parent_kind = JS_UNKNOWN_ASSIGNMENT
+			}
+		}
+
+		p.bump_remap(kind);
+	}
 }
 
 fn wrap_expression_in_invalid_assignment(p: &mut Parser, expression_end: usize) -> CompletedMarker {
@@ -394,14 +389,12 @@ fn wrap_expression_in_invalid_assignment(p: &mut Parser, expression_end: usize) 
 
 	let completed = unknown.complete(p, JS_UNKNOWN_ASSIGNMENT);
 
-	let expression_range = completed.range(p);
-	p.error(
-		p.err_builder(&format!(
-			"Invalid assignment to `{}`",
-			p.source(expression_range)
-		))
-		.primary(expression_range, "This expression cannot be assigned to"),
-	);
+	p.error(invalid_assignment_error(p, completed.range(p)));
 
 	completed
+}
+
+fn invalid_assignment_error(p: &Parser, range: TextRange) -> Diagnostic {
+	p.err_builder(&format!("Invalid assignment to `{}`", p.source(range)))
+		.primary(range, "This expression cannot be assigned to")
 }
