@@ -388,9 +388,7 @@ impl<'t> Parser<'t> {
 			errors_pos,
 		} = checkpoint;
 		self.tokens.rewind(token_pos);
-		if self.cur_event_pos() > event_pos {
-			self.drain_events(self.cur_event_pos() - event_pos);
-		}
+		self.drain_events(self.cur_event_pos() - event_pos);
 		self.errors.truncate(errors_pos);
 	}
 
