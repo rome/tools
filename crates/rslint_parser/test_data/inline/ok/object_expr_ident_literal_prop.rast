@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsVariableDeclarationStatement {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],

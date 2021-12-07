@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsBlockStatement {
             l_curly_token: L_CURLY@0..1 "{" [] [],
             statements: [],

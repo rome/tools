@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsLabeledStatement {
             label_token: IDENT@0..6 "label1" [] [],
             colon_token: COLON@6..8 ":" [] [Whitespace(" ")],

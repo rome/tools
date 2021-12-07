@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsExpressionStatement {
             expression: CallExpr {
                 type_args: missing (optional),

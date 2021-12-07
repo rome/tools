@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsThrowStatement {
             throw_token: THROW_KW@0..5 "throw" [] [],
             argument: missing (required),

@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsVariableDeclarationStatement {
             declaration: JsVariableDeclaration {
                 kind_token: VAR_KW@0..4 "var" [] [Whitespace(" ")],

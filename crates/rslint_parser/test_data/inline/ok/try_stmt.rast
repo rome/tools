@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsTryStatement {
             try_token: TRY_KW@0..4 "try" [] [Whitespace(" ")],
             body: JsBlockStatement {

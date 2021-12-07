@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsExpressionStatement {
             expression: JsImportCallExpression {
                 import_token: IMPORT_KW@0..6 "import" [] [],

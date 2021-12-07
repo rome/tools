@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsExpressionStatement {
             expression: NewExpr {
                 new_token: NEW_KW@0..4 "new" [] [Whitespace(" ")],

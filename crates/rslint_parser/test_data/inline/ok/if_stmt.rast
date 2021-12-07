@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsIfStatement {
             if_token: IF_KW@0..3 "if" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@3..4 "(" [] [],

@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         ImportDecl {
             import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
             imports: [
