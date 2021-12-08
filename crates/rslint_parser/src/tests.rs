@@ -50,11 +50,19 @@ fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
 	let res = catch_unwind(|| {
 		// Files containing a // SCRIPT comment are parsed as script and not as module
 		// This is needed to test features that are restricted in strict mode.
-		if text.contains("// SCRIPT") {
+		let parse = if text.contains("// SCRIPT") {
 			parse_text(text, 0).cast::<JsAnyRoot>().unwrap()
 		} else {
 			parse_module(text, 0).cast::<JsAnyRoot>().unwrap()
-		}
+		};
+
+		assert_eq!(
+			parse.syntax().to_string(),
+			text,
+			"Original source and re-printed tree differ"
+		);
+
+		parse
 	});
 	assert!(
 		!res.is_err(),
