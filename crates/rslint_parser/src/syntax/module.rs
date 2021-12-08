@@ -82,6 +82,8 @@ fn parse_module_item(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // import { a + b, d } from "c";
 // import { a, a } from "c";
 // import { default } from "c";
+// import { "a" } from "c";
+// import { as b } from "c";
 pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![import]) {
 		return Absent;
@@ -279,21 +281,29 @@ fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<CompletedMa
 }
 
 fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-	if p.nth_src(1) == "as" {
-		Present(parse_named_import_specifier(p))
-	} else {
-		parse_shorthand_named_import_specifier(p)
-	}
+	parse_named_import_specifier(p).or_else(|| parse_shorthand_named_import_specifier(p))
 }
 
-fn parse_named_import_specifier(p: &mut Parser) -> CompletedMarker {
+fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let m = p.start();
 
-	parse_export_name(p).or_missing_with_error(p, expected_export_name);
+	if p.cur_src() == "as" && p.nth_src(1) != "as" {
+		p.missing();
+		p.error(expected_export_name(
+			p,
+			p.cur_tok().range.start..p.cur_tok().range.start,
+		));
+	} else if p.nth_src(1) == "as" {
+		parse_export_name(p).or_missing_with_error(p, expected_export_name);
+	} else {
+		m.abandon(p);
+		return Absent;
+	}
+
 	expect_keyword(p, "as", T![as]);
 	parse_binding(p).or_missing_with_error(p, expected_binding);
 
-	m.complete(p, JS_NAMED_IMPORT_SPECIFIER)
+	Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIER))
 }
 
 fn parse_shorthand_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
@@ -515,5 +525,5 @@ fn expected_export_name(p: &Parser, range: Range<usize>) -> Diagnostic {
 }
 
 fn expected_named_import_specifier(p: &Parser, range: Range<usize>) -> Diagnostic {
-	expected_any(&["identifier", "string literal"], range).to_diagnostic(p)
+	expected_node("identifier", range).to_diagnostic(p)
 }

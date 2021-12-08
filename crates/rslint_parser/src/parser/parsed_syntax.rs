@@ -68,6 +68,17 @@ impl<T> ParsedSyntax<T> {
 		}
 	}
 
+	/// Calls `op` if the syntax is absent ond otherwise returns [ParsedSyntax::Present]
+	pub fn or_else<F>(self, op: F) -> ParsedSyntax<T>
+	where
+		F: FnOnce() -> ParsedSyntax<T>,
+	{
+		match self {
+			Absent => op(),
+			t => t,
+		}
+	}
+
 	/// Returns `true` if the parsed syntax is [ParsedSyntax::Present]
 	#[must_use]
 	pub fn is_present(&self) -> bool {

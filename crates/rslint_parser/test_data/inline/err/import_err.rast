@@ -176,13 +176,63 @@ JsModule {
             },
             semicolon_token: SEMICOLON@135..136 ";" [] [],
         },
+        JsImport {
+            import_token: IMPORT_KW@136..144 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_clause: JsImportNamedClause {
+                default_specifier: missing (optional),
+                named_import: JsNamedImportSpecifierList {
+                    l_curly_token: L_CURLY@144..146 "{" [] [Whitespace(" ")],
+                    specifiers: [
+                        JsUnknown {
+                            items: [
+                                Token(
+                                    JS_STRING_LITERAL@146..150 "\"a\"" [] [Whitespace(" ")],
+                                ),
+                            ],
+                        },
+                    ],
+                    r_curly_token: R_CURLY@150..152 "}" [] [Whitespace(" ")],
+                },
+                from_token: FROM_KW@152..157 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@157..160 "\"c\"" [] [],
+                },
+                assertion: missing (optional),
+            },
+            semicolon_token: SEMICOLON@160..161 ";" [] [],
+        },
+        JsImport {
+            import_token: IMPORT_KW@161..169 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_clause: JsImportNamedClause {
+                default_specifier: missing (optional),
+                named_import: JsNamedImportSpecifierList {
+                    l_curly_token: L_CURLY@169..171 "{" [] [Whitespace(" ")],
+                    specifiers: [
+                        JsNamedImportSpecifier {
+                            name: missing (required),
+                            as_token: AS_KW@171..174 "as" [] [Whitespace(" ")],
+                            local_name: JsIdentifierBinding {
+                                name_token: IDENT@174..176 "b" [] [Whitespace(" ")],
+                            },
+                        },
+                    ],
+                    r_curly_token: R_CURLY@176..178 "}" [] [Whitespace(" ")],
+                },
+                from_token: FROM_KW@178..183 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@183..186 "\"c\"" [] [],
+                },
+                assertion: missing (optional),
+            },
+            semicolon_token: SEMICOLON@186..187 ";" [] [],
+        },
     ],
 }
 
-0: JS_MODULE@0..137
+0: JS_MODULE@0..188
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..136
+  2: LIST@0..187
     0: JS_IMPORT@0..7
       0: IMPORT_KW@0..6 "import" [] []
       1: (empty)
@@ -290,7 +340,40 @@ JsModule {
           0: JS_STRING_LITERAL@132..135 "\"c\"" [] []
         4: (empty)
       2: SEMICOLON@135..136 ";" [] []
-  3: EOF@136..137 "" [Whitespace("\n")] []
+    10: JS_IMPORT@136..161
+      0: IMPORT_KW@136..144 "import" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IMPORT_NAMED_CLAUSE@144..160
+        0: (empty)
+        1: JS_NAMED_IMPORT_SPECIFIER_LIST@144..152
+          0: L_CURLY@144..146 "{" [] [Whitespace(" ")]
+          1: LIST@146..150
+            0: JS_UNKNOWN@146..150
+              0: JS_STRING_LITERAL@146..150 "\"a\"" [] [Whitespace(" ")]
+          2: R_CURLY@150..152 "}" [] [Whitespace(" ")]
+        2: FROM_KW@152..157 "from" [] [Whitespace(" ")]
+        3: JS_MODULE_SOURCE@157..160
+          0: JS_STRING_LITERAL@157..160 "\"c\"" [] []
+        4: (empty)
+      2: SEMICOLON@160..161 ";" [] []
+    11: JS_IMPORT@161..187
+      0: IMPORT_KW@161..169 "import" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IMPORT_NAMED_CLAUSE@169..186
+        0: (empty)
+        1: JS_NAMED_IMPORT_SPECIFIER_LIST@169..178
+          0: L_CURLY@169..171 "{" [] [Whitespace(" ")]
+          1: LIST@171..176
+            0: JS_NAMED_IMPORT_SPECIFIER@171..176
+              0: (empty)
+              1: AS_KW@171..174 "as" [] [Whitespace(" ")]
+              2: JS_IDENTIFIER_BINDING@174..176
+                0: IDENT@174..176 "b" [] [Whitespace(" ")]
+          2: R_CURLY@176..178 "}" [] [Whitespace(" ")]
+        2: FROM_KW@178..183 "from" [] [Whitespace(" ")]
+        3: JS_MODULE_SOURCE@183..186
+          0: JS_STRING_LITERAL@183..186 "\"c\"" [] []
+        4: (empty)
+      2: SEMICOLON@186..187 ";" [] []
+  3: EOF@187..188 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected a default import, a namespace import, or a named import but instead found ';'
   ┌─ import_err.js:1:7
@@ -339,11 +422,11 @@ error[SyntaxError]: expected `,` but instead found `+`
   │            ^ unexpected
 
 --
-error[SyntaxError]: expected an identifier, or a string literal but instead found '+ b'
+error[SyntaxError]: expected an identifier but instead found '+ b'
   ┌─ import_err.js:4:12
   │
 4 │ import { a + b, d } from "c";
-  │            ^^^ Expected an identifier, or a string literal here
+  │            ^^^ Expected an identifier here
 
 --
 error[SyntaxError]: Declarations inside of a `import` declaration may not have duplicates
@@ -364,9 +447,25 @@ error[SyntaxError]: `default` imports must be aliased
   │          `default` used here
 
 --
+error[SyntaxError]: expected an identifier but instead found '"a"'
+  ┌─ import_err.js:7:10
+  │
+7 │ import { "a" } from "c";
+  │          ^^^ Expected an identifier here
+
+--
+error[SyntaxError]: expected a string literal, or an identifier but instead found 'as'
+  ┌─ import_err.js:8:10
+  │
+8 │ import { as b } from "c";
+  │          ^^ Expected a string literal, or an identifier here
+
+--
 import;
 import *;
 import * as b, { a, b } from "c";
 import { a + b, d } from "c";
 import { a, a } from "c";
 import { default } from "c";
+import { "a" } from "c";
+import { as b } from "c";
