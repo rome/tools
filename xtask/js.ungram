@@ -44,9 +44,9 @@ JsUnknownExpression = SyntaxElement*
 JsUnknownMember = SyntaxElement*
 JsUnknownBinding = SyntaxElement*
 JsUnknownAssignment = SyntaxElement*
-// Generic Unknown node used in other places where it's none of the above.
-// Useful for less common cases
-JsUnknown = SyntaxElement*
+JsUnknownModifier = SyntaxElement*
+JsUnknownImportAssertionEntry = SyntaxElement*
+JsUnknownNamedImportSpecifier = SyntaxElement*
 
 Ident = 'ident'
 
@@ -615,7 +615,7 @@ JsEmptyClassMember = ';'
 // TODO: apply this node to all class members and properties
 JsAnyModifier =
 	JsModifier
-	| JsUnknown
+	| JsUnknownModifier
 
 // TODO: move here also the rest of the modifiers
 JsModifier = 'declare'?
@@ -966,7 +966,7 @@ JsNamedImportSpecifierList =
 JsAnyNamedImportSpecifier =
     JsShorthandNamedImportSpecifier
     | JsNamedImportSpecifier
-    | JsUnknown
+    | JsUnknownNamedImportSpecifier
 
 // import { foo as test } from "mod";
 //          ^^^^^^^^^^^
@@ -994,7 +994,7 @@ JsImportAssertion =
 
 JsAnyImportAssertionEntry =
 	JsImportAssertionEntry
-	| JsUnknown
+	| JsUnknownImportAssertionEntry
 
 // import a from "mod" assert { type: "json" }
 //                              ^^^^^^^^^^^^

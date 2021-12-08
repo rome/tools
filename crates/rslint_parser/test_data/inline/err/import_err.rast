@@ -89,7 +89,7 @@ JsModule {
                             },
                         },
                         missing separator,
-                        JsUnknown {
+                        JsUnknownNamedImportSpecifier {
                             items: [
                                 Token(
                                     PLUS@63..65 "+" [] [Whitespace(" ")],
@@ -183,7 +183,7 @@ JsModule {
                 named_import: JsNamedImportSpecifierList {
                     l_curly_token: L_CURLY@144..146 "{" [] [Whitespace(" ")],
                     specifiers: [
-                        JsUnknown {
+                        JsUnknownNamedImportSpecifier {
                             items: [
                                 Token(
                                     JS_STRING_LITERAL@146..150 "\"a\"" [] [Whitespace(" ")],
@@ -334,7 +334,7 @@ JsModule {
               0: JS_IDENTIFIER_BINDING@61..63
                 0: IDENT@61..63 "a" [] [Whitespace(" ")]
             1: (empty)
-            2: JS_UNKNOWN@63..66
+            2: JS_UNKNOWN_NAMED_IMPORT_SPECIFIER@63..66
               0: PLUS@63..65 "+" [] [Whitespace(" ")]
               1: IDENT@65..66 "b" [] []
             3: COMMA@66..68 "," [] [Whitespace(" ")]
@@ -390,7 +390,7 @@ JsModule {
         1: JS_NAMED_IMPORT_SPECIFIER_LIST@144..152
           0: L_CURLY@144..146 "{" [] [Whitespace(" ")]
           1: LIST@146..150
-            0: JS_UNKNOWN@146..150
+            0: JS_UNKNOWN_NAMED_IMPORT_SPECIFIER@146..150
               0: JS_STRING_LITERAL@146..150 "\"a\"" [] [Whitespace(" ")]
           2: R_CURLY@150..152 "}" [] [Whitespace(" ")]
         2: FROM_KW@152..157 "from" [] [Whitespace(" ")]

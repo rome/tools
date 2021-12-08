@@ -152,7 +152,7 @@ JsModule {
                             value_token: JS_STRING_LITERAL@194..200 "\"type\"" [] [],
                         },
                         COMMA@208..210 "," [] [Whitespace(" ")],
-                        JsUnknown {
+                        JsUnknownImportAssertionEntry {
                             items: [
                                 Token(
                                     IDENT@210..214 "type" [] [],
@@ -166,7 +166,7 @@ JsModule {
                             ],
                         },
                         COMMA@222..224 "," [] [Whitespace(" ")],
-                        JsUnknown {
+                        JsUnknownImportAssertionEntry {
                             items: [
                                 Token(
                                     JS_STRING_LITERAL@224..230 "\"type\"" [] [],
@@ -238,7 +238,7 @@ JsModule {
                             value_token: missing (required),
                         },
                         missing separator,
-                        JsUnknown {
+                        JsUnknownImportAssertionEntry {
                             items: [
                                 Token(
                                     JS_NUMBER_LITERAL@334..336 "1" [] [Whitespace(" ")],
@@ -365,12 +365,12 @@ JsModule {
               1: COLON@200..202 ":" [] [Whitespace(" ")]
               2: JS_STRING_LITERAL@202..208 "\"json\"" [] []
             1: COMMA@208..210 "," [] [Whitespace(" ")]
-            2: JS_UNKNOWN@210..222
+            2: JS_UNKNOWN_IMPORT_ASSERTION_ENTRY@210..222
               0: IDENT@210..214 "type" [] []
               1: COLON@214..216 ":" [] [Whitespace(" ")]
               2: JS_STRING_LITERAL@216..222 "\"html\"" [] []
             3: COMMA@222..224 "," [] [Whitespace(" ")]
-            4: JS_UNKNOWN@224..237
+            4: JS_UNKNOWN_IMPORT_ASSERTION_ENTRY@224..237
               0: JS_STRING_LITERAL@224..230 "\"type\"" [] []
               1: COLON@230..232 ":" [] [Whitespace(" ")]
               2: JS_STRING_LITERAL@232..237 "\"js\"" [] [Whitespace(" ")]
@@ -419,7 +419,7 @@ JsModule {
               1: COLON@332..334 ":" [] [Whitespace(" ")]
               2: (empty)
             7: (empty)
-            8: JS_UNKNOWN@334..336
+            8: JS_UNKNOWN_IMPORT_ASSERTION_ENTRY@334..336
               0: JS_NUMBER_LITERAL@334..336 "1" [] [Whitespace(" ")]
           3: R_CURLY@336..337 "}" [] []
       2: SEMICOLON@337..338 ";" [] []

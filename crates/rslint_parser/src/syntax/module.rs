@@ -268,7 +268,7 @@ impl ParseSeparatedList for NamedImportSpecifierList {
 		parsed_element.or_recover(
 			p,
 			&ParseRecovery::new(
-				JS_UNKNOWN,
+				JS_UNKNOWN_NAMED_IMPORT_SPECIFIER,
 				STMT_RECOVERY_SET.union(token_set![T![,], T!['}'], T![;]]),
 			)
 			.enable_recovery_on_line_break(),
@@ -378,11 +378,11 @@ impl ParseSeparatedList for ImportAssertionList {
 		parsed_element: ParsedSyntax<Self::ParsedElement>,
 	) -> RecoveryResult {
 		parsed_element
-			.or_invalid_to_unknown(p, JS_UNKNOWN)
+			.or_invalid_to_unknown(p, JS_UNKNOWN_IMPORT_ASSERTION_ENTRY)
 			.or_recover(
 				p,
 				&ParseRecovery::new(
-					JS_UNKNOWN,
+					JS_UNKNOWN_IMPORT_ASSERTION_ENTRY,
 					STMT_RECOVERY_SET.union(token_set![T![,], T!['}']]),
 				)
 				.enable_recovery_on_line_break(),
