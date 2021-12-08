@@ -1,4 +1,4 @@
-use crate::parser::{expected_any, expected_node, ParserProgress, ToDiagnostic};
+use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::js_parse_error::{
 	duplicate_assertion_keys_error, expected_binding, expected_export_name,
@@ -10,11 +10,11 @@ use crate::syntax::program::export_decl;
 use crate::syntax::stmt::{parse_statement, semi, STMT_RECOVERY_SET};
 use crate::syntax::util::expect_keyword;
 use crate::{
-	Absent, CompletedMarker, ConditionalSyntax, Marker, ParseRecovery, ParsedSyntax, Parser,
-	Present, TokenSet,
+	Absent, CompletedMarker, ConditionalSyntax, Marker, ParseRecovery, ParseSeparatedList,
+	ParsedSyntax, Parser, Present, TokenSet,
 };
 use rslint_syntax::SyntaxKind::*;
-use rslint_syntax::T;
+use rslint_syntax::{SyntaxKind, T};
 use std::collections::HashMap;
 use std::ops::Range;
 
@@ -241,26 +241,31 @@ fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<CompletedMa
 
 	let m = p.start();
 	p.bump_any();
+	NamedImportSpecifierList.parse_list(p);
+	p.expect_required(T!['}']);
 
-	let list = p.start();
-	let mut progress = ParserProgress::default();
-	let mut first = true;
+	Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIER_LIST))
+}
 
-	while !matches!(p.cur(), EOF | T!['}'] | T![;]) {
-		progress.assert_progressing(p);
+struct NamedImportSpecifierList;
 
-		if first {
-			first = false;
-		} else {
-			p.expect_required(T![,]);
+impl ParseSeparatedList for NamedImportSpecifierList {
+	type ParsedElement = CompletedMarker;
 
-			// Has this been a trailing comma and the parser is now at the end of the specifiers list?
-			if p.at(T!['}']) {
-				break;
-			}
-		}
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+		parse_named_import_specifier(p).or_else(|| parse_shorthand_named_import_specifier(p))
+	}
 
-		let recovered = parse_any_named_import_specifier(p).or_recover(
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		p.at(T!['}'])
+	}
+
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> RecoveryResult {
+		parsed_element.or_recover(
 			p,
 			&ParseRecovery::new(
 				JS_UNKNOWN,
@@ -268,27 +273,16 @@ fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<CompletedMa
 			)
 			.enable_recovery_on_line_break(),
 			expected_named_import_specifier,
-		);
-
-		if recovered.is_err() {
-			break;
-		}
+		)
 	}
 
-	if first {
-		list.abandon(p);
-		p.missing();
-	} else {
-		list.complete(p, LIST);
+	fn separating_element_kind(&mut self) -> SyntaxKind {
+		T![,]
 	}
 
-	p.expect_required(T!['}']);
-
-	Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIER_LIST))
-}
-
-fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-	parse_named_import_specifier(p).or_else(|| parse_shorthand_named_import_specifier(p))
+	fn allow_trailing_comma(&self) -> bool {
+		true
+	}
 }
 
 fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
@@ -355,25 +349,35 @@ fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.bump_remap(T![assert]);
 	p.expect_required(T!['{']);
 
-	let mut first = true;
-	let mut progress = ParserProgress::default();
-	let mut assertion_keys: HashMap<String, Range<usize>> = HashMap::default();
+	ImportAssertionList::default().parse_list(p);
 
-	let assertions = p.start();
+	p.expect_required(T!['}']);
 
-	while !matches!(p.cur(), EOF | T!['}']) {
-		progress.assert_progressing(p);
+	Present(m.complete(p, JS_IMPORT_ASSERTION))
+}
 
-		if first {
-			first = false;
-		} else {
-			p.expect_required(T![,]);
-			if p.at(T!['}']) {
-				break;
-			}
-		}
+#[derive(Default)]
+struct ImportAssertionList {
+	assertion_keys: HashMap<String, Range<usize>>,
+}
 
-		let recovered = parse_import_assertion_entry(p, &mut assertion_keys)
+impl ParseSeparatedList for ImportAssertionList {
+	type ParsedElement = ConditionalSyntax;
+
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+		parse_import_assertion_entry(p, &mut self.assertion_keys)
+	}
+
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		p.at(T!['}'])
+	}
+
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> RecoveryResult {
+		parsed_element
 			.or_invalid_to_unknown(p, JS_UNKNOWN)
 			.or_recover(
 				p,
@@ -383,23 +387,16 @@ fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 				)
 				.enable_recovery_on_line_break(),
 				|p, range| expected_node("import assertion entry", range).to_diagnostic(p),
-			);
-
-		if recovered.is_err() {
-			break;
-		}
+			)
 	}
 
-	if first {
-		assertions.abandon(p);
-		p.missing();
-	} else {
-		assertions.complete(p, LIST);
+	fn separating_element_kind(&mut self) -> SyntaxKind {
+		T![,]
 	}
 
-	p.expect_required(T!['}']);
-
-	Present(m.complete(p, JS_IMPORT_ASSERTION))
+	fn allow_trailing_comma(&self) -> bool {
+		true
+	}
 }
 
 fn parse_import_assertion_entry(
