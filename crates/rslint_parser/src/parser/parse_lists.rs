@@ -29,6 +29,11 @@ pub trait ParseList {
 		p: &mut Parser,
 		parsed_element: ParsedSyntax<Self::ParsedElement>,
 	) -> RecoveryResult;
+
+	/// It creates a [ParsedSyntax] that will contain the list
+	fn finish_list(&mut self, p: &mut Parser, m: Marker) {
+		ParsedSyntax::Present(m.complete(p, SyntaxKind::LIST)).unwrap();
+	}
 }
 
 /// Use this trait to parse simple lists that don't have particular requirements.
@@ -49,9 +54,6 @@ pub trait ParseList {
 /// }
 /// ```
 pub trait ParseNormalList: ParseList {
-	/// The type of syntax that will be returned by [Self::parse_list]. The type will be the generic for [ParsedSyntax]
-	type ParsedList;
-
 	/// Parses a simple list
 	///
 	/// # Panics
@@ -69,11 +71,8 @@ pub trait ParseNormalList: ParseList {
 				break;
 			}
 		}
-		self.finish_list(p, elements).unwrap();
+		self.finish_list(p, elements);
 	}
-
-	/// It creates a [ParsedSyntax] that will contain the list
-	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::ParsedList>;
 }
 
 /// A trait to parse lists that will be separated by a recurring element
@@ -94,16 +93,6 @@ pub trait ParseNormalList: ParseList {
 /// }
 /// ```
 pub trait ParseSeparatedList: ParseList {
-	/// The type of syntax that will be returned by [Self::parse_list]. The type will be the generic for [ParsedSyntax]
-	type ParsedList;
-
-	/// Tells the parser to parse the current token, continuing the loop.
-	/// This function is used in [Self::parse_list].
-	fn parse_separating_element(&mut self, p: &mut Parser) {
-		// bump the separator
-		p.bump_any();
-	}
-
 	/// The [SyntaxKind] of the element that separates the elements of the list
 	fn separating_element_kind(&mut self) -> SyntaxKind;
 
@@ -113,16 +102,8 @@ pub trait ParseSeparatedList: ParseList {
 	/// If present, it [parses](Self::parse_separating_element) it and continues with loop.
 	/// If not present, it adds a missing marker.
 	fn expect_separator(&mut self, p: &mut Parser) -> bool {
-		if p.expect_required(self.separating_element_kind()) {
-			self.parse_separating_element(p);
-			true
-		} else {
-			false
-		}
+		p.expect_required(self.separating_element_kind())
 	}
-
-	/// It creates a [ParsedSyntax] that will contain the list
-	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::ParsedList>;
 
 	/// When calling [Self::parse_list], this method checks, inside the loop, if the parser
 	/// is at a position where the current token is element that will separate the list.
@@ -151,6 +132,6 @@ pub trait ParseSeparatedList: ParseList {
 				break;
 			}
 		}
-		self.finish_list(p, elements).unwrap();
+		self.finish_list(p, elements);
 	}
 }

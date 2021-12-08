@@ -1078,18 +1078,12 @@ impl ParseList for SwitchClausesList {
 	) -> parser::RecoveryResult {
 		parsed_element.or_recover(
 			p,
-			&ParseRecovery::new(JS_UNKNOWN_EXPRESSION, STMT_RECOVERY_SET),
+			&ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
 			js_parse_error::expected_case,
 		)
 	}
 }
-impl ParseNormalList for SwitchClausesList {
-	type ParsedList = CompletedMarker;
-
-	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> ParsedSyntax<Self::ParsedList> {
-		Present(m.complete(p, LIST))
-	}
-}
+impl ParseNormalList for SwitchClausesList {}
 
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
 fn parse_switch_clause(
