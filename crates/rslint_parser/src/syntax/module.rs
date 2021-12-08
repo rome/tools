@@ -386,22 +386,25 @@ fn parse_import_assertion_entry(
 	let key_range = p.cur_tok().range;
 
 	let key = match p.cur() {
-		T![ident] | JS_STRING_LITERAL => {
-			let key = p.cur_src().to_string();
+		JS_STRING_LITERAL => Some(p.cur_src().trim_matches(&['\'', '"'][..])),
+		T![ident] => Some(p.cur_src()),
+		t if t.is_keyword() => Some(p.cur_src()),
+		_ => None,
+	}
+	.map(String::from);
+
+	match p.cur() {
+		JS_STRING_LITERAL | T![ident] => {
 			p.bump_any();
-			Some(key)
 		}
 		t if t.is_keyword() => {
-			let key = p.cur_src().to_string();
 			p.bump_remap(T![ident]);
-			Some(key)
 		}
 		T![:] => {
 			p.missing();
 			p.error(
 				expected_any(&["identifier", "string literal"], p.cur_tok().range).to_diagnostic(p),
 			);
-			None
 		}
 		_ => {
 			m.abandon(p);

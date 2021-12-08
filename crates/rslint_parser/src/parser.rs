@@ -267,6 +267,7 @@ impl<'t> Parser<'t> {
 			if err.code == Some(String::from("SyntaxError"))
 				&& previous.code == err.code
 				&& previous.file_id == err.file_id
+				&& err.children.is_empty()
 			{
 				match (&err.primary, &previous.primary) {
 					(Some(err_primary), Some(previous_primary))

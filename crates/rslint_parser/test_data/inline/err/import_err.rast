@@ -311,6 +311,15 @@ error[SyntaxError]: expected `from` but instead found `,`
 
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ import_err.js:3:14
+  │
+3 │ import * as b, { a, b } from "c";
+  │ -------------^ An explicit or implicit semicolon is expected here...
+  │ │             
+  │ ...Which is required to end this statement
+
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ import_err.js:3:30
   │
 3 │ import * as b, { a, b } from "c";
