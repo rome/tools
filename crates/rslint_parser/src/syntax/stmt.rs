@@ -8,7 +8,7 @@ use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use};
 #[allow(deprecated)]
-use crate::parser::{ParsedSyntax, ParserProgress};
+use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_declaration, parse_equal_value_clause};
 use crate::syntax::expr::parse_identifier;
@@ -1054,6 +1054,35 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	Present(m.complete(p, kind))
 }
 
+struct SwitchClausesList;
+
+impl ParseNodeList for SwitchClausesList {
+	type ParsedElement = CompletedMarker;
+
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+		match parse_statement(p, None) {
+			Some(stmt) => Present(stmt),
+			None => Absent,
+		}
+	}
+
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		p.at_ts(token_set![T![default], T![case], T!['}']])
+	}
+
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> parser::RecoveryResult {
+		parsed_element.or_recover(
+			p,
+			&ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
+			js_parse_error::expected_case,
+		)
+	}
+}
+
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
 fn parse_switch_clause(
 	p: &mut Parser,
@@ -1105,14 +1134,9 @@ fn parse_switch_clause(
 			p.bump_any();
 			expr(p);
 			p.expect_required(T![:]);
-			let cons_list = p.start();
-			let mut progress = ParserProgress::default();
 
-			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
-				progress.assert_progressing(p);
-				parse_statement(p, None);
-			}
-			cons_list.complete(p, LIST);
+			SwitchClausesList.parse_list(p);
+
 			Present(m.complete(p, JS_CASE_CLAUSE))
 		}
 		_ => {

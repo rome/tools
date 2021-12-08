@@ -74,6 +74,10 @@ pub(crate) fn expected_case_or_default(p: &Parser, range: Range<usize>) -> Diagn
 	expected_any(&["default", "case"], range).to_diagnostic(p)
 }
 
+pub(crate) fn expected_case(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_node("case", range).to_diagnostic(p)
+}
+
 pub(crate) fn expected_assignment_target(p: &Parser, range: Range<usize>) -> Diagnostic {
 	expected_any(&["identifier", "assignment target"], range).to_diagnostic(p)
 }
