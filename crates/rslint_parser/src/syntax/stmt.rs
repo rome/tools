@@ -8,7 +8,7 @@ use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use};
 #[allow(deprecated)]
-use crate::parser::{ParseNormalList, ParsedSyntax, ParserProgress};
+use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_declaration, parse_equal_value_clause};
 use crate::syntax::expr::parse_identifier;
@@ -1057,7 +1057,7 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 #[derive(Default)]
 struct SwitchClausesList;
 
-impl ParseList for SwitchClausesList {
+impl ParseNodeList for SwitchClausesList {
 	type ParsedElement = CompletedMarker;
 
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
@@ -1068,7 +1068,7 @@ impl ParseList for SwitchClausesList {
 	}
 
 	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
-		!p.at_ts(token_set![T![default], T![case], T!['}']])
+		p.at_ts(token_set![T![default], T![case], T!['}']])
 	}
 
 	fn recover(
@@ -1083,7 +1083,6 @@ impl ParseList for SwitchClausesList {
 		)
 	}
 }
-impl ParseNormalList for SwitchClausesList {}
 
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
 fn parse_switch_clause(

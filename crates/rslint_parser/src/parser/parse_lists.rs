@@ -3,9 +3,21 @@ use super::{ParsedSyntax, ParserProgress, RecoveryResult};
 use crate::{Marker, Parser};
 use rslint_syntax::SyntaxKind;
 
-/// A generic that defines a generic behaviour for all the possible lists.
+/// Use this trait to parse simple lists that don't have particular requirements.
 ///
-pub trait ParseList {
+/// In order to use this trait, you need to implement the [List] trait too.
+///
+/// ```rust,ignore
+/// use rslint_parser::{ParseSeparatedList};
+///
+/// struct MyList;
+///
+///
+/// impl ParseNormalList for MyList {
+///   // impl missing members
+/// }
+/// ```
+pub trait ParseNodeList {
 	/// The type returned when calling the function [Self::parse_element]
 	type ParsedElement;
 
@@ -32,28 +44,8 @@ pub trait ParseList {
 
 	/// It creates a [ParsedSyntax] that will contain the list
 	fn finish_list(&mut self, p: &mut Parser, m: Marker) {
-		ParsedSyntax::Present(m.complete(p, SyntaxKind::LIST)).unwrap();
+		m.complete(p, SyntaxKind::LIST);
 	}
-}
-
-/// Use this trait to parse simple lists that don't have particular requirements.
-///
-/// In order to use this trait, you need to implement the [List] trait too.
-///
-/// ```rust,ignore
-/// use rslint_parser::{List, ParseSeparatedList};
-///
-/// struct MyList;
-///
-/// impl List for MyList {
-///   // impl missing members
-/// }
-///
-/// impl ParseNormalList for MyList {
-///   // impl missing members
-/// }
-/// ```
-pub trait ParseNormalList: ParseList {
 	/// Parses a simple list
 	///
 	/// # Panics
@@ -62,7 +54,7 @@ pub trait ParseNormalList: ParseList {
 	fn parse_list(&mut self, p: &mut Parser) {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
-		while !p.at(SyntaxKind::EOF) && self.is_at_list_end(p) {
+		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
 			let parsed_element = self.parse_element(p);
@@ -80,19 +72,43 @@ pub trait ParseNormalList: ParseList {
 /// In order to use this trait, you need to implement the [List] trait too.
 ///
 /// ```rust,ignore
-/// use rslint_parser::{List, ParseSeparatedList};
+/// use rslint_parser::{ParseSeparatedList};
 ///
 /// struct MyList;
-///
-/// impl List for MyList {
-///   // impl missing members
-/// }
 ///
 /// impl ParseSeparatedList for MyList {
 ///   // impl missing members
 /// }
 /// ```
-pub trait ParseSeparatedList: ParseList {
+pub trait ParseSeparatedList {
+	/// The type returned when calling the function [Self::parse_element]
+	type ParsedElement;
+
+	/// Parses a single element of the list
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement>;
+
+	/// It creates a marker just before starting a list
+	fn start_list(&mut self, p: &mut Parser) -> Marker {
+		p.start()
+	}
+
+	/// This method is used to check the current token inside the loop. When this method return [false],
+	/// the trait will exit from the loop.
+	///
+	/// Usually here you want to check the current token.
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool;
+
+	/// This method is used to recover the parser in case [Self::parse_element] returns [ParsedSyntax::Absent]
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> RecoveryResult;
+
+	/// It creates a [ParsedSyntax] that will contain the list
+	fn finish_list(&mut self, p: &mut Parser, m: Marker) {
+		m.complete(p, SyntaxKind::LIST);
+	}
 	/// The [SyntaxKind] of the element that separates the elements of the list
 	fn separating_element_kind(&mut self) -> SyntaxKind;
 
@@ -105,12 +121,6 @@ pub trait ParseSeparatedList: ParseList {
 		p.expect_required(self.separating_element_kind())
 	}
 
-	/// When calling [Self::parse_list], this method checks, inside the loop, if the parser
-	/// is at a position where the current token is element that will separate the list.
-	///
-	/// Usually here you want to check the current token.
-	fn is_at_separating_element(&mut self, _p: &mut Parser) -> bool;
-
 	/// Parses a list of elements separated by a recurring element
 	///
 	/// # Panics
@@ -119,7 +129,7 @@ pub trait ParseSeparatedList: ParseList {
 	fn parse_list(&mut self, p: &mut Parser) {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
-		while !p.at(SyntaxKind::EOF) && self.is_at_list_end(p) {
+		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
 			if self.expect_separator(p) && self.is_at_list_end(p) {
