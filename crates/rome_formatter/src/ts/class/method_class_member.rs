@@ -6,8 +6,8 @@ use rslint_parser::ast::JsMethodClassMember;
 
 impl ToFormatElement for JsMethodClassMember {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let private_token = if let Some(static_token) = self.static_token() {
-			format_elements![formatter.format_token(&static_token)?, space_token()]
+		let modifiers = if let Some(modifiers) = self.modifiers() {
+			formatter.format_node(modifiers)?
 		} else {
 			empty_element()
 		};
@@ -15,7 +15,7 @@ impl ToFormatElement for JsMethodClassMember {
 		let params = formatter.format_node(self.parameter_list()?)?;
 		let body = formatter.format_node(self.body()?)?;
 		Ok(format_elements![
-			private_token,
+			modifiers,
 			name,
 			params,
 			space_token(),

@@ -731,7 +731,7 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Co
 
 				let error = p
 					.err_builder("class properties cannot be both optional and definite")
-					.primary(range.clone(), "")
+					.primary(range, "")
 					.secondary(marker.range(p), "");
 
 				p.error(error);
@@ -1072,13 +1072,11 @@ impl Modifiers {
 			m.abandon(p);
 			// Guaranteed to be at the static keyword, parsing a class member must succeed
 			parse_class_member_name(p).ok().unwrap();
+		} else if self.accessibility || self.declare || self.is_static {
+			m.complete(p, modifier_kind);
 		} else {
-			if self.accessibility || self.declare || self.is_static {
-				m.complete(p, modifier_kind);
-			} else {
-				m.abandon(p);
-				p.missing();
-			}
+			m.abandon(p);
+			p.missing();
 		}
 	}
 }
