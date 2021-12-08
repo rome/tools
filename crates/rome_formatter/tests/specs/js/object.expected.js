@@ -3,5 +3,6 @@ let a = {
 		aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
 		bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
 		cccccccccccccccccccccccccccccc
-	) {}
+	) {},
+	[fooooooooooooooooooooooooooooooooooooooooooooooooo()]: () => {}
 ,};
