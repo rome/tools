@@ -115,9 +115,8 @@ pub fn parse_statement(
 		// make sure we dont try parsing import.meta or import() as declarations
 		T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => {
 			let import = parse_import(p)
-				.into_invalid()
-				.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
-				.unwrap();
+				.unwrap()
+				.change_kind(p, JS_UNKNOWN_STATEMENT);
 
 			if p.syntax.file_kind == FileKind::Script {
 				let err = p

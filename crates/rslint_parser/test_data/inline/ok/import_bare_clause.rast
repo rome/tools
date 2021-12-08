@@ -8,6 +8,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@7..13 "\"test\"" [] [],
                 },
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@13..14 ";" [] [],
         },
@@ -17,6 +18,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@22..36 "\"no_semicolon\"" [] [],
                 },
+                assertion: missing (optional),
             },
             semicolon_token: missing (optional),
         },
@@ -32,11 +34,13 @@ JsModule {
       1: JS_IMPORT_BARE_CLAUSE@7..13
         0: JS_MODULE_SOURCE@7..13
           0: JS_STRING_LITERAL@7..13 "\"test\"" [] []
+        1: (empty)
       2: SEMICOLON@13..14 ";" [] []
     1: JS_IMPORT@14..36
       0: IMPORT_KW@14..22 "import" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IMPORT_BARE_CLAUSE@22..36
         0: JS_MODULE_SOURCE@22..36
           0: JS_STRING_LITERAL@22..36 "\"no_semicolon\"" [] []
+        1: (empty)
       2: (empty)
   3: EOF@36..37 "" [Whitespace("\n")] []

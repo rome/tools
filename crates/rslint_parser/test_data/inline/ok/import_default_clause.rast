@@ -12,6 +12,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@16..22 "\"test\"" [] [],
                 },
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@22..23 ";" [] [],
         },
@@ -30,5 +31,6 @@ JsModule {
         1: FROM_KW@11..16 "from" [] [Whitespace(" ")]
         2: JS_MODULE_SOURCE@16..22
           0: JS_STRING_LITERAL@16..22 "\"test\"" [] []
+        3: (empty)
       2: SEMICOLON@22..23 ";" [] []
   3: EOF@23..24 "" [Whitespace("\n")] []

@@ -12,6 +12,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@14..17 "\"b\"" [] [],
                 },
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@17..18 ";" [] [],
         },
@@ -55,6 +56,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@56..59 "\"c\"" [] [],
                 },
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@59..60 ";" [] [],
         },
@@ -73,6 +75,7 @@ JsModule {
         1: FROM_KW@9..14 "from" [] [Whitespace(" ")]
         2: JS_MODULE_SOURCE@14..17
           0: JS_STRING_LITERAL@14..17 "\"b\"" [] []
+        3: (empty)
       2: SEMICOLON@17..18 ";" [] []
     1: EXPORT_DECL@18..32
       0: EXPORT_KW@18..26 "export" [Whitespace("\n")] [Whitespace(" ")]
@@ -108,5 +111,6 @@ JsModule {
         2: FROM_KW@51..56 "from" [] [Whitespace(" ")]
         3: JS_MODULE_SOURCE@56..59
           0: JS_STRING_LITERAL@56..59 "\"c\"" [] []
+        4: (empty)
       2: SEMICOLON@59..60 ";" [] []
   3: EOF@60..61 "" [Whitespace("\n")] []

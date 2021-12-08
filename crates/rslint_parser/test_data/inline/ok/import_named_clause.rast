@@ -15,6 +15,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@15..18 "\"a\"" [] [],
                 },
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@18..19 ";" [] [],
         },
@@ -50,6 +51,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@45..48 "\"b\"" [] [],
                 },
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@48..49 ";" [] [],
         },
@@ -77,6 +79,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@71..74 "\"b\"" [] [],
                 },
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@74..75 ";" [] [],
         },
@@ -100,6 +103,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@98..101 "\"c\"" [] [],
                 },
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@101..102 ";" [] [],
         },
@@ -146,6 +150,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@154..157 "\"b\"" [] [],
                 },
+                assertion: missing (optional),
             },
             semicolon_token: SEMICOLON@157..158 ";" [] [],
         },
@@ -167,6 +172,7 @@ JsModule {
         2: FROM_KW@10..15 "from" [] [Whitespace(" ")]
         3: JS_MODULE_SOURCE@15..18
           0: JS_STRING_LITERAL@15..18 "\"a\"" [] []
+        4: (empty)
       2: SEMICOLON@18..19 ";" [] []
     1: JS_IMPORT@19..49
       0: IMPORT_KW@19..27 "import" [Whitespace("\n")] [Whitespace(" ")]
@@ -191,6 +197,7 @@ JsModule {
         2: FROM_KW@40..45 "from" [] [Whitespace(" ")]
         3: JS_MODULE_SOURCE@45..48
           0: JS_STRING_LITERAL@45..48 "\"b\"" [] []
+        4: (empty)
       2: SEMICOLON@48..49 ";" [] []
     2: JS_IMPORT@49..75
       0: IMPORT_KW@49..57 "import" [Whitespace("\n")] [Whitespace(" ")]
@@ -209,6 +216,7 @@ JsModule {
         2: FROM_KW@66..71 "from" [] [Whitespace(" ")]
         3: JS_MODULE_SOURCE@71..74
           0: JS_STRING_LITERAL@71..74 "\"b\"" [] []
+        4: (empty)
       2: SEMICOLON@74..75 ";" [] []
     3: JS_IMPORT@75..102
       0: IMPORT_KW@75..83 "import" [Whitespace("\n")] [Whitespace(" ")]
@@ -225,6 +233,7 @@ JsModule {
         2: FROM_KW@93..98 "from" [] [Whitespace(" ")]
         3: JS_MODULE_SOURCE@98..101
           0: JS_STRING_LITERAL@98..101 "\"c\"" [] []
+        4: (empty)
       2: SEMICOLON@101..102 ";" [] []
     4: JS_IMPORT@102..158
       0: IMPORT_KW@102..110 "import" [Whitespace("\n")] [Whitespace(" ")]
@@ -257,5 +266,6 @@ JsModule {
         2: FROM_KW@149..154 "from" [] [Whitespace(" ")]
         3: JS_MODULE_SOURCE@154..157
           0: JS_STRING_LITERAL@154..157 "\"b\"" [] []
+        4: (empty)
       2: SEMICOLON@157..158 ";" [] []
   3: EOF@158..159 "" [Whitespace("\n")] []

@@ -44,7 +44,6 @@ JsUnknownExpression = SyntaxElement*
 JsUnknownMember = SyntaxElement*
 JsUnknownBinding = SyntaxElement*
 JsUnknownAssignment = SyntaxElement*
-JsUnknownSpecifier = SyntaxElement*
 JsUnknownModifier = SyntaxElement*
 
 Ident = 'ident'
@@ -897,7 +896,7 @@ AnyJsImportClause =
 // import "abcd" assert ...
 JsImportBareClause =
 	source: JsModuleSource
-	// assertion: JsImportAssertion?
+	assertion: JsImportAssertion?
 
 // import foo from "mod"
 // import type foo from "mod"
@@ -906,7 +905,7 @@ JsImportDefaultClause =
 		local_name: JsAnyBinding
 		'from'
 		source: JsModuleSource
-		// assertion: JsImportAssertion?
+		assertion: JsImportAssertion?
 
 // import * as foo from "mod";
 // import type * as foo from "mod";
@@ -916,7 +915,7 @@ JsImportNamespaceClause =
 	local_name: JsAnyBinding
 	'from'
 	source: JsModuleSource
-	// assertion: JsImportAssertion?
+	assertion: JsImportAssertion?
 
 // import { a, b: c } from "d"
 //        ^^^^^^^^^^^^^^^^^^^^
@@ -935,7 +934,7 @@ JsImportNamedClause =
     named_import: JsAnyNamedImport
     'from'
     source: JsModuleSource
-    // assertion: JsImportAssertion?
+    assertion: JsImportAssertion?
 
 // import a, { b, c } from "d";
 //        ^^
@@ -960,7 +959,6 @@ JsNamedImportSpecifierList =
 JsAnyNamedImportSpecifier =
     JsShorthandNamedImportSpecifier
     | JsNamedImportSpecifier
-    | JsUnknownSpecifier
 
 // import { foo as test } from "mod";
 //          ^^^^^^^^^^^
@@ -978,8 +976,28 @@ JsShorthandNamedImportSpecifier =
     // 'type'?
     local_name: JsAnyBinding
 
+JsImportAssertion =
+    'assert'
+    '{'
+    assertions: (JsImportAssertionEntry (',' JsImportAssertionEntry)* ','?)
+    '}'
+
+JsImportAssertionEntry =
+    key: ('ident' | 'js_string_literal')
+    ':'
+    value: 'js_string_literal'
+
+// import { a as b } from "c"
+//          ^
+// export { a as "a-b-c" };
+//               ^^^^^^^
 JsLiteralExportName = value: ('ident' | 'js_string_literal')
 
+
+// import "test"
+//        ^^^^^^
+// export a from "b"
+//               ^^^
 JsModuleSource = value: 'js_string_literal'
 
 // export default declaration

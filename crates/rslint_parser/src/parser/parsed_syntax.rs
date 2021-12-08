@@ -245,6 +245,15 @@ impl ParsedSyntax<CompletedMarker> {
 		self.map(|marker| Invalid(marker.into()))
 	}
 
+	/// Converts this syntax into an [ConditionalSyntax::Invalid] if `valid` is true and into [ConditionalSyntax::Invalid] otherwise.
+	pub fn into_conditional(self, valid: bool) -> ParsedSyntax<ConditionalSyntax> {
+		if valid {
+			self.into_valid()
+		} else {
+			self.into_invalid()
+		}
+	}
+
 	/// Restricts this parsed syntax to only be valid if the current parsing context supports the passed in language feature
 	/// and adds a diagnostic if not.
 	///
@@ -418,6 +427,21 @@ impl ConditionalSyntax {
 		}
 	}
 
+	/// Changes the kind of the valid or invalid syntax and returns the
+	/// completed marker
+	pub fn change_kind(self, p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
+		match self {
+			Valid(mut marker) => {
+				marker.change_kind(p, kind);
+				marker
+			}
+			Invalid(mut marker) => {
+				marker.0.change_kind(p, kind);
+				marker.0
+			}
+		}
+	}
+
 	/// Wraps the parsed syntax in an unknown node if the syntax is [Invalid] or returns the valid syntax
 	pub fn or_invalid_to_unknown(
 		self,
@@ -458,10 +482,7 @@ impl ParsedSyntax<ConditionalSyntax> {
 		p: &mut Parser,
 		unknown_kind: SyntaxKind,
 	) -> ParsedSyntax<CompletedMarker> {
-		match self {
-			Absent => Absent,
-			Present(syntax) => Present(syntax.or_invalid_to_unknown(p, unknown_kind)),
-		}
+		self.map(|syntax| syntax.or_invalid_to_unknown(p, unknown_kind))
 	}
 
 	/// It adds a `missing` marker if the syntax is absent and returns `Ok(None)`.
