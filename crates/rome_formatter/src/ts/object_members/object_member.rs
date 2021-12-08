@@ -13,7 +13,9 @@ impl ToFormatElement for JsAnyObjectMember {
 			JsAnyObjectMember::JsShorthandPropertyObjectMember(ident) => {
 				ident.to_format_element(formatter)
 			}
-			JsAnyObjectMember::JsMethodObjectMember(_) => todo!(),
+			JsAnyObjectMember::JsMethodObjectMember(method_object_member) => {
+				method_object_member.to_format_element(formatter)
+			}
 			JsAnyObjectMember::JsUnknownMember(_) => todo!(),
 		}
 	}
