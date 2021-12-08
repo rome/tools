@@ -388,7 +388,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"TS_ENTITY_NAME",
 		"BOOLEAN",
 		"BIG_INT_VALUE",
-		// unknown nodes
+		// unknown nodes JS
 		"JS_UNKNOWN_EXPRESSION",
 		"JS_UNKNOWN_STATEMENT",
 		"JS_UNKNOWN_MEMBER",

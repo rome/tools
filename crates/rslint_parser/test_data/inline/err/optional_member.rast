@@ -43,12 +43,13 @@ JsRoot {
       5: LIST@10..16
         0: JS_PROPERTY_CLASS_MEMBER@10..16
           0: (empty)
-          1: JS_LITERAL_MEMBER_NAME@10..13
+          1: (empty)
+          2: JS_LITERAL_MEMBER_NAME@10..13
             0: IDENT@10..13 "foo" [] []
-          2: JS_UNKNOWN_EXPRESSION@13..14
+          3: JS_UNKNOWN_EXPRESSION@13..14
             0: QUESTION@13..14 "?" [] []
-          3: (empty)
-          4: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
+          4: (empty)
+          5: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
       6: R_CURLY@16..17 "}" [] []
   3: EOF@17..18 "" [Whitespace("\n")] []
 --

@@ -47,11 +47,12 @@ JsModule {
       5: LIST@11..19
         0: JS_GETTER_CLASS_MEMBER@11..19
           0: (empty)
-          1: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")]
-          2: (empty)
+          1: (empty)
+          2: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")]
           3: (empty)
           4: (empty)
-          5: JS_FUNCTION_BODY@17..19
+          5: (empty)
+          6: JS_FUNCTION_BODY@17..19
             0: L_CURLY@17..18 "{" [] []
             1: LIST@18..18
             2: LIST@18..18

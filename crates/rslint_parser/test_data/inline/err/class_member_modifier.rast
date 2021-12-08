@@ -1,0 +1,69 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsClassDeclaration {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
+            },
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
+            members: [
+                JsPropertyClassMember {
+                    modifiers: missing (optional),
+                    access_modifier: TsUnknownAccessibilityModifier {
+                        items: [
+                            Token(
+                                ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")],
+                            ),
+                        ],
+                    },
+                    name: JsLiteralMemberName {
+                        value: IDENT@19..22 "foo" [] [],
+                    },
+                    question_mark_token: missing (optional),
+                    excl_token: missing (optional),
+                    ty: missing (optional),
+                    value: missing (optional),
+                    semicolon_token: SEMICOLON@22..24 ";" [] [Whitespace(" ")],
+                },
+            ],
+            r_curly_token: R_CURLY@24..25 "}" [] [],
+        },
+    ],
+}
+
+0: JS_ROOT@0..26
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..25
+    0: JS_CLASS_DECLARATION@0..25
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..8
+        0: IDENT@6..8 "A" [] [Whitespace(" ")]
+      2: (empty)
+      3: (empty)
+      4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      5: LIST@10..24
+        0: JS_PROPERTY_CLASS_MEMBER@10..24
+          0: (empty)
+          1: TS_UNKNOWN_ACCESSIBILITY_MODIFIER@10..19
+            0: ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")]
+          2: JS_LITERAL_MEMBER_NAME@19..22
+            0: IDENT@19..22 "foo" [] []
+          3: (empty)
+          4: (empty)
+          5: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
+      6: R_CURLY@24..25 "}" [] []
+  3: EOF@25..26 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: `abstract` and `readonly` modifiers can only be used in TypeScript files
+  ┌─ class_member_modifier.js:1:11
+  │
+1 │ class A { abstract foo; }
+  │           ^^^^^^^^
+
+--
+class A { abstract foo; }

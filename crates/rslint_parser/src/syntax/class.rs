@@ -411,7 +411,7 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 		.set_declare_err(declare_diagnostic)
 		.consume(p);
 
-	let maybe_err = p.start();
+	let accessibility_marker = p.start();
 	let (abstract_range, readonly_range) = abstract_readonly_modifiers(p);
 	let has_modifier = abstract_range
 		.clone()
@@ -423,6 +423,8 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 			.clone()
 			.or_else(|| readonly_range.clone())
 			.unwrap();
+		// test_err class_member_modifier
+		// class A { abstract foo; }
 		if !p.typescript() {
 			let err = p
 				.err_builder(
@@ -431,13 +433,13 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 				.primary(range, "");
 
 			p.error(err);
-			// TODO: remap error to an unknown node
-			maybe_err.complete(p, ERROR);
+			accessibility_marker.complete(p, TS_UNKNOWN_ACCESSIBILITY_MODIFIER);
 		} else {
-			maybe_err.abandon(p);
+			accessibility_marker.complete(p, TS_ACCESSIBILITY);
 		}
 	} else {
-		maybe_err.abandon(p);
+		accessibility_marker.abandon(p);
+		p.missing();
 	}
 
 	if !is_static && !has_access_modifier {
@@ -866,7 +868,7 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
 
 			p.error(err);
 			// TODO: remap error to an unknown node
-			ty.change_kind(p, ERROR);
+			ty.change_kind(p, JS_UNKNOWN_EXPRESSION);
 		}
 	}
 
@@ -910,7 +912,6 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 	let modifiers_marker = p.start();
 	let has_accessibility = if ts_access_modifier(p).is_some() {
 		let range = p.cur_tok().range;
-		let maybe_err = p.start();
 		Modifiers::default().set_accessibility(true).consume(p);
 		// test_err class_constructor_parameter
 		// class B { constructor(protected b) {} }
@@ -920,10 +921,6 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 				.primary(range, "");
 
 			p.error(err);
-			// TODO: remap error to an unknown node
-			maybe_err.complete(p, ERROR);
-		} else {
-			maybe_err.abandon(p);
 		}
 		true
 	} else {
@@ -941,7 +938,7 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 
 			p.error(err);
 			// TODO: remap error to an unknown node
-			maybe_err.complete(p, ERROR);
+			maybe_err.complete(p, JS_UNKNOWN_EXPRESSION);
 		} else {
 			maybe_err.abandon(p);
 		}

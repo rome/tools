@@ -49,13 +49,14 @@ JsModule {
       5: LIST@15..30
         0: JS_SETTER_CLASS_MEMBER@15..30
           0: (empty)
-          1: SET_KW@15..22 "set" [Whitespace("\n  ")] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@22..25
+          1: (empty)
+          2: SET_KW@15..22 "set" [Whitespace("\n  ")] [Whitespace(" ")]
+          3: JS_LITERAL_MEMBER_NAME@22..25
             0: IDENT@22..25 "foo" [] []
-          3: L_PAREN@25..26 "(" [] []
-          4: (empty)
-          5: R_PAREN@26..28 ")" [] [Whitespace(" ")]
-          6: JS_FUNCTION_BODY@28..30
+          4: L_PAREN@25..26 "(" [] []
+          5: (empty)
+          6: R_PAREN@26..28 ")" [] [Whitespace(" ")]
+          7: JS_FUNCTION_BODY@28..30
             0: L_CURLY@28..29 "{" [] []
             1: LIST@29..29
             2: LIST@29..29

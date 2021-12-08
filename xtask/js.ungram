@@ -567,7 +567,7 @@ JsAnyClassMember =
 // class Test { 'constructor'() {} }
 //              ^^^^^^^^^^^^^^^^^^
 JsConstructorClassMember =
-	access_modifier: TsAccessibility?
+	access_modifier: TsAnyAccessibility?
 	name: JsLiteralMemberName
 	parameter_list: JsConstructorParameterList
 	body: JsFunctionBody
@@ -586,7 +586,7 @@ JsAnyConstructorParameter =
 //              ^^ ^^^^^^ ^^^^^^^^^
 JsPropertyClassMember =
 	modifiers: JsAnyModifier?
-	access_modifier: TsAccessibility?
+	access_modifier: TsAnyAccessibility?
 	name: JsAnyClassMemberName
 	'?'?
 	'!'?
@@ -598,7 +598,7 @@ JsPropertyClassMember =
 //              ^^^^^^
 JsMethodClassMember =
 	modifiers: JsAnyModifier?
-	access_modifier: TsAccessibility?
+	access_modifier: TsAnyAccessibility?
 	'async'?
 	'*'?
 	name: JsAnyClassMemberName
@@ -611,7 +611,7 @@ JsMethodClassMember =
 //              ^^^^^^^^^^
 JsGetterClassMember =
 	modifiers: JsAnyModifier?
-	access_modifier: TsAccessibility?
+	access_modifier: TsAnyAccessibility?
 	'get'
 	name: JsAnyClassMemberName
 	'(' ')'
@@ -622,7 +622,7 @@ JsGetterClassMember =
 //              ^^^^^^^^^^^
 JsSetterClassMember =
 	modifiers: JsAnyModifier?
-	access_modifier: TsAccessibility?
+	access_modifier: TsAnyAccessibility?
 	'set'
 	name: JsAnyClassMemberName
 	'('
@@ -1395,10 +1395,13 @@ TsImport = 'import' type_args:TsTypeArgs '.'? '(' qualifier:TsEntityName ')'
 TsIndexSignature = 'readonly'? '[' pat:JsAnyBinding ':' ty:TsType ']'
 
 // typescript type of access
+TsAnyAccessibility =
+	TsUnknownAccessibilityModifier
+	| TsAccessibility
+
 TsAccessibility = 'private' | 'readonly'
 
-
-TsConstructorParam = 'readonly' pat:JsAnyBindingPattern
+TsConstructorParam = 'readonly'? pat:JsAnyBindingPattern
 
 TsNonNull = expr:JsAnyExpression '!'
 

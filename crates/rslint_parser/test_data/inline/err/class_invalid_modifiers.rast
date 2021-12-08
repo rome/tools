@@ -60,14 +60,15 @@ JsRoot {
         0: JS_METHOD_CLASS_MEMBER@10..26
           0: JS_UNKNOWN_MODIFIER@10..17
             0: IDENT@10..17 "public" [] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@17..20
+          1: (empty)
+          2: JS_LITERAL_MEMBER_NAME@17..20
             0: IDENT@17..20 "foo" [] []
-          2: (empty)
-          3: JS_PARAMETER_LIST@20..23
+          3: (empty)
+          4: JS_PARAMETER_LIST@20..23
             0: L_PAREN@20..21 "(" [] []
             1: LIST@21..21
             2: R_PAREN@21..23 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@23..26
+          5: JS_FUNCTION_BODY@23..26
             0: L_CURLY@23..24 "{" [] []
             1: LIST@24..24
             2: LIST@24..24
