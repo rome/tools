@@ -267,35 +267,7 @@ error[SyntaxError]: expected `'('` but instead found `{`
   │        ^ unexpected
 
 --
-error[SyntaxError]: Expected an expression, but found none
-  ┌─ switch_stmt_err.js:2:8
-  │
-2 │ switch {}
-  │        ^ Expected an expression here
-
---
-error[SyntaxError]: expected `')'` but instead found `{`
-  ┌─ switch_stmt_err.js:2:8
-  │
-2 │ switch {}
-  │        ^ unexpected
-
---
 error[SyntaxError]: expected `'('` but instead found `{`
-  ┌─ switch_stmt_err.js:3:8
-  │
-3 │ switch { var i = 0 }
-  │        ^ unexpected
-
---
-error[SyntaxError]: Expected an expression, but found none
-  ┌─ switch_stmt_err.js:3:8
-  │
-3 │ switch { var i = 0 }
-  │        ^ Expected an expression here
-
---
-error[SyntaxError]: expected `')'` but instead found `{`
   ┌─ switch_stmt_err.js:3:8
   │
 3 │ switch { var i = 0 }
@@ -310,20 +282,6 @@ error[SyntaxError]: expected a default, or a case but instead found 'var i = 0'
 
 --
 error[SyntaxError]: expected `'('` but instead found `{`
-  ┌─ switch_stmt_err.js:4:8
-  │
-4 │ switch { var i = 0; case "bar": {} }
-  │        ^ unexpected
-
---
-error[SyntaxError]: Expected an expression, but found none
-  ┌─ switch_stmt_err.js:4:8
-  │
-4 │ switch { var i = 0; case "bar": {} }
-  │        ^ Expected an expression here
-
---
-error[SyntaxError]: expected `')'` but instead found `{`
   ┌─ switch_stmt_err.js:4:8
   │
 4 │ switch { var i = 0; case "bar": {} }

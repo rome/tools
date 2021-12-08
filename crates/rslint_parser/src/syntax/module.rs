@@ -249,7 +249,11 @@ fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<CompletedMa
 		let specifier = parse_any_named_import_specifier(p);
 		let recovered = specifier.or_recover(
 			p,
-			&ParseRecovery::new(JS_UNKNOWN_SPECIFIER, token_set![T![,], T!['}'], T![;]]),
+			&ParseRecovery::new(
+				JS_UNKNOWN_SPECIFIER,
+				STMT_RECOVERY_SET.union(token_set![T![,], T!['}'], T![;]]),
+			)
+			.enable_recovery_on_line_break(),
 			expected_named_import_specifier,
 		);
 

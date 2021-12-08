@@ -76,25 +76,4 @@ error[SyntaxError]: expected `:` but instead found `)`
   │              ^ unexpected
 
 --
-error[SyntaxError]: Expected an expression, but found none
-  ┌─ object_expr_method.js:1:14
-  │
-1 │ let b = { foo) }
-  │              ^ Expected an expression here
-
---
-error[SyntaxError]: expected `,` but instead found `)`
-  ┌─ object_expr_method.js:1:14
-  │
-1 │ let b = { foo) }
-  │              ^ unexpected
-
---
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found ')'
-  ┌─ object_expr_method.js:1:14
-  │
-1 │ let b = { foo) }
-  │              ^ Expected a property, a shorthand property, a getter, a setter, or a method here
-
---
 let b = { foo) }

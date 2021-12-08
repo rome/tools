@@ -119,18 +119,4 @@ error[SyntaxError]: expected `'}'` but instead the file ends
   │ ^ the file ends here
 
 --
-error[SyntaxError]: expected `'}'` but instead the file ends
-  ┌─ function_broken.js:2:1
-  │
-2 │ 
-  │ ^ the file ends here
-
---
-error[SyntaxError]: expected `'}'` but instead the file ends
-  ┌─ function_broken.js:2:1
-  │
-2 │ 
-  │ ^ the file ends here
-
---
 function foo())})}{{{  {}

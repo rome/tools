@@ -293,55 +293,11 @@ error[SyntaxError]: expected `as` but instead found `;`
   │         ^ unexpected
 
 --
-error[SyntaxError]: expected an identifier, an array pattern, or an object pattern but instead found ';'
-  ┌─ import_err.js:2:9
-  │
-2 │ import *;
-  │         ^ Expected an identifier, an array pattern, or an object pattern here
-
---
-error[SyntaxError]: expected `from` but instead found `;`
-  ┌─ import_err.js:2:9
-  │
-2 │ import *;
-  │         ^ unexpected
-
---
-error[SyntaxError]: expected a string literal but instead found ';'
-  ┌─ import_err.js:2:9
-  │
-2 │ import *;
-  │         ^ Expected a string literal here
-
---
 error[SyntaxError]: expected `from` but instead found `,`
   ┌─ import_err.js:3:14
   │
 3 │ import * as b, { a, b } from "c";
   │              ^ unexpected
-
---
-error[SyntaxError]: expected a string literal but instead found ','
-  ┌─ import_err.js:3:14
-  │
-3 │ import * as b, { a, b } from "c";
-  │              ^ Expected a string literal here
-
---
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ import_err.js:3:14
-  │
-3 │ import * as b, { a, b } from "c";
-  │ -------------^ An explicit or implicit semicolon is expected here...
-  │ │             
-  │ ...Which is required to end this statement
-
---
-error[SyntaxError]: expected a statement but instead found ','
-  ┌─ import_err.js:3:14
-  │
-3 │ import * as b, { a, b } from "c";
-  │              ^ Expected a statement here
 
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none

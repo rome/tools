@@ -434,13 +434,6 @@ error[SyntaxError]: expected a name for the function in a function declaration, 
   │          ^
 
 --
-error[SyntaxError]: expected a parenthesis '(' but instead found '{'
-  ┌─ function_decl_err.js:3:10
-  │
-3 │ function {}
-  │          ^ Expected a parenthesis '(' here
-
---
 error[SyntaxError]: expected a name for the function in a function declaration, but found none
   ┌─ function_decl_err.js:4:11
   │

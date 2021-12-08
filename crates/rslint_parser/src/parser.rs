@@ -261,7 +261,24 @@ impl<'t> Parser<'t> {
 	/// Add an error
 	#[cold]
 	pub fn error(&mut self, err: impl Into<ParserError>) {
-		self.errors.push(err.into())
+		let err = err.into();
+
+		if let Some(previous) = self.errors.last() {
+			if err.code == Some(String::from("SyntaxError"))
+				&& previous.code == err.code
+				&& previous.file_id == err.file_id
+			{
+				match (&err.primary, &previous.primary) {
+					(Some(err_primary), Some(previous_primary))
+						if err_primary.span == previous_primary.span =>
+					{
+						return;
+					}
+					_ => {}
+				}
+			}
+		}
+		self.errors.push(err)
 	}
 
 	/// Check if the parser's current token is contained in a token set
