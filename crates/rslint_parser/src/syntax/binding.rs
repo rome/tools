@@ -97,11 +97,14 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax<Condition
 					))
 					.secondary(
 						existing.to_owned(),
-						&format!("{} is first declared here", identifier_name),
+						&format!("`{}` is first declared here", identifier_name),
 					)
 					.primary(
 						identifier.range(p),
-						&format!("a second declaration of {} is not allowed", identifier_name),
+						&format!(
+							"a second declaration of `{}` is not allowed",
+							identifier_name
+						),
 					);
 				p.error(err);
 				return Present(identifier).into_invalid();

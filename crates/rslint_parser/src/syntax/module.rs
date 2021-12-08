@@ -288,8 +288,8 @@ fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMar
 
 fn parse_named_import_specifier(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	parse_export_name(p).or_missing_with_error(p, expected_export_name);
 
+	parse_export_name(p).or_missing_with_error(p, expected_export_name);
 	expect_keyword(p, "as", T![as]);
 	parse_binding(p).or_missing_with_error(p, expected_binding);
 
@@ -297,6 +297,23 @@ fn parse_named_import_specifier(p: &mut Parser) -> CompletedMarker {
 }
 
 fn parse_shorthand_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	if p.at(T![default]) {
+		p.error(
+			p.err_builder("`default` imports must be aliased")
+				.primary(p.cur_tok().range, "`default` used here")
+				.secondary(
+					p.cur_tok().range.end..p.cur_tok().range.end,
+					"add `as identifier` here",
+				),
+		);
+
+		let shorthand = p.start();
+		let binding = p.start();
+		p.bump_any();
+		binding.complete(p, JS_UNKNOWN_BINDING);
+		return Present(shorthand.complete(p, JS_SHORTHAND_NAMED_IMPORT_SPECIFIER));
+	}
+
 	parse_binding(p).map(|binding| {
 		binding
 			.precede(p)

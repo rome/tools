@@ -337,9 +337,9 @@ error[SyntaxError]: Declarations inside of a `let` declaration may not have dupl
   ┌─ binding_identifier_invalid.js:8:8
   │
 8 │ let a, a;
-  │     -  ^ a second declaration of a is not allowed
+  │     -  ^ a second declaration of `a` is not allowed
   │     │   
-  │     a is first declared here
+  │     `a` is first declared here
 
 --
 async () => { let await = 5; }

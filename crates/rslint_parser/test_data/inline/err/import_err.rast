@@ -156,12 +156,14 @@ JsModule {
                 named_import: JsNamedImportSpecifierList {
                     l_curly_token: L_CURLY@115..117 "{" [] [Whitespace(" ")],
                     specifiers: [
-                        JsUnknown {
-                            items: [
-                                Token(
-                                    DEFAULT_KW@117..125 "default" [] [Whitespace(" ")],
-                                ),
-                            ],
+                        JsShorthandNamedImportSpecifier {
+                            local_name: JsUnknownBinding {
+                                items: [
+                                    Token(
+                                        DEFAULT_KW@117..125 "default" [] [Whitespace(" ")],
+                                    ),
+                                ],
+                            },
                         },
                     ],
                     r_curly_token: R_CURLY@125..127 "}" [] [Whitespace(" ")],
@@ -279,8 +281,9 @@ JsModule {
         1: JS_NAMED_IMPORT_SPECIFIER_LIST@115..127
           0: L_CURLY@115..117 "{" [] [Whitespace(" ")]
           1: LIST@117..125
-            0: JS_UNKNOWN@117..125
-              0: DEFAULT_KW@117..125 "default" [] [Whitespace(" ")]
+            0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@117..125
+              0: JS_UNKNOWN_BINDING@117..125
+                0: DEFAULT_KW@117..125 "default" [] [Whitespace(" ")]
           2: R_CURLY@125..127 "}" [] [Whitespace(" ")]
         2: FROM_KW@127..132 "from" [] [Whitespace(" ")]
         3: JS_MODULE_SOURCE@132..135
@@ -347,16 +350,18 @@ error[SyntaxError]: Declarations inside of a `import` declaration may not have d
   ┌─ import_err.js:5:13
   │
 5 │ import { a, a } from "c";
-  │          -  ^ a second declaration of a is not allowed
+  │          -  ^ a second declaration of `a` is not allowed
   │          │   
-  │          a is first declared here
+  │          `a` is first declared here
 
 --
-error[SyntaxError]: expected an identifier, or a string literal but instead found 'default'
+error[SyntaxError]: `default` imports must be aliased
   ┌─ import_err.js:6:10
   │
 6 │ import { default } from "c";
-  │          ^^^^^^^ Expected an identifier, or a string literal here
+  │          ^^^^^^^- add `as identifier` here
+  │          │       
+  │          `default` used here
 
 --
 import;

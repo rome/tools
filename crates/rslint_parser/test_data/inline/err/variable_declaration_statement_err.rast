@@ -281,18 +281,18 @@ error[SyntaxError]: Declarations inside of a `let` declaration may not have dupl
   ┌─ variable_declaration_statement_err.js:1:10
   │
 1 │ let a, { a } = { a: 10 }
-  │     -    ^ a second declaration of a is not allowed
+  │     -    ^ a second declaration of `a` is not allowed
   │     │     
-  │     a is first declared here
+  │     `a` is first declared here
 
 --
 error[SyntaxError]: Declarations inside of a `const` declaration may not have duplicates
   ┌─ variable_declaration_statement_err.js:2:16
   │
 2 │ const a = 1, { a } = { a: 10 }
-  │       -        ^ a second declaration of a is not allowed
+  │       -        ^ a second declaration of `a` is not allowed
   │       │         
-  │       a is first declared here
+  │       `a` is first declared here
 
 --
 error[SyntaxError]: Const var declarations must have an initialized value
