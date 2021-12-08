@@ -14,3 +14,6 @@ class Foo extends Boar {
 	new_prop = 5;
 	double_semicolon = [5, 3, 4];
 }
+x = class {};
+x = class foo extends Boar {};
+x = class aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa extends bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb {};

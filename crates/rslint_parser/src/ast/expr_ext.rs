@@ -181,8 +181,10 @@ impl JsBinaryExpression {
 		Ok(kind)
 	}
 
-	pub fn right(&self) -> Option<JsAnyExpression> {
-		support::children(self.syntax()).nth(1)
+	pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
+		support::children(self.syntax())
+			.nth(1)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
 	}
 
 	/// Whether this is a comparison operation, such as `>`, `<`, `==`, `!=`, `===`, etc.

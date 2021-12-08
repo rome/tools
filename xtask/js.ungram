@@ -276,7 +276,7 @@ JsAnyExpression =
 	| JsUnknownExpression
 
 
-// the backtick is just a placeholder, there's
+// the backtick is just a placeholder, see parser in rslint_parser/src/ast/expr_ext.rs
 Template = '`'
 
 JsThisExpression = 'this'
@@ -358,7 +358,7 @@ JsArrayHole = manual__hole: ''
 JsAssignmentExpression =
   left: JsAnyAssignmentPattern
   operator_token: (
-		'=' |'+=' | '-=' | '*=' | '%=' |
+		'=' |'+=' | '-=' | '*=' | '/=' | '%=' |
 		'**=' | '>>=' | '<<=' | '>>>=' | '&=' |
 		'|=' | '^=' | '&&=' | '||=' | '??='
   )

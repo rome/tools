@@ -675,6 +675,7 @@ impl JsAssignmentExpression {
 				T ! [+=],
 				T ! [-=],
 				T ! [*=],
+				T ! [/=],
 				T ! [%=],
 				T ! [**=],
 				T ! [>>=],

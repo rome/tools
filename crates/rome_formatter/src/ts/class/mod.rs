@@ -1,4 +1,5 @@
 mod class_declaration;
+mod class_expression;
 mod class_member;
 mod class_member_name;
 mod constructor_class_member;

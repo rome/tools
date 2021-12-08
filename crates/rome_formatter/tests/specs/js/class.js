@@ -26,3 +26,12 @@ class Foo extends Boar {
 
 	double_semicolon = [5,3,4];;
 }
+
+x = class {
+}
+
+x = class foo extends Boar {
+}
+
+x = class aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa extends bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb {
+}
