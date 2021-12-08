@@ -71,7 +71,7 @@ pub use printer::PrinterOptions;
 use rome_core::file_handlers::Language;
 use rome_core::App;
 use rome_path::RomePath;
-use rslint_parser::parse_text;
+use rslint_parser::{parse_text, ParserError};
 
 use std::io::Read;
 use std::str::FromStr;
@@ -95,6 +95,9 @@ pub enum FormatError {
 
 	/// When the ability to format the current file has been turned off on purpose
 	CapabilityDisabled,
+
+	/// ParserErrors from rslint_parser
+	ParserError(Vec<ParserError>),
 }
 
 impl From<SyntaxError> for FormatError {
@@ -176,7 +179,6 @@ impl Formatted {
 	}
 }
 
-// TODO: implement me + handle errors
 /// Main function
 pub fn format(rome_path: &mut RomePath, options: FormatOptions) -> FormatResult<Formatted> {
 	// we assume that file exists
@@ -191,10 +193,15 @@ pub fn format(rome_path: &mut RomePath, options: FormatOptions) -> FormatResult<
 			let result = match handler.language() {
 				Language::Js => {
 					let parsed_result = parse_text(buffer.as_str(), 0);
-					Formatter::new(options).format_root(&parsed_result.syntax())
+					if parsed_result.errors().is_empty() {
+						Formatter::new(options).format_root(&parsed_result.syntax())
+					} else {
+						Err(FormatError::ParserError(parsed_result.errors().to_vec()))
+					}
 				}
 				Language::Json => {
 					let element = tokenize_json(buffer.as_str());
+					// TODO: add error handling
 					Ok(format_element(&element, options))
 				}
 				Language::Ts | Language::Unknown => Err(FormatError::UnsupportedLanguage),

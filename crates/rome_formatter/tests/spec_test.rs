@@ -1,5 +1,6 @@
 use rome_core::create_app;
-use rome_formatter::{format_file, FormatOptions};
+use rome_formatter::{format, FormatOptions};
+use rome_path::RomePath;
 use std::fs;
 use std::path::Path;
 
@@ -32,8 +33,10 @@ pub fn run(spec_input_file: &str, expected_file: &str) {
 		expected_file.display(),
 	);
 
-	let result = format_file(file_path, FormatOptions::default(), &app);
-	let expected_output = fs::read_to_string(expected_file).unwrap();
+	let mut rome_path = RomePath::new(file_path).deduce_handler(&app);
+	let result = format(&mut rome_path, FormatOptions::default());
+	let element = result.expect("no errors");
 
-	assert_eq!(&expected_output, result.code());
+	let expected_output = fs::read_to_string(expected_file).unwrap();
+	assert_eq!(&expected_output, element.code());
 }
