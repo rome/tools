@@ -1054,7 +1054,6 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	Present(m.complete(p, kind))
 }
 
-#[derive(Default)]
 struct SwitchClausesList;
 
 impl ParseNodeList for SwitchClausesList {
@@ -1136,7 +1135,7 @@ fn parse_switch_clause(
 			expr(p);
 			p.expect_required(T![:]);
 
-			SwitchClausesList::default().parse_list(p);
+			SwitchClausesList.parse_list(p);
 
 			Present(m.complete(p, JS_CASE_CLAUSE))
 		}
