@@ -144,15 +144,14 @@ pub fn parse_statement(
 					.primary(m.range(p), "not allowed inside scripts");
 
 				p.error(err);
-				m.change_kind(p, JS_UNKNOWN_STATEMENT);
 			} else {
 				let err = p
 					.err_builder("Illegal use of an import declaration not at the top level")
 					.primary(m.range(p), "move this declaration to the top level");
 
 				p.error(err);
-				m.change_kind(p, JS_UNKNOWN_STATEMENT);
 			}
+			m.change_kind(p, JS_UNKNOWN_STATEMENT);
 			Present(m)
 		}
 		T![;] => parse_empty_statement(p), // It is only ever Err if there's no ;

@@ -289,10 +289,10 @@ fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 
 	if p.cur_src() == "as" && p.nth_src(1) != "as" {
 		p.missing();
-		p.error(expected_export_name(
-			p,
-			p.cur_tok().range.start..p.cur_tok().range.start,
-		));
+		p.error(
+			p.err_builder("Expected an identifier or string literal before the as keyword")
+				.primary(p.cur_tok().range, "as keyword"),
+		);
 	} else if p.nth_src(1) == "as" {
 		parse_export_name(p).or_missing_with_error(p, expected_export_name);
 	} else {

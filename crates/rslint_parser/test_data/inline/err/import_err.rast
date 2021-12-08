@@ -454,11 +454,11 @@ error[SyntaxError]: expected an identifier but instead found '"a"'
   │          ^^^ Expected an identifier here
 
 --
-error[SyntaxError]: expected a string literal, or an identifier but instead found 'as'
+error[SyntaxError]: Expected an identifier or string literal before the as keyword
   ┌─ import_err.js:8:10
   │
 8 │ import { as b } from "c";
-  │          ^^ Expected a string literal, or an identifier here
+  │          ^^ as keyword
 
 --
 import;
