@@ -138,8 +138,9 @@ JsModule {
         1: JS_IDENTIFIER_EXPRESSION@19..21
           0: JS_REFERENCE_IDENTIFIER@19..21
             0: IDENT@19..21 "B" [] [Whitespace(" ")]
-      3: L_CURLY@21..22 "{" [] []
-      4: LIST@22..99
+      3: (empty)
+      4: L_CURLY@21..22 "{" [] []
+      5: LIST@22..99
         0: JS_CONSTRUCTOR_CLASS_MEMBER@22..53
           0: JS_LITERAL_MEMBER_NAME@22..35
             0: IDENT@22..35 "constructor" [Whitespace("\n\t")] []
@@ -206,5 +207,5 @@ JsModule {
                   4: R_BRACK@94..95 "]" [] []
                 1: SEMICOLON@95..96 ";" [] []
             3: R_CURLY@96..99 "}" [Whitespace("\n\t")] []
-      5: R_CURLY@99..101 "}" [Whitespace("\n")] []
+      6: R_CURLY@99..101 "}" [Whitespace("\n")] []
   3: EOF@101..102 "" [Whitespace("\n")] []
