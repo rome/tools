@@ -581,15 +581,14 @@ pub(crate) fn parse_statements(
 						.primary(m.range(p), "not allowed inside scripts");
 
 					p.error(err);
-					m.change_kind(p, ERROR);
-				}
-				if !top_level {
+					m.change_kind(p, JS_UNKNOWN_STATEMENT);
+				} else if !top_level {
 					let err = p
 						.err_builder("Illegal use of an import declaration not at the top level")
 						.primary(m.range(p), "move this declaration to the top level");
 
 					p.error(err);
-					m.change_kind(p, ERROR);
+					m.change_kind(p, JS_UNKNOWN_STATEMENT);
 				}
 			}
 			// test_err export_decl_not_top_level
@@ -604,15 +603,14 @@ pub(crate) fn parse_statements(
 						.primary(m.range(p), "not allowed inside scripts");
 
 					p.error(err);
-					m.change_kind(p, ERROR);
-				}
-				if !top_level {
+					m.change_kind(p, JS_UNKNOWN_STATEMENT);
+				} else if !top_level {
 					let err = p
 						.err_builder("Illegal use of an import declaration not at the top level")
 						.primary(m.range(p), "move this declaration to the top level");
 
 					p.error(err);
-					m.change_kind(p, ERROR);
+					m.change_kind(p, JS_UNKNOWN_STATEMENT);
 				}
 			}
 			_ => {
