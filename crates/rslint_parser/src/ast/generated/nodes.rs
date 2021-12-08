@@ -43,10 +43,10 @@ impl JsUnknownAssignment {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsUnknownModifier {
+pub struct JsUnknown {
 	pub(crate) syntax: SyntaxNode,
 }
-impl JsUnknownModifier {
+impl JsUnknown {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2029,7 +2029,7 @@ impl JsImportAssertion {
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['{'])
 	}
-	pub fn assertions(&self) -> AstSeparatedList<JsImportAssertionEntry> {
+	pub fn assertions(&self) -> AstSeparatedList<JsAnyImportAssertionEntry> {
 		support::separated_list(&self.syntax, 0usize)
 	}
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -2870,7 +2870,7 @@ pub enum JsAnyConstructorParameter {
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyModifier {
 	JsModifier(JsModifier),
-	JsUnknownModifier(JsUnknownModifier),
+	JsUnknown(JsUnknown),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrayAssignmentPatternElement {
@@ -2953,6 +2953,12 @@ pub enum JsAnyNamedImport {
 pub enum JsAnyNamedImportSpecifier {
 	JsShorthandNamedImportSpecifier(JsShorthandNamedImportSpecifier),
 	JsNamedImportSpecifier(JsNamedImportSpecifier),
+	JsUnknown(JsUnknown),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyImportAssertionEntry {
+	JsImportAssertionEntry(JsImportAssertionEntry),
+	JsUnknown(JsUnknown),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum DefaultDecl {
@@ -3094,8 +3100,8 @@ impl std::fmt::Debug for JsUnknownAssignment {
 			.finish()
 	}
 }
-impl AstNode for JsUnknownModifier {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_MODIFIER }
+impl AstNode for JsUnknown {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3105,9 +3111,9 @@ impl AstNode for JsUnknownModifier {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsUnknownModifier {
+impl std::fmt::Debug for JsUnknown {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsUnknownModifier")
+		f.debug_struct("JsUnknown")
 			.field("items", &self.items())
 			.finish()
 	}
@@ -9778,15 +9784,15 @@ impl std::fmt::Debug for JsAnyConstructorParameter {
 impl From<JsModifier> for JsAnyModifier {
 	fn from(node: JsModifier) -> JsAnyModifier { JsAnyModifier::JsModifier(node) }
 }
-impl From<JsUnknownModifier> for JsAnyModifier {
-	fn from(node: JsUnknownModifier) -> JsAnyModifier { JsAnyModifier::JsUnknownModifier(node) }
+impl From<JsUnknown> for JsAnyModifier {
+	fn from(node: JsUnknown) -> JsAnyModifier { JsAnyModifier::JsUnknown(node) }
 }
 impl AstNode for JsAnyModifier {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_MODIFIER | JS_UNKNOWN_MODIFIER) }
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_MODIFIER | JS_UNKNOWN) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			JS_MODIFIER => JsAnyModifier::JsModifier(JsModifier { syntax }),
-			JS_UNKNOWN_MODIFIER => JsAnyModifier::JsUnknownModifier(JsUnknownModifier { syntax }),
+			JS_UNKNOWN => JsAnyModifier::JsUnknown(JsUnknown { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -9794,7 +9800,7 @@ impl AstNode for JsAnyModifier {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			JsAnyModifier::JsModifier(it) => &it.syntax,
-			JsAnyModifier::JsUnknownModifier(it) => &it.syntax,
+			JsAnyModifier::JsUnknown(it) => &it.syntax,
 		}
 	}
 }
@@ -9802,7 +9808,7 @@ impl std::fmt::Debug for JsAnyModifier {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
 			JsAnyModifier::JsModifier(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyModifier::JsUnknownModifier(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyModifier::JsUnknown(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -10504,11 +10510,16 @@ impl From<JsNamedImportSpecifier> for JsAnyNamedImportSpecifier {
 		JsAnyNamedImportSpecifier::JsNamedImportSpecifier(node)
 	}
 }
+impl From<JsUnknown> for JsAnyNamedImportSpecifier {
+	fn from(node: JsUnknown) -> JsAnyNamedImportSpecifier {
+		JsAnyNamedImportSpecifier::JsUnknown(node)
+	}
+}
 impl AstNode for JsAnyNamedImportSpecifier {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		matches!(
 			kind,
-			JS_SHORTHAND_NAMED_IMPORT_SPECIFIER | JS_NAMED_IMPORT_SPECIFIER
+			JS_SHORTHAND_NAMED_IMPORT_SPECIFIER | JS_NAMED_IMPORT_SPECIFIER | JS_UNKNOWN
 		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -10521,6 +10532,7 @@ impl AstNode for JsAnyNamedImportSpecifier {
 			JS_NAMED_IMPORT_SPECIFIER => {
 				JsAnyNamedImportSpecifier::JsNamedImportSpecifier(JsNamedImportSpecifier { syntax })
 			}
+			JS_UNKNOWN => JsAnyNamedImportSpecifier::JsUnknown(JsUnknown { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -10529,6 +10541,7 @@ impl AstNode for JsAnyNamedImportSpecifier {
 		match self {
 			JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => &it.syntax,
 			JsAnyNamedImportSpecifier::JsNamedImportSpecifier(it) => &it.syntax,
+			JsAnyNamedImportSpecifier::JsUnknown(it) => &it.syntax,
 		}
 	}
 }
@@ -10539,6 +10552,44 @@ impl std::fmt::Debug for JsAnyNamedImportSpecifier {
 				std::fmt::Debug::fmt(it, f)
 			}
 			JsAnyNamedImportSpecifier::JsNamedImportSpecifier(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyNamedImportSpecifier::JsUnknown(it) => std::fmt::Debug::fmt(it, f),
+		}
+	}
+}
+impl From<JsImportAssertionEntry> for JsAnyImportAssertionEntry {
+	fn from(node: JsImportAssertionEntry) -> JsAnyImportAssertionEntry {
+		JsAnyImportAssertionEntry::JsImportAssertionEntry(node)
+	}
+}
+impl From<JsUnknown> for JsAnyImportAssertionEntry {
+	fn from(node: JsUnknown) -> JsAnyImportAssertionEntry {
+		JsAnyImportAssertionEntry::JsUnknown(node)
+	}
+}
+impl AstNode for JsAnyImportAssertionEntry {
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_IMPORT_ASSERTION_ENTRY | JS_UNKNOWN) }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_IMPORT_ASSERTION_ENTRY => {
+				JsAnyImportAssertionEntry::JsImportAssertionEntry(JsImportAssertionEntry { syntax })
+			}
+			JS_UNKNOWN => JsAnyImportAssertionEntry::JsUnknown(JsUnknown { syntax }),
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			JsAnyImportAssertionEntry::JsImportAssertionEntry(it) => &it.syntax,
+			JsAnyImportAssertionEntry::JsUnknown(it) => &it.syntax,
+		}
+	}
+}
+impl std::fmt::Debug for JsAnyImportAssertionEntry {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		match self {
+			JsAnyImportAssertionEntry::JsImportAssertionEntry(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyImportAssertionEntry::JsUnknown(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -11081,6 +11132,11 @@ impl std::fmt::Display for JsAnyNamedImportSpecifier {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsAnyImportAssertionEntry {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for DefaultDecl {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -11146,7 +11202,7 @@ impl std::fmt::Display for JsUnknownAssignment {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsUnknownModifier {
+impl std::fmt::Display for JsUnknown {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

@@ -114,9 +114,8 @@ pub fn parse_statement(
 
 		// make sure we dont try parsing import.meta or import() as declarations
 		T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => {
-			let import = parse_import(p)
-				.unwrap()
-				.change_kind(p, JS_UNKNOWN_STATEMENT);
+			let mut import = parse_import(p).unwrap();
+			import.change_kind(p, JS_UNKNOWN_STATEMENT);
 
 			if p.syntax.file_kind == FileKind::Script {
 				let err = p
@@ -145,14 +144,14 @@ pub fn parse_statement(
 					.primary(m.range(p), "not allowed inside scripts");
 
 				p.error(err);
-				m.change_kind(p, ERROR);
+				m.change_kind(p, JS_UNKNOWN_STATEMENT);
 			} else {
 				let err = p
 					.err_builder("Illegal use of an import declaration not at the top level")
 					.primary(m.range(p), "move this declaration to the top level");
 
 				p.error(err);
-				m.change_kind(p, ERROR);
+				m.change_kind(p, JS_UNKNOWN_STATEMENT);
 			}
 			Present(m)
 		}

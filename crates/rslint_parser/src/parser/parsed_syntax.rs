@@ -427,21 +427,6 @@ impl ConditionalSyntax {
 		}
 	}
 
-	/// Changes the kind of the valid or invalid syntax and returns the
-	/// completed marker
-	pub fn change_kind(self, p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
-		match self {
-			Valid(mut marker) => {
-				marker.change_kind(p, kind);
-				marker
-			}
-			Invalid(mut marker) => {
-				marker.0.change_kind(p, kind);
-				marker.0
-			}
-		}
-	}
-
 	/// Wraps the parsed syntax in an unknown node if the syntax is [Invalid] or returns the valid syntax
 	pub fn or_invalid_to_unknown(
 		self,

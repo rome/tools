@@ -326,7 +326,7 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 
 				let m = p.start();
 				p.bump_remap(T![declare]);
-				m.complete(p, JS_UNKNOWN_MODIFIER);
+				m.complete(p, JS_UNKNOWN);
 			}
 
 			return Valid(parse_method_class_member(p, member_marker));
@@ -1003,7 +1003,7 @@ impl Modifiers {
 			p.bump_remap(T![declare]);
 			if let Some(err) = self.declare_err {
 				p.error(err);
-				m.complete(p, JS_UNKNOWN_MODIFIER);
+				m.complete(p, JS_UNKNOWN);
 			} else {
 				m.complete(p, JS_MODIFIER);
 			}

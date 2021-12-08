@@ -4,10 +4,10 @@ use crate::syntax::js_parse_error::{expected_binding, expected_statement};
 use crate::syntax::program::export_decl;
 use crate::syntax::stmt::{parse_statement, semi, STMT_RECOVERY_SET};
 use crate::{
-	Absent, CompletedMarker, ConditionalSyntax, Invalid, Marker, ParseRecovery, ParsedSyntax,
-	Parser, Present, TokenSet, Valid,
+	Absent, CompletedMarker, ConditionalSyntax, Marker, ParseRecovery, ParsedSyntax, Parser,
+	Present, TokenSet,
 };
-use rslint_errors::{Diagnostic, Span};
+use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::{SyntaxKind, T};
 use std::collections::HashMap;
@@ -59,9 +59,7 @@ fn parse_module_items(p: &mut Parser) {
 
 fn parse_module_item(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
-		T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => {
-			parse_import(p).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
-		}
+		T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => parse_import(p),
 		T![export] => export_decl(p).into(),
 		_ => {
 			let checkpoint = p.checkpoint();
@@ -84,7 +82,7 @@ fn parse_module_item(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // import { a + b, d } from "c";
 // import { a, a } from "c";
 // import { default } from "c";
-pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![import]) {
 		return Absent;
 	}
@@ -95,18 +93,13 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 
 	p.state.duplicate_binding_parent = Some("import");
 
-	let valid = if let Err(invalid) = parse_import_clause(p).or_missing_with_error(p, |p, range| {
+	parse_import_clause(p).or_missing_with_error(p, |p, range| {
 		expected_any(
 			&["default import", "namespace import", "named import"],
 			range,
 		)
 		.to_diagnostic(p)
-	}) {
-		invalid.abandon(p);
-		false
-	} else {
-		true
-	};
+	});
 
 	p.state.duplicate_binding_parent = None;
 	p.state.name_map.clear();
@@ -115,12 +108,12 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 
 	semi(p, start..end);
 
-	Present(import.complete(p, JS_IMPORT)).into_conditional(valid)
+	Present(import.complete(p, JS_IMPORT))
 }
 
 // test import_default_clause
 // import foo from "test";
-fn parse_import_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+fn parse_import_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
 		JS_STRING_LITERAL => parse_import_bare_clause(p),
 		T![*] => parse_import_namespace_clause(p),
@@ -135,35 +128,19 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 
 					let default_specifier = m.complete(p, JS_DEFAULT_IMPORT_SPECIFIER);
 					let named_clause = default_specifier.precede(p);
-					let mut valid = true;
 
-					if let Err(invalid) =
-						parse_named_import(p).or_missing_with_error(p, expected_named_import)
-					{
-						invalid.abandon(p);
-						valid = false;
-					}
-
+					parse_named_import(p).or_missing_with_error(p, expected_named_import);
 					expect_keyword(p, "from", T![from]);
 					parse_module_source(p).or_missing_with_error(p, expected_module_source);
-					if let Err(invalid) = parse_import_assertion(p).or_missing(p) {
-						invalid.abandon(p);
-						valid = false;
-					}
+					parse_import_assertion(p).or_missing(p);
 
 					Present(named_clause.complete(p, JS_IMPORT_NAMED_CLAUSE))
-						.into_conditional(valid)
 				} else {
 					expect_keyword(p, "from", T![from]);
 					parse_module_source(p).or_missing_with_error(p, expected_module_source);
-					let valid = if let Err(invalid) = parse_import_assertion(p).or_missing(p) {
-						invalid.abandon(p);
-						false
-					} else {
-						true
-					};
+					parse_import_assertion(p).or_missing(p);
 
-					Present(m.complete(p, JS_IMPORT_DEFAULT_CLAUSE)).into_conditional(valid)
+					Present(m.complete(p, JS_IMPORT_DEFAULT_CLAUSE))
 				}
 			}
 		},
@@ -173,28 +150,15 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 // test import_bare_clause
 // import "test";
 // import "no_semicolon"
-fn parse_import_bare_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+fn parse_import_bare_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	parse_module_source(p).map(|module_source| {
 		let m = module_source.precede(p);
-
-		let valid = if let Err(invalid) = parse_import_assertion(p).or_missing(p) {
-			invalid.abandon(p);
-			false
-		} else {
-			true
-		};
-
-		let clause = m.complete(p, JS_IMPORT_BARE_CLAUSE);
-
-		if valid {
-			Valid(clause)
-		} else {
-			Invalid(clause.into())
-		}
+		parse_import_assertion(p).or_missing(p);
+		m.complete(p, JS_IMPORT_BARE_CLAUSE)
 	})
 }
 
-fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![*]) {
 		return Absent;
 	}
@@ -206,14 +170,9 @@ fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSynt
 	parse_binding(p).or_missing_with_error(p, expected_binding);
 	expect_keyword(p, "from", T![from]);
 	parse_module_source(p).or_missing_with_error(p, expected_module_source);
-	let valid = if let Err(invalid) = parse_import_assertion(p).or_missing(p) {
-		invalid.abandon(p);
-		false
-	} else {
-		true
-	};
+	parse_import_assertion(p).or_missing(p);
 
-	Present(m.complete(p, JS_IMPORT_NAMESPACE_CLAUSE)).into_conditional(valid)
+	Present(m.complete(p, JS_IMPORT_NAMESPACE_CLAUSE))
 }
 
 // test import_named_clause
@@ -222,29 +181,20 @@ fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSynt
 // import b, { a } from "b";
 // import a, * as b from "c";
 // import { a as b, default as c, "a-b-c" as d } from "b";
-fn parse_import_named_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+fn parse_import_named_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T!['{']) {
 		return Absent;
 	}
 
 	let m = p.start();
-	let mut valid = true;
 
 	parse_default_import_specifier(p).or_missing(p);
-
-	if let Err(invalid) = parse_named_import(p).or_missing_with_error(p, expected_named_import) {
-		valid = false;
-		invalid.abandon(p);
-	}
-
+	parse_named_import(p).or_missing_with_error(p, expected_named_import);
 	expect_keyword(p, "from", T![from]);
 	parse_module_source(p).or_missing_with_error(p, expected_module_source);
-	if let Err(invalid) = parse_import_assertion(p).or_missing(p) {
-		invalid.abandon(p);
-		valid = false;
-	}
+	parse_import_assertion(p).or_missing(p);
 
-	Present(m.complete(p, JS_IMPORT_NAMED_CLAUSE)).into_conditional(valid)
+	Present(m.complete(p, JS_IMPORT_NAMED_CLAUSE))
 }
 
 fn parse_default_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
@@ -255,9 +205,9 @@ fn parse_default_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarke
 	})
 }
 
-fn parse_named_import(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+fn parse_named_import(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
-		T![*] => parse_namespace_import_specifier(p).into_valid(),
+		T![*] => parse_namespace_import_specifier(p),
 		_ => parse_named_import_specifier_list(p),
 	}
 }
@@ -275,7 +225,7 @@ fn parse_namespace_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMar
 	Present(m.complete(p, JS_NAMESPACE_IMPORT_SPECIFIER))
 }
 
-fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T!['{']) {
 		return Absent;
 	}
@@ -286,7 +236,6 @@ fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<Conditional
 	let list = p.start();
 	let mut progress = ParserProgress::default();
 	let mut first = true;
-	let mut valid = true;
 
 	while !matches!(p.cur(), EOF | T!['}'] | T![;]) {
 		progress.assert_progressing(p);
@@ -302,25 +251,18 @@ fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<Conditional
 			}
 		}
 
-		let specifier = parse_any_named_import_specifier(p);
+		let recovered = parse_any_named_import_specifier(p).or_recover(
+			p,
+			&ParseRecovery::new(
+				JS_UNKNOWN,
+				STMT_RECOVERY_SET.union(token_set![T![,], T!['}'], T![;]]),
+			)
+			.enable_recovery_on_line_break(),
+			expected_named_import_specifier,
+		);
 
-		if specifier.is_absent() {
-			valid = false;
-			let recovered = specifier.or_recover(
-				p,
-				&ParseRecovery::new(
-					JS_NAMED_IMPORT_SPECIFIER,
-					STMT_RECOVERY_SET.union(token_set![T![,], T!['}'], T![;]]),
-				)
-				.enable_recovery_on_line_break(),
-				expected_named_import_specifier,
-			);
-
-			if let Ok(recovered) = recovered {
-				recovered.undo_completion(p).abandon(p);
-			} else {
-				break;
-			}
+		if recovered.is_err() {
+			break;
 		}
 	}
 
@@ -333,7 +275,7 @@ fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<Conditional
 
 	p.expect_required(T!['}']);
 
-	Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIER_LIST)).into_conditional(valid)
+	Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIER_LIST))
 }
 
 fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
@@ -380,12 +322,11 @@ fn parse_shorthand_named_import_specifier(p: &mut Parser) -> ParsedSyntax<Comple
 // import foo from "foo.json" assert { "type": "json", type: "html", "type": "js" };
 // import "x" assert;
 // import foo from "foo.json" assert { type: "json", lazy: true, startAtLine: 1 };
-fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![ident]) || p.cur_src() != "assert" || p.has_linebreak_before_n(0) {
 		return Absent;
 	}
 
-	// TODO track duplicate keys
 	let m = p.start();
 	p.bump_remap(T![assert]);
 	p.expect_required(T!['{']);
@@ -395,7 +336,6 @@ fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	let mut assertion_keys: HashMap<String, Range<usize>> = HashMap::default();
 
 	let assertions = p.start();
-	let mut valid = true;
 
 	while !matches!(p.cur(), EOF | T!['}']) {
 		progress.assert_progressing(p);
@@ -409,33 +349,21 @@ fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 			}
 		}
 
-		let assertion_entry = parse_import_assertion_entry(p, &mut assertion_keys);
-
-		match assertion_entry {
-			Absent => {
-				if let Ok(recovered) = ParseRecovery::new(
-					JS_IMPORT_ASSERTION,
+		let recovered = parse_import_assertion_entry(p, &mut assertion_keys)
+			.or_invalid_to_unknown(p, JS_UNKNOWN)
+			.or_recover(
+				p,
+				&ParseRecovery::new(
+					JS_UNKNOWN,
 					STMT_RECOVERY_SET.union(token_set![T![,], T!['}']]),
 				)
-				.enable_recovery_on_line_break()
-				.recover(p)
-				{
-					p.error(
-						expected_node("import assertion entry", recovered.range(p).as_range())
-							.to_diagnostic(p),
-					);
-					recovered.undo_completion(p).abandon(p);
-					valid = false;
-				} else {
-					p.error(
-						expected_node("import assertion entry", p.cur_tok().range).to_diagnostic(p),
-					);
-					break;
-				}
-			}
-			Present(Invalid(_)) => valid = false,
-			_ => (),
-		};
+				.enable_recovery_on_line_break(),
+				|p, range| expected_node("import assertion entry", range).to_diagnostic(p),
+			);
+
+		if recovered.is_err() {
+			break;
+		}
 	}
 
 	if first {
@@ -447,7 +375,7 @@ fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 
 	p.expect_required(T!['}']);
 
-	Present(m.complete(p, JS_IMPORT_ASSERTION)).into_conditional(valid)
+	Present(m.complete(p, JS_IMPORT_ASSERTION))
 }
 
 fn parse_import_assertion_entry(

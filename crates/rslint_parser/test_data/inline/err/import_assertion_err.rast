@@ -1,0 +1,524 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: [],
+    items: [
+        JsImport {
+            import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
+            import_clause: JsImportBareClause {
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@7..13 "\"foo\"" [] [Whitespace(" ")],
+                },
+                assertion: JsImportAssertion {
+                    assert_token: ASSERT_KW@13..20 "assert" [] [Whitespace(" ")],
+                    l_curly_token: L_CURLY@20..22 "{" [] [Whitespace(" ")],
+                    assertions: [
+                        JsImportAssertionEntry {
+                            key: IDENT@22..26 "type" [] [],
+                            colon_token: missing (required),
+                            value_token: missing (required),
+                        },
+                        COMMA@26..28 "," [] [Whitespace(" ")],
+                        JsImportAssertionEntry {
+                            key: JS_STRING_LITERAL@28..35 "\"json\"" [] [Whitespace(" ")],
+                            colon_token: missing (required),
+                            value_token: JS_STRING_LITERAL@28..35 "\"json\"" [] [Whitespace(" ")],
+                        },
+                    ],
+                    r_curly_token: R_CURLY@35..36 "}" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@36..37 ";" [] [],
+        },
+        JsImport {
+            import_token: IMPORT_KW@37..45 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_clause: JsImportBareClause {
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@45..51 "\"foo\"" [] [Whitespace(" ")],
+                },
+                assertion: missing (optional),
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@51..63 "\\u{61}ssert" [] [Whitespace(" ")],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsBlockStatement {
+            l_curly_token: L_CURLY@63..65 "{" [] [Whitespace(" ")],
+            statements: [
+                JsLabeledStatement {
+                    label_token: IDENT@65..69 "type" [] [],
+                    colon_token: COLON@69..71 ":" [] [Whitespace(" ")],
+                    body: JsExpressionStatement {
+                        expression: JsStringLiteralExpression {
+                            value_token: JS_STRING_LITERAL@71..78 "\"json\"" [] [Whitespace(" ")],
+                        },
+                        semicolon_token: missing (optional),
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@78..79 "}" [] [],
+        },
+        JsEmptyStatement {
+            semicolon_token: SEMICOLON@79..80 ";" [] [],
+        },
+        JsImport {
+            import_token: IMPORT_KW@80..88 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_clause: JsImportNamedClause {
+                default_specifier: missing (optional),
+                named_import: JsNamedImportSpecifierList {
+                    l_curly_token: L_CURLY@88..90 "{" [] [Whitespace(" ")],
+                    specifiers: [
+                        JsShorthandNamedImportSpecifier {
+                            local_name: JsIdentifierBinding {
+                                name_token: IDENT@90..94 "foo" [] [Whitespace(" ")],
+                            },
+                        },
+                    ],
+                    r_curly_token: R_CURLY@94..96 "}" [] [Whitespace(" ")],
+                },
+                from_token: missing (required),
+                source: missing (required),
+                assertion: JsImportAssertion {
+                    assert_token: ASSERT_KW@96..103 "assert" [] [Whitespace(" ")],
+                    l_curly_token: L_CURLY@103..105 "{" [] [Whitespace(" ")],
+                    assertions: [
+                        JsImportAssertionEntry {
+                            key: IDENT@105..109 "type" [] [],
+                            colon_token: COLON@109..111 ":" [] [Whitespace(" ")],
+                            value_token: JS_STRING_LITERAL@111..118 "\"json\"" [] [Whitespace(" ")],
+                        },
+                    ],
+                    r_curly_token: R_CURLY@118..119 "}" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@119..120 ";" [] [],
+        },
+        JsImport {
+            import_token: IMPORT_KW@120..128 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_clause: JsImportBareClause {
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@128..133 "\"foo\"" [] [],
+                },
+                assertion: missing (optional),
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@133..141 "assert" [Whitespace("\n")] [Whitespace(" ")],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsBlockStatement {
+            l_curly_token: L_CURLY@141..143 "{" [] [Whitespace(" ")],
+            statements: [
+                JsLabeledStatement {
+                    label_token: IDENT@143..147 "type" [] [],
+                    colon_token: COLON@147..149 ":" [] [Whitespace(" ")],
+                    body: JsExpressionStatement {
+                        expression: JsStringLiteralExpression {
+                            value_token: JS_STRING_LITERAL@149..156 "\"json\"" [] [Whitespace(" ")],
+                        },
+                        semicolon_token: missing (optional),
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@156..157 "}" [] [],
+        },
+        JsImport {
+            import_token: IMPORT_KW@157..165 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_clause: JsImportDefaultClause {
+                local_name: JsIdentifierBinding {
+                    name_token: IDENT@165..169 "foo" [] [Whitespace(" ")],
+                },
+                from_token: FROM_KW@169..174 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@174..185 "\"foo.json\"" [] [Whitespace(" ")],
+                },
+                assertion: JsImportAssertion {
+                    assert_token: ASSERT_KW@185..192 "assert" [] [Whitespace(" ")],
+                    l_curly_token: L_CURLY@192..194 "{" [] [Whitespace(" ")],
+                    assertions: [
+                        JsImportAssertionEntry {
+                            key: JS_STRING_LITERAL@194..200 "\"type\"" [] [],
+                            colon_token: COLON@200..202 ":" [] [Whitespace(" ")],
+                            value_token: JS_STRING_LITERAL@194..200 "\"type\"" [] [],
+                        },
+                        COMMA@208..210 "," [] [Whitespace(" ")],
+                        JsImportAssertionEntry {
+                            key: IDENT@210..214 "type" [] [],
+                            colon_token: COLON@214..216 ":" [] [Whitespace(" ")],
+                            value_token: JS_STRING_LITERAL@216..222 "\"html\"" [] [],
+                        },
+                        COMMA@222..224 "," [] [Whitespace(" ")],
+                        JsUnknown {
+                            items: [
+                                Token(
+                                    JS_STRING_LITERAL@224..230 "\"type\"" [] [],
+                                ),
+                                Token(
+                                    COLON@230..232 ":" [] [Whitespace(" ")],
+                                ),
+                                Token(
+                                    JS_STRING_LITERAL@232..237 "\"js\"" [] [Whitespace(" ")],
+                                ),
+                            ],
+                        },
+                    ],
+                    r_curly_token: R_CURLY@237..238 "}" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@238..239 ";" [] [],
+        },
+        JsImport {
+            import_token: IMPORT_KW@239..247 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_clause: JsImportBareClause {
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@247..251 "\"x\"" [] [Whitespace(" ")],
+                },
+                assertion: JsImportAssertion {
+                    assert_token: ASSERT_KW@251..257 "assert" [] [],
+                    l_curly_token: missing (required),
+                    assertions: [],
+                    r_curly_token: missing (required),
+                },
+            },
+            semicolon_token: SEMICOLON@257..258 ";" [] [],
+        },
+        JsImport {
+            import_token: IMPORT_KW@258..266 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_clause: JsImportDefaultClause {
+                local_name: JsIdentifierBinding {
+                    name_token: IDENT@266..270 "foo" [] [Whitespace(" ")],
+                },
+                from_token: FROM_KW@270..275 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@275..286 "\"foo.json\"" [] [Whitespace(" ")],
+                },
+                assertion: JsImportAssertion {
+                    assert_token: ASSERT_KW@286..293 "assert" [] [Whitespace(" ")],
+                    l_curly_token: L_CURLY@293..295 "{" [] [Whitespace(" ")],
+                    assertions: [
+                        JsImportAssertionEntry {
+                            key: IDENT@295..299 "type" [] [],
+                            colon_token: COLON@299..301 ":" [] [Whitespace(" ")],
+                            value_token: JS_STRING_LITERAL@301..307 "\"json\"" [] [],
+                        },
+                        COMMA@307..309 "," [] [Whitespace(" ")],
+                        JsImportAssertionEntry {
+                            key: IDENT@309..313 "lazy" [] [],
+                            colon_token: COLON@313..315 ":" [] [Whitespace(" ")],
+                            value_token: missing (required),
+                        },
+                        missing separator,
+                        JsImportAssertionEntry {
+                            key: IDENT@315..319 "true" [] [],
+                            colon_token: missing (required),
+                            value_token: missing (required),
+                        },
+                        COMMA@319..321 "," [] [Whitespace(" ")],
+                        JsImportAssertionEntry {
+                            key: IDENT@321..332 "startAtLine" [] [],
+                            colon_token: COLON@332..334 ":" [] [Whitespace(" ")],
+                            value_token: missing (required),
+                        },
+                        missing separator,
+                        JsUnknown {
+                            items: [
+                                Token(
+                                    JS_NUMBER_LITERAL@334..336 "1" [] [Whitespace(" ")],
+                                ),
+                            ],
+                        },
+                    ],
+                    r_curly_token: R_CURLY@336..337 "}" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@337..338 ";" [] [],
+        },
+    ],
+}
+
+0: JS_MODULE@0..339
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..338
+    0: JS_IMPORT@0..37
+      0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
+      1: JS_IMPORT_BARE_CLAUSE@7..36
+        0: JS_MODULE_SOURCE@7..13
+          0: JS_STRING_LITERAL@7..13 "\"foo\"" [] [Whitespace(" ")]
+        1: JS_IMPORT_ASSERTION@13..36
+          0: ASSERT_KW@13..20 "assert" [] [Whitespace(" ")]
+          1: L_CURLY@20..22 "{" [] [Whitespace(" ")]
+          2: LIST@22..35
+            0: JS_IMPORT_ASSERTION_ENTRY@22..26
+              0: IDENT@22..26 "type" [] []
+              1: (empty)
+              2: (empty)
+            1: COMMA@26..28 "," [] [Whitespace(" ")]
+            2: JS_IMPORT_ASSERTION_ENTRY@28..35
+              0: JS_STRING_LITERAL@28..35 "\"json\"" [] [Whitespace(" ")]
+              1: (empty)
+              2: (empty)
+          3: R_CURLY@35..36 "}" [] []
+      2: SEMICOLON@36..37 ";" [] []
+    1: JS_IMPORT@37..51
+      0: IMPORT_KW@37..45 "import" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IMPORT_BARE_CLAUSE@45..51
+        0: JS_MODULE_SOURCE@45..51
+          0: JS_STRING_LITERAL@45..51 "\"foo\"" [] [Whitespace(" ")]
+        1: (empty)
+      2: (empty)
+    2: JS_EXPRESSION_STATEMENT@51..63
+      0: JS_IDENTIFIER_EXPRESSION@51..63
+        0: JS_REFERENCE_IDENTIFIER@51..63
+          0: IDENT@51..63 "\\u{61}ssert" [] [Whitespace(" ")]
+      1: (empty)
+    3: JS_BLOCK_STATEMENT@63..79
+      0: L_CURLY@63..65 "{" [] [Whitespace(" ")]
+      1: LIST@65..78
+        0: JS_LABELED_STATEMENT@65..78
+          0: IDENT@65..69 "type" [] []
+          1: COLON@69..71 ":" [] [Whitespace(" ")]
+          2: JS_EXPRESSION_STATEMENT@71..78
+            0: JS_STRING_LITERAL_EXPRESSION@71..78
+              0: JS_STRING_LITERAL@71..78 "\"json\"" [] [Whitespace(" ")]
+            1: (empty)
+      2: R_CURLY@78..79 "}" [] []
+    4: JS_EMPTY_STATEMENT@79..80
+      0: SEMICOLON@79..80 ";" [] []
+    5: JS_IMPORT@80..120
+      0: IMPORT_KW@80..88 "import" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IMPORT_NAMED_CLAUSE@88..119
+        0: (empty)
+        1: JS_NAMED_IMPORT_SPECIFIER_LIST@88..96
+          0: L_CURLY@88..90 "{" [] [Whitespace(" ")]
+          1: LIST@90..94
+            0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@90..94
+              0: JS_IDENTIFIER_BINDING@90..94
+                0: IDENT@90..94 "foo" [] [Whitespace(" ")]
+          2: R_CURLY@94..96 "}" [] [Whitespace(" ")]
+        2: (empty)
+        3: JS_IMPORT_ASSERTION@96..119
+          0: ASSERT_KW@96..103 "assert" [] [Whitespace(" ")]
+          1: L_CURLY@103..105 "{" [] [Whitespace(" ")]
+          2: LIST@105..118
+            0: JS_IMPORT_ASSERTION_ENTRY@105..118
+              0: IDENT@105..109 "type" [] []
+              1: COLON@109..111 ":" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL@111..118 "\"json\"" [] [Whitespace(" ")]
+          3: R_CURLY@118..119 "}" [] []
+      2: SEMICOLON@119..120 ";" [] []
+    6: JS_IMPORT@120..133
+      0: IMPORT_KW@120..128 "import" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IMPORT_BARE_CLAUSE@128..133
+        0: JS_MODULE_SOURCE@128..133
+          0: JS_STRING_LITERAL@128..133 "\"foo\"" [] []
+        1: (empty)
+      2: (empty)
+    7: JS_EXPRESSION_STATEMENT@133..141
+      0: JS_IDENTIFIER_EXPRESSION@133..141
+        0: JS_REFERENCE_IDENTIFIER@133..141
+          0: IDENT@133..141 "assert" [Whitespace("\n")] [Whitespace(" ")]
+      1: (empty)
+    8: JS_BLOCK_STATEMENT@141..157
+      0: L_CURLY@141..143 "{" [] [Whitespace(" ")]
+      1: LIST@143..156
+        0: JS_LABELED_STATEMENT@143..156
+          0: IDENT@143..147 "type" [] []
+          1: COLON@147..149 ":" [] [Whitespace(" ")]
+          2: JS_EXPRESSION_STATEMENT@149..156
+            0: JS_STRING_LITERAL_EXPRESSION@149..156
+              0: JS_STRING_LITERAL@149..156 "\"json\"" [] [Whitespace(" ")]
+            1: (empty)
+      2: R_CURLY@156..157 "}" [] []
+    9: JS_IMPORT@157..239
+      0: IMPORT_KW@157..165 "import" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IMPORT_DEFAULT_CLAUSE@165..238
+        0: JS_IDENTIFIER_BINDING@165..169
+          0: IDENT@165..169 "foo" [] [Whitespace(" ")]
+        1: FROM_KW@169..174 "from" [] [Whitespace(" ")]
+        2: JS_MODULE_SOURCE@174..185
+          0: JS_STRING_LITERAL@174..185 "\"foo.json\"" [] [Whitespace(" ")]
+        3: JS_IMPORT_ASSERTION@185..238
+          0: ASSERT_KW@185..192 "assert" [] [Whitespace(" ")]
+          1: L_CURLY@192..194 "{" [] [Whitespace(" ")]
+          2: LIST@194..237
+            0: JS_IMPORT_ASSERTION_ENTRY@194..208
+              0: JS_STRING_LITERAL@194..200 "\"type\"" [] []
+              1: COLON@200..202 ":" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL@202..208 "\"json\"" [] []
+            1: COMMA@208..210 "," [] [Whitespace(" ")]
+            2: JS_IMPORT_ASSERTION_ENTRY@210..222
+              0: IDENT@210..214 "type" [] []
+              1: COLON@214..216 ":" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL@216..222 "\"html\"" [] []
+            3: COMMA@222..224 "," [] [Whitespace(" ")]
+            4: JS_UNKNOWN@224..237
+              0: JS_STRING_LITERAL@224..230 "\"type\"" [] []
+              1: COLON@230..232 ":" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL@232..237 "\"js\"" [] [Whitespace(" ")]
+          3: R_CURLY@237..238 "}" [] []
+      2: SEMICOLON@238..239 ";" [] []
+    10: JS_IMPORT@239..258
+      0: IMPORT_KW@239..247 "import" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IMPORT_BARE_CLAUSE@247..257
+        0: JS_MODULE_SOURCE@247..251
+          0: JS_STRING_LITERAL@247..251 "\"x\"" [] [Whitespace(" ")]
+        1: JS_IMPORT_ASSERTION@251..257
+          0: ASSERT_KW@251..257 "assert" [] []
+          1: (empty)
+          2: LIST@257..257
+          3: (empty)
+      2: SEMICOLON@257..258 ";" [] []
+    11: JS_IMPORT@258..338
+      0: IMPORT_KW@258..266 "import" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IMPORT_DEFAULT_CLAUSE@266..337
+        0: JS_IDENTIFIER_BINDING@266..270
+          0: IDENT@266..270 "foo" [] [Whitespace(" ")]
+        1: FROM_KW@270..275 "from" [] [Whitespace(" ")]
+        2: JS_MODULE_SOURCE@275..286
+          0: JS_STRING_LITERAL@275..286 "\"foo.json\"" [] [Whitespace(" ")]
+        3: JS_IMPORT_ASSERTION@286..337
+          0: ASSERT_KW@286..293 "assert" [] [Whitespace(" ")]
+          1: L_CURLY@293..295 "{" [] [Whitespace(" ")]
+          2: LIST@295..336
+            0: JS_IMPORT_ASSERTION_ENTRY@295..307
+              0: IDENT@295..299 "type" [] []
+              1: COLON@299..301 ":" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL@301..307 "\"json\"" [] []
+            1: COMMA@307..309 "," [] [Whitespace(" ")]
+            2: JS_IMPORT_ASSERTION_ENTRY@309..315
+              0: IDENT@309..313 "lazy" [] []
+              1: COLON@313..315 ":" [] [Whitespace(" ")]
+              2: (empty)
+            3: (empty)
+            4: JS_IMPORT_ASSERTION_ENTRY@315..319
+              0: IDENT@315..319 "true" [] []
+              1: (empty)
+              2: (empty)
+            5: COMMA@319..321 "," [] [Whitespace(" ")]
+            6: JS_IMPORT_ASSERTION_ENTRY@321..334
+              0: IDENT@321..332 "startAtLine" [] []
+              1: COLON@332..334 ":" [] [Whitespace(" ")]
+              2: (empty)
+            7: (empty)
+            8: JS_UNKNOWN@334..336
+              0: JS_NUMBER_LITERAL@334..336 "1" [] [Whitespace(" ")]
+          3: R_CURLY@336..337 "}" [] []
+      2: SEMICOLON@337..338 ";" [] []
+  3: EOF@338..339 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: expected `:` but instead found `,`
+  ┌─ import_assertion_err.js:1:27
+  │
+1 │ import "foo" assert { type, "json" };
+  │                           ^ unexpected
+
+--
+error[SyntaxError]: expected `:` but instead found `}`
+  ┌─ import_assertion_err.js:1:36
+  │
+1 │ import "foo" assert { type, "json" };
+  │                                    ^ unexpected
+
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ import_assertion_err.js:2:14
+  │
+2 │ import "foo" \u{61}ssert { type: "json" };
+  │ -------------^^^^^^^^^^^ An explicit or implicit semicolon is expected here...
+  │ │             
+  │ ...Which is required to end this statement
+
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ import_assertion_err.js:2:26
+  │
+2 │ import "foo" \u{61}ssert { type: "json" };
+  │              ------------^
+  │              │           │
+  │              │           An explicit or implicit semicolon is expected here...
+  │              ...Which is required to end this statement
+
+--
+error[SyntaxError]: expected `from` but instead found `assert`
+  ┌─ import_assertion_err.js:3:16
+  │
+3 │ import { foo } assert { type: "json" };
+  │                ^^^^^^ unexpected
+
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ import_assertion_err.js:5:8
+  │
+5 │ assert { type: "json" }
+  │ -------^
+  │ │      │
+  │ │      An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
+
+--
+error[SyntaxError]: Duplicate statement labels are not allowed
+  ┌─ import_assertion_err.js:5:10
+  │
+2 │ import "foo" \u{61}ssert { type: "json" };
+  │                            ---- `type` is first used as a label here
+  ·
+5 │ assert { type: "json" }
+  │          ^^^^ a second use of `type` here is not allowed
+
+--
+error[SyntaxError]: Duplicate assertion keys are not allowed
+  ┌─ import_assertion_err.js:6:37
+  │
+6 │ import foo from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+  │                                     ^^^^^^                        ------ second use here
+  │                                     │                              
+  │                                     First use of the key `"type"`
+
+--
+error[SyntaxError]: expected `'{'` but instead found `;`
+  ┌─ import_assertion_err.js:7:18
+  │
+7 │ import "x" assert;
+  │                  ^ unexpected
+
+--
+error[SyntaxError]: expected `JS_STRING_LITERAL` but instead found `true`
+  ┌─ import_assertion_err.js:8:57
+  │
+8 │ import foo from "foo.json" assert { type: "json", lazy: true, startAtLine: 1 };
+  │                                                         ^^^^ unexpected
+
+--
+error[SyntaxError]: expected `:` but instead found `,`
+  ┌─ import_assertion_err.js:8:61
+  │
+8 │ import foo from "foo.json" assert { type: "json", lazy: true, startAtLine: 1 };
+  │                                                             ^ unexpected
+
+--
+error[SyntaxError]: expected `JS_STRING_LITERAL` but instead found `1`
+  ┌─ import_assertion_err.js:8:76
+  │
+8 │ import foo from "foo.json" assert { type: "json", lazy: true, startAtLine: 1 };
+  │                                                                            ^ unexpected
+
+--
+import "foo" assert { type, "json" };
+import "foo" \u{61}ssert { type: "json" };
+import { foo } assert { type: "json" };
+import "foo"
+assert { type: "json" }
+import foo from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+import "x" assert;
+import foo from "foo.json" assert { type: "json", lazy: true, startAtLine: 1 };

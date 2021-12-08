@@ -51,7 +51,7 @@ JsModule {
       2: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       3: LIST@10..26
         0: JS_METHOD_CLASS_MEMBER@10..26
-          0: JS_UNKNOWN_MODIFIER@10..18
+          0: JS_UNKNOWN@10..18
             0: DECLARE_KW@10..18 "declare" [] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@18..20
             0: IDENT@18..20 "fn" [] []

@@ -34,7 +34,7 @@
 // SyntaxElement is a generic data structure that is meant to track nodes and tokens
 // in cases where we care about both types
 //
-// As Unknown* node will need to yield both tokens and nodes without discrimition,
+// As Unknown* node will need to yield both tokens and nodes without discrimination,
 // and their children will need to yield nodes and tokens as well.
 // For this reason, SyntaxElement = SyntaxElement
 SyntaxElement = SyntaxElement
@@ -44,7 +44,9 @@ JsUnknownExpression = SyntaxElement*
 JsUnknownMember = SyntaxElement*
 JsUnknownBinding = SyntaxElement*
 JsUnknownAssignment = SyntaxElement*
-JsUnknownModifier = SyntaxElement*
+// Generic Unknown node used in other places where it's none of the above.
+// Useful for less common cases
+JsUnknown = SyntaxElement*
 
 Ident = 'ident'
 
@@ -613,7 +615,7 @@ JsEmptyClassMember = ';'
 // TODO: apply this node to all class members and properties
 JsAnyModifier =
 	JsModifier
-	| JsUnknownModifier
+	| JsUnknown
 
 // TODO: move here also the rest of the modifiers
 JsModifier = 'declare'?
@@ -959,6 +961,7 @@ JsNamedImportSpecifierList =
 JsAnyNamedImportSpecifier =
     JsShorthandNamedImportSpecifier
     | JsNamedImportSpecifier
+    | JsUnknown
 
 // import { foo as test } from "mod";
 //          ^^^^^^^^^^^
@@ -979,8 +982,12 @@ JsShorthandNamedImportSpecifier =
 JsImportAssertion =
     'assert'
     '{'
-    assertions: (JsImportAssertionEntry (',' JsImportAssertionEntry)* ','?)
+    assertions: (JsAnyImportAssertionEntry (',' JsAnyImportAssertionEntry)* ','?)
     '}'
+
+JsAnyImportAssertionEntry =
+	JsImportAssertionEntry
+	| JsUnknown
 
 JsImportAssertionEntry =
     key: ('ident' | 'js_string_literal')
