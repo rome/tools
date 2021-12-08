@@ -263,15 +263,15 @@ impl<'t> Parser<'t> {
 	pub fn error(&mut self, err: impl Into<ParserError>) {
 		let err = err.into();
 
+		// Don't report another error if it would just be at the same position as the last error.
 		if let Some(previous) = self.errors.last() {
 			if err.code == Some(String::from("SyntaxError"))
 				&& previous.code == err.code
 				&& previous.file_id == err.file_id
-				&& err.children.is_empty()
 			{
 				match (&err.primary, &previous.primary) {
 					(Some(err_primary), Some(previous_primary))
-						if err_primary.span == previous_primary.span =>
+						if err_primary.span.range.start == previous_primary.span.range.start =>
 					{
 						return;
 					}

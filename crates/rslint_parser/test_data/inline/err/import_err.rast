@@ -226,13 +226,56 @@ JsModule {
             },
             semicolon_token: SEMICOLON@186..187 ";" [] [],
         },
+        JsImport {
+            import_token: IMPORT_KW@187..195 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_clause: missing (required),
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsNumberLiteralExpression {
+                value_token: JS_NUMBER_LITERAL@195..197 "4" [] [Whitespace(" ")],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@197..202 "from" [] [Whitespace(" ")],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStringLiteralExpression {
+                value_token: JS_STRING_LITERAL@202..205 "\"c\"" [] [],
+            },
+            semicolon_token: SEMICOLON@205..206 ";" [] [],
+        },
+        JsImport {
+            import_token: IMPORT_KW@206..214 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_clause: JsImportDefaultClause {
+                local_name: JsIdentifierBinding {
+                    name_token: IDENT@214..216 "a" [] [Whitespace(" ")],
+                },
+                from_token: FROM_KW@216..221 "from" [] [Whitespace(" ")],
+                source: missing (required),
+                assertion: missing (optional),
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsNumberLiteralExpression {
+                value_token: JS_NUMBER_LITERAL@221..222 "4" [] [],
+            },
+            semicolon_token: SEMICOLON@222..223 ";" [] [],
+        },
     ],
 }
 
-0: JS_MODULE@0..188
+0: JS_MODULE@0..224
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..187
+  2: LIST@0..223
     0: JS_IMPORT@0..7
       0: IMPORT_KW@0..6 "import" [] []
       1: (empty)
@@ -373,7 +416,37 @@ JsModule {
           0: JS_STRING_LITERAL@183..186 "\"c\"" [] []
         4: (empty)
       2: SEMICOLON@186..187 ";" [] []
-  3: EOF@187..188 "" [Whitespace("\n")] []
+    12: JS_IMPORT@187..195
+      0: IMPORT_KW@187..195 "import" [Whitespace("\n")] [Whitespace(" ")]
+      1: (empty)
+      2: (empty)
+    13: JS_EXPRESSION_STATEMENT@195..197
+      0: JS_NUMBER_LITERAL_EXPRESSION@195..197
+        0: JS_NUMBER_LITERAL@195..197 "4" [] [Whitespace(" ")]
+      1: (empty)
+    14: JS_EXPRESSION_STATEMENT@197..202
+      0: JS_IDENTIFIER_EXPRESSION@197..202
+        0: JS_REFERENCE_IDENTIFIER@197..202
+          0: IDENT@197..202 "from" [] [Whitespace(" ")]
+      1: (empty)
+    15: JS_EXPRESSION_STATEMENT@202..206
+      0: JS_STRING_LITERAL_EXPRESSION@202..205
+        0: JS_STRING_LITERAL@202..205 "\"c\"" [] []
+      1: SEMICOLON@205..206 ";" [] []
+    16: JS_IMPORT@206..221
+      0: IMPORT_KW@206..214 "import" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IMPORT_DEFAULT_CLAUSE@214..221
+        0: JS_IDENTIFIER_BINDING@214..216
+          0: IDENT@214..216 "a" [] [Whitespace(" ")]
+        1: FROM_KW@216..221 "from" [] [Whitespace(" ")]
+        2: (empty)
+        3: (empty)
+      2: (empty)
+    17: JS_EXPRESSION_STATEMENT@221..223
+      0: JS_NUMBER_LITERAL_EXPRESSION@221..222
+        0: JS_NUMBER_LITERAL@221..222 "4" [] []
+      1: SEMICOLON@222..223 ";" [] []
+  3: EOF@223..224 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected a default import, a namespace import, or a named import but instead found ';'
   ┌─ import_err.js:1:7
@@ -397,15 +470,6 @@ error[SyntaxError]: expected `from` but instead found `,`
 
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ import_err.js:3:14
-  │
-3 │ import * as b, { a, b } from "c";
-  │ -------------^ An explicit or implicit semicolon is expected here...
-  │ │             
-  │ ...Which is required to end this statement
-
---
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ import_err.js:3:30
   │
 3 │ import * as b, { a, b } from "c";
@@ -422,13 +486,6 @@ error[SyntaxError]: expected `,` but instead found `+`
   │            ^ unexpected
 
 --
-error[SyntaxError]: expected an identifier but instead found '+ b'
-  ┌─ import_err.js:4:12
-  │
-4 │ import { a + b, d } from "c";
-  │            ^^^ Expected an identifier here
-
---
 error[SyntaxError]: Declarations inside of a `import` declaration may not have duplicates
   ┌─ import_err.js:5:13
   │
@@ -442,7 +499,7 @@ error[SyntaxError]: `default` imports must be aliased
   ┌─ import_err.js:6:10
   │
 6 │ import { default } from "c";
-  │          ^^^^^^^- add `as identifier` here
+  │          ^^^^^^^- add the `as` keyword followed by an identifier name here
   │          │       
   │          `default` used here
 
@@ -461,6 +518,40 @@ error[SyntaxError]: Expected an identifier or string literal before the as keywo
   │          ^^ as keyword
 
 --
+error[SyntaxError]: expected a default import, a namespace import, or a named import but instead found '4'
+  ┌─ import_err.js:9:8
+  │
+9 │ import 4 from "c";
+  │        ^ Expected a default import, a namespace import, or a named import here
+
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ import_err.js:9:10
+  │
+9 │ import 4 from "c";
+  │        --^^^^
+  │        │ │
+  │        │ An explicit or implicit semicolon is expected here...
+  │        ...Which is required to end this statement
+
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ import_err.js:9:15
+  │
+9 │ import 4 from "c";
+  │          -----^^^
+  │          │    │
+  │          │    An explicit or implicit semicolon is expected here...
+  │          ...Which is required to end this statement
+
+--
+error[SyntaxError]: expected a string literal but instead found '4'
+   ┌─ import_err.js:10:15
+   │
+10 │ import a from 4;
+   │               ^ Expected a string literal here
+
+--
 import;
 import *;
 import * as b, { a, b } from "c";
@@ -469,3 +560,5 @@ import { a, a } from "c";
 import { default } from "c";
 import { "a" } from "c";
 import { as b } from "c";
+import 4 from "c";
+import a from 4;

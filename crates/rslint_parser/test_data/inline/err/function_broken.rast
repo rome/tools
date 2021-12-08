@@ -105,13 +105,6 @@ error[SyntaxError]: expected a function body but instead found ')'
   │               ^ Expected a function body here
 
 --
-error[SyntaxError]: expected a statement but instead found ')})}'
-  ┌─ function_broken.js:1:15
-  │
-1 │ function foo())})}{{{  {}
-  │               ^^^^ Expected a statement here
-
---
 error[SyntaxError]: expected `'}'` but instead the file ends
   ┌─ function_broken.js:2:1
   │

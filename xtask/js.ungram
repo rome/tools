@@ -912,6 +912,7 @@ JsImportDefaultClause =
 // import * as foo from "mod";
 // import type * as foo from "mod";
 JsImportNamespaceClause =
+  // 'type'
 	'*'
 	'as'
 	local_name: JsAnyBinding
@@ -948,11 +949,15 @@ JsAnyNamedImport =
 	JsNamedImportSpecifierList
 	|  JsNamespaceImportSpecifier
 
+// import a, * as b from "d";
+//           ^^^^^^
 JsNamespaceImportSpecifier =
     '*'
     'as'
     local_name: JsAnyBinding
 
+// import a, { b, c } from "d";
+//           ^^^^^^^^
 JsNamedImportSpecifierList =
     '{'
     specifiers: (JsAnyNamedImportSpecifier (',' JsAnyNamedImportSpecifier)* ','?)
@@ -979,6 +984,8 @@ JsShorthandNamedImportSpecifier =
     // 'type'?
     local_name: JsAnyBinding
 
+// import a from "mod" assert { type: "json" }
+//                     ^^^^^^^^^^^^^^^^^^^^^^^
 JsImportAssertion =
     'assert'
     '{'
@@ -989,6 +996,8 @@ JsAnyImportAssertionEntry =
 	JsImportAssertionEntry
 	| JsUnknown
 
+// import a from "mod" assert { type: "json" }
+//                              ^^^^^^^^^^^^
 JsImportAssertionEntry =
     key: ('ident' | 'js_string_literal')
     ':'

@@ -494,15 +494,6 @@ error[SyntaxError]: Duplicate assertion keys are not allowed
   │                                     First use of the key `type`
 
 --
-error[SyntaxError]: Duplicate assertion keys are not allowed
-  ┌─ import_assertion_err.js:6:37
-  │
-6 │ import foo from "foo.json" assert { "type": "json", type: "html", "type": "js" };
-  │                                     ^^^^^^                        ------ second use here
-  │                                     │                              
-  │                                     First use of the key `type`
-
---
 error[SyntaxError]: expected `'{'` but instead found `;`
   ┌─ import_assertion_err.js:7:18
   │
@@ -510,7 +501,7 @@ error[SyntaxError]: expected `'{'` but instead found `;`
   │                  ^ unexpected
 
 --
-error[SyntaxError]: expected `JS_STRING_LITERAL` but instead found `true`
+error[SyntaxError]: expected `string literal` but instead found `true`
   ┌─ import_assertion_err.js:8:57
   │
 8 │ import foo from "foo.json" assert { type: "json", lazy: true, startAtLine: 1 };
@@ -524,7 +515,7 @@ error[SyntaxError]: expected `:` but instead found `,`
   │                                                             ^ unexpected
 
 --
-error[SyntaxError]: expected `JS_STRING_LITERAL` but instead found `1`
+error[SyntaxError]: expected `string literal` but instead found `1`
   ┌─ import_assertion_err.js:8:76
   │
 8 │ import foo from "foo.json" assert { type: "json", lazy: true, startAtLine: 1 };

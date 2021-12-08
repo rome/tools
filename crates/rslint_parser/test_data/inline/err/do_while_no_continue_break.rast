@@ -129,16 +129,6 @@ error[SyntaxError]: expected `')'` but instead found `(`
   │              ^ unexpected
 
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ do_while_no_continue_break.js:1:14
-  │
-1 │ do { } break (continue)
-  │ -------------^
-  │ │            │
-  │ │            An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
-
---
 error[SyntaxError]: Expected an expression, but found none
   ┌─ do_while_no_continue_break.js:1:15
   │
@@ -158,16 +148,6 @@ error[SyntaxError]: expected `')'` but instead found `(`
   │
 2 │ do { } continue (break)
   │                 ^ unexpected
-
---
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ do_while_no_continue_break.js:2:17
-  │
-2 │ do { } continue (break)
-  │ ----------------^
-  │ │               │
-  │ │               An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
 
 --
 error[SyntaxError]: Expected an expression, but found none

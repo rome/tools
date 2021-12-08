@@ -1,15 +1,20 @@
 use crate::parser::{expected_any, expected_node, ParserProgress, ToDiagnostic};
 use crate::syntax::binding::parse_binding;
-use crate::syntax::js_parse_error::{expected_binding, expected_statement};
+use crate::syntax::js_parse_error::{
+	duplicate_assertion_keys_error, expected_binding, expected_export_name,
+	expected_export_name_after_as_keyword, expected_local_name_for_default_import,
+	expected_module_source, expected_named_import, expected_named_import_specifier,
+	expected_statement,
+};
 use crate::syntax::program::export_decl;
 use crate::syntax::stmt::{parse_statement, semi, STMT_RECOVERY_SET};
+use crate::syntax::util::expect_keyword;
 use crate::{
 	Absent, CompletedMarker, ConditionalSyntax, Marker, ParseRecovery, ParsedSyntax, Parser,
 	Present, TokenSet,
 };
-use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::*;
-use rslint_syntax::{SyntaxKind, T};
+use rslint_syntax::T;
 use std::collections::HashMap;
 use std::ops::Range;
 
@@ -84,6 +89,8 @@ fn parse_module_item(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // import { default } from "c";
 // import { "a" } from "c";
 // import { as b } from "c";
+// import 4 from "c";
+// import a from 4;
 pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![import]) {
 		return Absent;
@@ -289,10 +296,7 @@ fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 
 	if p.cur_src() == "as" && p.nth_src(1) != "as" {
 		p.missing();
-		p.error(
-			p.err_builder("Expected an identifier or string literal before the as keyword")
-				.primary(p.cur_tok().range, "as keyword"),
-		);
+		p.error(expected_export_name_after_as_keyword(p, p.cur_tok().range));
 	} else if p.nth_src(1) == "as" {
 		parse_export_name(p).or_missing_with_error(p, expected_export_name);
 	} else {
@@ -308,14 +312,7 @@ fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 
 fn parse_shorthand_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if p.at(T![default]) {
-		p.error(
-			p.err_builder("`default` imports must be aliased")
-				.primary(p.cur_tok().range, "`default` used here")
-				.secondary(
-					p.cur_tok().range.end..p.cur_tok().range.end,
-					"add `as identifier` here",
-				),
-		);
+		p.error(expected_local_name_for_default_import(p, p.cur_tok().range));
 
 		let shorthand = p.start();
 		let binding = p.start();
@@ -443,14 +440,12 @@ fn parse_import_assertion_entry(
 
 	if let Some(key) = key {
 		if let Some(first_use) = seen_assertion_keys.get(&key) {
-			p.error(
-				p.err_builder("Duplicate assertion keys are not allowed")
-					.primary(
-						first_use.to_owned(),
-						&format!("First use of the key `{}`", &key),
-					)
-					.secondary(key_range, "second use here"),
-			);
+			p.error(duplicate_assertion_keys_error(
+				p,
+				&key,
+				first_use.to_owned(),
+				key_range,
+			));
 			valid = false;
 		} else {
 			seen_assertion_keys.insert(key, key_range);
@@ -487,43 +482,4 @@ fn parse_module_source(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		p.bump_any();
 		Present(m.complete(p, JS_MODULE_SOURCE))
 	}
-}
-
-fn expect_keyword(p: &mut Parser, keyword_name: &str, kind: SyntaxKind) {
-	if p.at(T![ident]) && p.cur_src() == keyword_name {
-		p.bump_remap(kind);
-	} else {
-		let err = if p.cur() == SyntaxKind::EOF {
-			p.err_builder(&format!(
-				"expected `{}` but instead the file ends",
-				keyword_name
-			))
-			.primary(p.cur_tok().range, "the file ends here")
-		} else {
-			p.err_builder(&format!(
-				"expected `{}` but instead found `{}`",
-				keyword_name,
-				p.cur_src()
-			))
-			.primary(p.cur_tok().range, "unexpected")
-		};
-
-		p.error(err);
-	}
-}
-
-fn expected_module_source(p: &Parser, range: Range<usize>) -> Diagnostic {
-	expected_node("string literal", range).to_diagnostic(p)
-}
-
-fn expected_named_import(p: &Parser, range: Range<usize>) -> Diagnostic {
-	expected_any(&["namespace import", "named imports"], range).to_diagnostic(p)
-}
-
-fn expected_export_name(p: &Parser, range: Range<usize>) -> Diagnostic {
-	expected_any(&["string literal", "identifier"], range).to_diagnostic(p)
-}
-
-fn expected_named_import_specifier(p: &Parser, range: Range<usize>) -> Diagnostic {
-	expected_node("identifier", range).to_diagnostic(p)
 }

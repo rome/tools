@@ -354,13 +354,6 @@ error[SyntaxError]: expected `,` but instead found `:`
   │   ^ unexpected
 
 --
-error[SyntaxError]: expected an assignment target, a rest element, or a comma but instead found ': b'
-  ┌─ array_assignment_target_err.js:5:3
-  │
-5 │ [a: b] = c
-  │   ^^^ Expected an assignment target, a rest element, or a comma here
-
---
 [a a, ++b, ] = test;
 [a, c, ...rest,] = test;
 [a = , = "test"] = test;

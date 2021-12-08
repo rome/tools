@@ -6,3 +6,5 @@ import { a, a } from "c";
 import { default } from "c";
 import { "a" } from "c";
 import { as b } from "c";
+import 4 from "c";
+import a from 4;

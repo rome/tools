@@ -593,6 +593,7 @@ impl SyntaxKind {
 			QUESTION2EQ => "??=",
 			AT => "@",
 			BACKTICK => "'`'",
+			JS_STRING_LITERAL => "string literal",
 			_ => return None,
 		};
 		Some(tok)
