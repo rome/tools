@@ -1605,6 +1605,24 @@ impl<'a> Iterator for SyntaxSlots {
 		}
 	}
 
+	fn last(self) -> Option<Self::Item>
+	where
+		Self: Sized,
+	{
+		let mut slots = self.parent.green_ref().slots();
+		let slots_len = slots.len() as usize;
+
+		if (self.next_position as usize) < slots_len {
+			let position = slots_len - 1;
+			slots
+				.nth(position)
+				.map(|slot| self.map_slot(slot, position as u32))
+		} else {
+			// already at/passed the end
+			None
+		}
+	}
+
 	fn nth(&mut self, n: usize) -> Option<Self::Item> {
 		self.next_position += n as u32;
 		self.next()
@@ -1616,6 +1634,7 @@ impl ExactSizeIterator for SyntaxSlots {
 		self.parent.green_ref().slots().len()
 	}
 }
+
 impl FusedIterator for SyntaxSlots {}
 
 /// Iterator to visit a node's slots in pre-order.

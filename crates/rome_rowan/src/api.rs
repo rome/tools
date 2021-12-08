@@ -1201,7 +1201,18 @@ impl<L: Language> Iterator for SyntaxSlots<L> {
 	type Item = SyntaxSlot<L>;
 
 	fn next(&mut self) -> Option<Self::Item> {
-		self.raw.as_mut()?.next().map(|raw| raw.into())
+		self.raw.as_mut()?.next().map(SyntaxSlot::from)
+	}
+
+	fn nth(&mut self, n: usize) -> Option<Self::Item> {
+		self.raw.as_mut()?.nth(n).map(SyntaxSlot::from)
+	}
+
+	fn last(mut self) -> Option<Self::Item>
+	where
+		Self: Sized,
+	{
+		self.raw.as_mut()?.last().map(SyntaxSlot::from)
 	}
 }
 

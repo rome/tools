@@ -4,7 +4,30 @@ JsModule {
     items: [
         JsBlockStatement {
             l_curly_token: L_CURLY@0..1 "{" [] [],
-            statements: [],
+            statements: [
+                JsUnknownStatement {
+                    items: [
+                        Token(
+                            IMPORT_KW@1..10 "import" [Whitespace("\n ")] [Whitespace(" ")],
+                        ),
+                        Node(
+                            1: LIST@10..14
+                              0: JS_IDENTIFIER_BINDING@10..14
+                                0: IDENT@10..14 "foo" [] [Whitespace(" ")]
+                            ,
+                        ),
+                        Token(
+                            FROM_KW@14..19 "from" [] [Whitespace(" ")],
+                        ),
+                        Token(
+                            JS_STRING_LITERAL@19..24 "\"bar\"" [] [],
+                        ),
+                        Token(
+                            SEMICOLON@24..25 ";" [] [],
+                        ),
+                    ],
+                },
+            ],
             r_curly_token: R_CURLY@25..27 "}" [Whitespace("\n")] [],
         },
     ],
@@ -17,7 +40,7 @@ JsModule {
     0: JS_BLOCK_STATEMENT@0..27
       0: L_CURLY@0..1 "{" [] []
       1: LIST@1..25
-        0: ERROR@1..25
+        0: JS_UNKNOWN_STATEMENT@1..25
           0: IMPORT_KW@1..10 "import" [Whitespace("\n ")] [Whitespace(" ")]
           1: LIST@10..14
             0: JS_IDENTIFIER_BINDING@10..14

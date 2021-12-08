@@ -133,13 +133,11 @@ impl<N: AstNode> AstNodeList<N> {
 	/// Returns the first node from this list or None
 	#[inline]
 	pub fn first(&self) -> Option<N> {
-		// TODO 1724: Use inner once trivia is attached to tokens (not safe yet)
 		self.iter().next()
 	}
 
 	/// Returns the last node from this list or None
 	pub fn last(&self) -> Option<N> {
-		// TODO 1724: Use inner once trivia is attached to tokens (not safe yet)
 		self.iter().last()
 	}
 
@@ -155,21 +153,42 @@ pub struct AstNodeListIterator<N> {
 	ph: PhantomData<N>,
 }
 
+impl<N: AstNode> AstNodeListIterator<N> {
+	fn slot_to_node(slot: &SyntaxSlot) -> N {
+		match slot {
+			SyntaxSlot::Empty => panic!("Node isn't permitted to contain empty slots"),
+			SyntaxSlot::Node(node) => node.to(),
+			SyntaxSlot::Token(token) => panic!(
+				"Expected node of type `{:?}` but found token `{:?}` instead.",
+				std::any::type_name::<N>(),
+				token
+			),
+		}
+	}
+}
+
 impl<N: AstNode> Iterator for AstNodeListIterator<N> {
 	type Item = N;
 
 	fn next(&mut self) -> Option<Self::Item> {
-		// TODO 1724: Replace find map with force cast element into `N`.
-		// The code gen guarantees us that all elements must be of type N
-		self.inner.find_map(|e| {
-			let syntax = e.into_node()?;
+		Some(Self::slot_to_node(&self.inner.next()?))
+	}
 
-			if syntax.kind() == SyntaxKind::ERROR {
-				None
-			} else {
-				Some(syntax.to::<N>())
-			}
-		})
+	fn last(self) -> Option<Self::Item>
+	where
+		Self: Sized,
+	{
+		Some(Self::slot_to_node(&self.inner.last()?))
+	}
+
+	fn nth(&mut self, n: usize) -> Option<Self::Item> {
+		Some(Self::slot_to_node(&self.inner.nth(n)?))
+	}
+}
+
+impl<N: AstNode> ExactSizeIterator for AstNodeListIterator<N> {
+	fn len(&self) -> usize {
+		self.inner.len()
 	}
 }
 
