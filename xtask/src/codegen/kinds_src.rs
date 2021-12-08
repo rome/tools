@@ -168,7 +168,8 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_SHEBANG",
 	],
 	nodes: &[
-		"JS_ROOT",
+		"JS_MODULE",
+		"JS_SCRIPT",
 		"JS_DIRECTIVE",
 		"ERROR",
 		"JS_BLOCK_STATEMENT",

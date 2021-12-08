@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsBlockStatement {
             l_curly_token: L_CURLY@0..1 "{" [] [],
             statements: [],
@@ -10,7 +10,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..28
+0: JS_MODULE@0..28
   0: (empty)
   1: LIST@0..0
   2: LIST@0..27

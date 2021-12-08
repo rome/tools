@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         ForStmt {
             for_token: FOR_KW@0..4 "for" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@4..5 "(" [] [],
@@ -128,7 +128,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..95
+0: JS_MODULE@0..95
   0: (empty)
   1: LIST@0..0
   2: LIST@0..94

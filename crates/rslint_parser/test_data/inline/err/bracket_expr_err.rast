@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsExpressionStatement {
             expression: JsComputedMemberExpression {
                 object: JsIdentifierExpression {
@@ -44,7 +44,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..19
+0: JS_MODULE@0..19
   0: (empty)
   1: LIST@0..0
   2: LIST@0..18

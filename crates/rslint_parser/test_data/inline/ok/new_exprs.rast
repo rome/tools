@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsExpressionStatement {
             expression: NewExpr {
                 new_token: NEW_KW@0..4 "new" [] [Whitespace(" ")],
@@ -125,7 +125,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..113
+0: JS_MODULE@0..113
   0: (empty)
   1: LIST@0..0
   2: LIST@0..112

@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsWhileStatement {
             while_token: WHILE_KW@0..6 "while" [] [Whitespace(" ")],
             l_paren_token: missing (required),
@@ -57,7 +57,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..52
+0: JS_MODULE@0..52
   0: (empty)
   1: LIST@0..0
   2: LIST@0..51

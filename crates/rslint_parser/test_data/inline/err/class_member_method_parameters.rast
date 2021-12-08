@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -53,7 +53,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..21
+0: JS_MODULE@0..21
   0: (empty)
   1: LIST@0..0
   2: LIST@0..20

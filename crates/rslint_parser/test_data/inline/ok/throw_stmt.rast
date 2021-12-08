@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsThrowStatement {
             throw_token: THROW_KW@0..6 "throw" [] [Whitespace(" ")],
             argument: NewExpr {
@@ -34,7 +34,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..36
+0: JS_MODULE@0..36
   0: (empty)
   1: LIST@0..0
   2: LIST@0..35

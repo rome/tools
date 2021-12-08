@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsVariableDeclarationStatement {
             declaration: JsVariableDeclaration {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
@@ -107,7 +107,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..53
+0: JS_MODULE@0..53
   0: (empty)
   1: LIST@0..0
   2: LIST@0..52

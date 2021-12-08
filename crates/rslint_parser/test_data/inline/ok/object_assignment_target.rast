@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@0..1 "(" [] [],
@@ -121,7 +121,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..85
+0: JS_MODULE@0..85
   0: (empty)
   1: LIST@0..0
   2: LIST@0..84

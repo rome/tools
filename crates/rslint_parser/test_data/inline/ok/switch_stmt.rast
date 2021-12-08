@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsSwitchStatement {
             switch_token: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@7..8 "(" [] [],
@@ -34,7 +34,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..38
+0: JS_MODULE@0..38
   0: (empty)
   1: LIST@0..0
   2: LIST@0..37

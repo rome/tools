@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsTryStatement {
             try_token: TRY_KW@0..4 "try" [] [Whitespace(" ")],
             body: JsBlockStatement {
@@ -118,7 +118,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..112
+0: JS_MODULE@0..112
   0: (empty)
   1: LIST@0..0
   2: LIST@0..111

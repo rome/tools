@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsExpressionStatement {
             expression: JsArrowFunctionExpression {
                 async_token: ASYNC_KW@0..6 "async" [] [Whitespace(" ")],
@@ -158,7 +158,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..121
+0: JS_MODULE@0..121
   0: (empty)
   1: LIST@0..0
   2: LIST@0..120

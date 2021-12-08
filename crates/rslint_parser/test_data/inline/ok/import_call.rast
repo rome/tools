@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsExpressionStatement {
             expression: JsImportCallExpression {
                 import_token: IMPORT_KW@0..6 "import" [] [],
@@ -16,7 +16,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..14
+0: JS_MODULE@0..14
   0: (empty)
   1: LIST@0..0
   2: LIST@0..13

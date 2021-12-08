@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsExpressionStatement {
             expression: JsNumberLiteralExpression {
                 value_token: JS_NUMBER_LITERAL@0..1 "5" [] [],
@@ -47,7 +47,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..33
+0: JS_MODULE@0..33
   0: (empty)
   1: LIST@0..0
   2: LIST@0..32

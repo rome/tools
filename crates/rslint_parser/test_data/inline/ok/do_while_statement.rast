@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsDoWhileStatement {
             do_token: DO_KW@0..3 "do" [] [Whitespace(" ")],
             body: JsExpressionStatement {
@@ -155,7 +155,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..144
+0: JS_MODULE@0..144
   0: (empty)
   1: LIST@0..0
   2: LIST@0..143

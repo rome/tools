@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsLabeledStatement {
             label_token: IDENT@0..3 "foo" [] [],
             colon_token: COLON@3..5 ":" [] [Whitespace(" ")],
@@ -38,7 +38,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..46
+0: JS_MODULE@0..46
   0: (empty)
   1: LIST@0..0
   2: LIST@0..45

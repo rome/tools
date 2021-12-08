@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsFunctionDeclaration {
             async_token: missing (optional),
             function_token: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")],
@@ -60,7 +60,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..26
+0: JS_MODULE@0..26
   0: (empty)
   1: LIST@0..0
   2: LIST@0..25

@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsExpressionStatement {
             expression: JsAssignmentExpression {
                 left: JsArrayAssignmentPattern {
@@ -182,7 +182,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..101
+0: JS_MODULE@0..101
   0: (empty)
   1: LIST@0..0
   2: LIST@0..100

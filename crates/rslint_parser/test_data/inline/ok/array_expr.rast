@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsExpressionStatement {
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@0..1 "[" [] [],
@@ -127,7 +127,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..65
+0: JS_MODULE@0..65
   0: (empty)
   1: LIST@0..0
   2: LIST@0..64

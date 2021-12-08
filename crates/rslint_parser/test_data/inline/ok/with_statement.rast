@@ -1,4 +1,4 @@
-JsRoot {
+JsScript {
     interpreter_token: missing (optional),
     directives: [],
     statements: [
@@ -79,7 +79,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..65
+0: JS_SCRIPT@0..65
   0: (empty)
   1: LIST@0..0
   2: LIST@0..64

@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         ExportDecl {
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             type_token: missing (optional),
@@ -10,7 +10,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..27
+0: JS_MODULE@0..27
   0: (empty)
   1: LIST@0..0
   2: LIST@0..26

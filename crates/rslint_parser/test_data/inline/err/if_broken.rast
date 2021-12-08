@@ -1,7 +1,7 @@
-JsRoot {
+JsModule {
     interpreter_token: missing (optional),
     directives: [],
-    statements: [
+    items: [
         JsIfStatement {
             if_token: IF_KW@0..3 "if" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@3..4 "(" [] [],
@@ -26,7 +26,7 @@ JsRoot {
     ],
 }
 
-0: JS_ROOT@0..17
+0: JS_MODULE@0..17
   0: (empty)
   1: LIST@0..0
   2: LIST@0..16
