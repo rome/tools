@@ -3,7 +3,7 @@
 use super::expr::{expr, expr_or_assignment, identifier_name};
 use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use super::typescript::*;
-use crate::parser::ParserProgress;
+use crate::parser::{ParserProgress, RecoveryResult};
 use crate::syntax::class::parse_class_declaration;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::function::{is_at_async_function, LineBreak};

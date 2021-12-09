@@ -54,26 +54,16 @@ pub trait ParseNodeList {
 	fn parse_list(&mut self, p: &mut Parser) {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
-		let mut first = false;
 		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
 			let parsed_element = self.parse_element(p);
 
-			if parsed_element.is_present() {
-				first = true;
-			}
-
 			if self.recover(p, parsed_element).is_err() {
 				break;
 			}
 		}
-		if first {
-			self.finish_list(p, elements);
-		} else {
-			elements.abandon(p);
-			p.missing(p);
-		}
+		self.finish_list(p, elements);
 	}
 }
 
