@@ -127,13 +127,6 @@ error[SyntaxError]: expected a property, a shorthand property, a getter, a sette
   │          ^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
 --
-error[SyntaxError]: expected `'}'` but instead found `,`
-  ┌─ object_expr_err.js:1:10
-  │
-1 │ let a = {, foo}
-  │          ^ unexpected
-
---
 error[SyntaxError]: Expected a statement or declaration, but found none
   ┌─ object_expr_err.js:1:15
   │
