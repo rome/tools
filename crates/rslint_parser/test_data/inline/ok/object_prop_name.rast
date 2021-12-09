@@ -20,6 +20,11 @@ JsModule {
                                             value: JS_STRING_LITERAL@9..14 "\"foo\"" [] [],
                                         },
                                         colon_token: COLON@14..16 ":" [] [Whitespace(" ")],
+                                        value: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@16..19 "foo" [] [],
+                                            },
+                                        },
                                     },
                                     COMMA@19..21 "," [] [Whitespace(" ")],
                                     JsPropertyObjectMember {
@@ -30,10 +35,18 @@ JsModule {
                                                     value_token: JS_NUMBER_LITERAL@22..24 "6" [] [Whitespace(" ")],
                                                 },
                                                 operator: PLUS@24..26 "+" [] [Whitespace(" ")],
+                                                right: JsNumberLiteralExpression {
+                                                    value_token: JS_NUMBER_LITERAL@26..27 "6" [] [],
+                                                },
                                             },
                                             r_brack_token: R_BRACK@27..28 "]" [] [],
                                         },
                                         colon_token: COLON@28..30 ":" [] [Whitespace(" ")],
+                                        value: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@30..33 "foo" [] [],
+                                            },
+                                        },
                                     },
                                     COMMA@33..35 "," [] [Whitespace(" ")],
                                     JsPropertyObjectMember {
@@ -41,6 +54,11 @@ JsModule {
                                             value: IDENT@35..38 "bar" [] [],
                                         },
                                         colon_token: COLON@38..40 ":" [] [Whitespace(" ")],
+                                        value: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@40..43 "foo" [] [],
+                                            },
+                                        },
                                     },
                                     COMMA@43..45 "," [] [Whitespace(" ")],
                                     JsPropertyObjectMember {
@@ -48,6 +66,11 @@ JsModule {
                                             value: JS_NUMBER_LITERAL@45..46 "7" [] [],
                                         },
                                         colon_token: COLON@46..48 ":" [] [Whitespace(" ")],
+                                        value: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@48..51 "foo" [] [],
+                                            },
+                                        },
                                     },
                                 ],
                                 r_curly_token: R_CURLY@51..52 "}" [] [],

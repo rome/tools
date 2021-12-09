@@ -20,6 +20,9 @@ JsModule {
                                             value: IDENT@10..11 "a" [] [],
                                         },
                                         colon_token: COLON@11..13 ":" [] [Whitespace(" ")],
+                                        value: JsBooleanLiteralExpression {
+                                            value_token: TRUE_KW@13..18 "true" [] [Whitespace(" ")],
+                                        },
                                     },
                                 ],
                                 r_curly_token: R_CURLY@18..19 "}" [] [],

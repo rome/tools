@@ -10,7 +10,17 @@ JsModule {
                     },
                 },
                 question_mark_token: QUESTION@4..6 "?" [] [Whitespace(" ")],
+                consequent: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@6..10 "bar" [] [Whitespace(" ")],
+                    },
+                },
                 colon_token: COLON@10..12 ":" [] [Whitespace(" ")],
+                alternate: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@12..15 "baz" [] [],
+                    },
+                },
             },
             semicolon_token: missing (optional),
         },
@@ -22,7 +32,31 @@ JsModule {
                     },
                 },
                 question_mark_token: QUESTION@20..22 "?" [] [Whitespace(" ")],
+                consequent: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@22..26 "bar" [] [Whitespace(" ")],
+                    },
+                },
                 colon_token: COLON@26..28 ":" [] [Whitespace(" ")],
+                alternate: JsConditionalExpression {
+                    test: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@28..32 "baz" [] [Whitespace(" ")],
+                        },
+                    },
+                    question_mark_token: QUESTION@32..34 "?" [] [Whitespace(" ")],
+                    consequent: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@34..38 "bar" [] [Whitespace(" ")],
+                        },
+                    },
+                    colon_token: COLON@38..40 ":" [] [Whitespace(" ")],
+                    alternate: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@40..43 "baz" [] [],
+                        },
+                    },
+                },
             },
             semicolon_token: missing (optional),
         },

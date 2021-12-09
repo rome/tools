@@ -8,6 +8,7 @@ JsModule {
             init: missing (optional),
             first_semi_token: SEMICOLON@4..5 ";" [] [],
             test: missing (optional),
+            second_semi_token: SEMICOLON@5..7 ";" [] [Whitespace(" ")],
             update: ForStmtUpdate {
                 expr: JsObjectExpression {
                     l_curly_token: L_CURLY@7..8 "{" [] [],
@@ -46,8 +47,12 @@ JsModule {
                             },
                         },
                         operator: L_ANGLE@27..29 "<" [] [Whitespace(" ")],
+                        right: JsNumberLiteralExpression {
+                            value_token: JS_NUMBER_LITERAL@29..31 "10" [] [],
+                        },
                     },
                 },
+                second_semi_token: SEMICOLON@31..33 ";" [] [Whitespace(" ")],
                 update: ForStmtUpdate {
                     expr: JsPostUpdateExpression {
                         operand: JsIdentifierAssignment {
@@ -94,8 +99,12 @@ JsModule {
                         },
                     },
                     operator: L_ANGLE@57..59 "<" [] [Whitespace(" ")],
+                    right: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@59..61 "10" [] [],
+                    },
                 },
             },
+            second_semi_token: SEMICOLON@61..63 ";" [] [Whitespace(" ")],
             update: ForStmtUpdate {
                 expr: JsPreUpdateExpression {
                     operator: PLUS2@63..65 "++" [] [],

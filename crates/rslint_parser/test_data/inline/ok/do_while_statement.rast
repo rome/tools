@@ -119,6 +119,9 @@ JsModule {
                                         },
                                     },
                                     operator: PLUS@108..110 "+" [] [Whitespace(" ")],
+                                    right: JsNumberLiteralExpression {
+                                        value_token: JS_NUMBER_LITERAL@110..111 "1" [] [],
+                                    },
                                 },
                             },
                             semicolon_token: missing (optional),
@@ -135,6 +138,9 @@ JsModule {
                         },
                     },
                     operator: L_ANGLE@123..125 "<" [] [Whitespace(" ")],
+                    right: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@125..126 "5" [] [],
+                    },
                 },
                 r_paren_token: R_PAREN@126..127 ")" [] [],
                 semicolon_token: missing (optional),
@@ -148,6 +154,9 @@ JsModule {
                     },
                 },
                 operator: L_ANGLE@137..139 "<" [] [Whitespace(" ")],
+                right: JsNumberLiteralExpression {
+                    value_token: JS_NUMBER_LITERAL@139..142 "100" [] [],
+                },
             },
             r_paren_token: R_PAREN@142..143 ")" [] [],
             semicolon_token: missing (optional),

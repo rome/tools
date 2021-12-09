@@ -32,8 +32,12 @@ JsModule {
                         },
                     },
                     operator: L_ANGLE@18..20 "<" [] [Whitespace(" ")],
+                    right: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@20..22 "10" [] [],
+                    },
                 },
             },
+            second_semi_token: SEMICOLON@22..24 ";" [] [Whitespace(" ")],
             update: ForStmtUpdate {
                 expr: JsPostUpdateExpression {
                     operand: JsIdentifierAssignment {
@@ -117,6 +121,7 @@ JsModule {
             init: missing (optional),
             first_semi_token: SEMICOLON@88..89 ";" [] [],
             test: missing (optional),
+            second_semi_token: SEMICOLON@89..90 ";" [] [],
             update: missing (optional),
             r_paren_token: R_PAREN@90..92 ")" [] [Whitespace(" ")],
             cons: JsBlockStatement {

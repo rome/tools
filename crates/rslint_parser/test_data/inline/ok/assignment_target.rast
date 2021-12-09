@@ -101,10 +101,8 @@ JsModule {
                         },
                     },
                     l_brack_token: L_BRACK@67..68 "[" [] [],
-                    member: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@65..67 "a" [Whitespace("\n")] [],
-                        },
+                    member: JsStringLiteralExpression {
+                        value_token: JS_STRING_LITERAL@68..74 "\"test\"" [] [],
                     },
                     r_brack_token: R_BRACK@74..76 "]" [] [Whitespace(" ")],
                 },
@@ -176,16 +174,57 @@ JsModule {
                     },
                 },
                 operator: EQ3@120..124 "===" [] [Whitespace(" ")],
+                right: JsNumberLiteralExpression {
+                    value_token: JS_NUMBER_LITERAL@124..125 "3" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsAssignmentExpression {
+                left: JsComputedMemberAssignment {
+                    object: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@125..127 "a" [Whitespace("\n")] [],
+                        },
+                    },
+                    l_brack_token: L_BRACK@127..128 "[" [] [],
+                    member: JsStringLiteralExpression {
+                        value_token: JS_STRING_LITERAL@128..131 "'b'" [] [],
+                    },
+                    r_brack_token: R_BRACK@131..133 "]" [] [Whitespace(" ")],
+                },
+                operator_token: EQ@133..135 "=" [] [Whitespace(" ")],
+                right: JsAssignmentExpression {
+                    left: JsComputedMemberAssignment {
+                        object: JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@135..136 "c" [] [],
+                            },
+                        },
+                        l_brack_token: L_BRACK@136..137 "[" [] [],
+                        member: JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@137..138 "d" [] [],
+                            },
+                        },
+                        r_brack_token: R_BRACK@138..140 "]" [] [Whitespace(" ")],
+                    },
+                    operator_token: EQ@140..142 "=" [] [Whitespace(" ")],
+                    right: JsStringLiteralExpression {
+                        value_token: JS_STRING_LITERAL@142..148 "\"test\"" [] [],
+                    },
+                },
             },
             semicolon_token: missing (optional),
         },
     ],
 }
 
-0: JS_MODULE@0..126
+0: JS_MODULE@0..149
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..125
+  2: LIST@0..148
     0: JS_EXPRESSION_STATEMENT@0..21
       0: JS_ASSIGNMENT_EXPRESSION@0..20
         0: JS_IDENTIFIER_ASSIGNMENT@0..4
@@ -303,4 +342,29 @@ JsModule {
         2: JS_NUMBER_LITERAL_EXPRESSION@124..125
           0: JS_NUMBER_LITERAL@124..125 "3" [] []
       1: (empty)
-  3: EOF@125..126 "" [Whitespace("\n")] []
+    7: JS_EXPRESSION_STATEMENT@125..148
+      0: JS_ASSIGNMENT_EXPRESSION@125..148
+        0: JS_COMPUTED_MEMBER_ASSIGNMENT@125..133
+          0: JS_IDENTIFIER_EXPRESSION@125..127
+            0: JS_REFERENCE_IDENTIFIER@125..127
+              0: IDENT@125..127 "a" [Whitespace("\n")] []
+          1: L_BRACK@127..128 "[" [] []
+          2: JS_STRING_LITERAL_EXPRESSION@128..131
+            0: JS_STRING_LITERAL@128..131 "'b'" [] []
+          3: R_BRACK@131..133 "]" [] [Whitespace(" ")]
+        1: EQ@133..135 "=" [] [Whitespace(" ")]
+        2: JS_ASSIGNMENT_EXPRESSION@135..148
+          0: JS_COMPUTED_MEMBER_ASSIGNMENT@135..140
+            0: JS_IDENTIFIER_EXPRESSION@135..136
+              0: JS_REFERENCE_IDENTIFIER@135..136
+                0: IDENT@135..136 "c" [] []
+            1: L_BRACK@136..137 "[" [] []
+            2: JS_IDENTIFIER_EXPRESSION@137..138
+              0: JS_REFERENCE_IDENTIFIER@137..138
+                0: IDENT@137..138 "d" [] []
+            3: R_BRACK@138..140 "]" [] [Whitespace(" ")]
+          1: EQ@140..142 "=" [] [Whitespace(" ")]
+          2: JS_STRING_LITERAL_EXPRESSION@142..148
+            0: JS_STRING_LITERAL@142..148 "\"test\"" [] []
+      1: (empty)
+  3: EOF@148..149 "" [Whitespace("\n")] []

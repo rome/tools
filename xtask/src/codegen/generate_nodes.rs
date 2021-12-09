@@ -35,101 +35,110 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			let node_kind = format_ident!("{}", to_upper_snake_case(node.name.as_str()));
 			let mut slot = 0usize;
 
-			let methods = node.fields.iter().map(|field| match field {
-				Field::Token { kind, name, .. } => {
-					// TODO: make the mandatory/optional bit
-					let method_name = field.method_name();
-					let is_optional = field.is_optional();
+			let methods = node
+				.fields
+				.iter()
+				.filter(|field| {
+					!matches!(
+						field,
+						Field::Token { manual: true, .. } | Field::Node { manual: true, .. }
+					)
+				})
+				.map(|field| match field {
+					Field::Token { kind, name, .. } => {
+						// TODO: make the mandatory/optional bit
+						let method_name = field.method_name();
+						let is_optional = field.is_optional();
 
-					match kind {
-						TokenKind::Many(kinds) => {
-							let tokens = token_kinds_to_code(kinds.as_slice());
-							let method_name = format_ident!("{}", name);
+						match kind {
+							TokenKind::Many(kinds) => {
+								let tokens = token_kinds_to_code(kinds.as_slice());
+								let method_name = format_ident!("{}", name);
 
-							if is_optional {
-								quote! {
-									pub fn #method_name(&self) -> Option<SyntaxToken> {
-										support::find_token(&self.syntax, #tokens)
+								if is_optional {
+									quote! {
+										pub fn #method_name(&self) -> Option<SyntaxToken> {
+											support::find_token(&self.syntax, #tokens)
+										}
 									}
-								}
-							} else {
-								quote! {
-									pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
-										support::find_required_token(&self.syntax, #tokens)
+								} else {
+									quote! {
+										pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
+											support::find_required_token(&self.syntax, #tokens)
+										}
 									}
 								}
 							}
-						}
-						TokenKind::Single(kind) => {
-							let token_kind_code = token_kind_to_code(kind.as_str());
-							if is_optional {
-								quote! {
-									pub fn #method_name(&self) -> Option<SyntaxToken> {
-										support::token(&self.syntax, #token_kind_code)
+							TokenKind::Single(kind) => {
+								let token_kind_code = token_kind_to_code(kind.as_str());
+								if is_optional {
+									quote! {
+										pub fn #method_name(&self) -> Option<SyntaxToken> {
+											support::token(&self.syntax, #token_kind_code)
+										}
 									}
-								}
-							} else {
-								quote! {
-									pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
-										support::required_token(&self.syntax, #token_kind_code)
+								} else {
+									quote! {
+										pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
+											support::required_token(&self.syntax, #token_kind_code)
+										}
 									}
 								}
 							}
 						}
 					}
-				}
-				Field::Node {
-					ty,
-					optional,
-					has_many,
-					separated,
-					..
-				} => {
-					let is_syntax_type = &ty.eq(SYNTAX_ELEMENT_TYPE);
-					let ty = format_ident!("{}", &ty);
+					Field::Node {
+						ty,
+						optional,
+						has_many,
+						separated,
+						..
+					} => {
+						let is_syntax_type = &ty.eq(SYNTAX_ELEMENT_TYPE);
+						let ty = format_ident!("{}", &ty);
 
-					let method_name = field.method_name();
-					// this is when we encounter a node that has "Unknown" in its name
-					// it will return tokens a and nodes regardless because there's an error
-					// inside the code
-					if *is_syntax_type {
-						quote! {
-							pub fn items(&self) -> SyntaxElementChildren {
-								support::elements(&self.syntax)
-							}
-						}
-					} else if *optional {
-						quote! {
-							pub fn #method_name(&self) -> Option<#ty> {
-								support::node(&self.syntax)
-							}
-						}
-					} else if *has_many {
-						let field = if *separated {
+						let method_name = field.method_name();
+						// this is when we encounter a node that has "Unknown" in its name
+						// it will return tokens a and nodes regardless because there's an error
+						// inside the code
+						if *is_syntax_type {
 							quote! {
-								pub fn #method_name(&self) -> AstSeparatedList<#ty> {
-									support::separated_list(&self.syntax, #slot)
+								pub fn items(&self) -> SyntaxElementChildren {
+									support::elements(&self.syntax)
 								}
 							}
+						} else if *optional {
+							quote! {
+								pub fn #method_name(&self) -> Option<#ty> {
+									support::node(&self.syntax)
+								}
+							}
+						} else if *has_many {
+							let field = if *separated {
+								quote! {
+									pub fn #method_name(&self) -> AstSeparatedList<#ty> {
+										support::separated_list(&self.syntax, #slot)
+									}
+								}
+							} else {
+								quote! {
+									pub fn #method_name(&self) -> AstNodeList<#ty> {
+										support::node_list(&self.syntax, #slot)
+									}
+								}
+							};
+
+							slot += 1;
+							field
 						} else {
 							quote! {
-								pub fn #method_name(&self) -> AstNodeList<#ty> {
-									support::node_list(&self.syntax, #slot)
+								pub fn #method_name(&self) -> SyntaxResult<#ty> {
+									support::required_node(&self.syntax)
 								}
-							}
-						};
-
-						slot += 1;
-						field
-					} else {
-						quote! {
-							pub fn #method_name(&self) -> SyntaxResult<#ty> {
-								support::required_node(&self.syntax)
 							}
 						}
 					}
-				}
-			});
+				});
 
 			let fields = node.fields.iter().map(|field| {
 				let name = match field {

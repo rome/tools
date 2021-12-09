@@ -49,6 +49,11 @@ JsModule {
                                             value: IDENT@26..30 "foo" [] [Whitespace(" ")],
                                         },
                                         colon_token: missing (required),
+                                        value: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@30..34 "bar" [] [Whitespace(" ")],
+                                            },
+                                        },
                                     },
                                 ],
                                 r_curly_token: R_CURLY@34..35 "}" [] [],

@@ -62,6 +62,22 @@ JsModule {
                                 },
                             },
                             operator: PLUS@58..60 "+" [] [Whitespace(" ")],
+                            right: JsAwaitExpression {
+                                await_token: AWAIT_KW@60..66 "await" [] [Whitespace(" ")],
+                                argument: CallExpr {
+                                    type_args: missing (optional),
+                                    callee: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@66..71 "inner" [] [],
+                                        },
+                                    },
+                                    arguments: ArgList {
+                                        l_paren_token: L_PAREN@71..72 "(" [] [],
+                                        args: [],
+                                        r_paren_token: R_PAREN@72..73 ")" [] [],
+                                    },
+                                },
+                            },
                         },
                         semicolon_token: SEMICOLON@73..74 ";" [] [],
                     },

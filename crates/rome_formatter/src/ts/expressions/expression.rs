@@ -234,17 +234,12 @@ impl ToFormatElement for JsAwaitExpression {
 
 impl ToFormatElement for JsLogicalExpression {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let right = if let Some(token) = self.right() {
-			formatter.format_node(token)?
-		} else {
-			empty_element()
-		};
 		Ok(format_elements![
 			formatter.format_node(self.left()?)?,
 			space_token(),
 			formatter.format_token(&self.operator()?)?,
 			space_token(),
-			right,
+			formatter.format_node(self.right()?)?,
 		])
 	}
 }

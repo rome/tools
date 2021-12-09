@@ -161,6 +161,43 @@ JsScript {
                                 },
                                 fat_arrow_token: FAT_ARROW@249..252 "=>" [] [Whitespace(" ")],
                                 return_type: missing (optional),
+                                body: JsFunctionBody {
+                                    l_curly_token: L_CURLY@252..253 "{" [] [],
+                                    directives: [
+                                        JsDirective {
+                                            value_token: JS_STRING_LITERAL@253..267 "\"use strict\"" [Whitespace("\n\t")] [],
+                                            semicolon_token: SEMICOLON@267..268 ";" [] [],
+                                        },
+                                    ],
+                                    statements: [
+                                        JsVariableDeclarationStatement {
+                                            declaration: JsVariableDeclaration {
+                                                kind_token: LET_KW@268..275 "let" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                                                declarators: [
+                                                    JsVariableDeclarator {
+                                                        id: JsIdentifierBinding {
+                                                            name_token: IDENT@275..277 "a" [] [Whitespace(" ")],
+                                                        },
+                                                        init: JsEqualValueClause {
+                                                            eq_token: EQ@277..279 "=" [] [Whitespace(" ")],
+                                                            expression: JsNumberLiteralExpression {
+                                                                value_token: JS_NUMBER_LITERAL@279..281 "10" [] [],
+                                                            },
+                                                        },
+                                                    },
+                                                ],
+                                            },
+                                            semicolon_token: SEMICOLON@281..282 ";" [] [],
+                                        },
+                                        JsExpressionStatement {
+                                            expression: JsStringLiteralExpression {
+                                                value_token: JS_STRING_LITERAL@282..297 "\"use strict\"" [Whitespace("\n\n\t")] [],
+                                            },
+                                            semicolon_token: SEMICOLON@297..318 ";" [] [Whitespace("  "), Comments("// not a directive")],
+                                        },
+                                    ],
+                                    r_curly_token: R_CURLY@318..320 "}" [Whitespace("\n")] [],
+                                },
                             },
                         },
                     },

@@ -11,6 +11,14 @@ impl JsComputedMemberExpression {
 	}
 }
 
+impl JsComputedMemberAssignment {
+	pub fn member(&self) -> SyntaxResult<JsAnyExpression> {
+		support::children(self.syntax())
+			.nth(1)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
+	}
+}
+
 impl JsLiteralMemberName {
 	/// Returns the name of the member as a syntax text
 	///
@@ -217,8 +225,10 @@ impl JsLogicalExpression {
 		Ok(kind)
 	}
 
-	pub fn right(&self) -> Option<JsAnyExpression> {
-		support::children(self.syntax()).nth(1)
+	pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
+		support::children(self.syntax())
+			.nth(1)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
 	}
 }
 
@@ -227,6 +237,12 @@ impl JsSequenceExpression {
 		support::children(self.syntax())
 			.nth(1)
 			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
+	}
+}
+
+impl JsArrayHole {
+	pub fn hole_token(&self) -> Option<SyntaxToken> {
+		None
 	}
 }
 
@@ -357,8 +373,12 @@ impl JsStringLiteralExpression {
 }
 
 impl JsArrowFunctionExpression {
-	pub fn body(&self) -> Option<JsAnyArrowFunctionBody> {
-		JsAnyArrowFunctionBody::cast(self.syntax().children().last()?)
+	pub fn body(&self) -> SyntaxResult<JsAnyArrowFunctionBody> {
+		self.syntax()
+			.children()
+			.last()
+			.and_then(JsAnyArrowFunctionBody::cast)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
 	}
 }
 

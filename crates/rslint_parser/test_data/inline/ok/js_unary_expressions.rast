@@ -13,6 +13,9 @@ JsModule {
                     },
                     optional_chain_token_token: missing (optional),
                     l_brack_token: L_BRACK@8..9 "[" [] [],
+                    member: JsStringLiteralExpression {
+                        value_token: JS_STRING_LITERAL@9..15 "'test'" [] [],
+                    },
                     r_brack_token: R_BRACK@15..16 "]" [] [],
                 },
             },
@@ -88,8 +91,24 @@ JsModule {
                         },
                     },
                     operator: PLUS@59..61 "+" [] [Whitespace(" ")],
+                    right: JsUnaryExpression {
+                        operator: MINUS@61..62 "-" [] [],
+                        argument: JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@62..64 "b" [] [Whitespace(" ")],
+                            },
+                        },
+                    },
                 },
                 operator: PLUS@64..66 "+" [] [Whitespace(" ")],
+                right: JsUnaryExpression {
+                    operator: PLUS@66..67 "+" [] [],
+                    argument: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@67..68 "a" [] [],
+                        },
+                    },
+                },
             },
             semicolon_token: SEMICOLON@68..69 ";" [] [],
         },

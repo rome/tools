@@ -11,6 +11,11 @@ JsModule {
                 },
                 optional_chain_token_token: missing (optional),
                 l_brack_token: L_BRACK@3..4 "[" [] [],
+                member: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@4..7 "bar" [] [],
+                    },
+                },
                 r_brack_token: R_BRACK@7..8 "]" [] [],
             },
             semicolon_token: missing (optional),
@@ -24,6 +29,15 @@ JsModule {
                 },
                 optional_chain_token_token: missing (optional),
                 l_brack_token: L_BRACK@12..13 "[" [] [],
+                member: JsBinaryExpression {
+                    left: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@13..15 "5" [] [Whitespace(" ")],
+                    },
+                    operator: PLUS@15..17 "+" [] [Whitespace(" ")],
+                    right: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@17..18 "5" [] [],
+                    },
+                },
                 r_brack_token: R_BRACK@18..19 "]" [] [],
             },
             semicolon_token: missing (optional),
@@ -37,6 +51,9 @@ JsModule {
                 },
                 optional_chain_token_token: missing (optional),
                 l_brack_token: L_BRACK@23..24 "[" [] [],
+                member: JsStringLiteralExpression {
+                    value_token: JS_STRING_LITERAL@24..29 "\"bar\"" [] [],
+                },
                 r_brack_token: R_BRACK@29..30 "]" [] [],
             },
             semicolon_token: missing (optional),
@@ -51,10 +68,20 @@ JsModule {
                     },
                     optional_chain_token_token: missing (optional),
                     l_brack_token: L_BRACK@34..35 "[" [] [],
+                    member: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@35..38 "bar" [] [],
+                        },
+                    },
                     r_brack_token: R_BRACK@38..39 "]" [] [],
                 },
                 optional_chain_token_token: missing (optional),
                 l_brack_token: L_BRACK@39..40 "[" [] [],
+                member: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@40..43 "baz" [] [],
+                    },
+                },
                 r_brack_token: R_BRACK@43..44 "]" [] [],
             },
             semicolon_token: missing (optional),
@@ -68,6 +95,11 @@ JsModule {
                 },
                 optional_chain_token_token: QUESTIONDOT@48..50 "?." [] [],
                 l_brack_token: L_BRACK@50..51 "[" [] [],
+                member: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@51..54 "bar" [] [],
+                    },
+                },
                 r_brack_token: R_BRACK@54..55 "]" [] [],
             },
             semicolon_token: missing (optional),

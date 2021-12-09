@@ -20,6 +20,7 @@ JsModule {
                                             value: IDENT@10..13 "foo" [] [],
                                         },
                                         colon_token: missing (required),
+                                        value: missing (required),
                                     },
                                     missing separator,
                                     JsUnknownMember {

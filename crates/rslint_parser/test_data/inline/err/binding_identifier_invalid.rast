@@ -13,6 +13,36 @@ JsModule {
                 },
                 fat_arrow_token: FAT_ARROW@9..12 "=>" [] [Whitespace(" ")],
                 return_type: missing (optional),
+                body: JsFunctionBody {
+                    l_curly_token: L_CURLY@12..14 "{" [] [Whitespace(" ")],
+                    directives: [],
+                    statements: [
+                        JsVariableDeclarationStatement {
+                            declaration: JsVariableDeclaration {
+                                kind_token: LET_KW@14..18 "let" [] [Whitespace(" ")],
+                                declarators: [
+                                    JsVariableDeclarator {
+                                        id: JsUnknownBinding {
+                                            items: [
+                                                Token(
+                                                    IDENT@18..24 "await" [] [Whitespace(" ")],
+                                                ),
+                                            ],
+                                        },
+                                        init: JsEqualValueClause {
+                                            eq_token: EQ@24..26 "=" [] [Whitespace(" ")],
+                                            expression: JsNumberLiteralExpression {
+                                                value_token: JS_NUMBER_LITERAL@26..27 "5" [] [],
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                            semicolon_token: SEMICOLON@27..29 ";" [] [Whitespace(" ")],
+                        },
+                    ],
+                    r_curly_token: R_CURLY@29..30 "}" [] [],
+                },
             },
             semicolon_token: missing (optional),
         },

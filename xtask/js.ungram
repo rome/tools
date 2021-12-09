@@ -353,7 +353,7 @@ JsAnyArrayElement =
 	| JsSpread
 	| JsArrayHole
 
-JsArrayHole = manual__hole: ''
+JsArrayHole = manual__hole: ''?
 
 JsAssignmentExpression =
   left: JsAnyAssignmentPattern
@@ -659,7 +659,7 @@ JsStaticMemberAssignment =
 JsComputedMemberAssignment =
 	object: JsAnyExpression
 	'['
-	member: JsAnyExpression
+	manual__member: JsAnyExpression
 	']'
 
 JsAnyAssignmentPattern =
@@ -934,7 +934,7 @@ ImportClause =
 NamedImports = '{' specifiers:(Specifier (',' Specifier)* ','?) '}'
 
 
-Specifier = name:Ident manual__:'as'? manual__alias:Name
+Specifier = name:Ident 'as'? manual__alias:Name?
 
 
 // this is not currently implemented in rslint parser

@@ -27,6 +27,12 @@ JsModule {
                 },
                 fat_arrow_token: FAT_ARROW@8..11 "=>" [] [Whitespace(" ")],
                 return_type: missing (optional),
+                body: JsFunctionBody {
+                    l_curly_token: L_CURLY@11..12 "{" [] [],
+                    directives: [],
+                    statements: [],
+                    r_curly_token: R_CURLY@12..13 "}" [] [],
+                },
             },
             semicolon_token: missing (optional),
         },
@@ -40,6 +46,13 @@ JsModule {
                         },
                     },
                     comma_token: COMMA@16..18 "," [] [Whitespace(" ")],
+                    right: JsUnknownExpression {
+                        items: [
+                            Token(
+                                COMMA@18..19 "," [] [],
+                            ),
+                        ],
+                    },
                 },
                 r_paren_token: missing (required),
             },
@@ -87,6 +100,7 @@ JsModule {
                 },
                 fat_arrow_token: FAT_ARROW@35..37 "=>" [] [],
                 return_type: missing (optional),
+                body: missing (required),
             },
             semicolon_token: missing (optional),
         },

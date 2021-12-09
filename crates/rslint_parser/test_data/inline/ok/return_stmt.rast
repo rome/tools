@@ -13,6 +13,32 @@ JsModule {
                 },
                 fat_arrow_token: FAT_ARROW@3..6 "=>" [] [Whitespace(" ")],
                 return_type: missing (optional),
+                body: JsFunctionBody {
+                    l_curly_token: L_CURLY@6..7 "{" [] [],
+                    directives: [],
+                    statements: [
+                        JsReturnStatement {
+                            return_token: RETURN_KW@7..16 "return" [Whitespace("\n  ")] [],
+                            argument: missing (optional),
+                            semicolon_token: SEMICOLON@16..17 ";" [] [],
+                        },
+                        JsReturnStatement {
+                            return_token: RETURN_KW@17..27 "return" [Whitespace("\n  ")] [Whitespace(" ")],
+                            argument: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@27..30 "foo" [] [],
+                                },
+                            },
+                            semicolon_token: SEMICOLON@30..31 ";" [] [],
+                        },
+                        JsReturnStatement {
+                            return_token: RETURN_KW@31..40 "return" [Whitespace("\n  ")] [],
+                            argument: missing (optional),
+                            semicolon_token: missing (optional),
+                        },
+                    ],
+                    r_curly_token: R_CURLY@40..42 "}" [Whitespace("\n")] [],
+                },
             },
             semicolon_token: missing (optional),
         },

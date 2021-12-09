@@ -40,6 +40,9 @@ JsModule {
                                             value: IDENT@17..18 "a" [] [],
                                         },
                                         colon_token: COLON@18..20 ":" [] [Whitespace(" ")],
+                                        value: JsNumberLiteralExpression {
+                                            value_token: JS_NUMBER_LITERAL@20..23 "10" [] [Whitespace(" ")],
+                                        },
                                     },
                                 ],
                                 r_curly_token: R_CURLY@23..24 "}" [] [],
@@ -93,6 +96,9 @@ JsModule {
                                             value: IDENT@48..49 "a" [] [],
                                         },
                                         colon_token: COLON@49..51 ":" [] [Whitespace(" ")],
+                                        value: JsNumberLiteralExpression {
+                                            value_token: JS_NUMBER_LITERAL@51..54 "10" [] [Whitespace(" ")],
+                                        },
                                     },
                                 ],
                                 r_curly_token: R_CURLY@54..55 "}" [] [],

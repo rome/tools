@@ -103,6 +103,9 @@ JsModule {
                                 value_token: JS_STRING_LITERAL@94..98 "\"a\"" [] [Whitespace(" ")],
                             },
                             operator: PLUS@98..100 "+" [] [Whitespace(" ")],
+                            right: JsStringLiteralExpression {
+                                value_token: JS_STRING_LITERAL@100..103 "\"b\"" [] [],
+                            },
                         },
                         r_brack_token: R_BRACK@103..104 "]" [] [],
                     },

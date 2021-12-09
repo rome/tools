@@ -98,6 +98,9 @@ JsModule {
                                 value_token: JS_STRING_LITERAL@71..75 "\"a\"" [] [Whitespace(" ")],
                             },
                             operator: PLUS@75..77 "+" [] [Whitespace(" ")],
+                            right: JsStringLiteralExpression {
+                                value_token: JS_STRING_LITERAL@77..80 "\"b\"" [] [],
+                            },
                         },
                         r_brack_token: R_BRACK@80..81 "]" [] [],
                     },

@@ -63,7 +63,7 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 			}),
 			None => {
 				let mut fields = vec![];
-				handle_rule(&mut fields, grammar, rule, None, false, false);
+				handle_rule(&mut fields, grammar, rule, None, false, false, false);
 				ast.nodes.push(AstNodeSrc {
 					documentation: vec![],
 					name,
@@ -109,34 +109,47 @@ fn handle_rule(
 	fields: &mut Vec<Field>,
 	grammar: &Grammar,
 	rule: &Rule,
-	label: Option<&String>,
+	label: Option<&str>,
 	optional: bool,
 	has_many: bool,
+	manual: bool,
 ) {
 	match rule {
 		Rule::Labeled { label, rule } => {
 			// Some methods need to be manually implemented because they need some custom logic;
 			// we use the prefix "manual__" to exclude labelled nodes.
-			let manually_implemented = label.as_str().contains("manual__");
 
-			if manually_implemented {
-				return;
-			}
 			if handle_tokens_in_unions(fields, grammar, rule, label, optional) {
 				return;
 			}
 
-			handle_rule(fields, grammar, rule, Some(label), optional, has_many)
+			let manually_implemented = label.as_str().starts_with("manual__");
+			handle_rule(
+				fields,
+				grammar,
+				rule,
+				Some(if manually_implemented {
+					label.trim_start_matches("manual__")
+				} else {
+					label
+				}),
+				optional,
+				has_many,
+				manually_implemented,
+			)
 		}
 		Rule::Node(node) => {
 			let ty = grammar[*node].name.clone();
-			let name = label.cloned().unwrap_or_else(|| to_lower_snake_case(&ty));
+			let name = label
+				.map(String::from)
+				.unwrap_or_else(|| to_lower_snake_case(&ty));
 			let field = Field::Node {
 				name,
 				ty,
 				optional,
 				has_many,
 				separated: false,
+				manual,
 			};
 			fields.push(field);
 		}
@@ -144,22 +157,23 @@ fn handle_rule(
 			let name = clean_token_name(grammar, token);
 
 			let field = Field::Token {
-				name: label.cloned().unwrap_or_else(|| name.clone()),
+				name: label.map(String::from).unwrap_or_else(|| name.clone()),
 				kind: TokenKind::Single(name),
 				optional,
+				manual,
 			};
 			fields.push(field);
 		}
 
 		Rule::Rep(rule) => {
-			handle_rule(fields, grammar, rule, label, false, true);
+			handle_rule(fields, grammar, rule, label, false, true, manual);
 		}
 		Rule::Opt(rule) => {
-			handle_rule(fields, grammar, rule, label, true, false);
+			handle_rule(fields, grammar, rule, label, true, false, manual);
 		}
 		Rule::Alt(rules) => {
 			for rule in rules {
-				handle_rule(fields, grammar, rule, label, false, false);
+				handle_rule(fields, grammar, rule, label, false, false, manual);
 			}
 		}
 
@@ -169,7 +183,7 @@ fn handle_rule(
 			}
 
 			for rule in rules {
-				handle_rule(fields, grammar, rule, label, false, false);
+				handle_rule(fields, grammar, rule, label, false, false, manual);
 			}
 		}
 	};
@@ -179,7 +193,7 @@ fn handle_rule(
 	fn handle_comma_list(
 		acc: &mut Vec<Field>,
 		grammar: &Grammar,
-		label: Option<&String>,
+		label: Option<&str>,
 		rules: &[Rule],
 	) -> bool {
 		// Does it match (T * ',')?
@@ -216,7 +230,7 @@ fn handle_rule(
 		let ty = grammar[*node].name.clone();
 
 		let name = label
-			.cloned()
+			.map(String::from)
 			.unwrap_or_else(|| pluralize(&to_lower_snake_case(&ty)));
 
 		acc.push(Field::Node {
@@ -225,6 +239,7 @@ fn handle_rule(
 			optional: false,
 			has_many: true,
 			separated: true,
+			manual: false,
 		});
 
 		true
@@ -265,6 +280,7 @@ fn handle_tokens_in_unions(
 		name: label.to_string(),
 		kind: TokenKind::Many(token_kinds),
 		optional,
+		manual: false,
 	};
 	fields.push(field);
 	true
