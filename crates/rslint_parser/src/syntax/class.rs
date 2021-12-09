@@ -22,7 +22,13 @@ use rslint_syntax::{SyntaxKind, T};
 
 /// Parses a class expression, e.g. let a = class {}
 pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-	parse_class(p, ClassKind::Expression)
+	match parse_class(p, ClassKind::Expression) {
+		Present(Valid(marker)) => Present(marker),
+		Present(Invalid(invalid_syntax)) => {
+			Present(invalid_syntax.or_to_unknown(p, JS_UNKNOWN_EXPRESSION))
+		}
+		_ => unreachable!(),
+	}
 }
 
 // test class_decl
@@ -44,7 +50,13 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<CompletedMa
 /// A class can be invalid if
 /// * It uses an illegal identifier name
 pub(super) fn parse_class_declaration(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-	parse_class(p, ClassKind::Declaration)
+	match parse_class(p, ClassKind::Declaration) {
+		Present(Valid(marker)) => Present(marker),
+		Present(Invalid(invalid_syntax)) => {
+			Present(invalid_syntax.or_to_unknown(p, JS_UNKNOWN_STATEMENT))
+		}
+		_ => unreachable!(),
+	}
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
@@ -62,10 +74,11 @@ impl From<ClassKind> for SyntaxKind {
 	}
 }
 
-fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<CompletedMarker> {
+fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSyntax> {
 	if !p.at(T![class]) {
 		return Absent;
 	}
+	let mut class_is_valid = true;
 	let m = p.start();
 	let class_token_range = p.cur_tok().range;
 	p.expect_required(T![class]);
@@ -120,27 +133,33 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<CompletedMarker>
 		Absent => {
 			guard.missing();
 		}
-		Present(Invalid(syntax)) => {
-			syntax.or_to_unknown(&mut guard, JS_UNKNOWN_EXPRESSION);
+		Present(Invalid(_)) => {
+			class_is_valid = false;
 		}
 		_ => {}
-	}
+	};
 
 	match implements_clause(&mut guard) {
 		Absent => {
 			guard.missing();
 		}
-		Present(Invalid(syntax)) => {
-			syntax.or_to_unknown(&mut guard, JS_UNKNOWN_EXPRESSION);
+		Present(Invalid(_)) => {
+			class_is_valid = false;
 		}
 		_ => {}
-	}
+	};
 
 	guard.expect_required(T!['{']);
 	ClassMembersList.parse_list(&mut *guard);
 	guard.expect_required(T!['}']);
 
-	Present(m.complete(&mut *guard, kind.into()))
+	let class_marker = m.complete(&mut *guard, kind.into());
+
+	if class_is_valid {
+		Present(class_marker).into_valid()
+	} else {
+		Present(class_marker).into_invalid()
+	}
 }
 
 fn implements_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {

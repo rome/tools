@@ -6,8 +6,8 @@ use rslint_parser::ast::JsPropertyClassMember;
 
 impl ToFormatElement for JsPropertyClassMember {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let modifiers = if let Some(modifiers) = self.modifiers() {
-			formatter.format_node(modifiers)?
+		let static_token = if let Some(token) = self.static_token() {
+			format_elements![formatter.format_token(&token)?, space_token()]
 		} else {
 			empty_element()
 		};
@@ -19,7 +19,7 @@ impl ToFormatElement for JsPropertyClassMember {
 		};
 
 		Ok(format_elements![
-			modifiers,
+			static_token,
 			formatter.format_node(self.name()?)?,
 			init,
 			token(";")

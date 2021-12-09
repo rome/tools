@@ -6,9 +6,9 @@ use rslint_parser::ast::{
 	JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
 	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsForInStatement,
 	JsFunctionDeclaration, JsGetterClassMember, JsIdentifierBinding, JsIdentifierExpression,
-	JsIfStatement, JsLabeledStatement, JsModifier, JsNullLiteralExpression,
-	JsNumberLiteralExpression, JsObjectExpression, JsParameterList, JsPropertyClassMember,
-	JsPropertyObjectMember, JsReturnStatement, JsScript, JsSequenceExpression, JsSetterClassMember,
+	JsIfStatement, JsLabeledStatement, JsNullLiteralExpression, JsNumberLiteralExpression,
+	JsObjectExpression, JsParameterList, JsPropertyClassMember, JsPropertyObjectMember,
+	JsReturnStatement, JsScript, JsSequenceExpression, JsSetterClassMember,
 	JsShorthandPropertyObjectMember, JsSpread, JsStringLiteralExpression, JsSwitchStatement,
 	JsTryStatement, JsVariableDeclaration, JsVariableStatement, JsWhileStatement, JsWithStatement,
 };
@@ -168,9 +168,6 @@ impl ToFormatElement for SyntaxNode {
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_PROPERTY_CLASS_MEMBER => JsPropertyClassMember::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
-			SyntaxKind::JS_MODIFIER => JsModifier::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 
