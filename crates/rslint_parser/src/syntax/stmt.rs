@@ -836,6 +836,45 @@ pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax<CompletedM
 	}
 }
 
+struct VariableDeclaratorList {
+	is_let: bool,
+	const_range: Option<Range<usize>>,
+	no_semi: bool,
+}
+
+impl ParseNodeList for VariableDeclaratorList {
+	type ParsedElement = CompletedMarker;
+
+	fn start_list(&mut self, p: &mut Parser) -> Marker {
+		let marker = p.start();
+		variable_declarator(p, &self.const_range, self.no_semi, self.is_let);
+		marker
+	}
+
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+		match variable_declarator(p, &self.const_range, self.no_semi, self.is_let) {
+			None => Absent,
+			Some(marker) => Present(marker),
+		}
+	}
+
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		!p.eat(T![,])
+	}
+
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> RecoveryResult {
+		parsed_element.or_recover(
+			p,
+			&ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
+			js_parse_error::expected_directive,
+		)
+	}
+}
+
 /// Parses a list of JS_VARIABLE_DECLARATION
 fn parse_variable_declaration(p: &mut Parser, no_semi: bool) -> ParsedSyntax<CompletedMarker> {
 	let m = p.start();
@@ -860,15 +899,12 @@ fn parse_variable_declaration(p: &mut Parser, no_semi: bool) -> ParsedSyntax<Com
 		}
 	}
 
-	let declared_list = p.start();
-
-	variable_declarator(p, &is_const, no_semi, is_let);
-
-	while p.eat(T![,]) {
-		variable_declarator(p, &is_const, no_semi, is_let);
+	VariableDeclaratorList {
+		no_semi,
+		is_let,
+		const_range: is_const,
 	}
-
-	declared_list.complete(p, LIST);
+	.parse_list(p);
 	p.state.name_map.clear();
 	Present(m.complete(p, JS_VARIABLE_DECLARATION))
 }
