@@ -54,16 +54,26 @@ pub trait ParseNodeList {
 	fn parse_list(&mut self, p: &mut Parser) {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
+		let mut first = false;
 		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
 			let parsed_element = self.parse_element(p);
 
+			if parsed_element.is_present() {
+				first = true;
+			}
+
 			if self.recover(p, parsed_element).is_err() {
 				break;
 			}
 		}
-		self.finish_list(p, elements);
+		if first {
+			self.finish_list(p, elements);
+		} else {
+			elements.abandon(p);
+			p.missing(p);
+		}
 	}
 }
 
@@ -114,8 +124,8 @@ pub trait ParseSeparatedList {
 	/// The [SyntaxKind] of the element that separates the elements of the list
 	fn separating_element_kind(&mut self) -> SyntaxKind;
 
-	/// `true` if the list allows for an optional trailing comma
-	fn allow_trailing_comma(&self) -> bool {
+	/// `true` if the list allows for an optional trailing element
+	fn allow_trailing_separating_element(&self) -> bool {
 		false
 	}
 
@@ -137,7 +147,6 @@ pub trait ParseSeparatedList {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
 		let mut first = true;
-
 		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
@@ -146,7 +155,7 @@ pub trait ParseSeparatedList {
 			} else {
 				self.expect_separator(p);
 
-				if self.allow_trailing_comma() && self.is_at_list_end(p) {
+				if self.allow_trailing_separating_element() && self.is_at_list_end(p) {
 					break;
 				}
 			}
@@ -157,7 +166,6 @@ pub trait ParseSeparatedList {
 				break;
 			}
 		}
-
 		if first {
 			elements.abandon(p);
 			p.missing();

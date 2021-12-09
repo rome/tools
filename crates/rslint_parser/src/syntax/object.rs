@@ -1,14 +1,16 @@
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
-use crate::parser::{ParsedSyntax, ParserProgress};
+use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
 use crate::syntax::expr::{expr, expr_or_assignment};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::syntax::js_parse_error;
-use crate::{CompletedMarker, ParseRecovery, Parser, ParserState, TokenSet};
+use crate::{
+	CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, Parser, ParserState, TokenSet,
+};
 use rslint_syntax::SyntaxKind::*;
-use rslint_syntax::T;
+use rslint_syntax::{SyntaxKind, T};
 
 // test object_expr
 // let a = {};
@@ -18,6 +20,41 @@ use rslint_syntax::T;
 // let a = {, foo}
 // let b = { foo bar }
 
+struct ObjectMembersList;
+
+impl ParseSeparatedList for ObjectMembersList {
+	type ParsedElement = CompletedMarker;
+
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+		parse_object_member(p)
+	}
+
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		p.at(T!['}'])
+	}
+
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> RecoveryResult {
+		parsed_element.or_recover(
+			p,
+			&ParseRecovery::new(JS_UNKNOWN_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
+				.enable_recovery_on_line_break(),
+			js_parse_error::expected_object_member,
+		)
+	}
+
+	fn separating_element_kind(&mut self) -> SyntaxKind {
+		T![,]
+	}
+
+	fn allow_trailing_separating_element(&self) -> bool {
+		true
+	}
+}
+
 /// An object literal such as `{ a: b, "b": 5 + 5 }`.
 pub(super) fn parse_object_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T!['{']) {
@@ -25,42 +62,8 @@ pub(super) fn parse_object_expression(p: &mut Parser) -> ParsedSyntax<CompletedM
 	}
 	let m = p.start();
 	p.bump(T!['{']);
-	let props_list = p.start();
-	let mut first = true;
 
-	let mut progress = ParserProgress::default();
-	while !p.at(EOF) && !p.at(T!['}']) {
-		if first {
-			first = false;
-		} else {
-			p.expect_required(T![,]);
-
-			if p.at(T!['}']) {
-				break;
-			}
-		}
-
-		progress.assert_progressing(p);
-
-		// missing member
-		if p.at(T![,]) {
-			p.missing();
-			continue;
-		}
-
-		let recovered_member = parse_object_member(p).or_recover(
-			p,
-			&ParseRecovery::new(JS_UNKNOWN_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
-				.enable_recovery_on_line_break(),
-			js_parse_error::expected_object_member,
-		);
-
-		if recovered_member.is_err() {
-			break;
-		}
-	}
-
-	props_list.complete(p, LIST);
+	ObjectMembersList.parse_list(p);
 
 	p.expect_required(T!['}']);
 	Present(m.complete(p, JS_OBJECT_EXPRESSION))
