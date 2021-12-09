@@ -79,6 +79,9 @@ JsModule {
                                                     value_token: JS_STRING_LITERAL@40..46 "\"foo\"" [] [Whitespace(" ")],
                                                 },
                                                 operator: PLUS@46..48 "+" [] [Whitespace(" ")],
+                                                right: JsStringLiteralExpression {
+                                                    value_token: JS_STRING_LITERAL@48..53 "\"bar\"" [] [],
+                                                },
                                             },
                                             r_brack_token: R_BRACK@53..54 "]" [] [],
                                         },

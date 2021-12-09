@@ -59,6 +59,11 @@ JsModule {
                 },
                 optional_chain_token_token: missing (optional),
                 l_brack_token: L_BRACK@27..28 "[" [] [],
+                member: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@28..31 "bar" [] [],
+                    },
+                },
                 r_brack_token: R_BRACK@31..32 "]" [] [],
             },
             semicolon_token: missing (optional),

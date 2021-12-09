@@ -20,6 +20,12 @@ JsModule {
                                 },
                                 fat_arrow_token: FAT_ARROW@18..21 "=>" [] [Whitespace(" ")],
                                 return_type: missing (optional),
+                                body: JsFunctionBody {
+                                    l_curly_token: L_CURLY@21..22 "{" [] [],
+                                    directives: [],
+                                    statements: [],
+                                    r_curly_token: R_CURLY@22..23 "}" [] [],
+                                },
                             },
                         },
                     },
@@ -51,6 +57,12 @@ JsModule {
                                 },
                                 fat_arrow_token: FAT_ARROW@44..47 "=>" [] [Whitespace(" ")],
                                 return_type: missing (optional),
+                                body: JsFunctionBody {
+                                    l_curly_token: L_CURLY@47..48 "{" [] [],
+                                    directives: [],
+                                    statements: [],
+                                    r_curly_token: R_CURLY@48..49 "}" [] [],
+                                },
                             },
                         },
                     },
@@ -84,6 +96,11 @@ JsModule {
                 },
                 fat_arrow_token: FAT_ARROW@75..78 "=>" [] [Whitespace(" ")],
                 return_type: missing (optional),
+                body: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@78..81 "foo" [] [],
+                    },
+                },
             },
             semicolon_token: missing (optional),
         },

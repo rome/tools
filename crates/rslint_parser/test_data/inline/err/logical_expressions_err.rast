@@ -10,6 +10,13 @@ JsModule {
                     },
                 },
                 operator: QUESTION2@4..7 "??" [] [Whitespace(" ")],
+                right: JsBinaryExpression {
+                    left: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@9..10 "2" [] [],
+                    },
+                    operator: STAR@7..9 "*" [] [Whitespace(" ")],
+                    right: missing (required),
+                },
             },
             semicolon_token: SEMICOLON@10..11 ";" [] [],
         },
@@ -24,6 +31,11 @@ JsModule {
                     },
                 },
                 operator: AMP2@17..20 "&&" [] [Whitespace(" ")],
+                right: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@20..23 "bar" [] [],
+                    },
+                },
             },
             semicolon_token: SEMICOLON@23..24 ";" [] [],
         },
@@ -45,6 +57,7 @@ JsModule {
                                 },
                             },
                             operator: PIPE2@33..35 "||" [] [],
+                            right: missing (required),
                         },
                     ],
                     r_paren_token: R_PAREN@35..36 ")" [] [],

@@ -171,10 +171,8 @@ JsModule {
                                         },
                                     },
                                     l_brack_token: L_BRACK@72..73 "[" [] [],
-                                    member: JsIdentifierExpression {
-                                        name: JsReferenceIdentifier {
-                                            value_token: IDENT@71..72 "z" [] [],
-                                        },
+                                    member: JsStringLiteralExpression {
+                                        value_token: JS_STRING_LITERAL@73..83 "\"computed\"" [] [],
                                     },
                                     r_brack_token: R_BRACK@83..84 "]" [] [],
                                 },

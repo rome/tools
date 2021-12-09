@@ -420,6 +420,7 @@ pub enum Field {
 		name: String,
 		kind: TokenKind,
 		optional: bool,
+		manual: bool,
 	},
 	Node {
 		name: String,
@@ -427,6 +428,7 @@ pub enum Field {
 		optional: bool,
 		has_many: bool,
 		separated: bool,
+		manual: bool,
 	},
 }
 

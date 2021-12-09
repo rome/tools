@@ -10,6 +10,11 @@ JsModule {
                     },
                 },
                 operator: QUESTION2@4..7 "??" [] [Whitespace(" ")],
+                right: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@7..10 "bar" [] [],
+                    },
+                },
             },
             semicolon_token: missing (optional),
         },
@@ -21,6 +26,11 @@ JsModule {
                     },
                 },
                 operator: PIPE2@13..16 "||" [] [Whitespace(" ")],
+                right: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@16..17 "b" [] [],
+                    },
+                },
             },
             semicolon_token: missing (optional),
         },
@@ -32,6 +42,11 @@ JsModule {
                     },
                 },
                 operator: AMP2@20..23 "&&" [] [Whitespace(" ")],
+                right: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@23..24 "b" [] [],
+                    },
+                },
             },
             semicolon_token: missing (optional),
         },

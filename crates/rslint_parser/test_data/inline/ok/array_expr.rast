@@ -40,7 +40,9 @@ JsModule {
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@18..20 "[" [Whitespace("\n")] [],
                 elements: [
-                    JsArrayHole,
+                    JsArrayHole {
+                        hole_token: missing (optional),
+                    },
                     COMMA@20..21 "," [] [],
                     JsIdentifierExpression {
                         name: JsReferenceIdentifier {
@@ -71,15 +73,25 @@ JsModule {
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@34..36 "[" [Whitespace("\n")] [],
                 elements: [
-                    JsArrayHole,
+                    JsArrayHole {
+                        hole_token: missing (optional),
+                    },
                     COMMA@36..37 "," [] [],
-                    JsArrayHole,
+                    JsArrayHole {
+                        hole_token: missing (optional),
+                    },
                     COMMA@37..38 "," [] [],
-                    JsArrayHole,
+                    JsArrayHole {
+                        hole_token: missing (optional),
+                    },
                     COMMA@38..39 "," [] [],
-                    JsArrayHole,
+                    JsArrayHole {
+                        hole_token: missing (optional),
+                    },
                     COMMA@39..40 "," [] [],
-                    JsArrayHole,
+                    JsArrayHole {
+                        hole_token: missing (optional),
+                    },
                     COMMA@40..41 "," [] [],
                     JsIdentifierExpression {
                         name: JsReferenceIdentifier {
@@ -87,11 +99,17 @@ JsModule {
                         },
                     },
                     COMMA@44..45 "," [] [],
-                    JsArrayHole,
+                    JsArrayHole {
+                        hole_token: missing (optional),
+                    },
                     COMMA@45..46 "," [] [],
-                    JsArrayHole,
+                    JsArrayHole {
+                        hole_token: missing (optional),
+                    },
                     COMMA@46..47 "," [] [],
-                    JsArrayHole,
+                    JsArrayHole {
+                        hole_token: missing (optional),
+                    },
                     COMMA@47..48 "," [] [],
                 ],
                 r_brack_token: R_BRACK@48..49 "]" [] [],

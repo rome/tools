@@ -91,6 +91,9 @@ JsModule {
                                             value: IDENT@48..52 "eval" [] [],
                                         },
                                         colon_token: COLON@52..54 ":" [] [Whitespace(" ")],
+                                        value: JsStringLiteralExpression {
+                                            value_token: JS_STRING_LITERAL@54..60 "\"foo\"" [] [Whitespace(" ")],
+                                        },
                                     },
                                 ],
                                 r_curly_token: R_CURLY@60..61 "}" [] [],
@@ -139,6 +142,9 @@ JsModule {
                                             value: IDENT@80..84 "eval" [] [],
                                         },
                                         colon_token: COLON@84..86 ":" [] [Whitespace(" ")],
+                                        value: JsStringLiteralExpression {
+                                            value_token: JS_STRING_LITERAL@86..92 "\"foo\"" [] [Whitespace(" ")],
+                                        },
                                     },
                                 ],
                                 r_curly_token: R_CURLY@92..93 "}" [] [],

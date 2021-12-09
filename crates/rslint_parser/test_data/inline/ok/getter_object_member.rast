@@ -74,6 +74,9 @@ JsModule {
                                                     value_token: JS_STRING_LITERAL@85..89 "\"a\"" [] [Whitespace(" ")],
                                                 },
                                                 operator: PLUS@89..91 "+" [] [Whitespace(" ")],
+                                                right: JsStringLiteralExpression {
+                                                    value_token: JS_STRING_LITERAL@91..94 "\"b\"" [] [],
+                                                },
                                             },
                                             r_brack_token: R_BRACK@94..95 "]" [] [],
                                         },
@@ -91,6 +94,9 @@ JsModule {
                                                             value_token: JS_STRING_LITERAL@109..113 "\"a\"" [] [Whitespace(" ")],
                                                         },
                                                         operator: PLUS@113..115 "+" [] [Whitespace(" ")],
+                                                        right: JsStringLiteralExpression {
+                                                            value_token: JS_STRING_LITERAL@115..118 "\"b\"" [] [],
+                                                        },
                                                     },
                                                     semicolon_token: missing (optional),
                                                 },

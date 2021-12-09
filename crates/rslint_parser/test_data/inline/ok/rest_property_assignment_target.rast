@@ -111,9 +111,17 @@ JsModule {
                                         },
                                     },
                                     l_brack_token: L_BRACK@68..69 "[" [] [],
-                                    member: JsIdentifierExpression {
-                                        name: JsReferenceIdentifier {
-                                            value_token: IDENT@67..68 "m" [] [],
+                                    member: CallExpr {
+                                        type_args: missing (optional),
+                                        callee: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@69..73 "call" [] [],
+                                            },
+                                        },
+                                        arguments: ArgList {
+                                            l_paren_token: L_PAREN@73..74 "(" [] [],
+                                            args: [],
+                                            r_paren_token: R_PAREN@74..75 ")" [] [],
                                         },
                                     },
                                     r_brack_token: R_BRACK@75..77 "]" [] [Whitespace(" ")],

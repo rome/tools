@@ -101,6 +101,9 @@ JsModule {
                                 value_token: JS_NUMBER_LITERAL@71..73 "6" [] [Whitespace(" ")],
                             },
                             operator: PLUS@73..75 "+" [] [Whitespace(" ")],
+                            right: JsNumberLiteralExpression {
+                                value_token: JS_NUMBER_LITERAL@75..76 "6" [] [],
+                            },
                         },
                         COMMA@76..78 "," [] [Whitespace(" ")],
                         JsBinaryExpression {
@@ -112,9 +115,49 @@ JsModule {
                                 },
                                 optional_chain_token_token: missing (optional),
                                 l_brack_token: L_BRACK@81..82 "[" [] [],
+                                member: JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@82..85 "bar" [] [],
+                                    },
+                                },
                                 r_brack_token: R_BRACK@85..87 "]" [] [Whitespace(" ")],
                             },
                             operator: PLUS@87..89 "+" [] [Whitespace(" ")],
+                            right: JsBinaryExpression {
+                                left: JsArrowFunctionExpression {
+                                    async_token: missing (optional),
+                                    type_parameters: missing (optional),
+                                    parameter_list: JsParameterList {
+                                        l_paren_token: L_PAREN@89..90 "(" [] [],
+                                        parameters: [
+                                            JsIdentifierBinding {
+                                                name_token: IDENT@90..93 "foo" [] [],
+                                            },
+                                        ],
+                                        r_paren_token: R_PAREN@93..95 ")" [] [Whitespace(" ")],
+                                    },
+                                    fat_arrow_token: FAT_ARROW@95..98 "=>" [] [Whitespace(" ")],
+                                    return_type: missing (optional),
+                                    body: JsFunctionBody {
+                                        l_curly_token: L_CURLY@98..99 "{" [] [],
+                                        directives: [],
+                                        statements: [],
+                                        r_curly_token: R_CURLY@99..101 "}" [] [Whitespace(" ")],
+                                    },
+                                },
+                                operator: STAR@101..103 "*" [] [Whitespace(" ")],
+                                right: JsStaticMemberExpression {
+                                    object: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@103..106 "foo" [] [],
+                                        },
+                                    },
+                                    operator: QUESTIONDOT@106..108 "?." [] [],
+                                    member: JsName {
+                                        value_token: IDENT@108..111 "bar" [] [],
+                                    },
+                                },
+                            },
                         },
                     ],
                     r_paren_token: R_PAREN@111..112 ")" [] [],

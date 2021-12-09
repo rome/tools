@@ -49,13 +49,6 @@ impl JsVariableDeclaration {
 }
 
 impl Specifier {
-	pub fn as_token(&self) -> Option<SyntaxToken> {
-		self.syntax()
-			.children_with_tokens()
-			.filter_map(|x| x.into_token())
-			.nth(1)
-	}
-
 	pub fn alias(&self) -> Option<Name> {
 		self.syntax().children().nth(1).and_then(|x| x.try_to())
 	}

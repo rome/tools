@@ -10,6 +10,8 @@ JsModule {
                     specifiers: [
                         Specifier {
                             name: missing (required),
+                            as_token: missing (optional),
+                            alias: missing (optional),
                         },
                     ],
                     r_curly_token: R_CURLY@11..13 "}" [] [Whitespace(" ")],

@@ -124,11 +124,17 @@ JsModule {
                 left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@103..105 "[" [Whitespace("\n")] [],
                     elements: [
-                        JsArrayHole,
+                        JsArrayHole {
+                            hole_token: missing (optional),
+                        },
                         COMMA@105..106 "," [] [],
-                        JsArrayHole,
+                        JsArrayHole {
+                            hole_token: missing (optional),
+                        },
                         COMMA@106..107 "," [] [],
-                        JsArrayHole,
+                        JsArrayHole {
+                            hole_token: missing (optional),
+                        },
                         COMMA@107..108 "," [] [],
                         JsIdentifierAssignment {
                             name_token: IDENT@108..111 "foo" [] [],

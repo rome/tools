@@ -109,6 +109,9 @@ JsModule {
                                     },
                                     optional_chain_token_token: missing (optional),
                                     l_brack_token: L_BRACK@92..93 "[" [] [],
+                                    member: JsNumberLiteralExpression {
+                                        value_token: JS_NUMBER_LITERAL@93..94 "1" [] [],
+                                    },
                                     r_brack_token: R_BRACK@94..95 "]" [] [],
                                 },
                                 semicolon_token: SEMICOLON@95..96 ";" [] [],

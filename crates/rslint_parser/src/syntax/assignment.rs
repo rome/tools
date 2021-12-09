@@ -16,6 +16,7 @@ use crate::{SyntaxKind::*, *};
 // a["test"] = bar;
 // a.call().chain().member = x;
 // ++count === 3
+// a['b'] = c[d] = "test"
 
 // test_err invalid_assignment_target
 // ++a = b;

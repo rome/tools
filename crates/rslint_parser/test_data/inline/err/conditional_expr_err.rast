@@ -10,7 +10,17 @@ JsModule {
                     },
                 },
                 question_mark_token: QUESTION@4..6 "?" [] [Whitespace(" ")],
+                consequent: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@6..10 "bar" [] [Whitespace(" ")],
+                    },
+                },
                 colon_token: missing (required),
+                alternate: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@10..13 "baz" [] [],
+                    },
+                },
             },
             semicolon_token: missing (optional),
         },
@@ -22,7 +32,31 @@ JsModule {
                     },
                 },
                 question_mark_token: QUESTION@18..20 "?" [] [Whitespace(" ")],
+                consequent: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@20..24 "bar" [] [Whitespace(" ")],
+                    },
+                },
                 colon_token: missing (required),
+                alternate: JsConditionalExpression {
+                    test: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@24..28 "baz" [] [Whitespace(" ")],
+                        },
+                    },
+                    question_mark_token: QUESTION@28..30 "?" [] [Whitespace(" ")],
+                    consequent: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@30..34 "foo" [] [Whitespace(" ")],
+                        },
+                    },
+                    colon_token: COLON@34..36 ":" [] [Whitespace(" ")],
+                    alternate: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@36..39 "bar" [] [],
+                        },
+                    },
+                },
             },
             semicolon_token: missing (optional),
         },

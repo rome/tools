@@ -1550,7 +1550,6 @@ impl JsComputedMemberAssignment {
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['['])
 	}
-	pub fn member(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![']'])
 	}
@@ -2014,6 +2013,7 @@ pub struct Specifier {
 }
 impl Specifier {
 	pub fn name(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
+	pub fn as_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![as]) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsPrivateName {
@@ -3277,6 +3277,10 @@ impl std::fmt::Debug for ForStmt {
 				&support::DebugSyntaxResult(self.first_semi_token()),
 			)
 			.field("test", &support::DebugOptionalNode(self.test()))
+			.field(
+				"second_semi_token",
+				&support::DebugSyntaxResult(self.second_semi_token()),
+			)
 			.field("update", &support::DebugOptionalNode(self.update()))
 			.field(
 				"r_paren_token",
@@ -4162,6 +4166,7 @@ impl std::fmt::Debug for JsArrowFunctionExpression {
 				"return_type",
 				&support::DebugOptionalNode(self.return_type()),
 			)
+			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
 	}
 }
@@ -4226,6 +4231,7 @@ impl std::fmt::Debug for JsBinaryExpression {
 		f.debug_struct("JsBinaryExpression")
 			.field("left", &support::DebugSyntaxResult(self.left()))
 			.field("operator", &support::DebugSyntaxResult(self.operator()))
+			.field("right", &support::DebugSyntaxResult(self.right()))
 			.finish()
 	}
 }
@@ -4283,10 +4289,12 @@ impl std::fmt::Debug for JsConditionalExpression {
 				"question_mark_token",
 				&support::DebugSyntaxResult(self.question_mark_token()),
 			)
+			.field("consequent", &support::DebugSyntaxResult(self.consequent()))
 			.field(
 				"colon_token",
 				&support::DebugSyntaxResult(self.colon_token()),
 			)
+			.field("alternate", &support::DebugSyntaxResult(self.alternate()))
 			.finish()
 	}
 }
@@ -4313,6 +4321,7 @@ impl std::fmt::Debug for JsComputedMemberExpression {
 				"l_brack_token",
 				&support::DebugSyntaxResult(self.l_brack_token()),
 			)
+			.field("member", &support::DebugSyntaxResult(self.member()))
 			.field(
 				"r_brack_token",
 				&support::DebugSyntaxResult(self.r_brack_token()),
@@ -4403,6 +4412,7 @@ impl std::fmt::Debug for JsLogicalExpression {
 		f.debug_struct("JsLogicalExpression")
 			.field("left", &support::DebugSyntaxResult(self.left()))
 			.field("operator", &support::DebugSyntaxResult(self.operator()))
+			.field("right", &support::DebugSyntaxResult(self.right()))
 			.finish()
 	}
 }
@@ -4495,6 +4505,7 @@ impl std::fmt::Debug for JsSequenceExpression {
 				"comma_token",
 				&support::DebugSyntaxResult(self.comma_token()),
 			)
+			.field("right", &support::DebugSyntaxResult(self.right()))
 			.finish()
 	}
 }
@@ -5010,7 +5021,9 @@ impl AstNode for JsArrayHole {
 }
 impl std::fmt::Debug for JsArrayHole {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsArrayHole").finish()
+		f.debug_struct("JsArrayHole")
+			.field("hole_token", &support::DebugOptionalNode(self.hole_token()))
+			.finish()
 	}
 }
 impl AstNode for JsReferenceIdentifier {
@@ -5097,6 +5110,7 @@ impl std::fmt::Debug for JsPropertyObjectMember {
 				"colon_token",
 				&support::DebugSyntaxResult(self.colon_token()),
 			)
+			.field("value", &support::DebugSyntaxResult(self.value()))
 			.finish()
 	}
 }
@@ -6641,6 +6655,8 @@ impl std::fmt::Debug for Specifier {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("Specifier")
 			.field("name", &support::DebugSyntaxResult(self.name()))
+			.field("as_token", &support::DebugOptionalNode(self.as_token()))
+			.field("alias", &support::DebugOptionalNode(self.alias()))
 			.finish()
 	}
 }

@@ -139,6 +139,9 @@ JsModule {
                                 value_token: JS_STRING_LITERAL@123..129 "\"foo\"" [] [Whitespace(" ")],
                             },
                             operator: PLUS@129..131 "+" [] [Whitespace(" ")],
+                            right: JsStringLiteralExpression {
+                                value_token: JS_STRING_LITERAL@131..136 "\"bar\"" [] [],
+                            },
                         },
                         r_brack_token: R_BRACK@136..137 "]" [] [],
                     },

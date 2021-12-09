@@ -21,6 +21,9 @@ JsModule {
                                 value_token: JS_NUMBER_LITERAL@11..13 "1" [] [Whitespace(" ")],
                             },
                             operator: PLUS@13..15 "+" [] [Whitespace(" ")],
+                            right: JsNumberLiteralExpression {
+                                value_token: JS_NUMBER_LITERAL@15..16 "1" [] [],
+                            },
                         },
                         r_brack_token: R_BRACK@16..18 "]" [] [Whitespace(" ")],
                     },
@@ -39,6 +42,36 @@ JsModule {
                             },
                             fat_arrow_token: FAT_ARROW@23..26 "=>" [] [Whitespace(" ")],
                             return_type: missing (optional),
+                            body: JsFunctionBody {
+                                l_curly_token: L_CURLY@26..27 "{" [] [],
+                                directives: [],
+                                statements: [
+                                    JsVariableDeclarationStatement {
+                                        declaration: JsVariableDeclaration {
+                                            kind_token: LET_KW@27..36 "let" [Whitespace("\n    ")] [Whitespace(" ")],
+                                            declarators: [
+                                                JsVariableDeclarator {
+                                                    id: JsIdentifierBinding {
+                                                        name_token: IDENT@36..37 "a" [] [],
+                                                    },
+                                                    init: JsEqualValueClause {
+                                                        eq_token: EQ@37..38 "=" [] [],
+                                                        expression: JsUnknownExpression {
+                                                            items: [
+                                                                Token(
+                                                                    SEMICOLON@38..39 ";" [] [],
+                                                                ),
+                                                            ],
+                                                        },
+                                                    },
+                                                },
+                                            ],
+                                        },
+                                        semicolon_token: missing (optional),
+                                    },
+                                ],
+                                r_curly_token: R_CURLY@39..43 "}" [Whitespace("\n  ")] [],
+                            },
                         },
                     },
                     semicolon_token: SEMICOLON@43..44 ";" [] [],

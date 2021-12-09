@@ -20,6 +20,7 @@ JsModule {
                                 },
                             },
                             operator: PLUS@8..9 "+" [] [],
+                            right: missing (required),
                         },
                     ],
                     r_paren_token: R_PAREN@9..10 ")" [] [],
@@ -35,6 +36,13 @@ JsModule {
                     },
                 },
                 operator: PLUS@16..18 "+" [] [Whitespace(" ")],
+                right: JsBinaryExpression {
+                    left: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@20..21 "2" [] [],
+                    },
+                    operator: STAR@18..20 "*" [] [Whitespace(" ")],
+                    right: missing (required),
+                },
             },
             semicolon_token: SEMICOLON@21..22 ";" [] [],
         },
@@ -49,6 +57,11 @@ JsModule {
                     },
                 },
                 operator: STAR@28..30 "*" [] [Whitespace(" ")],
+                right: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@30..33 "bar" [] [],
+                    },
+                },
             },
             semicolon_token: SEMICOLON@33..34 ";" [] [],
         },
