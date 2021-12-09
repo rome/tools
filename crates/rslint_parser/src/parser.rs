@@ -41,7 +41,8 @@ impl ParserProgress {
 	}
 
 	/// Asserts that the parsing is still making progress.
-	/// ## Panics
+	///
+	/// # Panics
 	///
 	/// Panics if the parser is still at this position
 	#[inline]

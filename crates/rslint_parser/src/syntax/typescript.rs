@@ -223,6 +223,7 @@ pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
                 .primary(range, "");
 
 			p.error(err);
+			m.abandon(p);
 			return None;
 		}
 		parse_class_declaration(p)

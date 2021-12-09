@@ -11,23 +11,22 @@ JsModule {
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: [
-                JsPropertyClassMember {
-                    modifiers: missing (optional),
-                    access_modifier: TsUnknownAccessibilityModifier {
-                        items: [
-                            Token(
-                                ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")],
-                            ),
-                        ],
-                    },
-                    name: JsLiteralMemberName {
-                        value: IDENT@19..22 "foo" [] [],
-                    },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
-                    value: missing (optional),
-                    semicolon_token: SEMICOLON@22..24 ";" [] [Whitespace(" ")],
+                JsUnknownMember {
+                    items: [
+                        Node(
+                            3: TS_ACCESSIBILITY@10..19
+                              0: ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")]
+                            ,
+                        ),
+                        Node(
+                            4: JS_LITERAL_MEMBER_NAME@19..22
+                              0: IDENT@19..22 "foo" [] []
+                            ,
+                        ),
+                        Token(
+                            SEMICOLON@22..24 ";" [] [Whitespace(" ")],
+                        ),
+                    ],
                 },
             ],
             r_curly_token: R_CURLY@24..25 "}" [] [],
@@ -47,15 +46,17 @@ JsModule {
       3: (empty)
       4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       5: LIST@10..24
-        0: JS_PROPERTY_CLASS_MEMBER@10..24
+        0: JS_UNKNOWN_MEMBER@10..24
           0: (empty)
-          1: TS_UNKNOWN_ACCESSIBILITY_MODIFIER@10..19
+          1: (empty)
+          2: (empty)
+          3: TS_ACCESSIBILITY@10..19
             0: ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@19..22
+          4: JS_LITERAL_MEMBER_NAME@19..22
             0: IDENT@19..22 "foo" [] []
-          3: (empty)
-          4: (empty)
-          5: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
+          5: (empty)
+          6: (empty)
+          7: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
       6: R_CURLY@24..25 "}" [] []
   3: EOF@25..26 "" [Whitespace("\n")] []
 --
@@ -64,6 +65,13 @@ error[SyntaxError]: `abstract` and `readonly` modifiers can only be used in Type
   │
 1 │ class A { abstract foo; }
   │           ^^^^^^^^
+
+--
+error[SyntaxError]: expected a semicolon (';'), or a method for a class body but instead found '}'
+  ┌─ class_member_modifier.js:1:25
+  │
+1 │ class A { abstract foo; }
+  │                         ^ Expected a semicolon (';'), or a method for a class body here
 
 --
 class A { abstract foo; }

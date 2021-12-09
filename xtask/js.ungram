@@ -567,7 +567,7 @@ JsAnyClassMember =
 // class Test { 'constructor'() {} }
 //              ^^^^^^^^^^^^^^^^^^
 JsConstructorClassMember =
-	access_modifier: TsAnyAccessibility?
+	access_modifier: TsAccessibility?
 	name: JsLiteralMemberName
 	parameter_list: JsConstructorParameterList
 	body: JsFunctionBody
@@ -585,8 +585,11 @@ JsAnyConstructorParameter =
 // class Test { a; b = 1; static c; }
 //              ^^ ^^^^^^ ^^^^^^^^^
 JsPropertyClassMember =
-	modifiers: JsAnyModifier?
-	access_modifier: TsAnyAccessibility?
+	access_modifier: TsAccessibility?
+	'declare'?
+	'static'?
+	'readonly'?
+	'abstract'?
 	name: JsAnyClassMemberName
 	'?'?
 	'!'?
@@ -597,8 +600,9 @@ JsPropertyClassMember =
 // class Test { a() {} }
 //              ^^^^^^
 JsMethodClassMember =
-	modifiers: JsAnyModifier?
-	access_modifier: TsAnyAccessibility?
+	access_modifier: TsAccessibility?
+	'static'?
+	'abstract'?
 	'async'?
 	'*'?
 	name: JsAnyClassMemberName
@@ -610,8 +614,9 @@ JsMethodClassMember =
 // class Test { get a() {} }
 //              ^^^^^^^^^^
 JsGetterClassMember =
-	modifiers: JsAnyModifier?
-	access_modifier: TsAnyAccessibility?
+	access_modifier: TsAccessibility?
+	'static'?
+	'abstract'?
 	'get'
 	name: JsAnyClassMemberName
 	'(' ')'
@@ -621,8 +626,9 @@ JsGetterClassMember =
 // class Test { set a(v) {} }
 //              ^^^^^^^^^^^
 JsSetterClassMember =
-	modifiers: JsAnyModifier?
-	access_modifier: TsAnyAccessibility?
+	access_modifier: TsAccessibility?
+	'static'?
+	'abstract'?
 	'set'
 	name: JsAnyClassMemberName
 	'('
@@ -631,12 +637,6 @@ JsSetterClassMember =
 	body: JsFunctionBody
 
 JsEmptyClassMember = ';'
-
-JsAnyModifier =
-	JsModifier
-	| JsUnknownModifier
-
-JsModifier = 'declare'? 'static'? 'abstract'?
 
 ///////////////
 // ASSIGNMENT TARGETS
@@ -1392,12 +1392,8 @@ TsImport = 'import' type_args:TsTypeArgs '.'? '(' qualifier:TsEntityName ')'
 // typescript index signature
 TsIndexSignature = 'readonly'? '[' pat:JsAnyBinding ':' ty:TsType ']'
 
-// typescript type of access
-TsAnyAccessibility =
-	TsUnknownAccessibilityModifier
-	| TsAccessibility
 
-TsAccessibility = 'private' | 'readonly'
+TsAccessibility = 'private' | 'protected' | 'public'
 
 TsConstructorParam = 'readonly'? pat:JsAnyBindingPattern
 

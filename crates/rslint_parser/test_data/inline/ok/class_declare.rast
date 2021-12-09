@@ -12,8 +12,9 @@ JsModule {
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: [
                 JsMethodClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -46,8 +47,11 @@ JsModule {
             l_curly_token: L_CURLY@33..35 "{" [] [Whitespace(" ")],
             members: [
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
+                    declare_token: missing (optional),
+                    static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@35..43 "declare" [] [Whitespace(" ")],
                     },

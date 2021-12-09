@@ -12,8 +12,11 @@ JsModule {
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: [
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
+                    declare_token: missing (optional),
+                    static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@10..13 "foo" [] [],
                     },
@@ -44,13 +47,15 @@ JsModule {
         0: JS_PROPERTY_CLASS_MEMBER@10..16
           0: (empty)
           1: (empty)
-          2: JS_LITERAL_MEMBER_NAME@10..13
-            0: IDENT@10..13 "foo" [] []
+          2: (empty)
           3: (empty)
-          4: JS_UNKNOWN_EXPRESSION@13..14
-            0: BANG@13..14 "!" [] []
+          4: JS_LITERAL_MEMBER_NAME@10..13
+            0: IDENT@10..13 "foo" [] []
           5: (empty)
-          6: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
+          6: JS_UNKNOWN_EXPRESSION@13..14
+            0: BANG@13..14 "!" [] []
+          7: (empty)
+          8: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
       6: R_CURLY@16..17 "}" [] []
   3: EOF@17..18 "" [Whitespace("\n")] []
 --

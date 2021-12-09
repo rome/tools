@@ -11,33 +11,32 @@ JsModule {
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: [
-                JsMethodClassMember {
-                    modifiers: JsUnknownModifier {
-                        items: [
-                            Token(
-                                IDENT@10..17 "public" [] [Whitespace(" ")],
-                            ),
-                        ],
-                    },
-                    access_modifier: missing (optional),
-                    async_token: missing (optional),
-                    star_token: missing (optional),
-                    name: JsLiteralMemberName {
-                        value: IDENT@17..20 "foo" [] [],
-                    },
-                    type_parameters: missing (optional),
-                    parameter_list: JsParameterList {
-                        l_paren_token: L_PAREN@20..21 "(" [] [],
-                        parameters: [],
-                        r_paren_token: R_PAREN@21..23 ")" [] [Whitespace(" ")],
-                    },
-                    return_type: missing (optional),
-                    body: JsFunctionBody {
-                        l_curly_token: L_CURLY@23..24 "{" [] [],
-                        directives: [],
-                        statements: [],
-                        r_curly_token: R_CURLY@24..26 "}" [] [Whitespace(" ")],
-                    },
+                JsUnknownMember {
+                    items: [
+                        Token(
+                            IDENT@10..17 "public" [] [Whitespace(" ")],
+                        ),
+                        Node(
+                            4: JS_LITERAL_MEMBER_NAME@17..20
+                              0: IDENT@17..20 "foo" [] []
+                            ,
+                        ),
+                        Node(
+                            6: JS_PARAMETER_LIST@20..23
+                              0: L_PAREN@20..21 "(" [] []
+                              1: LIST@21..21
+                              2: R_PAREN@21..23 ")" [] [Whitespace(" ")]
+                            ,
+                        ),
+                        Node(
+                            7: JS_FUNCTION_BODY@23..26
+                              0: L_CURLY@23..24 "{" [] []
+                              1: LIST@24..24
+                              2: LIST@24..24
+                              3: R_CURLY@24..26 "}" [] [Whitespace(" ")]
+                            ,
+                        ),
+                    ],
                 },
             ],
             r_curly_token: R_CURLY@26..27 "}" [] [],
@@ -57,18 +56,19 @@ JsModule {
       3: (empty)
       4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       5: LIST@10..26
-        0: JS_METHOD_CLASS_MEMBER@10..26
-          0: JS_UNKNOWN_MODIFIER@10..17
-            0: IDENT@10..17 "public" [] [Whitespace(" ")]
+        0: JS_UNKNOWN_MEMBER@10..26
+          0: IDENT@10..17 "public" [] [Whitespace(" ")]
           1: (empty)
-          2: JS_LITERAL_MEMBER_NAME@17..20
-            0: IDENT@17..20 "foo" [] []
+          2: (empty)
           3: (empty)
-          4: JS_PARAMETER_LIST@20..23
+          4: JS_LITERAL_MEMBER_NAME@17..20
+            0: IDENT@17..20 "foo" [] []
+          5: (empty)
+          6: JS_PARAMETER_LIST@20..23
             0: L_PAREN@20..21 "(" [] []
             1: LIST@21..21
             2: R_PAREN@21..23 ")" [] [Whitespace(" ")]
-          5: JS_FUNCTION_BODY@23..26
+          7: JS_FUNCTION_BODY@23..26
             0: L_CURLY@23..24 "{" [] []
             1: LIST@24..24
             2: LIST@24..24
@@ -81,6 +81,13 @@ error[SyntaxError]: accessibility modifiers can only be used in TypeScript files
   │
 1 │ class A { public foo() {} }
   │           ^^^^^^
+
+--
+error[SyntaxError]: expected a semicolon (';'), or a method for a class body but instead found '}'
+  ┌─ class_invalid_modifiers.js:1:27
+  │
+1 │ class A { public foo() {} }
+  │                           ^ Expected a semicolon (';'), or a method for a class body here
 
 --
 class A { public foo() {} }
