@@ -10,6 +10,7 @@ mod do_while_statement;
 mod empty_statement;
 mod expression_statement;
 mod for_in_statement;
+mod for_of_statement;
 mod for_stmt;
 mod if_stmt;
 mod label_statement;

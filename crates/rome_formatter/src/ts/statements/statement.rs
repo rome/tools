@@ -48,7 +48,9 @@ impl ToFormatElement for JsAnyStatement {
 				debugger_statement.to_format_element(formatter)
 			}
 
-			JsAnyStatement::ForOfStmt(_) => todo!(),
+			JsAnyStatement::ForOfStmt(for_of_statement) => {
+				for_of_statement.to_format_element(formatter)
+			}
 			JsAnyStatement::JsFunctionDeclaration(decl) => decl.to_format_element(formatter),
 			JsAnyStatement::JsClassDeclaration(decl) => decl.to_format_element(formatter),
 			JsAnyStatement::JsVariableDeclarationStatement(decl) => {
