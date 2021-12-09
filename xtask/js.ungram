@@ -671,7 +671,7 @@ JsAnyAssignmentPattern =
 	| JsObjectAssignmentPattern
 
 
-// [a, b = "b"", ...rest] = bar
+// [a, b = "b", ...rest] = bar
 // ^^^^^^^^^^^^^^^^^^^^^^
 JsArrayAssignmentPattern =
 	'['
