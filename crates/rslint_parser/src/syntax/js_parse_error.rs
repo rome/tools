@@ -40,6 +40,9 @@ pub(crate) fn expected_object_member(p: &Parser, range: Range<usize>) -> Diagnos
 	)
 	.to_diagnostic(p)
 }
+pub(crate) fn expected_array_element(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_any(&["property", "expression", "method"], range).to_diagnostic(p)
+}
 
 pub(crate) fn expected_object_member_name(p: &Parser, range: Range<usize>) -> Diagnostic {
 	expected_any(
