@@ -7,5 +7,6 @@ mod empty_class_member;
 mod extends_clause;
 mod getter_class_member;
 mod method_class_member;
+mod private_class_member_name;
 mod property_class_member;
 mod setter_class_member;

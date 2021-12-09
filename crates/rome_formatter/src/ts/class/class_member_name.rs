@@ -6,7 +6,9 @@ impl ToFormatElement for JsAnyClassMemberName {
 		match self {
 			JsAnyClassMemberName::JsLiteralMemberName(name) => name.to_format_element(formatter),
 			JsAnyClassMemberName::JsComputedMemberName(name) => name.to_format_element(formatter),
-			JsAnyClassMemberName::JsPrivateClassMemberName(_) => todo!(),
+			JsAnyClassMemberName::JsPrivateClassMemberName(name) => {
+				name.to_format_element(formatter)
+			}
 		}
 	}
 }
