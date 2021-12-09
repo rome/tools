@@ -10,7 +10,9 @@ impl ToFormatElement for JsAnyAssignment {
 			JsAnyAssignment::JsStaticMemberAssignment(static_member) => {
 				static_member.to_format_element(formatter)
 			}
-			JsAnyAssignment::JsComputedMemberAssignment(_) => todo!(),
+			JsAnyAssignment::JsComputedMemberAssignment(computed_member_assignment) => {
+				computed_member_assignment.to_format_element(formatter)
+			}
 			JsAnyAssignment::JsParenthesizedAssignment(_) => todo!(),
 			JsAnyAssignment::JsUnknownAssignment(_) => todo!(),
 		}
