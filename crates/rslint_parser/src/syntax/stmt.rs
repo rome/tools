@@ -929,7 +929,11 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 			// left is a union, no need for wrapping
 			init_or_left.abandon(p);
 			let is_in = p.at(T![in]);
-			p.bump_any();
+			if is_in {
+				p.bump_any();
+			} else {
+				p.bump_remap(T![of]);
+			}
 
 			check_for_stmt_declaration(p, &decl);
 
@@ -981,7 +985,11 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 			// left is a union, no need for wrapping
 			init_or_left.abandon(p);
 			let is_in = p.at(T![in]);
-			p.bump_any();
+			if is_in {
+				p.bump_any();
+			} else {
+				p.bump_remap(T![of]);
+			}
 			return for_each_head(p, is_in);
 		} else {
 			init_or_left.complete(p, FOR_STMT_INIT);
@@ -1024,6 +1032,7 @@ fn normal_for_head(p: &mut Parser) {
 // for (let { foo, bar } of {}) {}
 // for (foo in {}) {}
 // for (;;) {}
+// for (let foo of []) {}
 pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// test_err for_stmt_err
 	// for ;; {}
