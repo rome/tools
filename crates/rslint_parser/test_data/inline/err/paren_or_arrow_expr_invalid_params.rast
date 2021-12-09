@@ -190,16 +190,6 @@ error[SyntaxError]: expected `')'` but instead found `b`
 
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ paren_or_arrow_expr_invalid_params.js:2:6
-  │
-2 │ (a, ,b) => {}
-  │ -----^
-  │ │    │
-  │ │    An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
-
---
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ paren_or_arrow_expr_invalid_params.js:2:7
   │
 2 │ (a, ,b) => {}
@@ -209,25 +199,11 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │      ...Which is required to end this statement
 
 --
-error[SyntaxError]: expected a statement but instead found ') =>'
-  ┌─ paren_or_arrow_expr_invalid_params.js:2:7
-  │
-2 │ (a, ,b) => {}
-  │       ^^^^ Expected a statement here
-
---
 error[SyntaxError]: Expected an expression, but found none
   ┌─ paren_or_arrow_expr_invalid_params.js:4:1
   │
 4 │ 
   │ ^ Expected an expression here
-
---
-error[SyntaxError]: expected a function body, or an expression but instead found ''
-  ┌─ paren_or_arrow_expr_invalid_params.js:4:1
-  │
-4 │ 
-  │ ^ Expected a function body, or an expression here
 
 --
 (5 + 5) => {}

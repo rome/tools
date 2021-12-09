@@ -117,3 +117,47 @@ pub(crate) fn expected_constructor_parameters(p: &Parser, range: Range<usize>) -
 pub(crate) fn expected_class_method_body(p: &Parser, range: Range<usize>) -> Diagnostic {
 	expected_node("class method body", range).to_diagnostic(p)
 }
+
+pub(crate) fn expected_module_source(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_node("string literal", range).to_diagnostic(p)
+}
+
+pub(crate) fn expected_named_import(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_any(&["namespace import", "named imports"], range).to_diagnostic(p)
+}
+
+pub(crate) fn expected_export_name(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_any(&["string literal", "identifier"], range).to_diagnostic(p)
+}
+
+pub(crate) fn expected_named_import_specifier(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_node("identifier", range).to_diagnostic(p)
+}
+
+pub(crate) fn expected_export_name_after_as_keyword(p: &Parser, range: Range<usize>) -> Diagnostic {
+	p.err_builder("Expected an identifier or string literal before the as keyword")
+		.primary(range, "as keyword")
+}
+
+pub(crate) fn expected_local_name_for_default_import(
+	p: &Parser,
+	range: Range<usize>,
+) -> Diagnostic {
+	p.err_builder("`default` imports must be aliased")
+		.primary(p.cur_tok().range, "`default` used here")
+		.secondary(
+			range.end..range.end,
+			"add the `as` keyword followed by an identifier name here",
+		)
+}
+
+pub(crate) fn duplicate_assertion_keys_error(
+	p: &Parser,
+	key: &str,
+	first_use: Range<usize>,
+	duplicate_range: Range<usize>,
+) -> Diagnostic {
+	p.err_builder("Duplicate assertion keys are not allowed")
+		.primary(&first_use, &format!("First use of the key `{}`", key))
+		.secondary(duplicate_range, "second use here")
+}

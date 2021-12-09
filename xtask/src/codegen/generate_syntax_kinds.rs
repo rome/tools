@@ -141,6 +141,7 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 			pub fn to_string(&self) -> Option<&str> {
 				let tok = match self {
 					#(#punctuation => #punctuation_strings,)*
+					JS_STRING_LITERAL => "string literal",
 					_ => return None,
 				};
 				Some(tok)

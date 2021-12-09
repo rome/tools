@@ -1,14 +1,13 @@
 //! Top level functions for parsing a script or module, also includes module specific items.
 
-use super::expr::{expr, expr_or_assignment, identifier_name, primary_expr};
+use super::expr::{expr, expr_or_assignment, identifier_name};
 use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use super::typescript::*;
 use crate::parser::ParserProgress;
-use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_class_declaration;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::function::{is_at_async_function, LineBreak};
-use crate::syntax::object::parse_object_expression;
+use crate::syntax::module::parse_module_body;
 use crate::syntax::stmt::directives;
 use crate::ParsedSyntax::Present;
 use crate::{SyntaxKind::*, *};
@@ -29,54 +28,20 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 	p.eat_optional(T![js_shebang]);
 
 	let old_parser_state = directives(p);
-	parse_statements(p, true, false, None);
+
+	let result = match p.syntax.file_kind {
+		FileKind::Script => {
+			parse_statements(p, false, None);
+			m.complete(p, JS_SCRIPT)
+		}
+		FileKind::Module | FileKind::TypeScript => parse_module_body(p, m),
+	};
 
 	if let Some(old_parser_state) = old_parser_state {
 		p.state = old_parser_state;
 	}
 
-	let kind = match p.syntax.file_kind {
-		FileKind::Script => JS_SCRIPT,
-		FileKind::Module | FileKind::TypeScript => JS_MODULE,
-	};
-
-	m.complete(p, kind)
-}
-
-fn named_list(p: &mut Parser) -> Marker {
-	let m = p.start();
-	p.expect_required(T!['{']);
-	let mut first = true;
-	let specifiers_list = p.start();
-	let mut progress = ParserProgress::default();
-
-	while !p.at(EOF) && !p.at(T!['}']) {
-		progress.assert_progressing(p);
-
-		if first {
-			first = false;
-		} else if p.at(T![,]) && p.nth_at(1, T!['}']) {
-			p.bump_any();
-			break;
-		} else {
-			p.expect_required(T![,]);
-		}
-
-		specifier(p);
-	}
-	specifiers_list.complete(p, LIST);
-	p.expect_required(T!['}']);
-	m
-}
-
-fn specifier(p: &mut Parser) -> CompletedMarker {
-	let m = p.start();
-	identifier_name(p);
-	if p.cur_src() == "as" {
-		p.bump_remap(T![as]);
-		identifier_name(p);
-	}
-	m.complete(p, SPECIFIER)
+	result
 }
 
 fn named_export_specifier(p: &mut Parser) -> CompletedMarker {
@@ -87,147 +52,6 @@ fn named_export_specifier(p: &mut Parser) -> CompletedMarker {
 		identifier_name(p);
 	}
 	m.complete(p, SPECIFIER)
-}
-
-/// An import declaration
-///
-/// # Panics
-/// Panics if the current syntax kind is not IMPORT_KW
-pub fn import_decl(p: &mut Parser) -> CompletedMarker {
-	assert_eq!(p.cur(), T![import]);
-	let m = p.start();
-	let start = p.cur_tok().range.start;
-
-	// import.meta and import(foo)
-	if p.nth_at(1, T![.]) || p.nth_at(1, T!['(']) {
-		primary_expr(p).expect(
-			"returned value from primary_expr should not be None because
-                the current token is guaranteed to be `IMPORT_KW`",
-		);
-		semi(p, start..p.cur_tok().range.start);
-		return m.complete(p, JS_EXPRESSION_STATEMENT);
-	}
-
-	let p = &mut *p.with_state(ParserState {
-		is_module: true,
-		strict: Some(StrictMode::Module),
-		..p.state.clone()
-	});
-
-	p.expect_required(T![import]);
-
-	if p.at_ts(token_set![T![ident], T![async], T![yield]]) && p.nth_at(1, T![=]) {
-		let mut complete = ts_import_equals_decl(p, m);
-		complete.err_if_not_ts(
-			p,
-			"import equals declarations can only be used in TypeScript files",
-		);
-		return complete;
-	}
-
-	let list = p.start();
-
-	if p.at(JS_STRING_LITERAL) {
-		let inner = p.start();
-		p.bump_any();
-		inner.complete(p, IMPORT_STRING_SPECIFIER);
-		semi(p, start..p.cur_tok().range.start);
-
-		list.complete(p, LIST);
-		return m.complete(p, IMPORT_DECL);
-	}
-
-	let ty_only = p.cur_src() == "type"
-		&& (p.nth_at(1, T!['{']) || p.nth_src(1) != "from" && !p.nth_at(1, T![,]));
-
-	if ty_only {
-		if !p.typescript() {
-			let err = p
-				.err_builder("type imports can only be used in TypeScript files")
-				.primary(p.cur_tok().range, "");
-
-			p.error(err);
-			let m = p.start();
-			p.bump_any();
-			m.complete(p, ERROR);
-		} else {
-			p.bump_remap(T![type]);
-		}
-	}
-
-	if p.at_ts(token_set![T![async], T![yield], T![ident]]) {
-		imported_binding(p);
-		if p.cur_src() != "from" {
-			p.expect_required(T![,]);
-		}
-	}
-
-	if p.at(T![*]) {
-		let m = p.start();
-		p.bump_any();
-		if p.cur_src() != "as" {
-			let err = p
-				.err_builder("expected `as` for a namespace specifier, but found none")
-				.primary(p.cur_tok().range, "");
-
-			p.error(err);
-		} else {
-			p.bump_remap(T![as]);
-		}
-		imported_binding(p);
-		m.complete(p, WILDCARD_IMPORT);
-	} else if p.at(T!['{']) {
-		named_list(p).complete(p, NAMED_IMPORTS);
-	}
-
-	list.complete(p, LIST);
-
-	if p.cur_src() != "from" {
-		let err = p
-			.err_builder("expected a `from` clause for an import, but found none")
-			.primary(p.cur_tok().range, "");
-
-		p.error(err);
-	} else {
-		p.bump_remap(T![from]);
-	}
-
-	if !p.eat(JS_STRING_LITERAL) {
-		let err = p
-			.err_builder(
-				"expected a source for a `from` clause in an import statement, but found none",
-			)
-			.primary(p.cur_tok().range, "");
-
-		p.error(err);
-	}
-
-	// test_err assert_expression
-	// import { a } from "a.json" assert
-	if p.cur_src() == "assert" {
-		let assert_token_range = p.cur_tok().range;
-		p.bump_remap(T![assert]);
-		let parsed_object_expression = parse_object_expression(p);
-		if parsed_object_expression.is_absent() {
-			let err = p
-				.err_builder("assert clauses in import declarations require an object expression")
-				.primary(assert_token_range, "");
-
-			p.error(err);
-		}
-	}
-
-	semi(p, start..p.cur_tok().range.start);
-	m.complete(p, IMPORT_DECL)
-}
-
-fn imported_binding(p: &mut Parser) {
-	let p = &mut *p.with_state(ParserState {
-		in_async: false,
-		in_generator: false,
-		..p.state.clone()
-	});
-	parse_binding(p).ok();
 }
 
 pub fn export_decl(p: &mut Parser) -> CompletedMarker {

@@ -178,27 +178,6 @@ error[SyntaxError]: expected `'('` but instead found `else`
 
 --
 error[SyntaxError]: Expected an expression, but found none
-  ┌─ if_stmt_err.js:3:4
-  │
-3 │ if else {}
-  │    ^^^^ Expected an expression here
-
---
-error[SyntaxError]: expected `')'` but instead found `else`
-  ┌─ if_stmt_err.js:3:4
-  │
-3 │ if else {}
-  │    ^^^^ unexpected
-
---
-error[SyntaxError]: expected a statement but instead found 'else'
-  ┌─ if_stmt_err.js:3:4
-  │
-3 │ if else {}
-  │    ^^^^ Expected a statement here
-
---
-error[SyntaxError]: Expected an expression, but found none
   ┌─ if_stmt_err.js:4:5
   │
 4 │ if () {} else {}

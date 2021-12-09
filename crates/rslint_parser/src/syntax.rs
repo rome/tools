@@ -14,6 +14,7 @@ mod decl;
 pub mod expr;
 mod function;
 mod js_parse_error;
+mod module;
 mod object;
 mod pattern;
 pub mod program;

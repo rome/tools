@@ -98,28 +98,7 @@ error[SyntaxError]: expected `,` but instead found `}`
   │                    ^ unexpected
 
 --
-error[SyntaxError]: expected a parameter but instead found '}'
-  ┌─ class_member_method_parameters.js:1:20
-  │
-1 │ class B { foo(a {} }
-  │                    ^ Expected a parameter here
-
---
 error[SyntaxError]: expected `')'` but instead the file ends
-  ┌─ class_member_method_parameters.js:2:1
-  │
-2 │ 
-  │ ^ the file ends here
-
---
-error[SyntaxError]: expected a class method body but instead found ''
-  ┌─ class_member_method_parameters.js:2:1
-  │
-2 │ 
-  │ ^ Expected a class method body here
-
---
-error[SyntaxError]: expected `'}'` but instead the file ends
   ┌─ class_member_method_parameters.js:2:1
   │
 2 │ 

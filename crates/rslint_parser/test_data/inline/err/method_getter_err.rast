@@ -63,20 +63,6 @@ error[SyntaxError]: expected an identifier, a string literal, a number literal, 
   │      ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
 --
-error[SyntaxError]: expected `'('` but instead found `{`
-  ┌─ method_getter_err.js:2:6
-  │
-2 │  get {}
-  │      ^ unexpected
-
---
-error[SyntaxError]: expected `')'` but instead found `{`
-  ┌─ method_getter_err.js:2:6
-  │
-2 │  get {}
-  │      ^ unexpected
-
---
 class foo {
  get {}
 }

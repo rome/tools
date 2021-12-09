@@ -65,11 +65,4 @@ error[SyntaxError]: expected `:` but instead found `}`
   │           ^ unexpected
 
 --
-error[SyntaxError]: Expected an expression, but found none
-  ┌─ object_expr_non_ident_literal_prop.js:1:11
-  │
-1 │ let b = {5}
-  │           ^ Expected an expression here
-
---
 let b = {5}

@@ -106,11 +106,18 @@ pub trait ParseSeparatedList {
 	) -> RecoveryResult;
 
 	/// It creates a [ParsedSyntax] that will contain the list
+	/// Only called if the list isn't empty
 	fn finish_list(&mut self, p: &mut Parser, m: Marker) {
 		m.complete(p, SyntaxKind::LIST);
 	}
+
 	/// The [SyntaxKind] of the element that separates the elements of the list
 	fn separating_element_kind(&mut self) -> SyntaxKind;
+
+	/// `true` if the list allows for an optional trailing comma
+	fn allow_trailing_comma(&self) -> bool {
+		false
+	}
 
 	/// Method called at each iteration of the the loop and checks if the expected
 	/// separator is present.
@@ -129,11 +136,19 @@ pub trait ParseSeparatedList {
 	fn parse_list(&mut self, p: &mut Parser) {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
+		let mut first = true;
+
 		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
-			if self.expect_separator(p) && self.is_at_list_end(p) {
-				break;
+			if first {
+				first = false;
+			} else {
+				self.expect_separator(p);
+
+				if self.allow_trailing_comma() && self.is_at_list_end(p) {
+					break;
+				}
 			}
 
 			let parsed_element = self.parse_element(p);
@@ -142,6 +157,12 @@ pub trait ParseSeparatedList {
 				break;
 			}
 		}
-		self.finish_list(p, elements);
+
+		if first {
+			elements.abandon(p);
+			p.missing();
+		} else {
+			self.finish_list(p, elements);
+		}
 	}
 }

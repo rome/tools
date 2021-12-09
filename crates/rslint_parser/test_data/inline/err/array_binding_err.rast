@@ -289,20 +289,6 @@ error[SyntaxError]: expected `,` but instead found `;`
   │               ^ unexpected
 
 --
-error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found ';'
-  ┌─ array_binding_err.js:4:15
-  │
-4 │ let [[a ] = [];
-  │               ^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
-
---
-error[SyntaxError]: expected `']'` but instead found `;`
-  ┌─ array_binding_err.js:4:15
-  │
-4 │ let [[a ] = [];
-  │               ^ unexpected
-
---
 error[SyntaxError]: Object and Array patterns require initializers
   ┌─ array_binding_err.js:4:5
   │

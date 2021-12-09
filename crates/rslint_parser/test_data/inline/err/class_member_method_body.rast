@@ -69,11 +69,4 @@ error[SyntaxError]: expected a class method body but instead found ''
   │ ^ Expected a class method body here
 
 --
-error[SyntaxError]: expected `'}'` but instead the file ends
-  ┌─ class_member_method_body.js:2:1
-  │
-2 │ 
-  │ ^ the file ends here
-
---
 class B { foo(a)

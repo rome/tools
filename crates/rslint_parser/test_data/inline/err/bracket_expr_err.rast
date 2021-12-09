@@ -99,13 +99,6 @@ error[SyntaxError]: Expected an expression, but found none
   │ ^ Expected an expression here
 
 --
-error[SyntaxError]: expected `']'` but instead the file ends
-  ┌─ bracket_expr_err.js:4:1
-  │
-4 │ 
-  │ ^ the file ends here
-
---
 foo[]
 foo?.[]
 foo[

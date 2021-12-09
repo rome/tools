@@ -43,7 +43,9 @@ pub struct ParserState {
 	pub default_item: Option<Range<usize>>,
 	/// The recovery set primary_expr will use
 	pub expr_recovery_set: TokenSet,
-	pub should_record_names: bool,
+	/// If set, the parser reports bindings with identical names. The option stores the name of the
+	/// node that disallows duplicate bindings, for example `let`, `const` or `import`.
+	pub duplicate_binding_parent: Option<&'static str>,
 	pub name_map: HashMap<String, Range<usize>>,
 	/// Whether the parser is in a conditional expr (ternary expr)
 	pub in_cond_expr: bool,
@@ -80,7 +82,7 @@ impl Default for ParserState {
 			default_item: None,
 			expr_recovery_set: EXPR_RECOVERY_SET,
 			name_map: HashMap::with_capacity(3),
-			should_record_names: false,
+			duplicate_binding_parent: None,
 			in_cond_expr: false,
 			in_case_cond: false,
 			no_recovery: false,

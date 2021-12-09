@@ -77,3 +77,26 @@ pub fn check_for_stmt_declaration(p: &mut Parser, marker: &CompletedMarker) {
 		p.error(err);
 	}
 }
+
+pub(crate) fn expect_keyword(p: &mut Parser, keyword_name: &str, kind: SyntaxKind) {
+	if p.at(T![ident]) && p.cur_src() == keyword_name {
+		p.bump_remap(kind);
+	} else {
+		let err = if p.cur() == SyntaxKind::EOF {
+			p.err_builder(&format!(
+				"expected `{}` but instead the file ends",
+				keyword_name
+			))
+			.primary(p.cur_tok().range, "the file ends here")
+		} else {
+			p.err_builder(&format!(
+				"expected `{}` but instead found `{}`",
+				keyword_name,
+				p.cur_src()
+			))
+			.primary(p.cur_tok().range, "unexpected")
+		};
+
+		p.error(err);
+	}
+}

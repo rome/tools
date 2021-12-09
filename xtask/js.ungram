@@ -34,7 +34,7 @@
 // SyntaxElement is a generic data structure that is meant to track nodes and tokens
 // in cases where we care about both types
 //
-// As Unknown* node will need to yield both tokens and nodes without discrimition,
+// As Unknown* node will need to yield both tokens and nodes without discrimination,
 // and their children will need to yield nodes and tokens as well.
 // For this reason, SyntaxElement = SyntaxElement
 SyntaxElement = SyntaxElement
@@ -45,6 +45,8 @@ JsUnknownMember = SyntaxElement*
 JsUnknownBinding = SyntaxElement*
 JsUnknownAssignment = SyntaxElement*
 JsUnknownModifier = SyntaxElement*
+JsUnknownImportAssertionEntry = SyntaxElement*
+JsUnknownNamedImportSpecifier = SyntaxElement*
 
 Ident = 'ident'
 
@@ -869,7 +871,7 @@ JsVariableDeclarator =
 
 JsAnyModuleItem =
 	JsAnyStatement
-	| ImportDecl
+	| JsImport
 	| ExportNamed
 	| ExportDefaultDecl
 	| ExportDefaultExpr
@@ -879,15 +881,140 @@ JsAnyModuleItem =
 	| TsExportAssignment
 	| TsNamespaceExportDecl
 
-ImportDecl =
-	'import'
-	imports:ImportClause*
-	'type'?
-	'from'
-	source: 'js_string_literal'
-	asserted_object: JsObjectExpression
-	'assert'?
+JsImport = 'import'
+	import_clause: AnyJsImportClause
 	';'?
+
+AnyJsImportClause =
+    JsImportBareClause
+    | JsName
+    | JsImportNamedClause
+    | JsImportDefaultClause
+    | JsImportNamespaceClause
+//    | TsImportRequireClause
+//    | TsImportAliasClause
+
+// import "abcd"
+// import "abcd" assert ...
+JsImportBareClause =
+	source: JsModuleSource
+	assertion: JsImportAssertion?
+
+// import foo from "mod"
+// import type foo from "mod"
+JsImportDefaultClause =
+		// 'type'?
+		local_name: JsAnyBinding
+		'from'
+		source: JsModuleSource
+		assertion: JsImportAssertion?
+
+// import * as foo from "mod";
+// import type * as foo from "mod";
+JsImportNamespaceClause =
+  // 'type'
+	'*'
+	'as'
+	local_name: JsAnyBinding
+	'from'
+	source: JsModuleSource
+	assertion: JsImportAssertion?
+
+// import { a, b: c } from "d"
+//        ^^^^^^^^^^^^^^^^^^^^
+// import c, { b } from "c"
+//        ^^^^^^^^^^^^^^^^^
+// import { type a } from "c"
+//        ^^^^^^^^^^^^^^^^^^^
+// import foo, * as bar from "mod"
+//        ^^^^^^^^^^^^^^^^^^^^^^^^
+// import type { foo } from "mod";
+//        ^^^^^^^^^^^^^^^^^^^^^^^
+// import foo, { type bar } from "mod";
+JsImportNamedClause =
+    // 'type'?
+    default_specifier: JsDefaultImportSpecifier?
+    named_import: JsAnyNamedImport
+    'from'
+    source: JsModuleSource
+    assertion: JsImportAssertion?
+
+// import a, { b, c } from "d";
+//        ^^
+JsDefaultImportSpecifier =
+    local_name: JsAnyBinding
+    trailing_comma: ','
+
+JsAnyNamedImport =
+	JsNamedImportSpecifierList
+	|  JsNamespaceImportSpecifier
+
+// import a, * as b from "d";
+//           ^^^^^^
+JsNamespaceImportSpecifier =
+    '*'
+    'as'
+    local_name: JsAnyBinding
+
+// import a, { b, c } from "d";
+//           ^^^^^^^^
+JsNamedImportSpecifierList =
+    '{'
+    specifiers: (JsAnyNamedImportSpecifier (',' JsAnyNamedImportSpecifier)* ','?)
+    '}'
+
+JsAnyNamedImportSpecifier =
+    JsShorthandNamedImportSpecifier
+    | JsNamedImportSpecifier
+    | JsUnknownNamedImportSpecifier
+
+// import { foo as test } from "mod";
+//          ^^^^^^^^^^^
+// import { type foo as test } from "mod";
+//          ^^^^^^^^^^^^^^^^^
+JsNamedImportSpecifier =
+    // 'type'?
+    name: JsLiteralExportName
+    'as'
+    local_name: JsAnyBinding
+
+// import { type foo } from "mod";
+//          ^^^^^^^^
+JsShorthandNamedImportSpecifier =
+    // 'type'?
+    local_name: JsAnyBinding
+
+// import a from "mod" assert { type: "json" }
+//                     ^^^^^^^^^^^^^^^^^^^^^^^
+JsImportAssertion =
+    'assert'
+    '{'
+    assertions: (JsAnyImportAssertionEntry (',' JsAnyImportAssertionEntry)* ','?)
+    '}'
+
+JsAnyImportAssertionEntry =
+	JsImportAssertionEntry
+	| JsUnknownImportAssertionEntry
+
+// import a from "mod" assert { type: "json" }
+//                              ^^^^^^^^^^^^
+JsImportAssertionEntry =
+    key: ('ident' | 'js_string_literal')
+    ':'
+    value: 'js_string_literal'
+
+// import { a as b } from "c"
+//          ^
+// export { a as "a-b-c" };
+//               ^^^^^^^
+JsLiteralExportName = value: ('ident' | 'js_string_literal')
+
+
+// import "test"
+//        ^^^^^^
+// export a from "b"
+//               ^^^
+JsModuleSource = value: 'js_string_literal'
 
 // export default declaration
 ExportDefaultDecl = 'export' 'default'? 'type'? decl:DefaultDecl
@@ -924,24 +1051,7 @@ TsExportAssignment = 'export' '=' expr: JsAnyExpression ';'?
 // typescript namespace export
 TsNamespaceExportDecl = 'export' 'as' 'namespace' ident: Ident? ';'?
 
-ImportClause =
-	WildcardImport
-	| NamedImports
-	| Name
-	| ImportStringSpecifier
-
-
-NamedImports = '{' specifiers:(Specifier (',' Specifier)* ','?) '}'
-
-
 Specifier = name:Ident 'as'? manual__alias:Name?
-
-
-// this is not currently implemented in rslint parser
-ImportStringSpecifier = source: 'js_string_literal'
-
-
-WildcardImport = '*' 'as'? ident: Ident?
 
 // @ematipico this one is not entirely correct I think..
 ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:(Specifier (',' Specifier)* ','?) * '}'
@@ -958,9 +1068,6 @@ JsSpread =
 	'...'
 	argument: JsAnyExpression
 
-
-
-Name = 'ident'
 
 // Reference to an identifier from the lexical scope
 JsReferenceIdentifier = value: 'ident'

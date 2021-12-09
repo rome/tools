@@ -8,33 +8,33 @@ JsModule {
                 star_token: STAR@7..9 "*" [] [Whitespace(" ")],
                 as_token: AS_KW@9..12 "as" [] [Whitespace(" ")],
                 local_name: JsIdentifierBinding {
-                    name_token: IDENT@12..16 "foo" [] [Whitespace(" ")],
+                    name_token: IDENT@12..17 "test" [] [Whitespace(" ")],
                 },
-                from_token: FROM_KW@16..21 "from" [] [Whitespace(" ")],
+                from_token: FROM_KW@17..22 "from" [] [Whitespace(" ")],
                 source: JsModuleSource {
-                    value_token: JS_STRING_LITERAL@21..26 "\"bla\"" [] [],
+                    value_token: JS_STRING_LITERAL@22..30 "\"module\"" [] [],
                 },
                 assertion: missing (optional),
             },
-            semicolon_token: SEMICOLON@26..27 ";" [] [],
+            semicolon_token: SEMICOLON@30..31 ";" [] [],
         },
     ],
 }
 
-0: JS_MODULE@0..28
+0: JS_MODULE@0..32
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..27
-    0: JS_IMPORT@0..27
+  2: LIST@0..31
+    0: JS_IMPORT@0..31
       0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
-      1: JS_IMPORT_NAMESPACE_CLAUSE@7..26
+      1: JS_IMPORT_NAMESPACE_CLAUSE@7..30
         0: STAR@7..9 "*" [] [Whitespace(" ")]
         1: AS_KW@9..12 "as" [] [Whitespace(" ")]
-        2: JS_IDENTIFIER_BINDING@12..16
-          0: IDENT@12..16 "foo" [] [Whitespace(" ")]
-        3: FROM_KW@16..21 "from" [] [Whitespace(" ")]
-        4: JS_MODULE_SOURCE@21..26
-          0: JS_STRING_LITERAL@21..26 "\"bla\"" [] []
+        2: JS_IDENTIFIER_BINDING@12..17
+          0: IDENT@12..17 "test" [] [Whitespace(" ")]
+        3: FROM_KW@17..22 "from" [] [Whitespace(" ")]
+        4: JS_MODULE_SOURCE@22..30
+          0: JS_STRING_LITERAL@22..30 "\"module\"" [] []
         5: (empty)
-      2: SEMICOLON@26..27 ";" [] []
-  3: EOF@27..28 "" [Whitespace("\n")] []
+      2: SEMICOLON@30..31 ";" [] []
+  3: EOF@31..32 "" [Whitespace("\n")] []

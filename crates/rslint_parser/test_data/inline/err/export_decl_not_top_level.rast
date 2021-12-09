@@ -15,7 +15,7 @@ JsModule {
                               0: L_CURLY@10..12 "{" [] [Whitespace(" ")]
                               1: LIST@12..17
                                 0: SPECIFIER@12..17
-                                  0: NAME@12..17
+                                  0: JS_NAME@12..17
                                     0: IDENT@12..17 "pain" [] [Whitespace(" ")]
                               2: R_CURLY@17..19 "}" [] [Whitespace(" ")]
                               3: FROM_KW@19..24 "from" [] [Whitespace(" ")]
@@ -44,7 +44,7 @@ JsModule {
             0: L_CURLY@10..12 "{" [] [Whitespace(" ")]
             1: LIST@12..17
               0: SPECIFIER@12..17
-                0: NAME@12..17
+                0: JS_NAME@12..17
                   0: IDENT@12..17 "pain" [] [Whitespace(" ")]
             2: R_CURLY@17..19 "}" [] [Whitespace(" ")]
             3: FROM_KW@19..24 "from" [] [Whitespace(" ")]
