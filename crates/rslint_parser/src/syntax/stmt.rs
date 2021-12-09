@@ -7,6 +7,7 @@ use super::expr::{expr, expr_or_assignment, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::program::export_decl;
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use};
+use crate::parser::RecoveryResult;
 #[allow(deprecated)]
 use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
@@ -549,13 +550,18 @@ pub(super) fn parse_block_impl(
 	Present(m.complete(p, block_kind))
 }
 
-#[must_use]
-pub(crate) fn directives(p: &mut Parser) -> Option<ParserState> {
-	let list = p.start();
+struct DirectivesList {
+	old_state: Option<ParserState>,
+}
 
-	let mut old_state: Option<ParserState> = None;
+impl Default for DirectivesList {
+	fn default() -> Self {
+		Self { old_state: None }
+	}
+}
 
-	fn is_directive(p: &Parser) -> bool {
+impl DirectivesList {
+	pub fn at_directives(&mut self, p: &mut Parser) -> bool {
 		if !p.at(JS_STRING_LITERAL) {
 			false
 		} else {
@@ -564,9 +570,12 @@ pub(crate) fn directives(p: &mut Parser) -> Option<ParserState> {
 			matches!(next, T![;] | EOF | T!['}']) || p.has_linebreak_before_n(1)
 		}
 	}
-	let mut progress = ParserProgress::default();
-	while is_directive(p) {
-		progress.assert_progressing(p);
+}
+
+impl ParseNodeList for DirectivesList {
+	type ParsedElement = CompletedMarker;
+
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
 		let directive_token = p.cur_tok();
 
 		let directive = p.start();
@@ -576,24 +585,45 @@ pub(crate) fn directives(p: &mut Parser) -> Option<ParserState> {
 		// eat semicolon if present, correct termination guaranteed by is_directive
 		p.eat(SyntaxKind::SEMICOLON);
 
-		directive.complete(p, JS_DIRECTIVE);
+		let completed_marker = directive.complete(p, JS_DIRECTIVE);
 
 		let directive_text = p.token_src(&directive_token);
 
 		if directive_text == "\"use strict\"" || directive_text == "'use strict'" {
-			if old_state == None {
-				old_state = Some(p.state.clone());
+			if self.old_state == None {
+				self.old_state = Some(p.state.clone());
 			}
 
 			let mut new_state = p.state.clone();
 			new_state.strict(p, directive_token.range);
 			p.state = new_state;
 		}
+
+		Present(completed_marker)
 	}
 
-	list.complete(p, LIST);
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		!self.at_directives(p)
+	}
 
-	old_state
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> RecoveryResult {
+		parsed_element.or_recover(
+			p,
+			&ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
+			js_parse_error::expected_directive,
+		)
+	}
+}
+
+#[must_use]
+pub(crate) fn directives(p: &mut Parser) -> Option<ParserState> {
+	let mut list = DirectivesList::default();
+	list.parse_list(p);
+	list.old_state
 }
 
 /// Top level items or items inside of a block statement, this also handles module items so we can
