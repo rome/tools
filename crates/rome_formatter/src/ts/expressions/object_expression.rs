@@ -10,8 +10,10 @@ impl ToFormatElement for JsObjectExpression {
 
 		Ok(group_elements(format_elements!(
 			formatter.format_token(&self.l_curly_token()?)?,
-			soft_indent(join_elements(soft_line_break_or_space(), props)),
-			if_group_breaks(token(",")),
+			soft_indent(format_elements![
+				join_elements(soft_line_break_or_space(), props),
+				if_group_breaks(token(",")),
+			]),
 			formatter.format_token(&self.r_curly_token()?)?,
 		)))
 	}

@@ -4,5 +4,5 @@ let a = {
 		bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
 		cccccccccccccccccccccccccccccc
 	) {},
-	[fooooooooooooooooooooooooooooooooooooooooooooooooo()]: () => {}
-,};
+	[fooooooooooooooooooooooooooooooooooooooooooooooooo()]: () => {},
+};
