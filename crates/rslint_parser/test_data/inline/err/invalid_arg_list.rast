@@ -27,9 +27,7 @@ JsModule {
                         missing separator,
                         JsUnknownExpression {
                             items: [
-                                Token(
-                                    SEMICOLON@7..8 ";" [] [],
-                                ),
+                                SEMICOLON@7..8 ";" [] [],
                             ],
                         },
                     ],
@@ -63,9 +61,7 @@ JsModule {
                         missing separator,
                         JsUnknownExpression {
                             items: [
-                                Token(
-                                    VAR_KW@17..20 "var" [] [],
-                                ),
+                                VAR_KW@17..20 "var" [] [],
                             ],
                         },
                     ],
