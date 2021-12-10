@@ -2,15 +2,17 @@ JsModule {
     interpreter_token: missing (optional),
     directives: [],
     items: [
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsClassExpression {
                                 class_token: CLASS_KW@8..14 "class" [] [Whitespace(" ")],
@@ -26,15 +28,17 @@ JsModule {
             },
             semicolon_token: SEMICOLON@16..17 ";" [] [],
         },
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@17..22 "let" [Whitespace("\n")] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@22..24 "a" [] [Whitespace(" ")],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@24..26 "=" [] [Whitespace(" ")],
                             expression: JsClassExpression {
                                 class_token: CLASS_KW@26..32 "class" [] [Whitespace(" ")],
@@ -98,14 +102,16 @@ JsModule {
   0: (empty)
   1: LIST@0..0
   2: LIST@0..71
-    0: JS_VARIABLE_DECLARATION_STATEMENT@0..17
-      0: JS_VARIABLE_DECLARATION@0..16
+    0: JS_VARIABLE_STATEMENT@0..17
+      0: JS_VARIABLE_DECLARATION_LIST@0..16
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..16
-          0: JS_VARIABLE_DECLARATOR@4..16
+          0: JS_VARIABLE_DECLARATION@4..16
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@6..16
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@6..16
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_CLASS_EXPRESSION@8..16
                 0: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
@@ -113,14 +119,16 @@ JsModule {
                 2: LIST@15..15
                 3: R_CURLY@15..16 "}" [] []
       1: SEMICOLON@16..17 ";" [] []
-    1: JS_VARIABLE_DECLARATION_STATEMENT@17..57
-      0: JS_VARIABLE_DECLARATION@17..57
+    1: JS_VARIABLE_STATEMENT@17..57
+      0: JS_VARIABLE_DECLARATION_LIST@17..57
         0: LET_KW@17..22 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@22..57
-          0: JS_VARIABLE_DECLARATOR@22..57
+          0: JS_VARIABLE_DECLARATION@22..57
             0: JS_IDENTIFIER_BINDING@22..24
               0: IDENT@22..24 "a" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@24..57
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@24..57
               0: EQ@24..26 "=" [] [Whitespace(" ")]
               1: JS_CLASS_EXPRESSION@26..57
                 0: CLASS_KW@26..32 "class" [] [Whitespace(" ")]

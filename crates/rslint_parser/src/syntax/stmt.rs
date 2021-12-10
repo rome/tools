@@ -3,16 +3,17 @@
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
 use super::binding::*;
-use super::expr::{expr, expr_or_assignment, EXPR_RECOVERY_SET, STARTS_EXPR};
+use super::expr::{expr, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::program::export_decl;
 use super::typescript::*;
-use super::util::{check_for_stmt_declaration, check_label_use};
+use super::util::check_label_use;
+use crate::parser::RecoveryResult;
 #[allow(deprecated)]
 use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
-use crate::syntax::class::{parse_class_declaration, parse_equal_value_clause};
-use crate::syntax::expr::parse_identifier;
+use crate::syntax::class::{parse_class_declaration, parse_initializer_clause};
+use crate::syntax::expr::{expr_or_assignment, parse_identifier};
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_binding;
@@ -21,6 +22,7 @@ use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
 use crate::{SyntaxKind::*, *};
+use rslint_errors::Span;
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![
 	L_CURLY,
@@ -822,20 +824,38 @@ pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax<CompletedM
 	// const a = 5 let b = 5;
 	let start = p.cur_tok().range.start;
 
-	let declaration = parse_variable_declaration(p, false)
+	let declaration = parse_variable_declaration_list(p)
 		.or_missing_with_error(p, js_parse_error::expected_variable);
 	if let Some(declaration) = declaration {
 		let m = declaration.precede(p);
 		semi(p, start..p.cur_tok().range.start);
-		Present(m.complete(p, JS_VARIABLE_DECLARATION_STATEMENT))
+		Present(m.complete(p, JS_VARIABLE_STATEMENT))
 	} else {
 		Absent
 	}
 }
 
-/// Parses a list of JS_VARIABLE_DECLARATION
-fn parse_variable_declaration(p: &mut Parser, no_semi: bool) -> ParsedSyntax<CompletedMarker> {
+fn parse_variable_declaration_list(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let m = p.start();
+
+	match parse_variable_declarations(p, false) {
+		Absent => {
+			m.abandon(p);
+			Absent
+		}
+		Present(_) => Present(m.complete(p, JS_VARIABLE_DECLARATION_LIST)),
+	}
+}
+
+/// Parses a list of JS_VARIABLE_DECLARATION_LIST
+/// Returns a tuple where
+/// * the first element is the marker to the not yet completed list
+/// * the second element is the range of all variable declarations except the first one. Is [None] if
+///   there's only one declaration.
+fn parse_variable_declarations(
+	p: &mut Parser,
+	for_in_or_of: bool,
+) -> ParsedSyntax<(Option<CompletedMarker>, Option<Range<usize>>)> {
 	let mut is_const = None;
 	let mut is_let = false;
 
@@ -852,30 +872,90 @@ fn parse_variable_declaration(p: &mut Parser, no_semi: bool) -> ParsedSyntax<Com
 			is_let = true;
 		}
 		_ => {
-			m.abandon(p);
 			return Absent;
 		}
 	}
-	let declared_list = p.start();
 
-	variable_declarator(p, &is_const, no_semi, is_let);
+	let mut parse_declarations = ParseVariableDeclarations {
+		const_range: is_const,
+		for_in_or_of,
+		is_let,
+		first: true,
+		remaining_declaration_range: None,
+	};
 
-	while p.eat(T![,]) {
-		variable_declarator(p, &is_const, no_semi, is_let);
+	let list = parse_declarations.parse_list(p);
+
+	p.state.name_map.clear();
+	Present((list, parse_declarations.remaining_declaration_range))
+}
+
+struct ParseVariableDeclarations {
+	const_range: Option<Range<usize>>,
+	for_in_or_of: bool,
+	is_let: bool,
+	first: bool,
+	// Range of the declarations succeeding the first declaration
+	// None until this hits the second declaration
+	remaining_declaration_range: Option<Range<usize>>,
+}
+
+impl ParseSeparatedList for ParseVariableDeclarations {
+	type ParsedElement = CompletedMarker;
+
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+		parse_variable_declaration(p, &self.const_range, self.for_in_or_of, self.is_let).map(
+			|declaration| {
+				if self.first {
+					self.first = false;
+				} else if let Some(range) = self.remaining_declaration_range.as_mut() {
+					range.end = declaration.range(p).as_range().end;
+				} else {
+					self.remaining_declaration_range = Some(declaration.range(p).as_range());
+				}
+				declaration
+			},
+		)
 	}
 
-	declared_list.complete(p, LIST);
-	p.state.name_map.clear();
-	Present(m.complete(p, JS_VARIABLE_DECLARATION))
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		if self.first {
+			false
+		} else {
+			!p.at(T![,])
+		}
+	}
+
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> RecoveryResult {
+		parsed_element.or_recover(
+			p,
+			&ParseRecovery::new(
+				// TODO this isn't really valid. Either `parse_variable_declarations` should return `ConditionalSyntax`
+				// or we use an `Unknown` node here
+				JS_VARIABLE_DECLARATION,
+				STMT_RECOVERY_SET.union(token_set!(T![,])),
+			)
+			.enable_recovery_on_line_break(),
+			expected_binding,
+		)
+	}
+
+	fn separating_element_kind(&mut self) -> SyntaxKind {
+		T![,]
+	}
 }
 
 // A single declarator, either `ident` or `ident = assign_expr`
-pub(crate) fn variable_declarator(
+pub(crate) fn parse_variable_declaration(
 	p: &mut Parser,
 	is_const: &Option<Range<usize>>,
-	for_stmt: bool,
+	for_in_or_of: bool,
 	is_let: bool,
-) -> Option<CompletedMarker> {
+) -> ParsedSyntax<CompletedMarker> {
 	p.state.duplicate_binding_parent = if is_const.is_some() {
 		Some("const")
 	} else if is_let {
@@ -883,16 +963,15 @@ pub(crate) fn variable_declarator(
 	} else {
 		None
 	};
-	let m = p.start();
+
 	let id = parse_binding_pattern(p);
 	p.state.duplicate_binding_parent = None;
 
-	if let Present(binding) = id {
-		let binding_marker = binding.undo_completion(p);
-		let binding_kind = binding.kind();
+	id.map(|id| {
+		let m = id.precede(p);
 
 		let cur = p.cur_tok().range;
-		let opt = p.eat(T![!]);
+		let opt = p.eat_optional(T![!]);
 		if opt && !p.typescript() {
 			let err = p
 				.err_builder("definite assignment assertions can only be used in TypeScript files")
@@ -901,59 +980,49 @@ pub(crate) fn variable_declarator(
 			p.error(err);
 		}
 
-		if p.eat(T![:]) {
-			let start = p.cur_tok().range.start;
-			let ty = ts_type(p);
-			let end = ty
-				.map(|x| usize::from(x.range(p).end()))
-				.unwrap_or(p.cur_tok().range.start);
-			if !p.typescript() {
+		if let Some(type_annotation) = maybe_ts_type_annotation(p) {
+			if p.typescript() && for_in_or_of {
 				let err = p
-					.err_builder("type annotations can only be used in TypeScript files")
-					.primary(start..end, "");
+					.err_builder("`for` statement declarators cannot have a type annotation")
+					.primary(type_annotation.start..type_annotation.end, "");
 
 				p.error(err);
 			}
-			if p.typescript() && for_stmt {
-				let err = p
-					.err_builder("`for` statement declarators cannot have a type annotation")
-					.primary(start..end, "");
-
-				p.state.for_head_error = Some(err);
-			}
+		} else {
+			p.missing();
 		}
 
-		let marker = binding_marker.complete(p, binding_kind);
-		let initializer = parse_equal_value_clause(p).or_missing(p);
+		let initializer = parse_initializer_clause(p).or_missing(p);
 		if initializer.is_none()
 			&& matches!(
-				marker.kind(),
+				id.kind(),
 				JS_ARRAY_BINDING_PATTERN | JS_OBJECT_BINDING_PATTERN
-			) && !for_stmt
+			) && !for_in_or_of
 			&& !p.state.in_declare
 		{
 			let err = p
 				.err_builder("Object and Array patterns require initializers")
 				.primary(
-					marker.range(p),
+					id.range(p),
 					"this pattern is declared, but it is not given an initialized value",
 				);
 
 			p.error(err);
 		// FIXME: does ts allow const var declarations without initializers in .d.ts files?
-		} else if initializer.is_none() && is_const.is_some() && !for_stmt && !p.state.in_declare {
+		} else if initializer.is_none()
+			&& is_const.is_some()
+			&& !for_in_or_of
+			&& !p.state.in_declare
+		{
 			let err = p
 				.err_builder("Const var declarations must have an initialized value")
-				.primary(marker.range(p), "this variable needs to be initialized");
+				.primary(id.range(p), "this variable needs to be initialized");
 
 			p.error(err);
 		}
 
-		Some(m.complete(p, JS_VARIABLE_DECLARATOR))
-	} else {
-		m.abandon(p);
-		None
-	}
+		m.complete(p, JS_VARIABLE_DECLARATION)
+	})
 }
 
 // A do.. while statement, such as `do {} while (true)`
@@ -992,57 +1061,75 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	Present(m.complete(p, JS_DO_WHILE_STATEMENT))
 }
 
-fn for_head(p: &mut Parser) -> SyntaxKind {
-	let init_or_left = p.start();
+/// Parses the header of a for statement into the current node and returns whatever it is a for in/of or "regular" for statement
+/// TODO inline into parse_for?
+fn parse_for_head(p: &mut Parser) -> SyntaxKind {
+	// for (;...
+	if p.at(T![;]) {
+		parse_normal_for_head(p);
+		return FOR_STMT;
+	}
+
+	// `for (let...` | `for (const...` | `for (var...`
+
+	// If we match `let`/`const` or `var`
+	// TODO: What needs to be done here is to parse all variable declarations
+	// and keep track of the parsed declarations.
+	// Then decide on what do to next depending if there's an in/of keyword
+	// In that case, the for statement is invalid and needs to be wrapped in an invalid statement
+
 	if p.at(T![const]) || p.at(T![var]) || (p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)))
 	{
-		let mut guard = p.with_state(ParserState {
-			include_in: false,
-			..p.state.clone()
-		});
-		let decl = parse_variable_declaration(&mut *guard, true).unwrap();
-		drop(guard);
-
-		if p.at(T![in]) || p.cur_src() == "of" {
-			if let Some(err) = p.state.for_head_error.take() {
-				p.error(err);
-			}
-			// left is a union, no need for wrapping
-			init_or_left.abandon(p);
-			let is_in = p.at(T![in]);
-			if is_in {
-				p.bump_any();
-			} else {
-				p.bump_remap(T![of]);
-			}
-
-			check_for_stmt_declaration(p, &decl);
-
-			for_each_head(p, is_in)
-		} else {
-			init_or_left.complete(p, FOR_STMT_INIT);
-			p.state.for_head_error = None;
-			p.expect_required(T![;]);
-			normal_for_head(p);
-			FOR_STMT
-		}
-	} else {
-		if p.eat(T![;]) {
-			init_or_left.abandon(p);
-			normal_for_head(p);
-			return FOR_STMT;
-		}
-
-		let checkpoint = p.checkpoint();
-		let init_expr = {
-			let mut guard = p.with_state(ParserState {
+		let m = p.start();
+		let (declarations, additional_declarations) = {
+			let guard = &mut *p.with_state(ParserState {
 				include_in: false,
 				..p.state.clone()
 			});
-			expr(&mut *guard)
+
+			parse_variable_declarations(&mut *guard, true).unwrap()
+		};
+
+		let is_in = p.at(T![in]);
+		let is_of = p.cur_src() == "of";
+
+		if is_in || is_of {
+			if let Some(declarations_list) = declarations {
+				declarations_list.undo_completion(p).abandon(p);
+			}
+
+			if let Some(additional_declarations_range) = additional_declarations {
+				p.error(
+					p.err_builder(&format!(
+						"Only a single declaration is allowed in a `for...{}` statement.",
+						if is_of { "of" } else { "in" },
+					))
+					.primary(additional_declarations_range, "additional declarations"),
+				);
+				// TODO change kind to UNKNOWN
+			}
+
+			m.complete(p, JS_FOR_VARIABLE_DECLARATION);
+
+			parse_for_of_or_in_head(p)
+		} else {
+			m.complete(p, JS_VARIABLE_DECLARATION_LIST);
+			parse_normal_for_head(p);
+			FOR_STMT
+		}
+	} else {
+		// for (some_expression`
+		let checkpoint = p.checkpoint();
+		let init_expr = {
+			let guard = &mut *p.with_state(ParserState {
+				include_in: false,
+				..p.state.clone()
+			});
+			expr(guard)
 		};
 
 		if p.at(T![in]) || p.cur_src() == "of" {
+			// for (assignment_pattern in ...
 			if let Some(assignment_expr) = init_expr {
 				let mut assignment = expression_to_assignment_pattern(
 					p,
@@ -1063,47 +1150,46 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 				}
 			}
 
-			// left is a union, no need for wrapping
-			init_or_left.abandon(p);
-			let is_in = p.at(T![in]);
-			if is_in {
-				p.bump_any();
-			} else {
-				p.bump_remap(T![of]);
-			}
-			return for_each_head(p, is_in);
-		} else {
-			init_or_left.complete(p, FOR_STMT_INIT);
+			return parse_for_of_or_in_head(p);
 		}
 
-		p.expect_required(T![;]);
-		normal_for_head(p);
+		parse_normal_for_head(p);
 		FOR_STMT
 	}
 }
 
-fn for_each_head(p: &mut Parser, is_in: bool) -> SyntaxKind {
-	if is_in {
-		expr(p);
-		FOR_IN_STMT
-	} else {
-		expr_or_assignment(p);
-		FOR_OF_STMT
-	}
-}
+/// Parses the parenthesized part of a non for in or for of statement
+/// Expects to be positioned right after the initializer
+fn parse_normal_for_head(p: &mut Parser) {
+	p.expect_required(T![;]);
 
-fn normal_for_head(p: &mut Parser) {
-	if !p.eat(T![;]) {
+	if !p.at(T![;]) {
 		let m = p.start();
 		expr(p);
 		m.complete(p, FOR_STMT_TEST);
-		p.expect_required(T![;]);
 	}
+
+	p.expect_required(T![;]);
 
 	if !p.at(T![')']) {
 		let m = p.start();
 		expr(p);
 		m.complete(p, FOR_STMT_UPDATE);
+	}
+}
+
+/// Expects to be positioned right before the of or in keyword
+fn parse_for_of_or_in_head(p: &mut Parser) -> SyntaxKind {
+	let is_in = p.at(T![in]);
+
+	if is_in {
+		p.bump_any();
+		expr(p);
+		JS_FOR_IN_STATEMENT
+	} else {
+		p.bump_remap(T![of]);
+		expr_or_assignment(p);
+		JS_FOR_OF_STATEMENT
 	}
 }
 
@@ -1122,14 +1208,18 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![for]) {
 		return Absent;
 	}
+
 	let m = p.start();
 	p.bump_any(); // for keyword
 
-	// FIXME: This should emit an error for non-for-of
-	p.eat(T![await]);
+	let mut await_range = None;
+	if p.at(T![await]) {
+		await_range = Some(p.cur_tok().range);
+		p.bump_any();
+	}
 
 	p.expect_required(T!['(']);
-	let kind = for_head(p);
+	let kind = parse_for_head(p);
 	p.expect_required(T![')']);
 	parse_statement(
 		&mut *p.with_state(ParserState {
@@ -1139,7 +1229,21 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		}),
 		None,
 	);
-	Present(m.complete(p, kind))
+
+	let mut completed = m.complete(p, kind);
+
+	if let Some(await_range) = await_range {
+		if kind != JS_FOR_OF_STATEMENT {
+			p.error(
+				p.err_builder("await can only be used in conjunction with for of statements")
+					.primary(await_range, "Remove the await here")
+					.secondary(completed.range(p), "or convert this to a for of statement"),
+			);
+		}
+		completed.change_kind(p, JS_UNKNOWN_STATEMENT)
+	}
+
+	Present(completed)
 }
 
 struct SwitchClausesList;

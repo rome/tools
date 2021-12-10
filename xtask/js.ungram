@@ -81,8 +81,8 @@ JsAnyStatement =
 	| JsDoWhileStatement
 	| JsWhileStatement
 	| ForStmt
-	| ForInStmt
-	| ForOfStmt
+	| JsForInStatement
+	| JsForOfStatement
 	| JsContinueStatement
 	| JsBreakStatement
 	| JsReturnStatement
@@ -95,7 +95,7 @@ JsAnyStatement =
 	| JsDebuggerStatement
   | JsFunctionDeclaration
 	| JsClassDeclaration
-	| JsVariableDeclarationStatement
+	| JsVariableStatement
 	| TsEnum
 	| TsTypeAliasDecl
 	| TsNamespaceDecl
@@ -144,7 +144,7 @@ JsElseClause =
 ForStmt =
 	'for'
 	'('
-	init:ForStmtInit?
+	initializer: JsAnyForInitializer?
 	first_semi: ';'
 	test:ForStmtTest?
 	manual__second_semi: ';'
@@ -152,19 +152,41 @@ ForStmt =
 	')'
 	cons:JsAnyStatement
 
-ForStmtInit = inner: ForHead
-ForHead = JsVariableDeclaration | JsAnyExpression
+JsAnyForInitializer = JsVariableDeclarationList | JsAnyExpression
+
+// TODO Inline when AST facade uses fixed offsets
 ForStmtTest = expr:JsAnyExpression
 ForStmtUpdate = expr:JsAnyExpression
 
 
 // for..in statement
-ForInStmt = 'for' '(' left:ForLeft 'in' right:JsAnyExpression ')' cons:JsAnyStatement
+JsForInStatement =
+	'for'
+	'('
+	initializer: JsAnyForInOrOfInitializer
+	'in'
+	expression: JsAnyExpression
+	')'
+	body: JsAnyStatement
 
 // for..of statement
-ForOfStmt = 'for' '(' left:ForLeft 'of' right:JsAnyExpression ')' cons:JsAnyStatement
-ForLeft = JsAnyAssignment | JsVariableDeclaration
+JsForOfStatement =
+	'for'
+	'await'?
+	'('
+	initializer: JsAnyForInOrOfInitializer
+	'of'
+	expression: JsAnyExpression
+	')'
+	body: JsAnyStatement
 
+JsAnyForInOrOfInitializer =
+	JsAnyAssignmentPattern
+	| JsForVariableDeclaration
+
+JsForVariableDeclaration =
+	kind_token: ('var' | 'let' | 'const')
+	declaration: JsVariableDeclaration
 
 JsBreakStatement =
     'break'
@@ -569,7 +591,7 @@ JsPropertyClassMember =
 	'?'?
 	'!'?
 	type: TsTypeAnnotation?
-	value: JsEqualValueClause?
+	value: JsInitializerClause?
 	';'?
 
 // class Test { a() {} }
@@ -708,7 +730,7 @@ JsAnyObjectAssignmentPatternMember =
 //    ^              ^^^^^^^^^^
 JsObjectAssignmentPatternShorthandProperty =
 	identifier: JsAnyAssignment
-	init: JsEqualValueClause?
+	init: JsInitializerClause?
 
 // ({ x: a } = b) or ({ x: a = "test" } = b)
 //    ^^^^              ^^^^^^^^^^^^^
@@ -716,7 +738,7 @@ JsObjectAssignmentPatternProperty =
 	member: JsName
 	':'
 	pattern: JsAnyAssignmentPattern
-	init: JsEqualValueClause?
+	init: JsInitializerClause?
 
 // ({ a, ...b } = a)
 //       ^^^^
@@ -789,7 +811,7 @@ JsObjectBindingPatternProperty =
 	member: JsAnyObjectMemberName
 	':'
 	pattern: JsAnyBindingPattern
-	init: JsEqualValueClause?
+	init: JsInitializerClause?
 
 // let { a } = c
 //       ^
@@ -797,7 +819,7 @@ JsObjectBindingPatternProperty =
 //       ^^^^^^^^^^
 JsObjectBindingPatternShorthandProperty =
 	identifier: JsAnyBinding
-	init: JsEqualValueClause?
+	init: JsInitializerClause?
 
 // let { ...a } = c
 //       ^^^^
@@ -854,16 +876,24 @@ TsTypeAnnotation =
 	':'
 	type: TsType
 
-JsVariableDeclarationStatement =
-    declaration: JsVariableDeclaration ';'?
+// let a, b = c;
+JsVariableStatement =
+    declaration_list: JsVariableDeclarationList ';'?
 
-JsVariableDeclaration =
+// Declaration of multiple variables
+// let a, b = c;
+// ^^^^^^^^
+JsVariableDeclarationList =
     kind_token: ('var' | 'const' | 'let')
-    declarators: (JsVariableDeclarator (',' JsVariableDeclarator)*)
+    declarations: (JsVariableDeclaration (',' JsVariableDeclaration)*)
 
-JsVariableDeclarator =
+// let b = c;
+//     ^^^^^
+JsVariableDeclaration =
     id: JsAnyBindingPattern
-    init: JsEqualValueClause?
+    '!'?
+    type_annotation: TsTypeAnnotation?
+    initializer: JsInitializerClause?
 
 
 ///////////////
@@ -1037,7 +1067,7 @@ ExportDecl = 'export' 'type'? decl: JsAnyExportDeclaration
 JsAnyExportDeclaration =
 	JsFunctionDeclaration
 	| JsClassDeclaration
-	| JsVariableDeclarationStatement
+	| JsVariableStatement
 	| TsEnum
 	| TsTypeAliasDecl
 	| TsNamespaceDecl
@@ -1116,7 +1146,7 @@ ArgList = '(' args:(JsAnyExpression (',' JsAnyExpression)* ','?) ')'
 //       ^^^^
 // class { a = 10; }
 //           ^^^^
-JsEqualValueClause =
+JsInitializerClause =
 	'='
 	expression: JsAnyExpression
 

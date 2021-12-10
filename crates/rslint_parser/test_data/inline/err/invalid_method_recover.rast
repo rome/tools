@@ -30,7 +30,7 @@ JsModule {
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
                     ty: missing (optional),
-                    value: JsEqualValueClause {
+                    value: JsInitializerClause {
                         eq_token: EQ@18..20 "=" [] [Whitespace(" ")],
                         expression: JsArrowFunctionExpression {
                             async_token: missing (optional),
@@ -46,15 +46,17 @@ JsModule {
                                 l_curly_token: L_CURLY@26..27 "{" [] [],
                                 directives: [],
                                 statements: [
-                                    JsVariableDeclarationStatement {
-                                        declaration: JsVariableDeclaration {
+                                    JsVariableStatement {
+                                        declaration_list: JsVariableDeclarationList {
                                             kind_token: LET_KW@27..36 "let" [Whitespace("\n    ")] [Whitespace(" ")],
-                                            declarators: [
-                                                JsVariableDeclarator {
+                                            declarations: [
+                                                JsVariableDeclaration {
                                                     id: JsIdentifierBinding {
                                                         name_token: IDENT@36..37 "a" [] [],
                                                     },
-                                                    init: JsEqualValueClause {
+                                                    excl_token: missing (optional),
+                                                    type_annotation: missing (optional),
+                                                    initializer: JsInitializerClause {
                                                         eq_token: EQ@37..38 "=" [] [],
                                                         expression: JsUnknownExpression {
                                                             items: [
@@ -102,7 +104,7 @@ JsModule {
               2: JS_NUMBER_LITERAL_EXPRESSION@15..16
                 0: JS_NUMBER_LITERAL@15..16 "1" [] []
             2: R_BRACK@16..18 "]" [] [Whitespace(" ")]
-          1: JS_EQUAL_VALUE_CLAUSE@18..43
+          1: JS_INITIALIZER_CLAUSE@18..43
             0: EQ@18..20 "=" [] [Whitespace(" ")]
             1: JS_ARROW_FUNCTION_EXPRESSION@20..43
               0: JS_PARAMETER_LIST@20..23
@@ -114,14 +116,16 @@ JsModule {
                 0: L_CURLY@26..27 "{" [] []
                 1: LIST@27..27
                 2: LIST@27..39
-                  0: JS_VARIABLE_DECLARATION_STATEMENT@27..39
-                    0: JS_VARIABLE_DECLARATION@27..39
+                  0: JS_VARIABLE_STATEMENT@27..39
+                    0: JS_VARIABLE_DECLARATION_LIST@27..39
                       0: LET_KW@27..36 "let" [Whitespace("\n    ")] [Whitespace(" ")]
                       1: LIST@36..39
-                        0: JS_VARIABLE_DECLARATOR@36..39
+                        0: JS_VARIABLE_DECLARATION@36..39
                           0: JS_IDENTIFIER_BINDING@36..37
                             0: IDENT@36..37 "a" [] []
-                          1: JS_EQUAL_VALUE_CLAUSE@37..39
+                          1: (empty)
+                          2: (empty)
+                          3: JS_INITIALIZER_CLAUSE@37..39
                             0: EQ@37..38 "=" [] []
                             1: JS_UNKNOWN_EXPRESSION@38..39
                               0: SEMICOLON@38..39 ";" [] []

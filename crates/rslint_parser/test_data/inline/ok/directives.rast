@@ -7,15 +7,17 @@ JsScript {
         },
     ],
     statements: [
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@20..26 "let" [Whitespace("\n\n")] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@26..28 "a" [] [Whitespace(" ")],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
                             expression: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@30..32 "10" [] [],
@@ -55,15 +57,17 @@ JsScript {
                     },
                 ],
                 statements: [
-                    JsVariableDeclarationStatement {
-                        declaration: JsVariableDeclaration {
+                    JsVariableStatement {
+                        declaration_list: JsVariableDeclarationList {
                             kind_token: LET_KW@101..108 "let" [Whitespace("\n\n\t")] [Whitespace(" ")],
-                            declarators: [
-                                JsVariableDeclarator {
+                            declarations: [
+                                JsVariableDeclaration {
                                     id: JsIdentifierBinding {
                                         name_token: IDENT@108..110 "a" [] [Whitespace(" ")],
                                     },
-                                    init: JsEqualValueClause {
+                                    excl_token: missing (optional),
+                                    type_annotation: missing (optional),
+                                    initializer: JsInitializerClause {
                                         eq_token: EQ@110..112 "=" [] [Whitespace(" ")],
                                         expression: JsNumberLiteralExpression {
                                             value_token: JS_NUMBER_LITERAL@112..114 "10" [] [],
@@ -108,15 +112,17 @@ JsScript {
                             },
                         ],
                         statements: [
-                            JsVariableDeclarationStatement {
-                                declaration: JsVariableDeclaration {
+                            JsVariableStatement {
+                                declaration_list: JsVariableDeclarationList {
                                     kind_token: LET_KW@183..190 "let" [Whitespace("\n\n\t")] [Whitespace(" ")],
-                                    declarators: [
-                                        JsVariableDeclarator {
+                                    declarations: [
+                                        JsVariableDeclaration {
                                             id: JsIdentifierBinding {
                                                 name_token: IDENT@190..192 "a" [] [Whitespace(" ")],
                                             },
-                                            init: JsEqualValueClause {
+                                            excl_token: missing (optional),
+                                            type_annotation: missing (optional),
+                                            initializer: JsInitializerClause {
                                                 eq_token: EQ@192..194 "=" [] [Whitespace(" ")],
                                                 expression: JsNumberLiteralExpression {
                                                     value_token: JS_NUMBER_LITERAL@194..196 "10" [] [],
@@ -141,15 +147,17 @@ JsScript {
             },
             semicolon_token: SEMICOLON@235..236 ";" [] [],
         },
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@236..242 "let" [Whitespace("\n\n")] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@242..244 "b" [] [Whitespace(" ")],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@244..246 "=" [] [Whitespace(" ")],
                             expression: JsArrowFunctionExpression {
                                 async_token: missing (optional),
@@ -170,15 +178,17 @@ JsScript {
                                         },
                                     ],
                                     statements: [
-                                        JsVariableDeclarationStatement {
-                                            declaration: JsVariableDeclaration {
+                                        JsVariableStatement {
+                                            declaration_list: JsVariableDeclarationList {
                                                 kind_token: LET_KW@268..275 "let" [Whitespace("\n\n\t")] [Whitespace(" ")],
-                                                declarators: [
-                                                    JsVariableDeclarator {
+                                                declarations: [
+                                                    JsVariableDeclaration {
                                                         id: JsIdentifierBinding {
                                                             name_token: IDENT@275..277 "a" [] [Whitespace(" ")],
                                                         },
-                                                        init: JsEqualValueClause {
+                                                        excl_token: missing (optional),
+                                                        type_annotation: missing (optional),
+                                                        initializer: JsInitializerClause {
                                                             eq_token: EQ@277..279 "=" [] [Whitespace(" ")],
                                                             expression: JsNumberLiteralExpression {
                                                                 value_token: JS_NUMBER_LITERAL@279..281 "10" [] [],
@@ -226,14 +236,16 @@ JsScript {
     0: JS_DIRECTIVE@0..20
       0: JS_STRING_LITERAL@0..20 "\"use new\"" [Comments("// SCRIPT"), Whitespace("\n\n")] []
   2: LIST@20..359
-    0: JS_VARIABLE_DECLARATION_STATEMENT@20..33
-      0: JS_VARIABLE_DECLARATION@20..32
+    0: JS_VARIABLE_STATEMENT@20..33
+      0: JS_VARIABLE_DECLARATION_LIST@20..32
         0: LET_KW@20..26 "let" [Whitespace("\n\n")] [Whitespace(" ")]
         1: LIST@26..32
-          0: JS_VARIABLE_DECLARATOR@26..32
+          0: JS_VARIABLE_DECLARATION@26..32
             0: JS_IDENTIFIER_BINDING@26..28
               0: IDENT@26..28 "a" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@28..32
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@28..32
               0: EQ@28..30 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@30..32
                 0: JS_NUMBER_LITERAL@30..32 "10" [] []
@@ -259,14 +271,16 @@ JsScript {
             0: JS_STRING_LITERAL@86..100 "'use strict'" [Whitespace("\n\t")] []
             1: SEMICOLON@100..101 ";" [] []
         2: LIST@101..150
-          0: JS_VARIABLE_DECLARATION_STATEMENT@101..115
-            0: JS_VARIABLE_DECLARATION@101..114
+          0: JS_VARIABLE_STATEMENT@101..115
+            0: JS_VARIABLE_DECLARATION_LIST@101..114
               0: LET_KW@101..108 "let" [Whitespace("\n\n\t")] [Whitespace(" ")]
               1: LIST@108..114
-                0: JS_VARIABLE_DECLARATOR@108..114
+                0: JS_VARIABLE_DECLARATION@108..114
                   0: JS_IDENTIFIER_BINDING@108..110
                     0: IDENT@108..110 "a" [] [Whitespace(" ")]
-                  1: JS_EQUAL_VALUE_CLAUSE@110..114
+                  1: (empty)
+                  2: (empty)
+                  3: JS_INITIALIZER_CLAUSE@110..114
                     0: EQ@110..112 "=" [] [Whitespace(" ")]
                     1: JS_NUMBER_LITERAL_EXPRESSION@112..114
                       0: JS_NUMBER_LITERAL@112..114 "10" [] []
@@ -295,14 +309,16 @@ JsScript {
                 0: JS_STRING_LITERAL@168..182 "\"use strict\"" [Whitespace("\n\t")] []
                 1: SEMICOLON@182..183 ";" [] []
             2: LIST@183..232
-              0: JS_VARIABLE_DECLARATION_STATEMENT@183..197
-                0: JS_VARIABLE_DECLARATION@183..196
+              0: JS_VARIABLE_STATEMENT@183..197
+                0: JS_VARIABLE_DECLARATION_LIST@183..196
                   0: LET_KW@183..190 "let" [Whitespace("\n\n\t")] [Whitespace(" ")]
                   1: LIST@190..196
-                    0: JS_VARIABLE_DECLARATOR@190..196
+                    0: JS_VARIABLE_DECLARATION@190..196
                       0: JS_IDENTIFIER_BINDING@190..192
                         0: IDENT@190..192 "a" [] [Whitespace(" ")]
-                      1: JS_EQUAL_VALUE_CLAUSE@192..196
+                      1: (empty)
+                      2: (empty)
+                      3: JS_INITIALIZER_CLAUSE@192..196
                         0: EQ@192..194 "=" [] [Whitespace(" ")]
                         1: JS_NUMBER_LITERAL_EXPRESSION@194..196
                           0: JS_NUMBER_LITERAL@194..196 "10" [] []
@@ -314,14 +330,16 @@ JsScript {
             3: R_CURLY@232..234 "}" [Whitespace("\n")] []
         2: R_PAREN@234..235 ")" [] []
       1: SEMICOLON@235..236 ";" [] []
-    4: JS_VARIABLE_DECLARATION_STATEMENT@236..320
-      0: JS_VARIABLE_DECLARATION@236..320
+    4: JS_VARIABLE_STATEMENT@236..320
+      0: JS_VARIABLE_DECLARATION_LIST@236..320
         0: LET_KW@236..242 "let" [Whitespace("\n\n")] [Whitespace(" ")]
         1: LIST@242..320
-          0: JS_VARIABLE_DECLARATOR@242..320
+          0: JS_VARIABLE_DECLARATION@242..320
             0: JS_IDENTIFIER_BINDING@242..244
               0: IDENT@242..244 "b" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@244..320
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@244..320
               0: EQ@244..246 "=" [] [Whitespace(" ")]
               1: JS_ARROW_FUNCTION_EXPRESSION@246..320
                 0: JS_PARAMETER_LIST@246..249
@@ -336,14 +354,16 @@ JsScript {
                       0: JS_STRING_LITERAL@253..267 "\"use strict\"" [Whitespace("\n\t")] []
                       1: SEMICOLON@267..268 ";" [] []
                   2: LIST@268..318
-                    0: JS_VARIABLE_DECLARATION_STATEMENT@268..282
-                      0: JS_VARIABLE_DECLARATION@268..281
+                    0: JS_VARIABLE_STATEMENT@268..282
+                      0: JS_VARIABLE_DECLARATION_LIST@268..281
                         0: LET_KW@268..275 "let" [Whitespace("\n\n\t")] [Whitespace(" ")]
                         1: LIST@275..281
-                          0: JS_VARIABLE_DECLARATOR@275..281
+                          0: JS_VARIABLE_DECLARATION@275..281
                             0: JS_IDENTIFIER_BINDING@275..277
                               0: IDENT@275..277 "a" [] [Whitespace(" ")]
-                            1: JS_EQUAL_VALUE_CLAUSE@277..281
+                            1: (empty)
+                            2: (empty)
+                            3: JS_INITIALIZER_CLAUSE@277..281
                               0: EQ@277..279 "=" [] [Whitespace(" ")]
                               1: JS_NUMBER_LITERAL_EXPRESSION@279..281
                                 0: JS_NUMBER_LITERAL@279..281 "10" [] []

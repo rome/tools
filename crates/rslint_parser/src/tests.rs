@@ -60,7 +60,8 @@ fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
 		assert_eq!(
 			parse.syntax().to_string(),
 			text,
-			"Original source and re-printed tree differ"
+			"Original source and re-printed tree differ\nParsed Tree: {:#?}",
+			parse.syntax(),
 		);
 
 		parse
@@ -293,7 +294,7 @@ pub fn node_range_must_be_correct() {
 	let var_decl = root
 		.syntax()
 		.descendants()
-		.find(|x| x.kind() == SyntaxKind::JS_VARIABLE_DECLARATION_STATEMENT)
+		.find(|x| x.kind() == SyntaxKind::JS_VARIABLE_STATEMENT)
 		.unwrap();
 
 	let range = var_decl.text_range();

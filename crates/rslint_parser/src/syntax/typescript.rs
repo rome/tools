@@ -176,7 +176,7 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 				.unwrap()
 				.undo_completion(p)
 				.abandon(p);
-			m.complete(p, JS_VARIABLE_DECLARATION_STATEMENT)
+			m.complete(p, JS_VARIABLE_STATEMENT)
 		}
 		_ if p.nth_src(1) == "let" => {
 			let m = p.start();
@@ -185,7 +185,7 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 				.unwrap()
 				.undo_completion(p)
 				.abandon(p);
-			m.complete(p, JS_VARIABLE_DECLARATION_STATEMENT)
+			m.complete(p, JS_VARIABLE_STATEMENT)
 		}
 		_ if p.nth_src(1) == "global" => {
 			let m = p.start();

@@ -27,15 +27,17 @@ JsModule {
                     JsBlockStatement {
                         l_curly_token: L_CURLY@27..28 "{" [] [],
                         statements: [
-                            JsVariableDeclarationStatement {
-                                declaration: JsVariableDeclaration {
+                            JsVariableStatement {
+                                declaration_list: JsVariableDeclarationList {
                                     kind_token: VAR_KW@28..35 "var" [Whitespace("\n\t\t")] [Whitespace(" ")],
-                                    declarators: [
-                                        JsVariableDeclarator {
+                                    declarations: [
+                                        JsVariableDeclaration {
                                             id: JsIdentifierBinding {
                                                 name_token: IDENT@35..45 "something" [] [Whitespace(" ")],
                                             },
-                                            init: JsEqualValueClause {
+                                            excl_token: missing (optional),
+                                            type_annotation: missing (optional),
+                                            initializer: JsInitializerClause {
                                                 eq_token: EQ@45..47 "=" [] [Whitespace(" ")],
                                                 expression: JsStringLiteralExpression {
                                                     value_token: JS_STRING_LITERAL@47..54 "\"lorem\"" [] [],
@@ -80,14 +82,16 @@ JsModule {
           1: JS_BLOCK_STATEMENT@27..58
             0: L_CURLY@27..28 "{" [] []
             1: LIST@28..55
-              0: JS_VARIABLE_DECLARATION_STATEMENT@28..55
-                0: JS_VARIABLE_DECLARATION@28..54
+              0: JS_VARIABLE_STATEMENT@28..55
+                0: JS_VARIABLE_DECLARATION_LIST@28..54
                   0: VAR_KW@28..35 "var" [Whitespace("\n\t\t")] [Whitespace(" ")]
                   1: LIST@35..54
-                    0: JS_VARIABLE_DECLARATOR@35..54
+                    0: JS_VARIABLE_DECLARATION@35..54
                       0: JS_IDENTIFIER_BINDING@35..45
                         0: IDENT@35..45 "something" [] [Whitespace(" ")]
-                      1: JS_EQUAL_VALUE_CLAUSE@45..54
+                      1: (empty)
+                      2: (empty)
+                      3: JS_INITIALIZER_CLAUSE@45..54
                         0: EQ@45..47 "=" [] [Whitespace(" ")]
                         1: JS_STRING_LITERAL_EXPRESSION@47..54
                           0: JS_STRING_LITERAL@47..54 "\"lorem\"" [] []

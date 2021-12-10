@@ -203,7 +203,7 @@ JsModule {
                                 identifier: JsIdentifierAssignment {
                                     name_token: IDENT@94..96 "x" [] [Whitespace(" ")],
                                 },
-                                init: JsEqualValueClause {
+                                init: JsInitializerClause {
                                     eq_token: EQ@96..98 "=" [] [Whitespace(" ")],
                                     expression: JsStringLiteralExpression {
                                         value_token: JS_STRING_LITERAL@98..107 "\"default\"" [] [],
@@ -239,7 +239,7 @@ JsModule {
                                 pattern: JsIdentifierAssignment {
                                     name_token: IDENT@120..122 "y" [] [Whitespace(" ")],
                                 },
-                                init: JsEqualValueClause {
+                                init: JsInitializerClause {
                                     eq_token: EQ@122..124 "=" [] [Whitespace(" ")],
                                     expression: JsStringLiteralExpression {
                                         value_token: JS_STRING_LITERAL@124..133 "\"default\"" [] [],
@@ -410,7 +410,7 @@ JsModule {
               0: JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY@94..107
                 0: JS_IDENTIFIER_ASSIGNMENT@94..96
                   0: IDENT@94..96 "x" [] [Whitespace(" ")]
-                1: JS_EQUAL_VALUE_CLAUSE@96..107
+                1: JS_INITIALIZER_CLAUSE@96..107
                   0: EQ@96..98 "=" [] [Whitespace(" ")]
                   1: JS_STRING_LITERAL_EXPRESSION@98..107
                     0: JS_STRING_LITERAL@98..107 "\"default\"" [] []
@@ -435,7 +435,7 @@ JsModule {
                 1: COLON@118..120 ":" [] [Whitespace(" ")]
                 2: JS_IDENTIFIER_ASSIGNMENT@120..122
                   0: IDENT@120..122 "y" [] [Whitespace(" ")]
-                3: JS_EQUAL_VALUE_CLAUSE@122..133
+                3: JS_INITIALIZER_CLAUSE@122..133
                   0: EQ@122..124 "=" [] [Whitespace(" ")]
                   1: JS_STRING_LITERAL_EXPRESSION@124..133
                     0: JS_STRING_LITERAL@124..133 "\"default\"" [] []

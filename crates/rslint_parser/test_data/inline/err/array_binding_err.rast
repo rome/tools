@@ -2,11 +2,11 @@ JsModule {
     interpreter_token: missing (optional),
     directives: [],
     items: [
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@4..5 "[" [] [],
                             elements: [
@@ -20,7 +20,9 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@8..10 "]" [] [Whitespace(" ")],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@10..12 "=" [] [Whitespace(" ")],
                             expression: JsArrayExpression {
                                 l_brack_token: L_BRACK@12..13 "[" [] [],
@@ -41,11 +43,11 @@ JsModule {
             },
             semicolon_token: SEMICOLON@18..19 ";" [] [],
         },
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@19..24 "let" [Whitespace("\n")] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@24..25 "[" [] [],
                             elements: [
@@ -59,7 +61,9 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@35..37 "]" [] [Whitespace(" ")],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@37..39 "=" [] [Whitespace(" ")],
                             expression: JsArrayExpression {
                                 l_brack_token: L_BRACK@39..40 "[" [] [],
@@ -80,11 +84,11 @@ JsModule {
             },
             semicolon_token: SEMICOLON@45..46 ";" [] [],
         },
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@51..52 "[" [] [],
                             elements: [
@@ -96,7 +100,9 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@61..63 "]" [] [Whitespace(" ")],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@63..65 "=" [] [Whitespace(" ")],
                             expression: JsArrayExpression {
                                 l_brack_token: L_BRACK@65..66 "[" [] [],
@@ -117,11 +123,11 @@ JsModule {
             },
             semicolon_token: SEMICOLON@71..72 ";" [] [],
         },
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@72..77 "let" [Whitespace("\n")] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@77..78 "[" [] [],
                             elements: [
@@ -146,7 +152,9 @@ JsModule {
                             ],
                             r_brack_token: missing (required),
                         },
-                        init: missing (optional),
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                 ],
             },
@@ -159,11 +167,11 @@ JsModule {
   0: (empty)
   1: LIST@0..0
   2: LIST@0..88
-    0: JS_VARIABLE_DECLARATION_STATEMENT@0..19
-      0: JS_VARIABLE_DECLARATION@0..18
+    0: JS_VARIABLE_STATEMENT@0..19
+      0: JS_VARIABLE_DECLARATION_LIST@0..18
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..18
-          0: JS_VARIABLE_DECLARATOR@4..18
+          0: JS_VARIABLE_DECLARATION@4..18
             0: JS_ARRAY_BINDING_PATTERN@4..10
               0: L_BRACK@4..5 "[" [] []
               1: LIST@5..8
@@ -173,7 +181,9 @@ JsModule {
                 2: JS_IDENTIFIER_BINDING@7..8
                   0: IDENT@7..8 "b" [] []
               2: R_BRACK@8..10 "]" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@10..18
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@10..18
               0: EQ@10..12 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@12..18
                 0: L_BRACK@12..13 "[" [] []
@@ -185,11 +195,11 @@ JsModule {
                     0: JS_NUMBER_LITERAL@16..17 "2" [] []
                 2: R_BRACK@17..18 "]" [] []
       1: SEMICOLON@18..19 ";" [] []
-    1: JS_VARIABLE_DECLARATION_STATEMENT@19..46
-      0: JS_VARIABLE_DECLARATION@19..45
+    1: JS_VARIABLE_STATEMENT@19..46
+      0: JS_VARIABLE_DECLARATION_LIST@19..45
         0: LET_KW@19..24 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@24..45
-          0: JS_VARIABLE_DECLARATOR@24..45
+          0: JS_VARIABLE_DECLARATION@24..45
             0: JS_ARRAY_BINDING_PATTERN@24..37
               0: L_BRACK@24..25 "[" [] []
               1: LIST@25..35
@@ -199,7 +209,9 @@ JsModule {
                   2: JS_STRING_LITERAL_EXPRESSION@26..35
                     0: JS_STRING_LITERAL@26..35 "\"default\"" [] []
               2: R_BRACK@35..37 "]" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@37..45
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@37..45
               0: EQ@37..39 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@39..45
                 0: L_BRACK@39..40 "[" [] []
@@ -211,18 +223,20 @@ JsModule {
                     0: JS_NUMBER_LITERAL@43..44 "2" [] []
                 2: R_BRACK@44..45 "]" [] []
       1: SEMICOLON@45..46 ";" [] []
-    2: JS_VARIABLE_DECLARATION_STATEMENT@46..72
-      0: JS_VARIABLE_DECLARATION@46..71
+    2: JS_VARIABLE_STATEMENT@46..72
+      0: JS_VARIABLE_DECLARATION_LIST@46..71
         0: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@51..71
-          0: JS_VARIABLE_DECLARATOR@51..71
+          0: JS_VARIABLE_DECLARATION@51..71
             0: JS_ARRAY_BINDING_PATTERN@51..63
               0: L_BRACK@51..52 "[" [] []
               1: LIST@52..61
                 0: JS_UNKNOWN_BINDING@52..61
                   0: JS_STRING_LITERAL@52..61 "\"default\"" [] []
               2: R_BRACK@61..63 "]" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@63..71
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@63..71
               0: EQ@63..65 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@65..71
                 0: L_BRACK@65..66 "[" [] []
@@ -234,11 +248,11 @@ JsModule {
                     0: JS_NUMBER_LITERAL@69..70 "2" [] []
                 2: R_BRACK@70..71 "]" [] []
       1: SEMICOLON@71..72 ";" [] []
-    3: JS_VARIABLE_DECLARATION_STATEMENT@72..88
-      0: JS_VARIABLE_DECLARATION@72..87
+    3: JS_VARIABLE_STATEMENT@72..88
+      0: JS_VARIABLE_DECLARATION_LIST@72..87
         0: LET_KW@72..77 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@77..87
-          0: JS_VARIABLE_DECLARATOR@77..87
+          0: JS_VARIABLE_DECLARATION@77..87
             0: JS_ARRAY_BINDING_PATTERN@77..87
               0: L_BRACK@77..78 "[" [] []
               1: LIST@78..87
@@ -256,6 +270,8 @@ JsModule {
                     2: R_BRACK@86..87 "]" [] []
                 1: (empty)
             1: (empty)
+            2: (empty)
+            3: (empty)
       1: SEMICOLON@87..88 ";" [] []
   3: EOF@88..89 "" [Whitespace("\n")] []
 --

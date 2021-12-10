@@ -50,7 +50,7 @@ JsModule {
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
                     ty: missing (optional),
-                    value: JsEqualValueClause {
+                    value: JsInitializerClause {
                         eq_token: EQ@53..55 "=" [] [Whitespace(" ")],
                         expression: JsStringLiteralExpression {
                             value_token: JS_STRING_LITERAL@55..58 "\"a\"" [] [],
@@ -135,7 +135,7 @@ JsModule {
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
                     ty: missing (optional),
-                    value: JsEqualValueClause {
+                    value: JsInitializerClause {
                         eq_token: EQ@140..142 "=" [] [Whitespace(" ")],
                         expression: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@142..143 "1" [] [],
@@ -170,7 +170,7 @@ JsModule {
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
                     ty: missing (optional),
-                    value: JsEqualValueClause {
+                    value: JsInitializerClause {
                         eq_token: EQ@176..178 "=" [] [Whitespace(" ")],
                         expression: JsStringLiteralExpression {
                             value_token: JS_STRING_LITERAL@178..181 "\"a\"" [] [],
@@ -205,7 +205,7 @@ JsModule {
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
                     ty: missing (optional),
-                    value: JsEqualValueClause {
+                    value: JsInitializerClause {
                         eq_token: EQ@248..250 "=" [] [Whitespace(" ")],
                         expression: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@250..251 "1" [] [],
@@ -242,7 +242,7 @@ JsModule {
         2: JS_PROPERTY_CLASS_MEMBER@31..58
           0: JS_LITERAL_MEMBER_NAME@31..53
             0: IDENT@31..53 "initializedProperty" [Whitespace("\n\t")] [Whitespace(" ")]
-          1: JS_EQUAL_VALUE_CLAUSE@53..58
+          1: JS_INITIALIZER_CLAUSE@53..58
             0: EQ@53..55 "=" [] [Whitespace(" ")]
             1: JS_STRING_LITERAL_EXPRESSION@55..58
               0: JS_STRING_LITERAL@55..58 "\"a\"" [] []
@@ -279,7 +279,7 @@ JsModule {
           0: STATIC_KW@105..114 "static" [Whitespace("\n\t")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@114..140
             0: IDENT@114..140 "staticInitializedProperty" [] [Whitespace(" ")]
-          2: JS_EQUAL_VALUE_CLAUSE@140..143
+          2: JS_INITIALIZER_CLAUSE@140..143
             0: EQ@140..142 "=" [] [Whitespace(" ")]
             1: JS_NUMBER_LITERAL_EXPRESSION@142..143
               0: JS_NUMBER_LITERAL@142..143 "1" [] []
@@ -294,7 +294,7 @@ JsModule {
           0: JS_PRIVATE_CLASS_MEMBER_NAME@154..176
             0: HASH@154..157 "#" [Whitespace("\n\t")] []
             1: IDENT@157..176 "privateInitialized" [] [Whitespace(" ")]
-          1: JS_EQUAL_VALUE_CLAUSE@176..181
+          1: JS_INITIALIZER_CLAUSE@176..181
             0: EQ@176..178 "=" [] [Whitespace(" ")]
             1: JS_STRING_LITERAL_EXPRESSION@178..181
               0: JS_STRING_LITERAL@178..181 "\"a\"" [] []
@@ -311,7 +311,7 @@ JsModule {
           1: JS_PRIVATE_CLASS_MEMBER_NAME@214..248
             0: HASH@214..215 "#" [] []
             1: IDENT@215..248 "staticPrivateInitializedProperty" [] [Whitespace(" ")]
-          2: JS_EQUAL_VALUE_CLAUSE@248..251
+          2: JS_INITIALIZER_CLAUSE@248..251
             0: EQ@248..250 "=" [] [Whitespace(" ")]
             1: JS_NUMBER_LITERAL_EXPRESSION@250..251
               0: JS_NUMBER_LITERAL@250..251 "1" [] []

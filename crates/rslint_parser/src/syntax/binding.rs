@@ -1,5 +1,5 @@
 use crate::parser::{expected_any, ToDiagnostic};
-use crate::syntax::class::parse_equal_value_clause;
+use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{is_at_identifier, parse_identifier};
 use crate::syntax::js_parse_error::{
 	expected_binding, expected_identifier, expected_object_member_name,
@@ -262,7 +262,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
 			JS_OBJECT_BINDING_PATTERN_PROPERTY
 		};
 
-		parse_equal_value_clause(p).or_missing(p);
+		parse_initializer_clause(p).or_missing(p);
 
 		Present(m.complete(p, kind))
 	}

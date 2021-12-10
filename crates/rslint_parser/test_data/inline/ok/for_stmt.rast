@@ -5,23 +5,23 @@ JsModule {
         ForStmt {
             for_token: FOR_KW@0..4 "for" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@4..5 "(" [] [],
-            init: ForStmtInit {
-                inner: JsVariableDeclaration {
-                    kind_token: LET_KW@5..9 "let" [] [Whitespace(" ")],
-                    declarators: [
-                        JsVariableDeclarator {
-                            id: JsIdentifierBinding {
-                                name_token: IDENT@9..11 "i" [] [Whitespace(" ")],
-                            },
-                            init: JsEqualValueClause {
-                                eq_token: EQ@11..13 "=" [] [Whitespace(" ")],
-                                expression: JsNumberLiteralExpression {
-                                    value_token: JS_NUMBER_LITERAL@13..14 "5" [] [],
-                                },
+            initializer: JsVariableDeclarationList {
+                kind_token: LET_KW@5..9 "let" [] [Whitespace(" ")],
+                declarations: [
+                    JsVariableDeclaration {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@9..11 "i" [] [Whitespace(" ")],
+                        },
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@11..13 "=" [] [Whitespace(" ")],
+                            expression: JsNumberLiteralExpression {
+                                value_token: JS_NUMBER_LITERAL@13..14 "5" [] [],
                             },
                         },
-                    ],
-                },
+                    },
+                ],
             },
             first_semi_token: SEMICOLON@14..16 ";" [] [Whitespace(" ")],
             test: ForStmtTest {
@@ -53,63 +53,64 @@ JsModule {
                 r_curly_token: R_CURLY@30..31 "}" [] [],
             },
         },
-        ForOfStmt {
+        JsForOfStatement {
             for_token: FOR_KW@31..36 "for" [Whitespace("\n")] [Whitespace(" ")],
+            await_token: missing (optional),
             l_paren_token: L_PAREN@36..37 "(" [] [],
-            left: JsVariableDeclaration {
+            initializer: JsForVariableDeclaration {
                 kind_token: LET_KW@37..41 "let" [] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
-                        id: JsObjectBindingPattern {
-                            l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],
-                            properties: [
-                                JsObjectBindingPatternShorthandProperty {
-                                    identifier: JsIdentifierBinding {
-                                        name_token: IDENT@43..46 "foo" [] [],
-                                    },
-                                    init: missing (optional),
+                declaration: JsVariableDeclaration {
+                    id: JsObjectBindingPattern {
+                        l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],
+                        properties: [
+                            JsObjectBindingPatternShorthandProperty {
+                                identifier: JsIdentifierBinding {
+                                    name_token: IDENT@43..46 "foo" [] [],
                                 },
-                                COMMA@46..48 "," [] [Whitespace(" ")],
-                                JsObjectBindingPatternShorthandProperty {
-                                    identifier: JsIdentifierBinding {
-                                        name_token: IDENT@48..52 "bar" [] [Whitespace(" ")],
-                                    },
-                                    init: missing (optional),
+                                init: missing (optional),
+                            },
+                            COMMA@46..48 "," [] [Whitespace(" ")],
+                            JsObjectBindingPatternShorthandProperty {
+                                identifier: JsIdentifierBinding {
+                                    name_token: IDENT@48..52 "bar" [] [Whitespace(" ")],
                                 },
-                            ],
-                            r_curly_token: R_CURLY@52..54 "}" [] [Whitespace(" ")],
-                        },
-                        init: missing (optional),
+                                init: missing (optional),
+                            },
+                        ],
+                        r_curly_token: R_CURLY@52..54 "}" [] [Whitespace(" ")],
                     },
-                ],
+                    excl_token: missing (optional),
+                    type_annotation: missing (optional),
+                    initializer: missing (optional),
+                },
             },
             of_token: OF_KW@54..57 "of" [] [Whitespace(" ")],
-            right: JsObjectExpression {
+            expression: JsObjectExpression {
                 l_curly_token: L_CURLY@57..58 "{" [] [],
                 members: [],
                 r_curly_token: R_CURLY@58..59 "}" [] [],
             },
             r_paren_token: R_PAREN@59..61 ")" [] [Whitespace(" ")],
-            cons: JsBlockStatement {
+            body: JsBlockStatement {
                 l_curly_token: L_CURLY@61..62 "{" [] [],
                 statements: [],
                 r_curly_token: R_CURLY@62..63 "}" [] [],
             },
         },
-        ForInStmt {
+        JsForInStatement {
             for_token: FOR_KW@63..68 "for" [Whitespace("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@68..69 "(" [] [],
-            left: JsIdentifierAssignment {
+            initializer: JsIdentifierAssignment {
                 name_token: IDENT@69..73 "foo" [] [Whitespace(" ")],
             },
             in_token: IN_KW@73..76 "in" [] [Whitespace(" ")],
-            right: JsObjectExpression {
+            expression: JsObjectExpression {
                 l_curly_token: L_CURLY@76..77 "{" [] [],
                 members: [],
                 r_curly_token: R_CURLY@77..78 "}" [] [],
             },
             r_paren_token: R_PAREN@78..80 ")" [] [Whitespace(" ")],
-            cons: JsBlockStatement {
+            body: JsBlockStatement {
                 l_curly_token: L_CURLY@80..81 "{" [] [],
                 statements: [],
                 r_curly_token: R_CURLY@81..82 "}" [] [],
@@ -118,7 +119,7 @@ JsModule {
         ForStmt {
             for_token: FOR_KW@82..87 "for" [Whitespace("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@87..88 "(" [] [],
-            init: missing (optional),
+            initializer: missing (optional),
             first_semi_token: SEMICOLON@88..89 ";" [] [],
             test: missing (optional),
             second_semi_token: SEMICOLON@89..90 ";" [] [],
@@ -130,28 +131,29 @@ JsModule {
                 r_curly_token: R_CURLY@93..94 "}" [] [],
             },
         },
-        ForOfStmt {
+        JsForOfStatement {
             for_token: FOR_KW@94..99 "for" [Whitespace("\n")] [Whitespace(" ")],
+            await_token: missing (optional),
             l_paren_token: L_PAREN@99..100 "(" [] [],
-            left: JsVariableDeclaration {
+            initializer: JsForVariableDeclaration {
                 kind_token: LET_KW@100..104 "let" [] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
-                        id: JsIdentifierBinding {
-                            name_token: IDENT@104..108 "foo" [] [Whitespace(" ")],
-                        },
-                        init: missing (optional),
+                declaration: JsVariableDeclaration {
+                    id: JsIdentifierBinding {
+                        name_token: IDENT@104..108 "foo" [] [Whitespace(" ")],
                     },
-                ],
+                    excl_token: missing (optional),
+                    type_annotation: missing (optional),
+                    initializer: missing (optional),
+                },
             },
             of_token: OF_KW@108..111 "of" [] [Whitespace(" ")],
-            right: JsArrayExpression {
+            expression: JsArrayExpression {
                 l_brack_token: L_BRACK@111..112 "[" [] [],
                 elements: [],
                 r_brack_token: R_BRACK@112..113 "]" [] [],
             },
             r_paren_token: R_PAREN@113..115 ")" [] [Whitespace(" ")],
-            cons: JsBlockStatement {
+            body: JsBlockStatement {
                 l_curly_token: L_CURLY@115..116 "{" [] [],
                 statements: [],
                 r_curly_token: R_CURLY@116..117 "}" [] [],
@@ -167,17 +169,18 @@ JsModule {
     0: FOR_STMT@0..31
       0: FOR_KW@0..4 "for" [] [Whitespace(" ")]
       1: L_PAREN@4..5 "(" [] []
-      2: FOR_STMT_INIT@5..14
-        0: JS_VARIABLE_DECLARATION@5..14
-          0: LET_KW@5..9 "let" [] [Whitespace(" ")]
-          1: LIST@9..14
-            0: JS_VARIABLE_DECLARATOR@9..14
-              0: JS_IDENTIFIER_BINDING@9..11
-                0: IDENT@9..11 "i" [] [Whitespace(" ")]
-              1: JS_EQUAL_VALUE_CLAUSE@11..14
-                0: EQ@11..13 "=" [] [Whitespace(" ")]
-                1: JS_NUMBER_LITERAL_EXPRESSION@13..14
-                  0: JS_NUMBER_LITERAL@13..14 "5" [] []
+      2: JS_VARIABLE_DECLARATION_LIST@5..14
+        0: LET_KW@5..9 "let" [] [Whitespace(" ")]
+        1: LIST@9..14
+          0: JS_VARIABLE_DECLARATION@9..14
+            0: JS_IDENTIFIER_BINDING@9..11
+              0: IDENT@9..11 "i" [] [Whitespace(" ")]
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@11..14
+              0: EQ@11..13 "=" [] [Whitespace(" ")]
+              1: JS_NUMBER_LITERAL_EXPRESSION@13..14
+                0: JS_NUMBER_LITERAL@13..14 "5" [] []
       3: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
       4: FOR_STMT_TEST@16..22
         0: JS_BINARY_EXPRESSION@16..22
@@ -198,27 +201,28 @@ JsModule {
         0: L_CURLY@29..30 "{" [] []
         1: LIST@30..30
         2: R_CURLY@30..31 "}" [] []
-    1: FOR_OF_STMT@31..63
+    1: JS_FOR_OF_STATEMENT@31..63
       0: FOR_KW@31..36 "for" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@36..37 "(" [] []
-      2: JS_VARIABLE_DECLARATION@37..54
+      2: JS_FOR_VARIABLE_DECLARATION@37..54
         0: LET_KW@37..41 "let" [] [Whitespace(" ")]
-        1: LIST@41..54
-          0: JS_VARIABLE_DECLARATOR@41..54
-            0: JS_OBJECT_BINDING_PATTERN@41..54
-              0: L_CURLY@41..43 "{" [] [Whitespace(" ")]
-              1: LIST@43..52
-                0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@43..46
-                  0: JS_IDENTIFIER_BINDING@43..46
-                    0: IDENT@43..46 "foo" [] []
-                  1: (empty)
-                1: COMMA@46..48 "," [] [Whitespace(" ")]
-                2: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@48..52
-                  0: JS_IDENTIFIER_BINDING@48..52
-                    0: IDENT@48..52 "bar" [] [Whitespace(" ")]
-                  1: (empty)
-              2: R_CURLY@52..54 "}" [] [Whitespace(" ")]
-            1: (empty)
+        1: JS_VARIABLE_DECLARATION@41..54
+          0: JS_OBJECT_BINDING_PATTERN@41..54
+            0: L_CURLY@41..43 "{" [] [Whitespace(" ")]
+            1: LIST@43..52
+              0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@43..46
+                0: JS_IDENTIFIER_BINDING@43..46
+                  0: IDENT@43..46 "foo" [] []
+                1: (empty)
+              1: COMMA@46..48 "," [] [Whitespace(" ")]
+              2: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@48..52
+                0: JS_IDENTIFIER_BINDING@48..52
+                  0: IDENT@48..52 "bar" [] [Whitespace(" ")]
+                1: (empty)
+            2: R_CURLY@52..54 "}" [] [Whitespace(" ")]
+          1: (empty)
+          2: (empty)
+          3: (empty)
       3: OF_KW@54..57 "of" [] [Whitespace(" ")]
       4: JS_OBJECT_EXPRESSION@57..59
         0: L_CURLY@57..58 "{" [] []
@@ -229,7 +233,7 @@ JsModule {
         0: L_CURLY@61..62 "{" [] []
         1: LIST@62..62
         2: R_CURLY@62..63 "}" [] []
-    2: FOR_IN_STMT@63..82
+    2: JS_FOR_IN_STATEMENT@63..82
       0: FOR_KW@63..68 "for" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@68..69 "(" [] []
       2: JS_IDENTIFIER_ASSIGNMENT@69..73
@@ -254,16 +258,17 @@ JsModule {
         0: L_CURLY@92..93 "{" [] []
         1: LIST@93..93
         2: R_CURLY@93..94 "}" [] []
-    4: FOR_OF_STMT@94..117
+    4: JS_FOR_OF_STATEMENT@94..117
       0: FOR_KW@94..99 "for" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@99..100 "(" [] []
-      2: JS_VARIABLE_DECLARATION@100..108
+      2: JS_FOR_VARIABLE_DECLARATION@100..108
         0: LET_KW@100..104 "let" [] [Whitespace(" ")]
-        1: LIST@104..108
-          0: JS_VARIABLE_DECLARATOR@104..108
-            0: JS_IDENTIFIER_BINDING@104..108
-              0: IDENT@104..108 "foo" [] [Whitespace(" ")]
-            1: (empty)
+        1: JS_VARIABLE_DECLARATION@104..108
+          0: JS_IDENTIFIER_BINDING@104..108
+            0: IDENT@104..108 "foo" [] [Whitespace(" ")]
+          1: (empty)
+          2: (empty)
+          3: (empty)
       3: OF_KW@108..111 "of" [] [Whitespace(" ")]
       4: JS_ARRAY_EXPRESSION@111..113
         0: L_BRACK@111..112 "[" [] []

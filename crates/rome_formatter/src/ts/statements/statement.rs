@@ -19,7 +19,7 @@ impl ToFormatElement for JsAnyStatement {
 				while_statement.to_format_element(formatter)
 			}
 			JsAnyStatement::ForStmt(for_stmt) => for_stmt.to_format_element(formatter),
-			JsAnyStatement::ForInStmt(for_in_statement) => {
+			JsAnyStatement::JsForInStatement(for_in_statement) => {
 				for_in_statement.to_format_element(formatter)
 			}
 			JsAnyStatement::JsContinueStatement(continue_statement) => {
@@ -48,14 +48,12 @@ impl ToFormatElement for JsAnyStatement {
 				debugger_statement.to_format_element(formatter)
 			}
 
-			JsAnyStatement::ForOfStmt(for_of_statement) => {
+			JsAnyStatement::JsForOfStatement(for_of_statement) => {
 				for_of_statement.to_format_element(formatter)
 			}
 			JsAnyStatement::JsFunctionDeclaration(decl) => decl.to_format_element(formatter),
 			JsAnyStatement::JsClassDeclaration(decl) => decl.to_format_element(formatter),
-			JsAnyStatement::JsVariableDeclarationStatement(decl) => {
-				decl.to_format_element(formatter)
-			}
+			JsAnyStatement::JsVariableStatement(decl) => decl.to_format_element(formatter),
 			JsAnyStatement::JsUnknownStatement(unknown_statement) => {
 				Ok(formatter.format_raw(unknown_statement.syntax()))
 			}
