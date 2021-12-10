@@ -1211,6 +1211,33 @@ impl ParseNodeList for SwitchClausesList {
 	}
 }
 
+struct ConsList;
+impl ParseNodeList for ConsList {
+	type ParsedElement = CompletedMarker;
+
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+		match parse_statement(p, None) {
+			None => Absent,
+			Some(marker) => Present(marker),
+		}
+	}
+
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		p.at_ts(token_set![T![default], T![case], T!['}']])
+	}
+
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> RecoveryResult {
+		parsed_element.or_recover(
+			p,
+			&ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
+			js_parse_error::expected_case,
+		)
+	}
+}
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
 fn parse_switch_clause(
 	p: &mut Parser,
@@ -1234,13 +1261,7 @@ fn parse_switch_clause(
 			};
 
 			p.expect_required(T![:]);
-			let cons_list = p.start();
-			let mut progress = ParserProgress::default();
-			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
-				progress.assert_progressing(p);
-				parse_statement(p, None);
-			}
-			cons_list.complete(p, LIST);
+			ConsList.parse_list(p);
 			let default = m.complete(p, syntax_kind);
 			if first_default.is_some() {
 				let err = p
