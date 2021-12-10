@@ -1261,7 +1261,14 @@ fn parse_switch_clause(
 			};
 
 			p.expect_required(T![:]);
-			ConsList.parse_list(p);
+			// ConsList.parse_list(p);
+			let cons_list = p.start();
+			let mut progress = ParserProgress::default();
+			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
+				progress.assert_progressing(p);
+				parse_statement(p, None);
+			}
+			cons_list.complete(p, LIST);
 			let default = m.complete(p, syntax_kind);
 			if first_default.is_some() {
 				let err = p
@@ -1292,6 +1299,78 @@ fn parse_switch_clause(
 			m.abandon(p);
 			Absent
 		}
+	}
+}
+
+struct SwitchStatementList;
+
+impl ParseNodeList for SwitchStatementList {
+	type ParsedElement = CompletedMarker;
+
+	fn parse_element(&mut self, _p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+		unreachable!("Not called")
+	}
+
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		p.at(T!['}'])
+	}
+
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> RecoveryResult {
+		parsed_element.or_recover(
+			p,
+			&ParseRecovery::new(
+				JS_UNKNOWN_STATEMENT,
+				token_set![T![default], T![case], T!['}']],
+			)
+			.enable_recovery_on_line_break(),
+			js_parse_error::expected_case_or_default,
+		)
+	}
+
+	fn parse_list(&mut self, p: &mut Parser) {
+		let cases_list = p.start();
+		let mut first_default: Option<CompletedMarker> = None;
+		let mut progress = ParserProgress::default();
+
+		while !p.at(EOF) && !self.is_at_list_end(p) {
+			progress.assert_progressing(p);
+			let mut temp = p.with_state(ParserState {
+				break_allowed: true,
+				..p.state.clone()
+			});
+
+			let clause = parse_switch_clause(&mut *temp, &mut first_default);
+
+			if let Present(marker) = clause {
+				if marker.kind() == JS_DEFAULT_CLAUSE && first_default == None {
+					first_default = Some(marker);
+				}
+			} else {
+				let m = temp.start();
+				temp.missing(); // case
+				temp.missing(); // discriminant
+				temp.missing(); // colon
+
+				let statements = temp.start();
+
+				let recovered_element = self.recover(&mut *temp, clause);
+
+				if recovered_element.is_err() {
+					statements.abandon(&mut *temp);
+					m.abandon(&mut *temp);
+					break;
+				} else {
+					statements.complete(&mut *temp, LIST);
+					m.complete(&mut *temp, JS_CASE_CLAUSE);
+				}
+			}
+		}
+
+		cases_list.complete(p, LIST);
 	}
 }
 
@@ -1326,52 +1405,7 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.bump_any(); // switch keyword
 	parenthesized_expression(p);
 	p.expect_required(T!['{']);
-	let cases_list = p.start();
-	let mut first_default: Option<CompletedMarker> = None;
-	let mut progress = ParserProgress::default();
-
-	while !p.at(EOF) && !p.at(T!['}']) {
-		progress.assert_progressing(p);
-		let mut temp = p.with_state(ParserState {
-			break_allowed: true,
-			..p.state.clone()
-		});
-
-		let clause = parse_switch_clause(&mut *temp, &mut first_default);
-
-		if let Present(marker) = clause {
-			if marker.kind() == JS_DEFAULT_CLAUSE && first_default == None {
-				first_default = Some(marker);
-			}
-		} else {
-			let m = temp.start();
-			temp.missing(); // case
-			temp.missing(); // discriminant
-			temp.missing(); // colon
-
-			let statements = temp.start();
-
-			let recovered_element = clause.or_recover(
-				&mut *temp,
-				&ParseRecovery::new(
-					JS_UNKNOWN_STATEMENT,
-					token_set![T![default], T![case], T!['}']],
-				)
-				.enable_recovery_on_line_break(),
-				js_parse_error::expected_case_or_default,
-			);
-
-			if recovered_element.is_err() {
-				statements.abandon(&mut *temp);
-				m.abandon(&mut *temp);
-				break;
-			} else {
-				statements.complete(&mut *temp, LIST);
-				m.complete(&mut *temp, JS_CASE_CLAUSE);
-			}
-		}
-	}
-	cases_list.complete(p, LIST);
+	SwitchStatementList.parse_list(p);
 	p.expect_required(T!['}']);
 	Present(m.complete(p, JS_SWITCH_STATEMENT))
 }
