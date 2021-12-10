@@ -1233,7 +1233,7 @@ impl ParseNodeList for ConsList {
 	) -> RecoveryResult {
 		parsed_element.or_recover(
 			p,
-			&ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
+			&ParseRecovery::new(JS_UNKNOWN_STATEMENT, token_set!()),
 			js_parse_error::expected_case,
 		)
 	}
@@ -1285,7 +1285,6 @@ fn parse_switch_clause(
 			p.expect_required(T![:]);
 
 			SwitchClausesList.parse_list(p);
-
 			Present(m.complete(p, JS_CASE_CLAUSE))
 		}
 		_ => {
@@ -1323,7 +1322,9 @@ impl ParseNodeList for SwitchStatementList {
 		p: &mut Parser,
 		parsed_element: ParsedSyntax<Self::ParsedElement>,
 	) -> RecoveryResult {
-		if let Absent = parsed_element {
+		if let Present(marker) = parsed_element {
+			Ok(marker)
+		} else {
 			let m = p.start();
 			p.missing(); // case
 			p.missing(); // discriminant
@@ -1353,17 +1354,6 @@ impl ParseNodeList for SwitchStatementList {
 					Err(err)
 				}
 			}
-		} else {
-			// here we need  to do standard recovery
-			parsed_element.or_recover(
-				p,
-				&ParseRecovery::new(
-					JS_UNKNOWN_STATEMENT,
-					token_set![T![default], T![case], T!['}']],
-				)
-				.enable_recovery_on_line_break(),
-				js_parse_error::expected_case_or_default,
-			)
 		}
 	}
 }
@@ -1399,7 +1389,60 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.bump_any(); // switch keyword
 	parenthesized_expression(p);
 	p.expect_required(T!['{']);
-	SwitchStatementList::default().parse_list(p);
+
+	{
+		let mut temp = p.with_state(ParserState {
+			break_allowed: true,
+			..p.state.clone()
+		});
+		SwitchStatementList::default().parse_list(&mut *temp);
+	}
+	// let cases_list = p.start();
+	// let mut first_default: Option<CompletedMarker> = None;
+	// let mut progress = ParserProgress::default();
+	//
+	// while !p.at(EOF) && !p.at(T!['}']) {
+	// 	progress.assert_progressing(p);
+	// 	let mut temp = p.with_state(ParserState {
+	// 		break_allowed: true,
+	// 		..p.state.clone()
+	// 	});
+	//
+	// 	let clause = parse_switch_clause(&mut *temp, &mut first_default);
+	//
+	// 	if let Present(marker) = clause {
+	// 		if marker.kind() == JS_DEFAULT_CLAUSE && first_default == None {
+	// 			first_default = Some(marker);
+	// 		}
+	// 	} else {
+	// 		let m = temp.start();
+	// 		temp.missing(); // case
+	// 		temp.missing(); // discriminant
+	// 		temp.missing(); // colon
+	//
+	// 		let statements = temp.start();
+	//
+	// 		let recovered_element = clause.or_recover(
+	// 			&mut *temp,
+	// 			&ParseRecovery::new(
+	// 				JS_UNKNOWN_STATEMENT,
+	// 				token_set![T![default], T![case], T!['}']],
+	// 			)
+	// 			.enable_recovery_on_line_break(),
+	// 			js_parse_error::expected_case_or_default,
+	// 		);
+	//
+	// 		if recovered_element.is_err() {
+	// 			statements.abandon(&mut *temp);
+	// 			m.abandon(&mut *temp);
+	// 			break;
+	// 		} else {
+	// 			statements.complete(&mut *temp, LIST);
+	// 			m.complete(&mut *temp, JS_CASE_CLAUSE);
+	// 		}
+	// 	}
+	// }
+	// cases_list.complete(p, LIST);
 	p.expect_required(T!['}']);
 	Present(m.complete(p, JS_SWITCH_STATEMENT))
 }
