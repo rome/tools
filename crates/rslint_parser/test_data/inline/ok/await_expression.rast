@@ -145,7 +145,7 @@ JsModule {
                     0: IDENT@31..36 "inner" [] []
                 1: ARG_LIST@36..38
                   0: L_PAREN@36..37 "(" [] []
-                  1: LIST@37..37
+                  1: (empty)
                   2: R_PAREN@37..38 ")" [] []
             1: SEMICOLON@38..39 ";" [] []
           1: JS_EXPRESSION_STATEMENT@39..74
@@ -160,7 +160,7 @@ JsModule {
                         0: IDENT@49..54 "inner" [] []
                     1: ARG_LIST@54..56
                       0: L_PAREN@54..55 "(" [] []
-                      1: LIST@55..55
+                      1: (empty)
                       2: R_PAREN@55..56 ")" [] []
                   2: R_PAREN@56..58 ")" [] [Whitespace(" ")]
               1: PLUS@58..60 "+" [] [Whitespace(" ")]
@@ -172,7 +172,7 @@ JsModule {
                       0: IDENT@66..71 "inner" [] []
                   1: ARG_LIST@71..73
                     0: L_PAREN@71..72 "(" [] []
-                    1: LIST@72..72
+                    1: (empty)
                     2: R_PAREN@72..73 ")" [] []
             1: SEMICOLON@73..74 ";" [] []
         3: R_CURLY@74..76 "}" [Whitespace("\n")] []

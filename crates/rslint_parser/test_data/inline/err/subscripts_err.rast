@@ -26,7 +26,7 @@ JsModule {
                     0: IDENT@0..3 "foo" [] []
                 1: ARG_LIST@3..5
                   0: L_PAREN@3..4 "(" [] []
-                  1: LIST@4..4
+                  1: (empty)
                   2: R_PAREN@4..5 ")" [] []
               1: QUESTIONDOT@5..7 "?." [] []
               2: JS_NAME@7..10

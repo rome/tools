@@ -352,7 +352,7 @@ JsModule {
                         0: IDENT@69..73 "call" [] []
                     1: ARG_LIST@73..75
                       0: L_PAREN@73..74 "(" [] []
-                      1: LIST@74..74
+                      1: (empty)
                       2: R_PAREN@74..75 ")" [] []
                   3: R_BRACK@75..77 "]" [] [Whitespace(" ")]
             2: R_BRACK@77..79 "]" [] [Whitespace(" ")]
@@ -382,7 +382,7 @@ JsModule {
                         0: IDENT@95..105 "expression" [] []
                     1: ARG_LIST@105..107
                       0: L_PAREN@105..106 "(" [] []
-                      1: LIST@106..106
+                      1: (empty)
                       2: R_PAREN@106..107 ")" [] []
                   1: DOT@107..108 "." [] []
                   2: JS_NAME@108..110

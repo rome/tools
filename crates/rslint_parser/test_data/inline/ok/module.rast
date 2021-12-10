@@ -94,7 +94,7 @@ JsModule {
             0: IDENT@32..34 "c" [Whitespace("\n")] []
         1: ARG_LIST@34..36
           0: L_PAREN@34..35 "(" [] []
-          1: LIST@35..35
+          1: (empty)
           2: R_PAREN@35..36 ")" [] []
       1: SEMICOLON@36..37 ";" [] []
     3: JS_IMPORT@37..60

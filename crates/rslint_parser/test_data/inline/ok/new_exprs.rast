@@ -180,7 +180,7 @@ JsModule {
             0: IDENT@4..7 "Foo" [] []
         2: ARG_LIST@7..9
           0: L_PAREN@7..8 "(" [] []
-          1: LIST@8..8
+          1: (empty)
           2: R_PAREN@8..9 ")" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@9..18
@@ -210,7 +210,7 @@ JsModule {
                   0: IDENT@46..49 "Foo" [] []
               2: ARG_LIST@49..51
                 0: L_PAREN@49..50 "(" [] []
-                1: LIST@50..50
+                1: (empty)
                 2: R_PAREN@50..51 ")" [] []
       1: SEMICOLON@51..52 ";" [] []
     4: JS_EXPRESSION_STATEMENT@52..112

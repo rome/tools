@@ -158,7 +158,7 @@ JsModule {
                     0: SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] []
                   1: ARG_LIST@47..49
                     0: L_PAREN@47..48 "(" [] []
-                    1: LIST@48..48
+                    1: (empty)
                     2: R_PAREN@48..49 ")" [] []
                 1: SEMICOLON@49..50 ";" [] []
             3: R_CURLY@50..53 "}" [Whitespace("\n\t")] []

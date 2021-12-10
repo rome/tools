@@ -134,7 +134,7 @@ JsModule {
                     0: SUPER_KW@32..40 "super" [Whitespace("\n\t\t")] []
                   1: ARG_LIST@40..42
                     0: L_PAREN@40..41 "(" [] []
-                    1: LIST@41..41
+                    1: (empty)
                     2: R_PAREN@41..42 ")" [] []
                 1: SEMICOLON@42..43 ";" [] []
               1: JS_EXPRESSION_STATEMENT@43..60
@@ -147,7 +147,7 @@ JsModule {
                       0: IDENT@53..57 "test" [] []
                   1: ARG_LIST@57..59
                     0: L_PAREN@57..58 "(" [] []
-                    1: LIST@58..58
+                    1: (empty)
                     2: R_PAREN@58..59 ")" [] []
                 1: SEMICOLON@59..60 ";" [] []
             3: R_CURLY@60..63 "}" [Whitespace("\n\t")] []
@@ -158,7 +158,7 @@ JsModule {
           0: SUPER_KW@65..72 "super" [Whitespace("\n\n")] []
         1: ARG_LIST@72..74
           0: L_PAREN@72..73 "(" [] []
-          1: LIST@73..73
+          1: (empty)
           2: R_PAREN@73..74 ")" [] []
       1: SEMICOLON@74..75 ";" [] []
   3: EOF@75..76 "" [Whitespace("\n")] []
