@@ -7,8 +7,12 @@ impl ToFormatElement for JsAnyAssignmentPattern {
 			JsAnyAssignmentPattern::JsAnyAssignment(assignment) => {
 				assignment.to_format_element(formatter)
 			}
-			JsAnyAssignmentPattern::JsArrayAssignmentPattern(_) => todo!(),
-			JsAnyAssignmentPattern::JsObjectAssignmentPattern(_) => todo!(),
+			JsAnyAssignmentPattern::JsArrayAssignmentPattern(array_assignment_pattern) => {
+				array_assignment_pattern.to_format_element(formatter)
+			}
+			JsAnyAssignmentPattern::JsObjectAssignmentPattern(object_assignment_pattern) => {
+				object_assignment_pattern.to_format_element(formatter)
+			}
 		}
 	}
 }

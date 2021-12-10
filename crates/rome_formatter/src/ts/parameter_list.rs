@@ -2,7 +2,7 @@ use crate::{
 	format_elements, group_elements, join_elements, soft_indent, soft_line_break_or_space,
 	FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{JsAnyParameter, JsParameterList};
+use rslint_parser::ast::{JsAnyParameter, JsParameterList, JsRestParameter};
 
 impl ToFormatElement for JsParameterList {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -23,7 +23,16 @@ impl ToFormatElement for JsAnyParameter {
 			JsAnyParameter::JsBindingPatternWithDefault(binding) => {
 				binding.to_format_element(formatter)
 			}
-			JsAnyParameter::JsRestParameter(_) => todo!("rest parameter"),
+			JsAnyParameter::JsRestParameter(binding) => binding.to_format_element(formatter),
 		}
+	}
+}
+
+impl ToFormatElement for JsRestParameter {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+		Ok(format_elements![
+			formatter.format_token(&self.dotdotdot_token()?)?,
+			formatter.format_node(self.binding()?)?
+		])
 	}
 }

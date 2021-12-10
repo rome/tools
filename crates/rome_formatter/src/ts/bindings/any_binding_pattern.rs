@@ -6,7 +6,9 @@ impl ToFormatElement for JsAnyBindingPattern {
 		match self {
 			JsAnyBindingPattern::JsAnyBinding(binding) => binding.to_format_element(formatter),
 			JsAnyBindingPattern::JsArrayBindingPattern(array) => array.to_format_element(formatter),
-			JsAnyBindingPattern::JsObjectBindingPattern(_) => todo!(),
+			JsAnyBindingPattern::JsObjectBindingPattern(binding) => {
+				binding.to_format_element(formatter)
+			}
 		}
 	}
 }

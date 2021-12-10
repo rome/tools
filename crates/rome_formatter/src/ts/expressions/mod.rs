@@ -7,5 +7,6 @@ mod identifier_expression;
 mod literal_expression;
 mod object_expression;
 mod sequence_expression;
+mod static_member_expression;
 mod super_expression;
 mod update_expression;

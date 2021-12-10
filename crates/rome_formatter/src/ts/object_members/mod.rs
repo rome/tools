@@ -1,5 +1,7 @@
+mod computed_member_name;
 mod getter_object_member;
 mod literal_member_name;
+mod method_object_member;
 mod object_member;
 mod object_member_name;
 mod property_object_member;

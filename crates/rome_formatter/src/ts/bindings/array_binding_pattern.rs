@@ -28,7 +28,9 @@ impl ToFormatElement for JsAnyArrayBindingPatternElement {
 			JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(with_default) => {
 				with_default.to_format_element(formatter)
 			}
-			JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(_) => todo!(),
+			JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(binding) => {
+				binding.to_format_element(formatter)
+			}
 		}
 	}
 }

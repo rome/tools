@@ -36,7 +36,9 @@ impl ToFormatElement for JsAnyExpression {
 			JsAnyExpression::JsComputedMemberExpression(computed_member_expression) => {
 				computed_member_expression.to_format_element(formatter)
 			}
-			JsAnyExpression::JsStaticMemberExpression(_) => todo!(),
+			JsAnyExpression::JsStaticMemberExpression(static_member_expression) => {
+				static_member_expression.to_format_element(formatter)
+			}
 			JsAnyExpression::NewExpr(new_expr) => new_expr.to_format_element(formatter),
 			JsAnyExpression::CallExpr(call_expression) => {
 				call_expression.to_format_element(formatter)
