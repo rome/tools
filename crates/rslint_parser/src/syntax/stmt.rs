@@ -1261,14 +1261,7 @@ fn parse_switch_clause(
 			};
 
 			p.expect_required(T![:]);
-			// ConsList.parse_list(p);
-			let cons_list = p.start();
-			let mut progress = ParserProgress::default();
-			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
-				progress.assert_progressing(p);
-				parse_statement(p, None);
-			}
-			cons_list.complete(p, LIST);
+			ConsList.parse_list(p);
 			let default = m.complete(p, syntax_kind);
 			if first_default.is_some() {
 				let err = p
