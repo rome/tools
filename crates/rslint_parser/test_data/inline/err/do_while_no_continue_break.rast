@@ -13,9 +13,7 @@ JsModule {
             l_paren_token: missing (required),
             test: JsUnknownExpression {
                 items: [
-                    Token(
-                        BREAK_KW@7..13 "break" [] [Whitespace(" ")],
-                    ),
+                    BREAK_KW@7..13 "break" [] [Whitespace(" ")],
                 ],
             },
             r_paren_token: missing (required),
@@ -26,9 +24,7 @@ JsModule {
                 l_paren_token: L_PAREN@13..14 "(" [] [],
                 expression: JsUnknownExpression {
                     items: [
-                        Token(
-                            CONTINUE_KW@14..22 "continue" [] [],
-                        ),
+                        CONTINUE_KW@14..22 "continue" [] [],
                     ],
                 },
                 r_paren_token: R_PAREN@22..23 ")" [] [],
@@ -46,9 +42,7 @@ JsModule {
             l_paren_token: missing (required),
             test: JsUnknownExpression {
                 items: [
-                    Token(
-                        CONTINUE_KW@31..40 "continue" [] [Whitespace(" ")],
-                    ),
+                    CONTINUE_KW@31..40 "continue" [] [Whitespace(" ")],
                 ],
             },
             r_paren_token: missing (required),
@@ -59,9 +53,7 @@ JsModule {
                 l_paren_token: L_PAREN@40..41 "(" [] [],
                 expression: JsUnknownExpression {
                     items: [
-                        Token(
-                            BREAK_KW@41..46 "break" [] [],
-                        ),
+                        BREAK_KW@41..46 "break" [] [],
                     ],
                 },
                 r_paren_token: R_PAREN@46..47 ")" [] [],

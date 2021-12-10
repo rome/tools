@@ -64,6 +64,13 @@ impl JsUnknownNamedImportSpecifier {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct List {
+	pub(crate) syntax: SyntaxNode,
+}
+impl List {
+	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct Ident {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -3024,6 +3031,221 @@ pub enum TsNamespaceBody {
 	TsModuleBlock(TsModuleBlock),
 	TsNamespaceDecl(TsNamespaceDecl),
 }
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum AnyNode {
+	JsUnknownStatement(JsUnknownStatement),
+	JsUnknownExpression(JsUnknownExpression),
+	JsUnknownMember(JsUnknownMember),
+	JsUnknownBinding(JsUnknownBinding),
+	JsUnknownAssignment(JsUnknownAssignment),
+	JsUnknownModifier(JsUnknownModifier),
+	JsUnknownImportAssertionEntry(JsUnknownImportAssertionEntry),
+	JsUnknownNamedImportSpecifier(JsUnknownNamedImportSpecifier),
+	List(List),
+	Ident(Ident),
+	JsScript(JsScript),
+	JsModule(JsModule),
+	JsDirective(JsDirective),
+	JsBlockStatement(JsBlockStatement),
+	JsEmptyStatement(JsEmptyStatement),
+	JsExpressionStatement(JsExpressionStatement),
+	JsIfStatement(JsIfStatement),
+	JsDoWhileStatement(JsDoWhileStatement),
+	JsWhileStatement(JsWhileStatement),
+	ForStmt(ForStmt),
+	ForInStmt(ForInStmt),
+	ForOfStmt(ForOfStmt),
+	JsContinueStatement(JsContinueStatement),
+	JsBreakStatement(JsBreakStatement),
+	JsReturnStatement(JsReturnStatement),
+	JsWithStatement(JsWithStatement),
+	JsLabeledStatement(JsLabeledStatement),
+	JsSwitchStatement(JsSwitchStatement),
+	JsThrowStatement(JsThrowStatement),
+	JsTryStatement(JsTryStatement),
+	JsTryFinallyStatement(JsTryFinallyStatement),
+	JsDebuggerStatement(JsDebuggerStatement),
+	JsFunctionDeclaration(JsFunctionDeclaration),
+	JsClassDeclaration(JsClassDeclaration),
+	JsVariableDeclarationStatement(JsVariableDeclarationStatement),
+	TsEnum(TsEnum),
+	TsTypeAliasDecl(TsTypeAliasDecl),
+	TsNamespaceDecl(TsNamespaceDecl),
+	TsModuleDecl(TsModuleDecl),
+	TsInterfaceDecl(TsInterfaceDecl),
+	JsElseClause(JsElseClause),
+	ForStmtInit(ForStmtInit),
+	ForStmtTest(ForStmtTest),
+	ForStmtUpdate(ForStmtUpdate),
+	JsVariableDeclaration(JsVariableDeclaration),
+	JsCaseClause(JsCaseClause),
+	JsDefaultClause(JsDefaultClause),
+	JsCatchClause(JsCatchClause),
+	JsFinallyClause(JsFinallyClause),
+	JsCatchDeclaration(JsCatchDeclaration),
+	JsArrayExpression(JsArrayExpression),
+	JsArrowFunctionExpression(JsArrowFunctionExpression),
+	JsAssignmentExpression(JsAssignmentExpression),
+	JsAwaitExpression(JsAwaitExpression),
+	JsBinaryExpression(JsBinaryExpression),
+	JsClassExpression(JsClassExpression),
+	JsConditionalExpression(JsConditionalExpression),
+	JsComputedMemberExpression(JsComputedMemberExpression),
+	JsFunctionExpression(JsFunctionExpression),
+	JsImportCallExpression(JsImportCallExpression),
+	JsLogicalExpression(JsLogicalExpression),
+	JsObjectExpression(JsObjectExpression),
+	JsParenthesizedExpression(JsParenthesizedExpression),
+	JsIdentifierExpression(JsIdentifierExpression),
+	JsSequenceExpression(JsSequenceExpression),
+	JsStaticMemberExpression(JsStaticMemberExpression),
+	JsSuperExpression(JsSuperExpression),
+	JsThisExpression(JsThisExpression),
+	JsUnaryExpression(JsUnaryExpression),
+	JsPreUpdateExpression(JsPreUpdateExpression),
+	JsPostUpdateExpression(JsPostUpdateExpression),
+	JsYieldExpression(JsYieldExpression),
+	Template(Template),
+	NewExpr(NewExpr),
+	CallExpr(CallExpr),
+	NewTarget(NewTarget),
+	ImportMeta(ImportMeta),
+	TsNonNull(TsNonNull),
+	TsAssertion(TsAssertion),
+	TsConstAssertion(TsConstAssertion),
+	TsTypeArgs(TsTypeArgs),
+	ArgList(ArgList),
+	TsTypeParams(TsTypeParams),
+	JsParameterList(JsParameterList),
+	TsTypeAnnotation(TsTypeAnnotation),
+	JsFunctionBody(JsFunctionBody),
+	JsSpread(JsSpread),
+	JsArrayHole(JsArrayHole),
+	JsReferenceIdentifier(JsReferenceIdentifier),
+	JsLiteralMemberName(JsLiteralMemberName),
+	JsComputedMemberName(JsComputedMemberName),
+	JsPropertyObjectMember(JsPropertyObjectMember),
+	JsMethodObjectMember(JsMethodObjectMember),
+	JsGetterObjectMember(JsGetterObjectMember),
+	JsSetterObjectMember(JsSetterObjectMember),
+	JsShorthandPropertyObjectMember(JsShorthandPropertyObjectMember),
+	TsImplementsClause(TsImplementsClause),
+	JsExtendsClause(JsExtendsClause),
+	TsExprWithTypeArgs(TsExprWithTypeArgs),
+	JsPrivateClassMemberName(JsPrivateClassMemberName),
+	JsConstructorClassMember(JsConstructorClassMember),
+	JsPropertyClassMember(JsPropertyClassMember),
+	JsMethodClassMember(JsMethodClassMember),
+	JsGetterClassMember(JsGetterClassMember),
+	JsSetterClassMember(JsSetterClassMember),
+	JsEmptyClassMember(JsEmptyClassMember),
+	TsIndexSignature(TsIndexSignature),
+	TsAccessibility(TsAccessibility),
+	JsConstructorParameterList(JsConstructorParameterList),
+	TsConstructorParam(TsConstructorParam),
+	JsBindingPatternWithDefault(JsBindingPatternWithDefault),
+	JsEqualValueClause(JsEqualValueClause),
+	JsModifier(JsModifier),
+	JsIdentifierAssignment(JsIdentifierAssignment),
+	JsStaticMemberAssignment(JsStaticMemberAssignment),
+	JsComputedMemberAssignment(JsComputedMemberAssignment),
+	JsParenthesizedAssignment(JsParenthesizedAssignment),
+	JsAssignmentWithDefault(JsAssignmentWithDefault),
+	JsArrayAssignmentPattern(JsArrayAssignmentPattern),
+	JsObjectAssignmentPattern(JsObjectAssignmentPattern),
+	JsArrayAssignmentPatternRestElement(JsArrayAssignmentPatternRestElement),
+	JsObjectAssignmentPatternShorthandProperty(JsObjectAssignmentPatternShorthandProperty),
+	JsObjectAssignmentPatternProperty(JsObjectAssignmentPatternProperty),
+	JsObjectAssignmentPatternRest(JsObjectAssignmentPatternRest),
+	JsName(JsName),
+	JsIdentifierBinding(JsIdentifierBinding),
+	JsArrayBindingPattern(JsArrayBindingPattern),
+	JsObjectBindingPattern(JsObjectBindingPattern),
+	JsArrayBindingPatternRestElement(JsArrayBindingPatternRestElement),
+	JsObjectBindingPatternProperty(JsObjectBindingPatternProperty),
+	JsObjectBindingPatternRest(JsObjectBindingPatternRest),
+	JsObjectBindingPatternShorthandProperty(JsObjectBindingPatternShorthandProperty),
+	JsStringLiteralExpression(JsStringLiteralExpression),
+	JsNumberLiteralExpression(JsNumberLiteralExpression),
+	JsBigIntLiteralExpression(JsBigIntLiteralExpression),
+	JsBooleanLiteralExpression(JsBooleanLiteralExpression),
+	JsNullLiteralExpression(JsNullLiteralExpression),
+	JsRegexLiteralExpression(JsRegexLiteralExpression),
+	JsVariableDeclarator(JsVariableDeclarator),
+	JsImport(JsImport),
+	ExportNamed(ExportNamed),
+	ExportDefaultDecl(ExportDefaultDecl),
+	ExportDefaultExpr(ExportDefaultExpr),
+	ExportWildcard(ExportWildcard),
+	ExportDecl(ExportDecl),
+	TsImportEqualsDecl(TsImportEqualsDecl),
+	TsExportAssignment(TsExportAssignment),
+	TsNamespaceExportDecl(TsNamespaceExportDecl),
+	JsImportBareClause(JsImportBareClause),
+	JsImportNamedClause(JsImportNamedClause),
+	JsImportDefaultClause(JsImportDefaultClause),
+	JsImportNamespaceClause(JsImportNamespaceClause),
+	JsModuleSource(JsModuleSource),
+	JsImportAssertion(JsImportAssertion),
+	JsDefaultImportSpecifier(JsDefaultImportSpecifier),
+	JsNamedImportSpecifierList(JsNamedImportSpecifierList),
+	JsNamespaceImportSpecifier(JsNamespaceImportSpecifier),
+	JsShorthandNamedImportSpecifier(JsShorthandNamedImportSpecifier),
+	JsNamedImportSpecifier(JsNamedImportSpecifier),
+	JsLiteralExportName(JsLiteralExportName),
+	JsImportAssertionEntry(JsImportAssertionEntry),
+	Specifier(Specifier),
+	JsPrivateName(JsPrivateName),
+	JsRestParameter(JsRestParameter),
+	TsExternalModuleRef(TsExternalModuleRef),
+	TsAny(TsAny),
+	TsUnknown(TsUnknown),
+	TsNumber(TsNumber),
+	TsObject(TsObject),
+	TsBoolean(TsBoolean),
+	TsBigint(TsBigint),
+	TsString(TsString),
+	TsSymbol(TsSymbol),
+	TsVoid(TsVoid),
+	TsUndefined(TsUndefined),
+	TsNull(TsNull),
+	TsNever(TsNever),
+	TsThis(TsThis),
+	TsLiteral(TsLiteral),
+	TsPredicate(TsPredicate),
+	TsTuple(TsTuple),
+	TsParen(TsParen),
+	TsTypeRef(TsTypeRef),
+	TsTemplate(TsTemplate),
+	TsMappedType(TsMappedType),
+	TsImport(TsImport),
+	TsArray(TsArray),
+	TsIndexedArray(TsIndexedArray),
+	TsTypeOperator(TsTypeOperator),
+	TsIntersection(TsIntersection),
+	TsUnion(TsUnion),
+	TsFnType(TsFnType),
+	TsConstructorType(TsConstructorType),
+	TsConditionalType(TsConditionalType),
+	TsObjectType(TsObjectType),
+	TsInfer(TsInfer),
+	TsTupleElement(TsTupleElement),
+	TsEnumMember(TsEnumMember),
+	TsTemplateElement(TsTemplateElement),
+	TsMappedTypeReadonly(TsMappedTypeReadonly),
+	TsMappedTypeParam(TsMappedTypeParam),
+	TsTypeName(TsTypeName),
+	TsExtends(TsExtends),
+	TsModuleBlock(TsModuleBlock),
+	TsTypeParam(TsTypeParam),
+	TsConstraint(TsConstraint),
+	TsDefault(TsDefault),
+	TsCallSignatureDecl(TsCallSignatureDecl),
+	TsConstructSignatureDecl(TsConstructSignatureDecl),
+	TsPropertySignature(TsPropertySignature),
+	TsMethodSignature(TsMethodSignature),
+	TsQualifiedPath(TsQualifiedPath),
+}
 impl AstNode for JsUnknownStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3038,7 +3260,7 @@ impl AstNode for JsUnknownStatement {
 impl std::fmt::Debug for JsUnknownStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownStatement")
-			.field("items", &self.items())
+			.field("items", &support::DebugSyntaxElementChildren(self.items()))
 			.finish()
 	}
 }
@@ -3056,7 +3278,7 @@ impl AstNode for JsUnknownExpression {
 impl std::fmt::Debug for JsUnknownExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownExpression")
-			.field("items", &self.items())
+			.field("items", &support::DebugSyntaxElementChildren(self.items()))
 			.finish()
 	}
 }
@@ -3074,7 +3296,7 @@ impl AstNode for JsUnknownMember {
 impl std::fmt::Debug for JsUnknownMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownMember")
-			.field("items", &self.items())
+			.field("items", &support::DebugSyntaxElementChildren(self.items()))
 			.finish()
 	}
 }
@@ -3092,7 +3314,7 @@ impl AstNode for JsUnknownBinding {
 impl std::fmt::Debug for JsUnknownBinding {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownBinding")
-			.field("items", &self.items())
+			.field("items", &support::DebugSyntaxElementChildren(self.items()))
 			.finish()
 	}
 }
@@ -3110,7 +3332,7 @@ impl AstNode for JsUnknownAssignment {
 impl std::fmt::Debug for JsUnknownAssignment {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownAssignment")
-			.field("items", &self.items())
+			.field("items", &support::DebugSyntaxElementChildren(self.items()))
 			.finish()
 	}
 }
@@ -3128,7 +3350,7 @@ impl AstNode for JsUnknownModifier {
 impl std::fmt::Debug for JsUnknownModifier {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownModifier")
-			.field("items", &self.items())
+			.field("items", &support::DebugSyntaxElementChildren(self.items()))
 			.finish()
 	}
 }
@@ -3146,7 +3368,7 @@ impl AstNode for JsUnknownImportAssertionEntry {
 impl std::fmt::Debug for JsUnknownImportAssertionEntry {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownImportAssertionEntry")
-			.field("items", &self.items())
+			.field("items", &support::DebugSyntaxElementChildren(self.items()))
 			.finish()
 	}
 }
@@ -3164,7 +3386,25 @@ impl AstNode for JsUnknownNamedImportSpecifier {
 impl std::fmt::Debug for JsUnknownNamedImportSpecifier {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownNamedImportSpecifier")
-			.field("items", &self.items())
+			.field("items", &support::DebugSyntaxElementChildren(self.items()))
+			.finish()
+	}
+}
+impl AstNode for List {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == LIST }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for List {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("List")
+			.field("items", &support::DebugSyntaxElementChildren(self.items()))
 			.finish()
 	}
 }
@@ -3205,7 +3445,7 @@ impl std::fmt::Debug for JsScript {
 		f.debug_struct("JsScript")
 			.field(
 				"interpreter_token",
-				&support::DebugOptionalNode(self.interpreter_token()),
+				&support::DebugOptionalElement(self.interpreter_token()),
 			)
 			.field("directives", &self.directives())
 			.field("statements", &self.statements())
@@ -3228,7 +3468,7 @@ impl std::fmt::Debug for JsModule {
 		f.debug_struct("JsModule")
 			.field(
 				"interpreter_token",
-				&support::DebugOptionalNode(self.interpreter_token()),
+				&support::DebugOptionalElement(self.interpreter_token()),
 			)
 			.field("directives", &self.directives())
 			.field("items", &self.items())
@@ -3255,7 +3495,7 @@ impl std::fmt::Debug for JsDirective {
 			)
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -3324,7 +3564,7 @@ impl std::fmt::Debug for JsExpressionStatement {
 			.field("expression", &support::DebugSyntaxResult(self.expression()))
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -3356,7 +3596,7 @@ impl std::fmt::Debug for JsIfStatement {
 			.field("consequent", &support::DebugSyntaxResult(self.consequent()))
 			.field(
 				"else_clause",
-				&support::DebugOptionalNode(self.else_clause()),
+				&support::DebugOptionalElement(self.else_clause()),
 			)
 			.finish()
 	}
@@ -3392,7 +3632,7 @@ impl std::fmt::Debug for JsDoWhileStatement {
 			)
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -3447,17 +3687,17 @@ impl std::fmt::Debug for ForStmt {
 				"l_paren_token",
 				&support::DebugSyntaxResult(self.l_paren_token()),
 			)
-			.field("init", &support::DebugOptionalNode(self.init()))
+			.field("init", &support::DebugOptionalElement(self.init()))
 			.field(
 				"first_semi_token",
 				&support::DebugSyntaxResult(self.first_semi_token()),
 			)
-			.field("test", &support::DebugOptionalNode(self.test()))
+			.field("test", &support::DebugOptionalElement(self.test()))
 			.field(
 				"second_semi_token",
 				&support::DebugSyntaxResult(self.second_semi_token()),
 			)
-			.field("update", &support::DebugOptionalNode(self.update()))
+			.field("update", &support::DebugOptionalElement(self.update()))
 			.field(
 				"r_paren_token",
 				&support::DebugSyntaxResult(self.r_paren_token()),
@@ -3546,11 +3786,11 @@ impl std::fmt::Debug for JsContinueStatement {
 			)
 			.field(
 				"label_token",
-				&support::DebugOptionalNode(self.label_token()),
+				&support::DebugOptionalElement(self.label_token()),
 			)
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -3575,11 +3815,11 @@ impl std::fmt::Debug for JsBreakStatement {
 			)
 			.field(
 				"label_token",
-				&support::DebugOptionalNode(self.label_token()),
+				&support::DebugOptionalElement(self.label_token()),
 			)
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -3602,10 +3842,10 @@ impl std::fmt::Debug for JsReturnStatement {
 				"return_token",
 				&support::DebugSyntaxResult(self.return_token()),
 			)
-			.field("argument", &support::DebugOptionalNode(self.argument()))
+			.field("argument", &support::DebugOptionalElement(self.argument()))
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -3727,7 +3967,7 @@ impl std::fmt::Debug for JsThrowStatement {
 			.field("argument", &support::DebugSyntaxResult(self.argument()))
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -3773,7 +4013,7 @@ impl std::fmt::Debug for JsTryFinallyStatement {
 			.field("body", &support::DebugSyntaxResult(self.body()))
 			.field(
 				"catch_clause",
-				&support::DebugOptionalNode(self.catch_clause()),
+				&support::DebugOptionalElement(self.catch_clause()),
 			)
 			.field(
 				"finally_clause",
@@ -3802,7 +4042,7 @@ impl std::fmt::Debug for JsDebuggerStatement {
 			)
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -3823,17 +4063,20 @@ impl std::fmt::Debug for JsFunctionDeclaration {
 		f.debug_struct("JsFunctionDeclaration")
 			.field(
 				"async_token",
-				&support::DebugOptionalNode(self.async_token()),
+				&support::DebugOptionalElement(self.async_token()),
 			)
 			.field(
 				"function_token",
 				&support::DebugSyntaxResult(self.function_token()),
 			)
-			.field("star_token", &support::DebugOptionalNode(self.star_token()))
+			.field(
+				"star_token",
+				&support::DebugOptionalElement(self.star_token()),
+			)
 			.field("id", &support::DebugSyntaxResult(self.id()))
 			.field(
 				"type_parameters",
-				&support::DebugOptionalNode(self.type_parameters()),
+				&support::DebugOptionalElement(self.type_parameters()),
 			)
 			.field(
 				"parameter_list",
@@ -3841,7 +4084,7 @@ impl std::fmt::Debug for JsFunctionDeclaration {
 			)
 			.field(
 				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
+				&support::DebugOptionalElement(self.return_type()),
 			)
 			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
@@ -3868,11 +4111,11 @@ impl std::fmt::Debug for JsClassDeclaration {
 			.field("id", &support::DebugSyntaxResult(self.id()))
 			.field(
 				"implements_clause",
-				&support::DebugOptionalNode(self.implements_clause()),
+				&support::DebugOptionalElement(self.implements_clause()),
 			)
 			.field(
 				"extends_clause",
-				&support::DebugOptionalNode(self.extends_clause()),
+				&support::DebugOptionalElement(self.extends_clause()),
 			)
 			.field(
 				"l_curly_token",
@@ -3906,7 +4149,7 @@ impl std::fmt::Debug for JsVariableDeclarationStatement {
 			)
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -3927,7 +4170,7 @@ impl std::fmt::Debug for TsEnum {
 		f.debug_struct("TsEnum")
 			.field(
 				"const_token",
-				&support::DebugOptionalNode(self.const_token()),
+				&support::DebugOptionalElement(self.const_token()),
 			)
 			.field("enum_token", &support::DebugSyntaxResult(self.enum_token()))
 			.field("ident", &support::DebugSyntaxResult(self.ident()))
@@ -3986,7 +4229,10 @@ impl std::fmt::Debug for TsNamespaceDecl {
 				&support::DebugSyntaxResult(self.declare_token()),
 			)
 			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.field("dot_token", &support::DebugOptionalNode(self.dot_token()))
+			.field(
+				"dot_token",
+				&support::DebugOptionalElement(self.dot_token()),
+			)
 			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
 	}
@@ -4011,13 +4257,16 @@ impl std::fmt::Debug for TsModuleDecl {
 			)
 			.field(
 				"global_token",
-				&support::DebugOptionalNode(self.global_token()),
+				&support::DebugOptionalElement(self.global_token()),
 			)
 			.field(
 				"module_token",
 				&support::DebugSyntaxResult(self.module_token()),
 			)
-			.field("dot_token", &support::DebugOptionalNode(self.dot_token()))
+			.field(
+				"dot_token",
+				&support::DebugOptionalElement(self.dot_token()),
+			)
 			.field("ident", &support::DebugSyntaxResult(self.ident()))
 			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
@@ -4039,7 +4288,7 @@ impl std::fmt::Debug for TsInterfaceDecl {
 		f.debug_struct("TsInterfaceDecl")
 			.field(
 				"declare_token",
-				&support::DebugOptionalNode(self.declare_token()),
+				&support::DebugOptionalElement(self.declare_token()),
 			)
 			.field(
 				"interface_token",
@@ -4051,9 +4300,9 @@ impl std::fmt::Debug for TsInterfaceDecl {
 			)
 			.field(
 				"extends_token",
-				&support::DebugOptionalNode(self.extends_token()),
+				&support::DebugOptionalElement(self.extends_token()),
 			)
-			.field("extends", &support::DebugOptionalNode(self.extends()))
+			.field("extends", &support::DebugOptionalElement(self.extends()))
 			.field(
 				"l_curly_token",
 				&support::DebugSyntaxResult(self.l_curly_token()),
@@ -4228,7 +4477,7 @@ impl std::fmt::Debug for JsCatchClause {
 			)
 			.field(
 				"declaration",
-				&support::DebugOptionalNode(self.declaration()),
+				&support::DebugOptionalElement(self.declaration()),
 			)
 			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
@@ -4324,15 +4573,15 @@ impl std::fmt::Debug for JsArrowFunctionExpression {
 		f.debug_struct("JsArrowFunctionExpression")
 			.field(
 				"async_token",
-				&support::DebugOptionalNode(self.async_token()),
+				&support::DebugOptionalElement(self.async_token()),
 			)
 			.field(
 				"type_parameters",
-				&support::DebugOptionalNode(self.type_parameters()),
+				&support::DebugOptionalElement(self.type_parameters()),
 			)
 			.field(
 				"parameter_list",
-				&support::DebugOptionalNode(self.parameter_list()),
+				&support::DebugOptionalElement(self.parameter_list()),
 			)
 			.field(
 				"fat_arrow_token",
@@ -4340,7 +4589,7 @@ impl std::fmt::Debug for JsArrowFunctionExpression {
 			)
 			.field(
 				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
+				&support::DebugOptionalElement(self.return_type()),
 			)
 			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
@@ -4429,10 +4678,10 @@ impl std::fmt::Debug for JsClassExpression {
 				"class_token",
 				&support::DebugSyntaxResult(self.class_token()),
 			)
-			.field("id", &support::DebugOptionalNode(self.id()))
+			.field("id", &support::DebugOptionalElement(self.id()))
 			.field(
 				"extends_clause",
-				&support::DebugOptionalNode(self.extends_clause()),
+				&support::DebugOptionalElement(self.extends_clause()),
 			)
 			.field(
 				"l_curly_token",
@@ -4491,7 +4740,7 @@ impl std::fmt::Debug for JsComputedMemberExpression {
 			.field("object", &support::DebugSyntaxResult(self.object()))
 			.field(
 				"optional_chain_token_token",
-				&support::DebugOptionalNode(self.optional_chain_token_token()),
+				&support::DebugOptionalElement(self.optional_chain_token_token()),
 			)
 			.field(
 				"l_brack_token",
@@ -4521,22 +4770,25 @@ impl std::fmt::Debug for JsFunctionExpression {
 		f.debug_struct("JsFunctionExpression")
 			.field(
 				"async_token",
-				&support::DebugOptionalNode(self.async_token()),
+				&support::DebugOptionalElement(self.async_token()),
 			)
 			.field(
 				"function_token",
 				&support::DebugSyntaxResult(self.function_token()),
 			)
-			.field("star_token", &support::DebugOptionalNode(self.star_token()))
-			.field("id", &support::DebugOptionalNode(self.id()))
+			.field(
+				"star_token",
+				&support::DebugOptionalElement(self.star_token()),
+			)
+			.field("id", &support::DebugOptionalElement(self.id()))
 			.field(
 				"type_parameters",
-				&support::DebugOptionalNode(self.type_parameters()),
+				&support::DebugOptionalElement(self.type_parameters()),
 			)
 			.field("parameters", &support::DebugSyntaxResult(self.parameters()))
 			.field(
 				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
+				&support::DebugOptionalElement(self.return_type()),
 			)
 			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
@@ -4819,8 +5071,11 @@ impl std::fmt::Debug for JsYieldExpression {
 				"yield_token",
 				&support::DebugSyntaxResult(self.yield_token()),
 			)
-			.field("star_token", &support::DebugOptionalNode(self.star_token()))
-			.field("argument", &support::DebugOptionalNode(self.argument()))
+			.field(
+				"star_token",
+				&support::DebugOptionalElement(self.star_token()),
+			)
+			.field("argument", &support::DebugOptionalElement(self.argument()))
 			.finish()
 	}
 }
@@ -4860,7 +5115,10 @@ impl std::fmt::Debug for NewExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("NewExpr")
 			.field("new_token", &support::DebugSyntaxResult(self.new_token()))
-			.field("type_args", &support::DebugOptionalNode(self.type_args()))
+			.field(
+				"type_args",
+				&support::DebugOptionalElement(self.type_args()),
+			)
 			.field("object", &support::DebugSyntaxResult(self.object()))
 			.field("arguments", &support::DebugSyntaxResult(self.arguments()))
 			.finish()
@@ -4880,7 +5138,10 @@ impl AstNode for CallExpr {
 impl std::fmt::Debug for CallExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("CallExpr")
-			.field("type_args", &support::DebugOptionalNode(self.type_args()))
+			.field(
+				"type_args",
+				&support::DebugOptionalElement(self.type_args()),
+			)
 			.field("callee", &support::DebugSyntaxResult(self.callee()))
 			.field("arguments", &support::DebugSyntaxResult(self.arguments()))
 			.finish()
@@ -5077,12 +5338,12 @@ impl std::fmt::Debug for TsTypeParams {
 		f.debug_struct("TsTypeParams")
 			.field(
 				"l_angle_token",
-				&support::DebugOptionalNode(self.l_angle_token()),
+				&support::DebugOptionalElement(self.l_angle_token()),
 			)
 			.field("params", &support::DebugSyntaxResult(self.params()))
 			.field(
 				"r_angle_token",
-				&support::DebugOptionalNode(self.r_angle_token()),
+				&support::DebugOptionalElement(self.r_angle_token()),
 			)
 			.finish()
 	}
@@ -5198,7 +5459,10 @@ impl AstNode for JsArrayHole {
 impl std::fmt::Debug for JsArrayHole {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsArrayHole")
-			.field("hole_token", &support::DebugOptionalNode(self.hole_token()))
+			.field(
+				"hole_token",
+				&support::DebugOptionalElement(self.hole_token()),
+			)
 			.finish()
 	}
 }
@@ -5306,13 +5570,16 @@ impl std::fmt::Debug for JsMethodObjectMember {
 		f.debug_struct("JsMethodObjectMember")
 			.field(
 				"async_token",
-				&support::DebugOptionalNode(self.async_token()),
+				&support::DebugOptionalElement(self.async_token()),
 			)
-			.field("star_token", &support::DebugOptionalNode(self.star_token()))
+			.field(
+				"star_token",
+				&support::DebugOptionalElement(self.star_token()),
+			)
 			.field("name", &support::DebugSyntaxResult(self.name()))
 			.field(
 				"type_params",
-				&support::DebugOptionalNode(self.type_params()),
+				&support::DebugOptionalElement(self.type_params()),
 			)
 			.field(
 				"parameter_list",
@@ -5320,7 +5587,7 @@ impl std::fmt::Debug for JsMethodObjectMember {
 			)
 			.field(
 				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
+				&support::DebugOptionalElement(self.return_type()),
 			)
 			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
@@ -5352,7 +5619,7 @@ impl std::fmt::Debug for JsGetterObjectMember {
 			)
 			.field(
 				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
+				&support::DebugOptionalElement(self.return_type()),
 			)
 			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
@@ -5509,7 +5776,7 @@ impl std::fmt::Debug for JsConstructorClassMember {
 		f.debug_struct("JsConstructorClassMember")
 			.field(
 				"access_modifier",
-				&support::DebugOptionalNode(self.access_modifier()),
+				&support::DebugOptionalElement(self.access_modifier()),
 			)
 			.field("name", &support::DebugSyntaxResult(self.name()))
 			.field(
@@ -5534,30 +5801,36 @@ impl AstNode for JsPropertyClassMember {
 impl std::fmt::Debug for JsPropertyClassMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsPropertyClassMember")
-			.field("modifiers", &support::DebugOptionalNode(self.modifiers()))
+			.field(
+				"modifiers",
+				&support::DebugOptionalElement(self.modifiers()),
+			)
 			.field(
 				"access_modifier",
-				&support::DebugOptionalNode(self.access_modifier()),
+				&support::DebugOptionalElement(self.access_modifier()),
 			)
 			.field(
 				"abstract_token",
-				&support::DebugOptionalNode(self.abstract_token()),
+				&support::DebugOptionalElement(self.abstract_token()),
 			)
 			.field(
 				"static_token",
-				&support::DebugOptionalNode(self.static_token()),
+				&support::DebugOptionalElement(self.static_token()),
 			)
 			.field("name", &support::DebugSyntaxResult(self.name()))
 			.field(
 				"question_mark_token",
-				&support::DebugOptionalNode(self.question_mark_token()),
+				&support::DebugOptionalElement(self.question_mark_token()),
 			)
-			.field("excl_token", &support::DebugOptionalNode(self.excl_token()))
-			.field("ty", &support::DebugOptionalNode(self.ty()))
-			.field("value", &support::DebugOptionalNode(self.value()))
+			.field(
+				"excl_token",
+				&support::DebugOptionalElement(self.excl_token()),
+			)
+			.field("ty", &support::DebugOptionalElement(self.ty()))
+			.field("value", &support::DebugOptionalElement(self.value()))
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -5578,25 +5851,28 @@ impl std::fmt::Debug for JsMethodClassMember {
 		f.debug_struct("JsMethodClassMember")
 			.field(
 				"access_modifier",
-				&support::DebugOptionalNode(self.access_modifier()),
+				&support::DebugOptionalElement(self.access_modifier()),
 			)
 			.field(
 				"static_token",
-				&support::DebugOptionalNode(self.static_token()),
+				&support::DebugOptionalElement(self.static_token()),
 			)
 			.field(
 				"abstract_token",
-				&support::DebugOptionalNode(self.abstract_token()),
+				&support::DebugOptionalElement(self.abstract_token()),
 			)
 			.field(
 				"async_token",
-				&support::DebugOptionalNode(self.async_token()),
+				&support::DebugOptionalElement(self.async_token()),
 			)
-			.field("star_token", &support::DebugOptionalNode(self.star_token()))
+			.field(
+				"star_token",
+				&support::DebugOptionalElement(self.star_token()),
+			)
 			.field("name", &support::DebugSyntaxResult(self.name()))
 			.field(
 				"type_parameters",
-				&support::DebugOptionalNode(self.type_parameters()),
+				&support::DebugOptionalElement(self.type_parameters()),
 			)
 			.field(
 				"parameter_list",
@@ -5604,7 +5880,7 @@ impl std::fmt::Debug for JsMethodClassMember {
 			)
 			.field(
 				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
+				&support::DebugOptionalElement(self.return_type()),
 			)
 			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
@@ -5626,15 +5902,15 @@ impl std::fmt::Debug for JsGetterClassMember {
 		f.debug_struct("JsGetterClassMember")
 			.field(
 				"access_modifier",
-				&support::DebugOptionalNode(self.access_modifier()),
+				&support::DebugOptionalElement(self.access_modifier()),
 			)
 			.field(
 				"abstract_token",
-				&support::DebugOptionalNode(self.abstract_token()),
+				&support::DebugOptionalElement(self.abstract_token()),
 			)
 			.field(
 				"static_token",
-				&support::DebugOptionalNode(self.static_token()),
+				&support::DebugOptionalElement(self.static_token()),
 			)
 			.field("get_token", &support::DebugSyntaxResult(self.get_token()))
 			.field("name", &support::DebugSyntaxResult(self.name()))
@@ -5648,7 +5924,7 @@ impl std::fmt::Debug for JsGetterClassMember {
 			)
 			.field(
 				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
+				&support::DebugOptionalElement(self.return_type()),
 			)
 			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
@@ -5670,15 +5946,15 @@ impl std::fmt::Debug for JsSetterClassMember {
 		f.debug_struct("JsSetterClassMember")
 			.field(
 				"access_modifier",
-				&support::DebugOptionalNode(self.access_modifier()),
+				&support::DebugOptionalElement(self.access_modifier()),
 			)
 			.field(
 				"abstract_token",
-				&support::DebugOptionalNode(self.abstract_token()),
+				&support::DebugOptionalElement(self.abstract_token()),
 			)
 			.field(
 				"static_token",
-				&support::DebugOptionalNode(self.static_token()),
+				&support::DebugOptionalElement(self.static_token()),
 			)
 			.field("set_token", &support::DebugSyntaxResult(self.set_token()))
 			.field("name", &support::DebugSyntaxResult(self.name()))
@@ -5732,7 +6008,7 @@ impl std::fmt::Debug for TsIndexSignature {
 		f.debug_struct("TsIndexSignature")
 			.field(
 				"readonly_token",
-				&support::DebugOptionalNode(self.readonly_token()),
+				&support::DebugOptionalElement(self.readonly_token()),
 			)
 			.field(
 				"l_brack_token",
@@ -5879,7 +6155,7 @@ impl std::fmt::Debug for JsModifier {
 		f.debug_struct("JsModifier")
 			.field(
 				"declare_token",
-				&support::DebugOptionalNode(self.declare_token()),
+				&support::DebugOptionalElement(self.declare_token()),
 			)
 			.finish()
 	}
@@ -6086,7 +6362,7 @@ impl std::fmt::Debug for JsObjectAssignmentPatternShorthandProperty {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsObjectAssignmentPatternShorthandProperty")
 			.field("identifier", &support::DebugSyntaxResult(self.identifier()))
-			.field("init", &support::DebugOptionalNode(self.init()))
+			.field("init", &support::DebugOptionalElement(self.init()))
 			.finish()
 	}
 }
@@ -6110,7 +6386,7 @@ impl std::fmt::Debug for JsObjectAssignmentPatternProperty {
 				&support::DebugSyntaxResult(self.colon_token()),
 			)
 			.field("pattern", &support::DebugSyntaxResult(self.pattern()))
-			.field("init", &support::DebugOptionalNode(self.init()))
+			.field("init", &support::DebugOptionalElement(self.init()))
 			.finish()
 	}
 }
@@ -6269,7 +6545,7 @@ impl std::fmt::Debug for JsObjectBindingPatternProperty {
 				&support::DebugSyntaxResult(self.colon_token()),
 			)
 			.field("pattern", &support::DebugSyntaxResult(self.pattern()))
-			.field("init", &support::DebugOptionalNode(self.init()))
+			.field("init", &support::DebugOptionalElement(self.init()))
 			.finish()
 	}
 }
@@ -6310,7 +6586,7 @@ impl std::fmt::Debug for JsObjectBindingPatternShorthandProperty {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsObjectBindingPatternShorthandProperty")
 			.field("identifier", &support::DebugSyntaxResult(self.identifier()))
-			.field("init", &support::DebugOptionalNode(self.init()))
+			.field("init", &support::DebugOptionalElement(self.init()))
 			.finish()
 	}
 }
@@ -6455,7 +6731,7 @@ impl std::fmt::Debug for JsVariableDeclarator {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsVariableDeclarator")
 			.field("id", &support::DebugSyntaxResult(self.id()))
-			.field("init", &support::DebugOptionalNode(self.init()))
+			.field("init", &support::DebugOptionalElement(self.init()))
 			.finish()
 	}
 }
@@ -6483,7 +6759,7 @@ impl std::fmt::Debug for JsImport {
 			)
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -6506,8 +6782,14 @@ impl std::fmt::Debug for ExportNamed {
 				"export_token",
 				&support::DebugSyntaxResult(self.export_token()),
 			)
-			.field("type_token", &support::DebugOptionalNode(self.type_token()))
-			.field("from_token", &support::DebugOptionalNode(self.from_token()))
+			.field(
+				"type_token",
+				&support::DebugOptionalElement(self.type_token()),
+			)
+			.field(
+				"from_token",
+				&support::DebugOptionalElement(self.from_token()),
+			)
 			.field(
 				"l_curly_token",
 				&support::DebugSyntaxResult(self.l_curly_token()),
@@ -6540,9 +6822,12 @@ impl std::fmt::Debug for ExportDefaultDecl {
 			)
 			.field(
 				"default_token",
-				&support::DebugOptionalNode(self.default_token()),
+				&support::DebugOptionalElement(self.default_token()),
 			)
-			.field("type_token", &support::DebugOptionalNode(self.type_token()))
+			.field(
+				"type_token",
+				&support::DebugOptionalElement(self.type_token()),
+			)
 			.field("decl", &support::DebugSyntaxResult(self.decl()))
 			.finish()
 	}
@@ -6565,10 +6850,13 @@ impl std::fmt::Debug for ExportDefaultExpr {
 				"export_token",
 				&support::DebugSyntaxResult(self.export_token()),
 			)
-			.field("type_token", &support::DebugOptionalNode(self.type_token()))
+			.field(
+				"type_token",
+				&support::DebugOptionalElement(self.type_token()),
+			)
 			.field(
 				"default_token",
-				&support::DebugOptionalNode(self.default_token()),
+				&support::DebugOptionalElement(self.default_token()),
 			)
 			.field("expr", &support::DebugSyntaxResult(self.expr()))
 			.finish()
@@ -6592,10 +6880,13 @@ impl std::fmt::Debug for ExportWildcard {
 				"export_token",
 				&support::DebugSyntaxResult(self.export_token()),
 			)
-			.field("type_token", &support::DebugOptionalNode(self.type_token()))
+			.field(
+				"type_token",
+				&support::DebugOptionalElement(self.type_token()),
+			)
 			.field("star_token", &support::DebugSyntaxResult(self.star_token()))
-			.field("as_token", &support::DebugOptionalNode(self.as_token()))
-			.field("ident", &support::DebugOptionalNode(self.ident()))
+			.field("as_token", &support::DebugOptionalElement(self.as_token()))
+			.field("ident", &support::DebugOptionalElement(self.ident()))
 			.field("from_token", &support::DebugSyntaxResult(self.from_token()))
 			.field(
 				"source_token",
@@ -6622,7 +6913,10 @@ impl std::fmt::Debug for ExportDecl {
 				"export_token",
 				&support::DebugSyntaxResult(self.export_token()),
 			)
-			.field("type_token", &support::DebugOptionalNode(self.type_token()))
+			.field(
+				"type_token",
+				&support::DebugOptionalElement(self.type_token()),
+			)
 			.field("decl", &support::DebugSyntaxResult(self.decl()))
 			.finish()
 	}
@@ -6654,7 +6948,7 @@ impl std::fmt::Debug for TsImportEqualsDecl {
 			.field("module", &support::DebugSyntaxResult(self.module()))
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -6681,7 +6975,7 @@ impl std::fmt::Debug for TsExportAssignment {
 			.field("expr", &support::DebugSyntaxResult(self.expr()))
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -6709,10 +7003,10 @@ impl std::fmt::Debug for TsNamespaceExportDecl {
 				"namespace_token",
 				&support::DebugSyntaxResult(self.namespace_token()),
 			)
-			.field("ident", &support::DebugOptionalNode(self.ident()))
+			.field("ident", &support::DebugOptionalElement(self.ident()))
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -6732,7 +7026,10 @@ impl std::fmt::Debug for JsImportBareClause {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsImportBareClause")
 			.field("source", &support::DebugSyntaxResult(self.source()))
-			.field("assertion", &support::DebugOptionalNode(self.assertion()))
+			.field(
+				"assertion",
+				&support::DebugOptionalElement(self.assertion()),
+			)
 			.finish()
 	}
 }
@@ -6752,7 +7049,7 @@ impl std::fmt::Debug for JsImportNamedClause {
 		f.debug_struct("JsImportNamedClause")
 			.field(
 				"default_specifier",
-				&support::DebugOptionalNode(self.default_specifier()),
+				&support::DebugOptionalElement(self.default_specifier()),
 			)
 			.field(
 				"named_import",
@@ -6760,7 +7057,10 @@ impl std::fmt::Debug for JsImportNamedClause {
 			)
 			.field("from_token", &support::DebugSyntaxResult(self.from_token()))
 			.field("source", &support::DebugSyntaxResult(self.source()))
-			.field("assertion", &support::DebugOptionalNode(self.assertion()))
+			.field(
+				"assertion",
+				&support::DebugOptionalElement(self.assertion()),
+			)
 			.finish()
 	}
 }
@@ -6781,7 +7081,10 @@ impl std::fmt::Debug for JsImportDefaultClause {
 			.field("local_name", &support::DebugSyntaxResult(self.local_name()))
 			.field("from_token", &support::DebugSyntaxResult(self.from_token()))
 			.field("source", &support::DebugSyntaxResult(self.source()))
-			.field("assertion", &support::DebugOptionalNode(self.assertion()))
+			.field(
+				"assertion",
+				&support::DebugOptionalElement(self.assertion()),
+			)
 			.finish()
 	}
 }
@@ -6804,7 +7107,10 @@ impl std::fmt::Debug for JsImportNamespaceClause {
 			.field("local_name", &support::DebugSyntaxResult(self.local_name()))
 			.field("from_token", &support::DebugSyntaxResult(self.from_token()))
 			.field("source", &support::DebugSyntaxResult(self.source()))
-			.field("assertion", &support::DebugOptionalNode(self.assertion()))
+			.field(
+				"assertion",
+				&support::DebugOptionalElement(self.assertion()),
+			)
 			.finish()
 	}
 }
@@ -7024,8 +7330,8 @@ impl std::fmt::Debug for Specifier {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("Specifier")
 			.field("name", &support::DebugSyntaxResult(self.name()))
-			.field("as_token", &support::DebugOptionalNode(self.as_token()))
-			.field("alias", &support::DebugOptionalNode(self.alias()))
+			.field("as_token", &support::DebugOptionalElement(self.as_token()))
+			.field("alias", &support::DebugOptionalElement(self.alias()))
 			.finish()
 	}
 }
@@ -7495,16 +7801,19 @@ impl std::fmt::Debug for TsMappedType {
 			)
 			.field(
 				"readonly_modifier",
-				&support::DebugOptionalNode(self.readonly_modifier()),
+				&support::DebugOptionalElement(self.readonly_modifier()),
 			)
 			.field(
 				"minus_token",
-				&support::DebugOptionalNode(self.minus_token()),
+				&support::DebugOptionalElement(self.minus_token()),
 			)
-			.field("plus_token", &support::DebugOptionalNode(self.plus_token()))
+			.field(
+				"plus_token",
+				&support::DebugOptionalElement(self.plus_token()),
+			)
 			.field(
 				"question_mark_token",
-				&support::DebugOptionalNode(self.question_mark_token()),
+				&support::DebugOptionalElement(self.question_mark_token()),
 			)
 			.field("param", &support::DebugSyntaxResult(self.param()))
 			.field(
@@ -7518,7 +7827,7 @@ impl std::fmt::Debug for TsMappedType {
 			)
 			.field(
 				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
+				&support::DebugOptionalElement(self.semicolon_token()),
 			)
 			.finish()
 	}
@@ -7542,7 +7851,10 @@ impl std::fmt::Debug for TsImport {
 				&support::DebugSyntaxResult(self.import_token()),
 			)
 			.field("type_args", &support::DebugSyntaxResult(self.type_args()))
-			.field("dot_token", &support::DebugOptionalNode(self.dot_token()))
+			.field(
+				"dot_token",
+				&support::DebugOptionalElement(self.dot_token()),
+			)
 			.field(
 				"l_paren_token",
 				&support::DebugSyntaxResult(self.l_paren_token()),
@@ -7682,7 +7994,7 @@ impl std::fmt::Debug for TsFnType {
 			)
 			.field(
 				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
+				&support::DebugOptionalElement(self.return_type()),
 			)
 			.finish()
 	}
@@ -7709,7 +8021,7 @@ impl std::fmt::Debug for TsConstructorType {
 			)
 			.field(
 				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
+				&support::DebugOptionalElement(self.return_type()),
 			)
 			.finish()
 	}
@@ -7814,7 +8126,7 @@ impl std::fmt::Debug for TsTupleElement {
 			)
 			.field(
 				"dotdotdot_token",
-				&support::DebugOptionalNode(self.dotdotdot_token()),
+				&support::DebugOptionalElement(self.dotdotdot_token()),
 			)
 			.field("ty", &support::DebugSyntaxResult(self.ty()))
 			.finish()
@@ -7878,12 +8190,15 @@ impl std::fmt::Debug for TsMappedTypeReadonly {
 		f.debug_struct("TsMappedTypeReadonly")
 			.field(
 				"minus_token",
-				&support::DebugOptionalNode(self.minus_token()),
+				&support::DebugOptionalElement(self.minus_token()),
 			)
-			.field("plus_token", &support::DebugOptionalNode(self.plus_token()))
+			.field(
+				"plus_token",
+				&support::DebugOptionalElement(self.plus_token()),
+			)
 			.field(
 				"readonly_token",
-				&support::DebugOptionalNode(self.readonly_token()),
+				&support::DebugOptionalElement(self.readonly_token()),
 			)
 			.finish()
 	}
@@ -7904,14 +8219,14 @@ impl std::fmt::Debug for TsMappedTypeParam {
 		f.debug_struct("TsMappedTypeParam")
 			.field(
 				"l_brack_token",
-				&support::DebugOptionalNode(self.l_brack_token()),
+				&support::DebugOptionalElement(self.l_brack_token()),
 			)
-			.field("name", &support::DebugOptionalNode(self.name()))
+			.field("name", &support::DebugOptionalElement(self.name()))
 			.field(
 				"r_brack_token",
-				&support::DebugOptionalNode(self.r_brack_token()),
+				&support::DebugOptionalElement(self.r_brack_token()),
 			)
-			.field("ident", &support::DebugOptionalNode(self.ident()))
+			.field("ident", &support::DebugOptionalElement(self.ident()))
 			.field("ty", &support::DebugSyntaxResult(self.ty()))
 			.finish()
 	}
@@ -8095,7 +8410,7 @@ impl std::fmt::Debug for TsConstructSignatureDecl {
 			.field("parameters", &support::DebugSyntaxResult(self.parameters()))
 			.field(
 				"colon_token",
-				&support::DebugOptionalNode(self.colon_token()),
+				&support::DebugOptionalElement(self.colon_token()),
 			)
 			.field(
 				"return_type",
@@ -8120,7 +8435,7 @@ impl std::fmt::Debug for TsPropertySignature {
 		f.debug_struct("TsPropertySignature")
 			.field(
 				"readonly_token",
-				&support::DebugOptionalNode(self.readonly_token()),
+				&support::DebugOptionalElement(self.readonly_token()),
 			)
 			.field("prop", &support::DebugSyntaxResult(self.prop()))
 			.field(
@@ -8151,7 +8466,7 @@ impl std::fmt::Debug for TsMethodSignature {
 		f.debug_struct("TsMethodSignature")
 			.field(
 				"readonly_token",
-				&support::DebugOptionalNode(self.readonly_token()),
+				&support::DebugOptionalElement(self.readonly_token()),
 			)
 			.field("key", &support::DebugSyntaxResult(self.key()))
 			.field(
@@ -8161,7 +8476,7 @@ impl std::fmt::Debug for TsMethodSignature {
 			.field("parameters", &support::DebugSyntaxResult(self.parameters()))
 			.field(
 				"question_mark_token",
-				&support::DebugOptionalNode(self.question_mark_token()),
+				&support::DebugOptionalElement(self.question_mark_token()),
 			)
 			.field(
 				"colon_token",
@@ -11051,6 +11366,1656 @@ impl std::fmt::Debug for TsNamespaceBody {
 		}
 	}
 }
+impl From<JsUnknownStatement> for AnyNode {
+	fn from(node: JsUnknownStatement) -> AnyNode { AnyNode::JsUnknownStatement(node) }
+}
+impl From<JsUnknownExpression> for AnyNode {
+	fn from(node: JsUnknownExpression) -> AnyNode { AnyNode::JsUnknownExpression(node) }
+}
+impl From<JsUnknownMember> for AnyNode {
+	fn from(node: JsUnknownMember) -> AnyNode { AnyNode::JsUnknownMember(node) }
+}
+impl From<JsUnknownBinding> for AnyNode {
+	fn from(node: JsUnknownBinding) -> AnyNode { AnyNode::JsUnknownBinding(node) }
+}
+impl From<JsUnknownAssignment> for AnyNode {
+	fn from(node: JsUnknownAssignment) -> AnyNode { AnyNode::JsUnknownAssignment(node) }
+}
+impl From<JsUnknownModifier> for AnyNode {
+	fn from(node: JsUnknownModifier) -> AnyNode { AnyNode::JsUnknownModifier(node) }
+}
+impl From<JsUnknownImportAssertionEntry> for AnyNode {
+	fn from(node: JsUnknownImportAssertionEntry) -> AnyNode {
+		AnyNode::JsUnknownImportAssertionEntry(node)
+	}
+}
+impl From<JsUnknownNamedImportSpecifier> for AnyNode {
+	fn from(node: JsUnknownNamedImportSpecifier) -> AnyNode {
+		AnyNode::JsUnknownNamedImportSpecifier(node)
+	}
+}
+impl From<List> for AnyNode {
+	fn from(node: List) -> AnyNode { AnyNode::List(node) }
+}
+impl From<Ident> for AnyNode {
+	fn from(node: Ident) -> AnyNode { AnyNode::Ident(node) }
+}
+impl From<JsScript> for AnyNode {
+	fn from(node: JsScript) -> AnyNode { AnyNode::JsScript(node) }
+}
+impl From<JsModule> for AnyNode {
+	fn from(node: JsModule) -> AnyNode { AnyNode::JsModule(node) }
+}
+impl From<JsDirective> for AnyNode {
+	fn from(node: JsDirective) -> AnyNode { AnyNode::JsDirective(node) }
+}
+impl From<JsBlockStatement> for AnyNode {
+	fn from(node: JsBlockStatement) -> AnyNode { AnyNode::JsBlockStatement(node) }
+}
+impl From<JsEmptyStatement> for AnyNode {
+	fn from(node: JsEmptyStatement) -> AnyNode { AnyNode::JsEmptyStatement(node) }
+}
+impl From<JsExpressionStatement> for AnyNode {
+	fn from(node: JsExpressionStatement) -> AnyNode { AnyNode::JsExpressionStatement(node) }
+}
+impl From<JsIfStatement> for AnyNode {
+	fn from(node: JsIfStatement) -> AnyNode { AnyNode::JsIfStatement(node) }
+}
+impl From<JsDoWhileStatement> for AnyNode {
+	fn from(node: JsDoWhileStatement) -> AnyNode { AnyNode::JsDoWhileStatement(node) }
+}
+impl From<JsWhileStatement> for AnyNode {
+	fn from(node: JsWhileStatement) -> AnyNode { AnyNode::JsWhileStatement(node) }
+}
+impl From<ForStmt> for AnyNode {
+	fn from(node: ForStmt) -> AnyNode { AnyNode::ForStmt(node) }
+}
+impl From<ForInStmt> for AnyNode {
+	fn from(node: ForInStmt) -> AnyNode { AnyNode::ForInStmt(node) }
+}
+impl From<ForOfStmt> for AnyNode {
+	fn from(node: ForOfStmt) -> AnyNode { AnyNode::ForOfStmt(node) }
+}
+impl From<JsContinueStatement> for AnyNode {
+	fn from(node: JsContinueStatement) -> AnyNode { AnyNode::JsContinueStatement(node) }
+}
+impl From<JsBreakStatement> for AnyNode {
+	fn from(node: JsBreakStatement) -> AnyNode { AnyNode::JsBreakStatement(node) }
+}
+impl From<JsReturnStatement> for AnyNode {
+	fn from(node: JsReturnStatement) -> AnyNode { AnyNode::JsReturnStatement(node) }
+}
+impl From<JsWithStatement> for AnyNode {
+	fn from(node: JsWithStatement) -> AnyNode { AnyNode::JsWithStatement(node) }
+}
+impl From<JsLabeledStatement> for AnyNode {
+	fn from(node: JsLabeledStatement) -> AnyNode { AnyNode::JsLabeledStatement(node) }
+}
+impl From<JsSwitchStatement> for AnyNode {
+	fn from(node: JsSwitchStatement) -> AnyNode { AnyNode::JsSwitchStatement(node) }
+}
+impl From<JsThrowStatement> for AnyNode {
+	fn from(node: JsThrowStatement) -> AnyNode { AnyNode::JsThrowStatement(node) }
+}
+impl From<JsTryStatement> for AnyNode {
+	fn from(node: JsTryStatement) -> AnyNode { AnyNode::JsTryStatement(node) }
+}
+impl From<JsTryFinallyStatement> for AnyNode {
+	fn from(node: JsTryFinallyStatement) -> AnyNode { AnyNode::JsTryFinallyStatement(node) }
+}
+impl From<JsDebuggerStatement> for AnyNode {
+	fn from(node: JsDebuggerStatement) -> AnyNode { AnyNode::JsDebuggerStatement(node) }
+}
+impl From<JsFunctionDeclaration> for AnyNode {
+	fn from(node: JsFunctionDeclaration) -> AnyNode { AnyNode::JsFunctionDeclaration(node) }
+}
+impl From<JsClassDeclaration> for AnyNode {
+	fn from(node: JsClassDeclaration) -> AnyNode { AnyNode::JsClassDeclaration(node) }
+}
+impl From<JsVariableDeclarationStatement> for AnyNode {
+	fn from(node: JsVariableDeclarationStatement) -> AnyNode {
+		AnyNode::JsVariableDeclarationStatement(node)
+	}
+}
+impl From<TsEnum> for AnyNode {
+	fn from(node: TsEnum) -> AnyNode { AnyNode::TsEnum(node) }
+}
+impl From<TsTypeAliasDecl> for AnyNode {
+	fn from(node: TsTypeAliasDecl) -> AnyNode { AnyNode::TsTypeAliasDecl(node) }
+}
+impl From<TsNamespaceDecl> for AnyNode {
+	fn from(node: TsNamespaceDecl) -> AnyNode { AnyNode::TsNamespaceDecl(node) }
+}
+impl From<TsModuleDecl> for AnyNode {
+	fn from(node: TsModuleDecl) -> AnyNode { AnyNode::TsModuleDecl(node) }
+}
+impl From<TsInterfaceDecl> for AnyNode {
+	fn from(node: TsInterfaceDecl) -> AnyNode { AnyNode::TsInterfaceDecl(node) }
+}
+impl From<JsElseClause> for AnyNode {
+	fn from(node: JsElseClause) -> AnyNode { AnyNode::JsElseClause(node) }
+}
+impl From<ForStmtInit> for AnyNode {
+	fn from(node: ForStmtInit) -> AnyNode { AnyNode::ForStmtInit(node) }
+}
+impl From<ForStmtTest> for AnyNode {
+	fn from(node: ForStmtTest) -> AnyNode { AnyNode::ForStmtTest(node) }
+}
+impl From<ForStmtUpdate> for AnyNode {
+	fn from(node: ForStmtUpdate) -> AnyNode { AnyNode::ForStmtUpdate(node) }
+}
+impl From<JsVariableDeclaration> for AnyNode {
+	fn from(node: JsVariableDeclaration) -> AnyNode { AnyNode::JsVariableDeclaration(node) }
+}
+impl From<JsCaseClause> for AnyNode {
+	fn from(node: JsCaseClause) -> AnyNode { AnyNode::JsCaseClause(node) }
+}
+impl From<JsDefaultClause> for AnyNode {
+	fn from(node: JsDefaultClause) -> AnyNode { AnyNode::JsDefaultClause(node) }
+}
+impl From<JsCatchClause> for AnyNode {
+	fn from(node: JsCatchClause) -> AnyNode { AnyNode::JsCatchClause(node) }
+}
+impl From<JsFinallyClause> for AnyNode {
+	fn from(node: JsFinallyClause) -> AnyNode { AnyNode::JsFinallyClause(node) }
+}
+impl From<JsCatchDeclaration> for AnyNode {
+	fn from(node: JsCatchDeclaration) -> AnyNode { AnyNode::JsCatchDeclaration(node) }
+}
+impl From<JsArrayExpression> for AnyNode {
+	fn from(node: JsArrayExpression) -> AnyNode { AnyNode::JsArrayExpression(node) }
+}
+impl From<JsArrowFunctionExpression> for AnyNode {
+	fn from(node: JsArrowFunctionExpression) -> AnyNode { AnyNode::JsArrowFunctionExpression(node) }
+}
+impl From<JsAssignmentExpression> for AnyNode {
+	fn from(node: JsAssignmentExpression) -> AnyNode { AnyNode::JsAssignmentExpression(node) }
+}
+impl From<JsAwaitExpression> for AnyNode {
+	fn from(node: JsAwaitExpression) -> AnyNode { AnyNode::JsAwaitExpression(node) }
+}
+impl From<JsBinaryExpression> for AnyNode {
+	fn from(node: JsBinaryExpression) -> AnyNode { AnyNode::JsBinaryExpression(node) }
+}
+impl From<JsClassExpression> for AnyNode {
+	fn from(node: JsClassExpression) -> AnyNode { AnyNode::JsClassExpression(node) }
+}
+impl From<JsConditionalExpression> for AnyNode {
+	fn from(node: JsConditionalExpression) -> AnyNode { AnyNode::JsConditionalExpression(node) }
+}
+impl From<JsComputedMemberExpression> for AnyNode {
+	fn from(node: JsComputedMemberExpression) -> AnyNode {
+		AnyNode::JsComputedMemberExpression(node)
+	}
+}
+impl From<JsFunctionExpression> for AnyNode {
+	fn from(node: JsFunctionExpression) -> AnyNode { AnyNode::JsFunctionExpression(node) }
+}
+impl From<JsImportCallExpression> for AnyNode {
+	fn from(node: JsImportCallExpression) -> AnyNode { AnyNode::JsImportCallExpression(node) }
+}
+impl From<JsLogicalExpression> for AnyNode {
+	fn from(node: JsLogicalExpression) -> AnyNode { AnyNode::JsLogicalExpression(node) }
+}
+impl From<JsObjectExpression> for AnyNode {
+	fn from(node: JsObjectExpression) -> AnyNode { AnyNode::JsObjectExpression(node) }
+}
+impl From<JsParenthesizedExpression> for AnyNode {
+	fn from(node: JsParenthesizedExpression) -> AnyNode { AnyNode::JsParenthesizedExpression(node) }
+}
+impl From<JsIdentifierExpression> for AnyNode {
+	fn from(node: JsIdentifierExpression) -> AnyNode { AnyNode::JsIdentifierExpression(node) }
+}
+impl From<JsSequenceExpression> for AnyNode {
+	fn from(node: JsSequenceExpression) -> AnyNode { AnyNode::JsSequenceExpression(node) }
+}
+impl From<JsStaticMemberExpression> for AnyNode {
+	fn from(node: JsStaticMemberExpression) -> AnyNode { AnyNode::JsStaticMemberExpression(node) }
+}
+impl From<JsSuperExpression> for AnyNode {
+	fn from(node: JsSuperExpression) -> AnyNode { AnyNode::JsSuperExpression(node) }
+}
+impl From<JsThisExpression> for AnyNode {
+	fn from(node: JsThisExpression) -> AnyNode { AnyNode::JsThisExpression(node) }
+}
+impl From<JsUnaryExpression> for AnyNode {
+	fn from(node: JsUnaryExpression) -> AnyNode { AnyNode::JsUnaryExpression(node) }
+}
+impl From<JsPreUpdateExpression> for AnyNode {
+	fn from(node: JsPreUpdateExpression) -> AnyNode { AnyNode::JsPreUpdateExpression(node) }
+}
+impl From<JsPostUpdateExpression> for AnyNode {
+	fn from(node: JsPostUpdateExpression) -> AnyNode { AnyNode::JsPostUpdateExpression(node) }
+}
+impl From<JsYieldExpression> for AnyNode {
+	fn from(node: JsYieldExpression) -> AnyNode { AnyNode::JsYieldExpression(node) }
+}
+impl From<Template> for AnyNode {
+	fn from(node: Template) -> AnyNode { AnyNode::Template(node) }
+}
+impl From<NewExpr> for AnyNode {
+	fn from(node: NewExpr) -> AnyNode { AnyNode::NewExpr(node) }
+}
+impl From<CallExpr> for AnyNode {
+	fn from(node: CallExpr) -> AnyNode { AnyNode::CallExpr(node) }
+}
+impl From<NewTarget> for AnyNode {
+	fn from(node: NewTarget) -> AnyNode { AnyNode::NewTarget(node) }
+}
+impl From<ImportMeta> for AnyNode {
+	fn from(node: ImportMeta) -> AnyNode { AnyNode::ImportMeta(node) }
+}
+impl From<TsNonNull> for AnyNode {
+	fn from(node: TsNonNull) -> AnyNode { AnyNode::TsNonNull(node) }
+}
+impl From<TsAssertion> for AnyNode {
+	fn from(node: TsAssertion) -> AnyNode { AnyNode::TsAssertion(node) }
+}
+impl From<TsConstAssertion> for AnyNode {
+	fn from(node: TsConstAssertion) -> AnyNode { AnyNode::TsConstAssertion(node) }
+}
+impl From<TsTypeArgs> for AnyNode {
+	fn from(node: TsTypeArgs) -> AnyNode { AnyNode::TsTypeArgs(node) }
+}
+impl From<ArgList> for AnyNode {
+	fn from(node: ArgList) -> AnyNode { AnyNode::ArgList(node) }
+}
+impl From<TsTypeParams> for AnyNode {
+	fn from(node: TsTypeParams) -> AnyNode { AnyNode::TsTypeParams(node) }
+}
+impl From<JsParameterList> for AnyNode {
+	fn from(node: JsParameterList) -> AnyNode { AnyNode::JsParameterList(node) }
+}
+impl From<TsTypeAnnotation> for AnyNode {
+	fn from(node: TsTypeAnnotation) -> AnyNode { AnyNode::TsTypeAnnotation(node) }
+}
+impl From<JsFunctionBody> for AnyNode {
+	fn from(node: JsFunctionBody) -> AnyNode { AnyNode::JsFunctionBody(node) }
+}
+impl From<JsSpread> for AnyNode {
+	fn from(node: JsSpread) -> AnyNode { AnyNode::JsSpread(node) }
+}
+impl From<JsArrayHole> for AnyNode {
+	fn from(node: JsArrayHole) -> AnyNode { AnyNode::JsArrayHole(node) }
+}
+impl From<JsReferenceIdentifier> for AnyNode {
+	fn from(node: JsReferenceIdentifier) -> AnyNode { AnyNode::JsReferenceIdentifier(node) }
+}
+impl From<JsLiteralMemberName> for AnyNode {
+	fn from(node: JsLiteralMemberName) -> AnyNode { AnyNode::JsLiteralMemberName(node) }
+}
+impl From<JsComputedMemberName> for AnyNode {
+	fn from(node: JsComputedMemberName) -> AnyNode { AnyNode::JsComputedMemberName(node) }
+}
+impl From<JsPropertyObjectMember> for AnyNode {
+	fn from(node: JsPropertyObjectMember) -> AnyNode { AnyNode::JsPropertyObjectMember(node) }
+}
+impl From<JsMethodObjectMember> for AnyNode {
+	fn from(node: JsMethodObjectMember) -> AnyNode { AnyNode::JsMethodObjectMember(node) }
+}
+impl From<JsGetterObjectMember> for AnyNode {
+	fn from(node: JsGetterObjectMember) -> AnyNode { AnyNode::JsGetterObjectMember(node) }
+}
+impl From<JsSetterObjectMember> for AnyNode {
+	fn from(node: JsSetterObjectMember) -> AnyNode { AnyNode::JsSetterObjectMember(node) }
+}
+impl From<JsShorthandPropertyObjectMember> for AnyNode {
+	fn from(node: JsShorthandPropertyObjectMember) -> AnyNode {
+		AnyNode::JsShorthandPropertyObjectMember(node)
+	}
+}
+impl From<TsImplementsClause> for AnyNode {
+	fn from(node: TsImplementsClause) -> AnyNode { AnyNode::TsImplementsClause(node) }
+}
+impl From<JsExtendsClause> for AnyNode {
+	fn from(node: JsExtendsClause) -> AnyNode { AnyNode::JsExtendsClause(node) }
+}
+impl From<TsExprWithTypeArgs> for AnyNode {
+	fn from(node: TsExprWithTypeArgs) -> AnyNode { AnyNode::TsExprWithTypeArgs(node) }
+}
+impl From<JsPrivateClassMemberName> for AnyNode {
+	fn from(node: JsPrivateClassMemberName) -> AnyNode { AnyNode::JsPrivateClassMemberName(node) }
+}
+impl From<JsConstructorClassMember> for AnyNode {
+	fn from(node: JsConstructorClassMember) -> AnyNode { AnyNode::JsConstructorClassMember(node) }
+}
+impl From<JsPropertyClassMember> for AnyNode {
+	fn from(node: JsPropertyClassMember) -> AnyNode { AnyNode::JsPropertyClassMember(node) }
+}
+impl From<JsMethodClassMember> for AnyNode {
+	fn from(node: JsMethodClassMember) -> AnyNode { AnyNode::JsMethodClassMember(node) }
+}
+impl From<JsGetterClassMember> for AnyNode {
+	fn from(node: JsGetterClassMember) -> AnyNode { AnyNode::JsGetterClassMember(node) }
+}
+impl From<JsSetterClassMember> for AnyNode {
+	fn from(node: JsSetterClassMember) -> AnyNode { AnyNode::JsSetterClassMember(node) }
+}
+impl From<JsEmptyClassMember> for AnyNode {
+	fn from(node: JsEmptyClassMember) -> AnyNode { AnyNode::JsEmptyClassMember(node) }
+}
+impl From<TsIndexSignature> for AnyNode {
+	fn from(node: TsIndexSignature) -> AnyNode { AnyNode::TsIndexSignature(node) }
+}
+impl From<TsAccessibility> for AnyNode {
+	fn from(node: TsAccessibility) -> AnyNode { AnyNode::TsAccessibility(node) }
+}
+impl From<JsConstructorParameterList> for AnyNode {
+	fn from(node: JsConstructorParameterList) -> AnyNode {
+		AnyNode::JsConstructorParameterList(node)
+	}
+}
+impl From<TsConstructorParam> for AnyNode {
+	fn from(node: TsConstructorParam) -> AnyNode { AnyNode::TsConstructorParam(node) }
+}
+impl From<JsBindingPatternWithDefault> for AnyNode {
+	fn from(node: JsBindingPatternWithDefault) -> AnyNode {
+		AnyNode::JsBindingPatternWithDefault(node)
+	}
+}
+impl From<JsEqualValueClause> for AnyNode {
+	fn from(node: JsEqualValueClause) -> AnyNode { AnyNode::JsEqualValueClause(node) }
+}
+impl From<JsModifier> for AnyNode {
+	fn from(node: JsModifier) -> AnyNode { AnyNode::JsModifier(node) }
+}
+impl From<JsIdentifierAssignment> for AnyNode {
+	fn from(node: JsIdentifierAssignment) -> AnyNode { AnyNode::JsIdentifierAssignment(node) }
+}
+impl From<JsStaticMemberAssignment> for AnyNode {
+	fn from(node: JsStaticMemberAssignment) -> AnyNode { AnyNode::JsStaticMemberAssignment(node) }
+}
+impl From<JsComputedMemberAssignment> for AnyNode {
+	fn from(node: JsComputedMemberAssignment) -> AnyNode {
+		AnyNode::JsComputedMemberAssignment(node)
+	}
+}
+impl From<JsParenthesizedAssignment> for AnyNode {
+	fn from(node: JsParenthesizedAssignment) -> AnyNode { AnyNode::JsParenthesizedAssignment(node) }
+}
+impl From<JsAssignmentWithDefault> for AnyNode {
+	fn from(node: JsAssignmentWithDefault) -> AnyNode { AnyNode::JsAssignmentWithDefault(node) }
+}
+impl From<JsArrayAssignmentPattern> for AnyNode {
+	fn from(node: JsArrayAssignmentPattern) -> AnyNode { AnyNode::JsArrayAssignmentPattern(node) }
+}
+impl From<JsObjectAssignmentPattern> for AnyNode {
+	fn from(node: JsObjectAssignmentPattern) -> AnyNode { AnyNode::JsObjectAssignmentPattern(node) }
+}
+impl From<JsArrayAssignmentPatternRestElement> for AnyNode {
+	fn from(node: JsArrayAssignmentPatternRestElement) -> AnyNode {
+		AnyNode::JsArrayAssignmentPatternRestElement(node)
+	}
+}
+impl From<JsObjectAssignmentPatternShorthandProperty> for AnyNode {
+	fn from(node: JsObjectAssignmentPatternShorthandProperty) -> AnyNode {
+		AnyNode::JsObjectAssignmentPatternShorthandProperty(node)
+	}
+}
+impl From<JsObjectAssignmentPatternProperty> for AnyNode {
+	fn from(node: JsObjectAssignmentPatternProperty) -> AnyNode {
+		AnyNode::JsObjectAssignmentPatternProperty(node)
+	}
+}
+impl From<JsObjectAssignmentPatternRest> for AnyNode {
+	fn from(node: JsObjectAssignmentPatternRest) -> AnyNode {
+		AnyNode::JsObjectAssignmentPatternRest(node)
+	}
+}
+impl From<JsName> for AnyNode {
+	fn from(node: JsName) -> AnyNode { AnyNode::JsName(node) }
+}
+impl From<JsIdentifierBinding> for AnyNode {
+	fn from(node: JsIdentifierBinding) -> AnyNode { AnyNode::JsIdentifierBinding(node) }
+}
+impl From<JsArrayBindingPattern> for AnyNode {
+	fn from(node: JsArrayBindingPattern) -> AnyNode { AnyNode::JsArrayBindingPattern(node) }
+}
+impl From<JsObjectBindingPattern> for AnyNode {
+	fn from(node: JsObjectBindingPattern) -> AnyNode { AnyNode::JsObjectBindingPattern(node) }
+}
+impl From<JsArrayBindingPatternRestElement> for AnyNode {
+	fn from(node: JsArrayBindingPatternRestElement) -> AnyNode {
+		AnyNode::JsArrayBindingPatternRestElement(node)
+	}
+}
+impl From<JsObjectBindingPatternProperty> for AnyNode {
+	fn from(node: JsObjectBindingPatternProperty) -> AnyNode {
+		AnyNode::JsObjectBindingPatternProperty(node)
+	}
+}
+impl From<JsObjectBindingPatternRest> for AnyNode {
+	fn from(node: JsObjectBindingPatternRest) -> AnyNode {
+		AnyNode::JsObjectBindingPatternRest(node)
+	}
+}
+impl From<JsObjectBindingPatternShorthandProperty> for AnyNode {
+	fn from(node: JsObjectBindingPatternShorthandProperty) -> AnyNode {
+		AnyNode::JsObjectBindingPatternShorthandProperty(node)
+	}
+}
+impl From<JsStringLiteralExpression> for AnyNode {
+	fn from(node: JsStringLiteralExpression) -> AnyNode { AnyNode::JsStringLiteralExpression(node) }
+}
+impl From<JsNumberLiteralExpression> for AnyNode {
+	fn from(node: JsNumberLiteralExpression) -> AnyNode { AnyNode::JsNumberLiteralExpression(node) }
+}
+impl From<JsBigIntLiteralExpression> for AnyNode {
+	fn from(node: JsBigIntLiteralExpression) -> AnyNode { AnyNode::JsBigIntLiteralExpression(node) }
+}
+impl From<JsBooleanLiteralExpression> for AnyNode {
+	fn from(node: JsBooleanLiteralExpression) -> AnyNode {
+		AnyNode::JsBooleanLiteralExpression(node)
+	}
+}
+impl From<JsNullLiteralExpression> for AnyNode {
+	fn from(node: JsNullLiteralExpression) -> AnyNode { AnyNode::JsNullLiteralExpression(node) }
+}
+impl From<JsRegexLiteralExpression> for AnyNode {
+	fn from(node: JsRegexLiteralExpression) -> AnyNode { AnyNode::JsRegexLiteralExpression(node) }
+}
+impl From<JsVariableDeclarator> for AnyNode {
+	fn from(node: JsVariableDeclarator) -> AnyNode { AnyNode::JsVariableDeclarator(node) }
+}
+impl From<JsImport> for AnyNode {
+	fn from(node: JsImport) -> AnyNode { AnyNode::JsImport(node) }
+}
+impl From<ExportNamed> for AnyNode {
+	fn from(node: ExportNamed) -> AnyNode { AnyNode::ExportNamed(node) }
+}
+impl From<ExportDefaultDecl> for AnyNode {
+	fn from(node: ExportDefaultDecl) -> AnyNode { AnyNode::ExportDefaultDecl(node) }
+}
+impl From<ExportDefaultExpr> for AnyNode {
+	fn from(node: ExportDefaultExpr) -> AnyNode { AnyNode::ExportDefaultExpr(node) }
+}
+impl From<ExportWildcard> for AnyNode {
+	fn from(node: ExportWildcard) -> AnyNode { AnyNode::ExportWildcard(node) }
+}
+impl From<ExportDecl> for AnyNode {
+	fn from(node: ExportDecl) -> AnyNode { AnyNode::ExportDecl(node) }
+}
+impl From<TsImportEqualsDecl> for AnyNode {
+	fn from(node: TsImportEqualsDecl) -> AnyNode { AnyNode::TsImportEqualsDecl(node) }
+}
+impl From<TsExportAssignment> for AnyNode {
+	fn from(node: TsExportAssignment) -> AnyNode { AnyNode::TsExportAssignment(node) }
+}
+impl From<TsNamespaceExportDecl> for AnyNode {
+	fn from(node: TsNamespaceExportDecl) -> AnyNode { AnyNode::TsNamespaceExportDecl(node) }
+}
+impl From<JsImportBareClause> for AnyNode {
+	fn from(node: JsImportBareClause) -> AnyNode { AnyNode::JsImportBareClause(node) }
+}
+impl From<JsImportNamedClause> for AnyNode {
+	fn from(node: JsImportNamedClause) -> AnyNode { AnyNode::JsImportNamedClause(node) }
+}
+impl From<JsImportDefaultClause> for AnyNode {
+	fn from(node: JsImportDefaultClause) -> AnyNode { AnyNode::JsImportDefaultClause(node) }
+}
+impl From<JsImportNamespaceClause> for AnyNode {
+	fn from(node: JsImportNamespaceClause) -> AnyNode { AnyNode::JsImportNamespaceClause(node) }
+}
+impl From<JsModuleSource> for AnyNode {
+	fn from(node: JsModuleSource) -> AnyNode { AnyNode::JsModuleSource(node) }
+}
+impl From<JsImportAssertion> for AnyNode {
+	fn from(node: JsImportAssertion) -> AnyNode { AnyNode::JsImportAssertion(node) }
+}
+impl From<JsDefaultImportSpecifier> for AnyNode {
+	fn from(node: JsDefaultImportSpecifier) -> AnyNode { AnyNode::JsDefaultImportSpecifier(node) }
+}
+impl From<JsNamedImportSpecifierList> for AnyNode {
+	fn from(node: JsNamedImportSpecifierList) -> AnyNode {
+		AnyNode::JsNamedImportSpecifierList(node)
+	}
+}
+impl From<JsNamespaceImportSpecifier> for AnyNode {
+	fn from(node: JsNamespaceImportSpecifier) -> AnyNode {
+		AnyNode::JsNamespaceImportSpecifier(node)
+	}
+}
+impl From<JsShorthandNamedImportSpecifier> for AnyNode {
+	fn from(node: JsShorthandNamedImportSpecifier) -> AnyNode {
+		AnyNode::JsShorthandNamedImportSpecifier(node)
+	}
+}
+impl From<JsNamedImportSpecifier> for AnyNode {
+	fn from(node: JsNamedImportSpecifier) -> AnyNode { AnyNode::JsNamedImportSpecifier(node) }
+}
+impl From<JsLiteralExportName> for AnyNode {
+	fn from(node: JsLiteralExportName) -> AnyNode { AnyNode::JsLiteralExportName(node) }
+}
+impl From<JsImportAssertionEntry> for AnyNode {
+	fn from(node: JsImportAssertionEntry) -> AnyNode { AnyNode::JsImportAssertionEntry(node) }
+}
+impl From<Specifier> for AnyNode {
+	fn from(node: Specifier) -> AnyNode { AnyNode::Specifier(node) }
+}
+impl From<JsPrivateName> for AnyNode {
+	fn from(node: JsPrivateName) -> AnyNode { AnyNode::JsPrivateName(node) }
+}
+impl From<JsRestParameter> for AnyNode {
+	fn from(node: JsRestParameter) -> AnyNode { AnyNode::JsRestParameter(node) }
+}
+impl From<TsExternalModuleRef> for AnyNode {
+	fn from(node: TsExternalModuleRef) -> AnyNode { AnyNode::TsExternalModuleRef(node) }
+}
+impl From<TsAny> for AnyNode {
+	fn from(node: TsAny) -> AnyNode { AnyNode::TsAny(node) }
+}
+impl From<TsUnknown> for AnyNode {
+	fn from(node: TsUnknown) -> AnyNode { AnyNode::TsUnknown(node) }
+}
+impl From<TsNumber> for AnyNode {
+	fn from(node: TsNumber) -> AnyNode { AnyNode::TsNumber(node) }
+}
+impl From<TsObject> for AnyNode {
+	fn from(node: TsObject) -> AnyNode { AnyNode::TsObject(node) }
+}
+impl From<TsBoolean> for AnyNode {
+	fn from(node: TsBoolean) -> AnyNode { AnyNode::TsBoolean(node) }
+}
+impl From<TsBigint> for AnyNode {
+	fn from(node: TsBigint) -> AnyNode { AnyNode::TsBigint(node) }
+}
+impl From<TsString> for AnyNode {
+	fn from(node: TsString) -> AnyNode { AnyNode::TsString(node) }
+}
+impl From<TsSymbol> for AnyNode {
+	fn from(node: TsSymbol) -> AnyNode { AnyNode::TsSymbol(node) }
+}
+impl From<TsVoid> for AnyNode {
+	fn from(node: TsVoid) -> AnyNode { AnyNode::TsVoid(node) }
+}
+impl From<TsUndefined> for AnyNode {
+	fn from(node: TsUndefined) -> AnyNode { AnyNode::TsUndefined(node) }
+}
+impl From<TsNull> for AnyNode {
+	fn from(node: TsNull) -> AnyNode { AnyNode::TsNull(node) }
+}
+impl From<TsNever> for AnyNode {
+	fn from(node: TsNever) -> AnyNode { AnyNode::TsNever(node) }
+}
+impl From<TsThis> for AnyNode {
+	fn from(node: TsThis) -> AnyNode { AnyNode::TsThis(node) }
+}
+impl From<TsLiteral> for AnyNode {
+	fn from(node: TsLiteral) -> AnyNode { AnyNode::TsLiteral(node) }
+}
+impl From<TsPredicate> for AnyNode {
+	fn from(node: TsPredicate) -> AnyNode { AnyNode::TsPredicate(node) }
+}
+impl From<TsTuple> for AnyNode {
+	fn from(node: TsTuple) -> AnyNode { AnyNode::TsTuple(node) }
+}
+impl From<TsParen> for AnyNode {
+	fn from(node: TsParen) -> AnyNode { AnyNode::TsParen(node) }
+}
+impl From<TsTypeRef> for AnyNode {
+	fn from(node: TsTypeRef) -> AnyNode { AnyNode::TsTypeRef(node) }
+}
+impl From<TsTemplate> for AnyNode {
+	fn from(node: TsTemplate) -> AnyNode { AnyNode::TsTemplate(node) }
+}
+impl From<TsMappedType> for AnyNode {
+	fn from(node: TsMappedType) -> AnyNode { AnyNode::TsMappedType(node) }
+}
+impl From<TsImport> for AnyNode {
+	fn from(node: TsImport) -> AnyNode { AnyNode::TsImport(node) }
+}
+impl From<TsArray> for AnyNode {
+	fn from(node: TsArray) -> AnyNode { AnyNode::TsArray(node) }
+}
+impl From<TsIndexedArray> for AnyNode {
+	fn from(node: TsIndexedArray) -> AnyNode { AnyNode::TsIndexedArray(node) }
+}
+impl From<TsTypeOperator> for AnyNode {
+	fn from(node: TsTypeOperator) -> AnyNode { AnyNode::TsTypeOperator(node) }
+}
+impl From<TsIntersection> for AnyNode {
+	fn from(node: TsIntersection) -> AnyNode { AnyNode::TsIntersection(node) }
+}
+impl From<TsUnion> for AnyNode {
+	fn from(node: TsUnion) -> AnyNode { AnyNode::TsUnion(node) }
+}
+impl From<TsFnType> for AnyNode {
+	fn from(node: TsFnType) -> AnyNode { AnyNode::TsFnType(node) }
+}
+impl From<TsConstructorType> for AnyNode {
+	fn from(node: TsConstructorType) -> AnyNode { AnyNode::TsConstructorType(node) }
+}
+impl From<TsConditionalType> for AnyNode {
+	fn from(node: TsConditionalType) -> AnyNode { AnyNode::TsConditionalType(node) }
+}
+impl From<TsObjectType> for AnyNode {
+	fn from(node: TsObjectType) -> AnyNode { AnyNode::TsObjectType(node) }
+}
+impl From<TsInfer> for AnyNode {
+	fn from(node: TsInfer) -> AnyNode { AnyNode::TsInfer(node) }
+}
+impl From<TsTupleElement> for AnyNode {
+	fn from(node: TsTupleElement) -> AnyNode { AnyNode::TsTupleElement(node) }
+}
+impl From<TsEnumMember> for AnyNode {
+	fn from(node: TsEnumMember) -> AnyNode { AnyNode::TsEnumMember(node) }
+}
+impl From<TsTemplateElement> for AnyNode {
+	fn from(node: TsTemplateElement) -> AnyNode { AnyNode::TsTemplateElement(node) }
+}
+impl From<TsMappedTypeReadonly> for AnyNode {
+	fn from(node: TsMappedTypeReadonly) -> AnyNode { AnyNode::TsMappedTypeReadonly(node) }
+}
+impl From<TsMappedTypeParam> for AnyNode {
+	fn from(node: TsMappedTypeParam) -> AnyNode { AnyNode::TsMappedTypeParam(node) }
+}
+impl From<TsTypeName> for AnyNode {
+	fn from(node: TsTypeName) -> AnyNode { AnyNode::TsTypeName(node) }
+}
+impl From<TsExtends> for AnyNode {
+	fn from(node: TsExtends) -> AnyNode { AnyNode::TsExtends(node) }
+}
+impl From<TsModuleBlock> for AnyNode {
+	fn from(node: TsModuleBlock) -> AnyNode { AnyNode::TsModuleBlock(node) }
+}
+impl From<TsTypeParam> for AnyNode {
+	fn from(node: TsTypeParam) -> AnyNode { AnyNode::TsTypeParam(node) }
+}
+impl From<TsConstraint> for AnyNode {
+	fn from(node: TsConstraint) -> AnyNode { AnyNode::TsConstraint(node) }
+}
+impl From<TsDefault> for AnyNode {
+	fn from(node: TsDefault) -> AnyNode { AnyNode::TsDefault(node) }
+}
+impl From<TsCallSignatureDecl> for AnyNode {
+	fn from(node: TsCallSignatureDecl) -> AnyNode { AnyNode::TsCallSignatureDecl(node) }
+}
+impl From<TsConstructSignatureDecl> for AnyNode {
+	fn from(node: TsConstructSignatureDecl) -> AnyNode { AnyNode::TsConstructSignatureDecl(node) }
+}
+impl From<TsPropertySignature> for AnyNode {
+	fn from(node: TsPropertySignature) -> AnyNode { AnyNode::TsPropertySignature(node) }
+}
+impl From<TsMethodSignature> for AnyNode {
+	fn from(node: TsMethodSignature) -> AnyNode { AnyNode::TsMethodSignature(node) }
+}
+impl From<TsQualifiedPath> for AnyNode {
+	fn from(node: TsQualifiedPath) -> AnyNode { AnyNode::TsQualifiedPath(node) }
+}
+impl AstNode for AnyNode {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		matches!(
+			kind,
+			JS_UNKNOWN_STATEMENT
+				| JS_UNKNOWN_EXPRESSION
+				| JS_UNKNOWN_MEMBER
+				| JS_UNKNOWN_BINDING
+				| JS_UNKNOWN_ASSIGNMENT
+				| JS_UNKNOWN_MODIFIER
+				| JS_UNKNOWN_IMPORT_ASSERTION_ENTRY
+				| JS_UNKNOWN_NAMED_IMPORT_SPECIFIER
+				| LIST | IDENT | JS_SCRIPT
+				| JS_MODULE | JS_DIRECTIVE
+				| JS_BLOCK_STATEMENT
+				| JS_EMPTY_STATEMENT
+				| JS_EXPRESSION_STATEMENT
+				| JS_IF_STATEMENT
+				| JS_DO_WHILE_STATEMENT
+				| JS_WHILE_STATEMENT
+				| FOR_STMT | FOR_IN_STMT
+				| FOR_OF_STMT | JS_CONTINUE_STATEMENT
+				| JS_BREAK_STATEMENT
+				| JS_RETURN_STATEMENT
+				| JS_WITH_STATEMENT
+				| JS_LABELED_STATEMENT
+				| JS_SWITCH_STATEMENT
+				| JS_THROW_STATEMENT
+				| JS_TRY_STATEMENT
+				| JS_TRY_FINALLY_STATEMENT
+				| JS_DEBUGGER_STATEMENT
+				| JS_FUNCTION_DECLARATION
+				| JS_CLASS_DECLARATION
+				| JS_VARIABLE_DECLARATION_STATEMENT
+				| TS_ENUM | TS_TYPE_ALIAS_DECL
+				| TS_NAMESPACE_DECL
+				| TS_MODULE_DECL | TS_INTERFACE_DECL
+				| JS_ELSE_CLAUSE | FOR_STMT_INIT
+				| FOR_STMT_TEST | FOR_STMT_UPDATE
+				| JS_VARIABLE_DECLARATION
+				| JS_CASE_CLAUSE | JS_DEFAULT_CLAUSE
+				| JS_CATCH_CLAUSE
+				| JS_FINALLY_CLAUSE
+				| JS_CATCH_DECLARATION
+				| JS_ARRAY_EXPRESSION
+				| JS_ARROW_FUNCTION_EXPRESSION
+				| JS_ASSIGNMENT_EXPRESSION
+				| JS_AWAIT_EXPRESSION
+				| JS_BINARY_EXPRESSION
+				| JS_CLASS_EXPRESSION
+				| JS_CONDITIONAL_EXPRESSION
+				| JS_COMPUTED_MEMBER_EXPRESSION
+				| JS_FUNCTION_EXPRESSION
+				| JS_IMPORT_CALL_EXPRESSION
+				| JS_LOGICAL_EXPRESSION
+				| JS_OBJECT_EXPRESSION
+				| JS_PARENTHESIZED_EXPRESSION
+				| JS_IDENTIFIER_EXPRESSION
+				| JS_SEQUENCE_EXPRESSION
+				| JS_STATIC_MEMBER_EXPRESSION
+				| JS_SUPER_EXPRESSION
+				| JS_THIS_EXPRESSION
+				| JS_UNARY_EXPRESSION
+				| JS_PRE_UPDATE_EXPRESSION
+				| JS_POST_UPDATE_EXPRESSION
+				| JS_YIELD_EXPRESSION
+				| TEMPLATE | NEW_EXPR
+				| CALL_EXPR | NEW_TARGET
+				| IMPORT_META | TS_NON_NULL
+				| TS_ASSERTION | TS_CONST_ASSERTION
+				| TS_TYPE_ARGS | ARG_LIST
+				| TS_TYPE_PARAMS | JS_PARAMETER_LIST
+				| TS_TYPE_ANNOTATION
+				| JS_FUNCTION_BODY
+				| JS_SPREAD | JS_ARRAY_HOLE
+				| JS_REFERENCE_IDENTIFIER
+				| JS_LITERAL_MEMBER_NAME
+				| JS_COMPUTED_MEMBER_NAME
+				| JS_PROPERTY_OBJECT_MEMBER
+				| JS_METHOD_OBJECT_MEMBER
+				| JS_GETTER_OBJECT_MEMBER
+				| JS_SETTER_OBJECT_MEMBER
+				| JS_SHORTHAND_PROPERTY_OBJECT_MEMBER
+				| TS_IMPLEMENTS_CLAUSE
+				| JS_EXTENDS_CLAUSE
+				| TS_EXPR_WITH_TYPE_ARGS
+				| JS_PRIVATE_CLASS_MEMBER_NAME
+				| JS_CONSTRUCTOR_CLASS_MEMBER
+				| JS_PROPERTY_CLASS_MEMBER
+				| JS_METHOD_CLASS_MEMBER
+				| JS_GETTER_CLASS_MEMBER
+				| JS_SETTER_CLASS_MEMBER
+				| JS_EMPTY_CLASS_MEMBER
+				| TS_INDEX_SIGNATURE
+				| TS_ACCESSIBILITY
+				| JS_CONSTRUCTOR_PARAMETER_LIST
+				| TS_CONSTRUCTOR_PARAM
+				| JS_BINDING_PATTERN_WITH_DEFAULT
+				| JS_EQUAL_VALUE_CLAUSE
+				| JS_MODIFIER | JS_IDENTIFIER_ASSIGNMENT
+				| JS_STATIC_MEMBER_ASSIGNMENT
+				| JS_COMPUTED_MEMBER_ASSIGNMENT
+				| JS_PARENTHESIZED_ASSIGNMENT
+				| JS_ASSIGNMENT_WITH_DEFAULT
+				| JS_ARRAY_ASSIGNMENT_PATTERN
+				| JS_OBJECT_ASSIGNMENT_PATTERN
+				| JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT
+				| JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY
+				| JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
+				| JS_OBJECT_ASSIGNMENT_PATTERN_REST
+				| JS_NAME | JS_IDENTIFIER_BINDING
+				| JS_ARRAY_BINDING_PATTERN
+				| JS_OBJECT_BINDING_PATTERN
+				| JS_ARRAY_BINDING_PATTERN_REST_ELEMENT
+				| JS_OBJECT_BINDING_PATTERN_PROPERTY
+				| JS_OBJECT_BINDING_PATTERN_REST
+				| JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
+				| JS_STRING_LITERAL_EXPRESSION
+				| JS_NUMBER_LITERAL_EXPRESSION
+				| JS_BIG_INT_LITERAL_EXPRESSION
+				| JS_BOOLEAN_LITERAL_EXPRESSION
+				| JS_NULL_LITERAL_EXPRESSION
+				| JS_REGEX_LITERAL_EXPRESSION
+				| JS_VARIABLE_DECLARATOR
+				| JS_IMPORT | EXPORT_NAMED
+				| EXPORT_DEFAULT_DECL
+				| EXPORT_DEFAULT_EXPR
+				| EXPORT_WILDCARD
+				| EXPORT_DECL | TS_IMPORT_EQUALS_DECL
+				| TS_EXPORT_ASSIGNMENT
+				| TS_NAMESPACE_EXPORT_DECL
+				| JS_IMPORT_BARE_CLAUSE
+				| JS_IMPORT_NAMED_CLAUSE
+				| JS_IMPORT_DEFAULT_CLAUSE
+				| JS_IMPORT_NAMESPACE_CLAUSE
+				| JS_MODULE_SOURCE
+				| JS_IMPORT_ASSERTION
+				| JS_DEFAULT_IMPORT_SPECIFIER
+				| JS_NAMED_IMPORT_SPECIFIER_LIST
+				| JS_NAMESPACE_IMPORT_SPECIFIER
+				| JS_SHORTHAND_NAMED_IMPORT_SPECIFIER
+				| JS_NAMED_IMPORT_SPECIFIER
+				| JS_LITERAL_EXPORT_NAME
+				| JS_IMPORT_ASSERTION_ENTRY
+				| SPECIFIER | JS_PRIVATE_NAME
+				| JS_REST_PARAMETER
+				| TS_EXTERNAL_MODULE_REF
+				| TS_ANY | TS_UNKNOWN
+				| TS_NUMBER | TS_OBJECT
+				| TS_BOOLEAN | TS_BIGINT
+				| TS_STRING | TS_SYMBOL
+				| TS_VOID | TS_UNDEFINED
+				| TS_NULL | TS_NEVER
+				| TS_THIS | TS_LITERAL
+				| TS_PREDICATE | TS_TUPLE
+				| TS_PAREN | TS_TYPE_REF
+				| TS_TEMPLATE | TS_MAPPED_TYPE
+				| TS_IMPORT | TS_ARRAY
+				| TS_INDEXED_ARRAY
+				| TS_TYPE_OPERATOR
+				| TS_INTERSECTION
+				| TS_UNION | TS_FN_TYPE
+				| TS_CONSTRUCTOR_TYPE
+				| TS_CONDITIONAL_TYPE
+				| TS_OBJECT_TYPE | TS_INFER
+				| TS_TUPLE_ELEMENT
+				| TS_ENUM_MEMBER | TS_TEMPLATE_ELEMENT
+				| TS_MAPPED_TYPE_READONLY
+				| TS_MAPPED_TYPE_PARAM
+				| TS_TYPE_NAME | TS_EXTENDS
+				| TS_MODULE_BLOCK
+				| TS_TYPE_PARAM | TS_CONSTRAINT
+				| TS_DEFAULT | TS_CALL_SIGNATURE_DECL
+				| TS_CONSTRUCT_SIGNATURE_DECL
+				| TS_PROPERTY_SIGNATURE
+				| TS_METHOD_SIGNATURE
+				| TS_QUALIFIED_PATH
+		)
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_UNKNOWN_STATEMENT => AnyNode::JsUnknownStatement(JsUnknownStatement { syntax }),
+			JS_UNKNOWN_EXPRESSION => AnyNode::JsUnknownExpression(JsUnknownExpression { syntax }),
+			JS_UNKNOWN_MEMBER => AnyNode::JsUnknownMember(JsUnknownMember { syntax }),
+			JS_UNKNOWN_BINDING => AnyNode::JsUnknownBinding(JsUnknownBinding { syntax }),
+			JS_UNKNOWN_ASSIGNMENT => AnyNode::JsUnknownAssignment(JsUnknownAssignment { syntax }),
+			JS_UNKNOWN_MODIFIER => AnyNode::JsUnknownModifier(JsUnknownModifier { syntax }),
+			JS_UNKNOWN_IMPORT_ASSERTION_ENTRY => {
+				AnyNode::JsUnknownImportAssertionEntry(JsUnknownImportAssertionEntry { syntax })
+			}
+			JS_UNKNOWN_NAMED_IMPORT_SPECIFIER => {
+				AnyNode::JsUnknownNamedImportSpecifier(JsUnknownNamedImportSpecifier { syntax })
+			}
+			LIST => AnyNode::List(List { syntax }),
+			IDENT => AnyNode::Ident(Ident { syntax }),
+			JS_SCRIPT => AnyNode::JsScript(JsScript { syntax }),
+			JS_MODULE => AnyNode::JsModule(JsModule { syntax }),
+			JS_DIRECTIVE => AnyNode::JsDirective(JsDirective { syntax }),
+			JS_BLOCK_STATEMENT => AnyNode::JsBlockStatement(JsBlockStatement { syntax }),
+			JS_EMPTY_STATEMENT => AnyNode::JsEmptyStatement(JsEmptyStatement { syntax }),
+			JS_EXPRESSION_STATEMENT => {
+				AnyNode::JsExpressionStatement(JsExpressionStatement { syntax })
+			}
+			JS_IF_STATEMENT => AnyNode::JsIfStatement(JsIfStatement { syntax }),
+			JS_DO_WHILE_STATEMENT => AnyNode::JsDoWhileStatement(JsDoWhileStatement { syntax }),
+			JS_WHILE_STATEMENT => AnyNode::JsWhileStatement(JsWhileStatement { syntax }),
+			FOR_STMT => AnyNode::ForStmt(ForStmt { syntax }),
+			FOR_IN_STMT => AnyNode::ForInStmt(ForInStmt { syntax }),
+			FOR_OF_STMT => AnyNode::ForOfStmt(ForOfStmt { syntax }),
+			JS_CONTINUE_STATEMENT => AnyNode::JsContinueStatement(JsContinueStatement { syntax }),
+			JS_BREAK_STATEMENT => AnyNode::JsBreakStatement(JsBreakStatement { syntax }),
+			JS_RETURN_STATEMENT => AnyNode::JsReturnStatement(JsReturnStatement { syntax }),
+			JS_WITH_STATEMENT => AnyNode::JsWithStatement(JsWithStatement { syntax }),
+			JS_LABELED_STATEMENT => AnyNode::JsLabeledStatement(JsLabeledStatement { syntax }),
+			JS_SWITCH_STATEMENT => AnyNode::JsSwitchStatement(JsSwitchStatement { syntax }),
+			JS_THROW_STATEMENT => AnyNode::JsThrowStatement(JsThrowStatement { syntax }),
+			JS_TRY_STATEMENT => AnyNode::JsTryStatement(JsTryStatement { syntax }),
+			JS_TRY_FINALLY_STATEMENT => {
+				AnyNode::JsTryFinallyStatement(JsTryFinallyStatement { syntax })
+			}
+			JS_DEBUGGER_STATEMENT => AnyNode::JsDebuggerStatement(JsDebuggerStatement { syntax }),
+			JS_FUNCTION_DECLARATION => {
+				AnyNode::JsFunctionDeclaration(JsFunctionDeclaration { syntax })
+			}
+			JS_CLASS_DECLARATION => AnyNode::JsClassDeclaration(JsClassDeclaration { syntax }),
+			JS_VARIABLE_DECLARATION_STATEMENT => {
+				AnyNode::JsVariableDeclarationStatement(JsVariableDeclarationStatement { syntax })
+			}
+			TS_ENUM => AnyNode::TsEnum(TsEnum { syntax }),
+			TS_TYPE_ALIAS_DECL => AnyNode::TsTypeAliasDecl(TsTypeAliasDecl { syntax }),
+			TS_NAMESPACE_DECL => AnyNode::TsNamespaceDecl(TsNamespaceDecl { syntax }),
+			TS_MODULE_DECL => AnyNode::TsModuleDecl(TsModuleDecl { syntax }),
+			TS_INTERFACE_DECL => AnyNode::TsInterfaceDecl(TsInterfaceDecl { syntax }),
+			JS_ELSE_CLAUSE => AnyNode::JsElseClause(JsElseClause { syntax }),
+			FOR_STMT_INIT => AnyNode::ForStmtInit(ForStmtInit { syntax }),
+			FOR_STMT_TEST => AnyNode::ForStmtTest(ForStmtTest { syntax }),
+			FOR_STMT_UPDATE => AnyNode::ForStmtUpdate(ForStmtUpdate { syntax }),
+			JS_VARIABLE_DECLARATION => {
+				AnyNode::JsVariableDeclaration(JsVariableDeclaration { syntax })
+			}
+			JS_CASE_CLAUSE => AnyNode::JsCaseClause(JsCaseClause { syntax }),
+			JS_DEFAULT_CLAUSE => AnyNode::JsDefaultClause(JsDefaultClause { syntax }),
+			JS_CATCH_CLAUSE => AnyNode::JsCatchClause(JsCatchClause { syntax }),
+			JS_FINALLY_CLAUSE => AnyNode::JsFinallyClause(JsFinallyClause { syntax }),
+			JS_CATCH_DECLARATION => AnyNode::JsCatchDeclaration(JsCatchDeclaration { syntax }),
+			JS_ARRAY_EXPRESSION => AnyNode::JsArrayExpression(JsArrayExpression { syntax }),
+			JS_ARROW_FUNCTION_EXPRESSION => {
+				AnyNode::JsArrowFunctionExpression(JsArrowFunctionExpression { syntax })
+			}
+			JS_ASSIGNMENT_EXPRESSION => {
+				AnyNode::JsAssignmentExpression(JsAssignmentExpression { syntax })
+			}
+			JS_AWAIT_EXPRESSION => AnyNode::JsAwaitExpression(JsAwaitExpression { syntax }),
+			JS_BINARY_EXPRESSION => AnyNode::JsBinaryExpression(JsBinaryExpression { syntax }),
+			JS_CLASS_EXPRESSION => AnyNode::JsClassExpression(JsClassExpression { syntax }),
+			JS_CONDITIONAL_EXPRESSION => {
+				AnyNode::JsConditionalExpression(JsConditionalExpression { syntax })
+			}
+			JS_COMPUTED_MEMBER_EXPRESSION => {
+				AnyNode::JsComputedMemberExpression(JsComputedMemberExpression { syntax })
+			}
+			JS_FUNCTION_EXPRESSION => {
+				AnyNode::JsFunctionExpression(JsFunctionExpression { syntax })
+			}
+			JS_IMPORT_CALL_EXPRESSION => {
+				AnyNode::JsImportCallExpression(JsImportCallExpression { syntax })
+			}
+			JS_LOGICAL_EXPRESSION => AnyNode::JsLogicalExpression(JsLogicalExpression { syntax }),
+			JS_OBJECT_EXPRESSION => AnyNode::JsObjectExpression(JsObjectExpression { syntax }),
+			JS_PARENTHESIZED_EXPRESSION => {
+				AnyNode::JsParenthesizedExpression(JsParenthesizedExpression { syntax })
+			}
+			JS_IDENTIFIER_EXPRESSION => {
+				AnyNode::JsIdentifierExpression(JsIdentifierExpression { syntax })
+			}
+			JS_SEQUENCE_EXPRESSION => {
+				AnyNode::JsSequenceExpression(JsSequenceExpression { syntax })
+			}
+			JS_STATIC_MEMBER_EXPRESSION => {
+				AnyNode::JsStaticMemberExpression(JsStaticMemberExpression { syntax })
+			}
+			JS_SUPER_EXPRESSION => AnyNode::JsSuperExpression(JsSuperExpression { syntax }),
+			JS_THIS_EXPRESSION => AnyNode::JsThisExpression(JsThisExpression { syntax }),
+			JS_UNARY_EXPRESSION => AnyNode::JsUnaryExpression(JsUnaryExpression { syntax }),
+			JS_PRE_UPDATE_EXPRESSION => {
+				AnyNode::JsPreUpdateExpression(JsPreUpdateExpression { syntax })
+			}
+			JS_POST_UPDATE_EXPRESSION => {
+				AnyNode::JsPostUpdateExpression(JsPostUpdateExpression { syntax })
+			}
+			JS_YIELD_EXPRESSION => AnyNode::JsYieldExpression(JsYieldExpression { syntax }),
+			TEMPLATE => AnyNode::Template(Template { syntax }),
+			NEW_EXPR => AnyNode::NewExpr(NewExpr { syntax }),
+			CALL_EXPR => AnyNode::CallExpr(CallExpr { syntax }),
+			NEW_TARGET => AnyNode::NewTarget(NewTarget { syntax }),
+			IMPORT_META => AnyNode::ImportMeta(ImportMeta { syntax }),
+			TS_NON_NULL => AnyNode::TsNonNull(TsNonNull { syntax }),
+			TS_ASSERTION => AnyNode::TsAssertion(TsAssertion { syntax }),
+			TS_CONST_ASSERTION => AnyNode::TsConstAssertion(TsConstAssertion { syntax }),
+			TS_TYPE_ARGS => AnyNode::TsTypeArgs(TsTypeArgs { syntax }),
+			ARG_LIST => AnyNode::ArgList(ArgList { syntax }),
+			TS_TYPE_PARAMS => AnyNode::TsTypeParams(TsTypeParams { syntax }),
+			JS_PARAMETER_LIST => AnyNode::JsParameterList(JsParameterList { syntax }),
+			TS_TYPE_ANNOTATION => AnyNode::TsTypeAnnotation(TsTypeAnnotation { syntax }),
+			JS_FUNCTION_BODY => AnyNode::JsFunctionBody(JsFunctionBody { syntax }),
+			JS_SPREAD => AnyNode::JsSpread(JsSpread { syntax }),
+			JS_ARRAY_HOLE => AnyNode::JsArrayHole(JsArrayHole { syntax }),
+			JS_REFERENCE_IDENTIFIER => {
+				AnyNode::JsReferenceIdentifier(JsReferenceIdentifier { syntax })
+			}
+			JS_LITERAL_MEMBER_NAME => AnyNode::JsLiteralMemberName(JsLiteralMemberName { syntax }),
+			JS_COMPUTED_MEMBER_NAME => {
+				AnyNode::JsComputedMemberName(JsComputedMemberName { syntax })
+			}
+			JS_PROPERTY_OBJECT_MEMBER => {
+				AnyNode::JsPropertyObjectMember(JsPropertyObjectMember { syntax })
+			}
+			JS_METHOD_OBJECT_MEMBER => {
+				AnyNode::JsMethodObjectMember(JsMethodObjectMember { syntax })
+			}
+			JS_GETTER_OBJECT_MEMBER => {
+				AnyNode::JsGetterObjectMember(JsGetterObjectMember { syntax })
+			}
+			JS_SETTER_OBJECT_MEMBER => {
+				AnyNode::JsSetterObjectMember(JsSetterObjectMember { syntax })
+			}
+			JS_SHORTHAND_PROPERTY_OBJECT_MEMBER => {
+				AnyNode::JsShorthandPropertyObjectMember(JsShorthandPropertyObjectMember { syntax })
+			}
+			TS_IMPLEMENTS_CLAUSE => AnyNode::TsImplementsClause(TsImplementsClause { syntax }),
+			JS_EXTENDS_CLAUSE => AnyNode::JsExtendsClause(JsExtendsClause { syntax }),
+			TS_EXPR_WITH_TYPE_ARGS => AnyNode::TsExprWithTypeArgs(TsExprWithTypeArgs { syntax }),
+			JS_PRIVATE_CLASS_MEMBER_NAME => {
+				AnyNode::JsPrivateClassMemberName(JsPrivateClassMemberName { syntax })
+			}
+			JS_CONSTRUCTOR_CLASS_MEMBER => {
+				AnyNode::JsConstructorClassMember(JsConstructorClassMember { syntax })
+			}
+			JS_PROPERTY_CLASS_MEMBER => {
+				AnyNode::JsPropertyClassMember(JsPropertyClassMember { syntax })
+			}
+			JS_METHOD_CLASS_MEMBER => AnyNode::JsMethodClassMember(JsMethodClassMember { syntax }),
+			JS_GETTER_CLASS_MEMBER => AnyNode::JsGetterClassMember(JsGetterClassMember { syntax }),
+			JS_SETTER_CLASS_MEMBER => AnyNode::JsSetterClassMember(JsSetterClassMember { syntax }),
+			JS_EMPTY_CLASS_MEMBER => AnyNode::JsEmptyClassMember(JsEmptyClassMember { syntax }),
+			TS_INDEX_SIGNATURE => AnyNode::TsIndexSignature(TsIndexSignature { syntax }),
+			TS_ACCESSIBILITY => AnyNode::TsAccessibility(TsAccessibility { syntax }),
+			JS_CONSTRUCTOR_PARAMETER_LIST => {
+				AnyNode::JsConstructorParameterList(JsConstructorParameterList { syntax })
+			}
+			TS_CONSTRUCTOR_PARAM => AnyNode::TsConstructorParam(TsConstructorParam { syntax }),
+			JS_BINDING_PATTERN_WITH_DEFAULT => {
+				AnyNode::JsBindingPatternWithDefault(JsBindingPatternWithDefault { syntax })
+			}
+			JS_EQUAL_VALUE_CLAUSE => AnyNode::JsEqualValueClause(JsEqualValueClause { syntax }),
+			JS_MODIFIER => AnyNode::JsModifier(JsModifier { syntax }),
+			JS_IDENTIFIER_ASSIGNMENT => {
+				AnyNode::JsIdentifierAssignment(JsIdentifierAssignment { syntax })
+			}
+			JS_STATIC_MEMBER_ASSIGNMENT => {
+				AnyNode::JsStaticMemberAssignment(JsStaticMemberAssignment { syntax })
+			}
+			JS_COMPUTED_MEMBER_ASSIGNMENT => {
+				AnyNode::JsComputedMemberAssignment(JsComputedMemberAssignment { syntax })
+			}
+			JS_PARENTHESIZED_ASSIGNMENT => {
+				AnyNode::JsParenthesizedAssignment(JsParenthesizedAssignment { syntax })
+			}
+			JS_ASSIGNMENT_WITH_DEFAULT => {
+				AnyNode::JsAssignmentWithDefault(JsAssignmentWithDefault { syntax })
+			}
+			JS_ARRAY_ASSIGNMENT_PATTERN => {
+				AnyNode::JsArrayAssignmentPattern(JsArrayAssignmentPattern { syntax })
+			}
+			JS_OBJECT_ASSIGNMENT_PATTERN => {
+				AnyNode::JsObjectAssignmentPattern(JsObjectAssignmentPattern { syntax })
+			}
+			JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT => {
+				AnyNode::JsArrayAssignmentPatternRestElement(JsArrayAssignmentPatternRestElement {
+					syntax,
+				})
+			}
+			JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY => {
+				AnyNode::JsObjectAssignmentPatternShorthandProperty(
+					JsObjectAssignmentPatternShorthandProperty { syntax },
+				)
+			}
+			JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY => {
+				AnyNode::JsObjectAssignmentPatternProperty(JsObjectAssignmentPatternProperty {
+					syntax,
+				})
+			}
+			JS_OBJECT_ASSIGNMENT_PATTERN_REST => {
+				AnyNode::JsObjectAssignmentPatternRest(JsObjectAssignmentPatternRest { syntax })
+			}
+			JS_NAME => AnyNode::JsName(JsName { syntax }),
+			JS_IDENTIFIER_BINDING => AnyNode::JsIdentifierBinding(JsIdentifierBinding { syntax }),
+			JS_ARRAY_BINDING_PATTERN => {
+				AnyNode::JsArrayBindingPattern(JsArrayBindingPattern { syntax })
+			}
+			JS_OBJECT_BINDING_PATTERN => {
+				AnyNode::JsObjectBindingPattern(JsObjectBindingPattern { syntax })
+			}
+			JS_ARRAY_BINDING_PATTERN_REST_ELEMENT => {
+				AnyNode::JsArrayBindingPatternRestElement(JsArrayBindingPatternRestElement {
+					syntax,
+				})
+			}
+			JS_OBJECT_BINDING_PATTERN_PROPERTY => {
+				AnyNode::JsObjectBindingPatternProperty(JsObjectBindingPatternProperty { syntax })
+			}
+			JS_OBJECT_BINDING_PATTERN_REST => {
+				AnyNode::JsObjectBindingPatternRest(JsObjectBindingPatternRest { syntax })
+			}
+			JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY => {
+				AnyNode::JsObjectBindingPatternShorthandProperty(
+					JsObjectBindingPatternShorthandProperty { syntax },
+				)
+			}
+			JS_STRING_LITERAL_EXPRESSION => {
+				AnyNode::JsStringLiteralExpression(JsStringLiteralExpression { syntax })
+			}
+			JS_NUMBER_LITERAL_EXPRESSION => {
+				AnyNode::JsNumberLiteralExpression(JsNumberLiteralExpression { syntax })
+			}
+			JS_BIG_INT_LITERAL_EXPRESSION => {
+				AnyNode::JsBigIntLiteralExpression(JsBigIntLiteralExpression { syntax })
+			}
+			JS_BOOLEAN_LITERAL_EXPRESSION => {
+				AnyNode::JsBooleanLiteralExpression(JsBooleanLiteralExpression { syntax })
+			}
+			JS_NULL_LITERAL_EXPRESSION => {
+				AnyNode::JsNullLiteralExpression(JsNullLiteralExpression { syntax })
+			}
+			JS_REGEX_LITERAL_EXPRESSION => {
+				AnyNode::JsRegexLiteralExpression(JsRegexLiteralExpression { syntax })
+			}
+			JS_VARIABLE_DECLARATOR => {
+				AnyNode::JsVariableDeclarator(JsVariableDeclarator { syntax })
+			}
+			JS_IMPORT => AnyNode::JsImport(JsImport { syntax }),
+			EXPORT_NAMED => AnyNode::ExportNamed(ExportNamed { syntax }),
+			EXPORT_DEFAULT_DECL => AnyNode::ExportDefaultDecl(ExportDefaultDecl { syntax }),
+			EXPORT_DEFAULT_EXPR => AnyNode::ExportDefaultExpr(ExportDefaultExpr { syntax }),
+			EXPORT_WILDCARD => AnyNode::ExportWildcard(ExportWildcard { syntax }),
+			EXPORT_DECL => AnyNode::ExportDecl(ExportDecl { syntax }),
+			TS_IMPORT_EQUALS_DECL => AnyNode::TsImportEqualsDecl(TsImportEqualsDecl { syntax }),
+			TS_EXPORT_ASSIGNMENT => AnyNode::TsExportAssignment(TsExportAssignment { syntax }),
+			TS_NAMESPACE_EXPORT_DECL => {
+				AnyNode::TsNamespaceExportDecl(TsNamespaceExportDecl { syntax })
+			}
+			JS_IMPORT_BARE_CLAUSE => AnyNode::JsImportBareClause(JsImportBareClause { syntax }),
+			JS_IMPORT_NAMED_CLAUSE => AnyNode::JsImportNamedClause(JsImportNamedClause { syntax }),
+			JS_IMPORT_DEFAULT_CLAUSE => {
+				AnyNode::JsImportDefaultClause(JsImportDefaultClause { syntax })
+			}
+			JS_IMPORT_NAMESPACE_CLAUSE => {
+				AnyNode::JsImportNamespaceClause(JsImportNamespaceClause { syntax })
+			}
+			JS_MODULE_SOURCE => AnyNode::JsModuleSource(JsModuleSource { syntax }),
+			JS_IMPORT_ASSERTION => AnyNode::JsImportAssertion(JsImportAssertion { syntax }),
+			JS_DEFAULT_IMPORT_SPECIFIER => {
+				AnyNode::JsDefaultImportSpecifier(JsDefaultImportSpecifier { syntax })
+			}
+			JS_NAMED_IMPORT_SPECIFIER_LIST => {
+				AnyNode::JsNamedImportSpecifierList(JsNamedImportSpecifierList { syntax })
+			}
+			JS_NAMESPACE_IMPORT_SPECIFIER => {
+				AnyNode::JsNamespaceImportSpecifier(JsNamespaceImportSpecifier { syntax })
+			}
+			JS_SHORTHAND_NAMED_IMPORT_SPECIFIER => {
+				AnyNode::JsShorthandNamedImportSpecifier(JsShorthandNamedImportSpecifier { syntax })
+			}
+			JS_NAMED_IMPORT_SPECIFIER => {
+				AnyNode::JsNamedImportSpecifier(JsNamedImportSpecifier { syntax })
+			}
+			JS_LITERAL_EXPORT_NAME => AnyNode::JsLiteralExportName(JsLiteralExportName { syntax }),
+			JS_IMPORT_ASSERTION_ENTRY => {
+				AnyNode::JsImportAssertionEntry(JsImportAssertionEntry { syntax })
+			}
+			SPECIFIER => AnyNode::Specifier(Specifier { syntax }),
+			JS_PRIVATE_NAME => AnyNode::JsPrivateName(JsPrivateName { syntax }),
+			JS_REST_PARAMETER => AnyNode::JsRestParameter(JsRestParameter { syntax }),
+			TS_EXTERNAL_MODULE_REF => AnyNode::TsExternalModuleRef(TsExternalModuleRef { syntax }),
+			TS_ANY => AnyNode::TsAny(TsAny { syntax }),
+			TS_UNKNOWN => AnyNode::TsUnknown(TsUnknown { syntax }),
+			TS_NUMBER => AnyNode::TsNumber(TsNumber { syntax }),
+			TS_OBJECT => AnyNode::TsObject(TsObject { syntax }),
+			TS_BOOLEAN => AnyNode::TsBoolean(TsBoolean { syntax }),
+			TS_BIGINT => AnyNode::TsBigint(TsBigint { syntax }),
+			TS_STRING => AnyNode::TsString(TsString { syntax }),
+			TS_SYMBOL => AnyNode::TsSymbol(TsSymbol { syntax }),
+			TS_VOID => AnyNode::TsVoid(TsVoid { syntax }),
+			TS_UNDEFINED => AnyNode::TsUndefined(TsUndefined { syntax }),
+			TS_NULL => AnyNode::TsNull(TsNull { syntax }),
+			TS_NEVER => AnyNode::TsNever(TsNever { syntax }),
+			TS_THIS => AnyNode::TsThis(TsThis { syntax }),
+			TS_LITERAL => AnyNode::TsLiteral(TsLiteral { syntax }),
+			TS_PREDICATE => AnyNode::TsPredicate(TsPredicate { syntax }),
+			TS_TUPLE => AnyNode::TsTuple(TsTuple { syntax }),
+			TS_PAREN => AnyNode::TsParen(TsParen { syntax }),
+			TS_TYPE_REF => AnyNode::TsTypeRef(TsTypeRef { syntax }),
+			TS_TEMPLATE => AnyNode::TsTemplate(TsTemplate { syntax }),
+			TS_MAPPED_TYPE => AnyNode::TsMappedType(TsMappedType { syntax }),
+			TS_IMPORT => AnyNode::TsImport(TsImport { syntax }),
+			TS_ARRAY => AnyNode::TsArray(TsArray { syntax }),
+			TS_INDEXED_ARRAY => AnyNode::TsIndexedArray(TsIndexedArray { syntax }),
+			TS_TYPE_OPERATOR => AnyNode::TsTypeOperator(TsTypeOperator { syntax }),
+			TS_INTERSECTION => AnyNode::TsIntersection(TsIntersection { syntax }),
+			TS_UNION => AnyNode::TsUnion(TsUnion { syntax }),
+			TS_FN_TYPE => AnyNode::TsFnType(TsFnType { syntax }),
+			TS_CONSTRUCTOR_TYPE => AnyNode::TsConstructorType(TsConstructorType { syntax }),
+			TS_CONDITIONAL_TYPE => AnyNode::TsConditionalType(TsConditionalType { syntax }),
+			TS_OBJECT_TYPE => AnyNode::TsObjectType(TsObjectType { syntax }),
+			TS_INFER => AnyNode::TsInfer(TsInfer { syntax }),
+			TS_TUPLE_ELEMENT => AnyNode::TsTupleElement(TsTupleElement { syntax }),
+			TS_ENUM_MEMBER => AnyNode::TsEnumMember(TsEnumMember { syntax }),
+			TS_TEMPLATE_ELEMENT => AnyNode::TsTemplateElement(TsTemplateElement { syntax }),
+			TS_MAPPED_TYPE_READONLY => {
+				AnyNode::TsMappedTypeReadonly(TsMappedTypeReadonly { syntax })
+			}
+			TS_MAPPED_TYPE_PARAM => AnyNode::TsMappedTypeParam(TsMappedTypeParam { syntax }),
+			TS_TYPE_NAME => AnyNode::TsTypeName(TsTypeName { syntax }),
+			TS_EXTENDS => AnyNode::TsExtends(TsExtends { syntax }),
+			TS_MODULE_BLOCK => AnyNode::TsModuleBlock(TsModuleBlock { syntax }),
+			TS_TYPE_PARAM => AnyNode::TsTypeParam(TsTypeParam { syntax }),
+			TS_CONSTRAINT => AnyNode::TsConstraint(TsConstraint { syntax }),
+			TS_DEFAULT => AnyNode::TsDefault(TsDefault { syntax }),
+			TS_CALL_SIGNATURE_DECL => AnyNode::TsCallSignatureDecl(TsCallSignatureDecl { syntax }),
+			TS_CONSTRUCT_SIGNATURE_DECL => {
+				AnyNode::TsConstructSignatureDecl(TsConstructSignatureDecl { syntax })
+			}
+			TS_PROPERTY_SIGNATURE => AnyNode::TsPropertySignature(TsPropertySignature { syntax }),
+			TS_METHOD_SIGNATURE => AnyNode::TsMethodSignature(TsMethodSignature { syntax }),
+			TS_QUALIFIED_PATH => AnyNode::TsQualifiedPath(TsQualifiedPath { syntax }),
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			AnyNode::JsUnknownStatement(it) => &it.syntax,
+			AnyNode::JsUnknownExpression(it) => &it.syntax,
+			AnyNode::JsUnknownMember(it) => &it.syntax,
+			AnyNode::JsUnknownBinding(it) => &it.syntax,
+			AnyNode::JsUnknownAssignment(it) => &it.syntax,
+			AnyNode::JsUnknownModifier(it) => &it.syntax,
+			AnyNode::JsUnknownImportAssertionEntry(it) => &it.syntax,
+			AnyNode::JsUnknownNamedImportSpecifier(it) => &it.syntax,
+			AnyNode::List(it) => &it.syntax,
+			AnyNode::Ident(it) => &it.syntax,
+			AnyNode::JsScript(it) => &it.syntax,
+			AnyNode::JsModule(it) => &it.syntax,
+			AnyNode::JsDirective(it) => &it.syntax,
+			AnyNode::JsBlockStatement(it) => &it.syntax,
+			AnyNode::JsEmptyStatement(it) => &it.syntax,
+			AnyNode::JsExpressionStatement(it) => &it.syntax,
+			AnyNode::JsIfStatement(it) => &it.syntax,
+			AnyNode::JsDoWhileStatement(it) => &it.syntax,
+			AnyNode::JsWhileStatement(it) => &it.syntax,
+			AnyNode::ForStmt(it) => &it.syntax,
+			AnyNode::ForInStmt(it) => &it.syntax,
+			AnyNode::ForOfStmt(it) => &it.syntax,
+			AnyNode::JsContinueStatement(it) => &it.syntax,
+			AnyNode::JsBreakStatement(it) => &it.syntax,
+			AnyNode::JsReturnStatement(it) => &it.syntax,
+			AnyNode::JsWithStatement(it) => &it.syntax,
+			AnyNode::JsLabeledStatement(it) => &it.syntax,
+			AnyNode::JsSwitchStatement(it) => &it.syntax,
+			AnyNode::JsThrowStatement(it) => &it.syntax,
+			AnyNode::JsTryStatement(it) => &it.syntax,
+			AnyNode::JsTryFinallyStatement(it) => &it.syntax,
+			AnyNode::JsDebuggerStatement(it) => &it.syntax,
+			AnyNode::JsFunctionDeclaration(it) => &it.syntax,
+			AnyNode::JsClassDeclaration(it) => &it.syntax,
+			AnyNode::JsVariableDeclarationStatement(it) => &it.syntax,
+			AnyNode::TsEnum(it) => &it.syntax,
+			AnyNode::TsTypeAliasDecl(it) => &it.syntax,
+			AnyNode::TsNamespaceDecl(it) => &it.syntax,
+			AnyNode::TsModuleDecl(it) => &it.syntax,
+			AnyNode::TsInterfaceDecl(it) => &it.syntax,
+			AnyNode::JsElseClause(it) => &it.syntax,
+			AnyNode::ForStmtInit(it) => &it.syntax,
+			AnyNode::ForStmtTest(it) => &it.syntax,
+			AnyNode::ForStmtUpdate(it) => &it.syntax,
+			AnyNode::JsVariableDeclaration(it) => &it.syntax,
+			AnyNode::JsCaseClause(it) => &it.syntax,
+			AnyNode::JsDefaultClause(it) => &it.syntax,
+			AnyNode::JsCatchClause(it) => &it.syntax,
+			AnyNode::JsFinallyClause(it) => &it.syntax,
+			AnyNode::JsCatchDeclaration(it) => &it.syntax,
+			AnyNode::JsArrayExpression(it) => &it.syntax,
+			AnyNode::JsArrowFunctionExpression(it) => &it.syntax,
+			AnyNode::JsAssignmentExpression(it) => &it.syntax,
+			AnyNode::JsAwaitExpression(it) => &it.syntax,
+			AnyNode::JsBinaryExpression(it) => &it.syntax,
+			AnyNode::JsClassExpression(it) => &it.syntax,
+			AnyNode::JsConditionalExpression(it) => &it.syntax,
+			AnyNode::JsComputedMemberExpression(it) => &it.syntax,
+			AnyNode::JsFunctionExpression(it) => &it.syntax,
+			AnyNode::JsImportCallExpression(it) => &it.syntax,
+			AnyNode::JsLogicalExpression(it) => &it.syntax,
+			AnyNode::JsObjectExpression(it) => &it.syntax,
+			AnyNode::JsParenthesizedExpression(it) => &it.syntax,
+			AnyNode::JsIdentifierExpression(it) => &it.syntax,
+			AnyNode::JsSequenceExpression(it) => &it.syntax,
+			AnyNode::JsStaticMemberExpression(it) => &it.syntax,
+			AnyNode::JsSuperExpression(it) => &it.syntax,
+			AnyNode::JsThisExpression(it) => &it.syntax,
+			AnyNode::JsUnaryExpression(it) => &it.syntax,
+			AnyNode::JsPreUpdateExpression(it) => &it.syntax,
+			AnyNode::JsPostUpdateExpression(it) => &it.syntax,
+			AnyNode::JsYieldExpression(it) => &it.syntax,
+			AnyNode::Template(it) => &it.syntax,
+			AnyNode::NewExpr(it) => &it.syntax,
+			AnyNode::CallExpr(it) => &it.syntax,
+			AnyNode::NewTarget(it) => &it.syntax,
+			AnyNode::ImportMeta(it) => &it.syntax,
+			AnyNode::TsNonNull(it) => &it.syntax,
+			AnyNode::TsAssertion(it) => &it.syntax,
+			AnyNode::TsConstAssertion(it) => &it.syntax,
+			AnyNode::TsTypeArgs(it) => &it.syntax,
+			AnyNode::ArgList(it) => &it.syntax,
+			AnyNode::TsTypeParams(it) => &it.syntax,
+			AnyNode::JsParameterList(it) => &it.syntax,
+			AnyNode::TsTypeAnnotation(it) => &it.syntax,
+			AnyNode::JsFunctionBody(it) => &it.syntax,
+			AnyNode::JsSpread(it) => &it.syntax,
+			AnyNode::JsArrayHole(it) => &it.syntax,
+			AnyNode::JsReferenceIdentifier(it) => &it.syntax,
+			AnyNode::JsLiteralMemberName(it) => &it.syntax,
+			AnyNode::JsComputedMemberName(it) => &it.syntax,
+			AnyNode::JsPropertyObjectMember(it) => &it.syntax,
+			AnyNode::JsMethodObjectMember(it) => &it.syntax,
+			AnyNode::JsGetterObjectMember(it) => &it.syntax,
+			AnyNode::JsSetterObjectMember(it) => &it.syntax,
+			AnyNode::JsShorthandPropertyObjectMember(it) => &it.syntax,
+			AnyNode::TsImplementsClause(it) => &it.syntax,
+			AnyNode::JsExtendsClause(it) => &it.syntax,
+			AnyNode::TsExprWithTypeArgs(it) => &it.syntax,
+			AnyNode::JsPrivateClassMemberName(it) => &it.syntax,
+			AnyNode::JsConstructorClassMember(it) => &it.syntax,
+			AnyNode::JsPropertyClassMember(it) => &it.syntax,
+			AnyNode::JsMethodClassMember(it) => &it.syntax,
+			AnyNode::JsGetterClassMember(it) => &it.syntax,
+			AnyNode::JsSetterClassMember(it) => &it.syntax,
+			AnyNode::JsEmptyClassMember(it) => &it.syntax,
+			AnyNode::TsIndexSignature(it) => &it.syntax,
+			AnyNode::TsAccessibility(it) => &it.syntax,
+			AnyNode::JsConstructorParameterList(it) => &it.syntax,
+			AnyNode::TsConstructorParam(it) => &it.syntax,
+			AnyNode::JsBindingPatternWithDefault(it) => &it.syntax,
+			AnyNode::JsEqualValueClause(it) => &it.syntax,
+			AnyNode::JsModifier(it) => &it.syntax,
+			AnyNode::JsIdentifierAssignment(it) => &it.syntax,
+			AnyNode::JsStaticMemberAssignment(it) => &it.syntax,
+			AnyNode::JsComputedMemberAssignment(it) => &it.syntax,
+			AnyNode::JsParenthesizedAssignment(it) => &it.syntax,
+			AnyNode::JsAssignmentWithDefault(it) => &it.syntax,
+			AnyNode::JsArrayAssignmentPattern(it) => &it.syntax,
+			AnyNode::JsObjectAssignmentPattern(it) => &it.syntax,
+			AnyNode::JsArrayAssignmentPatternRestElement(it) => &it.syntax,
+			AnyNode::JsObjectAssignmentPatternShorthandProperty(it) => &it.syntax,
+			AnyNode::JsObjectAssignmentPatternProperty(it) => &it.syntax,
+			AnyNode::JsObjectAssignmentPatternRest(it) => &it.syntax,
+			AnyNode::JsName(it) => &it.syntax,
+			AnyNode::JsIdentifierBinding(it) => &it.syntax,
+			AnyNode::JsArrayBindingPattern(it) => &it.syntax,
+			AnyNode::JsObjectBindingPattern(it) => &it.syntax,
+			AnyNode::JsArrayBindingPatternRestElement(it) => &it.syntax,
+			AnyNode::JsObjectBindingPatternProperty(it) => &it.syntax,
+			AnyNode::JsObjectBindingPatternRest(it) => &it.syntax,
+			AnyNode::JsObjectBindingPatternShorthandProperty(it) => &it.syntax,
+			AnyNode::JsStringLiteralExpression(it) => &it.syntax,
+			AnyNode::JsNumberLiteralExpression(it) => &it.syntax,
+			AnyNode::JsBigIntLiteralExpression(it) => &it.syntax,
+			AnyNode::JsBooleanLiteralExpression(it) => &it.syntax,
+			AnyNode::JsNullLiteralExpression(it) => &it.syntax,
+			AnyNode::JsRegexLiteralExpression(it) => &it.syntax,
+			AnyNode::JsVariableDeclarator(it) => &it.syntax,
+			AnyNode::JsImport(it) => &it.syntax,
+			AnyNode::ExportNamed(it) => &it.syntax,
+			AnyNode::ExportDefaultDecl(it) => &it.syntax,
+			AnyNode::ExportDefaultExpr(it) => &it.syntax,
+			AnyNode::ExportWildcard(it) => &it.syntax,
+			AnyNode::ExportDecl(it) => &it.syntax,
+			AnyNode::TsImportEqualsDecl(it) => &it.syntax,
+			AnyNode::TsExportAssignment(it) => &it.syntax,
+			AnyNode::TsNamespaceExportDecl(it) => &it.syntax,
+			AnyNode::JsImportBareClause(it) => &it.syntax,
+			AnyNode::JsImportNamedClause(it) => &it.syntax,
+			AnyNode::JsImportDefaultClause(it) => &it.syntax,
+			AnyNode::JsImportNamespaceClause(it) => &it.syntax,
+			AnyNode::JsModuleSource(it) => &it.syntax,
+			AnyNode::JsImportAssertion(it) => &it.syntax,
+			AnyNode::JsDefaultImportSpecifier(it) => &it.syntax,
+			AnyNode::JsNamedImportSpecifierList(it) => &it.syntax,
+			AnyNode::JsNamespaceImportSpecifier(it) => &it.syntax,
+			AnyNode::JsShorthandNamedImportSpecifier(it) => &it.syntax,
+			AnyNode::JsNamedImportSpecifier(it) => &it.syntax,
+			AnyNode::JsLiteralExportName(it) => &it.syntax,
+			AnyNode::JsImportAssertionEntry(it) => &it.syntax,
+			AnyNode::Specifier(it) => &it.syntax,
+			AnyNode::JsPrivateName(it) => &it.syntax,
+			AnyNode::JsRestParameter(it) => &it.syntax,
+			AnyNode::TsExternalModuleRef(it) => &it.syntax,
+			AnyNode::TsAny(it) => &it.syntax,
+			AnyNode::TsUnknown(it) => &it.syntax,
+			AnyNode::TsNumber(it) => &it.syntax,
+			AnyNode::TsObject(it) => &it.syntax,
+			AnyNode::TsBoolean(it) => &it.syntax,
+			AnyNode::TsBigint(it) => &it.syntax,
+			AnyNode::TsString(it) => &it.syntax,
+			AnyNode::TsSymbol(it) => &it.syntax,
+			AnyNode::TsVoid(it) => &it.syntax,
+			AnyNode::TsUndefined(it) => &it.syntax,
+			AnyNode::TsNull(it) => &it.syntax,
+			AnyNode::TsNever(it) => &it.syntax,
+			AnyNode::TsThis(it) => &it.syntax,
+			AnyNode::TsLiteral(it) => &it.syntax,
+			AnyNode::TsPredicate(it) => &it.syntax,
+			AnyNode::TsTuple(it) => &it.syntax,
+			AnyNode::TsParen(it) => &it.syntax,
+			AnyNode::TsTypeRef(it) => &it.syntax,
+			AnyNode::TsTemplate(it) => &it.syntax,
+			AnyNode::TsMappedType(it) => &it.syntax,
+			AnyNode::TsImport(it) => &it.syntax,
+			AnyNode::TsArray(it) => &it.syntax,
+			AnyNode::TsIndexedArray(it) => &it.syntax,
+			AnyNode::TsTypeOperator(it) => &it.syntax,
+			AnyNode::TsIntersection(it) => &it.syntax,
+			AnyNode::TsUnion(it) => &it.syntax,
+			AnyNode::TsFnType(it) => &it.syntax,
+			AnyNode::TsConstructorType(it) => &it.syntax,
+			AnyNode::TsConditionalType(it) => &it.syntax,
+			AnyNode::TsObjectType(it) => &it.syntax,
+			AnyNode::TsInfer(it) => &it.syntax,
+			AnyNode::TsTupleElement(it) => &it.syntax,
+			AnyNode::TsEnumMember(it) => &it.syntax,
+			AnyNode::TsTemplateElement(it) => &it.syntax,
+			AnyNode::TsMappedTypeReadonly(it) => &it.syntax,
+			AnyNode::TsMappedTypeParam(it) => &it.syntax,
+			AnyNode::TsTypeName(it) => &it.syntax,
+			AnyNode::TsExtends(it) => &it.syntax,
+			AnyNode::TsModuleBlock(it) => &it.syntax,
+			AnyNode::TsTypeParam(it) => &it.syntax,
+			AnyNode::TsConstraint(it) => &it.syntax,
+			AnyNode::TsDefault(it) => &it.syntax,
+			AnyNode::TsCallSignatureDecl(it) => &it.syntax,
+			AnyNode::TsConstructSignatureDecl(it) => &it.syntax,
+			AnyNode::TsPropertySignature(it) => &it.syntax,
+			AnyNode::TsMethodSignature(it) => &it.syntax,
+			AnyNode::TsQualifiedPath(it) => &it.syntax,
+		}
+	}
+}
+impl std::fmt::Debug for AnyNode {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		match self {
+			AnyNode::JsUnknownStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsUnknownExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsUnknownBinding(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsUnknownAssignment(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsUnknownModifier(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsUnknownImportAssertionEntry(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsUnknownNamedImportSpecifier(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::List(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::Ident(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsScript(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsModule(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsDirective(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsBlockStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsEmptyStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsExpressionStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsIfStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsDoWhileStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsWhileStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::ForStmt(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::ForInStmt(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::ForOfStmt(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsContinueStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsBreakStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsReturnStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsWithStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsLabeledStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsSwitchStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsThrowStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsTryStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsTryFinallyStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsDebuggerStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsVariableDeclarationStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsEnum(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsTypeAliasDecl(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsNamespaceDecl(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsModuleDecl(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsInterfaceDecl(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsElseClause(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::ForStmtInit(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::ForStmtTest(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::ForStmtUpdate(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsCaseClause(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsDefaultClause(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsCatchClause(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsFinallyClause(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsCatchDeclaration(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsArrayExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsArrowFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsAssignmentExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsAwaitExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsBinaryExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsClassExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsConditionalExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsComputedMemberExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsImportCallExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsLogicalExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsObjectExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsParenthesizedExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsIdentifierExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsSequenceExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsStaticMemberExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsSuperExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsThisExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsUnaryExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsPreUpdateExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsPostUpdateExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsYieldExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::Template(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::NewExpr(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::CallExpr(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::NewTarget(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::ImportMeta(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsNonNull(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsAssertion(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsConstAssertion(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsTypeArgs(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::ArgList(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsTypeParams(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsParameterList(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsTypeAnnotation(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsFunctionBody(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsSpread(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsArrayHole(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsLiteralMemberName(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsComputedMemberName(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsPropertyObjectMember(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsMethodObjectMember(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsGetterObjectMember(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsSetterObjectMember(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsShorthandPropertyObjectMember(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsImplementsClause(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsExtendsClause(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsExprWithTypeArgs(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsPrivateClassMemberName(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsConstructorClassMember(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsPropertyClassMember(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsMethodClassMember(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsGetterClassMember(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsSetterClassMember(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsEmptyClassMember(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsIndexSignature(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsAccessibility(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsConstructorParameterList(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsConstructorParam(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsBindingPatternWithDefault(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsEqualValueClause(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsModifier(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsIdentifierAssignment(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsStaticMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsComputedMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsParenthesizedAssignment(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsAssignmentWithDefault(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsArrayAssignmentPattern(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsObjectAssignmentPattern(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsArrayAssignmentPatternRestElement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsObjectAssignmentPatternShorthandProperty(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsObjectAssignmentPatternProperty(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsObjectAssignmentPatternRest(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsName(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsIdentifierBinding(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsArrayBindingPattern(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsObjectBindingPattern(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsArrayBindingPatternRestElement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsObjectBindingPatternProperty(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsObjectBindingPatternRest(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsObjectBindingPatternShorthandProperty(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsStringLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsNumberLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsBigIntLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsBooleanLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsNullLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsRegexLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsVariableDeclarator(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsImport(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::ExportNamed(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::ExportDefaultDecl(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::ExportDefaultExpr(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::ExportWildcard(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::ExportDecl(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsImportEqualsDecl(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsExportAssignment(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsNamespaceExportDecl(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsImportBareClause(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsImportNamedClause(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsImportDefaultClause(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsImportNamespaceClause(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsModuleSource(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsImportAssertion(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsDefaultImportSpecifier(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsNamedImportSpecifierList(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsNamespaceImportSpecifier(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsShorthandNamedImportSpecifier(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsNamedImportSpecifier(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsLiteralExportName(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsImportAssertionEntry(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::Specifier(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsPrivateName(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsRestParameter(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsExternalModuleRef(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsAny(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsUnknown(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsNumber(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsObject(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsBoolean(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsBigint(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsString(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsSymbol(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsVoid(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsUndefined(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsNull(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsNever(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsThis(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsLiteral(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsPredicate(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsTuple(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsParen(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsTypeRef(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsTemplate(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsMappedType(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsImport(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsArray(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsIndexedArray(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsTypeOperator(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsIntersection(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsUnion(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsFnType(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsConstructorType(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsConditionalType(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsObjectType(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsInfer(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsTupleElement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsEnumMember(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsTemplateElement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsMappedTypeReadonly(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsMappedTypeParam(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsTypeName(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsExtends(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsModuleBlock(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsTypeParam(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsConstraint(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsDefault(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsCallSignatureDecl(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsConstructSignatureDecl(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsPropertySignature(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsMethodSignature(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::TsQualifiedPath(it) => std::fmt::Debug::fmt(it, f),
+		}
+	}
+}
 impl std::fmt::Display for JsAnyRoot {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -11246,6 +13211,11 @@ impl std::fmt::Display for TsNamespaceBody {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for AnyNode {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsUnknownStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -11282,6 +13252,11 @@ impl std::fmt::Display for JsUnknownImportAssertionEntry {
 	}
 }
 impl std::fmt::Display for JsUnknownNamedImportSpecifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for List {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

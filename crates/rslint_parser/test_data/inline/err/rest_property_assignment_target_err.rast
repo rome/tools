@@ -36,20 +36,12 @@ JsModule {
                         properties: [
                             JsUnknownAssignment {
                                 items: [
-                                    Token(
-                                        DOT2@18..21 "..." [] [],
-                                    ),
-                                    Node(
-                                        1: JS_IDENTIFIER_ASSIGNMENT@21..23
-                                          0: IDENT@21..23 "c" [] [Whitespace(" ")]
-                                        ,
-                                    ),
-                                    Token(
-                                        EQ@23..25 "=" [] [Whitespace(" ")],
-                                    ),
-                                    Token(
-                                        JS_STRING_LITERAL@25..35 "\"default\"" [] [Whitespace(" ")],
-                                    ),
+                                    DOT2@18..21 "..." [] [],
+                                    JsIdentifierAssignment {
+                                        name_token: IDENT@21..23 "c" [] [Whitespace(" ")],
+                                    },
+                                    EQ@23..25 "=" [] [Whitespace(" ")],
+                                    JS_STRING_LITERAL@25..35 "\"default\"" [] [Whitespace(" ")],
                                 ],
                             },
                         ],
@@ -77,20 +69,18 @@ JsModule {
                                 dotdotdot_token: DOT2@46..49 "..." [] [],
                                 target: JsUnknownAssignment {
                                     items: [
-                                        Token(
-                                            L_CURLY@49..50 "{" [] [],
-                                        ),
-                                        Node(
-                                            1: LIST@50..51
-                                              0: JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY@50..51
-                                                0: JS_IDENTIFIER_ASSIGNMENT@50..51
-                                                  0: IDENT@50..51 "a" [] []
-                                                1: (empty)
-                                            ,
-                                        ),
-                                        Token(
-                                            R_CURLY@51..53 "}" [] [Whitespace(" ")],
-                                        ),
+                                        L_CURLY@49..50 "{" [] [],
+                                        List {
+                                            items: [
+                                                JsObjectAssignmentPatternShorthandProperty {
+                                                    identifier: JsIdentifierAssignment {
+                                                        name_token: IDENT@50..51 "a" [] [],
+                                                    },
+                                                    init: missing (optional),
+                                                },
+                                            ],
+                                        },
+                                        R_CURLY@51..53 "}" [] [Whitespace(" ")],
                                     ],
                                 },
                             },
@@ -117,14 +107,10 @@ JsModule {
                         properties: [
                             JsUnknownAssignment {
                                 items: [
-                                    Token(
-                                        DOT2@64..67 "..." [] [],
-                                    ),
-                                    Node(
-                                        1: JS_IDENTIFIER_ASSIGNMENT@67..71
-                                          0: IDENT@67..71 "rest" [] []
-                                        ,
-                                    ),
+                                    DOT2@64..67 "..." [] [],
+                                    JsIdentifierAssignment {
+                                        name_token: IDENT@67..71 "rest" [] [],
+                                    },
                                 ],
                             },
                             COMMA@71..73 "," [] [Whitespace(" ")],
@@ -157,14 +143,10 @@ JsModule {
                         properties: [
                             JsUnknownAssignment {
                                 items: [
-                                    Token(
-                                        DOT2@101..104 "..." [] [],
-                                    ),
-                                    Node(
-                                        1: JS_IDENTIFIER_ASSIGNMENT@104..108
-                                          0: IDENT@104..108 "rest" [] []
-                                        ,
-                                    ),
+                                    DOT2@101..104 "..." [] [],
+                                    JsIdentifierAssignment {
+                                        name_token: IDENT@104..108 "rest" [] [],
+                                    },
                                 ],
                             },
                             COMMA@108..110 "," [] [Whitespace(" ")],

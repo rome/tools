@@ -154,29 +154,17 @@ JsModule {
                         COMMA@208..210 "," [] [Whitespace(" ")],
                         JsUnknownImportAssertionEntry {
                             items: [
-                                Token(
-                                    IDENT@210..214 "type" [] [],
-                                ),
-                                Token(
-                                    COLON@214..216 ":" [] [Whitespace(" ")],
-                                ),
-                                Token(
-                                    JS_STRING_LITERAL@216..222 "\"html\"" [] [],
-                                ),
+                                IDENT@210..214 "type" [] [],
+                                COLON@214..216 ":" [] [Whitespace(" ")],
+                                JS_STRING_LITERAL@216..222 "\"html\"" [] [],
                             ],
                         },
                         COMMA@222..224 "," [] [Whitespace(" ")],
                         JsUnknownImportAssertionEntry {
                             items: [
-                                Token(
-                                    JS_STRING_LITERAL@224..230 "\"type\"" [] [],
-                                ),
-                                Token(
-                                    COLON@230..232 ":" [] [Whitespace(" ")],
-                                ),
-                                Token(
-                                    JS_STRING_LITERAL@232..237 "\"js\"" [] [Whitespace(" ")],
-                                ),
+                                JS_STRING_LITERAL@224..230 "\"type\"" [] [],
+                                COLON@230..232 ":" [] [Whitespace(" ")],
+                                JS_STRING_LITERAL@232..237 "\"js\"" [] [Whitespace(" ")],
                             ],
                         },
                     ],
@@ -240,9 +228,7 @@ JsModule {
                         missing separator,
                         JsUnknownImportAssertionEntry {
                             items: [
-                                Token(
-                                    JS_NUMBER_LITERAL@334..336 "1" [] [Whitespace(" ")],
-                                ),
+                                JS_NUMBER_LITERAL@334..336 "1" [] [Whitespace(" ")],
                             ],
                         },
                     ],

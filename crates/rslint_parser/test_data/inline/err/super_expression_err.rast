@@ -43,9 +43,7 @@ JsModule {
                                     type_args: missing (optional),
                                     callee: JsUnknownExpression {
                                         items: [
-                                            Token(
-                                                SUPER_KW@32..40 "super" [Whitespace("\n\t\t")] [],
-                                            ),
+                                            SUPER_KW@32..40 "super" [Whitespace("\n\t\t")] [],
                                         ],
                                     },
                                     arguments: ArgList {
@@ -62,9 +60,7 @@ JsModule {
                                     callee: JsStaticMemberExpression {
                                         object: JsUnknownExpression {
                                             items: [
-                                                Token(
-                                                    SUPER_KW@43..51 "super" [Whitespace("\n\t\t")] [],
-                                                ),
+                                                SUPER_KW@43..51 "super" [Whitespace("\n\t\t")] [],
                                             ],
                                         },
                                         operator: QUESTIONDOT@51..53 "?." [] [],
@@ -92,9 +88,7 @@ JsModule {
                 type_args: missing (optional),
                 callee: JsUnknownExpression {
                     items: [
-                        Token(
-                            SUPER_KW@65..72 "super" [Whitespace("\n\n")] [],
-                        ),
+                        SUPER_KW@65..72 "super" [Whitespace("\n\n")] [],
                     ],
                 },
                 arguments: ArgList {

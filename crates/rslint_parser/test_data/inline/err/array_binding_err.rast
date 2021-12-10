@@ -90,9 +90,7 @@ JsModule {
                             elements: [
                                 JsUnknownBinding {
                                     items: [
-                                        Token(
-                                            JS_STRING_LITERAL@52..61 "\"default\"" [] [],
-                                        ),
+                                        JS_STRING_LITERAL@52..61 "\"default\"" [] [],
                                     ],
                                 },
                             ],

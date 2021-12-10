@@ -17,9 +17,7 @@ JsModule {
                     missing separator,
                     JsUnknownBinding {
                         items: [
-                            Token(
-                                PLUS2@11..13 "++" [] [],
-                            ),
+                            PLUS2@11..13 "++" [] [],
                         ],
                     },
                     COMMA@13..15 "," [] [Whitespace(" ")],

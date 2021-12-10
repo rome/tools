@@ -40,20 +40,12 @@ JsModule {
                             elements: [
                                 JsUnknownBinding {
                                     items: [
-                                        Token(
-                                            DOT2@23..26 "..." [] [],
-                                        ),
-                                        Node(
-                                            1: JS_IDENTIFIER_BINDING@26..28
-                                              0: IDENT@26..28 "c" [] [Whitespace(" ")]
-                                            ,
-                                        ),
-                                        Token(
-                                            EQ@28..30 "=" [] [Whitespace(" ")],
-                                        ),
-                                        Token(
-                                            JS_STRING_LITERAL@30..40 "\"default\"" [] [Whitespace(" ")],
-                                        ),
+                                        DOT2@23..26 "..." [] [],
+                                        JsIdentifierBinding {
+                                            name_token: IDENT@26..28 "c" [] [Whitespace(" ")],
+                                        },
+                                        EQ@28..30 "=" [] [Whitespace(" ")],
+                                        JS_STRING_LITERAL@30..40 "\"default\"" [] [Whitespace(" ")],
                                     ],
                                 },
                             ],
@@ -82,14 +74,10 @@ JsModule {
                             elements: [
                                 JsUnknownBinding {
                                     items: [
-                                        Token(
-                                            DOT2@53..56 "..." [] [],
-                                        ),
-                                        Node(
-                                            1: JS_IDENTIFIER_BINDING@56..60
-                                              0: IDENT@56..60 "rest" [] []
-                                            ,
-                                        ),
+                                        DOT2@53..56 "..." [] [],
+                                        JsIdentifierBinding {
+                                            name_token: IDENT@56..60 "rest" [] [],
+                                        },
                                     ],
                                 },
                                 COMMA@60..62 "," [] [Whitespace(" ")],

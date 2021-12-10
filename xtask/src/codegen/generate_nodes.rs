@@ -4,33 +4,15 @@ use super::kinds_src::AstSrc;
 use crate::codegen::kinds_src::TokenKind;
 use crate::{
 	codegen::{kinds_src::Field, to_lower_snake_case, to_upper_snake_case},
-	Result,
+	Result, SYNTAX_ELEMENT_TYPE,
 };
 use quote::{format_ident, quote};
 
-// these node won't generate any code
-const SYNTAX_ELEMENT_TYPE: &str = "SyntaxElement";
-
 pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
-	let filtered_enums: Vec<_> = ast
-		.enums
-		.iter()
-		.filter(|e| e.name.as_str() != SYNTAX_ELEMENT_TYPE)
-		.collect();
-
-	let filtered_nodes: Vec<_> = ast
+	let (node_defs, node_boilerplate_impls): (Vec<_>, Vec<_>) = ast
 		.nodes
 		.iter()
-		.filter(|e| e.name.as_str() != SYNTAX_ELEMENT_TYPE)
-		.collect();
-
-	let (node_defs, node_boilerplate_impls): (Vec<_>, Vec<_>) = filtered_nodes
-		.iter()
-		.filter_map(|node| {
-			if node.name.as_str() == SYNTAX_ELEMENT_TYPE {
-				return None;
-			}
-
+		.map(|node| {
 			let name = format_ident!("{}", node.name);
 			let node_kind = format_ident!("{}", to_upper_snake_case(node.name.as_str()));
 			let mut slot = 0usize;
@@ -141,25 +123,36 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				});
 
 			let fields = node.fields.iter().map(|field| {
+				let is_syntax_element_children = matches!(
+					field,
+					Field::Node {
+						ref ty,
+						..
+					} if ty == SYNTAX_ELEMENT_TYPE
+				);
+
 				let name = match field {
 					Field::Token {
 						name,
 						kind: TokenKind::Many(_),
 						..
 					} => format_ident!("{}", name),
-					Field::Node { ty, .. } if ty == SYNTAX_ELEMENT_TYPE => format_ident!("items"),
 					_ => field.method_name(),
 				};
 
 				let string_name = name.to_string();
 
-				if field.is_many() {
+				if is_syntax_element_children {
+					quote! {
+						.field("items", &support::DebugSyntaxElementChildren(self.items()))
+					}
+				} else if field.is_many() {
 					quote! {
 						.field(#string_name, &self.#name())
 					}
 				} else if field.is_optional() {
 					quote! {
-						.field(#string_name, &support::DebugOptionalNode(self.#name()))
+						.field(#string_name, &support::DebugOptionalElement(self.#name()))
 					}
 				} else {
 					quote! {
@@ -170,7 +163,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 			let string_name = name.to_string();
 
-			Some((
+			(
 				quote! {
 					// TODO: review documentation
 					// #[doc = #documentation]
@@ -203,7 +196,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 						}
 					}
 				},
-			))
+			)
 		})
 		.unzip();
 
@@ -214,7 +207,8 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		.map(|current_enum| (current_enum.name.clone(), current_enum.variants.clone()))
 		.collect();
 
-	let (enum_defs, enum_boilerplate_impls): (Vec<_>, Vec<_>) = filtered_enums
+	let (enum_defs, enum_boilerplate_impls): (Vec<_>, Vec<_>) = ast
+		.enums
 		.iter()
 		.map(|en| {
 			// here we collect all the variants because this will generate the enums
@@ -258,7 +252,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			let variant_cast: Vec<_> = simple_variants
 				.iter()
 				.map(|current_enum| {
-					let variant_is_enum = filtered_enums.iter().find(|e| &e.name == *current_enum);
+					let variant_is_enum = ast.enums.iter().find(|e| &e.name == *current_enum);
 					let variant_name = format_ident!("{}", current_enum);
 
 					if variant_is_enum.is_some() {
@@ -422,8 +416,8 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		})
 		.unzip();
 
-	let enum_names = filtered_enums.iter().map(|it| &it.name);
-	let node_names = filtered_nodes.iter().map(|it| &it.name);
+	let enum_names = ast.enums.iter().map(|it| &it.name);
+	let node_names = ast.nodes.iter().map(|it| &it.name);
 
 	let display_impls = enum_names
 		.chain(node_names.clone())

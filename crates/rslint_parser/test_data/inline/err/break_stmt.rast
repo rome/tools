@@ -22,12 +22,8 @@ JsModule {
                 statements: [
                     JsUnknownStatement {
                         items: [
-                            Token(
-                                BREAK_KW@17..22 "break" [] [],
-                            ),
-                            Token(
-                                SEMICOLON@22..24 ";" [] [Whitespace(" ")],
-                            ),
+                            BREAK_KW@17..22 "break" [] [],
+                            SEMICOLON@22..24 ";" [] [Whitespace(" ")],
                         ],
                     },
                 ],

@@ -13,9 +13,7 @@ JsModule {
             members: [
                 JsUnknownMember {
                     items: [
-                        Token(
-                            L_CURLY@8..9 "{" [] [],
-                        ),
+                        L_CURLY@8..9 "{" [] [],
                     ],
                 },
             ],
@@ -23,9 +21,7 @@ JsModule {
         },
         JsUnknownStatement {
             items: [
-                Token(
-                    R_CURLY@10..11 "}" [] [],
-                ),
+                R_CURLY@10..11 "}" [] [],
             ],
         },
     ],

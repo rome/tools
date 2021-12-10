@@ -35,9 +35,7 @@ JsModule {
         },
         JsUnknownStatement {
             items: [
-                Token(
-                    COMMA@31..33 "," [] [Whitespace(" ")],
-                ),
+                COMMA@31..33 "," [] [Whitespace(" ")],
             ],
         },
         JsBlockStatement {
@@ -91,12 +89,8 @@ JsModule {
                         missing separator,
                         JsUnknownNamedImportSpecifier {
                             items: [
-                                Token(
-                                    PLUS@63..65 "+" [] [Whitespace(" ")],
-                                ),
-                                Token(
-                                    IDENT@65..66 "b" [] [],
-                                ),
+                                PLUS@63..65 "+" [] [Whitespace(" ")],
+                                IDENT@65..66 "b" [] [],
                             ],
                         },
                         COMMA@66..68 "," [] [Whitespace(" ")],
@@ -132,9 +126,7 @@ JsModule {
                         JsShorthandNamedImportSpecifier {
                             local_name: JsUnknownBinding {
                                 items: [
-                                    Token(
-                                        IDENT@94..96 "a" [] [Whitespace(" ")],
-                                    ),
+                                    IDENT@94..96 "a" [] [Whitespace(" ")],
                                 ],
                             },
                         },
@@ -159,9 +151,7 @@ JsModule {
                         JsShorthandNamedImportSpecifier {
                             local_name: JsUnknownBinding {
                                 items: [
-                                    Token(
-                                        DEFAULT_KW@117..125 "default" [] [Whitespace(" ")],
-                                    ),
+                                    DEFAULT_KW@117..125 "default" [] [Whitespace(" ")],
                                 ],
                             },
                         },
@@ -185,9 +175,7 @@ JsModule {
                     specifiers: [
                         JsUnknownNamedImportSpecifier {
                             items: [
-                                Token(
-                                    JS_STRING_LITERAL@146..150 "\"a\"" [] [Whitespace(" ")],
-                                ),
+                                JS_STRING_LITERAL@146..150 "\"a\"" [] [Whitespace(" ")],
                             ],
                         },
                     ],

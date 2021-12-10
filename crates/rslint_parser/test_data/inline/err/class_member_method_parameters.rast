@@ -36,9 +36,7 @@ JsModule {
                             missing separator,
                             JsUnknownBinding {
                                 items: [
-                                    Token(
-                                        R_CURLY@19..20 "}" [] [],
-                                    ),
+                                    R_CURLY@19..20 "}" [] [],
                                 ],
                             },
                         ],

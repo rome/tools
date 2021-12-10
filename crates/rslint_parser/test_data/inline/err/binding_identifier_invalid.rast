@@ -24,9 +24,7 @@ JsModule {
                                     JsVariableDeclarator {
                                         id: JsUnknownBinding {
                                             items: [
-                                                Token(
-                                                    IDENT@18..24 "await" [] [Whitespace(" ")],
-                                                ),
+                                                IDENT@18..24 "await" [] [Whitespace(" ")],
                                             ],
                                         },
                                         init: JsEqualValueClause {
@@ -71,9 +69,7 @@ JsModule {
                                 JsVariableDeclarator {
                                     id: JsUnknownBinding {
                                         items: [
-                                            Token(
-                                                IDENT@56..62 "yield" [] [Whitespace(" ")],
-                                            ),
+                                            IDENT@56..62 "yield" [] [Whitespace(" ")],
                                         ],
                                     },
                                     init: JsEqualValueClause {
@@ -98,9 +94,7 @@ JsModule {
                     JsVariableDeclarator {
                         id: JsUnknownBinding {
                             items: [
-                                Token(
-                                    IDENT@73..78 "eval" [] [Whitespace(" ")],
-                                ),
+                                IDENT@73..78 "eval" [] [Whitespace(" ")],
                             ],
                         },
                         init: JsEqualValueClause {
@@ -121,9 +115,7 @@ JsModule {
                     JsVariableDeclarator {
                         id: JsUnknownBinding {
                             items: [
-                                Token(
-                                    IDENT@87..91 "let" [] [Whitespace(" ")],
-                                ),
+                                IDENT@87..91 "let" [] [Whitespace(" ")],
                             ],
                         },
                         init: JsEqualValueClause {
@@ -144,9 +136,7 @@ JsModule {
                     JsVariableDeclarator {
                         id: JsUnknownBinding {
                             items: [
-                                Token(
-                                    IDENT@102..106 "let" [] [Whitespace(" ")],
-                                ),
+                                IDENT@102..106 "let" [] [Whitespace(" ")],
                             ],
                         },
                         init: JsEqualValueClause {
@@ -174,9 +164,7 @@ JsModule {
                     JsVariableDeclarator {
                         id: JsUnknownBinding {
                             items: [
-                                Token(
-                                    IDENT@118..119 "a" [] [],
-                                ),
+                                IDENT@118..119 "a" [] [],
                             ],
                         },
                         init: missing (optional),

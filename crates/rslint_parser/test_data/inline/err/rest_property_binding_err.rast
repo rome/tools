@@ -40,20 +40,12 @@ JsModule {
                             properties: [
                                 JsUnknownBinding {
                                     items: [
-                                        Token(
-                                            DOT2@23..26 "..." [] [],
-                                        ),
-                                        Node(
-                                            1: JS_IDENTIFIER_BINDING@26..28
-                                              0: IDENT@26..28 "c" [] [Whitespace(" ")]
-                                            ,
-                                        ),
-                                        Token(
-                                            EQ@28..30 "=" [] [Whitespace(" ")],
-                                        ),
-                                        Token(
-                                            JS_STRING_LITERAL@30..40 "\"default\"" [] [Whitespace(" ")],
-                                        ),
+                                        DOT2@23..26 "..." [] [],
+                                        JsIdentifierBinding {
+                                            name_token: IDENT@26..28 "c" [] [Whitespace(" ")],
+                                        },
+                                        EQ@28..30 "=" [] [Whitespace(" ")],
+                                        JS_STRING_LITERAL@30..40 "\"default\"" [] [Whitespace(" ")],
                                     ],
                                 },
                             ],
@@ -84,20 +76,18 @@ JsModule {
                                     dotdotdot_token: DOT2@53..56 "..." [] [],
                                     binding: JsUnknownBinding {
                                         items: [
-                                            Token(
-                                                L_CURLY@56..57 "{" [] [],
-                                            ),
-                                            Node(
-                                                1: LIST@57..58
-                                                  0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@57..58
-                                                    0: JS_IDENTIFIER_BINDING@57..58
-                                                      0: IDENT@57..58 "a" [] []
-                                                    1: (empty)
-                                                ,
-                                            ),
-                                            Token(
-                                                R_CURLY@58..60 "}" [] [Whitespace(" ")],
-                                            ),
+                                            L_CURLY@56..57 "{" [] [],
+                                            List {
+                                                items: [
+                                                    JsObjectBindingPatternShorthandProperty {
+                                                        identifier: JsIdentifierBinding {
+                                                            name_token: IDENT@57..58 "a" [] [],
+                                                        },
+                                                        init: missing (optional),
+                                                    },
+                                                ],
+                                            },
+                                            R_CURLY@58..60 "}" [] [Whitespace(" ")],
                                         ],
                                     },
                                 },
@@ -127,14 +117,10 @@ JsModule {
                             properties: [
                                 JsUnknownBinding {
                                     items: [
-                                        Token(
-                                            DOT2@73..76 "..." [] [],
-                                        ),
-                                        Node(
-                                            1: JS_IDENTIFIER_BINDING@76..80
-                                              0: IDENT@76..80 "rest" [] []
-                                            ,
-                                        ),
+                                        DOT2@73..76 "..." [] [],
+                                        JsIdentifierBinding {
+                                            name_token: IDENT@76..80 "rest" [] [],
+                                        },
                                     ],
                                 },
                                 COMMA@80..82 "," [] [Whitespace(" ")],
@@ -170,14 +156,10 @@ JsModule {
                             properties: [
                                 JsUnknownBinding {
                                     items: [
-                                        Token(
-                                            DOT2@112..115 "..." [] [],
-                                        ),
-                                        Node(
-                                            1: JS_IDENTIFIER_BINDING@115..119
-                                              0: IDENT@115..119 "rest" [] []
-                                            ,
-                                        ),
+                                        DOT2@112..115 "..." [] [],
+                                        JsIdentifierBinding {
+                                            name_token: IDENT@115..119 "rest" [] [],
+                                        },
                                     ],
                                 },
                                 COMMA@119..121 "," [] [Whitespace(" ")],
@@ -227,9 +209,7 @@ JsModule {
                                                 dotdotdot_token: DOT2@160..163 "..." [] [],
                                                 binding: JsUnknownBinding {
                                                     items: [
-                                                        Token(
-                                                            IDENT@163..169 "await" [] [Whitespace(" ")],
-                                                        ),
+                                                        IDENT@163..169 "await" [] [Whitespace(" ")],
                                                     ],
                                                 },
                                             },

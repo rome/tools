@@ -20,18 +20,10 @@ JsModule {
         },
         JsUnknownStatement {
             items: [
-                Token(
-                    R_PAREN@14..15 ")" [] [],
-                ),
-                Token(
-                    R_CURLY@15..16 "}" [] [],
-                ),
-                Token(
-                    R_PAREN@16..17 ")" [] [],
-                ),
-                Token(
-                    R_CURLY@17..18 "}" [] [],
-                ),
+                R_PAREN@14..15 ")" [] [],
+                R_CURLY@15..16 "}" [] [],
+                R_PAREN@16..17 ")" [] [],
+                R_CURLY@17..18 "}" [] [],
             ],
         },
         JsBlockStatement {
