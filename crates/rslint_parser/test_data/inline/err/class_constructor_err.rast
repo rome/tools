@@ -13,29 +13,21 @@ JsModule {
             members: [
                 JsUnknownMember {
                     items: [
-                        Token(
-                            STATIC_KW@10..17 "static" [] [Whitespace(" ")],
-                        ),
-                        Node(
-                            1: JS_LITERAL_MEMBER_NAME@17..28
-                              0: IDENT@17..28 "constructor" [] []
-                            ,
-                        ),
-                        Node(
-                            2: JS_CONSTRUCTOR_PARAMETER_LIST@28..31
-                              0: L_PAREN@28..29 "(" [] []
-                              1: LIST@29..29
-                              2: R_PAREN@29..31 ")" [] [Whitespace(" ")]
-                            ,
-                        ),
-                        Node(
-                            3: JS_FUNCTION_BODY@31..34
-                              0: L_CURLY@31..32 "{" [] []
-                              1: LIST@32..32
-                              2: LIST@32..32
-                              3: R_CURLY@32..34 "}" [] [Whitespace(" ")]
-                            ,
-                        ),
+                        STATIC_KW@10..17 "static" [] [Whitespace(" ")],
+                        JsLiteralMemberName {
+                            value: IDENT@17..28 "constructor" [] [],
+                        },
+                        JsConstructorParameterList {
+                            l_paren_token: L_PAREN@28..29 "(" [] [],
+                            parameters: [],
+                            r_paren_token: R_PAREN@29..31 ")" [] [Whitespace(" ")],
+                        },
+                        JsFunctionBody {
+                            l_curly_token: L_CURLY@31..32 "{" [] [],
+                            directives: [],
+                            statements: [],
+                            r_curly_token: R_CURLY@32..34 "}" [] [Whitespace(" ")],
+                        },
                     ],
                 },
             ],

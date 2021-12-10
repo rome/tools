@@ -22,12 +22,8 @@ JsModule {
                 statements: [
                     JsUnknownStatement {
                         items: [
-                            Token(
-                                CONTINUE_KW@17..25 "continue" [] [],
-                            ),
-                            Token(
-                                SEMICOLON@25..27 ";" [] [Whitespace(" ")],
-                            ),
+                            CONTINUE_KW@17..25 "continue" [] [],
+                            SEMICOLON@25..27 ";" [] [Whitespace(" ")],
                         ],
                     },
                 ],

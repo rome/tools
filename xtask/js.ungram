@@ -1051,7 +1051,7 @@ TsExportAssignment = 'export' '=' expr: JsAnyExpression ';'?
 // typescript namespace export
 TsNamespaceExportDecl = 'export' 'as' 'namespace' ident: Ident? ';'?
 
-Specifier = name:Ident 'as'? manual__alias:Name?
+Specifier = name:Ident 'as'? manual__alias: JsName?
 
 // @ematipico this one is not entirely correct I think..
 ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:(Specifier (',' Specifier)* ','?) * '}'

@@ -29,16 +29,12 @@ JsModule {
         },
         JsUnknownStatement {
             items: [
-                Token(
-                    R_CURLY@10..12 "}" [] [Whitespace(" ")],
-                ),
+                R_CURLY@10..12 "}" [] [Whitespace(" ")],
             ],
         },
         JsUnknownStatement {
             items: [
-                Token(
-                    EQ@12..14 "=" [] [Whitespace(" ")],
-                ),
+                EQ@12..14 "=" [] [Whitespace(" ")],
             ],
         },
         JsBlockStatement {
@@ -71,9 +67,7 @@ JsModule {
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsUnknownBinding {
                                         items: [
-                                            Token(
-                                                IDENT@37..42 "eval" [] [Whitespace(" ")],
-                                            ),
+                                            IDENT@37..42 "eval" [] [Whitespace(" ")],
                                         ],
                                     },
                                     init: missing (optional),

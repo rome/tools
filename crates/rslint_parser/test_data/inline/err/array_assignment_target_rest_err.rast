@@ -36,20 +36,12 @@ JsModule {
                         elements: [
                             JsUnknownAssignment {
                                 items: [
-                                    Token(
-                                        DOT2@18..21 "..." [] [],
-                                    ),
-                                    Node(
-                                        1: JS_IDENTIFIER_ASSIGNMENT@21..23
-                                          0: IDENT@21..23 "c" [] [Whitespace(" ")]
-                                        ,
-                                    ),
-                                    Token(
-                                        EQ@23..25 "=" [] [Whitespace(" ")],
-                                    ),
-                                    Token(
-                                        JS_STRING_LITERAL@25..35 "\"default\"" [] [Whitespace(" ")],
-                                    ),
+                                    DOT2@18..21 "..." [] [],
+                                    JsIdentifierAssignment {
+                                        name_token: IDENT@21..23 "c" [] [Whitespace(" ")],
+                                    },
+                                    EQ@23..25 "=" [] [Whitespace(" ")],
+                                    JS_STRING_LITERAL@25..35 "\"default\"" [] [Whitespace(" ")],
                                 ],
                             },
                         ],
@@ -75,14 +67,10 @@ JsModule {
                         elements: [
                             JsUnknownAssignment {
                                 items: [
-                                    Token(
-                                        DOT2@46..49 "..." [] [],
-                                    ),
-                                    Node(
-                                        1: JS_IDENTIFIER_ASSIGNMENT@49..53
-                                          0: IDENT@49..53 "rest" [] []
-                                        ,
-                                    ),
+                                    DOT2@46..49 "..." [] [],
+                                    JsIdentifierAssignment {
+                                        name_token: IDENT@49..53 "rest" [] [],
+                                    },
                                 ],
                             },
                             COMMA@53..55 "," [] [Whitespace(" ")],

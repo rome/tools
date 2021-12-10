@@ -414,12 +414,9 @@ impl std::fmt::Display for SyntaxError {
 }
 
 mod support {
-	use super::{
-		AstNode, AstNodeList, AstSeparatedList, SyntaxElementChildren, SyntaxKind, SyntaxNode,
-		SyntaxToken,
-	};
-	use crate::ast::AstChildren;
-	use crate::SyntaxList;
+	use super::{AstNode, AstNodeList, AstSeparatedList, SyntaxKind, SyntaxNode, SyntaxToken};
+	use crate::ast::{AnyNode, AstChildren};
+	use crate::{SyntaxElement, SyntaxElementChildren, SyntaxList, SyntaxNodeExt};
 	use crate::{SyntaxError, SyntaxResult};
 	use std::fmt::{Debug, Formatter};
 
@@ -510,14 +507,41 @@ mod support {
 
 	/// New-type wrapper to flatten the debug output of optional children when printing [AstNode]s.
 	/// Omits the [Some] if the node is present and prints `missing (optional)` if the child is missing
-	pub(super) struct DebugOptionalNode<N>(pub(super) Option<N>);
+	pub(super) struct DebugOptionalElement<N>(pub(super) Option<N>);
 
-	impl<N: Debug> Debug for DebugOptionalNode<N> {
+	impl<N: Debug> Debug for DebugOptionalElement<N> {
 		fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 			match &self.0 {
 				Some(node) => std::fmt::Debug::fmt(node, f),
 				None => f.write_str("missing (optional)"),
 			}
+		}
+	}
+
+	struct DebugSyntaxElement(SyntaxElement);
+
+	impl Debug for DebugSyntaxElement {
+		fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+			match &self.0 {
+				SyntaxElement::Node(node) => match node.kind() {
+					SyntaxKind::LIST => {
+						Debug::fmt(&DebugSyntaxElementChildren(node.children_with_tokens()), f)
+					}
+					_ => Debug::fmt(&node.to::<AnyNode>(), f),
+				},
+				SyntaxElement::Token(token) => Debug::fmt(token, f),
+			}
+		}
+	}
+
+	#[derive(Clone)]
+	pub(super) struct DebugSyntaxElementChildren(pub(super) SyntaxElementChildren);
+
+	impl Debug for DebugSyntaxElementChildren {
+		fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+			f.debug_list()
+				.entries(self.clone().0.map(DebugSyntaxElement))
+				.finish()
 		}
 	}
 }

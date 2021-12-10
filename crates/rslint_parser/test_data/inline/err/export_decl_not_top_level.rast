@@ -7,22 +7,21 @@ JsModule {
             statements: [
                 JsUnknownStatement {
                     items: [
-                        Token(
-                            EXPORT_KW@1..10 "export" [Whitespace("\n ")] [Whitespace(" ")],
-                        ),
-                        Node(
-                            1: EXPORT_NAMED@10..31
-                              0: L_CURLY@10..12 "{" [] [Whitespace(" ")]
-                              1: LIST@12..17
-                                0: SPECIFIER@12..17
-                                  0: JS_NAME@12..17
-                                    0: IDENT@12..17 "pain" [] [Whitespace(" ")]
-                              2: R_CURLY@17..19 "}" [] [Whitespace(" ")]
-                              3: FROM_KW@19..24 "from" [] [Whitespace(" ")]
-                              4: JS_STRING_LITERAL@24..30 "\"life\"" [] []
-                              5: SEMICOLON@30..31 ";" [] []
-                            ,
-                        ),
+                        EXPORT_KW@1..10 "export" [Whitespace("\n ")] [Whitespace(" ")],
+                        ExportNamed {
+                            export_token: missing (required),
+                            type_token: missing (optional),
+                            from_token: FROM_KW@19..24 "from" [] [Whitespace(" ")],
+                            l_curly_token: L_CURLY@10..12 "{" [] [Whitespace(" ")],
+                            specifiers: [
+                                Specifier {
+                                    name: missing (required),
+                                    as_token: missing (optional),
+                                    alias: missing (optional),
+                                },
+                            ],
+                            r_curly_token: R_CURLY@17..19 "}" [] [Whitespace(" ")],
+                        },
                     ],
                 },
             ],

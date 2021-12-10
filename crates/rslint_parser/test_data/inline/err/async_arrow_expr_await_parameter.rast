@@ -17,9 +17,7 @@ JsModule {
                                 type_parameters: missing (optional),
                                 parameter_list: JsUnknownBinding {
                                     items: [
-                                        Token(
-                                            IDENT@14..20 "await" [] [Whitespace(" ")],
-                                        ),
+                                        IDENT@14..20 "await" [] [Whitespace(" ")],
                                     ],
                                 },
                                 fat_arrow_token: FAT_ARROW@20..23 "=>" [] [Whitespace(" ")],

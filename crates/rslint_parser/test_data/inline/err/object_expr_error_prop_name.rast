@@ -46,9 +46,7 @@ JsModule {
                                 members: [
                                     JsUnknownMember {
                                         items: [
-                                            Token(
-                                                L_CURLY@36..37 "{" [] [],
-                                            ),
+                                            L_CURLY@36..37 "{" [] [],
                                         ],
                                     },
                                 ],
@@ -62,9 +60,7 @@ JsModule {
         },
         JsUnknownStatement {
             items: [
-                Token(
-                    R_CURLY@38..39 "}" [] [],
-                ),
+                R_CURLY@38..39 "}" [] [],
             ],
         },
     ],

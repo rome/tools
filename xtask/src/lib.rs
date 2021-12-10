@@ -25,6 +25,9 @@ pub const BASE_RESULT_FILE: &str = "base_results.json";
 // this is the filename of the results coming from the current PR
 pub const NEW_RESULT_FILE: &str = "new_results.json";
 
+// these node won't generate any code
+pub const SYNTAX_ELEMENT_TYPE: &str = "SyntaxElement";
+
 pub fn project_root() -> PathBuf {
 	Path::new(
 		&env::var("CARGO_MANIFEST_DIR").unwrap_or_else(|_| env!("CARGO_MANIFEST_DIR").to_owned()),

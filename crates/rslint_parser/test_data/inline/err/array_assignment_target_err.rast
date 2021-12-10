@@ -17,12 +17,8 @@ JsModule {
                         COMMA@4..6 "," [] [Whitespace(" ")],
                         JsUnknownAssignment {
                             items: [
-                                Token(
-                                    PLUS2@6..8 "++" [] [],
-                                ),
-                                Token(
-                                    IDENT@8..9 "b" [] [],
-                                ),
+                                PLUS2@6..8 "++" [] [],
+                                IDENT@8..9 "b" [] [],
                             ],
                         },
                         COMMA@9..11 "," [] [Whitespace(" ")],
@@ -53,14 +49,10 @@ JsModule {
                         COMMA@26..28 "," [] [Whitespace(" ")],
                         JsUnknownAssignment {
                             items: [
-                                Token(
-                                    DOT2@28..31 "..." [] [],
-                                ),
-                                Node(
-                                    1: JS_IDENTIFIER_ASSIGNMENT@31..35
-                                      0: IDENT@31..35 "rest" [] []
-                                    ,
-                                ),
+                                DOT2@28..31 "..." [] [],
+                                JsIdentifierAssignment {
+                                    name_token: IDENT@31..35 "rest" [] [],
+                                },
                             ],
                         },
                         COMMA@35..36 "," [] [],
@@ -159,12 +151,8 @@ JsModule {
                         missing separator,
                         JsUnknownAssignment {
                             items: [
-                                Token(
-                                    COLON@92..94 ":" [] [Whitespace(" ")],
-                                ),
-                                Token(
-                                    IDENT@94..95 "b" [] [],
-                                ),
+                                COLON@92..94 ":" [] [Whitespace(" ")],
+                                IDENT@94..95 "b" [] [],
                             ],
                         },
                     ],

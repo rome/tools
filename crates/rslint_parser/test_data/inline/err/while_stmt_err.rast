@@ -48,9 +48,7 @@ JsModule {
             r_paren_token: R_PAREN@48..50 ")" [] [Whitespace(" ")],
             body: JsUnknownStatement {
                 items: [
-                    Token(
-                        R_CURLY@50..51 "}" [] [],
-                    ),
+                    R_CURLY@50..51 "}" [] [],
                 ],
             },
         },

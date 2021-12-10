@@ -17,7 +17,7 @@ use crate::{
 		kinds_src::{AstEnumSrc, AstNodeSrc, KINDS_SRC},
 		update,
 	},
-	project_root, Result,
+	project_root, Result, SYNTAX_ELEMENT_TYPE,
 };
 use ungrammar::{Grammar, Rule, Token};
 
@@ -51,8 +51,13 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 		tokens,
 		..Default::default()
 	};
+
 	for node in grammar.iter() {
 		let name = grammar[node].name.clone();
+		if name == SYNTAX_ELEMENT_TYPE {
+			continue;
+		}
+
 		let rule = &grammar[node].rule;
 
 		match handle_alternatives(grammar, rule) {
@@ -72,6 +77,13 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 			}
 		}
 	}
+
+	ast.enums.push(AstEnumSrc {
+		name: "AnyNode".to_string(),
+		variants: ast.nodes.iter().map(|node| &node.name).cloned().collect(),
+		documentation: vec![],
+	});
+
 	ast
 }
 

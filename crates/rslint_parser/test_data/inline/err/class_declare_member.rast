@@ -14,9 +14,7 @@ JsModule {
                 JsPropertyClassMember {
                     modifiers: JsUnknownModifier {
                         items: [
-                            Token(
-                                DECLARE_KW@10..18 "declare" [] [Whitespace(" ")],
-                            ),
+                            DECLARE_KW@10..18 "declare" [] [Whitespace(" ")],
                         ],
                     },
                     access_modifier: missing (optional),

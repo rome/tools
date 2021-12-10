@@ -11,9 +11,7 @@ JsModule {
             r_paren_token: R_PAREN@8..9 ")" [] [],
             consequent: JsUnknownStatement {
                 items: [
-                    Token(
-                        R_CURLY@9..10 "}" [] [],
-                    ),
+                    R_CURLY@9..10 "}" [] [],
                 ],
             },
             else_clause: missing (optional),

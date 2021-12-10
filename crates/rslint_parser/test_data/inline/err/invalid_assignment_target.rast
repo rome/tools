@@ -6,12 +6,8 @@ JsModule {
             expression: JsAssignmentExpression {
                 left: JsUnknownAssignment {
                     items: [
-                        Token(
-                            PLUS2@0..2 "++" [] [],
-                        ),
-                        Token(
-                            IDENT@2..4 "a" [] [Whitespace(" ")],
-                        ),
+                        PLUS2@0..2 "++" [] [],
+                        IDENT@2..4 "a" [] [Whitespace(" ")],
                     ],
                 },
                 operator_token: EQ@4..6 "=" [] [Whitespace(" ")],
@@ -29,14 +25,10 @@ JsModule {
                     l_paren_token: L_PAREN@8..10 "(" [Whitespace("\n")] [],
                     assignment: JsUnknownAssignment {
                         items: [
-                            Token(
-                                PLUS2@10..12 "++" [] [],
-                            ),
-                            Node(
-                                1: JS_IDENTIFIER_ASSIGNMENT@12..13
-                                  0: IDENT@12..13 "a" [] []
-                                ,
-                            ),
+                            PLUS2@10..12 "++" [] [],
+                            JsIdentifierAssignment {
+                                name_token: IDENT@12..13 "a" [] [],
+                            },
                         ],
                     },
                     r_paren_token: R_PAREN@13..15 ")" [] [Whitespace(" ")],
@@ -72,20 +64,15 @@ JsModule {
             expression: JsAssignmentExpression {
                 left: JsUnknownAssignment {
                     items: [
-                        Node(
-                            0: JS_IDENTIFIER_EXPRESSION@27..29
-                              0: JS_REFERENCE_IDENTIFIER@27..29
-                                0: IDENT@27..29 "a" [Whitespace("\n")] []
-                            ,
-                        ),
-                        Token(
-                            QUESTIONDOT@29..31 "?." [] [],
-                        ),
-                        Node(
-                            2: JS_NAME@31..33
-                              0: IDENT@31..33 "b" [] [Whitespace(" ")]
-                            ,
-                        ),
+                        JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@27..29 "a" [Whitespace("\n")] [],
+                            },
+                        },
+                        QUESTIONDOT@29..31 "?." [] [],
+                        JsName {
+                            value_token: IDENT@31..33 "b" [] [Whitespace(" ")],
+                        },
                     ],
                 },
                 operator_token: EQ@33..35 "=" [] [Whitespace(" ")],
@@ -101,26 +88,17 @@ JsModule {
             expression: JsAssignmentExpression {
                 left: JsUnknownAssignment {
                     items: [
-                        Node(
-                            0: JS_IDENTIFIER_EXPRESSION@37..39
-                              0: JS_REFERENCE_IDENTIFIER@37..39
-                                0: IDENT@37..39 "a" [Whitespace("\n")] []
-                            ,
-                        ),
-                        Token(
-                            QUESTIONDOT@39..41 "?." [] [],
-                        ),
-                        Token(
-                            L_BRACK@41..42 "[" [] [],
-                        ),
-                        Node(
-                            3: JS_STRING_LITERAL_EXPRESSION@42..45
-                              0: JS_STRING_LITERAL@42..45 "\"b\"" [] []
-                            ,
-                        ),
-                        Token(
-                            R_BRACK@45..47 "]" [] [Whitespace(" ")],
-                        ),
+                        JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@37..39 "a" [Whitespace("\n")] [],
+                            },
+                        },
+                        QUESTIONDOT@39..41 "?." [] [],
+                        L_BRACK@41..42 "[" [] [],
+                        JsStringLiteralExpression {
+                            value_token: JS_STRING_LITERAL@42..45 "\"b\"" [] [],
+                        },
+                        R_BRACK@45..47 "]" [] [Whitespace(" ")],
                     ],
                 },
                 operator_token: EQ@47..49 "=" [] [Whitespace(" ")],
@@ -138,15 +116,12 @@ JsModule {
                     l_paren_token: L_PAREN@51..53 "(" [Whitespace("\n")] [],
                     assignment: JsUnknownAssignment {
                         items: [
-                            Node(
-                                0: JS_IDENTIFIER_EXPRESSION@53..55
-                                  0: JS_REFERENCE_IDENTIFIER@53..55
-                                    0: IDENT@53..55 "a" [] [Whitespace(" ")]
-                                ,
-                            ),
-                            Token(
-                                PLUS@55..56 "+" [] [],
-                            ),
+                            JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@53..55 "a" [] [Whitespace(" ")],
+                                },
+                            },
+                            PLUS@55..56 "+" [] [],
                         ],
                     },
                     r_paren_token: R_PAREN@56..58 ")" [] [Whitespace(" ")],

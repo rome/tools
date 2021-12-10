@@ -14,9 +14,7 @@ JsModule {
                             eq_token: EQ@6..7 "=" [] [],
                             expression: JsUnknownExpression {
                                 items: [
-                                    Token(
-                                        SEMICOLON@7..8 ";" [] [],
-                                    ),
+                                    SEMICOLON@7..8 ";" [] [],
                                 ],
                             },
                         },

@@ -4,28 +4,19 @@ JsModule {
     items: [
         JsUnknownStatement {
             items: [
-                Token(
-                    RETURN_KW@0..6 "return" [] [],
-                ),
-                Token(
-                    SEMICOLON@6..7 ";" [] [],
-                ),
+                RETURN_KW@0..6 "return" [] [],
+                SEMICOLON@6..7 ";" [] [],
             ],
         },
         JsUnknownStatement {
             items: [
-                Token(
-                    RETURN_KW@7..15 "return" [Whitespace("\n")] [Whitespace(" ")],
-                ),
-                Node(
-                    1: JS_IDENTIFIER_EXPRESSION@15..18
-                      0: JS_REFERENCE_IDENTIFIER@15..18
-                        0: IDENT@15..18 "foo" [] []
-                    ,
-                ),
-                Token(
-                    SEMICOLON@18..19 ";" [] [],
-                ),
+                RETURN_KW@7..15 "return" [Whitespace("\n")] [Whitespace(" ")],
+                JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@15..18 "foo" [] [],
+                    },
+                },
+                SEMICOLON@18..19 ";" [] [],
             ],
         },
     ],

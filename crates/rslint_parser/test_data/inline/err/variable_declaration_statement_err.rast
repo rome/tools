@@ -20,9 +20,7 @@ JsModule {
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsUnknownBinding {
                                         items: [
-                                            Token(
-                                                IDENT@9..11 "a" [] [Whitespace(" ")],
-                                            ),
+                                            IDENT@9..11 "a" [] [Whitespace(" ")],
                                         ],
                                     },
                                     init: missing (optional),
@@ -76,9 +74,7 @@ JsModule {
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsUnknownBinding {
                                         items: [
-                                            Token(
-                                                IDENT@40..42 "a" [] [Whitespace(" ")],
-                                            ),
+                                            IDENT@40..42 "a" [] [Whitespace(" ")],
                                         ],
                                     },
                                     init: missing (optional),

@@ -38,18 +38,10 @@ JsModule {
                     consequent: [
                         JsUnknownStatement {
                             items: [
-                                Token(
-                                    VAR_KW@33..37 "var" [] [Whitespace(" ")],
-                                ),
-                                Token(
-                                    IDENT@37..39 "i" [] [Whitespace(" ")],
-                                ),
-                                Token(
-                                    EQ@39..41 "=" [] [Whitespace(" ")],
-                                ),
-                                Token(
-                                    JS_NUMBER_LITERAL@41..43 "0" [] [Whitespace(" ")],
-                                ),
+                                VAR_KW@33..37 "var" [] [Whitespace(" ")],
+                                IDENT@37..39 "i" [] [Whitespace(" ")],
+                                EQ@39..41 "=" [] [Whitespace(" ")],
+                                JS_NUMBER_LITERAL@41..43 "0" [] [Whitespace(" ")],
                             ],
                         },
                     ],
@@ -71,21 +63,11 @@ JsModule {
                     consequent: [
                         JsUnknownStatement {
                             items: [
-                                Token(
-                                    VAR_KW@54..58 "var" [] [Whitespace(" ")],
-                                ),
-                                Token(
-                                    IDENT@58..60 "i" [] [Whitespace(" ")],
-                                ),
-                                Token(
-                                    EQ@60..62 "=" [] [Whitespace(" ")],
-                                ),
-                                Token(
-                                    JS_NUMBER_LITERAL@62..63 "0" [] [],
-                                ),
-                                Token(
-                                    SEMICOLON@63..65 ";" [] [Whitespace(" ")],
-                                ),
+                                VAR_KW@54..58 "var" [] [Whitespace(" ")],
+                                IDENT@58..60 "i" [] [Whitespace(" ")],
+                                EQ@60..62 "=" [] [Whitespace(" ")],
+                                JS_NUMBER_LITERAL@62..63 "0" [] [],
+                                SEMICOLON@63..65 ";" [] [Whitespace(" ")],
                             ],
                         },
                     ],

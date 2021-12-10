@@ -134,11 +134,9 @@ JsModule {
         JsExpressionStatement {
             expression: JsUnknownExpression {
                 items: [
-                    Node(
-                        0: JS_REFERENCE_IDENTIFIER@118..125
-                          0: IDENT@118..125 "yield" [Whitespace("\n")] [Whitespace(" ")]
-                        ,
-                    ),
+                    JsReferenceIdentifier {
+                        value_token: IDENT@118..125 "yield" [Whitespace("\n")] [Whitespace(" ")],
+                    },
                 ],
             },
             semicolon_token: missing (optional),
@@ -153,36 +151,27 @@ JsModule {
         },
         JsUnknownStatement {
             items: [
-                Token(
-                    FUNCTION_KW@129..139 "function" [Whitespace("\n")] [Whitespace(" ")],
-                ),
-                Node(
-                    1: JS_IDENTIFIER_BINDING@139..143
-                      0: IDENT@139..143 "test" [] []
-                    ,
-                ),
-                Node(
-                    3: JS_PARAMETER_LIST@143..145
-                      0: L_PAREN@143..144 "(" [] []
-                      1: LIST@144..144
-                      2: R_PAREN@144..145 ")" [] []
-                    ,
-                ),
-                Node(
-                    4: TS_TYPE_ANNOTATION@145..154
-                      0: COLON@145..147 ":" [] [Whitespace(" ")]
-                      1: TS_NUMBER@147..154
-                        0: IDENT@147..154 "number" [] [Whitespace(" ")]
-                    ,
-                ),
-                Node(
-                    5: JS_FUNCTION_BODY@154..156
-                      0: L_CURLY@154..155 "{" [] []
-                      1: LIST@155..155
-                      2: LIST@155..155
-                      3: R_CURLY@155..156 "}" [] []
-                    ,
-                ),
+                FUNCTION_KW@129..139 "function" [Whitespace("\n")] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@139..143 "test" [] [],
+                },
+                JsParameterList {
+                    l_paren_token: L_PAREN@143..144 "(" [] [],
+                    parameters: [],
+                    r_paren_token: R_PAREN@144..145 ")" [] [],
+                },
+                TsTypeAnnotation {
+                    colon_token: COLON@145..147 ":" [] [Whitespace(" ")],
+                    ty: TsNumber {
+                        ident: missing (required),
+                    },
+                },
+                JsFunctionBody {
+                    l_curly_token: L_CURLY@154..155 "{" [] [],
+                    directives: [],
+                    statements: [],
+                    r_curly_token: R_CURLY@155..156 "}" [] [],
+                },
             ],
         },
         JsFunctionDeclaration {
@@ -198,9 +187,7 @@ JsModule {
                 parameters: [
                     JsUnknownBinding {
                         items: [
-                            Token(
-                                IDENT@170..175 "await" [] [],
-                            ),
+                            IDENT@170..175 "await" [] [],
                         ],
                     },
                 ],
@@ -227,9 +214,7 @@ JsModule {
                 parameters: [
                     JsUnknownBinding {
                         items: [
-                            Token(
-                                IDENT@193..198 "yield" [] [],
-                            ),
+                            IDENT@193..198 "yield" [] [],
                         ],
                     },
                 ],

@@ -15,9 +15,7 @@ JsModule {
                 parameters: [
                     JsUnknownBinding {
                         items: [
-                            Token(
-                                TRUE_KW@13..17 "true" [] [],
-                            ),
+                            TRUE_KW@13..17 "true" [] [],
                         ],
                     },
                 ],
