@@ -70,14 +70,16 @@ JsModule {
                                 target: JsUnknownAssignment {
                                     items: [
                                         L_CURLY@49..50 "{" [] [],
-                                        [
-                                            JsObjectAssignmentPatternShorthandProperty {
-                                                identifier: JsIdentifierAssignment {
-                                                    name_token: IDENT@50..51 "a" [] [],
+                                        List {
+                                            items: [
+                                                JsObjectAssignmentPatternShorthandProperty {
+                                                    identifier: JsIdentifierAssignment {
+                                                        name_token: IDENT@50..51 "a" [] [],
+                                                    },
+                                                    init: missing (optional),
                                                 },
-                                                init: missing (optional),
-                                            },
-                                        ],
+                                            ],
+                                        },
                                         R_CURLY@51..53 "}" [] [Whitespace(" ")],
                                     ],
                                 },

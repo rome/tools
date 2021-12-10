@@ -64,6 +64,13 @@ impl JsUnknownNamedImportSpecifier {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct List {
+	pub(crate) syntax: SyntaxNode,
+}
+impl List {
+	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct Ident {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -3034,6 +3041,7 @@ pub enum AnyNode {
 	JsUnknownModifier(JsUnknownModifier),
 	JsUnknownImportAssertionEntry(JsUnknownImportAssertionEntry),
 	JsUnknownNamedImportSpecifier(JsUnknownNamedImportSpecifier),
+	List(List),
 	Ident(Ident),
 	JsScript(JsScript),
 	JsModule(JsModule),
@@ -3378,6 +3386,24 @@ impl AstNode for JsUnknownNamedImportSpecifier {
 impl std::fmt::Debug for JsUnknownNamedImportSpecifier {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownNamedImportSpecifier")
+			.field("items", &support::DebugSyntaxElementChildren(self.items()))
+			.finish()
+	}
+}
+impl AstNode for List {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == LIST }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for List {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("List")
 			.field("items", &support::DebugSyntaxElementChildren(self.items()))
 			.finish()
 	}
@@ -11368,6 +11394,9 @@ impl From<JsUnknownNamedImportSpecifier> for AnyNode {
 		AnyNode::JsUnknownNamedImportSpecifier(node)
 	}
 }
+impl From<List> for AnyNode {
+	fn from(node: List) -> AnyNode { AnyNode::List(node) }
+}
 impl From<Ident> for AnyNode {
 	fn from(node: Ident) -> AnyNode { AnyNode::Ident(node) }
 }
@@ -12025,7 +12054,7 @@ impl AstNode for AnyNode {
 				| JS_UNKNOWN_MODIFIER
 				| JS_UNKNOWN_IMPORT_ASSERTION_ENTRY
 				| JS_UNKNOWN_NAMED_IMPORT_SPECIFIER
-				| IDENT | JS_SCRIPT
+				| LIST | IDENT | JS_SCRIPT
 				| JS_MODULE | JS_DIRECTIVE
 				| JS_BLOCK_STATEMENT
 				| JS_EMPTY_STATEMENT
@@ -12206,6 +12235,7 @@ impl AstNode for AnyNode {
 			JS_UNKNOWN_NAMED_IMPORT_SPECIFIER => {
 				AnyNode::JsUnknownNamedImportSpecifier(JsUnknownNamedImportSpecifier { syntax })
 			}
+			LIST => AnyNode::List(List { syntax }),
 			IDENT => AnyNode::Ident(Ident { syntax }),
 			JS_SCRIPT => AnyNode::JsScript(JsScript { syntax }),
 			JS_MODULE => AnyNode::JsModule(JsModule { syntax }),
@@ -12561,6 +12591,7 @@ impl AstNode for AnyNode {
 			AnyNode::JsUnknownModifier(it) => &it.syntax,
 			AnyNode::JsUnknownImportAssertionEntry(it) => &it.syntax,
 			AnyNode::JsUnknownNamedImportSpecifier(it) => &it.syntax,
+			AnyNode::List(it) => &it.syntax,
 			AnyNode::Ident(it) => &it.syntax,
 			AnyNode::JsScript(it) => &it.syntax,
 			AnyNode::JsModule(it) => &it.syntax,
@@ -12778,6 +12809,7 @@ impl std::fmt::Debug for AnyNode {
 			AnyNode::JsUnknownModifier(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsUnknownImportAssertionEntry(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsUnknownNamedImportSpecifier(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::List(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::Ident(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsScript(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsModule(it) => std::fmt::Debug::fmt(it, f),
@@ -13220,6 +13252,11 @@ impl std::fmt::Display for JsUnknownImportAssertionEntry {
 	}
 }
 impl std::fmt::Display for JsUnknownNamedImportSpecifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for List {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

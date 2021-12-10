@@ -47,6 +47,7 @@ JsUnknownAssignment = SyntaxElement*
 JsUnknownModifier = SyntaxElement*
 JsUnknownImportAssertionEntry = SyntaxElement*
 JsUnknownNamedImportSpecifier = SyntaxElement*
+List = SyntaxElement*
 
 Ident = 'ident'
 

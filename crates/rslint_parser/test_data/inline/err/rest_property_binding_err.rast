@@ -77,14 +77,16 @@ JsModule {
                                     binding: JsUnknownBinding {
                                         items: [
                                             L_CURLY@56..57 "{" [] [],
-                                            [
-                                                JsObjectBindingPatternShorthandProperty {
-                                                    identifier: JsIdentifierBinding {
-                                                        name_token: IDENT@57..58 "a" [] [],
+                                            List {
+                                                items: [
+                                                    JsObjectBindingPatternShorthandProperty {
+                                                        identifier: JsIdentifierBinding {
+                                                            name_token: IDENT@57..58 "a" [] [],
+                                                        },
+                                                        init: missing (optional),
                                                     },
-                                                    init: missing (optional),
-                                                },
-                                            ],
+                                                ],
+                                            },
                                             R_CURLY@58..60 "}" [] [Whitespace(" ")],
                                         ],
                                     },

@@ -523,12 +523,7 @@ mod support {
 	impl Debug for DebugSyntaxElement {
 		fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 			match &self.0 {
-				SyntaxElement::Node(node) => match node.kind() {
-					SyntaxKind::LIST => {
-						Debug::fmt(&DebugSyntaxElementChildren(node.children_with_tokens()), f)
-					}
-					_ => Debug::fmt(&node.to::<AnyNode>(), f),
-				},
+				SyntaxElement::Node(node) => Debug::fmt(&node.to::<AnyNode>(), f),
 				SyntaxElement::Token(token) => Debug::fmt(token, f),
 			}
 		}
