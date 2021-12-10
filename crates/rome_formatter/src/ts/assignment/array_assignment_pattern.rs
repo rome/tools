@@ -1,10 +1,10 @@
 use crate::{
 	format_elements, group_elements, join_elements, soft_indent, soft_line_break_or_space,
-	space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+	FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
 	JsAnyArrayAssignmentPatternElement, JsArrayAssignmentPattern,
-	JsArrayAssignmentPatternRestElement, JsAssignmentWithDefault,
+	JsArrayAssignmentPatternRestElement,
 };
 
 impl ToFormatElement for JsArrayAssignmentPattern {
@@ -35,18 +35,6 @@ impl ToFormatElement for JsAnyArrayAssignmentPatternElement {
 				todo!()
 			}
 		}
-	}
-}
-
-impl ToFormatElement for JsAssignmentWithDefault {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		Ok(format_elements![
-			formatter.format_node(self.pattern()?)?,
-			space_token(),
-			formatter.format_token(&self.eq_token()?)?,
-			space_token(),
-			formatter.format_node(self.default()?)?,
-		])
 	}
 }
 
