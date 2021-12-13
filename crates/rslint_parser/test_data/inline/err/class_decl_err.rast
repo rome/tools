@@ -120,7 +120,7 @@ JsModule {
         0: EXTENDS_KW@57..65 "extends" [] [Whitespace(" ")]
         1: JS_OBJECT_EXPRESSION@65..67
           0: L_CURLY@65..66 "{" [] []
-          1: LIST@66..66
+          1: (empty)
           2: R_CURLY@66..67 "}" [] []
       3: (empty)
       4: LIST@67..67

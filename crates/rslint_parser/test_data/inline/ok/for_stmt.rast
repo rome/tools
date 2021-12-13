@@ -222,7 +222,7 @@ JsModule {
       3: OF_KW@54..57 "of" [] [Whitespace(" ")]
       4: JS_OBJECT_EXPRESSION@57..59
         0: L_CURLY@57..58 "{" [] []
-        1: LIST@58..58
+        1: (empty)
         2: R_CURLY@58..59 "}" [] []
       5: R_PAREN@59..61 ")" [] [Whitespace(" ")]
       6: JS_BLOCK_STATEMENT@61..63
@@ -237,7 +237,7 @@ JsModule {
       3: IN_KW@73..76 "in" [] [Whitespace(" ")]
       4: JS_OBJECT_EXPRESSION@76..78
         0: L_CURLY@76..77 "{" [] []
-        1: LIST@77..77
+        1: (empty)
         2: R_CURLY@77..78 "}" [] []
       5: R_PAREN@78..80 ")" [] [Whitespace(" ")]
       6: JS_BLOCK_STATEMENT@80..82
