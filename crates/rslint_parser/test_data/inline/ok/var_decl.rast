@@ -337,7 +337,7 @@ JsModule {
               0: EQ@86..88 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@88..90
                 0: L_CURLY@88..89 "{" [] []
-                1: (empty)
+                1: LIST@89..89
                 2: R_CURLY@89..90 "}" [] []
       1: SEMICOLON@90..91 ";" [] []
     5: JS_VARIABLE_DECLARATION_STATEMENT@91..154

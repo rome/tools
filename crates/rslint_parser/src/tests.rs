@@ -13,10 +13,7 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
 	let src = r#"
-switch (foo) {
- case bar:
- default:
-}
+let [a, b] = [1, 2];
     "#;
 
 	dbg!(parse_module(src, 0).syntax());

@@ -1,7 +1,7 @@
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
-use crate::parser::{ParsedSyntax, RecoveryResult};
+use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
 use crate::syntax::expr::{expr, expr_or_assignment};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
@@ -24,6 +24,10 @@ impl ParseSeparatedList for ObjectMembersList {
 	type ParsedElement = CompletedMarker;
 
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+		if p.at(T![,]) {
+			p.missing();
+			// continue;
+		}
 		parse_object_member(p)
 	}
 
@@ -61,7 +65,44 @@ pub(super) fn parse_object_expression(p: &mut Parser) -> ParsedSyntax<CompletedM
 	let m = p.start();
 	p.bump(T!['{']);
 
-	ObjectMembersList.parse_list(p);
+	// ObjectMembersList.parse_list(p);
+
+	let props_list = p.start();
+	let mut first = true;
+
+	let mut progress = ParserProgress::default();
+	while !p.at(EOF) && !p.at(T!['}']) {
+		if first {
+			first = false;
+		} else {
+			p.expect_required(T![,]);
+
+			if p.at(T!['}']) {
+				break;
+			}
+		}
+
+		progress.assert_progressing(p);
+
+		// missing member
+		if p.at(T![,]) {
+			p.missing();
+			continue;
+		}
+
+		let recovered_member = parse_object_member(p).or_recover(
+			p,
+			&ParseRecovery::new(JS_UNKNOWN_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
+				.enable_recovery_on_line_break(),
+			js_parse_error::expected_object_member,
+		);
+
+		if recovered_member.is_err() {
+			break;
+		}
+	}
+
+	props_list.complete(p, LIST);
 
 	p.expect_required(T!['}']);
 	Present(m.complete(p, JS_OBJECT_EXPRESSION))

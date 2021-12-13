@@ -624,10 +624,7 @@ impl ParseSeparatedList for ArgumentsList {
 		if p.at(T![...]) {
 			Present(spread_element(p))
 		} else {
-			match expr_or_assignment(p) {
-				Some(marker) => Present(marker),
-				None => Absent,
-			}
+			expr_or_assignment(p).into()
 		}
 	}
 
@@ -1198,10 +1195,7 @@ impl ParseSeparatedList for ArrayElementsList {
 		if p.at(T![...]) {
 			Present(spread_element(p))
 		} else {
-			match expr_or_assignment(p) {
-				Some(marker) => Present(marker),
-				None => Absent,
-			}
+			expr_or_assignment(p).into()
 		}
 	}
 
