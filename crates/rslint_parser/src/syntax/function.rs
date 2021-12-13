@@ -58,11 +58,13 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 	let in_async = is_at_async_function(p, LineBreak::DoNotCheck);
 	if in_async {
 		p.bump_remap(T![async]);
+	} else {
+		p.missing();
 	}
 
 	p.expect_required(T![function]);
 
-	let in_generator = p.eat(T![*]);
+	let in_generator = p.eat_optional(T![*]);
 	let guard = &mut *p.with_state(ParserState {
 		labels: HashMap::new(),
 		in_function: true,

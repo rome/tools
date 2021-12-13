@@ -75,6 +75,7 @@ JsScript {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@53..54 "" [Whitespace("\n")] [],
 }
 
 0: JS_SCRIPT@0..54

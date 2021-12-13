@@ -20,6 +20,7 @@ JsModule {
             ],
         },
     ],
+    eof_token: EOF@19..20 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..20

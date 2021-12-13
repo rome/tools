@@ -77,6 +77,7 @@ JsModule {
             },
         },
     ],
+    eof_token: EOF@68..69 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..69
@@ -96,35 +97,37 @@ JsModule {
     2: JS_FUNCTION_DECLARATION@13..43
       0: ASYNC_KW@13..20 "async" [Whitespace("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@20..29 "function" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@29..33
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@29..33
         0: IDENT@29..33 "test" [] []
-      3: (empty)
-      4: JS_PARAMETER_LIST@33..41
+      4: (empty)
+      5: JS_PARAMETER_LIST@33..41
         0: L_PAREN@33..34 "(" [] []
         1: LIST@34..39
           0: JS_UNKNOWN_BINDING@34..39
             0: IDENT@34..39 "await" [] []
         2: R_PAREN@39..41 ")" [] [Whitespace(" ")]
-      5: (empty)
-      6: JS_FUNCTION_BODY@41..43
+      6: (empty)
+      7: JS_FUNCTION_BODY@41..43
         0: L_CURLY@41..42 "{" [] []
         1: LIST@42..42
         2: LIST@42..42
         3: R_CURLY@42..43 "}" [] []
     3: JS_FUNCTION_DECLARATION@43..68
-      0: FUNCTION_KW@43..52 "function" [Whitespace("\n")] []
-      1: STAR@52..54 "*" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@54..58
+      0: (empty)
+      1: FUNCTION_KW@43..52 "function" [Whitespace("\n")] []
+      2: STAR@52..54 "*" [] [Whitespace(" ")]
+      3: JS_IDENTIFIER_BINDING@54..58
         0: IDENT@54..58 "test" [] []
-      3: (empty)
-      4: JS_PARAMETER_LIST@58..66
+      4: (empty)
+      5: JS_PARAMETER_LIST@58..66
         0: L_PAREN@58..59 "(" [] []
         1: LIST@59..64
           0: JS_UNKNOWN_BINDING@59..64
             0: IDENT@59..64 "yield" [] []
         2: R_PAREN@64..66 ")" [] [Whitespace(" ")]
-      5: (empty)
-      6: JS_FUNCTION_BODY@66..68
+      6: (empty)
+      7: JS_FUNCTION_BODY@66..68
         0: L_CURLY@66..67 "{" [] []
         1: LIST@67..67
         2: LIST@67..67

@@ -583,7 +583,7 @@ impl ParseNodeList for DirectivesList {
 		p.bump_any();
 
 		// eat semicolon if present, correct termination guaranteed by is_directive
-		p.eat(SyntaxKind::SEMICOLON);
+		p.eat_optional(SyntaxKind::SEMICOLON);
 
 		let completed_marker = directive.complete(p, JS_DIRECTIVE);
 

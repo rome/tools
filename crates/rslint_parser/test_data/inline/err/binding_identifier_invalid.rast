@@ -188,6 +188,7 @@ JsModule {
             semicolon_token: SEMICOLON@119..120 ";" [] [],
         },
     ],
+    eof_token: EOF@120..121 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..121
@@ -223,17 +224,18 @@ JsModule {
           3: R_CURLY@29..30 "}" [] []
       1: (empty)
     1: JS_FUNCTION_DECLARATION@30..68
-      0: FUNCTION_KW@30..40 "function" [Whitespace("\n")] [Whitespace(" ")]
-      1: STAR@40..41 "*" [] []
-      2: JS_IDENTIFIER_BINDING@41..44
+      0: (empty)
+      1: FUNCTION_KW@30..40 "function" [Whitespace("\n")] [Whitespace(" ")]
+      2: STAR@40..41 "*" [] []
+      3: JS_IDENTIFIER_BINDING@41..44
         0: IDENT@41..44 "foo" [] []
-      3: (empty)
-      4: JS_PARAMETER_LIST@44..47
+      4: (empty)
+      5: JS_PARAMETER_LIST@44..47
         0: L_PAREN@44..45 "(" [] []
         1: LIST@45..45
         2: R_PAREN@45..47 ")" [] [Whitespace(" ")]
-      5: (empty)
-      6: JS_FUNCTION_BODY@47..68
+      6: (empty)
+      7: JS_FUNCTION_BODY@47..68
         0: L_CURLY@47..48 "{" [] []
         1: LIST@48..48
         2: LIST@48..66

@@ -258,6 +258,7 @@ JsModule {
             semicolon_token: SEMICOLON@222..223 ";" [] [],
         },
     ],
+    eof_token: EOF@223..224 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..224

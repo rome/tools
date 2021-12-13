@@ -28,6 +28,7 @@ JsModule {
             r_curly_token: R_CURLY@31..33 "}" [Whitespace("\n")] [],
         },
     ],
+    eof_token: EOF@33..34 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..34

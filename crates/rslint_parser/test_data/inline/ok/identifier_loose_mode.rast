@@ -27,6 +27,7 @@ JsScript {
             semicolon_token: SEMICOLON@27..28 ";" [] [],
         },
     ],
+    eof_token: EOF@28..29 "" [Whitespace("\n")] [],
 }
 
 0: JS_SCRIPT@0..29

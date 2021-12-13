@@ -246,6 +246,7 @@ JsModule {
             },
         },
     ],
+    eof_token: EOF@177..178 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..178
@@ -373,15 +374,16 @@ JsModule {
     5: JS_FUNCTION_DECLARATION@127..177
       0: ASYNC_KW@127..134 "async" [Whitespace("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@134..143 "function" [] [Whitespace(" ")]
-      2: JS_IDENTIFIER_BINDING@143..147
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@143..147
         0: IDENT@143..147 "test" [] []
-      3: (empty)
-      4: JS_PARAMETER_LIST@147..150
+      4: (empty)
+      5: JS_PARAMETER_LIST@147..150
         0: L_PAREN@147..148 "(" [] []
         1: LIST@148..148
         2: R_PAREN@148..150 ")" [] [Whitespace(" ")]
-      5: (empty)
-      6: JS_FUNCTION_BODY@150..177
+      6: (empty)
+      7: JS_FUNCTION_BODY@150..177
         0: L_CURLY@150..151 "{" [] []
         1: LIST@151..151
         2: LIST@151..175

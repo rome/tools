@@ -49,6 +49,7 @@ JsScript {
             semicolon_token: SEMICOLON@36..37 ";" [] [],
         },
     ],
+    eof_token: EOF@37..38 "" [Whitespace("\n")] [],
 }
 
 0: JS_SCRIPT@0..38

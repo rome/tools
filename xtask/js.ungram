@@ -58,6 +58,7 @@ JsScript =
 	interpreter: 'js_shebang'?
 	directives: JsDirective*
 	statements: JsAnyStatement*
+	eof: 'EOF'
 
 JsModule =
 	interpreter: 'js_shebang'?

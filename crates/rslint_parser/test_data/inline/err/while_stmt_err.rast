@@ -53,6 +53,7 @@ JsModule {
             },
         },
     ],
+    eof_token: EOF@51..52 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..52

@@ -143,6 +143,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@77..78 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..78

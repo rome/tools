@@ -79,6 +79,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@47..48 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..48
@@ -97,15 +98,17 @@ JsModule {
             3: JS_INITIALIZER_CLAUSE@6..21
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_FUNCTION_EXPRESSION@8..21
-                0: FUNCTION_KW@8..16 "function" [] []
-                1: (empty)
+                0: (empty)
+                1: FUNCTION_KW@8..16 "function" [] []
                 2: (empty)
-                3: JS_PARAMETER_LIST@16..19
+                3: (empty)
+                4: (empty)
+                5: JS_PARAMETER_LIST@16..19
                   0: L_PAREN@16..17 "(" [] []
                   1: LIST@17..17
                   2: R_PAREN@17..19 ")" [] [Whitespace(" ")]
-                4: (empty)
-                5: JS_FUNCTION_BODY@19..21
+                6: (empty)
+                7: JS_FUNCTION_BODY@19..21
                   0: L_CURLY@19..20 "{" [] []
                   1: LIST@20..20
                   2: LIST@20..20
@@ -123,16 +126,18 @@ JsModule {
             3: JS_INITIALIZER_CLAUSE@28..47
               0: EQ@28..30 "=" [] [Whitespace(" ")]
               1: JS_FUNCTION_EXPRESSION@30..47
-                0: FUNCTION_KW@30..39 "function" [] [Whitespace(" ")]
-                1: JS_IDENTIFIER_BINDING@39..42
-                  0: IDENT@39..42 "foo" [] []
+                0: (empty)
+                1: FUNCTION_KW@30..39 "function" [] [Whitespace(" ")]
                 2: (empty)
-                3: JS_PARAMETER_LIST@42..45
+                3: JS_IDENTIFIER_BINDING@39..42
+                  0: IDENT@39..42 "foo" [] []
+                4: (empty)
+                5: JS_PARAMETER_LIST@42..45
                   0: L_PAREN@42..43 "(" [] []
                   1: LIST@43..43
                   2: R_PAREN@43..45 ")" [] [Whitespace(" ")]
-                4: (empty)
-                5: JS_FUNCTION_BODY@45..47
+                6: (empty)
+                7: JS_FUNCTION_BODY@45..47
                   0: L_CURLY@45..46 "{" [] []
                   1: LIST@46..46
                   2: LIST@46..46

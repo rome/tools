@@ -8,6 +8,7 @@ JsModule {
             decl: missing (required),
         },
     ],
+    eof_token: EOF@26..27 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..27

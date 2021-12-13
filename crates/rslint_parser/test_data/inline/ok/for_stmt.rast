@@ -255,6 +255,7 @@ JsModule {
             },
         },
     ],
+    eof_token: EOF@182..183 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..183

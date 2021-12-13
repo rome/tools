@@ -93,6 +93,9 @@ impl JsScript {
 	pub fn statements(&self) -> AstNodeList<JsAnyStatement> {
 		support::node_list(&self.syntax, 1usize)
 	}
+	pub fn eof_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![EOF])
+	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsModule {
@@ -106,6 +109,9 @@ impl JsModule {
 		support::node_list(&self.syntax, 0usize)
 	}
 	pub fn items(&self) -> AstNodeList<JsAnyModuleItem> { support::node_list(&self.syntax, 1usize) }
+	pub fn eof_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![EOF])
+	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsDirective {
@@ -3465,6 +3471,7 @@ impl std::fmt::Debug for JsScript {
 			)
 			.field("directives", &self.directives())
 			.field("statements", &self.statements())
+			.field("eof_token", &support::DebugSyntaxResult(self.eof_token()))
 			.finish()
 	}
 }
@@ -3488,6 +3495,7 @@ impl std::fmt::Debug for JsModule {
 			)
 			.field("directives", &self.directives())
 			.field("items", &self.items())
+			.field("eof_token", &support::DebugSyntaxResult(self.eof_token()))
 			.finish()
 	}
 }

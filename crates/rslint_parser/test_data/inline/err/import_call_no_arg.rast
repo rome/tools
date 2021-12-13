@@ -43,6 +43,7 @@ JsModule {
             semicolon_token: SEMICOLON@23..24 ";" [] [],
         },
     ],
+    eof_token: EOF@24..25 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..25
