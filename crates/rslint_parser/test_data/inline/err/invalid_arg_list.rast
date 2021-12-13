@@ -59,14 +59,16 @@ JsModule {
                             },
                         },
                         missing separator,
-                        JsUnknownExpression {
-                            items: [
-                                VAR_KW@17..20 "var" [] [],
-                            ],
-                        },
                     ],
                     r_paren_token: missing (required),
                 },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: VAR_KW@17..20 "var" [] [],
+                declarators: [],
             },
             semicolon_token: missing (optional),
         },
@@ -97,14 +99,14 @@ JsModule {
               0: SEMICOLON@7..8 ";" [] []
           2: (empty)
       1: (empty)
-    1: JS_EXPRESSION_STATEMENT@8..20
-      0: CALL_EXPR@8..20
+    1: JS_EXPRESSION_STATEMENT@8..17
+      0: CALL_EXPR@8..17
         0: JS_IDENTIFIER_EXPRESSION@8..12
           0: JS_REFERENCE_IDENTIFIER@8..12
             0: IDENT@8..12 "foo" [Whitespace("\n")] []
-        1: ARG_LIST@12..20
+        1: ARG_LIST@12..17
           0: L_PAREN@12..13 "(" [] []
-          1: LIST@13..20
+          1: LIST@13..17
             0: JS_IDENTIFIER_EXPRESSION@13..14
               0: JS_REFERENCE_IDENTIFIER@13..14
                 0: IDENT@13..14 "a" [] []
@@ -113,9 +115,12 @@ JsModule {
               0: JS_REFERENCE_IDENTIFIER@15..17
                 0: IDENT@15..17 "b" [] [Whitespace(" ")]
             3: (empty)
-            4: JS_UNKNOWN_EXPRESSION@17..20
-              0: VAR_KW@17..20 "var" [] []
           2: (empty)
+      1: (empty)
+    2: JS_VARIABLE_DECLARATION_STATEMENT@17..20
+      0: JS_VARIABLE_DECLARATION@17..20
+        0: VAR_KW@17..20 "var" [] []
+        1: LIST@20..20
       1: (empty)
   3: EOF@20..21 "" [Whitespace("\n")] []
 --
@@ -126,11 +131,11 @@ error[SyntaxError]: expected `,` but instead found `;`
   │        ^ unexpected
 
 --
-error[SyntaxError]: expected a default, or a case but instead found 'foo'
+error[SyntaxError]: expected `')'` but instead found `foo`
   ┌─ invalid_arg_list.js:2:1
   │
 2 │ foo(a,b var
-  │ ^^^ Expected a default, or a case here
+  │ ^^^ unexpected
 
 --
 error[SyntaxError]: expected `,` but instead found `var`
@@ -138,13 +143,6 @@ error[SyntaxError]: expected `,` but instead found `var`
   │
 2 │ foo(a,b var
   │         ^^^ unexpected
-
---
-error[SyntaxError]: expected `')'` but instead the file ends
-  ┌─ invalid_arg_list.js:3:1
-  │
-3 │ 
-  │ ^ the file ends here
 
 --
 foo(a,b;

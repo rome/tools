@@ -9,6 +9,7 @@ use super::typescript::*;
 use super::util::*;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
+use crate::parser::RecoveryError::AlreadyRecovered;
 use crate::parser::{ParserProgress, RecoveryResult};
 use crate::syntax::assignment::{
 	expression_to_assignment, expression_to_assignment_pattern, parse_assignment,
@@ -637,11 +638,11 @@ impl ParseSeparatedList for ArgumentsList {
 		p: &mut Parser,
 		parsed_element: ParsedSyntax<Self::ParsedElement>,
 	) -> RecoveryResult {
-		parsed_element.or_recover(
-			p,
-			&ParseRecovery::new(JS_UNKNOWN_EXPRESSION, STARTS_EXPR).enable_recovery_on_line_break(),
-			js_parse_error::expected_case_or_default,
-		)
+		if parsed_element.is_absent() {
+			Err(AlreadyRecovered)
+		} else {
+			Ok(parsed_element.unwrap())
+		}
 	}
 
 	fn separating_element_kind(&mut self) -> SyntaxKind {
@@ -657,7 +658,7 @@ impl ParseSeparatedList for ArgumentsList {
 ///
 /// `"(" (AssignExpr ",")* ")"`
 
-// test_err invalid_arg_LIST
+// test_err invalid_arg_list
 // foo(a,b;
 // foo(a,b var
 pub fn args(p: &mut Parser) -> CompletedMarker {
