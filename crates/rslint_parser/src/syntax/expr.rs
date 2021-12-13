@@ -635,7 +635,7 @@ impl ParseSeparatedList for ArgumentsList {
 
 	fn recover(
 		&mut self,
-		p: &mut Parser,
+		_p: &mut Parser,
 		parsed_element: ParsedSyntax<Self::ParsedElement>,
 	) -> RecoveryResult {
 		if parsed_element.is_absent() {
