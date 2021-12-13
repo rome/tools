@@ -13,8 +13,8 @@ JsModule {
             members: [
                 JsSetterClassMember {
                     access_modifier: missing (optional),
-                    static_token: missing (optional),
                     abstract_token: missing (optional),
+                    static_token: missing (optional),
                     set_token: SET_KW@11..17 "set" [Whitespace("\n ")] [Whitespace(" ")],
                     name: JsLiteralMemberName {
                         value: IDENT@17..20 "bar" [] [],

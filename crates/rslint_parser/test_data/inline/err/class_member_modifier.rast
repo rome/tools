@@ -13,19 +13,14 @@ JsModule {
             members: [
                 JsUnknownMember {
                     items: [
-                        Node(
-                            3: TS_ACCESSIBILITY@10..19
-                              0: ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")]
-                            ,
-                        ),
-                        Node(
-                            4: JS_LITERAL_MEMBER_NAME@19..22
-                              0: IDENT@19..22 "foo" [] []
-                            ,
-                        ),
-                        Token(
-                            SEMICOLON@22..24 ";" [] [Whitespace(" ")],
-                        ),
+                        TsAccessibility {
+                            private_token: missing (required),
+                            readonly_token: missing (required),
+                        },
+                        JsLiteralMemberName {
+                            value: IDENT@19..22 "foo" [] [],
+                        },
+                        SEMICOLON@22..24 ";" [] [Whitespace(" ")],
                     ],
                 },
             ],
@@ -64,13 +59,6 @@ error[SyntaxError]: `abstract` and `readonly` modifiers can only be used in Type
   │
 1 │ class A { abstract foo; }
   │           ^^^^^^^^
-
---
-error[SyntaxError]: expected a semicolon (';'), or a method for a class body but instead found '}'
-  ┌─ class_member_modifier.js:1:25
-  │
-1 │ class A { abstract foo; }
-  │                         ^ Expected a semicolon (';'), or a method for a class body here
 
 --
 class A { abstract foo; }

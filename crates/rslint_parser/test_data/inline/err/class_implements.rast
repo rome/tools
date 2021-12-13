@@ -4,33 +4,26 @@ JsModule {
     items: [
         JsUnknownStatement {
             items: [
-                Token(
-                    CLASS_KW@0..6 "class" [] [Whitespace(" ")],
-                ),
-                Node(
-                    1: JS_IDENTIFIER_BINDING@6..8
-                      0: IDENT@6..8 "B" [] [Whitespace(" ")]
-                    ,
-                ),
-                Node(
-                    3: TS_IMPLEMENTS_CLAUSE@8..21
-                      0: IMPLEMENTS_KW@8..19 "implements" [] [Whitespace(" ")]
-                      1: LIST@19..21
-                        0: TS_EXPR_WITH_TYPE_ARGS@19..21
-                          0: TS_TYPE_NAME@19..21
-                            0: IDENT@19..21 "C" [] [Whitespace(" ")]
-                    ,
-                ),
-                Token(
-                    L_CURLY@21..22 "{" [] [],
-                ),
-                Node(
-                    5: LIST@22..22
-                    ,
-                ),
-                Token(
-                    R_CURLY@22..23 "}" [] [],
-                ),
+                CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
+                },
+                TsImplementsClause {
+                    implements_token: IMPLEMENTS_KW@8..19 "implements" [] [Whitespace(" ")],
+                    interfaces: [
+                        TsExprWithTypeArgs {
+                            item: TsTypeName {
+                                ident: missing (required),
+                            },
+                            type_params: missing (required),
+                        },
+                    ],
+                },
+                L_CURLY@21..22 "{" [] [],
+                List {
+                    items: [],
+                },
+                R_CURLY@22..23 "}" [] [],
             ],
         },
     ],

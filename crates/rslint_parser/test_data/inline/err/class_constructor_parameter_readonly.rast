@@ -20,7 +20,7 @@ JsModule {
                         l_paren_token: L_PAREN@21..22 "(" [] [],
                         parameters: [
                             TsConstructorParam {
-                                readonly_token: missing (optional),
+                                readonly_token: missing (required),
                                 pat: missing (required),
                             },
                         ],

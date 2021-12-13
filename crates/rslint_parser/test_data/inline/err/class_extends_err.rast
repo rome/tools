@@ -4,72 +4,44 @@ JsModule {
     items: [
         JsUnknownStatement {
             items: [
-                Token(
-                    CLASS_KW@0..6 "class" [] [Whitespace(" ")],
-                ),
-                Node(
-                    1: JS_IDENTIFIER_BINDING@6..8
-                      0: IDENT@6..8 "A" [] [Whitespace(" ")]
-                    ,
-                ),
-                Node(
-                    2: JS_EXTENDS_CLAUSE@8..32
-                      0: EXTENDS_KW@8..16 "extends" [] [Whitespace(" ")]
-                      1: JS_IDENTIFIER_EXPRESSION@16..20
-                        0: JS_REFERENCE_IDENTIFIER@16..20
-                          0: IDENT@16..20 "bar" [] [Whitespace(" ")]
-                      2: EXTENDS_KW@20..28 "extends" [] [Whitespace(" ")]
-                      3: TS_EXPR_WITH_TYPE_ARGS@28..32
-                        0: JS_IDENTIFIER_EXPRESSION@28..32
-                          0: JS_REFERENCE_IDENTIFIER@28..32
-                            0: IDENT@28..32 "foo" [] [Whitespace(" ")]
-                    ,
-                ),
-                Token(
-                    L_CURLY@32..33 "{" [] [],
-                ),
-                Node(
-                    5: LIST@33..33
-                    ,
-                ),
-                Token(
-                    R_CURLY@33..34 "}" [] [],
-                ),
+                CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
+                },
+                JsExtendsClause {
+                    extends_token: EXTENDS_KW@8..16 "extends" [] [Whitespace(" ")],
+                    super_class: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@16..20 "bar" [] [Whitespace(" ")],
+                        },
+                    },
+                },
+                L_CURLY@32..33 "{" [] [],
+                List {
+                    items: [],
+                },
+                R_CURLY@33..34 "}" [] [],
             ],
         },
         JsUnknownStatement {
             items: [
-                Token(
-                    CLASS_KW@34..41 "class" [Whitespace("\n")] [Whitespace(" ")],
-                ),
-                Node(
-                    1: JS_IDENTIFIER_BINDING@41..43
-                      0: IDENT@41..43 "A" [] [Whitespace(" ")]
-                    ,
-                ),
-                Node(
-                    2: JS_EXTENDS_CLAUSE@43..60
-                      0: EXTENDS_KW@43..51 "extends" [] [Whitespace(" ")]
-                      1: JS_IDENTIFIER_EXPRESSION@51..54
-                        0: JS_REFERENCE_IDENTIFIER@51..54
-                          0: IDENT@51..54 "bar" [] []
-                      2: COMMA@54..56 "," [] [Whitespace(" ")]
-                      3: TS_EXPR_WITH_TYPE_ARGS@56..60
-                        0: JS_IDENTIFIER_EXPRESSION@56..60
-                          0: JS_REFERENCE_IDENTIFIER@56..60
-                            0: IDENT@56..60 "foo" [] [Whitespace(" ")]
-                    ,
-                ),
-                Token(
-                    L_CURLY@60..61 "{" [] [],
-                ),
-                Node(
-                    5: LIST@61..61
-                    ,
-                ),
-                Token(
-                    R_CURLY@61..62 "}" [] [],
-                ),
+                CLASS_KW@34..41 "class" [Whitespace("\n")] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@41..43 "A" [] [Whitespace(" ")],
+                },
+                JsExtendsClause {
+                    extends_token: EXTENDS_KW@43..51 "extends" [] [Whitespace(" ")],
+                    super_class: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@51..54 "bar" [] [],
+                        },
+                    },
+                },
+                L_CURLY@60..61 "{" [] [],
+                List {
+                    items: [],
+                },
+                R_CURLY@61..62 "}" [] [],
             ],
         },
     ],

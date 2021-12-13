@@ -20,7 +20,7 @@ JsModule {
                         l_paren_token: L_PAREN@21..22 "(" [] [],
                         parameters: [
                             TsConstructorParam {
-                                readonly_token: missing (optional),
+                                readonly_token: missing (required),
                                 pat: missing (required),
                             },
                         ],
@@ -76,13 +76,6 @@ JsModule {
   3: EOF@39..40 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: accessibility modifiers can only be used in TypeScript files
-  ┌─ class_constructor_parameter.js:1:23
-  │
-1 │ class B { constructor(protected b) {} }
-  │                       ^^^^^^^^^
-
---
-error[SyntaxError]: accessibility modifiers for a parameter inside a constructor can only be used in TypeScript files
   ┌─ class_constructor_parameter.js:1:23
   │
 1 │ class B { constructor(protected b) {} }

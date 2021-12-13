@@ -13,8 +13,8 @@ use crate::syntax::typescript::{
 use crate::CompletedNodeOrMissingMarker::NodeMarker;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-	CompletedMarker, ConditionalSyntax, Event, Invalid, Marker, ParseNodeList, ParseRecovery,
-	Parser, ParserState, StrictMode, TokenSet, Valid,
+	CompletedMarker, ConditionalSyntax, Event, Marker, ParseNodeList, ParseRecovery, Parser,
+	ParserState, StrictMode, TokenSet, Valid,
 };
 use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::*;
@@ -245,7 +245,7 @@ impl ParseNodeList for ClassMembersList {
 
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
 		let checkpoint = p.checkpoint();
-		let parsed_member = parse_class_member(p);
+		let to_recover = parse_class_member(p).or_invalid_to_unknown(p, JS_UNKNOWN_MEMBER);
 
 		match parsed_member {
 			Valid(marker) => Present(marker),
@@ -283,15 +283,13 @@ impl ParseNodeList for ClassMembersList {
 	}
 }
 
-fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
+fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	let mut member_marker = p.start();
 	let mut member_is_valid = true;
-
 	// test class_empty_element
 	// class foo { ;;;;;;;;;; get foo() {};;;;}
 	if p.eat(T![;]) {
-		return Present(member_marker.complete(p, JS_EMPTY_CLASS_MEMBER))
-			.map_to_conditional(member_is_valid);
+		return Present(member_marker.complete(p, JS_EMPTY_CLASS_MEMBER)).into_valid();
 	}
 
 	let has_access_modifier = matches!(p.cur_src(), "public" | "private" | "protected");
@@ -312,12 +310,10 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 		// declare() and declare: foo
 		if is_at_method_class_member(p, offset) {
 			parse_literal_member_name(p).ok().unwrap(); // bump declare as identifier
-			return Present(parse_method_class_member_body(p, member_marker))
-				.map_to_conditional(true);
+			return Present(parse_method_class_member_body(p, member_marker)).into_valid();
 		} else if is_at_property_class_member(p, offset) {
 			parse_literal_member_name(p).ok().unwrap(); // bump declare as identifier
-			return Present(parse_property_class_member_body(p, member_marker))
-				.map_to_conditional(true);
+			return Present(parse_property_class_member_body(p, member_marker)).into_valid();
 		} else {
 			// test_err class_declare_member
 			// class B { declare foo = bar }
@@ -352,7 +348,7 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 			}
 
 			return Present(parse_method_class_member(p, member_marker))
-				.map_to_conditional(member_is_valid);
+				.into_conditional(member_is_valid);
 		} else if is_at_property_class_member(p, offset) {
 			if declare && declare_diagnostic.is_some() {
 				p.bump_remap(T![declare]);
@@ -360,7 +356,7 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 			p.bump_any();
 
 			return Present(parse_property_class_member_body(p, member_marker))
-				.map_to_conditional(member_is_valid);
+				.into_conditional(member_is_valid);
 		}
 	}
 
@@ -386,7 +382,7 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 				.set_declare_err(declare_diagnostic)
 				.consume(p);
 			return Present(parse_method_class_member_body(p, member_marker))
-				.map_to_conditional(member_is_valid);
+				.into_conditional(member_is_valid);
 		} else if is_at_property_class_member(p, offset) {
 			member_is_valid = Modifiers::default()
 				.set_declare(declare)
@@ -401,10 +397,10 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 					member_marker,
 					JS_LITERAL_MEMBER_NAME,
 				))
-				.map_to_conditional(member_is_valid)
+				.into_conditional(member_is_valid)
 			} else {
 				Present(parse_property_class_member_body(p, member_marker))
-					.map_to_conditional(member_is_valid)
+					.into_conditional(member_is_valid)
 			};
 		}
 	}
@@ -463,7 +459,7 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 					p,
 					"class index signatures can only be used in TypeScript files",
 				);
-				return Present(sig).map_to_conditional(member_is_valid);
+				return Present(sig).into_conditional(member_is_valid);
 			}
 			Err(m) => {
 				p.rewind(checkpoint);
@@ -499,7 +495,7 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 		}
 
 		return Present(parse_method_class_member(&mut *guard, member_marker))
-			.map_to_conditional(member_is_valid);
+			.into_conditional(member_is_valid);
 	};
 
 	if p.cur_src() == "async"
@@ -535,7 +531,7 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 		}
 
 		return Present(parse_method_class_member(&mut *guard, member_marker))
-			.map_to_conditional(member_is_valid);
+			.into_conditional(member_is_valid);
 	}
 
 	let member_name = p.cur_src();
@@ -558,7 +554,7 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 		// test_err class_constructor_err
 		// class B { static constructor() {} }
 		return if is_constructor {
-			let mut constructor = parse_constructor_class_member_body(p, member_marker);
+			let constructor = parse_constructor_class_member_body(p, member_marker);
 			if let Present(Valid(constructor)) = constructor {
 				if is_static {
 					let err = p
@@ -566,9 +562,9 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 						.primary(constructor.range(p), "")
 						.secondary(static_token_range, "Remove the `static` word");
 
-					member_is_valid = false;
 					p.error(err);
 				}
+			} else {
 			}
 
 			if has_modifier {
@@ -577,15 +573,13 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 					"",
 				);
 
-				member_is_valid = false;
 				p.error(err);
 			}
 
-			// this will never be absent
-			constructor.unwrap()
+			constructor
 		} else {
 			Present(parse_method_class_member_body(p, member_marker))
-				.map_to_conditional(member_is_valid)
+				.into_conditional(member_is_valid)
 		};
 	}
 
@@ -605,7 +599,7 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 				p.error(err);
 			}
 
-			return Present(property).map_to_conditional(member_is_valid);
+			return Present(property).into_conditional(member_is_valid);
 		}
 
 		if member.kind() == JS_LITERAL_MEMBER_NAME {
@@ -703,11 +697,18 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
 				};
 
-				return Present(completed).map_to_conditional(member_is_valid);
+				return Present(completed).into_conditional(member_is_valid);
 			}
 		}
 	}
-	Invalid(member_marker.complete(p, JS_UNKNOWN_MEMBER).into())
+
+	// if we're arrived here it means that the parser hasn't advanced, so we bump any character
+	// so the parser can advance and recover itself
+
+	// test_err block_stmt_in_class
+	// class S{{}}
+	p.bump_any();
+	Present(member_marker.complete(p, JS_UNKNOWN_MEMBER)).into_invalid()
 }
 
 fn property_declaration_class_member_body(
