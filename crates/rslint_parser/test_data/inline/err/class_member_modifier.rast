@@ -55,8 +55,7 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@19..22
             0: IDENT@19..22 "foo" [] []
           5: (empty)
-          6: (empty)
-          7: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
+          6: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
       6: R_CURLY@24..25 "}" [] []
   3: EOF@25..26 "" [Whitespace("\n")] []
 --

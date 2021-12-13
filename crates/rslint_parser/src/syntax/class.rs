@@ -19,16 +19,11 @@ use crate::{
 use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::{SyntaxKind, T};
+use std::ops::Range;
 
 /// Parses a class expression, e.g. let a = class {}
 pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-	match parse_class(p, ClassKind::Expression) {
-		Present(Valid(marker)) => Present(marker),
-		Present(Invalid(invalid_syntax)) => {
-			Present(invalid_syntax.or_to_unknown(p, JS_UNKNOWN_EXPRESSION))
-		}
-		_ => unreachable!(),
-	}
+	parse_class(p, ClassKind::Expression).or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
 }
 
 // test class_decl
@@ -50,13 +45,7 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<CompletedMa
 /// A class can be invalid if
 /// * It uses an illegal identifier name
 pub(super) fn parse_class_declaration(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-	match parse_class(p, ClassKind::Declaration) {
-		Present(Valid(marker)) => Present(marker),
-		Present(Invalid(invalid_syntax)) => {
-			Present(invalid_syntax.or_to_unknown(p, JS_UNKNOWN_STATEMENT))
-		}
-		_ => unreachable!(),
-	}
+	parse_class(p, ClassKind::Declaration).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
@@ -129,25 +118,16 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSynta
 		}
 	}
 
-	match extends_clause(&mut guard) {
-		Absent => {
-			guard.missing();
-		}
-		Present(Invalid(_)) => {
-			class_is_valid = false;
-		}
-		_ => {}
-	};
+	if extends_clause(&mut guard).or_missing(&mut *guard).is_err() {
+		class_is_valid = false;
+	}
 
-	match implements_clause(&mut guard) {
-		Absent => {
-			guard.missing();
-		}
-		Present(Invalid(_)) => {
-			class_is_valid = false;
-		}
-		_ => {}
-	};
+	if implements_clause(&mut guard)
+		.or_missing(&mut *guard)
+		.is_err()
+	{
+		class_is_valid = false;
+	}
 
 	guard.expect_required(T!['{']);
 	ClassMembersList.parse_list(&mut *guard);
@@ -333,11 +313,11 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 		if is_at_method_class_member(p, offset) {
 			parse_literal_member_name(p).ok().unwrap(); // bump declare as identifier
 			return Present(parse_method_class_member_body(p, member_marker))
-				.map_to_conditional(member_is_valid);
+				.map_to_conditional(true);
 		} else if is_at_property_class_member(p, offset) {
 			parse_literal_member_name(p).ok().unwrap(); // bump declare as identifier
 			return Present(parse_property_class_member_body(p, member_marker))
-				.map_to_conditional(member_is_valid);
+				.map_to_conditional(true);
 		} else {
 			// test_err class_declare_member
 			// class B { declare foo = bar }
@@ -579,16 +559,16 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 		// class B { static constructor() {} }
 		return if is_constructor {
 			let mut constructor = parse_constructor_class_member_body(p, member_marker);
+			if let Present(Valid(constructor)) = constructor {
+				if is_static {
+					let err = p
+						.err_builder("constructors cannot be static")
+						.primary(constructor.range(p), "")
+						.secondary(static_token_range, "Remove the `static` word");
 
-			if is_static {
-				let err = p
-					.err_builder("constructors cannot be static")
-					.primary(constructor.range(p), "")
-					.secondary(static_token_range, "Remove the `static` word");
-
-				member_is_valid = false;
-				constructor.change_kind(p, JS_UNKNOWN_MEMBER);
-				p.error(err);
+					member_is_valid = false;
+					p.error(err);
+				}
 			}
 
 			if has_modifier {
@@ -601,7 +581,8 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 				p.error(err);
 			}
 
-			Present(constructor).map_to_conditional(member_is_valid)
+			// this will never be absent
+			constructor.unwrap()
 		} else {
 			Present(parse_method_class_member_body(p, member_marker))
 				.map_to_conditional(member_is_valid)
@@ -749,26 +730,20 @@ fn property_declaration_class_member_body(
 /// Parses the body of a property class member (anything after the member name)
 fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> CompletedMarker {
 	let parsed_syntax = optional_member_token(p);
-	match parsed_syntax {
-		Absent => p.missing(),
-		Present(Invalid(syntax)) => {
-			syntax.abandon(p);
-		}
-		Present(Valid(marker)) => {
-			if p.at(T![!]) {
-				let m = p.start();
+	if let Some(optional_range) = parsed_syntax {
+		if p.at(T![!]) {
+			let m = p.start();
 
-				let range = p.cur_tok().range;
+			let range = p.cur_tok().range;
 
-				let error = p
-					.err_builder("class properties cannot be both optional and definite")
-					.primary(range, "")
-					.secondary(marker.range(p), "");
+			let error = p
+				.err_builder("class properties cannot be both optional and definite")
+				.primary(range, "")
+				.secondary(optional_range, "");
 
-				p.error(error);
-				p.bump_any(); // Bump ! token
-				m.complete(p, JS_UNKNOWN_EXPRESSION);
-			}
+			p.error(error);
+			p.bump_any(); // Bump ! token
+			m.complete(p, JS_UNKNOWN_EXPRESSION);
 		}
 	}
 
@@ -807,10 +782,11 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Co
 }
 
 /// Eats the ? token for optional member. Emits an error if this isn't typescript
-fn optional_member_token(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+///
+///
+fn optional_member_token(p: &mut Parser) -> Option<Range<usize>> {
 	if p.at(T![?]) {
-		let m = p.start();
-		let mut is_invalid = false;
+		let range = p.cur_tok().range;
 		// test_err optional_member
 		// class B { foo?; }
 		if !p.typescript() {
@@ -818,20 +794,12 @@ fn optional_member_token(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 				.err_builder("`?` modifiers can only be used in TypeScript files")
 				.primary(p.cur_tok().range, "");
 
-			is_invalid = true;
 			p.error(err);
 		}
 		p.bump_any();
-
-		let completed_marker = Present(m.complete(p, QUESTION));
-
-		if is_invalid {
-			completed_marker.into_invalid()
-		} else {
-			completed_marker.into_valid()
-		}
+		Some(range)
 	} else {
-		Absent
+		None
 	}
 }
 
@@ -861,15 +829,8 @@ fn parse_method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
 
 /// Parses the body (everything after the identifier name) of a method class member
 fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
-	let parsed_member = optional_member_token(p);
-	match parsed_member {
-		Present(Invalid(invalid_syntax)) => {
-			invalid_syntax.precede(p).abandon(p);
-		}
-		Absent => p.missing(),
+	optional_member_token(p);
 
-		_ => {}
-	}
 	// .or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
 	// .or_missing(p);
 	ts_parameter_types(p);
@@ -880,13 +841,18 @@ fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker 
 	m.complete(p, JS_METHOD_CLASS_MEMBER)
 }
 
-fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> CompletedMarker {
-	if let Present(Valid(marker)) = optional_member_token(p) {
+fn parse_constructor_class_member_body(
+	p: &mut Parser,
+	member_marker: Marker,
+) -> ParsedSyntax<ConditionalSyntax> {
+	let mut constructor_is_valid = true;
+	if let Some(range) = optional_member_token(p) {
 		let err = p
 			.err_builder("constructors cannot be optional")
-			.primary(marker.range(p), "");
+			.primary(range, "");
 
 		p.error(err);
+		constructor_is_valid = false;
 	}
 
 	if p.at(T![<]) {
@@ -930,7 +896,12 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 
 	// TODO(RDambrosio016): ideally the following errors should just point to the modifiers
-	member_marker.complete(p, JS_CONSTRUCTOR_CLASS_MEMBER)
+	let completed_marker = member_marker.complete(p, JS_CONSTRUCTOR_CLASS_MEMBER);
+	if constructor_is_valid {
+		Present(completed_marker).into_valid()
+	} else {
+		Present(completed_marker).into_invalid()
+	}
 }
 
 fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
