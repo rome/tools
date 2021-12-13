@@ -20,6 +20,7 @@ impl ToFormatElement for JsVariableDeclarationList {
 			space_token(),
 			join_elements(
 				space_token(),
+				// TODO #1726 break multiple declarations across multiple lines if exceeding line width
 				formatter.format_separated(self.declarations())?
 			),
 		])

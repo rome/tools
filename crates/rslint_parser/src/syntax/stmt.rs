@@ -773,8 +773,9 @@ pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax<CompletedM
 	// const a = 5 let b = 5;
 	let start = p.cur_tok().range.start;
 
-	let declaration = parse_variable_declaration_list(p)
-		.or_missing_with_error(p, js_parse_error::expected_variable);
+	let declaration =
+		parse_variable_declaration_list(p, VariableDeclarationContext::VariableStatement)
+			.or_missing_with_error(p, js_parse_error::expected_variable);
 	if let Some(declaration) = declaration {
 		let m = declaration.precede(p);
 		semi(p, start..p.cur_tok().range.start);
@@ -784,16 +785,30 @@ pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax<CompletedM
 	}
 }
 
-fn parse_variable_declaration_list(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_variable_declaration_list(
+	p: &mut Parser,
+	declaration_context: VariableDeclarationContext,
+) -> ParsedSyntax<CompletedMarker> {
 	let m = p.start();
 
-	match parse_variable_declarations(p, false) {
+	match parse_variable_declarations(p, declaration_context) {
 		Absent => {
 			m.abandon(p);
 			Absent
 		}
 		Present(_) => Present(m.complete(p, JS_VARIABLE_DECLARATION_LIST)),
 	}
+}
+
+/// What's the context in which the variable gets declared.
+#[repr(u8)]
+#[derive(Clone, Debug, Copy, Eq, PartialEq)]
+enum VariableDeclarationContext {
+	/// Declaration inside a `for...of` or `for...in` or `for (;;)` loop
+	For,
+
+	/// Declaration as part of a variable statement (`let a`, `const b`, or `var c`).
+	VariableStatement,
 }
 
 /// Parses a list of JS_VARIABLE_DECLARATION_LIST
@@ -803,7 +818,7 @@ fn parse_variable_declaration_list(p: &mut Parser) -> ParsedSyntax<CompletedMark
 ///   there's only one declaration.
 fn parse_variable_declarations(
 	p: &mut Parser,
-	for_in_or_of: bool,
+	declaration_context: VariableDeclarationContext,
 ) -> ParsedSyntax<(Option<CompletedMarker>, Option<Range<usize>>)> {
 	let mut is_const = None;
 	let mut is_let = false;
@@ -827,7 +842,7 @@ fn parse_variable_declarations(
 
 	let mut parse_declarations = ParseVariableDeclarations {
 		const_range: is_const,
-		for_in_or_of,
+		declaration_context,
 		is_let,
 		first: true,
 		remaining_declaration_range: None,
@@ -841,7 +856,7 @@ fn parse_variable_declarations(
 
 struct ParseVariableDeclarations {
 	const_range: Option<Range<usize>>,
-	for_in_or_of: bool,
+	declaration_context: VariableDeclarationContext,
 	is_let: bool,
 	first: bool,
 	// Range of the declarations succeeding the first declaration
@@ -853,18 +868,23 @@ impl ParseSeparatedList for ParseVariableDeclarations {
 	type ParsedElement = CompletedMarker;
 
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
-		parse_variable_declaration(p, &self.const_range, self.for_in_or_of, self.is_let).map(
-			|declaration| {
-				if self.first {
-					self.first = false;
-				} else if let Some(range) = self.remaining_declaration_range.as_mut() {
-					range.end = declaration.range(p).as_range().end;
-				} else {
-					self.remaining_declaration_range = Some(declaration.range(p).as_range());
-				}
-				declaration
-			},
+		parse_variable_declaration(
+			p,
+			&self.const_range,
+			self.is_let,
+			self.first,
+			self.declaration_context,
 		)
+		.map(|declaration| {
+			if self.first {
+				self.first = false;
+			} else if let Some(range) = self.remaining_declaration_range.as_mut() {
+				range.end = declaration.range(p).as_range().end;
+			} else {
+				self.remaining_declaration_range = Some(declaration.range(p).as_range());
+			}
+			declaration
+		})
 	}
 
 	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
@@ -899,11 +919,12 @@ impl ParseSeparatedList for ParseVariableDeclarations {
 }
 
 // A single declarator, either `ident` or `ident = assign_expr`
-pub(crate) fn parse_variable_declaration(
+fn parse_variable_declaration(
 	p: &mut Parser,
 	is_const: &Option<Range<usize>>,
-	for_in_or_of: bool,
 	is_let: bool,
+	is_first: bool,
+	declaration_context: VariableDeclarationContext,
 ) -> ParsedSyntax<CompletedMarker> {
 	p.state.duplicate_binding_parent = if is_const.is_some() {
 		Some("const")
@@ -929,25 +950,34 @@ pub(crate) fn parse_variable_declaration(
 			p.error(err);
 		}
 
-		if let Some(type_annotation) = maybe_ts_type_annotation(p) {
-			if p.typescript() && for_in_or_of {
-				let err = p
-					.err_builder("`for` statement declarators cannot have a type annotation")
-					.primary(type_annotation.start..type_annotation.end, "");
+		let type_annotation = maybe_ts_type_annotation(p);
 
-				p.error(err);
-			}
-		} else {
+		if type_annotation.is_none() {
 			p.missing();
 		}
 
 		let initializer = parse_initializer_clause(p).or_missing(p);
-		if initializer.is_none()
+
+		// Heuristic to determine if we're in a for of or for in loop. This may be off if
+		// the user uses a for of/in with multiple declarations but this isn't allowed anyway.
+		let is_in_for_of_or_in = declaration_context == VariableDeclarationContext::For
+			&& is_first && (p.cur_src() == "of" || p.at(T![in]));
+
+		if is_in_for_of_or_in {
+			if p.typescript() {
+				if let Some(type_annotation) = type_annotation {
+					let err = p
+						.err_builder("`for` statement declarators cannot have a type annotation")
+						.primary(type_annotation.start..type_annotation.end, "");
+
+					p.error(err);
+				}
+			}
+		} else if initializer.is_none()
 			&& matches!(
 				id.kind(),
 				JS_ARRAY_BINDING_PATTERN | JS_OBJECT_BINDING_PATTERN
-			) && !for_in_or_of
-			&& !p.state.in_declare
+			) && !p.state.in_declare
 		{
 			let err = p
 				.err_builder("Object and Array patterns require initializers")
@@ -958,11 +988,7 @@ pub(crate) fn parse_variable_declaration(
 
 			p.error(err);
 		// FIXME: does ts allow const var declarations without initializers in .d.ts files?
-		} else if initializer.is_none()
-			&& is_const.is_some()
-			&& !for_in_or_of
-			&& !p.state.in_declare
-		{
+		} else if initializer.is_none() && is_const.is_some() && !p.state.in_declare {
 			let err = p
 				.err_builder("Const var declarations must have an initialized value")
 				.primary(id.range(p), "this variable needs to be initialized");
@@ -1024,13 +1050,14 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 	if p.at(T![const]) || p.at(T![var]) || (p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)))
 	{
 		let m = p.start();
+
 		let (declarations, additional_declarations) = {
 			let guard = &mut *p.with_state(ParserState {
 				include_in: false,
 				..p.state.clone()
 			});
 
-			parse_variable_declarations(&mut *guard, true).unwrap()
+			parse_variable_declarations(&mut *guard, VariableDeclarationContext::For).unwrap()
 		};
 
 		let is_in = p.at(T![in]);
@@ -1038,6 +1065,8 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 
 		if is_in || is_of {
 			if let Some(declarations_list) = declarations {
+				// remove the intermediate list node created by parse variable declarations that is needed
+				// for a ForInOrOfInitializer
 				declarations_list.undo_completion(p).abandon(p);
 			}
 
@@ -1171,6 +1200,7 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// for (let i, j = 6 of []) {}
 	// for await (let a in []) {}
 	// for await (let i = 0; i < 10; ++i) {}
+	// for (let [a];;) {}
 	if !p.at(T![for]) {
 		return Absent;
 	}
@@ -1201,9 +1231,12 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if let Some(await_range) = await_range {
 		if kind != JS_FOR_OF_STATEMENT {
 			p.error(
-				p.err_builder("await can only be used in conjunction with for of statements")
+				p.err_builder("await can only be used in conjunction with `for...of` statements")
 					.primary(await_range, "Remove the await here")
-					.secondary(completed.range(p), "or convert this to a for of statement"),
+					.secondary(
+						completed.range(p),
+						"or convert this to a `for...of` statement",
+					),
 			);
 			completed.change_kind(p, JS_UNKNOWN_STATEMENT)
 		}

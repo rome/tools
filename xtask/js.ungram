@@ -154,7 +154,7 @@ ForStmt =
 
 JsAnyForInitializer = JsVariableDeclarationList | JsAnyExpression
 
-// TODO Inline when AST facade uses fixed offsets
+// TODO #1724 Inline when AST facade uses fixed offsets
 ForStmtTest = expr:JsAnyExpression
 ForStmtUpdate = expr:JsAnyExpression
 

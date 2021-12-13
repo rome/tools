@@ -257,13 +257,46 @@ JsModule {
                 },
             ],
         },
+        ForStmt {
+            for_token: FOR_KW@177..182 "for" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@182..183 "(" [] [],
+            initializer: JsVariableDeclarationList {
+                kind_token: LET_KW@183..187 "let" [] [Whitespace(" ")],
+                declarations: [
+                    JsVariableDeclaration {
+                        id: JsArrayBindingPattern {
+                            l_brack_token: L_BRACK@187..188 "[" [] [],
+                            elements: [
+                                JsIdentifierBinding {
+                                    name_token: IDENT@188..189 "a" [] [],
+                                },
+                            ],
+                            r_brack_token: R_BRACK@189..190 "]" [] [],
+                        },
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            first_semi_token: SEMICOLON@190..191 ";" [] [],
+            test: missing (optional),
+            second_semi_token: SEMICOLON@191..192 ";" [] [],
+            update: missing (optional),
+            r_paren_token: R_PAREN@192..194 ")" [] [Whitespace(" ")],
+            cons: JsBlockStatement {
+                l_curly_token: L_CURLY@194..195 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@195..196 "}" [] [],
+            },
+        },
     ],
 }
 
-0: JS_MODULE@0..178
+0: JS_MODULE@0..197
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..177
+  2: LIST@0..196
     0: FOR_STMT@0..39
       0: FOR_KW@0..4 "for" [] [Whitespace(" ")]
       1: (empty)
@@ -455,7 +488,32 @@ JsModule {
         0: L_CURLY@175..176 "{" [] []
         1: LIST@176..176
         2: R_CURLY@176..177 "}" [] []
-  3: EOF@177..178 "" [Whitespace("\n")] []
+    6: FOR_STMT@177..196
+      0: FOR_KW@177..182 "for" [Whitespace("\n")] [Whitespace(" ")]
+      1: L_PAREN@182..183 "(" [] []
+      2: JS_VARIABLE_DECLARATION_LIST@183..190
+        0: LET_KW@183..187 "let" [] [Whitespace(" ")]
+        1: LIST@187..190
+          0: JS_VARIABLE_DECLARATION@187..190
+            0: JS_ARRAY_BINDING_PATTERN@187..190
+              0: L_BRACK@187..188 "[" [] []
+              1: LIST@188..189
+                0: JS_IDENTIFIER_BINDING@188..189
+                  0: IDENT@188..189 "a" [] []
+              2: R_BRACK@189..190 "]" [] []
+            1: (empty)
+            2: (empty)
+            3: (empty)
+      3: SEMICOLON@190..191 ";" [] []
+      4: (empty)
+      5: SEMICOLON@191..192 ";" [] []
+      6: (empty)
+      7: R_PAREN@192..194 ")" [] [Whitespace(" ")]
+      8: JS_BLOCK_STATEMENT@194..196
+        0: L_CURLY@194..195 "{" [] []
+        1: LIST@195..195
+        2: R_CURLY@195..196 "}" [] []
+  3: EOF@196..197 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `'('` but instead found `;`
   ┌─ for_stmt_err.js:1:5
@@ -527,24 +585,31 @@ error[SyntaxError]: Only a single declaration is allowed in a `for...of` stateme
   │             ^^^^^ additional declarations
 
 --
-error[SyntaxError]: await can only be used in conjunction with for of statements
+error[SyntaxError]: await can only be used in conjunction with `for...of` statements
   ┌─ for_stmt_err.js:6:5
   │
 6 │ for await (let a in []) {}
   │ ----^^^^^-----------------
   │ │   │
   │ │   Remove the await here
-  │ or convert this to a for of statement
+  │ or convert this to a `for...of` statement
 
 --
-error[SyntaxError]: await can only be used in conjunction with for of statements
+error[SyntaxError]: await can only be used in conjunction with `for...of` statements
   ┌─ for_stmt_err.js:7:5
   │
 7 │ for await (let i = 0; i < 10; ++i) {}
   │ ----^^^^^----------------------------
   │ │   │
   │ │   Remove the await here
-  │ or convert this to a for of statement
+  │ or convert this to a `for...of` statement
+
+--
+error[SyntaxError]: Object and Array patterns require initializers
+  ┌─ for_stmt_err.js:8:10
+  │
+8 │ for (let [a];;) {}
+  │          ^^^ this pattern is declared, but it is not given an initialized value
 
 --
 for ;; {}
@@ -554,3 +619,4 @@ for (in []) {}
 for (let i, j = 6 of []) {}
 for await (let a in []) {}
 for await (let i = 0; i < 10; ++i) {}
+for (let [a];;) {}
