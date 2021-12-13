@@ -9,7 +9,6 @@ use super::typescript::*;
 use super::util::*;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::RecoveryError::AlreadyRecovered;
 use crate::parser::{ParserProgress, RecoveryResult};
 use crate::syntax::assignment::{
 	expression_to_assignment, expression_to_assignment_pattern, parse_assignment,
@@ -616,44 +615,6 @@ fn is_at_identifier_name(p: &Parser) -> bool {
 	t.is_keyword() || t == T![ident]
 }
 
-struct ArgumentsList;
-
-impl ParseSeparatedList for ArgumentsList {
-	type ParsedElement = CompletedMarker;
-
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
-		if p.at(T![...]) {
-			Present(spread_element(p))
-		} else {
-			expr_or_assignment(p).into()
-		}
-	}
-
-	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
-		p.at(T![')'])
-	}
-
-	fn recover(
-		&mut self,
-		_p: &mut Parser,
-		parsed_element: ParsedSyntax<Self::ParsedElement>,
-	) -> RecoveryResult {
-		if parsed_element.is_absent() {
-			Err(AlreadyRecovered)
-		} else {
-			Ok(parsed_element.unwrap())
-		}
-	}
-
-	fn separating_element_kind(&mut self) -> SyntaxKind {
-		T![,]
-	}
-
-	fn allow_trailing_separating_element(&self) -> bool {
-		true
-	}
-}
-
 /// Arguments to a function.
 ///
 /// `"(" (AssignExpr ",")* ")"`
@@ -664,7 +625,26 @@ impl ParseSeparatedList for ArgumentsList {
 pub fn args(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect_required(T!['(']);
-	ArgumentsList.parse_list(p);
+	let args_list = p.start();
+	let mut progress = ParserProgress::default();
+
+	while !p.at(EOF) && !p.at(T![')']) {
+		progress.assert_progressing(p);
+
+		if p.at(T![...]) {
+			spread_element(p);
+		} else {
+			expr_or_assignment(p);
+		}
+
+		if p.at(T![,]) {
+			p.bump_any();
+		} else {
+			break;
+		}
+	}
+
+	args_list.complete(p, LIST);
 	p.expect_required(T![')']);
 	m.complete(p, ARG_LIST)
 }

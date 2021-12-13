@@ -61,7 +61,7 @@ JsModule {
             0: IDENT@11..14 "foo" [] []
         1: ARG_LIST@14..16
           0: L_PAREN@14..15 "(" [] []
-          1: (empty)
+          1: LIST@15..15
           2: R_PAREN@15..16 ")" [] []
       1: SEMICOLON@16..17 ";" [] []
   3: EOF@17..18 "" [Whitespace("\n")] []
