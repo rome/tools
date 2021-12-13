@@ -252,7 +252,7 @@ JsModule {
                   1: EQ@83..85 "=" [] [Whitespace(" ")]
                   2: JS_ARRAY_EXPRESSION@85..87
                     0: L_BRACK@85..86 "[" [] []
-                    1: LIST@86..86
+                    1: (empty)
                     2: R_BRACK@86..87 "]" [] []
                 1: (empty)
             1: (empty)

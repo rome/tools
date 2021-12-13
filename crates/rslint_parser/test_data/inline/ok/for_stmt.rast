@@ -267,7 +267,7 @@ JsModule {
       3: OF_KW@108..111 "of" [] [Whitespace(" ")]
       4: JS_ARRAY_EXPRESSION@111..113
         0: L_BRACK@111..112 "[" [] []
-        1: LIST@112..112
+        1: (empty)
         2: R_BRACK@112..113 "]" [] []
       5: R_PAREN@113..115 ")" [] [Whitespace(" ")]
       6: JS_BLOCK_STATEMENT@115..117

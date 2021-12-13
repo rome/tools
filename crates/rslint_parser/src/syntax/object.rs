@@ -51,44 +51,6 @@ impl ParseSeparatedList for ObjectMembersList {
 	fn allow_trailing_separating_element(&self) -> bool {
 		true
 	}
-
-	fn parse_list(&mut self, p: &mut Parser) {
-		let elements = p.start();
-		let mut first = true;
-
-		let mut progress = ParserProgress::default();
-		while !p.at(EOF) && !p.at(T!['}']) {
-			if first {
-				first = false;
-			} else {
-				self.expect_separator(p);
-
-				if self.allow_trailing_separating_element() && self.is_at_list_end(p) {
-					break;
-				}
-			}
-			progress.assert_progressing(p);
-
-			// missing member
-			if p.at(self.separating_element_kind()) {
-				p.missing();
-				continue;
-			}
-
-			let parsed_element = self.parse_element(p);
-
-			if self.recover(p, parsed_element).is_err() {
-				break;
-			}
-		}
-
-		if first {
-			elements.abandon(p);
-			p.missing();
-		} else {
-			self.finish_list(p, elements);
-		}
-	}
 }
 
 /// An object literal such as `{ a: b, "b": 5 + 5 }`.

@@ -138,8 +138,6 @@ pub trait ParseSeparatedList {
 		let mut progress = ParserProgress::default();
 		let mut first = true;
 		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
-			progress.assert_progressing(p);
-
 			if first {
 				first = false;
 			} else {
@@ -150,9 +148,15 @@ pub trait ParseSeparatedList {
 				}
 			}
 
+			progress.assert_progressing(p);
+
 			let parsed_element = self.parse_element(p);
 
-			if self.recover(p, parsed_element).is_err() {
+			if parsed_element.is_absent() && p.at(self.separating_element_kind()) {
+				// a missing element
+				p.missing();
+				continue;
+			} else if self.recover(p, parsed_element).is_err() {
 				break;
 			}
 		}

@@ -1193,10 +1193,10 @@ impl ParseSeparatedList for ArrayElementsList {
 	type ParsedElement = CompletedMarker;
 
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
-		if p.at(T![...]) {
-			Present(spread_element(p))
-		} else {
-			expr_or_assignment(p).into()
+		match p.cur() {
+			T![...] => Present(spread_element(p)),
+			T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
+			_ => expr_or_assignment(p).into(),
 		}
 	}
 
@@ -1222,37 +1222,6 @@ impl ParseSeparatedList for ArrayElementsList {
 
 	fn allow_trailing_separating_element(&self) -> bool {
 		true
-	}
-
-	fn parse_list(&mut self, p: &mut Parser) {
-		let elements_list = p.start();
-		let mut progress = ParserProgress::default();
-
-		while !p.at(EOF) {
-			progress.assert_progressing(p);
-
-			while p.at(T![,]) {
-				p.start().complete(p, SyntaxKind::JS_ARRAY_HOLE);
-				p.eat(T![,]);
-			}
-
-			if p.at(T![']']) {
-				break;
-			}
-
-			let parsed_element = self.parse_element(p);
-
-			if self.recover(p, parsed_element).is_err() {
-				break;
-			}
-
-			if self.is_at_list_end(p) {
-				break;
-			}
-
-			self.expect_separator(p);
-		}
-		elements_list.complete(p, LIST);
 	}
 }
 
