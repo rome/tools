@@ -5529,12 +5529,7 @@ impl AstNode for JsArrayHole {
 }
 impl std::fmt::Debug for JsArrayHole {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsArrayHole")
-			.field(
-				"hole_token",
-				&support::DebugOptionalElement(self.hole_token()),
-			)
-			.finish()
+		f.debug_struct("JsArrayHole").finish()
 	}
 }
 impl AstNode for JsReferenceIdentifier {

@@ -64,6 +64,7 @@ JsModule =
 	interpreter: 'js_shebang'?
 	directives: JsDirective*
 	items: JsAnyModuleItem*
+	eof: 'EOF'
 
 
 JsDirective =

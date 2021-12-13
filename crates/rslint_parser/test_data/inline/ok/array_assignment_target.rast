@@ -31,25 +31,17 @@ JsModule {
                 left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@17..19 "[" [Whitespace("\n")] [],
                     elements: [
-                        JsArrayHole {
-                            hole_token: missing (optional),
-                        },
+                        JsArrayHole,
                         COMMA@19..20 "," [] [],
-                        JsArrayHole {
-                            hole_token: missing (optional),
-                        },
+                        JsArrayHole,
                         COMMA@20..21 "," [] [],
-                        JsArrayHole {
-                            hole_token: missing (optional),
-                        },
+                        JsArrayHole,
                         COMMA@21..22 "," [] [],
                         JsIdentifierAssignment {
                             name_token: IDENT@22..23 "b" [] [],
                         },
                         COMMA@23..24 "," [] [],
-                        JsArrayHole {
-                            hole_token: missing (optional),
-                        },
+                        JsArrayHole,
                         COMMA@24..25 "," [] [],
                         JsIdentifierAssignment {
                             name_token: IDENT@25..26 "c" [] [],

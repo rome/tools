@@ -168,6 +168,11 @@ fn handle_rule(
 		Rule::Token(token) => {
 			let name = clean_token_name(grammar, token);
 
+			if name == "''" {
+				// array hole
+				return;
+			}
+
 			let field = Field::Token {
 				name: label.map(String::from).unwrap_or_else(|| name.clone()),
 				kind: TokenKind::Single(name),
