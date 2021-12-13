@@ -643,58 +643,7 @@ pub(crate) fn parse_statements(
 			break;
 		}
 
-		match p.cur() {
-			// test_err import_decl_not_top_level
-			// {
-			//  import foo from "bar";
-			// }
-
-			// make sure we dont try parsing import.meta or import() as declarations
-			T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => {
-				let import = parse_import(p)
-					.into_invalid()
-					.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
-					.unwrap();
-
-				if p.syntax.file_kind == FileKind::Script {
-					let err = p
-						.err_builder("Illegal use of an import declaration outside of a module")
-						.primary(import.range(p), "not allowed inside scripts");
-
-					p.error(err);
-				} else {
-					let err = p
-						.err_builder("Illegal use of an import declaration not at the top level")
-						.primary(import.range(p), "move this declaration to the top level");
-
-					p.error(err);
-				}
-			}
-			// test_err export_decl_not_top_level
-			// {
-			//  export { pain } from "life";
-			// }
-			T![export] => {
-				let mut m = export_decl(p);
-				if !p.state.is_module && !p.typescript() {
-					let err = p
-						.err_builder("Illegal use of an export declaration outside of a module")
-						.primary(m.range(p), "not allowed inside scripts");
-
-					p.error(err);
-				} else {
-					let err = p
-						.err_builder("Illegal use of an import declaration not at the top level")
-						.primary(m.range(p), "move this declaration to the top level");
-
-					p.error(err);
-				}
-				m.change_kind(p, JS_UNKNOWN_STATEMENT);
-			}
-			_ => {
-				parse_statement(p, recovery_set);
-			}
-		};
+		parse_statement(p, recovery_set);
 	}
 
 	list_start.complete(p, LIST);
@@ -1066,6 +1015,7 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 	// for (;...
 	if p.at(T![;]) {
+		p.missing();
 		parse_normal_for_head(p);
 		return FOR_STMT;
 	}
@@ -1148,9 +1098,15 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 					p.error(err);
 					assignment.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
 				}
+			} else {
+				p.missing();
 			}
 
 			return parse_for_of_or_in_head(p);
+		}
+
+		if init_expr.is_none() {
+			p.missing();
 		}
 
 		parse_normal_for_head(p);
@@ -1163,7 +1119,9 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 fn parse_normal_for_head(p: &mut Parser) {
 	p.expect_required(T![;]);
 
-	if !p.at(T![;]) {
+	if p.at(T![;]) {
+		p.missing() // missing test
+	} else {
 		let m = p.start();
 		expr(p);
 		m.complete(p, FOR_STMT_TEST);
@@ -1171,7 +1129,9 @@ fn parse_normal_for_head(p: &mut Parser) {
 
 	p.expect_required(T![;]);
 
-	if !p.at(T![')']) {
+	if p.at(T![')']) {
+		p.missing(); // Missing update
+	} else {
 		let m = p.start();
 		expr(p);
 		m.complete(p, FOR_STMT_UPDATE);
@@ -1184,11 +1144,18 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> SyntaxKind {
 
 	if is_in {
 		p.bump_any();
-		expr(p);
+		if expr(p).is_none() {
+			p.missing();
+		}
+
 		JS_FOR_IN_STATEMENT
 	} else {
 		p.bump_remap(T![of]);
-		expr_or_assignment(p);
+
+		if expr_or_assignment(p).is_none() {
+			p.missing();
+		}
+
 		JS_FOR_OF_STATEMENT
 	}
 }
@@ -1200,11 +1167,14 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> SyntaxKind {
 // for (foo in {}) {}
 // for (;;) {}
 // for (let foo of []) {}
+// for (let i = 5, j = 6; i < j; ++j) {}
 pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// test_err for_stmt_err
 	// for ;; {}
 	// for let i = 5; i < 10; i++ {}
 	// for let i = 5; i < 10; ++i {}
+	// for (in []) {}
+	// for (let i, j = 6 of []) {}
 	if !p.at(T![for]) {
 		return Absent;
 	}

@@ -1180,7 +1180,11 @@ pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
 // FIXME: `<T() => {}` causes infinite recursion if the parser isnt being run with `no_recovery`
 pub fn ts_type_params(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
-	p.expect_no_recover(T![<])?;
+	if p.expect_no_recover(T![<]).is_none() {
+		m.abandon(p);
+		return None;
+	}
+
 	let mut first = true;
 
 	let params_list = p.start();
@@ -1194,13 +1198,16 @@ pub fn ts_type_params(p: &mut Parser) -> Option<CompletedMarker> {
 				p.bump_any();
 				break;
 			}
-			p.expect_no_recover(T![,])?;
+			if p.expect_no_recover(T![,]).is_none() {
+				break;
+			}
 		}
+
 		no_recover!(p, type_param(p));
 	}
 	params_list.complete(p, LIST);
 
-	p.expect_no_recover(T![>])?;
+	p.expect_required(T![>]);
 	Some(m.complete(p, TS_TYPE_PARAMS))
 }
 
