@@ -1011,7 +1011,6 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 }
 
 /// Parses the header of a for statement into the current node and returns whatever it is a for in/of or "regular" for statement
-/// TODO inline into parse_for?
 fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 	// for (;...
 	if p.at(T![;]) {
@@ -1021,12 +1020,6 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 	}
 
 	// `for (let...` | `for (const...` | `for (var...`
-
-	// If we match `let`/`const` or `var`
-	// TODO: What needs to be done here is to parse all variable declarations
-	// and keep track of the parsed declarations.
-	// Then decide on what do to next depending if there's an in/of keyword
-	// In that case, the for statement is invalid and needs to be wrapped in an invalid statement
 
 	if p.at(T![const]) || p.at(T![var]) || (p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)))
 	{
@@ -1168,6 +1161,7 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> SyntaxKind {
 // for (;;) {}
 // for (let foo of []) {}
 // for (let i = 5, j = 6; i < j; ++j) {}
+// for await (let a of []) {}
 pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// test_err for_stmt_err
 	// for ;; {}
@@ -1175,6 +1169,8 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// for let i = 5; i < 10; ++i {}
 	// for (in []) {}
 	// for (let i, j = 6 of []) {}
+	// for await (let a in []) {}
+	// for await (let i = 0; i < 10; ++i) {}
 	if !p.at(T![for]) {
 		return Absent;
 	}
@@ -1209,8 +1205,8 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 					.primary(await_range, "Remove the await here")
 					.secondary(completed.range(p), "or convert this to a for of statement"),
 			);
+			completed.change_kind(p, JS_UNKNOWN_STATEMENT)
 		}
-		completed.change_kind(p, JS_UNKNOWN_STATEMENT)
 	}
 
 	Present(completed)
