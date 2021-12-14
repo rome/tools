@@ -188,7 +188,7 @@ fn extends_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		return Absent;
 	}
 
-	let mut is_invalid = false;
+	let mut is_valid = true;
 	let m = p.start();
 	p.bump_any();
 
@@ -204,7 +204,7 @@ fn extends_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 			.primary(elem.range(p), "");
 
 		p.error(err);
-		is_invalid = true;
+		is_valid = false;
 	}
 
 	// handle `extends foo extends bar` explicitly
@@ -219,11 +219,10 @@ fn extends_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 			.primary(p.marker_vec_range(&elems), "");
 
 		p.error(err);
-		is_invalid = true;
+		is_valid = false;
 	}
 
-	let completed_syntax = Present(m.complete(p, JS_EXTENDS_CLAUSE));
-	completed_syntax.into_conditional(!is_invalid)
+	Present(m.complete(p, JS_EXTENDS_CLAUSE)).into_conditional(is_valid)
 }
 
 struct ClassMembersList;
