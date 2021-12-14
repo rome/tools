@@ -29,7 +29,11 @@ pub(crate) trait ParseWithDefaultPattern {
 			let with_default =
 				pattern.precede_or_missing_with_error(p, Self::expected_pattern_error);
 			p.bump_any(); // eat the = token
-			expr_or_assignment(p);
+
+			if expr_or_assignment(p).is_none() {
+				p.missing();
+			}
+
 			Present(with_default.complete(p, Self::pattern_with_default_kind()))
 		} else {
 			pattern
@@ -94,7 +98,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 		}
 
 		elements.complete(p, LIST);
-		p.expect(T![']']);
+		p.expect_required(T![']']);
 
 		Present(m.complete(p, Self::array_pattern_kind()))
 	}

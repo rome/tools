@@ -74,7 +74,6 @@ JsModule {
                                 colon_token: COLON@28..30 ":" [] [Whitespace(" ")],
                                 pattern: JsStaticMemberAssignment {
                                     object: CallExpr {
-                                        type_args: missing (optional),
                                         callee: JsStaticMemberExpression {
                                             object: JsIdentifierExpression {
                                                 name: JsReferenceIdentifier {
@@ -86,6 +85,7 @@ JsModule {
                                                 value_token: IDENT@32..36 "test" [] [],
                                             },
                                         },
+                                        type_args: missing (optional),
                                         arguments: ArgList {
                                             l_paren_token: L_PAREN@36..37 "(" [] [],
                                             args: [],
@@ -261,6 +261,7 @@ JsModule {
             semicolon_token: SEMICOLON@139..140 ";" [] [],
         },
     ],
+    eof_token: EOF@140..141 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..141
@@ -328,7 +329,8 @@ JsModule {
                       1: DOT@31..32 "." [] []
                       2: JS_NAME@32..36
                         0: IDENT@32..36 "test" [] []
-                    1: ARG_LIST@36..38
+                    1: (empty)
+                    2: ARG_LIST@36..38
                       0: L_PAREN@36..37 "(" [] []
                       1: LIST@37..37
                       2: R_PAREN@37..38 ")" [] []

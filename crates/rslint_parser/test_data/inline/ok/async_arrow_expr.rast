@@ -20,8 +20,8 @@ JsModule {
                                 parameter_list: JsIdentifierBinding {
                                     name_token: IDENT@14..18 "foo" [] [Whitespace(" ")],
                                 },
-                                fat_arrow_token: FAT_ARROW@18..21 "=>" [] [Whitespace(" ")],
                                 return_type: missing (optional),
+                                fat_arrow_token: FAT_ARROW@18..21 "=>" [] [Whitespace(" ")],
                                 body: JsFunctionBody {
                                     l_curly_token: L_CURLY@21..22 "{" [] [],
                                     directives: [],
@@ -59,8 +59,8 @@ JsModule {
                                     ],
                                     r_paren_token: R_PAREN@42..44 ")" [] [Whitespace(" ")],
                                 },
-                                fat_arrow_token: FAT_ARROW@44..47 "=>" [] [Whitespace(" ")],
                                 return_type: missing (optional),
+                                fat_arrow_token: FAT_ARROW@44..47 "=>" [] [Whitespace(" ")],
                                 body: JsFunctionBody {
                                     l_curly_token: L_CURLY@47..48 "{" [] [],
                                     directives: [],
@@ -98,8 +98,8 @@ JsModule {
                     ],
                     r_paren_token: R_PAREN@73..75 ")" [] [Whitespace(" ")],
                 },
-                fat_arrow_token: FAT_ARROW@75..78 "=>" [] [Whitespace(" ")],
                 return_type: missing (optional),
+                fat_arrow_token: FAT_ARROW@75..78 "=>" [] [Whitespace(" ")],
                 body: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@78..81 "foo" [] [],
@@ -109,6 +109,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@81..82 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..82
@@ -128,10 +129,12 @@ JsModule {
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_ARROW_FUNCTION_EXPRESSION@8..23
                 0: ASYNC_KW@8..14 "async" [] [Whitespace(" ")]
-                1: JS_IDENTIFIER_BINDING@14..18
+                1: (empty)
+                2: JS_IDENTIFIER_BINDING@14..18
                   0: IDENT@14..18 "foo" [] [Whitespace(" ")]
-                2: FAT_ARROW@18..21 "=>" [] [Whitespace(" ")]
-                3: JS_FUNCTION_BODY@21..23
+                3: (empty)
+                4: FAT_ARROW@18..21 "=>" [] [Whitespace(" ")]
+                5: JS_FUNCTION_BODY@21..23
                   0: L_CURLY@21..22 "{" [] []
                   1: LIST@22..22
                   2: LIST@22..22
@@ -150,14 +153,16 @@ JsModule {
               0: EQ@30..32 "=" [] [Whitespace(" ")]
               1: JS_ARROW_FUNCTION_EXPRESSION@32..49
                 0: ASYNC_KW@32..38 "async" [] [Whitespace(" ")]
-                1: JS_PARAMETER_LIST@38..44
+                1: (empty)
+                2: JS_PARAMETER_LIST@38..44
                   0: L_PAREN@38..39 "(" [] []
                   1: LIST@39..42
                     0: JS_IDENTIFIER_BINDING@39..42
                       0: IDENT@39..42 "bar" [] []
                   2: R_PAREN@42..44 ")" [] [Whitespace(" ")]
-                2: FAT_ARROW@44..47 "=>" [] [Whitespace(" ")]
-                3: JS_FUNCTION_BODY@47..49
+                3: (empty)
+                4: FAT_ARROW@44..47 "=>" [] [Whitespace(" ")]
+                5: JS_FUNCTION_BODY@47..49
                   0: L_CURLY@47..48 "{" [] []
                   1: LIST@48..48
                   2: LIST@48..48
@@ -166,7 +171,8 @@ JsModule {
     2: JS_EXPRESSION_STATEMENT@49..81
       0: JS_ARROW_FUNCTION_EXPRESSION@49..81
         0: ASYNC_KW@49..56 "async" [Whitespace("\n")] [Whitespace(" ")]
-        1: JS_PARAMETER_LIST@56..75
+        1: (empty)
+        2: JS_PARAMETER_LIST@56..75
           0: L_PAREN@56..57 "(" [] []
           1: LIST@57..73
             0: JS_IDENTIFIER_BINDING@57..60
@@ -180,8 +186,9 @@ JsModule {
               1: JS_IDENTIFIER_BINDING@70..73
                 0: IDENT@70..73 "baz" [] []
           2: R_PAREN@73..75 ")" [] [Whitespace(" ")]
-        2: FAT_ARROW@75..78 "=>" [] [Whitespace(" ")]
-        3: JS_IDENTIFIER_EXPRESSION@78..81
+        3: (empty)
+        4: FAT_ARROW@75..78 "=>" [] [Whitespace(" ")]
+        5: JS_IDENTIFIER_EXPRESSION@78..81
           0: JS_REFERENCE_IDENTIFIER@78..81
             0: IDENT@78..81 "foo" [] []
       1: (empty)

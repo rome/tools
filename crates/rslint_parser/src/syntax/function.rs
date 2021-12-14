@@ -58,11 +58,13 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 	let in_async = is_at_async_function(p, LineBreak::DoNotCheck);
 	if in_async {
 		p.bump_remap(T![async]);
+	} else {
+		p.missing();
 	}
 
 	p.expect_required(T![function]);
 
-	let in_generator = p.eat(T![*]);
+	let in_generator = p.eat_optional(T![*]);
 	let guard = &mut *p.with_state(ParserState {
 		labels: HashMap::new(),
 		in_function: true,
@@ -97,7 +99,7 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 	parse_parameter_list(guard).or_missing_with_error(guard, js_parse_error::expected_parameters);
 
 	let return_type =
-		TypeScript.parse_exclusive_syntax(guard, parse_ts_return_type, |p, marker| {
+		TypeScript.parse_exclusive_syntax(guard, parse_ts_return_type_if_ts, |p, marker| {
 			p.err_builder("return types can only be used in TypeScript files")
 				.primary(marker.range(p), "")
 		});
@@ -154,7 +156,9 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 					p.error(err);
 					body.change_kind(p, ERROR);
 				}
-				_ => p.missing(),
+				_ => {
+					p.missing();
+				}
 			}
 		} else {
 			body.or_missing_with_error(p, js_parse_error::expected_function_body);
@@ -162,7 +166,7 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 	}
 }
 
-fn parse_ts_parameter_types(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_ts_parameter_types(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if p.at(T![<]) {
 		Present(ts_type_params(p).unwrap())
 	} else {
@@ -178,23 +182,15 @@ pub(crate) fn ts_parameter_types(p: &mut Parser) {
 	}
 }
 
-fn parse_ts_return_type(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-	if p.at(T![:]) {
-		let return_type = p.start();
-		ts_type_or_type_predicate_ann(p, T![:]);
-		Present(return_type.complete(p, TS_TYPE_ANNOTATION))
-	} else {
-		Absent
-	}
-}
-
-pub(crate) fn ts_return_type(p: &mut Parser) {
+pub(crate) fn parse_ts_return_type_if_ts(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if p.at(T![:]) {
 		let return_type = p.start();
 		if let Some(ref mut ty) = ts_type_or_type_predicate_ann(p, T![:]) {
 			ty.err_if_not_ts(p, "return types can only be used in TypeScript files");
 		}
-		return_type.complete(p, TS_TYPE_ANNOTATION);
+		Present(return_type.complete(p, TS_TYPE_ANNOTATION))
+	} else {
+		Absent
 	}
 }
 

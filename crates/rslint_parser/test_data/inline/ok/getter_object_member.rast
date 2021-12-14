@@ -169,6 +169,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@211..212 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..212
@@ -195,7 +196,8 @@ JsModule {
                       0: IDENT@15..18 "foo" [] []
                     2: L_PAREN@18..19 "(" [] []
                     3: R_PAREN@19..21 ")" [] [Whitespace(" ")]
-                    4: JS_FUNCTION_BODY@21..40
+                    4: (empty)
+                    5: JS_FUNCTION_BODY@21..40
                       0: L_CURLY@21..22 "{" [] []
                       1: LIST@22..22
                       2: LIST@22..37
@@ -213,7 +215,8 @@ JsModule {
                       0: JS_STRING_LITERAL@48..53 "\"bar\"" [] []
                     2: L_PAREN@53..54 "(" [] []
                     3: R_PAREN@54..56 ")" [] [Whitespace(" ")]
-                    4: JS_FUNCTION_BODY@56..76
+                    4: (empty)
+                    5: JS_FUNCTION_BODY@56..76
                       0: L_CURLY@56..57 "{" [] []
                       1: LIST@57..57
                       2: LIST@57..73
@@ -237,7 +240,8 @@ JsModule {
                       2: R_BRACK@94..95 "]" [] []
                     2: L_PAREN@95..96 "(" [] []
                     3: R_PAREN@96..98 ")" [] [Whitespace(" ")]
-                    4: JS_FUNCTION_BODY@98..121
+                    4: (empty)
+                    5: JS_FUNCTION_BODY@98..121
                       0: L_CURLY@98..99 "{" [] []
                       1: LIST@99..99
                       2: LIST@99..118
@@ -258,7 +262,8 @@ JsModule {
                       0: JS_NUMBER_LITERAL@129..130 "5" [] []
                     2: L_PAREN@130..131 "(" [] []
                     3: R_PAREN@131..133 ")" [] [Whitespace(" ")]
-                    4: JS_FUNCTION_BODY@133..149
+                    4: (empty)
+                    5: JS_FUNCTION_BODY@133..149
                       0: L_CURLY@133..134 "{" [] []
                       1: LIST@134..134
                       2: LIST@134..146
@@ -270,13 +275,17 @@ JsModule {
                       3: R_CURLY@146..149 "}" [Whitespace("\n\t")] []
                   7: COMMA@149..150 "," [] []
                   8: JS_METHOD_OBJECT_MEMBER@150..209
-                    0: JS_LITERAL_MEMBER_NAME@150..156
+                    0: (empty)
+                    1: (empty)
+                    2: JS_LITERAL_MEMBER_NAME@150..156
                       0: IDENT@150..156 "get" [Whitespace("\n\n\t")] []
-                    1: JS_PARAMETER_LIST@156..159
+                    3: (empty)
+                    4: JS_PARAMETER_LIST@156..159
                       0: L_PAREN@156..157 "(" [] []
                       1: LIST@157..157
                       2: R_PAREN@157..159 ")" [] [Whitespace(" ")]
-                    2: JS_FUNCTION_BODY@159..209
+                    5: (empty)
+                    6: JS_FUNCTION_BODY@159..209
                       0: L_CURLY@159..160 "{" [] []
                       1: LIST@160..160
                       2: LIST@160..206

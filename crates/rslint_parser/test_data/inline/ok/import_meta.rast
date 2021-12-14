@@ -6,10 +6,12 @@ JsModule {
             expression: ImportMeta {
                 import_token: IMPORT_KW@0..6 "import" [] [],
                 dot_token: DOT@6..7 "." [] [],
+                meta_token: META_KW@7..11 "meta" [] [],
             },
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@11..12 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..12
@@ -20,6 +22,6 @@ JsModule {
       0: IMPORT_META@0..11
         0: IMPORT_KW@0..6 "import" [] []
         1: DOT@6..7 "." [] []
-        2: IDENT@7..11 "meta" [] []
+        2: META_KW@7..11 "meta" [] []
       1: (empty)
   3: EOF@11..12 "" [Whitespace("\n")] []

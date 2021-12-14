@@ -122,7 +122,12 @@ pub(crate) fn expr_or_assignment(p: &mut Parser) -> Option<CompletedMarker> {
 	{
 		let res = try_parse_ts(p, |p| {
 			let m = p.start();
-			ts_type_params(p)?;
+			p.missing(); // async keyword
+			if ts_type_params(p).is_none() {
+				m.abandon(p);
+				return None;
+			}
+
 			let res = assign_expr_base(p);
 			if res.map(|x| x.kind()) != Some(JS_ARROW_FUNCTION_EXPRESSION) {
 				m.abandon(p);
@@ -196,8 +201,13 @@ pub fn yield_expr(p: &mut Parser) -> CompletedMarker {
 	p.expect_required(T![yield]);
 
 	if !is_semi(p, 0) && (p.at(T![*]) || p.at_ts(STARTS_EXPR)) {
-		p.eat(T![*]);
-		expr_or_assignment(p);
+		p.eat_optional(T![*]);
+		if expr_or_assignment(p).is_none() {
+			p.missing();
+		}
+	} else {
+		p.missing(); // star_token
+		p.missing(); // argument
 	}
 
 	m.complete(p, JS_YIELD_EXPRESSION)
@@ -257,7 +267,11 @@ fn binary_or_logical_expression_recursive(
 	min_prec: u8,
 ) -> Option<CompletedMarker> {
 	if 7 > min_prec && !p.has_linebreak_before_n(0) && p.cur_src() == "as" {
-		let m = left.map(|x| x.precede(p)).unwrap_or_else(|| p.start());
+		let m = left.map(|x| x.precede(p)).unwrap_or_else(|| {
+			let m = p.start();
+			p.missing();
+			m
+		});
 		p.bump_any();
 		let mut res = if p.eat(T![const]) {
 			m.complete(p, TS_CONST_ASSERTION)
@@ -293,7 +307,12 @@ fn binary_or_logical_expression_recursive(
 	let op = kind;
 	let op_tok = p.cur_tok();
 
-	let m = left.map(|m| m.precede(p)).unwrap_or_else(|| p.start());
+	let m = left.map(|m| m.precede(p)).unwrap_or_else(|| {
+		let m = p.start();
+		p.missing();
+		m
+	});
+
 	if op == T![>>] {
 		p.bump_multiple(2, T![>>]);
 	} else if op == T![>>>] {
@@ -314,7 +333,7 @@ fn binary_or_logical_expression_recursive(
 		unary_expr(p)
 	};
 
-	binary_or_logical_expression_recursive(
+	if binary_or_logical_expression_recursive(
 		p,
 		right,
 		// ** is right recursive
@@ -323,7 +342,11 @@ fn binary_or_logical_expression_recursive(
 		} else {
 			precedence
 		},
-	);
+	)
+	.is_none()
+	{
+		p.missing();
+	}
 
 	let expression_kind = match op {
 		T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
@@ -355,7 +378,7 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 		// new.target
 		if p.at(T![.]) && p.token_src(&p.nth_tok(1)) == "target" {
 			p.bump_any();
-			p.bump_any();
+			p.bump_remap(T![target]);
 			let complete = m.complete(p, NEW_TARGET);
 			return Some(subscripts(p, complete, true));
 		}
@@ -383,7 +406,11 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 					p,
 					"`new` expressions can only have type arguments in TypeScript files",
 				);
+			} else {
+				p.missing();
 			}
+		} else {
+			p.missing();
 		}
 
 		if !new_expr || p.at(T!['(']) {
@@ -391,6 +418,7 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 			let complete = m.complete(p, NEW_EXPR);
 			return Some(subscripts(p, complete, true));
 		}
+		p.missing(); // missing arguments
 		return Some(m.complete(p, NEW_EXPR));
 	}
 
@@ -448,6 +476,7 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 			T![?.] if p.nth_at(1, T!['(']) => {
 				lhs = {
 					let m = lhs.precede(p);
+					p.missing(); // type args
 					p.bump_any();
 					args(p);
 					m.complete(p, CALL_EXPR)
@@ -456,6 +485,7 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 			T!['('] if !no_call => {
 				lhs = {
 					let m = lhs.precede(p);
+					p.missing(); // type args
 					args(p);
 					m.complete(p, CALL_EXPR)
 				}
@@ -484,7 +514,11 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 				let res = try_parse_ts(p, |p| {
 					let m = lhs.precede(p);
 					// TODO: handle generic async arrow function expressions
-					ts_type_args(p)?;
+					if ts_type_args(p).is_none() {
+						m.abandon(p);
+						return None;
+					}
+
 					if !no_call && p.at(T!['(']) {
 						args(p);
 						Some(m.complete(p, CALL_EXPR))
@@ -585,10 +619,14 @@ pub fn computed_member_expression(
 	let m = lhs.precede(p);
 	if optional_chain {
 		p.expect_required(T![?.]);
+	} else {
+		p.missing();
 	}
 
 	p.expect_required(T!['[']);
-	expr(p);
+	if expr(p).is_none() {
+		p.missing();
+	}
 	p.expect_required(T![']']);
 
 	m.complete(p, JS_COMPUTED_MEMBER_EXPRESSION)
@@ -664,6 +702,10 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 	let m = p.start();
 	let checkpoint = p.checkpoint();
 	let start = p.cur_tok().range.start;
+
+	let async_missing_marker = p.missing();
+	let type_params_missing_marker = p.missing();
+
 	p.expect_required(T!['(']);
 	let mut spread_range = None;
 	let mut trailing_comma_marker = None;
@@ -741,6 +783,9 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 					temp.bump_any(); // bump ; into sequence expression which may or may not miss a lhs
 				}
 			} else {
+				if let Some(sequence) = sequence.take() {
+					sequence.complete(&mut *temp, JS_SEQUENCE_EXPRESSION);
+				}
 				temp.expect_required(T![')']);
 				break;
 			}
@@ -769,6 +814,8 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			if params_marker.is_none() {
 				// Rewind the parser so we can reparse as formal parameters
 				p.rewind(checkpoint);
+				p.missing(); // async
+				p.missing(); // type parameters
 				parse_parameter_list(p)
 					.or_missing_with_error(p, js_parse_error::expected_parameters);
 			}
@@ -781,6 +828,8 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 						"arrow functions can only have return types in TypeScript files",
 					);
 				}
+			} else {
+				p.missing();
 			}
 
 			p.bump_any();
@@ -788,6 +837,10 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			return m.complete(p, JS_ARROW_FUNCTION_EXPRESSION);
 		}
 	}
+
+	// turns out this isn't an arrow function after all, undo the missing async/type params markers
+	async_missing_marker.undo(p);
+	type_params_missing_marker.undo(p);
 
 	if let Some(params) = params_marker {
 		let err = p
@@ -895,6 +948,8 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 							..p.state.clone()
 						});
 
+						in_async_p.missing(); // type parameters
+
 						let parsed_parameters = parse_parameter_list(in_async_p);
 						if parsed_parameters.is_absent() {
 							// test_err async_arrow_expr_await_parameter
@@ -911,6 +966,8 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 								"arrow functions can only have return types in TypeScript files",
 							);
 							}
+						} else {
+							in_async_p.missing(); // return type annotation
 						}
 
 						in_async_p.expect_required(T![=>]);
@@ -952,9 +1009,12 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				// foo =>
 				// {}
 				let m = p.start();
+				p.missing(); // async token
+				p.missing(); // type parameters
 				parse_identifier_binding(p)
 					.or_invalid_to_unknown(p, JS_UNKNOWN_BINDING)
 					.or_missing_with_error(p, expected_identifier);
+				p.missing(); // return type
 				p.bump(T![=>]);
 				parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
 				m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
@@ -981,7 +1041,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				// import.foo
 				// import.metaa
 				if p.at(T![ident]) && p.token_src(&p.cur_tok()) == "meta" {
-					p.bump_any();
+					p.bump_remap(T![meta]);
 					m.complete(p, IMPORT_META)
 				} else if p.at(T![ident]) {
 					let err = p
@@ -992,7 +1052,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 						.primary(p.cur_tok().range, "");
 
 					p.err_and_bump(err, ERROR);
-					m.complete(p, ERROR)
+					m.complete(p, IMPORT_META)
 				} else {
 					let err = p
 						.err_builder("Expected `meta` following an import keyword, but found none")
@@ -1009,7 +1069,9 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				// test import_call
 				// import("foo")
 				p.expect_required(T!['(']);
-				expr_or_assignment(p);
+				if expr_or_assignment(p).is_none() {
+					p.missing();
+				}
 				p.expect_required(T![')']);
 				m.complete(p, JS_IMPORT_CALL_EXPRESSION)
 			}
@@ -1268,14 +1330,14 @@ pub fn lhs_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		None
 	};
 
-	if p.at(T!['(']) {
+	if p.at(T!['(']) || type_args.is_some() {
+		if type_args.is_none() {
+			p.missing();
+		}
+
 		args(p);
 		let lhs = m.complete(p, CALL_EXPR);
 		return Some(subscripts(p, lhs, false));
-	}
-
-	if type_args.is_some() {
-		p.expect_required(T!['(']);
 	}
 
 	m.abandon(p);

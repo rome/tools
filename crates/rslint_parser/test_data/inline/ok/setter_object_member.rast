@@ -137,6 +137,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@169..170 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..170
@@ -221,13 +222,17 @@ JsModule {
                       3: R_CURLY@104..107 "}" [Whitespace("\n\t")] []
                   7: COMMA@107..108 "," [] []
                   8: JS_METHOD_OBJECT_MEMBER@108..167
-                    0: JS_LITERAL_MEMBER_NAME@108..114
+                    0: (empty)
+                    1: (empty)
+                    2: JS_LITERAL_MEMBER_NAME@108..114
                       0: IDENT@108..114 "set" [Whitespace("\n\n\t")] []
-                    1: JS_PARAMETER_LIST@114..117
+                    3: (empty)
+                    4: JS_PARAMETER_LIST@114..117
                       0: L_PAREN@114..115 "(" [] []
                       1: LIST@115..115
                       2: R_PAREN@115..117 ")" [] [Whitespace(" ")]
-                    2: JS_FUNCTION_BODY@117..167
+                    5: (empty)
+                    6: JS_FUNCTION_BODY@117..167
                       0: L_CURLY@117..118 "{" [] []
                       1: LIST@118..118
                       2: LIST@118..164

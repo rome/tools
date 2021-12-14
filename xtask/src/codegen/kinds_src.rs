@@ -150,6 +150,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"let",
 		"float",
 		"number",
+		"meta",
 	],
 	literals: &[
 		"JS_NUMBER_LITERAL",
@@ -311,7 +312,6 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"FOR_STMT_TEST",
 		"FOR_STMT_UPDATE",
 		"FOR_STMT_INIT",
-		"EXPR_PATTERN",
 		// TypeScript
 		"TS_ANY",
 		"TS_UNKNOWN",

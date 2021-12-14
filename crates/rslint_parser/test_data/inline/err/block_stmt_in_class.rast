@@ -25,6 +25,7 @@ JsModule {
             ],
         },
     ],
+    eof_token: EOF@11..12 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..12

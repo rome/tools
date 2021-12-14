@@ -357,7 +357,7 @@ pub fn ts_module_block(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
 	p.expect_no_recover(T!['{'])?;
 	// module blocks are considered top level
-	parse_statements(p, true, None);
+	parse_statements(p, true);
 	p.expect_no_recover(T!['}'])?;
 	Some(m.complete(p, TS_MODULE_BLOCK))
 }

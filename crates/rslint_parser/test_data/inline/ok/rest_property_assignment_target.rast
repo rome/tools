@@ -112,12 +112,12 @@ JsModule {
                                     },
                                     l_brack_token: L_BRACK@68..69 "[" [] [],
                                     member: CallExpr {
-                                        type_args: missing (optional),
                                         callee: JsIdentifierExpression {
                                             name: JsReferenceIdentifier {
                                                 value_token: IDENT@69..73 "call" [] [],
                                             },
                                         },
+                                        type_args: missing (optional),
                                         arguments: ArgList {
                                             l_paren_token: L_PAREN@73..74 "(" [] [],
                                             args: [],
@@ -152,7 +152,6 @@ JsModule {
                                 dotdotdot_token: DOT2@88..91 "..." [] [],
                                 target: JsStaticMemberAssignment {
                                     object: CallExpr {
-                                        type_args: missing (optional),
                                         callee: JsStaticMemberExpression {
                                             object: JsIdentifierExpression {
                                                 name: JsReferenceIdentifier {
@@ -164,6 +163,7 @@ JsModule {
                                                 value_token: IDENT@95..105 "expression" [] [],
                                             },
                                         },
+                                        type_args: missing (optional),
                                         arguments: ArgList {
                                             l_paren_token: L_PAREN@105..106 "(" [] [],
                                             args: [],
@@ -231,6 +231,7 @@ JsModule {
             semicolon_token: SEMICOLON@139..140 ";" [] [],
         },
     ],
+    eof_token: EOF@140..141 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..141
@@ -317,7 +318,8 @@ JsModule {
                     0: JS_IDENTIFIER_EXPRESSION@69..73
                       0: JS_REFERENCE_IDENTIFIER@69..73
                         0: IDENT@69..73 "call" [] []
-                    1: ARG_LIST@73..75
+                    1: (empty)
+                    2: ARG_LIST@73..75
                       0: L_PAREN@73..74 "(" [] []
                       1: LIST@74..74
                       2: R_PAREN@74..75 ")" [] []
@@ -347,7 +349,8 @@ JsModule {
                       1: DOT@94..95 "." [] []
                       2: JS_NAME@95..105
                         0: IDENT@95..105 "expression" [] []
-                    1: ARG_LIST@105..107
+                    1: (empty)
+                    2: ARG_LIST@105..107
                       0: L_PAREN@105..106 "(" [] []
                       1: LIST@106..106
                       2: R_PAREN@106..107 ")" [] []

@@ -40,12 +40,12 @@ JsModule {
                         statements: [
                             JsExpressionStatement {
                                 expression: CallExpr {
-                                    type_args: missing (optional),
                                     callee: JsUnknownExpression {
                                         items: [
                                             SUPER_KW@32..40 "super" [Whitespace("\n\t\t")] [],
                                         ],
                                     },
+                                    type_args: missing (optional),
                                     arguments: ArgList {
                                         l_paren_token: L_PAREN@40..41 "(" [] [],
                                         args: [],
@@ -56,7 +56,6 @@ JsModule {
                             },
                             JsExpressionStatement {
                                 expression: CallExpr {
-                                    type_args: missing (optional),
                                     callee: JsStaticMemberExpression {
                                         object: JsUnknownExpression {
                                             items: [
@@ -68,6 +67,7 @@ JsModule {
                                             value_token: IDENT@53..57 "test" [] [],
                                         },
                                     },
+                                    type_args: missing (optional),
                                     arguments: ArgList {
                                         l_paren_token: L_PAREN@57..58 "(" [] [],
                                         args: [],
@@ -85,12 +85,12 @@ JsModule {
         },
         JsExpressionStatement {
             expression: CallExpr {
-                type_args: missing (optional),
                 callee: JsUnknownExpression {
                     items: [
                         SUPER_KW@65..72 "super" [Whitespace("\n\n")] [],
                     ],
                 },
+                type_args: missing (optional),
                 arguments: ArgList {
                     l_paren_token: L_PAREN@72..73 "(" [] [],
                     args: [],
@@ -100,6 +100,7 @@ JsModule {
             semicolon_token: SEMICOLON@74..75 ";" [] [],
         },
     ],
+    eof_token: EOF@75..76 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..76
@@ -124,7 +125,8 @@ JsModule {
             0: L_PAREN@28..29 "(" [] []
             1: LIST@29..29
             2: R_PAREN@29..31 ")" [] [Whitespace(" ")]
-          2: JS_FUNCTION_BODY@31..63
+          2: (empty)
+          3: JS_FUNCTION_BODY@31..63
             0: L_CURLY@31..32 "{" [] []
             1: LIST@32..32
             2: LIST@32..60
@@ -132,7 +134,8 @@ JsModule {
                 0: CALL_EXPR@32..42
                   0: JS_UNKNOWN_EXPRESSION@32..40
                     0: SUPER_KW@32..40 "super" [Whitespace("\n\t\t")] []
-                  1: ARG_LIST@40..42
+                  1: (empty)
+                  2: ARG_LIST@40..42
                     0: L_PAREN@40..41 "(" [] []
                     1: LIST@41..41
                     2: R_PAREN@41..42 ")" [] []
@@ -145,7 +148,8 @@ JsModule {
                     1: QUESTIONDOT@51..53 "?." [] []
                     2: JS_NAME@53..57
                       0: IDENT@53..57 "test" [] []
-                  1: ARG_LIST@57..59
+                  1: (empty)
+                  2: ARG_LIST@57..59
                     0: L_PAREN@57..58 "(" [] []
                     1: LIST@58..58
                     2: R_PAREN@58..59 ")" [] []
@@ -156,7 +160,8 @@ JsModule {
       0: CALL_EXPR@65..74
         0: JS_UNKNOWN_EXPRESSION@65..72
           0: SUPER_KW@65..72 "super" [Whitespace("\n\n")] []
-        1: ARG_LIST@72..74
+        1: (empty)
+        2: ARG_LIST@72..74
           0: L_PAREN@72..73 "(" [] []
           1: LIST@73..73
           2: R_PAREN@73..74 ")" [] []

@@ -58,5 +58,6 @@ pub(crate) fn expect_keyword(p: &mut Parser, keyword_name: &str, kind: SyntaxKin
 		};
 
 		p.error(err);
+		p.missing();
 	}
 }

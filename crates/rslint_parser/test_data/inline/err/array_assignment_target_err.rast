@@ -168,6 +168,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@100..101 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..101
@@ -226,6 +227,7 @@ JsModule {
               0: JS_IDENTIFIER_ASSIGNMENT@47..49
                 0: IDENT@47..49 "a" [] [Whitespace(" ")]
               1: EQ@49..51 "=" [] [Whitespace(" ")]
+              2: (empty)
             1: COMMA@51..53 "," [] [Whitespace(" ")]
             2: JS_ASSIGNMENT_WITH_DEFAULT@53..61
               0: (empty)

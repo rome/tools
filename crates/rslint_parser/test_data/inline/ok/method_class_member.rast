@@ -579,6 +579,7 @@ JsModule {
             r_curly_token: R_CURLY@604..606 "}" [Whitespace("\n")] [],
         },
     ],
+    eof_token: EOF@606..607 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..607
@@ -598,7 +599,8 @@ JsModule {
             0: L_PAREN@20..21 "(" [] []
             1: LIST@21..21
             2: R_PAREN@21..23 ")" [] [Whitespace(" ")]
-          2: JS_FUNCTION_BODY@23..25
+          2: (empty)
+          3: JS_FUNCTION_BODY@23..25
             0: L_CURLY@23..24 "{" [] []
             1: LIST@24..24
             2: LIST@24..24
@@ -611,7 +613,8 @@ JsModule {
             0: L_PAREN@44..45 "(" [] []
             1: LIST@45..45
             2: R_PAREN@45..47 ")" [] [Whitespace(" ")]
-          3: JS_FUNCTION_BODY@47..49
+          3: (empty)
+          4: JS_FUNCTION_BODY@47..49
             0: L_CURLY@47..48 "{" [] []
             1: LIST@48..48
             2: LIST@48..48
@@ -625,7 +628,8 @@ JsModule {
             0: L_PAREN@78..79 "(" [] []
             1: LIST@79..79
             2: R_PAREN@79..81 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@81..83
+          4: (empty)
+          5: JS_FUNCTION_BODY@81..83
             0: L_CURLY@81..82 "{" [] []
             1: LIST@82..82
             2: LIST@82..82
@@ -638,7 +642,8 @@ JsModule {
             0: L_PAREN@102..103 "(" [] []
             1: LIST@103..103
             2: R_PAREN@103..105 ")" [] [Whitespace(" ")]
-          3: JS_FUNCTION_BODY@105..107
+          3: (empty)
+          4: JS_FUNCTION_BODY@105..107
             0: L_CURLY@105..106 "{" [] []
             1: LIST@106..106
             2: LIST@106..106
@@ -650,7 +655,8 @@ JsModule {
             0: L_PAREN@115..116 "(" [] []
             1: LIST@116..116
             2: R_PAREN@116..118 ")" [] [Whitespace(" ")]
-          2: JS_FUNCTION_BODY@118..120
+          2: (empty)
+          3: JS_FUNCTION_BODY@118..120
             0: L_CURLY@118..119 "{" [] []
             1: LIST@119..119
             2: LIST@119..119
@@ -669,7 +675,8 @@ JsModule {
             0: L_PAREN@137..138 "(" [] []
             1: LIST@138..138
             2: R_PAREN@138..140 ")" [] [Whitespace(" ")]
-          2: JS_FUNCTION_BODY@140..142
+          2: (empty)
+          3: JS_FUNCTION_BODY@140..142
             0: L_CURLY@140..141 "{" [] []
             1: LIST@141..141
             2: LIST@141..141
@@ -681,7 +688,8 @@ JsModule {
             0: L_PAREN@145..146 "(" [] []
             1: LIST@146..146
             2: R_PAREN@146..148 ")" [] [Whitespace(" ")]
-          2: JS_FUNCTION_BODY@148..150
+          2: (empty)
+          3: JS_FUNCTION_BODY@148..150
             0: L_CURLY@148..149 "{" [] []
             1: LIST@149..149
             2: LIST@149..149
@@ -694,7 +702,8 @@ JsModule {
             0: L_PAREN@161..162 "(" [] []
             1: LIST@162..162
             2: R_PAREN@162..164 ")" [] [Whitespace(" ")]
-          2: JS_FUNCTION_BODY@164..166
+          2: (empty)
+          3: JS_FUNCTION_BODY@164..166
             0: L_CURLY@164..165 "{" [] []
             1: LIST@165..165
             2: LIST@165..165
@@ -713,7 +722,8 @@ JsModule {
             0: L_PAREN@230..231 "(" [] []
             1: LIST@231..231
             2: R_PAREN@231..233 ")" [] [Whitespace(" ")]
-          2: JS_FUNCTION_BODY@233..235
+          2: (empty)
+          3: JS_FUNCTION_BODY@233..235
             0: L_CURLY@233..234 "{" [] []
             1: LIST@234..234
             2: LIST@234..234
@@ -726,7 +736,8 @@ JsModule {
             0: L_PAREN@249..250 "(" [] []
             1: LIST@250..250
             2: R_PAREN@250..252 ")" [] [Whitespace(" ")]
-          3: JS_FUNCTION_BODY@252..254
+          3: (empty)
+          4: JS_FUNCTION_BODY@252..254
             0: L_CURLY@252..253 "{" [] []
             1: LIST@253..253
             2: LIST@253..253
@@ -739,7 +750,8 @@ JsModule {
             0: L_PAREN@264..265 "(" [] []
             1: LIST@265..265
             2: R_PAREN@265..267 ")" [] [Whitespace(" ")]
-          3: JS_FUNCTION_BODY@267..269
+          3: (empty)
+          4: JS_FUNCTION_BODY@267..269
             0: L_CURLY@267..268 "{" [] []
             1: LIST@268..268
             2: LIST@268..268
@@ -753,7 +765,8 @@ JsModule {
             0: L_PAREN@284..285 "(" [] []
             1: LIST@285..285
             2: R_PAREN@285..287 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@287..289
+          4: (empty)
+          5: JS_FUNCTION_BODY@287..289
             0: L_CURLY@287..288 "{" [] []
             1: LIST@288..288
             2: LIST@288..288
@@ -765,7 +778,8 @@ JsModule {
             0: L_PAREN@299..300 "(" [] []
             1: LIST@300..300
             2: R_PAREN@300..302 ")" [] [Whitespace(" ")]
-          2: JS_FUNCTION_BODY@302..304
+          2: (empty)
+          3: JS_FUNCTION_BODY@302..304
             0: L_CURLY@302..303 "{" [] []
             1: LIST@303..303
             2: LIST@303..303
@@ -777,7 +791,8 @@ JsModule {
             0: L_PAREN@310..311 "(" [] []
             1: LIST@311..311
             2: R_PAREN@311..313 ")" [] [Whitespace(" ")]
-          2: JS_FUNCTION_BODY@313..336
+          2: (empty)
+          3: JS_FUNCTION_BODY@313..336
             0: L_CURLY@313..314 "{" [] []
             1: LIST@314..314
             2: LIST@314..314
@@ -789,7 +804,8 @@ JsModule {
             0: L_PAREN@341..342 "(" [] []
             1: LIST@342..342
             2: R_PAREN@342..344 ")" [] [Whitespace(" ")]
-          2: JS_FUNCTION_BODY@344..367
+          2: (empty)
+          3: JS_FUNCTION_BODY@344..367
             0: L_CURLY@344..345 "{" [] []
             1: LIST@345..345
             2: LIST@345..345
@@ -809,7 +825,8 @@ JsModule {
             0: L_PAREN@400..401 "(" [] []
             1: LIST@401..401
             2: R_PAREN@401..403 ")" [] [Whitespace(" ")]
-          3: JS_FUNCTION_BODY@403..405
+          3: (empty)
+          4: JS_FUNCTION_BODY@403..405
             0: L_CURLY@403..404 "{" [] []
             1: LIST@404..404
             2: LIST@404..404
@@ -823,7 +840,8 @@ JsModule {
             0: L_PAREN@431..432 "(" [] []
             1: LIST@432..432
             2: R_PAREN@432..434 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@434..436
+          4: (empty)
+          5: JS_FUNCTION_BODY@434..436
             0: L_CURLY@434..435 "{" [] []
             1: LIST@435..435
             2: LIST@435..435
@@ -838,7 +856,8 @@ JsModule {
             0: L_PAREN@472..473 "(" [] []
             1: LIST@473..473
             2: R_PAREN@473..475 ")" [] [Whitespace(" ")]
-          5: JS_FUNCTION_BODY@475..477
+          5: (empty)
+          6: JS_FUNCTION_BODY@475..477
             0: L_CURLY@475..476 "{" [] []
             1: LIST@476..476
             2: LIST@476..476
@@ -852,7 +871,8 @@ JsModule {
             0: L_PAREN@503..504 "(" [] []
             1: LIST@504..504
             2: R_PAREN@504..506 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@506..508
+          4: (empty)
+          5: JS_FUNCTION_BODY@506..508
             0: L_CURLY@506..507 "{" [] []
             1: LIST@507..507
             2: LIST@507..507
@@ -865,7 +885,8 @@ JsModule {
             0: L_PAREN@524..525 "(" [] []
             1: LIST@525..525
             2: R_PAREN@525..527 ")" [] [Whitespace(" ")]
-          3: JS_FUNCTION_BODY@527..529
+          3: (empty)
+          4: JS_FUNCTION_BODY@527..529
             0: L_CURLY@527..528 "{" [] []
             1: LIST@528..528
             2: LIST@528..528
@@ -879,7 +900,8 @@ JsModule {
             0: L_PAREN@550..551 "(" [] []
             1: LIST@551..551
             2: R_PAREN@551..553 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@553..555
+          4: (empty)
+          5: JS_FUNCTION_BODY@553..555
             0: L_CURLY@553..554 "{" [] []
             1: LIST@554..554
             2: LIST@554..554
@@ -894,7 +916,8 @@ JsModule {
             0: L_PAREN@577..578 "(" [] []
             1: LIST@578..578
             2: R_PAREN@578..580 ")" [] [Whitespace(" ")]
-          5: JS_FUNCTION_BODY@580..582
+          5: (empty)
+          6: JS_FUNCTION_BODY@580..582
             0: L_CURLY@580..581 "{" [] []
             1: LIST@581..581
             2: LIST@581..581
@@ -908,7 +931,8 @@ JsModule {
             0: L_PAREN@599..600 "(" [] []
             1: LIST@600..600
             2: R_PAREN@600..602 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@602..604
+          4: (empty)
+          5: JS_FUNCTION_BODY@602..604
             0: L_CURLY@602..603 "{" [] []
             1: LIST@603..603
             2: LIST@603..603

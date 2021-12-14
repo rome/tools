@@ -4,8 +4,11 @@ use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
 use crate::syntax::expr::{expr, expr_or_assignment};
-use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
+use crate::syntax::function::{
+	function_body, parse_ts_parameter_types, parse_ts_return_type_if_ts,
+};
 use crate::syntax::js_parse_error;
+use crate::CompletedNodeOrMissingMarker::NodeMarker;
 use crate::{CompletedMarker, ParseRecovery, ParseSeparatedList, Parser, ParserState, TokenSet};
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::{SyntaxKind, T};
@@ -130,6 +133,8 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		_ => {
 			let checkpoint = p.checkpoint();
 			let m = p.start();
+			let async_missing = p.missing();
+			let generator_missing = p.missing();
 			let identifier_member_name =
 				matches!(p.cur(), T![ident] | T![await] | T![yield]) || p.cur().is_keyword();
 			let member_name = parse_object_member_name(p)
@@ -148,7 +153,10 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 			if p.at(T!['(']) || p.at(T![<]) {
 				parse_method_object_member_body(p);
 				Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
-			} else if let Some(mut member_name) = member_name {
+			} else if let NodeMarker(mut member_name) = member_name {
+				async_missing.undo(p);
+				generator_missing.undo(p);
+
 				// ({foo})
 				// test object_expr_ident_prop
 				if identifier_member_name
@@ -160,10 +168,15 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 					// let b = { a: true }
 					// If the member name was a literal OR we're at a colon
 					p.expect_required(T![:]);
-					expr_or_assignment(p);
+					if expr_or_assignment(p).is_none() {
+						p.missing();
+					}
 					Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
 				}
 			} else {
+				async_missing.undo(p);
+				generator_missing.undo(p);
+
 				// test_err object_expr_error_prop_name
 				// let a = { /: 6, /: /foo/ }
 				// let a = {{}}
@@ -206,7 +219,7 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.expect_required(T!['(']);
 	p.expect_required(T![')']);
 
-	ts_return_type(p);
+	parse_ts_return_type_if_ts(p).or_missing(p);
 
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
@@ -334,9 +347,9 @@ fn parse_method_object_member_body(p: &mut Parser) {
 	let old = p.state.to_owned();
 	p.state.in_function = true;
 
-	ts_parameter_types(p);
+	parse_ts_parameter_types(p).or_missing(p);
 	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_parameters);
-	ts_return_type(p);
+	parse_ts_return_type_if_ts(p).or_missing(p);
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
 	p.state = old;

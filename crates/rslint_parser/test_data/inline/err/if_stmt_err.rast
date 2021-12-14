@@ -72,12 +72,16 @@ JsModule {
                 value_token: TRUE_KW@65..69 "true" [] [],
             },
             r_paren_token: R_PAREN@69..70 ")" [] [],
-            consequent: JsUnknownStatement {
-                items: [
-                    R_CURLY@70..71 "}" [] [],
-                ],
-            },
+            consequent: missing (required),
             else_clause: missing (optional),
+        },
+        JsUnknownStatement {
+            items: [
+                R_CURLY@70..71 "}" [] [],
+                R_CURLY@71..72 "}" [] [],
+                R_CURLY@72..73 "}" [] [],
+                R_CURLY@73..75 "}" [] [Whitespace(" ")],
+            ],
         },
         JsBlockStatement {
             l_curly_token: L_CURLY@75..76 "{" [] [],
@@ -85,6 +89,7 @@ JsModule {
             r_curly_token: R_CURLY@76..77 "}" [] [],
         },
     ],
+    eof_token: EOF@77..78 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..78
@@ -97,7 +102,8 @@ JsModule {
       2: JS_BOOLEAN_LITERAL_EXPRESSION@4..8
         0: TRUE_KW@4..8 "true" [] []
       3: R_PAREN@8..10 ")" [] [Whitespace(" ")]
-      4: JS_ELSE_CLAUSE@10..17
+      4: (empty)
+      5: JS_ELSE_CLAUSE@10..17
         0: ELSE_KW@10..15 "else" [] [Whitespace(" ")]
         1: JS_BLOCK_STATEMENT@15..17
           0: L_CURLY@15..16 "{" [] []
@@ -109,13 +115,16 @@ JsModule {
       2: JS_BOOLEAN_LITERAL_EXPRESSION@22..26
         0: TRUE_KW@22..26 "true" [] []
       3: R_PAREN@26..28 ")" [] [Whitespace(" ")]
-      4: JS_ELSE_CLAUSE@28..43
+      4: (empty)
+      5: JS_ELSE_CLAUSE@28..43
         0: ELSE_KW@28..32 "else" [] []
         1: JS_IF_STATEMENT@32..43
           0: IF_KW@32..36 "if" [Whitespace("\n")] [Whitespace(" ")]
           1: (empty)
           2: (empty)
-          3: JS_ELSE_CLAUSE@36..43
+          3: (empty)
+          4: (empty)
+          5: JS_ELSE_CLAUSE@36..43
             0: ELSE_KW@36..41 "else" [] [Whitespace(" ")]
             1: JS_BLOCK_STATEMENT@41..43
               0: L_CURLY@41..42 "{" [] []
@@ -124,31 +133,32 @@ JsModule {
     2: JS_IF_STATEMENT@43..60
       0: IF_KW@43..47 "if" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@47..48 "(" [] []
-      2: R_PAREN@48..50 ")" [] [Whitespace(" ")]
-      3: JS_BLOCK_STATEMENT@50..53
+      2: (empty)
+      3: R_PAREN@48..50 ")" [] [Whitespace(" ")]
+      4: JS_BLOCK_STATEMENT@50..53
         0: L_CURLY@50..51 "{" [] []
         1: LIST@51..51
         2: R_CURLY@51..53 "}" [] [Whitespace(" ")]
-      4: JS_ELSE_CLAUSE@53..60
+      5: JS_ELSE_CLAUSE@53..60
         0: ELSE_KW@53..58 "else" [] [Whitespace(" ")]
         1: JS_BLOCK_STATEMENT@58..60
           0: L_CURLY@58..59 "{" [] []
           1: LIST@59..59
           2: R_CURLY@59..60 "}" [] []
-    3: JS_IF_STATEMENT@60..75
+    3: JS_IF_STATEMENT@60..70
       0: IF_KW@60..64 "if" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@64..65 "(" [] []
       2: JS_BOOLEAN_LITERAL_EXPRESSION@65..69
         0: TRUE_KW@65..69 "true" [] []
       3: R_PAREN@69..70 ")" [] []
-      4: JS_UNKNOWN_STATEMENT@70..71
-        0: R_CURLY@70..71 "}" [] []
-      5: JS_UNKNOWN_STATEMENT@71..75
-        0: R_CURLY@71..72 "}" [] []
-        1: R_CURLY@72..73 "}" [] []
-        2: R_CURLY@73..75 "}" [] [Whitespace(" ")]
-      6: (empty)
-    4: JS_BLOCK_STATEMENT@75..77
+      4: (empty)
+      5: (empty)
+    4: JS_UNKNOWN_STATEMENT@70..75
+      0: R_CURLY@70..71 "}" [] []
+      1: R_CURLY@71..72 "}" [] []
+      2: R_CURLY@72..73 "}" [] []
+      3: R_CURLY@73..75 "}" [] [Whitespace(" ")]
+    5: JS_BLOCK_STATEMENT@75..77
       0: L_CURLY@75..76 "{" [] []
       1: LIST@76..76
       2: R_CURLY@76..77 "}" [] []
@@ -182,18 +192,11 @@ error[SyntaxError]: Expected an expression, but found none
   │     ^ Expected an expression here
 
 --
-error[SyntaxError]: Expected a statement or declaration, but found none
+error[SyntaxError]: expected a statement but instead found '}'
   ┌─ if_stmt_err.js:5:10
   │
 5 │ if (true)}}}} {}
-  │          ^ Expected a statement or declaration here
-
---
-error[SyntaxError]: expected a statement but instead found '}}}'
-  ┌─ if_stmt_err.js:5:11
-  │
-5 │ if (true)}}}} {}
-  │           ^^^ Expected a statement here
+  │          ^ Expected a statement here
 
 --
 if (true) else {}

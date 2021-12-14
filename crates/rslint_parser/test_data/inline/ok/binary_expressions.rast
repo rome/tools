@@ -45,10 +45,10 @@ JsModule {
                         },
                         operator: STAR@24..26 "*" [] [Whitespace(" ")],
                         right: CallExpr {
-                            type_args: missing (optional),
                             callee: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@26..27 "3" [] [],
                             },
+                            type_args: missing (optional),
                             arguments: ArgList {
                                 l_paren_token: L_PAREN@27..29 "(" [Whitespace("\n")] [],
                                 args: [
@@ -225,6 +225,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@139..140 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..140
@@ -264,7 +265,8 @@ JsModule {
             2: CALL_EXPR@26..36
               0: JS_NUMBER_LITERAL_EXPRESSION@26..27
                 0: JS_NUMBER_LITERAL@26..27 "3" [] []
-              1: ARG_LIST@27..36
+              1: (empty)
+              2: ARG_LIST@27..36
                 0: L_PAREN@27..29 "(" [Whitespace("\n")] []
                 1: LIST@29..34
                   0: JS_BINARY_EXPRESSION@29..34

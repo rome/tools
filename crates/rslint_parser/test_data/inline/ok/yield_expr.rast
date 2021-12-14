@@ -57,6 +57,7 @@ JsModule {
             },
         },
     ],
+    eof_token: EOF@52..53 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..53
@@ -64,24 +65,26 @@ JsModule {
   1: LIST@0..0
   2: LIST@0..52
     0: JS_FUNCTION_DECLARATION@0..52
-      0: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
-      1: STAR@9..10 "*" [] []
-      2: JS_IDENTIFIER_BINDING@10..13
+      0: (empty)
+      1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
+      2: STAR@9..10 "*" [] []
+      3: JS_IDENTIFIER_BINDING@10..13
         0: IDENT@10..13 "foo" [] []
-      3: (empty)
-      4: JS_PARAMETER_LIST@13..16
+      4: (empty)
+      5: JS_PARAMETER_LIST@13..16
         0: L_PAREN@13..14 "(" [] []
         1: LIST@14..14
         2: R_PAREN@14..16 ")" [] [Whitespace(" ")]
-      5: (empty)
-      6: JS_FUNCTION_BODY@16..52
+      6: (empty)
+      7: JS_FUNCTION_BODY@16..52
         0: L_CURLY@16..17 "{" [] []
         1: LIST@17..17
         2: LIST@17..50
           0: JS_EXPRESSION_STATEMENT@17..29
             0: JS_YIELD_EXPRESSION@17..28
               0: YIELD_KW@17..25 "yield" [Whitespace("\n ")] [Whitespace(" ")]
-              1: JS_IDENTIFIER_EXPRESSION@25..28
+              1: (empty)
+              2: JS_IDENTIFIER_EXPRESSION@25..28
                 0: JS_REFERENCE_IDENTIFIER@25..28
                   0: IDENT@25..28 "foo" [] []
             1: SEMICOLON@28..29 ";" [] []
@@ -96,6 +99,8 @@ JsModule {
           2: JS_EXPRESSION_STATEMENT@42..50
             0: JS_YIELD_EXPRESSION@42..49
               0: YIELD_KW@42..49 "yield" [Whitespace("\n ")] []
+              1: (empty)
+              2: (empty)
             1: SEMICOLON@49..50 ";" [] []
         3: R_CURLY@50..52 "}" [Whitespace("\n")] []
   3: EOF@52..53 "" [Whitespace("\n")] []

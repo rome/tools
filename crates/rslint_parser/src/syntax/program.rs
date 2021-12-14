@@ -31,7 +31,7 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 
 	let result = match p.syntax.file_kind {
 		FileKind::Script => {
-			parse_statements(p, false, None);
+			parse_statements(p, false);
 			m.complete(p, JS_SCRIPT)
 		}
 		FileKind::Module | FileKind::TypeScript => parse_module_body(p, m),
@@ -50,6 +50,9 @@ fn named_export_specifier(p: &mut Parser) -> CompletedMarker {
 	if p.cur_src() == "as" {
 		p.bump_remap(T![as]);
 		identifier_name(p);
+	} else {
+		p.missing(); // as
+		p.missing(); // name
 	}
 	m.complete(p, SPECIFIER)
 }
@@ -174,11 +177,13 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		}
 	}
 
-	let only_ty = p.typescript()
-		&& (p.cur_src() == "type" && {
-			p.bump_remap(T![type]);
-			true
-		});
+	let only_ty = if p.typescript() && p.cur_src() == "type" {
+		p.bump_remap(T![type]);
+		true
+	} else {
+		p.missing();
+		false
+	};
 
 	let mut exports_ns = false;
 	let mut has_star = false;
@@ -325,6 +330,8 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		if p.cur_src() == "from" {
 			from_clause_and_semi(p, start);
 		} else {
+			p.missing(); // from token
+			p.missing(); // module source
 			semi(p, start..p.cur_tok().range.start);
 			if export_default || exports_ns {
 				let err = p

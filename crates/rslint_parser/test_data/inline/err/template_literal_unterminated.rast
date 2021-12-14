@@ -24,6 +24,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@20..20 "" [] [],
 }
 
 0: JS_MODULE@0..20

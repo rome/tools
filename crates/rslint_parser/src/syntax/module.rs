@@ -69,7 +69,7 @@ fn parse_module_item(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		_ => {
 			let checkpoint = p.checkpoint();
 
-			if let Some(statement) = parse_statement(p, None) {
+			if let Present(statement) = parse_statement(p) {
 				Present(statement)
 			} else {
 				// TODO remove once error recovery is removed from `parse_statement`

@@ -96,6 +96,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@71..72 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..72
@@ -155,12 +156,13 @@ JsModule {
         0: JS_IDENTIFIER_EXPRESSION@57..61
           0: JS_REFERENCE_IDENTIFIER@57..61
             0: IDENT@57..61 "foo" [Whitespace("\n")] []
-        1: L_BRACK@61..62 "[" [] []
-        2: JS_CLASS_EXPRESSION@62..70
+        1: (empty)
+        2: L_BRACK@61..62 "[" [] []
+        3: JS_CLASS_EXPRESSION@62..70
           0: CLASS_KW@62..68 "class" [] [Whitespace(" ")]
           1: L_CURLY@68..69 "{" [] []
           2: LIST@69..69
           3: R_CURLY@69..70 "}" [] []
-        3: R_BRACK@70..71 "]" [] []
+        4: R_BRACK@70..71 "]" [] []
       1: (empty)
   3: EOF@71..72 "" [Whitespace("\n")] []

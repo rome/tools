@@ -124,17 +124,11 @@ JsModule {
                 left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@103..105 "[" [Whitespace("\n")] [],
                     elements: [
-                        JsArrayHole {
-                            hole_token: missing (optional),
-                        },
+                        JsArrayHole,
                         COMMA@105..106 "," [] [],
-                        JsArrayHole {
-                            hole_token: missing (optional),
-                        },
+                        JsArrayHole,
                         COMMA@106..107 "," [] [],
-                        JsArrayHole {
-                            hole_token: missing (optional),
-                        },
+                        JsArrayHole,
                         COMMA@107..108 "," [] [],
                         JsIdentifierAssignment {
                             name_token: IDENT@108..111 "foo" [] [],
@@ -252,6 +246,7 @@ JsModule {
             semicolon_token: SEMICOLON@196..197 ";" [] [],
         },
     ],
+    eof_token: EOF@197..198 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..198

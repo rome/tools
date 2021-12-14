@@ -37,6 +37,7 @@ JsModule {
             r_curly_token: missing (required),
         },
     ],
+    eof_token: EOF@16..17 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..17
@@ -59,6 +60,7 @@ JsModule {
                 0: IDENT@14..15 "a" [] []
             2: R_PAREN@15..16 ")" [] []
           2: (empty)
+          3: (empty)
       4: (empty)
   3: EOF@16..17 "" [Whitespace("\n")] []
 --

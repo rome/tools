@@ -75,6 +75,7 @@ JsModule {
             r_curly_token: R_CURLY@39..40 "}" [] [],
         },
     ],
+    eof_token: EOF@40..41 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..41
@@ -113,7 +114,8 @@ JsModule {
             0: IDENT@27..30 "foo" [] []
           2: L_PAREN@30..31 "(" [] []
           3: R_PAREN@31..33 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@33..35
+          4: (empty)
+          5: JS_FUNCTION_BODY@33..35
             0: L_CURLY@33..34 "{" [] []
             1: LIST@34..34
             2: LIST@34..34

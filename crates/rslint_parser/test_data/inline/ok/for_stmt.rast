@@ -255,6 +255,7 @@ JsModule {
             },
         },
     ],
+    eof_token: EOF@182..183 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..183
@@ -298,8 +299,9 @@ JsModule {
         2: R_CURLY@30..31 "}" [] []
     1: JS_FOR_OF_STATEMENT@31..63
       0: FOR_KW@31..36 "for" [Whitespace("\n")] [Whitespace(" ")]
-      1: L_PAREN@36..37 "(" [] []
-      2: JS_FOR_VARIABLE_DECLARATION@37..54
+      1: (empty)
+      2: L_PAREN@36..37 "(" [] []
+      3: JS_FOR_VARIABLE_DECLARATION@37..54
         0: LET_KW@37..41 "let" [] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION@41..54
           0: JS_OBJECT_BINDING_PATTERN@41..54
@@ -318,13 +320,13 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-      3: OF_KW@54..57 "of" [] [Whitespace(" ")]
-      4: JS_OBJECT_EXPRESSION@57..59
+      4: OF_KW@54..57 "of" [] [Whitespace(" ")]
+      5: JS_OBJECT_EXPRESSION@57..59
         0: L_CURLY@57..58 "{" [] []
         1: (empty)
         2: R_CURLY@58..59 "}" [] []
-      5: R_PAREN@59..61 ")" [] [Whitespace(" ")]
-      6: JS_BLOCK_STATEMENT@61..63
+      6: R_PAREN@59..61 ")" [] [Whitespace(" ")]
+      7: JS_BLOCK_STATEMENT@61..63
         0: L_CURLY@61..62 "{" [] []
         1: LIST@62..62
         2: R_CURLY@62..63 "}" [] []
@@ -358,8 +360,9 @@ JsModule {
         2: R_CURLY@93..94 "}" [] []
     4: JS_FOR_OF_STATEMENT@94..117
       0: FOR_KW@94..99 "for" [Whitespace("\n")] [Whitespace(" ")]
-      1: L_PAREN@99..100 "(" [] []
-      2: JS_FOR_VARIABLE_DECLARATION@100..108
+      1: (empty)
+      2: L_PAREN@99..100 "(" [] []
+      3: JS_FOR_VARIABLE_DECLARATION@100..108
         0: LET_KW@100..104 "let" [] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION@104..108
           0: JS_IDENTIFIER_BINDING@104..108
@@ -367,13 +370,13 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-      3: OF_KW@108..111 "of" [] [Whitespace(" ")]
-      4: JS_ARRAY_EXPRESSION@111..113
+      4: OF_KW@108..111 "of" [] [Whitespace(" ")]
+      5: JS_ARRAY_EXPRESSION@111..113
         0: L_BRACK@111..112 "[" [] []
         1: (empty)
         2: R_BRACK@112..113 "]" [] []
-      5: R_PAREN@113..115 ")" [] [Whitespace(" ")]
-      6: JS_BLOCK_STATEMENT@115..117
+      6: R_PAREN@113..115 ")" [] [Whitespace(" ")]
+      7: JS_BLOCK_STATEMENT@115..117
         0: L_CURLY@115..116 "{" [] []
         1: LIST@116..116
         2: R_CURLY@116..117 "}" [] []

@@ -68,12 +68,12 @@ JsModule {
                                     init: JsInitializerClause {
                                         eq_token: EQ@40..42 "=" [] [Whitespace(" ")],
                                         expression: CallExpr {
-                                            type_args: missing (optional),
                                             callee: JsIdentifierExpression {
                                                 name: JsReferenceIdentifier {
                                                     value_token: IDENT@42..46 "call" [] [],
                                                 },
                                             },
+                                            type_args: missing (optional),
                                             arguments: ArgList {
                                                 l_paren_token: L_PAREN@46..47 "(" [] [],
                                                 args: [],
@@ -101,6 +101,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@54..55 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..55
@@ -158,7 +159,8 @@ JsModule {
                       0: JS_IDENTIFIER_EXPRESSION@42..46
                         0: JS_REFERENCE_IDENTIFIER@42..46
                           0: IDENT@42..46 "call" [] []
-                      1: ARG_LIST@46..49
+                      1: (empty)
+                      2: ARG_LIST@46..49
                         0: L_PAREN@46..47 "(" [] []
                         1: LIST@47..47
                         2: R_PAREN@47..49 ")" [] [Whitespace(" ")]

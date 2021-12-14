@@ -92,6 +92,7 @@ JsModule {
             semicolon_token: SEMICOLON@78..79 ";" [] [],
         },
     ],
+    eof_token: EOF@79..80 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..80

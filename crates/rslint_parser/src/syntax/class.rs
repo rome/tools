@@ -2,7 +2,7 @@ use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
 use crate::syntax::expr::expr_or_assignment;
-use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
+use crate::syntax::function::{function_body, parse_ts_return_type_if_ts, ts_parameter_types};
 use crate::syntax::js_parse_error;
 use crate::syntax::object::{parse_computed_member_name, parse_literal_member_name};
 use crate::syntax::stmt::{is_semi, optional_semi, parse_block_impl};
@@ -10,6 +10,7 @@ use crate::syntax::typescript::{
 	abstract_readonly_modifiers, maybe_ts_type_annotation, try_parse_index_signature,
 	ts_heritage_clause, ts_modifier, ts_type_params, DISALLOWED_TYPE_NAMES,
 };
+use crate::CompletedNodeOrMissingMarker::NodeMarker;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
 	CompletedMarker, ConditionalSyntax, Event, Invalid, Marker, ParseNodeList, ParseRecovery,
@@ -550,7 +551,7 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 		};
 	}
 
-	if let Some(member) = member {
+	if let NodeMarker(member) = member {
 		if is_at_property_class_member(p, 0) {
 			let property = if declare {
 				property_declaration_class_member_body(p, member_marker, member.kind())
@@ -647,7 +648,7 @@ fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {
 				let completed = if is_getter {
 					p.expect_required(T!['(']);
 					p.expect_required(T![')']);
-					ts_return_type(p);
+					parse_ts_return_type_if_ts(p).or_missing(p);
 					function_body(p)
 						.or_missing_with_error(p, js_parse_error::expected_class_method_body);
 
@@ -788,7 +789,7 @@ fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker 
 	optional_member_token(p);
 	ts_parameter_types(p);
 	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_class_parameters);
-	ts_return_type(p);
+	parse_ts_return_type_if_ts(p).or_missing(p);
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_class_method_body);
 
 	m.complete(p, JS_METHOD_CLASS_MEMBER)

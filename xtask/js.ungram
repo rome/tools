@@ -58,11 +58,13 @@ JsScript =
 	interpreter: 'js_shebang'?
 	directives: JsDirective*
 	statements: JsAnyStatement*
+	eof: 'EOF'
 
 JsModule =
 	interpreter: 'js_shebang'?
 	directives: JsDirective*
 	items: JsAnyModuleItem*
+	eof: 'EOF'
 
 
 JsDirective =
@@ -309,10 +311,10 @@ JsThisExpression = 'this'
 JsSuperExpression = 'super'
 
 // new expression
-NewExpr = 'new' type_args:TsTypeArgs? object:JsAnyExpression arguments:ArgList
+NewExpr = 'new' object:JsAnyExpression type_args:TsTypeArgs?  arguments:ArgList
 
 // call expression
-CallExpr = type_args:TsTypeArgs? callee:JsAnyExpression arguments:ArgList
+CallExpr = callee:JsAnyExpression type_args:TsTypeArgs? arguments:ArgList
 
 
 JsAwaitExpression =
@@ -343,7 +345,7 @@ JsConditionalExpression =
 	manual__alternate: JsAnyExpression
 
 // import meta expression
-ImportMeta = 'import' '.'
+ImportMeta = 'import' '.' 'meta'
 
 JsFunctionExpression =
 	'async'?
@@ -360,14 +362,14 @@ JsArrowFunctionExpression =
 	'async'?
 	type_parameters: TsTypeParams?
 	parameter_list: JsAnyArrowFunctionParameters?
-	'=>'
 	return_type: TsTypeAnnotation?
+	'=>'
 	manual__body: JsAnyArrowFunctionBody
 
 JsAnyArrowFunctionParameters = JsParameterList | JsAnyBinding
 JsAnyArrowFunctionBody = JsAnyExpression | JsFunctionBody
 
-// Array expression\
+// Array expression
 JsArrayExpression =
 	'['
 	elements: (JsAnyArrayElement (',' JsAnyArrayElement)* ','?)
@@ -903,7 +905,6 @@ JsVariableDeclaration =
 JsAnyModuleItem =
 	JsAnyStatement
 	| JsImport
-	| ExportNamed
 	| ExportDefaultDecl
 	| ExportDefaultExpr
 	| ExportWildcard
@@ -1068,6 +1069,7 @@ JsAnyExportDeclaration =
 	JsFunctionDeclaration
 	| JsClassDeclaration
 	| JsVariableStatement
+	| ExportNamed
 	| TsEnum
 	| TsTypeAliasDecl
 	| TsNamespaceDecl
@@ -1082,10 +1084,10 @@ TsExportAssignment = 'export' '=' expr: JsAnyExpression ';'?
 // typescript namespace export
 TsNamespaceExportDecl = 'export' 'as' 'namespace' ident: Ident? ';'?
 
-Specifier = name:Ident 'as'? manual__alias: JsName?
+Specifier = name:JsName 'as'? manual__alias: JsName?
 
 // @ematipico this one is not entirely correct I think..
-ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:(Specifier (',' Specifier)* ','?) * '}'
+ExportNamed = '{' specifiers:(Specifier (',' Specifier)* ','?) '}' 'from'?  'js_string_literal'? ';'?
 
 ///////////////
 // AUXILIARY

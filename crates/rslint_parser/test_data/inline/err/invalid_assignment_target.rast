@@ -136,6 +136,7 @@ JsModule {
             semicolon_token: SEMICOLON@61..62 ";" [] [],
         },
     ],
+    eof_token: EOF@62..63 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..63
@@ -217,6 +218,7 @@ JsModule {
               0: JS_REFERENCE_IDENTIFIER@53..55
                 0: IDENT@53..55 "a" [] [Whitespace(" ")]
             1: PLUS@55..56 "+" [] []
+            2: (empty)
           2: R_PAREN@56..58 ")" [] [Whitespace(" ")]
         1: EQ@58..60 "=" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_EXPRESSION@60..61

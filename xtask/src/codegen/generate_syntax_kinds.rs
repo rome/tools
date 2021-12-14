@@ -73,6 +73,7 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 			// but never end up in the final tree
 			#[doc(hidden)]
 			TOMBSTONE,
+			/// Marks the end of the file.May have trivia attached
 			EOF,
 			/// Polymorph list type
 			LIST,
@@ -159,6 +160,7 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 			[js_number_literal] => { $crate::SyntaxKind::JS_NUMBER_LITERAL };
 			[js_big_int_literal] => { $crate::SyntaxKind::JS_BIG_INT_LITERAL };
 			[js_regex_literal] => { $crate::SyntaxKind::JS_REGEX_LITERAL };
+			[EOF] => { $crate::SyntaxKind::EOF };
 			[#] => { $crate::SyntaxKind::HASH };
 		}
 	};

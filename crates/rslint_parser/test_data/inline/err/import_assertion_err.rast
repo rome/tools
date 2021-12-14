@@ -238,6 +238,7 @@ JsModule {
             semicolon_token: SEMICOLON@337..338 ";" [] [],
         },
     ],
+    eof_token: EOF@338..339 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..339
@@ -301,7 +302,8 @@ JsModule {
                 0: IDENT@90..94 "foo" [] [Whitespace(" ")]
           2: R_CURLY@94..96 "}" [] [Whitespace(" ")]
         2: (empty)
-        3: JS_IMPORT_ASSERTION@96..119
+        3: (empty)
+        4: JS_IMPORT_ASSERTION@96..119
           0: ASSERT_KW@96..103 "assert" [] [Whitespace(" ")]
           1: L_CURLY@103..105 "{" [] [Whitespace(" ")]
           2: LIST@105..118

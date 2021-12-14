@@ -4,12 +4,12 @@ JsModule {
     items: [
         JsExpressionStatement {
             expression: CallExpr {
-                type_args: missing (optional),
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@0..3 "foo" [] [],
                     },
                 },
+                type_args: missing (optional),
                 arguments: ArgList {
                     l_paren_token: L_PAREN@3..4 "(" [] [],
                     args: [
@@ -32,12 +32,12 @@ JsModule {
         },
         JsExpressionStatement {
             expression: CallExpr {
-                type_args: missing (optional),
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@8..12 "foo" [Whitespace("\n")] [],
                     },
                 },
+                type_args: missing (optional),
                 arguments: ArgList {
                     l_paren_token: L_PAREN@12..13 "(" [] [],
                     args: [
@@ -66,6 +66,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@20..21 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..21
@@ -77,7 +78,8 @@ JsModule {
         0: JS_IDENTIFIER_EXPRESSION@0..3
           0: JS_REFERENCE_IDENTIFIER@0..3
             0: IDENT@0..3 "foo" [] []
-        1: ARG_LIST@3..7
+        1: (empty)
+        2: ARG_LIST@3..7
           0: L_PAREN@3..4 "(" [] []
           1: LIST@4..7
             0: JS_IDENTIFIER_EXPRESSION@4..5
@@ -94,7 +96,8 @@ JsModule {
         0: JS_IDENTIFIER_EXPRESSION@8..12
           0: JS_REFERENCE_IDENTIFIER@8..12
             0: IDENT@8..12 "foo" [Whitespace("\n")] []
-        1: ARG_LIST@12..17
+        1: (empty)
+        2: ARG_LIST@12..17
           0: L_PAREN@12..13 "(" [] []
           1: LIST@13..17
             0: JS_IDENTIFIER_EXPRESSION@13..14

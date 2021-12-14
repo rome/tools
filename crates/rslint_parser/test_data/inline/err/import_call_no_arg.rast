@@ -28,12 +28,12 @@ JsModule {
         },
         JsExpressionStatement {
             expression: CallExpr {
-                type_args: missing (optional),
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@17..21 "foo" [Whitespace("\n")] [],
                     },
                 },
+                type_args: missing (optional),
                 arguments: ArgList {
                     l_paren_token: L_PAREN@21..22 "(" [] [],
                     args: [],
@@ -43,6 +43,7 @@ JsModule {
             semicolon_token: SEMICOLON@23..24 ";" [] [],
         },
     ],
+    eof_token: EOF@24..25 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..25
@@ -63,14 +64,16 @@ JsModule {
               1: JS_IMPORT_CALL_EXPRESSION@8..16
                 0: IMPORT_KW@8..14 "import" [] []
                 1: L_PAREN@14..15 "(" [] []
-                2: R_PAREN@15..16 ")" [] []
+                2: (empty)
+                3: R_PAREN@15..16 ")" [] []
       1: SEMICOLON@16..17 ";" [] []
     1: JS_EXPRESSION_STATEMENT@17..24
       0: CALL_EXPR@17..23
         0: JS_IDENTIFIER_EXPRESSION@17..21
           0: JS_REFERENCE_IDENTIFIER@17..21
             0: IDENT@17..21 "foo" [Whitespace("\n")] []
-        1: ARG_LIST@21..23
+        1: (empty)
+        2: ARG_LIST@21..23
           0: L_PAREN@21..22 "(" [] []
           1: LIST@22..22
           2: R_PAREN@22..23 ")" [] []

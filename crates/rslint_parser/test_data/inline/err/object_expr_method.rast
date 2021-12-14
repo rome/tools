@@ -40,6 +40,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@16..17 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..17
@@ -64,6 +65,7 @@ JsModule {
                     0: JS_LITERAL_MEMBER_NAME@10..13
                       0: IDENT@10..13 "foo" [] []
                     1: (empty)
+                    2: (empty)
                   1: (empty)
                   2: JS_UNKNOWN_MEMBER@13..15
                     0: R_PAREN@13..15 ")" [] [Whitespace(" ")]

@@ -6,7 +6,6 @@ JsModule {
             do_token: DO_KW@0..3 "do" [] [Whitespace(" ")],
             body: JsExpressionStatement {
                 expression: CallExpr {
-                    type_args: missing (optional),
                     callee: JsStaticMemberExpression {
                         object: JsIdentifierExpression {
                             name: JsReferenceIdentifier {
@@ -18,6 +17,7 @@ JsModule {
                             value_token: IDENT@11..14 "log" [] [],
                         },
                     },
+                    type_args: missing (optional),
                     arguments: ArgList {
                         l_paren_token: L_PAREN@14..15 "(" [] [],
                         args: [
@@ -45,7 +45,6 @@ JsModule {
                 statements: [
                     JsExpressionStatement {
                         expression: CallExpr {
-                            type_args: missing (optional),
                             callee: JsStaticMemberExpression {
                                 object: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
@@ -57,6 +56,7 @@ JsModule {
                                     value_token: IDENT@51..54 "log" [] [],
                                 },
                             },
+                            type_args: missing (optional),
                             arguments: ArgList {
                                 l_paren_token: L_PAREN@54..55 "(" [] [],
                                 args: [
@@ -164,6 +164,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@143..144 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..144
@@ -181,7 +182,8 @@ JsModule {
             1: DOT@10..11 "." [] []
             2: JS_NAME@11..14
               0: IDENT@11..14 "log" [] []
-          1: ARG_LIST@14..22
+          1: (empty)
+          2: ARG_LIST@14..22
             0: L_PAREN@14..15 "(" [] []
             1: LIST@15..21
               0: JS_STRING_LITERAL_EXPRESSION@15..21
@@ -208,7 +210,8 @@ JsModule {
                 1: DOT@50..51 "." [] []
                 2: JS_NAME@51..54
                   0: IDENT@51..54 "log" [] []
-              1: ARG_LIST@54..62
+              1: (empty)
+              2: ARG_LIST@54..62
                 0: L_PAREN@54..55 "(" [] []
                 1: LIST@55..61
                   0: JS_STRING_LITERAL_EXPRESSION@55..61

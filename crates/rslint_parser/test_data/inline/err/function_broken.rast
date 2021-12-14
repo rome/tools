@@ -50,6 +50,7 @@ JsModule {
             r_curly_token: missing (required),
         },
     ],
+    eof_token: EOF@25..26 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..26
@@ -57,16 +58,18 @@ JsModule {
   1: LIST@0..0
   2: LIST@0..25
     0: JS_FUNCTION_DECLARATION@0..14
-      0: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@9..12
-        0: IDENT@9..12 "foo" [] []
+      0: (empty)
+      1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
       2: (empty)
-      3: JS_PARAMETER_LIST@12..14
+      3: JS_IDENTIFIER_BINDING@9..12
+        0: IDENT@9..12 "foo" [] []
+      4: (empty)
+      5: JS_PARAMETER_LIST@12..14
         0: L_PAREN@12..13 "(" [] []
         1: LIST@13..13
         2: R_PAREN@13..14 ")" [] []
-      4: (empty)
-      5: (empty)
+      6: (empty)
+      7: (empty)
     1: JS_UNKNOWN_STATEMENT@14..18
       0: R_PAREN@14..15 ")" [] []
       1: R_CURLY@15..16 "}" [] []

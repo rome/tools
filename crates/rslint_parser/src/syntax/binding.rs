@@ -6,6 +6,7 @@ use crate::syntax::js_parse_error::{
 };
 use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
+use crate::CompletedNodeOrMissingMarker::NodeMarker;
 use crate::ConditionalSyntax::Valid;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
@@ -287,7 +288,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
 
 			let inner = parse_binding_pattern(p).or_missing_with_error(p, expected_identifier);
 
-			if let Some(mut inner) = inner {
+			if let NodeMarker(mut inner) = inner {
 				if inner.kind() != JS_IDENTIFIER_BINDING {
 					let inner_range = inner.range(p);
 					// Don't add multiple errors

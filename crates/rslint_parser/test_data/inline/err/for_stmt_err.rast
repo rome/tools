@@ -291,6 +291,7 @@ JsModule {
             },
         },
     ],
+    eof_token: EOF@196..197 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..197
@@ -386,23 +387,23 @@ JsModule {
       2: JS_UNKNOWN_EXPRESSION@75..78
         0: IN_KW@75..78 "in" [] [Whitespace(" ")]
       3: (empty)
-      4: (empty)
-      5: FOR_STMT_TEST@78..80
+      4: FOR_STMT_TEST@78..80
         0: JS_ARRAY_EXPRESSION@78..80
           0: L_BRACK@78..79 "[" [] []
           1: (empty)
           2: R_BRACK@79..80 "]" [] []
+      5: (empty)
       6: (empty)
-      7: (empty)
-      8: R_PAREN@80..82 ")" [] [Whitespace(" ")]
-      9: JS_BLOCK_STATEMENT@82..84
+      7: R_PAREN@80..82 ")" [] [Whitespace(" ")]
+      8: JS_BLOCK_STATEMENT@82..84
         0: L_CURLY@82..83 "{" [] []
         1: LIST@83..83
         2: R_CURLY@83..84 "}" [] []
     3: JS_FOR_OF_STATEMENT@84..112
       0: FOR_KW@84..89 "for" [Whitespace("\n")] [Whitespace(" ")]
-      1: L_PAREN@89..90 "(" [] []
-      2: JS_FOR_VARIABLE_DECLARATION@90..103
+      1: (empty)
+      2: L_PAREN@89..90 "(" [] []
+      3: JS_FOR_VARIABLE_DECLARATION@90..103
         0: LET_KW@90..94 "let" [] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION@94..95
           0: JS_IDENTIFIER_BINDING@94..95
@@ -420,13 +421,13 @@ JsModule {
             0: EQ@99..101 "=" [] [Whitespace(" ")]
             1: JS_NUMBER_LITERAL_EXPRESSION@101..103
               0: JS_NUMBER_LITERAL@101..103 "6" [] [Whitespace(" ")]
-      3: OF_KW@103..106 "of" [] [Whitespace(" ")]
-      4: JS_ARRAY_EXPRESSION@106..108
+      4: OF_KW@103..106 "of" [] [Whitespace(" ")]
+      5: JS_ARRAY_EXPRESSION@106..108
         0: L_BRACK@106..107 "[" [] []
         1: (empty)
         2: R_BRACK@107..108 "]" [] []
-      5: R_PAREN@108..110 ")" [] [Whitespace(" ")]
-      6: JS_BLOCK_STATEMENT@110..112
+      6: R_PAREN@108..110 ")" [] [Whitespace(" ")]
+      7: JS_BLOCK_STATEMENT@110..112
         0: L_CURLY@110..111 "{" [] []
         1: LIST@111..111
         2: R_CURLY@111..112 "}" [] []

@@ -113,6 +113,7 @@ JsModule {
             semicolon_token: SEMICOLON@68..69 ";" [] [],
         },
     ],
+    eof_token: EOF@69..70 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..70
@@ -126,10 +127,11 @@ JsModule {
           0: JS_IDENTIFIER_EXPRESSION@7..8
             0: JS_REFERENCE_IDENTIFIER@7..8
               0: IDENT@7..8 "a" [] []
-          1: L_BRACK@8..9 "[" [] []
-          2: JS_STRING_LITERAL_EXPRESSION@9..15
+          1: (empty)
+          2: L_BRACK@8..9 "[" [] []
+          3: JS_STRING_LITERAL_EXPRESSION@9..15
             0: JS_STRING_LITERAL@9..15 "'test'" [] []
-          3: R_BRACK@15..16 "]" [] []
+          4: R_BRACK@15..16 "]" [] []
       1: SEMICOLON@16..17 ";" [] []
     1: JS_EXPRESSION_STATEMENT@17..25
       0: JS_UNARY_EXPRESSION@17..24

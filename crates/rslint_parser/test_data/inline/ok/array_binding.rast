@@ -151,9 +151,7 @@ JsModule {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@90..91 "[" [] [],
                             elements: [
-                                JsArrayHole {
-                                    hole_token: missing (optional),
-                                },
+                                JsArrayHole,
                                 COMMA@91..93 "," [] [Whitespace(" ")],
                                 JsIdentifierBinding {
                                     name_token: IDENT@93..94 "a" [] [],
@@ -235,6 +233,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
+    eof_token: EOF@137..138 "" [Whitespace("\n")] [],
 }
 
 0: JS_MODULE@0..138
