@@ -107,6 +107,10 @@ Here are some other scripts that you might find useful.
 
  	When a rule's sole intention is to **mandate a single concept** - such as forcing the use of camel-casing - the rule should be named using the `use` prefix. For example, the rule to mandating the use of camel-cased variable names is named `useCamelCase`.
 
+### Write parsers and parsing rules
+
+To have a better understanding of our parsing infrastructure, please [read the in-depth section](/crates/rslint_parser/docs/authoring_parse_rules.md)
+
 ### Write tests for a parser
 
 If you want to create a new test for an existing parser, you will have to inline
