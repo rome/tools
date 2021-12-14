@@ -168,7 +168,9 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 					// let b = { a: true }
 					// If the member name was a literal OR we're at a colon
 					p.expect_required(T![:]);
-					expr_or_assignment(p);
+					if expr_or_assignment(p).is_none() {
+						p.missing();
+					}
 					Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
 				}
 			} else {

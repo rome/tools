@@ -1090,6 +1090,7 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 				include_in: false,
 				..p.state.clone()
 			});
+			// Replace the `p.token_pos() == checkpoint.token_pos` once `expr()` returns `ParsedSyntax`
 			expr(guard)
 		};
 
@@ -1120,7 +1121,7 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 			return parse_for_of_or_in_head(p);
 		}
 
-		if init_expr.is_none() {
+		if init_expr.is_none() && p.token_pos() == checkpoint.token_pos {
 			p.missing();
 		}
 

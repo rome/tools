@@ -201,7 +201,7 @@ pub fn yield_expr(p: &mut Parser) -> CompletedMarker {
 	p.expect_required(T![yield]);
 
 	if !is_semi(p, 0) && (p.at(T![*]) || p.at_ts(STARTS_EXPR)) {
-		p.eat(T![*]);
+		p.eat_optional(T![*]);
 		if expr_or_assignment(p).is_none() {
 			p.missing();
 		}
@@ -378,7 +378,7 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 		// new.target
 		if p.at(T![.]) && p.token_src(&p.nth_tok(1)) == "target" {
 			p.bump_any();
-			p.bump_any();
+			p.bump_remap(T![target]);
 			let complete = m.complete(p, NEW_TARGET);
 			return Some(subscripts(p, complete, true));
 		}
@@ -783,6 +783,9 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 					temp.bump_any(); // bump ; into sequence expression which may or may not miss a lhs
 				}
 			} else {
+				if let Some(sequence) = sequence.take() {
+					sequence.complete(&mut *temp, JS_SEQUENCE_EXPRESSION);
+				}
 				temp.expect_required(T![')']);
 				break;
 			}
@@ -1038,7 +1041,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				// import.foo
 				// import.metaa
 				if p.at(T![ident]) && p.token_src(&p.cur_tok()) == "meta" {
-					p.bump_any();
+					p.bump_remap(T![meta]);
 					m.complete(p, IMPORT_META)
 				} else if p.at(T![ident]) {
 					let err = p
@@ -1049,7 +1052,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 						.primary(p.cur_tok().range, "");
 
 					p.err_and_bump(err, ERROR);
-					m.complete(p, ERROR)
+					m.complete(p, IMPORT_META)
 				} else {
 					let err = p
 						.err_builder("Expected `meta` following an import keyword, but found none")
@@ -1066,7 +1069,9 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				// test import_call
 				// import("foo")
 				p.expect_required(T!['(']);
-				expr_or_assignment(p);
+				if expr_or_assignment(p).is_none() {
+					p.missing();
+				}
 				p.expect_required(T![')']);
 				m.complete(p, JS_IMPORT_CALL_EXPRESSION)
 			}

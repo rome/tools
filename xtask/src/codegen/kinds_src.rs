@@ -150,6 +150,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"let",
 		"float",
 		"number",
+		"meta",
 	],
 	literals: &[
 		"JS_NUMBER_LITERAL",
