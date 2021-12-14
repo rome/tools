@@ -11,22 +11,24 @@ JsModule {
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: [
-                JsConstructorClassMember {
-                    access_modifier: missing (optional),
-                    name: JsLiteralMemberName {
-                        value: IDENT@17..28 "constructor" [] [],
-                    },
-                    parameter_list: JsConstructorParameterList {
-                        l_paren_token: L_PAREN@28..29 "(" [] [],
-                        parameters: [],
-                        r_paren_token: R_PAREN@29..31 ")" [] [Whitespace(" ")],
-                    },
-                    body: JsFunctionBody {
-                        l_curly_token: L_CURLY@31..32 "{" [] [],
-                        directives: [],
-                        statements: [],
-                        r_curly_token: R_CURLY@32..34 "}" [] [Whitespace(" ")],
-                    },
+                JsUnknownMember {
+                    items: [
+                        STATIC_KW@10..17 "static" [] [Whitespace(" ")],
+                        JsLiteralMemberName {
+                            value: IDENT@17..28 "constructor" [] [],
+                        },
+                        JsConstructorParameterList {
+                            l_paren_token: L_PAREN@28..29 "(" [] [],
+                            parameters: [],
+                            r_paren_token: R_PAREN@29..31 ")" [] [Whitespace(" ")],
+                        },
+                        JsFunctionBody {
+                            l_curly_token: L_CURLY@31..32 "{" [] [],
+                            directives: [],
+                            statements: [],
+                            r_curly_token: R_CURLY@32..34 "}" [] [Whitespace(" ")],
+                        },
+                    ],
                 },
             ],
             r_curly_token: R_CURLY@34..35 "}" [] [],
@@ -47,7 +49,7 @@ JsModule {
       3: (empty)
       4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       5: LIST@10..34
-        0: JS_CONSTRUCTOR_CLASS_MEMBER@10..34
+        0: JS_UNKNOWN_MEMBER@10..34
           0: (empty)
           1: (empty)
           2: STATIC_KW@10..17 "static" [] [Whitespace(" ")]

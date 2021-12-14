@@ -13,8 +13,8 @@ use crate::syntax::typescript::{
 use crate::CompletedNodeOrMissingMarker::NodeMarker;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-	CompletedMarker, ConditionalSyntax, Event, Marker, ParseNodeList, ParseRecovery, Parser,
-	ParserState, StrictMode, TokenSet, Valid,
+	CompletedMarker, ConditionalSyntax, Event, Invalid, Marker, ParseNodeList, ParseRecovery,
+	Parser, ParserState, StrictMode, TokenSet, Valid,
 };
 use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::*;
@@ -347,14 +347,14 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		offset += 1;
 
 		if is_at_method_class_member(p, offset) {
-			member_is_valid = Modifiers::default()
+			let is_valid = Modifiers::default()
 				.set_declare(declare)
 				.set_accessibility(has_access_modifier)
 				.set_static(is_static)
 				.set_declare_err(declare_diagnostic)
 				.consume(p);
 			return Present(parse_method_class_member_body(p, member_marker))
-				.into_conditional(member_is_valid);
+				.into_conditional(is_valid);
 		} else if is_at_property_class_member(p, offset) {
 			Modifiers::default()
 				.set_declare(declare)
@@ -372,13 +372,17 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	}
 
 	// Seems that static is a keyword since the parser wasn't able to parse a valid method or property named static
-	member_is_valid = Modifiers::default()
+	let is_valid = Modifiers::default()
 		.set_declare(declare)
 		.set_accessibility(has_access_modifier)
 		.set_static(is_static)
 		.set_remap_static(true)
 		.set_declare_err(declare_diagnostic)
 		.consume(p);
+
+	if !is_valid {
+		member_is_valid = false
+	}
 
 	let accessibility_marker = p.start();
 	let (abstract_range, readonly_range) = abstract_readonly_modifiers(p);
@@ -521,6 +525,7 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		// class B { static constructor() {} }
 		return if is_constructor {
 			let constructor = parse_constructor_class_member_body(p, member_marker);
+			let mut constructor_has_error = false;
 			if let Present(Valid(constructor)) = constructor {
 				if is_static {
 					let err = p
@@ -529,6 +534,7 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 						.secondary(static_token_range, "Remove the `static` word");
 
 					p.error(err);
+					constructor_has_error = true;
 				}
 			}
 
@@ -539,9 +545,18 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 				);
 
 				p.error(err);
+				constructor_has_error = true;
 			}
 
-			constructor
+			return if constructor_has_error {
+				if let Present(Valid(marker)) = constructor {
+					Present(Invalid(marker.into()))
+				} else {
+					constructor
+				}
+			} else {
+				constructor
+			};
 		} else {
 			Present(parse_method_class_member_body(p, member_marker))
 				.into_conditional(member_is_valid)
@@ -864,11 +879,7 @@ fn parse_constructor_class_member_body(
 
 	// TODO(RDambrosio016): ideally the following errors should just point to the modifiers
 	let completed_marker = member_marker.complete(p, JS_CONSTRUCTOR_CLASS_MEMBER);
-	if constructor_is_valid {
-		Present(completed_marker).into_valid()
-	} else {
-		Present(completed_marker).into_invalid()
-	}
+	Present(completed_marker).into_conditional(constructor_is_valid)
 }
 
 fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
