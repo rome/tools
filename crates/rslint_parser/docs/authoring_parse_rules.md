@@ -126,80 +126,72 @@ Let's try to parse an array:
 We will use  `ParseSeparatedList` in order to achieve that
 
 ```rust
-
 struct ArrayElementsList;
 
 impl ParseSeparatedList for ArrayElementsList {
-    
-}
+    type ParsedElement = CompletedMarker;
 
-let list = p.start();
-let mut first = true;
+    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+        parse_array_element(p)
+    }
 
-while !p.at(T![']']) {
- if first {
-  first = false;
- } else {
-  p.expect(T![,]);
+    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+        p.at_ts(token_set![T![default], T![case], T!['}']])
+    }
 
-  if p.at(T!['}']) {
-   break;
-  }
- }
-
- let recovered_element = parse_array_element(p).or_recover(
-  p,
-  ParseRecovery::new(JS_UNKNOWN_EXPRESSION, token_set![T![,], T![']'], T![;]])
-   .enable_recovery_on_line_break(),
-  js_parse_error::expected_array_element,
- );
-
- if recovered_element.is_err() {
-  break;
- }
-}
-
-list.complete(p, LIST);
+    fn recover(
+        &mut self,
+        p: &mut Parser,
+        parsed_element: ParsedSyntax<Self::ParsedElement>,
+    ) -> parser::RecoveryResult {
+        parsed_element.or_recover(
+            p,
+            &ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
+            js_parse_error::expected_case,
+        )
+    }
+};
 ```
 
 Let's run through this step by step:
 
 ```rust
-let recovered_element = parse_array_element(p).or_recover(
- p,
- ParseRecovery::new(JS_UNKNOWN_EXPRESSION, token_set![T![,], T![']'], T![;]])
-  .enable_recovery_on_line_break(),
- js_parse_error::expected_array_element,
-);
+parsed_element.or_recover(
+    p,
+    &ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
+    js_parse_error::expected_case,
+)
 ```
 
-The `or_recover` performs an error recovery if the `parse_array_element` method returns `Absent`; there's no array element in the source text. The recovery eats all tokens until it finds one of the tokens specified in the `token_set`, a line break (if you called `enable_recovery_on_line_break`) or the end of the file. The recovery doesn't throw the tokens away but instead wraps them inside a `UNKNOWN_JS_EXPRESSION` node (first parameter). There exist multiple `UNKNOWN_*` nodes. You must consult the grammar to understand which `UNKNOWN*` node is supported in your case.
+The `or_recover` performs an error recovery if the `parse_array_element` method returns `Absent`; 
+there's no array element in the source text. 
+
+The recovery eats all tokens until it finds one of the tokens specified in the `token_set`, 
+a line break (if you called `enable_recovery_on_line_break`) or the end of the file. 
+
+The recovery doesn't throw the tokens away but instead wraps them inside a `UNKNOWN_JS_EXPRESSION` node (first parameter). 
+There exist multiple `UNKNOWN_*` nodes. You must consult the grammar to understand which `UNKNOWN*` node is supported in your case.
 
 > You usually want to include the terminal token ending your list, the element separator token, and the token terminating a statement in your recovery set.
 
 
-Now, the problem with recovery is that it can fail, and you must exit the loop if that happens to avoid an infinite loop:
+Now, the problem with recovery is that it can fail, and there are two reasons:
 
-```rust
-if recovered_element.is_err() {
- break;
-}
-```
+- the parser reached the end of the file;
+- the next token is one of the tokens specified in the recovery set, meaning there is nothing to recover from;
 
-There are two reasons why the recovery can fail
-
-The parser reached the end of the file.
-The next token is one of the tokens specified in the recovery set, meaning: There is nothing to recover from.
+In these cases the `ParseSeparatedList` and `ParseNodeList` will recover the parser for you.
 
 ## Conditional Syntax
 
 The conditional syntax allows you to express that some syntax may not be valid in all source files. Some use cases are:
 
-* Syntax that is only supported in strict or sloppy mode: for example, `with` statements
-* Syntax that is only supported in certain file types: Typescript, JSX, modules
-* Syntax that is only available in specific language versions: experimental features, different versions of the language e.g. (ECMA versions for JavaScript)
+* syntax that is only supported in strict or sloppy mode: for example, `with` statements is not valid when a JavaScript file uses `"use strict"` or is a module;
+* syntax that is only supported in certain file types: Typescript, JSX, modules;
+* syntax that is only available in specific language versions: experimental features, different versions of the language e.g. (ECMA versions for JavaScript);
 
-The idea is that the parser always parses the syntax regardless of whatever it is supported in this specific file or context. The main motivation behind doing so is that this gives us perfect error recovery and allows us to use the same code regardless of whether the syntax is supported.
+The idea is that the parser always parses the syntax regardless of whatever it is supported in this specific file or context. 
+The main motivation behind doing so is that this gives us perfect error recovery and allows us to use the same code regardless of whether the syntax is supported.
 
 However, conditional syntax must be handled because we want to add a diagnostic if the syntax isn't supported for the current file, and the parsed tokens must be attached somewhere.
 
