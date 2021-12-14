@@ -914,7 +914,6 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 		false
 	};
 
-	let maybe_err = p.start();
 	let has_readonly = if let Some(range) = ts_modifier(p, &["readonly"]) {
 		// test_err class_constructor_parameter_readonly
 		// class B { constructor(readonly b) {} }
@@ -924,14 +923,10 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 				.primary(range, "");
 
 			p.error(err);
-			// TODO: remap error to an unknown node
-			maybe_err.complete(p, JS_UNKNOWN_EXPRESSION);
-		} else {
-			maybe_err.abandon(p);
+			p.bump_any();
 		}
 		true
 	} else {
-		maybe_err.abandon(p);
 		false
 	};
 
