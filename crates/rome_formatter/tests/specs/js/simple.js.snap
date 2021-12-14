@@ -1,0 +1,26 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: simple.js
+
+---
+# Input
+function foo() {
+	let [ref, setRef] = useState();
+
+	useEffect(() => {
+		setRef()
+	});
+
+	return ref;
+}
+
+---
+# Output
+function foo() {
+	let [ref, setRef] = useState();
+	useEffect(() => {
+		setRef();
+	});
+	return ref;
+}
+

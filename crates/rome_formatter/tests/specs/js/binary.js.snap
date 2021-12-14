@@ -1,0 +1,56 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: binary.js
+
+---
+# Input
+a  +   b
+a  <   b
+a  >   b
+a  <=  b
+a  >=  b
+a  ==  b
+a  === b
+a  !=  b
+a  !== b
+a  +   b
+a  -   b
+a  *   b
+a  /   b
+a  %   b
+a  **  b
+a  <<  b
+a  >>  b
+a  >>> b
+a  &   b
+a  |   b
+a  ^   b
+a  in  b
+a  instanceof b
+
+---
+# Output
+a + b;
+a < b;
+a > b;
+a <= b;
+a >= b;
+a == b;
+a === b;
+a != b;
+a !== b;
+a + b;
+a - b;
+a * b;
+a / b;
+a % b;
+a ** b;
+a << b;
+a >> b;
+a >>> b;
+a & b;
+a | b;
+a ^ b;
+a in b;
+a instanceof b;
+

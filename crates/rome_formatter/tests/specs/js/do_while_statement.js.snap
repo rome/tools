@@ -1,0 +1,18 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: do_while_statement.js
+
+---
+# Input
+do {
+var foo = 4
+}
+
+while (something)
+
+---
+# Output
+do {
+	var foo = 4;
+} while (something);
+

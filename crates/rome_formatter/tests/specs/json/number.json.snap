@@ -1,0 +1,12 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: number.json
+
+---
+# Input
+0
+
+---
+# Output
+0
+

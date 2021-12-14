@@ -1,0 +1,27 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: object.js
+
+---
+# Input
+let a = {
+	async *foo(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccccccccccccc) {
+
+	},
+
+	[fooooooooooooooooooooooooooooooooooooooooooooooooo()]: () => {
+
+	}
+}
+
+---
+# Output
+let a = {
+	async *foo(
+		aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
+		bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
+		cccccccccccccccccccccccccccccc
+	) {},
+	[fooooooooooooooooooooooooooooooooooooooooooooooooo()]: () => {},
+};
+

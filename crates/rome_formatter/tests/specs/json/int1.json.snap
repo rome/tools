@@ -1,0 +1,101 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: int1.json
+
+---
+# Input
+[
+    "JSON Test Pattern pass1",
+    {"object with 1 member":["array with 1 element"]},
+    {},
+    [],
+    true,
+    false,
+    null,
+    {
+        "integer": 1234567890,
+        "real": -9876.543210,
+        "": 23456789012,
+        "zero": 0,
+        "one": 1,
+        "space": " ",
+        "quote": "\"",
+        "backslash": "\\",
+        "controls": "\n\r\t",
+        "slash": "/ & \/",
+        "alpha": "abcdefghijklmnopqrstuvwyz",
+        "ALPHA": "ABCDEFGHIJKLMNOPQRSTUVWYZ",
+        "digit": "0123456789",
+        "0123456789": "digit",
+        "true": true,
+        "false": false,
+        "null": null,
+        "array":[  ],
+        "object":{  },
+        "address": "50 St. James Street",
+        "url": "http://www.JSON.org/",
+        "comment": "// /* <!-- --",
+        "# -- --> */": " ",
+        " s p a c e d " :[1,2 , 3
+
+,
+
+4 , 5        ,          6           ,7        ],"compact":[1,2,3,4,5,6,7],
+        "jsontext": "{\"object with 1 member\":[\"array with 1 element\"]}",
+        "\/\\\"\n\r\t`1~!@#$%^&*()_+-=[]{}|;:',./<>?"
+: "A key can be any string"
+    },
+    0.5 ,98.6
+,
+99.44
+,
+
+1066
+,"rosebud"]
+
+---
+# Output
+[
+	"JSON Test Pattern pass1",
+	{"object with 1 member": ["array with 1 element"]},
+	{},
+	[],
+	true,
+	false,
+	null,
+	{
+		"integer": 1234567890,
+		"real": -9876.543210,
+		"": 23456789012,
+		"zero": 0,
+		"one": 1,
+		"space": " ",
+		"quote": "\"",
+		"backslash": "\\",
+		"controls": "\n\r\t",
+		"slash": "/ & \/",
+		"alpha": "abcdefghijklmnopqrstuvwyz",
+		"ALPHA": "ABCDEFGHIJKLMNOPQRSTUVWYZ",
+		"digit": "0123456789",
+		"0123456789": "digit",
+		"true": true,
+		"false": false,
+		"null": null,
+		"array": [],
+		"object": {},
+		"address": "50 St. James Street",
+		"url": "http://www.JSON.org/",
+		"comment": "// /* <!-- --",
+		"# -- --> */": " ",
+		" s p a c e d ": [1, 2, 3, 4, 5, 6, 7],
+		"compact": [1, 2, 3, 4, 5, 6, 7],
+		"jsontext": "{\"object with 1 member\":[\"array with 1 element\"]}",
+		"\/\\\"\n\r\t`1~!@#$%^&*()_+-=[]{}|;:',./<>?": "A key can be any string"
+	},
+	0.5,
+	98.6,
+	99.44,
+	1066,
+	"rosebud"
+]
+

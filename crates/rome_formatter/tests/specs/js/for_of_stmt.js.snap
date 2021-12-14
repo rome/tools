@@ -1,0 +1,23 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: for_of_stmt.js
+
+---
+# Input
+for (a of b) {}
+
+for (let a of b) {}
+
+for (const aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks of aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks) {
+}
+
+---
+# Output
+for (a of b) {}
+for (let a of b) {}
+for (
+	const aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks
+	of
+	aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks
+) {}
+

@@ -1,0 +1,14 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: spread.js
+
+---
+# Input
+let a = [...a, ...b,];
+let b = [...a, ...b];
+
+---
+# Output
+let a = [...a, ...b];
+let b = [...a, ...b];
+

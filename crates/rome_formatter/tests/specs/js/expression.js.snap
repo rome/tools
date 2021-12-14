@@ -1,0 +1,26 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: expression.js
+
+---
+# Input
+x = y!
+x = ++y
+x = --y
+x = y++
+x = y--
+x ?? y
+x || y
+x && y
+
+---
+# Output
+x = y!
+x = ++y;
+x = --y;
+x = y++;
+x = y--;
+x ?? y;
+x || y;
+x && y;
+

@@ -1,0 +1,23 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: continue_stmt.js
+
+---
+# Input
+while (true) {
+	continue;
+}
+
+tour: while (true) {
+	continue tour;
+}
+
+---
+# Output
+while (true) {
+	continue;
+}
+tour: while (true) {
+	continue tour;
+}
+
