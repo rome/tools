@@ -529,14 +529,9 @@ pub(super) fn parse_block_impl(
 	Present(m.complete(p, block_kind))
 }
 
+#[derive(Default)]
 struct DirectivesList {
 	old_state: Option<ParserState>,
-}
-
-impl Default for DirectivesList {
-	fn default() -> Self {
-		Self { old_state: None }
-	}
 }
 
 impl DirectivesList {

@@ -15,7 +15,7 @@ use crate::{
 };
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-#[allow(clippy::box_vec)]
+#[allow(clippy::box_collection)]
 pub enum GreenTokenTrivia {
 	None,
 	Whitespace(usize),
