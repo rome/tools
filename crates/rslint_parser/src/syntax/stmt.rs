@@ -623,7 +623,10 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
 /// An expression wrapped in parentheses such as `()`
 pub fn parenthesized_expression(p: &mut Parser) {
 	p.state.allow_object_expr = p.expect_required(T!['(']);
-	if expr(p).is_none() {
+
+	let pos = p.token_pos();
+	// Remove the pos check once `expr` has been converted to `ParsedSyntax`
+	if expr(p).is_none() && pos == p.token_pos() {
 		p.missing();
 	}
 	p.expect_required(T![')']);
@@ -1022,9 +1025,7 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.expect_required(T![while]);
 	parenthesized_expression(p);
 	let end_range = p.cur_tok().range.end;
-	if !semi(p, start..end_range) {
-		p.missing();
-	}
+	semi(p, start..end_range);
 	Present(m.complete(p, JS_DO_WHILE_STATEMENT))
 }
 

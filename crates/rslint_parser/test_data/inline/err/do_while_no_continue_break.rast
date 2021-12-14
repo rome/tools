@@ -80,8 +80,6 @@ JsModule {
         0: BREAK_KW@7..13 "break" [] [Whitespace(" ")]
       5: (empty)
       6: (empty)
-      7: (empty)
-      8: (empty)
     1: JS_EXPRESSION_STATEMENT@13..23
       0: JS_PARENTHESIZED_EXPRESSION@13..23
         0: L_PAREN@13..14 "(" [] []
@@ -101,8 +99,6 @@ JsModule {
         0: CONTINUE_KW@31..40 "continue" [] [Whitespace(" ")]
       5: (empty)
       6: (empty)
-      7: (empty)
-      8: (empty)
     3: JS_EXPRESSION_STATEMENT@40..47
       0: JS_PARENTHESIZED_EXPRESSION@40..47
         0: L_PAREN@40..41 "(" [] []
