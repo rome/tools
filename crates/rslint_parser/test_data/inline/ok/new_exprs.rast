@@ -36,7 +36,7 @@ JsModule {
             expression: NewTarget {
                 new_token: NEW_KW@18..22 "new" [Whitespace("\n")] [],
                 dot_token: DOT@22..23 "." [] [],
-                target_token: missing (required),
+                target_token: TARGET_KW@23..29 "target" [] [],
             },
             semicolon_token: missing (optional),
         },
@@ -198,7 +198,7 @@ JsModule {
       0: NEW_TARGET@18..29
         0: NEW_KW@18..22 "new" [Whitespace("\n")] []
         1: DOT@22..23 "." [] []
-        2: IDENT@23..29 "target" [] []
+        2: TARGET_KW@23..29 "target" [] []
       1: (empty)
     3: JS_EXPRESSION_STATEMENT@29..52
       0: NEW_EXPR@29..51

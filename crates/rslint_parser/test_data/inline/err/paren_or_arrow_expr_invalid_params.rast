@@ -130,7 +130,7 @@ JsModule {
           1: COMMA@16..18 "," [] [Whitespace(" ")]
           2: JS_UNKNOWN_EXPRESSION@18..19
             0: COMMA@18..19 "," [] []
-          3: (empty)
+        2: (empty)
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@19..20
       0: JS_IDENTIFIER_EXPRESSION@19..20

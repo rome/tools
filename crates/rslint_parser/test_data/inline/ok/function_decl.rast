@@ -215,7 +215,8 @@ JsModule {
           0: JS_EXPRESSION_STATEMENT@103..116
             0: JS_YIELD_EXPRESSION@103..115
               0: YIELD_KW@103..112 "yield" [Whitespace("\n  ")] [Whitespace(" ")]
-              1: JS_IDENTIFIER_EXPRESSION@112..115
+              1: (empty)
+              2: JS_IDENTIFIER_EXPRESSION@112..115
                 0: JS_REFERENCE_IDENTIFIER@112..115
                   0: IDENT@112..115 "foo" [] []
             1: SEMICOLON@115..116 ";" [] []

@@ -83,7 +83,8 @@ JsModule {
           0: JS_EXPRESSION_STATEMENT@17..29
             0: JS_YIELD_EXPRESSION@17..28
               0: YIELD_KW@17..25 "yield" [Whitespace("\n ")] [Whitespace(" ")]
-              1: JS_IDENTIFIER_EXPRESSION@25..28
+              1: (empty)
+              2: JS_IDENTIFIER_EXPRESSION@25..28
                 0: JS_REFERENCE_IDENTIFIER@25..28
                   0: IDENT@25..28 "foo" [] []
             1: SEMICOLON@28..29 ";" [] []

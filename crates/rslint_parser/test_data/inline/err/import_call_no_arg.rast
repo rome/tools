@@ -64,7 +64,8 @@ JsModule {
               1: JS_IMPORT_CALL_EXPRESSION@8..16
                 0: IMPORT_KW@8..14 "import" [] []
                 1: L_PAREN@14..15 "(" [] []
-                2: R_PAREN@15..16 ")" [] []
+                2: (empty)
+                3: R_PAREN@15..16 ")" [] []
       1: SEMICOLON@16..17 ";" [] []
     1: JS_EXPRESSION_STATEMENT@17..24
       0: CALL_EXPR@17..23

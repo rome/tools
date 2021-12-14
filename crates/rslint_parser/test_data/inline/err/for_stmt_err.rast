@@ -387,16 +387,15 @@ JsModule {
       2: JS_UNKNOWN_EXPRESSION@75..78
         0: IN_KW@75..78 "in" [] [Whitespace(" ")]
       3: (empty)
-      4: (empty)
-      5: FOR_STMT_TEST@78..80
+      4: FOR_STMT_TEST@78..80
         0: JS_ARRAY_EXPRESSION@78..80
           0: L_BRACK@78..79 "[" [] []
           1: (empty)
           2: R_BRACK@79..80 "]" [] []
+      5: (empty)
       6: (empty)
-      7: (empty)
-      8: R_PAREN@80..82 ")" [] [Whitespace(" ")]
-      9: JS_BLOCK_STATEMENT@82..84
+      7: R_PAREN@80..82 ")" [] [Whitespace(" ")]
+      8: JS_BLOCK_STATEMENT@82..84
         0: L_CURLY@82..83 "{" [] []
         1: LIST@83..83
         2: R_CURLY@83..84 "}" [] []
