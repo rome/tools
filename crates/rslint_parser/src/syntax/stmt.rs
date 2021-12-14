@@ -774,7 +774,7 @@ pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax<CompletedM
 	let start = p.cur_tok().range.start;
 
 	let declaration =
-		parse_variable_declaration_list(p, VariableDeclarationContext::VariableStatement)
+		parse_variable_declaration_list(p, VariableDeclarationParent::VariableStatement)
 			.or_missing_with_error(p, js_parse_error::expected_variable);
 	if let Some(declaration) = declaration {
 		let m = declaration.precede(p);
@@ -787,7 +787,7 @@ pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax<CompletedM
 
 fn parse_variable_declaration_list(
 	p: &mut Parser,
-	declaration_context: VariableDeclarationContext,
+	declaration_context: VariableDeclarationParent,
 ) -> ParsedSyntax<CompletedMarker> {
 	let m = p.start();
 
@@ -800,10 +800,10 @@ fn parse_variable_declaration_list(
 	}
 }
 
-/// What's the context in which the variable gets declared.
+/// What's the parent node of the variable declaration
 #[repr(u8)]
 #[derive(Clone, Debug, Copy, Eq, PartialEq)]
-enum VariableDeclarationContext {
+enum VariableDeclarationParent {
 	/// Declaration inside a `for...of` or `for...in` or `for (;;)` loop
 	For,
 
@@ -818,22 +818,21 @@ enum VariableDeclarationContext {
 ///   there's only one declaration.
 fn parse_variable_declarations(
 	p: &mut Parser,
-	declaration_context: VariableDeclarationContext,
+	declaration_parent: VariableDeclarationParent,
 ) -> ParsedSyntax<(Option<CompletedMarker>, Option<Range<usize>>)> {
-	let mut is_const = None;
-	let mut is_let = false;
+	let mut context = VariableDeclarationContext::new(declaration_parent);
 
 	match p.cur() {
 		T![var] => p.bump_any(),
 		T![const] => {
-			is_const = Some(p.cur_tok().range);
+			context.is_const = Some(p.cur_tok().range);
 			p.bump_any()
 		}
 		T![ident] if p.cur_src() == "let" => {
 			// let is a valid identifier name that's why the returns an ident for let.
 			// remap it here because we know from the context that this is the let keyword.
 			p.bump_remap(T![let]);
-			is_let = true;
+			context.is_let = true;
 		}
 		_ => {
 			return Absent;
@@ -841,10 +840,7 @@ fn parse_variable_declarations(
 	}
 
 	let mut parse_declarations = ParseVariableDeclarations {
-		const_range: is_const,
-		declaration_context,
-		is_let,
-		first: true,
+		declaration_context: context,
 		remaining_declaration_range: None,
 	};
 
@@ -855,10 +851,7 @@ fn parse_variable_declarations(
 }
 
 struct ParseVariableDeclarations {
-	const_range: Option<Range<usize>>,
 	declaration_context: VariableDeclarationContext,
-	is_let: bool,
-	first: bool,
 	// Range of the declarations succeeding the first declaration
 	// None until this hits the second declaration
 	remaining_declaration_range: Option<Range<usize>>,
@@ -868,16 +861,9 @@ impl ParseSeparatedList for ParseVariableDeclarations {
 	type ParsedElement = CompletedMarker;
 
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
-		parse_variable_declaration(
-			p,
-			&self.const_range,
-			self.is_let,
-			self.first,
-			self.declaration_context,
-		)
-		.map(|declaration| {
-			if self.first {
-				self.first = false;
+		parse_variable_declaration(p, &self.declaration_context).map(|declaration| {
+			if self.declaration_context.is_first {
+				self.declaration_context.is_first = false;
 			} else if let Some(range) = self.remaining_declaration_range.as_mut() {
 				range.end = declaration.range(p).as_range().end;
 			} else {
@@ -888,7 +874,7 @@ impl ParseSeparatedList for ParseVariableDeclarations {
 	}
 
 	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
-		if self.first {
+		if self.declaration_context.is_first {
 			false
 		} else {
 			!p.at(T![,])
@@ -918,22 +904,44 @@ impl ParseSeparatedList for ParseVariableDeclarations {
 	}
 }
 
+struct VariableDeclarationContext {
+	/// The range of the `const` keyword if this is `const` variable declaration.
+	is_const: Option<Range<usize>>,
+	/// `true` if this is a let variable declaration
+	is_let: bool,
+	/// Is this the first declaration in the declaration list (a first, b second in `let a, b`)
+	is_first: bool,
+	/// What's the parent of the variable declaration
+	parent: VariableDeclarationParent,
+}
+
+impl VariableDeclarationContext {
+	fn new(parent: VariableDeclarationParent) -> Self {
+		Self {
+			parent,
+			is_const: None,
+			is_let: false,
+			is_first: true,
+		}
+	}
+
+	fn duplicate_binding_parent_name(&self) -> Option<&'static str> {
+		if self.is_const.is_some() {
+			Some("const")
+		} else if self.is_let {
+			Some("let")
+		} else {
+			None
+		}
+	}
+}
+
 // A single declarator, either `ident` or `ident = assign_expr`
 fn parse_variable_declaration(
 	p: &mut Parser,
-	is_const: &Option<Range<usize>>,
-	is_let: bool,
-	is_first: bool,
-	declaration_context: VariableDeclarationContext,
+	context: &VariableDeclarationContext,
 ) -> ParsedSyntax<CompletedMarker> {
-	p.state.duplicate_binding_parent = if is_const.is_some() {
-		Some("const")
-	} else if is_let {
-		Some("let")
-	} else {
-		None
-	};
-
+	p.state.duplicate_binding_parent = context.duplicate_binding_parent_name();
 	let id = parse_binding_pattern(p);
 	p.state.duplicate_binding_parent = None;
 
@@ -960,8 +968,9 @@ fn parse_variable_declaration(
 
 		// Heuristic to determine if we're in a for of or for in loop. This may be off if
 		// the user uses a for of/in with multiple declarations but this isn't allowed anyway.
-		let is_in_for_of_or_in = declaration_context == VariableDeclarationContext::For
-			&& is_first && (p.cur_src() == "of" || p.at(T![in]));
+		let is_in_for_of_or_in = context.parent == VariableDeclarationParent::For
+			&& context.is_first
+			&& (p.cur_src() == "of" || p.at(T![in]));
 
 		if is_in_for_of_or_in {
 			if p.typescript() {
@@ -988,7 +997,7 @@ fn parse_variable_declaration(
 
 			p.error(err);
 		// FIXME: does ts allow const var declarations without initializers in .d.ts files?
-		} else if initializer.is_none() && is_const.is_some() && !p.state.in_declare {
+		} else if initializer.is_none() && context.is_const.is_some() && !p.state.in_declare {
 			let err = p
 				.err_builder("Const var declarations must have an initialized value")
 				.primary(id.range(p), "this variable needs to be initialized");
@@ -1057,7 +1066,7 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 				..p.state.clone()
 			});
 
-			parse_variable_declarations(&mut *guard, VariableDeclarationContext::For).unwrap()
+			parse_variable_declarations(&mut *guard, VariableDeclarationParent::For).unwrap()
 		};
 
 		let is_in = p.at(T![in]);
@@ -1065,8 +1074,8 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 
 		if is_in || is_of {
 			if let Some(declarations_list) = declarations {
-				// remove the intermediate list node created by parse variable declarations that is needed
-				// for a ForInOrOfInitializer
+				// remove the intermediate list node created by parse variable declarations that is not needed
+				// for a ForInOrOfInitializer where the variable declaration is a direct child.
 				declarations_list.undo_completion(p).abandon(p);
 			}
 
