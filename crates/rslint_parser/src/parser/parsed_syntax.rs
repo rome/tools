@@ -302,19 +302,6 @@ impl ParsedSyntax<CompletedMarker> {
 		}
 	}
 
-	/// Maps a [ParsedSyntax::Present] to [ConditionalSyntax] based on the [bool] passed.
-	///
-	/// # Panics
-	///
-	/// The method panics if the method is called from a [ParsedSyntax::Absent] syntax
-	pub fn map_to_conditional(self, is_valid: bool) -> ConditionalSyntax {
-		if is_valid {
-			self.into_valid().unwrap()
-		} else {
-			self.into_invalid().unwrap()
-		}
-	}
-
 	/// Restricts this parsed syntax to only be valid if the current parsing context supports the passed in language feature
 	/// and adds a diagnostic if not.
 	///

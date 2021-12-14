@@ -135,11 +135,7 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSynta
 
 	let class_marker = m.complete(&mut *guard, kind.into());
 
-	if class_is_valid {
-		Present(class_marker).into_valid()
-	} else {
-		Present(class_marker).into_invalid()
-	}
+	Present(class_marker).into_conditional(class_is_valid)
 }
 
 fn implements_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
@@ -184,11 +180,7 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	list.complete(p, LIST);
 
 	let completed_syntax = Present(implements_clause.complete(p, TS_IMPLEMENTS_CLAUSE));
-	if is_invalid {
-		completed_syntax.into_invalid()
-	} else {
-		completed_syntax.into_valid()
-	}
+	completed_syntax.into_conditional(!is_invalid)
 }
 
 fn extends_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
@@ -231,11 +223,7 @@ fn extends_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	}
 
 	let completed_syntax = Present(m.complete(p, JS_EXTENDS_CLAUSE));
-	if is_invalid {
-		completed_syntax.into_invalid()
-	} else {
-		completed_syntax.into_valid()
-	}
+	completed_syntax.into_conditional(!is_invalid)
 }
 
 struct ClassMembersList;
@@ -244,23 +232,7 @@ impl ParseNodeList for ClassMembersList {
 	type ParsedElement = CompletedMarker;
 
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
-		let checkpoint = p.checkpoint();
-		let to_recover = parse_class_member(p).or_invalid_to_unknown(p, JS_UNKNOWN_MEMBER);
-
-		match parsed_member {
-			Valid(marker) => Present(marker),
-			// In this case we want to mark members that have errors as invalid.
-			//
-			// This is because the parsing of members is incremental and when we encounter
-			// an error down the line, we might have already progressed the parser.
-			//
-			// So when there's an error, we mark the whole marker as invalid
-			// and the whole member becomes an unknown node.
-			Invalid(invalid_syntax) => {
-				invalid_syntax.or_to_unknown(p, JS_UNKNOWN_MEMBER);
-				Absent
-			}
-		}
+		parse_class_member(p).or_invalid_to_unknown(p, JS_UNKNOWN_MEMBER)
 	}
 
 	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
