@@ -71,7 +71,7 @@ JsModule {
 
 0: JS_MODULE@0..21
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..20
     0: JS_EXPRESSION_STATEMENT@0..8
       0: CALL_EXPR@0..7

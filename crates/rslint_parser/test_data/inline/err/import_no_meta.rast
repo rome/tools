@@ -24,7 +24,7 @@ JsModule {
 
 0: JS_MODULE@0..24
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..23
     0: JS_EXPRESSION_STATEMENT@0..10
       0: IMPORT_META@0..10

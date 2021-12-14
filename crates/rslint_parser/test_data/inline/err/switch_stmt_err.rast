@@ -116,7 +116,7 @@ JsModule {
 
 0: JS_MODULE@0..125
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..124
     0: JS_SWITCH_STATEMENT@0..13
       0: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")]
@@ -126,7 +126,7 @@ JsModule {
           0: IDENT@7..11 "foo" [] [Whitespace(" ")]
       3: (empty)
       4: L_CURLY@11..12 "{" [] []
-      5: JS_SWITCH_CASE_LIST@12..12
+      5: (empty)
       6: R_CURLY@12..13 "}" [] []
     1: JS_SWITCH_STATEMENT@13..23
       0: SWITCH_KW@13..21 "switch" [Whitespace("\n")] [Whitespace(" ")]
@@ -134,7 +134,7 @@ JsModule {
       2: (empty)
       3: (empty)
       4: L_CURLY@21..22 "{" [] []
-      5: JS_SWITCH_CASE_LIST@22..22
+      5: (empty)
       6: R_CURLY@22..23 "}" [] []
     2: JS_SWITCH_STATEMENT@23..44
       0: SWITCH_KW@23..31 "switch" [Whitespace("\n")] [Whitespace(" ")]

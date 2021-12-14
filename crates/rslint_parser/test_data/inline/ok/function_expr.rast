@@ -84,7 +84,7 @@ JsModule {
 
 0: JS_MODULE@0..48
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..47
     0: JS_VARIABLE_STATEMENT@0..21
       0: JS_VARIABLE_DECLARATIONS@0..21
@@ -110,7 +110,7 @@ JsModule {
                 6: (empty)
                 7: JS_FUNCTION_BODY@19..21
                   0: L_CURLY@19..20 "{" [] []
-                  1: JS_DIRECTIVE_LIST@20..20
+                  1: (empty)
                   2: JS_STATEMENT_LIST@20..20
                   3: R_CURLY@20..21 "}" [] []
       1: (empty)
@@ -139,7 +139,7 @@ JsModule {
                 6: (empty)
                 7: JS_FUNCTION_BODY@45..47
                   0: L_CURLY@45..46 "{" [] []
-                  1: JS_DIRECTIVE_LIST@46..46
+                  1: (empty)
                   2: JS_STATEMENT_LIST@46..46
                   3: R_CURLY@46..47 "}" [] []
       1: (empty)

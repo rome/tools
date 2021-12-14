@@ -36,7 +36,7 @@ JsModule {
 
 0: JS_MODULE@0..29
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..28
     0: JS_FUNCTION_DECLARATION@0..28
       0: (empty)
@@ -52,7 +52,7 @@ JsModule {
       6: (empty)
       7: JS_FUNCTION_BODY@15..28
         0: L_CURLY@15..17 "{" [] [Whitespace(" ")]
-        1: JS_DIRECTIVE_LIST@17..17
+        1: (empty)
         2: JS_STATEMENT_LIST@17..27
           0: JS_UNKNOWN_STATEMENT@17..27
             0: CONTINUE_KW@17..25 "continue" [] []

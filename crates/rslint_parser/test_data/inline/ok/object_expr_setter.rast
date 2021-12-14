@@ -63,7 +63,7 @@ JsModule {
 
 0: JS_MODULE@0..47
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..46
     0: JS_VARIABLE_STATEMENT@0..46
       0: JS_VARIABLE_DECLARATIONS@0..46
@@ -93,7 +93,7 @@ JsModule {
                     4: R_PAREN@24..26 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@26..44
                       0: L_CURLY@26..27 "{" [] []
-                      1: JS_DIRECTIVE_LIST@27..27
+                      1: (empty)
                       2: JS_STATEMENT_LIST@27..41
                         0: JS_RETURN_STATEMENT@27..41
                           0: RETURN_KW@27..39 "return" [Whitespace("\n    ")] [Whitespace(" ")]

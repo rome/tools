@@ -35,7 +35,7 @@ JsModule {
 
 0: JS_MODULE@0..22
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..21
     0: JS_FUNCTION_DECLARATION@0..21
       0: (empty)
@@ -53,7 +53,7 @@ JsModule {
       6: (empty)
       7: JS_FUNCTION_BODY@19..21
         0: L_CURLY@19..20 "{" [] []
-        1: JS_DIRECTIVE_LIST@20..20
+        1: (empty)
         2: JS_STATEMENT_LIST@20..20
         3: R_CURLY@20..21 "}" [] []
   3: EOF@21..22 "" [Whitespace("\n")] []

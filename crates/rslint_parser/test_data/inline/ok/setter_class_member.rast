@@ -264,7 +264,7 @@ JsModule {
 
 0: JS_MODULE@0..213
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..212
     0: JS_CLASS_DECLARATION@0..145
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
@@ -288,7 +288,7 @@ JsModule {
           8: R_PAREN@26..28 ")" [] [Whitespace(" ")]
           9: JS_FUNCTION_BODY@28..30
             0: L_CURLY@28..29 "{" [] []
-            1: JS_DIRECTIVE_LIST@29..29
+            1: (empty)
             2: JS_STATEMENT_LIST@29..29
             3: R_CURLY@29..30 "}" [] []
         1: JS_SETTER_CLASS_MEMBER@30..48
@@ -305,7 +305,7 @@ JsModule {
           8: R_PAREN@44..46 ")" [] [Whitespace(" ")]
           9: JS_FUNCTION_BODY@46..48
             0: L_CURLY@46..47 "{" [] []
-            1: JS_DIRECTIVE_LIST@47..47
+            1: (empty)
             2: JS_STATEMENT_LIST@47..47
             3: R_CURLY@47..48 "}" [] []
         2: JS_SETTER_CLASS_MEMBER@48..70
@@ -322,7 +322,7 @@ JsModule {
           8: R_PAREN@66..68 ")" [] [Whitespace(" ")]
           9: JS_FUNCTION_BODY@68..70
             0: L_CURLY@68..69 "{" [] []
-            1: JS_DIRECTIVE_LIST@69..69
+            1: (empty)
             2: JS_STATEMENT_LIST@69..69
             3: R_CURLY@69..70 "}" [] []
         3: JS_SETTER_CLASS_MEMBER@70..87
@@ -339,7 +339,7 @@ JsModule {
           8: R_PAREN@83..85 ")" [] [Whitespace(" ")]
           9: JS_FUNCTION_BODY@85..87
             0: L_CURLY@85..86 "{" [] []
-            1: JS_DIRECTIVE_LIST@86..86
+            1: (empty)
             2: JS_STATEMENT_LIST@86..86
             3: R_CURLY@86..87 "}" [] []
         4: JS_SETTER_CLASS_MEMBER@87..110
@@ -363,7 +363,7 @@ JsModule {
           8: R_PAREN@106..108 ")" [] [Whitespace(" ")]
           9: JS_FUNCTION_BODY@108..110
             0: L_CURLY@108..109 "{" [] []
-            1: JS_DIRECTIVE_LIST@109..109
+            1: (empty)
             2: JS_STATEMENT_LIST@109..109
             3: R_CURLY@109..110 "}" [] []
         5: JS_SETTER_CLASS_MEMBER@110..123
@@ -380,7 +380,7 @@ JsModule {
           8: R_PAREN@119..121 ")" [] [Whitespace(" ")]
           9: JS_FUNCTION_BODY@121..123
             0: L_CURLY@121..122 "{" [] []
-            1: JS_DIRECTIVE_LIST@122..122
+            1: (empty)
             2: JS_STATEMENT_LIST@122..122
             3: R_CURLY@122..123 "}" [] []
         6: JS_SETTER_CLASS_MEMBER@123..143
@@ -398,7 +398,7 @@ JsModule {
           8: R_PAREN@139..141 ")" [] [Whitespace(" ")]
           9: JS_FUNCTION_BODY@141..143
             0: L_CURLY@141..142 "{" [] []
-            1: JS_DIRECTIVE_LIST@142..142
+            1: (empty)
             2: JS_STATEMENT_LIST@142..142
             3: R_CURLY@142..143 "}" [] []
       6: R_CURLY@143..145 "}" [Whitespace("\n")] []
@@ -427,7 +427,7 @@ JsModule {
           7: (empty)
           8: JS_FUNCTION_BODY@173..175
             0: L_CURLY@173..174 "{" [] []
-            1: JS_DIRECTIVE_LIST@174..174
+            1: (empty)
             2: JS_STATEMENT_LIST@174..174
             3: R_CURLY@174..175 "}" [] []
         1: JS_METHOD_CLASS_MEMBER@175..192
@@ -448,7 +448,7 @@ JsModule {
           8: (empty)
           9: JS_FUNCTION_BODY@190..192
             0: L_CURLY@190..191 "{" [] []
-            1: JS_DIRECTIVE_LIST@191..191
+            1: (empty)
             2: JS_STATEMENT_LIST@191..191
             3: R_CURLY@191..192 "}" [] []
         2: JS_METHOD_CLASS_MEMBER@192..210
@@ -468,7 +468,7 @@ JsModule {
           7: (empty)
           8: JS_FUNCTION_BODY@208..210
             0: L_CURLY@208..209 "{" [] []
-            1: JS_DIRECTIVE_LIST@209..209
+            1: (empty)
             2: JS_STATEMENT_LIST@209..209
             3: R_CURLY@209..210 "}" [] []
       6: R_CURLY@210..212 "}" [Whitespace("\n")] []

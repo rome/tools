@@ -142,7 +142,7 @@ JsModule {
 
 0: JS_MODULE@0..170
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..169
     0: JS_VARIABLE_STATEMENT@0..169
       0: JS_VARIABLE_DECLARATIONS@0..169
@@ -168,7 +168,7 @@ JsModule {
                     4: R_PAREN@24..26 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@26..30
                       0: L_CURLY@26..27 "{" [] []
-                      1: JS_DIRECTIVE_LIST@27..27
+                      1: (empty)
                       2: JS_STATEMENT_LIST@27..27
                       3: R_CURLY@27..30 "}" [Whitespace("\n ")] []
                   1: COMMA@30..31 "," [] []
@@ -182,7 +182,7 @@ JsModule {
                     4: R_PAREN@49..51 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@51..55
                       0: L_CURLY@51..52 "{" [] []
-                      1: JS_DIRECTIVE_LIST@52..52
+                      1: (empty)
                       2: JS_STATEMENT_LIST@52..52
                       3: R_CURLY@52..55 "}" [Whitespace("\n ")] []
                   3: COMMA@55..56 "," [] []
@@ -203,7 +203,7 @@ JsModule {
                     4: R_PAREN@80..82 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@82..86
                       0: L_CURLY@82..83 "{" [] []
-                      1: JS_DIRECTIVE_LIST@83..83
+                      1: (empty)
                       2: JS_STATEMENT_LIST@83..83
                       3: R_CURLY@83..86 "}" [Whitespace("\n ")] []
                   5: COMMA@86..87 "," [] []
@@ -217,7 +217,7 @@ JsModule {
                     4: R_PAREN@101..103 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@103..107
                       0: L_CURLY@103..104 "{" [] []
-                      1: JS_DIRECTIVE_LIST@104..104
+                      1: (empty)
                       2: JS_STATEMENT_LIST@104..104
                       3: R_CURLY@104..107 "}" [Whitespace("\n\t")] []
                   7: COMMA@107..108 "," [] []
@@ -234,7 +234,7 @@ JsModule {
                     5: (empty)
                     6: JS_FUNCTION_BODY@117..167
                       0: L_CURLY@117..118 "{" [] []
-                      1: JS_DIRECTIVE_LIST@118..118
+                      1: (empty)
                       2: JS_STATEMENT_LIST@118..164
                         0: JS_RETURN_STATEMENT@118..164
                           0: RETURN_KW@118..128 "return" [Whitespace("\n\t ")] [Whitespace(" ")]

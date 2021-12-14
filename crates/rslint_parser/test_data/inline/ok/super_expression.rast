@@ -129,7 +129,7 @@ JsModule {
 
 0: JS_MODULE@0..102
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..101
     0: JS_CLASS_DECLARATION@0..101
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
@@ -157,7 +157,7 @@ JsModule {
             2: R_PAREN@36..38 ")" [] [Whitespace(" ")]
           7: JS_FUNCTION_BODY@38..53
             0: L_CURLY@38..39 "{" [] []
-            1: JS_DIRECTIVE_LIST@39..39
+            1: (empty)
             2: JS_STATEMENT_LIST@39..50
               0: JS_EXPRESSION_STATEMENT@39..50
                 0: CALL_EXPR@39..49
@@ -185,7 +185,7 @@ JsModule {
           7: (empty)
           8: JS_FUNCTION_BODY@63..99
             0: L_CURLY@63..64 "{" [] []
-            1: JS_DIRECTIVE_LIST@64..64
+            1: (empty)
             2: JS_STATEMENT_LIST@64..96
               0: JS_EXPRESSION_STATEMENT@64..84
                 0: CALL_EXPR@64..83

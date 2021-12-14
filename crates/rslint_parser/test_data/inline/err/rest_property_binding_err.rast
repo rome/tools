@@ -249,7 +249,7 @@ JsModule {
 
 0: JS_MODULE@0..178
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..177
     0: JS_VARIABLE_STATEMENT@0..16
       0: JS_VARIABLE_DECLARATIONS@0..15
@@ -383,7 +383,7 @@ JsModule {
       6: (empty)
       7: JS_FUNCTION_BODY@150..177
         0: L_CURLY@150..151 "{" [] []
-        1: JS_DIRECTIVE_LIST@151..151
+        1: (empty)
         2: JS_STATEMENT_LIST@151..175
           0: JS_VARIABLE_STATEMENT@151..175
             0: JS_VARIABLE_DECLARATIONS@151..174

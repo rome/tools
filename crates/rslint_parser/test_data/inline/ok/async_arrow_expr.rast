@@ -114,7 +114,7 @@ JsModule {
 
 0: JS_MODULE@0..82
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..81
     0: JS_VARIABLE_STATEMENT@0..23
       0: JS_VARIABLE_DECLARATIONS@0..23
@@ -136,7 +136,7 @@ JsModule {
                 4: FAT_ARROW@18..21 "=>" [] [Whitespace(" ")]
                 5: JS_FUNCTION_BODY@21..23
                   0: L_CURLY@21..22 "{" [] []
-                  1: JS_DIRECTIVE_LIST@22..22
+                  1: (empty)
                   2: JS_STATEMENT_LIST@22..22
                   3: R_CURLY@22..23 "}" [] []
       1: (empty)
@@ -164,7 +164,7 @@ JsModule {
                 4: FAT_ARROW@44..47 "=>" [] [Whitespace(" ")]
                 5: JS_FUNCTION_BODY@47..49
                   0: L_CURLY@47..48 "{" [] []
-                  1: JS_DIRECTIVE_LIST@48..48
+                  1: (empty)
                   2: JS_STATEMENT_LIST@48..48
                   3: R_CURLY@48..49 "}" [] []
       1: (empty)

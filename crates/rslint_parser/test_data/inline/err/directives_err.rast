@@ -18,12 +18,7 @@ JsScript {
             return_type: missing (optional),
             body: JsFunctionBody {
                 l_curly_token: L_CURLY@27..28 "{" [] [],
-                directives: [
-                    JsDirective {
-                        value_token: JS_STRING_LITERAL@28..42 "\"use strict\"" [Whitespace("\n\t")] [],
-                        semicolon_token: SEMICOLON@42..43 ";" [] [],
-                    },
-                ],
+                directives: [],
                 statements: [
                     JsFunctionDeclaration {
                         async_token: missing (optional),
@@ -41,12 +36,7 @@ JsScript {
                         return_type: missing (optional),
                         body: JsFunctionBody {
                             l_curly_token: L_CURLY@64..65 "{" [] [],
-                            directives: [
-                                JsDirective {
-                                    value_token: JS_STRING_LITERAL@65..80 "\"use strict\"" [Whitespace("\n\t\t")] [],
-                                    semicolon_token: SEMICOLON@80..81 ";" [] [],
-                                },
-                            ],
+                            directives: [],
                             statements: [],
                             r_curly_token: R_CURLY@81..84 "}" [Whitespace("\n\t")] [],
                         },
@@ -85,12 +75,7 @@ JsScript {
                                     return_type: missing (optional),
                                     body: JsFunctionBody {
                                         l_curly_token: L_CURLY@133..134 "{" [] [],
-                                        directives: [
-                                            JsDirective {
-                                                value_token: JS_STRING_LITERAL@134..150 "\"use strict\"" [Whitespace("\n\t\t\t")] [],
-                                                semicolon_token: SEMICOLON@150..151 ";" [] [],
-                                            },
-                                        ],
+                                        directives: [],
                                         statements: [],
                                         r_curly_token: R_CURLY@151..155 "}" [Whitespace("\n\t\t")] [],
                                     },
@@ -109,7 +94,7 @@ JsScript {
 
 0: JS_SCRIPT@0..161
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_STATEMENT_LIST@0..160
     0: JS_FUNCTION_DECLARATION@0..160
       0: (empty)
@@ -125,11 +110,11 @@ JsScript {
       6: (empty)
       7: JS_FUNCTION_BODY@27..160
         0: L_CURLY@27..28 "{" [] []
-        1: JS_DIRECTIVE_LIST@28..43
-          0: JS_DIRECTIVE@28..43
-            0: JS_STRING_LITERAL@28..42 "\"use strict\"" [Whitespace("\n\t")] []
-            1: SEMICOLON@42..43 ";" [] []
-        2: JS_STATEMENT_LIST@43..158
+        1: JS_DIRECTIVE@28..43
+          0: JS_STRING_LITERAL@28..42 "\"use strict\"" [Whitespace("\n\t")] []
+          1: SEMICOLON@42..43 ";" [] []
+        2: (empty)
+        3: JS_STATEMENT_LIST@43..158
           0: JS_FUNCTION_DECLARATION@43..84
             0: (empty)
             1: FUNCTION_KW@43..54 "function" [Whitespace("\n\t")] [Whitespace(" ")]
@@ -144,12 +129,12 @@ JsScript {
             6: (empty)
             7: JS_FUNCTION_BODY@64..84
               0: L_CURLY@64..65 "{" [] []
-              1: JS_DIRECTIVE_LIST@65..81
-                0: JS_DIRECTIVE@65..81
-                  0: JS_STRING_LITERAL@65..80 "\"use strict\"" [Whitespace("\n\t\t")] []
-                  1: SEMICOLON@80..81 ";" [] []
-              2: JS_STATEMENT_LIST@81..81
-              3: R_CURLY@81..84 "}" [Whitespace("\n\t")] []
+              1: JS_DIRECTIVE@65..81
+                0: JS_STRING_LITERAL@65..80 "\"use strict\"" [Whitespace("\n\t\t")] []
+                1: SEMICOLON@80..81 ";" [] []
+              2: (empty)
+              3: JS_STATEMENT_LIST@81..81
+              4: R_CURLY@81..84 "}" [Whitespace("\n\t")] []
           1: JS_FUNCTION_DECLARATION@84..158
             0: (empty)
             1: FUNCTION_KW@84..96 "function" [Whitespace("\n\n\t")] [Whitespace(" ")]
@@ -164,7 +149,7 @@ JsScript {
             6: (empty)
             7: JS_FUNCTION_BODY@106..158
               0: L_CURLY@106..107 "{" [] []
-              1: JS_DIRECTIVE_LIST@107..107
+              1: (empty)
               2: JS_STATEMENT_LIST@107..155
                 0: JS_FUNCTION_DECLARATION@107..155
                   0: (empty)
@@ -180,14 +165,14 @@ JsScript {
                   6: (empty)
                   7: JS_FUNCTION_BODY@133..155
                     0: L_CURLY@133..134 "{" [] []
-                    1: JS_DIRECTIVE_LIST@134..151
-                      0: JS_DIRECTIVE@134..151
-                        0: JS_STRING_LITERAL@134..150 "\"use strict\"" [Whitespace("\n\t\t\t")] []
-                        1: SEMICOLON@150..151 ";" [] []
-                    2: JS_STATEMENT_LIST@151..151
-                    3: R_CURLY@151..155 "}" [Whitespace("\n\t\t")] []
+                    1: JS_DIRECTIVE@134..151
+                      0: JS_STRING_LITERAL@134..150 "\"use strict\"" [Whitespace("\n\t\t\t")] []
+                      1: SEMICOLON@150..151 ";" [] []
+                    2: (empty)
+                    3: JS_STATEMENT_LIST@151..151
+                    4: R_CURLY@151..155 "}" [Whitespace("\n\t\t")] []
               3: R_CURLY@155..158 "}" [Whitespace("\n\t")] []
-        3: R_CURLY@158..160 "}" [Whitespace("\n")] []
+        4: R_CURLY@158..160 "}" [Whitespace("\n")] []
   3: EOF@160..161 "" [Whitespace("\n")] []
 --
 warning[SyntaxError]: Redundant strict mode declaration

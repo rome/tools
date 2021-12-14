@@ -105,7 +105,7 @@ JsModule {
 
 0: JS_MODULE@0..76
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..75
     0: JS_CLASS_DECLARATION@0..65
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
@@ -134,7 +134,7 @@ JsModule {
           7: (empty)
           8: JS_FUNCTION_BODY@31..63
             0: L_CURLY@31..32 "{" [] []
-            1: JS_DIRECTIVE_LIST@32..32
+            1: (empty)
             2: JS_STATEMENT_LIST@32..60
               0: JS_EXPRESSION_STATEMENT@32..43
                 0: CALL_EXPR@32..42

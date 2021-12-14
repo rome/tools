@@ -296,7 +296,7 @@ JsModule {
 
 0: JS_MODULE@0..197
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..196
     0: FOR_STMT@0..39
       0: FOR_KW@0..4 "for" [] [Whitespace(" ")]

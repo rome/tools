@@ -41,7 +41,7 @@ JsModule {
 
 0: JS_MODULE@0..46
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..45
     0: JS_LABELED_STATEMENT@0..7
       0: IDENT@0..3 "foo" [] []

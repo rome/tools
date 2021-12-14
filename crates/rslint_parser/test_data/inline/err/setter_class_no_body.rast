@@ -35,7 +35,7 @@ JsModule {
 
 0: JS_MODULE@0..29
   0: (empty)
-  1: JS_DIRECTIVE_LIST@0..0
+  1: (empty)
   2: JS_MODULE_ITEM_LIST@0..28
     0: JS_CLASS_DECLARATION@0..28
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
