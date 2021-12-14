@@ -1,6 +1,6 @@
 # Authoring Parse Rules
 
-This is a short, or not so short, guide on implementing parse rules using the Rome parser infrastructure.
+This is a short, or not so short, guide to implement parse rules using the Rome parser infrastructure.
 
 ## Naming
 The convention is to prefix your parse rule with `parse_` and then use the name defined in the grammar file.
@@ -8,7 +8,7 @@ The convention is to prefix your parse rule with `parse_` and then use the name 
 For example, `parse_for_statement` or `parse_expression`.
 
 ## Signature
-Most parse rules take a mutual reference to the parser as their only parameter and return a `ParsedSyntax`.
+Most parse rules take a `&mut` reference to the parser as their only parameter and return a `ParsedSyntax`.
 
 ```rust
 fn parse_rule_name(&mut: Parser) -> ParsedSyntax {}
@@ -37,11 +37,11 @@ Now, the parsing function must first test if the parser is positioned at an `if`
 
 ```rust
 if !p.at(T![if]) {
- return Absent;
+ return ParsedSyntax::Absent;
 }
 ```
 
-Why return `Absent`? The function must return `Absent` if the rule can't predict by the next token(s) if they form the expected node or not. Doing so allows the calling rule to decide if this is an error and perform an error recovery if necessary.  The second reason is to ensure that the rule doesn't return a node where all children are missing.
+Why return `ParsedSyntax::Absent`? The function must return `ParsedSyntax::Absent` if the rule can't predict by the next token(s) if they form the expected node or not. Doing so allows the calling rule to decide if this is an error and perform an error recovery if necessary.  The second reason is to ensure that the rule doesn't return a node where all children are missing.
 
 Your rule implementation may want to consider more than just the first child to determine if it can parse at least some of the expected children.
 For example, the if statement rule could test if the parser is located at an `else` clause and then create an `if` statement where all children are missing except the `else` clause:
@@ -89,7 +89,7 @@ fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
  p.expect_required(T!['(']);
  parse_any_expression(p).or_missing_with_error(p, js_parse_errors::expeced_if_statement);
  p.expect_required(T![')']);
- parse_block_statement(p).or_missing_with_error(p, js_parse_errors::expected_block-statement);
+ parse_block_statement(p).or_missing_with_error(p, js_parse_errors::expected_block_statement);
  parse_else_clause(p).or_missing();
 
  Present(m.complete(p, JS_IF_STATEMENT));
@@ -104,7 +104,7 @@ Parsing lists is different from parsing single elements with a fixed set of chil
 
 You may remember that `parse_*` methods shouldn't progress parsing if they return `Absent`. Not progressing the parser is problematic inside `while` loops because it inevitably results in an infinite loop.
 
-That's why you must do error recovery when parsing lists. Luckily, the parser comes with infrastructure to make error recovery a piece of cake.
+That's why you must do error recovery when parsing lists. Luckily, the parser comes with the infrastructure to make error recovery a piece of cake.
 The general structure for parsing a list is (yes, that's something the parser infrastructure should provide for you):
 
 ```rust
@@ -168,11 +168,11 @@ The next token is one of the tokens specified in the recovery set, meaning: Ther
 
 ## Conditional Syntax
 
-The conditional syntax allows you to express that some syntax may not be valid in all source files. Some use cases are
+The conditional syntax allows you to express that some syntax may not be valid in all source files. Some use cases are:
 
 * Syntax that is only supported in strict or sloppy mode: for example, `with` statements
-* Syntax that is only supported in certain file types: Typescript, JSX, Import / Export statements
-* Syntax that is only available in specific language versions: experimental features
+* Syntax that is only supported in certain file types: Typescript, JSX, modules
+* Syntax that is only available in specific language versions: experimental features, different versions of the language e.g. (ECMA versions for JavaScript)
 
 The idea is that the parser always parses the syntax regardless of whatever it is supported in this specific file or context. The main motivation behind doing so is that this gives us perfect error recovery and allows us to use the same code regardless of whether the syntax is supported.
 
