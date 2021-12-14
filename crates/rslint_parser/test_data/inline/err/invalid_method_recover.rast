@@ -12,6 +12,8 @@ JsModule {
                 JsPropertyClassMember {
                     modifiers: missing (optional),
                     access_modifier: missing (optional),
+                    abstract_token: missing (optional),
+                    static_token: missing (optional),
                     name: JsComputedMemberName {
                         l_brack_token: L_BRACK@7..11 "[" [Whitespace("\n  ")] [],
                         expression: JsBinaryExpression {
@@ -91,10 +93,16 @@ JsModule {
     0: JS_CLASS_DECLARATION@0..46
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: (empty)
-      2: L_CURLY@6..7 "{" [] []
-      3: LIST@7..44
+      2: (empty)
+      3: (empty)
+      4: L_CURLY@6..7 "{" [] []
+      5: LIST@7..44
         0: JS_PROPERTY_CLASS_MEMBER@7..44
-          0: JS_COMPUTED_MEMBER_NAME@7..18
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: JS_COMPUTED_MEMBER_NAME@7..18
             0: L_BRACK@7..11 "[" [Whitespace("\n  ")] []
             1: JS_BINARY_EXPRESSION@11..16
               0: JS_NUMBER_LITERAL_EXPRESSION@11..13
@@ -103,7 +111,8 @@ JsModule {
               2: JS_NUMBER_LITERAL_EXPRESSION@15..16
                 0: JS_NUMBER_LITERAL@15..16 "1" [] []
             2: R_BRACK@16..18 "]" [] [Whitespace(" ")]
-          1: JS_INITIALIZER_CLAUSE@18..43
+          5: (empty)
+          6: JS_INITIALIZER_CLAUSE@18..43
             0: EQ@18..20 "=" [] [Whitespace(" ")]
             1: JS_ARROW_FUNCTION_EXPRESSION@20..43
               0: (empty)
@@ -133,8 +142,8 @@ JsModule {
                               0: SEMICOLON@38..39 ";" [] []
                     1: (empty)
                 3: R_CURLY@39..43 "}" [Whitespace("\n  ")] []
-          2: SEMICOLON@43..44 ";" [] []
-      4: R_CURLY@44..46 "}" [Whitespace("\n")] []
+          7: SEMICOLON@43..44 ";" [] []
+      6: R_CURLY@44..46 "}" [Whitespace("\n")] []
     1: JS_EMPTY_STATEMENT@46..47
       0: SEMICOLON@46..47 ";" [] []
   3: EOF@47..48 "" [Whitespace("\n")] []

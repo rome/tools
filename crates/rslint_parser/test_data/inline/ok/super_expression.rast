@@ -52,6 +52,8 @@ JsModule {
                 },
                 JsMethodClassMember {
                     access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
@@ -142,13 +144,18 @@ JsModule {
       4: L_CURLY@21..22 "{" [] []
       5: LIST@22..99
         0: JS_CONSTRUCTOR_CLASS_MEMBER@22..53
-          0: JS_LITERAL_MEMBER_NAME@22..35
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@22..35
             0: IDENT@22..35 "constructor" [Whitespace("\n\t")] []
-          1: JS_CONSTRUCTOR_PARAMETER_LIST@35..38
+          5: (empty)
+          6: JS_CONSTRUCTOR_PARAMETER_LIST@35..38
             0: L_PAREN@35..36 "(" [] []
             1: LIST@36..36
             2: R_PAREN@36..38 ")" [] [Whitespace(" ")]
-          2: JS_FUNCTION_BODY@38..53
+          7: JS_FUNCTION_BODY@38..53
             0: L_CURLY@38..39 "{" [] []
             1: LIST@39..39
             2: LIST@39..50
@@ -164,14 +171,19 @@ JsModule {
                 1: SEMICOLON@49..50 ";" [] []
             3: R_CURLY@50..53 "}" [Whitespace("\n\t")] []
         1: JS_METHOD_CLASS_MEMBER@53..99
-          0: JS_LITERAL_MEMBER_NAME@53..60
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@53..60
             0: IDENT@53..60 "test" [Whitespace("\n\n\t")] []
-          1: JS_PARAMETER_LIST@60..63
+          5: (empty)
+          6: JS_PARAMETER_LIST@60..63
             0: L_PAREN@60..61 "(" [] []
             1: LIST@61..61
             2: R_PAREN@61..63 ")" [] [Whitespace(" ")]
-          2: (empty)
-          3: JS_FUNCTION_BODY@63..99
+          7: (empty)
+          8: JS_FUNCTION_BODY@63..99
             0: L_CURLY@63..64 "{" [] []
             1: LIST@64..64
             2: LIST@64..96

@@ -275,61 +275,80 @@ JsModule {
       4: L_CURLY@14..15 "{" [] []
       5: LIST@15..143
         0: JS_SETTER_CLASS_MEMBER@15..30
-          0: SET_KW@15..21 "set" [Whitespace("\n\t")] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@21..24
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: SET_KW@15..21 "set" [Whitespace("\n\t")] [Whitespace(" ")]
+          5: JS_LITERAL_MEMBER_NAME@21..24
             0: IDENT@21..24 "foo" [] []
-          2: L_PAREN@24..25 "(" [] []
-          3: JS_IDENTIFIER_BINDING@25..26
+          6: L_PAREN@24..25 "(" [] []
+          7: JS_IDENTIFIER_BINDING@25..26
             0: IDENT@25..26 "a" [] []
-          4: R_PAREN@26..28 ")" [] [Whitespace(" ")]
-          5: JS_FUNCTION_BODY@28..30
+          8: R_PAREN@26..28 ")" [] [Whitespace(" ")]
+          9: JS_FUNCTION_BODY@28..30
             0: L_CURLY@28..29 "{" [] []
             1: LIST@29..29
             2: LIST@29..29
             3: R_CURLY@29..30 "}" [] []
         1: JS_SETTER_CLASS_MEMBER@30..48
-          0: SET_KW@30..36 "set" [Whitespace("\n\t")] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@36..42
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: SET_KW@30..36 "set" [Whitespace("\n\t")] [Whitespace(" ")]
+          5: JS_LITERAL_MEMBER_NAME@36..42
             0: IDENT@36..42 "static" [] []
-          2: L_PAREN@42..43 "(" [] []
-          3: JS_IDENTIFIER_BINDING@43..44
+          6: L_PAREN@42..43 "(" [] []
+          7: JS_IDENTIFIER_BINDING@43..44
             0: IDENT@43..44 "a" [] []
-          4: R_PAREN@44..46 ")" [] [Whitespace(" ")]
-          5: JS_FUNCTION_BODY@46..48
+          8: R_PAREN@44..46 ")" [] [Whitespace(" ")]
+          9: JS_FUNCTION_BODY@46..48
             0: L_CURLY@46..47 "{" [] []
             1: LIST@47..47
             2: LIST@47..47
             3: R_CURLY@47..48 "}" [] []
         2: JS_SETTER_CLASS_MEMBER@48..70
-          0: STATIC_KW@48..57 "static" [Whitespace("\n\t")] [Whitespace(" ")]
-          1: SET_KW@57..61 "set" [] [Whitespace(" ")]
-          2: JS_LITERAL_MEMBER_NAME@61..64
+          0: (empty)
+          1: (empty)
+          2: STATIC_KW@48..57 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          3: (empty)
+          4: SET_KW@57..61 "set" [] [Whitespace(" ")]
+          5: JS_LITERAL_MEMBER_NAME@61..64
             0: IDENT@61..64 "bar" [] []
-          3: L_PAREN@64..65 "(" [] []
-          4: JS_IDENTIFIER_BINDING@65..66
+          6: L_PAREN@64..65 "(" [] []
+          7: JS_IDENTIFIER_BINDING@65..66
             0: IDENT@65..66 "a" [] []
-          5: R_PAREN@66..68 ")" [] [Whitespace(" ")]
-          6: JS_FUNCTION_BODY@68..70
+          8: R_PAREN@66..68 ")" [] [Whitespace(" ")]
+          9: JS_FUNCTION_BODY@68..70
             0: L_CURLY@68..69 "{" [] []
             1: LIST@69..69
             2: LIST@69..69
             3: R_CURLY@69..70 "}" [] []
         3: JS_SETTER_CLASS_MEMBER@70..87
-          0: SET_KW@70..76 "set" [Whitespace("\n\t")] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@76..81
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: SET_KW@70..76 "set" [Whitespace("\n\t")] [Whitespace(" ")]
+          5: JS_LITERAL_MEMBER_NAME@76..81
             0: JS_STRING_LITERAL@76..81 "\"baz\"" [] []
-          2: L_PAREN@81..82 "(" [] []
-          3: JS_IDENTIFIER_BINDING@82..83
+          6: L_PAREN@81..82 "(" [] []
+          7: JS_IDENTIFIER_BINDING@82..83
             0: IDENT@82..83 "a" [] []
-          4: R_PAREN@83..85 ")" [] [Whitespace(" ")]
-          5: JS_FUNCTION_BODY@85..87
+          8: R_PAREN@83..85 ")" [] [Whitespace(" ")]
+          9: JS_FUNCTION_BODY@85..87
             0: L_CURLY@85..86 "{" [] []
             1: LIST@86..86
             2: LIST@86..86
             3: R_CURLY@86..87 "}" [] []
         4: JS_SETTER_CLASS_MEMBER@87..110
-          0: SET_KW@87..93 "set" [Whitespace("\n\t")] [Whitespace(" ")]
-          1: JS_COMPUTED_MEMBER_NAME@93..104
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: SET_KW@87..93 "set" [Whitespace("\n\t")] [Whitespace(" ")]
+          5: JS_COMPUTED_MEMBER_NAME@93..104
             0: L_BRACK@93..94 "[" [] []
             1: JS_BINARY_EXPRESSION@94..103
               0: JS_STRING_LITERAL_EXPRESSION@94..98
@@ -338,38 +357,46 @@ JsModule {
               2: JS_STRING_LITERAL_EXPRESSION@100..103
                 0: JS_STRING_LITERAL@100..103 "\"b\"" [] []
             2: R_BRACK@103..104 "]" [] []
-          2: L_PAREN@104..105 "(" [] []
-          3: JS_IDENTIFIER_BINDING@105..106
+          6: L_PAREN@104..105 "(" [] []
+          7: JS_IDENTIFIER_BINDING@105..106
             0: IDENT@105..106 "a" [] []
-          4: R_PAREN@106..108 ")" [] [Whitespace(" ")]
-          5: JS_FUNCTION_BODY@108..110
+          8: R_PAREN@106..108 ")" [] [Whitespace(" ")]
+          9: JS_FUNCTION_BODY@108..110
             0: L_CURLY@108..109 "{" [] []
             1: LIST@109..109
             2: LIST@109..109
             3: R_CURLY@109..110 "}" [] []
         5: JS_SETTER_CLASS_MEMBER@110..123
-          0: SET_KW@110..116 "set" [Whitespace("\n\t")] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@116..117
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: SET_KW@110..116 "set" [Whitespace("\n\t")] [Whitespace(" ")]
+          5: JS_LITERAL_MEMBER_NAME@116..117
             0: JS_NUMBER_LITERAL@116..117 "5" [] []
-          2: L_PAREN@117..118 "(" [] []
-          3: JS_IDENTIFIER_BINDING@118..119
+          6: L_PAREN@117..118 "(" [] []
+          7: JS_IDENTIFIER_BINDING@118..119
             0: IDENT@118..119 "a" [] []
-          4: R_PAREN@119..121 ")" [] [Whitespace(" ")]
-          5: JS_FUNCTION_BODY@121..123
+          8: R_PAREN@119..121 ")" [] [Whitespace(" ")]
+          9: JS_FUNCTION_BODY@121..123
             0: L_CURLY@121..122 "{" [] []
             1: LIST@122..122
             2: LIST@122..122
             3: R_CURLY@122..123 "}" [] []
         6: JS_SETTER_CLASS_MEMBER@123..143
-          0: SET_KW@123..129 "set" [Whitespace("\n\t")] [Whitespace(" ")]
-          1: JS_PRIVATE_CLASS_MEMBER_NAME@129..137
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: SET_KW@123..129 "set" [Whitespace("\n\t")] [Whitespace(" ")]
+          5: JS_PRIVATE_CLASS_MEMBER_NAME@129..137
             0: HASH@129..130 "#" [] []
             1: IDENT@130..137 "private" [] []
-          2: L_PAREN@137..138 "(" [] []
-          3: JS_IDENTIFIER_BINDING@138..139
+          6: L_PAREN@137..138 "(" [] []
+          7: JS_IDENTIFIER_BINDING@138..139
             0: IDENT@138..139 "a" [] []
-          4: R_PAREN@139..141 ")" [] [Whitespace(" ")]
-          5: JS_FUNCTION_BODY@141..143
+          8: R_PAREN@139..141 ")" [] [Whitespace(" ")]
+          9: JS_FUNCTION_BODY@141..143
             0: L_CURLY@141..142 "{" [] []
             1: LIST@142..142
             2: LIST@142..142
@@ -384,48 +411,62 @@ JsModule {
       4: L_CURLY@163..164 "{" [] []
       5: LIST@164..210
         0: JS_METHOD_CLASS_MEMBER@164..175
-          0: JS_LITERAL_MEMBER_NAME@164..169
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@164..169
             0: IDENT@164..169 "set" [Whitespace("\n\t")] []
-          1: JS_PARAMETER_LIST@169..173
+          5: (empty)
+          6: JS_PARAMETER_LIST@169..173
             0: L_PAREN@169..170 "(" [] []
             1: LIST@170..171
               0: JS_IDENTIFIER_BINDING@170..171
                 0: IDENT@170..171 "a" [] []
             2: R_PAREN@171..173 ")" [] [Whitespace(" ")]
-          2: (empty)
-          3: JS_FUNCTION_BODY@173..175
+          7: (empty)
+          8: JS_FUNCTION_BODY@173..175
             0: L_CURLY@173..174 "{" [] []
             1: LIST@174..174
             2: LIST@174..174
             3: R_CURLY@174..175 "}" [] []
         1: JS_METHOD_CLASS_MEMBER@175..192
-          0: ASYNC_KW@175..183 "async" [Whitespace("\n\t")] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@183..186
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: ASYNC_KW@175..183 "async" [Whitespace("\n\t")] [Whitespace(" ")]
+          5: JS_LITERAL_MEMBER_NAME@183..186
             0: IDENT@183..186 "set" [] []
-          2: JS_PARAMETER_LIST@186..190
+          6: (empty)
+          7: JS_PARAMETER_LIST@186..190
             0: L_PAREN@186..187 "(" [] []
             1: LIST@187..188
               0: JS_IDENTIFIER_BINDING@187..188
                 0: IDENT@187..188 "a" [] []
             2: R_PAREN@188..190 ")" [] [Whitespace(" ")]
-          3: (empty)
-          4: JS_FUNCTION_BODY@190..192
+          8: (empty)
+          9: JS_FUNCTION_BODY@190..192
             0: L_CURLY@190..191 "{" [] []
             1: LIST@191..191
             2: LIST@191..191
             3: R_CURLY@191..192 "}" [] []
         2: JS_METHOD_CLASS_MEMBER@192..210
-          0: STATIC_KW@192..201 "static" [Whitespace("\n\t")] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@201..204
+          0: (empty)
+          1: (empty)
+          2: STATIC_KW@192..201 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@201..204
             0: IDENT@201..204 "set" [] []
-          2: JS_PARAMETER_LIST@204..208
+          5: (empty)
+          6: JS_PARAMETER_LIST@204..208
             0: L_PAREN@204..205 "(" [] []
             1: LIST@205..206
               0: JS_IDENTIFIER_BINDING@205..206
                 0: IDENT@205..206 "a" [] []
             2: R_PAREN@206..208 ")" [] [Whitespace(" ")]
-          3: (empty)
-          4: JS_FUNCTION_BODY@208..210
+          7: (empty)
+          8: JS_FUNCTION_BODY@208..210
             0: L_CURLY@208..209 "{" [] []
             1: LIST@209..209
             2: LIST@209..209

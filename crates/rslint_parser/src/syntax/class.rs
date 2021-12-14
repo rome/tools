@@ -143,7 +143,7 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		return Absent;
 	}
 
-	let mut is_invalid = false;
+	let mut is_valid = true;
 	let implements_clause = p.start();
 
 	let start = p.cur_tok().range.start;
@@ -159,7 +159,7 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 			.primary(start..(p.marker_vec_range(&elems).end), "");
 
 		p.error(err);
-		is_invalid = true;
+		is_valid = false;
 	}
 
 	let mut progress = ParserProgress::default();
@@ -174,13 +174,13 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 			.primary(start..p.marker_vec_range(&elems).end, "");
 
 		p.error(err);
-		is_invalid = true;
+		is_valid = false;
 	}
 
 	list.complete(p, LIST);
 
 	let completed_syntax = Present(implements_clause.complete(p, TS_IMPLEMENTS_CLAUSE));
-	completed_syntax.into_conditional(!is_invalid)
+	completed_syntax.into_conditional(is_valid)
 }
 
 fn extends_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
@@ -817,7 +817,7 @@ fn parse_method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
 
 /// Parses the body (everything after the identifier name) of a method class member
 fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
-	let member_kind = if let Ok(_) = optional_member_token(p) {
+	let member_kind = if optional_member_token(p).is_ok() {
 		JS_UNKNOWN_MEMBER
 	} else {
 		JS_METHOD_CLASS_MEMBER

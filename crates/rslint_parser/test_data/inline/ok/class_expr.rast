@@ -116,9 +116,11 @@ JsModule {
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_CLASS_EXPRESSION@8..16
                 0: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
-                1: L_CURLY@14..15 "{" [] []
-                2: LIST@15..15
-                3: R_CURLY@15..16 "}" [] []
+                1: (empty)
+                2: (empty)
+                3: L_CURLY@14..15 "{" [] []
+                4: LIST@15..15
+                5: R_CURLY@15..16 "}" [] []
       1: SEMICOLON@16..17 ";" [] []
     1: JS_VARIABLE_STATEMENT@17..57
       0: JS_VARIABLE_DECLARATION_LIST@17..57
@@ -135,8 +137,10 @@ JsModule {
                 0: CLASS_KW@26..32 "class" [] [Whitespace(" ")]
                 1: JS_IDENTIFIER_BINDING@32..36
                   0: IDENT@32..36 "foo" [] [Whitespace(" ")]
-                2: L_CURLY@36..37 "{" [] []
-                3: LIST@37..55
+                2: (empty)
+                3: (empty)
+                4: L_CURLY@36..37 "{" [] []
+                5: LIST@37..55
                   0: JS_CONSTRUCTOR_CLASS_MEMBER@37..55
                     0: (empty)
                     1: (empty)
@@ -154,7 +158,7 @@ JsModule {
                       1: LIST@54..54
                       2: LIST@54..54
                       3: R_CURLY@54..55 "}" [] []
-                4: R_CURLY@55..57 "}" [Whitespace("\n")] []
+                6: R_CURLY@55..57 "}" [Whitespace("\n")] []
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@57..71
       0: JS_COMPUTED_MEMBER_EXPRESSION@57..71
@@ -165,9 +169,11 @@ JsModule {
         2: L_BRACK@61..62 "[" [] []
         3: JS_CLASS_EXPRESSION@62..70
           0: CLASS_KW@62..68 "class" [] [Whitespace(" ")]
-          1: L_CURLY@68..69 "{" [] []
-          2: LIST@69..69
-          3: R_CURLY@69..70 "}" [] []
+          1: (empty)
+          2: (empty)
+          3: L_CURLY@68..69 "{" [] []
+          4: LIST@69..69
+          5: R_CURLY@69..70 "}" [] []
         4: R_BRACK@70..71 "]" [] []
       1: (empty)
   3: EOF@71..72 "" [Whitespace("\n")] []

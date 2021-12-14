@@ -42,8 +42,9 @@ JsModule {
                     semicolon_token: SEMICOLON@21..23 ";" [] [Whitespace(" ")],
                 },
                 JsGetterClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
+                    abstract_token: missing (optional),
+                    static_token: missing (optional),
                     get_token: GET_KW@23..27 "get" [] [Whitespace(" ")],
                     name: JsLiteralMemberName {
                         value: IDENT@27..30 "foo" [] [],
@@ -110,13 +111,17 @@ JsModule {
         9: JS_EMPTY_CLASS_MEMBER@21..23
           0: SEMICOLON@21..23 ";" [] [Whitespace(" ")]
         10: JS_GETTER_CLASS_MEMBER@23..35
-          0: GET_KW@23..27 "get" [] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@27..30
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: GET_KW@23..27 "get" [] [Whitespace(" ")]
+          5: JS_LITERAL_MEMBER_NAME@27..30
             0: IDENT@27..30 "foo" [] []
-          2: L_PAREN@30..31 "(" [] []
-          3: R_PAREN@31..33 ")" [] [Whitespace(" ")]
-          4: (empty)
-          5: JS_FUNCTION_BODY@33..35
+          6: L_PAREN@30..31 "(" [] []
+          7: R_PAREN@31..33 ")" [] [Whitespace(" ")]
+          8: (empty)
+          9: JS_FUNCTION_BODY@33..35
             0: L_CURLY@33..34 "{" [] []
             1: LIST@34..34
             2: LIST@34..34
