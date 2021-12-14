@@ -7,7 +7,7 @@ use super::{
 	kinds_src::{AstSrc, Field},
 	to_lower_snake_case, Mode,
 };
-use crate::codegen::kinds_src::{AstListSrc, AstUnknownSrc, TokenKind};
+use crate::codegen::kinds_src::{AstListSrc, TokenKind};
 use crate::{
 	codegen::{
 		self,
@@ -23,7 +23,9 @@ use ungrammar::{Grammar, Rule, Token};
 pub fn generate_ast(mode: Mode) -> Result<()> {
 	let grammar_src = include_str!("../../js.ungram");
 	let grammar: Grammar = grammar_src.parse().unwrap();
-	let ast = make_ast(&grammar);
+	let mut ast = make_ast(&grammar);
+
+	ast.sort();
 
 	let ast_nodes_file = project_root().join(codegen::AST_NODES);
 	let contents = generate_nodes(&ast)?;
@@ -62,7 +64,7 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 					fields,
 				})
 			}
-			RuleType::Unknown => ast.unknowns.push(AstUnknownSrc { name }),
+			RuleType::Unknown => ast.unknowns.push(name),
 			RuleType::List {
 				separated,
 				element_name,

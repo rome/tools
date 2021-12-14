@@ -2,7 +2,7 @@
 //! Based on the rust analyzer parser and ast definitions
 
 use quote::format_ident;
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 const LANGUAGE_PREFIXES: [&str; 4] = ["js_", "ts_", "jsx_", "tsx_"];
 
@@ -427,8 +427,8 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 pub struct AstSrc {
 	pub nodes: Vec<AstNodeSrc>,
 	pub enums: Vec<AstEnumSrc>,
-	lists: HashMap<String, AstListSrc>,
-	pub unknowns: Vec<AstUnknownSrc>,
+	lists: BTreeMap<String, AstListSrc>,
+	pub unknowns: Vec<String>,
 }
 
 impl AstSrc {
@@ -436,12 +436,28 @@ impl AstSrc {
 		self.lists.insert(String::from(name), src);
 	}
 
-	pub fn lists(&self) -> std::collections::hash_map::Iter<String, AstListSrc> {
+	pub fn lists(&self) -> std::collections::btree_map::Iter<String, AstListSrc> {
 		self.lists.iter()
 	}
 
 	pub fn is_list(&self, name: &str) -> bool {
 		self.lists.contains_key(name)
+	}
+
+	/// Sorts all nodes, enums, etc. for a stable code gen result
+	pub fn sort(&mut self) {
+		// No need to sort lists, they're stored in a btree
+		self.nodes.sort_unstable_by(|a, b| a.name.cmp(&b.name));
+		self.enums.sort_unstable_by(|a, b| a.name.cmp(&b.name));
+		self.unknowns.sort_unstable();
+
+		for node in self.nodes.iter_mut() {
+			node.fields.sort_unstable_by_key(|a| a.method_name());
+		}
+
+		for union in self.enums.iter_mut() {
+			union.variants.sort_unstable();
+		}
 	}
 }
 
@@ -449,11 +465,6 @@ impl AstSrc {
 pub struct AstListSrc {
 	pub element_name: String,
 	pub separated: bool,
-}
-
-#[derive(Debug)]
-pub struct AstUnknownSrc {
-	pub name: String,
 }
 
 #[derive(Debug)]

@@ -399,9 +399,9 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		});
 
 	let unknowns = ast.unknowns.iter().map(|unknown| {
-		let name = format_ident!("{}", unknown.name);
-		let string_name = &unknown.name;
-		let kind = format_ident!("{}", to_upper_snake_case(&unknown.name));
+		let name = format_ident!("{}", unknown);
+		let string_name = unknown;
+		let kind = format_ident!("{}", to_upper_snake_case(unknown));
 
 		quote! {
 			#[derive(Clone, PartialEq, Eq, Hash)]
@@ -538,14 +538,17 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 	});
 
 	let debug_syntax_element = {
-		let all_nodes = ast
+		let mut all_nodes: Vec<_> = ast
 			.nodes
 			.iter()
 			.map(|node| &node.name)
-			.chain(ast.unknowns.iter().map(|unknown| &unknown.name))
-			.chain(ast.lists().map(|(name, _)| name));
+			.chain(ast.unknowns.iter())
+			.chain(ast.lists().map(|(name, _)| name))
+			.collect();
 
-		let node_arms = all_nodes.map(|node| {
+		all_nodes.sort_unstable();
+
+		let node_arms = all_nodes.iter().map(|node| {
 			let kind = format_ident!("{}", to_upper_snake_case(node));
 			let ident = format_ident!("{}", node);
 
