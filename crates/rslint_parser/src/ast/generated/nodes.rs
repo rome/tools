@@ -705,10 +705,10 @@ impl JsArrowFunctionExpression {
 	pub fn parameter_list(&self) -> Option<JsAnyArrowFunctionParameters> {
 		support::node(&self.syntax)
 	}
+	pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 	pub fn fat_arrow_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [=>])
 	}
-	pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsAssignmentExpression {
@@ -1029,8 +1029,8 @@ impl NewExpr {
 	pub fn new_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![new])
 	}
-	pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax) }
 	pub fn object(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax) }
 	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1038,8 +1038,8 @@ pub struct CallExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl CallExpr {
-	pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax) }
 	pub fn callee(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax) }
 	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4655,12 +4655,12 @@ impl std::fmt::Debug for JsArrowFunctionExpression {
 				&support::DebugOptionalElement(self.parameter_list()),
 			)
 			.field(
-				"fat_arrow_token",
-				&support::DebugSyntaxResult(self.fat_arrow_token()),
-			)
-			.field(
 				"return_type",
 				&support::DebugOptionalElement(self.return_type()),
+			)
+			.field(
+				"fat_arrow_token",
+				&support::DebugSyntaxResult(self.fat_arrow_token()),
 			)
 			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
@@ -5186,11 +5186,11 @@ impl std::fmt::Debug for NewExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("NewExpr")
 			.field("new_token", &support::DebugSyntaxResult(self.new_token()))
+			.field("object", &support::DebugSyntaxResult(self.object()))
 			.field(
 				"type_args",
 				&support::DebugOptionalElement(self.type_args()),
 			)
-			.field("object", &support::DebugSyntaxResult(self.object()))
 			.field("arguments", &support::DebugSyntaxResult(self.arguments()))
 			.finish()
 	}
@@ -5209,11 +5209,11 @@ impl AstNode for CallExpr {
 impl std::fmt::Debug for CallExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("CallExpr")
+			.field("callee", &support::DebugSyntaxResult(self.callee()))
 			.field(
 				"type_args",
 				&support::DebugOptionalElement(self.type_args()),
 			)
-			.field("callee", &support::DebugSyntaxResult(self.callee()))
 			.field("arguments", &support::DebugSyntaxResult(self.arguments()))
 			.finish()
 	}

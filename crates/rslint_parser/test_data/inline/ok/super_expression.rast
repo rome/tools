@@ -34,10 +34,10 @@ JsModule {
                         statements: [
                             JsExpressionStatement {
                                 expression: CallExpr {
-                                    type_args: missing (optional),
                                     callee: JsSuperExpression {
                                         super_token: SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] [],
                                     },
+                                    type_args: missing (optional),
                                     arguments: ArgList {
                                         l_paren_token: L_PAREN@47..48 "(" [] [],
                                         args: [],
@@ -72,7 +72,6 @@ JsModule {
                         statements: [
                             JsExpressionStatement {
                                 expression: CallExpr {
-                                    type_args: missing (optional),
                                     callee: JsStaticMemberExpression {
                                         object: JsSuperExpression {
                                             super_token: SUPER_KW@64..72 "super" [Whitespace("\n\t\t")] [],
@@ -82,6 +81,7 @@ JsModule {
                                             value_token: IDENT@73..77 "test" [] [],
                                         },
                                     },
+                                    type_args: missing (optional),
                                     arguments: ArgList {
                                         l_paren_token: L_PAREN@77..78 "(" [] [],
                                         args: [

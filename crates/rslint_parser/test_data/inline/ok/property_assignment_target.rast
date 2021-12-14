@@ -74,7 +74,6 @@ JsModule {
                                 colon_token: COLON@28..30 ":" [] [Whitespace(" ")],
                                 pattern: JsStaticMemberAssignment {
                                     object: CallExpr {
-                                        type_args: missing (optional),
                                         callee: JsStaticMemberExpression {
                                             object: JsIdentifierExpression {
                                                 name: JsReferenceIdentifier {
@@ -86,6 +85,7 @@ JsModule {
                                                 value_token: IDENT@32..36 "test" [] [],
                                             },
                                         },
+                                        type_args: missing (optional),
                                         arguments: ArgList {
                                             l_paren_token: L_PAREN@36..37 "(" [] [],
                                             args: [],

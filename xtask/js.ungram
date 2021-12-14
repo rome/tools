@@ -362,14 +362,14 @@ JsArrowFunctionExpression =
 	'async'?
 	type_parameters: TsTypeParams?
 	parameter_list: JsAnyArrowFunctionParameters?
-	'=>'
 	return_type: TsTypeAnnotation?
+	'=>'
 	manual__body: JsAnyArrowFunctionBody
 
 JsAnyArrowFunctionParameters = JsParameterList | JsAnyBinding
 JsAnyArrowFunctionBody = JsAnyExpression | JsFunctionBody
 
-// Array expression\
+// Array expression
 JsArrayExpression =
 	'['
 	elements: (JsAnyArrayElement (',' JsAnyArrayElement)* ','?)

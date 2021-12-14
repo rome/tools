@@ -24,12 +24,12 @@ JsModule {
                         expression: JsAwaitExpression {
                             await_token: AWAIT_KW@23..31 "await" [Whitespace("\n\t")] [Whitespace(" ")],
                             argument: CallExpr {
-                                type_args: missing (optional),
                                 callee: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@31..36 "inner" [] [],
                                     },
                                 },
+                                type_args: missing (optional),
                                 arguments: ArgList {
                                     l_paren_token: L_PAREN@36..37 "(" [] [],
                                     args: [],
@@ -46,12 +46,12 @@ JsModule {
                                 argument: JsParenthesizedExpression {
                                     l_paren_token: L_PAREN@48..49 "(" [] [],
                                     expression: CallExpr {
-                                        type_args: missing (optional),
                                         callee: JsIdentifierExpression {
                                             name: JsReferenceIdentifier {
                                                 value_token: IDENT@49..54 "inner" [] [],
                                             },
                                         },
+                                        type_args: missing (optional),
                                         arguments: ArgList {
                                             l_paren_token: L_PAREN@54..55 "(" [] [],
                                             args: [],
@@ -65,12 +65,12 @@ JsModule {
                             right: JsAwaitExpression {
                                 await_token: AWAIT_KW@60..66 "await" [] [Whitespace(" ")],
                                 argument: CallExpr {
-                                    type_args: missing (optional),
                                     callee: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
                                             value_token: IDENT@66..71 "inner" [] [],
                                         },
                                     },
+                                    type_args: missing (optional),
                                     arguments: ArgList {
                                         l_paren_token: L_PAREN@71..72 "(" [] [],
                                         args: [],

@@ -22,8 +22,8 @@ JsModule {
                                         IDENT@14..20 "await" [] [Whitespace(" ")],
                                     ],
                                 },
-                                fat_arrow_token: FAT_ARROW@20..23 "=>" [] [Whitespace(" ")],
                                 return_type: missing (optional),
+                                fat_arrow_token: FAT_ARROW@20..23 "=>" [] [Whitespace(" ")],
                                 body: JsFunctionBody {
                                     l_curly_token: L_CURLY@23..24 "{" [] [],
                                     directives: [],

@@ -41,12 +41,12 @@ JsModule {
         },
         JsExpressionStatement {
             expression: CallExpr {
-                type_args: missing (optional),
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@24..28 "foo" [Whitespace("\n")] [],
                     },
                 },
+                type_args: missing (optional),
                 arguments: ArgList {
                     l_paren_token: L_PAREN@28..29 "(" [] [],
                     args: [

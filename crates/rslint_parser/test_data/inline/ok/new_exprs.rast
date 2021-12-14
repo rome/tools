@@ -5,12 +5,12 @@ JsModule {
         JsExpressionStatement {
             expression: NewExpr {
                 new_token: NEW_KW@0..4 "new" [] [Whitespace(" ")],
-                type_args: missing (optional),
                 object: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@4..7 "Foo" [] [],
                     },
                 },
+                type_args: missing (optional),
                 arguments: ArgList {
                     l_paren_token: L_PAREN@7..8 "(" [] [],
                     args: [],
@@ -22,12 +22,12 @@ JsModule {
         JsExpressionStatement {
             expression: NewExpr {
                 new_token: NEW_KW@9..14 "new" [Whitespace("\n")] [Whitespace(" ")],
-                type_args: missing (optional),
                 object: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@14..17 "foo" [] [],
                     },
                 },
+                type_args: missing (optional),
                 arguments: missing (required),
             },
             semicolon_token: SEMICOLON@17..18 ";" [] [],
@@ -43,31 +43,31 @@ JsModule {
         JsExpressionStatement {
             expression: NewExpr {
                 new_token: NEW_KW@29..34 "new" [Whitespace("\n")] [Whitespace(" ")],
-                type_args: missing (optional),
                 object: NewExpr {
                     new_token: NEW_KW@34..38 "new" [] [Whitespace(" ")],
-                    type_args: missing (optional),
                     object: NewExpr {
                         new_token: NEW_KW@38..42 "new" [] [Whitespace(" ")],
-                        type_args: missing (optional),
                         object: NewExpr {
                             new_token: NEW_KW@42..46 "new" [] [Whitespace(" ")],
-                            type_args: missing (optional),
                             object: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@46..49 "Foo" [] [],
                                 },
                             },
+                            type_args: missing (optional),
                             arguments: ArgList {
                                 l_paren_token: L_PAREN@49..50 "(" [] [],
                                 args: [],
                                 r_paren_token: R_PAREN@50..51 ")" [] [],
                             },
                         },
+                        type_args: missing (optional),
                         arguments: missing (required),
                     },
+                    type_args: missing (optional),
                     arguments: missing (required),
                 },
+                type_args: missing (optional),
                 arguments: missing (required),
             },
             semicolon_token: SEMICOLON@51..52 ";" [] [],
@@ -75,12 +75,12 @@ JsModule {
         JsExpressionStatement {
             expression: NewExpr {
                 new_token: NEW_KW@52..57 "new" [Whitespace("\n")] [Whitespace(" ")],
-                type_args: missing (optional),
                 object: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@57..60 "Foo" [] [],
                     },
                 },
+                type_args: missing (optional),
                 arguments: ArgList {
                     l_paren_token: L_PAREN@60..61 "(" [] [],
                     args: [
@@ -136,8 +136,8 @@ JsModule {
                                         ],
                                         r_paren_token: R_PAREN@93..95 ")" [] [Whitespace(" ")],
                                     },
-                                    fat_arrow_token: FAT_ARROW@95..98 "=>" [] [Whitespace(" ")],
                                     return_type: missing (optional),
+                                    fat_arrow_token: FAT_ARROW@95..98 "=>" [] [Whitespace(" ")],
                                     body: JsFunctionBody {
                                         l_curly_token: L_CURLY@98..99 "{" [] [],
                                         directives: [],

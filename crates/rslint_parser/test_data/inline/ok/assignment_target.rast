@@ -119,10 +119,8 @@ JsModule {
             expression: JsAssignmentExpression {
                 left: JsStaticMemberAssignment {
                     object: CallExpr {
-                        type_args: missing (optional),
                         callee: JsStaticMemberExpression {
                             object: CallExpr {
-                                type_args: missing (optional),
                                 callee: JsStaticMemberExpression {
                                     object: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
@@ -134,6 +132,7 @@ JsModule {
                                         value_token: IDENT@85..89 "call" [] [],
                                     },
                                 },
+                                type_args: missing (optional),
                                 arguments: ArgList {
                                     l_paren_token: L_PAREN@89..90 "(" [] [],
                                     args: [],
@@ -145,6 +144,7 @@ JsModule {
                                 value_token: IDENT@92..97 "chain" [] [],
                             },
                         },
+                        type_args: missing (optional),
                         arguments: ArgList {
                             l_paren_token: L_PAREN@97..98 "(" [] [],
                             args: [],

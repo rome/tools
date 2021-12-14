@@ -4,12 +4,12 @@ JsModule {
     items: [
         JsExpressionStatement {
             expression: CallExpr {
-                type_args: missing (optional),
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@0..3 "foo" [] [],
                     },
                 },
+                type_args: missing (optional),
                 arguments: ArgList {
                     l_paren_token: L_PAREN@3..4 "(" [] [],
                     args: [
@@ -32,12 +32,12 @@ JsModule {
         },
         JsExpressionStatement {
             expression: CallExpr {
-                type_args: missing (optional),
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@8..12 "foo" [Whitespace("\n")] [],
                     },
                 },
+                type_args: missing (optional),
                 arguments: ArgList {
                     l_paren_token: L_PAREN@12..13 "(" [] [],
                     args: [

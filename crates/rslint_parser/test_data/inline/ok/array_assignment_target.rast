@@ -88,12 +88,12 @@ JsModule {
                         COMMA@52..54 "," [] [Whitespace(" ")],
                         JsStaticMemberAssignment {
                             object: CallExpr {
-                                type_args: missing (optional),
                                 callee: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@54..58 "call" [] [],
                                     },
                                 },
+                                type_args: missing (optional),
                                 arguments: ArgList {
                                     l_paren_token: L_PAREN@58..59 "(" [] [],
                                     args: [],

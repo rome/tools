@@ -42,7 +42,6 @@ JsScript {
                             statements: [
                                 JsExpressionStatement {
                                     expression: CallExpr {
-                                        type_args: missing (optional),
                                         callee: JsStaticMemberExpression {
                                             object: JsIdentifierExpression {
                                                 name: JsReferenceIdentifier {
@@ -54,6 +53,7 @@ JsScript {
                                                 value_token: IDENT@52..55 "log" [] [],
                                             },
                                         },
+                                        type_args: missing (optional),
                                         arguments: ArgList {
                                             l_paren_token: L_PAREN@55..56 "(" [] [],
                                             args: [

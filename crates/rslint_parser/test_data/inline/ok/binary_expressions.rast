@@ -45,10 +45,10 @@ JsModule {
                         },
                         operator: STAR@24..26 "*" [] [Whitespace(" ")],
                         right: CallExpr {
-                            type_args: missing (optional),
                             callee: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@26..27 "3" [] [],
                             },
+                            type_args: missing (optional),
                             arguments: ArgList {
                                 l_paren_token: L_PAREN@27..29 "(" [Whitespace("\n")] [],
                                 args: [

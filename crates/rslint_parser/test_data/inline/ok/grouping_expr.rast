@@ -4,7 +4,6 @@ JsModule {
     items: [
         JsExpressionStatement {
             expression: CallExpr {
-                type_args: missing (optional),
                 callee: JsParenthesizedExpression {
                     l_paren_token: L_PAREN@0..1 "(" [] [],
                     expression: JsParenthesizedExpression {
@@ -18,6 +17,7 @@ JsModule {
                     },
                     r_paren_token: R_PAREN@6..7 ")" [] [],
                 },
+                type_args: missing (optional),
                 arguments: ArgList {
                     l_paren_token: L_PAREN@7..9 "(" [Whitespace("\n")] [],
                     args: [
