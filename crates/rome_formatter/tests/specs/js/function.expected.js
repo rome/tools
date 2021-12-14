@@ -5,7 +5,8 @@ async function foo(a) {
 x = function () {};
 x = async function* foo(a) {};
 function Foo() {
-	if (!new.target) { }
+	if (!new.target) {
+	}
 }
 function* Foo() {
 	yield;
