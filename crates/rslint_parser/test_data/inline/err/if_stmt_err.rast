@@ -164,6 +164,20 @@ JsModule {
       2: R_CURLY@76..77 "}" [] []
   3: EOF@77..78 "" [Whitespace("\n")] []
 --
+error[SyntaxError]: expected a statement but instead found 'else'
+  ┌─ if_stmt_err.js:1:11
+  │
+1 │ if (true) else {}
+  │           ^^^^ Expected a statement here
+
+--
+error[SyntaxError]: expected a statement but instead found 'else'
+  ┌─ if_stmt_err.js:2:11
+  │
+2 │ if (true) else
+  │           ^^^^ Expected a statement here
+
+--
 error[SyntaxError]: expected `'('` but instead found `else`
   ┌─ if_stmt_err.js:3:4
   │
@@ -178,11 +192,11 @@ error[SyntaxError]: Expected an expression, but found none
   │     ^ Expected an expression here
 
 --
-error[SyntaxError]: expected a statement but instead found '}}}}'
+error[SyntaxError]: expected a statement but instead found '}'
   ┌─ if_stmt_err.js:5:10
   │
 5 │ if (true)}}}} {}
-  │          ^^^^ Expected a statement here
+  │          ^ Expected a statement here
 
 --
 if (true) else {}

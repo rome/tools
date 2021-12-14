@@ -52,11 +52,11 @@ JsModule {
       2: R_CURLY@15..16 "}" [] []
   3: EOF@16..17 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected a statement but instead found '}}}}'
+error[SyntaxError]: expected a statement but instead found '}'
   ┌─ if_broken.js:1:10
   │
 1 │ if (true)}}}} {}
-  │          ^^^^ Expected a statement here
+  │          ^ Expected a statement here
 
 --
 if (true)}}}} {}

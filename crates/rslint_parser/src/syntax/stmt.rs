@@ -614,7 +614,16 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
 			break;
 		}
 
-		parse_statement(p).or_missing_with_error(p, expected_statement);
+		if parse_statement(p)
+			.or_recover(
+				p,
+				&ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
+				expected_statement,
+			)
+			.is_err()
+		{
+			break;
+		}
 	}
 
 	list_start.complete(p, LIST);
@@ -660,10 +669,7 @@ pub fn parse_if_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	}));
 
 	// body
-	// allows us to recover from `if (true) else {}`
-	if parse_statement(p).is_absent() {
-		p.missing();
-	}
+	parse_statement(p).or_missing_with_error(p, expected_statement);
 
 	// else clause
 	if p.at(T![else]) {
