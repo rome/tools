@@ -381,9 +381,10 @@ impl RewriteParseEvents for ReparseAssignment {
 	}
 
 	fn missing(&mut self, p: &mut Parser) {
-		if self.parents.last().map(|(parent, _)| parent) == Some(&JS_COMPUTED_MEMBER_ASSIGNMENT) {
-			// computed member assignments can't have optional chaining, drop the missing
-		} else {
+		// Drop the missing marker for the `?.` token of the computer member expression because
+		// computed member assignment has no such slot (token error's in case `?.` is used).
+		// Forward all other "missing" slots.
+		if self.parents.last().map(|(parent, _)| parent) != Some(&JS_COMPUTED_MEMBER_ASSIGNMENT) {
 			p.missing();
 		}
 	}

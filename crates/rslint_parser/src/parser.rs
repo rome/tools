@@ -744,7 +744,7 @@ pub struct CompletedMissingMarker {
 
 impl CompletedMissingMarker {
 	fn new(events_pos: u32, token_pos: usize) -> Self {
-		CompletedMissingMarker {
+		Self {
 			events_pos,
 			token_pos,
 		}

@@ -17,17 +17,17 @@ pub enum CompletedNodeOrMissingMarker {
 }
 
 impl CompletedNodeOrMissingMarker {
-	/// Returns `true` if this is a [MissingMarker]
+	/// Returns `true` if this is a [CompletedNodeOrMissingMarker::MissingMarker]
 	pub fn is_missing_marker(&self) -> bool {
 		matches!(self, MissingMarker(_))
 	}
 
-	/// Returns `true` if this is a [NodeMarker]
+	/// Returns `true` if this is a [CompletedNodeOrMissingMarker::NodeMarker]
 	pub fn is_node_marker(&self) -> bool {
 		matches!(self, NodeMarker(_))
 	}
 
-	/// Returns the kind of the completed node if this is a [NodeMarker] or [None]
+	/// Returns the kind of the completed node if this is a [CompletedNodeOrMissingMarker::NodeMarker] and [None] otherwise.
 	pub fn kind(&self) -> Option<SyntaxKind> {
 		match self {
 			NodeMarker(marker) => Some(marker.kind()),
