@@ -1,0 +1,15 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: throw_stmt.js
+
+---
+# Input
+throw "Something";
+
+throw false
+
+---
+# Output
+throw "Something";
+throw false;
+

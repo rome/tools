@@ -1,0 +1,20 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: array.json
+
+---
+# Input
+[
+  [
+1,null],
+  [1,null],
+  [null],
+  [0],
+  [false],
+  [""]
+]
+
+---
+# Output
+[[1, null], [1, null], [null], [0], [false], [""]]
+

@@ -1,0 +1,20 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: key_value.json
+
+---
+# Input
+{
+    "string": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring",
+    "stringstringstringstringstringstringstringstring": "stringstringstringstringstringstringstringstring",
+    "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring": "string"
+}
+
+---
+# Output
+{
+	"string": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring",
+	"stringstringstringstringstringstringstringstring": "stringstringstringstringstringstringstringstring",
+	"stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring": "string"
+}
+

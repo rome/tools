@@ -1,0 +1,14 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: spaces.js
+
+---
+# Input
+let a = [,];
+let c = [2,2,1,3];
+
+---
+# Output
+let a = [];
+let c = [2, 2, 1, 3];
+

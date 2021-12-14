@@ -1,0 +1,16 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: import.js
+
+---
+# Input
+import(x)
+import('x')
+import(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa)
+
+---
+# Output
+import(x);
+import("x");
+import(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa);
+

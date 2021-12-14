@@ -1,0 +1,14 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: binding_pattern.js
+
+---
+# Input
+let [a,b]=c;
+let [a,...b]=c;
+
+---
+# Output
+let [a, b] = c;
+let [a, ...b] = c;
+

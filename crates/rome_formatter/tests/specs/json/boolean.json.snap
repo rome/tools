@@ -1,0 +1,11 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: boolean.json
+
+---
+# Input
+true
+---
+# Output
+true
+

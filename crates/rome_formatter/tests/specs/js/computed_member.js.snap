@@ -1,0 +1,14 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: computed_member.js
+
+---
+# Input
+a[ b ]
+c?.[ d ]
+
+---
+# Output
+a[b];
+c?.[d];
+

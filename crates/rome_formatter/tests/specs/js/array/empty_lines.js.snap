@@ -1,0 +1,23 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: empty_lines.js
+
+---
+# Input
+let a = [
+
+    1,
+    2,
+
+    3,
+
+
+    4,
+
+
+  ];
+
+---
+# Output
+let a = [1, 2, 3, 4];
+

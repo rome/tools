@@ -13,3 +13,4 @@ rome_core = { version = "0.0.0", path = "../rome_core" }
 
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }
+insta = { version = "1.8.0" }
