@@ -1286,10 +1286,7 @@ impl ParseNodeList for ConsList {
 	type ParsedElement = CompletedMarker;
 
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
-		match parse_statement(p, None) {
-			None => Absent,
-			Some(marker) => Present(marker),
-		}
+		parse_statement(p)
 	}
 
 	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
