@@ -2,11 +2,11 @@ JsModule {
     interpreter_token: missing (optional),
     directives: [],
     items: [
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
                             properties: [
@@ -19,7 +19,9 @@ JsModule {
                             ],
                             r_curly_token: R_CURLY@14..16 "}" [] [Whitespace(" ")],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@16..18 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
@@ -32,11 +34,11 @@ JsModule {
             },
             semicolon_token: SEMICOLON@19..20 ";" [] [],
         },
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@20..25 "let" [Whitespace("\n")] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@25..27 "{" [] [Whitespace(" ")],
                             properties: [
@@ -62,7 +64,9 @@ JsModule {
                             ],
                             r_curly_token: R_CURLY@39..41 "}" [] [Whitespace(" ")],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@41..43 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
@@ -82,11 +86,11 @@ JsModule {
   0: (empty)
   1: LIST@0..0
   2: LIST@0..45
-    0: JS_VARIABLE_DECLARATION_STATEMENT@0..20
-      0: JS_VARIABLE_DECLARATION@0..19
+    0: JS_VARIABLE_STATEMENT@0..20
+      0: JS_VARIABLE_DECLARATION_LIST@0..19
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..19
-          0: JS_VARIABLE_DECLARATOR@4..19
+          0: JS_VARIABLE_DECLARATION@4..19
             0: JS_OBJECT_BINDING_PATTERN@4..16
               0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
               1: LIST@6..14
@@ -95,17 +99,19 @@ JsModule {
                   1: JS_IDENTIFIER_BINDING@9..14
                     0: IDENT@9..14 "abcd" [] [Whitespace(" ")]
               2: R_CURLY@14..16 "}" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@16..19
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@16..19
               0: EQ@16..18 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@18..19
                 0: JS_REFERENCE_IDENTIFIER@18..19
                   0: IDENT@18..19 "a" [] []
       1: SEMICOLON@19..20 ";" [] []
-    1: JS_VARIABLE_DECLARATION_STATEMENT@20..45
-      0: JS_VARIABLE_DECLARATION@20..44
+    1: JS_VARIABLE_STATEMENT@20..45
+      0: JS_VARIABLE_DECLARATION_LIST@20..44
         0: LET_KW@20..25 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@25..44
-          0: JS_VARIABLE_DECLARATOR@25..44
+          0: JS_VARIABLE_DECLARATION@25..44
             0: JS_OBJECT_BINDING_PATTERN@25..41
               0: L_CURLY@25..27 "{" [] [Whitespace(" ")]
               1: LIST@27..39
@@ -123,7 +129,9 @@ JsModule {
                     2: R_CURLY@37..39 "}" [] [Whitespace(" ")]
                   3: (empty)
               2: R_CURLY@39..41 "}" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@41..44
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@41..44
               0: EQ@41..43 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@43..44
                 0: JS_REFERENCE_IDENTIFIER@43..44

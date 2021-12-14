@@ -220,7 +220,7 @@ impl ForStmt {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn init(&self) -> Option<ForStmtInit> { support::node(&self.syntax) }
+	pub fn initializer(&self) -> Option<JsAnyForInitializer> { support::node(&self.syntax) }
 	pub fn first_semi_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [;])
 	}
@@ -232,46 +232,55 @@ impl ForStmt {
 	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct ForInStmt {
+pub struct JsForInStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl ForInStmt {
+impl JsForInStatement {
 	pub fn for_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![for])
 	}
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn left(&self) -> SyntaxResult<ForLeft> { support::required_node(&self.syntax) }
+	pub fn initializer(&self) -> SyntaxResult<JsAnyForInOrOfInitializer> {
+		support::required_node(&self.syntax)
+	}
 	pub fn in_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![in])
 	}
-	pub fn right(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+		support::required_node(&self.syntax)
+	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![')'])
 	}
-	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct ForOfStmt {
+pub struct JsForOfStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl ForOfStmt {
+impl JsForOfStatement {
 	pub fn for_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![for])
 	}
+	pub fn await_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![await]) }
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn left(&self) -> SyntaxResult<ForLeft> { support::required_node(&self.syntax) }
+	pub fn initializer(&self) -> SyntaxResult<JsAnyForInOrOfInitializer> {
+		support::required_node(&self.syntax)
+	}
 	pub fn of_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![of])
 	}
-	pub fn right(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+		support::required_node(&self.syntax)
+	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![')'])
 	}
-	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsContinueStatement {
@@ -451,11 +460,11 @@ impl JsClassDeclaration {
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsVariableDeclarationStatement {
+pub struct JsVariableStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl JsVariableDeclarationStatement {
-	pub fn declaration(&self) -> SyntaxResult<JsVariableDeclaration> {
+impl JsVariableStatement {
+	pub fn declaration_list(&self) -> SyntaxResult<JsVariableDeclarationList> {
 		support::required_node(&self.syntax)
 	}
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
@@ -551,13 +560,6 @@ impl JsElseClause {
 	pub fn alternate(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct ForStmtInit {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ForStmtInit {
-	pub fn inner(&self) -> SyntaxResult<ForHead> { support::required_node(&self.syntax) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct ForStmtTest {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -572,16 +574,38 @@ impl ForStmtUpdate {
 	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsVariableDeclarationList {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsVariableDeclarationList {
+	pub fn kind_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(&self.syntax, &[T![var], T![const], T![let]])
+	}
+	pub fn declarations(&self) -> AstSeparatedList<JsVariableDeclaration> {
+		support::separated_list(&self.syntax, 0usize)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsForVariableDeclaration {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsForVariableDeclaration {
+	pub fn kind_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(&self.syntax, &[T![var], T![let], T![const]])
+	}
+	pub fn declaration(&self) -> SyntaxResult<JsVariableDeclaration> {
+		support::required_node(&self.syntax)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclaration {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsVariableDeclaration {
-	pub fn kind_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::find_required_token(&self.syntax, &[T![var], T![const], T![let]])
-	}
-	pub fn declarators(&self) -> AstSeparatedList<JsVariableDeclarator> {
-		support::separated_list(&self.syntax, 0usize)
-	}
+	pub fn id(&self) -> SyntaxResult<JsAnyBindingPattern> { support::required_node(&self.syntax) }
+	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
+	pub fn type_annotation(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
+	pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsCaseClause {
@@ -1367,7 +1391,7 @@ impl JsPropertyClassMember {
 	}
 	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
 	pub fn ty(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
-	pub fn value(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
+	pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1524,10 +1548,10 @@ impl JsBindingPatternWithDefault {
 	pub fn default(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsEqualValueClause {
+pub struct JsInitializerClause {
 	pub(crate) syntax: SyntaxNode,
 }
-impl JsEqualValueClause {
+impl JsInitializerClause {
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [=])
 	}
@@ -1653,7 +1677,7 @@ impl JsObjectAssignmentPatternShorthandProperty {
 	pub fn identifier(&self) -> SyntaxResult<JsAnyAssignment> {
 		support::required_node(&self.syntax)
 	}
-	pub fn init(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
+	pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectAssignmentPatternProperty {
@@ -1667,7 +1691,7 @@ impl JsObjectAssignmentPatternProperty {
 	pub fn pattern(&self) -> SyntaxResult<JsAnyAssignmentPattern> {
 		support::required_node(&self.syntax)
 	}
-	pub fn init(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
+	pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectAssignmentPatternRest {
@@ -1753,7 +1777,7 @@ impl JsObjectBindingPatternProperty {
 	pub fn pattern(&self) -> SyntaxResult<JsAnyBindingPattern> {
 		support::required_node(&self.syntax)
 	}
-	pub fn init(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
+	pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectBindingPatternRest {
@@ -1771,7 +1795,7 @@ pub struct JsObjectBindingPatternShorthandProperty {
 }
 impl JsObjectBindingPatternShorthandProperty {
 	pub fn identifier(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
-	pub fn init(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
+	pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsStringLiteralExpression {
@@ -1826,14 +1850,6 @@ impl JsRegexLiteralExpression {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![js_regex_literal])
 	}
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsVariableDeclarator {
-	pub(crate) syntax: SyntaxNode,
-}
-impl JsVariableDeclarator {
-	pub fn id(&self) -> SyntaxResult<JsAnyBindingPattern> { support::required_node(&self.syntax) }
-	pub fn init(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImport {
@@ -2710,8 +2726,8 @@ pub enum JsAnyStatement {
 	JsDoWhileStatement(JsDoWhileStatement),
 	JsWhileStatement(JsWhileStatement),
 	ForStmt(ForStmt),
-	ForInStmt(ForInStmt),
-	ForOfStmt(ForOfStmt),
+	JsForInStatement(JsForInStatement),
+	JsForOfStatement(JsForOfStatement),
 	JsContinueStatement(JsContinueStatement),
 	JsBreakStatement(JsBreakStatement),
 	JsReturnStatement(JsReturnStatement),
@@ -2724,7 +2740,7 @@ pub enum JsAnyStatement {
 	JsDebuggerStatement(JsDebuggerStatement),
 	JsFunctionDeclaration(JsFunctionDeclaration),
 	JsClassDeclaration(JsClassDeclaration),
-	JsVariableDeclarationStatement(JsVariableDeclarationStatement),
+	JsVariableStatement(JsVariableStatement),
 	TsEnum(TsEnum),
 	TsTypeAliasDecl(TsTypeAliasDecl),
 	TsNamespaceDecl(TsNamespaceDecl),
@@ -2781,22 +2797,20 @@ pub enum JsAnyExpression {
 	JsUnknownExpression(JsUnknownExpression),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub enum ForHead {
-	JsVariableDeclaration(JsVariableDeclaration),
+pub enum JsAnyForInitializer {
+	JsVariableDeclarationList(JsVariableDeclarationList),
 	JsAnyExpression(JsAnyExpression),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub enum ForLeft {
-	JsAnyAssignment(JsAnyAssignment),
-	JsVariableDeclaration(JsVariableDeclaration),
+pub enum JsAnyForInOrOfInitializer {
+	JsAnyAssignmentPattern(JsAnyAssignmentPattern),
+	JsForVariableDeclaration(JsForVariableDeclaration),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub enum JsAnyAssignment {
-	JsIdentifierAssignment(JsIdentifierAssignment),
-	JsStaticMemberAssignment(JsStaticMemberAssignment),
-	JsComputedMemberAssignment(JsComputedMemberAssignment),
-	JsParenthesizedAssignment(JsParenthesizedAssignment),
-	JsUnknownAssignment(JsUnknownAssignment),
+pub enum JsAnyAssignmentPattern {
+	JsAnyAssignment(JsAnyAssignment),
+	JsArrayAssignmentPattern(JsArrayAssignmentPattern),
+	JsObjectAssignmentPattern(JsObjectAssignmentPattern),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnySwitchClause {
@@ -2840,15 +2854,17 @@ pub enum JsAnyArrayElement {
 	JsArrayHole(JsArrayHole),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub enum JsAnyAssignmentPattern {
-	JsAnyAssignment(JsAnyAssignment),
-	JsArrayAssignmentPattern(JsArrayAssignmentPattern),
-	JsObjectAssignmentPattern(JsObjectAssignmentPattern),
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyName {
 	JsName(JsName),
 	JsPrivateName(JsPrivateName),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyAssignment {
+	JsIdentifierAssignment(JsIdentifierAssignment),
+	JsStaticMemberAssignment(JsStaticMemberAssignment),
+	JsComputedMemberAssignment(JsComputedMemberAssignment),
+	JsParenthesizedAssignment(JsParenthesizedAssignment),
+	JsUnknownAssignment(JsUnknownAssignment),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectMemberName {
@@ -2990,7 +3006,7 @@ pub enum DefaultDecl {
 pub enum JsAnyExportDeclaration {
 	JsFunctionDeclaration(JsFunctionDeclaration),
 	JsClassDeclaration(JsClassDeclaration),
-	JsVariableDeclarationStatement(JsVariableDeclarationStatement),
+	JsVariableStatement(JsVariableStatement),
 	TsEnum(TsEnum),
 	TsTypeAliasDecl(TsTypeAliasDecl),
 	TsNamespaceDecl(TsNamespaceDecl),
@@ -3053,8 +3069,8 @@ pub enum AnyNode {
 	JsDoWhileStatement(JsDoWhileStatement),
 	JsWhileStatement(JsWhileStatement),
 	ForStmt(ForStmt),
-	ForInStmt(ForInStmt),
-	ForOfStmt(ForOfStmt),
+	JsForInStatement(JsForInStatement),
+	JsForOfStatement(JsForOfStatement),
 	JsContinueStatement(JsContinueStatement),
 	JsBreakStatement(JsBreakStatement),
 	JsReturnStatement(JsReturnStatement),
@@ -3067,16 +3083,17 @@ pub enum AnyNode {
 	JsDebuggerStatement(JsDebuggerStatement),
 	JsFunctionDeclaration(JsFunctionDeclaration),
 	JsClassDeclaration(JsClassDeclaration),
-	JsVariableDeclarationStatement(JsVariableDeclarationStatement),
+	JsVariableStatement(JsVariableStatement),
 	TsEnum(TsEnum),
 	TsTypeAliasDecl(TsTypeAliasDecl),
 	TsNamespaceDecl(TsNamespaceDecl),
 	TsModuleDecl(TsModuleDecl),
 	TsInterfaceDecl(TsInterfaceDecl),
 	JsElseClause(JsElseClause),
-	ForStmtInit(ForStmtInit),
 	ForStmtTest(ForStmtTest),
 	ForStmtUpdate(ForStmtUpdate),
+	JsVariableDeclarationList(JsVariableDeclarationList),
+	JsForVariableDeclaration(JsForVariableDeclaration),
 	JsVariableDeclaration(JsVariableDeclaration),
 	JsCaseClause(JsCaseClause),
 	JsDefaultClause(JsDefaultClause),
@@ -3144,7 +3161,7 @@ pub enum AnyNode {
 	JsConstructorParameterList(JsConstructorParameterList),
 	TsConstructorParam(TsConstructorParam),
 	JsBindingPatternWithDefault(JsBindingPatternWithDefault),
-	JsEqualValueClause(JsEqualValueClause),
+	JsInitializerClause(JsInitializerClause),
 	JsModifier(JsModifier),
 	JsIdentifierAssignment(JsIdentifierAssignment),
 	JsStaticMemberAssignment(JsStaticMemberAssignment),
@@ -3171,7 +3188,6 @@ pub enum AnyNode {
 	JsBooleanLiteralExpression(JsBooleanLiteralExpression),
 	JsNullLiteralExpression(JsNullLiteralExpression),
 	JsRegexLiteralExpression(JsRegexLiteralExpression),
-	JsVariableDeclarator(JsVariableDeclarator),
 	JsImport(JsImport),
 	ExportNamed(ExportNamed),
 	ExportDefaultDecl(ExportDefaultDecl),
@@ -3687,7 +3703,10 @@ impl std::fmt::Debug for ForStmt {
 				"l_paren_token",
 				&support::DebugSyntaxResult(self.l_paren_token()),
 			)
-			.field("init", &support::DebugOptionalElement(self.init()))
+			.field(
+				"initializer",
+				&support::DebugOptionalElement(self.initializer()),
+			)
 			.field(
 				"first_semi_token",
 				&support::DebugSyntaxResult(self.first_semi_token()),
@@ -3706,8 +3725,8 @@ impl std::fmt::Debug for ForStmt {
 			.finish()
 	}
 }
-impl AstNode for ForInStmt {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == FOR_IN_STMT }
+impl AstNode for JsForInStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FOR_IN_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3717,27 +3736,30 @@ impl AstNode for ForInStmt {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for ForInStmt {
+impl std::fmt::Debug for JsForInStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ForInStmt")
+		f.debug_struct("JsForInStatement")
 			.field("for_token", &support::DebugSyntaxResult(self.for_token()))
 			.field(
 				"l_paren_token",
 				&support::DebugSyntaxResult(self.l_paren_token()),
 			)
-			.field("left", &support::DebugSyntaxResult(self.left()))
+			.field(
+				"initializer",
+				&support::DebugSyntaxResult(self.initializer()),
+			)
 			.field("in_token", &support::DebugSyntaxResult(self.in_token()))
-			.field("right", &support::DebugSyntaxResult(self.right()))
+			.field("expression", &support::DebugSyntaxResult(self.expression()))
 			.field(
 				"r_paren_token",
 				&support::DebugSyntaxResult(self.r_paren_token()),
 			)
-			.field("cons", &support::DebugSyntaxResult(self.cons()))
+			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
 	}
 }
-impl AstNode for ForOfStmt {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == FOR_OF_STMT }
+impl AstNode for JsForOfStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FOR_OF_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3747,22 +3769,29 @@ impl AstNode for ForOfStmt {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for ForOfStmt {
+impl std::fmt::Debug for JsForOfStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ForOfStmt")
+		f.debug_struct("JsForOfStatement")
 			.field("for_token", &support::DebugSyntaxResult(self.for_token()))
+			.field(
+				"await_token",
+				&support::DebugOptionalElement(self.await_token()),
+			)
 			.field(
 				"l_paren_token",
 				&support::DebugSyntaxResult(self.l_paren_token()),
 			)
-			.field("left", &support::DebugSyntaxResult(self.left()))
+			.field(
+				"initializer",
+				&support::DebugSyntaxResult(self.initializer()),
+			)
 			.field("of_token", &support::DebugSyntaxResult(self.of_token()))
-			.field("right", &support::DebugSyntaxResult(self.right()))
+			.field("expression", &support::DebugSyntaxResult(self.expression()))
 			.field(
 				"r_paren_token",
 				&support::DebugSyntaxResult(self.r_paren_token()),
 			)
-			.field("cons", &support::DebugSyntaxResult(self.cons()))
+			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
 	}
 }
@@ -4129,8 +4158,8 @@ impl std::fmt::Debug for JsClassDeclaration {
 			.finish()
 	}
 }
-impl AstNode for JsVariableDeclarationStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION_STATEMENT }
+impl AstNode for JsVariableStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4140,12 +4169,12 @@ impl AstNode for JsVariableDeclarationStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsVariableDeclarationStatement {
+impl std::fmt::Debug for JsVariableStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsVariableDeclarationStatement")
+		f.debug_struct("JsVariableStatement")
 			.field(
-				"declaration",
-				&support::DebugSyntaxResult(self.declaration()),
+				"declaration_list",
+				&support::DebugSyntaxResult(self.declaration_list()),
 			)
 			.field(
 				"semicolon_token",
@@ -4334,24 +4363,6 @@ impl std::fmt::Debug for JsElseClause {
 			.finish()
 	}
 }
-impl AstNode for ForStmtInit {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == FOR_STMT_INIT }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for ForStmtInit {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ForStmtInit")
-			.field("inner", &support::DebugSyntaxResult(self.inner()))
-			.finish()
-	}
-}
 impl AstNode for ForStmtTest {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == FOR_STMT_TEST }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4388,6 +4399,47 @@ impl std::fmt::Debug for ForStmtUpdate {
 			.finish()
 	}
 }
+impl AstNode for JsVariableDeclarationList {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION_LIST }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsVariableDeclarationList {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsVariableDeclarationList")
+			.field("kind_token", &support::DebugSyntaxResult(self.kind_token()))
+			.field("declarations", &self.declarations())
+			.finish()
+	}
+}
+impl AstNode for JsForVariableDeclaration {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FOR_VARIABLE_DECLARATION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsForVariableDeclaration {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsForVariableDeclaration")
+			.field("kind_token", &support::DebugSyntaxResult(self.kind_token()))
+			.field(
+				"declaration",
+				&support::DebugSyntaxResult(self.declaration()),
+			)
+			.finish()
+	}
+}
 impl AstNode for JsVariableDeclaration {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4402,8 +4454,19 @@ impl AstNode for JsVariableDeclaration {
 impl std::fmt::Debug for JsVariableDeclaration {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsVariableDeclaration")
-			.field("kind_token", &support::DebugSyntaxResult(self.kind_token()))
-			.field("declarators", &self.declarators())
+			.field("id", &support::DebugSyntaxResult(self.id()))
+			.field(
+				"excl_token",
+				&support::DebugOptionalElement(self.excl_token()),
+			)
+			.field(
+				"type_annotation",
+				&support::DebugOptionalElement(self.type_annotation()),
+			)
+			.field(
+				"initializer",
+				&support::DebugOptionalElement(self.initializer()),
+			)
 			.finish()
 	}
 }
@@ -6120,8 +6183,8 @@ impl std::fmt::Debug for JsBindingPatternWithDefault {
 			.finish()
 	}
 }
-impl AstNode for JsEqualValueClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EQUAL_VALUE_CLAUSE }
+impl AstNode for JsInitializerClause {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_INITIALIZER_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6131,9 +6194,9 @@ impl AstNode for JsEqualValueClause {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsEqualValueClause {
+impl std::fmt::Debug for JsInitializerClause {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsEqualValueClause")
+		f.debug_struct("JsInitializerClause")
 			.field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
 			.field("expression", &support::DebugSyntaxResult(self.expression()))
 			.finish()
@@ -6713,25 +6776,6 @@ impl std::fmt::Debug for JsRegexLiteralExpression {
 				"value_token",
 				&support::DebugSyntaxResult(self.value_token()),
 			)
-			.finish()
-	}
-}
-impl AstNode for JsVariableDeclarator {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATOR }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsVariableDeclarator {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsVariableDeclarator")
-			.field("id", &support::DebugSyntaxResult(self.id()))
-			.field("init", &support::DebugOptionalElement(self.init()))
 			.finish()
 	}
 }
@@ -8563,11 +8607,11 @@ impl From<JsWhileStatement> for JsAnyStatement {
 impl From<ForStmt> for JsAnyStatement {
 	fn from(node: ForStmt) -> JsAnyStatement { JsAnyStatement::ForStmt(node) }
 }
-impl From<ForInStmt> for JsAnyStatement {
-	fn from(node: ForInStmt) -> JsAnyStatement { JsAnyStatement::ForInStmt(node) }
+impl From<JsForInStatement> for JsAnyStatement {
+	fn from(node: JsForInStatement) -> JsAnyStatement { JsAnyStatement::JsForInStatement(node) }
 }
-impl From<ForOfStmt> for JsAnyStatement {
-	fn from(node: ForOfStmt) -> JsAnyStatement { JsAnyStatement::ForOfStmt(node) }
+impl From<JsForOfStatement> for JsAnyStatement {
+	fn from(node: JsForOfStatement) -> JsAnyStatement { JsAnyStatement::JsForOfStatement(node) }
 }
 impl From<JsContinueStatement> for JsAnyStatement {
 	fn from(node: JsContinueStatement) -> JsAnyStatement {
@@ -8613,9 +8657,9 @@ impl From<JsFunctionDeclaration> for JsAnyStatement {
 impl From<JsClassDeclaration> for JsAnyStatement {
 	fn from(node: JsClassDeclaration) -> JsAnyStatement { JsAnyStatement::JsClassDeclaration(node) }
 }
-impl From<JsVariableDeclarationStatement> for JsAnyStatement {
-	fn from(node: JsVariableDeclarationStatement) -> JsAnyStatement {
-		JsAnyStatement::JsVariableDeclarationStatement(node)
+impl From<JsVariableStatement> for JsAnyStatement {
+	fn from(node: JsVariableStatement) -> JsAnyStatement {
+		JsAnyStatement::JsVariableStatement(node)
 	}
 }
 impl From<TsEnum> for JsAnyStatement {
@@ -8646,8 +8690,9 @@ impl AstNode for JsAnyStatement {
 				| JS_IF_STATEMENT
 				| JS_DO_WHILE_STATEMENT
 				| JS_WHILE_STATEMENT
-				| FOR_STMT | FOR_IN_STMT
-				| FOR_OF_STMT | JS_CONTINUE_STATEMENT
+				| FOR_STMT | JS_FOR_IN_STATEMENT
+				| JS_FOR_OF_STATEMENT
+				| JS_CONTINUE_STATEMENT
 				| JS_BREAK_STATEMENT
 				| JS_RETURN_STATEMENT
 				| JS_WITH_STATEMENT
@@ -8659,7 +8704,7 @@ impl AstNode for JsAnyStatement {
 				| JS_DEBUGGER_STATEMENT
 				| JS_FUNCTION_DECLARATION
 				| JS_CLASS_DECLARATION
-				| JS_VARIABLE_DECLARATION_STATEMENT
+				| JS_VARIABLE_STATEMENT
 				| TS_ENUM | TS_TYPE_ALIAS_DECL
 				| TS_NAMESPACE_DECL
 				| TS_MODULE_DECL | TS_INTERFACE_DECL
@@ -8679,8 +8724,8 @@ impl AstNode for JsAnyStatement {
 			}
 			JS_WHILE_STATEMENT => JsAnyStatement::JsWhileStatement(JsWhileStatement { syntax }),
 			FOR_STMT => JsAnyStatement::ForStmt(ForStmt { syntax }),
-			FOR_IN_STMT => JsAnyStatement::ForInStmt(ForInStmt { syntax }),
-			FOR_OF_STMT => JsAnyStatement::ForOfStmt(ForOfStmt { syntax }),
+			JS_FOR_IN_STATEMENT => JsAnyStatement::JsForInStatement(JsForInStatement { syntax }),
+			JS_FOR_OF_STATEMENT => JsAnyStatement::JsForOfStatement(JsForOfStatement { syntax }),
 			JS_CONTINUE_STATEMENT => {
 				JsAnyStatement::JsContinueStatement(JsContinueStatement { syntax })
 			}
@@ -8705,10 +8750,8 @@ impl AstNode for JsAnyStatement {
 			JS_CLASS_DECLARATION => {
 				JsAnyStatement::JsClassDeclaration(JsClassDeclaration { syntax })
 			}
-			JS_VARIABLE_DECLARATION_STATEMENT => {
-				JsAnyStatement::JsVariableDeclarationStatement(JsVariableDeclarationStatement {
-					syntax,
-				})
+			JS_VARIABLE_STATEMENT => {
+				JsAnyStatement::JsVariableStatement(JsVariableStatement { syntax })
 			}
 			TS_ENUM => JsAnyStatement::TsEnum(TsEnum { syntax }),
 			TS_TYPE_ALIAS_DECL => JsAnyStatement::TsTypeAliasDecl(TsTypeAliasDecl { syntax }),
@@ -8731,8 +8774,8 @@ impl AstNode for JsAnyStatement {
 			JsAnyStatement::JsDoWhileStatement(it) => &it.syntax,
 			JsAnyStatement::JsWhileStatement(it) => &it.syntax,
 			JsAnyStatement::ForStmt(it) => &it.syntax,
-			JsAnyStatement::ForInStmt(it) => &it.syntax,
-			JsAnyStatement::ForOfStmt(it) => &it.syntax,
+			JsAnyStatement::JsForInStatement(it) => &it.syntax,
+			JsAnyStatement::JsForOfStatement(it) => &it.syntax,
 			JsAnyStatement::JsContinueStatement(it) => &it.syntax,
 			JsAnyStatement::JsBreakStatement(it) => &it.syntax,
 			JsAnyStatement::JsReturnStatement(it) => &it.syntax,
@@ -8745,7 +8788,7 @@ impl AstNode for JsAnyStatement {
 			JsAnyStatement::JsDebuggerStatement(it) => &it.syntax,
 			JsAnyStatement::JsFunctionDeclaration(it) => &it.syntax,
 			JsAnyStatement::JsClassDeclaration(it) => &it.syntax,
-			JsAnyStatement::JsVariableDeclarationStatement(it) => &it.syntax,
+			JsAnyStatement::JsVariableStatement(it) => &it.syntax,
 			JsAnyStatement::TsEnum(it) => &it.syntax,
 			JsAnyStatement::TsTypeAliasDecl(it) => &it.syntax,
 			JsAnyStatement::TsNamespaceDecl(it) => &it.syntax,
@@ -8765,8 +8808,8 @@ impl std::fmt::Debug for JsAnyStatement {
 			JsAnyStatement::JsDoWhileStatement(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyStatement::JsWhileStatement(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyStatement::ForStmt(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::ForInStmt(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::ForOfStmt(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyStatement::JsForInStatement(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyStatement::JsForOfStatement(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyStatement::JsContinueStatement(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyStatement::JsBreakStatement(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyStatement::JsReturnStatement(it) => std::fmt::Debug::fmt(it, f),
@@ -8779,7 +8822,7 @@ impl std::fmt::Debug for JsAnyStatement {
 			JsAnyStatement::JsDebuggerStatement(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyStatement::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyStatement::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsVariableDeclarationStatement(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyStatement::JsVariableStatement(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyStatement::TsEnum(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyStatement::TsTypeAliasDecl(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyStatement::TsNamespaceDecl(it) => std::fmt::Debug::fmt(it, f),
@@ -9209,25 +9252,27 @@ impl std::fmt::Debug for JsAnyExpression {
 		}
 	}
 }
-impl From<JsVariableDeclaration> for ForHead {
-	fn from(node: JsVariableDeclaration) -> ForHead { ForHead::JsVariableDeclaration(node) }
+impl From<JsVariableDeclarationList> for JsAnyForInitializer {
+	fn from(node: JsVariableDeclarationList) -> JsAnyForInitializer {
+		JsAnyForInitializer::JsVariableDeclarationList(node)
+	}
 }
-impl AstNode for ForHead {
+impl AstNode for JsAnyForInitializer {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			JS_VARIABLE_DECLARATION => true,
+			JS_VARIABLE_DECLARATION_LIST => true,
 			k if JsAnyExpression::can_cast(k) => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			JS_VARIABLE_DECLARATION => {
-				ForHead::JsVariableDeclaration(JsVariableDeclaration { syntax })
+			JS_VARIABLE_DECLARATION_LIST => {
+				JsAnyForInitializer::JsVariableDeclarationList(JsVariableDeclarationList { syntax })
 			}
 			_ => {
 				if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
-					return Some(ForHead::JsAnyExpression(js_any_expression));
+					return Some(JsAnyForInitializer::JsAnyExpression(js_any_expression));
 				}
 				return None;
 			}
@@ -9236,38 +9281,98 @@ impl AstNode for ForHead {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			ForHead::JsVariableDeclaration(it) => &it.syntax,
-			ForHead::JsAnyExpression(it) => it.syntax(),
+			JsAnyForInitializer::JsVariableDeclarationList(it) => &it.syntax,
+			JsAnyForInitializer::JsAnyExpression(it) => it.syntax(),
 		}
 	}
 }
-impl std::fmt::Debug for ForHead {
+impl std::fmt::Debug for JsAnyForInitializer {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
-			ForHead::JsVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
-			ForHead::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyForInitializer::JsVariableDeclarationList(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyForInitializer::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
-impl From<JsVariableDeclaration> for ForLeft {
-	fn from(node: JsVariableDeclaration) -> ForLeft { ForLeft::JsVariableDeclaration(node) }
+impl From<JsForVariableDeclaration> for JsAnyForInOrOfInitializer {
+	fn from(node: JsForVariableDeclaration) -> JsAnyForInOrOfInitializer {
+		JsAnyForInOrOfInitializer::JsForVariableDeclaration(node)
+	}
 }
-impl AstNode for ForLeft {
+impl AstNode for JsAnyForInOrOfInitializer {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			JS_VARIABLE_DECLARATION => true,
+			JS_FOR_VARIABLE_DECLARATION => true,
+			k if JsAnyAssignmentPattern::can_cast(k) => true,
+			_ => false,
+		}
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_FOR_VARIABLE_DECLARATION => {
+				JsAnyForInOrOfInitializer::JsForVariableDeclaration(JsForVariableDeclaration {
+					syntax,
+				})
+			}
+			_ => {
+				if let Some(js_any_assignment_pattern) = JsAnyAssignmentPattern::cast(syntax) {
+					return Some(JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(
+						js_any_assignment_pattern,
+					));
+				}
+				return None;
+			}
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			JsAnyForInOrOfInitializer::JsForVariableDeclaration(it) => &it.syntax,
+			JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(it) => it.syntax(),
+		}
+	}
+}
+impl std::fmt::Debug for JsAnyForInOrOfInitializer {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		match self {
+			JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyForInOrOfInitializer::JsForVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
+		}
+	}
+}
+impl From<JsArrayAssignmentPattern> for JsAnyAssignmentPattern {
+	fn from(node: JsArrayAssignmentPattern) -> JsAnyAssignmentPattern {
+		JsAnyAssignmentPattern::JsArrayAssignmentPattern(node)
+	}
+}
+impl From<JsObjectAssignmentPattern> for JsAnyAssignmentPattern {
+	fn from(node: JsObjectAssignmentPattern) -> JsAnyAssignmentPattern {
+		JsAnyAssignmentPattern::JsObjectAssignmentPattern(node)
+	}
+}
+impl AstNode for JsAnyAssignmentPattern {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		match kind {
+			JS_ARRAY_ASSIGNMENT_PATTERN | JS_OBJECT_ASSIGNMENT_PATTERN => true,
 			k if JsAnyAssignment::can_cast(k) => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			JS_VARIABLE_DECLARATION => {
-				ForLeft::JsVariableDeclaration(JsVariableDeclaration { syntax })
+			JS_ARRAY_ASSIGNMENT_PATTERN => {
+				JsAnyAssignmentPattern::JsArrayAssignmentPattern(JsArrayAssignmentPattern {
+					syntax,
+				})
+			}
+			JS_OBJECT_ASSIGNMENT_PATTERN => {
+				JsAnyAssignmentPattern::JsObjectAssignmentPattern(JsObjectAssignmentPattern {
+					syntax,
+				})
 			}
 			_ => {
 				if let Some(js_any_assignment) = JsAnyAssignment::cast(syntax) {
-					return Some(ForLeft::JsAnyAssignment(js_any_assignment));
+					return Some(JsAnyAssignmentPattern::JsAnyAssignment(js_any_assignment));
 				}
 				return None;
 			}
@@ -9276,94 +9381,18 @@ impl AstNode for ForLeft {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			ForLeft::JsVariableDeclaration(it) => &it.syntax,
-			ForLeft::JsAnyAssignment(it) => it.syntax(),
+			JsAnyAssignmentPattern::JsArrayAssignmentPattern(it) => &it.syntax,
+			JsAnyAssignmentPattern::JsObjectAssignmentPattern(it) => &it.syntax,
+			JsAnyAssignmentPattern::JsAnyAssignment(it) => it.syntax(),
 		}
 	}
 }
-impl std::fmt::Debug for ForLeft {
+impl std::fmt::Debug for JsAnyAssignmentPattern {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
-			ForLeft::JsAnyAssignment(it) => std::fmt::Debug::fmt(it, f),
-			ForLeft::JsVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
-impl From<JsIdentifierAssignment> for JsAnyAssignment {
-	fn from(node: JsIdentifierAssignment) -> JsAnyAssignment {
-		JsAnyAssignment::JsIdentifierAssignment(node)
-	}
-}
-impl From<JsStaticMemberAssignment> for JsAnyAssignment {
-	fn from(node: JsStaticMemberAssignment) -> JsAnyAssignment {
-		JsAnyAssignment::JsStaticMemberAssignment(node)
-	}
-}
-impl From<JsComputedMemberAssignment> for JsAnyAssignment {
-	fn from(node: JsComputedMemberAssignment) -> JsAnyAssignment {
-		JsAnyAssignment::JsComputedMemberAssignment(node)
-	}
-}
-impl From<JsParenthesizedAssignment> for JsAnyAssignment {
-	fn from(node: JsParenthesizedAssignment) -> JsAnyAssignment {
-		JsAnyAssignment::JsParenthesizedAssignment(node)
-	}
-}
-impl From<JsUnknownAssignment> for JsAnyAssignment {
-	fn from(node: JsUnknownAssignment) -> JsAnyAssignment {
-		JsAnyAssignment::JsUnknownAssignment(node)
-	}
-}
-impl AstNode for JsAnyAssignment {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		matches!(
-			kind,
-			JS_IDENTIFIER_ASSIGNMENT
-				| JS_STATIC_MEMBER_ASSIGNMENT
-				| JS_COMPUTED_MEMBER_ASSIGNMENT
-				| JS_PARENTHESIZED_ASSIGNMENT
-				| JS_UNKNOWN_ASSIGNMENT
-		)
-	}
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			JS_IDENTIFIER_ASSIGNMENT => {
-				JsAnyAssignment::JsIdentifierAssignment(JsIdentifierAssignment { syntax })
-			}
-			JS_STATIC_MEMBER_ASSIGNMENT => {
-				JsAnyAssignment::JsStaticMemberAssignment(JsStaticMemberAssignment { syntax })
-			}
-			JS_COMPUTED_MEMBER_ASSIGNMENT => {
-				JsAnyAssignment::JsComputedMemberAssignment(JsComputedMemberAssignment { syntax })
-			}
-			JS_PARENTHESIZED_ASSIGNMENT => {
-				JsAnyAssignment::JsParenthesizedAssignment(JsParenthesizedAssignment { syntax })
-			}
-			JS_UNKNOWN_ASSIGNMENT => {
-				JsAnyAssignment::JsUnknownAssignment(JsUnknownAssignment { syntax })
-			}
-			_ => return None,
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			JsAnyAssignment::JsIdentifierAssignment(it) => &it.syntax,
-			JsAnyAssignment::JsStaticMemberAssignment(it) => &it.syntax,
-			JsAnyAssignment::JsComputedMemberAssignment(it) => &it.syntax,
-			JsAnyAssignment::JsParenthesizedAssignment(it) => &it.syntax,
-			JsAnyAssignment::JsUnknownAssignment(it) => &it.syntax,
-		}
-	}
-}
-impl std::fmt::Debug for JsAnyAssignment {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyAssignment::JsIdentifierAssignment(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyAssignment::JsStaticMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyAssignment::JsComputedMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyAssignment::JsParenthesizedAssignment(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyAssignment::JsUnknownAssignment(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyAssignmentPattern::JsAnyAssignment(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyAssignmentPattern::JsArrayAssignmentPattern(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyAssignmentPattern::JsObjectAssignmentPattern(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -9710,62 +9739,6 @@ impl std::fmt::Debug for JsAnyArrayElement {
 		}
 	}
 }
-impl From<JsArrayAssignmentPattern> for JsAnyAssignmentPattern {
-	fn from(node: JsArrayAssignmentPattern) -> JsAnyAssignmentPattern {
-		JsAnyAssignmentPattern::JsArrayAssignmentPattern(node)
-	}
-}
-impl From<JsObjectAssignmentPattern> for JsAnyAssignmentPattern {
-	fn from(node: JsObjectAssignmentPattern) -> JsAnyAssignmentPattern {
-		JsAnyAssignmentPattern::JsObjectAssignmentPattern(node)
-	}
-}
-impl AstNode for JsAnyAssignmentPattern {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			JS_ARRAY_ASSIGNMENT_PATTERN | JS_OBJECT_ASSIGNMENT_PATTERN => true,
-			k if JsAnyAssignment::can_cast(k) => true,
-			_ => false,
-		}
-	}
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			JS_ARRAY_ASSIGNMENT_PATTERN => {
-				JsAnyAssignmentPattern::JsArrayAssignmentPattern(JsArrayAssignmentPattern {
-					syntax,
-				})
-			}
-			JS_OBJECT_ASSIGNMENT_PATTERN => {
-				JsAnyAssignmentPattern::JsObjectAssignmentPattern(JsObjectAssignmentPattern {
-					syntax,
-				})
-			}
-			_ => {
-				if let Some(js_any_assignment) = JsAnyAssignment::cast(syntax) {
-					return Some(JsAnyAssignmentPattern::JsAnyAssignment(js_any_assignment));
-				}
-				return None;
-			}
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			JsAnyAssignmentPattern::JsArrayAssignmentPattern(it) => &it.syntax,
-			JsAnyAssignmentPattern::JsObjectAssignmentPattern(it) => &it.syntax,
-			JsAnyAssignmentPattern::JsAnyAssignment(it) => it.syntax(),
-		}
-	}
-}
-impl std::fmt::Debug for JsAnyAssignmentPattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyAssignmentPattern::JsAnyAssignment(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyAssignmentPattern::JsArrayAssignmentPattern(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyAssignmentPattern::JsObjectAssignmentPattern(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<JsName> for JsAnyName {
 	fn from(node: JsName) -> JsAnyName { JsAnyName::JsName(node) }
 }
@@ -9794,6 +9767,84 @@ impl std::fmt::Debug for JsAnyName {
 		match self {
 			JsAnyName::JsName(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyName::JsPrivateName(it) => std::fmt::Debug::fmt(it, f),
+		}
+	}
+}
+impl From<JsIdentifierAssignment> for JsAnyAssignment {
+	fn from(node: JsIdentifierAssignment) -> JsAnyAssignment {
+		JsAnyAssignment::JsIdentifierAssignment(node)
+	}
+}
+impl From<JsStaticMemberAssignment> for JsAnyAssignment {
+	fn from(node: JsStaticMemberAssignment) -> JsAnyAssignment {
+		JsAnyAssignment::JsStaticMemberAssignment(node)
+	}
+}
+impl From<JsComputedMemberAssignment> for JsAnyAssignment {
+	fn from(node: JsComputedMemberAssignment) -> JsAnyAssignment {
+		JsAnyAssignment::JsComputedMemberAssignment(node)
+	}
+}
+impl From<JsParenthesizedAssignment> for JsAnyAssignment {
+	fn from(node: JsParenthesizedAssignment) -> JsAnyAssignment {
+		JsAnyAssignment::JsParenthesizedAssignment(node)
+	}
+}
+impl From<JsUnknownAssignment> for JsAnyAssignment {
+	fn from(node: JsUnknownAssignment) -> JsAnyAssignment {
+		JsAnyAssignment::JsUnknownAssignment(node)
+	}
+}
+impl AstNode for JsAnyAssignment {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		matches!(
+			kind,
+			JS_IDENTIFIER_ASSIGNMENT
+				| JS_STATIC_MEMBER_ASSIGNMENT
+				| JS_COMPUTED_MEMBER_ASSIGNMENT
+				| JS_PARENTHESIZED_ASSIGNMENT
+				| JS_UNKNOWN_ASSIGNMENT
+		)
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_IDENTIFIER_ASSIGNMENT => {
+				JsAnyAssignment::JsIdentifierAssignment(JsIdentifierAssignment { syntax })
+			}
+			JS_STATIC_MEMBER_ASSIGNMENT => {
+				JsAnyAssignment::JsStaticMemberAssignment(JsStaticMemberAssignment { syntax })
+			}
+			JS_COMPUTED_MEMBER_ASSIGNMENT => {
+				JsAnyAssignment::JsComputedMemberAssignment(JsComputedMemberAssignment { syntax })
+			}
+			JS_PARENTHESIZED_ASSIGNMENT => {
+				JsAnyAssignment::JsParenthesizedAssignment(JsParenthesizedAssignment { syntax })
+			}
+			JS_UNKNOWN_ASSIGNMENT => {
+				JsAnyAssignment::JsUnknownAssignment(JsUnknownAssignment { syntax })
+			}
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			JsAnyAssignment::JsIdentifierAssignment(it) => &it.syntax,
+			JsAnyAssignment::JsStaticMemberAssignment(it) => &it.syntax,
+			JsAnyAssignment::JsComputedMemberAssignment(it) => &it.syntax,
+			JsAnyAssignment::JsParenthesizedAssignment(it) => &it.syntax,
+			JsAnyAssignment::JsUnknownAssignment(it) => &it.syntax,
+		}
+	}
+}
+impl std::fmt::Debug for JsAnyAssignment {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		match self {
+			JsAnyAssignment::JsIdentifierAssignment(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyAssignment::JsStaticMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyAssignment::JsComputedMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyAssignment::JsParenthesizedAssignment(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyAssignment::JsUnknownAssignment(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -11022,9 +11073,9 @@ impl From<JsClassDeclaration> for JsAnyExportDeclaration {
 		JsAnyExportDeclaration::JsClassDeclaration(node)
 	}
 }
-impl From<JsVariableDeclarationStatement> for JsAnyExportDeclaration {
-	fn from(node: JsVariableDeclarationStatement) -> JsAnyExportDeclaration {
-		JsAnyExportDeclaration::JsVariableDeclarationStatement(node)
+impl From<JsVariableStatement> for JsAnyExportDeclaration {
+	fn from(node: JsVariableStatement) -> JsAnyExportDeclaration {
+		JsAnyExportDeclaration::JsVariableStatement(node)
 	}
 }
 impl From<TsEnum> for JsAnyExportDeclaration {
@@ -11056,7 +11107,7 @@ impl AstNode for JsAnyExportDeclaration {
 			kind,
 			JS_FUNCTION_DECLARATION
 				| JS_CLASS_DECLARATION
-				| JS_VARIABLE_DECLARATION_STATEMENT
+				| JS_VARIABLE_STATEMENT
 				| TS_ENUM | TS_TYPE_ALIAS_DECL
 				| TS_NAMESPACE_DECL
 				| TS_MODULE_DECL | TS_INTERFACE_DECL
@@ -11070,10 +11121,8 @@ impl AstNode for JsAnyExportDeclaration {
 			JS_CLASS_DECLARATION => {
 				JsAnyExportDeclaration::JsClassDeclaration(JsClassDeclaration { syntax })
 			}
-			JS_VARIABLE_DECLARATION_STATEMENT => {
-				JsAnyExportDeclaration::JsVariableDeclarationStatement(
-					JsVariableDeclarationStatement { syntax },
-				)
+			JS_VARIABLE_STATEMENT => {
+				JsAnyExportDeclaration::JsVariableStatement(JsVariableStatement { syntax })
 			}
 			TS_ENUM => JsAnyExportDeclaration::TsEnum(TsEnum { syntax }),
 			TS_TYPE_ALIAS_DECL => {
@@ -11094,7 +11143,7 @@ impl AstNode for JsAnyExportDeclaration {
 		match self {
 			JsAnyExportDeclaration::JsFunctionDeclaration(it) => &it.syntax,
 			JsAnyExportDeclaration::JsClassDeclaration(it) => &it.syntax,
-			JsAnyExportDeclaration::JsVariableDeclarationStatement(it) => &it.syntax,
+			JsAnyExportDeclaration::JsVariableStatement(it) => &it.syntax,
 			JsAnyExportDeclaration::TsEnum(it) => &it.syntax,
 			JsAnyExportDeclaration::TsTypeAliasDecl(it) => &it.syntax,
 			JsAnyExportDeclaration::TsNamespaceDecl(it) => &it.syntax,
@@ -11108,9 +11157,7 @@ impl std::fmt::Debug for JsAnyExportDeclaration {
 		match self {
 			JsAnyExportDeclaration::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExportDeclaration::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExportDeclaration::JsVariableDeclarationStatement(it) => {
-				std::fmt::Debug::fmt(it, f)
-			}
+			JsAnyExportDeclaration::JsVariableStatement(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExportDeclaration::TsEnum(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExportDeclaration::TsTypeAliasDecl(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExportDeclaration::TsNamespaceDecl(it) => std::fmt::Debug::fmt(it, f),
@@ -11430,11 +11477,11 @@ impl From<JsWhileStatement> for AnyNode {
 impl From<ForStmt> for AnyNode {
 	fn from(node: ForStmt) -> AnyNode { AnyNode::ForStmt(node) }
 }
-impl From<ForInStmt> for AnyNode {
-	fn from(node: ForInStmt) -> AnyNode { AnyNode::ForInStmt(node) }
+impl From<JsForInStatement> for AnyNode {
+	fn from(node: JsForInStatement) -> AnyNode { AnyNode::JsForInStatement(node) }
 }
-impl From<ForOfStmt> for AnyNode {
-	fn from(node: ForOfStmt) -> AnyNode { AnyNode::ForOfStmt(node) }
+impl From<JsForOfStatement> for AnyNode {
+	fn from(node: JsForOfStatement) -> AnyNode { AnyNode::JsForOfStatement(node) }
 }
 impl From<JsContinueStatement> for AnyNode {
 	fn from(node: JsContinueStatement) -> AnyNode { AnyNode::JsContinueStatement(node) }
@@ -11472,10 +11519,8 @@ impl From<JsFunctionDeclaration> for AnyNode {
 impl From<JsClassDeclaration> for AnyNode {
 	fn from(node: JsClassDeclaration) -> AnyNode { AnyNode::JsClassDeclaration(node) }
 }
-impl From<JsVariableDeclarationStatement> for AnyNode {
-	fn from(node: JsVariableDeclarationStatement) -> AnyNode {
-		AnyNode::JsVariableDeclarationStatement(node)
-	}
+impl From<JsVariableStatement> for AnyNode {
+	fn from(node: JsVariableStatement) -> AnyNode { AnyNode::JsVariableStatement(node) }
 }
 impl From<TsEnum> for AnyNode {
 	fn from(node: TsEnum) -> AnyNode { AnyNode::TsEnum(node) }
@@ -11495,14 +11540,17 @@ impl From<TsInterfaceDecl> for AnyNode {
 impl From<JsElseClause> for AnyNode {
 	fn from(node: JsElseClause) -> AnyNode { AnyNode::JsElseClause(node) }
 }
-impl From<ForStmtInit> for AnyNode {
-	fn from(node: ForStmtInit) -> AnyNode { AnyNode::ForStmtInit(node) }
-}
 impl From<ForStmtTest> for AnyNode {
 	fn from(node: ForStmtTest) -> AnyNode { AnyNode::ForStmtTest(node) }
 }
 impl From<ForStmtUpdate> for AnyNode {
 	fn from(node: ForStmtUpdate) -> AnyNode { AnyNode::ForStmtUpdate(node) }
+}
+impl From<JsVariableDeclarationList> for AnyNode {
+	fn from(node: JsVariableDeclarationList) -> AnyNode { AnyNode::JsVariableDeclarationList(node) }
+}
+impl From<JsForVariableDeclaration> for AnyNode {
+	fn from(node: JsForVariableDeclaration) -> AnyNode { AnyNode::JsForVariableDeclaration(node) }
 }
 impl From<JsVariableDeclaration> for AnyNode {
 	fn from(node: JsVariableDeclaration) -> AnyNode { AnyNode::JsVariableDeclaration(node) }
@@ -11713,8 +11761,8 @@ impl From<JsBindingPatternWithDefault> for AnyNode {
 		AnyNode::JsBindingPatternWithDefault(node)
 	}
 }
-impl From<JsEqualValueClause> for AnyNode {
-	fn from(node: JsEqualValueClause) -> AnyNode { AnyNode::JsEqualValueClause(node) }
+impl From<JsInitializerClause> for AnyNode {
+	fn from(node: JsInitializerClause) -> AnyNode { AnyNode::JsInitializerClause(node) }
 }
 impl From<JsModifier> for AnyNode {
 	fn from(node: JsModifier) -> AnyNode { AnyNode::JsModifier(node) }
@@ -11813,9 +11861,6 @@ impl From<JsNullLiteralExpression> for AnyNode {
 }
 impl From<JsRegexLiteralExpression> for AnyNode {
 	fn from(node: JsRegexLiteralExpression) -> AnyNode { AnyNode::JsRegexLiteralExpression(node) }
-}
-impl From<JsVariableDeclarator> for AnyNode {
-	fn from(node: JsVariableDeclarator) -> AnyNode { AnyNode::JsVariableDeclarator(node) }
 }
 impl From<JsImport> for AnyNode {
 	fn from(node: JsImport) -> AnyNode { AnyNode::JsImport(node) }
@@ -12062,8 +12107,9 @@ impl AstNode for AnyNode {
 				| JS_IF_STATEMENT
 				| JS_DO_WHILE_STATEMENT
 				| JS_WHILE_STATEMENT
-				| FOR_STMT | FOR_IN_STMT
-				| FOR_OF_STMT | JS_CONTINUE_STATEMENT
+				| FOR_STMT | JS_FOR_IN_STATEMENT
+				| JS_FOR_OF_STATEMENT
+				| JS_CONTINUE_STATEMENT
 				| JS_BREAK_STATEMENT
 				| JS_RETURN_STATEMENT
 				| JS_WITH_STATEMENT
@@ -12075,12 +12121,14 @@ impl AstNode for AnyNode {
 				| JS_DEBUGGER_STATEMENT
 				| JS_FUNCTION_DECLARATION
 				| JS_CLASS_DECLARATION
-				| JS_VARIABLE_DECLARATION_STATEMENT
+				| JS_VARIABLE_STATEMENT
 				| TS_ENUM | TS_TYPE_ALIAS_DECL
 				| TS_NAMESPACE_DECL
 				| TS_MODULE_DECL | TS_INTERFACE_DECL
-				| JS_ELSE_CLAUSE | FOR_STMT_INIT
-				| FOR_STMT_TEST | FOR_STMT_UPDATE
+				| JS_ELSE_CLAUSE | FOR_STMT_TEST
+				| FOR_STMT_UPDATE
+				| JS_VARIABLE_DECLARATION_LIST
+				| JS_FOR_VARIABLE_DECLARATION
 				| JS_VARIABLE_DECLARATION
 				| JS_CASE_CLAUSE | JS_DEFAULT_CLAUSE
 				| JS_CATCH_CLAUSE
@@ -12140,7 +12188,7 @@ impl AstNode for AnyNode {
 				| JS_CONSTRUCTOR_PARAMETER_LIST
 				| TS_CONSTRUCTOR_PARAM
 				| JS_BINDING_PATTERN_WITH_DEFAULT
-				| JS_EQUAL_VALUE_CLAUSE
+				| JS_INITIALIZER_CLAUSE
 				| JS_MODIFIER | JS_IDENTIFIER_ASSIGNMENT
 				| JS_STATIC_MEMBER_ASSIGNMENT
 				| JS_COMPUTED_MEMBER_ASSIGNMENT
@@ -12165,7 +12213,6 @@ impl AstNode for AnyNode {
 				| JS_BOOLEAN_LITERAL_EXPRESSION
 				| JS_NULL_LITERAL_EXPRESSION
 				| JS_REGEX_LITERAL_EXPRESSION
-				| JS_VARIABLE_DECLARATOR
 				| JS_IMPORT | EXPORT_NAMED
 				| EXPORT_DEFAULT_DECL
 				| EXPORT_DEFAULT_EXPR
@@ -12249,8 +12296,8 @@ impl AstNode for AnyNode {
 			JS_DO_WHILE_STATEMENT => AnyNode::JsDoWhileStatement(JsDoWhileStatement { syntax }),
 			JS_WHILE_STATEMENT => AnyNode::JsWhileStatement(JsWhileStatement { syntax }),
 			FOR_STMT => AnyNode::ForStmt(ForStmt { syntax }),
-			FOR_IN_STMT => AnyNode::ForInStmt(ForInStmt { syntax }),
-			FOR_OF_STMT => AnyNode::ForOfStmt(ForOfStmt { syntax }),
+			JS_FOR_IN_STATEMENT => AnyNode::JsForInStatement(JsForInStatement { syntax }),
+			JS_FOR_OF_STATEMENT => AnyNode::JsForOfStatement(JsForOfStatement { syntax }),
 			JS_CONTINUE_STATEMENT => AnyNode::JsContinueStatement(JsContinueStatement { syntax }),
 			JS_BREAK_STATEMENT => AnyNode::JsBreakStatement(JsBreakStatement { syntax }),
 			JS_RETURN_STATEMENT => AnyNode::JsReturnStatement(JsReturnStatement { syntax }),
@@ -12267,18 +12314,21 @@ impl AstNode for AnyNode {
 				AnyNode::JsFunctionDeclaration(JsFunctionDeclaration { syntax })
 			}
 			JS_CLASS_DECLARATION => AnyNode::JsClassDeclaration(JsClassDeclaration { syntax }),
-			JS_VARIABLE_DECLARATION_STATEMENT => {
-				AnyNode::JsVariableDeclarationStatement(JsVariableDeclarationStatement { syntax })
-			}
+			JS_VARIABLE_STATEMENT => AnyNode::JsVariableStatement(JsVariableStatement { syntax }),
 			TS_ENUM => AnyNode::TsEnum(TsEnum { syntax }),
 			TS_TYPE_ALIAS_DECL => AnyNode::TsTypeAliasDecl(TsTypeAliasDecl { syntax }),
 			TS_NAMESPACE_DECL => AnyNode::TsNamespaceDecl(TsNamespaceDecl { syntax }),
 			TS_MODULE_DECL => AnyNode::TsModuleDecl(TsModuleDecl { syntax }),
 			TS_INTERFACE_DECL => AnyNode::TsInterfaceDecl(TsInterfaceDecl { syntax }),
 			JS_ELSE_CLAUSE => AnyNode::JsElseClause(JsElseClause { syntax }),
-			FOR_STMT_INIT => AnyNode::ForStmtInit(ForStmtInit { syntax }),
 			FOR_STMT_TEST => AnyNode::ForStmtTest(ForStmtTest { syntax }),
 			FOR_STMT_UPDATE => AnyNode::ForStmtUpdate(ForStmtUpdate { syntax }),
+			JS_VARIABLE_DECLARATION_LIST => {
+				AnyNode::JsVariableDeclarationList(JsVariableDeclarationList { syntax })
+			}
+			JS_FOR_VARIABLE_DECLARATION => {
+				AnyNode::JsForVariableDeclaration(JsForVariableDeclaration { syntax })
+			}
 			JS_VARIABLE_DECLARATION => {
 				AnyNode::JsVariableDeclaration(JsVariableDeclaration { syntax })
 			}
@@ -12396,7 +12446,7 @@ impl AstNode for AnyNode {
 			JS_BINDING_PATTERN_WITH_DEFAULT => {
 				AnyNode::JsBindingPatternWithDefault(JsBindingPatternWithDefault { syntax })
 			}
-			JS_EQUAL_VALUE_CLAUSE => AnyNode::JsEqualValueClause(JsEqualValueClause { syntax }),
+			JS_INITIALIZER_CLAUSE => AnyNode::JsInitializerClause(JsInitializerClause { syntax }),
 			JS_MODIFIER => AnyNode::JsModifier(JsModifier { syntax }),
 			JS_IDENTIFIER_ASSIGNMENT => {
 				AnyNode::JsIdentifierAssignment(JsIdentifierAssignment { syntax })
@@ -12478,9 +12528,6 @@ impl AstNode for AnyNode {
 			}
 			JS_REGEX_LITERAL_EXPRESSION => {
 				AnyNode::JsRegexLiteralExpression(JsRegexLiteralExpression { syntax })
-			}
-			JS_VARIABLE_DECLARATOR => {
-				AnyNode::JsVariableDeclarator(JsVariableDeclarator { syntax })
 			}
 			JS_IMPORT => AnyNode::JsImport(JsImport { syntax }),
 			EXPORT_NAMED => AnyNode::ExportNamed(ExportNamed { syntax }),
@@ -12603,8 +12650,8 @@ impl AstNode for AnyNode {
 			AnyNode::JsDoWhileStatement(it) => &it.syntax,
 			AnyNode::JsWhileStatement(it) => &it.syntax,
 			AnyNode::ForStmt(it) => &it.syntax,
-			AnyNode::ForInStmt(it) => &it.syntax,
-			AnyNode::ForOfStmt(it) => &it.syntax,
+			AnyNode::JsForInStatement(it) => &it.syntax,
+			AnyNode::JsForOfStatement(it) => &it.syntax,
 			AnyNode::JsContinueStatement(it) => &it.syntax,
 			AnyNode::JsBreakStatement(it) => &it.syntax,
 			AnyNode::JsReturnStatement(it) => &it.syntax,
@@ -12617,16 +12664,17 @@ impl AstNode for AnyNode {
 			AnyNode::JsDebuggerStatement(it) => &it.syntax,
 			AnyNode::JsFunctionDeclaration(it) => &it.syntax,
 			AnyNode::JsClassDeclaration(it) => &it.syntax,
-			AnyNode::JsVariableDeclarationStatement(it) => &it.syntax,
+			AnyNode::JsVariableStatement(it) => &it.syntax,
 			AnyNode::TsEnum(it) => &it.syntax,
 			AnyNode::TsTypeAliasDecl(it) => &it.syntax,
 			AnyNode::TsNamespaceDecl(it) => &it.syntax,
 			AnyNode::TsModuleDecl(it) => &it.syntax,
 			AnyNode::TsInterfaceDecl(it) => &it.syntax,
 			AnyNode::JsElseClause(it) => &it.syntax,
-			AnyNode::ForStmtInit(it) => &it.syntax,
 			AnyNode::ForStmtTest(it) => &it.syntax,
 			AnyNode::ForStmtUpdate(it) => &it.syntax,
+			AnyNode::JsVariableDeclarationList(it) => &it.syntax,
+			AnyNode::JsForVariableDeclaration(it) => &it.syntax,
 			AnyNode::JsVariableDeclaration(it) => &it.syntax,
 			AnyNode::JsCaseClause(it) => &it.syntax,
 			AnyNode::JsDefaultClause(it) => &it.syntax,
@@ -12694,7 +12742,7 @@ impl AstNode for AnyNode {
 			AnyNode::JsConstructorParameterList(it) => &it.syntax,
 			AnyNode::TsConstructorParam(it) => &it.syntax,
 			AnyNode::JsBindingPatternWithDefault(it) => &it.syntax,
-			AnyNode::JsEqualValueClause(it) => &it.syntax,
+			AnyNode::JsInitializerClause(it) => &it.syntax,
 			AnyNode::JsModifier(it) => &it.syntax,
 			AnyNode::JsIdentifierAssignment(it) => &it.syntax,
 			AnyNode::JsStaticMemberAssignment(it) => &it.syntax,
@@ -12721,7 +12769,6 @@ impl AstNode for AnyNode {
 			AnyNode::JsBooleanLiteralExpression(it) => &it.syntax,
 			AnyNode::JsNullLiteralExpression(it) => &it.syntax,
 			AnyNode::JsRegexLiteralExpression(it) => &it.syntax,
-			AnyNode::JsVariableDeclarator(it) => &it.syntax,
 			AnyNode::JsImport(it) => &it.syntax,
 			AnyNode::ExportNamed(it) => &it.syntax,
 			AnyNode::ExportDefaultDecl(it) => &it.syntax,
@@ -12821,8 +12868,8 @@ impl std::fmt::Debug for AnyNode {
 			AnyNode::JsDoWhileStatement(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsWhileStatement(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::ForStmt(it) => std::fmt::Debug::fmt(it, f),
-			AnyNode::ForInStmt(it) => std::fmt::Debug::fmt(it, f),
-			AnyNode::ForOfStmt(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsForInStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsForOfStatement(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsContinueStatement(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsBreakStatement(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsReturnStatement(it) => std::fmt::Debug::fmt(it, f),
@@ -12835,16 +12882,17 @@ impl std::fmt::Debug for AnyNode {
 			AnyNode::JsDebuggerStatement(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
-			AnyNode::JsVariableDeclarationStatement(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsVariableStatement(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::TsEnum(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::TsTypeAliasDecl(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::TsNamespaceDecl(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::TsModuleDecl(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::TsInterfaceDecl(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsElseClause(it) => std::fmt::Debug::fmt(it, f),
-			AnyNode::ForStmtInit(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::ForStmtTest(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::ForStmtUpdate(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsVariableDeclarationList(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsForVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsCaseClause(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsDefaultClause(it) => std::fmt::Debug::fmt(it, f),
@@ -12912,7 +12960,7 @@ impl std::fmt::Debug for AnyNode {
 			AnyNode::JsConstructorParameterList(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::TsConstructorParam(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsBindingPatternWithDefault(it) => std::fmt::Debug::fmt(it, f),
-			AnyNode::JsEqualValueClause(it) => std::fmt::Debug::fmt(it, f),
+			AnyNode::JsInitializerClause(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsModifier(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsIdentifierAssignment(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsStaticMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
@@ -12939,7 +12987,6 @@ impl std::fmt::Debug for AnyNode {
 			AnyNode::JsBooleanLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsNullLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsRegexLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-			AnyNode::JsVariableDeclarator(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::JsImport(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::ExportNamed(it) => std::fmt::Debug::fmt(it, f),
 			AnyNode::ExportDefaultDecl(it) => std::fmt::Debug::fmt(it, f),
@@ -13036,17 +13083,17 @@ impl std::fmt::Display for JsAnyExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ForHead {
+impl std::fmt::Display for JsAnyForInitializer {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ForLeft {
+impl std::fmt::Display for JsAnyForInOrOfInitializer {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsAnyAssignment {
+impl std::fmt::Display for JsAnyAssignmentPattern {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -13086,12 +13133,12 @@ impl std::fmt::Display for JsAnyArrayElement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsAnyAssignmentPattern {
+impl std::fmt::Display for JsAnyName {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsAnyName {
+impl std::fmt::Display for JsAnyAssignment {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -13316,12 +13363,12 @@ impl std::fmt::Display for ForStmt {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ForInStmt {
+impl std::fmt::Display for JsForInStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ForOfStmt {
+impl std::fmt::Display for JsForOfStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -13386,7 +13433,7 @@ impl std::fmt::Display for JsClassDeclaration {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsVariableDeclarationStatement {
+impl std::fmt::Display for JsVariableStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -13421,17 +13468,22 @@ impl std::fmt::Display for JsElseClause {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ForStmtInit {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for ForStmtTest {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
 impl std::fmt::Display for ForStmtUpdate {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsVariableDeclarationList {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsForVariableDeclaration {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -13771,7 +13823,7 @@ impl std::fmt::Display for JsBindingPatternWithDefault {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsEqualValueClause {
+impl std::fmt::Display for JsInitializerClause {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -13902,11 +13954,6 @@ impl std::fmt::Display for JsNullLiteralExpression {
 	}
 }
 impl std::fmt::Display for JsRegexLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsVariableDeclarator {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

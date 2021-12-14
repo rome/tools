@@ -1,6 +1,6 @@
 //! General utility functions for parsing and error checking.
 
-use crate::{ast, AstNode, CompletedMarker, Parser, TextRange, Token};
+use crate::{Parser, Token};
 use rslint_syntax::{SyntaxKind, T};
 
 /// Check if the use of a statement label is valid and the label is defined.
@@ -8,7 +8,7 @@ use rslint_syntax::{SyntaxKind, T};
 /// # Panics
 /// Panics if the marker is not a name with an ident
 // FIXME: Labels should not cross function boundaries
-pub fn check_label_use(p: &mut Parser, label: &Token) {
+pub(crate) fn check_label_use(p: &mut Parser, label: &Token) {
 	let name = p.token_src(label);
 
 	if p.state.labels.get(name).is_none() {
@@ -21,7 +21,7 @@ pub fn check_label_use(p: &mut Parser, label: &Token) {
 }
 
 /// Get the precedence of a token
-pub fn get_precedence(tok: SyntaxKind) -> Option<u8> {
+pub(crate) fn get_precedence(tok: SyntaxKind) -> Option<u8> {
 	Some(match tok {
 		T![||] | T![??] => 1,
 		T![&&] => 2,
@@ -36,46 +36,6 @@ pub fn get_precedence(tok: SyntaxKind) -> Option<u8> {
 		T![%] | T![**] => 11,
 		_ => return None,
 	})
-}
-
-/// Check if the var declaration in a for statement has multiple declarators, which is invalid
-pub fn check_for_stmt_declaration(p: &mut Parser, marker: &CompletedMarker) {
-	#[allow(deprecated)]
-	let parsed = p.parse_marker::<ast::JsVariableDeclaration>(marker);
-	let excess = parsed.declarators().iter().skip(1).collect::<Vec<_>>();
-
-	if !excess.is_empty() {
-		let start = marker
-			.offset_range(
-				p,
-				excess
-					.first()
-					.unwrap()
-					.as_ref()
-					.unwrap()
-					.syntax()
-					.text_trimmed_range(),
-			)
-			.start();
-		let end = marker
-			.offset_range(
-				p,
-				excess
-					.last()
-					.unwrap()
-					.as_ref()
-					.unwrap()
-					.syntax()
-					.text_trimmed_range(),
-			)
-			.end();
-
-		let err = p
-			.err_builder("For statement variable declarations may only have one declaration")
-			.primary(TextRange::new(start, end), "");
-
-		p.error(err);
-	}
 }
 
 pub(crate) fn expect_keyword(p: &mut Parser, keyword_name: &str, kind: SyntaxKind) {

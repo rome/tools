@@ -37,7 +37,7 @@ impl ForStmt {
 	}
 }
 
-impl JsVariableDeclaration {
+impl JsVariableDeclarationList {
 	/// Whether the declaration is a const declaration
 	pub fn is_const(&self) -> bool {
 		self.variable_kind() == Ok(JsVariableKind::Const)
@@ -91,7 +91,7 @@ mod tests {
 		let var_decl = parsed
 			.statements()
 			.iter()
-			.find_map(|stmt| ast::JsVariableDeclarationStatement::cast(stmt.syntax().clone()));
+			.find_map(|stmt| ast::JsVariableStatement::cast(stmt.syntax().clone()));
 
 		assert!(var_decl.is_some());
 	}

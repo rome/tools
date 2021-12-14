@@ -94,8 +94,6 @@ impl ParserProgress {
 /// // Completed markers can be turned into an ast node with parse_marker on the parser
 /// let completed_marker = expr::expr(&mut parser).unwrap();
 ///
-/// parser.parse_marker::<JsParenthesizedExpression>(&completed_marker);
-///
 /// // Make a new text tree sink, its job is assembling events into a rowan GreenNode.
 /// // At each point (Start, Token, Finish, Error) it also consumes whitespace.
 /// // Other abstractions can also yield lossy syntax nodes if whitespace is not wanted.
@@ -370,29 +368,6 @@ impl<'t> Parser<'t> {
 			},
 			_ => unreachable!(),
 		}
-	}
-
-	/// Parse a completed marker into an ast node.
-	///
-	/// # Panics
-	/// Panics if the AST node represented by the marker does not match the generic
-	#[deprecated(note = "Unsafe and fairly expensive.")]
-	pub fn parse_marker<T: AstNode>(&self, marker: &CompletedMarker) -> T {
-		let events = self
-			.events
-			.get(marker.old_start as usize..(marker.finish_pos as usize + 1))
-			.expect("Marker out of bounds")
-			.to_vec();
-
-		let start = match self.events[marker.old_start as usize] {
-			Event::Start { start, .. } => start,
-			_ => unreachable!(),
-		};
-
-		let mut sink =
-			LosslessTreeSink::with_offset(self.tokens.source(), self.tokens.raw_tokens, start);
-		process(&mut sink, events, vec![]);
-		T::cast(sink.finish().0).expect("Marker was parsed to the wrong ast node")
 	}
 
 	/// Get the source code of a range

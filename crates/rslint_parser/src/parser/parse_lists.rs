@@ -1,6 +1,6 @@
 ///! A set of traits useful to parse various types of lists
 use super::{ParsedSyntax, ParserProgress, RecoveryResult};
-use crate::{Marker, Parser};
+use crate::{CompletedMarker, Marker, Parser};
 use rslint_syntax::SyntaxKind;
 
 /// Use this trait to parse simple lists that don't have particular requirements.
@@ -107,8 +107,8 @@ pub trait ParseSeparatedList {
 
 	/// It creates a [ParsedSyntax] that will contain the list
 	/// Only called if the list isn't empty
-	fn finish_list(&mut self, p: &mut Parser, m: Marker) {
-		m.complete(p, SyntaxKind::LIST);
+	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> CompletedMarker {
+		m.complete(p, SyntaxKind::LIST)
 	}
 
 	/// The [SyntaxKind] of the element that separates the elements of the list
@@ -133,7 +133,7 @@ pub trait ParseSeparatedList {
 	/// # Panics
 	///
 	/// It panics if the parser doesn't advance at each cycle of the loop
-	fn parse_list(&mut self, p: &mut Parser) {
+	fn parse_list(&mut self, p: &mut Parser) -> Option<CompletedMarker> {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
 		let mut first = true;
@@ -163,8 +163,9 @@ pub trait ParseSeparatedList {
 		if first {
 			elements.abandon(p);
 			p.missing();
+			None
 		} else {
-			self.finish_list(p, elements);
+			Some(self.finish_list(p, elements))
 		}
 	}
 }

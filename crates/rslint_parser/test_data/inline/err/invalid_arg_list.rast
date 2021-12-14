@@ -58,10 +58,10 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: VAR_KW@17..20 "var" [] [],
-                declarators: [],
+                declarations: [],
             },
             semicolon_token: missing (optional),
         },
@@ -106,10 +106,10 @@ JsModule {
                 0: IDENT@15..17 "b" [] [Whitespace(" ")]
           2: (empty)
       1: (empty)
-    2: JS_VARIABLE_DECLARATION_STATEMENT@17..20
-      0: JS_VARIABLE_DECLARATION@17..20
+    2: JS_VARIABLE_STATEMENT@17..20
+      0: JS_VARIABLE_DECLARATION_LIST@17..20
         0: VAR_KW@17..20 "var" [] []
-        1: LIST@20..20
+        1: (empty)
       1: (empty)
   3: EOF@20..21 "" [Whitespace("\n")] []
 --

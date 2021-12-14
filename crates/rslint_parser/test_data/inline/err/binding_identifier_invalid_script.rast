@@ -2,17 +2,19 @@ JsScript {
     interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@0..14 "let" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsUnknownBinding {
                             items: [
                                 IDENT@14..18 "let" [] [Whitespace(" ")],
                             ],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@18..20 "=" [] [Whitespace(" ")],
                             expression: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@20..21 "5" [] [],
@@ -23,17 +25,19 @@ JsScript {
             },
             semicolon_token: SEMICOLON@21..22 ";" [] [],
         },
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: CONST_KW@22..29 "const" [Whitespace("\n")] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsUnknownBinding {
                             items: [
                                 IDENT@29..33 "let" [] [Whitespace(" ")],
                             ],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@33..35 "=" [] [Whitespace(" ")],
                             expression: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@35..36 "5" [] [],
@@ -51,26 +55,30 @@ JsScript {
   0: (empty)
   1: LIST@0..0
   2: LIST@0..37
-    0: JS_VARIABLE_DECLARATION_STATEMENT@0..22
-      0: JS_VARIABLE_DECLARATION@0..21
+    0: JS_VARIABLE_STATEMENT@0..22
+      0: JS_VARIABLE_DECLARATION_LIST@0..21
         0: LET_KW@0..14 "let" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")]
         1: LIST@14..21
-          0: JS_VARIABLE_DECLARATOR@14..21
+          0: JS_VARIABLE_DECLARATION@14..21
             0: JS_UNKNOWN_BINDING@14..18
               0: IDENT@14..18 "let" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@18..21
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@18..21
               0: EQ@18..20 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@20..21
                 0: JS_NUMBER_LITERAL@20..21 "5" [] []
       1: SEMICOLON@21..22 ";" [] []
-    1: JS_VARIABLE_DECLARATION_STATEMENT@22..37
-      0: JS_VARIABLE_DECLARATION@22..36
+    1: JS_VARIABLE_STATEMENT@22..37
+      0: JS_VARIABLE_DECLARATION_LIST@22..36
         0: CONST_KW@22..29 "const" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@29..36
-          0: JS_VARIABLE_DECLARATOR@29..36
+          0: JS_VARIABLE_DECLARATION@29..36
             0: JS_UNKNOWN_BINDING@29..33
               0: IDENT@29..33 "let" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@33..36
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@33..36
               0: EQ@33..35 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@35..36
                 0: JS_NUMBER_LITERAL@35..36 "5" [] []

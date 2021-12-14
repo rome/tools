@@ -176,7 +176,7 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 				.unwrap()
 				.undo_completion(p)
 				.abandon(p);
-			m.complete(p, JS_VARIABLE_DECLARATION_STATEMENT)
+			m.complete(p, JS_VARIABLE_STATEMENT)
 		}
 		_ if p.nth_src(1) == "let" => {
 			let m = p.start();
@@ -185,7 +185,7 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 				.unwrap()
 				.undo_completion(p)
 				.abandon(p);
-			m.complete(p, JS_VARIABLE_DECLARATION_STATEMENT)
+			m.complete(p, JS_VARIABLE_STATEMENT)
 		}
 		_ if p.nth_src(1) == "global" => {
 			let m = p.start();
@@ -1180,7 +1180,11 @@ pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
 // FIXME: `<T() => {}` causes infinite recursion if the parser isnt being run with `no_recovery`
 pub fn ts_type_params(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
-	p.expect_no_recover(T![<])?;
+	if p.expect_no_recover(T![<]).is_none() {
+		m.abandon(p);
+		return None;
+	}
+
 	let mut first = true;
 
 	let params_list = p.start();
@@ -1194,13 +1198,16 @@ pub fn ts_type_params(p: &mut Parser) -> Option<CompletedMarker> {
 				p.bump_any();
 				break;
 			}
-			p.expect_no_recover(T![,])?;
+			if p.expect_no_recover(T![,]).is_none() {
+				break;
+			}
 		}
+
 		no_recover!(p, type_param(p));
 	}
 	params_list.complete(p, LIST);
 
-	p.expect_no_recover(T![>])?;
+	p.expect_required(T![>]);
 	Some(m.complete(p, TS_TYPE_PARAMS))
 }
 

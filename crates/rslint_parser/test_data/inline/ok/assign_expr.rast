@@ -223,7 +223,7 @@ JsModule {
                                 identifier: JsIdentifierAssignment {
                                     name_token: IDENT@168..172 "foo" [] [Whitespace(" ")],
                                 },
-                                init: JsEqualValueClause {
+                                init: JsInitializerClause {
                                     eq_token: EQ@172..174 "=" [] [Whitespace(" ")],
                                     expression: JsStringLiteralExpression {
                                         value_token: JS_STRING_LITERAL@174..179 "\"foo\"" [] [],
@@ -408,7 +408,7 @@ JsModule {
               2: JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY@168..179
                 0: JS_IDENTIFIER_ASSIGNMENT@168..172
                   0: IDENT@168..172 "foo" [] [Whitespace(" ")]
-                1: JS_EQUAL_VALUE_CLAUSE@172..179
+                1: JS_INITIALIZER_CLAUSE@172..179
                   0: EQ@172..174 "=" [] [Whitespace(" ")]
                   1: JS_STRING_LITERAL_EXPRESSION@174..179
                     0: JS_STRING_LITERAL@174..179 "\"foo\"" [] []

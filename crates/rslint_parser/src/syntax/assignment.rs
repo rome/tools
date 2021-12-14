@@ -1,6 +1,6 @@
 use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
-use crate::syntax::class::parse_equal_value_clause;
+use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{conditional_expr, expr, is_at_name, parse_name, unary_expr};
 use crate::syntax::js_parse_error::{expected_assignment_target, expected_identifier};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
@@ -219,7 +219,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 			JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY
 		};
 
-		parse_equal_value_clause(p).or_missing(p);
+		parse_initializer_clause(p).or_missing(p);
 
 		Present(m.complete(p, kind))
 	}

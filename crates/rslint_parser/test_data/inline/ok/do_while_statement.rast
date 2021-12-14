@@ -80,15 +80,17 @@ JsModule {
             r_paren_token: R_PAREN@76..77 ")" [] [],
             semicolon_token: SEMICOLON@77..78 ";" [] [],
         },
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@78..84 "let" [Whitespace("\n\n")] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@84..86 "a" [] [Whitespace(" ")],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@86..88 "=" [] [Whitespace(" ")],
                             expression: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@88..89 "1" [] [],
@@ -220,14 +222,16 @@ JsModule {
         0: TRUE_KW@72..76 "true" [] []
       5: R_PAREN@76..77 ")" [] []
       6: SEMICOLON@77..78 ";" [] []
-    2: JS_VARIABLE_DECLARATION_STATEMENT@78..90
-      0: JS_VARIABLE_DECLARATION@78..89
+    2: JS_VARIABLE_STATEMENT@78..90
+      0: JS_VARIABLE_DECLARATION_LIST@78..89
         0: LET_KW@78..84 "let" [Whitespace("\n\n")] [Whitespace(" ")]
         1: LIST@84..89
-          0: JS_VARIABLE_DECLARATOR@84..89
+          0: JS_VARIABLE_DECLARATION@84..89
             0: JS_IDENTIFIER_BINDING@84..86
               0: IDENT@84..86 "a" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@86..89
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@86..89
               0: EQ@86..88 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@88..89
                 0: JS_NUMBER_LITERAL@88..89 "1" [] []

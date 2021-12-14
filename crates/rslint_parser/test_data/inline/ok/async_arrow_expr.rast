@@ -2,15 +2,17 @@ JsModule {
     interpreter_token: missing (optional),
     directives: [],
     items: [
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsArrowFunctionExpression {
                                 async_token: ASYNC_KW@8..14 "async" [] [Whitespace(" ")],
@@ -33,15 +35,17 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsVariableDeclarationStatement {
-            declaration: JsVariableDeclaration {
+        JsVariableStatement {
+            declaration_list: JsVariableDeclarationList {
                 kind_token: LET_KW@23..28 "let" [Whitespace("\n")] [Whitespace(" ")],
-                declarators: [
-                    JsVariableDeclarator {
+                declarations: [
+                    JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@28..30 "b" [] [Whitespace(" ")],
                         },
-                        init: JsEqualValueClause {
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
                             eq_token: EQ@30..32 "=" [] [Whitespace(" ")],
                             expression: JsArrowFunctionExpression {
                                 async_token: ASYNC_KW@32..38 "async" [] [Whitespace(" ")],
@@ -111,14 +115,16 @@ JsModule {
   0: (empty)
   1: LIST@0..0
   2: LIST@0..81
-    0: JS_VARIABLE_DECLARATION_STATEMENT@0..23
-      0: JS_VARIABLE_DECLARATION@0..23
+    0: JS_VARIABLE_STATEMENT@0..23
+      0: JS_VARIABLE_DECLARATION_LIST@0..23
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..23
-          0: JS_VARIABLE_DECLARATOR@4..23
+          0: JS_VARIABLE_DECLARATION@4..23
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@6..23
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@6..23
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_ARROW_FUNCTION_EXPRESSION@8..23
                 0: ASYNC_KW@8..14 "async" [] [Whitespace(" ")]
@@ -131,14 +137,16 @@ JsModule {
                   2: LIST@22..22
                   3: R_CURLY@22..23 "}" [] []
       1: (empty)
-    1: JS_VARIABLE_DECLARATION_STATEMENT@23..49
-      0: JS_VARIABLE_DECLARATION@23..49
+    1: JS_VARIABLE_STATEMENT@23..49
+      0: JS_VARIABLE_DECLARATION_LIST@23..49
         0: LET_KW@23..28 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@28..49
-          0: JS_VARIABLE_DECLARATOR@28..49
+          0: JS_VARIABLE_DECLARATION@28..49
             0: JS_IDENTIFIER_BINDING@28..30
               0: IDENT@28..30 "b" [] [Whitespace(" ")]
-            1: JS_EQUAL_VALUE_CLAUSE@30..49
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@30..49
               0: EQ@30..32 "=" [] [Whitespace(" ")]
               1: JS_ARROW_FUNCTION_EXPRESSION@32..49
                 0: ASYNC_KW@32..38 "async" [] [Whitespace(" ")]

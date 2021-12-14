@@ -57,7 +57,7 @@ JsModule {
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
                     ty: missing (optional),
-                    value: JsEqualValueClause {
+                    value: JsInitializerClause {
                         eq_token: EQ@43..45 "=" [] [Whitespace(" ")],
                         expression: JsIdentifierExpression {
                             name: JsReferenceIdentifier {
@@ -105,7 +105,7 @@ JsModule {
         0: JS_PROPERTY_CLASS_MEMBER@35..49
           0: JS_LITERAL_MEMBER_NAME@35..43
             0: IDENT@35..43 "declare" [] [Whitespace(" ")]
-          1: JS_EQUAL_VALUE_CLAUSE@43..49
+          1: JS_INITIALIZER_CLAUSE@43..49
             0: EQ@43..45 "=" [] [Whitespace(" ")]
             1: JS_IDENTIFIER_EXPRESSION@45..49
               0: JS_REFERENCE_IDENTIFIER@45..49

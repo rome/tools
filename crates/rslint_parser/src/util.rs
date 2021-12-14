@@ -108,8 +108,8 @@ pub trait SyntaxNodeExt {
 	#[inline]
 	fn is_loop(&self) -> bool {
 		const ITERATION_STMT: [SyntaxKind; 5] = [
-			SyntaxKind::FOR_IN_STMT,
-			SyntaxKind::FOR_OF_STMT,
+			SyntaxKind::JS_FOR_IN_STATEMENT,
+			SyntaxKind::JS_FOR_OF_STATEMENT,
 			SyntaxKind::FOR_STMT,
 			SyntaxKind::JS_WHILE_STATEMENT,
 			SyntaxKind::JS_DO_WHILE_STATEMENT,

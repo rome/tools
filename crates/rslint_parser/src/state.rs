@@ -1,5 +1,3 @@
-use rslint_errors::Diagnostic;
-
 use crate::syntax::expr::EXPR_RECOVERY_SET;
 use crate::{CompletedMarker, Parser, SyntaxKind, TokenSet};
 use std::collections::HashMap;
@@ -54,7 +52,6 @@ pub struct ParserState {
 	pub in_declare: bool,
 	pub in_binding_list_for_signature: bool,
 	pub in_default: bool,
-	pub for_head_error: Option<Diagnostic>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -89,7 +86,6 @@ impl Default for ParserState {
 			in_declare: false,
 			in_binding_list_for_signature: false,
 			in_default: false,
-			for_head_error: None,
 		}
 	}
 }
