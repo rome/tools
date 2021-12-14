@@ -2,7 +2,7 @@
 name = "rslint_regex"
 version = "0.3.0"
 authors = ["RSLint developers"]
-edition = "2018"
+edition = "2021"
 description = "RegEx parser for the ECMAScript definition"
 license = "MIT"
 repository = "https://github.com/rslint/rslint"

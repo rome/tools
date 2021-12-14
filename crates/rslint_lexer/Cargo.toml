@@ -1,5 +1,5 @@
 [package]
-edition = "2018"
+edition = "2021"
 name = "rslint_lexer"
 version = "0.2.0"
 authors = ["RSLint developers"]
