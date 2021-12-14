@@ -7,8 +7,6 @@ use super::expr::{expr, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::program::export_decl;
 use super::typescript::*;
 use super::util::check_label_use;
-use crate::parser::RecoveryResult;
-#[allow(deprecated)]
 use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};

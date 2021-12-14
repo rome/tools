@@ -16,8 +16,13 @@ fn parser_smoke_test() {
 let [a, b] = [1, 2];
     "#;
 
-	dbg!(parse_module(src, 0).syntax());
-	assert!(parse_module(src, 0).ok().is_ok());
+	let module = parse_module(src, 0);
+
+	assert_errors_are_absent(
+		module.errors(),
+		Path::new("parser_smoke_test"),
+		&module.syntax(),
+	);
 }
 
 #[test]

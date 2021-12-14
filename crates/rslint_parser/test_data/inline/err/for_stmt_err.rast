@@ -390,7 +390,7 @@ JsModule {
       5: FOR_STMT_TEST@78..80
         0: JS_ARRAY_EXPRESSION@78..80
           0: L_BRACK@78..79 "[" [] []
-          1: LIST@79..79
+          1: (empty)
           2: R_BRACK@79..80 "]" [] []
       6: (empty)
       7: (empty)
@@ -423,7 +423,7 @@ JsModule {
       3: OF_KW@103..106 "of" [] [Whitespace(" ")]
       4: JS_ARRAY_EXPRESSION@106..108
         0: L_BRACK@106..107 "[" [] []
-        1: LIST@107..107
+        1: (empty)
         2: R_BRACK@107..108 "]" [] []
       5: R_PAREN@108..110 ")" [] [Whitespace(" ")]
       6: JS_BLOCK_STATEMENT@110..112
@@ -445,7 +445,7 @@ JsModule {
       4: IN_KW@130..133 "in" [] [Whitespace(" ")]
       5: JS_ARRAY_EXPRESSION@133..135
         0: L_BRACK@133..134 "[" [] []
-        1: LIST@134..134
+        1: (empty)
         2: R_BRACK@134..135 "]" [] []
       6: R_PAREN@135..137 ")" [] [Whitespace(" ")]
       7: JS_BLOCK_STATEMENT@137..139
