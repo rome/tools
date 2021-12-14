@@ -52,7 +52,8 @@ JsModule {
             0: IDENT@17..20 "bar" [] []
           2: L_PAREN@20..21 "(" [] []
           3: R_PAREN@21..23 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@23..25
+          4: (empty)
+          5: JS_FUNCTION_BODY@23..25
             0: L_CURLY@23..24 "{" [] []
             1: LIST@24..24
             2: LIST@24..24

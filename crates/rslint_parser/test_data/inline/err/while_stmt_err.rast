@@ -74,7 +74,8 @@ JsModule {
       0: WHILE_KW@13..20 "while" [Whitespace("\n")] [Whitespace(" ")]
       1: (empty)
       2: (empty)
-      3: JS_BLOCK_STATEMENT@20..22
+      3: (empty)
+      4: JS_BLOCK_STATEMENT@20..22
         0: L_CURLY@20..21 "{" [] []
         1: LIST@21..21
         2: R_CURLY@21..22 "}" [] []
@@ -96,6 +97,7 @@ JsModule {
       3: R_PAREN@48..50 ")" [] [Whitespace(" ")]
       4: JS_UNKNOWN_STATEMENT@50..51
         0: R_CURLY@50..51 "}" [] []
+      5: (empty)
   3: EOF@51..52 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `'('` but instead found `true`

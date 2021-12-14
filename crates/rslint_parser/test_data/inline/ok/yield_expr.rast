@@ -98,6 +98,8 @@ JsModule {
           2: JS_EXPRESSION_STATEMENT@42..50
             0: JS_YIELD_EXPRESSION@42..49
               0: YIELD_KW@42..49 "yield" [Whitespace("\n ")] []
+              1: (empty)
+              2: (empty)
             1: SEMICOLON@49..50 ";" [] []
         3: R_CURLY@50..52 "}" [Whitespace("\n")] []
   3: EOF@52..53 "" [Whitespace("\n")] []

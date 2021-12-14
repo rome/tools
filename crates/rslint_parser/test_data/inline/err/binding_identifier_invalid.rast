@@ -198,12 +198,14 @@ JsModule {
     0: JS_EXPRESSION_STATEMENT@0..30
       0: JS_ARROW_FUNCTION_EXPRESSION@0..30
         0: ASYNC_KW@0..6 "async" [] [Whitespace(" ")]
-        1: JS_PARAMETER_LIST@6..9
+        1: (empty)
+        2: JS_PARAMETER_LIST@6..9
           0: L_PAREN@6..7 "(" [] []
           1: LIST@7..7
           2: R_PAREN@7..9 ")" [] [Whitespace(" ")]
-        2: FAT_ARROW@9..12 "=>" [] [Whitespace(" ")]
-        3: JS_FUNCTION_BODY@12..30
+        3: (empty)
+        4: FAT_ARROW@9..12 "=>" [] [Whitespace(" ")]
+        5: JS_FUNCTION_BODY@12..30
           0: L_CURLY@12..14 "{" [] [Whitespace(" ")]
           1: LIST@14..14
           2: LIST@14..29

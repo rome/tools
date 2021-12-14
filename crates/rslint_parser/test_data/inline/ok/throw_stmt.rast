@@ -46,7 +46,8 @@ JsModule {
         1: JS_IDENTIFIER_EXPRESSION@10..15
           0: JS_REFERENCE_IDENTIFIER@10..15
             0: IDENT@10..15 "Error" [] []
-        2: ARG_LIST@15..22
+        2: (empty)
+        3: ARG_LIST@15..22
           0: L_PAREN@15..16 "(" [] []
           1: LIST@16..21
             0: JS_STRING_LITERAL_EXPRESSION@16..21

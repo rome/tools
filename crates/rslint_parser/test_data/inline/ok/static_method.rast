@@ -134,7 +134,8 @@ JsModule {
               0: JS_IDENTIFIER_BINDING@24..27
                 0: IDENT@24..27 "bar" [] []
             2: R_PAREN@27..29 ")" [] [Whitespace(" ")]
-          3: JS_FUNCTION_BODY@29..31
+          3: (empty)
+          4: JS_FUNCTION_BODY@29..31
             0: L_CURLY@29..30 "{" [] []
             1: LIST@30..30
             2: LIST@30..30
@@ -148,7 +149,8 @@ JsModule {
             0: L_PAREN@44..45 "(" [] []
             1: LIST@45..45
             2: R_PAREN@45..47 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@47..49
+          4: (empty)
+          5: JS_FUNCTION_BODY@47..49
             0: L_CURLY@47..48 "{" [] []
             1: LIST@48..48
             2: LIST@48..48
@@ -162,7 +164,8 @@ JsModule {
             0: L_PAREN@67..68 "(" [] []
             1: LIST@68..68
             2: R_PAREN@68..70 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@70..72
+          4: (empty)
+          5: JS_FUNCTION_BODY@70..72
             0: L_CURLY@70..71 "{" [] []
             1: LIST@71..71
             2: LIST@71..71
@@ -177,7 +180,8 @@ JsModule {
             0: L_PAREN@91..92 "(" [] []
             1: LIST@92..92
             2: R_PAREN@92..94 ")" [] [Whitespace(" ")]
-          5: JS_FUNCTION_BODY@94..96
+          5: (empty)
+          6: JS_FUNCTION_BODY@94..96
             0: L_CURLY@94..95 "{" [] []
             1: LIST@95..95
             2: LIST@95..95

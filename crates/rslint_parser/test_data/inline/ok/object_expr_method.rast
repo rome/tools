@@ -165,22 +165,29 @@ JsModule {
                 0: L_CURLY@8..9 "{" [] []
                 1: LIST@9..75
                   0: JS_METHOD_OBJECT_MEMBER@9..18
-                    0: JS_LITERAL_MEMBER_NAME@9..13
+                    0: (empty)
+                    1: (empty)
+                    2: JS_LITERAL_MEMBER_NAME@9..13
                       0: IDENT@9..13 "foo" [Whitespace("\n")] []
-                    1: JS_PARAMETER_LIST@13..16
+                    3: (empty)
+                    4: JS_PARAMETER_LIST@13..16
                       0: L_PAREN@13..14 "(" [] []
                       1: LIST@14..14
                       2: R_PAREN@14..16 ")" [] [Whitespace(" ")]
-                    2: JS_FUNCTION_BODY@16..18
+                    5: (empty)
+                    6: JS_FUNCTION_BODY@16..18
                       0: L_CURLY@16..17 "{" [] []
                       1: LIST@17..17
                       2: LIST@17..17
                       3: R_CURLY@17..18 "}" [] []
                   1: COMMA@18..19 "," [] []
                   2: JS_METHOD_OBJECT_MEMBER@19..37
-                    0: JS_LITERAL_MEMBER_NAME@19..25
+                    0: (empty)
+                    1: (empty)
+                    2: JS_LITERAL_MEMBER_NAME@19..25
                       0: JS_STRING_LITERAL@19..25 "\"bar\"" [Whitespace("\n")] []
-                    1: JS_PARAMETER_LIST@25..35
+                    3: (empty)
+                    4: JS_PARAMETER_LIST@25..35
                       0: L_PAREN@25..26 "(" [] []
                       1: LIST@26..33
                         0: JS_IDENTIFIER_BINDING@26..27
@@ -192,14 +199,17 @@ JsModule {
                         4: JS_IDENTIFIER_BINDING@32..33
                           0: IDENT@32..33 "c" [] []
                       2: R_PAREN@33..35 ")" [] [Whitespace(" ")]
-                    2: JS_FUNCTION_BODY@35..37
+                    5: (empty)
+                    6: JS_FUNCTION_BODY@35..37
                       0: L_CURLY@35..36 "{" [] []
                       1: LIST@36..36
                       2: LIST@36..36
                       3: R_CURLY@36..37 "}" [] []
                   3: COMMA@37..38 "," [] []
                   4: JS_METHOD_OBJECT_MEMBER@38..60
-                    0: JS_COMPUTED_MEMBER_NAME@38..54
+                    0: (empty)
+                    1: (empty)
+                    2: JS_COMPUTED_MEMBER_NAME@38..54
                       0: L_BRACK@38..40 "[" [Whitespace("\n")] []
                       1: JS_BINARY_EXPRESSION@40..53
                         0: JS_STRING_LITERAL_EXPRESSION@40..46
@@ -208,22 +218,27 @@ JsModule {
                         2: JS_STRING_LITERAL_EXPRESSION@48..53
                           0: JS_STRING_LITERAL@48..53 "\"bar\"" [] []
                       2: R_BRACK@53..54 "]" [] []
-                    1: JS_PARAMETER_LIST@54..58
+                    3: (empty)
+                    4: JS_PARAMETER_LIST@54..58
                       0: L_PAREN@54..55 "(" [] []
                       1: LIST@55..56
                         0: JS_IDENTIFIER_BINDING@55..56
                           0: IDENT@55..56 "a" [] []
                       2: R_PAREN@56..58 ")" [] [Whitespace(" ")]
-                    2: JS_FUNCTION_BODY@58..60
+                    5: (empty)
+                    6: JS_FUNCTION_BODY@58..60
                       0: L_CURLY@58..59 "{" [] []
                       1: LIST@59..59
                       2: LIST@59..59
                       3: R_CURLY@59..60 "}" [] []
                   5: COMMA@60..61 "," [] []
                   6: JS_METHOD_OBJECT_MEMBER@61..75
-                    0: JS_LITERAL_MEMBER_NAME@61..63
+                    0: (empty)
+                    1: (empty)
+                    2: JS_LITERAL_MEMBER_NAME@61..63
                       0: JS_NUMBER_LITERAL@61..63 "5" [Whitespace("\n")] []
-                    1: JS_PARAMETER_LIST@63..73
+                    3: (empty)
+                    4: JS_PARAMETER_LIST@63..73
                       0: L_PAREN@63..64 "(" [] []
                       1: LIST@64..71
                         0: JS_REST_PARAMETER@64..71
@@ -231,7 +246,8 @@ JsModule {
                           1: JS_IDENTIFIER_BINDING@67..71
                             0: IDENT@67..71 "rest" [] []
                       2: R_PAREN@71..73 ")" [] [Whitespace(" ")]
-                    2: JS_FUNCTION_BODY@73..75
+                    5: (empty)
+                    6: JS_FUNCTION_BODY@73..75
                       0: L_CURLY@73..74 "{" [] []
                       1: LIST@74..74
                       2: LIST@74..74

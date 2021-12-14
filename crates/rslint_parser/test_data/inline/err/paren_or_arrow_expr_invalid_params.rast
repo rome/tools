@@ -102,7 +102,9 @@ JsModule {
   2: LIST@0..37
     0: JS_EXPRESSION_STATEMENT@0..13
       0: JS_ARROW_FUNCTION_EXPRESSION@0..13
-        0: JS_PARAMETER_LIST@0..8
+        0: (empty)
+        1: (empty)
+        2: JS_PARAMETER_LIST@0..8
           0: L_PAREN@0..1 "(" [] []
           1: LIST@1..6
             0: JS_UNKNOWN_BINDING@1..6
@@ -110,8 +112,9 @@ JsModule {
               1: PLUS@3..5 "+" [] [Whitespace(" ")]
               2: JS_NUMBER_LITERAL@5..6 "5" [] []
           2: R_PAREN@6..8 ")" [] [Whitespace(" ")]
-        1: FAT_ARROW@8..11 "=>" [] [Whitespace(" ")]
-        2: JS_FUNCTION_BODY@11..13
+        3: (empty)
+        4: FAT_ARROW@8..11 "=>" [] [Whitespace(" ")]
+        5: JS_FUNCTION_BODY@11..13
           0: L_CURLY@11..12 "{" [] []
           1: LIST@12..12
           2: LIST@12..12
@@ -143,7 +146,9 @@ JsModule {
       2: R_CURLY@26..27 "}" [] []
     5: JS_EXPRESSION_STATEMENT@27..37
       0: JS_ARROW_FUNCTION_EXPRESSION@27..37
-        0: JS_PARAMETER_LIST@27..35
+        0: (empty)
+        1: (empty)
+        2: JS_PARAMETER_LIST@27..35
           0: L_PAREN@27..29 "(" [Whitespace("\n")] []
           1: LIST@29..33
             0: JS_IDENTIFIER_BINDING@29..30
@@ -152,8 +157,9 @@ JsModule {
             2: JS_IDENTIFIER_BINDING@32..33
               0: IDENT@32..33 "b" [] []
           2: R_PAREN@33..35 ")" [] [Whitespace(" ")]
-        1: FAT_ARROW@35..37 "=>" [] []
-        2: (empty)
+        3: (empty)
+        4: FAT_ARROW@35..37 "=>" [] []
+        5: (empty)
       1: (empty)
   3: EOF@37..38 "" [Whitespace("\n")] []
 --

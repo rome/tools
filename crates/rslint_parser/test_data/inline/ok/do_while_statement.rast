@@ -182,7 +182,8 @@ JsModule {
             1: DOT@10..11 "." [] []
             2: JS_NAME@11..14
               0: IDENT@11..14 "log" [] []
-          1: ARG_LIST@14..22
+          1: (empty)
+          2: ARG_LIST@14..22
             0: L_PAREN@14..15 "(" [] []
             1: LIST@15..21
               0: JS_STRING_LITERAL_EXPRESSION@15..21
@@ -209,7 +210,8 @@ JsModule {
                 1: DOT@50..51 "." [] []
                 2: JS_NAME@51..54
                   0: IDENT@51..54 "log" [] []
-              1: ARG_LIST@54..62
+              1: (empty)
+              2: ARG_LIST@54..62
                 0: L_PAREN@54..55 "(" [] []
                 1: LIST@55..61
                   0: JS_STRING_LITERAL_EXPRESSION@55..61

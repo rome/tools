@@ -265,7 +265,8 @@ JsModule {
             2: CALL_EXPR@26..36
               0: JS_NUMBER_LITERAL_EXPRESSION@26..27
                 0: JS_NUMBER_LITERAL@26..27 "3" [] []
-              1: ARG_LIST@27..36
+              1: (empty)
+              2: ARG_LIST@27..36
                 0: L_PAREN@27..29 "(" [Whitespace("\n")] []
                 1: LIST@29..34
                   0: JS_BINARY_EXPRESSION@29..34

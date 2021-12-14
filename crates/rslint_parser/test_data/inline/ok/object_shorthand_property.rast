@@ -159,7 +159,8 @@ JsModule {
                       0: JS_IDENTIFIER_EXPRESSION@42..46
                         0: JS_REFERENCE_IDENTIFIER@42..46
                           0: IDENT@42..46 "call" [] []
-                      1: ARG_LIST@46..49
+                      1: (empty)
+                      2: ARG_LIST@46..49
                         0: L_PAREN@46..47 "(" [] []
                         1: LIST@47..47
                         2: R_PAREN@47..49 ")" [] [Whitespace(" ")]

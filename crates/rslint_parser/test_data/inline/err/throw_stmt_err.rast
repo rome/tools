@@ -39,13 +39,15 @@ JsModule {
     0: JS_THROW_STATEMENT@0..5
       0: THROW_KW@0..5 "throw" [] []
       1: (empty)
+      2: (empty)
     1: JS_EXPRESSION_STATEMENT@5..27
       0: NEW_EXPR@5..27
         0: NEW_KW@5..10 "new" [Whitespace("\n")] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@10..15
           0: JS_REFERENCE_IDENTIFIER@10..15
             0: IDENT@10..15 "Error" [] []
-        2: ARG_LIST@15..27
+        2: (empty)
+        3: ARG_LIST@15..27
           0: L_PAREN@15..16 "(" [] []
           1: LIST@16..26
             0: JS_STRING_LITERAL_EXPRESSION@16..26

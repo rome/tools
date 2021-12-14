@@ -80,6 +80,7 @@ JsModule {
                 0: R_CURLY@19..20 "}" [] []
             2: (empty)
           2: (empty)
+          3: (empty)
       4: (empty)
   3: EOF@20..21 "" [Whitespace("\n")] []
 --

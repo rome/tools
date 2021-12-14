@@ -78,7 +78,8 @@ JsModule {
         0: JS_IDENTIFIER_EXPRESSION@0..3
           0: JS_REFERENCE_IDENTIFIER@0..3
             0: IDENT@0..3 "foo" [] []
-        1: ARG_LIST@3..10
+        1: (empty)
+        2: ARG_LIST@3..10
           0: L_PAREN@3..4 "(" [] []
           1: LIST@4..9
             0: JS_BINARY_EXPRESSION@4..9
@@ -86,6 +87,7 @@ JsModule {
                 0: JS_REFERENCE_IDENTIFIER@4..8
                   0: IDENT@4..8 "foo" [] [Whitespace(" ")]
               1: PLUS@8..9 "+" [] []
+              2: (empty)
           2: R_PAREN@9..10 ")" [] []
       1: SEMICOLON@10..11 ";" [] []
     1: JS_EXPRESSION_STATEMENT@11..22
@@ -95,8 +97,9 @@ JsModule {
             0: IDENT@11..16 "foo" [Whitespace("\n")] [Whitespace(" ")]
         1: PLUS@16..18 "+" [] [Whitespace(" ")]
         2: JS_BINARY_EXPRESSION@18..21
-          0: STAR@18..20 "*" [] [Whitespace(" ")]
-          1: JS_NUMBER_LITERAL_EXPRESSION@20..21
+          0: (empty)
+          1: STAR@18..20 "*" [] [Whitespace(" ")]
+          2: JS_NUMBER_LITERAL_EXPRESSION@20..21
             0: JS_NUMBER_LITERAL@20..21 "2" [] []
       1: SEMICOLON@21..22 ";" [] []
     2: JS_EXPRESSION_STATEMENT@22..34

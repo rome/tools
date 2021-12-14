@@ -64,7 +64,8 @@ JsModule {
         0: JS_IDENTIFIER_EXPRESSION@11..14
           0: JS_REFERENCE_IDENTIFIER@11..14
             0: IDENT@11..14 "foo" [] []
-        1: ARG_LIST@14..16
+        1: (empty)
+        2: ARG_LIST@14..16
           0: L_PAREN@14..15 "(" [] []
           1: LIST@15..15
           2: R_PAREN@15..16 ")" [] []

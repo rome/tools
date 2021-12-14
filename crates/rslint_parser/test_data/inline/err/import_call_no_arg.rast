@@ -71,7 +71,8 @@ JsModule {
         0: JS_IDENTIFIER_EXPRESSION@17..21
           0: JS_REFERENCE_IDENTIFIER@17..21
             0: IDENT@17..21 "foo" [Whitespace("\n")] []
-        1: ARG_LIST@21..23
+        1: (empty)
+        2: ARG_LIST@21..23
           0: L_PAREN@21..22 "(" [] []
           1: LIST@22..22
           2: R_PAREN@22..23 ")" [] []

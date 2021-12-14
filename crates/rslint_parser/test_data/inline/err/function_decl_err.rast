@@ -162,9 +162,7 @@ JsModule {
                 },
                 TsTypeAnnotation {
                     colon_token: COLON@145..147 ":" [] [Whitespace(" ")],
-                    ty: TsNumber {
-                        ident: missing (required),
-                    },
+                    ty: missing (required),
                 },
                 JsFunctionBody {
                     l_curly_token: L_CURLY@154..155 "{" [] [],
@@ -367,7 +365,7 @@ JsModule {
         2: R_PAREN@144..145 ")" [] []
       6: TS_TYPE_ANNOTATION@145..154
         0: COLON@145..147 ":" [] [Whitespace(" ")]
-        1: TS_NUMBER@147..154
+        1: ERROR@147..154
           0: IDENT@147..154 "number" [] [Whitespace(" ")]
       7: JS_FUNCTION_BODY@154..156
         0: L_CURLY@154..155 "{" [] []

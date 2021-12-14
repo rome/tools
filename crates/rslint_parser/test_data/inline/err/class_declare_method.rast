@@ -60,7 +60,8 @@ JsModule {
             0: L_PAREN@20..21 "(" [] []
             1: LIST@21..21
             2: R_PAREN@21..23 ")" [] [Whitespace(" ")]
-          3: JS_FUNCTION_BODY@23..26
+          3: (empty)
+          4: JS_FUNCTION_BODY@23..26
             0: L_CURLY@23..24 "{" [] []
             1: LIST@24..24
             2: LIST@24..24

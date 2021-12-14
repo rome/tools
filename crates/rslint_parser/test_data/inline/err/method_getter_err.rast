@@ -49,7 +49,8 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_FUNCTION_BODY@17..19
+          4: (empty)
+          5: JS_FUNCTION_BODY@17..19
             0: L_CURLY@17..18 "{" [] []
             1: LIST@18..18
             2: LIST@18..18

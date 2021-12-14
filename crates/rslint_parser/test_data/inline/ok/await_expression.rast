@@ -145,7 +145,8 @@ JsModule {
                 0: JS_IDENTIFIER_EXPRESSION@31..36
                   0: JS_REFERENCE_IDENTIFIER@31..36
                     0: IDENT@31..36 "inner" [] []
-                1: ARG_LIST@36..38
+                1: (empty)
+                2: ARG_LIST@36..38
                   0: L_PAREN@36..37 "(" [] []
                   1: LIST@37..37
                   2: R_PAREN@37..38 ")" [] []
@@ -160,7 +161,8 @@ JsModule {
                     0: JS_IDENTIFIER_EXPRESSION@49..54
                       0: JS_REFERENCE_IDENTIFIER@49..54
                         0: IDENT@49..54 "inner" [] []
-                    1: ARG_LIST@54..56
+                    1: (empty)
+                    2: ARG_LIST@54..56
                       0: L_PAREN@54..55 "(" [] []
                       1: LIST@55..55
                       2: R_PAREN@55..56 ")" [] []
@@ -172,7 +174,8 @@ JsModule {
                   0: JS_IDENTIFIER_EXPRESSION@66..71
                     0: JS_REFERENCE_IDENTIFIER@66..71
                       0: IDENT@66..71 "inner" [] []
-                  1: ARG_LIST@71..73
+                  1: (empty)
+                  2: ARG_LIST@71..73
                     0: L_PAREN@71..72 "(" [] []
                     1: LIST@72..72
                     2: R_PAREN@72..73 ")" [] []

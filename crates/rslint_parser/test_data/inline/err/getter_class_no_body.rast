@@ -48,6 +48,7 @@ JsModule {
           2: L_PAREN@25..26 "(" [] []
           3: R_PAREN@26..27 ")" [] []
           4: (empty)
+          5: (empty)
       4: (empty)
   3: EOF@27..28 "" [Whitespace("\n")] []
 --

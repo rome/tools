@@ -276,6 +276,8 @@ JsModule {
         1: (empty)
         2: (empty)
         3: (empty)
+        4: (empty)
+        5: (empty)
       2: SEMICOLON@16..17 ";" [] []
     2: JS_IMPORT@17..31
       0: IMPORT_KW@17..25 "import" [Whitespace("\n")] [Whitespace(" ")]
@@ -286,6 +288,7 @@ JsModule {
           0: IDENT@30..31 "b" [] []
         3: (empty)
         4: (empty)
+        5: (empty)
       2: (empty)
     3: JS_UNKNOWN_STATEMENT@31..33
       0: COMMA@31..33 "," [] [Whitespace(" ")]
