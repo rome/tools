@@ -330,7 +330,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			named_export_specifier(p);
 		}
 
-		specifiers.complete(p, LIST);
+		specifiers.complete(p, EXPORT_NAMED_SPECIFIER_LIST);
 		p.expect_required(T!['}']);
 
 		if p.cur_src() == "from" {

@@ -20,7 +20,7 @@ impl ToFormatElement for JsFunctionDeclaration {
 
 		tokens.push(space_token());
 		tokens.push(formatter.format_node(self.id()?)?);
-		tokens.push(formatter.format_node(self.parameter_list()?)?);
+		tokens.push(formatter.format_node(self.parameters()?)?);
 		tokens.push(space_token());
 		tokens.push(formatter.format_node(self.body()?)?);
 

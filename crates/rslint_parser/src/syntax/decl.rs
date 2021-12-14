@@ -36,7 +36,7 @@ pub(super) fn parse_parameter_list(p: &mut Parser) -> ParsedSyntax<CompletedMark
 	}
 	let m = p.start();
 	parse_parameters_list(p, parse_formal_param_pat);
-	Present(m.complete(p, JS_PARAMETER_LIST))
+	Present(m.complete(p, JS_PARAMETERS))
 }
 
 /// Parses a (param, param) list into the current active node
@@ -151,7 +151,7 @@ pub(super) fn parse_parameters_list(
 		}
 	}
 
-	parameters_list.complete(p, LIST);
+	parameters_list.complete(p, JS_PARAMETER_LIST);
 	p.state.allow_object_expr = true;
 	p.expect_required(T![')']);
 }

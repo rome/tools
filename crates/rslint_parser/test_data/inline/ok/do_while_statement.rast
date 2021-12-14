@@ -18,7 +18,7 @@ JsModule {
                         },
                     },
                     type_args: missing (optional),
-                    arguments: ArgList {
+                    arguments: JsCallArguments {
                         l_paren_token: L_PAREN@14..15 "(" [] [],
                         args: [
                             JsStringLiteralExpression {
@@ -57,7 +57,7 @@ JsModule {
                                 },
                             },
                             type_args: missing (optional),
-                            arguments: ArgList {
+                            arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@54..55 "(" [] [],
                                 args: [
                                     JsStringLiteralExpression {
@@ -81,9 +81,9 @@ JsModule {
             semicolon_token: SEMICOLON@77..78 ";" [] [],
         },
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@78..84 "let" [Whitespace("\n\n")] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@84..86 "a" [] [Whitespace(" ")],
@@ -169,8 +169,8 @@ JsModule {
 
 0: JS_MODULE@0..144
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..143
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..143
     0: JS_DO_WHILE_STATEMENT@0..35
       0: DO_KW@0..3 "do" [] [Whitespace(" ")]
       1: JS_EXPRESSION_STATEMENT@3..24
@@ -183,9 +183,9 @@ JsModule {
             2: JS_NAME@11..14
               0: IDENT@11..14 "log" [] []
           1: (empty)
-          2: ARG_LIST@14..22
+          2: JS_CALL_ARGUMENTS@14..22
             0: L_PAREN@14..15 "(" [] []
-            1: LIST@15..21
+            1: JS_CALL_ARGUMENT_LIST@15..21
               0: JS_STRING_LITERAL_EXPRESSION@15..21
                 0: JS_STRING_LITERAL@15..21 "\"test\"" [] []
             2: R_PAREN@21..22 ")" [] []
@@ -200,7 +200,7 @@ JsModule {
       0: DO_KW@35..40 "do" [Whitespace("\n\n")] [Whitespace(" ")]
       1: JS_BLOCK_STATEMENT@40..65
         0: L_CURLY@40..41 "{" [] []
-        1: LIST@41..62
+        1: JS_STATEMENT_LIST@41..62
           0: JS_EXPRESSION_STATEMENT@41..62
             0: CALL_EXPR@41..62
               0: JS_STATIC_MEMBER_EXPRESSION@41..54
@@ -211,9 +211,9 @@ JsModule {
                 2: JS_NAME@51..54
                   0: IDENT@51..54 "log" [] []
               1: (empty)
-              2: ARG_LIST@54..62
+              2: JS_CALL_ARGUMENTS@54..62
                 0: L_PAREN@54..55 "(" [] []
-                1: LIST@55..61
+                1: JS_CALL_ARGUMENT_LIST@55..61
                   0: JS_STRING_LITERAL_EXPRESSION@55..61
                     0: JS_STRING_LITERAL@55..61 "\"test\"" [] []
                 2: R_PAREN@61..62 ")" [] []
@@ -226,9 +226,9 @@ JsModule {
       5: R_PAREN@76..77 ")" [] []
       6: SEMICOLON@77..78 ";" [] []
     2: JS_VARIABLE_STATEMENT@78..90
-      0: JS_VARIABLE_DECLARATION_LIST@78..89
+      0: JS_VARIABLE_DECLARATIONS@78..89
         0: LET_KW@78..84 "let" [Whitespace("\n\n")] [Whitespace(" ")]
-        1: LIST@84..89
+        1: JS_VARIABLE_DECLARATION_LIST@84..89
           0: JS_VARIABLE_DECLARATION@84..89
             0: JS_IDENTIFIER_BINDING@84..86
               0: IDENT@84..86 "a" [] [Whitespace(" ")]
@@ -245,7 +245,7 @@ JsModule {
         0: DO_KW@93..98 "do" [Whitespace("\n\t")] [Whitespace(" ")]
         1: JS_BLOCK_STATEMENT@98..115
           0: L_CURLY@98..99 "{" [] []
-          1: LIST@99..111
+          1: JS_STATEMENT_LIST@99..111
             0: JS_EXPRESSION_STATEMENT@99..111
               0: JS_ASSIGNMENT_EXPRESSION@99..111
                 0: JS_IDENTIFIER_ASSIGNMENT@99..104

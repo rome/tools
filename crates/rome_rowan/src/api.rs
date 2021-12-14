@@ -13,7 +13,6 @@ pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Ha
 
 	fn kind_from_raw(raw: SyntaxKind) -> Self::Kind;
 	fn kind_to_raw(kind: Self::Kind) -> SyntaxKind;
-	fn list_kind() -> Self::Kind;
 }
 
 #[derive(Debug, Default, Hash, Copy, Eq, Ord, PartialEq, PartialOrd, Clone)]
@@ -28,10 +27,6 @@ impl Language for RawLanguage {
 
 	fn kind_to_raw(kind: Self::Kind) -> SyntaxKind {
 		kind
-	}
-
-	fn list_kind() -> Self::Kind {
-		SyntaxKind(0)
 	}
 }
 
@@ -795,12 +790,8 @@ impl<L: Language> SyntaxNode<L> {
 		self.raw.splice_children(to_delete, to_insert)
 	}
 
-	pub fn into_list(self) -> Option<SyntaxList<L>> {
-		if self.kind() == L::list_kind() {
-			Some(SyntaxList::new(self))
-		} else {
-			None
-		}
+	pub fn into_list(self) -> SyntaxList<L> {
+		SyntaxList::new(self)
 	}
 }
 
@@ -1236,8 +1227,6 @@ pub struct SyntaxList<L: Language> {
 impl<L: Language> SyntaxList<L> {
 	/// Creates a new list wrapping a List `SyntaxNode`
 	fn new(node: SyntaxNode<L>) -> Self {
-		assert_eq!(node.kind(), L::list_kind());
-
 		Self { list: Some(node) }
 	}
 
@@ -1307,7 +1296,9 @@ mod tests {
 	use text_size::TextRange;
 
 	use crate::api::{RawLanguage, TriviaPiece};
-	use crate::{Direction, Language, SyntaxKind, SyntaxList, TreeBuilder};
+	use crate::{Direction, SyntaxKind, SyntaxList, TreeBuilder};
+
+	const LIST_KIND: SyntaxKind = SyntaxKind(0);
 
 	#[test]
 	fn empty_list() {
@@ -1326,7 +1317,7 @@ mod tests {
 	fn node_list() {
 		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
 
-		builder.start_node(RawLanguage::list_kind());
+		builder.start_node(LIST_KIND);
 
 		builder.start_node(SyntaxKind(1));
 		builder.token(SyntaxKind(2), "1");
@@ -1339,7 +1330,7 @@ mod tests {
 		builder.finish_node();
 
 		let node = builder.finish();
-		let list = node.into_list().unwrap();
+		let list = node.into_list();
 
 		assert!(!list.is_empty());
 		assert_eq!(list.len(), 2);
@@ -1367,7 +1358,7 @@ mod tests {
 	fn node_or_token_list() {
 		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
 
-		builder.start_node(RawLanguage::list_kind());
+		builder.start_node(LIST_KIND);
 
 		builder.start_node(SyntaxKind(1));
 		builder.token(SyntaxKind(2), "1");
@@ -1382,7 +1373,7 @@ mod tests {
 		builder.finish_node();
 
 		let node = builder.finish();
-		let list = node.into_list().unwrap();
+		let list = node.into_list();
 
 		assert!(!list.is_empty());
 		assert_eq!(list.len(), 3);
@@ -1485,7 +1476,7 @@ mod tests {
 	fn siblings_with_tokens() {
 		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
 
-		builder.start_node(RawLanguage::list_kind());
+		builder.start_node(LIST_KIND);
 
 		builder.token(SyntaxKind(1), "for");
 		builder.token(SyntaxKind(2), "(");

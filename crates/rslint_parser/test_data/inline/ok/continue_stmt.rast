@@ -46,14 +46,14 @@ JsModule {
 
 0: JS_MODULE@0..64
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..63
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..63
     0: JS_LABELED_STATEMENT@0..7
       0: IDENT@0..3 "foo" [] []
       1: COLON@3..5 ":" [] [Whitespace(" ")]
       2: JS_BLOCK_STATEMENT@5..7
         0: L_CURLY@5..6 "{" [] []
-        1: LIST@6..6
+        1: JS_STATEMENT_LIST@6..6
         2: R_CURLY@6..7 "}" [] []
     1: JS_WHILE_STATEMENT@7..63
       0: WHILE_KW@7..14 "while" [Whitespace("\n")] [Whitespace(" ")]
@@ -63,7 +63,7 @@ JsModule {
       3: R_PAREN@19..21 ")" [] [Whitespace(" ")]
       4: JS_BLOCK_STATEMENT@21..63
         0: L_CURLY@21..22 "{" [] []
-        1: LIST@22..61
+        1: JS_STATEMENT_LIST@22..61
           0: JS_CONTINUE_STATEMENT@22..34
             0: CONTINUE_KW@22..33 "continue" [Whitespace("\n  ")] []
             1: (empty)

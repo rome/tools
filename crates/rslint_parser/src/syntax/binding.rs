@@ -183,6 +183,10 @@ impl ParseArrayPattern<BindingPatternWithDefault> for ArrayBindingPattern {
 		JS_ARRAY_BINDING_PATTERN_REST_ELEMENT
 	}
 
+	fn list_kind() -> SyntaxKind {
+		JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST
+	}
+
 	#[inline]
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic {
 		expected_any(
@@ -219,6 +223,10 @@ impl ParseObjectPattern for ObjectBindingPattern {
 	#[inline]
 	fn object_pattern_kind() -> SyntaxKind {
 		JS_OBJECT_BINDING_PATTERN
+	}
+
+	fn list_kind() -> SyntaxKind {
+		JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST
 	}
 
 	#[inline]

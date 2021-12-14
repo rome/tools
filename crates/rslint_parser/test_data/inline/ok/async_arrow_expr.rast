@@ -3,9 +3,9 @@ JsModule {
     directives: [],
     items: [
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -17,7 +17,7 @@ JsModule {
                             expression: JsArrowFunctionExpression {
                                 async_token: ASYNC_KW@8..14 "async" [] [Whitespace(" ")],
                                 type_parameters: missing (optional),
-                                parameter_list: JsIdentifierBinding {
+                                parameters: JsIdentifierBinding {
                                     name_token: IDENT@14..18 "foo" [] [Whitespace(" ")],
                                 },
                                 return_type: missing (optional),
@@ -36,9 +36,9 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@23..28 "let" [Whitespace("\n")] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@28..30 "b" [] [Whitespace(" ")],
@@ -50,9 +50,9 @@ JsModule {
                             expression: JsArrowFunctionExpression {
                                 async_token: ASYNC_KW@32..38 "async" [] [Whitespace(" ")],
                                 type_parameters: missing (optional),
-                                parameter_list: JsParameterList {
+                                parameters: JsParameters {
                                     l_paren_token: L_PAREN@38..39 "(" [] [],
-                                    parameters: [
+                                    items: [
                                         JsIdentifierBinding {
                                             name_token: IDENT@39..42 "bar" [] [],
                                         },
@@ -78,9 +78,9 @@ JsModule {
             expression: JsArrowFunctionExpression {
                 async_token: ASYNC_KW@49..56 "async" [Whitespace("\n")] [Whitespace(" ")],
                 type_parameters: missing (optional),
-                parameter_list: JsParameterList {
+                parameters: JsParameters {
                     l_paren_token: L_PAREN@56..57 "(" [] [],
-                    parameters: [
+                    items: [
                         JsIdentifierBinding {
                             name_token: IDENT@57..60 "foo" [] [],
                         },
@@ -114,12 +114,12 @@ JsModule {
 
 0: JS_MODULE@0..82
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..81
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..81
     0: JS_VARIABLE_STATEMENT@0..23
-      0: JS_VARIABLE_DECLARATION_LIST@0..23
+      0: JS_VARIABLE_DECLARATIONS@0..23
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: LIST@4..23
+        1: JS_VARIABLE_DECLARATION_LIST@4..23
           0: JS_VARIABLE_DECLARATION@4..23
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
@@ -136,14 +136,14 @@ JsModule {
                 4: FAT_ARROW@18..21 "=>" [] [Whitespace(" ")]
                 5: JS_FUNCTION_BODY@21..23
                   0: L_CURLY@21..22 "{" [] []
-                  1: LIST@22..22
-                  2: LIST@22..22
+                  1: JS_DIRECTIVE_LIST@22..22
+                  2: JS_STATEMENT_LIST@22..22
                   3: R_CURLY@22..23 "}" [] []
       1: (empty)
     1: JS_VARIABLE_STATEMENT@23..49
-      0: JS_VARIABLE_DECLARATION_LIST@23..49
+      0: JS_VARIABLE_DECLARATIONS@23..49
         0: LET_KW@23..28 "let" [Whitespace("\n")] [Whitespace(" ")]
-        1: LIST@28..49
+        1: JS_VARIABLE_DECLARATION_LIST@28..49
           0: JS_VARIABLE_DECLARATION@28..49
             0: JS_IDENTIFIER_BINDING@28..30
               0: IDENT@28..30 "b" [] [Whitespace(" ")]
@@ -154,9 +154,9 @@ JsModule {
               1: JS_ARROW_FUNCTION_EXPRESSION@32..49
                 0: ASYNC_KW@32..38 "async" [] [Whitespace(" ")]
                 1: (empty)
-                2: JS_PARAMETER_LIST@38..44
+                2: JS_PARAMETERS@38..44
                   0: L_PAREN@38..39 "(" [] []
-                  1: LIST@39..42
+                  1: JS_PARAMETER_LIST@39..42
                     0: JS_IDENTIFIER_BINDING@39..42
                       0: IDENT@39..42 "bar" [] []
                   2: R_PAREN@42..44 ")" [] [Whitespace(" ")]
@@ -164,17 +164,17 @@ JsModule {
                 4: FAT_ARROW@44..47 "=>" [] [Whitespace(" ")]
                 5: JS_FUNCTION_BODY@47..49
                   0: L_CURLY@47..48 "{" [] []
-                  1: LIST@48..48
-                  2: LIST@48..48
+                  1: JS_DIRECTIVE_LIST@48..48
+                  2: JS_STATEMENT_LIST@48..48
                   3: R_CURLY@48..49 "}" [] []
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@49..81
       0: JS_ARROW_FUNCTION_EXPRESSION@49..81
         0: ASYNC_KW@49..56 "async" [Whitespace("\n")] [Whitespace(" ")]
         1: (empty)
-        2: JS_PARAMETER_LIST@56..75
+        2: JS_PARAMETERS@56..75
           0: L_PAREN@56..57 "(" [] []
-          1: LIST@57..73
+          1: JS_PARAMETER_LIST@57..73
             0: JS_IDENTIFIER_BINDING@57..60
               0: IDENT@57..60 "foo" [] []
             1: COMMA@60..62 "," [] [Whitespace(" ")]

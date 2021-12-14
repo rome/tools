@@ -10,9 +10,9 @@ JsScript {
                 name_token: IDENT@19..23 "test" [] [],
             },
             type_parameters: missing (optional),
-            parameter_list: JsParameterList {
+            parameters: JsParameters {
                 l_paren_token: L_PAREN@23..24 "(" [] [],
-                parameters: [
+                items: [
                     JsIdentifierBinding {
                         name_token: IDENT@24..29 "await" [] [],
                     },
@@ -33,8 +33,8 @@ JsScript {
 
 0: JS_SCRIPT@0..34
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..33
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_STATEMENT_LIST@0..33
     0: JS_FUNCTION_DECLARATION@0..33
       0: (empty)
       1: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")]
@@ -42,16 +42,16 @@ JsScript {
       3: JS_IDENTIFIER_BINDING@19..23
         0: IDENT@19..23 "test" [] []
       4: (empty)
-      5: JS_PARAMETER_LIST@23..31
+      5: JS_PARAMETERS@23..31
         0: L_PAREN@23..24 "(" [] []
-        1: LIST@24..29
+        1: JS_PARAMETER_LIST@24..29
           0: JS_IDENTIFIER_BINDING@24..29
             0: IDENT@24..29 "await" [] []
         2: R_PAREN@29..31 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@31..33
         0: L_CURLY@31..32 "{" [] []
-        1: LIST@32..32
-        2: LIST@32..32
+        1: JS_DIRECTIVE_LIST@32..32
+        2: JS_STATEMENT_LIST@32..32
         3: R_CURLY@32..33 "}" [] []
   3: EOF@33..34 "" [Whitespace("\n")] []

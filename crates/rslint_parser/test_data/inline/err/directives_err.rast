@@ -10,9 +10,9 @@ JsScript {
                 name_token: IDENT@20..24 "test" [] [],
             },
             type_parameters: missing (optional),
-            parameter_list: JsParameterList {
+            parameters: JsParameters {
                 l_paren_token: L_PAREN@24..25 "(" [] [],
-                parameters: [],
+                items: [],
                 r_paren_token: R_PAREN@25..27 ")" [] [Whitespace(" ")],
             },
             return_type: missing (optional),
@@ -33,9 +33,9 @@ JsScript {
                             name_token: IDENT@54..61 "inner_a" [] [],
                         },
                         type_parameters: missing (optional),
-                        parameter_list: JsParameterList {
+                        parameters: JsParameters {
                             l_paren_token: L_PAREN@61..62 "(" [] [],
-                            parameters: [],
+                            items: [],
                             r_paren_token: R_PAREN@62..64 ")" [] [Whitespace(" ")],
                         },
                         return_type: missing (optional),
@@ -59,9 +59,9 @@ JsScript {
                             name_token: IDENT@96..103 "inner_b" [] [],
                         },
                         type_parameters: missing (optional),
-                        parameter_list: JsParameterList {
+                        parameters: JsParameters {
                             l_paren_token: L_PAREN@103..104 "(" [] [],
-                            parameters: [],
+                            items: [],
                             r_paren_token: R_PAREN@104..106 ")" [] [Whitespace(" ")],
                         },
                         return_type: missing (optional),
@@ -77,9 +77,9 @@ JsScript {
                                         name_token: IDENT@119..130 "inner_inner" [] [],
                                     },
                                     type_parameters: missing (optional),
-                                    parameter_list: JsParameterList {
+                                    parameters: JsParameters {
                                         l_paren_token: L_PAREN@130..131 "(" [] [],
-                                        parameters: [],
+                                        items: [],
                                         r_paren_token: R_PAREN@131..133 ")" [] [Whitespace(" ")],
                                     },
                                     return_type: missing (optional),
@@ -109,8 +109,8 @@ JsScript {
 
 0: JS_SCRIPT@0..161
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..160
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_STATEMENT_LIST@0..160
     0: JS_FUNCTION_DECLARATION@0..160
       0: (empty)
       1: FUNCTION_KW@0..20 "function" [Comments("// SCRIPT"), Whitespace("\n\n")] [Whitespace(" ")]
@@ -118,18 +118,18 @@ JsScript {
       3: JS_IDENTIFIER_BINDING@20..24
         0: IDENT@20..24 "test" [] []
       4: (empty)
-      5: JS_PARAMETER_LIST@24..27
+      5: JS_PARAMETERS@24..27
         0: L_PAREN@24..25 "(" [] []
-        1: LIST@25..25
+        1: JS_PARAMETER_LIST@25..25
         2: R_PAREN@25..27 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@27..160
         0: L_CURLY@27..28 "{" [] []
-        1: LIST@28..43
+        1: JS_DIRECTIVE_LIST@28..43
           0: JS_DIRECTIVE@28..43
             0: JS_STRING_LITERAL@28..42 "\"use strict\"" [Whitespace("\n\t")] []
             1: SEMICOLON@42..43 ";" [] []
-        2: LIST@43..158
+        2: JS_STATEMENT_LIST@43..158
           0: JS_FUNCTION_DECLARATION@43..84
             0: (empty)
             1: FUNCTION_KW@43..54 "function" [Whitespace("\n\t")] [Whitespace(" ")]
@@ -137,18 +137,18 @@ JsScript {
             3: JS_IDENTIFIER_BINDING@54..61
               0: IDENT@54..61 "inner_a" [] []
             4: (empty)
-            5: JS_PARAMETER_LIST@61..64
+            5: JS_PARAMETERS@61..64
               0: L_PAREN@61..62 "(" [] []
-              1: LIST@62..62
+              1: JS_PARAMETER_LIST@62..62
               2: R_PAREN@62..64 ")" [] [Whitespace(" ")]
             6: (empty)
             7: JS_FUNCTION_BODY@64..84
               0: L_CURLY@64..65 "{" [] []
-              1: LIST@65..81
+              1: JS_DIRECTIVE_LIST@65..81
                 0: JS_DIRECTIVE@65..81
                   0: JS_STRING_LITERAL@65..80 "\"use strict\"" [Whitespace("\n\t\t")] []
                   1: SEMICOLON@80..81 ";" [] []
-              2: LIST@81..81
+              2: JS_STATEMENT_LIST@81..81
               3: R_CURLY@81..84 "}" [Whitespace("\n\t")] []
           1: JS_FUNCTION_DECLARATION@84..158
             0: (empty)
@@ -157,15 +157,15 @@ JsScript {
             3: JS_IDENTIFIER_BINDING@96..103
               0: IDENT@96..103 "inner_b" [] []
             4: (empty)
-            5: JS_PARAMETER_LIST@103..106
+            5: JS_PARAMETERS@103..106
               0: L_PAREN@103..104 "(" [] []
-              1: LIST@104..104
+              1: JS_PARAMETER_LIST@104..104
               2: R_PAREN@104..106 ")" [] [Whitespace(" ")]
             6: (empty)
             7: JS_FUNCTION_BODY@106..158
               0: L_CURLY@106..107 "{" [] []
-              1: LIST@107..107
-              2: LIST@107..155
+              1: JS_DIRECTIVE_LIST@107..107
+              2: JS_STATEMENT_LIST@107..155
                 0: JS_FUNCTION_DECLARATION@107..155
                   0: (empty)
                   1: FUNCTION_KW@107..119 "function" [Whitespace("\n\t\t")] [Whitespace(" ")]
@@ -173,18 +173,18 @@ JsScript {
                   3: JS_IDENTIFIER_BINDING@119..130
                     0: IDENT@119..130 "inner_inner" [] []
                   4: (empty)
-                  5: JS_PARAMETER_LIST@130..133
+                  5: JS_PARAMETERS@130..133
                     0: L_PAREN@130..131 "(" [] []
-                    1: LIST@131..131
+                    1: JS_PARAMETER_LIST@131..131
                     2: R_PAREN@131..133 ")" [] [Whitespace(" ")]
                   6: (empty)
                   7: JS_FUNCTION_BODY@133..155
                     0: L_CURLY@133..134 "{" [] []
-                    1: LIST@134..151
+                    1: JS_DIRECTIVE_LIST@134..151
                       0: JS_DIRECTIVE@134..151
                         0: JS_STRING_LITERAL@134..150 "\"use strict\"" [Whitespace("\n\t\t\t")] []
                         1: SEMICOLON@150..151 ";" [] []
-                    2: LIST@151..151
+                    2: JS_STATEMENT_LIST@151..151
                     3: R_CURLY@151..155 "}" [Whitespace("\n\t\t")] []
               3: R_CURLY@155..158 "}" [Whitespace("\n\t")] []
         3: R_CURLY@158..160 "}" [Whitespace("\n")] []

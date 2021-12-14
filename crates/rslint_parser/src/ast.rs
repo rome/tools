@@ -16,12 +16,7 @@ use std::fmt::{Debug, Formatter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
-pub use self::{
-	expr_ext::*,
-	generated::{nodes::*, tokens::*},
-	stmt_ext::*,
-	ts_ext::*,
-};
+pub use self::{expr_ext::*, generated::nodes::*, stmt_ext::*, ts_ext::*};
 
 /// The main trait to go from untyped `SyntaxNode`  to a typed ast. The
 /// conversion itself has zero runtime cost: ast and syntax nodes have exactly
@@ -87,63 +82,47 @@ impl<N: AstNode> Iterator for AstChildren<N> {
 	}
 }
 
+pub trait AstList {
+	fn syntax_list(&self) -> &SyntaxList;
+
+	fn can_cast(kind: SyntaxKind) -> bool;
+
+	fn cast(node: SyntaxNode) -> Option<Self>
+	where
+		Self: Sized;
+}
+
 /// List of homogenous nodes
-#[derive(Clone)]
-pub struct AstNodeList<N> {
-	inner: SyntaxList,
-	ph: PhantomData<N>,
-}
-
-impl<N> Default for AstNodeList<N> {
-	fn default() -> Self {
-		AstNodeList {
-			inner: SyntaxList::default(),
-			ph: PhantomData,
-		}
-	}
-}
-
-impl<N: AstNode + Debug> Debug for AstNodeList<N> {
-	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		f.debug_list().entries(self.iter()).finish()
-	}
-}
-
-impl<N: AstNode> AstNodeList<N> {
-	/// Creates a new node list wrapping the passed in syntax list
-	fn new(list: SyntaxList) -> Self {
-		AstNodeList {
-			inner: list,
-			ph: PhantomData,
-		}
-	}
-
-	pub fn iter(&self) -> AstNodeListIterator<N> {
+pub trait AstNodeList<N>: AstList
+where
+	N: AstNode,
+{
+	fn iter(&self) -> AstNodeListIterator<N> {
 		AstNodeListIterator {
-			inner: self.inner.iter(),
+			inner: self.syntax_list().iter(),
 			ph: PhantomData,
 		}
 	}
 
 	#[inline]
-	pub fn len(&self) -> usize {
-		self.inner.len()
+	fn len(&self) -> usize {
+		self.syntax_list().len()
 	}
 
 	/// Returns the first node from this list or None
 	#[inline]
-	pub fn first(&self) -> Option<N> {
+	fn first(&self) -> Option<N> {
 		self.iter().next()
 	}
 
 	/// Returns the last node from this list or None
-	pub fn last(&self) -> Option<N> {
+	fn last(&self) -> Option<N> {
 		self.iter().last()
 	}
 
 	#[inline]
-	pub fn is_empty(&self) -> bool {
-		self.inner.is_empty()
+	fn is_empty(&self) -> bool {
+		self.syntax_list().is_empty()
 	}
 }
 
@@ -194,24 +173,6 @@ impl<N: AstNode> ExactSizeIterator for AstNodeListIterator<N> {
 
 impl<N: AstNode> FusedIterator for AstNodeListIterator<N> {}
 
-impl<N: AstNode> IntoIterator for &AstNodeList<N> {
-	type Item = N;
-	type IntoIter = AstNodeListIterator<N>;
-
-	fn into_iter(self) -> Self::IntoIter {
-		self.iter()
-	}
-}
-
-impl<N: AstNode> IntoIterator for AstNodeList<N> {
-	type Item = N;
-	type IntoIter = AstNodeListIterator<N>;
-
-	fn into_iter(self) -> Self::IntoIter {
-		self.iter()
-	}
-}
-
 #[derive(Clone)]
 pub struct AstSeparatedElement<N> {
 	node: SyntaxResult<N>,
@@ -251,61 +212,65 @@ impl<N: Debug> Debug for AstSeparatedElement<N> {
 /// even if they are missing from the source code. For example, a list for `a b` where the `,` separator
 /// is missing contains the slots `Node(a), Empty, Node(b)`. This also applies for missing nodes:
 /// the list for `, b,` must have the slots `Empty, Token(,), Node(b), Token(,)`.
-#[derive(Clone)]
-pub struct AstSeparatedList<N> {
-	list: SyntaxList,
-	ph: PhantomData<N>,
-}
-
-impl<N: AstNode + Debug> Debug for AstSeparatedList<N> {
-	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		f.debug_list().entries(self.elements()).finish()
-	}
-}
-
-impl<N: AstNode> AstSeparatedList<N> {
-	fn new(list: SyntaxList) -> Self {
-		Self {
-			list,
-			ph: PhantomData,
-		}
-	}
-
+pub trait AstSeparatedList<N>: AstList
+where
+	N: AstNode,
+{
 	/// Returns an iterator over all nodes with their trailing separator
-	pub fn elements(&self) -> AstSeparatedListElementsIterator<N> {
-		AstSeparatedListElementsIterator::new(&self.list)
+	fn elements(&self) -> AstSeparatedListElementsIterator<N> {
+		AstSeparatedListElementsIterator::new(self.syntax_list())
 	}
 
 	/// Returns an iterator over all separator tokens
-	pub fn separators(&self) -> impl Iterator<Item = SyntaxResult<SyntaxToken>> {
-		self.elements()
-			.filter_map(|element| match element.trailing_separator {
-				Ok(Some(separator)) => Some(Ok(separator)),
-				Err(missing) => Some(Err(missing)),
-				_ => None,
-			})
+	fn separators(&self) -> AstSeparatorIterator<N> {
+		AstSeparatorIterator {
+			inner: self.elements(),
+		}
 	}
 
 	/// Returns an iterator over all nodes
-	pub fn iter(&self) -> AstSeparatedListNodesIterator<N> {
+	fn iter(&self) -> AstSeparatedListNodesIterator<N> {
 		AstSeparatedListNodesIterator {
 			inner: self.elements(),
 		}
 	}
 
 	#[inline]
-	pub fn is_empty(&self) -> bool {
+	fn is_empty(&self) -> bool {
 		self.len() == 0
 	}
 
-	pub fn len(&self) -> usize {
-		(self.list.len() + 1) / 2
+	fn len(&self) -> usize {
+		(self.syntax_list().len() + 1) / 2
 	}
 
-	pub fn trailing_separator(&self) -> Option<SyntaxToken> {
-		match self.list.last()? {
+	fn trailing_separator(&self) -> Option<SyntaxToken> {
+		match self.syntax_list().last()? {
 			SyntaxSlot::Token(token) => Some(token),
 			_ => None,
+		}
+	}
+}
+
+pub struct AstSeparatorIterator<N> {
+	inner: AstSeparatedListElementsIterator<N>,
+}
+
+impl<N> Iterator for AstSeparatorIterator<N>
+where
+	N: AstNode,
+{
+	type Item = SyntaxResult<SyntaxToken>;
+
+	fn next(&mut self) -> Option<Self::Item> {
+		loop {
+			let element = self.inner.next()?;
+
+			match element.trailing_separator {
+				Ok(Some(separator)) => return Some(Ok(separator)),
+				Err(missing) => return Some(Err(missing)),
+				_ => {}
+			}
 		}
 	}
 }
@@ -376,24 +341,6 @@ impl<N: AstNode> Iterator for AstSeparatedListNodesIterator<N> {
 
 impl<N: AstNode> FusedIterator for AstSeparatedListNodesIterator<N> {}
 
-impl<N: AstNode> IntoIterator for AstSeparatedList<N> {
-	type Item = SyntaxResult<N>;
-	type IntoIter = AstSeparatedListNodesIterator<N>;
-
-	fn into_iter(self) -> Self::IntoIter {
-		self.iter()
-	}
-}
-
-impl<N: AstNode> IntoIterator for &AstSeparatedList<N> {
-	type Item = SyntaxResult<N>;
-	type IntoIter = AstSeparatedListNodesIterator<N>;
-
-	fn into_iter(self) -> Self::IntoIter {
-		self.iter()
-	}
-}
-
 /// Specific result used when navigating nodes using AST APIs
 pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
 
@@ -414,9 +361,9 @@ impl std::fmt::Display for SyntaxError {
 }
 
 mod support {
-	use super::{AstNode, AstNodeList, AstSeparatedList, SyntaxKind, SyntaxNode, SyntaxToken};
-	use crate::ast::{AnyNode, AstChildren};
-	use crate::{SyntaxElement, SyntaxElementChildren, SyntaxList, SyntaxNodeExt};
+	use super::{AstNode, SyntaxKind, SyntaxNode, SyntaxToken};
+	use crate::ast::{AstChildren, AstList, DebugSyntaxElement};
+	use crate::SyntaxElementChildren;
 	use crate::{SyntaxError, SyntaxResult};
 	use std::fmt::{Debug, Formatter};
 
@@ -436,24 +383,8 @@ mod support {
 		AstChildren::new(parent)
 	}
 
-	fn nth_syntax_list(parent: &SyntaxNode, index: usize) -> SyntaxList {
-		// TODO 1724 change parser to insert a missing for empty lists. Gracefully handle this here.
-		parent
-			.children()
-			.filter_map(|node| node.into_list())
-			.nth(index)
-			.unwrap_or_default()
-	}
-
-	pub(super) fn node_list<N: AstNode>(parent: &SyntaxNode, index: usize) -> AstNodeList<N> {
-		AstNodeList::new(nth_syntax_list(parent, index))
-	}
-
-	pub(super) fn separated_list<N: AstNode>(
-		parent: &SyntaxNode,
-		index: usize,
-	) -> AstSeparatedList<N> {
-		AstSeparatedList::new(nth_syntax_list(parent, index))
+	pub(super) fn list<L: AstList + Default>(parent: &SyntaxNode) -> L {
+		parent.children().find_map(L::cast).unwrap_or_default()
 	}
 
 	pub(super) fn token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
@@ -518,17 +449,6 @@ mod support {
 		}
 	}
 
-	struct DebugSyntaxElement(SyntaxElement);
-
-	impl Debug for DebugSyntaxElement {
-		fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-			match &self.0 {
-				SyntaxElement::Node(node) => Debug::fmt(&node.to::<AnyNode>(), f),
-				SyntaxElement::Token(token) => Debug::fmt(token, f),
-			}
-		}
-	}
-
 	#[derive(Clone)]
 	pub(super) struct DebugSyntaxElementChildren(pub(super) SyntaxElementChildren);
 
@@ -543,18 +463,47 @@ mod support {
 
 #[cfg(test)]
 mod tests {
-	use crate::ast::{AstSeparatedElement, AstSeparatedList, JsNumberLiteralExpression};
-	use crate::{JsLanguage, SyntaxKind, SyntaxResult};
-	use rome_rowan::TreeBuilder;
+	use crate::ast::{AstList, AstSeparatedElement, AstSeparatedList, JsNumberLiteralExpression};
+	use crate::{JsLanguage, SyntaxKind, SyntaxNode, SyntaxResult};
+	use rome_rowan::{SyntaxList, TreeBuilder};
+
+	struct TestList {
+		syntax_list: SyntaxList<JsLanguage>,
+	}
+
+	impl TestList {
+		fn new(list: SyntaxList<JsLanguage>) -> Self {
+			Self { syntax_list: list }
+		}
+	}
+
+	impl AstList for TestList {
+		fn syntax_list(&self) -> &crate::SyntaxList {
+			&self.syntax_list
+		}
+
+		fn can_cast(_: SyntaxKind) -> bool {
+			false
+		}
+
+		fn cast(_: SyntaxNode) -> Option<Self>
+		where
+			Self: Sized,
+		{
+			None
+		}
+	}
+
+	impl AstSeparatedList<JsNumberLiteralExpression> for TestList {}
 
 	/// Creates a ast separated list over a sequence of numbers separated by ",".
 	/// The elements are pairs of: (value, separator).
 	fn build_list<'a>(
 		elements: impl IntoIterator<Item = (Option<i32>, Option<&'a str>)>,
-	) -> AstSeparatedList<JsNumberLiteralExpression> {
+	) -> TestList {
 		let mut builder: TreeBuilder<JsLanguage> = TreeBuilder::new();
 
-		builder.start_node(SyntaxKind::LIST);
+		builder.start_node(SyntaxKind::JS_STATEMENT_LIST);
 
 		let mut had_missing_separator = false;
 
@@ -583,7 +532,7 @@ mod tests {
 
 		let node = builder.finish();
 
-		AstSeparatedList::new(node.into_list().unwrap())
+		TestList::new(node.into_list())
 	}
 
 	fn assert_elements<'a>(

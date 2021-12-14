@@ -80,8 +80,8 @@ JsModule {
 
 0: JS_MODULE@0..41
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..40
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..40
     0: JS_CLASS_DECLARATION@0..40
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..10
@@ -89,7 +89,7 @@ JsModule {
       2: (empty)
       3: (empty)
       4: L_CURLY@10..12 "{" [] [Whitespace(" ")]
-      5: LIST@12..39
+      5: JS_CLASS_MEMBER_LIST@12..39
         0: JS_EMPTY_CLASS_MEMBER@12..13
           0: SEMICOLON@12..13 ";" [] []
         1: JS_EMPTY_CLASS_MEMBER@13..14
@@ -123,8 +123,8 @@ JsModule {
           8: (empty)
           9: JS_FUNCTION_BODY@33..35
             0: L_CURLY@33..34 "{" [] []
-            1: LIST@34..34
-            2: LIST@34..34
+            1: JS_DIRECTIVE_LIST@34..34
+            2: JS_STATEMENT_LIST@34..34
             3: R_CURLY@34..35 "}" [] []
         11: JS_EMPTY_CLASS_MEMBER@35..36
           0: SEMICOLON@35..36 ";" [] []

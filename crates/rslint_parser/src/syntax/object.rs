@@ -47,6 +47,10 @@ impl ParseSeparatedList for ObjectMembersList {
 		)
 	}
 
+	fn list_kind() -> SyntaxKind {
+		JS_OBJECT_MEMBER_LIST
+	}
+
 	fn separating_element_kind(&mut self) -> SyntaxKind {
 		T![,]
 	}

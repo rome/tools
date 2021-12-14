@@ -3,9 +3,9 @@ JsModule {
     directives: [],
     items: [
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -34,7 +34,7 @@ JsModule {
                     },
                 },
                 type_args: missing (optional),
-                arguments: ArgList {
+                arguments: JsCallArguments {
                     l_paren_token: L_PAREN@21..22 "(" [] [],
                     args: [],
                     r_paren_token: R_PAREN@22..23 ")" [] [],
@@ -48,12 +48,12 @@ JsModule {
 
 0: JS_MODULE@0..25
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..24
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..24
     0: JS_VARIABLE_STATEMENT@0..17
-      0: JS_VARIABLE_DECLARATION_LIST@0..16
+      0: JS_VARIABLE_DECLARATIONS@0..16
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: LIST@4..16
+        1: JS_VARIABLE_DECLARATION_LIST@4..16
           0: JS_VARIABLE_DECLARATION@4..16
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
@@ -73,9 +73,9 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@17..21
             0: IDENT@17..21 "foo" [Whitespace("\n")] []
         1: (empty)
-        2: ARG_LIST@21..23
+        2: JS_CALL_ARGUMENTS@21..23
           0: L_PAREN@21..22 "(" [] []
-          1: LIST@22..22
+          1: JS_CALL_ARGUMENT_LIST@22..22
           2: R_PAREN@22..23 ")" [] []
       1: SEMICOLON@23..24 ";" [] []
   3: EOF@24..25 "" [Whitespace("\n")] []

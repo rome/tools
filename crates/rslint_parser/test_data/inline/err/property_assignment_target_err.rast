@@ -165,15 +165,15 @@ JsModule {
 
 0: JS_MODULE@0..74
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..73
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..73
     0: JS_EXPRESSION_STATEMENT@0..12
       0: JS_PARENTHESIZED_EXPRESSION@0..11
         0: L_PAREN@0..1 "(" [] []
         1: JS_ASSIGNMENT_EXPRESSION@1..10
           0: JS_OBJECT_ASSIGNMENT_PATTERN@1..6
             0: L_CURLY@1..2 "{" [] []
-            1: LIST@2..4
+            1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@2..4
               0: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY@2..4
                 0: (empty)
                 1: COLON@2..3 ":" [] []
@@ -194,7 +194,7 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@14..23
           0: JS_OBJECT_ASSIGNMENT_PATTERN@14..19
             0: L_CURLY@14..15 "{" [] []
-            1: LIST@15..17
+            1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@15..17
               0: JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY@15..17
                 0: (empty)
                 1: JS_INITIALIZER_CLAUSE@15..17
@@ -216,7 +216,7 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@27..42
           0: JS_OBJECT_ASSIGNMENT_PATTERN@27..38
             0: L_CURLY@27..28 "{" [] []
-            1: LIST@28..36
+            1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@28..36
               0: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY@28..36
                 0: (empty)
                 1: COLON@28..29 ":" [] []
@@ -239,7 +239,7 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@46..55
           0: JS_OBJECT_ASSIGNMENT_PATTERN@46..51
             0: L_CURLY@46..47 "{" [] []
-            1: LIST@47..49
+            1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@47..49
               0: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY@47..49
                 0: (empty)
                 1: COLON@47..48 ":" [] []
@@ -260,7 +260,7 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@59..71
           0: JS_OBJECT_ASSIGNMENT_PATTERN@59..67
             0: L_CURLY@59..61 "{" [] [Whitespace(" ")]
-            1: LIST@61..65
+            1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@61..65
               0: JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY@61..63
                 0: JS_IDENTIFIER_ASSIGNMENT@61..63
                   0: IDENT@61..63 "a" [] [Whitespace(" ")]

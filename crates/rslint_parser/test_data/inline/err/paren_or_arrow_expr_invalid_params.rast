@@ -6,9 +6,9 @@ JsModule {
             expression: JsArrowFunctionExpression {
                 async_token: missing (optional),
                 type_parameters: missing (optional),
-                parameter_list: JsParameterList {
+                parameters: JsParameters {
                     l_paren_token: L_PAREN@0..1 "(" [] [],
-                    parameters: [
+                    items: [
                         JsUnknownBinding {
                             items: [
                                 JS_NUMBER_LITERAL@1..3 "5" [] [Whitespace(" ")],
@@ -73,9 +73,9 @@ JsModule {
             expression: JsArrowFunctionExpression {
                 async_token: missing (optional),
                 type_parameters: missing (optional),
-                parameter_list: JsParameterList {
+                parameters: JsParameters {
                     l_paren_token: L_PAREN@27..29 "(" [Whitespace("\n")] [],
-                    parameters: [
+                    items: [
                         JsIdentifierBinding {
                             name_token: IDENT@29..30 "a" [] [],
                         },
@@ -98,15 +98,15 @@ JsModule {
 
 0: JS_MODULE@0..38
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..37
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..37
     0: JS_EXPRESSION_STATEMENT@0..13
       0: JS_ARROW_FUNCTION_EXPRESSION@0..13
         0: (empty)
         1: (empty)
-        2: JS_PARAMETER_LIST@0..8
+        2: JS_PARAMETERS@0..8
           0: L_PAREN@0..1 "(" [] []
-          1: LIST@1..6
+          1: JS_PARAMETER_LIST@1..6
             0: JS_UNKNOWN_BINDING@1..6
               0: JS_NUMBER_LITERAL@1..3 "5" [] [Whitespace(" ")]
               1: PLUS@3..5 "+" [] [Whitespace(" ")]
@@ -116,8 +116,8 @@ JsModule {
         4: FAT_ARROW@8..11 "=>" [] [Whitespace(" ")]
         5: JS_FUNCTION_BODY@11..13
           0: L_CURLY@11..12 "{" [] []
-          1: LIST@12..12
-          2: LIST@12..12
+          1: JS_DIRECTIVE_LIST@12..12
+          2: JS_STATEMENT_LIST@12..12
           3: R_CURLY@12..13 "}" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@13..19
@@ -142,15 +142,15 @@ JsModule {
       1: FAT_ARROW@22..25 "=>" [] [Whitespace(" ")]
     4: JS_BLOCK_STATEMENT@25..27
       0: L_CURLY@25..26 "{" [] []
-      1: LIST@26..26
+      1: JS_STATEMENT_LIST@26..26
       2: R_CURLY@26..27 "}" [] []
     5: JS_EXPRESSION_STATEMENT@27..37
       0: JS_ARROW_FUNCTION_EXPRESSION@27..37
         0: (empty)
         1: (empty)
-        2: JS_PARAMETER_LIST@27..35
+        2: JS_PARAMETERS@27..35
           0: L_PAREN@27..29 "(" [Whitespace("\n")] []
-          1: LIST@29..33
+          1: JS_PARAMETER_LIST@29..33
             0: JS_IDENTIFIER_BINDING@29..30
               0: IDENT@29..30 "a" [] []
             1: COMMA@30..32 "," [] [Whitespace(" ")]

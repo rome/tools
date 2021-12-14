@@ -3,9 +3,9 @@ JsModule {
     directives: [],
     items: [
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -20,9 +20,9 @@ JsModule {
                                 star_token: missing (optional),
                                 id: missing (optional),
                                 type_parameters: missing (optional),
-                                parameters: JsParameterList {
+                                parameters: JsParameters {
                                     l_paren_token: L_PAREN@22..23 "(" [] [],
-                                    parameters: [],
+                                    items: [],
                                     r_paren_token: R_PAREN@23..25 ")" [] [Whitespace(" ")],
                                 },
                                 return_type: missing (optional),
@@ -40,9 +40,9 @@ JsModule {
             semicolon_token: SEMICOLON@27..28 ";" [] [],
         },
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@28..33 "let" [Whitespace("\n")] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@33..35 "b" [] [Whitespace(" ")],
@@ -59,9 +59,9 @@ JsModule {
                                     name_token: IDENT@52..55 "foo" [] [],
                                 },
                                 type_parameters: missing (optional),
-                                parameters: JsParameterList {
+                                parameters: JsParameters {
                                     l_paren_token: L_PAREN@55..56 "(" [] [],
-                                    parameters: [],
+                                    items: [],
                                     r_paren_token: R_PAREN@56..58 ")" [] [Whitespace(" ")],
                                 },
                                 return_type: missing (optional),
@@ -84,12 +84,12 @@ JsModule {
 
 0: JS_MODULE@0..62
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..61
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..61
     0: JS_VARIABLE_STATEMENT@0..28
-      0: JS_VARIABLE_DECLARATION_LIST@0..27
+      0: JS_VARIABLE_DECLARATIONS@0..27
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: LIST@4..27
+        1: JS_VARIABLE_DECLARATION_LIST@4..27
           0: JS_VARIABLE_DECLARATION@4..27
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
@@ -103,21 +103,21 @@ JsModule {
                 2: (empty)
                 3: (empty)
                 4: (empty)
-                5: JS_PARAMETER_LIST@22..25
+                5: JS_PARAMETERS@22..25
                   0: L_PAREN@22..23 "(" [] []
-                  1: LIST@23..23
+                  1: JS_PARAMETER_LIST@23..23
                   2: R_PAREN@23..25 ")" [] [Whitespace(" ")]
                 6: (empty)
                 7: JS_FUNCTION_BODY@25..27
                   0: L_CURLY@25..26 "{" [] []
-                  1: LIST@26..26
-                  2: LIST@26..26
+                  1: JS_DIRECTIVE_LIST@26..26
+                  2: JS_STATEMENT_LIST@26..26
                   3: R_CURLY@26..27 "}" [] []
       1: SEMICOLON@27..28 ";" [] []
     1: JS_VARIABLE_STATEMENT@28..61
-      0: JS_VARIABLE_DECLARATION_LIST@28..60
+      0: JS_VARIABLE_DECLARATIONS@28..60
         0: LET_KW@28..33 "let" [Whitespace("\n")] [Whitespace(" ")]
-        1: LIST@33..60
+        1: JS_VARIABLE_DECLARATION_LIST@33..60
           0: JS_VARIABLE_DECLARATION@33..60
             0: JS_IDENTIFIER_BINDING@33..35
               0: IDENT@33..35 "b" [] [Whitespace(" ")]
@@ -132,15 +132,15 @@ JsModule {
                 3: JS_IDENTIFIER_BINDING@52..55
                   0: IDENT@52..55 "foo" [] []
                 4: (empty)
-                5: JS_PARAMETER_LIST@55..58
+                5: JS_PARAMETERS@55..58
                   0: L_PAREN@55..56 "(" [] []
-                  1: LIST@56..56
+                  1: JS_PARAMETER_LIST@56..56
                   2: R_PAREN@56..58 ")" [] [Whitespace(" ")]
                 6: (empty)
                 7: JS_FUNCTION_BODY@58..60
                   0: L_CURLY@58..59 "{" [] []
-                  1: LIST@59..59
-                  2: LIST@59..59
+                  1: JS_DIRECTIVE_LIST@59..59
+                  2: JS_STATEMENT_LIST@59..59
                   3: R_CURLY@59..60 "}" [] []
       1: SEMICOLON@60..61 ";" [] []
   3: EOF@61..62 "" [Whitespace("\n")] []

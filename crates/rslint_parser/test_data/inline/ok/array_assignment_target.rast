@@ -94,7 +94,7 @@ JsModule {
                                     },
                                 },
                                 type_args: missing (optional),
-                                arguments: ArgList {
+                                arguments: JsCallArguments {
                                     l_paren_token: L_PAREN@58..59 "(" [] [],
                                     args: [],
                                     r_paren_token: R_PAREN@59..60 ")" [] [],
@@ -151,13 +151,13 @@ JsModule {
 
 0: JS_MODULE@0..86
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..85
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..85
     0: JS_EXPRESSION_STATEMENT@0..17
       0: JS_ASSIGNMENT_EXPRESSION@0..16
         0: JS_ARRAY_ASSIGNMENT_PATTERN@0..11
           0: L_BRACK@0..1 "[" [] []
-          1: LIST@1..9
+          1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@1..9
             0: JS_IDENTIFIER_ASSIGNMENT@1..4
               0: IDENT@1..4 "foo" [] []
             1: COMMA@4..6 "," [] [Whitespace(" ")]
@@ -173,7 +173,7 @@ JsModule {
       0: JS_ASSIGNMENT_EXPRESSION@17..34
         0: JS_ARRAY_ASSIGNMENT_PATTERN@17..29
           0: L_BRACK@17..19 "[" [Whitespace("\n")] []
-          1: LIST@19..27
+          1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@19..27
             0: JS_ARRAY_HOLE@19..19
             1: COMMA@19..20 "," [] []
             2: JS_ARRAY_HOLE@20..20
@@ -198,7 +198,7 @@ JsModule {
       0: JS_ASSIGNMENT_EXPRESSION@35..69
         0: JS_ARRAY_ASSIGNMENT_PATTERN@35..64
           0: L_BRACK@35..37 "[" [Whitespace("\n")] []
-          1: LIST@37..62
+          1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@37..62
             0: JS_ASSIGNMENT_WITH_DEFAULT@37..47
               0: JS_IDENTIFIER_ASSIGNMENT@37..39
                 0: IDENT@37..39 "a" [] [Whitespace(" ")]
@@ -220,9 +220,9 @@ JsModule {
                   0: JS_REFERENCE_IDENTIFIER@54..58
                     0: IDENT@54..58 "call" [] []
                 1: (empty)
-                2: ARG_LIST@58..60
+                2: JS_CALL_ARGUMENTS@58..60
                   0: L_PAREN@58..59 "(" [] []
-                  1: LIST@59..59
+                  1: JS_CALL_ARGUMENT_LIST@59..59
                   2: R_PAREN@59..60 ")" [] []
               1: DOT@60..61 "." [] []
               2: JS_NAME@61..62
@@ -237,7 +237,7 @@ JsModule {
       0: JS_ASSIGNMENT_EXPRESSION@70..84
         0: JS_ARRAY_ASSIGNMENT_PATTERN@70..79
           0: L_BRACK@70..72 "[" [Whitespace("\n")] []
-          1: LIST@72..77
+          1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@72..77
             0: JS_PARENTHESIZED_ASSIGNMENT@72..77
               0: L_PAREN@72..73 "(" [] []
               1: JS_PARENTHESIZED_ASSIGNMENT@73..76

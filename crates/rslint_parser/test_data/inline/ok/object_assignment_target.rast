@@ -124,15 +124,15 @@ JsModule {
 
 0: JS_MODULE@0..85
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..84
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..84
     0: JS_EXPRESSION_STATEMENT@0..10
       0: JS_PARENTHESIZED_EXPRESSION@0..9
         0: L_PAREN@0..1 "(" [] []
         1: JS_ASSIGNMENT_EXPRESSION@1..8
           0: JS_OBJECT_ASSIGNMENT_PATTERN@1..4
             0: L_CURLY@1..2 "{" [] []
-            1: LIST@2..2
+            1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@2..2
             2: R_CURLY@2..4 "}" [] [Whitespace(" ")]
           1: EQ@4..6 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@6..8
@@ -147,7 +147,7 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@12..29
           0: JS_OBJECT_ASSIGNMENT_PATTERN@12..25
             0: L_CURLY@12..14 "{" [] [Whitespace(" ")]
-            1: LIST@14..23
+            1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@14..23
               0: JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY@14..17
                 0: JS_IDENTIFIER_ASSIGNMENT@14..17
                   0: IDENT@14..17 "bar" [] []
@@ -171,14 +171,14 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@33..82
           0: JS_OBJECT_ASSIGNMENT_PATTERN@33..78
             0: L_CURLY@33..35 "{" [] [Whitespace(" ")]
-            1: LIST@35..76
+            1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@35..76
               0: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY@35..53
                 0: JS_NAME@35..38
                   0: IDENT@35..38 "bar" [] []
                 1: COLON@38..40 ":" [] [Whitespace(" ")]
                 2: JS_ARRAY_ASSIGNMENT_PATTERN@40..53
                   0: L_BRACK@40..41 "[" [] []
-                  1: LIST@41..52
+                  1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@41..52
                     0: JS_ASSIGNMENT_WITH_DEFAULT@41..52
                       0: JS_IDENTIFIER_ASSIGNMENT@41..45
                         0: IDENT@41..45 "baz" [] [Whitespace(" ")]

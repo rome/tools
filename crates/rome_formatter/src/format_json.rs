@@ -9,7 +9,9 @@ use rslint_parser::ast::{
 	JsParenthesizedExpression, JsPropertyObjectMember, JsStringLiteralExpression,
 	JsUnaryExpression,
 };
-use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
+use rslint_parser::{
+	parse_text, AstNode, AstSeparatedList, SyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken,
+};
 
 fn tokenize_token(syntax_token: SyntaxToken) -> FormatElement {
 	match syntax_token.kind() {

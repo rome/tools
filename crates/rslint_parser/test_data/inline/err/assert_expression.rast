@@ -6,7 +6,7 @@ JsModule {
             import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
-                named_import: JsNamedImportSpecifierList {
+                named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@7..9 "{" [] [Whitespace(" ")],
                     specifiers: [
                         JsShorthandNamedImportSpecifier {
@@ -36,15 +36,15 @@ JsModule {
 
 0: JS_MODULE@0..34
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..33
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..33
     0: JS_IMPORT@0..33
       0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@7..33
         0: (empty)
-        1: JS_NAMED_IMPORT_SPECIFIER_LIST@7..13
+        1: JS_NAMED_IMPORT_SPECIFIERS@7..13
           0: L_CURLY@7..9 "{" [] [Whitespace(" ")]
-          1: LIST@9..11
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@9..11
             0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@9..11
               0: JS_IDENTIFIER_BINDING@9..11
                 0: IDENT@9..11 "a" [] [Whitespace(" ")]

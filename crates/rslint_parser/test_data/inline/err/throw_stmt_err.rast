@@ -16,7 +16,7 @@ JsModule {
                     },
                 },
                 type_args: missing (optional),
-                arguments: ArgList {
+                arguments: JsCallArguments {
                     l_paren_token: L_PAREN@15..16 "(" [] [],
                     args: [
                         JsStringLiteralExpression {
@@ -34,8 +34,8 @@ JsModule {
 
 0: JS_MODULE@0..28
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..27
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..27
     0: JS_THROW_STATEMENT@0..5
       0: THROW_KW@0..5 "throw" [] []
       1: (empty)
@@ -47,9 +47,9 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@10..15
             0: IDENT@10..15 "Error" [] []
         2: (empty)
-        3: ARG_LIST@15..27
+        3: JS_CALL_ARGUMENTS@15..27
           0: L_PAREN@15..16 "(" [] []
-          1: LIST@16..26
+          1: JS_CALL_ARGUMENT_LIST@16..26
             0: JS_STRING_LITERAL_EXPRESSION@16..26
               0: JS_STRING_LITERAL@16..26 "\"oh no :(\"" [] []
           2: R_PAREN@26..27 ")" [] []

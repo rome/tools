@@ -49,7 +49,7 @@ JsModule {
                                 value_token: JS_NUMBER_LITERAL@26..27 "3" [] [],
                             },
                             type_args: missing (optional),
-                            arguments: ArgList {
+                            arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@27..29 "(" [Whitespace("\n")] [],
                                 args: [
                                     JsBinaryExpression {
@@ -230,8 +230,8 @@ JsModule {
 
 0: JS_MODULE@0..140
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..139
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..139
     0: JS_EXPRESSION_STATEMENT@0..5
       0: JS_BINARY_EXPRESSION@0..5
         0: JS_NUMBER_LITERAL_EXPRESSION@0..2
@@ -266,9 +266,9 @@ JsModule {
               0: JS_NUMBER_LITERAL_EXPRESSION@26..27
                 0: JS_NUMBER_LITERAL@26..27 "3" [] []
               1: (empty)
-              2: ARG_LIST@27..36
+              2: JS_CALL_ARGUMENTS@27..36
                 0: L_PAREN@27..29 "(" [Whitespace("\n")] []
-                1: LIST@29..34
+                1: JS_CALL_ARGUMENT_LIST@29..34
                   0: JS_BINARY_EXPRESSION@29..34
                     0: JS_NUMBER_LITERAL_EXPRESSION@29..31
                       0: JS_NUMBER_LITERAL@29..31 "1" [] [Whitespace(" ")]

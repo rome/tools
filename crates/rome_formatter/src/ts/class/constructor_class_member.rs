@@ -3,21 +3,21 @@ use crate::{
 	FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
-	JsAnyConstructorParameter, JsConstructorClassMember, JsConstructorParameterList,
+	JsAnyConstructorParameter, JsConstructorClassMember, JsConstructorParameters,
 };
 
 impl ToFormatElement for JsConstructorClassMember {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		Ok(format_elements![
 			formatter.format_node(self.name()?)?,
-			formatter.format_node(self.parameter_list()?)?,
+			formatter.format_node(self.parameters()?)?,
 			space_token(),
 			formatter.format_node(self.body()?)?
 		])
 	}
 }
 
-impl ToFormatElement for JsConstructorParameterList {
+impl ToFormatElement for JsConstructorParameters {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let l_bracket = formatter.format_token(&self.l_paren_token()?)?;
 		let params = formatter.format_separated(self.parameters())?;

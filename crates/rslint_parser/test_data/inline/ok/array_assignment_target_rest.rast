@@ -118,7 +118,7 @@ JsModule {
                                             },
                                         },
                                         type_args: missing (optional),
-                                        arguments: ArgList {
+                                        arguments: JsCallArguments {
                                             l_paren_token: L_PAREN@73..74 "(" [] [],
                                             args: [],
                                             r_paren_token: R_PAREN@74..75 ")" [] [],
@@ -164,7 +164,7 @@ JsModule {
                                             },
                                         },
                                         type_args: missing (optional),
-                                        arguments: ArgList {
+                                        arguments: JsCallArguments {
                                             l_paren_token: L_PAREN@105..106 "(" [] [],
                                             args: [],
                                             r_paren_token: R_PAREN@106..107 ")" [] [],
@@ -269,15 +269,15 @@ JsModule {
 
 0: JS_MODULE@0..162
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..161
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..161
     0: JS_EXPRESSION_STATEMENT@0..18
       0: JS_PARENTHESIZED_EXPRESSION@0..17
         0: L_PAREN@0..1 "(" [] []
         1: JS_ASSIGNMENT_EXPRESSION@1..16
           0: JS_ARRAY_ASSIGNMENT_PATTERN@1..13
             0: L_BRACK@1..3 "[" [] [Whitespace(" ")]
-            1: LIST@3..11
+            1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@3..11
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@3..11
                 0: DOT2@3..6 "..." [] []
                 1: JS_IDENTIFIER_ASSIGNMENT@6..11
@@ -295,7 +295,7 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@20..37
           0: JS_ARRAY_ASSIGNMENT_PATTERN@20..34
             0: L_BRACK@20..22 "[" [] [Whitespace(" ")]
-            1: LIST@22..32
+            1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@22..32
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@22..32
                 0: DOT2@22..25 "..." [] []
                 1: JS_PARENTHESIZED_ASSIGNMENT@25..32
@@ -316,7 +316,7 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@41..58
           0: JS_ARRAY_ASSIGNMENT_PATTERN@41..55
             0: L_BRACK@41..43 "[" [] [Whitespace(" ")]
-            1: LIST@43..53
+            1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@43..53
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@43..53
                 0: DOT2@43..46 "..." [] []
                 1: JS_STATIC_MEMBER_ASSIGNMENT@46..53
@@ -339,7 +339,7 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@62..82
           0: JS_ARRAY_ASSIGNMENT_PATTERN@62..79
             0: L_BRACK@62..64 "[" [] [Whitespace(" ")]
-            1: LIST@64..77
+            1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@64..77
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@64..77
                 0: DOT2@64..67 "..." [] []
                 1: JS_COMPUTED_MEMBER_ASSIGNMENT@67..77
@@ -352,9 +352,9 @@ JsModule {
                       0: JS_REFERENCE_IDENTIFIER@69..73
                         0: IDENT@69..73 "call" [] []
                     1: (empty)
-                    2: ARG_LIST@73..75
+                    2: JS_CALL_ARGUMENTS@73..75
                       0: L_PAREN@73..74 "(" [] []
-                      1: LIST@74..74
+                      1: JS_CALL_ARGUMENT_LIST@74..74
                       2: R_PAREN@74..75 ")" [] []
                   3: R_BRACK@75..77 "]" [] [Whitespace(" ")]
             2: R_BRACK@77..79 "]" [] [Whitespace(" ")]
@@ -370,7 +370,7 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@86..115
           0: JS_ARRAY_ASSIGNMENT_PATTERN@86..112
             0: L_BRACK@86..88 "[" [] [Whitespace(" ")]
-            1: LIST@88..110
+            1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@88..110
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@88..110
                 0: DOT2@88..91 "..." [] []
                 1: JS_STATIC_MEMBER_ASSIGNMENT@91..110
@@ -383,9 +383,9 @@ JsModule {
                       2: JS_NAME@95..105
                         0: IDENT@95..105 "expression" [] []
                     1: (empty)
-                    2: ARG_LIST@105..107
+                    2: JS_CALL_ARGUMENTS@105..107
                       0: L_PAREN@105..106 "(" [] []
-                      1: LIST@106..106
+                      1: JS_CALL_ARGUMENT_LIST@106..106
                       2: R_PAREN@106..107 ")" [] []
                   1: DOT@107..108 "." [] []
                   2: JS_NAME@108..110
@@ -403,12 +403,12 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@119..136
           0: JS_ARRAY_ASSIGNMENT_PATTERN@119..133
             0: L_BRACK@119..121 "[" [] [Whitespace(" ")]
-            1: LIST@121..131
+            1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@121..131
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@121..131
                 0: DOT2@121..124 "..." [] []
                 1: JS_ARRAY_ASSIGNMENT_PATTERN@124..131
                   0: L_BRACK@124..125 "[" [] []
-                  1: LIST@125..129
+                  1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@125..129
                     0: JS_IDENTIFIER_ASSIGNMENT@125..126
                       0: IDENT@125..126 "x" [] []
                     1: COMMA@126..128 "," [] [Whitespace(" ")]
@@ -428,12 +428,12 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@140..159
           0: JS_ARRAY_ASSIGNMENT_PATTERN@140..156
             0: L_BRACK@140..142 "[" [] [Whitespace(" ")]
-            1: LIST@142..154
+            1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@142..154
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@142..154
                 0: DOT2@142..145 "..." [] []
                 1: JS_ARRAY_ASSIGNMENT_PATTERN@145..154
                   0: L_BRACK@145..147 "[" [] [Whitespace(" ")]
-                  1: LIST@147..152
+                  1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@147..152
                     0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@147..152
                       0: DOT2@147..150 "..." [] []
                       1: JS_IDENTIFIER_ASSIGNMENT@150..152

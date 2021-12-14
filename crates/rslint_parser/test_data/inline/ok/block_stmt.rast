@@ -56,31 +56,31 @@ JsModule {
 
 0: JS_MODULE@0..27
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..26
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..26
     0: JS_BLOCK_STATEMENT@0..2
       0: L_CURLY@0..1 "{" [] []
-      1: LIST@1..1
+      1: JS_STATEMENT_LIST@1..1
       2: R_CURLY@1..2 "}" [] []
     1: JS_BLOCK_STATEMENT@2..11
       0: L_CURLY@2..4 "{" [Whitespace("\n")] []
-      1: LIST@4..10
+      1: JS_STATEMENT_LIST@4..10
         0: JS_BLOCK_STATEMENT@4..10
           0: L_CURLY@4..5 "{" [] []
-          1: LIST@5..9
+          1: JS_STATEMENT_LIST@5..9
             0: JS_BLOCK_STATEMENT@5..9
               0: L_CURLY@5..6 "{" [] []
-              1: LIST@6..8
+              1: JS_STATEMENT_LIST@6..8
                 0: JS_BLOCK_STATEMENT@6..8
                   0: L_CURLY@6..7 "{" [] []
-                  1: LIST@7..7
+                  1: JS_STATEMENT_LIST@7..7
                   2: R_CURLY@7..8 "}" [] []
               2: R_CURLY@8..9 "}" [] []
           2: R_CURLY@9..10 "}" [] []
       2: R_CURLY@10..11 "}" [] []
     2: JS_BLOCK_STATEMENT@11..26
       0: L_CURLY@11..14 "{" [Whitespace("\n")] [Whitespace(" ")]
-      1: LIST@14..25
+      1: JS_STATEMENT_LIST@14..25
         0: JS_EXPRESSION_STATEMENT@14..25
           0: JS_ASSIGNMENT_EXPRESSION@14..23
             0: JS_IDENTIFIER_ASSIGNMENT@14..18

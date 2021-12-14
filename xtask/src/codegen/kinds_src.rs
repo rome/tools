@@ -2,6 +2,7 @@
 //! Based on the rust analyzer parser and ast definitions
 
 use quote::format_ident;
+use std::collections::HashMap;
 
 const LANGUAGE_PREFIXES: [&str; 4] = ["js_", "ts_", "jsx_", "tsx_"];
 
@@ -170,12 +171,16 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 	],
 	nodes: &[
 		"JS_MODULE",
+		"JS_MODULE_ITEM_LIST",
 		"JS_SCRIPT",
 		"JS_DIRECTIVE",
+		"JS_DIRECTIVE_LIST",
 		"ERROR",
+		"JS_STATEMENT_LIST",
 		"JS_BLOCK_STATEMENT",
 		"JS_FUNCTION_BODY",
 		"JS_VARIABLE_STATEMENT",
+		"JS_VARIABLE_DECLARATIONS",
 		"JS_VARIABLE_DECLARATION_LIST",
 		"JS_VARIABLE_DECLARATION",
 		"JS_INITIALIZER_CLAUSE",
@@ -194,6 +199,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_RETURN_STATEMENT",
 		"JS_WITH_STATEMENT",
 		"JS_SWITCH_STATEMENT",
+		"JS_SWITCH_CASE_LIST",
 		"JS_CASE_CLAUSE",
 		"JS_DEFAULT_CLAUSE",
 		"JS_LABELED_STATEMENT",
@@ -205,6 +211,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_FINALLY_CLAUSE",
 		"JS_DEBUGGER_STATEMENT",
 		"JS_FUNCTION_DECLARATION",
+		"JS_PARAMETERS",
 		"JS_PARAMETER_LIST",
 		"JS_REST_PARAMETER",
 		"TS_TYPE_ANNOTATION",
@@ -215,10 +222,12 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_PRIVATE_NAME",
 		"JS_THIS_EXPRESSION",
 		"JS_ARRAY_EXPRESSION",
+		"JS_ARRAY_ELEMENT_LIST",
 		"JS_ARRAY_HOLE",
 		"JS_COMPUTED_MEMBER_NAME",
 		"JS_LITERAL_MEMBER_NAME",
 		"JS_OBJECT_EXPRESSION",
+		"JS_OBJECT_MEMBER_LIST",
 		"JS_PROPERTY_OBJECT_MEMBER",
 		"JS_GETTER_OBJECT_MEMBER",
 		"JS_SETTER_OBJECT_MEMBER",
@@ -238,7 +247,8 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_CONDITIONAL_EXPRESSION",
 		"JS_ASSIGNMENT_EXPRESSION",
 		"JS_SEQUENCE_EXPRESSION",
-		"ARG_LIST",
+		"JS_CALL_ARGUMENTS",
+		"JS_CALL_ARGUMENT_LIST",
 		"JS_STRING_LITERAL_EXPRESSION",
 		"JS_NUMBER_LITERAL_EXPRESSION",
 		"JS_BIG_INT_LITERAL_EXPRESSION",
@@ -254,8 +264,10 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_SPREAD",
 		"JS_OBJECT_BINDING_PATTERN",
 		"JS_ARRAY_BINDING_PATTERN",
+		"JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST",
 		"JS_BINDING_PATTERN_WITH_DEFAULT",
 		"JS_ARRAY_BINDING_PATTERN_REST_ELEMENT",
+		"JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST",
 		"JS_OBJECT_BINDING_PATTERN_REST",
 		"JS_OBJECT_BINDING_PATTERN_PROPERTY",
 		"JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY",
@@ -263,10 +275,12 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_YIELD_EXPRESSION",
 		"JS_CLASS_DECLARATION",
 		"JS_CLASS_EXPRESSION",
+		"JS_CLASS_MEMBER_LIST",
 		"JS_EXTENDS_CLAUSE",
 		"JS_PRIVATE_CLASS_MEMBER_NAME",
 		"JS_CONSTRUCTOR_CLASS_MEMBER",
 		"JS_CONSTRUCTOR_PARAMETER_LIST",
+		"JS_CONSTRUCTOR_PARAMETERS",
 		"JS_CONSTRUCTOR_PARAMETER",
 		"JS_PROPERTY_CLASS_MEMBER",
 		"JS_METHOD_CLASS_MEMBER",
@@ -279,8 +293,10 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_STATIC_MEMBER_ASSIGNMENT",
 		"JS_COMPUTED_MEMBER_ASSIGNMENT",
 		"JS_ARRAY_ASSIGNMENT_PATTERN",
+		"JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST",
 		"JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT",
 		"JS_OBJECT_ASSIGNMENT_PATTERN",
+		"JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST",
 		"JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY",
 		"JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY",
 		"JS_OBJECT_ASSIGNMENT_PATTERN_REST",
@@ -289,17 +305,20 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_IMPORT_DEFAULT_CLAUSE",
 		"JS_IMPORT_NAMESPACE_CLAUSE",
 		"JS_IMPORT_NAMED_CLAUSE",
+		"JS_NAMED_IMPORT_SPECIFIERS",
 		"JS_NAMED_IMPORT_SPECIFIER_LIST",
 		"JS_NAMESPACE_IMPORT_SPECIFIER",
 		"JS_DEFAULT_IMPORT_SPECIFIER",
 		"JS_NAMED_IMPORT_SPECIFIER",
 		"JS_SHORTHAND_NAMED_IMPORT_SPECIFIER",
 		"JS_IMPORT_ASSERTION",
+		"JS_IMPORT_ASSERTION_ENTRY_LIST",
 		"JS_IMPORT_ASSERTION_ENTRY",
 		"JS_MODULE_SOURCE",
 		"JS_LITERAL_EXPORT_NAME",
 		"EXPORT_DECL",
 		"EXPORT_NAMED",
+		"EXPORT_NAMED_SPECIFIER_LIST",
 		"SPECIFIER",
 		"EXPORT_DEFAULT_DECL",
 		"EXPORT_DEFAULT_EXPR",
@@ -342,15 +361,18 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"TS_TYPE_QUERY_EXPR",
 		"TS_IMPORT",
 		"TS_TYPE_ARGS",
+		"TS_TYPE_ARG_LIST",
 		"TS_ARRAY",
 		"TS_INDEXED_ARRAY",
 		"TS_TYPE_OPERATOR",
 		"TS_INTERSECTION",
 		"TS_UNION",
+		"TS_TYPE_PARAM_LIST",
 		"TS_TYPE_PARAMS",
 		"TS_FN_TYPE",
 		"TS_CONSTRUCTOR_TYPE",
 		"TS_IMPLEMENTS_CLAUSE",
+		"TS_TYPE_LIST",
 		"TS_EXTENDS",
 		"TS_CONDITIONAL_TYPE",
 		"TS_CONSTRAINT",
@@ -360,6 +382,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"TS_ASSERTION",
 		"TS_CONST_ASSERTION",
 		"TS_ENUM",
+		"TS_ENUM_MEMBER_LIST",
 		"TS_ENUM_MEMBER",
 		"TS_TYPE_ALIAS_DECL",
 		"TS_NAMESPACE_DECL",
@@ -374,6 +397,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"TS_INTERFACE_DECL",
 		"TS_ACCESSIBILITY",
 		"TS_OBJECT_TYPE",
+		"TS_OBJECT_MEMBER_LIST",
 		"TS_EXPR_WITH_TYPE_ARGS",
 		"TS_IMPORT_EQUALS_DECL",
 		"TS_MODULE_REF",
@@ -401,9 +425,35 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 
 #[derive(Default, Debug)]
 pub struct AstSrc {
-	pub tokens: Vec<String>,
 	pub nodes: Vec<AstNodeSrc>,
 	pub enums: Vec<AstEnumSrc>,
+	lists: HashMap<String, AstListSrc>,
+	pub unknowns: Vec<AstUnknownSrc>,
+}
+
+impl AstSrc {
+	pub fn push_list(&mut self, name: &str, src: AstListSrc) {
+		self.lists.insert(String::from(name), src);
+	}
+
+	pub fn lists(&self) -> std::collections::hash_map::Iter<String, AstListSrc> {
+		self.lists.iter()
+	}
+
+	pub fn is_list(&self, name: &str) -> bool {
+		self.lists.contains_key(name)
+	}
+}
+
+#[derive(Debug)]
+pub struct AstListSrc {
+	pub element_name: String,
+	pub separated: bool,
+}
+
+#[derive(Debug)]
+pub struct AstUnknownSrc {
+	pub name: String,
 }
 
 #[derive(Debug)]
@@ -432,8 +482,6 @@ pub enum Field {
 		name: String,
 		ty: String,
 		optional: bool,
-		has_many: bool,
-		separated: bool,
 		manual: bool,
 	},
 }
@@ -447,10 +495,6 @@ pub struct AstEnumSrc {
 }
 
 impl Field {
-	pub fn is_many(&self) -> bool {
-		matches!(self, Field::Node { has_many: true, .. })
-	}
-
 	pub fn method_name(&self) -> proc_macro2::Ident {
 		match self {
 			Field::Token { name, .. } => {

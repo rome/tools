@@ -17,9 +17,7 @@ JsModule {
                     },
                 },
                 L_CURLY@32..33 "{" [] [],
-                List {
-                    items: [],
-                },
+                [],
                 R_CURLY@33..34 "}" [] [],
             ],
         },
@@ -38,9 +36,7 @@ JsModule {
                     },
                 },
                 L_CURLY@60..61 "{" [] [],
-                List {
-                    items: [],
-                },
+                [],
                 R_CURLY@61..62 "}" [] [],
             ],
         },
@@ -50,8 +46,8 @@ JsModule {
 
 0: JS_MODULE@0..63
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..62
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..62
     0: JS_UNKNOWN_STATEMENT@0..34
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
@@ -68,7 +64,7 @@ JsModule {
               0: IDENT@28..32 "foo" [] [Whitespace(" ")]
       3: (empty)
       4: L_CURLY@32..33 "{" [] []
-      5: LIST@33..33
+      5: JS_CLASS_MEMBER_LIST@33..33
       6: R_CURLY@33..34 "}" [] []
     1: JS_UNKNOWN_STATEMENT@34..62
       0: CLASS_KW@34..41 "class" [Whitespace("\n")] [Whitespace(" ")]
@@ -86,7 +82,7 @@ JsModule {
               0: IDENT@56..60 "foo" [] [Whitespace(" ")]
       3: (empty)
       4: L_CURLY@60..61 "{" [] []
-      5: LIST@61..61
+      5: JS_CLASS_MEMBER_LIST@61..61
       6: R_CURLY@61..62 "}" [] []
   3: EOF@62..63 "" [Whitespace("\n")] []
 --

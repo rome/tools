@@ -30,9 +30,9 @@ JsModule {
                 name_token: IDENT@29..33 "test" [] [],
             },
             type_parameters: missing (optional),
-            parameter_list: JsParameterList {
+            parameters: JsParameters {
                 l_paren_token: L_PAREN@33..34 "(" [] [],
-                parameters: [
+                items: [
                     JsUnknownBinding {
                         items: [
                             IDENT@34..39 "await" [] [],
@@ -57,9 +57,9 @@ JsModule {
                 name_token: IDENT@54..58 "test" [] [],
             },
             type_parameters: missing (optional),
-            parameter_list: JsParameterList {
+            parameters: JsParameters {
                 l_paren_token: L_PAREN@58..59 "(" [] [],
-                parameters: [
+                items: [
                     JsUnknownBinding {
                         items: [
                             IDENT@59..64 "yield" [] [],
@@ -82,8 +82,8 @@ JsModule {
 
 0: JS_MODULE@0..69
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..68
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..68
     0: JS_EXPRESSION_STATEMENT@0..6
       0: JS_UNKNOWN_EXPRESSION@0..5
         0: JS_REFERENCE_IDENTIFIER@0..5
@@ -101,17 +101,17 @@ JsModule {
       3: JS_IDENTIFIER_BINDING@29..33
         0: IDENT@29..33 "test" [] []
       4: (empty)
-      5: JS_PARAMETER_LIST@33..41
+      5: JS_PARAMETERS@33..41
         0: L_PAREN@33..34 "(" [] []
-        1: LIST@34..39
+        1: JS_PARAMETER_LIST@34..39
           0: JS_UNKNOWN_BINDING@34..39
             0: IDENT@34..39 "await" [] []
         2: R_PAREN@39..41 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@41..43
         0: L_CURLY@41..42 "{" [] []
-        1: LIST@42..42
-        2: LIST@42..42
+        1: JS_DIRECTIVE_LIST@42..42
+        2: JS_STATEMENT_LIST@42..42
         3: R_CURLY@42..43 "}" [] []
     3: JS_FUNCTION_DECLARATION@43..68
       0: (empty)
@@ -120,17 +120,17 @@ JsModule {
       3: JS_IDENTIFIER_BINDING@54..58
         0: IDENT@54..58 "test" [] []
       4: (empty)
-      5: JS_PARAMETER_LIST@58..66
+      5: JS_PARAMETERS@58..66
         0: L_PAREN@58..59 "(" [] []
-        1: LIST@59..64
+        1: JS_PARAMETER_LIST@59..64
           0: JS_UNKNOWN_BINDING@59..64
             0: IDENT@59..64 "yield" [] []
         2: R_PAREN@64..66 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@66..68
         0: L_CURLY@66..67 "{" [] []
-        1: LIST@67..67
-        2: LIST@67..67
+        1: JS_DIRECTIVE_LIST@67..67
+        2: JS_STATEMENT_LIST@67..67
         3: R_CURLY@67..68 "}" [] []
   3: EOF@68..69 "" [Whitespace("\n")] []
 --

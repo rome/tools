@@ -7,13 +7,12 @@ use super::{
 	kinds_src::{AstSrc, Field},
 	to_lower_snake_case, Mode,
 };
-use crate::codegen::kinds_src::TokenKind;
+use crate::codegen::kinds_src::{AstListSrc, AstUnknownSrc, TokenKind};
 use crate::{
 	codegen::{
 		self,
 		generate_nodes::generate_nodes,
 		generate_syntax_kinds::generate_syntax_kinds,
-		generate_tokens::generate_tokens,
 		kinds_src::{AstEnumSrc, AstNodeSrc, KINDS_SRC},
 		update,
 	},
@@ -25,10 +24,6 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
 	let grammar_src = include_str!("../../js.ungram");
 	let grammar: Grammar = grammar_src.parse().unwrap();
 	let ast = make_ast(&grammar);
-
-	let tokens_file = project_root().join(codegen::AST_TOKENS);
-	let contents = generate_tokens(&ast)?;
-	update(tokens_file.as_path(), &contents, mode)?;
 
 	let ast_nodes_file = project_root().join(codegen::AST_NODES);
 	let contents = generate_nodes(&ast)?;
@@ -42,15 +37,7 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
 }
 
 fn make_ast(grammar: &Grammar) -> AstSrc {
-	let tokens = "Whitespace Comment"
-		.split_ascii_whitespace()
-		.map(|it| it.to_string())
-		.collect::<Vec<_>>();
-
-	let mut ast = AstSrc {
-		tokens,
-		..Default::default()
-	};
+	let mut ast = AstSrc::default();
 
 	for node in grammar.iter() {
 		let name = grammar[node].name.clone();
@@ -60,34 +47,51 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 
 		let rule = &grammar[node].rule;
 
-		match handle_alternatives(grammar, rule) {
-			Some(variants) => ast.enums.push(AstEnumSrc {
+		match rule_type(grammar, rule) {
+			RuleType::Union(variants) => ast.enums.push(AstEnumSrc {
 				documentation: vec![],
 				name,
 				variants,
 			}),
-			None => {
+			RuleType::Node => {
 				let mut fields = vec![];
-				handle_rule(&mut fields, grammar, rule, None, false, false, false);
+				handle_rule(&mut fields, grammar, rule, None, false, false);
 				ast.nodes.push(AstNodeSrc {
 					documentation: vec![],
 					name,
 					fields,
 				})
 			}
+			RuleType::Unknown => ast.unknowns.push(AstUnknownSrc { name }),
+			RuleType::List {
+				separated,
+				element_name,
+			} => {
+				ast.push_list(
+					name.as_str(),
+					AstListSrc {
+						element_name,
+						separated,
+					},
+				);
+			}
 		}
 	}
-
-	ast.enums.push(AstEnumSrc {
-		name: "AnyNode".to_string(),
-		variants: ast.nodes.iter().map(|node| &node.name).cloned().collect(),
-		documentation: vec![],
-	});
 
 	ast
 }
 
-fn handle_alternatives(grammar: &Grammar, rule: &Rule) -> Option<Vec<String>> {
+enum RuleType {
+	Union(Vec<String>),
+	Node,
+	Unknown,
+	List {
+		separated: bool,
+		element_name: String,
+	},
+}
+
+fn rule_type(grammar: &Grammar, rule: &Rule) -> RuleType {
 	match rule {
 		// this is for enums
 		Rule::Alt(alternatives) => {
@@ -96,12 +100,42 @@ fn handle_alternatives(grammar: &Grammar, rule: &Rule) -> Option<Vec<String>> {
 				match alternative {
 					Rule::Node(it) => all_alternatives.push(grammar[*it].name.clone()),
 					Rule::Token(it) if grammar[*it].name == ";" => (),
-					_ => return None,
+					_ => return RuleType::Node,
 				}
 			}
-			Some(all_alternatives)
+			RuleType::Union(all_alternatives)
 		}
-		_ => None,
+		// A*
+		Rule::Rep(rule) => {
+			let element_type = match rule.as_ref() {
+				Rule::Node(node) => &grammar[*node].name,
+				_ => {
+					panic!("Lists should only be over node types");
+				}
+			};
+
+			if element_type == SYNTAX_ELEMENT_TYPE {
+				RuleType::Unknown
+			} else {
+				RuleType::List {
+					separated: false,
+					element_name: element_type.to_string(),
+				}
+			}
+		}
+		Rule::Seq(rules) => {
+			// (T (',' T)* ','?)
+			// (T (',' T)*)
+			if let Some(element_name) = handle_comma_list(grammar, rules.as_slice()) {
+				RuleType::List {
+					separated: true,
+					element_name: String::from(element_name),
+				}
+			} else {
+				RuleType::Node
+			}
+		}
+		_ => RuleType::Node,
 	}
 }
 
@@ -123,7 +157,6 @@ fn handle_rule(
 	rule: &Rule,
 	label: Option<&str>,
 	optional: bool,
-	has_many: bool,
 	manual: bool,
 ) {
 	match rule {
@@ -146,7 +179,6 @@ fn handle_rule(
 					label
 				}),
 				optional,
-				has_many,
 				manually_implemented,
 			)
 		}
@@ -159,8 +191,6 @@ fn handle_rule(
 				name,
 				ty,
 				optional,
-				has_many,
-				separated: false,
 				manual,
 			};
 			fields.push(field);
@@ -182,89 +212,61 @@ fn handle_rule(
 			fields.push(field);
 		}
 
-		Rule::Rep(rule) => {
-			handle_rule(fields, grammar, rule, label, false, true, manual);
+		Rule::Rep(_) => {
+			panic!("Create a list node for *many* children {:?}", label);
 		}
 		Rule::Opt(rule) => {
-			handle_rule(fields, grammar, rule, label, true, false, manual);
+			handle_rule(fields, grammar, rule, label, true, manual);
 		}
 		Rule::Alt(rules) => {
 			for rule in rules {
-				handle_rule(fields, grammar, rule, label, false, false, manual);
+				handle_rule(fields, grammar, rule, label, false, manual);
 			}
 		}
 
 		Rule::Seq(rules) => {
-			if handle_comma_list(fields, grammar, label, rules.as_slice()) {
-				return;
-			}
-
 			for rule in rules {
-				handle_rule(fields, grammar, rule, label, false, false, manual);
+				handle_rule(fields, grammar, rule, label, false, manual);
 			}
 		}
 	};
+}
 
-	// (T (',' T)* ','?)
-	// (T (',' T)*)
-	fn handle_comma_list(
-		acc: &mut Vec<Field>,
-		grammar: &Grammar,
-		label: Option<&str>,
-		rules: &[Rule],
-	) -> bool {
-		// Does it match (T * ',')?
-		let (node, repeat, trailing_separator) = match rules {
-			[Rule::Node(node), Rule::Rep(repeat), Rule::Opt(trailing_separator)] => {
-				(node, repeat, Some(trailing_separator))
-			}
-			[Rule::Node(node), Rule::Rep(repeat)] => (node, repeat, None),
-			_ => return false,
-		};
-
-		// Is the repeat a ()*?
-		let repeat = match &**repeat {
-			Rule::Seq(it) => it,
-			_ => return false,
-		};
-
-		// Does the repeat match (token node))
-		match repeat.as_slice() {
-			[comma, Rule::Node(n)] => {
-				let separator_matches_trailing = if let Some(trailing) = trailing_separator {
-					&**trailing == comma
-				} else {
-					true
-				};
-
-				if n != node || !separator_matches_trailing {
-					return false;
-				}
-			}
-			_ => return false,
+// (T (',' T)* ','?)
+// (T (',' T)*)
+fn handle_comma_list<'a>(grammar: &'a Grammar, rules: &[Rule]) -> Option<&'a str> {
+	// Does it match (T * ',')?
+	let (node, repeat, trailing_separator) = match rules {
+		[Rule::Node(node), Rule::Rep(repeat), Rule::Opt(trailing_separator)] => {
+			(node, repeat, Some(trailing_separator))
 		}
+		[Rule::Node(node), Rule::Rep(repeat)] => (node, repeat, None),
+		_ => return None,
+	};
 
-		let ty = grammar[*node].name.clone();
+	// Is the repeat a ()*?
+	let repeat = match &**repeat {
+		Rule::Seq(it) => it,
+		_ => return None,
+	};
 
-		let name = label
-			.map(String::from)
-			.unwrap_or_else(|| pluralize(&to_lower_snake_case(&ty)));
+	// Does the repeat match (token node))
+	match repeat.as_slice() {
+		[comma, Rule::Node(n)] => {
+			let separator_matches_trailing = if let Some(trailing) = trailing_separator {
+				&**trailing == comma
+			} else {
+				true
+			};
 
-		acc.push(Field::Node {
-			name,
-			ty,
-			optional: false,
-			has_many: true,
-			separated: true,
-			manual: false,
-		});
-
-		true
+			if n != node || !separator_matches_trailing {
+				return None;
+			}
+		}
+		_ => return None,
 	}
 
-	fn pluralize(s: &str) -> String {
-		format!("{}s", s)
-	}
+	Some(&grammar[*node].name)
 }
 
 // handle cases like:  `op: ('-' | '+' | '*')`

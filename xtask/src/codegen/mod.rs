@@ -4,7 +4,6 @@
 mod ast;
 mod generate_nodes;
 mod generate_syntax_kinds;
-mod generate_tokens;
 mod kinds_src;
 mod parser_tests;
 
@@ -21,7 +20,6 @@ pub use self::parser_tests::generate_parser_tests;
 
 const SYNTAX_KINDS: &str = "crates/rslint_syntax/src/generated.rs";
 const AST_NODES: &str = "crates/rslint_parser/src/ast/generated/nodes.rs";
-const AST_TOKENS: &str = "crates/rslint_parser/src/ast/generated/tokens.rs";
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Mode {

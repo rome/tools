@@ -22,7 +22,7 @@ impl ToFormatElement for JsMethodObjectMember {
 			star_token,
 			formatter.format_node(self.name()?)?,
 			// TODO self.type_params()
-			formatter.format_node(self.parameter_list()?)?,
+			formatter.format_node(self.parameters()?)?,
 			// TODO self.return_type()
 			space_token(),
 			formatter.format_node(self.body()?)?,

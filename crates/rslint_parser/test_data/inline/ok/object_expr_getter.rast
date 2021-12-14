@@ -3,9 +3,9 @@ JsModule {
     directives: [],
     items: [
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -57,12 +57,12 @@ JsModule {
 
 0: JS_MODULE@0..43
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..42
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..42
     0: JS_VARIABLE_STATEMENT@0..42
-      0: JS_VARIABLE_DECLARATION_LIST@0..42
+      0: JS_VARIABLE_DECLARATIONS@0..42
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: LIST@4..42
+        1: JS_VARIABLE_DECLARATION_LIST@4..42
           0: JS_VARIABLE_DECLARATION@4..42
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
@@ -72,7 +72,7 @@ JsModule {
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@8..42
                 0: L_CURLY@8..9 "{" [] []
-                1: LIST@9..40
+                1: JS_OBJECT_MEMBER_LIST@9..40
                   0: JS_GETTER_OBJECT_MEMBER@9..40
                     0: GET_KW@9..15 "get" [Whitespace("\n ")] [Whitespace(" ")]
                     1: JS_LITERAL_MEMBER_NAME@15..18
@@ -82,8 +82,8 @@ JsModule {
                     4: (empty)
                     5: JS_FUNCTION_BODY@21..40
                       0: L_CURLY@21..22 "{" [] []
-                      1: LIST@22..22
-                      2: LIST@22..37
+                      1: JS_DIRECTIVE_LIST@22..22
+                      2: JS_STATEMENT_LIST@22..37
                         0: JS_RETURN_STATEMENT@22..37
                           0: RETURN_KW@22..33 "return" [Whitespace("\n   ")] [Whitespace(" ")]
                           1: JS_IDENTIFIER_EXPRESSION@33..36

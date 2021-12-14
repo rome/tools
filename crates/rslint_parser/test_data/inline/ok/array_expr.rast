@@ -130,12 +130,12 @@ JsModule {
 
 0: JS_MODULE@0..65
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..64
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..64
     0: JS_EXPRESSION_STATEMENT@0..11
       0: JS_ARRAY_EXPRESSION@0..10
         0: L_BRACK@0..1 "[" [] []
-        1: LIST@1..9
+        1: JS_ARRAY_ELEMENT_LIST@1..9
           0: JS_IDENTIFIER_EXPRESSION@1..4
             0: JS_REFERENCE_IDENTIFIER@1..4
               0: IDENT@1..4 "foo" [] []
@@ -148,7 +148,7 @@ JsModule {
     1: JS_EXPRESSION_STATEMENT@11..18
       0: JS_ARRAY_EXPRESSION@11..17
         0: L_BRACK@11..13 "[" [Whitespace("\n")] []
-        1: LIST@13..16
+        1: JS_ARRAY_ELEMENT_LIST@13..16
           0: JS_IDENTIFIER_EXPRESSION@13..16
             0: JS_REFERENCE_IDENTIFIER@13..16
               0: IDENT@13..16 "foo" [] []
@@ -157,7 +157,7 @@ JsModule {
     2: JS_EXPRESSION_STATEMENT@18..26
       0: JS_ARRAY_EXPRESSION@18..25
         0: L_BRACK@18..20 "[" [Whitespace("\n")] []
-        1: LIST@20..24
+        1: JS_ARRAY_ELEMENT_LIST@20..24
           0: JS_ARRAY_HOLE@20..20
           1: COMMA@20..21 "," [] []
           2: JS_IDENTIFIER_EXPRESSION@21..24
@@ -168,7 +168,7 @@ JsModule {
     3: JS_EXPRESSION_STATEMENT@26..34
       0: JS_ARRAY_EXPRESSION@26..33
         0: L_BRACK@26..28 "[" [Whitespace("\n")] []
-        1: LIST@28..32
+        1: JS_ARRAY_ELEMENT_LIST@28..32
           0: JS_IDENTIFIER_EXPRESSION@28..31
             0: JS_REFERENCE_IDENTIFIER@28..31
               0: IDENT@28..31 "foo" [] []
@@ -178,7 +178,7 @@ JsModule {
     4: JS_EXPRESSION_STATEMENT@34..50
       0: JS_ARRAY_EXPRESSION@34..49
         0: L_BRACK@34..36 "[" [Whitespace("\n")] []
-        1: LIST@36..48
+        1: JS_ARRAY_ELEMENT_LIST@36..48
           0: JS_ARRAY_HOLE@36..36
           1: COMMA@36..37 "," [] []
           2: JS_ARRAY_HOLE@37..37
@@ -204,7 +204,7 @@ JsModule {
     5: JS_EXPRESSION_STATEMENT@50..64
       0: JS_ARRAY_EXPRESSION@50..63
         0: L_BRACK@50..52 "[" [Whitespace("\n")] []
-        1: LIST@52..62
+        1: JS_ARRAY_ELEMENT_LIST@52..62
           0: JS_SPREAD@52..56
             0: DOT2@52..55 "..." [] []
             1: JS_IDENTIFIER_EXPRESSION@55..56

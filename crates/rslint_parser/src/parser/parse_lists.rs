@@ -44,8 +44,12 @@ pub trait ParseNodeList {
 
 	/// It creates a [ParsedSyntax] that will contain the list
 	fn finish_list(&mut self, p: &mut Parser, m: Marker) {
-		m.complete(p, SyntaxKind::LIST);
+		m.complete(p, Self::list_kind());
 	}
+
+	/// The kind of the list node
+	fn list_kind() -> SyntaxKind;
+
 	/// Parses a simple list
 	///
 	/// # Panics
@@ -108,8 +112,11 @@ pub trait ParseSeparatedList {
 	/// It creates a [ParsedSyntax] that will contain the list
 	/// Only called if the list isn't empty
 	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> CompletedMarker {
-		m.complete(p, SyntaxKind::LIST)
+		m.complete(p, Self::list_kind())
 	}
+
+	/// The kind of the list node
+	fn list_kind() -> SyntaxKind;
 
 	/// The [SyntaxKind] of the element that separates the elements of the list
 	fn separating_element_kind(&mut self) -> SyntaxKind;

@@ -1,5 +1,5 @@
 use rslint_parser::ast::JsBlockStatement;
-use rslint_parser::{AstNode, SyntaxKind};
+use rslint_parser::{AstNode, AstNodeList, SyntaxKind};
 
 use crate::ts::statements::format_statements;
 use crate::{

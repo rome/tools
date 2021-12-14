@@ -3,9 +3,9 @@ JsModule {
     directives: [],
     items: [
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -29,12 +29,12 @@ JsModule {
 
 0: JS_MODULE@0..20
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..20
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..20
     0: JS_VARIABLE_STATEMENT@0..20
-      0: JS_VARIABLE_DECLARATION_LIST@0..20
+      0: JS_VARIABLE_DECLARATIONS@0..20
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: LIST@4..20
+        1: JS_VARIABLE_DECLARATION_LIST@4..20
           0: JS_VARIABLE_DECLARATION@4..20
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
@@ -44,7 +44,7 @@ JsModule {
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: TEMPLATE@8..20
                 0: BACKTICK@8..9 "`" [] []
-                1: LIST@9..20
+                1: JS_UNKNOWN_EXPRESSION@9..20
                   0: TEMPLATE_ELEMENT@9..15
                     0: DOLLARCURLY@9..11 "${" [] []
                     1: JS_IDENTIFIER_EXPRESSION@11..14

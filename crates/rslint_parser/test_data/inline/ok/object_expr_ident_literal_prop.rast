@@ -3,9 +3,9 @@ JsModule {
     directives: [],
     items: [
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "b" [] [Whitespace(" ")],
@@ -41,12 +41,12 @@ JsModule {
 
 0: JS_MODULE@0..20
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..19
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..19
     0: JS_VARIABLE_STATEMENT@0..19
-      0: JS_VARIABLE_DECLARATION_LIST@0..19
+      0: JS_VARIABLE_DECLARATIONS@0..19
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: LIST@4..19
+        1: JS_VARIABLE_DECLARATION_LIST@4..19
           0: JS_VARIABLE_DECLARATION@4..19
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "b" [] [Whitespace(" ")]
@@ -56,7 +56,7 @@ JsModule {
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@8..19
                 0: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-                1: LIST@10..18
+                1: JS_OBJECT_MEMBER_LIST@10..18
                   0: JS_PROPERTY_OBJECT_MEMBER@10..18
                     0: JS_LITERAL_MEMBER_NAME@10..11
                       0: IDENT@10..11 "a" [] []

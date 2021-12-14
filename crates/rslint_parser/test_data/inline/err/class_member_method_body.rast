@@ -21,9 +21,9 @@ JsModule {
                         value: IDENT@10..13 "foo" [] [],
                     },
                     type_parameters: missing (optional),
-                    parameter_list: JsParameterList {
+                    parameters: JsParameters {
                         l_paren_token: L_PAREN@13..14 "(" [] [],
-                        parameters: [
+                        items: [
                             JsIdentifierBinding {
                                 name_token: IDENT@14..15 "a" [] [],
                             },
@@ -42,8 +42,8 @@ JsModule {
 
 0: JS_MODULE@0..17
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..16
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..16
     0: JS_CLASS_DECLARATION@0..16
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
@@ -51,7 +51,7 @@ JsModule {
       2: (empty)
       3: (empty)
       4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      5: LIST@10..16
+      5: JS_CLASS_MEMBER_LIST@10..16
         0: JS_METHOD_CLASS_MEMBER@10..16
           0: (empty)
           1: (empty)
@@ -60,9 +60,9 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@10..13
             0: IDENT@10..13 "foo" [] []
           5: (empty)
-          6: JS_PARAMETER_LIST@13..16
+          6: JS_PARAMETERS@13..16
             0: L_PAREN@13..14 "(" [] []
-            1: LIST@14..15
+            1: JS_PARAMETER_LIST@14..15
               0: JS_IDENTIFIER_BINDING@14..15
                 0: IDENT@14..15 "a" [] []
             2: R_PAREN@15..16 ")" [] []

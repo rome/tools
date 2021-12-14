@@ -41,21 +41,21 @@ JsModule {
 
 0: JS_MODULE@0..46
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..45
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..45
     0: JS_LABELED_STATEMENT@0..7
       0: IDENT@0..3 "foo" [] []
       1: COLON@3..5 ":" [] [Whitespace(" ")]
       2: JS_BLOCK_STATEMENT@5..7
         0: L_CURLY@5..6 "{" [] []
-        1: LIST@6..6
+        1: JS_STATEMENT_LIST@6..6
         2: R_CURLY@6..7 "}" [] []
     1: JS_LABELED_STATEMENT@7..16
       0: IDENT@7..12 "rust" [Whitespace("\n")] []
       1: COLON@12..14 ":" [] [Whitespace(" ")]
       2: JS_BLOCK_STATEMENT@14..16
         0: L_CURLY@14..15 "{" [] []
-        1: LIST@15..15
+        1: JS_STATEMENT_LIST@15..15
         2: R_CURLY@15..16 "}" [] []
     2: JS_BREAK_STATEMENT@16..23
       0: BREAK_KW@16..22 "break" [Whitespace("\n")] []

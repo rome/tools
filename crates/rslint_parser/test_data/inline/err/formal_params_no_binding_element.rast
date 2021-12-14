@@ -10,9 +10,9 @@ JsModule {
                 name_token: IDENT@9..12 "foo" [] [],
             },
             type_parameters: missing (optional),
-            parameter_list: JsParameterList {
+            parameters: JsParameters {
                 l_paren_token: L_PAREN@12..13 "(" [] [],
-                parameters: [
+                items: [
                     JsUnknownBinding {
                         items: [
                             TRUE_KW@13..17 "true" [] [],
@@ -35,8 +35,8 @@ JsModule {
 
 0: JS_MODULE@0..22
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..21
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..21
     0: JS_FUNCTION_DECLARATION@0..21
       0: (empty)
       1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
@@ -44,17 +44,17 @@ JsModule {
       3: JS_IDENTIFIER_BINDING@9..12
         0: IDENT@9..12 "foo" [] []
       4: (empty)
-      5: JS_PARAMETER_LIST@12..19
+      5: JS_PARAMETERS@12..19
         0: L_PAREN@12..13 "(" [] []
-        1: LIST@13..17
+        1: JS_PARAMETER_LIST@13..17
           0: JS_UNKNOWN_BINDING@13..17
             0: TRUE_KW@13..17 "true" [] []
         2: R_PAREN@17..19 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@19..21
         0: L_CURLY@19..20 "{" [] []
-        1: LIST@20..20
-        2: LIST@20..20
+        1: JS_DIRECTIVE_LIST@20..20
+        2: JS_STATEMENT_LIST@20..20
         3: R_CURLY@20..21 "}" [] []
   3: EOF@21..22 "" [Whitespace("\n")] []
 --

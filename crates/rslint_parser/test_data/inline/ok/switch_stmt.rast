@@ -37,8 +37,8 @@ JsModule {
 
 0: JS_MODULE@0..38
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..37
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..37
     0: JS_SWITCH_STATEMENT@0..37
       0: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")]
       1: L_PAREN@7..8 "(" [] []
@@ -47,17 +47,17 @@ JsModule {
           0: IDENT@8..11 "foo" [] []
       3: R_PAREN@11..13 ")" [] [Whitespace(" ")]
       4: L_CURLY@13..14 "{" [] []
-      5: LIST@14..35
+      5: JS_SWITCH_CASE_LIST@14..35
         0: JS_CASE_CLAUSE@14..25
           0: CASE_KW@14..21 "case" [Whitespace("\n ")] [Whitespace(" ")]
           1: JS_IDENTIFIER_EXPRESSION@21..24
             0: JS_REFERENCE_IDENTIFIER@21..24
               0: IDENT@21..24 "bar" [] []
           2: COLON@24..25 ":" [] []
-          3: LIST@25..25
+          3: JS_STATEMENT_LIST@25..25
         1: JS_DEFAULT_CLAUSE@25..35
           0: DEFAULT_KW@25..34 "default" [Whitespace("\n ")] []
           1: COLON@34..35 ":" [] []
-          2: LIST@35..35
+          2: JS_STATEMENT_LIST@35..35
       6: R_CURLY@35..37 "}" [Whitespace("\n")] []
   3: EOF@37..38 "" [Whitespace("\n")] []

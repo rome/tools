@@ -17,9 +17,9 @@ JsModule {
                         JsLiteralMemberName {
                             value: IDENT@18..20 "fn" [] [],
                         },
-                        JsParameterList {
+                        JsParameters {
                             l_paren_token: L_PAREN@20..21 "(" [] [],
-                            parameters: [],
+                            items: [],
                             r_paren_token: R_PAREN@21..23 ")" [] [Whitespace(" ")],
                         },
                         JsFunctionBody {
@@ -39,8 +39,8 @@ JsModule {
 
 0: JS_MODULE@0..28
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..27
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..27
     0: JS_CLASS_DECLARATION@0..27
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
@@ -48,7 +48,7 @@ JsModule {
       2: (empty)
       3: (empty)
       4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      5: LIST@10..26
+      5: JS_CLASS_MEMBER_LIST@10..26
         0: JS_UNKNOWN_MEMBER@10..26
           0: (empty)
           1: DECLARE_KW@10..18 "declare" [] [Whitespace(" ")]
@@ -57,15 +57,15 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@18..20
             0: IDENT@18..20 "fn" [] []
           5: (empty)
-          6: JS_PARAMETER_LIST@20..23
+          6: JS_PARAMETERS@20..23
             0: L_PAREN@20..21 "(" [] []
-            1: LIST@21..21
+            1: JS_PARAMETER_LIST@21..21
             2: R_PAREN@21..23 ")" [] [Whitespace(" ")]
           7: (empty)
           8: JS_FUNCTION_BODY@23..26
             0: L_CURLY@23..24 "{" [] []
-            1: LIST@24..24
-            2: LIST@24..24
+            1: JS_DIRECTIVE_LIST@24..24
+            2: JS_STATEMENT_LIST@24..24
             3: R_CURLY@24..26 "}" [] [Whitespace(" ")]
       6: R_CURLY@26..27 "}" [] []
   3: EOF@27..28 "" [Whitespace("\n")] []

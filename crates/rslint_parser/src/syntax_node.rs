@@ -21,10 +21,6 @@ impl Language for JsLanguage {
 	fn kind_to_raw(kind: SyntaxKind) -> rome_rowan::SyntaxKind {
 		rome_rowan::SyntaxKind(kind.into())
 	}
-
-	fn list_kind() -> Self::Kind {
-		SyntaxKind::LIST
-	}
 }
 
 pub type SyntaxNode = rome_rowan::SyntaxNode<JsLanguage>;

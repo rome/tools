@@ -6,7 +6,7 @@ JsModule {
             import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
-                named_import: JsNamedImportSpecifierList {
+                named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@7..8 "{" [] [],
                     specifiers: [],
                     r_curly_token: R_CURLY@8..10 "}" [] [Whitespace(" ")],
@@ -23,7 +23,7 @@ JsModule {
             import_token: IMPORT_KW@19..27 "import" [Whitespace("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
-                named_import: JsNamedImportSpecifierList {
+                named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@27..29 "{" [] [Whitespace(" ")],
                     specifiers: [
                         JsShorthandNamedImportSpecifier {
@@ -64,7 +64,7 @@ JsModule {
                     },
                     trailing_comma_token: COMMA@58..60 "," [] [Whitespace(" ")],
                 },
-                named_import: JsNamedImportSpecifierList {
+                named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@60..62 "{" [] [Whitespace(" ")],
                     specifiers: [
                         JsShorthandNamedImportSpecifier {
@@ -111,7 +111,7 @@ JsModule {
             import_token: IMPORT_KW@102..110 "import" [Whitespace("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
-                named_import: JsNamedImportSpecifierList {
+                named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@110..112 "{" [] [Whitespace(" ")],
                     specifiers: [
                         JsNamedImportSpecifier {
@@ -160,13 +160,13 @@ JsModule {
 
 0: JS_MODULE@0..159
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..158
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..158
     0: JS_IMPORT@0..19
       0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@7..18
         0: (empty)
-        1: JS_NAMED_IMPORT_SPECIFIER_LIST@7..10
+        1: JS_NAMED_IMPORT_SPECIFIERS@7..10
           0: L_CURLY@7..8 "{" [] []
           1: (empty)
           2: R_CURLY@8..10 "}" [] [Whitespace(" ")]
@@ -179,9 +179,9 @@ JsModule {
       0: IMPORT_KW@19..27 "import" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@27..48
         0: (empty)
-        1: JS_NAMED_IMPORT_SPECIFIER_LIST@27..40
+        1: JS_NAMED_IMPORT_SPECIFIERS@27..40
           0: L_CURLY@27..29 "{" [] [Whitespace(" ")]
-          1: LIST@29..38
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@29..38
             0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@29..30
               0: JS_IDENTIFIER_BINDING@29..30
                 0: IDENT@29..30 "a" [] []
@@ -207,9 +207,9 @@ JsModule {
           0: JS_IDENTIFIER_BINDING@57..58
             0: IDENT@57..58 "b" [] []
           1: COMMA@58..60 "," [] [Whitespace(" ")]
-        1: JS_NAMED_IMPORT_SPECIFIER_LIST@60..66
+        1: JS_NAMED_IMPORT_SPECIFIERS@60..66
           0: L_CURLY@60..62 "{" [] [Whitespace(" ")]
-          1: LIST@62..64
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@62..64
             0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@62..64
               0: JS_IDENTIFIER_BINDING@62..64
                 0: IDENT@62..64 "a" [] [Whitespace(" ")]
@@ -240,9 +240,9 @@ JsModule {
       0: IMPORT_KW@102..110 "import" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@110..157
         0: (empty)
-        1: JS_NAMED_IMPORT_SPECIFIER_LIST@110..149
+        1: JS_NAMED_IMPORT_SPECIFIERS@110..149
           0: L_CURLY@110..112 "{" [] [Whitespace(" ")]
-          1: LIST@112..147
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@112..147
             0: JS_NAMED_IMPORT_SPECIFIER@112..118
               0: JS_LITERAL_EXPORT_NAME@112..114
                 0: IDENT@112..114 "a" [] [Whitespace(" ")]

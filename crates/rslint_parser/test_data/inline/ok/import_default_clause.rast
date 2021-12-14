@@ -22,8 +22,8 @@ JsModule {
 
 0: JS_MODULE@0..24
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..23
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..23
     0: JS_IMPORT@0..23
       0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
       1: JS_IMPORT_DEFAULT_CLAUSE@7..22

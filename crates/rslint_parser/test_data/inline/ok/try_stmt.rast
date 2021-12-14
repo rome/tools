@@ -121,26 +121,26 @@ JsModule {
 
 0: JS_MODULE@0..112
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..111
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..111
     0: JS_TRY_STATEMENT@0..15
       0: TRY_KW@0..4 "try" [] [Whitespace(" ")]
       1: JS_BLOCK_STATEMENT@4..7
         0: L_CURLY@4..5 "{" [] []
-        1: LIST@5..5
+        1: JS_STATEMENT_LIST@5..5
         2: R_CURLY@5..7 "}" [] [Whitespace(" ")]
       2: JS_CATCH_CLAUSE@7..15
         0: CATCH_KW@7..13 "catch" [] [Whitespace(" ")]
         1: (empty)
         2: JS_BLOCK_STATEMENT@13..15
           0: L_CURLY@13..14 "{" [] []
-          1: LIST@14..14
+          1: JS_STATEMENT_LIST@14..14
           2: R_CURLY@14..15 "}" [] []
     1: JS_TRY_STATEMENT@15..35
       0: TRY_KW@15..20 "try" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_BLOCK_STATEMENT@20..23
         0: L_CURLY@20..21 "{" [] []
-        1: LIST@21..21
+        1: JS_STATEMENT_LIST@21..21
         2: R_CURLY@21..23 "}" [] [Whitespace(" ")]
       2: JS_CATCH_CLAUSE@23..35
         0: CATCH_KW@23..29 "catch" [] [Whitespace(" ")]
@@ -151,32 +151,32 @@ JsModule {
           2: R_PAREN@31..33 ")" [] [Whitespace(" ")]
         2: JS_BLOCK_STATEMENT@33..35
           0: L_CURLY@33..34 "{" [] []
-          1: LIST@34..34
+          1: JS_STATEMENT_LIST@34..34
           2: R_CURLY@34..35 "}" [] []
     2: JS_TRY_FINALLY_STATEMENT@35..62
       0: TRY_KW@35..40 "try" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_BLOCK_STATEMENT@40..43
         0: L_CURLY@40..41 "{" [] []
-        1: LIST@41..41
+        1: JS_STATEMENT_LIST@41..41
         2: R_CURLY@41..43 "}" [] [Whitespace(" ")]
       2: JS_CATCH_CLAUSE@43..52
         0: CATCH_KW@43..49 "catch" [] [Whitespace(" ")]
         1: (empty)
         2: JS_BLOCK_STATEMENT@49..52
           0: L_CURLY@49..50 "{" [] []
-          1: LIST@50..50
+          1: JS_STATEMENT_LIST@50..50
           2: R_CURLY@50..52 "}" [] [Whitespace(" ")]
       3: JS_FINALLY_CLAUSE@52..62
         0: FINALLY_KW@52..60 "finally" [] [Whitespace(" ")]
         1: JS_BLOCK_STATEMENT@60..62
           0: L_CURLY@60..61 "{" [] []
-          1: LIST@61..61
+          1: JS_STATEMENT_LIST@61..61
           2: R_CURLY@61..62 "}" [] []
     3: JS_TRY_FINALLY_STATEMENT@62..93
       0: TRY_KW@62..67 "try" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_BLOCK_STATEMENT@67..70
         0: L_CURLY@67..68 "{" [] []
-        1: LIST@68..68
+        1: JS_STATEMENT_LIST@68..68
         2: R_CURLY@68..70 "}" [] [Whitespace(" ")]
       2: JS_CATCH_CLAUSE@70..83
         0: CATCH_KW@70..76 "catch" [] [Whitespace(" ")]
@@ -187,25 +187,25 @@ JsModule {
           2: R_PAREN@78..80 ")" [] [Whitespace(" ")]
         2: JS_BLOCK_STATEMENT@80..83
           0: L_CURLY@80..81 "{" [] []
-          1: LIST@81..81
+          1: JS_STATEMENT_LIST@81..81
           2: R_CURLY@81..83 "}" [] [Whitespace(" ")]
       3: JS_FINALLY_CLAUSE@83..93
         0: FINALLY_KW@83..91 "finally" [] [Whitespace(" ")]
         1: JS_BLOCK_STATEMENT@91..93
           0: L_CURLY@91..92 "{" [] []
-          1: LIST@92..92
+          1: JS_STATEMENT_LIST@92..92
           2: R_CURLY@92..93 "}" [] []
     4: JS_TRY_FINALLY_STATEMENT@93..111
       0: TRY_KW@93..98 "try" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_BLOCK_STATEMENT@98..101
         0: L_CURLY@98..99 "{" [] []
-        1: LIST@99..99
+        1: JS_STATEMENT_LIST@99..99
         2: R_CURLY@99..101 "}" [] [Whitespace(" ")]
       2: (empty)
       3: JS_FINALLY_CLAUSE@101..111
         0: FINALLY_KW@101..109 "finally" [] [Whitespace(" ")]
         1: JS_BLOCK_STATEMENT@109..111
           0: L_CURLY@109..110 "{" [] []
-          1: LIST@110..110
+          1: JS_STATEMENT_LIST@110..110
           2: R_CURLY@110..111 "}" [] []
   3: EOF@111..112 "" [Whitespace("\n")] []

@@ -16,13 +16,9 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@11..24 "constructor" [Whitespace("\n\t")] [],
                     },
-                    parameter_list: JsConstructorParameterList {
+                    parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@24..25 "(" [] [],
-                        parameters: [
-                            JsIdentifierBinding {
-                                name_token: IDENT@25..26 "a" [] [],
-                            },
-                        ],
+                        parameters: [],
                         r_paren_token: R_PAREN@26..28 ")" [] [Whitespace(" ")],
                     },
                     body: JsFunctionBody {
@@ -70,13 +66,9 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: JS_STRING_LITERAL@61..76 "\"constructor\"" [Whitespace("\n\t")] [],
                     },
-                    parameter_list: JsConstructorParameterList {
+                    parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@76..77 "(" [] [],
-                        parameters: [
-                            JsIdentifierBinding {
-                                name_token: IDENT@77..78 "b" [] [],
-                            },
-                        ],
+                        parameters: [],
                         r_paren_token: R_PAREN@78..80 ")" [] [Whitespace(" ")],
                     },
                     body: JsFunctionBody {
@@ -116,8 +108,8 @@ JsModule {
 
 0: JS_MODULE@0..101
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..100
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..100
     0: JS_CLASS_DECLARATION@0..48
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..10
@@ -125,7 +117,7 @@ JsModule {
       2: (empty)
       3: (empty)
       4: L_CURLY@10..11 "{" [] []
-      5: LIST@11..46
+      5: JS_CLASS_MEMBER_LIST@11..46
         0: JS_CONSTRUCTOR_CLASS_MEMBER@11..46
           0: (empty)
           1: (empty)
@@ -134,16 +126,16 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@11..24
             0: IDENT@11..24 "constructor" [Whitespace("\n\t")] []
           5: (empty)
-          6: JS_CONSTRUCTOR_PARAMETER_LIST@24..28
+          6: JS_CONSTRUCTOR_PARAMETERS@24..28
             0: L_PAREN@24..25 "(" [] []
-            1: LIST@25..26
+            1: JS_PARAMETER_LIST@25..26
               0: JS_IDENTIFIER_BINDING@25..26
                 0: IDENT@25..26 "a" [] []
             2: R_PAREN@26..28 ")" [] [Whitespace(" ")]
           7: JS_FUNCTION_BODY@28..46
             0: L_CURLY@28..29 "{" [] []
-            1: LIST@29..29
-            2: LIST@29..43
+            1: JS_DIRECTIVE_LIST@29..29
+            2: JS_STATEMENT_LIST@29..43
               0: JS_EXPRESSION_STATEMENT@29..43
                 0: JS_ASSIGNMENT_EXPRESSION@29..42
                   0: JS_STATIC_MEMBER_ASSIGNMENT@29..39
@@ -166,7 +158,7 @@ JsModule {
       2: (empty)
       3: (empty)
       4: L_CURLY@60..61 "{" [] []
-      5: LIST@61..98
+      5: JS_CLASS_MEMBER_LIST@61..98
         0: JS_CONSTRUCTOR_CLASS_MEMBER@61..98
           0: (empty)
           1: (empty)
@@ -175,16 +167,16 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@61..76
             0: JS_STRING_LITERAL@61..76 "\"constructor\"" [Whitespace("\n\t")] []
           5: (empty)
-          6: JS_CONSTRUCTOR_PARAMETER_LIST@76..80
+          6: JS_CONSTRUCTOR_PARAMETERS@76..80
             0: L_PAREN@76..77 "(" [] []
-            1: LIST@77..78
+            1: JS_PARAMETER_LIST@77..78
               0: JS_IDENTIFIER_BINDING@77..78
                 0: IDENT@77..78 "b" [] []
             2: R_PAREN@78..80 ")" [] [Whitespace(" ")]
           7: JS_FUNCTION_BODY@80..98
             0: L_CURLY@80..81 "{" [] []
-            1: LIST@81..81
-            2: LIST@81..95
+            1: JS_DIRECTIVE_LIST@81..81
+            2: JS_STATEMENT_LIST@81..95
               0: JS_EXPRESSION_STATEMENT@81..95
                 0: JS_ASSIGNMENT_EXPRESSION@81..94
                   0: JS_STATIC_MEMBER_ASSIGNMENT@81..91

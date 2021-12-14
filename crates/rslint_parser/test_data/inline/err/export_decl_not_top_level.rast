@@ -35,17 +35,17 @@ JsModule {
 
 0: JS_MODULE@0..34
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..33
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..33
     0: JS_BLOCK_STATEMENT@0..33
       0: L_CURLY@0..1 "{" [] []
-      1: LIST@1..31
+      1: JS_STATEMENT_LIST@1..31
         0: JS_UNKNOWN_STATEMENT@1..31
           0: EXPORT_KW@1..10 "export" [Whitespace("\n ")] [Whitespace(" ")]
           1: (empty)
           2: EXPORT_NAMED@10..31
             0: L_CURLY@10..12 "{" [] [Whitespace(" ")]
-            1: LIST@12..17
+            1: EXPORT_NAMED_SPECIFIER_LIST@12..17
               0: SPECIFIER@12..17
                 0: JS_NAME@12..17
                   0: IDENT@12..17 "pain" [] [Whitespace(" ")]

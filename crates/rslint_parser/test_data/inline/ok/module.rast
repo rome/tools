@@ -44,7 +44,7 @@ JsModule {
                     },
                 },
                 type_args: missing (optional),
-                arguments: ArgList {
+                arguments: JsCallArguments {
                     l_paren_token: L_PAREN@34..35 "(" [] [],
                     args: [],
                     r_paren_token: R_PAREN@35..36 ")" [] [],
@@ -56,7 +56,7 @@ JsModule {
             import_token: IMPORT_KW@37..45 "import" [Whitespace("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
-                named_import: JsNamedImportSpecifierList {
+                named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@45..47 "{" [] [Whitespace(" ")],
                     specifiers: [
                         JsShorthandNamedImportSpecifier {
@@ -81,8 +81,8 @@ JsModule {
 
 0: JS_MODULE@0..61
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..60
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..60
     0: JS_IMPORT@0..18
       0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
       1: JS_IMPORT_DEFAULT_CLAUSE@7..17
@@ -98,7 +98,7 @@ JsModule {
       1: (empty)
       2: EXPORT_NAMED@26..32
         0: L_CURLY@26..28 "{" [] [Whitespace(" ")]
-        1: LIST@28..30
+        1: EXPORT_NAMED_SPECIFIER_LIST@28..30
           0: SPECIFIER@28..30
             0: JS_NAME@28..30
               0: IDENT@28..30 "a" [] [Whitespace(" ")]
@@ -114,18 +114,18 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@32..34
             0: IDENT@32..34 "c" [Whitespace("\n")] []
         1: (empty)
-        2: ARG_LIST@34..36
+        2: JS_CALL_ARGUMENTS@34..36
           0: L_PAREN@34..35 "(" [] []
-          1: LIST@35..35
+          1: JS_CALL_ARGUMENT_LIST@35..35
           2: R_PAREN@35..36 ")" [] []
       1: SEMICOLON@36..37 ";" [] []
     3: JS_IMPORT@37..60
       0: IMPORT_KW@37..45 "import" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@45..59
         0: (empty)
-        1: JS_NAMED_IMPORT_SPECIFIER_LIST@45..51
+        1: JS_NAMED_IMPORT_SPECIFIERS@45..51
           0: L_CURLY@45..47 "{" [] [Whitespace(" ")]
-          1: LIST@47..49
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@47..49
             0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@47..49
               0: JS_IDENTIFIER_BINDING@47..49
                 0: IDENT@47..49 "c" [] [Whitespace(" ")]

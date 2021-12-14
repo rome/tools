@@ -173,13 +173,13 @@ JsModule {
 
 0: JS_MODULE@0..101
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..100
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..100
     0: JS_EXPRESSION_STATEMENT@0..20
       0: JS_ASSIGNMENT_EXPRESSION@0..19
         0: JS_ARRAY_ASSIGNMENT_PATTERN@0..13
           0: L_BRACK@0..1 "[" [] []
-          1: LIST@1..11
+          1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@1..11
             0: JS_IDENTIFIER_ASSIGNMENT@1..3
               0: IDENT@1..3 "a" [] [Whitespace(" ")]
             1: (empty)
@@ -200,7 +200,7 @@ JsModule {
       0: JS_ASSIGNMENT_EXPRESSION@20..44
         0: JS_ARRAY_ASSIGNMENT_PATTERN@20..38
           0: L_BRACK@20..22 "[" [Whitespace("\n")] []
-          1: LIST@22..36
+          1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@22..36
             0: JS_IDENTIFIER_ASSIGNMENT@22..23
               0: IDENT@22..23 "a" [] []
             1: COMMA@23..25 "," [] [Whitespace(" ")]
@@ -222,7 +222,7 @@ JsModule {
       0: JS_ASSIGNMENT_EXPRESSION@45..69
         0: JS_ARRAY_ASSIGNMENT_PATTERN@45..63
           0: L_BRACK@45..47 "[" [Whitespace("\n")] []
-          1: LIST@47..61
+          1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@47..61
             0: JS_ASSIGNMENT_WITH_DEFAULT@47..51
               0: JS_IDENTIFIER_ASSIGNMENT@47..49
                 0: IDENT@47..49 "a" [] [Whitespace(" ")]
@@ -244,10 +244,10 @@ JsModule {
       0: JS_ASSIGNMENT_EXPRESSION@70..88
         0: JS_ARRAY_ASSIGNMENT_PATTERN@70..82
           0: L_BRACK@70..72 "[" [Whitespace("\n")] []
-          1: LIST@72..81
+          1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@72..81
             0: JS_ARRAY_ASSIGNMENT_PATTERN@72..78
               0: L_BRACK@72..73 "[" [] []
-              1: LIST@73..76
+              1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@73..76
                 0: JS_IDENTIFIER_ASSIGNMENT@73..75
                   0: IDENT@73..75 "a" [] [Whitespace(" ")]
                 1: (empty)
@@ -257,7 +257,7 @@ JsModule {
             1: (empty)
             2: JS_ARRAY_ASSIGNMENT_PATTERN@78..81
               0: L_BRACK@78..79 "[" [] []
-              1: LIST@79..80
+              1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@79..80
                 0: JS_IDENTIFIER_ASSIGNMENT@79..80
                   0: IDENT@79..80 "c" [] []
               2: R_BRACK@80..81 "]" [] []
@@ -271,7 +271,7 @@ JsModule {
       0: JS_ASSIGNMENT_EXPRESSION@89..100
         0: JS_ARRAY_ASSIGNMENT_PATTERN@89..97
           0: L_BRACK@89..91 "[" [Whitespace("\n")] []
-          1: LIST@91..95
+          1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@91..95
             0: JS_IDENTIFIER_ASSIGNMENT@91..92
               0: IDENT@91..92 "a" [] []
             1: (empty)

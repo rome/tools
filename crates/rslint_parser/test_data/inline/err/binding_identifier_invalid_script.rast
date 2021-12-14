@@ -3,9 +3,9 @@ JsScript {
     directives: [],
     statements: [
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..14 "let" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
                             items: [
@@ -26,9 +26,9 @@ JsScript {
             semicolon_token: SEMICOLON@21..22 ";" [] [],
         },
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: CONST_KW@22..29 "const" [Whitespace("\n")] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
                             items: [
@@ -54,12 +54,12 @@ JsScript {
 
 0: JS_SCRIPT@0..38
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..37
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_STATEMENT_LIST@0..37
     0: JS_VARIABLE_STATEMENT@0..22
-      0: JS_VARIABLE_DECLARATION_LIST@0..21
+      0: JS_VARIABLE_DECLARATIONS@0..21
         0: LET_KW@0..14 "let" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")]
-        1: LIST@14..21
+        1: JS_VARIABLE_DECLARATION_LIST@14..21
           0: JS_VARIABLE_DECLARATION@14..21
             0: JS_UNKNOWN_BINDING@14..18
               0: IDENT@14..18 "let" [] [Whitespace(" ")]
@@ -71,9 +71,9 @@ JsScript {
                 0: JS_NUMBER_LITERAL@20..21 "5" [] []
       1: SEMICOLON@21..22 ";" [] []
     1: JS_VARIABLE_STATEMENT@22..37
-      0: JS_VARIABLE_DECLARATION_LIST@22..36
+      0: JS_VARIABLE_DECLARATIONS@22..36
         0: CONST_KW@22..29 "const" [Whitespace("\n")] [Whitespace(" ")]
-        1: LIST@29..36
+        1: JS_VARIABLE_DECLARATION_LIST@29..36
           0: JS_VARIABLE_DECLARATION@29..36
             0: JS_UNKNOWN_BINDING@29..33
               0: IDENT@29..33 "let" [] [Whitespace(" ")]

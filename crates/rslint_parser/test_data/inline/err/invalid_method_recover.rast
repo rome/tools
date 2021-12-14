@@ -35,9 +35,9 @@ JsModule {
                         expression: JsArrowFunctionExpression {
                             async_token: missing (optional),
                             type_parameters: missing (optional),
-                            parameter_list: JsParameterList {
+                            parameters: JsParameters {
                                 l_paren_token: L_PAREN@20..21 "(" [] [],
-                                parameters: [],
+                                items: [],
                                 r_paren_token: R_PAREN@21..23 ")" [] [Whitespace(" ")],
                             },
                             return_type: missing (optional),
@@ -47,9 +47,9 @@ JsModule {
                                 directives: [],
                                 statements: [
                                     JsVariableStatement {
-                                        declaration_list: JsVariableDeclarationList {
+                                        declarations: JsVariableDeclarations {
                                             kind_token: LET_KW@27..36 "let" [Whitespace("\n    ")] [Whitespace(" ")],
-                                            declarations: [
+                                            items: [
                                                 JsVariableDeclaration {
                                                     id: JsIdentifierBinding {
                                                         name_token: IDENT@36..37 "a" [] [],
@@ -88,15 +88,15 @@ JsModule {
 
 0: JS_MODULE@0..48
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..47
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..47
     0: JS_CLASS_DECLARATION@0..46
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: (empty)
       2: (empty)
       3: (empty)
       4: L_CURLY@6..7 "{" [] []
-      5: LIST@7..44
+      5: JS_CLASS_MEMBER_LIST@7..44
         0: JS_PROPERTY_CLASS_MEMBER@7..44
           0: (empty)
           1: (empty)
@@ -117,20 +117,20 @@ JsModule {
             1: JS_ARROW_FUNCTION_EXPRESSION@20..43
               0: (empty)
               1: (empty)
-              2: JS_PARAMETER_LIST@20..23
+              2: JS_PARAMETERS@20..23
                 0: L_PAREN@20..21 "(" [] []
-                1: LIST@21..21
+                1: JS_PARAMETER_LIST@21..21
                 2: R_PAREN@21..23 ")" [] [Whitespace(" ")]
               3: (empty)
               4: FAT_ARROW@23..26 "=>" [] [Whitespace(" ")]
               5: JS_FUNCTION_BODY@26..43
                 0: L_CURLY@26..27 "{" [] []
-                1: LIST@27..27
-                2: LIST@27..39
+                1: JS_DIRECTIVE_LIST@27..27
+                2: JS_STATEMENT_LIST@27..39
                   0: JS_VARIABLE_STATEMENT@27..39
-                    0: JS_VARIABLE_DECLARATION_LIST@27..39
+                    0: JS_VARIABLE_DECLARATIONS@27..39
                       0: LET_KW@27..36 "let" [Whitespace("\n    ")] [Whitespace(" ")]
-                      1: LIST@36..39
+                      1: JS_VARIABLE_DECLARATION_LIST@36..39
                         0: JS_VARIABLE_DECLARATION@36..39
                           0: JS_IDENTIFIER_BINDING@36..37
                             0: IDENT@36..37 "a" [] []

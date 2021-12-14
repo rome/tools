@@ -28,14 +28,14 @@ JsModule {
 
 0: JS_MODULE@0..27
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..26
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..26
     0: EXPORT_DECL@0..26
       0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
       1: (empty)
       2: EXPORT_NAMED@7..26
         0: L_CURLY@7..9 "{" [] [Whitespace(" ")]
-        1: LIST@9..13
+        1: EXPORT_NAMED_SPECIFIER_LIST@9..13
           0: SPECIFIER@9..13
             0: JS_NAME@9..13
               0: IDENT@9..13 "foo" [] [Whitespace(" ")]

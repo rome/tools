@@ -133,7 +133,7 @@ JsModule {
                                     },
                                 },
                                 type_args: missing (optional),
-                                arguments: ArgList {
+                                arguments: JsCallArguments {
                                     l_paren_token: L_PAREN@89..90 "(" [] [],
                                     args: [],
                                     r_paren_token: R_PAREN@90..91 ")" [] [],
@@ -145,7 +145,7 @@ JsModule {
                             },
                         },
                         type_args: missing (optional),
-                        arguments: ArgList {
+                        arguments: JsCallArguments {
                             l_paren_token: L_PAREN@97..98 "(" [] [],
                             args: [],
                             r_paren_token: R_PAREN@98..99 ")" [] [],
@@ -224,8 +224,8 @@ JsModule {
 
 0: JS_MODULE@0..149
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..148
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..148
     0: JS_EXPRESSION_STATEMENT@0..21
       0: JS_ASSIGNMENT_EXPRESSION@0..20
         0: JS_IDENTIFIER_ASSIGNMENT@0..4
@@ -315,17 +315,17 @@ JsModule {
                   2: JS_NAME@85..89
                     0: IDENT@85..89 "call" [] []
                 1: (empty)
-                2: ARG_LIST@89..91
+                2: JS_CALL_ARGUMENTS@89..91
                   0: L_PAREN@89..90 "(" [] []
-                  1: LIST@90..90
+                  1: JS_CALL_ARGUMENT_LIST@90..90
                   2: R_PAREN@90..91 ")" [] []
               1: DOT@91..92 "." [] []
               2: JS_NAME@92..97
                 0: IDENT@92..97 "chain" [] []
             1: (empty)
-            2: ARG_LIST@97..99
+            2: JS_CALL_ARGUMENTS@97..99
               0: L_PAREN@97..98 "(" [] []
-              1: LIST@98..98
+              1: JS_CALL_ARGUMENT_LIST@98..98
               2: R_PAREN@98..99 ")" [] []
           1: DOT@99..100 "." [] []
           2: JS_NAME@100..107

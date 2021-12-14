@@ -4,7 +4,7 @@ use super::kinds_src::AstSrc;
 use crate::codegen::kinds_src::TokenKind;
 use crate::{
 	codegen::{kinds_src::Field, to_lower_snake_case, to_upper_snake_case},
-	Result, SYNTAX_ELEMENT_TYPE,
+	Result,
 };
 use quote::{format_ident, quote};
 
@@ -15,7 +15,6 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		.map(|node| {
 			let name = format_ident!("{}", node.name);
 			let node_kind = format_ident!("{}", to_upper_snake_case(node.name.as_str()));
-			let mut slot = 0usize;
 
 			let methods = node
 				.fields
@@ -69,24 +68,15 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 							}
 						}
 					}
-					Field::Node {
-						ty,
-						optional,
-						has_many,
-						separated,
-						..
-					} => {
-						let is_syntax_type = &ty.eq(SYNTAX_ELEMENT_TYPE);
+					Field::Node { ty, optional, .. } => {
+						let is_list = ast.is_list(&ty);
 						let ty = format_ident!("{}", &ty);
 
 						let method_name = field.method_name();
-						// this is when we encounter a node that has "Unknown" in its name
-						// it will return tokens a and nodes regardless because there's an error
-						// inside the code
-						if *is_syntax_type {
+						if is_list {
 							quote! {
-								pub fn items(&self) -> SyntaxElementChildren {
-									support::elements(&self.syntax)
+								pub fn #method_name(&self) -> #ty {
+									support::list(&self.syntax)
 								}
 							}
 						} else if *optional {
@@ -95,23 +85,6 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 									support::node(&self.syntax)
 								}
 							}
-						} else if *has_many {
-							let field = if *separated {
-								quote! {
-									pub fn #method_name(&self) -> AstSeparatedList<#ty> {
-										support::separated_list(&self.syntax, #slot)
-									}
-								}
-							} else {
-								quote! {
-									pub fn #method_name(&self) -> AstNodeList<#ty> {
-										support::node_list(&self.syntax, #slot)
-									}
-								}
-							};
-
-							slot += 1;
-							field
 						} else {
 							quote! {
 								pub fn #method_name(&self) -> SyntaxResult<#ty> {
@@ -123,14 +96,6 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				});
 
 			let fields = node.fields.iter().map(|field| {
-				let is_syntax_element_children = matches!(
-					field,
-					Field::Node {
-						ref ty,
-						..
-					} if ty == SYNTAX_ELEMENT_TYPE
-				);
-
 				let name = match field {
 					Field::Token {
 						name,
@@ -140,13 +105,14 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					_ => field.method_name(),
 				};
 
+				let is_list = match field {
+					Field::Node { ty, .. } => ast.is_list(ty),
+					_ => false,
+				};
+
 				let string_name = name.to_string();
 
-				if is_syntax_element_children {
-					quote! {
-						.field("items", &support::DebugSyntaxElementChildren(self.items()))
-					}
-				} else if field.is_many() {
+				if is_list {
 					quote! {
 						.field(#string_name, &self.#name())
 					}
@@ -432,6 +398,179 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			}
 		});
 
+	let unknowns = ast.unknowns.iter().map(|unknown| {
+		let name = format_ident!("{}", unknown.name);
+		let string_name = &unknown.name;
+		let kind = format_ident!("{}", to_upper_snake_case(&unknown.name));
+
+		quote! {
+			#[derive(Clone, PartialEq, Eq, Hash)]
+			pub struct #name {
+				syntax: SyntaxNode
+			}
+
+			impl #name {
+				pub fn items(&self) -> SyntaxElementChildren {
+					support::elements(&self.syntax)
+				}
+			}
+
+			impl AstNode for #name {
+				fn can_cast(kind: SyntaxKind) -> bool {
+					kind == #kind
+				}
+
+				fn cast(syntax: SyntaxNode) -> Option<Self> {
+					if Self::can_cast(syntax.kind()) {
+						Some(Self { syntax })
+					} else {
+						None
+					}
+				}
+				fn syntax(&self) -> &SyntaxNode {
+					&self.syntax
+				}
+			}
+
+			impl std::fmt::Debug for #name {
+				fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+					f.debug_struct(#string_name)
+						.field("items", &support::DebugSyntaxElementChildren(self.items()))
+						.finish()
+				}
+			}
+		}
+	});
+
+	let lists = ast.lists().map(|(name, list)| {
+		let list_name = format_ident!("{}", name);
+		let list_kind = format_ident!("{}", to_upper_snake_case(name));
+		let element_type = format_ident!("{}", list.element_name);
+
+		let list_impl = quote! {
+			impl AstList for #list_name {
+				fn syntax_list(&self) -> &SyntaxList {
+					&self.syntax_list
+				}
+
+				fn can_cast(kind: SyntaxKind) -> bool {
+					kind == #list_kind
+				}
+
+				fn cast(syntax: SyntaxNode) -> Option<#list_name> {
+					if Self::can_cast(syntax.kind()) {
+						Some(#list_name { syntax_list: syntax.into_list() })
+					} else {
+						None
+					}
+				}
+			}
+		};
+
+		let specialized_list_impl = if list.separated {
+			quote! {
+				impl AstSeparatedList<#element_type> for #list_name {}
+
+				impl Debug for #list_name {
+					fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+						f.debug_list().entries(self.elements()).finish()
+					}
+				}
+
+				impl IntoIterator for #list_name {
+					type Item = SyntaxResult<#element_type>;
+					type IntoIter = AstSeparatedListNodesIterator<#element_type>;
+
+					fn into_iter(self) -> Self::IntoIter {
+						self.iter()
+					}
+				}
+
+				impl IntoIterator for &#list_name {
+					type Item = SyntaxResult<#element_type>;
+					type IntoIter = AstSeparatedListNodesIterator<#element_type>;
+
+					fn into_iter(self) -> Self::IntoIter {
+						self.iter()
+					}
+				}
+			}
+		} else {
+			quote! {
+				impl AstNodeList<#element_type> for #list_name {}
+
+				impl Debug for #list_name {
+					fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+						f.debug_list().entries(self.iter()).finish()
+					}
+				}
+
+				impl IntoIterator for &#list_name {
+					type Item = #element_type;
+					type IntoIter = AstNodeListIterator<#element_type>;
+
+					fn into_iter(self) -> Self::IntoIter {
+						self.iter()
+					}
+				}
+
+				impl IntoIterator for #list_name {
+					type Item = #element_type;
+					type IntoIter = AstNodeListIterator<#element_type>;
+
+					fn into_iter(self) -> Self::IntoIter {
+						self.iter()
+					}
+				}
+
+			}
+		};
+
+		quote! {
+			#[derive(Default, Clone)]
+			pub struct #list_name {
+			  syntax_list: SyntaxList,
+			}
+
+			#list_impl
+			#specialized_list_impl
+		}
+	});
+
+	let debug_syntax_element = {
+		let all_nodes = ast
+			.nodes
+			.iter()
+			.map(|node| &node.name)
+			.chain(ast.unknowns.iter().map(|unknown| &unknown.name))
+			.chain(ast.lists().map(|(name, _)| name));
+
+		let node_arms = all_nodes.map(|node| {
+			let kind = format_ident!("{}", to_upper_snake_case(node));
+			let ident = format_ident!("{}", node);
+
+			quote! {
+				#kind => std::fmt::Debug::fmt(&#ident::cast(node.clone()).unwrap(), f)
+			}
+		});
+
+		quote! {
+			pub struct DebugSyntaxElement(pub(crate) SyntaxElement);
+
+			impl Debug for DebugSyntaxElement {
+				fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+					match &self.0 {
+						NodeOrToken::Node(node) => match node.kind() {
+							#(#node_arms),*,
+							_ => std::fmt::Debug::fmt(node, f),
+						},
+						NodeOrToken::Token(token) => Debug::fmt(token, f),
+					}
+				}
+			}
+		}
+	};
+
 	let ast = quote! {
 	#![allow(clippy::enum_variant_names)]
 	// sometimes we generate comparison of simple tokens
@@ -450,6 +589,9 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		#(#node_boilerplate_impls)*
 		#(#enum_boilerplate_impls)*
 		#(#display_impls)*
+		#(#unknowns)*
+		#(#lists)*
+		#debug_syntax_element
 	};
 
 	let ast = ast

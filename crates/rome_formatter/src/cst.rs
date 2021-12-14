@@ -1,16 +1,16 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	ArgList, CallExpr, ForStmt, ForStmtTest, ForStmtUpdate, JsArrayBindingPattern,
-	JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement, JsBooleanLiteralExpression,
-	JsCaseClause, JsCatchClause, JsClassDeclaration, JsConstructorParameterList,
-	JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
-	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsForInStatement,
-	JsFunctionDeclaration, JsGetterClassMember, JsIdentifierBinding, JsIdentifierExpression,
-	JsIfStatement, JsLabeledStatement, JsNullLiteralExpression, JsNumberLiteralExpression,
-	JsObjectExpression, JsParameterList, JsPropertyClassMember, JsPropertyObjectMember,
-	JsReturnStatement, JsScript, JsSequenceExpression, JsSetterClassMember,
-	JsShorthandPropertyObjectMember, JsSpread, JsStringLiteralExpression, JsSwitchStatement,
-	JsTryStatement, JsVariableDeclaration, JsVariableStatement, JsWhileStatement, JsWithStatement,
+	CallExpr, ForStmt, ForStmtTest, ForStmtUpdate, JsArrayBindingPattern, JsArrayExpression,
+	JsArrowFunctionExpression, JsBlockStatement, JsBooleanLiteralExpression, JsCallArguments,
+	JsCaseClause, JsCatchClause, JsClassDeclaration, JsConstructorParameters, JsContinueStatement,
+	JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement, JsEmptyStatement,
+	JsExpressionStatement, JsFinallyClause, JsForInStatement, JsFunctionDeclaration,
+	JsGetterClassMember, JsIdentifierBinding, JsIdentifierExpression, JsIfStatement,
+	JsLabeledStatement, JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression,
+	JsParameters, JsPropertyClassMember, JsPropertyObjectMember, JsReturnStatement, JsScript,
+	JsSequenceExpression, JsSetterClassMember, JsShorthandPropertyObjectMember, JsSpread,
+	JsStringLiteralExpression, JsSwitchStatement, JsTryStatement, JsVariableDeclaration,
+	JsVariableStatement, JsWhileStatement, JsWithStatement,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
@@ -49,7 +49,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_IDENTIFIER_EXPRESSION => JsIdentifierExpression::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::JS_PARAMETER_LIST => JsParameterList::cast(self.clone())
+			SyntaxKind::JS_PARAMETERS => JsParameters::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_SCRIPT => JsScript::cast(self.clone())
@@ -147,7 +147,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::CALL_EXPR => CallExpr::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::ARG_LIST => ArgList::cast(self.clone())
+			SyntaxKind::JS_CALL_ARGUMENTS => JsCallArguments::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_PROPERTY_OBJECT_MEMBER => JsPropertyObjectMember::cast(self.clone())
@@ -156,11 +156,9 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_CLASS_DECLARATION => JsClassDeclaration::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::JS_CONSTRUCTOR_PARAMETER_LIST => {
-				JsConstructorParameterList::cast(self.clone())
-					.unwrap()
-					.to_format_element(formatter)
-			}
+			SyntaxKind::JS_CONSTRUCTOR_PARAMETERS => JsConstructorParameters::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
 			SyntaxKind::JS_GETTER_CLASS_MEMBER => JsGetterClassMember::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),

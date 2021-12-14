@@ -3,9 +3,9 @@ JsModule {
     directives: [],
     items: [
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -106,9 +106,9 @@ JsModule {
                                             value: IDENT@108..114 "set" [Whitespace("\n\n\t")] [],
                                         },
                                         type_params: missing (optional),
-                                        parameter_list: JsParameterList {
+                                        parameters: JsParameters {
                                             l_paren_token: L_PAREN@114..115 "(" [] [],
-                                            parameters: [],
+                                            items: [],
                                             r_paren_token: R_PAREN@115..117 ")" [] [Whitespace(" ")],
                                         },
                                         return_type: missing (optional),
@@ -142,12 +142,12 @@ JsModule {
 
 0: JS_MODULE@0..170
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..169
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..169
     0: JS_VARIABLE_STATEMENT@0..169
-      0: JS_VARIABLE_DECLARATION_LIST@0..169
+      0: JS_VARIABLE_DECLARATIONS@0..169
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: LIST@4..169
+        1: JS_VARIABLE_DECLARATION_LIST@4..169
           0: JS_VARIABLE_DECLARATION@4..169
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
@@ -157,7 +157,7 @@ JsModule {
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@8..169
                 0: L_CURLY@8..9 "{" [] []
-                1: LIST@9..167
+                1: JS_OBJECT_MEMBER_LIST@9..167
                   0: JS_SETTER_OBJECT_MEMBER@9..30
                     0: SET_KW@9..15 "set" [Whitespace("\n ")] [Whitespace(" ")]
                     1: JS_LITERAL_MEMBER_NAME@15..18
@@ -168,8 +168,8 @@ JsModule {
                     4: R_PAREN@24..26 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@26..30
                       0: L_CURLY@26..27 "{" [] []
-                      1: LIST@27..27
-                      2: LIST@27..27
+                      1: JS_DIRECTIVE_LIST@27..27
+                      2: JS_STATEMENT_LIST@27..27
                       3: R_CURLY@27..30 "}" [Whitespace("\n ")] []
                   1: COMMA@30..31 "," [] []
                   2: JS_SETTER_OBJECT_MEMBER@31..55
@@ -182,8 +182,8 @@ JsModule {
                     4: R_PAREN@49..51 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@51..55
                       0: L_CURLY@51..52 "{" [] []
-                      1: LIST@52..52
-                      2: LIST@52..52
+                      1: JS_DIRECTIVE_LIST@52..52
+                      2: JS_STATEMENT_LIST@52..52
                       3: R_CURLY@52..55 "}" [Whitespace("\n ")] []
                   3: COMMA@55..56 "," [] []
                   4: JS_SETTER_OBJECT_MEMBER@56..86
@@ -203,8 +203,8 @@ JsModule {
                     4: R_PAREN@80..82 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@82..86
                       0: L_CURLY@82..83 "{" [] []
-                      1: LIST@83..83
-                      2: LIST@83..83
+                      1: JS_DIRECTIVE_LIST@83..83
+                      2: JS_STATEMENT_LIST@83..83
                       3: R_CURLY@83..86 "}" [Whitespace("\n ")] []
                   5: COMMA@86..87 "," [] []
                   6: JS_SETTER_OBJECT_MEMBER@87..107
@@ -217,8 +217,8 @@ JsModule {
                     4: R_PAREN@101..103 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@103..107
                       0: L_CURLY@103..104 "{" [] []
-                      1: LIST@104..104
-                      2: LIST@104..104
+                      1: JS_DIRECTIVE_LIST@104..104
+                      2: JS_STATEMENT_LIST@104..104
                       3: R_CURLY@104..107 "}" [Whitespace("\n\t")] []
                   7: COMMA@107..108 "," [] []
                   8: JS_METHOD_OBJECT_MEMBER@108..167
@@ -227,15 +227,15 @@ JsModule {
                     2: JS_LITERAL_MEMBER_NAME@108..114
                       0: IDENT@108..114 "set" [Whitespace("\n\n\t")] []
                     3: (empty)
-                    4: JS_PARAMETER_LIST@114..117
+                    4: JS_PARAMETERS@114..117
                       0: L_PAREN@114..115 "(" [] []
-                      1: LIST@115..115
+                      1: JS_PARAMETER_LIST@115..115
                       2: R_PAREN@115..117 ")" [] [Whitespace(" ")]
                     5: (empty)
                     6: JS_FUNCTION_BODY@117..167
                       0: L_CURLY@117..118 "{" [] []
-                      1: LIST@118..118
-                      2: LIST@118..164
+                      1: JS_DIRECTIVE_LIST@118..118
+                      2: JS_STATEMENT_LIST@118..164
                         0: JS_RETURN_STATEMENT@118..164
                           0: RETURN_KW@118..128 "return" [Whitespace("\n\t ")] [Whitespace(" ")]
                           1: JS_STRING_LITERAL_EXPRESSION@128..163

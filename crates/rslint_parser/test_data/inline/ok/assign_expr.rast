@@ -251,8 +251,8 @@ JsModule {
 
 0: JS_MODULE@0..198
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..197
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..197
     0: JS_EXPRESSION_STATEMENT@0..21
       0: JS_ASSIGNMENT_EXPRESSION@0..20
         0: JS_IDENTIFIER_ASSIGNMENT@0..4
@@ -294,7 +294,7 @@ JsModule {
       0: JS_ASSIGNMENT_EXPRESSION@46..63
         0: JS_ARRAY_ASSIGNMENT_PATTERN@46..58
           0: L_BRACK@46..48 "[" [Whitespace("\n")] []
-          1: LIST@48..56
+          1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@48..56
             0: JS_IDENTIFIER_ASSIGNMENT@48..51
               0: IDENT@48..51 "foo" [] []
             1: COMMA@51..53 "," [] [Whitespace(" ")]
@@ -310,7 +310,7 @@ JsModule {
       0: JS_ASSIGNMENT_EXPRESSION@64..102
         0: JS_ARRAY_ASSIGNMENT_PATTERN@64..97
           0: L_BRACK@64..66 "[" [Whitespace("\n")] []
-          1: LIST@66..95
+          1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@66..95
             0: JS_IDENTIFIER_ASSIGNMENT@66..69
               0: IDENT@66..69 "foo" [] []
             1: COMMA@69..71 "," [] [Whitespace(" ")]
@@ -335,7 +335,7 @@ JsModule {
       0: JS_ASSIGNMENT_EXPRESSION@103..122
         0: JS_ARRAY_ASSIGNMENT_PATTERN@103..117
           0: L_BRACK@103..105 "[" [Whitespace("\n")] []
-          1: LIST@105..115
+          1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@105..115
             0: JS_ARRAY_HOLE@105..105
             1: COMMA@105..106 "," [] []
             2: JS_ARRAY_HOLE@106..106
@@ -359,7 +359,7 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@125..142
           0: JS_OBJECT_ASSIGNMENT_PATTERN@125..138
             0: L_CURLY@125..127 "{" [] [Whitespace(" ")]
-            1: LIST@127..136
+            1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@127..136
               0: JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY@127..130
                 0: JS_IDENTIFIER_ASSIGNMENT@127..130
                   0: IDENT@127..130 "bar" [] []
@@ -383,14 +383,14 @@ JsModule {
         1: JS_ASSIGNMENT_EXPRESSION@146..195
           0: JS_OBJECT_ASSIGNMENT_PATTERN@146..191
             0: L_CURLY@146..148 "{" [] [Whitespace(" ")]
-            1: LIST@148..189
+            1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@148..189
               0: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY@148..166
                 0: JS_NAME@148..151
                   0: IDENT@148..151 "bar" [] []
                 1: COLON@151..153 ":" [] [Whitespace(" ")]
                 2: JS_ARRAY_ASSIGNMENT_PATTERN@153..166
                   0: L_BRACK@153..154 "[" [] []
-                  1: LIST@154..165
+                  1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@154..165
                     0: JS_ASSIGNMENT_WITH_DEFAULT@154..165
                       0: JS_IDENTIFIER_ASSIGNMENT@154..158
                         0: IDENT@154..158 "baz" [] [Whitespace(" ")]

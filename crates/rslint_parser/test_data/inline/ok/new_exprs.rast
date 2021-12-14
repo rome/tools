@@ -11,7 +11,7 @@ JsModule {
                     },
                 },
                 type_args: missing (optional),
-                arguments: ArgList {
+                arguments: JsCallArguments {
                     l_paren_token: L_PAREN@7..8 "(" [] [],
                     args: [],
                     r_paren_token: R_PAREN@8..9 ")" [] [],
@@ -55,7 +55,7 @@ JsModule {
                                 },
                             },
                             type_args: missing (optional),
-                            arguments: ArgList {
+                            arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@49..50 "(" [] [],
                                 args: [],
                                 r_paren_token: R_PAREN@50..51 ")" [] [],
@@ -81,7 +81,7 @@ JsModule {
                     },
                 },
                 type_args: missing (optional),
-                arguments: ArgList {
+                arguments: JsCallArguments {
                     l_paren_token: L_PAREN@60..61 "(" [] [],
                     args: [
                         JsIdentifierExpression {
@@ -127,9 +127,9 @@ JsModule {
                                 left: JsArrowFunctionExpression {
                                     async_token: missing (optional),
                                     type_parameters: missing (optional),
-                                    parameter_list: JsParameterList {
+                                    parameters: JsParameters {
                                         l_paren_token: L_PAREN@89..90 "(" [] [],
-                                        parameters: [
+                                        items: [
                                             JsIdentifierBinding {
                                                 name_token: IDENT@90..93 "foo" [] [],
                                             },
@@ -171,8 +171,8 @@ JsModule {
 
 0: JS_MODULE@0..113
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..112
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..112
     0: JS_EXPRESSION_STATEMENT@0..9
       0: NEW_EXPR@0..9
         0: NEW_KW@0..4 "new" [] [Whitespace(" ")]
@@ -180,9 +180,9 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@4..7
             0: IDENT@4..7 "Foo" [] []
         2: (empty)
-        3: ARG_LIST@7..9
+        3: JS_CALL_ARGUMENTS@7..9
           0: L_PAREN@7..8 "(" [] []
-          1: LIST@8..8
+          1: JS_CALL_ARGUMENT_LIST@8..8
           2: R_PAREN@8..9 ")" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@9..18
@@ -213,9 +213,9 @@ JsModule {
                 0: JS_REFERENCE_IDENTIFIER@46..49
                   0: IDENT@46..49 "Foo" [] []
               2: (empty)
-              3: ARG_LIST@49..51
+              3: JS_CALL_ARGUMENTS@49..51
                 0: L_PAREN@49..50 "(" [] []
-                1: LIST@50..50
+                1: JS_CALL_ARGUMENT_LIST@50..50
                 2: R_PAREN@50..51 ")" [] []
             2: (empty)
             3: (empty)
@@ -231,9 +231,9 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@57..60
             0: IDENT@57..60 "Foo" [] []
         2: (empty)
-        3: ARG_LIST@60..112
+        3: JS_CALL_ARGUMENTS@60..112
           0: L_PAREN@60..61 "(" [] []
-          1: LIST@61..111
+          1: JS_CALL_ARGUMENT_LIST@61..111
             0: JS_IDENTIFIER_EXPRESSION@61..64
               0: JS_REFERENCE_IDENTIFIER@61..64
                 0: IDENT@61..64 "bar" [] []
@@ -265,9 +265,9 @@ JsModule {
                 0: JS_ARROW_FUNCTION_EXPRESSION@89..101
                   0: (empty)
                   1: (empty)
-                  2: JS_PARAMETER_LIST@89..95
+                  2: JS_PARAMETERS@89..95
                     0: L_PAREN@89..90 "(" [] []
-                    1: LIST@90..93
+                    1: JS_PARAMETER_LIST@90..93
                       0: JS_IDENTIFIER_BINDING@90..93
                         0: IDENT@90..93 "foo" [] []
                     2: R_PAREN@93..95 ")" [] [Whitespace(" ")]
@@ -275,8 +275,8 @@ JsModule {
                   4: FAT_ARROW@95..98 "=>" [] [Whitespace(" ")]
                   5: JS_FUNCTION_BODY@98..101
                     0: L_CURLY@98..99 "{" [] []
-                    1: LIST@99..99
-                    2: LIST@99..99
+                    1: JS_DIRECTIVE_LIST@99..99
+                    2: JS_STATEMENT_LIST@99..99
                     3: R_CURLY@99..101 "}" [] [Whitespace(" ")]
                 1: STAR@101..103 "*" [] [Whitespace(" ")]
                 2: JS_STATIC_MEMBER_EXPRESSION@103..111

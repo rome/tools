@@ -3,9 +3,9 @@ JsModule {
     directives: [],
     items: [
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@4..5 "[" [] [],
@@ -44,9 +44,9 @@ JsModule {
             semicolon_token: SEMICOLON@18..19 ";" [] [],
         },
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@19..24 "let" [Whitespace("\n")] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@24..25 "[" [] [],
@@ -85,9 +85,9 @@ JsModule {
             semicolon_token: SEMICOLON@45..46 ";" [] [],
         },
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@51..52 "[" [] [],
@@ -124,9 +124,9 @@ JsModule {
             semicolon_token: SEMICOLON@71..72 ";" [] [],
         },
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@72..77 "let" [Whitespace("\n")] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@77..78 "[" [] [],
@@ -166,16 +166,16 @@ JsModule {
 
 0: JS_MODULE@0..89
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..88
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..88
     0: JS_VARIABLE_STATEMENT@0..19
-      0: JS_VARIABLE_DECLARATION_LIST@0..18
+      0: JS_VARIABLE_DECLARATIONS@0..18
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: LIST@4..18
+        1: JS_VARIABLE_DECLARATION_LIST@4..18
           0: JS_VARIABLE_DECLARATION@4..18
             0: JS_ARRAY_BINDING_PATTERN@4..10
               0: L_BRACK@4..5 "[" [] []
-              1: LIST@5..8
+              1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@5..8
                 0: JS_IDENTIFIER_BINDING@5..7
                   0: IDENT@5..7 "a" [] [Whitespace(" ")]
                 1: (empty)
@@ -188,7 +188,7 @@ JsModule {
               0: EQ@10..12 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@12..18
                 0: L_BRACK@12..13 "[" [] []
-                1: LIST@13..17
+                1: JS_ARRAY_ELEMENT_LIST@13..17
                   0: JS_NUMBER_LITERAL_EXPRESSION@13..14
                     0: JS_NUMBER_LITERAL@13..14 "1" [] []
                   1: COMMA@14..16 "," [] [Whitespace(" ")]
@@ -197,13 +197,13 @@ JsModule {
                 2: R_BRACK@17..18 "]" [] []
       1: SEMICOLON@18..19 ";" [] []
     1: JS_VARIABLE_STATEMENT@19..46
-      0: JS_VARIABLE_DECLARATION_LIST@19..45
+      0: JS_VARIABLE_DECLARATIONS@19..45
         0: LET_KW@19..24 "let" [Whitespace("\n")] [Whitespace(" ")]
-        1: LIST@24..45
+        1: JS_VARIABLE_DECLARATION_LIST@24..45
           0: JS_VARIABLE_DECLARATION@24..45
             0: JS_ARRAY_BINDING_PATTERN@24..37
               0: L_BRACK@24..25 "[" [] []
-              1: LIST@25..35
+              1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@25..35
                 0: JS_BINDING_PATTERN_WITH_DEFAULT@25..35
                   0: (empty)
                   1: EQ@25..26 "=" [] []
@@ -216,7 +216,7 @@ JsModule {
               0: EQ@37..39 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@39..45
                 0: L_BRACK@39..40 "[" [] []
-                1: LIST@40..44
+                1: JS_ARRAY_ELEMENT_LIST@40..44
                   0: JS_NUMBER_LITERAL_EXPRESSION@40..41
                     0: JS_NUMBER_LITERAL@40..41 "1" [] []
                   1: COMMA@41..43 "," [] [Whitespace(" ")]
@@ -225,13 +225,13 @@ JsModule {
                 2: R_BRACK@44..45 "]" [] []
       1: SEMICOLON@45..46 ";" [] []
     2: JS_VARIABLE_STATEMENT@46..72
-      0: JS_VARIABLE_DECLARATION_LIST@46..71
+      0: JS_VARIABLE_DECLARATIONS@46..71
         0: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")]
-        1: LIST@51..71
+        1: JS_VARIABLE_DECLARATION_LIST@51..71
           0: JS_VARIABLE_DECLARATION@51..71
             0: JS_ARRAY_BINDING_PATTERN@51..63
               0: L_BRACK@51..52 "[" [] []
-              1: LIST@52..61
+              1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@52..61
                 0: JS_UNKNOWN_BINDING@52..61
                   0: JS_STRING_LITERAL@52..61 "\"default\"" [] []
               2: R_BRACK@61..63 "]" [] [Whitespace(" ")]
@@ -241,7 +241,7 @@ JsModule {
               0: EQ@63..65 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@65..71
                 0: L_BRACK@65..66 "[" [] []
-                1: LIST@66..70
+                1: JS_ARRAY_ELEMENT_LIST@66..70
                   0: JS_NUMBER_LITERAL_EXPRESSION@66..67
                     0: JS_NUMBER_LITERAL@66..67 "1" [] []
                   1: COMMA@67..69 "," [] [Whitespace(" ")]
@@ -250,17 +250,17 @@ JsModule {
                 2: R_BRACK@70..71 "]" [] []
       1: SEMICOLON@71..72 ";" [] []
     3: JS_VARIABLE_STATEMENT@72..88
-      0: JS_VARIABLE_DECLARATION_LIST@72..87
+      0: JS_VARIABLE_DECLARATIONS@72..87
         0: LET_KW@72..77 "let" [Whitespace("\n")] [Whitespace(" ")]
-        1: LIST@77..87
+        1: JS_VARIABLE_DECLARATION_LIST@77..87
           0: JS_VARIABLE_DECLARATION@77..87
             0: JS_ARRAY_BINDING_PATTERN@77..87
               0: L_BRACK@77..78 "[" [] []
-              1: LIST@78..87
+              1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@78..87
                 0: JS_BINDING_PATTERN_WITH_DEFAULT@78..87
                   0: JS_ARRAY_BINDING_PATTERN@78..83
                     0: L_BRACK@78..79 "[" [] []
-                    1: LIST@79..81
+                    1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@79..81
                       0: JS_IDENTIFIER_BINDING@79..81
                         0: IDENT@79..81 "a" [] [Whitespace(" ")]
                     2: R_BRACK@81..83 "]" [] [Whitespace(" ")]

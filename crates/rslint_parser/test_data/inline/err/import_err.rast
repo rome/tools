@@ -78,7 +78,7 @@ JsModule {
             import_token: IMPORT_KW@51..59 "import" [Whitespace("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
-                named_import: JsNamedImportSpecifierList {
+                named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@59..61 "{" [] [Whitespace(" ")],
                     specifiers: [
                         JsShorthandNamedImportSpecifier {
@@ -114,7 +114,7 @@ JsModule {
             import_token: IMPORT_KW@81..89 "import" [Whitespace("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
-                named_import: JsNamedImportSpecifierList {
+                named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@89..91 "{" [] [Whitespace(" ")],
                     specifiers: [
                         JsShorthandNamedImportSpecifier {
@@ -145,7 +145,7 @@ JsModule {
             import_token: IMPORT_KW@107..115 "import" [Whitespace("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
-                named_import: JsNamedImportSpecifierList {
+                named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@115..117 "{" [] [Whitespace(" ")],
                     specifiers: [
                         JsShorthandNamedImportSpecifier {
@@ -170,7 +170,7 @@ JsModule {
             import_token: IMPORT_KW@136..144 "import" [Whitespace("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
-                named_import: JsNamedImportSpecifierList {
+                named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@144..146 "{" [] [Whitespace(" ")],
                     specifiers: [
                         JsUnknownNamedImportSpecifier {
@@ -193,7 +193,7 @@ JsModule {
             import_token: IMPORT_KW@161..169 "import" [Whitespace("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
-                named_import: JsNamedImportSpecifierList {
+                named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@169..171 "{" [] [Whitespace(" ")],
                     specifiers: [
                         JsNamedImportSpecifier {
@@ -263,8 +263,8 @@ JsModule {
 
 0: JS_MODULE@0..224
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..223
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..223
     0: JS_IMPORT@0..7
       0: IMPORT_KW@0..6 "import" [] []
       1: (empty)
@@ -294,7 +294,7 @@ JsModule {
       0: COMMA@31..33 "," [] [Whitespace(" ")]
     4: JS_BLOCK_STATEMENT@33..42
       0: L_CURLY@33..35 "{" [] [Whitespace(" ")]
-      1: LIST@35..40
+      1: JS_STATEMENT_LIST@35..40
         0: JS_EXPRESSION_STATEMENT@35..40
           0: JS_SEQUENCE_EXPRESSION@35..40
             0: JS_IDENTIFIER_EXPRESSION@35..36
@@ -319,9 +319,9 @@ JsModule {
       0: IMPORT_KW@51..59 "import" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@59..80
         0: (empty)
-        1: JS_NAMED_IMPORT_SPECIFIER_LIST@59..72
+        1: JS_NAMED_IMPORT_SPECIFIERS@59..72
           0: L_CURLY@59..61 "{" [] [Whitespace(" ")]
-          1: LIST@61..70
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@61..70
             0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@61..63
               0: JS_IDENTIFIER_BINDING@61..63
                 0: IDENT@61..63 "a" [] [Whitespace(" ")]
@@ -343,9 +343,9 @@ JsModule {
       0: IMPORT_KW@81..89 "import" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@89..106
         0: (empty)
-        1: JS_NAMED_IMPORT_SPECIFIER_LIST@89..98
+        1: JS_NAMED_IMPORT_SPECIFIERS@89..98
           0: L_CURLY@89..91 "{" [] [Whitespace(" ")]
-          1: LIST@91..96
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@91..96
             0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@91..92
               0: JS_IDENTIFIER_BINDING@91..92
                 0: IDENT@91..92 "a" [] []
@@ -363,9 +363,9 @@ JsModule {
       0: IMPORT_KW@107..115 "import" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@115..135
         0: (empty)
-        1: JS_NAMED_IMPORT_SPECIFIER_LIST@115..127
+        1: JS_NAMED_IMPORT_SPECIFIERS@115..127
           0: L_CURLY@115..117 "{" [] [Whitespace(" ")]
-          1: LIST@117..125
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@117..125
             0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@117..125
               0: JS_UNKNOWN_BINDING@117..125
                 0: DEFAULT_KW@117..125 "default" [] [Whitespace(" ")]
@@ -379,9 +379,9 @@ JsModule {
       0: IMPORT_KW@136..144 "import" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@144..160
         0: (empty)
-        1: JS_NAMED_IMPORT_SPECIFIER_LIST@144..152
+        1: JS_NAMED_IMPORT_SPECIFIERS@144..152
           0: L_CURLY@144..146 "{" [] [Whitespace(" ")]
-          1: LIST@146..150
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@146..150
             0: JS_UNKNOWN_NAMED_IMPORT_SPECIFIER@146..150
               0: JS_STRING_LITERAL@146..150 "\"a\"" [] [Whitespace(" ")]
           2: R_CURLY@150..152 "}" [] [Whitespace(" ")]
@@ -394,9 +394,9 @@ JsModule {
       0: IMPORT_KW@161..169 "import" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@169..186
         0: (empty)
-        1: JS_NAMED_IMPORT_SPECIFIER_LIST@169..178
+        1: JS_NAMED_IMPORT_SPECIFIERS@169..178
           0: L_CURLY@169..171 "{" [] [Whitespace(" ")]
-          1: LIST@171..176
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@171..176
             0: JS_NAMED_IMPORT_SPECIFIER@171..176
               0: (empty)
               1: AS_KW@171..174 "as" [] [Whitespace(" ")]

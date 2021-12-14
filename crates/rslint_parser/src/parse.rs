@@ -49,7 +49,7 @@ impl<T> Parse<T> {
 	/// The syntax node represented by this Parse result
 	///
 	/// ```
-	/// use rslint_parser::{parse_text, ast::JsIfStatement, SyntaxNodeExt, SyntaxKind, AstNode};
+	/// use rslint_parser::{parse_text, ast::JsIfStatement, SyntaxNodeExt, SyntaxKind, AstNode, AstNodeList};
 	///
 	/// let parse = parse_text(
 	/// "

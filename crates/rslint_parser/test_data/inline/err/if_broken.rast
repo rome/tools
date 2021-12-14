@@ -31,8 +31,8 @@ JsModule {
 
 0: JS_MODULE@0..17
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..16
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..16
     0: JS_IF_STATEMENT@0..9
       0: IF_KW@0..3 "if" [] [Whitespace(" ")]
       1: L_PAREN@3..4 "(" [] []
@@ -48,7 +48,7 @@ JsModule {
       3: R_CURLY@12..14 "}" [] [Whitespace(" ")]
     2: JS_BLOCK_STATEMENT@14..16
       0: L_CURLY@14..15 "{" [] []
-      1: LIST@15..15
+      1: JS_STATEMENT_LIST@15..15
       2: R_CURLY@15..16 "}" [] []
   3: EOF@16..17 "" [Whitespace("\n")] []
 --

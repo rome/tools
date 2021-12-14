@@ -47,7 +47,7 @@ JsModule {
                     },
                 },
                 type_args: missing (optional),
-                arguments: ArgList {
+                arguments: JsCallArguments {
                     l_paren_token: L_PAREN@28..29 "(" [] [],
                     args: [
                         JsLogicalExpression {
@@ -71,8 +71,8 @@ JsModule {
 
 0: JS_MODULE@0..37
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..36
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..36
     0: JS_EXPRESSION_STATEMENT@0..11
       0: JS_LOGICAL_EXPRESSION@0..10
         0: JS_IDENTIFIER_EXPRESSION@0..4
@@ -103,9 +103,9 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@24..28
             0: IDENT@24..28 "foo" [Whitespace("\n")] []
         1: (empty)
-        2: ARG_LIST@28..36
+        2: JS_CALL_ARGUMENTS@28..36
           0: L_PAREN@28..29 "(" [] []
-          1: LIST@29..35
+          1: JS_CALL_ARGUMENT_LIST@29..35
             0: JS_LOGICAL_EXPRESSION@29..35
               0: JS_IDENTIFIER_EXPRESSION@29..33
                 0: JS_REFERENCE_IDENTIFIER@29..33

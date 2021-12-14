@@ -75,8 +75,6 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 			TOMBSTONE,
 			/// Marks the end of the file.May have trivia attached
 			EOF,
-			/// Polymorph list type
-			LIST,
 			#(#punctuation,)*
 			#(#all_keywords,)*
 			#(#literals,)*

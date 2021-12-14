@@ -23,7 +23,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@22..35 "constructor" [Whitespace("\n\t")] [],
                     },
-                    parameter_list: JsConstructorParameterList {
+                    parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@35..36 "(" [] [],
                         parameters: [],
                         r_paren_token: R_PAREN@36..38 ")" [] [Whitespace(" ")],
@@ -38,7 +38,7 @@ JsModule {
                                         super_token: SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] [],
                                     },
                                     type_args: missing (optional),
-                                    arguments: ArgList {
+                                    arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@47..48 "(" [] [],
                                         args: [],
                                         r_paren_token: R_PAREN@48..49 ")" [] [],
@@ -60,9 +60,9 @@ JsModule {
                         value: IDENT@53..60 "test" [Whitespace("\n\n\t")] [],
                     },
                     type_parameters: missing (optional),
-                    parameter_list: JsParameterList {
+                    parameters: JsParameters {
                         l_paren_token: L_PAREN@60..61 "(" [] [],
-                        parameters: [],
+                        items: [],
                         r_paren_token: R_PAREN@61..63 ")" [] [Whitespace(" ")],
                     },
                     return_type: missing (optional),
@@ -82,7 +82,7 @@ JsModule {
                                         },
                                     },
                                     type_args: missing (optional),
-                                    arguments: ArgList {
+                                    arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@77..78 "(" [] [],
                                         args: [
                                             JsIdentifierExpression {
@@ -129,8 +129,8 @@ JsModule {
 
 0: JS_MODULE@0..102
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..101
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..101
     0: JS_CLASS_DECLARATION@0..101
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..11
@@ -142,7 +142,7 @@ JsModule {
             0: IDENT@19..21 "B" [] [Whitespace(" ")]
       3: (empty)
       4: L_CURLY@21..22 "{" [] []
-      5: LIST@22..99
+      5: JS_CLASS_MEMBER_LIST@22..99
         0: JS_CONSTRUCTOR_CLASS_MEMBER@22..53
           0: (empty)
           1: (empty)
@@ -151,22 +151,22 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@22..35
             0: IDENT@22..35 "constructor" [Whitespace("\n\t")] []
           5: (empty)
-          6: JS_CONSTRUCTOR_PARAMETER_LIST@35..38
+          6: JS_CONSTRUCTOR_PARAMETERS@35..38
             0: L_PAREN@35..36 "(" [] []
-            1: LIST@36..36
+            1: JS_PARAMETER_LIST@36..36
             2: R_PAREN@36..38 ")" [] [Whitespace(" ")]
           7: JS_FUNCTION_BODY@38..53
             0: L_CURLY@38..39 "{" [] []
-            1: LIST@39..39
-            2: LIST@39..50
+            1: JS_DIRECTIVE_LIST@39..39
+            2: JS_STATEMENT_LIST@39..50
               0: JS_EXPRESSION_STATEMENT@39..50
                 0: CALL_EXPR@39..49
                   0: JS_SUPER_EXPRESSION@39..47
                     0: SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] []
                   1: (empty)
-                  2: ARG_LIST@47..49
+                  2: JS_CALL_ARGUMENTS@47..49
                     0: L_PAREN@47..48 "(" [] []
-                    1: LIST@48..48
+                    1: JS_CALL_ARGUMENT_LIST@48..48
                     2: R_PAREN@48..49 ")" [] []
                 1: SEMICOLON@49..50 ";" [] []
             3: R_CURLY@50..53 "}" [Whitespace("\n\t")] []
@@ -178,15 +178,15 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@53..60
             0: IDENT@53..60 "test" [Whitespace("\n\n\t")] []
           5: (empty)
-          6: JS_PARAMETER_LIST@60..63
+          6: JS_PARAMETERS@60..63
             0: L_PAREN@60..61 "(" [] []
-            1: LIST@61..61
+            1: JS_PARAMETER_LIST@61..61
             2: R_PAREN@61..63 ")" [] [Whitespace(" ")]
           7: (empty)
           8: JS_FUNCTION_BODY@63..99
             0: L_CURLY@63..64 "{" [] []
-            1: LIST@64..64
-            2: LIST@64..96
+            1: JS_DIRECTIVE_LIST@64..64
+            2: JS_STATEMENT_LIST@64..96
               0: JS_EXPRESSION_STATEMENT@64..84
                 0: CALL_EXPR@64..83
                   0: JS_STATIC_MEMBER_EXPRESSION@64..77
@@ -196,9 +196,9 @@ JsModule {
                     2: JS_NAME@73..77
                       0: IDENT@73..77 "test" [] []
                   1: (empty)
-                  2: ARG_LIST@77..83
+                  2: JS_CALL_ARGUMENTS@77..83
                     0: L_PAREN@77..78 "(" [] []
-                    1: LIST@78..82
+                    1: JS_CALL_ARGUMENT_LIST@78..82
                       0: JS_IDENTIFIER_EXPRESSION@78..79
                         0: JS_REFERENCE_IDENTIFIER@78..79
                           0: IDENT@78..79 "a" [] []

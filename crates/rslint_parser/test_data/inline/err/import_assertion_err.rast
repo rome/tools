@@ -70,7 +70,7 @@ JsModule {
             import_token: IMPORT_KW@80..88 "import" [Whitespace("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
-                named_import: JsNamedImportSpecifierList {
+                named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@88..90 "{" [] [Whitespace(" ")],
                     specifiers: [
                         JsShorthandNamedImportSpecifier {
@@ -243,8 +243,8 @@ JsModule {
 
 0: JS_MODULE@0..339
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..338
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..338
     0: JS_IMPORT@0..37
       0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
       1: JS_IMPORT_BARE_CLAUSE@7..36
@@ -253,7 +253,7 @@ JsModule {
         1: JS_IMPORT_ASSERTION@13..36
           0: ASSERT_KW@13..20 "assert" [] [Whitespace(" ")]
           1: L_CURLY@20..22 "{" [] [Whitespace(" ")]
-          2: LIST@22..35
+          2: JS_IMPORT_ASSERTION_ENTRY_LIST@22..35
             0: JS_IMPORT_ASSERTION_ENTRY@22..26
               0: IDENT@22..26 "type" [] []
               1: (empty)
@@ -279,7 +279,7 @@ JsModule {
       1: (empty)
     3: JS_BLOCK_STATEMENT@63..79
       0: L_CURLY@63..65 "{" [] [Whitespace(" ")]
-      1: LIST@65..78
+      1: JS_STATEMENT_LIST@65..78
         0: JS_LABELED_STATEMENT@65..78
           0: IDENT@65..69 "type" [] []
           1: COLON@69..71 ":" [] [Whitespace(" ")]
@@ -294,9 +294,9 @@ JsModule {
       0: IMPORT_KW@80..88 "import" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@88..119
         0: (empty)
-        1: JS_NAMED_IMPORT_SPECIFIER_LIST@88..96
+        1: JS_NAMED_IMPORT_SPECIFIERS@88..96
           0: L_CURLY@88..90 "{" [] [Whitespace(" ")]
-          1: LIST@90..94
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@90..94
             0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@90..94
               0: JS_IDENTIFIER_BINDING@90..94
                 0: IDENT@90..94 "foo" [] [Whitespace(" ")]
@@ -306,7 +306,7 @@ JsModule {
         4: JS_IMPORT_ASSERTION@96..119
           0: ASSERT_KW@96..103 "assert" [] [Whitespace(" ")]
           1: L_CURLY@103..105 "{" [] [Whitespace(" ")]
-          2: LIST@105..118
+          2: JS_IMPORT_ASSERTION_ENTRY_LIST@105..118
             0: JS_IMPORT_ASSERTION_ENTRY@105..118
               0: IDENT@105..109 "type" [] []
               1: COLON@109..111 ":" [] [Whitespace(" ")]
@@ -327,7 +327,7 @@ JsModule {
       1: (empty)
     8: JS_BLOCK_STATEMENT@141..157
       0: L_CURLY@141..143 "{" [] [Whitespace(" ")]
-      1: LIST@143..156
+      1: JS_STATEMENT_LIST@143..156
         0: JS_LABELED_STATEMENT@143..156
           0: IDENT@143..147 "type" [] []
           1: COLON@147..149 ":" [] [Whitespace(" ")]
@@ -347,7 +347,7 @@ JsModule {
         3: JS_IMPORT_ASSERTION@185..238
           0: ASSERT_KW@185..192 "assert" [] [Whitespace(" ")]
           1: L_CURLY@192..194 "{" [] [Whitespace(" ")]
-          2: LIST@194..237
+          2: JS_IMPORT_ASSERTION_ENTRY_LIST@194..237
             0: JS_IMPORT_ASSERTION_ENTRY@194..208
               0: JS_STRING_LITERAL@194..200 "\"type\"" [] []
               1: COLON@200..202 ":" [] [Whitespace(" ")]
@@ -372,7 +372,7 @@ JsModule {
         1: JS_IMPORT_ASSERTION@251..257
           0: ASSERT_KW@251..257 "assert" [] []
           1: (empty)
-          2: LIST@257..257
+          2: JS_IMPORT_ASSERTION_ENTRY_LIST@257..257
           3: (empty)
       2: SEMICOLON@257..258 ";" [] []
     11: JS_IMPORT@258..338
@@ -386,7 +386,7 @@ JsModule {
         3: JS_IMPORT_ASSERTION@286..337
           0: ASSERT_KW@286..293 "assert" [] [Whitespace(" ")]
           1: L_CURLY@293..295 "{" [] [Whitespace(" ")]
-          2: LIST@295..336
+          2: JS_IMPORT_ASSERTION_ENTRY_LIST@295..336
             0: JS_IMPORT_ASSERTION_ENTRY@295..307
               0: IDENT@295..299 "type" [] []
               1: COLON@299..301 ":" [] [Whitespace(" ")]

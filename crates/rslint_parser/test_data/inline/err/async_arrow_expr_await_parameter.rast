@@ -3,9 +3,9 @@ JsModule {
     directives: [],
     items: [
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarations: [
+                items: [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -17,7 +17,7 @@ JsModule {
                             expression: JsArrowFunctionExpression {
                                 async_token: ASYNC_KW@8..14 "async" [] [Whitespace(" ")],
                                 type_parameters: missing (optional),
-                                parameter_list: JsUnknownBinding {
+                                parameters: JsUnknownBinding {
                                     items: [
                                         IDENT@14..20 "await" [] [Whitespace(" ")],
                                     ],
@@ -43,12 +43,12 @@ JsModule {
 
 0: JS_MODULE@0..26
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..25
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..25
     0: JS_VARIABLE_STATEMENT@0..25
-      0: JS_VARIABLE_DECLARATION_LIST@0..25
+      0: JS_VARIABLE_DECLARATIONS@0..25
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: LIST@4..25
+        1: JS_VARIABLE_DECLARATION_LIST@4..25
           0: JS_VARIABLE_DECLARATION@4..25
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
@@ -65,8 +65,8 @@ JsModule {
                 4: FAT_ARROW@20..23 "=>" [] [Whitespace(" ")]
                 5: JS_FUNCTION_BODY@23..25
                   0: L_CURLY@23..24 "{" [] []
-                  1: LIST@24..24
-                  2: LIST@24..24
+                  1: JS_DIRECTIVE_LIST@24..24
+                  2: JS_STATEMENT_LIST@24..24
                   3: R_CURLY@24..25 "}" [] []
       1: (empty)
   3: EOF@25..26 "" [Whitespace("\n")] []

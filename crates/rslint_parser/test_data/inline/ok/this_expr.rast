@@ -26,8 +26,8 @@ JsModule {
 
 0: JS_MODULE@0..14
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..13
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..13
     0: JS_EXPRESSION_STATEMENT@0..4
       0: JS_THIS_EXPRESSION@0..4
         0: THIS_KW@0..4 "this" [] []

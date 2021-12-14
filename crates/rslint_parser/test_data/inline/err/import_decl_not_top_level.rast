@@ -30,11 +30,11 @@ JsModule {
 
 0: JS_MODULE@0..28
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..27
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..27
     0: JS_BLOCK_STATEMENT@0..27
       0: L_CURLY@0..1 "{" [] []
-      1: LIST@1..25
+      1: JS_STATEMENT_LIST@1..25
         0: JS_UNKNOWN_STATEMENT@1..25
           0: IMPORT_KW@1..10 "import" [Whitespace("\n ")] [Whitespace(" ")]
           1: JS_IMPORT_DEFAULT_CLAUSE@10..24

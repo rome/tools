@@ -55,8 +55,8 @@ JsModule {
 
 0: JS_MODULE@0..42
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..41
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..41
     0: JS_DO_WHILE_STATEMENT@0..41
       0: DO_KW@0..3 "do" [] [Whitespace(" ")]
       1: JS_WHILE_STATEMENT@3..41

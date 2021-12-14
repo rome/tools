@@ -682,9 +682,9 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 		}
 	}
 
-	args_list.complete(p, LIST);
+	args_list.complete(p, JS_CALL_ARGUMENT_LIST);
 	p.expect_required(T![')']);
-	m.complete(p, ARG_LIST)
+	m.complete(p, JS_CALL_ARGUMENTS)
 }
 
 // test paren_or_arrow_expr
@@ -1221,7 +1221,8 @@ pub fn template(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker
         }
 	}
 
-	elements_list.complete(p, LIST);
+	// TODO
+	elements_list.complete(p, JS_UNKNOWN_EXPRESSION);
 
 	// test_err template_literal_unterminated
 	// let a = `${foo} bar
@@ -1258,6 +1259,10 @@ impl ParseSeparatedList for ArrayElementsList {
 			&ParseRecovery::new(JS_UNKNOWN_EXPRESSION, EXPR_RECOVERY_SET),
 			js_parse_error::expected_array_element,
 		)
+	}
+
+	fn list_kind() -> SyntaxKind {
+		JS_ARRAY_ELEMENT_LIST
 	}
 
 	fn separating_element_kind(&mut self) -> SyntaxKind {

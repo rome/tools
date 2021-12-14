@@ -2,9 +2,9 @@ use crate::{
 	concat_elements, format_elements, group_elements, FormatElement, FormatResult, Formatter,
 	ToFormatElement,
 };
-use rslint_parser::ast::ArgList;
+use rslint_parser::ast::JsCallArguments;
 
-impl ToFormatElement for ArgList {
+impl ToFormatElement for JsCallArguments {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let l_bracket = formatter.format_token(&self.l_paren_token()?)?;
 		let args = concat_elements(formatter.format_separated(self.args())?);

@@ -10,7 +10,7 @@ JsModule {
                     },
                 },
                 type_args: missing (optional),
-                arguments: ArgList {
+                arguments: JsCallArguments {
                     l_paren_token: L_PAREN@3..4 "(" [] [],
                     args: [
                         JsIdentifierExpression {
@@ -38,7 +38,7 @@ JsModule {
                     },
                 },
                 type_args: missing (optional),
-                arguments: ArgList {
+                arguments: JsCallArguments {
                     l_paren_token: L_PAREN@12..13 "(" [] [],
                     args: [
                         JsIdentifierExpression {
@@ -59,9 +59,9 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: VAR_KW@17..20 "var" [] [],
-                declarations: [],
+                items: [],
             },
             semicolon_token: missing (optional),
         },
@@ -71,17 +71,17 @@ JsModule {
 
 0: JS_MODULE@0..21
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..20
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..20
     0: JS_EXPRESSION_STATEMENT@0..8
       0: CALL_EXPR@0..7
         0: JS_IDENTIFIER_EXPRESSION@0..3
           0: JS_REFERENCE_IDENTIFIER@0..3
             0: IDENT@0..3 "foo" [] []
         1: (empty)
-        2: ARG_LIST@3..7
+        2: JS_CALL_ARGUMENTS@3..7
           0: L_PAREN@3..4 "(" [] []
-          1: LIST@4..7
+          1: JS_CALL_ARGUMENT_LIST@4..7
             0: JS_IDENTIFIER_EXPRESSION@4..5
               0: JS_REFERENCE_IDENTIFIER@4..5
                 0: IDENT@4..5 "a" [] []
@@ -97,9 +97,9 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@8..12
             0: IDENT@8..12 "foo" [Whitespace("\n")] []
         1: (empty)
-        2: ARG_LIST@12..17
+        2: JS_CALL_ARGUMENTS@12..17
           0: L_PAREN@12..13 "(" [] []
-          1: LIST@13..17
+          1: JS_CALL_ARGUMENT_LIST@13..17
             0: JS_IDENTIFIER_EXPRESSION@13..14
               0: JS_REFERENCE_IDENTIFIER@13..14
                 0: IDENT@13..14 "a" [] []
@@ -110,7 +110,7 @@ JsModule {
           2: (empty)
       1: (empty)
     2: JS_VARIABLE_STATEMENT@17..20
-      0: JS_VARIABLE_DECLARATION_LIST@17..20
+      0: JS_VARIABLE_DECLARATIONS@17..20
         0: VAR_KW@17..20 "var" [] []
         1: (empty)
       1: (empty)

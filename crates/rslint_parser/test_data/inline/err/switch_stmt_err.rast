@@ -35,16 +35,7 @@ JsModule {
                     case_token: missing (required),
                     test: missing (required),
                     colon_token: missing (required),
-                    consequent: [
-                        JsUnknownStatement {
-                            items: [
-                                VAR_KW@33..37 "var" [] [Whitespace(" ")],
-                                IDENT@37..39 "i" [] [Whitespace(" ")],
-                                EQ@39..41 "=" [] [Whitespace(" ")],
-                                JS_NUMBER_LITERAL@41..43 "0" [] [Whitespace(" ")],
-                            ],
-                        },
-                    ],
+                    consequent: [],
                 },
             ],
             r_curly_token: R_CURLY@43..44 "}" [] [],
@@ -60,17 +51,7 @@ JsModule {
                     case_token: missing (required),
                     test: missing (required),
                     colon_token: missing (required),
-                    consequent: [
-                        JsUnknownStatement {
-                            items: [
-                                VAR_KW@54..58 "var" [] [Whitespace(" ")],
-                                IDENT@58..60 "i" [] [Whitespace(" ")],
-                                EQ@60..62 "=" [] [Whitespace(" ")],
-                                JS_NUMBER_LITERAL@62..63 "0" [] [],
-                                SEMICOLON@63..65 ";" [] [Whitespace(" ")],
-                            ],
-                        },
-                    ],
+                    consequent: [],
                 },
                 JsCaseClause {
                     case_token: CASE_KW@65..70 "case" [] [Whitespace(" ")],
@@ -135,8 +116,8 @@ JsModule {
 
 0: JS_MODULE@0..125
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..124
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..124
     0: JS_SWITCH_STATEMENT@0..13
       0: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")]
       1: (empty)
@@ -145,7 +126,7 @@ JsModule {
           0: IDENT@7..11 "foo" [] [Whitespace(" ")]
       3: (empty)
       4: L_CURLY@11..12 "{" [] []
-      5: LIST@12..12
+      5: JS_SWITCH_CASE_LIST@12..12
       6: R_CURLY@12..13 "}" [] []
     1: JS_SWITCH_STATEMENT@13..23
       0: SWITCH_KW@13..21 "switch" [Whitespace("\n")] [Whitespace(" ")]
@@ -153,7 +134,7 @@ JsModule {
       2: (empty)
       3: (empty)
       4: L_CURLY@21..22 "{" [] []
-      5: LIST@22..22
+      5: JS_SWITCH_CASE_LIST@22..22
       6: R_CURLY@22..23 "}" [] []
     2: JS_SWITCH_STATEMENT@23..44
       0: SWITCH_KW@23..31 "switch" [Whitespace("\n")] [Whitespace(" ")]
@@ -161,12 +142,12 @@ JsModule {
       2: (empty)
       3: (empty)
       4: L_CURLY@31..33 "{" [] [Whitespace(" ")]
-      5: LIST@33..43
+      5: JS_SWITCH_CASE_LIST@33..43
         0: JS_CASE_CLAUSE@33..43
           0: (empty)
           1: (empty)
           2: (empty)
-          3: LIST@33..43
+          3: JS_SWITCH_CASE_LIST@33..43
             0: JS_UNKNOWN_STATEMENT@33..43
               0: VAR_KW@33..37 "var" [] [Whitespace(" ")]
               1: IDENT@37..39 "i" [] [Whitespace(" ")]
@@ -179,12 +160,12 @@ JsModule {
       2: (empty)
       3: (empty)
       4: L_CURLY@52..54 "{" [] [Whitespace(" ")]
-      5: LIST@54..80
+      5: JS_SWITCH_CASE_LIST@54..80
         0: JS_CASE_CLAUSE@54..65
           0: (empty)
           1: (empty)
           2: (empty)
-          3: LIST@54..65
+          3: JS_SWITCH_CASE_LIST@54..65
             0: JS_UNKNOWN_STATEMENT@54..65
               0: VAR_KW@54..58 "var" [] [Whitespace(" ")]
               1: IDENT@58..60 "i" [] [Whitespace(" ")]
@@ -196,10 +177,10 @@ JsModule {
           1: JS_STRING_LITERAL_EXPRESSION@70..75
             0: JS_STRING_LITERAL@70..75 "\"bar\"" [] []
           2: COLON@75..77 ":" [] [Whitespace(" ")]
-          3: LIST@77..80
+          3: JS_STATEMENT_LIST@77..80
             0: JS_BLOCK_STATEMENT@77..80
               0: L_CURLY@77..78 "{" [] []
-              1: LIST@78..78
+              1: JS_STATEMENT_LIST@78..78
               2: R_CURLY@78..80 "}" [] [Whitespace(" ")]
       6: R_CURLY@80..81 "}" [] []
     4: JS_SWITCH_STATEMENT@81..124
@@ -210,24 +191,24 @@ JsModule {
           0: IDENT@90..93 "foo" [] []
       3: R_PAREN@93..95 ")" [] [Whitespace(" ")]
       4: L_CURLY@95..96 "{" [] []
-      5: LIST@96..122
+      5: JS_SWITCH_CASE_LIST@96..122
         0: JS_DEFAULT_CLAUSE@96..109
           0: DEFAULT_KW@96..105 "default" [Whitespace("\n\t")] []
           1: COLON@105..107 ":" [] [Whitespace(" ")]
-          2: LIST@107..109
+          2: JS_STATEMENT_LIST@107..109
             0: JS_BLOCK_STATEMENT@107..109
               0: L_CURLY@107..108 "{" [] []
-              1: LIST@108..108
+              1: JS_STATEMENT_LIST@108..108
               2: R_CURLY@108..109 "}" [] []
         1: JS_CASE_CLAUSE@109..122
           0: (empty)
           1: JS_UNARY_EXPRESSION@109..118
             0: DEFAULT_KW@109..118 "default" [Whitespace("\n\t")] []
           2: COLON@118..120 ":" [] [Whitespace(" ")]
-          3: LIST@120..122
+          3: JS_STATEMENT_LIST@120..122
             0: JS_BLOCK_STATEMENT@120..122
               0: L_CURLY@120..121 "{" [] []
-              1: LIST@121..121
+              1: JS_STATEMENT_LIST@121..121
               2: R_CURLY@121..122 "}" [] []
       6: R_CURLY@122..124 "}" [Whitespace("\n")] []
   3: EOF@124..125 "" [Whitespace("\n")] []
