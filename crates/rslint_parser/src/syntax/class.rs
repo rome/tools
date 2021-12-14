@@ -22,8 +22,8 @@ use rslint_syntax::{SyntaxKind, T};
 use std::ops::Range;
 
 /// Parses a class expression, e.g. let a = class {}
-pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-	parse_class(p, ClassKind::Expression).or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
+pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+	parse_class(p, ClassKind::Expression)
 }
 
 // test class_decl
@@ -44,8 +44,8 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<CompletedMa
 ///
 /// A class can be invalid if
 /// * It uses an illegal identifier name
-pub(super) fn parse_class_declaration(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-	parse_class(p, ClassKind::Declaration).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
+pub(super) fn parse_class_declaration(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+	parse_class(p, ClassKind::Declaration)
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
@@ -286,7 +286,7 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 			return Present(parse_method_class_member_body(p, member_marker)).into_valid();
 		} else if is_at_property_class_member(p, offset) {
 			parse_literal_member_name(p).ok().unwrap(); // bump declare as identifier
-			return Present(parse_property_class_member_body(p, member_marker)).into_valid();
+			return parse_property_class_member_body(p, member_marker);
 		} else {
 			// test_err class_declare_member
 			// class B { declare foo = bar }
@@ -328,8 +328,7 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 			}
 			p.bump_any();
 
-			return Present(parse_property_class_member_body(p, member_marker))
-				.into_conditional(member_is_valid);
+			return parse_property_class_member_body(p, member_marker);
 		}
 	}
 
@@ -357,7 +356,7 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 			return Present(parse_method_class_member_body(p, member_marker))
 				.into_conditional(member_is_valid);
 		} else if is_at_property_class_member(p, offset) {
-			member_is_valid = Modifiers::default()
+			Modifiers::default()
 				.set_declare(declare)
 				.set_accessibility(has_access_modifier)
 				.set_static(is_static)
@@ -365,15 +364,9 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 				.consume(p);
 
 			return if declare {
-				Present(property_declaration_class_member_body(
-					p,
-					member_marker,
-					JS_LITERAL_MEMBER_NAME,
-				))
-				.into_conditional(member_is_valid)
+				property_declaration_class_member_body(p, member_marker, JS_LITERAL_MEMBER_NAME)
 			} else {
-				Present(parse_property_class_member_body(p, member_marker))
-					.into_conditional(member_is_valid)
+				parse_property_class_member_body(p, member_marker)
 			};
 		}
 	}
@@ -563,15 +556,17 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 				parse_property_class_member_body(p, member_marker)
 			};
 
-			if is_constructor {
-				let err = p
-					.err_builder("class properties may not be called `constructor`")
-					.primary(property.range(p), "");
+			if let Present(Valid(property)) = property {
+				if is_constructor {
+					let err = p
+						.err_builder("class properties may not be called `constructor`")
+						.primary(property.range(p), "");
 
-				p.error(err);
+					p.error(err);
+				}
 			}
 
-			return Present(property).into_conditional(member_is_valid);
+			return property;
 		}
 
 		if member.kind() == JS_LITERAL_MEMBER_NAME {
@@ -688,26 +683,30 @@ fn property_declaration_class_member_body(
 	p: &mut Parser,
 	member_marker: Marker,
 	member_name_kind: SyntaxKind,
-) -> CompletedMarker {
+) -> ParsedSyntax<ConditionalSyntax> {
 	let property = parse_property_class_member_body(p, member_marker);
-	if member_name_kind == JS_PRIVATE_CLASS_MEMBER_NAME {
-		let err = p
-			.err_builder("private class properties with `declare` are invalid")
-			.primary(property.range(p), "");
+	if let Present(Valid(property)) = property {
+		if member_name_kind == JS_PRIVATE_CLASS_MEMBER_NAME {
+			let err = p
+				.err_builder("private class properties with `declare` are invalid")
+				.primary(property.range(p), "");
 
-		p.error(err);
+			p.error(err);
+		}
 	}
 
 	property
 }
 
 /// Parses the body of a property class member (anything after the member name)
-fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> CompletedMarker {
+fn parse_property_class_member_body(
+	p: &mut Parser,
+	member_marker: Marker,
+) -> ParsedSyntax<ConditionalSyntax> {
 	let parsed_syntax = optional_member_token(p);
+	let mut property_is_valid = true;
 	if let Some(optional_range) = parsed_syntax {
 		if p.at(T![!]) {
-			let m = p.start();
-
 			let range = p.cur_tok().range;
 
 			let error = p
@@ -717,14 +716,13 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Co
 
 			p.error(error);
 			p.bump_any(); // Bump ! token
-			m.complete(p, JS_UNKNOWN_EXPRESSION);
+			property_is_valid = false;
 		}
 	}
 
 	// test_err class_member_bang
 	// class B { foo!; }
 	if p.at(T![!]) {
-		let m = p.start();
 		let range = p.cur_tok().range;
 		let error = p
 			.err_builder("definite assignment assertions can only be used in TypeScript files")
@@ -732,7 +730,7 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Co
 
 		p.error(error);
 		p.bump_any(); // Bump ! token
-		m.complete(p, JS_UNKNOWN_EXPRESSION);
+		property_is_valid = false;
 	}
 
 	maybe_ts_type_annotation(p);
@@ -752,7 +750,7 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Co
 		p.error(err);
 	}
 
-	member_marker.complete(p, JS_PROPERTY_CLASS_MEMBER)
+	Present(member_marker.complete(p, JS_PROPERTY_CLASS_MEMBER)).into_conditional(property_is_valid)
 }
 
 /// Eats the ? token for optional member. Emits an error if this isn't typescript
@@ -804,8 +802,6 @@ fn parse_method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
 fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
 	optional_member_token(p);
 
-	// .or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
-	// .or_missing(p);
 	ts_parameter_types(p);
 	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_class_parameters);
 	parse_ts_return_type_if_ts(p).or_missing(p);
@@ -837,8 +833,6 @@ fn parse_constructor_class_member_body(
 				.primary(ty.range(p), "");
 
 			p.error(err);
-			// TODO: remap error to an unknown node
-			ty.change_kind(p, JS_UNKNOWN_EXPRESSION);
 		}
 	}
 

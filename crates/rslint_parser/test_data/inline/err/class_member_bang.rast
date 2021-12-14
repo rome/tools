@@ -11,19 +11,14 @@ JsModule {
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: [
-                JsPropertyClassMember {
-                    modifiers: missing (optional),
-                    access_modifier: missing (optional),
-                    abstract_token: missing (optional),
-                    static_token: missing (optional),
-                    name: JsLiteralMemberName {
-                        value: IDENT@10..13 "foo" [] [],
-                    },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
-                    value: missing (optional),
-                    semicolon_token: SEMICOLON@14..16 ";" [] [Whitespace(" ")],
+                JsUnknownMember {
+                    items: [
+                        JsLiteralMemberName {
+                            value: IDENT@10..13 "foo" [] [],
+                        },
+                        BANG@13..14 "!" [] [],
+                        SEMICOLON@14..16 ";" [] [Whitespace(" ")],
+                    ],
                 },
             ],
             r_curly_token: R_CURLY@16..17 "}" [] [],
@@ -43,7 +38,7 @@ JsModule {
       3: (empty)
       4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       5: LIST@10..16
-        0: JS_PROPERTY_CLASS_MEMBER@10..16
+        0: JS_UNKNOWN_MEMBER@10..16
           0: (empty)
           1: (empty)
           2: (empty)
@@ -51,8 +46,7 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@10..13
             0: IDENT@10..13 "foo" [] []
           5: (empty)
-          6: JS_UNKNOWN_EXPRESSION@13..14
-            0: BANG@13..14 "!" [] []
+          6: BANG@13..14 "!" [] []
           7: (empty)
           8: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
       6: R_CURLY@16..17 "}" [] []

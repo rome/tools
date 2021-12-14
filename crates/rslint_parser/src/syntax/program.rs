@@ -237,11 +237,13 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		}
 
 		if p.at(T![class]) {
-			parse_class_declaration(&mut *p.with_state(ParserState {
+			let p = &mut *p.with_state(ParserState {
 				in_default: true,
 				..p.state.clone()
-			}))
-			.unwrap();
+			});
+			parse_class_declaration(p)
+				.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
+				.unwrap();
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
 
@@ -261,7 +263,9 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	}
 
 	if !only_ty && p.at(T![class]) {
-		parse_class_declaration(p).unwrap();
+		parse_class_declaration(p)
+			.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
+			.unwrap();
 	} else if !only_ty
 		// function ...
 		&& (p.at(T![function])

@@ -11,17 +11,22 @@ JsModule {
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: [
-                JsUnknownMember {
-                    items: [
-                        TsAccessibility {
-                            private_token: missing (required),
-                            readonly_token: missing (required),
-                        },
-                        JsLiteralMemberName {
-                            value: IDENT@19..22 "foo" [] [],
-                        },
-                        SEMICOLON@22..24 ";" [] [Whitespace(" ")],
-                    ],
+                JsPropertyClassMember {
+                    modifiers: missing (optional),
+                    access_modifier: TsAccessibility {
+                        private_token: missing (required),
+                        readonly_token: missing (required),
+                    },
+                    abstract_token: missing (optional),
+                    static_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@19..22 "foo" [] [],
+                    },
+                    question_mark_token: missing (optional),
+                    excl_token: missing (optional),
+                    ty: missing (optional),
+                    value: missing (optional),
+                    semicolon_token: SEMICOLON@22..24 ";" [] [Whitespace(" ")],
                 },
             ],
             r_curly_token: R_CURLY@24..25 "}" [] [],
@@ -41,7 +46,7 @@ JsModule {
       3: (empty)
       4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       5: LIST@10..24
-        0: JS_UNKNOWN_MEMBER@10..24
+        0: JS_PROPERTY_CLASS_MEMBER@10..24
           0: (empty)
           1: (empty)
           2: (empty)

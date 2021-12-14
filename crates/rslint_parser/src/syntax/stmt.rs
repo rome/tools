@@ -179,7 +179,7 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		T![function] => {
 			parse_function_declaration(p).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
 		}
-		T![class] => parse_class_declaration(p),
+		T![class] => parse_class_declaration(p).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT),
 		T![ident] if is_at_async_function(p, LineBreak::DoCheck) => {
 			parse_function_declaration(p).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
 		}

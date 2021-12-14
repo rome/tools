@@ -196,6 +196,7 @@ pub(crate) fn parse_ts_return_type_if_ts(p: &mut Parser) -> ParsedSyntax<Complet
 
 /// Tells [is_at_async_function] if it needs to check line breaks
 #[derive(PartialEq)]
+#[repr(u8)]
 pub(super) enum LineBreak {
 	// check line breaks
 	DoCheck,
