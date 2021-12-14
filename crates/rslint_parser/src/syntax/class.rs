@@ -719,8 +719,7 @@ fn parse_property_class_member_body(
 	member_marker: Marker,
 ) -> ParsedSyntax<ConditionalSyntax> {
 	let parsed_syntax = optional_member_token(p);
-	let mut property_is_valid = true;
-	if let Some(optional_range) = parsed_syntax {
+	let mut property_is_valid = if let Ok(optional_range) = parsed_syntax {
 		if p.at(T![!]) {
 			let range = p.cur_tok().range;
 
@@ -731,9 +730,13 @@ fn parse_property_class_member_body(
 
 			p.error(error);
 			p.bump_any(); // Bump ! token
-			property_is_valid = false;
+			false
+		} else {
+			false
 		}
-	}
+	} else {
+		true
+	};
 
 	// test_err class_member_bang
 	// class B { foo!; }
@@ -769,7 +772,7 @@ fn parse_property_class_member_body(
 }
 
 /// Eats the ? token for optional member. Emits an error if this isn't typescript
-fn optional_member_token(p: &mut Parser) -> Option<Range<usize>> {
+fn optional_member_token(p: &mut Parser) -> Result<Range<usize>, ()> {
 	if p.at(T![?]) {
 		let range = p.cur_tok().range;
 		// test_err optional_member
@@ -782,10 +785,10 @@ fn optional_member_token(p: &mut Parser) -> Option<Range<usize>> {
 			p.error(err);
 		}
 		p.bump_any();
-		Some(range)
+		Ok(range)
 	} else {
 		p.missing();
-		None
+		Err(())
 	}
 }
 
@@ -815,29 +818,34 @@ fn parse_method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
 
 /// Parses the body (everything after the identifier name) of a method class member
 fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
-	optional_member_token(p);
+	let member_kind = if let Ok(_) = optional_member_token(p) {
+		JS_UNKNOWN_MEMBER
+	} else {
+		JS_METHOD_CLASS_MEMBER
+	};
 
 	ts_parameter_types(p);
 	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_class_parameters);
 	parse_ts_return_type_if_ts(p).or_missing(p);
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_class_method_body);
 
-	m.complete(p, JS_METHOD_CLASS_MEMBER)
+	m.complete(p, member_kind)
 }
 
 fn parse_constructor_class_member_body(
 	p: &mut Parser,
 	member_marker: Marker,
 ) -> ParsedSyntax<ConditionalSyntax> {
-	let mut constructor_is_valid = true;
-	if let Some(range) = optional_member_token(p) {
+	let constructor_is_valid = if let Ok(range) = optional_member_token(p) {
 		let err = p
 			.err_builder("constructors cannot be optional")
 			.primary(range, "");
 
 		p.error(err);
-		constructor_is_valid = false;
-	}
+		false
+	} else {
+		true
+	};
 
 	if p.at(T![<]) {
 		if let Some(ref mut ty) = ts_type_params(p) {
