@@ -5,7 +5,7 @@ use crate::parser::{ParsedSyntax, RecoveryResult};
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
 use crate::syntax::expr::{expr, expr_or_assignment};
 use crate::syntax::function::{
-	function_body, parse_ts_parameter_types, parse_ts_return_type_if_ts, ts_parameter_types,
+	function_body, parse_ts_parameter_types, parse_ts_return_type_if_ts,
 };
 use crate::syntax::js_parse_error;
 use crate::CompletedNodeOrMissingMarker::NodeMarker;

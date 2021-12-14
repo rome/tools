@@ -14,7 +14,7 @@ use crate::syntax::class::{parse_class_declaration, parse_initializer_clause};
 use crate::syntax::expr::{expr_or_assignment, parse_identifier};
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::expected_binding;
+use crate::syntax::js_parse_error::{expected_binding, expected_statement};
 use crate::syntax::module::parse_import;
 use crate::CompletedNodeOrMissingMarker::NodeMarker;
 use crate::JsSyntaxFeature::StrictMode;
@@ -107,11 +107,8 @@ pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
 /// If not passed, [STMT_RECOVERY_SET] will be used as recovery set
 // TODO: change return type to `ParsedSyntax` once `expr_or_assignment` returns `ParsedSyntax`
 // TODO: move error recovery to callers once `expr_with_semi_recovery` is refactored/gone
-pub fn parse_statement(
-	p: &mut Parser,
-	recovery_set: impl Into<Option<TokenSet>>,
-) -> Option<CompletedMarker> {
-	let res = match p.cur() {
+pub fn parse_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	match p.cur() {
 		// test_err import_decl_not_top_level
 		// {
 		//  import foo from "bar";
@@ -193,31 +190,6 @@ pub fn parse_statement(
 		// TODO: handle `<T>() => {};` with less of a hack
 		_ if p.at_ts(STARTS_EXPR) || p.at(T![<]) => parse_expression_statement(p),
 		_ => Absent,
-	};
-
-	match res {
-		Absent => {
-			// We must explicitly handle this case or else infinite recursion can happen
-			if p.at_ts(token_set![T!['}'], T![export]]) {
-				let err = p
-					.err_builder("Expected a statement or declaration, but found none")
-					.primary(
-						p.cur_tok().range,
-						"Expected a statement or declaration here",
-					);
-				p.err_and_bump(err, JS_UNKNOWN_STATEMENT);
-			}
-			res.or_recover(
-				p,
-				&ParseRecovery::new(
-					JS_UNKNOWN_STATEMENT,
-					recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
-				),
-				js_parse_error::expected_statement,
-			)
-			.ok()
-		}
-		Present(marker) => Some(marker),
 	}
 }
 
@@ -309,7 +281,7 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 			let labelled_statement = identifier.undo_completion(p);
 			p.bump_any();
-			parse_statement(p, None);
+			parse_statement(p).or_missing_with_error(p, expected_statement);
 
 			return Present(labelled_statement.complete(p, kind));
 		}
@@ -546,7 +518,7 @@ pub(super) fn parse_block_impl(
 		None
 	};
 
-	parse_statements(p, true, None);
+	parse_statements(p, true);
 
 	p.expect_required(T!['}']);
 
@@ -632,13 +604,7 @@ pub(crate) fn directives(p: &mut Parser) -> Option<ParserState> {
 
 /// Top level items or items inside of a block statement, this also handles module items so we can
 /// easily recover from erroneous module declarations in scripts
-pub(crate) fn parse_statements(
-	p: &mut Parser,
-	stop_on_r_curly: bool,
-	recovery_set: impl Into<Option<TokenSet>>,
-) {
-	let recovery_set = recovery_set.into();
-
+pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
 	let list_start = p.start();
 	let mut progress = ParserProgress::default();
 
@@ -648,7 +614,7 @@ pub(crate) fn parse_statements(
 			break;
 		}
 
-		parse_statement(p, recovery_set);
+		parse_statement(p).or_missing_with_error(p, expected_statement);
 	}
 
 	list_start.complete(p, LIST);
@@ -692,7 +658,7 @@ pub fn parse_if_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 	// body
 	// allows us to recover from `if (true) else {}`
-	if parse_statement(p, STMT_RECOVERY_SET.union(token_set![T![else]])).is_none() {
+	if parse_statement(p).is_absent() {
 		p.missing();
 	}
 
@@ -700,8 +666,7 @@ pub fn parse_if_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if p.at(T![else]) {
 		let else_clause = p.start();
 		p.bump_any(); // bump else
-			  // stmt(p).into_required();
-		parse_statement(p, None);
+		parse_statement(p).or_missing_with_error(p, expected_statement);
 		else_clause.complete(p, JS_ELSE_CLAUSE);
 	} else {
 		p.missing();
@@ -720,7 +685,7 @@ pub fn parse_with_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.bump_any(); // with
 	parenthesized_expression(p);
 
-	parse_statement(p, None);
+	parse_statement(p).or_missing_with_error(p, expected_statement);
 
 	let with_stmt = m.complete(p, JS_WITH_STATEMENT);
 
@@ -751,17 +716,13 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.bump_any(); // while
 	parenthesized_expression(p);
 
-	if parse_statement(
-		&mut *p.with_state(ParserState {
+	{
+		let guard = &mut *p.with_state(ParserState {
 			break_allowed: true,
 			continue_allowed: true,
 			..p.state.clone()
-		}),
-		None,
-	)
-	.is_none()
-	{
-		p.missing();
+		});
+		parse_statement(guard).or_missing_with_error(guard, expected_statement);
 	}
 
 	Present(m.complete(p, JS_WHILE_STATEMENT))
@@ -1049,17 +1010,13 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let start = p.cur_tok().range.start;
 	p.bump_any(); // do keyword
 
-	if parse_statement(
-		&mut *p.with_state(ParserState {
+	{
+		let guard = &mut *p.with_state(ParserState {
 			continue_allowed: true,
 			break_allowed: true,
 			..p.state.clone()
-		}),
-		None,
-	)
-	.is_none()
-	{
-		p.missing();
+		});
+		parse_statement(guard).or_missing_with_error(guard, expected_statement);
 	}
 
 	p.expect_required(T![while]);
@@ -1257,14 +1214,15 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.expect_required(T!['(']);
 	let kind = parse_for_head(p);
 	p.expect_required(T![')']);
-	parse_statement(
-		&mut *p.with_state(ParserState {
+
+	{
+		let guard = &mut *p.with_state(ParserState {
 			continue_allowed: true,
 			break_allowed: true,
 			..p.state.clone()
-		}),
-		None,
-	);
+		});
+		parse_statement(guard).or_missing_with_error(guard, expected_statement);
+	}
 
 	let mut completed = m.complete(p, kind);
 
@@ -1295,10 +1253,7 @@ impl ParseNodeList for SwitchClausesList {
 	type ParsedElement = CompletedMarker;
 
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-		match parse_statement(p, None) {
-			Some(stmt) => Present(stmt),
-			None => Absent,
-		}
+		parse_statement(p)
 	}
 
 	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {

@@ -32,10 +32,6 @@ JsModule {
         JsUnknownStatement {
             items: [
                 R_CURLY@10..12 "}" [] [Whitespace(" ")],
-            ],
-        },
-        JsUnknownStatement {
-            items: [
                 EQ@12..14 "=" [] [Whitespace(" ")],
             ],
         },
@@ -225,11 +221,10 @@ JsModule {
             2: (empty)
             3: (empty)
       1: (empty)
-    1: JS_UNKNOWN_STATEMENT@10..12
+    1: JS_UNKNOWN_STATEMENT@10..14
       0: R_CURLY@10..12 "}" [] [Whitespace(" ")]
-    2: JS_UNKNOWN_STATEMENT@12..14
-      0: EQ@12..14 "=" [] [Whitespace(" ")]
-    3: JS_BLOCK_STATEMENT@14..29
+      1: EQ@12..14 "=" [] [Whitespace(" ")]
+    2: JS_BLOCK_STATEMENT@14..29
       0: L_CURLY@14..16 "{" [] [Whitespace(" ")]
       1: LIST@16..28
         0: JS_LABELED_STATEMENT@16..28
@@ -240,9 +235,9 @@ JsModule {
               0: JS_STRING_LITERAL@22..28 "\"foo\"" [] [Whitespace(" ")]
             1: (empty)
       2: R_CURLY@28..29 "}" [] []
-    4: JS_EMPTY_STATEMENT@29..30
+    3: JS_EMPTY_STATEMENT@29..30
       0: SEMICOLON@29..30 ";" [] []
-    5: JS_VARIABLE_STATEMENT@30..62
+    4: JS_VARIABLE_STATEMENT@30..62
       0: JS_VARIABLE_DECLARATION_LIST@30..61
         0: LET_KW@30..35 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@35..61
@@ -270,7 +265,7 @@ JsModule {
                       0: JS_STRING_LITERAL@54..60 "\"foo\"" [] [Whitespace(" ")]
                 2: R_CURLY@60..61 "}" [] []
       1: SEMICOLON@61..62 ";" [] []
-    6: JS_VARIABLE_STATEMENT@62..94
+    5: JS_VARIABLE_STATEMENT@62..94
       0: JS_VARIABLE_DECLARATION_LIST@62..93
         0: LET_KW@62..67 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@67..93
@@ -307,7 +302,7 @@ JsModule {
                       0: JS_STRING_LITERAL@86..92 "\"foo\"" [] [Whitespace(" ")]
                 2: R_CURLY@92..93 "}" [] []
       1: SEMICOLON@93..94 ";" [] []
-    7: JS_VARIABLE_STATEMENT@94..124
+    6: JS_VARIABLE_STATEMENT@94..124
       0: JS_VARIABLE_DECLARATION_LIST@94..123
         0: LET_KW@94..99 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@99..123
@@ -354,18 +349,11 @@ error[SyntaxError]: Object and Array patterns require initializers
   │     ^^^^^ this pattern is declared, but it is not given an initialized value
 
 --
-error[SyntaxError]: Expected a statement or declaration, but found none
+error[SyntaxError]: expected a statement but instead found '} ='
   ┌─ object_binding_pattern.js:1:11
   │
 1 │ let { 5 } } = { eval: "foo" };
-  │           ^ Expected a statement or declaration here
-
---
-error[SyntaxError]: expected a statement but instead found '='
-  ┌─ object_binding_pattern.js:1:13
-  │
-1 │ let { 5 } } = { eval: "foo" };
-  │             ^ Expected a statement here
+  │           ^^^ Expected a statement here
 
 --
 error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
