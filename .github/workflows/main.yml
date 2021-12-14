@@ -22,7 +22,7 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: 1.56.1
+          toolchain: 1.57.0
           profile: minimal
           components: rustfmt
       - name: Run rustfmt
@@ -40,7 +40,7 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: 1.56.1
+          toolchain: 1.57.0
           profile: minimal
           components: clippy
       - name: Run clippy
@@ -59,7 +59,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.56.1
+          toolchain: 1.57.0
       - name: Cache
         uses: Swatinem/rust-cache@v1
       - name: Compile for tests
@@ -89,7 +89,7 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: 1.56.1
+          toolchain: 1.57.0
           profile: minimal
       - name: Cache
         uses: Swatinem/rust-cache@v1

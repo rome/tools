@@ -126,25 +126,25 @@ struct RewriteParseEventsTreeSink<'r, 'p, T> {
 
 impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 'p, T> {
 	fn token(&mut self, kind: SyntaxKind) {
-		self.reparse.token(kind, &mut self.parser);
+		self.reparse.token(kind, self.parser);
 	}
 
 	fn start_node(&mut self, kind: SyntaxKind) {
-		self.reparse.start_node(kind, &mut self.parser);
+		self.reparse.start_node(kind, self.parser);
 	}
 
 	fn finish_node(&mut self) {
-		self.reparse.finish_node(&mut self.parser);
+		self.reparse.finish_node(self.parser);
 	}
 
 	fn missing(&mut self) {
-		self.reparse.missing(&mut self.parser);
+		self.reparse.missing(self.parser);
 	}
 
 	fn errors(&mut self, _errors: Vec<ParserError>) {}
 
 	fn consume_multiple_tokens(&mut self, amount: u8, kind: SyntaxKind) {
-		self.reparse.multiple_token(amount, kind, &mut self.parser);
+		self.reparse.multiple_token(amount, kind, self.parser);
 	}
 }
 

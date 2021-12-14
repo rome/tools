@@ -1,5 +1,5 @@
 [package]
-edition = "2018"
+edition = "2021"
 name = "rslint_parser"
 version = "0.3.0"
 authors = ["RDambrosio016 <rdambrosio016@gmail.com>"]

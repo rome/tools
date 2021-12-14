@@ -25,7 +25,7 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: 1.56.1
+          toolchain: 1.57.0
           profile: minimal
       - name: Cache
         uses: Swatinem/rust-cache@v1
@@ -56,7 +56,7 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: 1.56.1
+          toolchain: 1.57.0
           profile: minimal
       - name: Cache
         uses: Swatinem/rust-cache@v1

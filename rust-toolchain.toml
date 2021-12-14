@@ -1,6 +1,6 @@
 [toolchain]
 profile = "default"
-channel = "1.56.1"
+channel = "1.57.0"
 components = ["clippy", "rustfmt"]
 targets = [
 	"x86_64-apple-darwin",
