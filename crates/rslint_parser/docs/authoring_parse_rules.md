@@ -64,16 +64,19 @@ if assignment_target.is_absent() {
 let my_node = assignment_target.precede_or_missing();
 ```
 
-But be careful with calling other rules. Your rule mustn't progress the parser if it returns `Absent`.
+But be careful with calling other rules. Your rule mustn't progress the parser - meaning that it can't
+advance in the parsing process and consume tokens - if it returns `Absent`.
 
 
 ### Parse children
 The parse rules will guide you in how to write your implementation and the parser infrastructure provides the following convenience APIs:
 
 * Optional token `'ident'?`: Use `p.eat_optional(token)`. It eats the next token if it matches the passed-in token. Adds a missing marker if the token isn't present in the source code.
-* Required token `'ident'`: Use`p.expect_required(token)`. It eats the next token if it matches the passed-in token. It adds an `Expected 'x' but found 'y' instead` error and a missing marker if the token isn't present in the source code.
+* Required token `'ident'`: Use`p.expect_required(token)`. It eats the next token if it matches the passed-in token. 
+It adds an `Expected 'x' but found 'y' instead` error and a missing marker if the token isn't present in the source code.
 * Optional node `body: JsBlockStatement?`: Use`parse_block_statement(p).or_missing(p)`. It parses the block if it is present in the source code and adds a missing marker if it isn't.
-* Required node `body: JsBlockStatement`: Use `parse_block_statement(p).or_missing_with_error(p, error_builder)`: It parses the block statement if it is present in the source code and adds a missing marker and an error if not.
+* Required node `body: JsBlockStatement`: Use `parse_block_statement(p).or_missing_with_error(p, error_builder)`:
+it parses the block statement if it is present in the source code and adds a missing marker and an error if not.
 
 Using the above-described rules result in the following implementation for the `if` statement rule.
 
@@ -90,24 +93,46 @@ fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
  parse_any_expression(p).or_missing_with_error(p, js_parse_errors::expeced_if_statement);
  p.expect_required(T![')']);
  parse_block_statement(p).or_missing_with_error(p, js_parse_errors::expected_block_statement);
+// the else block is optional, so we mark it as "missing" in case it's absent
  parse_else_clause(p).or_missing();
 
  Present(m.complete(p, JS_IF_STATEMENT));
 }
 ```
 
-Hold on, what are these *missing* markers? Rome's AST facade uses fixed offsets to retrieve a particular child from a node. For example, the 3rd child of the if statement is the condition. However, the condition would become the second element if the opening parentheses `(` isn't present in the source text. That's where missing elements come into play. Missing elements (added by calling `p.missing()`) represent placeholders for syntax that isn't present in the source text to guarantee that the children always appear in the same order.
+Hold on, what are these *missing* markers? Rome's AST facade uses fixed offsets to retrieve a particular child from a node. 
+For example, the 3rd child of the if statement is the condition. However, the condition would become the second element 
+if the opening parentheses `(` isn't present in the source text. That's where missing elements come into play. 
+Missing elements (added by calling `p.missing()`) represent placeholders for syntax that isn't present in the source text to guarantee that the children always appear in the same order.
 
 ## Parsing Lists & Error Recovery
 
-Parsing lists is different from parsing single elements with a fixed set of children because it requires looping until the parser reaches a terminal token (or the end of the file).
+Parsing lists is different from parsing single elements with a fixed set of children because it requires looping until 
+the parser reaches a terminal token (or the end of the file).
 
-You may remember that `parse_*` methods shouldn't progress parsing if they return `Absent`. Not progressing the parser is problematic inside `while` loops because it inevitably results in an infinite loop.
+You may remember that `parse_*` methods shouldn't progress parsing if they return `Absent`. 
+Not progressing the parser is problematic inside `while` loops because it inevitably results in an infinite loop.
 
 That's why you must do error recovery when parsing lists. Luckily, the parser comes with the infrastructure to make error recovery a piece of cake.
 The general structure for parsing a list is (yes, that's something the parser infrastructure should provide for you):
 
+
+Let's try to parse an array: 
+
+```js
+[ 1, 3, 6 ]
+```
+
+We will use  `ParseSeparatedList` in order to achieve that
+
 ```rust
+
+struct ArrayElementsList;
+
+impl ParseSeparatedList for ArrayElementsList {
+    
+}
+
 let list = p.start();
 let mut first = true;
 
@@ -219,7 +244,7 @@ What if there's no `UNKNOWN` node matching the node of your parse rule? You must
 
 ## Summary
 
-* Pare rules are named `parse_rule_name`
+* Parse rules are named `parse_rule_name`
 * The parse rules should return a `ParsedSyntax` or `ConditinalParsedSyntax`
 * The rule must return `Present` if it consumes any token and, therefore, can parse the node with at least some of its children.
 * It returns `Absent` otherwise and must not progress parsing nor add any errors.
