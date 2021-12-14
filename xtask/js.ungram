@@ -311,10 +311,10 @@ JsThisExpression = 'this'
 JsSuperExpression = 'super'
 
 // new expression
-NewExpr = 'new' type_args:TsTypeArgs? object:JsAnyExpression arguments:ArgList
+NewExpr = 'new' object:JsAnyExpression type_args:TsTypeArgs?  arguments:ArgList
 
 // call expression
-CallExpr = type_args:TsTypeArgs? callee:JsAnyExpression arguments:ArgList
+CallExpr = callee:JsAnyExpression type_args:TsTypeArgs? arguments:ArgList
 
 
 JsAwaitExpression =

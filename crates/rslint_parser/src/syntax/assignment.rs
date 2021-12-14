@@ -4,6 +4,7 @@ use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{conditional_expr, expr, is_at_name, parse_name, unary_expr};
 use crate::syntax::js_parse_error::{expected_assignment_target, expected_identifier};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
+use crate::CompletedNodeOrMissingMarker::NodeMarker;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Parser};
 use crate::{SyntaxKind::*, *};
@@ -249,7 +250,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 		let target = parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
 			.or_missing_with_error(p, expected_assignment_target);
 
-		if let Some(mut target) = target {
+		if let NodeMarker(mut target) = target {
 			if matches!(
 				target.kind(),
 				JS_OBJECT_ASSIGNMENT_PATTERN | JS_ARRAY_ASSIGNMENT_PATTERN
@@ -377,6 +378,14 @@ impl RewriteParseEvents for ReparseAssignment {
 		}
 
 		p.bump_remap(kind);
+	}
+
+	fn missing(&mut self, p: &mut Parser) {
+		if self.parents.last().map(|(parent, _)| parent) == Some(&JS_COMPUTED_MEMBER_ASSIGNMENT) {
+			// computed member assignments can't have optional chaining, drop the missing
+		} else {
+			p.missing();
+		}
 	}
 }
 

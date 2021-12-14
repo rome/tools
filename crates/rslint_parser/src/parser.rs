@@ -17,7 +17,9 @@ use std::ops::Range;
 
 pub use parse_error::*;
 pub use parse_lists::{ParseNodeList, ParseSeparatedList};
-pub use parsed_syntax::{ConditionalSyntax, InvalidSyntax, ParsedSyntax};
+pub use parsed_syntax::{
+	CompletedNodeOrMissingMarker, ConditionalSyntax, InvalidSyntax, ParsedSyntax,
+};
 #[allow(deprecated)]
 pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
@@ -294,8 +296,10 @@ impl<'t> Parser<'t> {
 
 	/// Inserts a marker for a missing child element because the child is optional and wasn't present in the source
 	/// or it's a mandatory child that wasn't present in the source because of a syntax error.
-	pub fn missing(&mut self) {
+	pub fn missing(&mut self) -> CompletedMissingMarker {
+		let marker = CompletedMissingMarker::new(self.events.len() as u32, self.token_pos());
 		self.push_event(Event::Missing);
+		marker
 	}
 
 	fn push_event(&mut self, event: Event) {
@@ -723,6 +727,35 @@ impl CompletedMarker {
 
 	pub fn err_if_not_ts(&mut self, p: &mut Parser, err: &str) {
 		p.err_if_not_ts(self, err, SyntaxKind::ERROR);
+	}
+}
+
+/// A completed marker for an [Event::Missing]. Allows to undo the missing placeholder.
+/// This can be useful if a missing placeholder is required for some nodes but it's impossible
+/// to determine the node type at the current position.
+#[derive(Debug, PartialEq, Eq)]
+pub struct CompletedMissingMarker {
+	/// The position of this marker in the `positions` array. Guaranteed
+	/// to point to an `Event::Missing`
+	events_pos: u32,
+	/// The tokens position at the moment the missing slot was created
+	token_pos: usize,
+}
+
+impl CompletedMissingMarker {
+	fn new(events_pos: u32, token_pos: usize) -> Self {
+		CompletedMissingMarker {
+			events_pos,
+			token_pos,
+		}
+	}
+
+	/// Undoes the missing placeholder
+	pub fn undo(self, p: &mut Parser) {
+		match &mut p.events[self.events_pos as usize] {
+			event @ Event::Missing { .. } => *event = Event::tombstone(self.token_pos),
+			_ => unreachable!(),
+		}
 	}
 }
 

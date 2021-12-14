@@ -1,11 +1,52 @@
 use crate::parser::parse_recovery::RecoveryResult;
+use crate::parser::parsed_syntax::CompletedNodeOrMissingMarker::{MissingMarker, NodeMarker};
 use crate::parser::ConditionalSyntax::{Invalid, Valid};
 use crate::parser::ParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, Marker, Parser, SyntaxFeature};
+use crate::{CompletedMarker, CompletedMissingMarker, Marker, Parser, SyntaxFeature};
 use rslint_errors::{Diagnostic, Span};
 use rslint_syntax::SyntaxKind;
 use std::ops::Range;
+
+#[derive(Debug, Eq, PartialEq)]
+pub enum CompletedNodeOrMissingMarker {
+	/// Marker for a completed node
+	NodeMarker(CompletedMarker),
+	/// Marker for a completed missing/empty slot
+	MissingMarker(CompletedMissingMarker),
+}
+
+impl CompletedNodeOrMissingMarker {
+	/// Returns `true` if this is a [MissingMarker]
+	pub fn is_missing_marker(&self) -> bool {
+		matches!(self, MissingMarker(_))
+	}
+
+	/// Returns `true` if this is a [NodeMarker]
+	pub fn is_node_marker(&self) -> bool {
+		matches!(self, NodeMarker(_))
+	}
+
+	/// Returns the kind of the completed node if this is a [NodeMarker] or [None]
+	pub fn kind(&self) -> Option<SyntaxKind> {
+		match self {
+			NodeMarker(marker) => Some(marker.kind()),
+			_ => None,
+		}
+	}
+}
+
+impl From<CompletedMarker> for CompletedNodeOrMissingMarker {
+	fn from(marker: CompletedMarker) -> Self {
+		NodeMarker(marker)
+	}
+}
+
+impl From<CompletedMissingMarker> for CompletedNodeOrMissingMarker {
+	fn from(marker: CompletedMissingMarker) -> Self {
+		MissingMarker(marker)
+	}
+}
 
 /// Syntax that is either present in the source tree or absent.
 ///
@@ -134,29 +175,25 @@ impl ParsedSyntax<CompletedMarker> {
 		self,
 		p: &mut Parser,
 		error_builder: E,
-	) -> Option<CompletedMarker>
+	) -> CompletedNodeOrMissingMarker
 	where
 		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
 	{
 		match self {
-			Present(syntax) => Some(syntax),
+			Present(syntax) => syntax.into(),
 			Absent => {
-				p.missing();
 				let diagnostic = error_builder(p, p.cur_tok().range);
 				p.error(diagnostic);
-				None
+				p.missing().into()
 			}
 		}
 	}
 
 	/// It returns the syntax if present or adds a missing marker.
-	pub fn or_missing(self, p: &mut Parser) -> Option<CompletedMarker> {
+	pub fn or_missing(self, p: &mut Parser) -> CompletedNodeOrMissingMarker {
 		match self {
-			Present(syntax) => Some(syntax),
-			Absent => {
-				p.missing();
-				None
-			}
+			Present(syntax) => syntax.into(),
+			Absent => p.missing().into(),
 		}
 	}
 
@@ -483,13 +520,10 @@ impl ParsedSyntax<ConditionalSyntax> {
 
 	/// It adds a `missing` marker if the syntax is absent and returns `Ok(None)`.
 	/// It returns [Err(InvalidSyntax)] if this syntax is [Invalid] and [Ok] if this syntax is [Valid]
-	pub fn or_missing(self, p: &mut Parser) -> Result<Option<CompletedMarker>, InvalidSyntax> {
+	pub fn or_missing(self, p: &mut Parser) -> Result<CompletedNodeOrMissingMarker, InvalidSyntax> {
 		match self {
-			Absent => {
-				p.missing();
-				Ok(None)
-			}
-			Present(Valid(marker)) => Ok(Some(marker)),
+			Absent => Ok(p.missing().into()),
+			Present(Valid(marker)) => Ok(marker.into()),
 			Present(Invalid(invalid)) => Err(invalid),
 		}
 	}
@@ -501,18 +535,16 @@ impl ParsedSyntax<ConditionalSyntax> {
 		self,
 		p: &mut Parser,
 		error_builder: E,
-	) -> Result<Option<CompletedMarker>, InvalidSyntax>
+	) -> Result<CompletedNodeOrMissingMarker, InvalidSyntax>
 	where
 		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
 	{
 		match self {
 			Absent => {
-				p.missing();
 				p.error(error_builder(p, p.cur_tok().range));
-
-				Ok(None)
+				Ok(p.missing().into())
 			}
-			Present(Valid(marker)) => Ok(Some(marker)),
+			Present(Valid(marker)) => Ok(marker.into()),
 			Present(Invalid(invalid)) => Err(invalid),
 		}
 	}

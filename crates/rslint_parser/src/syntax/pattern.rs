@@ -98,7 +98,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 		}
 
 		elements.complete(p, LIST);
-		p.expect(T![']']);
+		p.expect_required(T![']']);
 
 		Present(m.complete(p, Self::array_pattern_kind()))
 	}
