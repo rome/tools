@@ -41,22 +41,17 @@ JsModule {
       4: L_CURLY@7..8 "{" [] []
       5: LIST@8..9
         0: JS_UNKNOWN_MEMBER@8..9
-          0: (empty)
-          1: (empty)
-          2: (empty)
-          3: (empty)
-          4: (empty)
-          5: L_CURLY@8..9 "{" [] []
+          0: L_CURLY@8..9 "{" [] []
       6: R_CURLY@9..10 "}" [] []
     1: JS_UNKNOWN_STATEMENT@10..11
       0: R_CURLY@10..11 "}" [] []
   3: EOF@11..12 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
+error[SyntaxError]: expected a property , a method, a getter, or a setter but instead found '{'
   ┌─ block_stmt_in_class.js:1:9
   │
 1 │ class S{{}}
-  │         ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+  │         ^ Expected a property , a method, a getter, or a setter here
 
 --
 error[SyntaxError]: expected a statement but instead found '}'

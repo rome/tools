@@ -257,6 +257,7 @@ impl ParseNodeList for ClassMembersList {
 
 fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	let mut member_marker = p.start();
+	let checkpoint = p.checkpoint();
 	let mut member_is_valid = true;
 	// test class_empty_element
 	// class foo { ;;;;;;;;;; get foo() {};;;;}
@@ -674,13 +675,14 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		}
 	}
 
-	// if we're arrived here it means that the parser hasn't advanced, so we bump any character
-	// so the parser can advance and recover itself
+	// if we're arrived here it means that the parser hasn't advanced, so we rewind the parser
+	// so we remove also possible empty tokens we marked along the way
 
 	// test_err block_stmt_in_class
 	// class S{{}}
-	p.bump_any();
-	Present(member_marker.complete(p, JS_UNKNOWN_MEMBER)).into_invalid()
+	p.rewind(checkpoint);
+	member_marker.abandon(p);
+	Absent
 }
 
 fn property_declaration_class_member_body(
