@@ -451,10 +451,6 @@ impl AstSrc {
 		self.enums.sort_unstable_by(|a, b| a.name.cmp(&b.name));
 		self.unknowns.sort_unstable();
 
-		for node in self.nodes.iter_mut() {
-			node.fields.sort_unstable_by_key(|a| a.method_name());
-		}
-
 		for union in self.enums.iter_mut() {
 			union.variants.sort_unstable();
 		}
