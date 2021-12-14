@@ -9,7 +9,7 @@ use super::typescript::*;
 use super::util::*;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::ParserProgress;
+use crate::parser::{ParserProgress, RecoveryResult};
 use crate::syntax::assignment::{
 	expression_to_assignment, expression_to_assignment_pattern, parse_assignment,
 	AssignmentExprPrecedence,
@@ -619,7 +619,7 @@ fn is_at_identifier_name(p: &Parser) -> bool {
 ///
 /// `"(" (AssignExpr ",")* ")"`
 
-// test_err invalid_arg_LIST
+// test_err invalid_arg_list
 // foo(a,b;
 // foo(a,b var
 pub fn args(p: &mut Parser) -> CompletedMarker {
@@ -1167,6 +1167,44 @@ pub fn template(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker
 	m.complete(p, TEMPLATE)
 }
 
+struct ArrayElementsList;
+
+impl ParseSeparatedList for ArrayElementsList {
+	type ParsedElement = CompletedMarker;
+
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+		match p.cur() {
+			T![...] => Present(spread_element(p)),
+			T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
+			_ => expr_or_assignment(p).into(),
+		}
+	}
+
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		p.at(T![']'])
+	}
+
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> RecoveryResult {
+		parsed_element.or_recover(
+			p,
+			&ParseRecovery::new(JS_UNKNOWN_EXPRESSION, EXPR_RECOVERY_SET),
+			js_parse_error::expected_array_element,
+		)
+	}
+
+	fn separating_element_kind(&mut self) -> SyntaxKind {
+		T![,]
+	}
+
+	fn allow_trailing_separating_element(&self) -> bool {
+		true
+	}
+}
+
 /// An array literal such as `[foo, bar, ...baz]`.
 // test array_expr
 // [foo, bar];
@@ -1178,35 +1216,7 @@ pub fn template(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker
 pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect_required(T!['[']);
-	let elements_list = p.start();
-	let mut progress = ParserProgress::default();
-
-	while !p.at(EOF) {
-		progress.assert_progressing(p);
-
-		while p.at(T![,]) {
-			p.start().complete(p, SyntaxKind::JS_ARRAY_HOLE);
-			p.eat(T![,]);
-		}
-
-		if p.at(T![']']) {
-			break;
-		}
-
-		if p.at(T![...]) {
-			spread_element(p);
-		} else {
-			expr_or_assignment(p);
-		}
-
-		if p.at(T![']']) {
-			break;
-		}
-
-		p.expect_required(T![,]);
-	}
-	elements_list.complete(p, LIST);
-
+	ArrayElementsList.parse_list(p);
 	p.expect_required(T![']']);
 	m.complete(p, JS_ARRAY_EXPRESSION)
 }

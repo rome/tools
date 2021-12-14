@@ -13,9 +13,10 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
 	let src = r#"
-    console.log("hello world");
+let [a, b] = [1, 2];
     "#;
 
+	dbg!(parse_module(src, 0).syntax());
 	assert!(parse_module(src, 0).ok().is_ok());
 }
 

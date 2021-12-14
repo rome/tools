@@ -1,4 +1,4 @@
-use crate::parser::{ParsedSyntax, ParserProgress};
+use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
 use crate::syntax::expr::expr_or_assignment;
@@ -12,8 +12,8 @@ use crate::syntax::typescript::{
 };
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-	CompletedMarker, ConditionalSyntax, Event, Invalid, Marker, ParseRecovery, Parser, ParserState,
-	StrictMode, TokenSet, Valid,
+	CompletedMarker, ConditionalSyntax, Event, Invalid, Marker, ParseNodeList, ParseRecovery,
+	Parser, ParserState, StrictMode, TokenSet, Valid,
 };
 use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::*;
@@ -121,7 +121,7 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<CompletedMarker>
 	implements_clause(&mut guard);
 
 	guard.expect_required(T!['{']);
-	parse_class_members(&mut *guard);
+	ClassMembersList.parse_list(&mut *guard);
 	guard.expect_required(T!['}']);
 
 	Present(m.complete(&mut *guard, kind.into()))
@@ -214,18 +214,16 @@ fn extends_clause(p: &mut Parser) {
 	m.complete(p, JS_EXTENDS_CLAUSE);
 }
 
-/// Parses a list of class members
-fn parse_class_members(p: &mut Parser) {
-	let members = p.start();
+struct ClassMembersList;
 
-	let mut progress = ParserProgress::default();
-	while !p.at(EOF) && !p.at(T!['}']) {
-		progress.assert_progressing(p);
+impl ParseNodeList for ClassMembersList {
+	type ParsedElement = CompletedMarker;
 
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
 		let checkpoint = p.checkpoint();
 		let parsed_member = parse_class_member(p);
 
-		let to_recover = match parsed_member {
+		match parsed_member {
 			Valid(marker) => Present(marker),
 			// In this case we want to mark members that have errors as invalid.
 			//
@@ -238,23 +236,27 @@ fn parse_class_members(p: &mut Parser) {
 				p.rewind(checkpoint);
 				Absent
 			}
-		};
+		}
+	}
 
-		let member_recovered = to_recover.or_recover(
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		p.at(T!['}'])
+	}
+
+	fn recover(
+		&mut self,
+		p: &mut Parser,
+		parsed_element: ParsedSyntax<Self::ParsedElement>,
+	) -> RecoveryResult {
+		parsed_element.or_recover(
 			p,
 			&ParseRecovery::new(
 				JS_UNKNOWN_MEMBER,
 				token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
 			),
 			js_parse_error::expected_class_member,
-		);
-
-		if member_recovered.is_err() {
-			break;
-		}
+		)
 	}
-
-	members.complete(p, LIST);
 }
 
 fn parse_class_member(p: &mut Parser) -> ConditionalSyntax {

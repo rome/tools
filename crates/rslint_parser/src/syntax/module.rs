@@ -280,7 +280,7 @@ impl ParseSeparatedList for NamedImportSpecifierList {
 		T![,]
 	}
 
-	fn allow_trailing_comma(&self) -> bool {
+	fn allow_trailing_separating_element(&self) -> bool {
 		true
 	}
 }
@@ -394,7 +394,7 @@ impl ParseSeparatedList for ImportAssertionList {
 		T![,]
 	}
 
-	fn allow_trailing_comma(&self) -> bool {
+	fn allow_trailing_separating_element(&self) -> bool {
 		true
 	}
 }
