@@ -400,7 +400,7 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 			.or_else(|| readonly_range.clone())
 			.unwrap();
 		// test_err class_member_modifier
-		// // class A { abstract foo; }
+		// class A { abstract foo; }
 		if !p.typescript() {
 			let err = p
 				.err_builder(
@@ -537,7 +537,6 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 
 					p.error(err);
 				}
-			} else {
 			}
 
 			if has_modifier {
@@ -757,8 +756,6 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Co
 }
 
 /// Eats the ? token for optional member. Emits an error if this isn't typescript
-///
-///
 fn optional_member_token(p: &mut Parser) -> Option<Range<usize>> {
 	if p.at(T![?]) {
 		let range = p.cur_tok().range;
@@ -774,6 +771,7 @@ fn optional_member_token(p: &mut Parser) -> Option<Range<usize>> {
 		p.bump_any();
 		Some(range)
 	} else {
+		p.missing();
 		None
 	}
 }

@@ -50,10 +50,11 @@ JsModule {
           3: (empty)
           4: JS_LITERAL_MEMBER_NAME@10..13
             0: IDENT@10..13 "foo" [] []
-          5: JS_UNKNOWN_EXPRESSION@13..14
+          5: (empty)
+          6: JS_UNKNOWN_EXPRESSION@13..14
             0: BANG@13..14 "!" [] []
-          6: (empty)
-          7: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
+          7: (empty)
+          8: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
       6: R_CURLY@16..17 "}" [] []
   3: EOF@17..18 "" [Whitespace("\n")] []
 --

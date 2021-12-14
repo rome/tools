@@ -54,11 +54,12 @@ JsModule {
           3: (empty)
           4: JS_LITERAL_MEMBER_NAME@17..28
             0: IDENT@17..28 "constructor" [] []
-          5: JS_CONSTRUCTOR_PARAMETER_LIST@28..31
+          5: (empty)
+          6: JS_CONSTRUCTOR_PARAMETER_LIST@28..31
             0: L_PAREN@28..29 "(" [] []
             1: LIST@29..29
             2: R_PAREN@29..31 ")" [] [Whitespace(" ")]
-          6: JS_FUNCTION_BODY@31..34
+          7: JS_FUNCTION_BODY@31..34
             0: L_CURLY@31..32 "{" [] []
             1: LIST@32..32
             2: LIST@32..32
