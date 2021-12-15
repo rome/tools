@@ -90,12 +90,12 @@ pub(crate) fn parse_assignment(
 	// TODO remove the rewind inside of the error handle once the `unary_expr` returns a ParsedSyntax
 	let assignment_expression = match expr_kind {
 		AssignmentExprPrecedence::Unary => unary_expr(p),
-		AssignmentExprPrecedence::Conditional => conditional_expr(p),
+		AssignmentExprPrecedence::Conditional => conditional_expr(p).into(),
 		// TODO: to remove once moved to parsed syntax
-		AssignmentExprPrecedence::Any => Some(expr(p).unwrap()),
+		AssignmentExprPrecedence::Any => expr(p),
 	};
 
-	if let Some(expr) = assignment_expression {
+	if let Present(expr) = assignment_expression {
 		Present(expression_to_assignment(p, expr, checkpoint))
 	} else {
 		// Only necessary because `unary_expr` always adds a "expected an expression" error.

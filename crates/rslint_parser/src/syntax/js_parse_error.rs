@@ -172,3 +172,7 @@ pub(crate) fn expected_expression(p: &Parser, range: Range<usize>) -> Diagnostic
 pub(crate) fn expected_expression_assignment(p: &Parser, range: Range<usize>) -> Diagnostic {
 	expected_any(&["expression", "assignment"], range).to_diagnostic(p)
 }
+
+pub(crate) fn expected_unary_expression(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_node("unary expression", range).to_diagnostic(p)
+}

@@ -255,7 +255,8 @@ pub fn conditional_expr(p: &mut Parser) -> Option<CompletedMarker> {
 
 /// A binary expression such as `2 + 2` or `foo * bar + 2` or a logical expression 'a || b'
 pub fn binary_or_logical_expression(p: &mut Parser) -> Option<CompletedMarker> {
-	let left = unary_expr(p);
+	let left: Option<CompletedMarker> = unary_expr(p).into();
+
 	binary_or_logical_expression_recursive(p, left, 0)
 }
 
@@ -338,7 +339,9 @@ fn binary_or_logical_expression_recursive(
 	}
 
 	// This is a hack to allow us to effectively recover from `foo + / bar`
-	let right = if get_precedence(p.cur()).is_some() && !p.at_ts(token_set![T![-], T![+], T![<]]) {
+	let right: Option<CompletedMarker> = if get_precedence(p.cur()).is_some()
+		&& !p.at_ts(token_set![T![-], T![+], T![<]])
+	{
 		let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.token_src(&op_tok)))
             .secondary(op_tok.range, "This operator requires a right hand side value")
             .primary(p.cur_tok().range, "But this operator was encountered instead");
@@ -346,7 +349,7 @@ fn binary_or_logical_expression_recursive(
 		p.error(err);
 		None
 	} else {
-		unary_expr(p)
+		unary_expr(p).into()
 	};
 
 	if binary_or_logical_expression_recursive(
@@ -1442,8 +1445,13 @@ pub fn postfix_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	}
 }
 
+// test_err unary_expr
+// ++ ;
+// -- ;
+// -;
+
 /// A unary expression such as `!foo` or `++bar`
-pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
+pub fn unary_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	const UNARY_SINGLE: TokenSet =
 		token_set![T![delete], T![void], T![typeof], T![+], T![-], T![~], T![!]];
 
@@ -1451,8 +1459,8 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if (p.state.in_async || p.syntax.top_level_await) && p.at(T![await]) {
 		let m = p.start();
 		p.bump_any();
-		unary_expr(p);
-		return Some(m.complete(p, JS_AWAIT_EXPRESSION));
+		unary_expr(p).or_missing_with_error(p, js_parse_error::expected_unary_expression);
+		return Present(m.complete(p, JS_AWAIT_EXPRESSION));
 	}
 
 	if p.at(T![<]) {
@@ -1460,17 +1468,17 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		p.bump_any();
 		return if p.eat(T![const]) {
 			p.expect_required(T![>]);
-			unary_expr(p);
+			unary_expr(p).or_missing_with_error(p, js_parse_error::expected_unary_expression);
 			let mut res = m.complete(p, TS_CONST_ASSERTION);
 			res.err_if_not_ts(p, "const assertions can only be used in TypeScript files");
-			Some(res)
+			Present(res)
 		} else {
 			ts_type(p);
 			p.expect_required(T![>]);
-			unary_expr(p);
+			unary_expr(p).or_missing_with_error(p, js_parse_error::expected_unary_expression);
 			let mut res = m.complete(p, TS_ASSERTION);
 			res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
-			Some(res)
+			Present(res)
 		};
 	}
 
@@ -1480,7 +1488,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		parse_assignment(p, AssignmentExprPrecedence::Unary)
 			.or_missing_with_error(p, expected_simple_assignment_target);
 		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
-		return Some(complete);
+		return Present(complete);
 	}
 	if p.at(T![--]) {
 		let m = p.start();
@@ -1488,7 +1496,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		parse_assignment(p, AssignmentExprPrecedence::Unary)
 			.or_missing_with_error(p, expected_simple_assignment_target);
 		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
-		return Some(complete);
+		return Present(complete);
 	}
 
 	if p.at_ts(UNARY_SINGLE) {
@@ -1496,11 +1504,11 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		let op = p.cur();
 		p.bump_any();
 
-		let res = if let Some(unary) = unary_expr(p) {
+		let res = if let Present(unary) = unary_expr(p) {
 			unary
 		} else {
 			m.abandon(p);
-			return None;
+			return Absent;
 		};
 
 		if op == T![delete] && p.typescript() {
@@ -1515,8 +1523,8 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				}
 			}
 		}
-		return Some(m.complete(p, JS_UNARY_EXPRESSION));
+		return Present(m.complete(p, JS_UNARY_EXPRESSION));
 	}
 
-	postfix_expr(p)
+	postfix_expr(p).into()
 }

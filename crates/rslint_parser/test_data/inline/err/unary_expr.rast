@@ -1,0 +1,74 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: [],
+    items: [
+        JsExpressionStatement {
+            expression: JsPreUpdateExpression {
+                operator: PLUS2@0..3 "++" [] [Whitespace(" ")],
+                operand: missing (required),
+            },
+            semicolon_token: SEMICOLON@3..4 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsPreUpdateExpression {
+                operator: MINUS2@4..8 "--" [Whitespace("\n")] [Whitespace(" ")],
+                operand: missing (required),
+            },
+            semicolon_token: SEMICOLON@8..9 ";" [] [],
+        },
+        JsUnknownStatement {
+            items: [
+                MINUS@9..11 "-" [Whitespace("\n")] [],
+            ],
+        },
+        JsEmptyStatement {
+            semicolon_token: SEMICOLON@11..12 ";" [] [],
+        },
+    ],
+    eof_token: EOF@12..13 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..13
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..12
+    0: JS_EXPRESSION_STATEMENT@0..4
+      0: JS_PRE_UPDATE_EXPRESSION@0..3
+        0: PLUS2@0..3 "++" [] [Whitespace(" ")]
+        1: (empty)
+      1: SEMICOLON@3..4 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@4..9
+      0: JS_PRE_UPDATE_EXPRESSION@4..8
+        0: MINUS2@4..8 "--" [Whitespace("\n")] [Whitespace(" ")]
+        1: (empty)
+      1: SEMICOLON@8..9 ";" [] []
+    2: JS_UNKNOWN_STATEMENT@9..11
+      0: MINUS@9..11 "-" [Whitespace("\n")] []
+    3: JS_EMPTY_STATEMENT@11..12
+      0: SEMICOLON@11..12 ";" [] []
+  3: EOF@12..13 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: expected an identifier, or a member expression but instead found ';'
+  ┌─ unary_expr.js:1:4
+  │
+1 │ ++ ;
+  │    ^ Expected an identifier, or a member expression here
+
+--
+error[SyntaxError]: expected an identifier, or a member expression but instead found ';'
+  ┌─ unary_expr.js:2:4
+  │
+2 │ -- ;
+  │    ^ Expected an identifier, or a member expression here
+
+--
+error[SyntaxError]: expected a statement but instead found '-'
+  ┌─ unary_expr.js:3:1
+  │
+3 │ -;
+  │ ^ Expected a statement here
+
+--
+++ ;
+-- ;
+-;
