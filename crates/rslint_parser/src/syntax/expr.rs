@@ -157,7 +157,8 @@ fn assign_expr_base(p: &mut Parser) -> Option<CompletedMarker> {
 
 	let checkpoint = guard.checkpoint();
 	let target = conditional_expr(&mut *guard)?;
-	assign_expr_recursive(&mut *guard, target, checkpoint)
+	// TODO remove into
+	assign_expr_recursive(&mut *guard, target, checkpoint).into()
 }
 
 // test assign_expr
@@ -173,7 +174,7 @@ fn assign_expr_recursive(
 	p: &mut Parser,
 	target: CompletedMarker,
 	checkpoint: Checkpoint,
-) -> Option<CompletedMarker> {
+) -> ParsedSyntax<CompletedMarker> {
 	if p.at_ts(ASSIGN_TOKENS) {
 		let target = expression_to_assignment_pattern(
 			p,
@@ -184,9 +185,9 @@ fn assign_expr_recursive(
 		let m = target.precede(p);
 		p.bump_any(); // operator
 		expr_or_assignment(p);
-		Some(m.complete(p, JS_ASSIGNMENT_EXPRESSION))
+		Present(m.complete(p, JS_ASSIGNMENT_EXPRESSION))
 	} else {
-		Some(target)
+		Present(target)
 	}
 }
 
