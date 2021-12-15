@@ -421,7 +421,7 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
 	let mut elems = Vec::with_capacity(1);
 	let m = p.start();
 	if exprs {
-		lhs_expr(p);
+		lhs_expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
 	} else {
 		ts_entity_name(p, None, false);
 	}
@@ -438,7 +438,7 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
 		progress.assert_progressing(p);
 		let m = p.start();
 		if exprs {
-			lhs_expr(p);
+			lhs_expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
 		} else {
 			ts_entity_name(p, None, false);
 		}

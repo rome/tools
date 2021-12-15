@@ -387,7 +387,10 @@ fn binary_or_logical_expression_recursive(
 // new.target
 // new new new new Foo();
 // new Foo(bar, baz, 6 + 6, foo[bar] + (foo) => {} * foo?.bar)
-pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMarker> {
+
+// test_err new_exprs
+// new;
+pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax<CompletedMarker> {
 	if p.at(T![new]) {
 		// We must start the marker here and not outside or else we make
 		// a needless node if the node ends up just being a primary expr
@@ -399,18 +402,18 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 			p.bump_any();
 			p.bump_remap(T![target]);
 			let complete = m.complete(p, NEW_TARGET);
-			return Some(subscripts(p, complete, true));
+			return Present(subscripts(p, complete, true));
 		}
 
-		let complete = if let Some(expr) = member_or_new_expr(p, new_expr) {
+		let complete = if let Present(expr) = member_or_new_expr(p, new_expr) {
 			expr
 		} else {
 			m.abandon(p);
-			return None;
+			return Absent;
 		};
 		if complete.kind() == JS_ARROW_FUNCTION_EXPRESSION {
 			m.abandon(p);
-			return Some(complete);
+			return Present(complete);
 		}
 
 		if p.at(T![<]) {
@@ -436,10 +439,10 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 			// it's safe to unwrap
 			args(p).unwrap();
 			let complete = m.complete(p, NEW_EXPR);
-			return Some(subscripts(p, complete, true));
+			return Present(subscripts(p, complete, true));
 		}
 		p.missing(); // missing arguments
-		return Some(m.complete(p, NEW_EXPR));
+		return Present(m.complete(p, NEW_EXPR));
 	}
 
 	// super.foo and super[bar]
@@ -467,12 +470,15 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 				_ => unreachable!(),
 			};
 
-			return Some(subscripts(p, lhs, true));
+			return Present(subscripts(p, lhs, true));
 		}
 	}
 
-	let lhs = primary_expr(p)?;
-	Some(subscripts(p, lhs, true))
+	match primary_expr(p) {
+		None => Absent,
+		Some(lhs) => Present(subscripts(p, lhs, true)),
+	}
+	// let lhs = primary_expr(p);
 }
 
 fn super_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
@@ -1359,7 +1365,7 @@ pub fn spread_element(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 }
 
 /// A left hand side expression, either a member expression or a call expression such as `foo()`.
-pub fn lhs_expr(p: &mut Parser) -> Option<CompletedMarker> {
+pub fn lhs_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let lhs = if p.at(T![super]) && p.nth_at(1, T!['(']) {
 		let super_syntax = super_expression(p);
 		if let Present(mut super_marker) = super_syntax {
@@ -1374,45 +1380,55 @@ pub fn lhs_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			}
 		}
 
-		super_syntax.unwrap()
+		super_syntax
 	} else {
-		member_or_new_expr(p, true)?
+		member_or_new_expr(p, true)
 	};
 
-	if lhs.kind() == JS_ARROW_FUNCTION_EXPRESSION {
-		return Some(lhs);
+	if let Present(m) = lhs {
+		if m.kind() == JS_ARROW_FUNCTION_EXPRESSION {
+			return lhs;
+		}
 	}
 
-	let m = lhs.precede(p);
-	let type_args = if p.at(T![<]) {
-		let checkpoint = p.checkpoint();
-		let mut complete = try_parse_ts(p, ts_type_args);
-		if !p.at(T!['(']) {
-			p.rewind(checkpoint);
-			None
-		} else {
-			if let Some(ref mut comp) = complete {
-				comp.err_if_not_ts(p, "type arguments can only be used in TypeScript files");
+	match lhs {
+		Present(lhs) => {
+			let m = lhs.precede(p);
+			let type_args = if p.at(T![<]) {
+				let checkpoint = p.checkpoint();
+				let mut complete = try_parse_ts(p, ts_type_args);
+				if !p.at(T!['(']) {
+					p.rewind(checkpoint);
+					None
+				} else {
+					if let Some(ref mut comp) = complete {
+						comp.err_if_not_ts(
+							p,
+							"type arguments can only be used in TypeScript files",
+						);
+					}
+					complete
+				}
+			} else {
+				None
+			};
+
+			if p.at(T!['(']) || type_args.is_some() {
+				if type_args.is_none() {
+					p.missing();
+				}
+
+				// it's safe to unwrap
+				args(p).unwrap();
+				let lhs = m.complete(p, CALL_EXPR);
+				return Present(subscripts(p, lhs, false));
 			}
-			complete
-		}
-	} else {
-		None
-	};
 
-	if p.at(T!['(']) || type_args.is_some() {
-		if type_args.is_none() {
-			p.missing();
+			m.abandon(p);
+			Present(lhs)
 		}
-
-		// it's safe to unwrap
-		args(p).unwrap();
-		let lhs = m.complete(p, CALL_EXPR);
-		return Some(subscripts(p, lhs, false));
+		Absent => Absent,
 	}
-
-	m.abandon(p);
-	Some(lhs)
 }
 
 /// A postifx expression, either `LHSExpr [no linebreak] ++` or `LHSExpr [no linebreak] --`.
@@ -1422,26 +1438,31 @@ pub fn lhs_expr(p: &mut Parser) -> Option<CompletedMarker> {
 pub fn postfix_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	let checkpoint = p.checkpoint();
 	let lhs = lhs_expr(p);
-	if !p.has_linebreak_before_n(0) {
-		match p.cur() {
-			T![++] => {
-				let assignment_target = expression_to_assignment(p, lhs?, checkpoint);
-				let m = assignment_target.precede(p);
-				p.bump(T![++]);
-				let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
-				Some(complete)
+	match lhs {
+		Present(lhs) => {
+			if !p.has_linebreak_before_n(0) {
+				match p.cur() {
+					T![++] => {
+						let assignment_target = expression_to_assignment(p, lhs, checkpoint);
+						let m = assignment_target.precede(p);
+						p.bump(T![++]);
+						let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
+						Some(complete)
+					}
+					T![--] => {
+						let assignment_target = expression_to_assignment(p, lhs, checkpoint);
+						let m = assignment_target.precede(p);
+						p.bump(T![--]);
+						let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
+						Some(complete)
+					}
+					_ => lhs.into(),
+				}
+			} else {
+				lhs.into()
 			}
-			T![--] => {
-				let assignment_target = expression_to_assignment(p, lhs?, checkpoint);
-				let m = assignment_target.precede(p);
-				p.bump(T![--]);
-				let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
-				Some(complete)
-			}
-			_ => lhs,
 		}
-	} else {
-		lhs
+		Absent => None,
 	}
 }
 
