@@ -1,0 +1,18 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: pre_update_expression.js
+
+---
+# Input
+++y
+--y
+x = ++y
+x = --y
+
+---
+# Output
+++y;
+--y;
+x = ++y;
+x = --y;
+

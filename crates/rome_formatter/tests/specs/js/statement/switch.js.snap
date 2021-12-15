@@ -1,0 +1,26 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: switch.js
+
+---
+# Input
+switch (key) {
+
+	case value:
+		break;
+
+	default:
+		break;
+
+
+}
+
+---
+# Output
+switch (key) {
+	case value:
+		break;
+	default:
+		break;
+}
+

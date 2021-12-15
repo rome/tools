@@ -1,0 +1,18 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: with.js
+
+---
+# Input
+with (   b)
+
+{
+	5
+}
+
+---
+# Output
+with (b) {
+	5;
+}
+

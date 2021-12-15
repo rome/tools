@@ -1,0 +1,27 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: while_loop.js
+
+---
+# Input
+while (true) { var foo = 4 }
+
+while
+
+
+	(
+	true
+
+) { 			var foo = 4; }
+while (true) {}
+
+---
+# Output
+while (true) {
+	var foo = 4;
+}
+while (true) {
+	var foo = 4;
+}
+while (true) {}
+

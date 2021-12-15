@@ -1,0 +1,14 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: number.js
+
+---
+# Input
+1.23e4
+1000e3 // FIXME handle number with scientific notation #1294
+
+---
+# Output
+1.23e4;
+1000e3;
+
