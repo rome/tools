@@ -59,7 +59,7 @@ JsModule {
 
 0: JS_MODULE@0..52
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..51
     0: JS_WHILE_STATEMENT@0..13
       0: WHILE_KW@0..6 "while" [] [Whitespace(" ")]

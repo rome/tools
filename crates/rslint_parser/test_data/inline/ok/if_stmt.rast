@@ -97,7 +97,7 @@ JsModule {
 
 0: JS_MODULE@0..88
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..87
     0: JS_IF_STATEMENT@0..20
       0: IF_KW@0..3 "if" [] [Whitespace(" ")]

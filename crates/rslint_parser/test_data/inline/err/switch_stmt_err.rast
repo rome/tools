@@ -35,7 +35,16 @@ JsModule {
                     case_token: missing (required),
                     test: missing (required),
                     colon_token: missing (required),
-                    consequent: [],
+                    consequent: [
+                        JsUnknownStatement {
+                            items: [
+                                VAR_KW@33..37 "var" [] [Whitespace(" ")],
+                                IDENT@37..39 "i" [] [Whitespace(" ")],
+                                EQ@39..41 "=" [] [Whitespace(" ")],
+                                JS_NUMBER_LITERAL@41..43 "0" [] [Whitespace(" ")],
+                            ],
+                        },
+                    ],
                 },
             ],
             r_curly_token: R_CURLY@43..44 "}" [] [],
@@ -51,7 +60,17 @@ JsModule {
                     case_token: missing (required),
                     test: missing (required),
                     colon_token: missing (required),
-                    consequent: [],
+                    consequent: [
+                        JsUnknownStatement {
+                            items: [
+                                VAR_KW@54..58 "var" [] [Whitespace(" ")],
+                                IDENT@58..60 "i" [] [Whitespace(" ")],
+                                EQ@60..62 "=" [] [Whitespace(" ")],
+                                JS_NUMBER_LITERAL@62..63 "0" [] [],
+                                SEMICOLON@63..65 ";" [] [Whitespace(" ")],
+                            ],
+                        },
+                    ],
                 },
                 JsCaseClause {
                     case_token: CASE_KW@65..70 "case" [] [Whitespace(" ")],
@@ -116,7 +135,7 @@ JsModule {
 
 0: JS_MODULE@0..125
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..124
     0: JS_SWITCH_STATEMENT@0..13
       0: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")]
@@ -126,7 +145,7 @@ JsModule {
           0: IDENT@7..11 "foo" [] [Whitespace(" ")]
       3: (empty)
       4: L_CURLY@11..12 "{" [] []
-      5: (empty)
+      5: JS_SWITCH_CASE_LIST@12..12
       6: R_CURLY@12..13 "}" [] []
     1: JS_SWITCH_STATEMENT@13..23
       0: SWITCH_KW@13..21 "switch" [Whitespace("\n")] [Whitespace(" ")]
@@ -134,7 +153,7 @@ JsModule {
       2: (empty)
       3: (empty)
       4: L_CURLY@21..22 "{" [] []
-      5: (empty)
+      5: JS_SWITCH_CASE_LIST@22..22
       6: R_CURLY@22..23 "}" [] []
     2: JS_SWITCH_STATEMENT@23..44
       0: SWITCH_KW@23..31 "switch" [Whitespace("\n")] [Whitespace(" ")]
@@ -147,7 +166,7 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: JS_SWITCH_CASE_LIST@33..43
+          3: JS_STATEMENT_LIST@33..43
             0: JS_UNKNOWN_STATEMENT@33..43
               0: VAR_KW@33..37 "var" [] [Whitespace(" ")]
               1: IDENT@37..39 "i" [] [Whitespace(" ")]
@@ -165,7 +184,7 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: JS_SWITCH_CASE_LIST@54..65
+          3: JS_STATEMENT_LIST@54..65
             0: JS_UNKNOWN_STATEMENT@54..65
               0: VAR_KW@54..58 "var" [] [Whitespace(" ")]
               1: IDENT@58..60 "i" [] [Whitespace(" ")]

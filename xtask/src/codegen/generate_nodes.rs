@@ -447,12 +447,8 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		let list_kind = format_ident!("{}", to_upper_snake_case(name));
 		let element_type = format_ident!("{}", list.element_name);
 
-		let list_impl = quote! {
-			impl AstList for #list_name {
-				fn syntax_list(&self) -> &SyntaxList {
-					&self.syntax_list
-				}
-
+		let node_impl = quote! {
+			impl AstNode for #list_name {
 				fn can_cast(kind: SyntaxKind) -> bool {
 					kind == #list_kind
 				}
@@ -464,12 +460,20 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 						None
 					}
 				}
+
+				fn syntax(&self) -> &SyntaxNode {
+					self.syntax_list.node()
+				}
 			}
 		};
 
-		let specialized_list_impl = if list.separated {
+		let list_impl = if list.separated {
 			quote! {
-				impl AstSeparatedList<#element_type> for #list_name {}
+				impl AstSeparatedList<#element_type> for #list_name {
+					fn syntax_list(&self) -> &SyntaxList {
+						&self.syntax_list
+					}
+				}
 
 				impl Debug for #list_name {
 					fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -497,7 +501,11 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			}
 		} else {
 			quote! {
-				impl AstNodeList<#element_type> for #list_name {}
+				impl AstNodeList<#element_type> for #list_name {
+					fn syntax_list(&self) -> &SyntaxList {
+						&self.syntax_list
+					}
+				}
 
 				impl Debug for #list_name {
 					fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -527,13 +535,13 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		};
 
 		quote! {
-			#[derive(Default, Clone)]
+			#[derive(Clone, Eq, PartialEq, Hash)]
 			pub struct #list_name {
 			  syntax_list: SyntaxList,
 			}
 
+			#node_impl
 			#list_impl
-			#specialized_list_impl
 		}
 	});
 

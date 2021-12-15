@@ -36,7 +36,7 @@ JsModule {
 
 0: JS_MODULE@0..34
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..33
     0: JS_IMPORT@0..33
       0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
@@ -55,7 +55,7 @@ JsModule {
         4: JS_IMPORT_ASSERTION@27..33
           0: ASSERT_KW@27..33 "assert" [] []
           1: (empty)
-          2: (empty)
+          2: JS_IMPORT_ASSERTION_ENTRY_LIST@33..33
           3: (empty)
       2: (empty)
   3: EOF@33..34 "" [Whitespace("\n")] []

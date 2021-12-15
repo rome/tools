@@ -121,7 +121,7 @@ JsModule {
 
 0: JS_MODULE@0..112
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..111
     0: JS_TRY_STATEMENT@0..15
       0: TRY_KW@0..4 "try" [] [Whitespace(" ")]

@@ -33,7 +33,7 @@ JsScript {
 
 0: JS_SCRIPT@0..34
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_STATEMENT_LIST@0..33
     0: JS_FUNCTION_DECLARATION@0..33
       0: (empty)
@@ -51,7 +51,7 @@ JsScript {
       6: (empty)
       7: JS_FUNCTION_BODY@31..33
         0: L_CURLY@31..32 "{" [] []
-        1: (empty)
+        1: JS_DIRECTIVE_LIST@32..32
         2: JS_STATEMENT_LIST@32..32
         3: R_CURLY@32..33 "}" [] []
   3: EOF@33..34 "" [Whitespace("\n")] []

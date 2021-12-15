@@ -71,7 +71,7 @@ JsModule {
 
 0: JS_MODULE@0..21
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..20
     0: JS_EXPRESSION_STATEMENT@0..8
       0: CALL_EXPR@0..7
@@ -112,7 +112,7 @@ JsModule {
     2: JS_VARIABLE_STATEMENT@17..20
       0: JS_VARIABLE_DECLARATIONS@17..20
         0: VAR_KW@17..20 "var" [] []
-        1: (empty)
+        1: JS_VARIABLE_DECLARATION_LIST@20..20
       1: (empty)
   3: EOF@20..21 "" [Whitespace("\n")] []
 --

@@ -141,7 +141,7 @@ fn parse_common(
 ///
 /// let parse = parse_text("foo.bar[2]", 0);
 /// // Parse returns a JS Root which contains two lists, the directives and the statements, let's get the statements
-/// let stmt = parse.syntax().children().next().unwrap();
+/// let stmt = parse.syntax().children().nth(1).unwrap();
 /// // The untyped syntax node of `foo.bar[2]`, the root node is `Script`.
 /// let untyped_expr_node = stmt.first_child().unwrap();
 ///
@@ -183,7 +183,7 @@ pub fn parse_text(text: &str, file_id: usize) -> Parse<JsScript> {
 ///
 /// let parse = parse_text_lossy("foo.bar[2]", 0);
 /// // Parse returns a JS Root with two children, an empty list of directives and the list of statements, let's get the statements
-/// let stmt = parse.syntax().children().next().unwrap();
+/// let stmt = parse.syntax().children().nth(1).unwrap();
 /// // The untyped syntax node of `foo.bar[2]`, the root node is `Script`.
 /// let untyped_expr_node = stmt.first_child().unwrap();
 ///

@@ -73,7 +73,7 @@ JsModule {
 
 0: JS_MODULE@0..32
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..31
     0: JS_VARIABLE_STATEMENT@0..8
       0: JS_VARIABLE_DECLARATIONS@0..8

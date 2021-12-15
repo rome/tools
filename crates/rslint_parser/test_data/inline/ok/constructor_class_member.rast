@@ -18,7 +18,11 @@ JsModule {
                     },
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@24..25 "(" [] [],
-                        parameters: [],
+                        parameters: [
+                            JsIdentifierBinding {
+                                name_token: IDENT@25..26 "a" [] [],
+                            },
+                        ],
                         r_paren_token: R_PAREN@26..28 ")" [] [Whitespace(" ")],
                     },
                     body: JsFunctionBody {
@@ -68,7 +72,11 @@ JsModule {
                     },
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@76..77 "(" [] [],
-                        parameters: [],
+                        parameters: [
+                            JsIdentifierBinding {
+                                name_token: IDENT@77..78 "b" [] [],
+                            },
+                        ],
                         r_paren_token: R_PAREN@78..80 ")" [] [Whitespace(" ")],
                     },
                     body: JsFunctionBody {
@@ -108,7 +116,7 @@ JsModule {
 
 0: JS_MODULE@0..101
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..100
     0: JS_CLASS_DECLARATION@0..48
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
@@ -128,13 +136,13 @@ JsModule {
           5: (empty)
           6: JS_CONSTRUCTOR_PARAMETERS@24..28
             0: L_PAREN@24..25 "(" [] []
-            1: JS_PARAMETER_LIST@25..26
+            1: JS_CONSTRUCTOR_PARAMETER_LIST@25..26
               0: JS_IDENTIFIER_BINDING@25..26
                 0: IDENT@25..26 "a" [] []
             2: R_PAREN@26..28 ")" [] [Whitespace(" ")]
           7: JS_FUNCTION_BODY@28..46
             0: L_CURLY@28..29 "{" [] []
-            1: (empty)
+            1: JS_DIRECTIVE_LIST@29..29
             2: JS_STATEMENT_LIST@29..43
               0: JS_EXPRESSION_STATEMENT@29..43
                 0: JS_ASSIGNMENT_EXPRESSION@29..42
@@ -169,13 +177,13 @@ JsModule {
           5: (empty)
           6: JS_CONSTRUCTOR_PARAMETERS@76..80
             0: L_PAREN@76..77 "(" [] []
-            1: JS_PARAMETER_LIST@77..78
+            1: JS_CONSTRUCTOR_PARAMETER_LIST@77..78
               0: JS_IDENTIFIER_BINDING@77..78
                 0: IDENT@77..78 "b" [] []
             2: R_PAREN@78..80 ")" [] [Whitespace(" ")]
           7: JS_FUNCTION_BODY@80..98
             0: L_CURLY@80..81 "{" [] []
-            1: (empty)
+            1: JS_DIRECTIVE_LIST@81..81
             2: JS_STATEMENT_LIST@81..95
               0: JS_EXPRESSION_STATEMENT@81..95
                 0: JS_ASSIGNMENT_EXPRESSION@81..94

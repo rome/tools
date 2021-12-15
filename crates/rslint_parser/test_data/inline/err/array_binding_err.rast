@@ -166,7 +166,7 @@ JsModule {
 
 0: JS_MODULE@0..89
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..88
     0: JS_VARIABLE_STATEMENT@0..19
       0: JS_VARIABLE_DECLARATIONS@0..18
@@ -267,7 +267,7 @@ JsModule {
                   1: EQ@83..85 "=" [] [Whitespace(" ")]
                   2: JS_ARRAY_EXPRESSION@85..87
                     0: L_BRACK@85..86 "[" [] []
-                    1: (empty)
+                    1: JS_ARRAY_ELEMENT_LIST@86..86
                     2: R_BRACK@86..87 "]" [] []
                 1: (empty)
               2: (empty)

@@ -82,7 +82,7 @@ JsScript {
 
 0: JS_SCRIPT@0..65
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_STATEMENT_LIST@0..64
     0: JS_FUNCTION_DECLARATION@0..64
       0: (empty)
@@ -103,7 +103,7 @@ JsScript {
       6: (empty)
       7: JS_FUNCTION_BODY@28..64
         0: L_CURLY@28..29 "{" [] []
-        1: (empty)
+        1: JS_DIRECTIVE_LIST@29..29
         2: JS_STATEMENT_LIST@29..62
           0: JS_WITH_STATEMENT@29..62
             0: WITH_KW@29..36 "with" [Whitespace("\n\t")] [Whitespace(" ")]

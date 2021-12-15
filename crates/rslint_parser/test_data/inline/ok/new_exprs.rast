@@ -171,7 +171,7 @@ JsModule {
 
 0: JS_MODULE@0..113
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..112
     0: JS_EXPRESSION_STATEMENT@0..9
       0: NEW_EXPR@0..9
@@ -275,7 +275,7 @@ JsModule {
                   4: FAT_ARROW@95..98 "=>" [] [Whitespace(" ")]
                   5: JS_FUNCTION_BODY@98..101
                     0: L_CURLY@98..99 "{" [] []
-                    1: (empty)
+                    1: JS_DIRECTIVE_LIST@99..99
                     2: JS_STATEMENT_LIST@99..99
                     3: R_CURLY@99..101 "}" [] [Whitespace(" ")]
                 1: STAR@101..103 "*" [] [Whitespace(" ")]

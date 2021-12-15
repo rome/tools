@@ -58,7 +58,7 @@ pub trait ParseNodeList {
 	fn parse_list(&mut self, p: &mut Parser) {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
-		let mut empty = true;
+
 		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
@@ -67,16 +67,9 @@ pub trait ParseNodeList {
 			if self.recover(p, parsed_element).is_err() {
 				break;
 			}
-
-			empty = false;
 		}
 
-		if empty {
-			elements.abandon(p);
-			p.missing();
-		} else {
-			self.finish_list(p, elements);
-		}
+		self.finish_list(p, elements);
 	}
 }
 
@@ -149,7 +142,7 @@ pub trait ParseSeparatedList {
 	/// # Panics
 	///
 	/// It panics if the parser doesn't advance at each cycle of the loop
-	fn parse_list(&mut self, p: &mut Parser) -> Option<CompletedMarker> {
+	fn parse_list(&mut self, p: &mut Parser) -> CompletedMarker {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
 		let mut first = true;
@@ -176,12 +169,6 @@ pub trait ParseSeparatedList {
 				break;
 			}
 		}
-		if first {
-			elements.abandon(p);
-			p.missing();
-			None
-		} else {
-			Some(self.finish_list(p, elements))
-		}
+		self.finish_list(p, elements)
 	}
 }

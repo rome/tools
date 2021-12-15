@@ -174,7 +174,7 @@ JsModule {
 
 0: JS_MODULE@0..212
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..211
     0: JS_VARIABLE_STATEMENT@0..211
       0: JS_VARIABLE_DECLARATIONS@0..211
@@ -199,7 +199,7 @@ JsModule {
                     4: (empty)
                     5: JS_FUNCTION_BODY@21..40
                       0: L_CURLY@21..22 "{" [] []
-                      1: (empty)
+                      1: JS_DIRECTIVE_LIST@22..22
                       2: JS_STATEMENT_LIST@22..37
                         0: JS_RETURN_STATEMENT@22..37
                           0: RETURN_KW@22..33 "return" [Whitespace("\n   ")] [Whitespace(" ")]
@@ -218,7 +218,7 @@ JsModule {
                     4: (empty)
                     5: JS_FUNCTION_BODY@56..76
                       0: L_CURLY@56..57 "{" [] []
-                      1: (empty)
+                      1: JS_DIRECTIVE_LIST@57..57
                       2: JS_STATEMENT_LIST@57..73
                         0: JS_RETURN_STATEMENT@57..73
                           0: RETURN_KW@57..67 "return" [Whitespace("\n\t ")] [Whitespace(" ")]
@@ -243,7 +243,7 @@ JsModule {
                     4: (empty)
                     5: JS_FUNCTION_BODY@98..121
                       0: L_CURLY@98..99 "{" [] []
-                      1: (empty)
+                      1: JS_DIRECTIVE_LIST@99..99
                       2: JS_STATEMENT_LIST@99..118
                         0: JS_RETURN_STATEMENT@99..118
                           0: RETURN_KW@99..109 "return" [Whitespace("\n\t ")] [Whitespace(" ")]
@@ -265,7 +265,7 @@ JsModule {
                     4: (empty)
                     5: JS_FUNCTION_BODY@133..149
                       0: L_CURLY@133..134 "{" [] []
-                      1: (empty)
+                      1: JS_DIRECTIVE_LIST@134..134
                       2: JS_STATEMENT_LIST@134..146
                         0: JS_RETURN_STATEMENT@134..146
                           0: RETURN_KW@134..144 "return" [Whitespace("\n\t ")] [Whitespace(" ")]
@@ -287,7 +287,7 @@ JsModule {
                     5: (empty)
                     6: JS_FUNCTION_BODY@159..209
                       0: L_CURLY@159..160 "{" [] []
-                      1: (empty)
+                      1: JS_DIRECTIVE_LIST@160..160
                       2: JS_STATEMENT_LIST@160..206
                         0: JS_RETURN_STATEMENT@160..206
                           0: RETURN_KW@160..170 "return" [Whitespace("\n\t ")] [Whitespace(" ")]

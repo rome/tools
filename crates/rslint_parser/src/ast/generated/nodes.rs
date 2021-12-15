@@ -12320,12 +12320,11 @@ impl std::fmt::Debug for JsUnknownStatement {
 			.finish()
 	}
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct ExportNamedSpecifierList {
 	syntax_list: SyntaxList,
 }
-impl AstList for ExportNamedSpecifierList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for ExportNamedSpecifierList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_NAMED_SPECIFIER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<ExportNamedSpecifierList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12336,8 +12335,11 @@ impl AstList for ExportNamedSpecifierList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<Specifier> for ExportNamedSpecifierList {}
+impl AstSeparatedList<Specifier> for ExportNamedSpecifierList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for ExportNamedSpecifierList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -12353,12 +12355,11 @@ impl IntoIterator for &ExportNamedSpecifierList {
 	type IntoIter = AstSeparatedListNodesIterator<Specifier>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsArrayAssignmentPatternElementList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsArrayAssignmentPatternElementList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsArrayAssignmentPatternElementList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsArrayAssignmentPatternElementList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12369,8 +12370,11 @@ impl AstList for JsArrayAssignmentPatternElementList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<JsAnyArrayAssignmentPatternElement> for JsArrayAssignmentPatternElementList {}
+impl AstSeparatedList<JsAnyArrayAssignmentPatternElement> for JsArrayAssignmentPatternElementList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsArrayAssignmentPatternElementList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -12386,12 +12390,11 @@ impl IntoIterator for &JsArrayAssignmentPatternElementList {
 	type IntoIter = AstSeparatedListNodesIterator<JsAnyArrayAssignmentPatternElement>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsArrayBindingPatternElementList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsArrayBindingPatternElementList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsArrayBindingPatternElementList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsArrayBindingPatternElementList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12402,8 +12405,11 @@ impl AstList for JsArrayBindingPatternElementList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<JsAnyArrayBindingPatternElement> for JsArrayBindingPatternElementList {}
+impl AstSeparatedList<JsAnyArrayBindingPatternElement> for JsArrayBindingPatternElementList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsArrayBindingPatternElementList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -12419,12 +12425,11 @@ impl IntoIterator for &JsArrayBindingPatternElementList {
 	type IntoIter = AstSeparatedListNodesIterator<JsAnyArrayBindingPatternElement>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsArrayElementList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsArrayElementList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsArrayElementList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_ELEMENT_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsArrayElementList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12435,8 +12440,11 @@ impl AstList for JsArrayElementList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<JsAnyArrayElement> for JsArrayElementList {}
+impl AstSeparatedList<JsAnyArrayElement> for JsArrayElementList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsArrayElementList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -12452,12 +12460,11 @@ impl IntoIterator for &JsArrayElementList {
 	type IntoIter = AstSeparatedListNodesIterator<JsAnyArrayElement>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsCallArgumentList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsCallArgumentList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsCallArgumentList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CALL_ARGUMENT_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsCallArgumentList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12468,8 +12475,11 @@ impl AstList for JsCallArgumentList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<JsAnyExpression> for JsCallArgumentList {}
+impl AstSeparatedList<JsAnyExpression> for JsCallArgumentList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsCallArgumentList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -12485,12 +12495,11 @@ impl IntoIterator for &JsCallArgumentList {
 	type IntoIter = AstSeparatedListNodesIterator<JsAnyExpression>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsClassMemberList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsClassMemberList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsClassMemberList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CLASS_MEMBER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsClassMemberList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12501,8 +12510,11 @@ impl AstList for JsClassMemberList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<JsAnyClassMember> for JsClassMemberList {}
+impl AstNodeList<JsAnyClassMember> for JsClassMemberList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsClassMemberList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.iter()).finish()
@@ -12518,12 +12530,11 @@ impl IntoIterator for JsClassMemberList {
 	type IntoIter = AstNodeListIterator<JsAnyClassMember>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsConstructorParameterList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsConstructorParameterList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsConstructorParameterList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONSTRUCTOR_PARAMETER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsConstructorParameterList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12534,8 +12545,11 @@ impl AstList for JsConstructorParameterList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<JsAnyConstructorParameter> for JsConstructorParameterList {}
+impl AstSeparatedList<JsAnyConstructorParameter> for JsConstructorParameterList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsConstructorParameterList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -12551,12 +12565,11 @@ impl IntoIterator for &JsConstructorParameterList {
 	type IntoIter = AstSeparatedListNodesIterator<JsAnyConstructorParameter>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsDirectiveList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsDirectiveList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsDirectiveList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DIRECTIVE_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsDirectiveList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12567,8 +12580,11 @@ impl AstList for JsDirectiveList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<JsDirective> for JsDirectiveList {}
+impl AstNodeList<JsDirective> for JsDirectiveList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsDirectiveList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.iter()).finish()
@@ -12584,12 +12600,11 @@ impl IntoIterator for JsDirectiveList {
 	type IntoIter = AstNodeListIterator<JsDirective>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsImportAssertionEntryList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsImportAssertionEntryList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsImportAssertionEntryList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_ASSERTION_ENTRY_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsImportAssertionEntryList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12600,8 +12615,11 @@ impl AstList for JsImportAssertionEntryList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<JsAnyImportAssertionEntry> for JsImportAssertionEntryList {}
+impl AstSeparatedList<JsAnyImportAssertionEntry> for JsImportAssertionEntryList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsImportAssertionEntryList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -12617,12 +12635,11 @@ impl IntoIterator for &JsImportAssertionEntryList {
 	type IntoIter = AstSeparatedListNodesIterator<JsAnyImportAssertionEntry>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsModuleItemList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsModuleItemList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsModuleItemList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_MODULE_ITEM_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsModuleItemList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12633,8 +12650,11 @@ impl AstList for JsModuleItemList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<JsAnyModuleItem> for JsModuleItemList {}
+impl AstNodeList<JsAnyModuleItem> for JsModuleItemList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsModuleItemList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.iter()).finish()
@@ -12650,12 +12670,11 @@ impl IntoIterator for JsModuleItemList {
 	type IntoIter = AstNodeListIterator<JsAnyModuleItem>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsNamedImportSpecifierList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsNamedImportSpecifierList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsNamedImportSpecifierList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NAMED_IMPORT_SPECIFIER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsNamedImportSpecifierList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12666,8 +12685,11 @@ impl AstList for JsNamedImportSpecifierList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<JsAnyNamedImportSpecifier> for JsNamedImportSpecifierList {}
+impl AstSeparatedList<JsAnyNamedImportSpecifier> for JsNamedImportSpecifierList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsNamedImportSpecifierList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -12683,12 +12705,11 @@ impl IntoIterator for &JsNamedImportSpecifierList {
 	type IntoIter = AstSeparatedListNodesIterator<JsAnyNamedImportSpecifier>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsObjectAssignmentPatternPropertyList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsObjectAssignmentPatternPropertyList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsObjectAssignmentPatternPropertyList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsObjectAssignmentPatternPropertyList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12699,10 +12720,12 @@ impl AstList for JsObjectAssignmentPatternPropertyList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
 impl AstSeparatedList<JsAnyObjectAssignmentPatternMember>
 	for JsObjectAssignmentPatternPropertyList
 {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for JsObjectAssignmentPatternPropertyList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -12719,12 +12742,11 @@ impl IntoIterator for &JsObjectAssignmentPatternPropertyList {
 	type IntoIter = AstSeparatedListNodesIterator<JsAnyObjectAssignmentPatternMember>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsObjectBindingPatternPropertyList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsObjectBindingPatternPropertyList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsObjectBindingPatternPropertyList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsObjectBindingPatternPropertyList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12735,8 +12757,11 @@ impl AstList for JsObjectBindingPatternPropertyList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<JsAnyObjectBindingPatternMember> for JsObjectBindingPatternPropertyList {}
+impl AstSeparatedList<JsAnyObjectBindingPatternMember> for JsObjectBindingPatternPropertyList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsObjectBindingPatternPropertyList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -12752,12 +12777,11 @@ impl IntoIterator for &JsObjectBindingPatternPropertyList {
 	type IntoIter = AstSeparatedListNodesIterator<JsAnyObjectBindingPatternMember>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsObjectMemberList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsObjectMemberList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsObjectMemberList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_MEMBER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsObjectMemberList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12768,8 +12792,11 @@ impl AstList for JsObjectMemberList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<JsAnyObjectMember> for JsObjectMemberList {}
+impl AstSeparatedList<JsAnyObjectMember> for JsObjectMemberList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsObjectMemberList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -12785,12 +12812,11 @@ impl IntoIterator for &JsObjectMemberList {
 	type IntoIter = AstSeparatedListNodesIterator<JsAnyObjectMember>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsParameterList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsParameterList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsParameterList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARAMETER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsParameterList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12801,8 +12827,11 @@ impl AstList for JsParameterList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<JsAnyParameter> for JsParameterList {}
+impl AstSeparatedList<JsAnyParameter> for JsParameterList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsParameterList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -12818,12 +12847,11 @@ impl IntoIterator for &JsParameterList {
 	type IntoIter = AstSeparatedListNodesIterator<JsAnyParameter>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsStatementList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsStatementList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsStatementList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATEMENT_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsStatementList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12834,8 +12862,11 @@ impl AstList for JsStatementList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<JsAnyStatement> for JsStatementList {}
+impl AstNodeList<JsAnyStatement> for JsStatementList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsStatementList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.iter()).finish()
@@ -12851,12 +12882,11 @@ impl IntoIterator for JsStatementList {
 	type IntoIter = AstNodeListIterator<JsAnyStatement>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsSwitchCaseList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsSwitchCaseList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsSwitchCaseList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SWITCH_CASE_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsSwitchCaseList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12867,8 +12897,11 @@ impl AstList for JsSwitchCaseList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<JsAnySwitchClause> for JsSwitchCaseList {}
+impl AstNodeList<JsAnySwitchClause> for JsSwitchCaseList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsSwitchCaseList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.iter()).finish()
@@ -12884,12 +12917,11 @@ impl IntoIterator for JsSwitchCaseList {
 	type IntoIter = AstNodeListIterator<JsAnySwitchClause>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsVariableDeclarationList {
 	syntax_list: SyntaxList,
 }
-impl AstList for JsVariableDeclarationList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for JsVariableDeclarationList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsVariableDeclarationList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12900,8 +12932,11 @@ impl AstList for JsVariableDeclarationList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<JsVariableDeclaration> for JsVariableDeclarationList {}
+impl AstSeparatedList<JsVariableDeclaration> for JsVariableDeclarationList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for JsVariableDeclarationList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -12917,12 +12952,11 @@ impl IntoIterator for &JsVariableDeclarationList {
 	type IntoIter = AstSeparatedListNodesIterator<JsVariableDeclaration>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsEnumMemberList {
 	syntax_list: SyntaxList,
 }
-impl AstList for TsEnumMemberList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for TsEnumMemberList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ENUM_MEMBER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<TsEnumMemberList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12933,8 +12967,11 @@ impl AstList for TsEnumMemberList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<TsEnumMember> for TsEnumMemberList {}
+impl AstNodeList<TsEnumMember> for TsEnumMemberList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for TsEnumMemberList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.iter()).finish()
@@ -12950,12 +12987,11 @@ impl IntoIterator for TsEnumMemberList {
 	type IntoIter = AstNodeListIterator<TsEnumMember>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsObjectMemberList {
 	syntax_list: SyntaxList,
 }
-impl AstList for TsObjectMemberList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for TsObjectMemberList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_OBJECT_MEMBER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<TsObjectMemberList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12966,8 +13002,11 @@ impl AstList for TsObjectMemberList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<TsTypeElement> for TsObjectMemberList {}
+impl AstNodeList<TsTypeElement> for TsObjectMemberList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for TsObjectMemberList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.iter()).finish()
@@ -12983,12 +13022,11 @@ impl IntoIterator for TsObjectMemberList {
 	type IntoIter = AstNodeListIterator<TsTypeElement>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsTypeArgList {
 	syntax_list: SyntaxList,
 }
-impl AstList for TsTypeArgList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for TsTypeArgList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ARG_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<TsTypeArgList> {
 		if Self::can_cast(syntax.kind()) {
@@ -12999,8 +13037,11 @@ impl AstList for TsTypeArgList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<TsType> for TsTypeArgList {}
+impl AstSeparatedList<TsType> for TsTypeArgList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for TsTypeArgList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -13016,12 +13057,11 @@ impl IntoIterator for &TsTypeArgList {
 	type IntoIter = AstSeparatedListNodesIterator<TsType>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsTypeList {
 	syntax_list: SyntaxList,
 }
-impl AstList for TsTypeList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for TsTypeList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<TsTypeList> {
 		if Self::can_cast(syntax.kind()) {
@@ -13032,8 +13072,11 @@ impl AstList for TsTypeList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<TsExprWithTypeArgs> for TsTypeList {}
+impl AstSeparatedList<TsExprWithTypeArgs> for TsTypeList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for TsTypeList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()
@@ -13049,12 +13092,11 @@ impl IntoIterator for &TsTypeList {
 	type IntoIter = AstSeparatedListNodesIterator<TsExprWithTypeArgs>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-#[derive(Default, Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsTypeParamList {
 	syntax_list: SyntaxList,
 }
-impl AstList for TsTypeParamList {
-	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+impl AstNode for TsTypeParamList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_PARAM_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<TsTypeParamList> {
 		if Self::can_cast(syntax.kind()) {
@@ -13065,8 +13107,11 @@ impl AstList for TsTypeParamList {
 			None
 		}
 	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<TsTypeParam> for TsTypeParamList {}
+impl AstSeparatedList<TsTypeParam> for TsTypeParamList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
 impl Debug for TsTypeParamList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		f.debug_list().entries(self.elements()).finish()

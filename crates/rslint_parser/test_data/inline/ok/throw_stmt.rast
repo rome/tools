@@ -37,7 +37,7 @@ JsModule {
 
 0: JS_MODULE@0..36
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..35
     0: JS_THROW_STATEMENT@0..23
       0: THROW_KW@0..6 "throw" [] [Whitespace(" ")]

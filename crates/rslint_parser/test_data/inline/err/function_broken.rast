@@ -55,7 +55,7 @@ JsModule {
 
 0: JS_MODULE@0..26
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..25
     0: JS_FUNCTION_DECLARATION@0..14
       0: (empty)

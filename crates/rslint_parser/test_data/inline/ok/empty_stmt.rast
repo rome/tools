@@ -11,7 +11,7 @@ JsModule {
 
 0: JS_MODULE@0..2
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..1
     0: JS_EMPTY_STATEMENT@0..1
       0: SEMICOLON@0..1 ";" [] []

@@ -87,7 +87,7 @@ JsModule {
 
 0: JS_MODULE@0..51
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..50
     0: JS_VARIABLE_STATEMENT@0..22
       0: JS_VARIABLE_DECLARATIONS@0..22
@@ -111,7 +111,7 @@ JsModule {
               0: EQ@18..20 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@20..22
                 0: L_CURLY@20..21 "{" [] []
-                1: (empty)
+                1: JS_OBJECT_MEMBER_LIST@21..21
                 2: R_CURLY@21..22 "}" [] []
       1: (empty)
     1: JS_VARIABLE_STATEMENT@22..50
@@ -140,7 +140,7 @@ JsModule {
               0: EQ@46..48 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@48..50
                 0: L_CURLY@48..49 "{" [] []
-                1: (empty)
+                1: JS_OBJECT_MEMBER_LIST@49..49
                 2: R_CURLY@49..50 "}" [] []
       1: (empty)
   3: EOF@50..51 "" [Whitespace("\n")] []

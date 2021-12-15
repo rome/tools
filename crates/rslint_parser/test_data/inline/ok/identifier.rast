@@ -16,7 +16,7 @@ JsModule {
 
 0: JS_MODULE@0..5
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..4
     0: JS_EXPRESSION_STATEMENT@0..4
       0: JS_IDENTIFIER_EXPRESSION@0..3

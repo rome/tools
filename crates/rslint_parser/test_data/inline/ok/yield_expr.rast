@@ -62,7 +62,7 @@ JsModule {
 
 0: JS_MODULE@0..53
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..52
     0: JS_FUNCTION_DECLARATION@0..52
       0: (empty)
@@ -78,7 +78,7 @@ JsModule {
       6: (empty)
       7: JS_FUNCTION_BODY@16..52
         0: L_CURLY@16..17 "{" [] []
-        1: (empty)
+        1: JS_DIRECTIVE_LIST@17..17
         2: JS_STATEMENT_LIST@17..50
           0: JS_EXPRESSION_STATEMENT@17..29
             0: JS_YIELD_EXPRESSION@17..28

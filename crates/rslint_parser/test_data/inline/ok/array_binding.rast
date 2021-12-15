@@ -238,7 +238,7 @@ JsModule {
 
 0: JS_MODULE@0..138
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..137
     0: JS_VARIABLE_STATEMENT@0..12
       0: JS_VARIABLE_DECLARATIONS@0..11
@@ -333,7 +333,7 @@ JsModule {
               0: EQ@81..83 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@83..85
                 0: L_BRACK@83..84 "[" [] []
-                1: (empty)
+                1: JS_ARRAY_ELEMENT_LIST@84..84
                 2: R_BRACK@84..85 "]" [] []
       1: (empty)
     4: JS_VARIABLE_STATEMENT@85..109
@@ -360,7 +360,7 @@ JsModule {
               0: EQ@105..107 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@107..109
                 0: L_BRACK@107..108 "[" [] []
-                1: (empty)
+                1: JS_ARRAY_ELEMENT_LIST@108..108
                 2: R_BRACK@108..109 "]" [] []
       1: (empty)
     5: JS_VARIABLE_STATEMENT@109..137
@@ -395,7 +395,7 @@ JsModule {
               0: EQ@133..135 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@135..137
                 0: L_BRACK@135..136 "[" [] []
-                1: (empty)
+                1: JS_ARRAY_ELEMENT_LIST@136..136
                 2: R_BRACK@136..137 "]" [] []
       1: (empty)
   3: EOF@137..138 "" [Whitespace("\n")] []

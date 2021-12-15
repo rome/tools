@@ -101,7 +101,7 @@ JsModule {
 
 0: JS_MODULE@0..72
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..71
     0: JS_VARIABLE_STATEMENT@0..17
       0: JS_VARIABLE_DECLARATIONS@0..16
@@ -119,7 +119,7 @@ JsModule {
                 1: (empty)
                 2: (empty)
                 3: L_CURLY@14..15 "{" [] []
-                4: (empty)
+                4: JS_CLASS_MEMBER_LIST@15..15
                 5: R_CURLY@15..16 "}" [] []
       1: SEMICOLON@16..17 ";" [] []
     1: JS_VARIABLE_STATEMENT@17..57
@@ -151,11 +151,11 @@ JsModule {
                     5: (empty)
                     6: JS_CONSTRUCTOR_PARAMETERS@50..53
                       0: L_PAREN@50..51 "(" [] []
-                      1: JS_PARAMETER_LIST@51..51
+                      1: JS_CONSTRUCTOR_PARAMETER_LIST@51..51
                       2: R_PAREN@51..53 ")" [] [Whitespace(" ")]
                     7: JS_FUNCTION_BODY@53..55
                       0: L_CURLY@53..54 "{" [] []
-                      1: (empty)
+                      1: JS_DIRECTIVE_LIST@54..54
                       2: JS_STATEMENT_LIST@54..54
                       3: R_CURLY@54..55 "}" [] []
                 6: R_CURLY@55..57 "}" [Whitespace("\n")] []
@@ -172,7 +172,7 @@ JsModule {
           1: (empty)
           2: (empty)
           3: L_CURLY@68..69 "{" [] []
-          4: (empty)
+          4: JS_CLASS_MEMBER_LIST@69..69
           5: R_CURLY@69..70 "}" [] []
         4: R_BRACK@70..71 "]" [] []
       1: (empty)

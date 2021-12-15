@@ -120,7 +120,7 @@ JsModule {
 
 0: JS_MODULE@0..116
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..115
     0: JS_FUNCTION_DECLARATION@0..76
       0: ASYNC_KW@0..6 "async" [] [Whitespace(" ")]
@@ -136,7 +136,7 @@ JsModule {
       6: (empty)
       7: JS_FUNCTION_BODY@22..76
         0: L_CURLY@22..23 "{" [] []
-        1: (empty)
+        1: JS_DIRECTIVE_LIST@23..23
         2: JS_STATEMENT_LIST@23..74
           0: JS_EXPRESSION_STATEMENT@23..39
             0: JS_AWAIT_EXPRESSION@23..38
@@ -195,7 +195,7 @@ JsModule {
       6: (empty)
       7: JS_FUNCTION_BODY@101..115
         0: L_CURLY@101..102 "{" [] []
-        1: (empty)
+        1: JS_DIRECTIVE_LIST@102..102
         2: JS_STATEMENT_LIST@102..113
           0: JS_RETURN_STATEMENT@102..113
             0: RETURN_KW@102..111 "return" [Whitespace("\n\t")] [Whitespace(" ")]

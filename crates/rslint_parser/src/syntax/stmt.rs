@@ -804,7 +804,7 @@ enum VariableDeclarationParent {
 fn parse_variable_declarations(
 	p: &mut Parser,
 	declaration_parent: VariableDeclarationParent,
-) -> ParsedSyntax<(Option<CompletedMarker>, Option<Range<usize>>)> {
+) -> ParsedSyntax<(CompletedMarker, Option<Range<usize>>)> {
 	let mut context = VariableDeclarationContext::new(declaration_parent);
 
 	match p.cur() {
@@ -1066,11 +1066,9 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 		let is_of = p.cur_src() == "of";
 
 		if is_in || is_of {
-			if let Some(declarations_list) = declarations {
-				// remove the intermediate list node created by parse variable declarations that is not needed
-				// for a ForInOrOfInitializer where the variable declaration is a direct child.
-				declarations_list.undo_completion(p).abandon(p);
-			}
+			// remove the intermediate list node created by parse variable declarations that is not needed
+			// for a ForInOrOfInitializer where the variable declaration is a direct child.
+			declarations.undo_completion(p).abandon(p);
 
 			if let Some(additional_declarations_range) = additional_declarations {
 				p.error(
@@ -1422,7 +1420,7 @@ impl ParseNodeList for SwitchCasesList {
 
 			match recovered_element {
 				Ok(marker) => {
-					statements.complete(p, JS_SWITCH_CASE_LIST);
+					statements.complete(p, JS_STATEMENT_LIST);
 					m.complete(p, JS_CASE_CLAUSE);
 					Ok(marker)
 				}

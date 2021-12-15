@@ -296,7 +296,7 @@ JsModule {
 
 0: JS_MODULE@0..197
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..196
     0: FOR_STMT@0..39
       0: FOR_KW@0..4 "for" [] [Whitespace(" ")]
@@ -308,7 +308,7 @@ JsModule {
       6: FOR_STMT_UPDATE@7..9
         0: JS_OBJECT_EXPRESSION@7..9
           0: L_CURLY@7..8 "{" [] []
-          1: (empty)
+          1: JS_OBJECT_MEMBER_LIST@8..8
           2: R_CURLY@8..9 "}" [] []
       7: (empty)
       8: FOR_STMT@9..39
@@ -390,7 +390,7 @@ JsModule {
       4: FOR_STMT_TEST@78..80
         0: JS_ARRAY_EXPRESSION@78..80
           0: L_BRACK@78..79 "[" [] []
-          1: (empty)
+          1: JS_ARRAY_ELEMENT_LIST@79..79
           2: R_BRACK@79..80 "]" [] []
       5: (empty)
       6: (empty)
@@ -424,7 +424,7 @@ JsModule {
       4: OF_KW@103..106 "of" [] [Whitespace(" ")]
       5: JS_ARRAY_EXPRESSION@106..108
         0: L_BRACK@106..107 "[" [] []
-        1: (empty)
+        1: JS_ARRAY_ELEMENT_LIST@107..107
         2: R_BRACK@107..108 "]" [] []
       6: R_PAREN@108..110 ")" [] [Whitespace(" ")]
       7: JS_BLOCK_STATEMENT@110..112
@@ -446,7 +446,7 @@ JsModule {
       4: IN_KW@130..133 "in" [] [Whitespace(" ")]
       5: JS_ARRAY_EXPRESSION@133..135
         0: L_BRACK@133..134 "[" [] []
-        1: (empty)
+        1: JS_ARRAY_ELEMENT_LIST@134..134
         2: R_BRACK@134..135 "]" [] []
       6: R_PAREN@135..137 ")" [] [Whitespace(" ")]
       7: JS_BLOCK_STATEMENT@137..139

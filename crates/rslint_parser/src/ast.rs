@@ -82,21 +82,14 @@ impl<N: AstNode> Iterator for AstChildren<N> {
 	}
 }
 
-pub trait AstList {
-	fn syntax_list(&self) -> &SyntaxList;
-
-	fn can_cast(kind: SyntaxKind) -> bool;
-
-	fn cast(node: SyntaxNode) -> Option<Self>
-	where
-		Self: Sized;
-}
-
 /// List of homogenous nodes
-pub trait AstNodeList<N>: AstList
+pub trait AstNodeList<N>
 where
 	N: AstNode,
 {
+	/// Returns the underlying syntax list
+	fn syntax_list(&self) -> &SyntaxList;
+
 	fn iter(&self) -> AstNodeListIterator<N> {
 		AstNodeListIterator {
 			inner: self.syntax_list().iter(),
@@ -212,10 +205,13 @@ impl<N: Debug> Debug for AstSeparatedElement<N> {
 /// even if they are missing from the source code. For example, a list for `a b` where the `,` separator
 /// is missing contains the slots `Node(a), Empty, Node(b)`. This also applies for missing nodes:
 /// the list for `, b,` must have the slots `Empty, Token(,), Node(b), Token(,)`.
-pub trait AstSeparatedList<N>: AstList
+pub trait AstSeparatedList<N>
 where
 	N: AstNode,
 {
+	/// Returns the underlying syntax list
+	fn syntax_list(&self) -> &SyntaxList;
+
 	/// Returns an iterator over all nodes with their trailing separator
 	fn elements(&self) -> AstSeparatedListElementsIterator<N> {
 		AstSeparatedListElementsIterator::new(self.syntax_list())
@@ -278,7 +274,7 @@ where
 #[derive(Debug, Clone)]
 pub struct AstSeparatedListElementsIterator<N> {
 	slots: SyntaxSlots,
-	parent: Option<SyntaxNode>,
+	parent: SyntaxNode,
 	ph: PhantomData<N>,
 }
 
@@ -286,7 +282,7 @@ impl<N: AstNode> AstSeparatedListElementsIterator<N> {
 	fn new(list: &SyntaxList) -> Self {
 		Self {
 			slots: list.iter(),
-			parent: list.node().cloned(),
+			parent: list.node().clone(),
 			ph: PhantomData,
 		}
 	}
@@ -303,14 +299,14 @@ impl<N: AstNode> Iterator for AstSeparatedListElementsIterator<N> {
 			SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
 			// Missing element
 			SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild(
-					self.parent.as_ref().unwrap().clone(),
+					self.parent.clone(),
 				)),
 			SyntaxSlot::Node(node) => Ok(node.to::<N>())
 		};
 
 		let separator = match self.slots.next() {
 			Some(SyntaxSlot::Empty) => Err(
-				SyntaxError::MissingRequiredChild(self.parent.as_ref().unwrap().clone()),
+				SyntaxError::MissingRequiredChild(self.parent.clone()),
 			),
 			Some(SyntaxSlot::Token(token)) => Ok(Some(token)),
 			// End of list, no trailing separator
@@ -362,7 +358,7 @@ impl std::fmt::Display for SyntaxError {
 
 mod support {
 	use super::{AstNode, SyntaxKind, SyntaxNode, SyntaxToken};
-	use crate::ast::{AstChildren, AstList, DebugSyntaxElement};
+	use crate::ast::{AstChildren, DebugSyntaxElement};
 	use crate::SyntaxElementChildren;
 	use crate::{SyntaxError, SyntaxResult};
 	use std::fmt::{Debug, Formatter};
@@ -383,8 +379,8 @@ mod support {
 		AstChildren::new(parent)
 	}
 
-	pub(super) fn list<L: AstList + Default>(parent: &SyntaxNode) -> L {
-		parent.children().find_map(L::cast).unwrap_or_default()
+	pub(super) fn list<L: AstNode>(parent: &SyntaxNode) -> L {
+		parent.children().find_map(L::cast).unwrap()
 	}
 
 	pub(super) fn token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
@@ -463,8 +459,8 @@ mod support {
 
 #[cfg(test)]
 mod tests {
-	use crate::ast::{AstList, AstSeparatedElement, AstSeparatedList, JsNumberLiteralExpression};
-	use crate::{JsLanguage, SyntaxKind, SyntaxNode, SyntaxResult};
+	use crate::ast::{AstSeparatedElement, AstSeparatedList, JsNumberLiteralExpression};
+	use crate::{AstNode, JsLanguage, SyntaxKind, SyntaxNode, SyntaxResult};
 	use rome_rowan::{SyntaxList, TreeBuilder};
 
 	struct TestList {
@@ -477,24 +473,28 @@ mod tests {
 		}
 	}
 
-	impl AstList for TestList {
+	impl AstSeparatedList<JsNumberLiteralExpression> for TestList {
 		fn syntax_list(&self) -> &crate::SyntaxList {
 			&self.syntax_list
 		}
+	}
 
+	impl AstNode for TestList {
 		fn can_cast(_: SyntaxKind) -> bool {
-			false
+			unimplemented!()
 		}
 
 		fn cast(_: SyntaxNode) -> Option<Self>
 		where
 			Self: Sized,
 		{
-			None
+			unimplemented!()
+		}
+
+		fn syntax(&self) -> &SyntaxNode {
+			self.syntax_list.node()
 		}
 	}
-
-	impl AstSeparatedList<JsNumberLiteralExpression> for TestList {}
 
 	/// Creates a ast separated list over a sequence of numbers separated by ",".
 	/// The elements are pairs of: (value, separator).

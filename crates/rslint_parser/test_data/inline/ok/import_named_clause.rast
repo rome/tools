@@ -160,7 +160,7 @@ JsModule {
 
 0: JS_MODULE@0..159
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..158
     0: JS_IMPORT@0..19
       0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
@@ -168,7 +168,7 @@ JsModule {
         0: (empty)
         1: JS_NAMED_IMPORT_SPECIFIERS@7..10
           0: L_CURLY@7..8 "{" [] []
-          1: (empty)
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@8..8
           2: R_CURLY@8..10 "}" [] [Whitespace(" ")]
         2: FROM_KW@10..15 "from" [] [Whitespace(" ")]
         3: JS_MODULE_SOURCE@15..18

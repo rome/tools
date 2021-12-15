@@ -82,7 +82,7 @@ JsModule {
 
 0: JS_MODULE@0..69
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..68
     0: JS_EXPRESSION_STATEMENT@0..6
       0: JS_UNKNOWN_EXPRESSION@0..5
@@ -110,7 +110,7 @@ JsModule {
       6: (empty)
       7: JS_FUNCTION_BODY@41..43
         0: L_CURLY@41..42 "{" [] []
-        1: (empty)
+        1: JS_DIRECTIVE_LIST@42..42
         2: JS_STATEMENT_LIST@42..42
         3: R_CURLY@42..43 "}" [] []
     3: JS_FUNCTION_DECLARATION@43..68
@@ -129,7 +129,7 @@ JsModule {
       6: (empty)
       7: JS_FUNCTION_BODY@66..68
         0: L_CURLY@66..67 "{" [] []
-        1: (empty)
+        1: JS_DIRECTIVE_LIST@67..67
         2: JS_STATEMENT_LIST@67..67
         3: R_CURLY@67..68 "}" [] []
   3: EOF@68..69 "" [Whitespace("\n")] []

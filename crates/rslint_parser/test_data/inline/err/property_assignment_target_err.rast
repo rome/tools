@@ -165,7 +165,7 @@ JsModule {
 
 0: JS_MODULE@0..74
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..73
     0: JS_EXPRESSION_STATEMENT@0..12
       0: JS_PARENTHESIZED_EXPRESSION@0..11
@@ -184,7 +184,7 @@ JsModule {
           1: EQ@6..8 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@8..10
             0: L_CURLY@8..9 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@9..9
             2: R_CURLY@9..10 "}" [] []
         2: R_PAREN@10..11 ")" [] []
       1: SEMICOLON@11..12 ";" [] []
@@ -206,7 +206,7 @@ JsModule {
           1: EQ@19..21 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@21..23
             0: L_CURLY@21..22 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@22..22
             2: R_CURLY@22..23 "}" [] []
         2: R_PAREN@23..24 ")" [] []
       1: SEMICOLON@24..25 ";" [] []
@@ -229,7 +229,7 @@ JsModule {
           1: EQ@38..40 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@40..42
             0: L_CURLY@40..41 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@41..41
             2: R_CURLY@41..42 "}" [] []
         2: R_PAREN@42..43 ")" [] []
       1: SEMICOLON@43..44 ";" [] []
@@ -250,7 +250,7 @@ JsModule {
           1: EQ@51..53 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@53..55
             0: L_CURLY@53..54 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@54..54
             2: R_CURLY@54..55 "}" [] []
         2: R_PAREN@55..56 ")" [] []
       1: SEMICOLON@56..57 ";" [] []
@@ -274,7 +274,7 @@ JsModule {
           1: EQ@67..69 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@69..71
             0: L_CURLY@69..70 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@70..70
             2: R_CURLY@70..71 "}" [] []
         2: R_PAREN@71..72 ")" [] []
       1: SEMICOLON@72..73 ";" [] []

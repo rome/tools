@@ -251,7 +251,7 @@ JsModule {
 
 0: JS_MODULE@0..198
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..197
     0: JS_EXPRESSION_STATEMENT@0..21
       0: JS_ASSIGNMENT_EXPRESSION@0..20
@@ -373,7 +373,7 @@ JsModule {
           1: EQ@138..140 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@140..142
             0: L_CURLY@140..141 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@141..141
             2: R_CURLY@141..142 "}" [] []
         2: R_PAREN@142..143 ")" [] []
       1: SEMICOLON@143..144 ";" [] []
@@ -416,7 +416,7 @@ JsModule {
           1: EQ@191..193 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@193..195
             0: L_CURLY@193..194 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@194..194
             2: R_CURLY@194..195 "}" [] []
         2: R_PAREN@195..196 ")" [] []
       1: SEMICOLON@196..197 ";" [] []

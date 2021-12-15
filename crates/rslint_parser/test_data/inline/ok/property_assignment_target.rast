@@ -266,7 +266,7 @@ JsModule {
 
 0: JS_MODULE@0..141
   0: (empty)
-  1: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..140
     0: JS_EXPRESSION_STATEMENT@0..10
       0: JS_PARENTHESIZED_EXPRESSION@0..9
@@ -283,7 +283,7 @@ JsModule {
           1: EQ@4..6 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@6..8
             0: L_CURLY@6..7 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@7..7
             2: R_CURLY@7..8 "}" [] []
         2: R_PAREN@8..9 ")" [] []
       1: SEMICOLON@9..10 ";" [] []
@@ -305,7 +305,7 @@ JsModule {
           1: EQ@18..20 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@20..22
             0: L_CURLY@20..21 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@21..21
             2: R_CURLY@21..22 "}" [] []
         2: R_PAREN@22..23 ")" [] []
       1: SEMICOLON@23..24 ";" [] []
@@ -342,7 +342,7 @@ JsModule {
           1: EQ@41..43 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@43..45
             0: L_CURLY@43..44 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@44..44
             2: R_CURLY@44..45 "}" [] []
         2: R_PAREN@45..46 ")" [] []
       1: SEMICOLON@46..47 ";" [] []
@@ -370,7 +370,7 @@ JsModule {
           1: EQ@59..61 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@61..63
             0: L_CURLY@61..62 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@62..62
             2: R_CURLY@62..63 "}" [] []
         2: R_PAREN@63..64 ")" [] []
       1: SEMICOLON@64..65 ";" [] []
@@ -398,7 +398,7 @@ JsModule {
           1: EQ@85..87 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@87..89
             0: L_CURLY@87..88 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@88..88
             2: R_CURLY@88..89 "}" [] []
         2: R_PAREN@89..90 ")" [] []
       1: SEMICOLON@90..91 ";" [] []
@@ -420,7 +420,7 @@ JsModule {
           1: EQ@108..110 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@110..112
             0: L_CURLY@110..111 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@111..111
             2: R_CURLY@111..112 "}" [] []
         2: R_PAREN@112..113 ")" [] []
       1: SEMICOLON@113..114 ";" [] []
@@ -445,7 +445,7 @@ JsModule {
           1: EQ@134..136 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@136..138
             0: L_CURLY@136..137 "{" [] []
-            1: (empty)
+            1: JS_OBJECT_MEMBER_LIST@137..137
             2: R_CURLY@137..138 "}" [] []
         2: R_PAREN@138..139 ")" [] []
       1: SEMICOLON@139..140 ";" [] []
