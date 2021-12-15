@@ -1,0 +1,44 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: [],
+    items: [
+        JsExpressionStatement {
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@0..1 "[" [] [],
+                elements: [
+                    JsSpread {
+                        dotdotdot_token: DOT2@1..4 "..." [] [],
+                        argument: missing (required),
+                    },
+                ],
+                r_brack_token: R_BRACK@4..5 "]" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@5..6 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..6
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..5
+    0: JS_EXPRESSION_STATEMENT@0..5
+      0: JS_ARRAY_EXPRESSION@0..5
+        0: L_BRACK@0..1 "[" [] []
+        1: LIST@1..4
+          0: JS_SPREAD@1..4
+            0: DOT2@1..4 "..." [] []
+            1: (empty)
+        2: R_BRACK@4..5 "]" [] []
+      1: (empty)
+  3: EOF@5..6 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ spread.js:1:5
+  │
+1 │ [...]
+  │     ^ Expected an expression here
+
+--
+[...]

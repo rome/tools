@@ -88,6 +88,7 @@ JsModule {
               0: EQ@6..7 "=" [] []
               1: JS_UNKNOWN_EXPRESSION@7..8
                 0: SEMICOLON@7..8 ";" [] []
+              2: (empty)
       1: (empty)
     1: JS_VARIABLE_STATEMENT@8..21
       0: JS_VARIABLE_DECLARATIONS@8..21
@@ -124,6 +125,13 @@ error[SyntaxError]: Expected an expression, but found none
   │
 1 │ var a =;
   │        ^ Expected an expression here
+
+--
+error[SyntaxError]: expected an expression, or an assignment but instead found 'const'
+  ┌─ var_decl_err.js:2:1
+  │
+2 │ const a = 5 let b = 5;
+  │ ^^^^^ Expected an expression, or an assignment here
 
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none

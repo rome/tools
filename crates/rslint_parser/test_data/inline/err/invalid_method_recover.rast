@@ -144,6 +144,7 @@ JsModule {
                             0: EQ@37..38 "=" [] []
                             1: JS_UNKNOWN_EXPRESSION@38..39
                               0: SEMICOLON@38..39 ";" [] []
+                            2: (empty)
                     1: (empty)
                 3: R_CURLY@39..43 "}" [Whitespace("\n  ")] []
           10: SEMICOLON@43..44 ";" [] []
@@ -164,6 +165,13 @@ error[SyntaxError]: Expected an expression, but found none
   │
 3 │     let a=;
   │           ^ Expected an expression here
+
+--
+error[SyntaxError]: expected an expression, or an assignment but instead found '}'
+  ┌─ invalid_method_recover.js:4:3
+  │
+4 │   };
+  │   ^ Expected an expression, or an assignment here
 
 --
 class {

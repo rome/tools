@@ -246,6 +246,7 @@ JsModule {
                 2: (empty)
                 3: JS_INITIALIZER_CLAUSE@48..49
                   0: EQ@48..49 "=" [] []
+                  1: (empty)
             2: R_CURLY@49..51 "}" [] [Whitespace(" ")]
           1: EQ@51..53 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@53..55

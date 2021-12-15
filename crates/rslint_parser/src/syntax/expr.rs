@@ -171,6 +171,13 @@ fn assign_expr_base(p: &mut Parser) -> Option<CompletedMarker> {
 // [,,,foo,bar] = baz;
 // ({ bar, baz } = {});
 // ({ bar: [baz = "baz"], foo = "foo", ...rest } = {});
+
+// test_err assign_expr_right
+// (foo = );
+
+// TODO: review the left missing expression, the green tree might be better
+// test_err assign_expr_left
+// ( = foo);
 fn assign_expr_recursive(
 	p: &mut Parser,
 	target: CompletedMarker,
@@ -185,7 +192,8 @@ fn assign_expr_recursive(
 		);
 		let m = target.precede(p);
 		p.bump_any(); // operator
-		expr_or_assignment(p);
+		expr_or_assignment(p)
+			.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 		Present(m.complete(p, JS_ASSIGNMENT_EXPRESSION))
 	} else {
 		Present(target)
@@ -223,17 +231,23 @@ pub fn conditional_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	// test_err conditional_expr_err
 	// foo ? bar baz
 	// foo ? bar baz ? foo : bar
+	// foo ? bar :
 	let lhs = binary_or_logical_expression(p);
 
 	if p.at(T![?]) {
 		let m = lhs?.precede(p);
 		p.bump_any();
-		expr_or_assignment(&mut *p.with_state(ParserState {
-			in_cond_expr: true,
-			..p.state.clone()
-		}));
+		{
+			let p = &mut *p.with_state(ParserState {
+				in_cond_expr: true,
+				..p.state.clone()
+			});
+			expr_or_assignment(p)
+				.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
+		}
 		p.expect_required(T![:]);
-		expr_or_assignment(p);
+		expr_or_assignment(p)
+			.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 		return Some(m.complete(p, JS_CONDITIONAL_EXPRESSION));
 	}
 	lhs
@@ -673,6 +687,7 @@ fn is_at_identifier_name(p: &Parser) -> bool {
 // test_err invalid_arg_list
 // foo(a,b;
 // foo(a,b var
+// foo (,,b)
 pub fn args(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T!['(']) {
 		return Absent;
@@ -689,7 +704,8 @@ pub fn args(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 			// already do a check on "..." so it's safe to unwrap
 			spread_element(p).unwrap();
 		} else {
-			expr_or_assignment(p);
+			expr_or_assignment(p)
+				.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 		}
 
 		if p.at(T![,]) {
@@ -758,7 +774,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				if !temp.eat(T![')']) {
 					if temp.eat(T![=]) {
 						// formal params will handle this error
-						expr_or_assignment(&mut *temp);
+						expr_or_assignment(&mut *temp).or_missing(&mut *temp);
 						temp.expect_required(T![')']);
 					} else {
 						let err = temp.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", temp.cur_src()))
@@ -1232,6 +1248,9 @@ pub(crate) fn is_at_identifier(p: &Parser) -> bool {
 // let a = ``;
 // let a = `${foo}`;
 // let a = `foo`;
+
+// test_err template_literal
+// let a = `foo ${}`
 pub fn template(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker {
 	let m = tag.map(|m| m.precede(p)).unwrap_or_else(|| p.start());
 	p.expect_required(BACKTICK);
@@ -1247,7 +1266,7 @@ pub fn template(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker
             DOLLAR_CURLY => {
                 let e = p.start();
                 p.bump_any();
-                expr(p);
+                expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
                 p.expect_required(T!['}']);
                 e.complete(p, TEMPLATE_ELEMENT);
             }
@@ -1323,6 +1342,8 @@ pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 	m.complete(p, JS_ARRAY_EXPRESSION)
 }
 
+// test_err spread
+// [...]
 /// A spread element consisting of three dots and an assignment expression such as `...foo`
 pub fn spread_element(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![...]) {
@@ -1330,7 +1351,7 @@ pub fn spread_element(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	}
 	let m = p.start();
 	p.bump(T![...]);
-	expr_or_assignment(p);
+	expr_or_assignment(p).or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 	Present(m.complete(p, JS_SPREAD))
 }
 

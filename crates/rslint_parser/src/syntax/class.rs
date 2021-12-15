@@ -702,12 +702,15 @@ fn optional_member_token(p: &mut Parser) -> Result<RangeOrMissingMarker, ()> {
 	}
 }
 
+// test_err class_property_initializer
+// class B { lorem = ; }
 pub(crate) fn parse_initializer_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if p.at(T![=]) {
 		let m = p.start();
 		p.bump(T![=]);
 
-		expr_or_assignment(p);
+		expr_or_assignment(p)
+			.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 
 		Present(m.complete(p, JS_INITIALIZER_CLAUSE))
 	} else {
