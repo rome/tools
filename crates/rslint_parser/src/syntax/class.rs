@@ -292,7 +292,7 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	}
 
 	let mut member_is_valid = true;
-	let mut modifiers = match parse_modifiers(p) {
+	let mut modifiers = match parse_class_member_modifiers(p) {
 		Ok(modifiers) => modifiers,
 		Err(modifiers) => {
 			member_is_valid = false;
@@ -914,13 +914,18 @@ fn is_at_modifier(p: &Parser, offset: usize) -> bool {
 /// Parses all possible modifiers regardless of what the current member is. It's up to the caller
 /// to create diagnostics for not allowed modifiers.
 ///
+/// Inserts `missing` marker for all possible class modifiers. These must be undone if a member
+/// doesn't support a specific modifier.
+///
 /// Returns [Ok] if the modifiers are in the correct order, no typescript modifiers are used, or this
 /// is a typescript file
 /// Returns [Err] otherwise
-fn parse_modifiers(p: &mut Parser) -> Result<ParsedModifiers, ParsedModifiers> {
+fn parse_class_member_modifiers(
+	p: &mut Parser,
+) -> Result<ClassMemberModifiers, ClassMemberModifiers> {
 	let mut last: Option<Modifier> = None;
 	let mut valid = true;
-	let mut modifiers = ParsedModifiers::default();
+	let mut modifiers = ClassMemberModifiers::default();
 
 	let mut progress = ParserProgress::default();
 	loop {
@@ -982,7 +987,7 @@ fn parse_modifiers(p: &mut Parser) -> Result<ParsedModifiers, ParsedModifiers> {
 	}
 }
 
-fn parse_modifier(p: &mut Parser, modifiers: &mut ParsedModifiers) -> Option<Modifier> {
+fn parse_modifier(p: &mut Parser, modifiers: &mut ClassMemberModifiers) -> Option<Modifier> {
 	// Test if this modifier is followed by another modifier, member name or any other token that
 	// starts a new member. If that's the case, then this is fairly likely a modifier. If not, then
 	// this is probably not a modifier, but the name of the member. For example, all these are valid
@@ -1074,13 +1079,13 @@ impl RangeOrMissingMarker {
 /// for all modifiers. These missing markers can later be undone if they are not needed for a specific
 /// member type (for example, `declare` is only allowed on properties).
 #[derive(Debug, Default)]
-struct ParsedModifiers {
+struct ClassMemberModifiers {
 	// replace length with std::mem::variant_count() when it becomes stable
 	modifiers: [Option<RangeOrMissingMarker>; 5],
 	next_insert_position: usize,
 }
 
-impl ParsedModifiers {
+impl ClassMemberModifiers {
 	/// Inserts `missing` markers for all the modifiers that haven't been seen at this point and
 	/// stores them in the modifiers array so that they can later be undone if necessary.
 	fn mark_remaining_missing(&mut self, p: &mut Parser) {
