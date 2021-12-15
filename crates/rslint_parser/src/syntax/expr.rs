@@ -414,7 +414,8 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 		}
 
 		if !new_expr || p.at(T!['(']) {
-			args(p);
+			// it's safe to unwrap
+			args(p).unwrap();
 			let complete = m.complete(p, NEW_EXPR);
 			return Some(subscripts(p, complete, true));
 		}
@@ -483,7 +484,8 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 					let m = lhs.precede(p);
 					p.missing(); // type args
 					p.bump_any();
-					args(p);
+					// it's safe to unwrap
+					args(p).unwrap();
 					m.complete(p, CALL_EXPR)
 				}
 			}
@@ -491,7 +493,8 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 				lhs = {
 					let m = lhs.precede(p);
 					p.missing(); // type args
-					args(p);
+			 // it's safe to unwrap
+					args(p).unwrap();
 					m.complete(p, CALL_EXPR)
 				}
 			}
@@ -527,7 +530,8 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 					}
 
 					if !no_call && p.at(T!['(']) {
-						args(p);
+						// we already to the check on '(', so it's safe to unwrap
+						args(p).unwrap();
 						Some(m.complete(p, CALL_EXPR))
 					} else if p.at(BACKTICK) {
 						m.abandon(p);
@@ -667,9 +671,12 @@ fn is_at_identifier_name(p: &Parser) -> bool {
 // test_err invalid_arg_list
 // foo(a,b;
 // foo(a,b var
-pub fn args(p: &mut Parser) -> CompletedMarker {
+pub fn args(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	if !p.at(T!['(']) {
+		return Absent;
+	}
 	let m = p.start();
-	p.expect_required(T!['(']);
+	p.bump(T!['(']);
 	let args_list = p.start();
 	let mut progress = ParserProgress::default();
 
@@ -677,7 +684,8 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 		progress.assert_progressing(p);
 
 		if p.at(T![...]) {
-			spread_element(p);
+			// already do a check on "..." so it's safe to unwrap
+			spread_element(p).unwrap();
 		} else {
 			expr_or_assignment(p);
 		}
@@ -691,7 +699,7 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 
 	args_list.complete(p, JS_CALL_ARGUMENT_LIST);
 	p.expect_required(T![')']);
-	m.complete(p, JS_CALL_ARGUMENTS)
+	Present(m.complete(p, JS_CALL_ARGUMENTS))
 }
 
 // test paren_or_arrow_expr
@@ -1249,7 +1257,7 @@ impl ParseSeparatedList for ArrayElementsList {
 
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
 		match p.cur() {
-			T![...] => Present(spread_element(p)),
+			T![...] => spread_element(p),
 			T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
 			_ => expr_or_assignment(p).into(),
 		}
@@ -1301,11 +1309,14 @@ pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 }
 
 /// A spread element consisting of three dots and an assignment expression such as `...foo`
-pub fn spread_element(p: &mut Parser) -> CompletedMarker {
+pub fn spread_element(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	if !p.at(T![...]) {
+		return Absent;
+	}
 	let m = p.start();
-	p.expect_required(T![...]);
+	p.bump(T![...]);
 	expr_or_assignment(p);
-	m.complete(p, JS_SPREAD)
+	Present(m.complete(p, JS_SPREAD))
 }
 
 /// A left hand side expression, either a member expression or a call expression such as `foo()`.
@@ -1355,7 +1366,8 @@ pub fn lhs_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			p.missing();
 		}
 
-		args(p);
+		// it's safe to unwrap
+		args(p).unwrap();
 		let lhs = m.complete(p, CALL_EXPR);
 		return Some(subscripts(p, lhs, false));
 	}
