@@ -21,7 +21,9 @@ JsModule {
                         parameters: JsConstructorParameterList [
                             TsConstructorParam {
                                 readonly_token: READONLY_KW@22..31 "readonly" [] [Whitespace(" ")],
-                                pat: missing (required),
+                                pat: JsIdentifierBinding {
+                                    name_token: IDENT@31..32 "b" [] [],
+                                },
                             },
                         ],
                         r_paren_token: R_PAREN@32..34 ")" [] [Whitespace(" ")],
@@ -54,20 +56,19 @@ JsModule {
       5: JS_CLASS_MEMBER_LIST@10..37
         0: JS_CONSTRUCTOR_CLASS_MEMBER@10..37
           0: (empty)
-          1: (empty)
-          2: (empty)
-          3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@10..21
+          1: JS_LITERAL_MEMBER_NAME@10..21
             0: IDENT@10..21 "constructor" [] []
-          5: (empty)
-          6: JS_CONSTRUCTOR_PARAMETERS@21..34
+          2: (empty)
+          3: JS_CONSTRUCTOR_PARAMETERS@21..34
             0: L_PAREN@21..22 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@22..32
               0: TS_CONSTRUCTOR_PARAM@22..32
-                0: READONLY_KW@22..31 "readonly" [] [Whitespace(" ")]
-                1: IDENT@31..32 "b" [] []
+                0: (empty)
+                1: READONLY_KW@22..31 "readonly" [] [Whitespace(" ")]
+                2: JS_IDENTIFIER_BINDING@31..32
+                  0: IDENT@31..32 "b" [] []
             2: R_PAREN@32..34 ")" [] [Whitespace(" ")]
-          7: JS_FUNCTION_BODY@34..37
+          4: JS_FUNCTION_BODY@34..37
             0: L_CURLY@34..35 "{" [] []
             1: JS_DIRECTIVE_LIST@35..35
             2: JS_STATEMENT_LIST@35..35

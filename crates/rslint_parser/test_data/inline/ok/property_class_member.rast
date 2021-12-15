@@ -249,56 +249,76 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@11..21
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@11..21
             0: IDENT@11..21 "property" [Whitespace("\n\t")] []
-          5: (empty)
           6: (empty)
           7: (empty)
+          8: (empty)
+          9: (empty)
+          10: (empty)
         1: JS_PROPERTY_CLASS_MEMBER@21..31
-          0: JS_LITERAL_MEMBER_NAME@21..30
-            0: IDENT@21..30 "declare" [Whitespace("\n\t")] []
+          0: (empty)
           1: (empty)
           2: (empty)
-          3: SEMICOLON@30..31 ";" [] []
+          3: (empty)
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@21..30
+            0: IDENT@21..30 "declare" [Whitespace("\n\t")] []
+          6: (empty)
+          7: (empty)
+          8: (empty)
+          9: (empty)
+          10: SEMICOLON@30..31 ";" [] []
         2: JS_PROPERTY_CLASS_MEMBER@31..58
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@31..53
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@31..53
             0: IDENT@31..53 "initializedProperty" [Whitespace("\n\t")] [Whitespace(" ")]
-          5: (empty)
-          6: JS_INITIALIZER_CLAUSE@53..58
+          6: (empty)
+          7: (empty)
+          8: (empty)
+          9: JS_INITIALIZER_CLAUSE@53..58
             0: EQ@53..55 "=" [] [Whitespace(" ")]
             1: JS_STRING_LITERAL_EXPRESSION@55..58
               0: JS_STRING_LITERAL@55..58 "\"a\"" [] []
-          7: (empty)
+          10: (empty)
         3: JS_PROPERTY_CLASS_MEMBER@58..65
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@58..64
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@58..64
             0: JS_STRING_LITERAL@58..64 "\"a\"" [Whitespace("\n\n\t")] []
-          5: (empty)
           6: (empty)
-          7: SEMICOLON@64..65 ";" [] []
+          7: (empty)
+          8: (empty)
+          9: (empty)
+          10: SEMICOLON@64..65 ";" [] []
         4: JS_PROPERTY_CLASS_MEMBER@65..68
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@65..68
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@65..68
             0: JS_NUMBER_LITERAL@65..68 "5" [Whitespace("\n\t")] []
-          5: (empty)
           6: (empty)
           7: (empty)
+          8: (empty)
+          9: (empty)
+          10: (empty)
         5: JS_PROPERTY_CLASS_MEMBER@68..81
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_COMPUTED_MEMBER_NAME@68..81
+          4: (empty)
+          5: JS_COMPUTED_MEMBER_NAME@68..81
             0: L_BRACK@68..71 "[" [Whitespace("\n\t")] []
             1: JS_BINARY_EXPRESSION@71..80
               0: JS_STRING_LITERAL_EXPRESSION@71..75
@@ -307,81 +327,101 @@ JsModule {
               2: JS_STRING_LITERAL_EXPRESSION@77..80
                 0: JS_STRING_LITERAL@77..80 "\"b\"" [] []
             2: R_BRACK@80..81 "]" [] []
-          5: (empty)
           6: (empty)
           7: (empty)
+          8: (empty)
+          9: (empty)
+          10: (empty)
         6: JS_PROPERTY_CLASS_MEMBER@81..105
           0: (empty)
           1: (empty)
           2: STATIC_KW@81..91 "static" [Whitespace("\n\n\t")] [Whitespace(" ")]
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@91..105
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@91..105
             0: IDENT@91..105 "staticProperty" [] []
-          5: (empty)
           6: (empty)
           7: (empty)
+          8: (empty)
+          9: (empty)
+          10: (empty)
         7: JS_PROPERTY_CLASS_MEMBER@105..143
           0: (empty)
           1: (empty)
           2: STATIC_KW@105..114 "static" [Whitespace("\n\t")] [Whitespace(" ")]
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@114..140
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@114..140
             0: IDENT@114..140 "staticInitializedProperty" [] [Whitespace(" ")]
-          5: (empty)
-          6: JS_INITIALIZER_CLAUSE@140..143
+          6: (empty)
+          7: (empty)
+          8: (empty)
+          9: JS_INITIALIZER_CLAUSE@140..143
             0: EQ@140..142 "=" [] [Whitespace(" ")]
             1: JS_NUMBER_LITERAL_EXPRESSION@142..143
               0: JS_NUMBER_LITERAL@142..143 "1" [] []
-          7: (empty)
+          10: (empty)
         8: JS_PROPERTY_CLASS_MEMBER@143..154
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_PRIVATE_CLASS_MEMBER_NAME@143..154
+          4: (empty)
+          5: JS_PRIVATE_CLASS_MEMBER_NAME@143..154
             0: HASH@143..147 "#" [Whitespace("\n\n\t")] []
             1: IDENT@147..154 "private" [] []
-          5: (empty)
           6: (empty)
           7: (empty)
+          8: (empty)
+          9: (empty)
+          10: (empty)
         9: JS_PROPERTY_CLASS_MEMBER@154..181
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_PRIVATE_CLASS_MEMBER_NAME@154..176
+          4: (empty)
+          5: JS_PRIVATE_CLASS_MEMBER_NAME@154..176
             0: HASH@154..157 "#" [Whitespace("\n\t")] []
             1: IDENT@157..176 "privateInitialized" [] [Whitespace(" ")]
-          5: (empty)
-          6: JS_INITIALIZER_CLAUSE@176..181
+          6: (empty)
+          7: (empty)
+          8: (empty)
+          9: JS_INITIALIZER_CLAUSE@176..181
             0: EQ@176..178 "=" [] [Whitespace(" ")]
             1: JS_STRING_LITERAL_EXPRESSION@178..181
               0: JS_STRING_LITERAL@178..181 "\"a\"" [] []
-          7: (empty)
+          10: (empty)
         10: JS_PROPERTY_CLASS_MEMBER@181..205
           0: (empty)
           1: (empty)
           2: STATIC_KW@181..191 "static" [Whitespace("\n\n\t")] [Whitespace(" ")]
           3: (empty)
-          4: JS_PRIVATE_CLASS_MEMBER_NAME@191..205
+          4: (empty)
+          5: JS_PRIVATE_CLASS_MEMBER_NAME@191..205
             0: HASH@191..192 "#" [] []
             1: IDENT@192..205 "staticPrivate" [] []
-          5: (empty)
           6: (empty)
           7: (empty)
+          8: (empty)
+          9: (empty)
+          10: (empty)
         11: JS_PROPERTY_CLASS_MEMBER@205..251
           0: (empty)
           1: (empty)
           2: STATIC_KW@205..214 "static" [Whitespace("\n\t")] [Whitespace(" ")]
           3: (empty)
-          4: JS_PRIVATE_CLASS_MEMBER_NAME@214..248
+          4: (empty)
+          5: JS_PRIVATE_CLASS_MEMBER_NAME@214..248
             0: HASH@214..215 "#" [] []
             1: IDENT@215..248 "staticPrivateInitializedProperty" [] [Whitespace(" ")]
-          5: (empty)
-          6: JS_INITIALIZER_CLAUSE@248..251
+          6: (empty)
+          7: (empty)
+          8: (empty)
+          9: JS_INITIALIZER_CLAUSE@248..251
             0: EQ@248..250 "=" [] [Whitespace(" ")]
             1: JS_NUMBER_LITERAL_EXPRESSION@250..251
               0: JS_NUMBER_LITERAL@250..251 "1" [] []
-          7: (empty)
+          10: (empty)
       6: R_CURLY@251..253 "}" [Whitespace("\n")] []
   3: EOF@253..255 "" [Whitespace("\n\n")] []

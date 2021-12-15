@@ -5,7 +5,7 @@ use crate::parser::{ParsedSyntax, RecoveryResult};
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
 use crate::syntax::expr::{expr, expr_or_assignment};
 use crate::syntax::function::{
-	function_body, parse_ts_parameter_types, parse_ts_return_type_if_ts,
+	function_body, parse_ts_parameter_types, parse_ts_type_annotation_or_error,
 };
 use crate::syntax::js_parse_error;
 use crate::CompletedNodeOrMissingMarker::NodeMarker;
@@ -223,7 +223,7 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.expect_required(T!['(']);
 	p.expect_required(T![')']);
 
-	parse_ts_return_type_if_ts(p).or_missing(p);
+	parse_ts_type_annotation_or_error(p).or_missing(p);
 
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
@@ -293,6 +293,13 @@ pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax<Complet
 	Present(m.complete(p, JS_COMPUTED_MEMBER_NAME))
 }
 
+pub(super) fn is_at_literal_member_name(p: &Parser, offset: usize) -> bool {
+	matches!(
+		p.nth(offset),
+		JS_STRING_LITERAL | JS_NUMBER_LITERAL | T![ident]
+	) || p.nth(offset).is_keyword()
+}
+
 pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let m = p.start();
 	match p.cur() {
@@ -353,7 +360,7 @@ fn parse_method_object_member_body(p: &mut Parser) {
 
 	parse_ts_parameter_types(p).or_missing(p);
 	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_parameters);
-	parse_ts_return_type_if_ts(p).or_missing(p);
+	parse_ts_type_annotation_or_error(p).or_missing(p);
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
 	p.state = old;

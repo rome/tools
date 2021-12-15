@@ -54,30 +54,6 @@ macro_rules! no_recover {
 	};
 }
 
-pub(crate) fn abstract_readonly_modifiers(
-	p: &mut Parser,
-) -> (Option<Range<usize>>, Option<Range<usize>>) {
-	let (mut abstract_, mut readonly) = (None, None);
-	for _ in 0..2 {
-		match p.cur_src() {
-			"abstract" if abstract_.is_none() => {
-				abstract_ = ts_modifier(p, &["abstract"]);
-				if abstract_.is_none() {
-					return (abstract_, readonly);
-				}
-			}
-			"readonly" if readonly.is_none() => {
-				readonly = ts_modifier(p, &["readonly"]);
-				if readonly.is_none() {
-					return (abstract_, readonly);
-				}
-			}
-			_ => return (abstract_, readonly),
-		}
-	}
-	(abstract_, readonly)
-}
-
 pub fn ts_modifier(p: &mut Parser, modifiers: &[&'static str]) -> Option<Range<usize>> {
 	if !modifiers.contains(&p.cur_src()) {
 		return None;

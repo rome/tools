@@ -111,13 +111,12 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: SET_KW@42..46 "set" [] [Whitespace(" ")]
+          3: SET_KW@42..46 "set" [] [Whitespace(" ")]
+          4: (empty)
           5: (empty)
           6: (empty)
           7: (empty)
-          8: (empty)
-          9: JS_FUNCTION_BODY@46..49
+          8: JS_FUNCTION_BODY@46..49
             0: L_CURLY@46..47 "{" [] []
             1: JS_DIRECTIVE_LIST@47..47
             2: JS_STATEMENT_LIST@47..47

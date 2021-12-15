@@ -47,14 +47,13 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: GET_KW@15..22 "get" [Whitespace("\n  ")] [Whitespace(" ")]
-          5: JS_LITERAL_MEMBER_NAME@22..25
+          3: GET_KW@15..22 "get" [Whitespace("\n  ")] [Whitespace(" ")]
+          4: JS_LITERAL_MEMBER_NAME@22..25
             0: IDENT@22..25 "foo" [] []
-          6: L_PAREN@25..26 "(" [] []
-          7: R_PAREN@26..27 ")" [] []
+          5: L_PAREN@25..26 "(" [] []
+          6: R_PAREN@26..27 ")" [] []
+          7: (empty)
           8: (empty)
-          9: (empty)
       6: (empty)
   3: EOF@27..28 "" [Whitespace("\n")] []
 --

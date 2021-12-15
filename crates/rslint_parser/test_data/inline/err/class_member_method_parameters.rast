@@ -69,10 +69,11 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@10..13
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@10..13
             0: IDENT@10..13 "foo" [] []
-          5: (empty)
-          6: JS_PARAMETERS@13..20
+          6: (empty)
+          7: JS_PARAMETERS@13..20
             0: L_PAREN@13..14 "(" [] []
             1: JS_PARAMETER_LIST@14..20
               0: JS_IDENTIFIER_BINDING@14..16
@@ -86,8 +87,8 @@ JsModule {
               4: JS_UNKNOWN_BINDING@19..20
                 0: R_CURLY@19..20 "}" [] []
             2: (empty)
-          7: (empty)
           8: (empty)
+          9: (empty)
       6: (empty)
   3: EOF@20..21 "" [Whitespace("\n")] []
 --

@@ -52,14 +52,13 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")]
-          5: JS_LITERAL_MEMBER_NAME@17..20
+          3: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")]
+          4: JS_LITERAL_MEMBER_NAME@17..20
             0: IDENT@17..20 "bar" [] []
-          6: L_PAREN@20..21 "(" [] []
-          7: R_PAREN@21..23 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@23..25
+          5: L_PAREN@20..21 "(" [] []
+          6: R_PAREN@21..23 ")" [] [Whitespace(" ")]
+          7: (empty)
+          8: JS_FUNCTION_BODY@23..25
             0: L_CURLY@23..24 "{" [] []
             1: JS_DIRECTIVE_LIST@24..24
             2: JS_STATEMENT_LIST@24..24
