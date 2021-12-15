@@ -475,8 +475,8 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax<Comple
 	}
 
 	match primary_expr(p) {
-		None => Absent,
-		Some(lhs) => Present(subscripts(p, lhs, true)),
+		Absent => Absent,
+		Present(lhs) => Present(subscripts(p, lhs, true)),
 	}
 	// let lhs = primary_expr(p);
 }
@@ -952,9 +952,10 @@ pub fn expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 }
 
 /// A primary expression such as a literal, an object, an array, or `this`.
-pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
-	if let Present(m) = parse_literal_expression(p) {
-		return Some(m);
+pub fn primary_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	let parsed_literal_expression = parse_literal_expression(p);
+	if parsed_literal_expression.is_present() {
+		return parsed_literal_expression;
 	}
 
 	let complete = match p.cur() {
@@ -1152,11 +1153,11 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			)
 			.enabled_braces_check()
 			.recover(p);
-			return None;
+			return Absent;
 		}
 	};
 
-	Some(complete)
+	Present(complete)
 }
 
 fn parse_identifier_expression(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
