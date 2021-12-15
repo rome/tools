@@ -649,13 +649,13 @@ pub fn identifier_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if is_at_identifier_name(p) {
 		let m = p.start();
 		p.bump_remap(T![ident]);
-		Some(m.complete(p, JS_NAME))
+		Present(m.complete(p, JS_NAME))
 	} else {
 		let err = p
 			.err_builder("Expected an identifier or keyword")
 			.primary(p.cur_tok().range, "Expected an identifier or keyword here");
 		p.error(err);
-		None
+		Absent
 	}
 }
 
