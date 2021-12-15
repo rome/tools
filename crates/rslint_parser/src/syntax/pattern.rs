@@ -30,7 +30,7 @@ pub(crate) trait ParseWithDefaultPattern {
 				pattern.precede_or_missing_with_error(p, Self::expected_pattern_error);
 			p.bump_any(); // eat the = token
 
-			if expr_or_assignment(p).is_none() {
+			if expr_or_assignment(p).is_absent() {
 				p.missing();
 			}
 

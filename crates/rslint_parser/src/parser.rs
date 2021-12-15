@@ -516,7 +516,8 @@ impl<'t> Parser<'t> {
 			return None;
 		}
 
-		func(self)
+		// TODO remove .into() once moved to ParsedSyntax
+		func(self).into()
 	}
 }
 

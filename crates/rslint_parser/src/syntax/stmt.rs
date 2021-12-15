@@ -634,7 +634,7 @@ pub fn parenthesized_expression(p: &mut Parser) {
 
 	let pos = p.token_pos();
 	// Remove the pos check once `expr` has been converted to `ParsedSyntax`
-	if expr(p).is_none() && pos == p.token_pos() {
+	if expr(p).is_absent() && pos == p.token_pos() {
 		p.missing();
 	}
 	p.expect_required(T![')']);
@@ -1103,7 +1103,7 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 
 		if p.at(T![in]) || p.cur_src() == "of" {
 			// for (assignment_pattern in ...
-			if let Some(assignment_expr) = init_expr {
+			if let Present(assignment_expr) = init_expr {
 				let mut assignment = expression_to_assignment_pattern(
 					p,
 					assignment_expr,
@@ -1128,7 +1128,7 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 			return parse_for_of_or_in_head(p);
 		}
 
-		if init_expr.is_none() && p.token_pos() == checkpoint.token_pos {
+		if init_expr.is_absent() && p.token_pos() == checkpoint.token_pos {
 			p.missing();
 		}
 
@@ -1167,7 +1167,7 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> SyntaxKind {
 
 	if is_in {
 		p.bump_any();
-		if expr(p).is_none() {
+		if expr(p).is_absent() {
 			p.missing();
 		}
 
@@ -1175,7 +1175,7 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> SyntaxKind {
 	} else {
 		p.bump_remap(T![of]);
 
-		if expr_or_assignment(p).is_none() {
+		if expr_or_assignment(p).is_absent() {
 			p.missing();
 		}
 

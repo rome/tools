@@ -116,7 +116,7 @@ pub fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 }
 
 /// Parses an expression that might turn out to be an assignment target if an assignment operator is found
-pub(crate) fn expr_or_assignment(p: &mut Parser) -> Option<CompletedMarker> {
+pub(crate) fn expr_or_assignment(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if p.at(T![<])
 		&& (token_set![T![ident], T![await], T![yield]].contains(p.nth(1)) || p.nth(1).is_keyword())
 	{
@@ -139,10 +139,11 @@ pub(crate) fn expr_or_assignment(p: &mut Parser) -> Option<CompletedMarker> {
 		});
 		if let Some(mut res) = res {
 			res.err_if_not_ts(p, "type parameters can only be used in TypeScript files");
-			return Some(res);
+			return Present(res);
 		}
 	}
-	assign_expr_base(p)
+	// TODO: to remove once moved to ParsedSyntax
+	assign_expr_base(p).into()
 }
 
 fn assign_expr_base(p: &mut Parser) -> Option<CompletedMarker> {
@@ -203,7 +204,7 @@ pub fn yield_expr(p: &mut Parser) -> CompletedMarker {
 
 	if !is_semi(p, 0) && (p.at(T![*]) || p.at_ts(STARTS_EXPR)) {
 		p.eat_optional(T![*]);
-		if expr_or_assignment(p).is_none() {
+		if expr_or_assignment(p).is_absent() {
 			p.missing();
 		}
 	} else {
@@ -636,7 +637,7 @@ pub fn computed_member_expression(
 	}
 
 	p.expect_required(T!['[']);
-	if expr(p).is_none() {
+	if expr(p).is_absent() {
 		p.missing();
 	}
 	p.expect_required(T![']']);
@@ -775,7 +776,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				break;
 			}
 			let expr = expr_or_assignment(&mut *temp);
-			if expr.is_some() && temp.at(T![:]) {
+			if expr.is_absent() && temp.at(T![:]) {
 				temp.rewind(checkpoint);
 				// TODO: review this when `paren_or_arrow_expr` is refactored to use the new API
 				params_marker = Some(parse_parameter_list(&mut *temp).ok().unwrap());
@@ -791,6 +792,10 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 					temp.bump_any(); // bump )
 					break;
 				} else {
+					let expr = match expr {
+						Present(m) => Some(m),
+						Absent => None,
+					};
 					// start a sequence expression that precedes the before parsed expression statement
 					// and bump the ',' into it.
 					sequence = sequence
@@ -898,18 +903,23 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 /// A general expression.
 // test sequence_expr
 // 1, 2, 3, 4, 5
-pub fn expr(p: &mut Parser) -> Option<CompletedMarker> {
-	let first = expr_or_assignment(p)?;
+pub fn expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	let first = expr_or_assignment(p);
 
-	if p.at(T![,]) {
-		let sequence_expr_marker = first.precede(p);
+	match first {
+		Present(first) => {
+			if p.at(T![,]) {
+				let sequence_expr_marker = first.precede(p);
 
-		p.bump_any();
-		expr(p);
+				p.bump_any();
+				expr(p);
 
-		Some(sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION))
-	} else {
-		Some(first)
+				Present(sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION))
+			} else {
+				first.into()
+			}
+		}
+		Absent => Absent,
 	}
 }
 
@@ -1087,7 +1097,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				// test import_call
 				// import("foo")
 				p.expect_required(T!['(']);
-				if expr_or_assignment(p).is_none() {
+				if expr_or_assignment(p).is_absent() {
 					p.missing();
 				}
 				p.expect_required(T![')']);
@@ -1153,6 +1163,7 @@ fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax>
 // await;
 // async function test(await) {}
 // function* test(yield) {}
+
 /// Parses an identifier if it is valid in this context or returns `Invalid` if the context isn't valid in this context.
 /// An identifier is invalid if:
 /// * It is named `await` inside of an async function

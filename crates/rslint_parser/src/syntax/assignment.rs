@@ -91,7 +91,8 @@ pub(crate) fn parse_assignment(
 	let assignment_expression = match expr_kind {
 		AssignmentExprPrecedence::Unary => unary_expr(p),
 		AssignmentExprPrecedence::Conditional => conditional_expr(p),
-		AssignmentExprPrecedence::Any => expr(p),
+		// TODO: to remove once moved to parsed syntax
+		AssignmentExprPrecedence::Any => Some(expr(p).unwrap()),
 	};
 
 	if let Some(expr) = assignment_expression {
