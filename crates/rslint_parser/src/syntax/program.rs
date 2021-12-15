@@ -242,6 +242,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 				..p.state.clone()
 			});
 			parse_class_declaration(p)
+				// TODO: change position of unknown node, it's not valid at this position
 				.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
 				.unwrap();
 			return m.complete(p, EXPORT_DEFAULT_DECL);
@@ -264,6 +265,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 
 	if !only_ty && p.at(T![class]) {
 		parse_class_declaration(p)
+			// TODO: change position of unknown node, it's not valid at this position
 			.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
 			.unwrap();
 	} else if !only_ty
