@@ -1435,34 +1435,34 @@ pub fn lhs_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // test postfix_expr
 // foo++
 // foo--
-pub fn postfix_expr(p: &mut Parser) -> Option<CompletedMarker> {
+pub fn postfix_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let checkpoint = p.checkpoint();
 	let lhs = lhs_expr(p);
 	match lhs {
-		Present(lhs) => {
+		Present(marker) => {
 			if !p.has_linebreak_before_n(0) {
 				match p.cur() {
 					T![++] => {
-						let assignment_target = expression_to_assignment(p, lhs, checkpoint);
+						let assignment_target = expression_to_assignment(p, marker, checkpoint);
 						let m = assignment_target.precede(p);
 						p.bump(T![++]);
 						let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
-						Some(complete)
+						Present(complete)
 					}
 					T![--] => {
-						let assignment_target = expression_to_assignment(p, lhs, checkpoint);
+						let assignment_target = expression_to_assignment(p, marker, checkpoint);
 						let m = assignment_target.precede(p);
 						p.bump(T![--]);
 						let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
-						Some(complete)
+						Present(complete)
 					}
-					_ => lhs.into(),
+					_ => lhs,
 				}
 			} else {
-				lhs.into()
+				lhs
 			}
 		}
-		Absent => None,
+		Absent => Absent,
 	}
 }
 
