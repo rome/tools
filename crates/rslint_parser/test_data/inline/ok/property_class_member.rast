@@ -12,10 +12,11 @@ JsModule {
             l_curly_token: L_CURLY@10..11 "{" [] [],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@11..21 "property" [Whitespace("\n\t")] [],
                     },
@@ -26,10 +27,11 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@21..30 "declare" [Whitespace("\n\t")] [],
                     },
@@ -40,10 +42,11 @@ JsModule {
                     semicolon_token: SEMICOLON@30..31 ";" [] [],
                 },
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@31..53 "initializedProperty" [Whitespace("\n\t")] [Whitespace(" ")],
                     },
@@ -59,10 +62,11 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: JS_STRING_LITERAL@58..64 "\"a\"" [Whitespace("\n\n\t")] [],
                     },
@@ -73,10 +77,11 @@ JsModule {
                     semicolon_token: SEMICOLON@64..65 ";" [] [],
                 },
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: JS_NUMBER_LITERAL@65..68 "5" [Whitespace("\n\t")] [],
                     },
@@ -87,10 +92,11 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsComputedMemberName {
                         l_brack_token: L_BRACK@68..71 "[" [Whitespace("\n\t")] [],
                         expression: JsBinaryExpression {
@@ -111,10 +117,11 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: STATIC_KW@81..91 "static" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@91..105 "staticProperty" [] [],
                     },
@@ -125,10 +132,11 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: STATIC_KW@105..114 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@114..140 "staticInitializedProperty" [] [Whitespace(" ")],
                     },
@@ -144,10 +152,11 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@143..147 "#" [Whitespace("\n\n\t")] [],
                         id_token: IDENT@147..154 "private" [] [],
@@ -159,10 +168,11 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@154..157 "#" [Whitespace("\n\t")] [],
                         id_token: IDENT@157..176 "privateInitialized" [] [Whitespace(" ")],
@@ -179,10 +189,11 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: STATIC_KW@181..191 "static" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@191..192 "#" [] [],
                         id_token: IDENT@192..205 "staticPrivate" [] [],
@@ -194,10 +205,11 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: STATIC_KW@205..214 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@214..215 "#" [] [],
                         id_token: IDENT@215..248 "staticPrivateInitializedProperty" [] [Whitespace(" ")],

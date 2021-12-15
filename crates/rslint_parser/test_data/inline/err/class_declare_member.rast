@@ -12,10 +12,11 @@ JsModule {
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: DECLARE_KW@10..18 "declare" [] [Whitespace(" ")],
                     static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@18..22 "foo" [] [Whitespace(" ")],
                     },

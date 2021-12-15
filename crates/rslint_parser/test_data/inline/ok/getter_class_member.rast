@@ -13,8 +13,8 @@ JsModule {
             members: JsClassMemberList [
                 JsGetterClassMember {
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
                     static_token: missing (optional),
+                    abstract_token: missing (optional),
                     get_token: GET_KW@15..21 "get" [Whitespace("\n\t")] [Whitespace(" ")],
                     name: JsLiteralMemberName {
                         value: IDENT@21..24 "foo" [] [],
@@ -31,8 +31,8 @@ JsModule {
                 },
                 JsGetterClassMember {
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
                     static_token: missing (optional),
+                    abstract_token: missing (optional),
                     get_token: GET_KW@29..35 "get" [Whitespace("\n\t")] [Whitespace(" ")],
                     name: JsLiteralMemberName {
                         value: IDENT@35..41 "static" [] [],
@@ -49,8 +49,8 @@ JsModule {
                 },
                 JsGetterClassMember {
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
                     static_token: STATIC_KW@46..55 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    abstract_token: missing (optional),
                     get_token: GET_KW@55..59 "get" [] [Whitespace(" ")],
                     name: JsLiteralMemberName {
                         value: IDENT@59..62 "bar" [] [],
@@ -67,8 +67,8 @@ JsModule {
                 },
                 JsGetterClassMember {
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
                     static_token: missing (optional),
+                    abstract_token: missing (optional),
                     get_token: GET_KW@67..73 "get" [Whitespace("\n\t")] [Whitespace(" ")],
                     name: JsLiteralMemberName {
                         value: JS_STRING_LITERAL@73..78 "\"baz\"" [] [],
@@ -85,8 +85,8 @@ JsModule {
                 },
                 JsGetterClassMember {
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
                     static_token: missing (optional),
+                    abstract_token: missing (optional),
                     get_token: GET_KW@83..89 "get" [Whitespace("\n\t")] [Whitespace(" ")],
                     name: JsComputedMemberName {
                         l_brack_token: L_BRACK@89..90 "[" [] [],
@@ -113,8 +113,8 @@ JsModule {
                 },
                 JsGetterClassMember {
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
                     static_token: missing (optional),
+                    abstract_token: missing (optional),
                     get_token: GET_KW@105..111 "get" [Whitespace("\n\t")] [Whitespace(" ")],
                     name: JsLiteralMemberName {
                         value: JS_NUMBER_LITERAL@111..112 "5" [] [],
@@ -131,8 +131,8 @@ JsModule {
                 },
                 JsGetterClassMember {
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
                     static_token: missing (optional),
+                    abstract_token: missing (optional),
                     get_token: GET_KW@117..123 "get" [Whitespace("\n\t")] [Whitespace(" ")],
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@123..124 "#" [] [],

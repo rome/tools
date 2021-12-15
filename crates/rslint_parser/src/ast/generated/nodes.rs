@@ -804,10 +804,10 @@ pub struct JsGetterClassMember {
 }
 impl JsGetterClassMember {
 	pub fn access_modifier(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
+	pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![static]) }
 	pub fn abstract_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![abstract])
 	}
-	pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![static]) }
 	pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![get])
 	}
@@ -1092,13 +1092,6 @@ impl JsMethodObjectMember {
 	pub fn parameters(&self) -> SyntaxResult<JsParameters> { support::required_node(&self.syntax) }
 	pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsModifier {
-	pub(crate) syntax: SyntaxNode,
-}
-impl JsModifier {
-	pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![declare]) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsModule {
@@ -1388,12 +1381,15 @@ pub struct JsPropertyClassMember {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsPropertyClassMember {
-	pub fn modifiers(&self) -> Option<JsAnyModifier> { support::node(&self.syntax) }
 	pub fn access_modifier(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
+	pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![declare]) }
+	pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![static]) }
+	pub fn readonly_token(&self) -> Option<SyntaxToken> {
+		support::token(&self.syntax, T![readonly])
+	}
 	pub fn abstract_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![abstract])
 	}
-	pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![static]) }
 	pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
 		support::required_node(&self.syntax)
 	}
@@ -1488,10 +1484,10 @@ pub struct JsSetterClassMember {
 }
 impl JsSetterClassMember {
 	pub fn access_modifier(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
+	pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![static]) }
 	pub fn abstract_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![abstract])
 	}
-	pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![static]) }
 	pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![set])
 	}
@@ -1847,8 +1843,11 @@ impl TsAccessibility {
 	pub fn private_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![private])
 	}
-	pub fn readonly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![readonly])
+	pub fn protected_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![protected])
+	}
+	pub fn public_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![public])
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1973,8 +1972,8 @@ pub struct TsConstructorParam {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsConstructorParam {
-	pub fn readonly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![readonly])
+	pub fn readonly_token(&self) -> Option<SyntaxToken> {
+		support::token(&self.syntax, T![readonly])
 	}
 	pub fn pat(&self) -> SyntaxResult<JsAnyBindingPattern> { support::required_node(&self.syntax) }
 }
@@ -2790,11 +2789,6 @@ pub enum JsAnyLiteralExpression {
 	JsNumberLiteralExpression(JsNumberLiteralExpression),
 	JsRegexLiteralExpression(JsRegexLiteralExpression),
 	JsStringLiteralExpression(JsStringLiteralExpression),
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub enum JsAnyModifier {
-	JsModifier(JsModifier),
-	JsUnknownModifier(JsUnknownModifier),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyModuleItem {
@@ -4491,12 +4485,12 @@ impl std::fmt::Debug for JsGetterClassMember {
 				&support::DebugOptionalElement(self.access_modifier()),
 			)
 			.field(
-				"abstract_token",
-				&support::DebugOptionalElement(self.abstract_token()),
-			)
-			.field(
 				"static_token",
 				&support::DebugOptionalElement(self.static_token()),
+			)
+			.field(
+				"abstract_token",
+				&support::DebugOptionalElement(self.abstract_token()),
 			)
 			.field("get_token", &support::DebugSyntaxResult(self.get_token()))
 			.field("name", &support::DebugSyntaxResult(self.name()))
@@ -5034,27 +5028,6 @@ impl std::fmt::Debug for JsMethodObjectMember {
 				&support::DebugOptionalElement(self.return_type()),
 			)
 			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
-}
-impl AstNode for JsModifier {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_MODIFIER }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsModifier {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsModifier")
-			.field(
-				"declare_token",
-				&support::DebugOptionalElement(self.declare_token()),
-			)
 			.finish()
 	}
 }
@@ -5614,20 +5587,24 @@ impl std::fmt::Debug for JsPropertyClassMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsPropertyClassMember")
 			.field(
-				"modifiers",
-				&support::DebugOptionalElement(self.modifiers()),
-			)
-			.field(
 				"access_modifier",
 				&support::DebugOptionalElement(self.access_modifier()),
 			)
 			.field(
-				"abstract_token",
-				&support::DebugOptionalElement(self.abstract_token()),
+				"declare_token",
+				&support::DebugOptionalElement(self.declare_token()),
 			)
 			.field(
 				"static_token",
 				&support::DebugOptionalElement(self.static_token()),
+			)
+			.field(
+				"readonly_token",
+				&support::DebugOptionalElement(self.readonly_token()),
+			)
+			.field(
+				"abstract_token",
+				&support::DebugOptionalElement(self.abstract_token()),
 			)
 			.field("name", &support::DebugSyntaxResult(self.name()))
 			.field(
@@ -5826,12 +5803,12 @@ impl std::fmt::Debug for JsSetterClassMember {
 				&support::DebugOptionalElement(self.access_modifier()),
 			)
 			.field(
-				"abstract_token",
-				&support::DebugOptionalElement(self.abstract_token()),
-			)
-			.field(
 				"static_token",
 				&support::DebugOptionalElement(self.static_token()),
+			)
+			.field(
+				"abstract_token",
+				&support::DebugOptionalElement(self.abstract_token()),
 			)
 			.field("set_token", &support::DebugSyntaxResult(self.set_token()))
 			.field("name", &support::DebugSyntaxResult(self.name()))
@@ -6490,8 +6467,12 @@ impl std::fmt::Debug for TsAccessibility {
 				&support::DebugSyntaxResult(self.private_token()),
 			)
 			.field(
-				"readonly_token",
-				&support::DebugSyntaxResult(self.readonly_token()),
+				"protected_token",
+				&support::DebugSyntaxResult(self.protected_token()),
+			)
+			.field(
+				"public_token",
+				&support::DebugSyntaxResult(self.public_token()),
 			)
 			.finish()
 	}
@@ -6761,7 +6742,7 @@ impl std::fmt::Debug for TsConstructorParam {
 		f.debug_struct("TsConstructorParam")
 			.field(
 				"readonly_token",
-				&support::DebugSyntaxResult(self.readonly_token()),
+				&support::DebugOptionalElement(self.readonly_token()),
 			)
 			.field("pat", &support::DebugSyntaxResult(self.pat()))
 			.finish()
@@ -9664,37 +9645,6 @@ impl std::fmt::Debug for JsAnyLiteralExpression {
 		}
 	}
 }
-impl From<JsModifier> for JsAnyModifier {
-	fn from(node: JsModifier) -> JsAnyModifier { JsAnyModifier::JsModifier(node) }
-}
-impl From<JsUnknownModifier> for JsAnyModifier {
-	fn from(node: JsUnknownModifier) -> JsAnyModifier { JsAnyModifier::JsUnknownModifier(node) }
-}
-impl AstNode for JsAnyModifier {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_MODIFIER | JS_UNKNOWN_MODIFIER) }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			JS_MODIFIER => JsAnyModifier::JsModifier(JsModifier { syntax }),
-			JS_UNKNOWN_MODIFIER => JsAnyModifier::JsUnknownModifier(JsUnknownModifier { syntax }),
-			_ => return None,
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			JsAnyModifier::JsModifier(it) => &it.syntax,
-			JsAnyModifier::JsUnknownModifier(it) => &it.syntax,
-		}
-	}
-}
-impl std::fmt::Debug for JsAnyModifier {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyModifier::JsModifier(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyModifier::JsUnknownModifier(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<ExportDecl> for JsAnyModuleItem {
 	fn from(node: ExportDecl) -> JsAnyModuleItem { JsAnyModuleItem::ExportDecl(node) }
 }
@@ -11136,11 +11086,6 @@ impl std::fmt::Display for JsAnyLiteralExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsAnyModifier {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for JsAnyModuleItem {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -11617,11 +11562,6 @@ impl std::fmt::Display for JsMethodClassMember {
 	}
 }
 impl std::fmt::Display for JsMethodObjectMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsModifier {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -13578,7 +13518,6 @@ impl Debug for DebugSyntaxElement {
 				JS_METHOD_OBJECT_MEMBER => {
 					std::fmt::Debug::fmt(&JsMethodObjectMember::cast(node.clone()).unwrap(), f)
 				}
-				JS_MODIFIER => std::fmt::Debug::fmt(&JsModifier::cast(node.clone()).unwrap(), f),
 				JS_MODULE => std::fmt::Debug::fmt(&JsModule::cast(node.clone()).unwrap(), f),
 				JS_MODULE_ITEM_LIST => {
 					std::fmt::Debug::fmt(&JsModuleItemList::cast(node.clone()).unwrap(), f)

@@ -96,10 +96,11 @@ JsModule {
             l_curly_token: L_CURLY@66..67 "{" [] [],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
                         hash_token: HASH@67..70 "#" [Whitespace("\n\t")] [],
                         id_token: IDENT@70..73 "bar" [] [],

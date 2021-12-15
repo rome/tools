@@ -38,8 +38,8 @@ JsModule {
             members: JsClassMemberList [
                 JsSetterClassMember {
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
                     static_token: missing (optional),
+                    abstract_token: missing (optional),
                     set_token: SET_KW@42..46 "set" [] [Whitespace(" ")],
                     name: missing (required),
                     l_paren_token: missing (required),

@@ -12,13 +12,15 @@ JsModule {
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    modifiers: missing (optional),
                     access_modifier: TsAccessibility {
                         private_token: missing (required),
-                        readonly_token: missing (required),
+                        protected_token: missing (required),
+                        public_token: missing (required),
                     },
-                    abstract_token: missing (optional),
+                    declare_token: missing (optional),
                     static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@19..22 "foo" [] [],
                     },

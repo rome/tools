@@ -13,8 +13,8 @@ JsModule {
             members: JsClassMemberList [
                 JsGetterClassMember {
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
                     static_token: missing (optional),
+                    abstract_token: missing (optional),
                     get_token: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")],
                     name: missing (required),
                     l_paren_token: missing (required),

@@ -69,7 +69,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 						}
 					}
 					Field::Node { ty, optional, .. } => {
-						let is_list = ast.is_list(&ty);
+						let is_list = ast.is_list(ty);
 						let ty = format_ident!("{}", &ty);
 
 						let method_name = field.method_name();
