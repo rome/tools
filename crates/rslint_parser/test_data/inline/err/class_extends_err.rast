@@ -2,41 +2,47 @@ JsModule {
     interpreter_token: missing (optional),
     directives: [],
     items: [
-        JsClassDeclaration {
-            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
-            id: JsIdentifierBinding {
-                name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
-            },
-            implements_clause: missing (optional),
-            extends_clause: JsExtendsClause {
-                extends_token: EXTENDS_KW@8..16 "extends" [] [Whitespace(" ")],
-                super_class: JsIdentifierExpression {
-                    name: JsReferenceIdentifier {
-                        value_token: IDENT@16..20 "bar" [] [Whitespace(" ")],
+        JsUnknownStatement {
+            items: [
+                CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
+                },
+                JsExtendsClause {
+                    extends_token: EXTENDS_KW@8..16 "extends" [] [Whitespace(" ")],
+                    super_class: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@16..20 "bar" [] [Whitespace(" ")],
+                        },
                     },
                 },
-            },
-            l_curly_token: L_CURLY@32..33 "{" [] [],
-            members: [],
-            r_curly_token: R_CURLY@33..34 "}" [] [],
+                L_CURLY@32..33 "{" [] [],
+                List {
+                    items: [],
+                },
+                R_CURLY@33..34 "}" [] [],
+            ],
         },
-        JsClassDeclaration {
-            class_token: CLASS_KW@34..41 "class" [Whitespace("\n")] [Whitespace(" ")],
-            id: JsIdentifierBinding {
-                name_token: IDENT@41..43 "A" [] [Whitespace(" ")],
-            },
-            implements_clause: missing (optional),
-            extends_clause: JsExtendsClause {
-                extends_token: EXTENDS_KW@43..51 "extends" [] [Whitespace(" ")],
-                super_class: JsIdentifierExpression {
-                    name: JsReferenceIdentifier {
-                        value_token: IDENT@51..54 "bar" [] [],
+        JsUnknownStatement {
+            items: [
+                CLASS_KW@34..41 "class" [Whitespace("\n")] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@41..43 "A" [] [Whitespace(" ")],
+                },
+                JsExtendsClause {
+                    extends_token: EXTENDS_KW@43..51 "extends" [] [Whitespace(" ")],
+                    super_class: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@51..54 "bar" [] [],
+                        },
                     },
                 },
-            },
-            l_curly_token: L_CURLY@60..61 "{" [] [],
-            members: [],
-            r_curly_token: R_CURLY@61..62 "}" [] [],
+                L_CURLY@60..61 "{" [] [],
+                List {
+                    items: [],
+                },
+                R_CURLY@61..62 "}" [] [],
+            ],
         },
     ],
     eof_token: EOF@62..63 "" [Whitespace("\n")] [],
@@ -46,7 +52,7 @@ JsModule {
   0: (empty)
   1: LIST@0..0
   2: LIST@0..62
-    0: JS_CLASS_DECLARATION@0..34
+    0: JS_UNKNOWN_STATEMENT@0..34
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
@@ -55,16 +61,16 @@ JsModule {
         1: JS_IDENTIFIER_EXPRESSION@16..20
           0: JS_REFERENCE_IDENTIFIER@16..20
             0: IDENT@16..20 "bar" [] [Whitespace(" ")]
-        2: ERROR@20..32
-          0: EXTENDS_KW@20..28 "extends" [] [Whitespace(" ")]
-          1: TS_EXPR_WITH_TYPE_ARGS@28..32
-            0: JS_IDENTIFIER_EXPRESSION@28..32
-              0: JS_REFERENCE_IDENTIFIER@28..32
-                0: IDENT@28..32 "foo" [] [Whitespace(" ")]
-      3: L_CURLY@32..33 "{" [] []
-      4: LIST@33..33
-      5: R_CURLY@33..34 "}" [] []
-    1: JS_CLASS_DECLARATION@34..62
+        2: EXTENDS_KW@20..28 "extends" [] [Whitespace(" ")]
+        3: TS_EXPR_WITH_TYPE_ARGS@28..32
+          0: JS_IDENTIFIER_EXPRESSION@28..32
+            0: JS_REFERENCE_IDENTIFIER@28..32
+              0: IDENT@28..32 "foo" [] [Whitespace(" ")]
+      3: (empty)
+      4: L_CURLY@32..33 "{" [] []
+      5: LIST@33..33
+      6: R_CURLY@33..34 "}" [] []
+    1: JS_UNKNOWN_STATEMENT@34..62
       0: CLASS_KW@34..41 "class" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@41..43
         0: IDENT@41..43 "A" [] [Whitespace(" ")]
@@ -78,9 +84,10 @@ JsModule {
           0: JS_IDENTIFIER_EXPRESSION@56..60
             0: JS_REFERENCE_IDENTIFIER@56..60
               0: IDENT@56..60 "foo" [] [Whitespace(" ")]
-      3: L_CURLY@60..61 "{" [] []
-      4: LIST@61..61
-      5: R_CURLY@61..62 "}" [] []
+      3: (empty)
+      4: L_CURLY@60..61 "{" [] []
+      5: LIST@61..61
+      6: R_CURLY@61..62 "}" [] []
   3: EOF@62..63 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: classes cannot extend multiple classes

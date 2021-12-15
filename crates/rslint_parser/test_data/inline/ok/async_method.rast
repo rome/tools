@@ -72,36 +72,48 @@ JsModule {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..10
         0: IDENT@6..10 "foo" [] [Whitespace(" ")]
-      2: L_CURLY@10..11 "{" [] []
-      3: LIST@11..44
+      2: (empty)
+      3: (empty)
+      4: L_CURLY@10..11 "{" [] []
+      5: LIST@11..44
         0: JS_METHOD_CLASS_MEMBER@11..27
-          0: ASYNC_KW@11..19 "async" [Whitespace("\n ")] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@19..22
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: ASYNC_KW@11..19 "async" [Whitespace("\n ")] [Whitespace(" ")]
+          5: JS_LITERAL_MEMBER_NAME@19..22
             0: IDENT@19..22 "foo" [] []
-          2: JS_PARAMETER_LIST@22..25
+          6: (empty)
+          7: JS_PARAMETER_LIST@22..25
             0: L_PAREN@22..23 "(" [] []
             1: LIST@23..23
             2: R_PAREN@23..25 ")" [] [Whitespace(" ")]
-          3: (empty)
-          4: JS_FUNCTION_BODY@25..27
+          8: (empty)
+          9: JS_FUNCTION_BODY@25..27
             0: L_CURLY@25..26 "{" [] []
             1: LIST@26..26
             2: LIST@26..26
             3: R_CURLY@26..27 "}" [] []
         1: JS_METHOD_CLASS_MEMBER@27..44
-          0: ASYNC_KW@27..35 "async" [Whitespace("\n ")] [Whitespace(" ")]
-          1: STAR@35..36 "*" [] []
-          2: JS_LITERAL_MEMBER_NAME@36..39
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: ASYNC_KW@27..35 "async" [Whitespace("\n ")] [Whitespace(" ")]
+          5: STAR@35..36 "*" [] []
+          6: JS_LITERAL_MEMBER_NAME@36..39
             0: IDENT@36..39 "foo" [] []
-          3: JS_PARAMETER_LIST@39..42
+          7: (empty)
+          8: JS_PARAMETER_LIST@39..42
             0: L_PAREN@39..40 "(" [] []
             1: LIST@40..40
             2: R_PAREN@40..42 ")" [] [Whitespace(" ")]
-          4: (empty)
-          5: JS_FUNCTION_BODY@42..44
+          9: (empty)
+          10: JS_FUNCTION_BODY@42..44
             0: L_CURLY@42..43 "{" [] []
             1: LIST@43..43
             2: LIST@43..43
             3: R_CURLY@43..44 "}" [] []
-      4: R_CURLY@44..46 "}" [Whitespace("\n")] []
+      6: R_CURLY@44..46 "}" [Whitespace("\n")] []
   3: EOF@46..47 "" [Whitespace("\n")] []

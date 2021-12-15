@@ -585,10 +585,11 @@ JsAnyConstructorParameter =
 // class Test { a; b = 1; static c; }
 //              ^^ ^^^^^^ ^^^^^^^^^
 JsPropertyClassMember =
-	modifiers: JsAnyModifier?
 	access_modifier: TsAccessibility?
-	'abstract'?
+	'declare'?
 	'static'?
+	'readonly'?
+	'abstract'?
 	name: JsAnyClassMemberName
 	'?'?
 	'!'?
@@ -614,8 +615,8 @@ JsMethodClassMember =
 //              ^^^^^^^^^^
 JsGetterClassMember =
 	access_modifier: TsAccessibility?
-	'abstract'?
 	'static'?
+	'abstract'?
 	'get'
 	name: JsAnyClassMemberName
 	'(' ')'
@@ -626,8 +627,8 @@ JsGetterClassMember =
 //              ^^^^^^^^^^^
 JsSetterClassMember =
 	access_modifier: TsAccessibility?
-	'abstract'?
 	'static'?
+	'abstract'?
 	'set'
 	name: JsAnyClassMemberName
 	'('
@@ -636,14 +637,6 @@ JsSetterClassMember =
 	body: JsFunctionBody
 
 JsEmptyClassMember = ';'
-
-// TODO: apply this node to all class members and properties
-JsAnyModifier =
-	JsModifier
-	| JsUnknownModifier
-
-// TODO: move here also the rest of the modifiers
-JsModifier = 'declare'?
 
 ///////////////
 // ASSIGNMENT TARGETS
@@ -1399,11 +1392,10 @@ TsImport = 'import' type_args:TsTypeArgs '.'? '(' qualifier:TsEntityName ')'
 // typescript index signature
 TsIndexSignature = 'readonly'? '[' pat:JsAnyBinding ':' ty:TsType ']'
 
-// typescript type of access
-TsAccessibility = 'private' | 'readonly'
 
+TsAccessibility = 'private' | 'protected' | 'public'
 
-TsConstructorParam = 'readonly' pat:JsAnyBindingPattern
+TsConstructorParam = 'readonly'? pat:JsAnyBindingPattern
 
 TsNonNull = expr:JsAnyExpression '!'
 

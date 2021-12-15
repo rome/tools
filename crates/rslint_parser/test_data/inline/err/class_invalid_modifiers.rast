@@ -5,7 +5,7 @@ JsModule {
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
-                name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
+                name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
             },
             implements_clause: missing (optional),
             extends_clause: missing (optional),
@@ -13,9 +13,9 @@ JsModule {
             members: [
                 JsUnknownMember {
                     items: [
-                        DECLARE_KW@10..18 "declare" [] [Whitespace(" ")],
+                        IDENT@10..17 "public" [] [Whitespace(" ")],
                         JsLiteralMemberName {
-                            value: IDENT@18..20 "fn" [] [],
+                            value: IDENT@17..20 "foo" [] [],
                         },
                         JsParameterList {
                             l_paren_token: L_PAREN@20..21 "(" [] [],
@@ -44,18 +44,18 @@ JsModule {
     0: JS_CLASS_DECLARATION@0..27
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
-        0: IDENT@6..8 "B" [] [Whitespace(" ")]
+        0: IDENT@6..8 "A" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
       4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       5: LIST@10..26
         0: JS_UNKNOWN_MEMBER@10..26
-          0: (empty)
-          1: DECLARE_KW@10..18 "declare" [] [Whitespace(" ")]
+          0: IDENT@10..17 "public" [] [Whitespace(" ")]
+          1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@18..20
-            0: IDENT@18..20 "fn" [] []
+          4: JS_LITERAL_MEMBER_NAME@17..20
+            0: IDENT@17..20 "foo" [] []
           5: (empty)
           6: JS_PARAMETER_LIST@20..23
             0: L_PAREN@20..21 "(" [] []
@@ -70,11 +70,11 @@ JsModule {
       6: R_CURLY@26..27 "}" [] []
   3: EOF@27..28 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: `declare` modifiers can only be used in TypeScript files
-  ┌─ class_declare_method.js:1:11
+error[SyntaxError]: accessibility modifiers can only be used in TypeScript files
+  ┌─ class_invalid_modifiers.js:1:11
   │
-1 │ class B { declare fn() {} }
-  │           ^^^^^^^
+1 │ class A { public foo() {} }
+  │           ^^^^^^
 
 --
-class B { declare fn() {} }
+class A { public foo() {} }

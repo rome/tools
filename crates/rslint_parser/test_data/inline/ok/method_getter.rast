@@ -44,19 +44,25 @@ JsModule {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..10
         0: IDENT@6..10 "foo" [] [Whitespace(" ")]
-      2: L_CURLY@10..11 "{" [] []
-      3: LIST@11..25
+      2: (empty)
+      3: (empty)
+      4: L_CURLY@10..11 "{" [] []
+      5: LIST@11..25
         0: JS_GETTER_CLASS_MEMBER@11..25
-          0: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@17..20
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")]
+          5: JS_LITERAL_MEMBER_NAME@17..20
             0: IDENT@17..20 "bar" [] []
-          2: L_PAREN@20..21 "(" [] []
-          3: R_PAREN@21..23 ")" [] [Whitespace(" ")]
-          4: (empty)
-          5: JS_FUNCTION_BODY@23..25
+          6: L_PAREN@20..21 "(" [] []
+          7: R_PAREN@21..23 ")" [] [Whitespace(" ")]
+          8: (empty)
+          9: JS_FUNCTION_BODY@23..25
             0: L_CURLY@23..24 "{" [] []
             1: LIST@24..24
             2: LIST@24..24
             3: R_CURLY@24..25 "}" [] []
-      4: R_CURLY@25..27 "}" [Whitespace("\n")] []
+      6: R_CURLY@25..27 "}" [Whitespace("\n")] []
   3: EOF@27..28 "" [Whitespace("\n")] []

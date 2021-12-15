@@ -1,0 +1,60 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: [],
+    items: [
+        JsUnknownStatement {
+            items: [
+                CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
+                },
+                TsImplementsClause {
+                    implements_token: IMPLEMENTS_KW@8..19 "implements" [] [Whitespace(" ")],
+                    interfaces: [
+                        TsExprWithTypeArgs {
+                            item: TsTypeName {
+                                ident: missing (required),
+                            },
+                            type_params: missing (required),
+                        },
+                    ],
+                },
+                L_CURLY@21..22 "{" [] [],
+                List {
+                    items: [],
+                },
+                R_CURLY@22..23 "}" [] [],
+            ],
+        },
+    ],
+    eof_token: EOF@23..24 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..24
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..23
+    0: JS_UNKNOWN_STATEMENT@0..23
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..8
+        0: IDENT@6..8 "B" [] [Whitespace(" ")]
+      2: (empty)
+      3: TS_IMPLEMENTS_CLAUSE@8..21
+        0: IMPLEMENTS_KW@8..19 "implements" [] [Whitespace(" ")]
+        1: LIST@19..21
+          0: TS_EXPR_WITH_TYPE_ARGS@19..21
+            0: TS_TYPE_NAME@19..21
+              0: IDENT@19..21 "C" [] [Whitespace(" ")]
+      4: L_CURLY@21..22 "{" [] []
+      5: LIST@22..22
+      6: R_CURLY@22..23 "}" [] []
+  3: EOF@23..24 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: classes can only implement interfaces in TypeScript files
+  ┌─ class_implements.js:1:9
+  │
+1 │ class B implements C {}
+  │         ^^^^^^^^^^^^
+
+--
+class B implements C {}

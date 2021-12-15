@@ -86,8 +86,10 @@ JsModule {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..10
         0: IDENT@6..10 "foo" [] [Whitespace(" ")]
-      2: L_CURLY@10..12 "{" [] [Whitespace(" ")]
-      3: LIST@12..39
+      2: (empty)
+      3: (empty)
+      4: L_CURLY@10..12 "{" [] [Whitespace(" ")]
+      5: LIST@12..39
         0: JS_EMPTY_CLASS_MEMBER@12..13
           0: SEMICOLON@12..13 ";" [] []
         1: JS_EMPTY_CLASS_MEMBER@13..14
@@ -109,13 +111,17 @@ JsModule {
         9: JS_EMPTY_CLASS_MEMBER@21..23
           0: SEMICOLON@21..23 ";" [] [Whitespace(" ")]
         10: JS_GETTER_CLASS_MEMBER@23..35
-          0: GET_KW@23..27 "get" [] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@27..30
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: GET_KW@23..27 "get" [] [Whitespace(" ")]
+          5: JS_LITERAL_MEMBER_NAME@27..30
             0: IDENT@27..30 "foo" [] []
-          2: L_PAREN@30..31 "(" [] []
-          3: R_PAREN@31..33 ")" [] [Whitespace(" ")]
-          4: (empty)
-          5: JS_FUNCTION_BODY@33..35
+          6: L_PAREN@30..31 "(" [] []
+          7: R_PAREN@31..33 ")" [] [Whitespace(" ")]
+          8: (empty)
+          9: JS_FUNCTION_BODY@33..35
             0: L_CURLY@33..34 "{" [] []
             1: LIST@34..34
             2: LIST@34..34
@@ -128,5 +134,5 @@ JsModule {
           0: SEMICOLON@37..38 ";" [] []
         14: JS_EMPTY_CLASS_MEMBER@38..39
           0: SEMICOLON@38..39 ";" [] []
-      4: R_CURLY@39..40 "}" [] []
+      6: R_CURLY@39..40 "}" [] []
   3: EOF@40..41 "" [Whitespace("\n")] []

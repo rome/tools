@@ -263,25 +263,37 @@ JsModule {
       0: CLASS_KW@53..61 "class" [Whitespace("\n\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@61..66
         0: IDENT@61..66 "Test" [] [Whitespace(" ")]
-      2: L_CURLY@66..67 "{" [] []
-      3: LIST@67..149
+      2: (empty)
+      3: (empty)
+      4: L_CURLY@66..67 "{" [] []
+      5: LIST@67..149
         0: JS_PROPERTY_CLASS_MEMBER@67..73
-          0: JS_PRIVATE_CLASS_MEMBER_NAME@67..73
-            0: HASH@67..70 "#" [Whitespace("\n\t")] []
-            1: IDENT@70..73 "bar" [] []
+          0: (empty)
           1: (empty)
           2: (empty)
+          3: (empty)
+          4: JS_PRIVATE_CLASS_MEMBER_NAME@67..73
+            0: HASH@67..70 "#" [Whitespace("\n\t")] []
+            1: IDENT@70..73 "bar" [] []
+          5: (empty)
+          6: (empty)
+          7: (empty)
         1: JS_METHOD_CLASS_MEMBER@73..149
-          0: JS_LITERAL_MEMBER_NAME@73..80
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@73..80
             0: IDENT@73..80 "test" [Whitespace("\n\n\t")] []
-          1: JS_PARAMETER_LIST@80..88
+          5: (empty)
+          6: JS_PARAMETER_LIST@80..88
             0: L_PAREN@80..81 "(" [] []
             1: LIST@81..86
               0: JS_IDENTIFIER_BINDING@81..86
                 0: IDENT@81..86 "other" [] []
             2: R_PAREN@86..88 ")" [] [Whitespace(" ")]
-          2: (empty)
-          3: JS_FUNCTION_BODY@88..149
+          7: (empty)
+          8: JS_FUNCTION_BODY@88..149
             0: L_CURLY@88..89 "{" [] []
             1: LIST@89..89
             2: LIST@89..146
@@ -324,5 +336,5 @@ JsModule {
                     1: IDENT@142..145 "bar" [] []
                 1: SEMICOLON@145..146 ";" [] []
             3: R_CURLY@146..149 "}" [Whitespace("\n\t")] []
-      4: R_CURLY@149..151 "}" [Whitespace("\n")] []
+      6: R_CURLY@149..151 "}" [Whitespace("\n")] []
   3: EOF@151..152 "" [Whitespace("\n")] []

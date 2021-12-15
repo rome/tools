@@ -116,17 +116,23 @@ JsModule {
         1: JS_IDENTIFIER_EXPRESSION@19..21
           0: JS_REFERENCE_IDENTIFIER@19..21
             0: IDENT@19..21 "B" [] [Whitespace(" ")]
-      3: L_CURLY@21..22 "{" [] []
-      4: LIST@22..63
+      3: (empty)
+      4: L_CURLY@21..22 "{" [] []
+      5: LIST@22..63
         0: JS_METHOD_CLASS_MEMBER@22..63
-          0: JS_LITERAL_MEMBER_NAME@22..28
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: JS_LITERAL_MEMBER_NAME@22..28
             0: IDENT@22..28 "test" [Whitespace("\n\t")] []
-          1: JS_PARAMETER_LIST@28..31
+          5: (empty)
+          6: JS_PARAMETER_LIST@28..31
             0: L_PAREN@28..29 "(" [] []
             1: LIST@29..29
             2: R_PAREN@29..31 ")" [] [Whitespace(" ")]
-          2: (empty)
-          3: JS_FUNCTION_BODY@31..63
+          7: (empty)
+          8: JS_FUNCTION_BODY@31..63
             0: L_CURLY@31..32 "{" [] []
             1: LIST@32..32
             2: LIST@32..60
@@ -155,7 +161,7 @@ JsModule {
                     2: R_PAREN@58..59 ")" [] []
                 1: SEMICOLON@59..60 ";" [] []
             3: R_CURLY@60..63 "}" [Whitespace("\n\t")] []
-      5: R_CURLY@63..65 "}" [Whitespace("\n")] []
+      6: R_CURLY@63..65 "}" [Whitespace("\n")] []
     1: JS_EXPRESSION_STATEMENT@65..75
       0: CALL_EXPR@65..74
         0: JS_UNKNOWN_EXPRESSION@65..72
