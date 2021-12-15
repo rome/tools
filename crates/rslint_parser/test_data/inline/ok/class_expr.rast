@@ -84,7 +84,7 @@ JsModule {
                         value_token: IDENT@57..61 "foo" [Whitespace("\n")] [],
                     },
                 },
-                optional_chain_token_token: missing (optional),
+                optional_chain_token: missing (optional),
                 l_brack_token: L_BRACK@61..62 "[" [] [],
                 member: JsClassExpression {
                     class_token: CLASS_KW@62..68 "class" [] [Whitespace(" ")],

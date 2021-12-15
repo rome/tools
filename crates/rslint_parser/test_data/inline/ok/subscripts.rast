@@ -63,7 +63,7 @@ JsModule {
                         r_paren_token: R_PAREN@26..27 ")" [] [],
                     },
                 },
-                optional_chain_token_token: missing (optional),
+                optional_chain_token: missing (optional),
                 l_brack_token: L_BRACK@27..28 "[" [] [],
                 member: JsIdentifierExpression {
                     name: JsReferenceIdentifier {

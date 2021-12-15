@@ -645,7 +645,7 @@ pub fn computed_member_expression(
 }
 
 /// An identifier name, either an ident or a keyword
-pub fn identifier_name(p: &mut Parser) -> Option<CompletedMarker> {
+pub fn identifier_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if is_at_identifier_name(p) {
 		let m = p.start();
 		p.bump_remap(T![ident]);
