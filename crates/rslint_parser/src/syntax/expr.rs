@@ -428,35 +428,40 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 	// super[bar]
 	// super[foo][bar]
 	if p.at(T![super]) && token_set!(T![.], T!['['], T![?.]).contains(p.nth(1)) {
-		let mut super_completed = super_expression(p);
+		let super_completed = super_expression(p);
 
-		let lhs = match p.cur() {
-			T![.] => static_member_expression(p, super_completed, T![.]),
-			T!['['] => computed_member_expression(p, super_completed, false),
-			T![?.] => {
-				super_completed.change_kind(p, JS_UNKNOWN_EXPRESSION);
-				p.error(
-					p.err_builder(
-						"Super doesn't support optional chaining as super can never be null",
-					)
-					.primary(super_completed.range(p), ""),
-				);
-				static_member_expression(p, super_completed, T![?.])
-			}
-			_ => unreachable!(),
-		};
+		if let Present(mut super_marker) = super_completed {
+			let lhs = match p.cur() {
+				T![.] => static_member_expression(p, super_marker, T![.]),
+				T!['['] => computed_member_expression(p, super_marker, false).unwrap(),
+				T![?.] => {
+					super_marker.change_kind(p, JS_UNKNOWN_EXPRESSION);
+					p.error(
+						p.err_builder(
+							"Super doesn't support optional chaining as super can never be null",
+						)
+						.primary(super_marker.range(p), ""),
+					);
+					static_member_expression(p, super_marker, T![?.])
+				}
+				_ => unreachable!(),
+			};
 
-		return Some(subscripts(p, lhs, true));
+			return Some(subscripts(p, lhs, true));
+		}
 	}
 
 	let lhs = primary_expr(p)?;
 	Some(subscripts(p, lhs, true))
 }
 
-fn super_expression(p: &mut Parser) -> CompletedMarker {
+fn super_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	if !p.at(T![super]) {
+		return Absent;
+	}
 	let super_marker = p.start();
 	p.expect_required(T![super]);
-	super_marker.complete(p, JS_SUPER_EXPRESSION)
+	Present(super_marker.complete(p, JS_SUPER_EXPRESSION))
 }
 
 /// Dot, Array, or Call expr subscripts. Including optional chaining.
@@ -490,8 +495,10 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 					m.complete(p, CALL_EXPR)
 				}
 			}
-			T![?.] if p.nth_at(1, T!['[']) => lhs = computed_member_expression(p, lhs, true),
-			T!['['] => lhs = computed_member_expression(p, lhs, false),
+			T![?.] if p.nth_at(1, T!['[']) => {
+				lhs = computed_member_expression(p, lhs, true).unwrap()
+			}
+			T!['['] => lhs = computed_member_expression(p, lhs, false).unwrap(),
 			T![?.] => lhs = static_member_expression(p, lhs, T![?.]),
 			T![.] => lhs = static_member_expression(p, lhs, T![.]),
 			T![!] if !p.has_linebreak_before_n(0) => {
@@ -611,7 +618,7 @@ pub fn computed_member_expression(
 	p: &mut Parser,
 	lhs: CompletedMarker,
 	optional_chain: bool,
-) -> CompletedMarker {
+) -> ParsedSyntax<CompletedMarker> {
 	// test_err bracket_expr_err
 	// foo[]
 	// foo?.[]
@@ -629,7 +636,7 @@ pub fn computed_member_expression(
 	}
 	p.expect_required(T![']']);
 
-	m.complete(p, JS_COMPUTED_MEMBER_EXPRESSION)
+	Present(m.complete(p, JS_COMPUTED_MEMBER_EXPRESSION))
 }
 
 /// An identifier name, either an ident or a keyword
@@ -1304,17 +1311,20 @@ pub fn spread_element(p: &mut Parser) -> CompletedMarker {
 /// A left hand side expression, either a member expression or a call expression such as `foo()`.
 pub fn lhs_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	let lhs = if p.at(T![super]) && p.nth_at(1, T!['(']) {
-		let mut super_marker = super_expression(p);
-
-		if !p.state.in_constructor {
-			p.error(
-				p.err_builder("`super` is only valid inside of a class constructor of a subclass.")
+		let super_syntax = super_expression(p);
+		if let Present(mut super_marker) = super_syntax {
+			if !p.state.in_constructor {
+				p.error(
+					p.err_builder(
+						"`super` is only valid inside of a class constructor of a subclass.",
+					)
 					.primary(super_marker.range(p), ""),
-			);
-			super_marker.change_kind(p, JS_UNKNOWN_EXPRESSION);
+				);
+				super_marker.change_kind(p, JS_UNKNOWN_EXPRESSION);
+			}
 		}
 
-		super_marker
+		super_syntax.unwrap()
 	} else {
 		member_or_new_expr(p, true)?
 	};
@@ -1400,20 +1410,20 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![<]) {
 		let m = p.start();
 		p.bump_any();
-		if p.eat(T![const]) {
+		return if p.eat(T![const]) {
 			p.expect_required(T![>]);
 			unary_expr(p);
 			let mut res = m.complete(p, TS_CONST_ASSERTION);
 			res.err_if_not_ts(p, "const assertions can only be used in TypeScript files");
-			return Some(res);
+			Some(res)
 		} else {
 			ts_type(p);
 			p.expect_required(T![>]);
 			unary_expr(p);
 			let mut res = m.complete(p, TS_ASSERTION);
 			res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
-			return Some(res);
-		}
+			Some(res)
+		};
 	}
 
 	if p.at(T![++]) {
