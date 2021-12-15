@@ -25,7 +25,7 @@ macro_rules! at_ident_name {
 
 pub fn parse(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.eat_optional(T![js_shebang]);
+	p.eat_optional(JS_SHEBANG);
 
 	let old_parser_state = directives(p);
 
@@ -358,7 +358,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 fn from_clause_and_semi(p: &mut Parser, start: usize) {
 	debug_assert_eq!(p.cur_src(), "from");
 	p.bump_remap(T![from]);
-	p.expect_required(T![js_string_literal]);
+	p.expect_required(JS_STRING_LITERAL);
 	semi(p, start..p.cur_tok().range.start);
 }
 

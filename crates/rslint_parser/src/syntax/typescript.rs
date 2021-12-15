@@ -1018,20 +1018,23 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 			let elements_list = p.start();
 			while !p.at(EOF) && !p.at(BACKTICK) {
 				match p.cur() {
-                    TEMPLATE_CHUNK => p.bump_any(),
-                    DOLLARCURLY => {
+                    TEMPLATE_CHUNK => {
+											let m = p.start();
+											p.bump_any();
+											m.complete(p, TEMPLATE_CHUNK_ELEMENT);
+										},
+										DOLLAR_CURLY => {
                         let e = p.start();
                         p.bump_any();
                         ts_type(p);
                         p.expect_required(T!['}']);
                         e.complete(p, TS_TEMPLATE_ELEMENT);
                     },
-                    t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
+                    t => unreachable!("Anything not template chunk or dollar_curly should have been eaten by the lexer, but {:?} was found", t),
                 }
 			}
 
-			// TODO
-			elements_list.complete(p, JS_UNKNOWN_EXPRESSION);
+			elements_list.complete(p, TEMPLATE_ELEMENT_LIST);
 			p.eat(BACKTICK);
 			Some(m.complete(p, TS_TEMPLATE))
 		}

@@ -308,7 +308,23 @@ JsAnyExpression =
 
 
 // the backtick is just a placeholder, see parser in rslint_parser/src/ast/expr_ext.rs
-Template = '`'
+Template =
+	l_tick: '`'
+	elements: TemplateElementList
+	r_tick: '`'
+
+TemplateElementList = AnyTemplateElement*
+
+AnyTemplateElement =
+	TemplateChunkElement
+	| TemplateElement
+
+TemplateChunkElement = 'template_chunk'
+
+TemplateElement =
+	'dollar_curly'
+	expression: JsAnyExpression
+	'}'
 
 JsThisExpression = 'this'
 

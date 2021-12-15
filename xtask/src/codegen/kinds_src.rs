@@ -162,7 +162,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 	tokens: &[
 		"HASH", // #
 		"TEMPLATE_CHUNK",
-		"DOLLARCURLY", // ${
+		"DOLLAR_CURLY", // ${
 		"ERROR_TOKEN",
 		"IDENT",
 		"WHITESPACE",
@@ -257,6 +257,8 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_REGEX_LITERAL_EXPRESSION",
 		"TEMPLATE",
 		"TEMPLATE_ELEMENT",
+		"TEMPLATE_CHUNK_ELEMENT",
+		"TEMPLATE_ELEMENT_LIST",
 		"JS_IMPORT_CALL_EXPRESSION",
 		"NEW_TARGET",
 		"IMPORT_META",

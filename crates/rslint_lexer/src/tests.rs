@@ -194,7 +194,7 @@ fn template_literals() {
 	assert_lex! {
 		"`${a} a`",
 		BACKTICK:1,
-		DOLLARCURLY:2,
+		DOLLAR_CURLY:2,
 		IDENT:1,
 		R_CURLY:1,
 		TEMPLATE_CHUNK:2,
@@ -204,11 +204,11 @@ fn template_literals() {
 	assert_lex! {
 		"`${a} b ${b}`",
 		BACKTICK:1,
-		DOLLARCURLY:2,
+		DOLLAR_CURLY:2,
 		IDENT:1,
 		R_CURLY:1,
 		TEMPLATE_CHUNK:3,
-		DOLLARCURLY:2,
+		DOLLAR_CURLY:2,
 		IDENT:1,
 		R_CURLY:1,
 		BACKTICK:1

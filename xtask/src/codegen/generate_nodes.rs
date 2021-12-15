@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use super::kinds_src::AstSrc;
-use crate::codegen::kinds_src::TokenKind;
+use crate::codegen::kinds_src::{TokenKind, KINDS_SRC};
 use crate::{
 	codegen::{kinds_src::Field, to_lower_snake_case, to_upper_snake_case},
 	Result,
@@ -467,6 +467,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			}
 		};
 
+		let padded_name = format!("{} ", name);
 		let list_impl = if list.separated {
 			quote! {
 				impl AstSeparatedList<#element_type> for #list_name {
@@ -477,7 +478,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 				impl Debug for #list_name {
 					fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-						write!(f, "{} ", #name)?;
+						f.write_str(#padded_name)?;
 						f.debug_list().entries(self.elements()).finish()
 					}
 				}
@@ -510,7 +511,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 				impl Debug for #list_name {
 					fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-						write!(f, "{} ", #name)?;
+						f.write_str(#padded_name)?;
 						f.debug_list().entries(self.iter()).finish()
 					}
 				}
@@ -617,8 +618,16 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 }
 
 fn token_kind_to_code(name: &str) -> proc_macro2::TokenStream {
-	let token: proc_macro2::TokenStream = name.parse().unwrap();
-	quote! { T![#token] }
+	let kind_variant_name = to_upper_snake_case(name);
+	if KINDS_SRC.literals.contains(&kind_variant_name.as_str())
+		|| KINDS_SRC.tokens.contains(&kind_variant_name.as_str())
+	{
+		let ident = format_ident!("{}", kind_variant_name);
+		quote! {  #ident }
+	} else {
+		let token: proc_macro2::TokenStream = name.parse().unwrap();
+		quote! { T![#token] }
+	}
 }
 
 fn token_kinds_to_code(kinds: &[String]) -> proc_macro2::TokenStream {

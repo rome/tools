@@ -1421,7 +1421,7 @@ impl<'src> Lexer<'src> {
 				}
 				'$' if self.bytes.get(self.cur + 1) == Some(&b'{') && self.cur == start => {
 					self.advance(2);
-					return (Token::new(SyntaxKind::DOLLARCURLY, 2), diagnostic);
+					return (Token::new(SyntaxKind::DOLLAR_CURLY, 2), diagnostic);
 				}
 				'$' if self.bytes.get(self.cur + 1) == Some(&b'{') => {
 					return (

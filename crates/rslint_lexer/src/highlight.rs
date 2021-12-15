@@ -124,7 +124,7 @@ impl<'s> Iterator for Highlighter<'s> {
 				rgb![152, 195, 121]
 			}
 			SyntaxKind::JS_NUMBER_LITERAL => rgb![209, 154, 102],
-			SyntaxKind::DOLLARCURLY => rgb![198, 120, 221],
+			SyntaxKind::DOLLAR_CURLY => rgb![198, 120, 221],
 			SyntaxKind::ERROR_TOKEN => rgb![244, 71, 71],
 			SyntaxKind::COMMENT => rgb![127, 132, 142],
 			_ => Color::White,

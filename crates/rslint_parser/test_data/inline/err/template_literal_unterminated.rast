@@ -15,7 +15,22 @@ JsModule {
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: Template {
-                                backtick_token: BACKTICK@8..9 "`" [] [],
+                                l_tick_token: BACKTICK@8..9 "`" [] [],
+                                elements: TemplateElementList [
+                                    TemplateElement {
+                                        dollar_curly_token: DOLLAR_CURLY@9..11 "${" [] [],
+                                        expression: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@11..14 "foo" [] [],
+                                            },
+                                        },
+                                        r_curly_token: R_CURLY@14..15 "}" [] [],
+                                    },
+                                    TemplateChunkElement {
+                                        template_chunk_token: TEMPLATE_CHUNK@15..20 " bar\n" [] [],
+                                    },
+                                ],
+                                r_tick_token: BACKTICK@8..9 "`" [] [],
                             },
                         },
                     },
@@ -44,14 +59,15 @@ JsModule {
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: TEMPLATE@8..20
                 0: BACKTICK@8..9 "`" [] []
-                1: JS_UNKNOWN_EXPRESSION@9..20
+                1: TEMPLATE_ELEMENT_LIST@9..20
                   0: TEMPLATE_ELEMENT@9..15
-                    0: DOLLARCURLY@9..11 "${" [] []
+                    0: DOLLAR_CURLY@9..11 "${" [] []
                     1: JS_IDENTIFIER_EXPRESSION@11..14
                       0: JS_REFERENCE_IDENTIFIER@11..14
                         0: IDENT@11..14 "foo" [] []
                     2: R_CURLY@14..15 "}" [] []
-                  1: TEMPLATE_CHUNK@15..20 " bar\n" [] []
+                  1: TEMPLATE_CHUNK_ELEMENT@15..20
+                    0: TEMPLATE_CHUNK@15..20 " bar\n" [] []
       1: (empty)
   3: EOF@20..20 "" [] []
 --

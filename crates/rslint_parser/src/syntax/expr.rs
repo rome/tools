@@ -1209,20 +1209,23 @@ pub fn template(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker
 
 	while !p.at(EOF) && !p.at(BACKTICK) {
 		match p.cur() {
-            TEMPLATE_CHUNK => p.bump_any(),
-            DOLLARCURLY => {
+            TEMPLATE_CHUNK => {
+							let m = p.start();
+							p.bump_any();
+							m.complete(p, TEMPLATE_CHUNK_ELEMENT);
+						},
+            DOLLAR_CURLY => {
                 let e = p.start();
                 p.bump_any();
                 expr(p);
                 p.expect_required(T!['}']);
                 e.complete(p, TEMPLATE_ELEMENT);
-            },
+            }
             t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
         }
 	}
 
-	// TODO
-	elements_list.complete(p, JS_UNKNOWN_EXPRESSION);
+	elements_list.complete(p, TEMPLATE_ELEMENT_LIST);
 
 	// test_err template_literal_unterminated
 	// let a = `${foo} bar

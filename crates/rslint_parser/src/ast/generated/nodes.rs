@@ -69,7 +69,7 @@ impl ExportNamed {
 	}
 	pub fn from_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![from]) }
 	pub fn js_string_literal_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T![js_string_literal])
+		support::token(&self.syntax, JS_STRING_LITERAL)
 	}
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
@@ -91,7 +91,7 @@ impl ExportWildcard {
 		support::required_token(&self.syntax, T![from])
 	}
 	pub fn source_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal])
+		support::required_token(&self.syntax, JS_STRING_LITERAL)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -136,7 +136,7 @@ pub struct Ident {
 }
 impl Ident {
 	pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![ident])
+		support::required_token(&self.syntax, IDENT)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -297,7 +297,7 @@ pub struct JsBigIntLiteralExpression {
 }
 impl JsBigIntLiteralExpression {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_big_int_literal])
+		support::required_token(&self.syntax, JS_BIG_INT_LITERAL)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -379,7 +379,7 @@ impl JsBreakStatement {
 	pub fn break_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![break])
 	}
-	pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![ident]) }
+	pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, IDENT) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -562,7 +562,7 @@ impl JsContinueStatement {
 	pub fn continue_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![continue])
 	}
-	pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![ident]) }
+	pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, IDENT) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -604,7 +604,7 @@ pub struct JsDirective {
 }
 impl JsDirective {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal])
+		support::required_token(&self.syntax, JS_STRING_LITERAL)
 	}
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
@@ -849,7 +849,7 @@ pub struct JsIdentifierAssignment {
 }
 impl JsIdentifierAssignment {
 	pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![ident])
+		support::required_token(&self.syntax, IDENT)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -858,7 +858,7 @@ pub struct JsIdentifierBinding {
 }
 impl JsIdentifierBinding {
 	pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![ident])
+		support::required_token(&self.syntax, IDENT)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -925,13 +925,13 @@ pub struct JsImportAssertionEntry {
 }
 impl JsImportAssertionEntry {
 	pub fn key(&self) -> SyntaxResult<SyntaxToken> {
-		support::find_required_token(&self.syntax, &[T![ident], T![js_string_literal]])
+		support::find_required_token(&self.syntax, &[IDENT, JS_STRING_LITERAL])
 	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [:])
 	}
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal])
+		support::required_token(&self.syntax, JS_STRING_LITERAL)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1023,7 +1023,7 @@ pub struct JsLabeledStatement {
 }
 impl JsLabeledStatement {
 	pub fn label_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![ident])
+		support::required_token(&self.syntax, IDENT)
 	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [:])
@@ -1036,7 +1036,7 @@ pub struct JsLiteralExportName {
 }
 impl JsLiteralExportName {
 	pub fn value(&self) -> SyntaxResult<SyntaxToken> {
-		support::find_required_token(&self.syntax, &[T![ident], T![js_string_literal]])
+		support::find_required_token(&self.syntax, &[IDENT, JS_STRING_LITERAL])
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1045,10 +1045,7 @@ pub struct JsLiteralMemberName {
 }
 impl JsLiteralMemberName {
 	pub fn value(&self) -> SyntaxResult<SyntaxToken> {
-		support::find_required_token(
-			&self.syntax,
-			&[T![ident], T![js_string_literal], T![js_number_literal]],
-		)
+		support::find_required_token(&self.syntax, &[IDENT, JS_STRING_LITERAL, JS_NUMBER_LITERAL])
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1109,7 +1106,7 @@ pub struct JsModule {
 }
 impl JsModule {
 	pub fn interpreter_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T![js_shebang])
+		support::token(&self.syntax, JS_SHEBANG)
 	}
 	pub fn directives(&self) -> JsDirectiveList { support::list(&self.syntax) }
 	pub fn items(&self) -> JsModuleItemList { support::list(&self.syntax) }
@@ -1123,7 +1120,7 @@ pub struct JsModuleSource {
 }
 impl JsModuleSource {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal])
+		support::required_token(&self.syntax, JS_STRING_LITERAL)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1132,7 +1129,7 @@ pub struct JsName {
 }
 impl JsName {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![ident])
+		support::required_token(&self.syntax, IDENT)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1187,7 +1184,7 @@ pub struct JsNumberLiteralExpression {
 }
 impl JsNumberLiteralExpression {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_number_literal])
+		support::required_token(&self.syntax, JS_NUMBER_LITERAL)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1371,7 +1368,7 @@ impl JsPrivateClassMemberName {
 		support::required_token(&self.syntax, T ! [#])
 	}
 	pub fn id_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![ident])
+		support::required_token(&self.syntax, IDENT)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1383,7 +1380,7 @@ impl JsPrivateName {
 		support::required_token(&self.syntax, T ! [#])
 	}
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![ident])
+		support::required_token(&self.syntax, IDENT)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1426,7 +1423,7 @@ pub struct JsReferenceIdentifier {
 }
 impl JsReferenceIdentifier {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![ident])
+		support::required_token(&self.syntax, IDENT)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1435,7 +1432,7 @@ pub struct JsRegexLiteralExpression {
 }
 impl JsRegexLiteralExpression {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_regex_literal])
+		support::required_token(&self.syntax, JS_REGEX_LITERAL)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1467,7 +1464,7 @@ pub struct JsScript {
 }
 impl JsScript {
 	pub fn interpreter_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T![js_shebang])
+		support::token(&self.syntax, JS_SHEBANG)
 	}
 	pub fn directives(&self) -> JsDirectiveList { support::list(&self.syntax) }
 	pub fn statements(&self) -> JsStatementList { support::list(&self.syntax) }
@@ -1588,7 +1585,7 @@ pub struct JsStringLiteralExpression {
 }
 impl JsStringLiteralExpression {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal])
+		support::required_token(&self.syntax, JS_STRING_LITERAL)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1810,8 +1807,36 @@ pub struct Template {
 	pub(crate) syntax: SyntaxNode,
 }
 impl Template {
-	pub fn backtick_token(&self) -> SyntaxResult<SyntaxToken> {
+	pub fn l_tick_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['`'])
+	}
+	pub fn elements(&self) -> TemplateElementList { support::list(&self.syntax) }
+	pub fn r_tick_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['`'])
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TemplateChunkElement {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TemplateChunkElement {
+	pub fn template_chunk_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, TEMPLATE_CHUNK)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TemplateElement {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TemplateElement {
+	pub fn dollar_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, DOLLAR_CURLY)
+	}
+	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+		support::required_node(&self.syntax)
+	}
+	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2050,7 +2075,7 @@ impl TsExternalModuleRef {
 		support::required_token(&self.syntax, T!['('])
 	}
 	pub fn module_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal])
+		support::required_token(&self.syntax, JS_STRING_LITERAL)
 	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![')'])
@@ -2605,6 +2630,11 @@ pub enum AnyJsImportClause {
 	JsImportNamedClause(JsImportNamedClause),
 	JsImportNamespaceClause(JsImportNamespaceClause),
 	JsName(JsName),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum AnyTemplateElement {
+	TemplateChunkElement(TemplateChunkElement),
+	TemplateElement(TemplateElement),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum DefaultDecl {
@@ -6383,8 +6413,60 @@ impl std::fmt::Debug for Template {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("Template")
 			.field(
-				"backtick_token",
-				&support::DebugSyntaxResult(self.backtick_token()),
+				"l_tick_token",
+				&support::DebugSyntaxResult(self.l_tick_token()),
+			)
+			.field("elements", &self.elements())
+			.field(
+				"r_tick_token",
+				&support::DebugSyntaxResult(self.r_tick_token()),
+			)
+			.finish()
+	}
+}
+impl AstNode for TemplateChunkElement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE_CHUNK_ELEMENT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TemplateChunkElement {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("TemplateChunkElement")
+			.field(
+				"template_chunk_token",
+				&support::DebugSyntaxResult(self.template_chunk_token()),
+			)
+			.finish()
+	}
+}
+impl AstNode for TemplateElement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE_ELEMENT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TemplateElement {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("TemplateElement")
+			.field(
+				"dollar_curly_token",
+				&support::DebugSyntaxResult(self.dollar_curly_token()),
+			)
+			.field("expression", &support::DebugSyntaxResult(self.expression()))
+			.field(
+				"r_curly_token",
+				&support::DebugSyntaxResult(self.r_curly_token()),
 			)
 			.finish()
 	}
@@ -8119,6 +8201,45 @@ impl std::fmt::Debug for AnyJsImportClause {
 			AnyJsImportClause::JsImportNamedClause(it) => std::fmt::Debug::fmt(it, f),
 			AnyJsImportClause::JsImportNamespaceClause(it) => std::fmt::Debug::fmt(it, f),
 			AnyJsImportClause::JsName(it) => std::fmt::Debug::fmt(it, f),
+		}
+	}
+}
+impl From<TemplateChunkElement> for AnyTemplateElement {
+	fn from(node: TemplateChunkElement) -> AnyTemplateElement {
+		AnyTemplateElement::TemplateChunkElement(node)
+	}
+}
+impl From<TemplateElement> for AnyTemplateElement {
+	fn from(node: TemplateElement) -> AnyTemplateElement {
+		AnyTemplateElement::TemplateElement(node)
+	}
+}
+impl AstNode for AnyTemplateElement {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		matches!(kind, TEMPLATE_CHUNK_ELEMENT | TEMPLATE_ELEMENT)
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			TEMPLATE_CHUNK_ELEMENT => {
+				AnyTemplateElement::TemplateChunkElement(TemplateChunkElement { syntax })
+			}
+			TEMPLATE_ELEMENT => AnyTemplateElement::TemplateElement(TemplateElement { syntax }),
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			AnyTemplateElement::TemplateChunkElement(it) => &it.syntax,
+			AnyTemplateElement::TemplateElement(it) => &it.syntax,
+		}
+	}
+}
+impl std::fmt::Debug for AnyTemplateElement {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		match self {
+			AnyTemplateElement::TemplateChunkElement(it) => std::fmt::Debug::fmt(it, f),
+			AnyTemplateElement::TemplateElement(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -10915,6 +11036,11 @@ impl std::fmt::Display for AnyJsImportClause {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for AnyTemplateElement {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for DefaultDecl {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -11785,6 +11911,16 @@ impl std::fmt::Display for Template {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for TemplateChunkElement {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for TemplateElement {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for TsAccessibility {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -12342,7 +12478,7 @@ impl AstSeparatedList<Specifier> for ExportNamedSpecifierList {
 }
 impl Debug for ExportNamedSpecifierList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "ExportNamedSpecifierList")?;
+		f.write_str("ExportNamedSpecifierList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12378,7 +12514,7 @@ impl AstSeparatedList<JsAnyArrayAssignmentPatternElement> for JsArrayAssignmentP
 }
 impl Debug for JsArrayAssignmentPatternElementList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsArrayAssignmentPatternElementList")?;
+		f.write_str("JsArrayAssignmentPatternElementList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12414,7 +12550,7 @@ impl AstSeparatedList<JsAnyArrayBindingPatternElement> for JsArrayBindingPattern
 }
 impl Debug for JsArrayBindingPatternElementList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsArrayBindingPatternElementList")?;
+		f.write_str("JsArrayBindingPatternElementList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12450,7 +12586,7 @@ impl AstSeparatedList<JsAnyArrayElement> for JsArrayElementList {
 }
 impl Debug for JsArrayElementList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsArrayElementList")?;
+		f.write_str("JsArrayElementList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12486,7 +12622,7 @@ impl AstSeparatedList<JsAnyExpression> for JsCallArgumentList {
 }
 impl Debug for JsCallArgumentList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsCallArgumentList")?;
+		f.write_str("JsCallArgumentList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12522,7 +12658,7 @@ impl AstNodeList<JsAnyClassMember> for JsClassMemberList {
 }
 impl Debug for JsClassMemberList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsClassMemberList")?;
+		f.write_str("JsClassMemberList ")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -12558,7 +12694,7 @@ impl AstSeparatedList<JsAnyConstructorParameter> for JsConstructorParameterList 
 }
 impl Debug for JsConstructorParameterList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsConstructorParameterList")?;
+		f.write_str("JsConstructorParameterList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12594,7 +12730,7 @@ impl AstNodeList<JsDirective> for JsDirectiveList {
 }
 impl Debug for JsDirectiveList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsDirectiveList")?;
+		f.write_str("JsDirectiveList ")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -12630,7 +12766,7 @@ impl AstSeparatedList<JsAnyImportAssertionEntry> for JsImportAssertionEntryList 
 }
 impl Debug for JsImportAssertionEntryList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsImportAssertionEntryList")?;
+		f.write_str("JsImportAssertionEntryList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12666,7 +12802,7 @@ impl AstNodeList<JsAnyModuleItem> for JsModuleItemList {
 }
 impl Debug for JsModuleItemList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsModuleItemList")?;
+		f.write_str("JsModuleItemList ")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -12702,7 +12838,7 @@ impl AstSeparatedList<JsAnyNamedImportSpecifier> for JsNamedImportSpecifierList 
 }
 impl Debug for JsNamedImportSpecifierList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsNamedImportSpecifierList")?;
+		f.write_str("JsNamedImportSpecifierList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12740,7 +12876,7 @@ impl AstSeparatedList<JsAnyObjectAssignmentPatternMember>
 }
 impl Debug for JsObjectAssignmentPatternPropertyList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsObjectAssignmentPatternPropertyList")?;
+		f.write_str("JsObjectAssignmentPatternPropertyList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12776,7 +12912,7 @@ impl AstSeparatedList<JsAnyObjectBindingPatternMember> for JsObjectBindingPatter
 }
 impl Debug for JsObjectBindingPatternPropertyList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsObjectBindingPatternPropertyList")?;
+		f.write_str("JsObjectBindingPatternPropertyList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12812,7 +12948,7 @@ impl AstSeparatedList<JsAnyObjectMember> for JsObjectMemberList {
 }
 impl Debug for JsObjectMemberList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsObjectMemberList")?;
+		f.write_str("JsObjectMemberList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12848,7 +12984,7 @@ impl AstSeparatedList<JsAnyParameter> for JsParameterList {
 }
 impl Debug for JsParameterList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsParameterList")?;
+		f.write_str("JsParameterList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12884,7 +13020,7 @@ impl AstNodeList<JsAnyStatement> for JsStatementList {
 }
 impl Debug for JsStatementList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsStatementList")?;
+		f.write_str("JsStatementList ")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -12920,7 +13056,7 @@ impl AstNodeList<JsAnySwitchClause> for JsSwitchCaseList {
 }
 impl Debug for JsSwitchCaseList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsSwitchCaseList")?;
+		f.write_str("JsSwitchCaseList ")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -12956,7 +13092,7 @@ impl AstSeparatedList<JsVariableDeclaration> for JsVariableDeclarationList {
 }
 impl Debug for JsVariableDeclarationList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "JsVariableDeclarationList")?;
+		f.write_str("JsVariableDeclarationList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12968,6 +13104,42 @@ impl IntoIterator for JsVariableDeclarationList {
 impl IntoIterator for &JsVariableDeclarationList {
 	type Item = SyntaxResult<JsVariableDeclaration>;
 	type IntoIter = AstSeparatedListNodesIterator<JsVariableDeclaration>;
+	fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
+pub struct TemplateElementList {
+	syntax_list: SyntaxList,
+}
+impl AstNode for TemplateElementList {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE_ELEMENT_LIST }
+	fn cast(syntax: SyntaxNode) -> Option<TemplateElementList> {
+		if Self::can_cast(syntax.kind()) {
+			Some(TemplateElementList {
+				syntax_list: syntax.into_list(),
+			})
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstNodeList<AnyTemplateElement> for TemplateElementList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for TemplateElementList {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		f.write_str("TemplateElementList ")?;
+		f.debug_list().entries(self.iter()).finish()
+	}
+}
+impl IntoIterator for &TemplateElementList {
+	type Item = AnyTemplateElement;
+	type IntoIter = AstNodeListIterator<AnyTemplateElement>;
+	fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for TemplateElementList {
+	type Item = AnyTemplateElement;
+	type IntoIter = AstNodeListIterator<AnyTemplateElement>;
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -12992,7 +13164,7 @@ impl AstNodeList<TsEnumMember> for TsEnumMemberList {
 }
 impl Debug for TsEnumMemberList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "TsEnumMemberList")?;
+		f.write_str("TsEnumMemberList ")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -13028,7 +13200,7 @@ impl AstNodeList<TsTypeElement> for TsObjectMemberList {
 }
 impl Debug for TsObjectMemberList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "TsObjectMemberList")?;
+		f.write_str("TsObjectMemberList ")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -13064,7 +13236,7 @@ impl AstSeparatedList<TsType> for TsTypeArgList {
 }
 impl Debug for TsTypeArgList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "TsTypeArgList")?;
+		f.write_str("TsTypeArgList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -13100,7 +13272,7 @@ impl AstSeparatedList<TsExprWithTypeArgs> for TsTypeList {
 }
 impl Debug for TsTypeList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "TsTypeList")?;
+		f.write_str("TsTypeList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -13136,7 +13308,7 @@ impl AstSeparatedList<TsTypeParam> for TsTypeParamList {
 }
 impl Debug for TsTypeParamList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{} ", "TsTypeParamList")?;
+		f.write_str("TsTypeParamList ")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -13627,6 +13799,15 @@ impl Debug for DebugSyntaxElement {
 				NEW_TARGET => std::fmt::Debug::fmt(&NewTarget::cast(node.clone()).unwrap(), f),
 				SPECIFIER => std::fmt::Debug::fmt(&Specifier::cast(node.clone()).unwrap(), f),
 				TEMPLATE => std::fmt::Debug::fmt(&Template::cast(node.clone()).unwrap(), f),
+				TEMPLATE_CHUNK_ELEMENT => {
+					std::fmt::Debug::fmt(&TemplateChunkElement::cast(node.clone()).unwrap(), f)
+				}
+				TEMPLATE_ELEMENT => {
+					std::fmt::Debug::fmt(&TemplateElement::cast(node.clone()).unwrap(), f)
+				}
+				TEMPLATE_ELEMENT_LIST => {
+					std::fmt::Debug::fmt(&TemplateElementList::cast(node.clone()).unwrap(), f)
+				}
 				TS_ACCESSIBILITY => {
 					std::fmt::Debug::fmt(&TsAccessibility::cast(node.clone()).unwrap(), f)
 				}

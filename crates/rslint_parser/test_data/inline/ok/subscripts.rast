@@ -4,7 +4,13 @@ JsModule {
     items: JsModuleItemList [
         JsExpressionStatement {
             expression: Template {
-                backtick_token: BACKTICK@3..4 "`" [] [],
+                l_tick_token: BACKTICK@3..4 "`" [] [],
+                elements: TemplateElementList [
+                    TemplateChunkElement {
+                        template_chunk_token: TEMPLATE_CHUNK@4..7 "bar" [] [],
+                    },
+                ],
+                r_tick_token: BACKTICK@3..4 "`" [] [],
             },
             semicolon_token: missing (optional),
         },
@@ -82,8 +88,9 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@0..3
             0: IDENT@0..3 "foo" [] []
         1: BACKTICK@3..4 "`" [] []
-        2: JS_UNKNOWN_EXPRESSION@4..7
-          0: TEMPLATE_CHUNK@4..7 "bar" [] []
+        2: TEMPLATE_ELEMENT_LIST@4..7
+          0: TEMPLATE_CHUNK_ELEMENT@4..7
+            0: TEMPLATE_CHUNK@4..7 "bar" [] []
         3: BACKTICK@7..8 "`" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@8..32
