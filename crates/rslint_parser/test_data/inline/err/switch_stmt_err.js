@@ -6,3 +6,4 @@ switch (foo) {
 	default: {}
 	default: {}
 }
+switch (foo) { case : }

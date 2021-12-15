@@ -903,6 +903,9 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 /// A general expression.
 // test sequence_expr
 // 1, 2, 3, 4, 5
+
+// test_err sequence_expr
+// 1, 2, , 4
 pub fn expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let first = expr_or_assignment(p);
 
@@ -912,7 +915,7 @@ pub fn expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 				let sequence_expr_marker = first.precede(p);
 
 				p.bump_any();
-				expr(p);
+				expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
 
 				Present(sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION))
 			} else {

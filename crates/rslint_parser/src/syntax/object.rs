@@ -124,7 +124,8 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		T![...] => {
 			let m = p.start();
 			p.bump_any();
-			expr_or_assignment(p);
+			expr_or_assignment(p)
+				.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 			Present(m.complete(p, JS_SPREAD))
 		}
 
@@ -192,7 +193,8 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 				SingleTokenParseRecovery::new(token_set![T![:], T![,]], ERROR).recover(p);
 
 				if p.eat(T![:]) {
-					expr_or_assignment(p);
+					expr_or_assignment(p)
+						.or_missing_with_error(p, js_parse_error::expected_object_member);
 					Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
 				} else {
 					// It turns out that this isn't a valid member after all. Make sure to throw
@@ -288,7 +290,7 @@ pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax<Complet
 
 	let m = p.start();
 	p.expect_required(T!['[']);
-	expr(p);
+	expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
 	p.expect_required(T![']']);
 	Present(m.complete(p, JS_COMPUTED_MEMBER_NAME))
 }

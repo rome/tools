@@ -121,7 +121,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 				"`declare` modifiers cannot be applied to export equals declarations"
 			);
 			p.bump_any();
-			expr(p);
+			expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
 			semi(p, start..p.cur_tok().range.start);
 			let mut complete = m.complete(p, TS_EXPORT_ASSIGNMENT);
 			complete.err_if_not_ts(
@@ -258,7 +258,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		if p.cur_src() == "from" || (p.at(T![,]) && p.nth_at(1, T!['{'])) {
 			export_default = true;
 		} else {
-			expr_or_assignment(p);
+			expr_or_assignment(p).or_missing_with_error(p, js_parse_error::expected_expression);
 			semi(p, start..p.cur_tok().range.start);
 			return m.complete(p, EXPORT_DEFAULT_EXPR);
 		}

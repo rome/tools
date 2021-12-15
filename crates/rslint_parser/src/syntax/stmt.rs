@@ -1146,7 +1146,7 @@ fn parse_normal_for_head(p: &mut Parser) {
 		p.missing(); // missing test
 	} else {
 		let m = p.start();
-		expr(p);
+		expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
 		m.complete(p, FOR_STMT_TEST);
 	}
 
@@ -1156,7 +1156,7 @@ fn parse_normal_for_head(p: &mut Parser) {
 		p.missing(); // Missing update
 	} else {
 		let m = p.start();
-		expr(p);
+		expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
 		m.complete(p, FOR_STMT_UPDATE);
 	}
 }
@@ -1357,7 +1357,7 @@ fn parse_switch_clause(
 		}
 		T![case] => {
 			p.bump_any();
-			expr(p);
+			expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
 			p.expect_required(T![:]);
 
 			SwitchClausesList.parse_list(p);
@@ -1461,6 +1461,7 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// 	default: {}
 	// 	default: {}
 	// }
+	// switch (foo) { case : }
 
 	if !p.at(T![switch]) {
 		return Absent;
