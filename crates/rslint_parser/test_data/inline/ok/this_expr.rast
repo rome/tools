@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsThisExpression {
                 this_token: THIS_KW@0..4 "this" [] [],

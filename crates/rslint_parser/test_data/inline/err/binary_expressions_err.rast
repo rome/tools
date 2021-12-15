@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: CallExpr {
                 callee: JsIdentifierExpression {
@@ -12,7 +12,7 @@ JsModule {
                 type_args: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@3..4 "(" [] [],
-                    args: [
+                    args: JsCallArgumentList [
                         JsBinaryExpression {
                             left: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {

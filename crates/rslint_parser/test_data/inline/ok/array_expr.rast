@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@0..1 "[" [] [],
-                elements: [
+                elements: JsArrayElementList [
                     JsIdentifierExpression {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@1..4 "foo" [] [],
@@ -25,7 +25,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@11..13 "[" [Whitespace("\n")] [],
-                elements: [
+                elements: JsArrayElementList [
                     JsIdentifierExpression {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@13..16 "foo" [] [],
@@ -39,7 +39,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@18..20 "[" [Whitespace("\n")] [],
-                elements: [
+                elements: JsArrayElementList [
                     JsArrayHole,
                     COMMA@20..21 "," [] [],
                     JsIdentifierExpression {
@@ -55,7 +55,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@26..28 "[" [Whitespace("\n")] [],
-                elements: [
+                elements: JsArrayElementList [
                     JsIdentifierExpression {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@28..31 "foo" [] [],
@@ -70,7 +70,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@34..36 "[" [Whitespace("\n")] [],
-                elements: [
+                elements: JsArrayElementList [
                     JsArrayHole,
                     COMMA@36..37 "," [] [],
                     JsArrayHole,
@@ -101,7 +101,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@50..52 "[" [Whitespace("\n")] [],
-                elements: [
+                elements: JsArrayElementList [
                     JsSpread {
                         dotdotdot_token: DOT2@52..55 "..." [] [],
                         argument: JsIdentifierExpression {

@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -10,7 +10,7 @@ JsModule {
             implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@10..11 "{" [] [],
-            members: [
+            members: JsClassMemberList [
                 JsPropertyClassMember {
                     modifiers: missing (optional),
                     access_modifier: missing (optional),

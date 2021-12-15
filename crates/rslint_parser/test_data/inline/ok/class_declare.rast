@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -10,7 +10,7 @@ JsModule {
             implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
-            members: [
+            members: JsClassMemberList [
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
@@ -23,14 +23,14 @@ JsModule {
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@17..18 "(" [] [],
-                        items: [],
+                        items: JsParameterList [],
                         r_paren_token: R_PAREN@18..20 ")" [] [Whitespace(" ")],
                     },
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@20..21 "{" [] [],
-                        directives: [],
-                        statements: [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@21..23 "}" [] [Whitespace(" ")],
                     },
                 },
@@ -45,7 +45,7 @@ JsModule {
             implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@33..35 "{" [] [Whitespace(" ")],
-            members: [
+            members: JsClassMemberList [
                 JsPropertyClassMember {
                     modifiers: missing (optional),
                     access_modifier: missing (optional),

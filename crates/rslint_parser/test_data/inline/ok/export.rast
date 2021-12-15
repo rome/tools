@@ -1,13 +1,13 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         ExportDecl {
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             type_token: missing (optional),
             decl: ExportNamed {
                 l_curly_token: L_CURLY@7..9 "{" [] [Whitespace(" ")],
-                specifiers: [
+                specifiers: ExportNamedSpecifierList [
                     Specifier {
                         name: JsName {
                             value_token: IDENT@9..13 "foo" [] [Whitespace(" ")],

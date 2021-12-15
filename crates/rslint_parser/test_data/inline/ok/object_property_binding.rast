@@ -1,15 +1,15 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternProperty {
                                     member: JsLiteralMemberName {
                                         value: IDENT@6..9 "foo" [] [],
@@ -29,7 +29,7 @@ JsModule {
                             eq_token: EQ@18..20 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@20..21 "{" [] [],
-                                members: [],
+                                members: JsObjectMemberList [],
                                 r_curly_token: R_CURLY@21..22 "}" [] [],
                             },
                         },
@@ -41,11 +41,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@22..27 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@27..29 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternProperty {
                                     member: JsLiteralMemberName {
                                         value: IDENT@29..32 "foo" [] [],
@@ -72,7 +72,7 @@ JsModule {
                             eq_token: EQ@46..48 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@48..49 "{" [] [],
-                                members: [],
+                                members: JsObjectMemberList [],
                                 r_curly_token: R_CURLY@49..50 "}" [] [],
                             },
                         },

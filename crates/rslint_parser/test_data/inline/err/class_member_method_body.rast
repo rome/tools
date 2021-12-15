@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -10,7 +10,7 @@ JsModule {
             implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
-            members: [
+            members: JsClassMemberList [
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
@@ -23,7 +23,7 @@ JsModule {
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@13..14 "(" [] [],
-                        items: [
+                        items: JsParameterList [
                             JsIdentifierBinding {
                                 name_token: IDENT@14..15 "a" [] [],
                             },

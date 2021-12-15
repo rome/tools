@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -26,7 +26,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@21..26 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@26..28 "a" [] [Whitespace(" ")],
@@ -47,7 +47,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@33..38 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@38..40 "a" [] [Whitespace(" ")],
@@ -68,7 +68,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@51..56 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@56..58 "a" [] [Whitespace(" ")],

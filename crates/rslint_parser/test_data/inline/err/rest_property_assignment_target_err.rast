@@ -1,14 +1,14 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@0..1 "(" [] [],
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@1..3 "{" [] [Whitespace(" ")],
-                        properties: [
+                        properties: JsObjectAssignmentPatternPropertyList [
                             JsObjectAssignmentPatternRest {
                                 dotdotdot_token: DOT2@3..7 "..." [] [Whitespace(" ")],
                                 target: missing (required),
@@ -33,7 +33,7 @@ JsModule {
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@16..18 "{" [] [Whitespace(" ")],
-                        properties: [
+                        properties: JsObjectAssignmentPatternPropertyList [
                             JsUnknownAssignment {
                                 items: [
                                     DOT2@18..21 "..." [] [],
@@ -64,13 +64,13 @@ JsModule {
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@44..46 "{" [] [Whitespace(" ")],
-                        properties: [
+                        properties: JsObjectAssignmentPatternPropertyList [
                             JsObjectAssignmentPatternRest {
                                 dotdotdot_token: DOT2@46..49 "..." [] [],
                                 target: JsUnknownAssignment {
                                     items: [
                                         L_CURLY@49..50 "{" [] [],
-                                        [
+                                        JsObjectAssignmentPatternPropertyList [
                                             JsObjectAssignmentPatternShorthandProperty {
                                                 identifier: JsIdentifierAssignment {
                                                     name_token: IDENT@50..51 "a" [] [],
@@ -102,7 +102,7 @@ JsModule {
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@62..64 "{" [] [Whitespace(" ")],
-                        properties: [
+                        properties: JsObjectAssignmentPatternPropertyList [
                             JsUnknownAssignment {
                                 items: [
                                     DOT2@64..67 "..." [] [],
@@ -138,7 +138,7 @@ JsModule {
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@99..101 "{" [] [Whitespace(" ")],
-                        properties: [
+                        properties: JsObjectAssignmentPatternPropertyList [
                             JsUnknownAssignment {
                                 items: [
                                     DOT2@101..104 "..." [] [],

@@ -1,25 +1,25 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsLabeledStatement {
             label_token: IDENT@0..6 "label1" [] [],
             colon_token: COLON@6..8 ":" [] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@8..9 "{" [] [],
-                statements: [
+                statements: JsStatementList [
                     JsLabeledStatement {
                         label_token: IDENT@9..17 "label2" [Whitespace("\n\t")] [],
                         colon_token: COLON@17..19 ":" [] [Whitespace(" ")],
                         body: JsBlockStatement {
                             l_curly_token: L_CURLY@19..20 "{" [] [],
-                            statements: [
+                            statements: JsStatementList [
                                 JsLabeledStatement {
                                     label_token: IDENT@20..29 "label1" [Whitespace("\n\t\t")] [],
                                     colon_token: COLON@29..31 ":" [] [Whitespace(" ")],
                                     body: JsBlockStatement {
                                         l_curly_token: L_CURLY@31..32 "{" [] [],
-                                        statements: [],
+                                        statements: JsStatementList [],
                                         r_curly_token: R_CURLY@32..33 "}" [] [],
                                     },
                                 },

@@ -1,20 +1,20 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@0..1 "(" [] [],
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@1..2 "{" [] [],
-                        properties: [],
+                        properties: JsObjectAssignmentPatternPropertyList [],
                         r_curly_token: R_CURLY@2..4 "}" [] [Whitespace(" ")],
                     },
                     operator_token: EQ@4..6 "=" [] [Whitespace(" ")],
                     right: JsObjectExpression {
                         l_curly_token: L_CURLY@6..7 "{" [] [],
-                        members: [],
+                        members: JsObjectMemberList [],
                         r_curly_token: R_CURLY@7..8 "}" [] [],
                     },
                 },
@@ -28,7 +28,7 @@ JsModule {
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@12..14 "{" [] [Whitespace(" ")],
-                        properties: [
+                        properties: JsObjectAssignmentPatternPropertyList [
                             JsObjectAssignmentPatternShorthandProperty {
                                 identifier: JsIdentifierAssignment {
                                     name_token: IDENT@14..17 "bar" [] [],
@@ -48,7 +48,7 @@ JsModule {
                     operator_token: EQ@25..27 "=" [] [Whitespace(" ")],
                     right: JsObjectExpression {
                         l_curly_token: L_CURLY@27..28 "{" [] [],
-                        members: [],
+                        members: JsObjectMemberList [],
                         r_curly_token: R_CURLY@28..29 "}" [] [],
                     },
                 },
@@ -62,7 +62,7 @@ JsModule {
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@33..35 "{" [] [Whitespace(" ")],
-                        properties: [
+                        properties: JsObjectAssignmentPatternPropertyList [
                             JsObjectAssignmentPatternProperty {
                                 member: JsName {
                                     value_token: IDENT@35..38 "bar" [] [],
@@ -70,7 +70,7 @@ JsModule {
                                 colon_token: COLON@38..40 ":" [] [Whitespace(" ")],
                                 pattern: JsArrayAssignmentPattern {
                                     l_brack_token: L_BRACK@40..41 "[" [] [],
-                                    elements: [
+                                    elements: JsArrayAssignmentPatternElementList [
                                         JsAssignmentWithDefault {
                                             pattern: JsIdentifierAssignment {
                                                 name_token: IDENT@41..45 "baz" [] [Whitespace(" ")],
@@ -110,7 +110,7 @@ JsModule {
                     operator_token: EQ@78..80 "=" [] [Whitespace(" ")],
                     right: JsObjectExpression {
                         l_curly_token: L_CURLY@80..81 "{" [] [],
-                        members: [],
+                        members: JsObjectMemberList [],
                         r_curly_token: R_CURLY@81..82 "}" [] [],
                     },
                 },

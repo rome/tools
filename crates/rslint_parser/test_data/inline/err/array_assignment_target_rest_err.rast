@@ -1,14 +1,14 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@0..1 "(" [] [],
                 expression: JsAssignmentExpression {
                     left: JsArrayAssignmentPattern {
                         l_brack_token: L_BRACK@1..3 "[" [] [Whitespace(" ")],
-                        elements: [
+                        elements: JsArrayAssignmentPatternElementList [
                             JsArrayAssignmentPatternRestElement {
                                 dotdotdot_token: DOT2@3..7 "..." [] [Whitespace(" ")],
                                 pattern: missing (required),
@@ -33,7 +33,7 @@ JsModule {
                 expression: JsAssignmentExpression {
                     left: JsArrayAssignmentPattern {
                         l_brack_token: L_BRACK@16..18 "[" [] [Whitespace(" ")],
-                        elements: [
+                        elements: JsArrayAssignmentPatternElementList [
                             JsUnknownAssignment {
                                 items: [
                                     DOT2@18..21 "..." [] [],
@@ -64,7 +64,7 @@ JsModule {
                 expression: JsAssignmentExpression {
                     left: JsArrayAssignmentPattern {
                         l_brack_token: L_BRACK@44..46 "[" [] [Whitespace(" ")],
-                        elements: [
+                        elements: JsArrayAssignmentPatternElementList [
                             JsUnknownAssignment {
                                 items: [
                                     DOT2@46..49 "..." [] [],

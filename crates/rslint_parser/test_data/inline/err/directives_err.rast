@@ -1,7 +1,7 @@
 JsScript {
     interpreter_token: missing (optional),
-    directives: [],
-    statements: [
+    directives: JsDirectiveList [],
+    statements: JsStatementList [
         JsFunctionDeclaration {
             async_token: missing (optional),
             function_token: FUNCTION_KW@0..20 "function" [Comments("// SCRIPT"), Whitespace("\n\n")] [Whitespace(" ")],
@@ -12,19 +12,19 @@ JsScript {
             type_parameters: missing (optional),
             parameters: JsParameters {
                 l_paren_token: L_PAREN@24..25 "(" [] [],
-                items: [],
+                items: JsParameterList [],
                 r_paren_token: R_PAREN@25..27 ")" [] [Whitespace(" ")],
             },
             return_type: missing (optional),
             body: JsFunctionBody {
                 l_curly_token: L_CURLY@27..28 "{" [] [],
-                directives: [
+                directives: JsDirectiveList [
                     JsDirective {
                         value_token: JS_STRING_LITERAL@28..42 "\"use strict\"" [Whitespace("\n\t")] [],
                         semicolon_token: SEMICOLON@42..43 ";" [] [],
                     },
                 ],
-                statements: [
+                statements: JsStatementList [
                     JsFunctionDeclaration {
                         async_token: missing (optional),
                         function_token: FUNCTION_KW@43..54 "function" [Whitespace("\n\t")] [Whitespace(" ")],
@@ -35,19 +35,19 @@ JsScript {
                         type_parameters: missing (optional),
                         parameters: JsParameters {
                             l_paren_token: L_PAREN@61..62 "(" [] [],
-                            items: [],
+                            items: JsParameterList [],
                             r_paren_token: R_PAREN@62..64 ")" [] [Whitespace(" ")],
                         },
                         return_type: missing (optional),
                         body: JsFunctionBody {
                             l_curly_token: L_CURLY@64..65 "{" [] [],
-                            directives: [
+                            directives: JsDirectiveList [
                                 JsDirective {
                                     value_token: JS_STRING_LITERAL@65..80 "\"use strict\"" [Whitespace("\n\t\t")] [],
                                     semicolon_token: SEMICOLON@80..81 ";" [] [],
                                 },
                             ],
-                            statements: [],
+                            statements: JsStatementList [],
                             r_curly_token: R_CURLY@81..84 "}" [Whitespace("\n\t")] [],
                         },
                     },
@@ -61,14 +61,14 @@ JsScript {
                         type_parameters: missing (optional),
                         parameters: JsParameters {
                             l_paren_token: L_PAREN@103..104 "(" [] [],
-                            items: [],
+                            items: JsParameterList [],
                             r_paren_token: R_PAREN@104..106 ")" [] [Whitespace(" ")],
                         },
                         return_type: missing (optional),
                         body: JsFunctionBody {
                             l_curly_token: L_CURLY@106..107 "{" [] [],
-                            directives: [],
-                            statements: [
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [
                                 JsFunctionDeclaration {
                                     async_token: missing (optional),
                                     function_token: FUNCTION_KW@107..119 "function" [Whitespace("\n\t\t")] [Whitespace(" ")],
@@ -79,19 +79,19 @@ JsScript {
                                     type_parameters: missing (optional),
                                     parameters: JsParameters {
                                         l_paren_token: L_PAREN@130..131 "(" [] [],
-                                        items: [],
+                                        items: JsParameterList [],
                                         r_paren_token: R_PAREN@131..133 ")" [] [Whitespace(" ")],
                                     },
                                     return_type: missing (optional),
                                     body: JsFunctionBody {
                                         l_curly_token: L_CURLY@133..134 "{" [] [],
-                                        directives: [
+                                        directives: JsDirectiveList [
                                             JsDirective {
                                                 value_token: JS_STRING_LITERAL@134..150 "\"use strict\"" [Whitespace("\n\t\t\t")] [],
                                                 semicolon_token: SEMICOLON@150..151 ";" [] [],
                                             },
                                         ],
-                                        statements: [],
+                                        statements: JsStatementList [],
                                         r_curly_token: R_CURLY@151..155 "}" [Whitespace("\n\t\t")] [],
                                     },
                                 },

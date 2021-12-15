@@ -1,13 +1,13 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         ForStmt {
             for_token: FOR_KW@0..4 "for" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@4..5 "(" [] [],
             initializer: JsVariableDeclarations {
                 kind_token: LET_KW@5..9 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@9..11 "i" [] [Whitespace(" ")],
@@ -49,7 +49,7 @@ JsModule {
             r_paren_token: R_PAREN@27..29 ")" [] [Whitespace(" ")],
             cons: JsBlockStatement {
                 l_curly_token: L_CURLY@29..30 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@30..31 "}" [] [],
             },
         },
@@ -62,7 +62,7 @@ JsModule {
                 declaration: JsVariableDeclaration {
                     id: JsObjectBindingPattern {
                         l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],
-                        properties: [
+                        properties: JsObjectBindingPatternPropertyList [
                             JsObjectBindingPatternShorthandProperty {
                                 identifier: JsIdentifierBinding {
                                     name_token: IDENT@43..46 "foo" [] [],
@@ -87,13 +87,13 @@ JsModule {
             of_token: OF_KW@54..57 "of" [] [Whitespace(" ")],
             expression: JsObjectExpression {
                 l_curly_token: L_CURLY@57..58 "{" [] [],
-                members: [],
+                members: JsObjectMemberList [],
                 r_curly_token: R_CURLY@58..59 "}" [] [],
             },
             r_paren_token: R_PAREN@59..61 ")" [] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@61..62 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@62..63 "}" [] [],
             },
         },
@@ -106,13 +106,13 @@ JsModule {
             in_token: IN_KW@73..76 "in" [] [Whitespace(" ")],
             expression: JsObjectExpression {
                 l_curly_token: L_CURLY@76..77 "{" [] [],
-                members: [],
+                members: JsObjectMemberList [],
                 r_curly_token: R_CURLY@77..78 "}" [] [],
             },
             r_paren_token: R_PAREN@78..80 ")" [] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@80..81 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@81..82 "}" [] [],
             },
         },
@@ -127,7 +127,7 @@ JsModule {
             r_paren_token: R_PAREN@90..92 ")" [] [Whitespace(" ")],
             cons: JsBlockStatement {
                 l_curly_token: L_CURLY@92..93 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@93..94 "}" [] [],
             },
         },
@@ -149,13 +149,13 @@ JsModule {
             of_token: OF_KW@108..111 "of" [] [Whitespace(" ")],
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@111..112 "[" [] [],
-                elements: [],
+                elements: JsArrayElementList [],
                 r_brack_token: R_BRACK@112..113 "]" [] [],
             },
             r_paren_token: R_PAREN@113..115 ")" [] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@115..116 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@116..117 "}" [] [],
             },
         },
@@ -164,7 +164,7 @@ JsModule {
             l_paren_token: L_PAREN@122..123 "(" [] [],
             initializer: JsVariableDeclarations {
                 kind_token: LET_KW@123..127 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@127..129 "i" [] [Whitespace(" ")],
@@ -222,7 +222,7 @@ JsModule {
             r_paren_token: R_PAREN@151..153 ")" [] [Whitespace(" ")],
             cons: JsBlockStatement {
                 l_curly_token: L_CURLY@153..154 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@154..155 "}" [] [],
             },
         },
@@ -244,13 +244,13 @@ JsModule {
             of_token: OF_KW@173..176 "of" [] [Whitespace(" ")],
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@176..177 "[" [] [],
-                elements: [],
+                elements: JsArrayElementList [],
                 r_brack_token: R_BRACK@177..178 "]" [] [],
             },
             r_paren_token: R_PAREN@178..180 ")" [] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@180..181 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@181..182 "}" [] [],
             },
         },

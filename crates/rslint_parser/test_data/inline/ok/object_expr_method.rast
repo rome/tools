@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "b" [] [Whitespace(" ")],
@@ -16,7 +16,7 @@ JsModule {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@8..9 "{" [] [],
-                                members: [
+                                members: JsObjectMemberList [
                                     JsMethodObjectMember {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
@@ -26,14 +26,14 @@ JsModule {
                                         type_params: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@13..14 "(" [] [],
-                                            items: [],
+                                            items: JsParameterList [],
                                             r_paren_token: R_PAREN@14..16 ")" [] [Whitespace(" ")],
                                         },
                                         return_type: missing (optional),
                                         body: JsFunctionBody {
                                             l_curly_token: L_CURLY@16..17 "{" [] [],
-                                            directives: [],
-                                            statements: [],
+                                            directives: JsDirectiveList [],
+                                            statements: JsStatementList [],
                                             r_curly_token: R_CURLY@17..18 "}" [] [],
                                         },
                                     },
@@ -47,7 +47,7 @@ JsModule {
                                         type_params: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@25..26 "(" [] [],
-                                            items: [
+                                            items: JsParameterList [
                                                 JsIdentifierBinding {
                                                     name_token: IDENT@26..27 "a" [] [],
                                                 },
@@ -65,8 +65,8 @@ JsModule {
                                         return_type: missing (optional),
                                         body: JsFunctionBody {
                                             l_curly_token: L_CURLY@35..36 "{" [] [],
-                                            directives: [],
-                                            statements: [],
+                                            directives: JsDirectiveList [],
+                                            statements: JsStatementList [],
                                             r_curly_token: R_CURLY@36..37 "}" [] [],
                                         },
                                     },
@@ -90,7 +90,7 @@ JsModule {
                                         type_params: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@54..55 "(" [] [],
-                                            items: [
+                                            items: JsParameterList [
                                                 JsIdentifierBinding {
                                                     name_token: IDENT@55..56 "a" [] [],
                                                 },
@@ -100,8 +100,8 @@ JsModule {
                                         return_type: missing (optional),
                                         body: JsFunctionBody {
                                             l_curly_token: L_CURLY@58..59 "{" [] [],
-                                            directives: [],
-                                            statements: [],
+                                            directives: JsDirectiveList [],
+                                            statements: JsStatementList [],
                                             r_curly_token: R_CURLY@59..60 "}" [] [],
                                         },
                                     },
@@ -115,7 +115,7 @@ JsModule {
                                         type_params: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@63..64 "(" [] [],
-                                            items: [
+                                            items: JsParameterList [
                                                 JsRestParameter {
                                                     dotdotdot_token: DOT2@64..67 "..." [] [],
                                                     binding: JsIdentifierBinding {
@@ -128,8 +128,8 @@ JsModule {
                                         return_type: missing (optional),
                                         body: JsFunctionBody {
                                             l_curly_token: L_CURLY@73..74 "{" [] [],
-                                            directives: [],
-                                            statements: [],
+                                            directives: JsDirectiveList [],
+                                            statements: JsStatementList [],
                                             r_curly_token: R_CURLY@74..75 "}" [] [],
                                         },
                                     },

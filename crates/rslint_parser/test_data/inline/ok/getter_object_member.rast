@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -16,7 +16,7 @@ JsModule {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@8..9 "{" [] [],
-                                members: [
+                                members: JsObjectMemberList [
                                     JsGetterObjectMember {
                                         get_token: GET_KW@9..15 "get" [Whitespace("\n ")] [Whitespace(" ")],
                                         name: JsLiteralMemberName {
@@ -27,8 +27,8 @@ JsModule {
                                         return_type: missing (optional),
                                         body: JsFunctionBody {
                                             l_curly_token: L_CURLY@21..22 "{" [] [],
-                                            directives: [],
-                                            statements: [
+                                            directives: JsDirectiveList [],
+                                            statements: JsStatementList [
                                                 JsReturnStatement {
                                                     return_token: RETURN_KW@22..33 "return" [Whitespace("\n   ")] [Whitespace(" ")],
                                                     argument: JsIdentifierExpression {
@@ -53,8 +53,8 @@ JsModule {
                                         return_type: missing (optional),
                                         body: JsFunctionBody {
                                             l_curly_token: L_CURLY@56..57 "{" [] [],
-                                            directives: [],
-                                            statements: [
+                                            directives: JsDirectiveList [],
+                                            statements: JsStatementList [
                                                 JsReturnStatement {
                                                     return_token: RETURN_KW@57..67 "return" [Whitespace("\n\t ")] [Whitespace(" ")],
                                                     argument: JsStringLiteralExpression {
@@ -87,8 +87,8 @@ JsModule {
                                         return_type: missing (optional),
                                         body: JsFunctionBody {
                                             l_curly_token: L_CURLY@98..99 "{" [] [],
-                                            directives: [],
-                                            statements: [
+                                            directives: JsDirectiveList [],
+                                            statements: JsStatementList [
                                                 JsReturnStatement {
                                                     return_token: RETURN_KW@99..109 "return" [Whitespace("\n\t ")] [Whitespace(" ")],
                                                     argument: JsBinaryExpression {
@@ -117,8 +117,8 @@ JsModule {
                                         return_type: missing (optional),
                                         body: JsFunctionBody {
                                             l_curly_token: L_CURLY@133..134 "{" [] [],
-                                            directives: [],
-                                            statements: [
+                                            directives: JsDirectiveList [],
+                                            statements: JsStatementList [
                                                 JsReturnStatement {
                                                     return_token: RETURN_KW@134..144 "return" [Whitespace("\n\t ")] [Whitespace(" ")],
                                                     argument: JsNumberLiteralExpression {
@@ -140,14 +140,14 @@ JsModule {
                                         type_params: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@156..157 "(" [] [],
-                                            items: [],
+                                            items: JsParameterList [],
                                             r_paren_token: R_PAREN@157..159 ")" [] [Whitespace(" ")],
                                         },
                                         return_type: missing (optional),
                                         body: JsFunctionBody {
                                             l_curly_token: L_CURLY@159..160 "{" [] [],
-                                            directives: [],
-                                            statements: [
+                                            directives: JsDirectiveList [],
+                                            statements: JsStatementList [
                                                 JsReturnStatement {
                                                     return_token: RETURN_KW@160..170 "return" [Whitespace("\n\t ")] [Whitespace(" ")],
                                                     argument: JsStringLiteralExpression {

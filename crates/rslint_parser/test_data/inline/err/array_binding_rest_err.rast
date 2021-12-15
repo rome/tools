@@ -1,15 +1,15 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@4..6 "[" [] [Whitespace(" ")],
-                            elements: [
+                            elements: JsArrayBindingPatternElementList [
                                 JsArrayBindingPatternRestElement {
                                     dotdotdot_token: DOT2@6..10 "..." [] [Whitespace(" ")],
                                     pattern: missing (required),
@@ -35,11 +35,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@16..21 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@21..23 "[" [] [Whitespace(" ")],
-                            elements: [
+                            elements: JsArrayBindingPatternElementList [
                                 JsUnknownBinding {
                                     items: [
                                         DOT2@23..26 "..." [] [],
@@ -71,11 +71,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@51..53 "[" [] [Whitespace(" ")],
-                            elements: [
+                            elements: JsArrayBindingPatternElementList [
                                 JsUnknownBinding {
                                     items: [
                                         DOT2@53..56 "..." [] [],

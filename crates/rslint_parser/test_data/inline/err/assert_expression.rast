@@ -1,14 +1,14 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsImport {
             import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@7..9 "{" [] [Whitespace(" ")],
-                    specifiers: [
+                    specifiers: JsNamedImportSpecifierList [
                         JsShorthandNamedImportSpecifier {
                             local_name: JsIdentifierBinding {
                                 name_token: IDENT@9..11 "a" [] [Whitespace(" ")],
@@ -24,7 +24,7 @@ JsModule {
                 assertion: JsImportAssertion {
                     assert_token: ASSERT_KW@27..33 "assert" [] [],
                     l_curly_token: missing (required),
-                    assertions: [],
+                    assertions: JsImportAssertionEntryList [],
                     r_curly_token: missing (required),
                 },
             },

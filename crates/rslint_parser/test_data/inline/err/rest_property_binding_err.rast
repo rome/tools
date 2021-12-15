@@ -1,15 +1,15 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternRest {
                                     dotdotdot_token: DOT2@6..10 "..." [] [Whitespace(" ")],
                                     binding: missing (required),
@@ -35,11 +35,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@16..21 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@21..23 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsUnknownBinding {
                                     items: [
                                         DOT2@23..26 "..." [] [],
@@ -71,17 +71,17 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@51..53 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternRest {
                                     dotdotdot_token: DOT2@53..56 "..." [] [],
                                     binding: JsUnknownBinding {
                                         items: [
                                             L_CURLY@56..57 "{" [] [],
-                                            [
+                                            JsObjectBindingPatternPropertyList [
                                                 JsObjectBindingPatternShorthandProperty {
                                                     identifier: JsIdentifierBinding {
                                                         name_token: IDENT@57..58 "a" [] [],
@@ -114,11 +114,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@66..71 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@71..73 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsUnknownBinding {
                                     items: [
                                         DOT2@73..76 "..." [] [],
@@ -155,11 +155,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@105..110 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@110..112 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsUnknownBinding {
                                     items: [
                                         DOT2@112..115 "..." [] [],
@@ -197,22 +197,22 @@ JsModule {
             type_parameters: missing (optional),
             parameters: JsParameters {
                 l_paren_token: L_PAREN@147..148 "(" [] [],
-                items: [],
+                items: JsParameterList [],
                 r_paren_token: R_PAREN@148..150 ")" [] [Whitespace(" ")],
             },
             return_type: missing (optional),
             body: JsFunctionBody {
                 l_curly_token: L_CURLY@150..151 "{" [] [],
-                directives: [],
-                statements: [
+                directives: JsDirectiveList [],
+                statements: JsStatementList [
                     JsVariableStatement {
                         declarations: JsVariableDeclarations {
                             kind_token: LET_KW@151..158 "let" [Whitespace("\n  ")] [Whitespace(" ")],
-                            items: [
+                            items: JsVariableDeclarationList [
                                 JsVariableDeclaration {
                                     id: JsObjectBindingPattern {
                                         l_curly_token: L_CURLY@158..160 "{" [] [Whitespace(" ")],
-                                        properties: [
+                                        properties: JsObjectBindingPatternPropertyList [
                                             JsObjectBindingPatternRest {
                                                 dotdotdot_token: DOT2@160..163 "..." [] [],
                                                 binding: JsUnknownBinding {

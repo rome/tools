@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsWhileStatement {
             while_token: WHILE_KW@0..6 "while" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@6..7 "(" [] [],
@@ -11,7 +11,7 @@ JsModule {
             r_paren_token: R_PAREN@11..13 ")" [] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@13..14 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@14..15 "}" [] [],
             },
         },
@@ -24,7 +24,7 @@ JsModule {
             r_paren_token: R_PAREN@24..26 ")" [] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@26..27 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@27..28 "}" [] [],
             },
         },

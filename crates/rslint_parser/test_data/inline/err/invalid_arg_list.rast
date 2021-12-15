@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: CallExpr {
                 callee: JsIdentifierExpression {
@@ -12,7 +12,7 @@ JsModule {
                 type_args: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@3..4 "(" [] [],
-                    args: [
+                    args: JsCallArgumentList [
                         JsIdentifierExpression {
                             name: JsReferenceIdentifier {
                                 value_token: IDENT@4..5 "a" [] [],
@@ -40,7 +40,7 @@ JsModule {
                 type_args: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@12..13 "(" [] [],
-                    args: [
+                    args: JsCallArgumentList [
                         JsIdentifierExpression {
                             name: JsReferenceIdentifier {
                                 value_token: IDENT@13..14 "a" [] [],
@@ -61,7 +61,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: VAR_KW@17..20 "var" [] [],
-                items: [],
+                items: JsVariableDeclarationList [],
             },
             semicolon_token: missing (optional),
         },

@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsThrowStatement {
             throw_token: THROW_KW@0..5 "throw" [] [],
             argument: missing (required),
@@ -18,7 +18,7 @@ JsModule {
                 type_args: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@15..16 "(" [] [],
-                    args: [
+                    args: JsCallArgumentList [
                         JsStringLiteralExpression {
                             value_token: JS_STRING_LITERAL@16..26 "\"oh no :(\"" [] [],
                         },

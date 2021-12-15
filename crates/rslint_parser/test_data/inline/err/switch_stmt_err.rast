@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsSwitchStatement {
             switch_token: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")],
             l_paren_token: missing (required),
@@ -12,7 +12,7 @@ JsModule {
             },
             r_paren_token: missing (required),
             l_curly_token: L_CURLY@11..12 "{" [] [],
-            cases: [],
+            cases: JsSwitchCaseList [],
             r_curly_token: R_CURLY@12..13 "}" [] [],
         },
         JsSwitchStatement {
@@ -21,7 +21,7 @@ JsModule {
             discriminant: missing (required),
             r_paren_token: missing (required),
             l_curly_token: L_CURLY@21..22 "{" [] [],
-            cases: [],
+            cases: JsSwitchCaseList [],
             r_curly_token: R_CURLY@22..23 "}" [] [],
         },
         JsSwitchStatement {
@@ -30,12 +30,12 @@ JsModule {
             discriminant: missing (required),
             r_paren_token: missing (required),
             l_curly_token: L_CURLY@31..33 "{" [] [Whitespace(" ")],
-            cases: [
+            cases: JsSwitchCaseList [
                 JsCaseClause {
                     case_token: missing (required),
                     test: missing (required),
                     colon_token: missing (required),
-                    consequent: [
+                    consequent: JsStatementList [
                         JsUnknownStatement {
                             items: [
                                 VAR_KW@33..37 "var" [] [Whitespace(" ")],
@@ -55,12 +55,12 @@ JsModule {
             discriminant: missing (required),
             r_paren_token: missing (required),
             l_curly_token: L_CURLY@52..54 "{" [] [Whitespace(" ")],
-            cases: [
+            cases: JsSwitchCaseList [
                 JsCaseClause {
                     case_token: missing (required),
                     test: missing (required),
                     colon_token: missing (required),
-                    consequent: [
+                    consequent: JsStatementList [
                         JsUnknownStatement {
                             items: [
                                 VAR_KW@54..58 "var" [] [Whitespace(" ")],
@@ -78,10 +78,10 @@ JsModule {
                         value_token: JS_STRING_LITERAL@70..75 "\"bar\"" [] [],
                     },
                     colon_token: COLON@75..77 ":" [] [Whitespace(" ")],
-                    consequent: [
+                    consequent: JsStatementList [
                         JsBlockStatement {
                             l_curly_token: L_CURLY@77..78 "{" [] [],
-                            statements: [],
+                            statements: JsStatementList [],
                             r_curly_token: R_CURLY@78..80 "}" [] [Whitespace(" ")],
                         },
                     ],
@@ -99,14 +99,14 @@ JsModule {
             },
             r_paren_token: R_PAREN@93..95 ")" [] [Whitespace(" ")],
             l_curly_token: L_CURLY@95..96 "{" [] [],
-            cases: [
+            cases: JsSwitchCaseList [
                 JsDefaultClause {
                     default_token: DEFAULT_KW@96..105 "default" [Whitespace("\n\t")] [],
                     colon_token: COLON@105..107 ":" [] [Whitespace(" ")],
-                    consequent: [
+                    consequent: JsStatementList [
                         JsBlockStatement {
                             l_curly_token: L_CURLY@107..108 "{" [] [],
-                            statements: [],
+                            statements: JsStatementList [],
                             r_curly_token: R_CURLY@108..109 "}" [] [],
                         },
                     ],
@@ -118,10 +118,10 @@ JsModule {
                         argument: missing (required),
                     },
                     colon_token: COLON@118..120 ":" [] [Whitespace(" ")],
-                    consequent: [
+                    consequent: JsStatementList [
                         JsBlockStatement {
                             l_curly_token: L_CURLY@120..121 "{" [] [],
-                            statements: [],
+                            statements: JsStatementList [],
                             r_curly_token: R_CURLY@121..122 "}" [] [],
                         },
                     ],

@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsSwitchStatement {
             switch_token: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@7..8 "(" [] [],
@@ -12,7 +12,7 @@ JsModule {
             },
             r_paren_token: R_PAREN@11..13 ")" [] [Whitespace(" ")],
             l_curly_token: L_CURLY@13..14 "{" [] [],
-            cases: [
+            cases: JsSwitchCaseList [
                 JsCaseClause {
                     case_token: CASE_KW@14..21 "case" [Whitespace("\n ")] [Whitespace(" ")],
                     test: JsIdentifierExpression {
@@ -21,12 +21,12 @@ JsModule {
                         },
                     },
                     colon_token: COLON@24..25 ":" [] [],
-                    consequent: [],
+                    consequent: JsStatementList [],
                 },
                 JsDefaultClause {
                     default_token: DEFAULT_KW@25..34 "default" [Whitespace("\n ")] [],
                     colon_token: COLON@34..35 ":" [] [],
-                    consequent: [],
+                    consequent: JsStatementList [],
                 },
             ],
             r_curly_token: R_CURLY@35..37 "}" [Whitespace("\n")] [],

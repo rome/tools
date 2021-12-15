@@ -477,6 +477,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 				impl Debug for #list_name {
 					fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+						write!(f, "{} ", #name)?;
 						f.debug_list().entries(self.elements()).finish()
 					}
 				}
@@ -509,6 +510,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 				impl Debug for #list_name {
 					fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+						write!(f, "{} ", #name)?;
 						f.debug_list().entries(self.iter()).finish()
 					}
 				}

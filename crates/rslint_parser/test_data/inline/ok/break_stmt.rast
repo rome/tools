@@ -1,13 +1,13 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsLabeledStatement {
             label_token: IDENT@0..3 "foo" [] [],
             colon_token: COLON@3..5 ":" [] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@5..6 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@6..7 "}" [] [],
             },
         },
@@ -16,7 +16,7 @@ JsModule {
             colon_token: COLON@12..14 ":" [] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@14..15 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@15..16 "}" [] [],
             },
         },

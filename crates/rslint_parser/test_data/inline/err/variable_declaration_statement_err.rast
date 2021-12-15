@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..5 "a" [] [],
@@ -18,7 +18,7 @@ JsModule {
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@7..9 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsUnknownBinding {
                                         items: [
@@ -36,7 +36,7 @@ JsModule {
                             eq_token: EQ@13..15 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@15..17 "{" [] [Whitespace(" ")],
-                                members: [
+                                members: JsObjectMemberList [
                                     JsPropertyObjectMember {
                                         name: JsLiteralMemberName {
                                             value: IDENT@17..18 "a" [] [],
@@ -58,7 +58,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: CONST_KW@24..31 "const" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@31..33 "a" [] [Whitespace(" ")],
@@ -76,7 +76,7 @@ JsModule {
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@38..40 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsUnknownBinding {
                                         items: [
@@ -94,7 +94,7 @@ JsModule {
                             eq_token: EQ@44..46 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@46..48 "{" [] [Whitespace(" ")],
-                                members: [
+                                members: JsObjectMemberList [
                                     JsPropertyObjectMember {
                                         name: JsLiteralMemberName {
                                             value: IDENT@48..49 "a" [] [],
@@ -116,7 +116,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: CONST_KW@55..62 "const" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@62..63 "a" [] [],
@@ -132,11 +132,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@64..69 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@69..70 "[" [] [],
-                            elements: [
+                            elements: JsArrayBindingPatternElementList [
                                 JsIdentifierBinding {
                                     name_token: IDENT@70..71 "a" [] [],
                                 },
@@ -154,11 +154,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: CONST_KW@73..80 "const" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@80..82 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@82..84 "b" [] [Whitespace(" ")],

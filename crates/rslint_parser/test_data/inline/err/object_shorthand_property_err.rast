@@ -1,15 +1,15 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@6..8 "a" [] [Whitespace(" ")],
@@ -44,11 +44,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@15..20 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@20..22 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: missing (required),
                                     init: JsInitializerClause {
@@ -79,11 +79,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@36..41 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 missing element,
                                 COMMA@43..45 "," [] [Whitespace(" ")],
                                 JsObjectBindingPatternShorthandProperty {

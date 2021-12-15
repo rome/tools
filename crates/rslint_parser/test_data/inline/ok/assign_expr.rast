@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsAssignmentExpression {
                 left: JsIdentifierAssignment {
@@ -62,7 +62,7 @@ JsModule {
             expression: JsAssignmentExpression {
                 left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@46..48 "[" [Whitespace("\n")] [],
-                    elements: [
+                    elements: JsArrayAssignmentPatternElementList [
                         JsIdentifierAssignment {
                             name_token: IDENT@48..51 "foo" [] [],
                         },
@@ -86,7 +86,7 @@ JsModule {
             expression: JsAssignmentExpression {
                 left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@64..66 "[" [Whitespace("\n")] [],
-                    elements: [
+                    elements: JsArrayAssignmentPatternElementList [
                         JsIdentifierAssignment {
                             name_token: IDENT@66..69 "foo" [] [],
                         },
@@ -123,7 +123,7 @@ JsModule {
             expression: JsAssignmentExpression {
                 left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@103..105 "[" [Whitespace("\n")] [],
-                    elements: [
+                    elements: JsArrayAssignmentPatternElementList [
                         JsArrayHole,
                         COMMA@105..106 "," [] [],
                         JsArrayHole,
@@ -155,7 +155,7 @@ JsModule {
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@125..127 "{" [] [Whitespace(" ")],
-                        properties: [
+                        properties: JsObjectAssignmentPatternPropertyList [
                             JsObjectAssignmentPatternShorthandProperty {
                                 identifier: JsIdentifierAssignment {
                                     name_token: IDENT@127..130 "bar" [] [],
@@ -175,7 +175,7 @@ JsModule {
                     operator_token: EQ@138..140 "=" [] [Whitespace(" ")],
                     right: JsObjectExpression {
                         l_curly_token: L_CURLY@140..141 "{" [] [],
-                        members: [],
+                        members: JsObjectMemberList [],
                         r_curly_token: R_CURLY@141..142 "}" [] [],
                     },
                 },
@@ -189,7 +189,7 @@ JsModule {
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@146..148 "{" [] [Whitespace(" ")],
-                        properties: [
+                        properties: JsObjectAssignmentPatternPropertyList [
                             JsObjectAssignmentPatternProperty {
                                 member: JsName {
                                     value_token: IDENT@148..151 "bar" [] [],
@@ -197,7 +197,7 @@ JsModule {
                                 colon_token: COLON@151..153 ":" [] [Whitespace(" ")],
                                 pattern: JsArrayAssignmentPattern {
                                     l_brack_token: L_BRACK@153..154 "[" [] [],
-                                    elements: [
+                                    elements: JsArrayAssignmentPatternElementList [
                                         JsAssignmentWithDefault {
                                             pattern: JsIdentifierAssignment {
                                                 name_token: IDENT@154..158 "baz" [] [Whitespace(" ")],
@@ -237,7 +237,7 @@ JsModule {
                     operator_token: EQ@191..193 "=" [] [Whitespace(" ")],
                     right: JsObjectExpression {
                         l_curly_token: L_CURLY@193..194 "{" [] [],
-                        members: [],
+                        members: JsObjectMemberList [],
                         r_curly_token: R_CURLY@194..195 "}" [] [],
                     },
                 },

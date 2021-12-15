@@ -1,12 +1,12 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsDoWhileStatement {
             do_token: DO_KW@0..3 "do" [] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@3..5 "{" [] [Whitespace(" ")],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@5..7 "}" [] [Whitespace(" ")],
             },
             while_token: missing (required),
@@ -35,7 +35,7 @@ JsModule {
             do_token: DO_KW@23..27 "do" [Whitespace("\n")] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@27..29 "{" [] [Whitespace(" ")],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@29..31 "}" [] [Whitespace(" ")],
             },
             while_token: missing (required),

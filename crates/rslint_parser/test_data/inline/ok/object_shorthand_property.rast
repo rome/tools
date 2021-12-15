@@ -1,15 +1,15 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@6..7 "a" [] [],
@@ -44,11 +44,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@16..21 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@21..23 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@23..25 "a" [] [Whitespace(" ")],
@@ -76,7 +76,7 @@ JsModule {
                                             type_args: missing (optional),
                                             arguments: JsCallArguments {
                                                 l_paren_token: L_PAREN@46..47 "(" [] [],
-                                                args: [],
+                                                args: JsCallArgumentList [],
                                                 r_paren_token: R_PAREN@47..49 ")" [] [Whitespace(" ")],
                                             },
                                         },

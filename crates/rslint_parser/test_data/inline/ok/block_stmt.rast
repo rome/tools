@@ -1,24 +1,24 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsBlockStatement {
             l_curly_token: L_CURLY@0..1 "{" [] [],
-            statements: [],
+            statements: JsStatementList [],
             r_curly_token: R_CURLY@1..2 "}" [] [],
         },
         JsBlockStatement {
             l_curly_token: L_CURLY@2..4 "{" [Whitespace("\n")] [],
-            statements: [
+            statements: JsStatementList [
                 JsBlockStatement {
                     l_curly_token: L_CURLY@4..5 "{" [] [],
-                    statements: [
+                    statements: JsStatementList [
                         JsBlockStatement {
                             l_curly_token: L_CURLY@5..6 "{" [] [],
-                            statements: [
+                            statements: JsStatementList [
                                 JsBlockStatement {
                                     l_curly_token: L_CURLY@6..7 "{" [] [],
-                                    statements: [],
+                                    statements: JsStatementList [],
                                     r_curly_token: R_CURLY@7..8 "}" [] [],
                                 },
                             ],
@@ -32,7 +32,7 @@ JsModule {
         },
         JsBlockStatement {
             l_curly_token: L_CURLY@11..14 "{" [Whitespace("\n")] [Whitespace(" ")],
-            statements: [
+            statements: JsStatementList [
                 JsExpressionStatement {
                     expression: JsAssignmentExpression {
                         left: JsIdentifierAssignment {

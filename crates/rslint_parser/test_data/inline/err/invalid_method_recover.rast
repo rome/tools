@@ -1,14 +1,14 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: missing (required),
             implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@6..7 "{" [] [],
-            members: [
+            members: JsClassMemberList [
                 JsPropertyClassMember {
                     modifiers: missing (optional),
                     access_modifier: missing (optional),
@@ -37,19 +37,19 @@ JsModule {
                             type_parameters: missing (optional),
                             parameters: JsParameters {
                                 l_paren_token: L_PAREN@20..21 "(" [] [],
-                                items: [],
+                                items: JsParameterList [],
                                 r_paren_token: R_PAREN@21..23 ")" [] [Whitespace(" ")],
                             },
                             return_type: missing (optional),
                             fat_arrow_token: FAT_ARROW@23..26 "=>" [] [Whitespace(" ")],
                             body: JsFunctionBody {
                                 l_curly_token: L_CURLY@26..27 "{" [] [],
-                                directives: [],
-                                statements: [
+                                directives: JsDirectiveList [],
+                                statements: JsStatementList [
                                     JsVariableStatement {
                                         declarations: JsVariableDeclarations {
                                             kind_token: LET_KW@27..36 "let" [Whitespace("\n    ")] [Whitespace(" ")],
-                                            items: [
+                                            items: JsVariableDeclarationList [
                                                 JsVariableDeclaration {
                                                     id: JsIdentifierBinding {
                                                         name_token: IDENT@36..37 "a" [] [],

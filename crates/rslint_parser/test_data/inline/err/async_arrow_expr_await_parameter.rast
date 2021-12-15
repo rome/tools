@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -26,8 +26,8 @@ JsModule {
                                 fat_arrow_token: FAT_ARROW@20..23 "=>" [] [Whitespace(" ")],
                                 body: JsFunctionBody {
                                     l_curly_token: L_CURLY@23..24 "{" [] [],
-                                    directives: [],
-                                    statements: [],
+                                    directives: JsDirectiveList [],
+                                    statements: JsStatementList [],
                                     r_curly_token: R_CURLY@24..25 "}" [] [],
                                 },
                             },

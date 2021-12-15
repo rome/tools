@@ -1,26 +1,26 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsArrowFunctionExpression {
                 async_token: ASYNC_KW@0..6 "async" [] [Whitespace(" ")],
                 type_parameters: missing (optional),
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@6..7 "(" [] [],
-                    items: [],
+                    items: JsParameterList [],
                     r_paren_token: R_PAREN@7..9 ")" [] [Whitespace(" ")],
                 },
                 return_type: missing (optional),
                 fat_arrow_token: FAT_ARROW@9..12 "=>" [] [Whitespace(" ")],
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@12..14 "{" [] [Whitespace(" ")],
-                    directives: [],
-                    statements: [
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [
                         JsVariableStatement {
                             declarations: JsVariableDeclarations {
                                 kind_token: LET_KW@14..18 "let" [] [Whitespace(" ")],
-                                items: [
+                                items: JsVariableDeclarationList [
                                     JsVariableDeclaration {
                                         id: JsUnknownBinding {
                                             items: [
@@ -56,18 +56,18 @@ JsModule {
             type_parameters: missing (optional),
             parameters: JsParameters {
                 l_paren_token: L_PAREN@44..45 "(" [] [],
-                items: [],
+                items: JsParameterList [],
                 r_paren_token: R_PAREN@45..47 ")" [] [Whitespace(" ")],
             },
             return_type: missing (optional),
             body: JsFunctionBody {
                 l_curly_token: L_CURLY@47..48 "{" [] [],
-                directives: [],
-                statements: [
+                directives: JsDirectiveList [],
+                statements: JsStatementList [
                     JsVariableStatement {
                         declarations: JsVariableDeclarations {
                             kind_token: LET_KW@48..56 "let" [Whitespace("\n   ")] [Whitespace(" ")],
-                            items: [
+                            items: JsVariableDeclarationList [
                                 JsVariableDeclaration {
                                     id: JsUnknownBinding {
                                         items: [
@@ -94,7 +94,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@68..73 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
                             items: [
@@ -117,7 +117,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@82..87 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
                             items: [
@@ -140,7 +140,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: CONST_KW@95..102 "const" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
                             items: [
@@ -163,7 +163,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@110..115 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@115..116 "a" [] [],

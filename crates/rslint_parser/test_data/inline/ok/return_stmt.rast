@@ -1,22 +1,22 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsArrowFunctionExpression {
                 async_token: missing (optional),
                 type_parameters: missing (optional),
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@0..1 "(" [] [],
-                    items: [],
+                    items: JsParameterList [],
                     r_paren_token: R_PAREN@1..3 ")" [] [Whitespace(" ")],
                 },
                 return_type: missing (optional),
                 fat_arrow_token: FAT_ARROW@3..6 "=>" [] [Whitespace(" ")],
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@6..7 "{" [] [],
-                    directives: [],
-                    statements: [
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [
                         JsReturnStatement {
                             return_token: RETURN_KW@7..16 "return" [Whitespace("\n  ")] [],
                             argument: missing (optional),

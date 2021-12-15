@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -16,7 +16,7 @@ JsModule {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
-                                members: [
+                                members: JsObjectMemberList [
                                     JsPropertyObjectMember {
                                         name: missing (required),
                                         colon_token: COLON@17..19 ":" [] [Whitespace(" ")],
@@ -36,7 +36,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@26..31 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@31..33 "a" [] [Whitespace(" ")],
@@ -47,7 +47,7 @@ JsModule {
                             eq_token: EQ@33..35 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@35..36 "{" [] [],
-                                members: [
+                                members: JsObjectMemberList [
                                     JsUnknownMember {
                                         items: [
                                             L_CURLY@36..37 "{" [] [],

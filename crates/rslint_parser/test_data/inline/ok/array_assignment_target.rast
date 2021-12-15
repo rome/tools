@@ -1,12 +1,12 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsAssignmentExpression {
                 left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@0..1 "[" [] [],
-                    elements: [
+                    elements: JsArrayAssignmentPatternElementList [
                         JsIdentifierAssignment {
                             name_token: IDENT@1..4 "foo" [] [],
                         },
@@ -30,7 +30,7 @@ JsModule {
             expression: JsAssignmentExpression {
                 left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@17..19 "[" [Whitespace("\n")] [],
-                    elements: [
+                    elements: JsArrayAssignmentPatternElementList [
                         JsArrayHole,
                         COMMA@19..20 "," [] [],
                         JsArrayHole,
@@ -63,7 +63,7 @@ JsModule {
             expression: JsAssignmentExpression {
                 left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@35..37 "[" [Whitespace("\n")] [],
-                    elements: [
+                    elements: JsArrayAssignmentPatternElementList [
                         JsAssignmentWithDefault {
                             pattern: JsIdentifierAssignment {
                                 name_token: IDENT@37..39 "a" [] [Whitespace(" ")],
@@ -96,7 +96,7 @@ JsModule {
                                 type_args: missing (optional),
                                 arguments: JsCallArguments {
                                     l_paren_token: L_PAREN@58..59 "(" [] [],
-                                    args: [],
+                                    args: JsCallArgumentList [],
                                     r_paren_token: R_PAREN@59..60 ")" [] [],
                                 },
                             },
@@ -121,7 +121,7 @@ JsModule {
             expression: JsAssignmentExpression {
                 left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@70..72 "[" [Whitespace("\n")] [],
-                    elements: [
+                    elements: JsArrayAssignmentPatternElementList [
                         JsParenthesizedAssignment {
                             l_paren_token: L_PAREN@72..73 "(" [] [],
                             assignment: JsParenthesizedAssignment {

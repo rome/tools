@@ -1,16 +1,16 @@
 JsScript {
     interpreter_token: missing (optional),
-    directives: [
+    directives: JsDirectiveList [
         JsDirective {
             value_token: JS_STRING_LITERAL@0..20 "\"use new\"" [Comments("// SCRIPT"), Whitespace("\n\n")] [],
             semicolon_token: missing (optional),
         },
     ],
-    statements: [
+    statements: JsStatementList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@20..26 "let" [Whitespace("\n\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@26..28 "a" [] [Whitespace(" ")],
@@ -44,23 +44,23 @@ JsScript {
             type_parameters: missing (optional),
             parameters: JsParameters {
                 l_paren_token: L_PAREN@82..83 "(" [] [],
-                items: [],
+                items: JsParameterList [],
                 r_paren_token: R_PAREN@83..85 ")" [] [Whitespace(" ")],
             },
             return_type: missing (optional),
             body: JsFunctionBody {
                 l_curly_token: L_CURLY@85..86 "{" [] [],
-                directives: [
+                directives: JsDirectiveList [
                     JsDirective {
                         value_token: JS_STRING_LITERAL@86..100 "'use strict'" [Whitespace("\n\t")] [],
                         semicolon_token: SEMICOLON@100..101 ";" [] [],
                     },
                 ],
-                statements: [
+                statements: JsStatementList [
                     JsVariableStatement {
                         declarations: JsVariableDeclarations {
                             kind_token: LET_KW@101..108 "let" [Whitespace("\n\n\t")] [Whitespace(" ")],
-                            items: [
+                            items: JsVariableDeclarationList [
                                 JsVariableDeclaration {
                                     id: JsIdentifierBinding {
                                         name_token: IDENT@108..110 "a" [] [Whitespace(" ")],
@@ -99,23 +99,23 @@ JsScript {
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@164..165 "(" [] [],
-                        items: [],
+                        items: JsParameterList [],
                         r_paren_token: R_PAREN@165..167 ")" [] [Whitespace(" ")],
                     },
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@167..168 "{" [] [],
-                        directives: [
+                        directives: JsDirectiveList [
                             JsDirective {
                                 value_token: JS_STRING_LITERAL@168..182 "\"use strict\"" [Whitespace("\n\t")] [],
                                 semicolon_token: SEMICOLON@182..183 ";" [] [],
                             },
                         ],
-                        statements: [
+                        statements: JsStatementList [
                             JsVariableStatement {
                                 declarations: JsVariableDeclarations {
                                     kind_token: LET_KW@183..190 "let" [Whitespace("\n\n\t")] [Whitespace(" ")],
-                                    items: [
+                                    items: JsVariableDeclarationList [
                                         JsVariableDeclaration {
                                             id: JsIdentifierBinding {
                                                 name_token: IDENT@190..192 "a" [] [Whitespace(" ")],
@@ -150,7 +150,7 @@ JsScript {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@236..242 "let" [Whitespace("\n\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@242..244 "b" [] [Whitespace(" ")],
@@ -164,24 +164,24 @@ JsScript {
                                 type_parameters: missing (optional),
                                 parameters: JsParameters {
                                     l_paren_token: L_PAREN@246..247 "(" [] [],
-                                    items: [],
+                                    items: JsParameterList [],
                                     r_paren_token: R_PAREN@247..249 ")" [] [Whitespace(" ")],
                                 },
                                 return_type: missing (optional),
                                 fat_arrow_token: FAT_ARROW@249..252 "=>" [] [Whitespace(" ")],
                                 body: JsFunctionBody {
                                     l_curly_token: L_CURLY@252..253 "{" [] [],
-                                    directives: [
+                                    directives: JsDirectiveList [
                                         JsDirective {
                                             value_token: JS_STRING_LITERAL@253..267 "\"use strict\"" [Whitespace("\n\t")] [],
                                             semicolon_token: SEMICOLON@267..268 ";" [] [],
                                         },
                                     ],
-                                    statements: [
+                                    statements: JsStatementList [
                                         JsVariableStatement {
                                             declarations: JsVariableDeclarations {
                                                 kind_token: LET_KW@268..275 "let" [Whitespace("\n\n\t")] [Whitespace(" ")],
-                                                items: [
+                                                items: JsVariableDeclarationList [
                                                     JsVariableDeclaration {
                                                         id: JsIdentifierBinding {
                                                             name_token: IDENT@275..277 "a" [] [Whitespace(" ")],
@@ -217,7 +217,7 @@ JsScript {
         },
         JsBlockStatement {
             l_curly_token: L_CURLY@320..323 "{" [Whitespace("\n\n")] [],
-            statements: [
+            statements: JsStatementList [
                 JsExpressionStatement {
                     expression: JsStringLiteralExpression {
                         value_token: JS_STRING_LITERAL@323..337 "\"use strict\"" [Whitespace("\n\t")] [],

@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -36,7 +36,7 @@ JsModule {
                 type_args: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@21..22 "(" [] [],
-                    args: [],
+                    args: JsCallArgumentList [],
                     r_paren_token: R_PAREN@22..23 ")" [] [],
                 },
             },

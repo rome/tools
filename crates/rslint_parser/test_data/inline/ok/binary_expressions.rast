@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsBinaryExpression {
                 left: JsNumberLiteralExpression {
@@ -51,7 +51,7 @@ JsModule {
                             type_args: missing (optional),
                             arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@27..29 "(" [Whitespace("\n")] [],
-                                args: [
+                                args: JsCallArgumentList [
                                     JsBinaryExpression {
                                         left: JsNumberLiteralExpression {
                                             value_token: JS_NUMBER_LITERAL@29..31 "1" [] [Whitespace(" ")],

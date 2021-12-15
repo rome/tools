@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsUnknownExpression {
                 items: [
@@ -32,7 +32,7 @@ JsModule {
             type_parameters: missing (optional),
             parameters: JsParameters {
                 l_paren_token: L_PAREN@33..34 "(" [] [],
-                items: [
+                items: JsParameterList [
                     JsUnknownBinding {
                         items: [
                             IDENT@34..39 "await" [] [],
@@ -44,8 +44,8 @@ JsModule {
             return_type: missing (optional),
             body: JsFunctionBody {
                 l_curly_token: L_CURLY@41..42 "{" [] [],
-                directives: [],
-                statements: [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@42..43 "}" [] [],
             },
         },
@@ -59,7 +59,7 @@ JsModule {
             type_parameters: missing (optional),
             parameters: JsParameters {
                 l_paren_token: L_PAREN@58..59 "(" [] [],
-                items: [
+                items: JsParameterList [
                     JsUnknownBinding {
                         items: [
                             IDENT@59..64 "yield" [] [],
@@ -71,8 +71,8 @@ JsModule {
             return_type: missing (optional),
             body: JsFunctionBody {
                 l_curly_token: L_CURLY@66..67 "{" [] [],
-                directives: [],
-                statements: [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@67..68 "}" [] [],
             },
         },

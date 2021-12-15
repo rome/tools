@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         ForStmt {
             for_token: FOR_KW@0..4 "for" [] [Whitespace(" ")],
             l_paren_token: missing (required),
@@ -12,7 +12,7 @@ JsModule {
             update: ForStmtUpdate {
                 expr: JsObjectExpression {
                     l_curly_token: L_CURLY@7..8 "{" [] [],
-                    members: [],
+                    members: JsObjectMemberList [],
                     r_curly_token: R_CURLY@8..9 "}" [] [],
                 },
             },
@@ -22,7 +22,7 @@ JsModule {
                 l_paren_token: missing (required),
                 initializer: JsVariableDeclarations {
                     kind_token: LET_KW@14..18 "let" [] [Whitespace(" ")],
-                    items: [
+                    items: JsVariableDeclarationList [
                         JsVariableDeclaration {
                             id: JsIdentifierBinding {
                                 name_token: IDENT@18..20 "i" [] [Whitespace(" ")],
@@ -64,7 +64,7 @@ JsModule {
                 r_paren_token: missing (required),
                 cons: JsBlockStatement {
                     l_curly_token: L_CURLY@37..38 "{" [] [],
-                    statements: [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@38..39 "}" [] [],
                 },
             },
@@ -74,7 +74,7 @@ JsModule {
             l_paren_token: missing (required),
             initializer: JsVariableDeclarations {
                 kind_token: LET_KW@44..48 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@48..50 "i" [] [Whitespace(" ")],
@@ -116,7 +116,7 @@ JsModule {
             r_paren_token: missing (required),
             cons: JsBlockStatement {
                 l_curly_token: L_CURLY@67..68 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@68..69 "}" [] [],
             },
         },
@@ -132,7 +132,7 @@ JsModule {
             test: ForStmtTest {
                 expr: JsArrayExpression {
                     l_brack_token: L_BRACK@78..79 "[" [] [],
-                    elements: [],
+                    elements: JsArrayElementList [],
                     r_brack_token: R_BRACK@79..80 "]" [] [],
                 },
             },
@@ -141,7 +141,7 @@ JsModule {
             r_paren_token: R_PAREN@80..82 ")" [] [Whitespace(" ")],
             cons: JsBlockStatement {
                 l_curly_token: L_CURLY@82..83 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@83..84 "}" [] [],
             },
         },
@@ -163,13 +163,13 @@ JsModule {
             of_token: OF_KW@103..106 "of" [] [Whitespace(" ")],
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@106..107 "[" [] [],
-                elements: [],
+                elements: JsArrayElementList [],
                 r_brack_token: R_BRACK@107..108 "]" [] [],
             },
             r_paren_token: R_PAREN@108..110 ")" [] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@110..111 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@111..112 "}" [] [],
             },
         },
@@ -192,13 +192,13 @@ JsModule {
                 IN_KW@130..133 "in" [] [Whitespace(" ")],
                 JsArrayExpression {
                     l_brack_token: L_BRACK@133..134 "[" [] [],
-                    elements: [],
+                    elements: JsArrayElementList [],
                     r_brack_token: R_BRACK@134..135 "]" [] [],
                 },
                 R_PAREN@135..137 ")" [] [Whitespace(" ")],
                 JsBlockStatement {
                     l_curly_token: L_CURLY@137..138 "{" [] [],
-                    statements: [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@138..139 "}" [] [],
                 },
             ],
@@ -210,7 +210,7 @@ JsModule {
                 L_PAREN@150..151 "(" [] [],
                 JsVariableDeclarations {
                     kind_token: LET_KW@151..155 "let" [] [Whitespace(" ")],
-                    items: [
+                    items: JsVariableDeclarationList [
                         JsVariableDeclaration {
                             id: JsIdentifierBinding {
                                 name_token: IDENT@155..157 "i" [] [Whitespace(" ")],
@@ -252,7 +252,7 @@ JsModule {
                 R_PAREN@173..175 ")" [] [Whitespace(" ")],
                 JsBlockStatement {
                     l_curly_token: L_CURLY@175..176 "{" [] [],
-                    statements: [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@176..177 "}" [] [],
                 },
             ],
@@ -262,11 +262,11 @@ JsModule {
             l_paren_token: L_PAREN@182..183 "(" [] [],
             initializer: JsVariableDeclarations {
                 kind_token: LET_KW@183..187 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@187..188 "[" [] [],
-                            elements: [
+                            elements: JsArrayBindingPatternElementList [
                                 JsIdentifierBinding {
                                     name_token: IDENT@188..189 "a" [] [],
                                 },
@@ -286,7 +286,7 @@ JsModule {
             r_paren_token: R_PAREN@192..194 ")" [] [Whitespace(" ")],
             cons: JsBlockStatement {
                 l_curly_token: L_CURLY@194..195 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@195..196 "}" [] [],
             },
         },

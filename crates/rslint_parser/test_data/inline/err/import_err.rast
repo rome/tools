@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsImport {
             import_token: IMPORT_KW@0..6 "import" [] [],
             import_clause: missing (required),
@@ -40,7 +40,7 @@ JsModule {
         },
         JsBlockStatement {
             l_curly_token: L_CURLY@33..35 "{" [] [Whitespace(" ")],
-            statements: [
+            statements: JsStatementList [
                 JsExpressionStatement {
                     expression: JsSequenceExpression {
                         left: JsIdentifierExpression {
@@ -80,7 +80,7 @@ JsModule {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@59..61 "{" [] [Whitespace(" ")],
-                    specifiers: [
+                    specifiers: JsNamedImportSpecifierList [
                         JsShorthandNamedImportSpecifier {
                             local_name: JsIdentifierBinding {
                                 name_token: IDENT@61..63 "a" [] [Whitespace(" ")],
@@ -116,7 +116,7 @@ JsModule {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@89..91 "{" [] [Whitespace(" ")],
-                    specifiers: [
+                    specifiers: JsNamedImportSpecifierList [
                         JsShorthandNamedImportSpecifier {
                             local_name: JsIdentifierBinding {
                                 name_token: IDENT@91..92 "a" [] [],
@@ -147,7 +147,7 @@ JsModule {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@115..117 "{" [] [Whitespace(" ")],
-                    specifiers: [
+                    specifiers: JsNamedImportSpecifierList [
                         JsShorthandNamedImportSpecifier {
                             local_name: JsUnknownBinding {
                                 items: [
@@ -172,7 +172,7 @@ JsModule {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@144..146 "{" [] [Whitespace(" ")],
-                    specifiers: [
+                    specifiers: JsNamedImportSpecifierList [
                         JsUnknownNamedImportSpecifier {
                             items: [
                                 JS_STRING_LITERAL@146..150 "\"a\"" [] [Whitespace(" ")],
@@ -195,7 +195,7 @@ JsModule {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@169..171 "{" [] [Whitespace(" ")],
-                    specifiers: [
+                    specifiers: JsNamedImportSpecifierList [
                         JsNamedImportSpecifier {
                             name: missing (required),
                             as_token: AS_KW@171..174 "as" [] [Whitespace(" ")],

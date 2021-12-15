@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsNumberLiteralExpression {
                 value_token: JS_NUMBER_LITERAL@0..1 "5" [] [],

@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "b" [] [Whitespace(" ")],
@@ -16,7 +16,7 @@ JsModule {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@8..9 "{" [] [],
-                                members: [
+                                members: JsObjectMemberList [
                                     JsSetterObjectMember {
                                         set_token: SET_KW@9..15 "set" [Whitespace("\n ")] [Whitespace(" ")],
                                         name: JsLiteralMemberName {
@@ -27,8 +27,8 @@ JsModule {
                                         r_paren_token: R_PAREN@19..21 ")" [] [Whitespace(" ")],
                                         body: JsFunctionBody {
                                             l_curly_token: L_CURLY@21..22 "{" [] [],
-                                            directives: [],
-                                            statements: [
+                                            directives: JsDirectiveList [],
+                                            statements: JsStatementList [
                                                 JsReturnStatement {
                                                     return_token: RETURN_KW@22..34 "return" [Whitespace("\n    ")] [Whitespace(" ")],
                                                     argument: JsNumberLiteralExpression {

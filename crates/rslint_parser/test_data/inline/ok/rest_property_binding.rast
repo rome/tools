@@ -1,15 +1,15 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternRest {
                                     dotdotdot_token: DOT2@6..9 "..." [] [],
                                     binding: JsIdentifierBinding {
@@ -37,11 +37,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@20..25 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@25..27 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternProperty {
                                     member: JsLiteralMemberName {
                                         value: IDENT@27..28 "b" [] [],
@@ -49,7 +49,7 @@ JsModule {
                                     colon_token: COLON@28..30 ":" [] [Whitespace(" ")],
                                     pattern: JsObjectBindingPattern {
                                         l_curly_token: L_CURLY@30..32 "{" [] [Whitespace(" ")],
-                                        properties: [
+                                        properties: JsObjectBindingPatternPropertyList [
                                             JsObjectBindingPatternRest {
                                                 dotdotdot_token: DOT2@32..35 "..." [] [],
                                                 binding: JsIdentifierBinding {

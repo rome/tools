@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsStaticMemberExpression {
                 object: JsIdentifierExpression {
@@ -94,7 +94,7 @@ JsModule {
             implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@66..67 "{" [] [],
-            members: [
+            members: JsClassMemberList [
                 JsPropertyClassMember {
                     modifiers: missing (optional),
                     access_modifier: missing (optional),
@@ -122,7 +122,7 @@ JsModule {
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@80..81 "(" [] [],
-                        items: [
+                        items: JsParameterList [
                             JsIdentifierBinding {
                                 name_token: IDENT@81..86 "other" [] [],
                             },
@@ -132,8 +132,8 @@ JsModule {
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@88..89 "{" [] [],
-                        directives: [],
-                        statements: [
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: JsStaticMemberExpression {
                                     object: JsThisExpression {

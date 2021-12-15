@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: CallExpr {
                 callee: JsParenthesizedExpression {
@@ -20,7 +20,7 @@ JsModule {
                 type_args: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@7..9 "(" [Whitespace("\n")] [],
-                    args: [
+                    args: JsCallArgumentList [
                         JsIdentifierExpression {
                             name: JsReferenceIdentifier {
                                 value_token: IDENT@9..12 "foo" [] [],

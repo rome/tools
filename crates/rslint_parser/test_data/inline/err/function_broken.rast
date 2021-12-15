@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsFunctionDeclaration {
             async_token: missing (optional),
             function_token: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")],
@@ -12,7 +12,7 @@ JsModule {
             type_parameters: missing (optional),
             parameters: JsParameters {
                 l_paren_token: L_PAREN@12..13 "(" [] [],
-                items: [],
+                items: JsParameterList [],
                 r_paren_token: R_PAREN@13..14 ")" [] [],
             },
             return_type: missing (optional),
@@ -28,16 +28,16 @@ JsModule {
         },
         JsBlockStatement {
             l_curly_token: L_CURLY@18..19 "{" [] [],
-            statements: [
+            statements: JsStatementList [
                 JsBlockStatement {
                     l_curly_token: L_CURLY@19..20 "{" [] [],
-                    statements: [
+                    statements: JsStatementList [
                         JsBlockStatement {
                             l_curly_token: L_CURLY@20..23 "{" [] [Whitespace("  ")],
-                            statements: [
+                            statements: JsStatementList [
                                 JsBlockStatement {
                                     l_curly_token: L_CURLY@23..24 "{" [] [],
-                                    statements: [],
+                                    statements: JsStatementList [],
                                     r_curly_token: R_CURLY@24..25 "}" [] [],
                                 },
                             ],

@@ -1,14 +1,14 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsImport {
             import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@7..8 "{" [] [],
-                    specifiers: [],
+                    specifiers: JsNamedImportSpecifierList [],
                     r_curly_token: R_CURLY@8..10 "}" [] [Whitespace(" ")],
                 },
                 from_token: FROM_KW@10..15 "from" [] [Whitespace(" ")],
@@ -25,7 +25,7 @@ JsModule {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@27..29 "{" [] [Whitespace(" ")],
-                    specifiers: [
+                    specifiers: JsNamedImportSpecifierList [
                         JsShorthandNamedImportSpecifier {
                             local_name: JsIdentifierBinding {
                                 name_token: IDENT@29..30 "a" [] [],
@@ -66,7 +66,7 @@ JsModule {
                 },
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@60..62 "{" [] [Whitespace(" ")],
-                    specifiers: [
+                    specifiers: JsNamedImportSpecifierList [
                         JsShorthandNamedImportSpecifier {
                             local_name: JsIdentifierBinding {
                                 name_token: IDENT@62..64 "a" [] [Whitespace(" ")],
@@ -113,7 +113,7 @@ JsModule {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@110..112 "{" [] [Whitespace(" ")],
-                    specifiers: [
+                    specifiers: JsNamedImportSpecifierList [
                         JsNamedImportSpecifier {
                             name: JsLiteralExportName {
                                 value: IDENT@112..114 "a" [] [Whitespace(" ")],

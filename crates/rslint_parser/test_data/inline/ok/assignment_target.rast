@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsAssignmentExpression {
                 left: JsIdentifierAssignment {
@@ -135,7 +135,7 @@ JsModule {
                                 type_args: missing (optional),
                                 arguments: JsCallArguments {
                                     l_paren_token: L_PAREN@89..90 "(" [] [],
-                                    args: [],
+                                    args: JsCallArgumentList [],
                                     r_paren_token: R_PAREN@90..91 ")" [] [],
                                 },
                             },
@@ -147,7 +147,7 @@ JsModule {
                         type_args: missing (optional),
                         arguments: JsCallArguments {
                             l_paren_token: L_PAREN@97..98 "(" [] [],
-                            args: [],
+                            args: JsCallArgumentList [],
                             r_paren_token: R_PAREN@98..99 ")" [] [],
                         },
                     },

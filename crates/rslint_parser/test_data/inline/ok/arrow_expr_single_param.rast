@@ -1,7 +1,7 @@
 JsScript {
     interpreter_token: missing (optional),
-    directives: [],
-    statements: [
+    directives: JsDirectiveList [],
+    statements: JsStatementList [
         JsExpressionStatement {
             expression: JsArrowFunctionExpression {
                 async_token: missing (optional),
@@ -13,8 +13,8 @@ JsScript {
                 fat_arrow_token: FAT_ARROW@14..17 "=>" [] [Whitespace(" ")],
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@17..18 "{" [] [],
-                    directives: [],
-                    statements: [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@18..19 "}" [] [],
                 },
             },
@@ -31,8 +31,8 @@ JsScript {
                 fat_arrow_token: FAT_ARROW@26..29 "=>" [] [Whitespace(" ")],
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@29..30 "{" [] [],
-                    directives: [],
-                    statements: [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@30..31 "}" [] [],
                 },
             },
@@ -49,8 +49,8 @@ JsScript {
                 fat_arrow_token: FAT_ARROW@38..41 "=>" [] [Whitespace(" ")],
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@41..42 "{" [] [],
-                    directives: [],
-                    statements: [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@42..43 "}" [] [],
                 },
             },
@@ -67,8 +67,8 @@ JsScript {
                 fat_arrow_token: FAT_ARROW@48..50 "=>" [] [],
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@50..52 "{" [Whitespace("\n")] [],
-                    directives: [],
-                    statements: [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@52..53 "}" [] [],
                 },
             },

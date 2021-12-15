@@ -1,15 +1,15 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternProperty {
                                     member: JsLiteralMemberName {
                                         value: JS_NUMBER_LITERAL@6..8 "5" [] [Whitespace(" ")],
@@ -37,7 +37,7 @@ JsModule {
         },
         JsBlockStatement {
             l_curly_token: L_CURLY@14..16 "{" [] [Whitespace(" ")],
-            statements: [
+            statements: JsStatementList [
                 JsLabeledStatement {
                     label_token: IDENT@16..20 "eval" [] [],
                     colon_token: COLON@20..22 ":" [] [Whitespace(" ")],
@@ -57,11 +57,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@30..35 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@35..37 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsUnknownBinding {
                                         items: [
@@ -79,7 +79,7 @@ JsModule {
                             eq_token: EQ@44..46 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@46..48 "{" [] [Whitespace(" ")],
-                                members: [
+                                members: JsObjectMemberList [
                                     JsPropertyObjectMember {
                                         name: JsLiteralMemberName {
                                             value: IDENT@48..52 "eval" [] [],
@@ -101,11 +101,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@62..67 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@67..69 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternProperty {
                                     member: JsLiteralMemberName {
                                         value: JS_NUMBER_LITERAL@69..70 "5" [] [],
@@ -132,7 +132,7 @@ JsModule {
                             eq_token: EQ@76..78 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@78..80 "{" [] [Whitespace(" ")],
-                                members: [
+                                members: JsObjectMemberList [
                                     JsPropertyObjectMember {
                                         name: JsLiteralMemberName {
                                             value: IDENT@80..84 "eval" [] [],
@@ -154,11 +154,11 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@94..99 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@99..101 "{" [] [Whitespace(" ")],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternProperty {
                                     member: JsLiteralMemberName {
                                         value: IDENT@101..109 "default" [] [Whitespace(" ")],
@@ -185,7 +185,7 @@ JsModule {
                             eq_token: EQ@119..121 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@121..122 "{" [] [],
-                                members: [],
+                                members: JsObjectMemberList [],
                                 r_curly_token: R_CURLY@122..123 "}" [] [],
                             },
                         },

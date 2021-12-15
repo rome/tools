@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -17,7 +17,7 @@ JsModule {
                 },
             },
             l_curly_token: L_CURLY@21..22 "{" [] [],
-            members: [
+            members: JsClassMemberList [
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
@@ -30,14 +30,14 @@ JsModule {
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@28..29 "(" [] [],
-                        items: [],
+                        items: JsParameterList [],
                         r_paren_token: R_PAREN@29..31 ")" [] [Whitespace(" ")],
                     },
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@31..32 "{" [] [],
-                        directives: [],
-                        statements: [
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: CallExpr {
                                     callee: JsUnknownExpression {
@@ -48,7 +48,7 @@ JsModule {
                                     type_args: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@40..41 "(" [] [],
-                                        args: [],
+                                        args: JsCallArgumentList [],
                                         r_paren_token: R_PAREN@41..42 ")" [] [],
                                     },
                                 },
@@ -70,7 +70,7 @@ JsModule {
                                     type_args: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@57..58 "(" [] [],
-                                        args: [],
+                                        args: JsCallArgumentList [],
                                         r_paren_token: R_PAREN@58..59 ")" [] [],
                                     },
                                 },
@@ -93,7 +93,7 @@ JsModule {
                 type_args: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@72..73 "(" [] [],
-                    args: [],
+                    args: JsCallArgumentList [],
                     r_paren_token: R_PAREN@73..74 ")" [] [],
                 },
             },

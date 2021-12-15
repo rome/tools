@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsDebuggerStatement {
             debugger_token: DEBUGGER_KW@0..8 "debugger" [] [],
             semicolon_token: SEMICOLON@8..9 ";" [] [],

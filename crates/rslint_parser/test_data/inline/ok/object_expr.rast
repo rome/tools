@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -16,7 +16,7 @@ JsModule {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@8..9 "{" [] [],
-                                members: [],
+                                members: JsObjectMemberList [],
                                 r_curly_token: R_CURLY@9..10 "}" [] [],
                             },
                         },
@@ -28,7 +28,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@11..16 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@16..18 "b" [] [Whitespace(" ")],
@@ -39,7 +39,7 @@ JsModule {
                             eq_token: EQ@18..20 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@20..21 "{" [] [],
-                                members: [
+                                members: JsObjectMemberList [
                                     JsShorthandPropertyObjectMember {
                                         name: JsReferenceIdentifier {
                                             value_token: IDENT@21..24 "foo" [] [],

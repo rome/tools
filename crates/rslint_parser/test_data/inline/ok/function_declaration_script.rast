@@ -1,7 +1,7 @@
 JsScript {
     interpreter_token: missing (optional),
-    directives: [],
-    statements: [
+    directives: JsDirectiveList [],
+    statements: JsStatementList [
         JsFunctionDeclaration {
             async_token: missing (optional),
             function_token: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
@@ -12,7 +12,7 @@ JsScript {
             type_parameters: missing (optional),
             parameters: JsParameters {
                 l_paren_token: L_PAREN@23..24 "(" [] [],
-                items: [
+                items: JsParameterList [
                     JsIdentifierBinding {
                         name_token: IDENT@24..29 "await" [] [],
                     },
@@ -22,8 +22,8 @@ JsScript {
             return_type: missing (optional),
             body: JsFunctionBody {
                 l_curly_token: L_CURLY@31..32 "{" [] [],
-                directives: [],
-                statements: [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@32..33 "}" [] [],
             },
         },

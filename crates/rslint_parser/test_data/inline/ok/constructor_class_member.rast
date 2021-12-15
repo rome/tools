@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -10,7 +10,7 @@ JsModule {
             implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@10..11 "{" [] [],
-            members: [
+            members: JsClassMemberList [
                 JsConstructorClassMember {
                     access_modifier: missing (optional),
                     name: JsLiteralMemberName {
@@ -18,7 +18,7 @@ JsModule {
                     },
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@24..25 "(" [] [],
-                        parameters: [
+                        parameters: JsConstructorParameterList [
                             JsIdentifierBinding {
                                 name_token: IDENT@25..26 "a" [] [],
                             },
@@ -27,8 +27,8 @@ JsModule {
                     },
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@28..29 "{" [] [],
-                        directives: [],
-                        statements: [
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: JsAssignmentExpression {
                                     left: JsStaticMemberAssignment {
@@ -64,7 +64,7 @@ JsModule {
             implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@60..61 "{" [] [],
-            members: [
+            members: JsClassMemberList [
                 JsConstructorClassMember {
                     access_modifier: missing (optional),
                     name: JsLiteralMemberName {
@@ -72,7 +72,7 @@ JsModule {
                     },
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@76..77 "(" [] [],
-                        parameters: [
+                        parameters: JsConstructorParameterList [
                             JsIdentifierBinding {
                                 name_token: IDENT@77..78 "b" [] [],
                             },
@@ -81,8 +81,8 @@ JsModule {
                     },
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@80..81 "{" [] [],
-                        directives: [],
-                        statements: [
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: JsAssignmentExpression {
                                     left: JsStaticMemberAssignment {

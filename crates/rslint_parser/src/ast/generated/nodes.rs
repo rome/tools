@@ -12342,6 +12342,7 @@ impl AstSeparatedList<Specifier> for ExportNamedSpecifierList {
 }
 impl Debug for ExportNamedSpecifierList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "ExportNamedSpecifierList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12377,6 +12378,7 @@ impl AstSeparatedList<JsAnyArrayAssignmentPatternElement> for JsArrayAssignmentP
 }
 impl Debug for JsArrayAssignmentPatternElementList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsArrayAssignmentPatternElementList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12412,6 +12414,7 @@ impl AstSeparatedList<JsAnyArrayBindingPatternElement> for JsArrayBindingPattern
 }
 impl Debug for JsArrayBindingPatternElementList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsArrayBindingPatternElementList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12447,6 +12450,7 @@ impl AstSeparatedList<JsAnyArrayElement> for JsArrayElementList {
 }
 impl Debug for JsArrayElementList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsArrayElementList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12482,6 +12486,7 @@ impl AstSeparatedList<JsAnyExpression> for JsCallArgumentList {
 }
 impl Debug for JsCallArgumentList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsCallArgumentList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12517,6 +12522,7 @@ impl AstNodeList<JsAnyClassMember> for JsClassMemberList {
 }
 impl Debug for JsClassMemberList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsClassMemberList")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -12552,6 +12558,7 @@ impl AstSeparatedList<JsAnyConstructorParameter> for JsConstructorParameterList 
 }
 impl Debug for JsConstructorParameterList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsConstructorParameterList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12587,6 +12594,7 @@ impl AstNodeList<JsDirective> for JsDirectiveList {
 }
 impl Debug for JsDirectiveList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsDirectiveList")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -12622,6 +12630,7 @@ impl AstSeparatedList<JsAnyImportAssertionEntry> for JsImportAssertionEntryList 
 }
 impl Debug for JsImportAssertionEntryList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsImportAssertionEntryList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12657,6 +12666,7 @@ impl AstNodeList<JsAnyModuleItem> for JsModuleItemList {
 }
 impl Debug for JsModuleItemList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsModuleItemList")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -12692,6 +12702,7 @@ impl AstSeparatedList<JsAnyNamedImportSpecifier> for JsNamedImportSpecifierList 
 }
 impl Debug for JsNamedImportSpecifierList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsNamedImportSpecifierList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12729,6 +12740,7 @@ impl AstSeparatedList<JsAnyObjectAssignmentPatternMember>
 }
 impl Debug for JsObjectAssignmentPatternPropertyList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsObjectAssignmentPatternPropertyList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12764,6 +12776,7 @@ impl AstSeparatedList<JsAnyObjectBindingPatternMember> for JsObjectBindingPatter
 }
 impl Debug for JsObjectBindingPatternPropertyList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsObjectBindingPatternPropertyList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12799,6 +12812,7 @@ impl AstSeparatedList<JsAnyObjectMember> for JsObjectMemberList {
 }
 impl Debug for JsObjectMemberList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsObjectMemberList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12834,6 +12848,7 @@ impl AstSeparatedList<JsAnyParameter> for JsParameterList {
 }
 impl Debug for JsParameterList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsParameterList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12869,6 +12884,7 @@ impl AstNodeList<JsAnyStatement> for JsStatementList {
 }
 impl Debug for JsStatementList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsStatementList")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -12904,6 +12920,7 @@ impl AstNodeList<JsAnySwitchClause> for JsSwitchCaseList {
 }
 impl Debug for JsSwitchCaseList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsSwitchCaseList")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -12939,6 +12956,7 @@ impl AstSeparatedList<JsVariableDeclaration> for JsVariableDeclarationList {
 }
 impl Debug for JsVariableDeclarationList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "JsVariableDeclarationList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -12974,6 +12992,7 @@ impl AstNodeList<TsEnumMember> for TsEnumMemberList {
 }
 impl Debug for TsEnumMemberList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "TsEnumMemberList")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -13009,6 +13028,7 @@ impl AstNodeList<TsTypeElement> for TsObjectMemberList {
 }
 impl Debug for TsObjectMemberList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "TsObjectMemberList")?;
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
@@ -13044,6 +13064,7 @@ impl AstSeparatedList<TsType> for TsTypeArgList {
 }
 impl Debug for TsTypeArgList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "TsTypeArgList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -13079,6 +13100,7 @@ impl AstSeparatedList<TsExprWithTypeArgs> for TsTypeList {
 }
 impl Debug for TsTypeList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "TsTypeList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }
@@ -13114,6 +13136,7 @@ impl AstSeparatedList<TsTypeParam> for TsTypeParamList {
 }
 impl Debug for TsTypeParamList {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(f, "{} ", "TsTypeParamList")?;
 		f.debug_list().entries(self.elements()).finish()
 	}
 }

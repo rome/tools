@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsDoWhileStatement {
             do_token: DO_KW@0..3 "do" [] [Whitespace(" ")],
             body: JsWhileStatement {

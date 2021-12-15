@@ -1,14 +1,14 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsArrowFunctionExpression {
                 async_token: missing (optional),
                 type_parameters: missing (optional),
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@0..1 "(" [] [],
-                    items: [
+                    items: JsParameterList [
                         JsUnknownBinding {
                             items: [
                                 JS_NUMBER_LITERAL@1..3 "5" [] [Whitespace(" ")],
@@ -23,8 +23,8 @@ JsModule {
                 fat_arrow_token: FAT_ARROW@8..11 "=>" [] [Whitespace(" ")],
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@11..12 "{" [] [],
-                    directives: [],
-                    statements: [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@12..13 "}" [] [],
                 },
             },
@@ -66,7 +66,7 @@ JsModule {
         },
         JsBlockStatement {
             l_curly_token: L_CURLY@25..26 "{" [] [],
-            statements: [],
+            statements: JsStatementList [],
             r_curly_token: R_CURLY@26..27 "}" [] [],
         },
         JsExpressionStatement {
@@ -75,7 +75,7 @@ JsModule {
                 type_parameters: missing (optional),
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@27..29 "(" [Whitespace("\n")] [],
-                    items: [
+                    items: JsParameterList [
                         JsIdentifierBinding {
                             name_token: IDENT@29..30 "a" [] [],
                         },

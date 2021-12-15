@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsIfStatement {
             if_token: IF_KW@0..3 "if" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@3..4 "(" [] [],
@@ -14,7 +14,7 @@ JsModule {
                 else_token: ELSE_KW@10..15 "else" [] [Whitespace(" ")],
                 alternate: JsBlockStatement {
                     l_curly_token: L_CURLY@15..16 "{" [] [],
-                    statements: [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@16..17 "}" [] [],
                 },
             },
@@ -39,7 +39,7 @@ JsModule {
                         else_token: ELSE_KW@36..41 "else" [] [Whitespace(" ")],
                         alternate: JsBlockStatement {
                             l_curly_token: L_CURLY@41..42 "{" [] [],
-                            statements: [],
+                            statements: JsStatementList [],
                             r_curly_token: R_CURLY@42..43 "}" [] [],
                         },
                     },
@@ -53,14 +53,14 @@ JsModule {
             r_paren_token: R_PAREN@48..50 ")" [] [Whitespace(" ")],
             consequent: JsBlockStatement {
                 l_curly_token: L_CURLY@50..51 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@51..53 "}" [] [Whitespace(" ")],
             },
             else_clause: JsElseClause {
                 else_token: ELSE_KW@53..58 "else" [] [Whitespace(" ")],
                 alternate: JsBlockStatement {
                     l_curly_token: L_CURLY@58..59 "{" [] [],
-                    statements: [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@59..60 "}" [] [],
                 },
             },
@@ -85,7 +85,7 @@ JsModule {
         },
         JsBlockStatement {
             l_curly_token: L_CURLY@75..76 "{" [] [],
-            statements: [],
+            statements: JsStatementList [],
             r_curly_token: R_CURLY@76..77 "}" [] [],
         },
     ],

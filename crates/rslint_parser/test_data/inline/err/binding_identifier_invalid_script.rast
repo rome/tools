@@ -1,11 +1,11 @@
 JsScript {
     interpreter_token: missing (optional),
-    directives: [],
-    statements: [
+    directives: JsDirectiveList [],
+    statements: JsStatementList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..14 "let" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
                             items: [
@@ -28,7 +28,7 @@ JsScript {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: CONST_KW@22..29 "const" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
                             items: [

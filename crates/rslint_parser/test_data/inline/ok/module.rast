@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsImport {
             import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
             import_clause: JsImportDefaultClause {
@@ -21,7 +21,7 @@ JsModule {
             type_token: missing (optional),
             decl: ExportNamed {
                 l_curly_token: L_CURLY@26..28 "{" [] [Whitespace(" ")],
-                specifiers: [
+                specifiers: ExportNamedSpecifierList [
                     Specifier {
                         name: JsName {
                             value_token: IDENT@28..30 "a" [] [Whitespace(" ")],
@@ -46,7 +46,7 @@ JsModule {
                 type_args: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@34..35 "(" [] [],
-                    args: [],
+                    args: JsCallArgumentList [],
                     r_paren_token: R_PAREN@35..36 ")" [] [],
                 },
             },
@@ -58,7 +58,7 @@ JsModule {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@45..47 "{" [] [Whitespace(" ")],
-                    specifiers: [
+                    specifiers: JsNamedImportSpecifierList [
                         JsShorthandNamedImportSpecifier {
                             local_name: JsIdentifierBinding {
                                 name_token: IDENT@47..49 "c" [] [Whitespace(" ")],

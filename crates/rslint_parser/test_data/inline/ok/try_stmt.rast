@@ -1,12 +1,12 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsTryStatement {
             try_token: TRY_KW@0..4 "try" [] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@4..5 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@5..7 "}" [] [Whitespace(" ")],
             },
             catch_clause: JsCatchClause {
@@ -14,7 +14,7 @@ JsModule {
                 declaration: missing (optional),
                 body: JsBlockStatement {
                     l_curly_token: L_CURLY@13..14 "{" [] [],
-                    statements: [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@14..15 "}" [] [],
                 },
             },
@@ -23,7 +23,7 @@ JsModule {
             try_token: TRY_KW@15..20 "try" [Whitespace("\n")] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@20..21 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@21..23 "}" [] [Whitespace(" ")],
             },
             catch_clause: JsCatchClause {
@@ -37,7 +37,7 @@ JsModule {
                 },
                 body: JsBlockStatement {
                     l_curly_token: L_CURLY@33..34 "{" [] [],
-                    statements: [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@34..35 "}" [] [],
                 },
             },
@@ -46,7 +46,7 @@ JsModule {
             try_token: TRY_KW@35..40 "try" [Whitespace("\n")] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@40..41 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@41..43 "}" [] [Whitespace(" ")],
             },
             catch_clause: JsCatchClause {
@@ -54,7 +54,7 @@ JsModule {
                 declaration: missing (optional),
                 body: JsBlockStatement {
                     l_curly_token: L_CURLY@49..50 "{" [] [],
-                    statements: [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@50..52 "}" [] [Whitespace(" ")],
                 },
             },
@@ -62,7 +62,7 @@ JsModule {
                 finally_token: FINALLY_KW@52..60 "finally" [] [Whitespace(" ")],
                 body: JsBlockStatement {
                     l_curly_token: L_CURLY@60..61 "{" [] [],
-                    statements: [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@61..62 "}" [] [],
                 },
             },
@@ -71,7 +71,7 @@ JsModule {
             try_token: TRY_KW@62..67 "try" [Whitespace("\n")] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@67..68 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@68..70 "}" [] [Whitespace(" ")],
             },
             catch_clause: JsCatchClause {
@@ -85,7 +85,7 @@ JsModule {
                 },
                 body: JsBlockStatement {
                     l_curly_token: L_CURLY@80..81 "{" [] [],
-                    statements: [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@81..83 "}" [] [Whitespace(" ")],
                 },
             },
@@ -93,7 +93,7 @@ JsModule {
                 finally_token: FINALLY_KW@83..91 "finally" [] [Whitespace(" ")],
                 body: JsBlockStatement {
                     l_curly_token: L_CURLY@91..92 "{" [] [],
-                    statements: [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@92..93 "}" [] [],
                 },
             },
@@ -102,7 +102,7 @@ JsModule {
             try_token: TRY_KW@93..98 "try" [Whitespace("\n")] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@98..99 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@99..101 "}" [] [Whitespace(" ")],
             },
             catch_clause: missing (optional),
@@ -110,7 +110,7 @@ JsModule {
                 finally_token: FINALLY_KW@101..109 "finally" [] [Whitespace(" ")],
                 body: JsBlockStatement {
                     l_curly_token: L_CURLY@109..110 "{" [] [],
-                    statements: [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@110..111 "}" [] [],
                 },
             },

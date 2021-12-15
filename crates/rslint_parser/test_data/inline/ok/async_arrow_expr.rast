@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -24,8 +24,8 @@ JsModule {
                                 fat_arrow_token: FAT_ARROW@18..21 "=>" [] [Whitespace(" ")],
                                 body: JsFunctionBody {
                                     l_curly_token: L_CURLY@21..22 "{" [] [],
-                                    directives: [],
-                                    statements: [],
+                                    directives: JsDirectiveList [],
+                                    statements: JsStatementList [],
                                     r_curly_token: R_CURLY@22..23 "}" [] [],
                                 },
                             },
@@ -38,7 +38,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@23..28 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@28..30 "b" [] [Whitespace(" ")],
@@ -52,7 +52,7 @@ JsModule {
                                 type_parameters: missing (optional),
                                 parameters: JsParameters {
                                     l_paren_token: L_PAREN@38..39 "(" [] [],
-                                    items: [
+                                    items: JsParameterList [
                                         JsIdentifierBinding {
                                             name_token: IDENT@39..42 "bar" [] [],
                                         },
@@ -63,8 +63,8 @@ JsModule {
                                 fat_arrow_token: FAT_ARROW@44..47 "=>" [] [Whitespace(" ")],
                                 body: JsFunctionBody {
                                     l_curly_token: L_CURLY@47..48 "{" [] [],
-                                    directives: [],
-                                    statements: [],
+                                    directives: JsDirectiveList [],
+                                    statements: JsStatementList [],
                                     r_curly_token: R_CURLY@48..49 "}" [] [],
                                 },
                             },
@@ -80,7 +80,7 @@ JsModule {
                 type_parameters: missing (optional),
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@56..57 "(" [] [],
-                    items: [
+                    items: JsParameterList [
                         JsIdentifierBinding {
                             name_token: IDENT@57..60 "foo" [] [],
                         },

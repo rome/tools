@@ -1,16 +1,16 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsBlockStatement {
             l_curly_token: L_CURLY@0..1 "{" [] [],
-            statements: [
+            statements: JsStatementList [
                 JsUnknownStatement {
                     items: [
                         EXPORT_KW@1..10 "export" [Whitespace("\n ")] [Whitespace(" ")],
                         ExportNamed {
                             l_curly_token: L_CURLY@10..12 "{" [] [Whitespace(" ")],
-                            specifiers: [
+                            specifiers: ExportNamedSpecifierList [
                                 Specifier {
                                     name: JsName {
                                         value_token: IDENT@12..17 "pain" [] [Whitespace(" ")],

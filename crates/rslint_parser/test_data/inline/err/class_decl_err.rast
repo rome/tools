@@ -1,14 +1,14 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: missing (required),
             implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@6..7 "{" [] [],
-            members: [],
+            members: JsClassMemberList [],
             r_curly_token: R_CURLY@7..8 "}" [] [],
         },
         JsClassDeclaration {
@@ -24,7 +24,7 @@ JsModule {
                 },
             },
             l_curly_token: L_CURLY@27..28 "{" [] [],
-            members: [],
+            members: JsClassMemberList [],
             r_curly_token: R_CURLY@28..29 "}" [] [],
         },
         JsClassDeclaration {
@@ -35,7 +35,7 @@ JsModule {
             implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@40..42 "{" [] [Whitespace(" ")],
-            members: [
+            members: JsClassMemberList [
                 JsSetterClassMember {
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
@@ -47,8 +47,8 @@ JsModule {
                     r_paren_token: missing (required),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@46..47 "{" [] [],
-                        directives: [],
-                        statements: [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@47..49 "}" [] [Whitespace(" ")],
                     },
                 },
@@ -63,12 +63,12 @@ JsModule {
                 extends_token: EXTENDS_KW@57..65 "extends" [] [Whitespace(" ")],
                 super_class: JsObjectExpression {
                     l_curly_token: L_CURLY@65..66 "{" [] [],
-                    members: [],
+                    members: JsObjectMemberList [],
                     r_curly_token: R_CURLY@66..67 "}" [] [],
                 },
             },
             l_curly_token: missing (required),
-            members: [],
+            members: JsClassMemberList [],
             r_curly_token: missing (required),
         },
     ],

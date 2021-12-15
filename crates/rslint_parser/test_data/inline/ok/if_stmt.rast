@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsIfStatement {
             if_token: IF_KW@0..3 "if" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@3..4 "(" [] [],
@@ -11,14 +11,14 @@ JsModule {
             r_paren_token: R_PAREN@8..10 ")" [] [Whitespace(" ")],
             consequent: JsBlockStatement {
                 l_curly_token: L_CURLY@10..11 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@11..13 "}" [] [Whitespace(" ")],
             },
             else_clause: JsElseClause {
                 else_token: ELSE_KW@13..18 "else" [] [Whitespace(" ")],
                 alternate: JsBlockStatement {
                     l_curly_token: L_CURLY@18..19 "{" [] [],
-                    statements: [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@19..20 "}" [] [],
                 },
             },
@@ -32,7 +32,7 @@ JsModule {
             r_paren_token: R_PAREN@29..31 ")" [] [Whitespace(" ")],
             consequent: JsBlockStatement {
                 l_curly_token: L_CURLY@31..32 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@32..33 "}" [] [],
             },
             else_clause: missing (optional),
@@ -63,7 +63,7 @@ JsModule {
             r_paren_token: R_PAREN@57..59 ")" [] [Whitespace(" ")],
             consequent: JsBlockStatement {
                 l_curly_token: L_CURLY@59..60 "{" [] [],
-                statements: [],
+                statements: JsStatementList [],
                 r_curly_token: R_CURLY@60..62 "}" [] [Whitespace(" ")],
             },
             else_clause: JsElseClause {
@@ -77,14 +77,14 @@ JsModule {
                     r_paren_token: R_PAREN@75..77 ")" [] [Whitespace(" ")],
                     consequent: JsBlockStatement {
                         l_curly_token: L_CURLY@77..78 "{" [] [],
-                        statements: [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@78..80 "}" [] [Whitespace(" ")],
                     },
                     else_clause: JsElseClause {
                         else_token: ELSE_KW@80..85 "else" [] [Whitespace(" ")],
                         alternate: JsBlockStatement {
                             l_curly_token: L_CURLY@85..86 "{" [] [],
-                            statements: [],
+                            statements: JsStatementList [],
                             r_curly_token: R_CURLY@86..87 "}" [] [],
                         },
                     },

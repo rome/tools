@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsImport {
             import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
             import_clause: JsImportBareClause {
@@ -11,7 +11,7 @@ JsModule {
                 assertion: JsImportAssertion {
                     assert_token: ASSERT_KW@11..18 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@18..20 "{" [] [Whitespace(" ")],
-                    assertions: [
+                    assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
                             key: IDENT@20..24 "type" [] [],
                             colon_token: COLON@24..26 ":" [] [Whitespace(" ")],
@@ -32,7 +32,7 @@ JsModule {
                 assertion: JsImportAssertion {
                     assert_token: ASSERT_KW@48..55 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@55..57 "{" [] [Whitespace(" ")],
-                    assertions: [
+                    assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
                             key: JS_STRING_LITERAL@57..63 "\"type\"" [] [],
                             colon_token: COLON@63..65 ":" [] [Whitespace(" ")],
@@ -57,7 +57,7 @@ JsModule {
                 assertion: JsImportAssertion {
                     assert_token: ASSERT_KW@102..109 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@109..111 "{" [] [Whitespace(" ")],
-                    assertions: [
+                    assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
                             key: IDENT@111..115 "type" [] [],
                             colon_token: COLON@115..117 ":" [] [Whitespace(" ")],
@@ -75,7 +75,7 @@ JsModule {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@134..135 "{" [] [],
-                    specifiers: [
+                    specifiers: JsNamedImportSpecifierList [
                         JsShorthandNamedImportSpecifier {
                             local_name: JsIdentifierBinding {
                                 name_token: IDENT@135..139 "test" [] [],
@@ -91,7 +91,7 @@ JsModule {
                 assertion: JsImportAssertion {
                     assert_token: ASSERT_KW@157..164 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@164..166 "{" [] [Whitespace(" ")],
-                    assertions: [
+                    assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
                             key: IDENT@166..169 "for" [] [],
                             colon_token: COLON@169..171 ":" [] [Whitespace(" ")],
@@ -116,7 +116,7 @@ JsModule {
                 assertion: JsImportAssertion {
                     assert_token: ASSERT_KW@206..213 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@213..215 "{" [] [Whitespace(" ")],
-                    assertions: [
+                    assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
                             key: IDENT@215..219 "type" [] [],
                             colon_token: COLON@219..221 ":" [] [Whitespace(" ")],
@@ -143,7 +143,7 @@ JsModule {
                 assertion: JsImportAssertion {
                     assert_token: ASSERT_KW@266..272 "assert" [] [],
                     l_curly_token: L_CURLY@272..275 "{" [Whitespace("\n")] [Whitespace(" ")],
-                    assertions: [
+                    assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
                             key: IDENT@275..279 "type" [] [],
                             colon_token: COLON@279..281 ":" [] [Whitespace(" ")],

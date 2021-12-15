@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -17,7 +17,7 @@ JsModule {
                 },
             },
             l_curly_token: L_CURLY@21..22 "{" [] [],
-            members: [
+            members: JsClassMemberList [
                 JsConstructorClassMember {
                     access_modifier: missing (optional),
                     name: JsLiteralMemberName {
@@ -25,13 +25,13 @@ JsModule {
                     },
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@35..36 "(" [] [],
-                        parameters: [],
+                        parameters: JsConstructorParameterList [],
                         r_paren_token: R_PAREN@36..38 ")" [] [Whitespace(" ")],
                     },
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@38..39 "{" [] [],
-                        directives: [],
-                        statements: [
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: CallExpr {
                                     callee: JsSuperExpression {
@@ -40,7 +40,7 @@ JsModule {
                                     type_args: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@47..48 "(" [] [],
-                                        args: [],
+                                        args: JsCallArgumentList [],
                                         r_paren_token: R_PAREN@48..49 ")" [] [],
                                     },
                                 },
@@ -62,14 +62,14 @@ JsModule {
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@60..61 "(" [] [],
-                        items: [],
+                        items: JsParameterList [],
                         r_paren_token: R_PAREN@61..63 ")" [] [Whitespace(" ")],
                     },
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@63..64 "{" [] [],
-                        directives: [],
-                        statements: [
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: CallExpr {
                                     callee: JsStaticMemberExpression {
@@ -84,7 +84,7 @@ JsModule {
                                     type_args: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@77..78 "(" [] [],
-                                        args: [
+                                        args: JsCallArgumentList [
                                             JsIdentifierExpression {
                                                 name: JsReferenceIdentifier {
                                                     value_token: IDENT@78..79 "a" [] [],

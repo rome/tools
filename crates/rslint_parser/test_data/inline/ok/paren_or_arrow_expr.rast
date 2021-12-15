@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@0..1 "(" [] [],
@@ -20,7 +20,7 @@ JsModule {
                 type_parameters: missing (optional),
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@6..8 "(" [Whitespace("\n")] [],
-                    items: [
+                    items: JsParameterList [
                         JsIdentifierBinding {
                             name_token: IDENT@8..11 "foo" [] [],
                         },
@@ -31,8 +31,8 @@ JsModule {
                 fat_arrow_token: FAT_ARROW@13..16 "=>" [] [Whitespace(" ")],
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@16..17 "{" [] [],
-                    directives: [],
-                    statements: [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@17..18 "}" [] [],
                 },
             },
@@ -60,10 +60,10 @@ JsModule {
                 type_parameters: missing (optional),
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@28..30 "(" [Whitespace("\n")] [],
-                    items: [
+                    items: JsParameterList [
                         JsObjectBindingPattern {
                             l_curly_token: L_CURLY@30..31 "{" [] [],
-                            properties: [
+                            properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsIdentifierBinding {
                                         name_token: IDENT@31..34 "foo" [] [],
@@ -85,7 +85,7 @@ JsModule {
                                     colon_token: COLON@42..44 ":" [] [Whitespace(" ")],
                                     pattern: JsArrayBindingPattern {
                                         l_brack_token: L_BRACK@44..45 "[" [] [],
-                                        elements: [
+                                        elements: JsArrayBindingPatternElementList [
                                             JsIdentifierBinding {
                                                 name_token: IDENT@45..46 "f" [] [],
                                             },
@@ -111,8 +111,8 @@ JsModule {
                 fat_arrow_token: FAT_ARROW@58..61 "=>" [] [Whitespace(" ")],
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@61..62 "{" [] [],
-                    directives: [],
-                    statements: [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@62..63 "}" [] [],
                 },
             },
@@ -124,7 +124,7 @@ JsModule {
                 type_parameters: missing (optional),
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@64..66 "(" [Whitespace("\n")] [],
-                    items: [
+                    items: JsParameterList [
                         JsIdentifierBinding {
                             name_token: IDENT@66..69 "foo" [] [],
                         },
@@ -142,8 +142,8 @@ JsModule {
                 fat_arrow_token: FAT_ARROW@79..82 "=>" [] [Whitespace(" ")],
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@82..83 "{" [] [],
-                    directives: [],
-                    statements: [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
                     r_curly_token: R_CURLY@83..84 "}" [] [],
                 },
             },

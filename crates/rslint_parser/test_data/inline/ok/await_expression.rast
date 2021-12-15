@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsFunctionDeclaration {
             async_token: ASYNC_KW@0..6 "async" [] [Whitespace(" ")],
             function_token: FUNCTION_KW@6..15 "function" [] [Whitespace(" ")],
@@ -12,14 +12,14 @@ JsModule {
             type_parameters: missing (optional),
             parameters: JsParameters {
                 l_paren_token: L_PAREN@19..20 "(" [] [],
-                items: [],
+                items: JsParameterList [],
                 r_paren_token: R_PAREN@20..22 ")" [] [Whitespace(" ")],
             },
             return_type: missing (optional),
             body: JsFunctionBody {
                 l_curly_token: L_CURLY@22..23 "{" [] [],
-                directives: [],
-                statements: [
+                directives: JsDirectiveList [],
+                statements: JsStatementList [
                     JsExpressionStatement {
                         expression: JsAwaitExpression {
                             await_token: AWAIT_KW@23..31 "await" [Whitespace("\n\t")] [Whitespace(" ")],
@@ -32,7 +32,7 @@ JsModule {
                                 type_args: missing (optional),
                                 arguments: JsCallArguments {
                                     l_paren_token: L_PAREN@36..37 "(" [] [],
-                                    args: [],
+                                    args: JsCallArgumentList [],
                                     r_paren_token: R_PAREN@37..38 ")" [] [],
                                 },
                             },
@@ -54,7 +54,7 @@ JsModule {
                                         type_args: missing (optional),
                                         arguments: JsCallArguments {
                                             l_paren_token: L_PAREN@54..55 "(" [] [],
-                                            args: [],
+                                            args: JsCallArgumentList [],
                                             r_paren_token: R_PAREN@55..56 ")" [] [],
                                         },
                                     },
@@ -73,7 +73,7 @@ JsModule {
                                     type_args: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@71..72 "(" [] [],
-                                        args: [],
+                                        args: JsCallArgumentList [],
                                         r_paren_token: R_PAREN@72..73 ")" [] [],
                                     },
                                 },
@@ -95,14 +95,14 @@ JsModule {
             type_parameters: missing (optional),
             parameters: JsParameters {
                 l_paren_token: L_PAREN@98..99 "(" [] [],
-                items: [],
+                items: JsParameterList [],
                 r_paren_token: R_PAREN@99..101 ")" [] [Whitespace(" ")],
             },
             return_type: missing (optional),
             body: JsFunctionBody {
                 l_curly_token: L_CURLY@101..102 "{" [] [],
-                directives: [],
-                statements: [
+                directives: JsDirectiveList [],
+                statements: JsStatementList [
                     JsReturnStatement {
                         return_token: RETURN_KW@102..111 "return" [Whitespace("\n\t")] [Whitespace(" ")],
                         argument: JsNumberLiteralExpression {

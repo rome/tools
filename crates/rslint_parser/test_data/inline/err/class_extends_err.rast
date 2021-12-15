@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsUnknownStatement {
             items: [
                 CLASS_KW@0..6 "class" [] [Whitespace(" ")],
@@ -17,7 +17,7 @@ JsModule {
                     },
                 },
                 L_CURLY@32..33 "{" [] [],
-                [],
+                JsClassMemberList [],
                 R_CURLY@33..34 "}" [] [],
             ],
         },
@@ -36,7 +36,7 @@ JsModule {
                     },
                 },
                 L_CURLY@60..61 "{" [] [],
-                [],
+                JsClassMemberList [],
                 R_CURLY@61..62 "}" [] [],
             ],
         },

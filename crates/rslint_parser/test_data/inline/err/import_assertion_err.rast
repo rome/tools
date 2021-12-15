@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsImport {
             import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
             import_clause: JsImportBareClause {
@@ -11,7 +11,7 @@ JsModule {
                 assertion: JsImportAssertion {
                     assert_token: ASSERT_KW@13..20 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@20..22 "{" [] [Whitespace(" ")],
-                    assertions: [
+                    assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
                             key: IDENT@22..26 "type" [] [],
                             colon_token: missing (required),
@@ -49,7 +49,7 @@ JsModule {
         },
         JsBlockStatement {
             l_curly_token: L_CURLY@63..65 "{" [] [Whitespace(" ")],
-            statements: [
+            statements: JsStatementList [
                 JsLabeledStatement {
                     label_token: IDENT@65..69 "type" [] [],
                     colon_token: COLON@69..71 ":" [] [Whitespace(" ")],
@@ -72,7 +72,7 @@ JsModule {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
                     l_curly_token: L_CURLY@88..90 "{" [] [Whitespace(" ")],
-                    specifiers: [
+                    specifiers: JsNamedImportSpecifierList [
                         JsShorthandNamedImportSpecifier {
                             local_name: JsIdentifierBinding {
                                 name_token: IDENT@90..94 "foo" [] [Whitespace(" ")],
@@ -86,7 +86,7 @@ JsModule {
                 assertion: JsImportAssertion {
                     assert_token: ASSERT_KW@96..103 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@103..105 "{" [] [Whitespace(" ")],
-                    assertions: [
+                    assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
                             key: IDENT@105..109 "type" [] [],
                             colon_token: COLON@109..111 ":" [] [Whitespace(" ")],
@@ -118,7 +118,7 @@ JsModule {
         },
         JsBlockStatement {
             l_curly_token: L_CURLY@141..143 "{" [] [Whitespace(" ")],
-            statements: [
+            statements: JsStatementList [
                 JsLabeledStatement {
                     label_token: IDENT@143..147 "type" [] [],
                     colon_token: COLON@147..149 ":" [] [Whitespace(" ")],
@@ -145,7 +145,7 @@ JsModule {
                 assertion: JsImportAssertion {
                     assert_token: ASSERT_KW@185..192 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@192..194 "{" [] [Whitespace(" ")],
-                    assertions: [
+                    assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
                             key: JS_STRING_LITERAL@194..200 "\"type\"" [] [],
                             colon_token: COLON@200..202 ":" [] [Whitespace(" ")],
@@ -182,7 +182,7 @@ JsModule {
                 assertion: JsImportAssertion {
                     assert_token: ASSERT_KW@251..257 "assert" [] [],
                     l_curly_token: missing (required),
-                    assertions: [],
+                    assertions: JsImportAssertionEntryList [],
                     r_curly_token: missing (required),
                 },
             },
@@ -201,7 +201,7 @@ JsModule {
                 assertion: JsImportAssertion {
                     assert_token: ASSERT_KW@286..293 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@293..295 "{" [] [Whitespace(" ")],
-                    assertions: [
+                    assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
                             key: IDENT@295..299 "type" [] [],
                             colon_token: COLON@299..301 ":" [] [Whitespace(" ")],

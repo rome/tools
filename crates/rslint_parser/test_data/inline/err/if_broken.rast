@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsIfStatement {
             if_token: IF_KW@0..3 "if" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@3..4 "(" [] [],
@@ -22,7 +22,7 @@ JsModule {
         },
         JsBlockStatement {
             l_curly_token: L_CURLY@14..15 "{" [] [],
-            statements: [],
+            statements: JsStatementList [],
             r_curly_token: R_CURLY@15..16 "}" [] [],
         },
     ],

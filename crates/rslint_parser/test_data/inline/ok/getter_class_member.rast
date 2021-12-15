@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -10,7 +10,7 @@ JsModule {
             implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@14..15 "{" [] [],
-            members: [
+            members: JsClassMemberList [
                 JsGetterClassMember {
                     access_modifier: missing (optional),
                     abstract_token: missing (optional),
@@ -24,8 +24,8 @@ JsModule {
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@27..28 "{" [] [],
-                        directives: [],
-                        statements: [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@28..29 "}" [] [],
                     },
                 },
@@ -42,8 +42,8 @@ JsModule {
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@44..45 "{" [] [],
-                        directives: [],
-                        statements: [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@45..46 "}" [] [],
                     },
                 },
@@ -60,8 +60,8 @@ JsModule {
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@65..66 "{" [] [],
-                        directives: [],
-                        statements: [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@66..67 "}" [] [],
                     },
                 },
@@ -78,8 +78,8 @@ JsModule {
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@81..82 "{" [] [],
-                        directives: [],
-                        statements: [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@82..83 "}" [] [],
                     },
                 },
@@ -106,8 +106,8 @@ JsModule {
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@103..104 "{" [] [],
-                        directives: [],
-                        statements: [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@104..105 "}" [] [],
                     },
                 },
@@ -124,8 +124,8 @@ JsModule {
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@115..116 "{" [] [],
-                        directives: [],
-                        statements: [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@116..117 "}" [] [],
                     },
                 },
@@ -143,8 +143,8 @@ JsModule {
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@134..135 "{" [] [],
-                        directives: [],
-                        statements: [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@135..136 "}" [] [],
                     },
                 },
@@ -159,7 +159,7 @@ JsModule {
             implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@156..157 "{" [] [],
-            members: [
+            members: JsClassMemberList [
                 JsMethodClassMember {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
@@ -172,14 +172,14 @@ JsModule {
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@162..163 "(" [] [],
-                        items: [],
+                        items: JsParameterList [],
                         r_paren_token: R_PAREN@163..165 ")" [] [Whitespace(" ")],
                     },
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@165..166 "{" [] [],
-                        directives: [],
-                        statements: [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@166..167 "}" [] [],
                     },
                 },
@@ -195,14 +195,14 @@ JsModule {
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@178..179 "(" [] [],
-                        items: [],
+                        items: JsParameterList [],
                         r_paren_token: R_PAREN@179..181 ")" [] [Whitespace(" ")],
                     },
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@181..182 "{" [] [],
-                        directives: [],
-                        statements: [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@182..183 "}" [] [],
                     },
                 },
@@ -218,14 +218,14 @@ JsModule {
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@195..196 "(" [] [],
-                        items: [],
+                        items: JsParameterList [],
                         r_paren_token: R_PAREN@196..198 ")" [] [Whitespace(" ")],
                     },
                     return_type: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@198..199 "{" [] [],
-                        directives: [],
-                        statements: [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@199..200 "}" [] [],
                     },
                 },

@@ -1,10 +1,10 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsBlockStatement {
             l_curly_token: L_CURLY@0..1 "{" [] [],
-            statements: [
+            statements: JsStatementList [
                 JsUnknownStatement {
                     items: [
                         IMPORT_KW@1..10 "import" [Whitespace("\n ")] [Whitespace(" ")],

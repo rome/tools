@@ -1,15 +1,15 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@4..6 "[" [] [Whitespace(" ")],
-                            elements: [
+                            elements: JsArrayBindingPatternElementList [
                                 JsArrayBindingPatternRestElement {
                                     dotdotdot_token: DOT2@6..9 "..." [] [],
                                     pattern: JsIdentifierBinding {
@@ -37,16 +37,16 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@20..25 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@25..27 "[" [] [Whitespace(" ")],
-                            elements: [
+                            elements: JsArrayBindingPatternElementList [
                                 JsArrayBindingPatternRestElement {
                                     dotdotdot_token: DOT2@27..30 "..." [] [],
                                     pattern: JsArrayBindingPattern {
                                         l_brack_token: L_BRACK@30..31 "[" [] [],
-                                        elements: [
+                                        elements: JsArrayBindingPatternElementList [
                                             JsIdentifierBinding {
                                                 name_token: IDENT@31..32 "x" [] [],
                                             },
@@ -79,16 +79,16 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@43..48 "let" [Whitespace("\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@48..50 "[" [] [Whitespace(" ")],
-                            elements: [
+                            elements: JsArrayBindingPatternElementList [
                                 JsArrayBindingPatternRestElement {
                                     dotdotdot_token: DOT2@50..53 "..." [] [],
                                     pattern: JsArrayBindingPattern {
                                         l_brack_token: L_BRACK@53..55 "[" [] [Whitespace(" ")],
-                                        elements: [
+                                        elements: JsArrayBindingPatternElementList [
                                             JsArrayBindingPatternRestElement {
                                                 dotdotdot_token: DOT2@55..58 "..." [] [],
                                                 pattern: JsIdentifierBinding {

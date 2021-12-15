@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsDoWhileStatement {
             do_token: DO_KW@0..3 "do" [] [Whitespace(" ")],
             body: JsExpressionStatement {
@@ -20,7 +20,7 @@ JsModule {
                     type_args: missing (optional),
                     arguments: JsCallArguments {
                         l_paren_token: L_PAREN@14..15 "(" [] [],
-                        args: [
+                        args: JsCallArgumentList [
                             JsStringLiteralExpression {
                                 value_token: JS_STRING_LITERAL@15..21 "\"test\"" [] [],
                             },
@@ -42,7 +42,7 @@ JsModule {
             do_token: DO_KW@35..40 "do" [Whitespace("\n\n")] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@40..41 "{" [] [],
-                statements: [
+                statements: JsStatementList [
                     JsExpressionStatement {
                         expression: CallExpr {
                             callee: JsStaticMemberExpression {
@@ -59,7 +59,7 @@ JsModule {
                             type_args: missing (optional),
                             arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@54..55 "(" [] [],
-                                args: [
+                                args: JsCallArgumentList [
                                     JsStringLiteralExpression {
                                         value_token: JS_STRING_LITERAL@55..61 "\"test\"" [] [],
                                     },
@@ -83,7 +83,7 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: LET_KW@78..84 "let" [Whitespace("\n\n")] [Whitespace(" ")],
-                items: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@84..86 "a" [] [Whitespace(" ")],
@@ -107,7 +107,7 @@ JsModule {
                 do_token: DO_KW@93..98 "do" [Whitespace("\n\t")] [Whitespace(" ")],
                 body: JsBlockStatement {
                     l_curly_token: L_CURLY@98..99 "{" [] [],
-                    statements: [
+                    statements: JsStatementList [
                         JsExpressionStatement {
                             expression: JsAssignmentExpression {
                                 left: JsIdentifierAssignment {

@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: Template {
                 backtick_token: BACKTICK@3..4 "`" [] [],
@@ -21,7 +21,7 @@ JsModule {
                             type_args: missing (optional),
                             arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@12..13 "(" [] [],
-                                args: [
+                                args: JsCallArgumentList [
                                     JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
                                             value_token: IDENT@13..16 "bar" [] [],
@@ -34,7 +34,7 @@ JsModule {
                         type_args: missing (optional),
                         arguments: JsCallArguments {
                             l_paren_token: L_PAREN@17..18 "(" [] [],
-                            args: [
+                            args: JsCallArgumentList [
                                 JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@18..21 "baz" [] [],
@@ -47,7 +47,7 @@ JsModule {
                     type_args: missing (optional),
                     arguments: JsCallArguments {
                         l_paren_token: L_PAREN@22..23 "(" [] [],
-                        args: [
+                        args: JsCallArgumentList [
                             JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@23..26 "baz" [] [],

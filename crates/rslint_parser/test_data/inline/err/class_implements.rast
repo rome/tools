@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsUnknownStatement {
             items: [
                 CLASS_KW@0..6 "class" [] [Whitespace(" ")],
@@ -10,7 +10,7 @@ JsModule {
                 },
                 TsImplementsClause {
                     implements_token: IMPLEMENTS_KW@8..19 "implements" [] [Whitespace(" ")],
-                    interfaces: [
+                    interfaces: TsTypeList [
                         TsExprWithTypeArgs {
                             item: TsTypeName {
                                 ident: missing (required),
@@ -20,7 +20,7 @@ JsModule {
                     ],
                 },
                 L_CURLY@21..22 "{" [] [],
-                [],
+                JsClassMemberList [],
                 R_CURLY@22..23 "}" [] [],
             ],
         },
