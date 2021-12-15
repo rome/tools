@@ -1084,7 +1084,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		// ((foo))
 		// (foo)
 		T!['('] => paren_or_arrow_expr(p, p.state.potential_arrow_start),
-		T!['['] => array_expr(p),
+		T!['['] => array_expr(p).unwrap(),
 		T!['{'] if p.state.allow_object_expr => parse_object_expression(p).unwrap(),
 		T![import] => {
 			let m = p.start();
@@ -1343,12 +1343,15 @@ impl ParseSeparatedList for ArrayElementsList {
 // [foo,];
 // [,,,,,foo,,,,];
 // [...a, ...b];
-pub fn array_expr(p: &mut Parser) -> CompletedMarker {
+pub fn array_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	if !p.at(T!['[']) {
+		return Absent;
+	}
 	let m = p.start();
-	p.expect_required(T!['[']);
+	p.bump(T!['[']);
 	ArrayElementsList.parse_list(p);
 	p.expect_required(T![']']);
-	m.complete(p, JS_ARRAY_EXPRESSION)
+	Present(m.complete(p, JS_ARRAY_EXPRESSION))
 }
 
 // test_err spread
