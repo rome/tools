@@ -64,7 +64,7 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 	#[inline]
 	pub fn token(&mut self, kind: L::Kind, text: &str) {
 		let (hash, token) = self.cache.token(L::kind_to_raw(kind), text);
-		self.children.push((hash, Some(token.into())));
+		self.push_child(hash, Some(token.into()));
 	}
 
 	/// Adds new token to the current branch.
@@ -79,7 +79,7 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 		let (hash, token) =
 			self.cache
 				.token_with_trivia(L::kind_to_raw(kind), text, leading, trailing);
-		self.children.push((hash, Some(token.into())));
+		self.push_child(hash, Some(token.into()));
 	}
 
 	/// Inserts a placeholder for a child that is missing in a parent node either because
@@ -87,7 +87,8 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 	/// because of a syntax error.
 	#[inline]
 	pub fn missing(&mut self) {
-		self.children.push(NodeCache::empty());
+		let (hash, element) = NodeCache::empty();
+		self.push_child(hash, element);
 	}
 
 	/// Start new node and make it current.
@@ -101,30 +102,26 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 	/// branch as current.
 	#[inline]
 	pub fn finish_node(&mut self) {
-		let (kind, first_child) = self.parents.pop().unwrap();
+		let (mut kind, first_child) = self.parents.pop().unwrap();
+
+		let len = (first_child..self.children.len()).len();
+
+		if !L::validate_end(kind, len) {
+			kind = kind.to_unknown();
+		};
 
 		let raw_kind = L::kind_to_raw(kind);
+
 		let (hash, node) =
 			self.cache
 				.node(raw_kind, &mut self.children, first_child, |all_children| {
-					let children = &all_children[first_child..];
-					let child_kinds = children
-						.iter()
-						.map(|(_, element)| element.as_ref().map(|e| L::kind_from_raw(e.kind())));
-
-					let raw_kind = if L::fits_shape_of(&kind, children.len(), child_kinds) {
-						raw_kind
-					} else {
-						L::kind_to_raw(kind.to_unknown())
-					};
-
 					GreenNode::new(
 						raw_kind,
 						all_children.drain(first_child..).map(|(_, it)| it),
 					)
 				});
 
-		self.children.push((hash, Some(node.into())));
+		self.push_child(hash, Some(node.into()));
 	}
 
 	/// Prepare for maybe wrapping the next node.
@@ -194,6 +191,23 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 		match self.children.pop().unwrap().1 {
 			Some(NodeOrToken::Node(node)) => node,
 			_ => panic!(),
+		}
+	}
+
+	fn push_child(&mut self, hash: u64, child: Option<GreenElement>) {
+		self.children.push((hash, child));
+		self.validate_last_child();
+	}
+
+	fn validate_last_child(&mut self) {
+		if let Some((_, child)) = self.children.last() {
+			if let Some((parent, first_child)) = self.parents.last_mut() {
+				let index = self.children.len() - *first_child - 1;
+				let child_kind = child.as_ref().map(|c| L::kind_from_raw(c.kind()));
+				if !L::validate_slot(*parent, index, child_kind) {
+					*parent = parent.to_unknown();
+				}
+			}
 		}
 	}
 }
