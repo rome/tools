@@ -236,27 +236,32 @@ pub fn conditional_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	let lhs = binary_or_logical_expression(p);
 
 	if p.at(T![?]) {
-		let m = lhs?.precede(p);
-		p.bump_any();
-		{
-			let p = &mut *p.with_state(ParserState {
-				in_cond_expr: true,
-				..p.state.clone()
-			});
-			expr_or_assignment(p)
-				.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
-		}
-		p.expect_required(T![:]);
-		expr_or_assignment(p)
-			.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
-		return Some(m.complete(p, JS_CONDITIONAL_EXPRESSION));
+		return match lhs {
+			Absent => None,
+			Present(marker) => {
+				let m = marker.precede(p);
+				p.bump_any();
+				{
+					let p = &mut *p.with_state(ParserState {
+						in_cond_expr: true,
+						..p.state.clone()
+					});
+					expr_or_assignment(p)
+						.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
+				}
+				p.expect_required(T![:]);
+				expr_or_assignment(p)
+					.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
+				Some(m.complete(p, JS_CONDITIONAL_EXPRESSION))
+			}
+		};
 	}
-	lhs
+	lhs.into()
 }
 
 /// A binary expression such as `2 + 2` or `foo * bar + 2` or a logical expression 'a || b'
-pub fn binary_or_logical_expression(p: &mut Parser) -> Option<CompletedMarker> {
-	let left: Option<CompletedMarker> = unary_expr(p).into();
+pub fn binary_or_logical_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	let left = unary_expr(p);
 
 	binary_or_logical_expression_recursive(p, left, 0)
 }
@@ -281,15 +286,11 @@ pub fn binary_or_logical_expression(p: &mut Parser) -> Option<CompletedMarker> {
 // !foo * bar;
 fn binary_or_logical_expression_recursive(
 	p: &mut Parser,
-	left: Option<CompletedMarker>,
+	left: ParsedSyntax<CompletedMarker>,
 	min_prec: u8,
-) -> Option<CompletedMarker> {
+) -> ParsedSyntax<CompletedMarker> {
 	if 7 > min_prec && !p.has_linebreak_before_n(0) && p.cur_src() == "as" {
-		let m = left.map(|x| x.precede(p)).unwrap_or_else(|| {
-			let m = p.start();
-			p.missing();
-			m
-		});
+		let m = left.precede_or_missing(p);
 		p.bump_any();
 		let mut res = if p.eat(T![const]) {
 			m.complete(p, TS_CONST_ASSERTION)
@@ -298,7 +299,7 @@ fn binary_or_logical_expression_recursive(
 			m.complete(p, TS_ASSERTION)
 		};
 		res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
-		return binary_or_logical_expression_recursive(p, Some(res), min_prec);
+		return binary_or_logical_expression_recursive(p, Present(res), min_prec);
 	}
 	let kind = match p.cur() {
 		T![>] if p.nth_at(1, T![>]) && p.nth_at(2, T![>]) => T![>>>],
@@ -325,11 +326,13 @@ fn binary_or_logical_expression_recursive(
 	let op = kind;
 	let op_tok = p.cur_tok();
 
-	let m = left.map(|m| m.precede(p)).unwrap_or_else(|| {
-		let m = p.start();
-		p.missing();
-		m
-	});
+	let m = left.precede_or_missing(p);
+
+	// let m = left.map(|m| m.precede(p)).unwrap_or_else(|| {
+	// 	let m = p.start();
+	// 	p.missing();
+	// 	m
+	// });
 
 	if op == T![>>] {
 		p.bump_multiple(2, T![>>]);
@@ -340,17 +343,15 @@ fn binary_or_logical_expression_recursive(
 	}
 
 	// This is a hack to allow us to effectively recover from `foo + / bar`
-	let right: Option<CompletedMarker> = if get_precedence(p.cur()).is_some()
-		&& !p.at_ts(token_set![T![-], T![+], T![<]])
-	{
+	let right = if get_precedence(p.cur()).is_some() && !p.at_ts(token_set![T![-], T![+], T![<]]) {
 		let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.token_src(&op_tok)))
             .secondary(op_tok.range, "This operator requires a right hand side value")
             .primary(p.cur_tok().range, "But this operator was encountered instead");
 
 		p.error(err);
-		None
+		Absent
 	} else {
-		unary_expr(p).into()
+		unary_expr(p)
 	};
 
 	if binary_or_logical_expression_recursive(
@@ -363,7 +364,7 @@ fn binary_or_logical_expression_recursive(
 			precedence
 		},
 	)
-	.is_none()
+	.is_absent()
 	{
 		p.missing();
 	}
@@ -374,7 +375,7 @@ fn binary_or_logical_expression_recursive(
 	};
 
 	let complete = m.complete(p, expression_kind);
-	binary_or_logical_expression_recursive(p, Some(complete), min_prec)
+	binary_or_logical_expression_recursive(p, Present(complete), min_prec)
 
 	// FIXME(RDambrosio016): We should check for nullish-coalescing and logical expr being used together,
 	// however, i can't figure out a way to do this efficiently without using parse_marker which is way too
