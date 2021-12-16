@@ -77,10 +77,10 @@ fn element_id(elem: GreenElementRef<'_>) -> *const () {
 impl NodeCache {
 	/// Hash used for nodes that haven't been cached because it has too many slots or
 	/// one of its children wasn't cached.
-	const UNCACHED_NODE_HASH: u64 = 0;
+	const UNCACHED_NODE_HASH: u64 = u64::MAX;
 
 	/// Hash for an empty slot
-	const EMPTY_SLOT_HASH: u64 = 1;
+	const EMPTY_SLOT_HASH: u64 = u64::MAX - 1;
 
 	pub(crate) const fn empty() -> (u64, Option<GreenElement>) {
 		(Self::EMPTY_SLOT_HASH, None)
@@ -167,9 +167,6 @@ impl NodeCache {
 	) -> (u64, GreenToken) {
 		let hash = token_hash_of(kind, text);
 
-		let leading = GreenTokenTrivia::from(leading);
-		let trailing = GreenTokenTrivia::from(trailing);
-
 		let entry = self.tokens.raw_entry_mut().from_hash(hash, |token| {
 			token.0.kind() == kind && token.0.text() == text
 		});
@@ -177,7 +174,10 @@ impl NodeCache {
 		let token = match entry {
 			RawEntryMut::Occupied(entry) => entry.key().0.clone(),
 			RawEntryMut::Vacant(entry) => {
+				let leading = GreenTokenTrivia::from(leading);
+				let trailing = GreenTokenTrivia::from(trailing);
 				let token = GreenToken::with_trivia(kind, text, leading, trailing);
+
 				entry.insert_with_hasher(hash, NoHash(token.clone()), (), |t| token_hash(&t.0));
 				token
 			}
