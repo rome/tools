@@ -19,6 +19,7 @@ mod utility_types;
 
 #[allow(unsafe_code)]
 mod arc;
+mod ast_shape;
 mod cow_mut;
 #[cfg(feature = "serde1")]
 mod serde_impls;
@@ -30,10 +31,11 @@ pub use text_size::{TextLen, TextRange, TextSize};
 
 pub use crate::{
 	api::{
-		Language, SyntaxElement, SyntaxElementChildren, SyntaxList, SyntaxNode, SyntaxNodeChildren,
-		SyntaxSlot, SyntaxSlots, SyntaxToken, TriviaPiece,
+		Language, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList, SyntaxNode,
+		SyntaxNodeChildren, SyntaxSlot, SyntaxSlots, SyntaxToken, TriviaPiece,
 	},
-	green::SyntaxKind,
+	ast_shape::AstTreeShape,
+	green::RawSyntaxKind,
 	syntax_text::SyntaxText,
 	tree_builder::{Checkpoint, TreeBuilder},
 	utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},

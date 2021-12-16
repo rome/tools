@@ -956,13 +956,19 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 	Present(m.complete(p, JS_PARENTHESIZED_EXPRESSION))
 }
 
+pub fn parse_expression_snipped(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	let m = p.start();
+	parse_expression(p).or_missing_with_error(p, expected_expression);
+	m.complete(p, JS_EXPRESSION_SNIPPED).into()
+}
+
 /// A general expression.
 // test sequence_expr
 // 1, 2, 3, 4, 5
 
 // test_err sequence_expr
 // 1, 2, , 4
-pub fn parse_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let first = parse_expr_or_assignment(p);
 
 	first.map(|first_marker| {

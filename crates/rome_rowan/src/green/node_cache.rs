@@ -6,7 +6,7 @@ use crate::api::TriviaPiece;
 use crate::green::Slot;
 use crate::{
 	green::GreenElementRef, GreenNode, GreenNodeData, GreenToken, GreenTokenData, NodeOrToken,
-	SyntaxKind,
+	RawSyntaxKind,
 };
 
 use super::element::GreenElement;
@@ -42,7 +42,7 @@ pub struct NodeCache {
 	tokens: HashMap<NoHash<GreenToken>, ()>,
 }
 
-fn token_hash_of(kind: SyntaxKind, text: &str) -> u64 {
+fn token_hash_of(kind: RawSyntaxKind, text: &str) -> u64 {
 	let mut h = FxHasher::default();
 	kind.hash(&mut h);
 	text.hash(&mut h);
@@ -86,17 +86,17 @@ impl NodeCache {
 		(Self::EMPTY_SLOT_HASH, None)
 	}
 
-	pub(crate) fn node(
+	pub(crate) fn node<F>(
 		&mut self,
-		kind: SyntaxKind,
+		kind: RawSyntaxKind,
 		// u64 is the hash of the slot
 		slots: &mut Vec<(u64, Option<GreenElement>)>,
 		first_child: usize,
-	) -> (u64, GreenNode) {
-		let build_node = move |slots: &mut Vec<(u64, Option<GreenElement>)>| {
-			GreenNode::new(kind, slots.drain(first_child..).map(|(_, it)| it))
-		};
-
+		build_node: F,
+	) -> (u64, GreenNode)
+	where
+		F: FnOnce(&mut Vec<(u64, Option<GreenElement>)>) -> GreenNode,
+	{
 		let slots_ref = &slots[first_child..];
 		if slots_ref.len() > 3 {
 			let node = build_node(slots);
@@ -140,7 +140,7 @@ impl NodeCache {
 
 		let node = match entry {
 			RawEntryMut::Occupied(entry) => {
-				drop(slots.drain(first_child..));
+				slots.truncate(first_child);
 				entry.key().0.clone()
 			}
 			RawEntryMut::Vacant(entry) => {
@@ -153,13 +153,13 @@ impl NodeCache {
 		(hash, node)
 	}
 
-	pub(crate) fn token(&mut self, kind: SyntaxKind, text: &str) -> (u64, GreenToken) {
+	pub(crate) fn token(&mut self, kind: RawSyntaxKind, text: &str) -> (u64, GreenToken) {
 		self.token_with_trivia(kind, text, Vec::new(), Vec::new())
 	}
 
 	pub(crate) fn token_with_trivia(
 		&mut self,
-		kind: SyntaxKind,
+		kind: RawSyntaxKind,
 		text: &str,
 		leading: Vec<TriviaPiece>,
 		trailing: Vec<TriviaPiece>,
@@ -188,7 +188,7 @@ impl NodeCache {
 
 #[test]
 fn green_token_hash() {
-	let kind = SyntaxKind(0);
+	let kind = RawSyntaxKind(0);
 	let text = " let ";
 	let t1 = GreenToken::with_trivia(
 		kind,

@@ -2,6 +2,7 @@
 //!
 //!
 mod ast;
+mod generate_js_tree_shape;
 mod generate_nodes;
 mod generate_syntax_kinds;
 mod kinds_src;
@@ -20,6 +21,7 @@ pub use self::parser_tests::generate_parser_tests;
 
 const SYNTAX_KINDS: &str = "crates/rslint_syntax/src/generated.rs";
 const AST_NODES: &str = "crates/rslint_parser/src/ast/generated/nodes.rs";
+const JS_TREE_SHAPE: &str = "crates/rslint_parser/src/ast/generated/js_tree_shape.rs";
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Mode {

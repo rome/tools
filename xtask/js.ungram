@@ -39,6 +39,7 @@
 // For this reason, SyntaxElement = SyntaxElement
 SyntaxElement = SyntaxElement
 
+JsUnknown = SyntaxElement*
 JsUnknownStatement = SyntaxElement*
 JsUnknownExpression = SyntaxElement*
 JsUnknownMember = SyntaxElement*
@@ -51,7 +52,7 @@ JsUnknownNamedImportSpecifier = SyntaxElement*
 Ident = 'ident'
 
 JsAnyRoot =
-	JsScript | JsModule
+	JsScript | JsModule | JsExpressionSnipped
 
 JsScript =
 	interpreter: 'js_shebang'?
@@ -63,6 +64,10 @@ JsModule =
 	interpreter: 'js_shebang'?
 	directives: JsDirectiveList
 	items: JsModuleItemList
+	eof: 'EOF'
+
+JsExpressionSnipped =
+	expression: JsAnyExpression
 	eof: 'EOF'
 
 
@@ -78,33 +83,33 @@ JsDirectiveList = JsDirective*
 
 JsAnyStatement =
 	JsBlockStatement
+	| ForStmt
+	| JsBreakStatement
+	| JsClassDeclaration
+	| JsContinueStatement
+	| JsDebuggerStatement
+	| JsDoWhileStatement
 	| JsEmptyStatement
 	| JsExpressionStatement
-	| JsIfStatement
-	| JsDoWhileStatement
-	| JsWhileStatement
-	| ForStmt
 	| JsForInStatement
 	| JsForOfStatement
-	| JsContinueStatement
-	| JsBreakStatement
-	| JsReturnStatement
-	| JsWithStatement
+	| JsIfStatement
 	| JsLabeledStatement
+	| JsReturnStatement
 	| JsSwitchStatement
 	| JsThrowStatement
-	| JsTryStatement
 	| JsTryFinallyStatement
-	| JsDebuggerStatement
-  | JsFunctionDeclaration
-	| JsClassDeclaration
-	| JsVariableStatement
-	| TsEnum
-	| TsTypeAliasDecl
-	| TsNamespaceDecl
-	| TsModuleDecl
-	| TsInterfaceDecl
+	| JsTryStatement
 	| JsUnknownStatement
+	| JsVariableStatement
+	| JsWhileStatement
+	| JsWithStatement
+	| TsEnum
+	| TsInterfaceDecl
+	| TsModuleDecl
+	| TsNamespaceDecl
+	| TsTypeAliasDecl
+  | JsFunctionDeclaration
 
 
 JsBlockStatement =
@@ -274,37 +279,37 @@ JsDebuggerStatement =
 // Expression
 JsAnyExpression =
 	JsAnyLiteralExpression
+	| CallExpr
+	| ImportMeta
 	| JsArrayExpression
 	| JsArrowFunctionExpression
 	| JsAssignmentExpression
 	| JsAwaitExpression
 	| JsBinaryExpression
 	| JsClassExpression
-	| JsConditionalExpression
 	| JsComputedMemberExpression
+	| JsConditionalExpression
 	| JsFunctionExpression
+	| JsIdentifierExpression
 	| JsImportCallExpression
 	| JsLogicalExpression
 	| JsObjectExpression
 	| JsParenthesizedExpression
-	| JsIdentifierExpression
+	| JsPostUpdateExpression
+	| JsPreUpdateExpression
 	| JsSequenceExpression
 	| JsStaticMemberExpression
 	| JsSuperExpression
 	| JsThisExpression
 	| JsUnaryExpression
-	| JsPreUpdateExpression
-	| JsPostUpdateExpression
+	| JsUnknownExpression
 	| JsYieldExpression
-	| Template
 	| NewExpr
-	| CallExpr
 	| NewTarget
-	| ImportMeta
-	| TsNonNull
+	| Template
 	| TsAssertion
 	| TsConstAssertion
-	| JsUnknownExpression
+	| TsNonNull
 
 
 Template =

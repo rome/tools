@@ -1,7 +1,7 @@
 //! Utilities for high level parsing of js code.
 
-use crate::ast::{JsModule, JsScript};
-use crate::{ast::JsAnyExpression, *};
+use crate::ast::{JsExpressionSnipped, JsModule, JsScript};
+use crate::*;
 use rslint_errors::Severity;
 use std::marker::PhantomData;
 
@@ -233,11 +233,11 @@ pub fn parse_module(text: &str, file_id: usize) -> Parse<JsModule> {
 
 /// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).
 /// Or turned into a typed [`Expr`](Expr) with [`tree`](Parse::tree).
-pub fn parse_expr(text: &str, file_id: usize) -> Parse<JsAnyExpression> {
+pub fn parse_expr(text: &str, file_id: usize) -> Parse<JsExpressionSnipped> {
 	let (tokens, mut errors) = tokenize(text, file_id);
 	let tok_source = TokenSource::new(text, &tokens);
 	let mut parser = crate::Parser::new(tok_source, file_id, Syntax::default());
-	crate::syntax::expr::parse_expression(&mut parser).unwrap();
+	crate::syntax::expr::parse_expression_snipped(&mut parser).unwrap();
 	let (events, p_diags) = parser.finish();
 	errors.extend(p_diags);
 	let mut tree_sink = LosslessTreeSink::new(text, &tokens);

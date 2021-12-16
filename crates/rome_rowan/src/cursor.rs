@@ -101,7 +101,7 @@ use crate::{
 	TriviaPiece,
 };
 use crate::{
-	green::{GreenElementRef, GreenNodeData, GreenTokenData, SyntaxKind},
+	green::{GreenElementRef, GreenNodeData, GreenTokenData, RawSyntaxKind},
 	sll,
 	utility_types::Delta,
 	Direction, GreenNode, GreenToken, NodeOrToken, SyntaxText, TextRange, TextSize, TokenAtOffset,
@@ -404,7 +404,7 @@ impl NodeData {
 	}
 
 	#[inline]
-	fn kind(&self) -> SyntaxKind {
+	fn kind(&self) -> RawSyntaxKind {
 		self.green().kind()
 	}
 
@@ -686,7 +686,7 @@ impl SyntaxNode {
 	}
 
 	#[inline]
-	pub fn kind(&self) -> SyntaxKind {
+	pub fn kind(&self) -> RawSyntaxKind {
 		self.data().kind()
 	}
 
@@ -1069,7 +1069,7 @@ impl SyntaxToken {
 	}
 
 	#[inline]
-	pub fn kind(&self) -> SyntaxKind {
+	pub fn kind(&self) -> RawSyntaxKind {
 		self.data().kind()
 	}
 
@@ -1212,7 +1212,7 @@ impl SyntaxElement {
 	}
 
 	#[inline]
-	pub fn kind(&self) -> SyntaxKind {
+	pub fn kind(&self) -> RawSyntaxKind {
 		match self {
 			NodeOrToken::Node(it) => it.kind(),
 			NodeOrToken::Token(it) => it.kind(),

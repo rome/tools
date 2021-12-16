@@ -1187,6 +1187,9 @@ dependencies = [
 [[package]]
 name = "rslint_syntax"
 version = "0.1.4"
+dependencies = [
+ "rome_rowan",
+]
 
 [[package]]
 name = "rslint_text_edit"

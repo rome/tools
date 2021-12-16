@@ -8,13 +8,25 @@ JsModule {
                 JsIdentifierBinding {
                     name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
                 },
-                JsExtendsClause {
-                    extends_token: EXTENDS_KW@8..16 "extends" [] [Whitespace(" ")],
-                    super_class: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@16..20 "bar" [] [Whitespace(" ")],
+                JsUnknown {
+                    items: [
+                        EXTENDS_KW@8..16 "extends" [] [Whitespace(" ")],
+                        JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@16..20 "bar" [] [Whitespace(" ")],
+                            },
                         },
-                    },
+                        EXTENDS_KW@20..28 "extends" [] [Whitespace(" ")],
+                        JsUnknown {
+                            items: [
+                                JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@28..32 "foo" [] [Whitespace(" ")],
+                                    },
+                                },
+                            ],
+                        },
+                    ],
                 },
                 L_CURLY@32..33 "{" [] [],
                 JsClassMemberList [],
@@ -27,13 +39,25 @@ JsModule {
                 JsIdentifierBinding {
                     name_token: IDENT@41..43 "A" [] [Whitespace(" ")],
                 },
-                JsExtendsClause {
-                    extends_token: EXTENDS_KW@43..51 "extends" [] [Whitespace(" ")],
-                    super_class: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@51..54 "bar" [] [],
+                JsUnknown {
+                    items: [
+                        EXTENDS_KW@43..51 "extends" [] [Whitespace(" ")],
+                        JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@51..54 "bar" [] [],
+                            },
                         },
-                    },
+                        COMMA@54..56 "," [] [Whitespace(" ")],
+                        JsUnknown {
+                            items: [
+                                JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@56..60 "foo" [] [Whitespace(" ")],
+                                    },
+                                },
+                            ],
+                        },
+                    ],
                 },
                 L_CURLY@60..61 "{" [] [],
                 JsClassMemberList [],
@@ -52,13 +76,13 @@ JsModule {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
-      2: JS_EXTENDS_CLAUSE@8..32
+      2: JS_UNKNOWN@8..32
         0: EXTENDS_KW@8..16 "extends" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@16..20
           0: JS_REFERENCE_IDENTIFIER@16..20
             0: IDENT@16..20 "bar" [] [Whitespace(" ")]
         2: EXTENDS_KW@20..28 "extends" [] [Whitespace(" ")]
-        3: TS_EXPR_WITH_TYPE_ARGS@28..32
+        3: JS_UNKNOWN@28..32
           0: JS_IDENTIFIER_EXPRESSION@28..32
             0: JS_REFERENCE_IDENTIFIER@28..32
               0: IDENT@28..32 "foo" [] [Whitespace(" ")]
@@ -70,13 +94,13 @@ JsModule {
       0: CLASS_KW@34..41 "class" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@41..43
         0: IDENT@41..43 "A" [] [Whitespace(" ")]
-      2: JS_EXTENDS_CLAUSE@43..60
+      2: JS_UNKNOWN@43..60
         0: EXTENDS_KW@43..51 "extends" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@51..54
           0: JS_REFERENCE_IDENTIFIER@51..54
             0: IDENT@51..54 "bar" [] []
         2: COMMA@54..56 "," [] [Whitespace(" ")]
-        3: TS_EXPR_WITH_TYPE_ARGS@56..60
+        3: JS_UNKNOWN@56..60
           0: JS_IDENTIFIER_EXPRESSION@56..60
             0: JS_REFERENCE_IDENTIFIER@56..60
               0: IDENT@56..60 "foo" [] [Whitespace(" ")]

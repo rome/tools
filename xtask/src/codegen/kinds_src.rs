@@ -173,6 +173,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_MODULE",
 		"JS_MODULE_ITEM_LIST",
 		"JS_SCRIPT",
+		"JS_EXPRESSION_SNIPPED",
 		"JS_DIRECTIVE",
 		"JS_DIRECTIVE_LIST",
 		"ERROR",
@@ -413,6 +414,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"BOOLEAN",
 		"BIG_INT_VALUE",
 		// unknown nodes JS
+		"JS_UNKNOWN",
 		"JS_UNKNOWN_EXPRESSION",
 		"JS_UNKNOWN_STATEMENT",
 		"JS_UNKNOWN_MEMBER",
@@ -461,7 +463,15 @@ impl AstSrc {
 #[derive(Debug)]
 pub struct AstListSrc {
 	pub element_name: String,
-	pub separated: bool,
+	pub separator: Option<AstListSeparatorConfiguration>,
+}
+
+#[derive(Debug)]
+pub struct AstListSeparatorConfiguration {
+	/// Name of the separator token
+	pub separator_token: String,
+	/// Whatever the list allows a trailing comma or not
+	pub allow_trailing: bool,
 }
 
 #[derive(Debug)]

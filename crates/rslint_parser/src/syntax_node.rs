@@ -14,12 +14,12 @@ pub struct JsLanguage;
 impl Language for JsLanguage {
 	type Kind = SyntaxKind;
 
-	fn kind_from_raw(raw: rome_rowan::SyntaxKind) -> SyntaxKind {
+	fn kind_from_raw(raw: rome_rowan::RawSyntaxKind) -> SyntaxKind {
 		SyntaxKind::from(raw.0)
 	}
 
-	fn kind_to_raw(kind: SyntaxKind) -> rome_rowan::SyntaxKind {
-		rome_rowan::SyntaxKind(kind.into())
+	fn kind_to_raw(kind: SyntaxKind) -> rome_rowan::RawSyntaxKind {
+		rome_rowan::RawSyntaxKind(kind.into())
 	}
 }
 

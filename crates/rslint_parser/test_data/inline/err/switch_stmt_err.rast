@@ -113,9 +113,10 @@ JsModule {
                 },
                 JsCaseClause {
                     case_token: missing (required),
-                    test: JsUnaryExpression {
-                        operator: missing (required),
-                        argument: missing (required),
+                    test: JsUnknownExpression {
+                        items: [
+                            DEFAULT_KW@109..118 "default" [Whitespace("\n\t")] [],
+                        ],
                     },
                     colon_token: COLON@118..120 ":" [] [Whitespace(" ")],
                     consequent: JsStatementList [
@@ -241,7 +242,7 @@ JsModule {
               2: R_CURLY@108..109 "}" [] []
         1: JS_CASE_CLAUSE@109..122
           0: (empty)
-          1: JS_UNARY_EXPRESSION@109..118
+          1: JS_UNKNOWN_EXPRESSION@109..118
             0: DEFAULT_KW@109..118 "default" [Whitespace("\n\t")] []
           2: COLON@118..120 ":" [] [Whitespace(" ")]
           3: JS_STATEMENT_LIST@120..122
