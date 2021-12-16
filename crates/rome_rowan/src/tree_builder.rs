@@ -1,4 +1,5 @@
 use crate::api::SyntaxKind;
+use crate::green::CacheableNode;
 use crate::{
 	api::TriviaPiece,
 	cow_mut::CowMut,
@@ -112,16 +113,17 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 						.iter()
 						.map(|(_, element)| element.as_ref().map(|e| L::kind_from_raw(e.kind())));
 
-					let raw_kind = if L::fits_shape_of(&kind, children.len(), child_kinds) {
-						raw_kind
-					} else {
-						L::kind_to_raw(kind.to_unknown())
-					};
+					let fits_shape = L::fits_shape_of(&kind, children.len(), child_kinds);
+					let slots = all_children.drain(first_child..).map(|(_, it)| it);
 
-					GreenNode::new(
-						raw_kind,
-						all_children.drain(first_child..).map(|(_, it)| it),
-					)
+					if fits_shape {
+						CacheableNode::Cache(GreenNode::new(raw_kind, slots))
+					} else {
+						CacheableNode::NoCache(GreenNode::new(
+							L::kind_to_raw(kind.to_unknown()),
+							slots,
+						))
+					}
 				});
 
 		self.children.push((hash, Some(node.into())));

@@ -86,29 +86,33 @@ impl NodeCache {
 		(Self::EMPTY_SLOT_HASH, None)
 	}
 
+	/// Creates a new node or retrieves it from the cache.
+	/// * `kind`: The type of the node
+	/// * `children`: The slots of this node are all the elements in `children` starting from `first_child`
+	/// * `build_node`: Function that constructs a node in case it wasn't part of the cache.
 	pub(crate) fn node<F>(
 		&mut self,
 		kind: RawSyntaxKind,
 		// u64 is the hash of the slot
-		slots: &mut Vec<(u64, Option<GreenElement>)>,
+		children: &mut Vec<(u64, Option<GreenElement>)>,
 		first_child: usize,
 		build_node: F,
 	) -> (u64, GreenNode)
 	where
-		F: FnOnce(&mut Vec<(u64, Option<GreenElement>)>) -> GreenNode,
+		F: FnOnce(&mut Vec<(u64, Option<GreenElement>)>) -> CacheableNode,
 	{
-		let slots_ref = &slots[first_child..];
-		if slots_ref.len() > 3 {
-			let node = build_node(slots);
+		let slots = &children[first_child..];
+		if slots.len() > 3 {
+			let node = build_node(children).unwrap();
 			return (Self::UNCACHED_NODE_HASH, node);
 		}
 
 		let hash = {
 			let mut h = FxHasher::default();
 			kind.hash(&mut h);
-			for &(hash, _) in slots_ref {
+			for &(hash, _) in slots {
 				if hash == Self::UNCACHED_NODE_HASH {
-					let node = build_node(slots);
+					let node = build_node(children).unwrap();
 					return (Self::UNCACHED_NODE_HASH, node);
 				}
 				hash.hash(&mut h);
@@ -124,11 +128,11 @@ impl NodeCache {
 		// For `libsyntax/parse/parser.rs`, measurements show that deduping saves
 		// 17% of the memory for green nodes!
 		let entry = self.nodes.raw_entry_mut().from_hash(hash, |node| {
-			node.0.kind() == kind && node.0.slots().len() == slots_ref.len() && {
+			node.0.kind() == kind && node.0.slots().len() == slots.len() && {
 				let lhs = node.0.slots();
 				let lhs = lhs.map(|slot| slot.as_ref().map(element_id));
 
-				let rhs = slots_ref.iter().map(|(_, element)| {
+				let rhs = slots.iter().map(|(_, element)| {
 					element
 						.as_ref()
 						.map(|element| element_id(element.as_deref()))
@@ -141,13 +145,21 @@ impl NodeCache {
 		let node = match entry {
 			RawEntryMut::Occupied(entry) => {
 				// Pop all of the nodes children
-				slots.truncate(first_child);
+				children.truncate(first_child);
 				entry.key().0.clone()
 			}
 			RawEntryMut::Vacant(entry) => {
-				let node = build_node(slots);
-				entry.insert_with_hasher(hash, NoHash(node.clone()), (), |n| node_hash(&n.0));
-				node
+				let node = build_node(children);
+
+				match node {
+					CacheableNode::Cache(node) => {
+						entry.insert_with_hasher(hash, NoHash(node.clone()), (), |n| {
+							node_hash(&n.0)
+						});
+						node
+					}
+					CacheableNode::NoCache(node) => node,
+				}
 			}
 		};
 
@@ -184,6 +196,23 @@ impl NodeCache {
 		};
 
 		(hash, token)
+	}
+}
+
+/// Built node that can be cached or should not be cached
+pub(crate) enum CacheableNode {
+	/// Node that is safe to be cached
+	Cache(GreenNode),
+	/// Node where it isn't safe to cache it, for example because it changed its kind.
+	NoCache(GreenNode),
+}
+
+impl CacheableNode {
+	fn unwrap(self) -> GreenNode {
+		match self {
+			CacheableNode::Cache(node) => node,
+			CacheableNode::NoCache(node) => node,
+		}
 	}
 }
 

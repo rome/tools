@@ -1,11 +1,6 @@
 //! Generated file, do not edit by hand, see `xtask/src/codegen`
 
-use crate::{
-	ast::*,
-	JsLanguage,
-	SyntaxKind::{self, *},
-	T,
-};
+use crate::{ast::*, JsLanguage, SyntaxKind::*, T};
 use rome_rowan::AstTreeShape;
 impl AstTreeShape for JsLanguage {
 	fn fits_shape_of(
