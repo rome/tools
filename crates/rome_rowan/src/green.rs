@@ -9,6 +9,7 @@ pub(crate) use self::{
 	token::{GreenToken, GreenTokenData},
 };
 
+pub(crate) use self::node_cache::CacheableNode;
 pub use self::node_cache::NodeCache;
 
 /// SyntaxKind is a type tag for each token or node.
