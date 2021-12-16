@@ -58,7 +58,7 @@ fn parse_module_items(p: &mut Parser) {
 		list_marker.abandon(p);
 		p.missing();
 	} else {
-		list_marker.complete(p, LIST);
+		list_marker.complete(p, JS_MODULE_ITEM_LIST);
 	}
 }
 
@@ -244,7 +244,7 @@ fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<CompletedMa
 	NamedImportSpecifierList.parse_list(p);
 	p.expect_required(T!['}']);
 
-	Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIER_LIST))
+	Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIERS))
 }
 
 struct NamedImportSpecifierList;
@@ -274,6 +274,10 @@ impl ParseSeparatedList for NamedImportSpecifierList {
 			.enable_recovery_on_line_break(),
 			expected_named_import_specifier,
 		)
+	}
+
+	fn list_kind() -> SyntaxKind {
+		JS_NAMED_IMPORT_SPECIFIER_LIST
 	}
 
 	fn separating_element_kind(&mut self) -> SyntaxKind {
@@ -388,6 +392,10 @@ impl ParseSeparatedList for ImportAssertionList {
 				.enable_recovery_on_line_break(),
 				|p, range| expected_node("import assertion entry", range).to_diagnostic(p),
 			)
+	}
+
+	fn list_kind() -> SyntaxKind {
+		JS_IMPORT_ASSERTION_ENTRY_LIST
 	}
 
 	fn separating_element_kind(&mut self) -> SyntaxKind {

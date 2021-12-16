@@ -50,9 +50,7 @@ impl ToFormatElement for ForStmt {
 impl ToFormatElement for JsAnyForInitializer {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
-			JsAnyForInitializer::JsVariableDeclarationList(decl) => {
-				decl.to_format_element(formatter)
-			}
+			JsAnyForInitializer::JsVariableDeclarations(decl) => decl.to_format_element(formatter),
 			JsAnyForInitializer::JsAnyExpression(expr) => expr.to_format_element(formatter),
 		}
 	}

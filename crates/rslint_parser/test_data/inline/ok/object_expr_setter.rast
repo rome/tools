@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarations: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "b" [] [Whitespace(" ")],
@@ -16,7 +16,7 @@ JsModule {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@8..9 "{" [] [],
-                                members: [
+                                members: JsObjectMemberList [
                                     JsSetterObjectMember {
                                         set_token: SET_KW@9..15 "set" [Whitespace("\n ")] [Whitespace(" ")],
                                         name: JsComputedMemberName {
@@ -35,8 +35,8 @@ JsModule {
                                         r_paren_token: R_PAREN@24..26 ")" [] [Whitespace(" ")],
                                         body: JsFunctionBody {
                                             l_curly_token: L_CURLY@26..27 "{" [] [],
-                                            directives: [],
-                                            statements: [
+                                            directives: JsDirectiveList [],
+                                            statements: JsStatementList [
                                                 JsReturnStatement {
                                                     return_token: RETURN_KW@27..39 "return" [Whitespace("\n    ")] [Whitespace(" ")],
                                                     argument: JsNumberLiteralExpression {
@@ -63,12 +63,12 @@ JsModule {
 
 0: JS_MODULE@0..47
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..46
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..46
     0: JS_VARIABLE_STATEMENT@0..46
-      0: JS_VARIABLE_DECLARATION_LIST@0..46
+      0: JS_VARIABLE_DECLARATIONS@0..46
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: LIST@4..46
+        1: JS_VARIABLE_DECLARATION_LIST@4..46
           0: JS_VARIABLE_DECLARATION@4..46
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "b" [] [Whitespace(" ")]
@@ -78,7 +78,7 @@ JsModule {
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@8..46
                 0: L_CURLY@8..9 "{" [] []
-                1: LIST@9..44
+                1: JS_OBJECT_MEMBER_LIST@9..44
                   0: JS_SETTER_OBJECT_MEMBER@9..44
                     0: SET_KW@9..15 "set" [Whitespace("\n ")] [Whitespace(" ")]
                     1: JS_COMPUTED_MEMBER_NAME@15..20
@@ -93,8 +93,8 @@ JsModule {
                     4: R_PAREN@24..26 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@26..44
                       0: L_CURLY@26..27 "{" [] []
-                      1: LIST@27..27
-                      2: LIST@27..41
+                      1: JS_DIRECTIVE_LIST@27..27
+                      2: JS_STATEMENT_LIST@27..41
                         0: JS_RETURN_STATEMENT@27..41
                           0: RETURN_KW@27..39 "return" [Whitespace("\n    ")] [Whitespace(" ")]
                           1: JS_NUMBER_LITERAL_EXPRESSION@39..40

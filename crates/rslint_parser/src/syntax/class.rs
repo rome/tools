@@ -177,7 +177,7 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		is_valid = false;
 	}
 
-	list.complete(p, LIST);
+	list.complete(p, TS_TYPE_LIST);
 
 	let completed_syntax = Present(implements_clause.complete(p, TS_IMPLEMENTS_CLAUSE));
 	completed_syntax.into_conditional(is_valid)
@@ -251,6 +251,10 @@ impl ParseNodeList for ClassMembersList {
 			),
 			js_parse_error::expected_class_member,
 		)
+	}
+
+	fn list_kind() -> SyntaxKind {
+		JS_CLASS_MEMBER_LIST
 	}
 }
 
@@ -891,8 +895,12 @@ fn parse_constructor_class_member_body(
 
 fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let m = p.start();
-	parse_parameters_list(p, parse_constructor_parameter);
-	Present(m.complete(p, JS_CONSTRUCTOR_PARAMETER_LIST))
+	parse_parameters_list(
+		p,
+		parse_constructor_parameter,
+		JS_CONSTRUCTOR_PARAMETER_LIST,
+	);
+	Present(m.complete(p, JS_CONSTRUCTOR_PARAMETERS))
 }
 
 fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {

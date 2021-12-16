@@ -1,10 +1,10 @@
 use std::collections::HashMap;
 
 use super::kinds_src::AstSrc;
-use crate::codegen::kinds_src::TokenKind;
+use crate::codegen::kinds_src::{TokenKind, KINDS_SRC};
 use crate::{
 	codegen::{kinds_src::Field, to_lower_snake_case, to_upper_snake_case},
-	Result, SYNTAX_ELEMENT_TYPE,
+	Result,
 };
 use quote::{format_ident, quote};
 
@@ -15,7 +15,6 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		.map(|node| {
 			let name = format_ident!("{}", node.name);
 			let node_kind = format_ident!("{}", to_upper_snake_case(node.name.as_str()));
-			let mut slot = 0usize;
 
 			let methods = node
 				.fields
@@ -69,24 +68,15 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 							}
 						}
 					}
-					Field::Node {
-						ty,
-						optional,
-						has_many,
-						separated,
-						..
-					} => {
-						let is_syntax_type = &ty.eq(SYNTAX_ELEMENT_TYPE);
+					Field::Node { ty, optional, .. } => {
+						let is_list = ast.is_list(ty);
 						let ty = format_ident!("{}", &ty);
 
 						let method_name = field.method_name();
-						// this is when we encounter a node that has "Unknown" in its name
-						// it will return tokens a and nodes regardless because there's an error
-						// inside the code
-						if *is_syntax_type {
+						if is_list {
 							quote! {
-								pub fn items(&self) -> SyntaxElementChildren {
-									support::elements(&self.syntax)
+								pub fn #method_name(&self) -> #ty {
+									support::list(&self.syntax)
 								}
 							}
 						} else if *optional {
@@ -95,23 +85,6 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 									support::node(&self.syntax)
 								}
 							}
-						} else if *has_many {
-							let field = if *separated {
-								quote! {
-									pub fn #method_name(&self) -> AstSeparatedList<#ty> {
-										support::separated_list(&self.syntax, #slot)
-									}
-								}
-							} else {
-								quote! {
-									pub fn #method_name(&self) -> AstNodeList<#ty> {
-										support::node_list(&self.syntax, #slot)
-									}
-								}
-							};
-
-							slot += 1;
-							field
 						} else {
 							quote! {
 								pub fn #method_name(&self) -> SyntaxResult<#ty> {
@@ -123,14 +96,6 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				});
 
 			let fields = node.fields.iter().map(|field| {
-				let is_syntax_element_children = matches!(
-					field,
-					Field::Node {
-						ref ty,
-						..
-					} if ty == SYNTAX_ELEMENT_TYPE
-				);
-
 				let name = match field {
 					Field::Token {
 						name,
@@ -140,13 +105,14 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					_ => field.method_name(),
 				};
 
+				let is_list = match field {
+					Field::Node { ty, .. } => ast.is_list(ty),
+					_ => false,
+				};
+
 				let string_name = name.to_string();
 
-				if is_syntax_element_children {
-					quote! {
-						.field("items", &support::DebugSyntaxElementChildren(self.items()))
-					}
-				} else if field.is_many() {
+				if is_list {
 					quote! {
 						.field(#string_name, &self.#name())
 					}
@@ -202,22 +168,22 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 	// it maps enum name A and its corresponding variants
 	let name_to_variants: HashMap<_, _> = ast
-		.enums
+		.unions
 		.iter()
 		.map(|current_enum| (current_enum.name.clone(), current_enum.variants.clone()))
 		.collect();
 
-	let (enum_defs, enum_boilerplate_impls): (Vec<_>, Vec<_>) = ast
-		.enums
+	let (union_defs, union_boilerplate_impls): (Vec<_>, Vec<_>) = ast
+		.unions
 		.iter()
-		.map(|en| {
+		.map(|union| {
 			// here we collect all the variants because this will generate the enums
 			// so we don't care about filtered variants
-			let variants_for_enum: Vec<_> = en
+			let variants_for_union: Vec<_> = union
 				.variants
 				.iter()
-				.map(|en| {
-					let variant_name = format_ident!("{}", en);
+				.map(|variant| {
+					let variant_name = format_ident!("{}", variant);
 
 					quote! {
 						#variant_name(#variant_name)
@@ -230,7 +196,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			// Inside an enum, we can have variants that point to a "flat" type or to another enum;
 			// we want to divide these variants as we will generate a different code based on these requirements
 			let (variant_of_variants, simple_variants): (Vec<_>, Vec<_>) =
-				en.variants.iter().partition(|current_enum| {
+				union.variants.iter().partition(|current_enum| {
 					if let Some(variants) = name_to_variants.get(*current_enum) {
 						!variants.is_empty()
 					} else {
@@ -243,7 +209,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				.map(|var| format_ident!("{}", var))
 				.collect();
 
-			let name = format_ident!("{}", en.name);
+			let name = format_ident!("{}", union.name);
 			let kinds: Vec<_> = variants
 				.iter()
 				.map(|name| format_ident!("{}", to_upper_snake_case(&name.to_string())))
@@ -252,7 +218,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			let variant_cast: Vec<_> = simple_variants
 				.iter()
 				.map(|current_enum| {
-					let variant_is_enum = ast.enums.iter().find(|e| &e.name == *current_enum);
+					let variant_is_enum = ast.unions.iter().find(|e| &e.name == *current_enum);
 					let variant_name = format_ident!("{}", current_enum);
 
 					if variant_is_enum.is_some() {
@@ -337,7 +303,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				}
 			};
 
-			let can_cast_fn = if en.variants.iter().any(|v| !simple_variants.contains(&v)) {
+			let can_cast_fn = if union.variants.iter().any(|v| !simple_variants.contains(&v)) {
 				quote! {
 					match kind {
 						#all_kinds
@@ -360,7 +326,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				})
 				.collect();
 
-			let all_variant_names = en
+			let all_variant_names = union
 				.variants
 				.iter()
 				.map(|variant| format_ident!("{}", variant));
@@ -370,7 +336,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					// #[doc = #doc]
 					#[derive(Clone, PartialEq, Eq, Hash)]
 					pub enum #name {
-						#(#variants_for_enum),*
+						#(#variants_for_union),*
 					}
 				},
 				quote! {
@@ -416,10 +382,10 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		})
 		.unzip();
 
-	let enum_names = ast.enums.iter().map(|it| &it.name);
+	let union_names = ast.unions.iter().map(|it| &it.name);
 	let node_names = ast.nodes.iter().map(|it| &it.name);
 
-	let display_impls = enum_names
+	let display_impls = union_names
 		.chain(node_names.clone())
 		.map(|it| format_ident!("{}", it))
 		.map(|name| {
@@ -431,6 +397,193 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				}
 			}
 		});
+
+	let unknowns = ast.unknowns.iter().map(|unknown| {
+		let name = format_ident!("{}", unknown);
+		let string_name = unknown;
+		let kind = format_ident!("{}", to_upper_snake_case(unknown));
+
+		quote! {
+			#[derive(Clone, PartialEq, Eq, Hash)]
+			pub struct #name {
+				syntax: SyntaxNode
+			}
+
+			impl #name {
+				pub fn items(&self) -> SyntaxElementChildren {
+					support::elements(&self.syntax)
+				}
+			}
+
+			impl AstNode for #name {
+				fn can_cast(kind: SyntaxKind) -> bool {
+					kind == #kind
+				}
+
+				fn cast(syntax: SyntaxNode) -> Option<Self> {
+					if Self::can_cast(syntax.kind()) {
+						Some(Self { syntax })
+					} else {
+						None
+					}
+				}
+				fn syntax(&self) -> &SyntaxNode {
+					&self.syntax
+				}
+			}
+
+			impl std::fmt::Debug for #name {
+				fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+					f.debug_struct(#string_name)
+						.field("items", &support::DebugSyntaxElementChildren(self.items()))
+						.finish()
+				}
+			}
+		}
+	});
+
+	let lists = ast.lists().map(|(name, list)| {
+		let list_name = format_ident!("{}", name);
+		let list_kind = format_ident!("{}", to_upper_snake_case(name));
+		let element_type = format_ident!("{}", list.element_name);
+
+		let node_impl = quote! {
+			impl AstNode for #list_name {
+				fn can_cast(kind: SyntaxKind) -> bool {
+					kind == #list_kind
+				}
+
+				fn cast(syntax: SyntaxNode) -> Option<#list_name> {
+					if Self::can_cast(syntax.kind()) {
+						Some(#list_name { syntax_list: syntax.into_list() })
+					} else {
+						None
+					}
+				}
+
+				fn syntax(&self) -> &SyntaxNode {
+					self.syntax_list.node()
+				}
+			}
+		};
+
+		let padded_name = format!("{} ", name);
+		let list_impl = if list.separated {
+			quote! {
+				impl AstSeparatedList<#element_type> for #list_name {
+					fn syntax_list(&self) -> &SyntaxList {
+						&self.syntax_list
+					}
+				}
+
+				impl Debug for #list_name {
+					fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+						f.write_str(#padded_name)?;
+						f.debug_list().entries(self.elements()).finish()
+					}
+				}
+
+				impl IntoIterator for #list_name {
+					type Item = SyntaxResult<#element_type>;
+					type IntoIter = AstSeparatedListNodesIterator<#element_type>;
+
+					fn into_iter(self) -> Self::IntoIter {
+						self.iter()
+					}
+				}
+
+				impl IntoIterator for &#list_name {
+					type Item = SyntaxResult<#element_type>;
+					type IntoIter = AstSeparatedListNodesIterator<#element_type>;
+
+					fn into_iter(self) -> Self::IntoIter {
+						self.iter()
+					}
+				}
+			}
+		} else {
+			quote! {
+				impl AstNodeList<#element_type> for #list_name {
+					fn syntax_list(&self) -> &SyntaxList {
+						&self.syntax_list
+					}
+				}
+
+				impl Debug for #list_name {
+					fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+						f.write_str(#padded_name)?;
+						f.debug_list().entries(self.iter()).finish()
+					}
+				}
+
+				impl IntoIterator for &#list_name {
+					type Item = #element_type;
+					type IntoIter = AstNodeListIterator<#element_type>;
+
+					fn into_iter(self) -> Self::IntoIter {
+						self.iter()
+					}
+				}
+
+				impl IntoIterator for #list_name {
+					type Item = #element_type;
+					type IntoIter = AstNodeListIterator<#element_type>;
+
+					fn into_iter(self) -> Self::IntoIter {
+						self.iter()
+					}
+				}
+
+			}
+		};
+
+		quote! {
+			#[derive(Clone, Eq, PartialEq, Hash)]
+			pub struct #list_name {
+			  syntax_list: SyntaxList,
+			}
+
+			#node_impl
+			#list_impl
+		}
+	});
+
+	let debug_syntax_element = {
+		let mut all_nodes: Vec<_> = ast
+			.nodes
+			.iter()
+			.map(|node| &node.name)
+			.chain(ast.unknowns.iter())
+			.chain(ast.lists().map(|(name, _)| name))
+			.collect();
+
+		all_nodes.sort_unstable();
+
+		let node_arms = all_nodes.iter().map(|node| {
+			let kind = format_ident!("{}", to_upper_snake_case(node));
+			let ident = format_ident!("{}", node);
+
+			quote! {
+				#kind => std::fmt::Debug::fmt(&#ident::cast(node.clone()).unwrap(), f)
+			}
+		});
+
+		quote! {
+			pub struct DebugSyntaxElement(pub(crate) SyntaxElement);
+
+			impl Debug for DebugSyntaxElement {
+				fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+					match &self.0 {
+						NodeOrToken::Node(node) => match node.kind() {
+							#(#node_arms),*,
+							_ => std::fmt::Debug::fmt(node, f),
+						},
+						NodeOrToken::Token(token) => Debug::fmt(token, f),
+					}
+				}
+			}
+		}
+	};
 
 	let ast = quote! {
 	#![allow(clippy::enum_variant_names)]
@@ -446,10 +599,13 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 
 		#(#node_defs)*
-		#(#enum_defs)*
+		#(#union_defs)*
 		#(#node_boilerplate_impls)*
-		#(#enum_boilerplate_impls)*
+		#(#union_boilerplate_impls)*
 		#(#display_impls)*
+		#(#unknowns)*
+		#(#lists)*
+		#debug_syntax_element
 	};
 
 	let ast = ast
@@ -462,8 +618,16 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 }
 
 fn token_kind_to_code(name: &str) -> proc_macro2::TokenStream {
-	let token: proc_macro2::TokenStream = name.parse().unwrap();
-	quote! { T![#token] }
+	let kind_variant_name = to_upper_snake_case(name);
+	if KINDS_SRC.literals.contains(&kind_variant_name.as_str())
+		|| KINDS_SRC.tokens.contains(&kind_variant_name.as_str())
+	{
+		let ident = format_ident!("{}", kind_variant_name);
+		quote! {  #ident }
+	} else {
+		let token: proc_macro2::TokenStream = name.parse().unwrap();
+		quote! { T![#token] }
+	}
 }
 
 fn token_kinds_to_code(kinds: &[String]) -> proc_macro2::TokenStream {

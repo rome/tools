@@ -13,7 +13,6 @@ pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Ha
 
 	fn kind_from_raw(raw: SyntaxKind) -> Self::Kind;
 	fn kind_to_raw(kind: Self::Kind) -> SyntaxKind;
-	fn list_kind() -> Self::Kind;
 }
 
 #[derive(Debug, Default, Hash, Copy, Eq, Ord, PartialEq, PartialOrd, Clone)]
@@ -28,10 +27,6 @@ impl Language for RawLanguage {
 
 	fn kind_to_raw(kind: Self::Kind) -> SyntaxKind {
 		kind
-	}
-
-	fn list_kind() -> Self::Kind {
-		SyntaxKind(0)
 	}
 }
 
@@ -653,7 +648,7 @@ impl<L: Language> SyntaxNode<L> {
 	/// Returns an iterator over all the slots of this syntax node.
 	pub fn slots(&self) -> SyntaxSlots<L> {
 		SyntaxSlots {
-			raw: Some(self.raw.slots()),
+			raw: self.raw.slots(),
 			_p: PhantomData,
 		}
 	}
@@ -795,12 +790,8 @@ impl<L: Language> SyntaxNode<L> {
 		self.raw.splice_children(to_delete, to_insert)
 	}
 
-	pub fn into_list(self) -> Option<SyntaxList<L>> {
-		if self.kind() == L::list_kind() {
-			Some(SyntaxList::new(self))
-		} else {
-			None
-		}
+	pub fn into_list(self) -> SyntaxList<L> {
+		SyntaxList::new(self)
 	}
 }
 
@@ -1184,35 +1175,26 @@ impl<L: Language> From<cursor::SyntaxSlot> for SyntaxSlot<L> {
 /// Iterator over the slots of a node.
 #[derive(Debug, Clone)]
 pub struct SyntaxSlots<L> {
-	raw: Option<cursor::SyntaxSlots>,
+	raw: cursor::SyntaxSlots,
 	_p: PhantomData<L>,
-}
-
-impl<L> Default for SyntaxSlots<L> {
-	fn default() -> Self {
-		SyntaxSlots {
-			raw: None,
-			_p: PhantomData,
-		}
-	}
 }
 
 impl<L: Language> Iterator for SyntaxSlots<L> {
 	type Item = SyntaxSlot<L>;
 
 	fn next(&mut self) -> Option<Self::Item> {
-		self.raw.as_mut()?.next().map(SyntaxSlot::from)
+		self.raw.next().map(SyntaxSlot::from)
 	}
 
 	fn nth(&mut self, n: usize) -> Option<Self::Item> {
-		self.raw.as_mut()?.nth(n).map(SyntaxSlot::from)
+		self.raw.nth(n).map(SyntaxSlot::from)
 	}
 
-	fn last(mut self) -> Option<Self::Item>
+	fn last(self) -> Option<Self::Item>
 	where
 		Self: Sized,
 	{
-		self.raw.as_mut()?.last().map(SyntaxSlot::from)
+		self.raw.last().map(SyntaxSlot::from)
 	}
 }
 
@@ -1220,43 +1202,30 @@ impl<'a, L: Language> FusedIterator for SyntaxSlots<L> {}
 
 impl<'a, L: Language> ExactSizeIterator for SyntaxSlots<L> {
 	fn len(&self) -> usize {
-		match &self.raw {
-			None => 0,
-			Some(raw) => raw.len(),
-		}
+		self.raw.len()
 	}
 }
 
 /// A list of `SyntaxNode`s and/or `SyntaxToken`s
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Eq, PartialEq, Hash)]
 pub struct SyntaxList<L: Language> {
-	list: Option<SyntaxNode<L>>,
+	list: SyntaxNode<L>,
 }
 
 impl<L: Language> SyntaxList<L> {
 	/// Creates a new list wrapping a List `SyntaxNode`
 	fn new(node: SyntaxNode<L>) -> Self {
-		assert_eq!(node.kind(), L::list_kind());
-
-		Self { list: Some(node) }
+		Self { list: node }
 	}
 
 	/// Iterates over the elements in the list.
 	pub fn iter(&self) -> SyntaxSlots<L> {
-		if let Some(list) = &self.list {
-			list.slots()
-		} else {
-			SyntaxSlots::<L>::default()
-		}
+		self.list.slots()
 	}
 
 	/// Returns the number of items in this list
 	pub fn len(&self) -> usize {
-		if let Some(list) = &self.list {
-			list.slots().len()
-		} else {
-			0
-		}
+		self.list.slots().len()
 	}
 
 	pub fn is_empty(&self) -> bool {
@@ -1264,23 +1233,15 @@ impl<L: Language> SyntaxList<L> {
 	}
 
 	pub fn first(&self) -> Option<SyntaxSlot<L>> {
-		if let Some(list) = &self.list {
-			list.slots().next()
-		} else {
-			None
-		}
+		self.list.slots().next()
 	}
 
 	pub fn last(&self) -> Option<SyntaxSlot<L>> {
-		if let Some(list) = &self.list {
-			list.slots().last()
-		} else {
-			None
-		}
+		self.list.slots().last()
 	}
 
-	pub fn node(&self) -> Option<&SyntaxNode<L>> {
-		self.list.as_ref()
+	pub fn node(&self) -> &SyntaxNode<L> {
+		&self.list
 	}
 }
 
@@ -1307,11 +1268,16 @@ mod tests {
 	use text_size::TextRange;
 
 	use crate::api::{RawLanguage, TriviaPiece};
-	use crate::{Direction, Language, SyntaxKind, SyntaxList, TreeBuilder};
+	use crate::{Direction, SyntaxKind, TreeBuilder};
+
+	const LIST_KIND: SyntaxKind = SyntaxKind(0);
 
 	#[test]
 	fn empty_list() {
-		let list = SyntaxList::<RawLanguage>::default();
+		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+		builder.start_node(LIST_KIND);
+		builder.finish_node();
+		let list = builder.finish().into_list();
 
 		assert!(list.is_empty());
 		assert_eq!(list.len(), 0);
@@ -1326,7 +1292,7 @@ mod tests {
 	fn node_list() {
 		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
 
-		builder.start_node(RawLanguage::list_kind());
+		builder.start_node(LIST_KIND);
 
 		builder.start_node(SyntaxKind(1));
 		builder.token(SyntaxKind(2), "1");
@@ -1339,7 +1305,7 @@ mod tests {
 		builder.finish_node();
 
 		let node = builder.finish();
-		let list = node.into_list().unwrap();
+		let list = node.into_list();
 
 		assert!(!list.is_empty());
 		assert_eq!(list.len(), 2);
@@ -1367,7 +1333,7 @@ mod tests {
 	fn node_or_token_list() {
 		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
 
-		builder.start_node(RawLanguage::list_kind());
+		builder.start_node(LIST_KIND);
 
 		builder.start_node(SyntaxKind(1));
 		builder.token(SyntaxKind(2), "1");
@@ -1382,7 +1348,7 @@ mod tests {
 		builder.finish_node();
 
 		let node = builder.finish();
-		let list = node.into_list().unwrap();
+		let list = node.into_list();
 
 		assert!(!list.is_empty());
 		assert_eq!(list.len(), 3);
@@ -1485,7 +1451,7 @@ mod tests {
 	fn siblings_with_tokens() {
 		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
 
-		builder.start_node(RawLanguage::list_kind());
+		builder.start_node(LIST_KIND);
 
 		builder.token(SyntaxKind(1), "for");
 		builder.token(SyntaxKind(2), "(");

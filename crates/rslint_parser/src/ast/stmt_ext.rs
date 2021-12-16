@@ -2,23 +2,6 @@
 
 use crate::{ast::*, SyntaxKind::*, SyntaxNodeExt, T};
 
-impl List {
-	pub fn into_separated_list<N: AstNode>(self) -> AstSeparatedList<N> {
-		AstSeparatedList::new(self.syntax_list())
-	}
-
-	pub fn into_node_list<N: AstNode>(self) -> AstNodeList<N> {
-		AstNodeList::new(self.syntax_list())
-	}
-
-	fn syntax_list(&self) -> SyntaxList {
-		self.syntax
-			.clone()
-			.into_list()
-			.expect("Expect underlying node to be of type LIST")
-	}
-}
-
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub enum JsVariableKind {
 	Const,
@@ -37,7 +20,7 @@ impl ForStmt {
 	}
 }
 
-impl JsVariableDeclarationList {
+impl JsVariableDeclarations {
 	/// Whether the declaration is a const declaration
 	pub fn is_const(&self) -> bool {
 		self.variable_kind() == Ok(JsVariableKind::Const)

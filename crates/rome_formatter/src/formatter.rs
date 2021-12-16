@@ -124,9 +124,9 @@ impl Formatter {
 		Ok(result.into_iter())
 	}
 
-	pub fn format_separated<T: AstNode + ToFormatElement + Clone>(
+	pub fn format_separated<T: AstNode + ToFormatElement + Clone, L: AstSeparatedList<T>>(
 		&self,
-		list: AstSeparatedList<T>,
+		list: L,
 	) -> FormatResult<impl Iterator<Item = FormatElement>> {
 		let mut result = Vec::with_capacity(list.len());
 

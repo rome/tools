@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
@@ -10,11 +10,11 @@ JsModule {
             implements_clause: missing (optional),
             extends_clause: missing (optional),
             l_curly_token: L_CURLY@10..11 "{" [] [],
-            members: [
+            members: JsClassMemberList [
                 JsSetterClassMember {
                     access_modifier: missing (optional),
-                    abstract_token: missing (optional),
                     static_token: missing (optional),
+                    abstract_token: missing (optional),
                     set_token: SET_KW@11..17 "set" [Whitespace("\n ")] [Whitespace(" ")],
                     name: JsLiteralMemberName {
                         value: IDENT@17..20 "bar" [] [],
@@ -26,8 +26,8 @@ JsModule {
                     r_paren_token: R_PAREN@22..24 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@24..25 "{" [] [],
-                        directives: [],
-                        statements: [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
                         r_curly_token: R_CURLY@25..26 "}" [] [],
                     },
                 },
@@ -40,8 +40,8 @@ JsModule {
 
 0: JS_MODULE@0..29
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..28
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..28
     0: JS_CLASS_DECLARATION@0..28
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..10
@@ -49,7 +49,7 @@ JsModule {
       2: (empty)
       3: (empty)
       4: L_CURLY@10..11 "{" [] []
-      5: LIST@11..26
+      5: JS_CLASS_MEMBER_LIST@11..26
         0: JS_SETTER_CLASS_MEMBER@11..26
           0: (empty)
           1: (empty)
@@ -64,8 +64,8 @@ JsModule {
           8: R_PAREN@22..24 ")" [] [Whitespace(" ")]
           9: JS_FUNCTION_BODY@24..26
             0: L_CURLY@24..25 "{" [] []
-            1: LIST@25..25
-            2: LIST@25..25
+            1: JS_DIRECTIVE_LIST@25..25
+            2: JS_STATEMENT_LIST@25..25
             3: R_CURLY@25..26 "}" [] []
       6: R_CURLY@26..28 "}" [Whitespace("\n")] []
   3: EOF@28..29 "" [Whitespace("\n")] []

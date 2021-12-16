@@ -682,9 +682,9 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 		}
 	}
 
-	args_list.complete(p, LIST);
+	args_list.complete(p, JS_CALL_ARGUMENT_LIST);
 	p.expect_required(T![')']);
-	m.complete(p, ARG_LIST)
+	m.complete(p, JS_CALL_ARGUMENTS)
 }
 
 // test paren_or_arrow_expr
@@ -1209,19 +1209,23 @@ pub fn template(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker
 
 	while !p.at(EOF) && !p.at(BACKTICK) {
 		match p.cur() {
-            TEMPLATE_CHUNK => p.bump_any(),
-            DOLLARCURLY => {
+            TEMPLATE_CHUNK => {
+							let m = p.start();
+							p.bump_any();
+							m.complete(p, TEMPLATE_CHUNK_ELEMENT);
+						},
+            DOLLAR_CURLY => {
                 let e = p.start();
                 p.bump_any();
                 expr(p);
                 p.expect_required(T!['}']);
                 e.complete(p, TEMPLATE_ELEMENT);
-            },
+            }
             t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
         }
 	}
 
-	elements_list.complete(p, LIST);
+	elements_list.complete(p, TEMPLATE_ELEMENT_LIST);
 
 	// test_err template_literal_unterminated
 	// let a = `${foo} bar
@@ -1258,6 +1262,10 @@ impl ParseSeparatedList for ArrayElementsList {
 			&ParseRecovery::new(JS_UNKNOWN_EXPRESSION, EXPR_RECOVERY_SET),
 			js_parse_error::expected_array_element,
 		)
+	}
+
+	fn list_kind() -> SyntaxKind {
+		JS_ARRAY_ELEMENT_LIST
 	}
 
 	fn separating_element_kind(&mut self) -> SyntaxKind {

@@ -44,8 +44,12 @@ pub trait ParseNodeList {
 
 	/// It creates a [ParsedSyntax] that will contain the list
 	fn finish_list(&mut self, p: &mut Parser, m: Marker) {
-		m.complete(p, SyntaxKind::LIST);
+		m.complete(p, Self::list_kind());
 	}
+
+	/// The kind of the list node
+	fn list_kind() -> SyntaxKind;
+
 	/// Parses a simple list
 	///
 	/// # Panics
@@ -54,6 +58,7 @@ pub trait ParseNodeList {
 	fn parse_list(&mut self, p: &mut Parser) {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
+
 		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
@@ -63,6 +68,7 @@ pub trait ParseNodeList {
 				break;
 			}
 		}
+
 		self.finish_list(p, elements);
 	}
 }
@@ -108,8 +114,11 @@ pub trait ParseSeparatedList {
 	/// It creates a [ParsedSyntax] that will contain the list
 	/// Only called if the list isn't empty
 	fn finish_list(&mut self, p: &mut Parser, m: Marker) -> CompletedMarker {
-		m.complete(p, SyntaxKind::LIST)
+		m.complete(p, Self::list_kind())
 	}
+
+	/// The kind of the list node
+	fn list_kind() -> SyntaxKind;
 
 	/// The [SyntaxKind] of the element that separates the elements of the list
 	fn separating_element_kind(&mut self) -> SyntaxKind;
@@ -133,7 +142,7 @@ pub trait ParseSeparatedList {
 	/// # Panics
 	///
 	/// It panics if the parser doesn't advance at each cycle of the loop
-	fn parse_list(&mut self, p: &mut Parser) -> Option<CompletedMarker> {
+	fn parse_list(&mut self, p: &mut Parser) -> CompletedMarker {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
 		let mut first = true;
@@ -160,12 +169,6 @@ pub trait ParseSeparatedList {
 				break;
 			}
 		}
-		if first {
-			elements.abandon(p);
-			p.missing();
-			None
-		} else {
-			Some(self.finish_list(p, elements))
-		}
+		self.finish_list(p, elements)
 	}
 }

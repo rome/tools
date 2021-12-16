@@ -5,7 +5,7 @@ use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Invalid, ParseRecovery, ParsedSyntax, Parser, ParserState, Valid};
 use crate::{ConditionalSyntax, TokenSet};
 use rslint_errors::Diagnostic;
-use rslint_syntax::SyntaxKind::{EOF, JS_ARRAY_HOLE, LIST};
+use rslint_syntax::SyntaxKind::{EOF, JS_ARRAY_HOLE};
 use rslint_syntax::{SyntaxKind, T};
 use std::ops::Range;
 
@@ -49,6 +49,8 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 	fn array_pattern_kind() -> SyntaxKind;
 	/// The kind of the rest pattern
 	fn rest_pattern_kind() -> SyntaxKind;
+	/// The kind of the list
+	fn list_kind() -> SyntaxKind;
 	///  Creates a diagnostic saying that the parser expected an element at the position passed as an argument.
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic;
 	/// Creates a pattern with default instance. Used to parse the array elements.
@@ -97,7 +99,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 			}
 		}
 
-		elements.complete(p, LIST);
+		elements.complete(p, Self::list_kind());
 		p.expect_required(T![']']);
 
 		Present(m.complete(p, Self::array_pattern_kind()))
@@ -147,7 +149,8 @@ pub(crate) trait ParseObjectPattern {
 	fn unknown_pattern_kind() -> SyntaxKind;
 	/// The kind of the pattern like node this trait parses
 	fn object_pattern_kind() -> SyntaxKind;
-
+	/// The kind of the property list
+	fn list_kind() -> SyntaxKind;
 	/// Creates a diagnostic saying that a property is expected at the passed in range that isn't present.
 	fn expected_property_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic;
 
@@ -204,7 +207,7 @@ pub(crate) trait ParseObjectPattern {
 			}
 		}
 
-		elements.complete(p, LIST);
+		elements.complete(p, Self::list_kind());
 		p.expect(T!['}']);
 
 		Present(m.complete(p, Self::object_pattern_kind()))

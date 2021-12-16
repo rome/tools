@@ -2,18 +2,18 @@ use crate::{
 	empty_element, format_elements, join_elements, space_token, token, FormatElement, FormatResult,
 	Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{JsVariableDeclaration, JsVariableDeclarationList, JsVariableStatement};
+use rslint_parser::ast::{JsVariableDeclaration, JsVariableDeclarations, JsVariableStatement};
 
 impl ToFormatElement for JsVariableStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		Ok(format_elements![
-			formatter.format_node(self.declaration_list()?)?,
+			formatter.format_node(self.declarations()?)?,
 			token(";"),
 		])
 	}
 }
 
-impl ToFormatElement for JsVariableDeclarationList {
+impl ToFormatElement for JsVariableDeclarations {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		Ok(format_elements![
 			formatter.format_token(&self.kind_token()?)?,
@@ -21,7 +21,7 @@ impl ToFormatElement for JsVariableDeclarationList {
 			join_elements(
 				space_token(),
 				// TODO #1726 break multiple declarations across multiple lines if exceeding line width
-				formatter.format_separated(self.declarations())?
+				formatter.format_separated(self.items())?
 			),
 		])
 	}

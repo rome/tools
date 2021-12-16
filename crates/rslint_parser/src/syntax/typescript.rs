@@ -394,10 +394,8 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 		ts_type_params(p);
 	}
 
-	let mut extends_list = None;
 	if p.cur_src() == "extends" {
 		p.bump_any();
-		extends_list = Some(p.start());
 		ts_heritage_clause(p, false);
 	};
 
@@ -420,10 +418,6 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 		m.complete(p, ERROR);
 	}
 
-	if let Some(extends_list) = extends_list {
-		extends_list.complete(p, LIST);
-	}
-
 	p.expect_required(T!['{']);
 
 	let members_list = p.start();
@@ -433,7 +427,7 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 		progress.assert_progressing(p);
 		ts_type_member(p);
 	}
-	members_list.complete(p, LIST);
+	members_list.complete(p, TS_OBJECT_MEMBER_LIST);
 
 	p.expect_required(T!['}']);
 	Some(m.complete(p, TS_INTERFACE_DECL))
@@ -674,7 +668,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 		}
 	}
 
-	members_list.complete(p, LIST);
+	members_list.complete(p, TS_ENUM_MEMBER_LIST);
 
 	p.expect_required(T!['}']);
 	m.complete(p, TS_ENUM)
@@ -867,7 +861,7 @@ fn intersection_or_union(
 			constituent(p);
 		}
 
-		types_list.complete(p, LIST);
+		types_list.complete(p, TS_TYPE_LIST);
 		Some(m.complete(p, kind))
 	} else if !saw_op && ty.is_none() {
 		types_list.abandon(p);
@@ -878,7 +872,7 @@ fn intersection_or_union(
 		m.abandon(p);
 		ty
 	} else {
-		types_list.complete(p, LIST);
+		types_list.complete(p, TS_TYPE_LIST);
 		Some(m.complete(p, kind))
 	}
 }
@@ -1024,19 +1018,23 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 			let elements_list = p.start();
 			while !p.at(EOF) && !p.at(BACKTICK) {
 				match p.cur() {
-                    TEMPLATE_CHUNK => p.bump_any(),
-                    DOLLARCURLY => {
+                    TEMPLATE_CHUNK => {
+											let m = p.start();
+											p.bump_any();
+											m.complete(p, TEMPLATE_CHUNK_ELEMENT);
+										},
+										DOLLAR_CURLY => {
                         let e = p.start();
                         p.bump_any();
                         ts_type(p);
                         p.expect_required(T!['}']);
                         e.complete(p, TS_TEMPLATE_ELEMENT);
                     },
-                    t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
+                    t => unreachable!("Anything not template chunk or dollar_curly should have been eaten by the lexer, but {:?} was found", t),
                 }
 			}
 
-			elements_list.complete(p, LIST);
+			elements_list.complete(p, TEMPLATE_ELEMENT_LIST);
 			p.eat(BACKTICK);
 			Some(m.complete(p, TS_TEMPLATE))
 		}
@@ -1079,7 +1077,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 					ts_type_member(p);
 					type_member_semi(p);
 				}
-				members_list.complete(p, LIST);
+				members_list.complete(p, TS_OBJECT_MEMBER_LIST);
 				p.expect_required(T!['}']);
 				Some(m.complete(p, TS_OBJECT_TYPE))
 			}
@@ -1168,7 +1166,7 @@ pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
 			return None;
 		}
 	}
-	args_list.complete(p, LIST);
+	args_list.complete(p, TS_TYPE_ARG_LIST);
 
 	if p.expect_no_recover(T![>]).is_none() {
 		m.abandon(p);
@@ -1206,7 +1204,7 @@ pub fn ts_type_params(p: &mut Parser) -> Option<CompletedMarker> {
 
 		no_recover!(p, type_param(p));
 	}
-	params_list.complete(p, LIST);
+	params_list.complete(p, TS_TYPE_PARAM_LIST);
 
 	p.expect_required(T![>]);
 	Some(m.complete(p, TS_TYPE_PARAMS))

@@ -588,6 +588,10 @@ impl ParseNodeList for DirectivesList {
 		// directives don't need proper error recovery
 		Err(RecoveryError::AlreadyRecovered)
 	}
+
+	fn list_kind() -> SyntaxKind {
+		JS_DIRECTIVE_LIST
+	}
 }
 
 #[must_use]
@@ -621,7 +625,7 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
 		}
 	}
 
-	list_start.complete(p, LIST);
+	list_start.complete(p, JS_STATEMENT_LIST);
 }
 
 /// An expression wrapped in parentheses such as `()`
@@ -777,7 +781,7 @@ fn parse_variable_declaration_list(
 			m.abandon(p);
 			Absent
 		}
-		Present(_) => Present(m.complete(p, JS_VARIABLE_DECLARATION_LIST)),
+		Present(_) => Present(m.complete(p, JS_VARIABLE_DECLARATIONS)),
 	}
 }
 
@@ -800,7 +804,7 @@ enum VariableDeclarationParent {
 fn parse_variable_declarations(
 	p: &mut Parser,
 	declaration_parent: VariableDeclarationParent,
-) -> ParsedSyntax<(Option<CompletedMarker>, Option<Range<usize>>)> {
+) -> ParsedSyntax<(CompletedMarker, Option<Range<usize>>)> {
 	let mut context = VariableDeclarationContext::new(declaration_parent);
 
 	match p.cur() {
@@ -878,6 +882,10 @@ impl ParseSeparatedList for ParseVariableDeclarations {
 			.enable_recovery_on_line_break(),
 			expected_binding,
 		)
+	}
+
+	fn list_kind() -> SyntaxKind {
+		JS_VARIABLE_DECLARATION_LIST
 	}
 
 	fn separating_element_kind(&mut self) -> SyntaxKind {
@@ -1058,11 +1066,9 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 		let is_of = p.cur_src() == "of";
 
 		if is_in || is_of {
-			if let Some(declarations_list) = declarations {
-				// remove the intermediate list node created by parse variable declarations that is not needed
-				// for a ForInOrOfInitializer where the variable declaration is a direct child.
-				declarations_list.undo_completion(p).abandon(p);
-			}
+			// remove the intermediate list node created by parse variable declarations that is not needed
+			// for a ForInOrOfInitializer where the variable declaration is a direct child.
+			declarations.undo_completion(p).abandon(p);
 
 			if let Some(additional_declarations_range) = additional_declarations {
 				p.error(
@@ -1079,7 +1085,7 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 
 			parse_for_of_or_in_head(p)
 		} else {
-			m.complete(p, JS_VARIABLE_DECLARATION_LIST);
+			m.complete(p, JS_VARIABLE_DECLARATIONS);
 			parse_normal_for_head(p);
 			FOR_STMT
 		}
@@ -1274,6 +1280,10 @@ impl ParseNodeList for SwitchClausesList {
 			js_parse_error::expected_case,
 		)
 	}
+
+	fn list_kind() -> SyntaxKind {
+		JS_STATEMENT_LIST
+	}
 }
 
 struct ConsList;
@@ -1298,6 +1308,10 @@ impl ParseNodeList for ConsList {
 			&ParseRecovery::new(JS_UNKNOWN_STATEMENT, token_set!()),
 			js_parse_error::expected_case,
 		)
+	}
+
+	fn list_kind() -> SyntaxKind {
+		JS_STATEMENT_LIST
 	}
 }
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
@@ -1406,7 +1420,7 @@ impl ParseNodeList for SwitchCasesList {
 
 			match recovered_element {
 				Ok(marker) => {
-					statements.complete(p, LIST);
+					statements.complete(p, JS_STATEMENT_LIST);
 					m.complete(p, JS_CASE_CLAUSE);
 					Ok(marker)
 				}
@@ -1417,6 +1431,10 @@ impl ParseNodeList for SwitchCasesList {
 				}
 			}
 		}
+	}
+
+	fn list_kind() -> SyntaxKind {
+		JS_SWITCH_CASE_LIST
 	}
 }
 

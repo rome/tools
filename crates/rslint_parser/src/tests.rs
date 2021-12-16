@@ -1,4 +1,4 @@
-use crate::ast::{ArgList, JsAnyRoot};
+use crate::ast::{JsAnyRoot, JsCallArguments};
 use crate::{parse_module, parse_text, AstNode, Parse, ParserError, SyntaxNode, SyntaxToken};
 use expect_test::expect_file;
 use rome_rowan::TextSize;
@@ -36,7 +36,7 @@ fn parser_missing_smoke_test() {
 	let arg_list = module
 		.syntax()
 		.descendants()
-		.find_map(ArgList::cast)
+		.find_map(JsCallArguments::cast)
 		.unwrap();
 
 	let opening = arg_list.syntax.element_in_slot(0);
@@ -44,7 +44,10 @@ fn parser_missing_smoke_test() {
 	let closing = arg_list.syntax().element_in_slot(2);
 
 	assert_eq!(opening.map(|o| o.to_string()), Some(String::from("(")));
-	assert_eq!(list.map(|l| l.kind()), Some(SyntaxKind::LIST));
+	assert_eq!(
+		list.map(|l| l.kind()),
+		Some(SyntaxKind::JS_CALL_ARGUMENT_LIST)
+	);
 	assert_eq!(closing, None);
 }
 

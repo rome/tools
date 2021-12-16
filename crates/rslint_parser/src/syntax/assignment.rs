@@ -153,6 +153,10 @@ impl ParseArrayPattern<AssignmentPatternWithDefault> for ArrayAssignmentPattern 
 		JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT
 	}
 
+	fn list_kind() -> SyntaxKind {
+		JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST
+	}
+
 	#[inline]
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic {
 		expected_any(&["assignment target", "rest element", "comma"], range).to_diagnostic(p)
@@ -179,6 +183,10 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 	#[inline]
 	fn object_pattern_kind() -> SyntaxKind {
 		JS_OBJECT_ASSIGNMENT_PATTERN
+	}
+
+	fn list_kind() -> SyntaxKind {
+		JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST
 	}
 
 	#[inline]

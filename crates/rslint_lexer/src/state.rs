@@ -78,7 +78,7 @@ impl LexerState {
 				false
 			}
 
-			SyntaxKind::DOLLARCURLY => {
+			SyntaxKind::DOLLAR_CURLY => {
 				self.ctx.push(Context::TplInternal);
 				true
 			}

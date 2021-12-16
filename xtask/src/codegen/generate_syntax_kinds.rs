@@ -75,8 +75,6 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 			TOMBSTONE,
 			/// Marks the end of the file.May have trivia attached
 			EOF,
-			/// Polymorph list type
-			LIST,
 			#(#punctuation,)*
 			#(#all_keywords,)*
 			#(#literals,)*
@@ -155,11 +153,6 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 			#([#punctuation_values] => { $crate::SyntaxKind::#punctuation };)*
 			#([#all_keywords_idents] => { $crate::SyntaxKind::#all_keywords };)*
 			[ident] => { $crate::SyntaxKind::IDENT };
-			[js_shebang] => { $crate::SyntaxKind::JS_SHEBANG };
-			[js_string_literal] => { $crate::SyntaxKind::JS_STRING_LITERAL };
-			[js_number_literal] => { $crate::SyntaxKind::JS_NUMBER_LITERAL };
-			[js_big_int_literal] => { $crate::SyntaxKind::JS_BIG_INT_LITERAL };
-			[js_regex_literal] => { $crate::SyntaxKind::JS_REGEX_LITERAL };
 			[EOF] => { $crate::SyntaxKind::EOF };
 			[#] => { $crate::SyntaxKind::HASH };
 		}

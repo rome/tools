@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                declarations: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
@@ -19,7 +19,7 @@ JsModule {
                                 id: missing (optional),
                                 extends_clause: missing (optional),
                                 l_curly_token: L_CURLY@14..15 "{" [] [],
-                                members: [],
+                                members: JsClassMemberList [],
                                 r_curly_token: R_CURLY@15..16 "}" [] [],
                             },
                         },
@@ -29,9 +29,9 @@ JsModule {
             semicolon_token: SEMICOLON@16..17 ";" [] [],
         },
         JsVariableStatement {
-            declaration_list: JsVariableDeclarationList {
+            declarations: JsVariableDeclarations {
                 kind_token: LET_KW@17..22 "let" [Whitespace("\n")] [Whitespace(" ")],
-                declarations: [
+                items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
                             name_token: IDENT@22..24 "a" [] [Whitespace(" ")],
@@ -47,21 +47,21 @@ JsModule {
                                 },
                                 extends_clause: missing (optional),
                                 l_curly_token: L_CURLY@36..37 "{" [] [],
-                                members: [
+                                members: JsClassMemberList [
                                     JsConstructorClassMember {
                                         access_modifier: missing (optional),
                                         name: JsLiteralMemberName {
                                             value: IDENT@37..50 "constructor" [Whitespace("\n ")] [],
                                         },
-                                        parameter_list: JsConstructorParameterList {
+                                        parameters: JsConstructorParameters {
                                             l_paren_token: L_PAREN@50..51 "(" [] [],
-                                            parameters: [],
+                                            parameters: JsConstructorParameterList [],
                                             r_paren_token: R_PAREN@51..53 ")" [] [Whitespace(" ")],
                                         },
                                         body: JsFunctionBody {
                                             l_curly_token: L_CURLY@53..54 "{" [] [],
-                                            directives: [],
-                                            statements: [],
+                                            directives: JsDirectiveList [],
+                                            statements: JsStatementList [],
                                             r_curly_token: R_CURLY@54..55 "}" [] [],
                                         },
                                     },
@@ -88,7 +88,7 @@ JsModule {
                     id: missing (optional),
                     extends_clause: missing (optional),
                     l_curly_token: L_CURLY@68..69 "{" [] [],
-                    members: [],
+                    members: JsClassMemberList [],
                     r_curly_token: R_CURLY@69..70 "}" [] [],
                 },
                 r_brack_token: R_BRACK@70..71 "]" [] [],
@@ -101,12 +101,12 @@ JsModule {
 
 0: JS_MODULE@0..72
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..71
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..71
     0: JS_VARIABLE_STATEMENT@0..17
-      0: JS_VARIABLE_DECLARATION_LIST@0..16
+      0: JS_VARIABLE_DECLARATIONS@0..16
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: LIST@4..16
+        1: JS_VARIABLE_DECLARATION_LIST@4..16
           0: JS_VARIABLE_DECLARATION@4..16
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
@@ -119,13 +119,13 @@ JsModule {
                 1: (empty)
                 2: (empty)
                 3: L_CURLY@14..15 "{" [] []
-                4: LIST@15..15
+                4: JS_CLASS_MEMBER_LIST@15..15
                 5: R_CURLY@15..16 "}" [] []
       1: SEMICOLON@16..17 ";" [] []
     1: JS_VARIABLE_STATEMENT@17..57
-      0: JS_VARIABLE_DECLARATION_LIST@17..57
+      0: JS_VARIABLE_DECLARATIONS@17..57
         0: LET_KW@17..22 "let" [Whitespace("\n")] [Whitespace(" ")]
-        1: LIST@22..57
+        1: JS_VARIABLE_DECLARATION_LIST@22..57
           0: JS_VARIABLE_DECLARATION@22..57
             0: JS_IDENTIFIER_BINDING@22..24
               0: IDENT@22..24 "a" [] [Whitespace(" ")]
@@ -140,7 +140,7 @@ JsModule {
                 2: (empty)
                 3: (empty)
                 4: L_CURLY@36..37 "{" [] []
-                5: LIST@37..55
+                5: JS_CLASS_MEMBER_LIST@37..55
                   0: JS_CONSTRUCTOR_CLASS_MEMBER@37..55
                     0: (empty)
                     1: (empty)
@@ -149,14 +149,14 @@ JsModule {
                     4: JS_LITERAL_MEMBER_NAME@37..50
                       0: IDENT@37..50 "constructor" [Whitespace("\n ")] []
                     5: (empty)
-                    6: JS_CONSTRUCTOR_PARAMETER_LIST@50..53
+                    6: JS_CONSTRUCTOR_PARAMETERS@50..53
                       0: L_PAREN@50..51 "(" [] []
-                      1: LIST@51..51
+                      1: JS_CONSTRUCTOR_PARAMETER_LIST@51..51
                       2: R_PAREN@51..53 ")" [] [Whitespace(" ")]
                     7: JS_FUNCTION_BODY@53..55
                       0: L_CURLY@53..54 "{" [] []
-                      1: LIST@54..54
-                      2: LIST@54..54
+                      1: JS_DIRECTIVE_LIST@54..54
+                      2: JS_STATEMENT_LIST@54..54
                       3: R_CURLY@54..55 "}" [] []
                 6: R_CURLY@55..57 "}" [Whitespace("\n")] []
       1: (empty)
@@ -172,7 +172,7 @@ JsModule {
           1: (empty)
           2: (empty)
           3: L_CURLY@68..69 "{" [] []
-          4: LIST@69..69
+          4: JS_CLASS_MEMBER_LIST@69..69
           5: R_CURLY@69..70 "}" [] []
         4: R_BRACK@70..71 "]" [] []
       1: (empty)
