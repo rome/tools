@@ -1,0 +1,13 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: statement.js
+
+---
+# Input
+;
+debugger
+
+---
+# Output
+debugger;
+

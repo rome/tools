@@ -1,0 +1,12 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: ident.js
+
+---
+# Input
+x
+
+---
+# Output
+x;
+

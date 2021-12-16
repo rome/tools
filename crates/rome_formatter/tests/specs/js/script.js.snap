@@ -1,0 +1,13 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: script.js
+
+---
+# Input
+#!/usr/bin/env node
+
+---
+# Output
+#!/usr/bin/env node
+
+

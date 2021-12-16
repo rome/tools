@@ -6,9 +6,11 @@ expression: spread.js
 # Input
 let a = [...a, ...b,];
 let b = [...a, ...b];
+[...a]
 
 ---
 # Output
 let a = [...a, ...b];
 let b = [...a, ...b];
+[...a];
 

@@ -1,0 +1,12 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: sequence_expression.js
+
+---
+# Input
+a,b
+
+---
+# Output
+a, b;
+

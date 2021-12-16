@@ -1,0 +1,16 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: arrow_function.js
+
+---
+# Input
+() => {}
+async () => {}
+(foo) => {}
+
+---
+# Output
+() => {};
+async () => {};
+(foo) => {};
+

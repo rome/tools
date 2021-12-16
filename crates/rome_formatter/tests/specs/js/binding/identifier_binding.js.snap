@@ -1,0 +1,12 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: identifier_binding.js
+
+---
+# Input
+let x = y
+
+---
+# Output
+let x = y;
+

@@ -30,7 +30,9 @@ impl ToFormatElement for JsAnyArrayAssignmentPatternElement {
 			JsAnyArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(
 				array_assignment_pattern_rest_element,
 			) => array_assignment_pattern_rest_element.to_format_element(formatter),
-			JsAnyArrayAssignmentPatternElement::JsArrayHole(_array_hole) => todo!(),
+			JsAnyArrayAssignmentPatternElement::JsArrayHole(array_hole) => {
+				array_hole.to_format_element(formatter)
+			}
 			JsAnyArrayAssignmentPatternElement::JsUnknownAssignment(_unknown_assignment) => {
 				todo!()
 			}

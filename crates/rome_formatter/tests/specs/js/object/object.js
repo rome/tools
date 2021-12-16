@@ -1,9 +1,21 @@
 let a = {
-	async *foo(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccccccccccccc) {
+	...spread,
 
+	foo() {
+	},
+
+	*foo() {
+	},
+
+	async *foo(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccccccccccccc) {
 	},
 
 	[fooooooooooooooooooooooooooooooooooooooooooooooooo()]: () => {
+	},
 
-	}
+	[foo()]: {
+
+	},
+
+	...spread,
 }
