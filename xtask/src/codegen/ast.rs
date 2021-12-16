@@ -2,6 +2,7 @@
 //! This is derived from rust-analyzer/xtask/codegen
 
 use std::vec;
+use syn::token::Comma;
 
 use super::{
 	kinds_src::{AstSrc, Field},
