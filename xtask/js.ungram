@@ -313,6 +313,7 @@ JsAnyExpression =
 
 
 Template =
+	tag: JsAnyExpression?
 	l_tick: '`'
 	elements: TemplateElementList
 	r_tick: '`'
@@ -1410,7 +1411,7 @@ TsInterfaceDecl =
 	'{' members:TsTypeElement '}'
 
 
-TsExprWithTypeArgs = item:TsEntityName type_params:TsTypeArgs
+TsExprWithTypeArgs = item: TsEntityName type_params: TsTypeArgs?
 TsTypeElement =
 	TsCallSignatureDecl
 	| TsConstructSignatureDecl

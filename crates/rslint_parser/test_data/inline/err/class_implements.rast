@@ -11,17 +11,14 @@ JsModule {
                 JsUnknown {
                     items: [
                         IMPLEMENTS_KW@8..19 "implements" [] [Whitespace(" ")],
-                        JsUnknown {
-                            items: [
-                                JsUnknown {
-                                    items: [
-                                        TsTypeName {
-                                            ident: missing (required),
-                                        },
-                                    ],
+                        TsTypeList [
+                            TsExprWithTypeArgs {
+                                item: TsTypeName {
+                                    ident: missing (required),
                                 },
-                            ],
-                        },
+                                type_params: missing (optional),
+                            },
+                        ],
                     ],
                 },
                 L_CURLY@21..22 "{" [] [],
@@ -44,10 +41,11 @@ JsModule {
       2: (empty)
       3: JS_UNKNOWN@8..21
         0: IMPLEMENTS_KW@8..19 "implements" [] [Whitespace(" ")]
-        1: JS_UNKNOWN@19..21
-          0: JS_UNKNOWN@19..21
+        1: TS_TYPE_LIST@19..21
+          0: TS_EXPR_WITH_TYPE_ARGS@19..21
             0: TS_TYPE_NAME@19..21
               0: IDENT@19..21 "C" [] [Whitespace(" ")]
+            1: (empty)
       4: L_CURLY@21..22 "{" [] []
       5: JS_CLASS_MEMBER_LIST@22..22
       6: R_CURLY@22..23 "}" [] []

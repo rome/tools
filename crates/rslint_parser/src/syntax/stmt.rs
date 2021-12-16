@@ -1370,7 +1370,7 @@ fn parse_switch_clause(
 				p.missing();
 				let discriminant = p.start();
 				p.bump_any(); // interpret `default` as the test of the case
-				discriminant.complete(p, JS_UNARY_EXPRESSION);
+				discriminant.complete(p, JS_UNKNOWN_EXPRESSION);
 				JS_CASE_CLAUSE
 			} else {
 				p.bump_any();

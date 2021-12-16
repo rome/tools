@@ -1290,7 +1290,12 @@ pub(crate) fn is_at_identifier(p: &Parser) -> bool {
 // test_err template_literal
 // let a = `foo ${}`
 fn parse_template_literal(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker {
-	let m = tag.map(|m| m.precede(p)).unwrap_or_else(|| p.start());
+	let m = tag.map(|m| m.precede(p)).unwrap_or_else(|| {
+		let m = p.start();
+		p.missing();
+		m
+	});
+
 	p.expect_required(BACKTICK);
 	let elements_list = p.start();
 
@@ -1318,7 +1323,7 @@ fn parse_template_literal(p: &mut Parser, tag: Option<CompletedMarker>) -> Compl
 	// let a = `${foo} bar
 
 	// The lexer already should throw an error for unterminated template literal
-	p.eat(BACKTICK);
+	p.eat_optional(BACKTICK);
 	m.complete(p, TEMPLATE)
 }
 

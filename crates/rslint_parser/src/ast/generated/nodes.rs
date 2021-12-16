@@ -1827,6 +1827,7 @@ pub struct Template {
 	pub(crate) syntax: SyntaxNode,
 }
 impl Template {
+	pub fn tag(&self) -> Option<JsAnyExpression> { support::node(&self.syntax) }
 	pub fn l_tick_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['`'])
 	}
@@ -2062,7 +2063,7 @@ pub struct TsExprWithTypeArgs {
 }
 impl TsExprWithTypeArgs {
 	pub fn item(&self) -> SyntaxResult<TsEntityName> { support::required_node(&self.syntax) }
-	pub fn type_params(&self) -> SyntaxResult<TsTypeArgs> { support::required_node(&self.syntax) }
+	pub fn type_params(&self) -> Option<TsTypeArgs> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExtends {
@@ -6429,6 +6430,7 @@ impl AstNode for Template {
 impl std::fmt::Debug for Template {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("Template")
+			.field("tag", &support::DebugOptionalElement(self.tag()))
 			.field(
 				"l_tick_token",
 				&support::DebugSyntaxResult(self.l_tick_token()),
@@ -6905,7 +6907,7 @@ impl std::fmt::Debug for TsExprWithTypeArgs {
 			.field("item", &support::DebugSyntaxResult(self.item()))
 			.field(
 				"type_params",
-				&support::DebugSyntaxResult(self.type_params()),
+				&support::DebugOptionalElement(self.type_params()),
 			)
 			.finish()
 	}

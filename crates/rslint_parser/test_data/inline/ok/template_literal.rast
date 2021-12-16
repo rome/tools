@@ -15,6 +15,7 @@ JsModule {
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: Template {
+                                tag: missing (optional),
                                 l_tick_token: BACKTICK@8..9 "`" [] [],
                                 elements: TemplateElementList [
                                     TemplateChunkElement {
@@ -51,6 +52,7 @@ JsModule {
                         initializer: JsInitializerClause {
                             eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
                             expression: Template {
+                                tag: missing (optional),
                                 l_tick_token: BACKTICK@30..31 "`" [] [],
                                 elements: TemplateElementList [],
                                 r_tick_token: BACKTICK@30..31 "`" [] [],
@@ -74,6 +76,7 @@ JsModule {
                         initializer: JsInitializerClause {
                             eq_token: EQ@40..42 "=" [] [Whitespace(" ")],
                             expression: Template {
+                                tag: missing (optional),
                                 l_tick_token: BACKTICK@42..43 "`" [] [],
                                 elements: TemplateElementList [
                                     TemplateElement {
@@ -107,6 +110,7 @@ JsModule {
                         initializer: JsInitializerClause {
                             eq_token: EQ@58..60 "=" [] [Whitespace(" ")],
                             expression: Template {
+                                tag: missing (optional),
                                 l_tick_token: BACKTICK@60..61 "`" [] [],
                                 elements: TemplateElementList [
                                     TemplateChunkElement {
@@ -141,8 +145,9 @@ JsModule {
             3: JS_INITIALIZER_CLAUSE@6..20
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: TEMPLATE@8..20
-                0: BACKTICK@8..9 "`" [] []
-                1: TEMPLATE_ELEMENT_LIST@9..19
+                0: (empty)
+                1: BACKTICK@8..9 "`" [] []
+                2: TEMPLATE_ELEMENT_LIST@9..19
                   0: TEMPLATE_CHUNK_ELEMENT@9..13
                     0: TEMPLATE_CHUNK@9..13 "foo " [] []
                   1: TEMPLATE_ELEMENT@13..19
@@ -151,7 +156,7 @@ JsModule {
                       0: JS_REFERENCE_IDENTIFIER@15..18
                         0: IDENT@15..18 "bar" [] []
                     2: R_CURLY@18..19 "}" [] []
-                2: BACKTICK@19..20 "`" [] []
+                3: BACKTICK@19..20 "`" [] []
       1: SEMICOLON@20..21 ";" [] []
     1: JS_VARIABLE_STATEMENT@21..33
       0: JS_VARIABLE_DECLARATIONS@21..32
@@ -165,9 +170,10 @@ JsModule {
             3: JS_INITIALIZER_CLAUSE@28..32
               0: EQ@28..30 "=" [] [Whitespace(" ")]
               1: TEMPLATE@30..32
-                0: BACKTICK@30..31 "`" [] []
-                1: TEMPLATE_ELEMENT_LIST@31..31
-                2: BACKTICK@31..32 "`" [] []
+                0: (empty)
+                1: BACKTICK@30..31 "`" [] []
+                2: TEMPLATE_ELEMENT_LIST@31..31
+                3: BACKTICK@31..32 "`" [] []
       1: SEMICOLON@32..33 ";" [] []
     2: JS_VARIABLE_STATEMENT@33..51
       0: JS_VARIABLE_DECLARATIONS@33..50
@@ -181,15 +187,16 @@ JsModule {
             3: JS_INITIALIZER_CLAUSE@40..50
               0: EQ@40..42 "=" [] [Whitespace(" ")]
               1: TEMPLATE@42..50
-                0: BACKTICK@42..43 "`" [] []
-                1: TEMPLATE_ELEMENT_LIST@43..49
+                0: (empty)
+                1: BACKTICK@42..43 "`" [] []
+                2: TEMPLATE_ELEMENT_LIST@43..49
                   0: TEMPLATE_ELEMENT@43..49
                     0: DOLLAR_CURLY@43..45 "${" [] []
                     1: JS_IDENTIFIER_EXPRESSION@45..48
                       0: JS_REFERENCE_IDENTIFIER@45..48
                         0: IDENT@45..48 "foo" [] []
                     2: R_CURLY@48..49 "}" [] []
-                2: BACKTICK@49..50 "`" [] []
+                3: BACKTICK@49..50 "`" [] []
       1: SEMICOLON@50..51 ";" [] []
     3: JS_VARIABLE_STATEMENT@51..66
       0: JS_VARIABLE_DECLARATIONS@51..65
@@ -203,10 +210,11 @@ JsModule {
             3: JS_INITIALIZER_CLAUSE@58..65
               0: EQ@58..60 "=" [] [Whitespace(" ")]
               1: TEMPLATE@60..65
-                0: BACKTICK@60..61 "`" [] []
-                1: TEMPLATE_ELEMENT_LIST@61..64
+                0: (empty)
+                1: BACKTICK@60..61 "`" [] []
+                2: TEMPLATE_ELEMENT_LIST@61..64
                   0: TEMPLATE_CHUNK_ELEMENT@61..64
                     0: TEMPLATE_CHUNK@61..64 "foo" [] []
-                2: BACKTICK@64..65 "`" [] []
+                3: BACKTICK@64..65 "`" [] []
       1: SEMICOLON@65..66 ";" [] []
   3: EOF@66..67 "" [Whitespace("\n")] []
