@@ -427,12 +427,16 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
 	} else {
 		ts_entity_name(p, None, false);
 	}
+
 	if p.at(T![<]) {
 		ts_type_args(p);
+	} else if !exprs {
+		p.missing();
 	}
+
 	// it doesnt matter if we complete as ts_expr_with_type_args even if its an lhs expr
 	// because exprs: true will only be used with `class extends foo, bar`, in which case
-	// the first expr with be "unwrapped" to go to the class' node and the rest are errors
+	// the first expr will be "unwrapped" to go to the class' node and the rest are errors
 	elems.push(m.complete(p, TS_EXPR_WITH_TYPE_ARGS));
 
 	let mut progress = ParserProgress::default();
@@ -446,7 +450,10 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
 		}
 		if p.at(T![<]) {
 			ts_type_args(p);
+		} else if !exprs {
+			p.missing();
 		}
+
 		elems.push(m.complete(p, TS_EXPR_WITH_TYPE_ARGS));
 	}
 	elems

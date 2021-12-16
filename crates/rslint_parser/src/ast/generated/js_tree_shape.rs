@@ -3005,7 +3005,10 @@ impl AstTreeShape for JsLanguage {
 				true
 			}
 			TEMPLATE => {
-				if actual_len != 3usize {
+				if actual_len != 4usize {
+					return false;
+				}
+				if actual_kinds.next().unwrap().map(JsAnyExpression::can_cast) == Some(false) {
 					return false;
 				}
 				if actual_kinds.next().unwrap().map(|actual| actual == T!['`']) == Some(false) {
