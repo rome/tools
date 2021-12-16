@@ -129,26 +129,26 @@ pub(crate) fn expr_or_assignment(p: &mut Parser) -> ParsedSyntax<CompletedMarker
 			}
 
 			let res = assign_expr_base(p);
-			if res.map(|x| x.kind()) != Some(JS_ARROW_FUNCTION_EXPRESSION) {
-				m.abandon(p);
-				None
-			} else {
-				res.unwrap().undo_completion(p).abandon(p);
-				Some(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION))
+			if let Some(kind) = res.kind() {
+				if kind == JS_ARROW_FUNCTION_EXPRESSION {
+					m.abandon(p);
+					return None;
+				}
 			}
+			res.abandon(p);
+			Some(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION))
 		});
 		if let Some(mut res) = res {
 			res.err_if_not_ts(p, "type parameters can only be used in TypeScript files");
 			return Present(res);
 		}
 	}
-	// TODO: to remove once moved to ParsedSyntax
-	assign_expr_base(p).into()
+	assign_expr_base(p)
 }
 
-fn assign_expr_base(p: &mut Parser) -> Option<CompletedMarker> {
+fn assign_expr_base(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if p.state.in_generator && p.at(T![yield]) {
-		return Some(yield_expr(p));
+		return Present(yield_expr(p));
 	}
 	let potential_arrow_start = matches!(p.cur(), T![ident] | T!['('] | T![yield] | T![await]);
 	let mut guard = p.with_state(ParserState {
@@ -157,9 +157,10 @@ fn assign_expr_base(p: &mut Parser) -> Option<CompletedMarker> {
 	});
 
 	let checkpoint = guard.checkpoint();
-	let target = conditional_expr(&mut *guard)?;
-	// TODO remove into
-	assign_expr_recursive(&mut *guard, target, checkpoint).into()
+	match conditional_expr(&mut *guard) {
+		None => Absent,
+		Some(target) => assign_expr_recursive(&mut *guard, target, checkpoint),
+	}
 }
 
 // test assign_expr
