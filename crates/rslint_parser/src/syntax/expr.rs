@@ -23,6 +23,7 @@ use crate::syntax::js_parse_error::{
 };
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::is_semi;
+use crate::CompletedNodeOrMissingMarker::NodeMarker;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
@@ -800,8 +801,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			let expr = expr_or_assignment(&mut *temp);
 			if expr.is_absent() && temp.at(T![:]) {
 				temp.rewind(checkpoint);
-				// TODO: review this when `paren_or_arrow_expr` is refactored to use the new API
-				params_marker = Some(parse_parameter_list(&mut *temp).ok().unwrap());
+				params_marker = Some(parse_parameter_list(&mut *temp).or_missing(&mut *temp));
 				break;
 			}
 
@@ -885,7 +885,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 	async_missing_marker.undo(p);
 	type_params_missing_marker.undo(p);
 
-	if let Some(params) = params_marker {
+	if let Some(NodeMarker(params)) = params_marker {
 		let err = p
 			.err_builder("grouping expressions cannot contain parameters")
 			.primary(params.range(p), "");
@@ -1300,7 +1300,7 @@ impl ParseSeparatedList for ArrayElementsList {
 		match p.cur() {
 			T![...] => spread_element(p),
 			T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
-			_ => expr_or_assignment(p).into(),
+			_ => expr_or_assignment(p),
 		}
 	}
 
@@ -1548,5 +1548,5 @@ pub fn unary_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		return Present(m.complete(p, JS_UNARY_EXPRESSION));
 	}
 
-	postfix_expr(p).into()
+	postfix_expr(p)
 }

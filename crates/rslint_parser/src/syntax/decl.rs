@@ -167,6 +167,6 @@ pub(super) fn parse_arrow_body(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 	if guard.at(T!['{']) {
 		function_body(&mut *guard)
 	} else {
-		expr_or_assignment(&mut *guard).into()
+		expr_or_assignment(&mut *guard)
 	}
 }
