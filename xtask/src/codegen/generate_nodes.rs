@@ -168,22 +168,22 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 	// it maps enum name A and its corresponding variants
 	let name_to_variants: HashMap<_, _> = ast
-		.enums
+		.unions
 		.iter()
 		.map(|current_enum| (current_enum.name.clone(), current_enum.variants.clone()))
 		.collect();
 
-	let (enum_defs, enum_boilerplate_impls): (Vec<_>, Vec<_>) = ast
-		.enums
+	let (union_defs, union_boilerplate_impls): (Vec<_>, Vec<_>) = ast
+		.unions
 		.iter()
-		.map(|en| {
+		.map(|union| {
 			// here we collect all the variants because this will generate the enums
 			// so we don't care about filtered variants
-			let variants_for_enum: Vec<_> = en
+			let variants_for_union: Vec<_> = union
 				.variants
 				.iter()
-				.map(|en| {
-					let variant_name = format_ident!("{}", en);
+				.map(|variant| {
+					let variant_name = format_ident!("{}", variant);
 
 					quote! {
 						#variant_name(#variant_name)
@@ -196,7 +196,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			// Inside an enum, we can have variants that point to a "flat" type or to another enum;
 			// we want to divide these variants as we will generate a different code based on these requirements
 			let (variant_of_variants, simple_variants): (Vec<_>, Vec<_>) =
-				en.variants.iter().partition(|current_enum| {
+				union.variants.iter().partition(|current_enum| {
 					if let Some(variants) = name_to_variants.get(*current_enum) {
 						!variants.is_empty()
 					} else {
@@ -209,7 +209,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				.map(|var| format_ident!("{}", var))
 				.collect();
 
-			let name = format_ident!("{}", en.name);
+			let name = format_ident!("{}", union.name);
 			let kinds: Vec<_> = variants
 				.iter()
 				.map(|name| format_ident!("{}", to_upper_snake_case(&name.to_string())))
@@ -218,7 +218,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			let variant_cast: Vec<_> = simple_variants
 				.iter()
 				.map(|current_enum| {
-					let variant_is_enum = ast.enums.iter().find(|e| &e.name == *current_enum);
+					let variant_is_enum = ast.unions.iter().find(|e| &e.name == *current_enum);
 					let variant_name = format_ident!("{}", current_enum);
 
 					if variant_is_enum.is_some() {
@@ -303,7 +303,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				}
 			};
 
-			let can_cast_fn = if en.variants.iter().any(|v| !simple_variants.contains(&v)) {
+			let can_cast_fn = if union.variants.iter().any(|v| !simple_variants.contains(&v)) {
 				quote! {
 					match kind {
 						#all_kinds
@@ -326,7 +326,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				})
 				.collect();
 
-			let all_variant_names = en
+			let all_variant_names = union
 				.variants
 				.iter()
 				.map(|variant| format_ident!("{}", variant));
@@ -336,7 +336,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					// #[doc = #doc]
 					#[derive(Clone, PartialEq, Eq, Hash)]
 					pub enum #name {
-						#(#variants_for_enum),*
+						#(#variants_for_union),*
 					}
 				},
 				quote! {
@@ -382,10 +382,10 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		})
 		.unzip();
 
-	let enum_names = ast.enums.iter().map(|it| &it.name);
+	let union_names = ast.unions.iter().map(|it| &it.name);
 	let node_names = ast.nodes.iter().map(|it| &it.name);
 
-	let display_impls = enum_names
+	let display_impls = union_names
 		.chain(node_names.clone())
 		.map(|it| format_ident!("{}", it))
 		.map(|name| {
@@ -599,9 +599,9 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 
 		#(#node_defs)*
-		#(#enum_defs)*
+		#(#union_defs)*
 		#(#node_boilerplate_impls)*
-		#(#enum_boilerplate_impls)*
+		#(#union_boilerplate_impls)*
 		#(#display_impls)*
 		#(#unknowns)*
 		#(#lists)*

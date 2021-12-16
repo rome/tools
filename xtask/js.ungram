@@ -307,7 +307,6 @@ JsAnyExpression =
 	| JsUnknownExpression
 
 
-// the backtick is just a placeholder, see parser in rslint_parser/src/ast/expr_ext.rs
 Template =
 	l_tick: '`'
 	elements: TemplateElementList

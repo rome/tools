@@ -49,13 +49,13 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 
 		let rule = &grammar[node].rule;
 
-		match rule_type(grammar, rule) {
-			RuleType::Union(variants) => ast.enums.push(AstEnumSrc {
+		match classify_node_rule(grammar, rule) {
+			NodeRuleClassification::Union(variants) => ast.unions.push(AstEnumSrc {
 				documentation: vec![],
 				name,
 				variants,
 			}),
-			RuleType::Node => {
+			NodeRuleClassification::Node => {
 				let mut fields = vec![];
 				handle_rule(&mut fields, grammar, rule, None, false, false);
 				ast.nodes.push(AstNodeSrc {
@@ -64,8 +64,8 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 					fields,
 				})
 			}
-			RuleType::Unknown => ast.unknowns.push(name),
-			RuleType::List {
+			NodeRuleClassification::Unknown => ast.unknowns.push(name),
+			NodeRuleClassification::List {
 				separated,
 				element_name,
 			} => {
@@ -83,17 +83,26 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 	ast
 }
 
-enum RuleType {
+/// Classification of a node rule.
+/// Determined by matching the top level production of any node.
+enum NodeRuleClassification {
+	/// Union of the form `A = B | C`
 	Union(Vec<String>),
+	/// Regular node containing tokens or sub nodes of the form `A = B 'c'
 	Node,
+	/// An Unknown node of the form `A = SyntaxElement*`
 	Unknown,
+
+	/// A list node of the form `A = B*` or `A = (B (',' B)*)` or `A = (B (',' B)* ','?)`
 	List {
+		/// Are the nodes in this list separated by a token
 		separated: bool,
+		/// Name of the nodes stored in this list (`B` in the example above)
 		element_name: String,
 	},
 }
 
-fn rule_type(grammar: &Grammar, rule: &Rule) -> RuleType {
+fn classify_node_rule(grammar: &Grammar, rule: &Rule) -> NodeRuleClassification {
 	match rule {
 		// this is for enums
 		Rule::Alt(alternatives) => {
@@ -102,10 +111,10 @@ fn rule_type(grammar: &Grammar, rule: &Rule) -> RuleType {
 				match alternative {
 					Rule::Node(it) => all_alternatives.push(grammar[*it].name.clone()),
 					Rule::Token(it) if grammar[*it].name == ";" => (),
-					_ => return RuleType::Node,
+					_ => return NodeRuleClassification::Node,
 				}
 			}
-			RuleType::Union(all_alternatives)
+			NodeRuleClassification::Union(all_alternatives)
 		}
 		// A*
 		Rule::Rep(rule) => {
@@ -117,9 +126,9 @@ fn rule_type(grammar: &Grammar, rule: &Rule) -> RuleType {
 			};
 
 			if element_type == SYNTAX_ELEMENT_TYPE {
-				RuleType::Unknown
+				NodeRuleClassification::Unknown
 			} else {
-				RuleType::List {
+				NodeRuleClassification::List {
 					separated: false,
 					element_name: element_type.to_string(),
 				}
@@ -129,15 +138,15 @@ fn rule_type(grammar: &Grammar, rule: &Rule) -> RuleType {
 			// (T (',' T)* ','?)
 			// (T (',' T)*)
 			if let Some(element_name) = handle_comma_list(grammar, rules.as_slice()) {
-				RuleType::List {
+				NodeRuleClassification::List {
 					separated: true,
 					element_name: String::from(element_name),
 				}
 			} else {
-				RuleType::Node
+				NodeRuleClassification::Node
 			}
 		}
-		_ => RuleType::Node,
+		_ => NodeRuleClassification::Node,
 	}
 }
 

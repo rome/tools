@@ -428,7 +428,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 #[derive(Default, Debug)]
 pub struct AstSrc {
 	pub nodes: Vec<AstNodeSrc>,
-	pub enums: Vec<AstEnumSrc>,
+	pub unions: Vec<AstEnumSrc>,
 	lists: BTreeMap<String, AstListSrc>,
 	pub unknowns: Vec<String>,
 }
@@ -450,10 +450,10 @@ impl AstSrc {
 	pub fn sort(&mut self) {
 		// No need to sort lists, they're stored in a btree
 		self.nodes.sort_unstable_by(|a, b| a.name.cmp(&b.name));
-		self.enums.sort_unstable_by(|a, b| a.name.cmp(&b.name));
+		self.unions.sort_unstable_by(|a, b| a.name.cmp(&b.name));
 		self.unknowns.sort_unstable();
 
-		for union in self.enums.iter_mut() {
+		for union in self.unions.iter_mut() {
 			union.variants.sort_unstable();
 		}
 	}
