@@ -124,8 +124,6 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 					)
 				});
 
-		// Pop all of the nodes children
-		self.children.truncate(first_child);
 		self.children.push((hash, Some(node.into())));
 	}
 

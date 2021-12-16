@@ -111,7 +111,6 @@ impl ParserProgress {
 /// let (untyped_node, errors) = sink.finish();
 ///
 /// assert!(errors.is_empty());
-/// dbg!(untyped_node.kind());
 /// assert!(JsExpressionSnipped::can_cast(untyped_node.kind()));
 ///
 /// // Convert the untyped SyntaxNode into a typed AST node
