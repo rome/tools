@@ -3,7 +3,7 @@
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
 use super::binding::*;
-use super::expr::{expr, EXPR_RECOVERY_SET, STARTS_EXPR};
+use super::expr::{parse_expression, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::program::export_decl;
 use super::typescript::*;
 use super::util::check_label_use;
@@ -11,7 +11,7 @@ use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_declaration, parse_initializer_clause};
-use crate::syntax::expr::{expr_or_assignment, parse_identifier};
+use crate::syntax::expr::{parse_expr_or_assignment, parse_identifier};
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement};
@@ -636,7 +636,7 @@ pub fn parenthesized_expression(p: &mut Parser) {
 
 	let pos = p.token_pos();
 	// Remove the pos check once `expr` has been converted to `ParsedSyntax`
-	if expr(p).is_absent() && pos == p.token_pos() {
+	if parse_expression(p).is_absent() && pos == p.token_pos() {
 		p.missing();
 	}
 	p.expect_required(T![')']);
@@ -1100,7 +1100,7 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 				..p.state.clone()
 			});
 			// Replace the `p.token_pos() == checkpoint.token_pos` once `expr()` returns `ParsedSyntax`
-			expr(guard)
+			parse_expression(guard)
 		};
 
 		if p.at(T![in]) || p.cur_src() == "of" {
@@ -1148,7 +1148,7 @@ fn parse_normal_for_head(p: &mut Parser) {
 		p.missing(); // missing test
 	} else {
 		let m = p.start();
-		expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
+		parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
 		m.complete(p, FOR_STMT_TEST);
 	}
 
@@ -1158,7 +1158,7 @@ fn parse_normal_for_head(p: &mut Parser) {
 		p.missing(); // Missing update
 	} else {
 		let m = p.start();
-		expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
+		parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
 		m.complete(p, FOR_STMT_UPDATE);
 	}
 }
@@ -1169,7 +1169,7 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> SyntaxKind {
 
 	if is_in {
 		p.bump_any();
-		if expr(p).is_absent() {
+		if parse_expression(p).is_absent() {
 			p.missing();
 		}
 
@@ -1177,7 +1177,7 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> SyntaxKind {
 	} else {
 		p.bump_remap(T![of]);
 
-		if expr_or_assignment(p).is_absent() {
+		if parse_expr_or_assignment(p).is_absent() {
 			p.missing();
 		}
 
@@ -1359,7 +1359,7 @@ fn parse_switch_clause(
 		}
 		T![case] => {
 			p.bump_any();
-			expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
+			parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
 			p.expect_required(T![:]);
 
 			SwitchClausesList.parse_list(p);

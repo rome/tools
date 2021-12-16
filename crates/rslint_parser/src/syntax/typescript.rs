@@ -1,7 +1,9 @@
 //! TypeScript specific functions.
 
 use super::decl::*;
-use super::expr::{expr_or_assignment, identifier_name, lhs_expr, parse_literal_expression};
+use super::expr::{
+	lhs_expr, parse_expr_or_assignment, parse_identifier_name, parse_literal_expression,
+};
 use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use crate::parser::ParserProgress;
 #[allow(deprecated)]
@@ -250,7 +252,7 @@ pub fn ts_type_alias_decl(p: &mut Parser) -> Option<CompletedMarker> {
 	let start = p.cur_tok().range.start;
 	p.bump_any();
 	let identifier =
-		identifier_name(p).or_missing_with_error(p, js_parse_error::expected_identifier);
+		parse_identifier_name(p).or_missing_with_error(p, js_parse_error::expected_identifier);
 
 	if let NodeMarker(marker) = identifier {
 		no_recover!(p, m, t, Some(marker));
@@ -283,7 +285,7 @@ pub(crate) fn ts_module_or_namespace_decl(
 		p.eat(T![.]);
 	}
 
-	if identifier_name(p).is_absent() && p.state.no_recovery {
+	if parse_identifier_name(p).is_absent() && p.state.no_recovery {
 		return None;
 	}
 
@@ -371,7 +373,7 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 
 		p.error(err);
 	}
-	identifier_name(p).or_missing_with_error(p, js_parse_error::expected_identifier);
+	parse_identifier_name(p).or_missing_with_error(p, js_parse_error::expected_identifier);
 	if p.at(T![<]) {
 		ts_type_params(p);
 	}
@@ -475,7 +477,7 @@ pub fn ts_type_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Option<CompletedMarker> {
 	if p.eat(T!['[']) {
-		expr_or_assignment(p)
+		parse_expr_or_assignment(p)
 			.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 		p.expect_no_recover(T![']'])?;
 	} else {
@@ -600,7 +602,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.eat(T![const]);
 	p.expect_required(T![enum]);
-	identifier_name(p).or_missing_with_error(p, js_parse_error::expected_identifier);
+	parse_identifier_name(p).or_missing_with_error(p, js_parse_error::expected_identifier);
 	p.expect_required(T!['{']);
 	let mut first = true;
 
@@ -636,13 +638,16 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 			true
 		} else {
 			if !p.eat(JS_STRING_LITERAL) {
-				identifier_name(p).unwrap().undo_completion(p).abandon(p);
+				parse_identifier_name(p)
+					.unwrap()
+					.undo_completion(p)
+					.abandon(p);
 			}
 			false
 		};
 
 		if p.eat(T![=]) {
-			expr_or_assignment(p)
+			parse_expr_or_assignment(p)
 				.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 			member.complete(p, TS_ENUM_MEMBER);
 		} else if err_occured {
@@ -876,7 +881,7 @@ pub fn ts_type_operator_or_higher(p: &mut Parser) -> Option<CompletedMarker> {
 	} else if p.cur_src() == "infer" {
 		let m = p.start();
 		p.bump_remap(T![infer]);
-		identifier_name(p).or_missing_with_error(p, js_parse_error::expected_identifier);
+		parse_identifier_name(p).or_missing_with_error(p, js_parse_error::expected_identifier);
 		Some(m.complete(p, TS_INFER))
 	} else {
 		// FIXME: readonly should apparently be handled here?
@@ -923,7 +928,7 @@ pub fn ts_tuple(p: &mut Parser) -> Option<CompletedMarker> {
 			&& !DISALLOWED_TYPE_NAMES.contains(&p.cur_src())
 			&& (p.nth_at(1, T![:]) || (p.nth_at(1, T![?]) && p.nth_at(2, T![:])))
 		{
-			identifier_name(p).or_missing_with_error(p, js_parse_error::expected_identifier);
+			parse_identifier_name(p).or_missing_with_error(p, js_parse_error::expected_identifier);
 			true
 		} else {
 			false
@@ -1290,7 +1295,7 @@ pub fn ts_mapped_type(p: &mut Parser) -> Option<CompletedMarker> {
 	let param = p.start();
 	p.expect_no_recover(T!['['])?;
 	// This is basically to unwrap the marker from a node to a single token
-	if let Present(marker) = identifier_name(p) {
+	if let Present(marker) = parse_identifier_name(p) {
 		marker.undo_completion(p).abandon(p)
 	} else {
 		p.missing();

@@ -1,7 +1,7 @@
 use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
-use crate::syntax::expr::expr_or_assignment;
+use crate::syntax::expr::parse_expr_or_assignment;
 use crate::syntax::function::{
 	function_body, parse_ts_type_annotation_or_error, ts_parameter_types,
 };
@@ -709,7 +709,7 @@ pub(crate) fn parse_initializer_clause(p: &mut Parser) -> ParsedSyntax<Completed
 		let m = p.start();
 		p.bump(T![=]);
 
-		expr_or_assignment(p)
+		parse_expr_or_assignment(p)
 			.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 
 		Present(m.complete(p, JS_INITIALIZER_CLAUSE))

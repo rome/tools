@@ -3,7 +3,7 @@ use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
-use crate::syntax::expr::{expr, expr_or_assignment};
+use crate::syntax::expr::{parse_expr_or_assignment, parse_expression};
 use crate::syntax::function::{
 	function_body, parse_ts_parameter_types, parse_ts_type_annotation_or_error,
 };
@@ -124,7 +124,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		T![...] => {
 			let m = p.start();
 			p.bump_any();
-			expr_or_assignment(p)
+			parse_expr_or_assignment(p)
 				.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 			Present(m.complete(p, JS_SPREAD))
 		}
@@ -173,7 +173,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 					// let b = { a: true }
 					// If the member name was a literal OR we're at a colon
 					p.expect_required(T![:]);
-					if expr_or_assignment(p).is_absent() {
+					if parse_expr_or_assignment(p).is_absent() {
 						p.missing();
 					}
 					Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
@@ -193,7 +193,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 				SingleTokenParseRecovery::new(token_set![T![:], T![,]], ERROR).recover(p);
 
 				if p.eat(T![:]) {
-					expr_or_assignment(p)
+					parse_expr_or_assignment(p)
 						.or_missing_with_error(p, js_parse_error::expected_object_member);
 					Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
 				} else {
@@ -290,7 +290,7 @@ pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax<Complet
 
 	let m = p.start();
 	p.expect_required(T!['[']);
-	expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
+	parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
 	p.expect_required(T![']']);
 	Present(m.complete(p, JS_COMPUTED_MEMBER_NAME))
 }

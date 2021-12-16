@@ -95,7 +95,7 @@ impl ParserProgress {
 /// // A completed marker marks the start and end indices in the events vec which signify
 /// // the Start event, and the Finish event.
 /// // Completed markers can be turned into an ast node with parse_marker on the parser
-/// let completed_marker = expr::expr(&mut parser).unwrap();
+/// let completed_marker = expr::parse_expression(&mut parser).unwrap();
 ///
 /// // Make a new text tree sink, its job is assembling events into a rowan GreenNode.
 /// // At each point (Start, Token, Finish, Error) it also consumes whitespace.
@@ -499,9 +499,9 @@ impl<'t> Parser<'t> {
 	)]
 	pub fn expr_with_semi_recovery(&mut self, assign: bool) -> RecoveryResult {
 		let func = if assign {
-			syntax::expr::expr_or_assignment
+			syntax::expr::parse_expr_or_assignment
 		} else {
-			syntax::expr::expr
+			syntax::expr::parse_expression
 		};
 
 		func(self).or_recover(
