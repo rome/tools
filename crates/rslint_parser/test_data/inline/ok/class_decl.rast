@@ -7,8 +7,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..10 "foo" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@10..11 "{" [] [],
             members: JsClassMemberList [],
             r_curly_token: R_CURLY@11..12 "}" [] [],
@@ -18,7 +18,6 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@19..23 "foo" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
                 extends_token: EXTENDS_KW@23..31 "extends" [] [Whitespace(" ")],
                 super_class: JsIdentifierExpression {
@@ -27,6 +26,7 @@ JsModule {
                     },
                 },
             },
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@35..36 "{" [] [],
             members: JsClassMemberList [],
             r_curly_token: R_CURLY@36..37 "}" [] [],
@@ -36,7 +36,6 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@44..48 "foo" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
                 extends_token: EXTENDS_KW@48..56 "extends" [] [Whitespace(" ")],
                 super_class: JsStaticMemberExpression {
@@ -51,6 +50,7 @@ JsModule {
                     },
                 },
             },
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@64..65 "{" [] [],
             members: JsClassMemberList [],
             r_curly_token: R_CURLY@65..66 "}" [] [],

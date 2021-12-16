@@ -7,8 +7,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsMethodClassMember {
@@ -42,8 +42,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@30..32 "A" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@32..34 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsMethodClassMember {
@@ -77,13 +77,13 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@64..66 "A" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@66..68 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),

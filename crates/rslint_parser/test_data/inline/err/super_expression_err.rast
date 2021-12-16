@@ -7,7 +7,6 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..11 "Test" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
                 extends_token: EXTENDS_KW@11..19 "extends" [] [Whitespace(" ")],
                 super_class: JsIdentifierExpression {
@@ -16,6 +15,7 @@ JsModule {
                     },
                 },
             },
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@21..22 "{" [] [],
             members: JsClassMemberList [
                 JsMethodClassMember {

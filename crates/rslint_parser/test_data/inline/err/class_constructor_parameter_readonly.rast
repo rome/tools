@@ -7,8 +7,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsConstructorClassMember {
@@ -16,10 +16,12 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@10..21 "constructor" [] [],
                     },
+                    type_parameters: missing (optional),
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@21..22 "(" [] [],
                         parameters: JsConstructorParameterList [
                             TsConstructorParam {
+                                accessibility: missing (optional),
                                 readonly_token: READONLY_KW@22..31 "readonly" [] [Whitespace(" ")],
                                 pat: JsIdentifierBinding {
                                     name_token: IDENT@31..32 "b" [] [],

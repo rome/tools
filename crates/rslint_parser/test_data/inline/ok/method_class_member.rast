@@ -7,8 +7,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..11 "Test" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@11..12 "{" [] [],
             members: JsClassMemberList [
                 JsMethodClassMember {
@@ -214,8 +214,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@176..195 "ContextualKeywords" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@195..196 "{" [] [],
             members: JsClassMemberList [
                 JsMethodClassMember {
@@ -387,8 +387,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@377..384 "Static" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@384..385 "{" [] [],
             members: JsClassMemberList [
                 JsMethodClassMember {

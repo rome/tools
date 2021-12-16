@@ -7,13 +7,13 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..10 "foo" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@10..11 "{" [] [],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -27,8 +27,8 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -42,8 +42,8 @@ JsModule {
                     semicolon_token: SEMICOLON@30..31 ";" [] [],
                 },
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -62,8 +62,8 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -77,8 +77,8 @@ JsModule {
                     semicolon_token: SEMICOLON@64..65 ";" [] [],
                 },
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -92,8 +92,8 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -117,8 +117,8 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: STATIC_KW@81..91 "static" [Whitespace("\n\n\t")] [Whitespace(" ")],
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -132,8 +132,8 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: STATIC_KW@105..114 "static" [Whitespace("\n\t")] [Whitespace(" ")],
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -152,8 +152,8 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -168,8 +168,8 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -189,8 +189,8 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: STATIC_KW@181..191 "static" [Whitespace("\n\n\t")] [Whitespace(" ")],
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -205,8 +205,8 @@ JsModule {
                     semicolon_token: missing (optional),
                 },
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: STATIC_KW@205..214 "static" [Whitespace("\n\t")] [Whitespace(" ")],
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),

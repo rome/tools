@@ -18,6 +18,7 @@ JsModule {
                                 class_token: CLASS_KW@8..14 "class" [] [Whitespace(" ")],
                                 id: missing (optional),
                                 extends_clause: missing (optional),
+                                implements_clause: missing (optional),
                                 l_curly_token: L_CURLY@14..15 "{" [] [],
                                 members: JsClassMemberList [],
                                 r_curly_token: R_CURLY@15..16 "}" [] [],
@@ -46,6 +47,7 @@ JsModule {
                                     name_token: IDENT@32..36 "foo" [] [Whitespace(" ")],
                                 },
                                 extends_clause: missing (optional),
+                                implements_clause: missing (optional),
                                 l_curly_token: L_CURLY@36..37 "{" [] [],
                                 members: JsClassMemberList [
                                     JsConstructorClassMember {
@@ -53,6 +55,7 @@ JsModule {
                                         name: JsLiteralMemberName {
                                             value: IDENT@37..50 "constructor" [Whitespace("\n ")] [],
                                         },
+                                        type_parameters: missing (optional),
                                         parameters: JsConstructorParameters {
                                             l_paren_token: L_PAREN@50..51 "(" [] [],
                                             parameters: JsConstructorParameterList [],
@@ -87,6 +90,7 @@ JsModule {
                     class_token: CLASS_KW@62..68 "class" [] [Whitespace(" ")],
                     id: missing (optional),
                     extends_clause: missing (optional),
+                    implements_clause: missing (optional),
                     l_curly_token: L_CURLY@68..69 "{" [] [],
                     members: JsClassMemberList [],
                     r_curly_token: R_CURLY@69..70 "}" [] [],
