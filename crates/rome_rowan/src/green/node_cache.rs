@@ -140,6 +140,7 @@ impl NodeCache {
 
 		let node = match entry {
 			RawEntryMut::Occupied(entry) => {
+				// Pop all of the nodes children
 				slots.truncate(first_child);
 				entry.key().0.clone()
 			}
