@@ -1,0 +1,12 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: this_expression.js
+
+---
+# Input
+this
+
+---
+# Output
+this;
+

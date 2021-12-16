@@ -1,0 +1,19 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: property_key.js
+
+---
+# Input
+const foo = {
+  "foo-bar": true,
+  "bar": {
+    "lorem_ispsum": {
+      "lorem-ipsum": true
+    },
+  },
+};
+
+---
+# Output
+const foo = {"foo-bar": true, "bar": {"lorem_ispsum": {"lorem-ipsum": true}}};
+

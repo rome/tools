@@ -1,0 +1,16 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: new_expression.js
+
+---
+# Input
+new a()
+new b(x)
+new c(dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd)
+
+---
+# Output
+new a();
+new b(x);
+new c(dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd);
+
