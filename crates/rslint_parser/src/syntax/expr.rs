@@ -157,9 +157,10 @@ fn assign_expr_base(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	});
 
 	let checkpoint = guard.checkpoint();
-	match conditional_expr(&mut *guard) {
-		None => Absent,
-		Some(target) => assign_expr_recursive(&mut *guard, target, checkpoint),
+	if let Present(target) = conditional_expr(&mut *guard) {
+		assign_expr_recursive(&mut *guard, target, checkpoint)
+	} else {
+		Absent
 	}
 }
 
@@ -228,7 +229,7 @@ pub fn yield_expr(p: &mut Parser) -> CompletedMarker {
 // test conditional_expr
 // foo ? bar : baz
 // foo ? bar : baz ? bar : baz
-pub fn conditional_expr(p: &mut Parser) -> Option<CompletedMarker> {
+pub fn conditional_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// test_err conditional_expr_err
 	// foo ? bar baz
 	// foo ? bar baz ? foo : bar
@@ -236,27 +237,26 @@ pub fn conditional_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	let lhs = binary_or_logical_expression(p);
 
 	if p.at(T![?]) {
-		return match lhs {
-			Absent => None,
-			Present(marker) => {
-				let m = marker.precede(p);
-				p.bump_any();
-				{
-					let p = &mut *p.with_state(ParserState {
-						in_cond_expr: true,
-						..p.state.clone()
-					});
-					expr_or_assignment(p)
-						.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
-				}
-				p.expect_required(T![:]);
+		return if let Present(marker) = lhs {
+			let m = marker.precede(p);
+			p.bump_any();
+			{
+				let p = &mut *p.with_state(ParserState {
+					in_cond_expr: true,
+					..p.state.clone()
+				});
 				expr_or_assignment(p)
 					.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
-				Some(m.complete(p, JS_CONDITIONAL_EXPRESSION))
 			}
+			p.expect_required(T![:]);
+			expr_or_assignment(p)
+				.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
+			Present(m.complete(p, JS_CONDITIONAL_EXPRESSION))
+		} else {
+			lhs
 		};
 	}
-	lhs.into()
+	lhs
 }
 
 /// A binary expression such as `2 + 2` or `foo * bar + 2` or a logical expression 'a || b'
@@ -327,12 +327,6 @@ fn binary_or_logical_expression_recursive(
 	let op_tok = p.cur_tok();
 
 	let m = left.precede_or_missing(p);
-
-	// let m = left.map(|m| m.precede(p)).unwrap_or_else(|| {
-	// 	let m = p.start();
-	// 	p.missing();
-	// 	m
-	// });
 
 	if op == T![>>] {
 		p.bump_multiple(2, T![>>]);
@@ -519,8 +513,9 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 			T!['('] if !no_call => {
 				lhs = {
 					let m = lhs.precede(p);
-					p.missing(); // type args
-			 // it's safe to unwrap
+					// type args
+					p.missing();
+					// it's safe to unwrap
 					args(p).unwrap();
 					m.complete(p, CALL_EXPR)
 				}
