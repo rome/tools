@@ -140,9 +140,9 @@ error[SyntaxError]: `static` modifier already seen.
   ┌─ class_invalid_modifiers.js:2:18
   │
 2 │ class B { static static foo() {} }
-  │           ------ ^^^^^^
+  │           ------ ^^^^^^ remove the duplicate `static` here
   │           │       
-  │           First seen here
+  │           first usage
 
 --
 class A { public foo() {} }

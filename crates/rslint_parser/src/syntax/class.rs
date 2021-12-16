@@ -82,6 +82,10 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<ConditionalSynta
 		..p.state.clone()
 	});
 
+	// test_err class_decl_no_id
+	// class {}
+	// class implements B {}
+
 	// parse class id
 	if guard.cur_src() != "implements" {
 		let id = parse_binding(&mut *guard);
@@ -384,7 +388,11 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	}
 
 	// Insert the missing markers for async and generator for the case this turns out to
-	// be a method member. The marker must be `undo`n if it turns out this is any other member.
+	// be a method member. The marker must be undone (call `marker.undo`) for any non method
+	// member because these don't support the `async` or `generator` keywords.
+	// This is needed because we can't use lookahead to determine if this is a method member
+	// before parsing the member name (in front of which these missing markers must be inserted) because
+	// computed member names can be of any length.
 	let async_missing_marker = p.missing();
 	let generator_missing_marker = p.missing();
 
@@ -400,6 +408,8 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		// test class_static_constructor_method
 		// class B { static constructor() {} }
 		return if is_constructor {
+			// Undoing the async and generator `missing` markers because constructors offer no slot for
+			// either of them.
 			async_missing_marker.undo(p);
 			generator_missing_marker.undo(p);
 
@@ -457,6 +467,8 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 		};
 	}
 
+	// It's certain that this isn't a method member. So, let's undo the method specific
+	// missing markers for the async and generator slots.
 	async_missing_marker.undo(p);
 	generator_missing_marker.undo(p);
 
@@ -923,7 +935,7 @@ fn is_at_modifier(p: &Parser, offset: usize) -> bool {
 fn parse_class_member_modifiers(
 	p: &mut Parser,
 ) -> Result<ClassMemberModifiers, ClassMemberModifiers> {
-	let mut last: Option<Modifier> = None;
+	let mut previous_modifier: Option<Modifier> = None;
 	let mut valid = true;
 	let mut modifiers = ClassMemberModifiers::default();
 
@@ -931,52 +943,54 @@ fn parse_class_member_modifiers(
 	loop {
 		progress.assert_progressing(p);
 
-		// set_range doesn't work because this is already too late..
-		if let Some(modifier) = parse_modifier(p, &mut modifiers) {
-			if let Some(existing) = modifiers.get_range(modifier.kind) {
-				p.error(
-					p.err_builder(&format!(
-						"`{}` modifier already seen.",
-						p.span_text(modifier.range.clone()),
-					))
-					.primary(modifier.range.clone(), "")
-					.secondary(existing.clone(), "First seen here"),
-				);
+		if let Some(current_modifier) = parse_modifier(p, &mut modifiers) {
+			if let Some(existing) = modifiers.get_range(current_modifier.kind) {
+				let name = p.span_text(current_modifier.range.clone());
+				let err = p
+					.err_builder(&format!("`{}` modifier already seen.", name,))
+					.primary(
+						current_modifier.range.clone(),
+						&format!("remove the duplicate `{}` here", name),
+					)
+					.secondary(existing.clone(), "first usage");
+				p.error(err);
 				valid = false;
 				continue;
 			}
 
-			if let Some(last) = &last {
-				if last.kind > modifier.kind {
+			// Checks the precedence of modifiers. The precedence is defined by the order of the
+			// enum variants in [Modifier]
+			if let Some(previous_modifier) = &previous_modifier {
+				if previous_modifier.kind > current_modifier.kind {
 					p.error(
 						p.err_builder(&format!(
-							"`{}` modifier must precede `{}` modifier.",
-							p.span_text(modifier.range.clone()),
-							p.span_text(last.range.clone())
+							"`{}` modifier must precede `{}`.",
+							p.span_text(current_modifier.range.clone()),
+							p.span_text(previous_modifier.range.clone())
 						))
-						.primary(modifier.range.clone(), "")
-						.secondary(last.range.clone(), ""),
+						.primary(current_modifier.range.clone(), "")
+						.secondary(previous_modifier.range.clone(), ""),
 					);
-					modifiers.set_range(modifier.clone());
+					modifiers.set_range(current_modifier.clone());
 					valid = false;
 					continue;
 				}
 			}
 
-			if !p.typescript() && !matches!(&modifier.kind, ModifierKind::Static) {
+			if !p.typescript() && !matches!(&current_modifier.kind, ModifierKind::Static) {
 				p.error(
 					p.err_builder(&format!(
 						"`{}` modifier can only be used in TypeScript files",
-						p.span_text(modifier.range.clone())
+						p.span_text(current_modifier.range.clone())
 					))
-					.primary(modifier.range.clone(), ""),
+					.primary(current_modifier.range.clone(), ""),
 				);
 				valid = false;
 			}
 
-			modifiers.set_range(modifier.clone());
+			modifiers.set_range(current_modifier.clone());
 
-			last = Some(modifier);
+			previous_modifier = Some(current_modifier);
 		} else if valid {
 			// mark all the not seen modifiers as missing
 			modifiers.mark_remaining_missing(p);
@@ -1018,7 +1032,10 @@ fn parse_modifier(p: &mut Parser, modifiers: &mut ClassMemberModifiers) -> Optio
 		}
 	};
 
-	// Fill in missing placeholders for all modifiers preceding this modifier
+	// Fill in missing placeholders for all modifiers preceding this modifier before bumping the token.
+	// For example, this adds `missing` markers for `declare` and `static` if this is the `static` modifier so
+	// that we end up with the layout: `declare: missing, accessibility: missing, static: static_kw`. This is important
+	// because the `static` keyword otherwise ends up in the first slot `static: static_kw`.
 	modifiers.create_missing_for_modifiers_preceding(p, modifier_kind);
 
 	p.bump_remap(kw_kind);
