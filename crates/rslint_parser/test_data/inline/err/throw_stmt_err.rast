@@ -28,14 +28,23 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
+        JsThrowStatement {
+            throw_token: THROW_KW@27..33 "throw" [Whitespace("\n")] [],
+            argument: JsUnknownExpression {
+                items: [
+                    SEMICOLON@33..34 ";" [] [],
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
     ],
-    eof_token: EOF@27..28 "" [Whitespace("\n")] [],
+    eof_token: EOF@34..35 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..28
+0: JS_MODULE@0..35
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..27
+  2: JS_MODULE_ITEM_LIST@0..34
     0: JS_THROW_STATEMENT@0..5
       0: THROW_KW@0..5 "throw" [] []
       1: (empty)
@@ -54,7 +63,12 @@ JsModule {
               0: JS_STRING_LITERAL@16..26 "\"oh no :(\"" [] []
           2: R_PAREN@26..27 ")" [] []
       1: (empty)
-  3: EOF@27..28 "" [Whitespace("\n")] []
+    2: JS_THROW_STATEMENT@27..34
+      0: THROW_KW@27..33 "throw" [Whitespace("\n")] []
+      1: JS_UNKNOWN_EXPRESSION@33..34
+        0: SEMICOLON@33..34 ";" [] []
+      2: (empty)
+  3: EOF@34..35 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Linebreaks between a throw statement and the error to be thrown are not allowed
   ┌─ throw_stmt_err.js:2:1
@@ -66,5 +80,20 @@ error[SyntaxError]: Linebreaks between a throw statement and the error to be thr
   │ A linebreak is not allowed here
 
 --
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ throw_stmt_err.js:3:6
+  │
+3 │ throw;
+  │      ^ Expected an expression here
+
+--
+error[SyntaxError]: expected an expression, but found `;` instead
+  ┌─ throw_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^
+
+--
 throw
 new Error("oh no :(")
+throw;

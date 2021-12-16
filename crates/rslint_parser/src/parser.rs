@@ -497,27 +497,21 @@ impl<'t> Parser<'t> {
 	#[deprecated(
 		note = "Use ParseRecovery instead which signals with a Result if the recovery was successful or not"
 	)]
-	pub fn expr_with_semi_recovery(&mut self, assign: bool) -> Option<CompletedMarker> {
+	pub fn expr_with_semi_recovery(&mut self, assign: bool) -> RecoveryResult {
 		let func = if assign {
 			syntax::expr::expr_or_assignment
 		} else {
 			syntax::expr::expr
 		};
 
-		if self.at(T![;]) {
-			let m = self.start();
-			let err = self
-				.err_builder("expected an expression, but found `;` instead")
-				.primary(self.cur_tok().range, "");
-			self.error(err);
-			self.bump_any();
-			m.complete(self, SyntaxKind::JS_UNKNOWN_EXPRESSION);
-
-			return None;
-		}
-
-		// TODO remove .into() once moved to ParsedSyntax
-		func(self).into()
+		func(self).or_recover(
+			self,
+			&ParseRecovery::new(SyntaxKind::JS_UNKNOWN_EXPRESSION, token_set![T![;]]),
+			|p, range| {
+				p.err_builder("expected an expression, but found `;` instead")
+					.primary(range, "")
+			},
+		)
 	}
 }
 

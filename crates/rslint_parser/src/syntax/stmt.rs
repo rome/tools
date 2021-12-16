@@ -288,7 +288,7 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	}
 
 	let expr = p.expr_with_semi_recovery(false);
-	if let Some(expr) = expr {
+	if let Ok(expr) = expr {
 		let m = expr.precede(p);
 		semi(p, start..p.cur_tok().range.end);
 		Present(m.complete(p, JS_EXPRESSION_STATEMENT))
@@ -328,6 +328,7 @@ pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// test_err throw_stmt_err
 	// throw
 	// new Error("oh no :(")
+	// throw;
 	if !p.at(T![throw]) {
 		return Absent;
 	}
@@ -348,7 +349,8 @@ pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		p.error(err);
 		p.missing();
 	} else {
-		p.expr_with_semi_recovery(false);
+		// TODO: review this part when error recovery is fixed
+		p.expr_with_semi_recovery(false).ok();
 	}
 	semi(p, start..p.cur_tok().range.end);
 	Present(m.complete(p, JS_THROW_STATEMENT))
@@ -460,7 +462,7 @@ pub fn parse_return_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.bump_any(); // return keyword
 	if !p.has_linebreak_before_n(0) && p.at_ts(STARTS_EXPR) {
 		// TODO: review this part and make sure it plays well with the new recovery logic
-		p.expr_with_semi_recovery(false);
+		p.expr_with_semi_recovery(false).ok();
 	} else {
 		p.missing();
 	}

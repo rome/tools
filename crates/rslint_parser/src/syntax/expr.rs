@@ -475,7 +475,6 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax<Comple
 		Absent => Absent,
 		Present(lhs) => Present(subscripts(p, lhs, true)),
 	}
-	// let lhs = primary_expr(p);
 }
 
 fn super_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
@@ -932,16 +931,16 @@ pub fn expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let first = expr_or_assignment(p);
 
 	match first {
-		Present(first) => {
+		Present(first_marker) => {
 			if p.at(T![,]) {
-				let sequence_expr_marker = first.precede(p);
+				let sequence_expr_marker = first_marker.precede(p);
 
 				p.bump_any();
 				expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
 
 				Present(sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION))
 			} else {
-				first.into()
+				first_marker.into()
 			}
 		}
 		Absent => Absent,
@@ -1139,6 +1138,7 @@ pub fn primary_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		// test_err primary_expr_invalid_recovery
 		// let a = \; foo();
 		_ => {
+			// TODO: remove it and delegate recovery to parent
 			let err = p
 				.err_builder("Expected an expression, but found none")
 				.primary(p.cur_tok().range, "Expected an expression here");
