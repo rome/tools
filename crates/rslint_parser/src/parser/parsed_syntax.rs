@@ -427,15 +427,6 @@ impl From<Option<CompletedMarker>> for ParsedSyntax<CompletedMarker> {
 	}
 }
 
-impl From<ParsedSyntax<CompletedMarker>> for Option<CompletedMarker> {
-	fn from(option: ParsedSyntax<CompletedMarker>) -> Self {
-		match option {
-			Present(completed) => Some(completed),
-			Absent => None,
-		}
-	}
-}
-
 /// A parsed syntax that may be invalid because of a syntax error (the whole node, node one of its children).
 /// Examples
 /// * Parsing an identifier that turns out to not be valid. For example, `await` isn't a valid identifier in async functions or strict mode
