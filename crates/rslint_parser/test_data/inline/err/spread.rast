@@ -1,11 +1,11 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsArrayExpression {
                 l_brack_token: L_BRACK@0..1 "[" [] [],
-                elements: [
+                elements: JsArrayElementList [
                     JsSpread {
                         dotdotdot_token: DOT2@1..4 "..." [] [],
                         argument: missing (required),
@@ -21,12 +21,12 @@ JsModule {
 
 0: JS_MODULE@0..6
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..5
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..5
     0: JS_EXPRESSION_STATEMENT@0..5
       0: JS_ARRAY_EXPRESSION@0..5
         0: L_BRACK@0..1 "[" [] []
-        1: LIST@1..4
+        1: JS_ARRAY_ELEMENT_LIST@1..4
           0: JS_SPREAD@1..4
             0: DOT2@1..4 "..." [] []
             1: (empty)

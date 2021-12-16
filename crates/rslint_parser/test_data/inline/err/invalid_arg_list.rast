@@ -61,18 +61,39 @@ JsModule {
         JsVariableStatement {
             declarations: JsVariableDeclarations {
                 kind_token: VAR_KW@17..20 "var" [] [],
-                items: JsVariableDeclarationList [],
+                items: JsVariableDeclarationList [
+                    JsVariableDeclaration {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@20..25 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                        },
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsParenthesizedExpression {
+                l_paren_token: L_PAREN@25..26 "(" [] [],
+                expression: JsUnknownExpression {
+                    items: [
+                        COMMA@26..27 "," [] [],
+                    ],
+                },
+                r_paren_token: R_PAREN@29..30 ")" [] [],
             },
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@20..21 "" [Whitespace("\n")] [],
+    eof_token: EOF@30..31 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..21
+0: JS_MODULE@0..31
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..20
+  2: JS_MODULE_ITEM_LIST@0..30
     0: JS_EXPRESSION_STATEMENT@0..8
       0: CALL_EXPR@0..7
         0: JS_IDENTIFIER_EXPRESSION@0..3
@@ -109,12 +130,30 @@ JsModule {
                 0: IDENT@15..17 "b" [] [Whitespace(" ")]
           2: (empty)
       1: (empty)
-    2: JS_VARIABLE_STATEMENT@17..20
-      0: JS_VARIABLE_DECLARATIONS@17..20
+    2: JS_VARIABLE_STATEMENT@17..25
+      0: JS_VARIABLE_DECLARATIONS@17..25
         0: VAR_KW@17..20 "var" [] []
-        1: JS_VARIABLE_DECLARATION_LIST@20..20
+        1: JS_VARIABLE_DECLARATION_LIST@20..25
+          0: JS_VARIABLE_DECLARATION@20..25
+            0: JS_IDENTIFIER_BINDING@20..25
+              0: IDENT@20..25 "foo" [Whitespace("\n")] [Whitespace(" ")]
+            1: (empty)
+            2: (empty)
+            3: (empty)
       1: (empty)
-  3: EOF@20..21 "" [Whitespace("\n")] []
+    3: JS_EXPRESSION_STATEMENT@25..30
+      0: JS_PARENTHESIZED_EXPRESSION@25..30
+        0: L_PAREN@25..26 "(" [] []
+        1: JS_UNKNOWN_EXPRESSION@26..27
+          0: COMMA@26..27 "," [] []
+        2: JS_SEQUENCE_EXPRESSION@27..29
+          0: COMMA@27..28 "," [] []
+          1: JS_IDENTIFIER_EXPRESSION@28..29
+            0: JS_REFERENCE_IDENTIFIER@28..29
+              0: IDENT@28..29 "b" [] []
+        3: R_PAREN@29..30 ")" [] []
+      1: (empty)
+  3: EOF@30..31 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `')'` but instead found `;`
   ┌─ invalid_arg_list.js:1:8
@@ -130,5 +169,23 @@ error[SyntaxError]: expected `')'` but instead found `var`
   │         ^^^ unexpected
 
 --
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ invalid_arg_list.js:3:5
+  │  
+2 │   foo(a,b var
+  │ ┌─────────'
+3 │ │ foo (,,b)
+  │ │     ^ An explicit or implicit semicolon is expected here...
+  │ └────' ...Which is required to end this statement
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ invalid_arg_list.js:3:6
+  │
+3 │ foo (,,b)
+  │      ^ Expected an expression here
+
+--
 foo(a,b;
 foo(a,b var
+foo (,,b)

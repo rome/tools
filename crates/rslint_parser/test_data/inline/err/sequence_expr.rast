@@ -1,7 +1,7 @@
 JsModule {
     interpreter_token: missing (optional),
-    directives: [],
-    items: [
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsSequenceExpression {
                 left: JsNumberLiteralExpression {
@@ -34,8 +34,8 @@ JsModule {
 
 0: JS_MODULE@0..10
   0: (empty)
-  1: LIST@0..0
-  2: LIST@0..9
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..9
     0: JS_EXPRESSION_STATEMENT@0..8
       0: JS_SEQUENCE_EXPRESSION@0..8
         0: JS_NUMBER_LITERAL_EXPRESSION@0..1

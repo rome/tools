@@ -492,7 +492,7 @@ pub struct JsComputedMemberExpression {
 }
 impl JsComputedMemberExpression {
 	pub fn object(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-	pub fn optional_chain_token_token(&self) -> Option<SyntaxToken> {
+	pub fn optional_chain_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T ! [?.])
 	}
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -3859,8 +3859,8 @@ impl std::fmt::Debug for JsComputedMemberExpression {
 		f.debug_struct("JsComputedMemberExpression")
 			.field("object", &support::DebugSyntaxResult(self.object()))
 			.field(
-				"optional_chain_token_token",
-				&support::DebugOptionalElement(self.optional_chain_token_token()),
+				"optional_chain_token",
+				&support::DebugOptionalElement(self.optional_chain_token()),
 			)
 			.field(
 				"l_brack_token",

@@ -60,14 +60,32 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
+        JsExpressionStatement {
+            expression: JsConditionalExpression {
+                test: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@39..44 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                    },
+                },
+                question_mark_token: QUESTION@44..46 "?" [] [Whitespace(" ")],
+                consequent: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@46..50 "bar" [] [Whitespace(" ")],
+                    },
+                },
+                colon_token: COLON@50..51 ":" [] [],
+                alternate: missing (required),
+            },
+            semicolon_token: missing (optional),
+        },
     ],
-    eof_token: EOF@39..40 "" [Whitespace("\n")] [],
+    eof_token: EOF@51..52 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..40
+0: JS_MODULE@0..52
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..39
+  2: JS_MODULE_ITEM_LIST@0..51
     0: JS_EXPRESSION_STATEMENT@0..13
       0: JS_CONDITIONAL_EXPRESSION@0..13
         0: JS_IDENTIFIER_EXPRESSION@0..4
@@ -105,7 +123,19 @@ JsModule {
             0: JS_REFERENCE_IDENTIFIER@36..39
               0: IDENT@36..39 "bar" [] []
       1: (empty)
-  3: EOF@39..40 "" [Whitespace("\n")] []
+    2: JS_EXPRESSION_STATEMENT@39..51
+      0: JS_CONDITIONAL_EXPRESSION@39..51
+        0: JS_IDENTIFIER_EXPRESSION@39..44
+          0: JS_REFERENCE_IDENTIFIER@39..44
+            0: IDENT@39..44 "foo" [Whitespace("\n")] [Whitespace(" ")]
+        1: QUESTION@44..46 "?" [] [Whitespace(" ")]
+        2: JS_IDENTIFIER_EXPRESSION@46..50
+          0: JS_REFERENCE_IDENTIFIER@46..50
+            0: IDENT@46..50 "bar" [] [Whitespace(" ")]
+        3: COLON@50..51 ":" [] []
+        4: (empty)
+      1: (empty)
+  3: EOF@51..52 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `:` but instead found `baz`
   ┌─ conditional_expr_err.js:1:11
@@ -121,5 +151,13 @@ error[SyntaxError]: expected `:` but instead found `baz`
   │           ^^^ unexpected
 
 --
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ conditional_expr_err.js:4:1
+  │
+4 │ 
+  │ ^ Expected an expression here
+
+--
 foo ? bar baz
 foo ? bar baz ? foo : bar
+foo ? bar :
