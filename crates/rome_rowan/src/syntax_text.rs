@@ -278,14 +278,14 @@ mod private {
 
 #[cfg(test)]
 mod tests {
-	use crate::api::RawLanguage;
-	use crate::{SyntaxKind, SyntaxNode, TreeBuilder};
+	use crate::api::{RawLanguage, RawLanguageKind};
+	use crate::{SyntaxNode, TreeBuilder};
 
 	fn build_tree(chunks: &[&str]) -> SyntaxNode<RawLanguage> {
 		let mut builder = TreeBuilder::<'_, RawLanguage>::new();
-		builder.start_node(SyntaxKind(1));
+		builder.start_node(RawLanguageKind(1));
 		for &chunk in chunks.iter() {
-			builder.token(SyntaxKind(2), chunk)
+			builder.token(RawLanguageKind(2), chunk)
 		}
 		builder.finish_node();
 		builder.finish()

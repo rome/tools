@@ -662,6 +662,18 @@ impl JsEmptyStatement {
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExpressionSnipped {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExpressionSnipped {
+	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+		support::required_node(&self.syntax)
+	}
+	pub fn eof_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![EOF])
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExpressionStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2856,6 +2868,7 @@ pub enum JsAnyParameter {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyRoot {
+	JsExpressionSnipped(JsExpressionSnipped),
 	JsModule(JsModule),
 	JsScript(JsScript),
 }
@@ -4203,6 +4216,25 @@ impl std::fmt::Debug for JsEmptyStatement {
 				"semicolon_token",
 				&support::DebugSyntaxResult(self.semicolon_token()),
 			)
+			.finish()
+	}
+}
+impl AstNode for JsExpressionSnipped {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPRESSION_SNIPPED }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExpressionSnipped {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExpressionSnipped")
+			.field("expression", &support::DebugSyntaxResult(self.expression()))
+			.field("eof_token", &support::DebugSyntaxResult(self.eof_token()))
 			.finish()
 	}
 }
@@ -10227,6 +10259,9 @@ impl std::fmt::Debug for JsAnyParameter {
 		}
 	}
 }
+impl From<JsExpressionSnipped> for JsAnyRoot {
+	fn from(node: JsExpressionSnipped) -> JsAnyRoot { JsAnyRoot::JsExpressionSnipped(node) }
+}
 impl From<JsModule> for JsAnyRoot {
 	fn from(node: JsModule) -> JsAnyRoot { JsAnyRoot::JsModule(node) }
 }
@@ -10234,9 +10269,12 @@ impl From<JsScript> for JsAnyRoot {
 	fn from(node: JsScript) -> JsAnyRoot { JsAnyRoot::JsScript(node) }
 }
 impl AstNode for JsAnyRoot {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_MODULE | JS_SCRIPT) }
+	fn can_cast(kind: SyntaxKind) -> bool {
+		matches!(kind, JS_EXPRESSION_SNIPPED | JS_MODULE | JS_SCRIPT)
+	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
+			JS_EXPRESSION_SNIPPED => JsAnyRoot::JsExpressionSnipped(JsExpressionSnipped { syntax }),
 			JS_MODULE => JsAnyRoot::JsModule(JsModule { syntax }),
 			JS_SCRIPT => JsAnyRoot::JsScript(JsScript { syntax }),
 			_ => return None,
@@ -10245,6 +10283,7 @@ impl AstNode for JsAnyRoot {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
+			JsAnyRoot::JsExpressionSnipped(it) => &it.syntax,
 			JsAnyRoot::JsModule(it) => &it.syntax,
 			JsAnyRoot::JsScript(it) => &it.syntax,
 		}
@@ -10253,6 +10292,7 @@ impl AstNode for JsAnyRoot {
 impl std::fmt::Debug for JsAnyRoot {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
+			JsAnyRoot::JsExpressionSnipped(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyRoot::JsModule(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyRoot::JsScript(it) => std::fmt::Debug::fmt(it, f),
 		}
@@ -11399,6 +11439,11 @@ impl std::fmt::Display for JsEmptyStatement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsExpressionSnipped {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsExpressionStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -12172,6 +12217,31 @@ impl std::fmt::Display for TsUnknown {
 impl std::fmt::Display for TsVoid {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsUnknown {
+	syntax: SyntaxNode,
+}
+impl JsUnknown {
+	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+impl AstNode for JsUnknown {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsUnknown {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsUnknown")
+			.field("items", &support::DebugSyntaxElementChildren(self.items()))
+			.finish()
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -13404,6 +13474,9 @@ impl Debug for DebugSyntaxElement {
 				JS_EMPTY_STATEMENT => {
 					std::fmt::Debug::fmt(&JsEmptyStatement::cast(node.clone()).unwrap(), f)
 				}
+				JS_EXPRESSION_SNIPPED => {
+					std::fmt::Debug::fmt(&JsExpressionSnipped::cast(node.clone()).unwrap(), f)
+				}
 				JS_EXPRESSION_STATEMENT => {
 					std::fmt::Debug::fmt(&JsExpressionStatement::cast(node.clone()).unwrap(), f)
 				}
@@ -13665,6 +13738,7 @@ impl Debug for DebugSyntaxElement {
 				JS_UNARY_EXPRESSION => {
 					std::fmt::Debug::fmt(&JsUnaryExpression::cast(node.clone()).unwrap(), f)
 				}
+				JS_UNKNOWN => std::fmt::Debug::fmt(&JsUnknown::cast(node.clone()).unwrap(), f),
 				JS_UNKNOWN_ASSIGNMENT => {
 					std::fmt::Debug::fmt(&JsUnknownAssignment::cast(node.clone()).unwrap(), f)
 				}

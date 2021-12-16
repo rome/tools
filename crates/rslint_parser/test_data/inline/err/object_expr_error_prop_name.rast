@@ -17,12 +17,16 @@ JsModule {
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
                                 members: JsObjectMemberList [
-                                    JsPropertyObjectMember {
-                                        name: missing (required),
-                                        colon_token: COLON@17..19 ":" [] [Whitespace(" ")],
-                                        value: JsRegexLiteralExpression {
-                                            value_token: JS_REGEX_LITERAL@19..25 "/foo/" [] [Whitespace(" ")],
-                                        },
+                                    JsUnknownMember {
+                                        items: [
+                                            1: ERROR@10..17
+                                              0: JS_REGEX_LITERAL@10..17 "/: 6, /" [] []
+                                            ,
+                                            COLON@17..19 ":" [] [Whitespace(" ")],
+                                            JsRegexLiteralExpression {
+                                                value_token: JS_REGEX_LITERAL@19..25 "/foo/" [] [Whitespace(" ")],
+                                            },
+                                        ],
                                     },
                                 ],
                                 r_curly_token: R_CURLY@25..26 "}" [] [],
@@ -89,7 +93,7 @@ JsModule {
               1: JS_OBJECT_EXPRESSION@8..26
                 0: L_CURLY@8..10 "{" [] [Whitespace(" ")]
                 1: JS_OBJECT_MEMBER_LIST@10..25
-                  0: JS_PROPERTY_OBJECT_MEMBER@10..25
+                  0: JS_UNKNOWN_MEMBER@10..25
                     0: (empty)
                     1: ERROR@10..17
                       0: JS_REGEX_LITERAL@10..17 "/: 6, /" [] []

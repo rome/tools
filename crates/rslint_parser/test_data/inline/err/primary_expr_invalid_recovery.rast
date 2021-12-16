@@ -2,24 +2,34 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsVariableStatement {
-            declarations: JsVariableDeclarations {
-                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
-                items: JsVariableDeclarationList [
-                    JsVariableDeclaration {
-                        id: JsIdentifierBinding {
-                            name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
+        JsUnknownStatement {
+            items: [
+                JsUnknown {
+                    items: [
+                        LET_KW@0..4 "let" [] [Whitespace(" ")],
+                        JsUnknown {
+                            items: [
+                                JsUnknown {
+                                    items: [
+                                        JsIdentifierBinding {
+                                            name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
+                                        },
+                                        JsUnknown {
+                                            items: [
+                                                EQ@6..8 "=" [] [Whitespace(" ")],
+                                                1: ERROR@8..9
+                                                  0: ERROR_TOKEN@8..9 "\\" [] []
+                                                ,
+                                            ],
+                                        },
+                                    ],
+                                },
+                            ],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
-                        initializer: JsInitializerClause {
-                            eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
-                            expression: missing (required),
-                        },
-                    },
-                ],
-            },
-            semicolon_token: SEMICOLON@9..11 ";" [] [Whitespace(" ")],
+                    ],
+                },
+                SEMICOLON@9..11 ";" [] [Whitespace(" ")],
+            ],
         },
         JsExpressionStatement {
             expression: CallExpr {
@@ -45,16 +55,16 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..17
-    0: JS_VARIABLE_STATEMENT@0..11
-      0: JS_VARIABLE_DECLARATIONS@0..9
+    0: JS_UNKNOWN_STATEMENT@0..11
+      0: JS_UNKNOWN@0..9
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@4..9
-          0: JS_VARIABLE_DECLARATION@4..9
+        1: JS_UNKNOWN@4..9
+          0: JS_UNKNOWN@4..9
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
-            3: JS_INITIALIZER_CLAUSE@6..9
+            3: JS_UNKNOWN@6..9
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: ERROR@8..9
                 0: ERROR_TOKEN@8..9 "\\" [] []

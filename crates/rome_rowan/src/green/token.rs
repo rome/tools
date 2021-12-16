@@ -10,7 +10,7 @@ use countme::Count;
 use crate::{
 	api::TriviaPiece,
 	arc::{Arc, HeaderSlice, ThinArc},
-	green::SyntaxKind,
+	green::RawSyntaxKind,
 	TextSize,
 };
 
@@ -63,7 +63,7 @@ impl From<Vec<TriviaPiece>> for GreenTokenTrivia {
 
 #[derive(PartialEq, Eq, Hash)]
 struct GreenTokenHead {
-	kind: SyntaxKind,
+	kind: RawSyntaxKind,
 	leading: GreenTokenTrivia,
 	trailing: GreenTokenTrivia,
 	_c: Count<GreenToken>,
@@ -143,7 +143,7 @@ impl fmt::Display for GreenTokenData {
 impl GreenTokenData {
 	/// Kind of this Token.
 	#[inline]
-	pub fn kind(&self) -> SyntaxKind {
+	pub fn kind(&self) -> RawSyntaxKind {
 		self.data.header.kind
 	}
 
@@ -209,13 +209,13 @@ impl GreenTokenData {
 impl GreenToken {
 	#[inline]
 	#[cfg(test)]
-	pub fn new(kind: SyntaxKind, text: &str) -> GreenToken {
+	pub fn new(kind: RawSyntaxKind, text: &str) -> GreenToken {
 		Self::with_trivia(kind, text, GreenTokenTrivia::None, GreenTokenTrivia::None)
 	}
 
 	#[inline]
 	pub fn with_trivia(
-		kind: SyntaxKind,
+		kind: RawSyntaxKind,
 		text: &str,
 		leading: GreenTokenTrivia,
 		trailing: GreenTokenTrivia,
@@ -268,7 +268,7 @@ mod tests {
 	#[test]
 	fn green_token_text_and_len() {
 		let t = GreenToken::with_trivia(
-			SyntaxKind(0),
+			RawSyntaxKind(0),
 			"\n\t let \t\t",
 			GreenTokenTrivia::Whitespace(3),
 			GreenTokenTrivia::Whitespace(3),

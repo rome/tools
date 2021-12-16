@@ -2,12 +2,14 @@
 //! This is derived from rust-analyzer/xtask/codegen
 
 use std::vec;
+use syn::token::Comma;
 
 use super::{
 	kinds_src::{AstSrc, Field},
 	to_lower_snake_case, Mode,
 };
-use crate::codegen::kinds_src::{AstListSrc, TokenKind};
+use crate::codegen::generate_js_tree_shape::generate_js_tree_shape;
+use crate::codegen::kinds_src::{AstListSeparatorConfiguration, AstListSrc, TokenKind};
 use crate::{
 	codegen::{
 		self,
@@ -34,6 +36,10 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
 	let syntax_kinds_file = project_root().join(codegen::SYNTAX_KINDS);
 	let contents = generate_syntax_kinds(KINDS_SRC)?;
 	update(syntax_kinds_file.as_path(), &contents, mode)?;
+
+	let js_tree_shape_file = project_root().join(codegen::JS_TREE_SHAPE);
+	let contents = generate_js_tree_shape(&ast)?;
+	update(js_tree_shape_file.as_path(), &contents, mode)?;
 
 	Ok(())
 }
@@ -66,14 +72,14 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 			}
 			NodeRuleClassification::Unknown => ast.unknowns.push(name),
 			NodeRuleClassification::List {
-				separated,
+				separator,
 				element_name,
 			} => {
 				ast.push_list(
 					name.as_str(),
 					AstListSrc {
 						element_name,
-						separated,
+						separator,
 					},
 				);
 			}
@@ -95,10 +101,11 @@ enum NodeRuleClassification {
 
 	/// A list node of the form `A = B*` or `A = (B (',' B)*)` or `A = (B (',' B)* ','?)`
 	List {
-		/// Are the nodes in this list separated by a token
-		separated: bool,
 		/// Name of the nodes stored in this list (`B` in the example above)
 		element_name: String,
+
+		/// [None] if this is a node list or [Some] if this is a separated list
+		separator: Option<AstListSeparatorConfiguration>,
 	},
 }
 
@@ -129,7 +136,7 @@ fn classify_node_rule(grammar: &Grammar, rule: &Rule) -> NodeRuleClassification 
 				NodeRuleClassification::Unknown
 			} else {
 				NodeRuleClassification::List {
-					separated: false,
+					separator: None,
 					element_name: element_type.to_string(),
 				}
 			}
@@ -137,10 +144,13 @@ fn classify_node_rule(grammar: &Grammar, rule: &Rule) -> NodeRuleClassification 
 		Rule::Seq(rules) => {
 			// (T (',' T)* ','?)
 			// (T (',' T)*)
-			if let Some(element_name) = handle_comma_list(grammar, rules.as_slice()) {
+			if let Some(comma_list) = handle_comma_list(grammar, rules.as_slice()) {
 				NodeRuleClassification::List {
-					separated: true,
-					element_name: String::from(element_name),
+					separator: Some(AstListSeparatorConfiguration {
+						allow_trailing: comma_list.trailing_separator,
+						separator_token: comma_list.separator_name.to_string(),
+					}),
+					element_name: comma_list.node_name.to_string(),
 				}
 			} else {
 				NodeRuleClassification::Node
@@ -243,9 +253,15 @@ fn handle_rule(
 	};
 }
 
+struct CommaList<'a> {
+	node_name: &'a str,
+	separator_name: &'a str,
+	trailing_separator: bool,
+}
+
 // (T (',' T)* ','?)
 // (T (',' T)*)
-fn handle_comma_list<'a>(grammar: &'a Grammar, rules: &[Rule]) -> Option<&'a str> {
+fn handle_comma_list<'a>(grammar: &'a Grammar, rules: &[Rule]) -> Option<CommaList<'a>> {
 	// Does it match (T * ',')?
 	let (node, repeat, trailing_separator) = match rules {
 		[Rule::Node(node), Rule::Rep(repeat), Rule::Opt(trailing_separator)] => {
@@ -262,7 +278,7 @@ fn handle_comma_list<'a>(grammar: &'a Grammar, rules: &[Rule]) -> Option<&'a str
 	};
 
 	// Does the repeat match (token node))
-	match repeat.as_slice() {
+	let comma = match repeat.as_slice() {
 		[comma, Rule::Node(n)] => {
 			let separator_matches_trailing = if let Some(trailing) = trailing_separator {
 				&**trailing == comma
@@ -273,11 +289,22 @@ fn handle_comma_list<'a>(grammar: &'a Grammar, rules: &[Rule]) -> Option<&'a str
 			if n != node || !separator_matches_trailing {
 				return None;
 			}
+
+			comma
 		}
 		_ => return None,
-	}
+	};
 
-	Some(&grammar[*node].name)
+	let separator_name = match comma {
+		Rule::Token(token) => &grammar[*token].name,
+		_ => panic!("The separator in rule {:?} must be a token", rules),
+	};
+
+	Some(CommaList {
+		node_name: &grammar[*node].name,
+		trailing_separator: trailing_separator.is_some(),
+		separator_name,
+	})
 }
 
 // handle cases like:  `op: ('-' | '+' | '*')`

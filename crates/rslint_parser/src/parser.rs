@@ -68,13 +68,14 @@ impl ParserProgress {
 ///     syntax::expr,
 ///     tokenize,
 ///     TokenSource,
-///     ast::JsParenthesizedExpression,
+///     ast::{JsParenthesizedExpression, JsAnyExpression},
 ///     LosslessTreeSink,
 ///     SyntaxNode,
 ///     process,
 ///     AstNode,
 ///     Syntax
 /// };
+/// use rslint_parser::ast::JsExpressionSnipped;
 ///
 /// let source = "(delete b)";
 ///
@@ -95,7 +96,7 @@ impl ParserProgress {
 /// // A completed marker marks the start and end indices in the events vec which signify
 /// // the Start event, and the Finish event.
 /// // Completed markers can be turned into an ast node with parse_marker on the parser
-/// let completed_marker = expr::parse_expression(&mut parser).unwrap();
+/// let completed_marker = expr::parse_expression_snipped(&mut parser).unwrap();
 ///
 /// // Make a new text tree sink, its job is assembling events into a rowan GreenNode.
 /// // At each point (Start, Token, Finish, Error) it also consumes whitespace.
@@ -110,13 +111,21 @@ impl ParserProgress {
 /// let (untyped_node, errors) = sink.finish();
 ///
 /// assert!(errors.is_empty());
-///
-/// assert!(JsParenthesizedExpression::can_cast(untyped_node.kind()));
+/// dbg!(untyped_node.kind());
+/// assert!(JsExpressionSnipped::can_cast(untyped_node.kind()));
 ///
 /// // Convert the untyped SyntaxNode into a typed AST node
-/// let typed_expr = JsParenthesizedExpression::cast(untyped_node).unwrap();
+/// let expression_snipped = JsExpressionSnipped::cast(untyped_node).unwrap();
+/// let expression = expression_snipped.expression().unwrap();
 ///
-/// assert_eq!(typed_expr.expression().unwrap().syntax().text(), "delete b");
+/// match expression {
+///   JsAnyExpression::JsParenthesizedExpression(parenthesized) => { ///
+///     assert_eq!(parenthesized.expression().unwrap().syntax().text(), "delete b");
+///   },
+///   _ => panic!("Expected parenthesized expression")
+/// }
+///
+///
 /// ```
 pub struct Parser<'t> {
 	pub file_id: usize,

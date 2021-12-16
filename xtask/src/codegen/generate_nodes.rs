@@ -468,7 +468,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		};
 
 		let padded_name = format!("{} ", name);
-		let list_impl = if list.separated {
+		let list_impl = if list.separator.is_some() {
 			quote! {
 				impl AstSeparatedList<#element_type> for #list_name {
 					fn syntax_list(&self) -> &SyntaxList {
@@ -617,7 +617,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 	Ok(pretty)
 }
 
-fn token_kind_to_code(name: &str) -> proc_macro2::TokenStream {
+pub(crate) fn token_kind_to_code(name: &str) -> proc_macro2::TokenStream {
 	let kind_variant_name = to_upper_snake_case(name);
 	if KINDS_SRC.literals.contains(&kind_variant_name.as_str())
 		|| KINDS_SRC.tokens.contains(&kind_variant_name.as_str())

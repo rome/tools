@@ -3,14 +3,21 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: Template {
-                l_tick_token: BACKTICK@3..4 "`" [] [],
-                elements: TemplateElementList [
-                    TemplateChunkElement {
-                        template_chunk_token: TEMPLATE_CHUNK@4..7 "bar" [] [],
+            expression: JsUnknownExpression {
+                items: [
+                    JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@0..3 "foo" [] [],
+                        },
                     },
+                    BACKTICK@3..4 "`" [] [],
+                    TemplateElementList [
+                        TemplateChunkElement {
+                            template_chunk_token: TEMPLATE_CHUNK@4..7 "bar" [] [],
+                        },
+                    ],
+                    BACKTICK@7..8 "`" [] [],
                 ],
-                r_tick_token: BACKTICK@3..4 "`" [] [],
             },
             semicolon_token: missing (optional),
         },
@@ -83,7 +90,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..32
     0: JS_EXPRESSION_STATEMENT@0..8
-      0: TEMPLATE@0..8
+      0: JS_UNKNOWN_EXPRESSION@0..8
         0: JS_IDENTIFIER_EXPRESSION@0..3
           0: JS_REFERENCE_IDENTIFIER@0..3
             0: IDENT@0..3 "foo" [] []
