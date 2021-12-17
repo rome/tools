@@ -16,13 +16,16 @@ JsModule {
             },
             semicolon_token: SEMICOLON@8..9 ";" [] [],
         },
-        JsUnknownStatement {
-            items: [
-                MINUS@9..11 "-" [Whitespace("\n")] [],
-            ],
-        },
-        JsEmptyStatement {
-            semicolon_token: SEMICOLON@11..12 ";" [] [],
+        JsExpressionStatement {
+            expression: JsUnaryExpression {
+                operator: MINUS@9..11 "-" [Whitespace("\n")] [],
+                argument: JsUnknownExpression {
+                    items: [
+                        SEMICOLON@11..12 ";" [] [],
+                    ],
+                },
+            },
+            semicolon_token: missing (optional),
         },
     ],
     eof_token: EOF@12..13 "" [Whitespace("\n")] [],
@@ -42,10 +45,13 @@ JsModule {
         0: MINUS2@4..8 "--" [Whitespace("\n")] [Whitespace(" ")]
         1: (empty)
       1: SEMICOLON@8..9 ";" [] []
-    2: JS_UNKNOWN_STATEMENT@9..11
-      0: MINUS@9..11 "-" [Whitespace("\n")] []
-    3: JS_EMPTY_STATEMENT@11..12
-      0: SEMICOLON@11..12 ";" [] []
+    2: JS_EXPRESSION_STATEMENT@9..12
+      0: JS_UNARY_EXPRESSION@9..12
+        0: MINUS@9..11 "-" [Whitespace("\n")] []
+        1: JS_UNKNOWN_EXPRESSION@11..12
+          0: SEMICOLON@11..12 ";" [] []
+        2: (empty)
+      1: (empty)
   3: EOF@12..13 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected an identifier, or a member expression but instead found ';'
@@ -62,11 +68,11 @@ error[SyntaxError]: expected an identifier, or a member expression but instead f
   │    ^ Expected an identifier, or a member expression here
 
 --
-error[SyntaxError]: expected a statement but instead found '-'
-  ┌─ unary_expr.js:3:1
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ unary_expr.js:3:2
   │
 3 │ -;
-  │ ^ Expected a statement here
+  │  ^ Expected an expression here
 
 --
 ++ ;

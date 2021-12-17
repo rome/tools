@@ -93,7 +93,7 @@ pub const STARTS_EXPR: TokenSet = token_set![
 // "foo"
 // 'bar'
 // null
-pub fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let literal_kind = match p.cur_tok().kind {
 		SyntaxKind::JS_NUMBER_LITERAL => {
 			if p.cur_src().ends_with('n') {
@@ -205,7 +205,7 @@ fn parse_assign_expr_recursive(
 //  yield* foo;
 //  yield;
 // }
-pub(crate) fn yield_expr(p: &mut Parser) -> CompletedMarker {
+fn yield_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect_required(T![yield]);
 
@@ -222,7 +222,7 @@ pub(crate) fn yield_expr(p: &mut Parser) -> CompletedMarker {
 // test conditional_expr
 // foo ? bar : baz
 // foo ? bar : baz ? bar : baz
-pub fn parse_conditional_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_conditional_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// test_err conditional_expr_err
 	// foo ? bar baz
 	// foo ? bar baz ? foo : bar
@@ -251,7 +251,7 @@ pub fn parse_conditional_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 }
 
 /// A binary expression such as `2 + 2` or `foo * bar + 2` or a logical expression 'a || b'
-pub fn parse_binary_or_logical_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_binary_or_logical_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let left = parse_unary_expr(p);
 
 	parse_binary_or_logical_expression_recursive(p, left, 0)
@@ -374,7 +374,7 @@ fn parse_binary_or_logical_expression_recursive(
 
 // test_err new_exprs
 // new;
-pub fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax<CompletedMarker> {
+fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax<CompletedMarker> {
 	if p.at(T![new]) {
 		// We must start the marker here and not outside or else we make
 		// a needless node if the node ends up just being a primary expr
@@ -470,7 +470,7 @@ fn parse_super_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // test subscripts
 // foo`bar`
 // foo(bar)(baz)(baz)[bar]
-pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> CompletedMarker {
+fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> CompletedMarker {
 	// test_err subscripts_err
 	// foo()?.baz[].
 	// BAR`b
@@ -604,7 +604,7 @@ fn parse_private_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	Present(m.complete(p, JS_PRIVATE_NAME))
 }
 
-pub(crate) fn parse_any_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_any_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
 		T![#] => parse_private_name(p),
 		_ => parse_name(p),
@@ -642,7 +642,7 @@ pub fn parse_computed_member_expression(
 }
 
 /// An identifier name, either an ident or a keyword
-pub fn parse_identifier_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_identifier_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if is_at_identifier_name(p) {
 		let m = p.start();
 		p.bump_remap(T![ident]);
@@ -660,7 +660,7 @@ pub fn parse_identifier_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // foo(a,b;
 // foo(a,b var
 // foo (,,b)
-pub fn parse_arguments(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_arguments(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T!['(']) {
 		return Absent;
 	}
@@ -703,10 +703,7 @@ pub fn parse_arguments(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // (5 + 5) => {}
 // (a, ,b) => {}
 // (a, b) =>
-pub fn parse_paren_or_arrow_expr(
-	p: &mut Parser,
-	can_be_arrow: bool,
-) -> ParsedSyntax<CompletedMarker> {
+fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax<CompletedMarker> {
 	let m = p.start();
 	let checkpoint = p.checkpoint();
 	let start = p.cur_tok().range.start;
@@ -915,7 +912,7 @@ pub fn parse_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 }
 
 /// A primary expression such as a literal, an object, an array, or `this`.
-pub fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let parsed_literal_expression = parse_literal_expression(p);
 	if parsed_literal_expression.is_present() {
 		return parsed_literal_expression;
@@ -1163,7 +1160,7 @@ fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax>
 /// An identifier is invalid if:
 /// * It is named `await` inside of an async function
 /// * It is named `yield` inside of a generator function or in strict mode
-pub(crate) fn parse_identifier(
+pub(super) fn parse_identifier(
 	p: &mut Parser,
 	kind: SyntaxKind,
 ) -> ParsedSyntax<ConditionalSyntax> {
@@ -1227,7 +1224,7 @@ pub(crate) fn is_at_identifier(p: &Parser) -> bool {
 
 // test_err template_literal
 // let a = `foo ${}`
-pub fn parse_template_literal(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker {
+fn parse_template_literal(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker {
 	let m = tag.map(|m| m.precede(p)).unwrap_or_else(|| p.start());
 	p.expect_required(BACKTICK);
 	let elements_list = p.start();
@@ -1310,7 +1307,7 @@ impl ParseSeparatedList for ArrayElementsList {
 // [foo,];
 // [,,,,,foo,,,,];
 // [...a, ...b];
-pub fn parse_array_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_array_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T!['[']) {
 		return Absent;
 	}
@@ -1324,7 +1321,7 @@ pub fn parse_array_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // test_err spread
 // [...]
 /// A spread element consisting of three dots and an assignment expression such as `...foo`
-pub fn parse_spread_element(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_spread_element(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![...]) {
 		return Absent;
 	}
@@ -1336,7 +1333,7 @@ pub fn parse_spread_element(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 }
 
 /// A left hand side expression, either a member expression or a call expression such as `foo()`.
-pub fn parse_lhs_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_lhs_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let lhs = if p.at(T![super]) && p.nth_at(1, T!['(']) {
 		let super_syntax = parse_super_expression(p);
 		if let Present(mut super_marker) = super_syntax {
@@ -1356,85 +1353,74 @@ pub fn parse_lhs_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		parse_member_or_new_expr(p, true)
 	};
 
-	if let Present(m) = lhs {
-		if m.kind() == JS_ARROW_FUNCTION_EXPRESSION {
-			return lhs;
-		}
+	if lhs.kind() == Some(JS_ARROW_FUNCTION_EXPRESSION) {
+		return lhs;
 	}
 
-	match lhs {
-		Present(lhs) => {
-			let m = lhs.precede(p);
-			let type_args = if p.at(T![<]) {
-				let checkpoint = p.checkpoint();
-				let mut complete = try_parse_ts(p, ts_type_args);
-				if !p.at(T!['(']) {
-					p.rewind(checkpoint);
-					None
-				} else {
-					if let Some(ref mut comp) = complete {
-						comp.err_if_not_ts(
-							p,
-							"type arguments can only be used in TypeScript files",
-						);
-					}
-					complete
-				}
-			} else {
+	lhs.map(|lhs_marker| {
+		let m = lhs_marker.precede(p);
+		let type_args = if p.at(T![<]) {
+			let checkpoint = p.checkpoint();
+			let mut complete = try_parse_ts(p, ts_type_args);
+			if !p.at(T!['(']) {
+				p.rewind(checkpoint);
 				None
-			};
-
-			if p.at(T!['(']) || type_args.is_some() {
-				if type_args.is_none() {
-					p.missing();
+			} else {
+				if let Some(ref mut comp) = complete {
+					comp.err_if_not_ts(p, "type arguments can only be used in TypeScript files");
 				}
+				complete
+			}
+		} else {
+			None
+		};
 
-				// it's safe to unwrap
-				parse_arguments(p).unwrap();
-				let lhs = m.complete(p, CALL_EXPR);
-				return Present(subscripts(p, lhs, false));
+		if p.at(T!['(']) || type_args.is_some() {
+			if type_args.is_none() {
+				p.missing();
 			}
 
-			m.abandon(p);
-			Present(lhs)
+			// it's safe to unwrap
+			parse_arguments(p).unwrap();
+			let lhs = m.complete(p, CALL_EXPR);
+			return subscripts(p, lhs, false);
 		}
-		Absent => Absent,
-	}
+
+		m.abandon(p);
+		lhs_marker
+	})
 }
 
 /// A postifx expression, either `LHSExpr [no linebreak] ++` or `LHSExpr [no linebreak] --`.
 // test postfix_expr
 // foo++
 // foo--
-pub fn parse_postfix_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_postfix_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let checkpoint = p.checkpoint();
 	let lhs = parse_lhs_expr(p);
-	match lhs {
-		Present(marker) => {
-			if !p.has_linebreak_before_n(0) {
-				match p.cur() {
-					T![++] => {
-						let assignment_target = expression_to_assignment(p, marker, checkpoint);
-						let m = assignment_target.precede(p);
-						p.bump(T![++]);
-						let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
-						Present(complete)
-					}
-					T![--] => {
-						let assignment_target = expression_to_assignment(p, marker, checkpoint);
-						let m = assignment_target.precede(p);
-						p.bump(T![--]);
-						let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
-						Present(complete)
-					}
-					_ => lhs,
+	lhs.map(|marker| {
+		if !p.has_linebreak_before_n(0) {
+			match p.cur() {
+				T![++] => {
+					let assignment_target = expression_to_assignment(p, marker, checkpoint);
+					let m = assignment_target.precede(p);
+					p.bump(T![++]);
+					let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
+					complete
 				}
-			} else {
-				lhs
+				T![--] => {
+					let assignment_target = expression_to_assignment(p, marker, checkpoint);
+					let m = assignment_target.precede(p);
+					p.bump(T![--]);
+					let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
+					complete
+				}
+				_ => marker,
 			}
+		} else {
+			marker
 		}
-		Absent => Absent,
-	}
+	})
 }
 
 // test_err unary_expr
@@ -1443,7 +1429,7 @@ pub fn parse_postfix_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // -;
 
 /// A unary expression such as `!foo` or `++bar`
-pub fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	const UNARY_SINGLE: TokenSet =
 		token_set![T![delete], T![void], T![typeof], T![+], T![-], T![~], T![!]];
 
@@ -1496,22 +1482,21 @@ pub fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		let op = p.cur();
 		p.bump_any();
 
-		let res = if let Present(unary) = parse_unary_expr(p) {
-			unary
-		} else {
-			m.abandon(p);
-			return Absent;
-		};
+		let res = parse_unary_expr(p).or_missing(p);
 
 		if op == T![delete] && p.typescript() {
-			match res.kind() {
-				JS_STATIC_MEMBER_EXPRESSION | JS_COMPUTED_MEMBER_EXPRESSION => {}
-				_ => {
-					let err = p
-						.err_builder("the target for a delete operator must be a property access")
-						.primary(res.range(p), "");
+			if let NodeMarker(res) = res {
+				match res.kind() {
+					JS_STATIC_MEMBER_EXPRESSION | JS_COMPUTED_MEMBER_EXPRESSION => {}
+					_ => {
+						let err = p
+							.err_builder(
+								"the target for a delete operator must be a property access",
+							)
+							.primary(res.range(p), "");
 
-					p.error(err);
+						p.error(err);
+					}
 				}
 			}
 		}
