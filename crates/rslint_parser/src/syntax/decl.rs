@@ -95,11 +95,11 @@ pub(super) fn parse_parameters_list(
 				let start = p.cur_tok().range.start;
 				let m = p.start();
 				p.bump_any();
-				let expr = parse_expr_or_assignment(&mut *p);
-				let end = match expr {
-					Absent => p.cur_tok().range.start,
-					Present(marker) => usize::from(marker.range(p).end()),
-				};
+
+				let end = parse_expr_or_assignment(&mut *p)
+					.ok()
+					.map(|marker| usize::from(marker.range(p).end()))
+					.unwrap_or_else(|| p.cur_tok().range.start);
 
 				let err = p
 					.err_builder("rest elements may not have default initializers")

@@ -2,7 +2,7 @@
 
 use super::decl::*;
 use super::expr::{
-	lhs_expr, parse_expr_or_assignment, parse_identifier_name, parse_literal_expression,
+	parse_expr_or_assignment, parse_identifier_name, parse_lhs_expr, parse_literal_expression,
 };
 use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use crate::parser::ParserProgress;
@@ -423,7 +423,7 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
 	let mut elems = Vec::with_capacity(1);
 	let m = p.start();
 	if exprs {
-		lhs_expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
+		parse_lhs_expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
 	} else {
 		ts_entity_name(p, None, false);
 	}
@@ -440,7 +440,7 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
 		progress.assert_progressing(p);
 		let m = p.start();
 		if exprs {
-			lhs_expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
+			parse_lhs_expr(p).or_missing_with_error(p, js_parse_error::expected_expression);
 		} else {
 			ts_entity_name(p, None, false);
 		}

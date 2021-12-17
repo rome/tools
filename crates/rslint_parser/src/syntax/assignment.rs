@@ -2,7 +2,7 @@ use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{
-	is_at_name, parse_conditional_expr, parse_expression, parse_name, unary_expr,
+	is_at_name, parse_conditional_expr, parse_expression, parse_name, parse_unary_expr,
 };
 use crate::syntax::js_parse_error::{expected_assignment_target, expected_identifier};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
@@ -91,7 +91,7 @@ pub(crate) fn parse_assignment(
 
 	// TODO remove the rewind inside of the error handle once the `unary_expr` returns a ParsedSyntax
 	let assignment_expression = match expr_kind {
-		AssignmentExprPrecedence::Unary => unary_expr(p),
+		AssignmentExprPrecedence::Unary => parse_unary_expr(p),
 		AssignmentExprPrecedence::Conditional => parse_conditional_expr(p),
 		AssignmentExprPrecedence::Any => parse_expression(p),
 	};
