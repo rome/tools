@@ -1506,12 +1506,6 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 	parse_postfix_expr(p)
 }
 
-pub(super) fn is_at_name(p: &Parser) -> bool {
+pub(super) fn is_at_identifier_name(p: &Parser) -> bool {
 	p.at(T![ident]) || p.cur().is_keyword()
-}
-
-fn is_at_identifier_name(p: &Parser) -> bool {
-	let t = p.cur();
-
-	t.is_keyword() || t == T![ident]
 }

@@ -633,12 +633,7 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
 /// An expression wrapped in parentheses such as `()`
 pub fn parenthesized_expression(p: &mut Parser) {
 	p.state.allow_object_expr = p.expect_required(T!['(']);
-
-	let pos = p.token_pos();
-	// Remove the pos check once `expr` has been converted to `ParsedSyntax`
-	if parse_expression(p).is_absent() && pos == p.token_pos() {
-		p.missing();
-	}
+	parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
 	p.expect_required(T![')']);
 	p.state.allow_object_expr = true;
 }
@@ -1130,9 +1125,7 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 			return parse_for_of_or_in_head(p);
 		}
 
-		if init_expr.is_absent() && p.token_pos() == checkpoint.token_pos {
-			p.missing();
-		}
+		init_expr.or_missing_with_error(p, js_parse_error::expected_expression);
 
 		parse_normal_for_head(p);
 		FOR_STMT

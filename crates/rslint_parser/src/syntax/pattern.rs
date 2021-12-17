@@ -1,6 +1,7 @@
 ///! Provides traits for parsing pattern like nodes
 use crate::parser::ParserProgress;
 use crate::syntax::expr::{parse_expr_or_assignment, EXPR_RECOVERY_SET};
+use crate::syntax::js_parse_error;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Invalid, ParseRecovery, ParsedSyntax, Parser, ParserState, Valid};
 use crate::{ConditionalSyntax, TokenSet};
@@ -30,9 +31,8 @@ pub(crate) trait ParseWithDefaultPattern {
 				pattern.precede_or_missing_with_error(p, Self::expected_pattern_error);
 			p.bump_any(); // eat the = token
 
-			if parse_expr_or_assignment(p).is_absent() {
-				p.missing();
-			}
+			parse_expr_or_assignment(p)
+				.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 
 			Present(with_default.complete(p, Self::pattern_with_default_kind()))
 		} else {

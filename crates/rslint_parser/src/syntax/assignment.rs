@@ -2,7 +2,7 @@ use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{
-	is_at_name, parse_conditional_expr, parse_expression, parse_name, parse_unary_expr,
+	is_at_identifier_name, parse_conditional_expr, parse_expression, parse_name, parse_unary_expr,
 };
 use crate::syntax::js_parse_error::{expected_assignment_target, expected_identifier};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
@@ -212,7 +212,9 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 	// ({:=} = {});
 	// ({ a b } = {});
 	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-		if !is_at_name(p) && !p.at_ts(token_set![T![:], T![=], T![ident], T![await], T![yield]]) {
+		if !is_at_identifier_name(p)
+			&& !p.at_ts(token_set![T![:], T![=], T![ident], T![await], T![yield]])
+		{
 			return Absent;
 		}
 
