@@ -336,7 +336,7 @@ JsThisExpression = 'this'
 JsSuperExpression = 'super'
 
 // new expression
-NewExpr = 'new' object:JsAnyExpression type_args:TsTypeArgs?  arguments: JsCallArguments
+NewExpr = 'new' object:JsAnyExpression type_args:TsTypeArgs?  arguments: JsCallArguments?
 
 // call expression
 CallExpr = callee:JsAnyExpression type_args:TsTypeArgs? arguments: JsCallArguments

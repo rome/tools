@@ -14,18 +14,21 @@ JsModule {
                         type_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
-                            expression: JsObjectExpression {
-                                l_curly_token: L_CURLY@8..9 "{" [] [],
-                                members: JsObjectMemberList [
-                                    missing element,
-                                    COMMA@9..11 "," [] [Whitespace(" ")],
-                                    JsShorthandPropertyObjectMember {
-                                        name: JsReferenceIdentifier {
-                                            value_token: IDENT@11..14 "foo" [] [],
-                                        },
+                            expression: JsUnknownExpression {
+                                items: [
+                                    L_CURLY@8..9 "{" [] [],
+                                    JsUnknown {
+                                        items: [
+                                            COMMA@9..11 "," [] [Whitespace(" ")],
+                                            JsShorthandPropertyObjectMember {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@11..14 "foo" [] [],
+                                                },
+                                            },
+                                        ],
                                     },
+                                    R_CURLY@14..15 "}" [] [],
                                 ],
-                                r_curly_token: R_CURLY@14..15 "}" [] [],
                             },
                         },
                     },
@@ -48,16 +51,17 @@ JsModule {
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@24..26 "{" [] [Whitespace(" ")],
                                 members: JsObjectMemberList [
-                                    JsPropertyObjectMember {
-                                        name: JsLiteralMemberName {
-                                            value: IDENT@26..30 "foo" [] [Whitespace(" ")],
-                                        },
-                                        colon_token: missing (required),
-                                        value: JsIdentifierExpression {
-                                            name: JsReferenceIdentifier {
-                                                value_token: IDENT@30..34 "bar" [] [Whitespace(" ")],
+                                    JsUnknownMember {
+                                        items: [
+                                            JsLiteralMemberName {
+                                                value: IDENT@26..30 "foo" [] [Whitespace(" ")],
                                             },
-                                        },
+                                            JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@30..34 "bar" [] [Whitespace(" ")],
+                                                },
+                                            },
+                                        ],
                                     },
                                 ],
                                 r_curly_token: R_CURLY@34..35 "}" [] [],
@@ -87,12 +91,11 @@ JsModule {
             2: (empty)
             3: JS_INITIALIZER_CLAUSE@6..15
               0: EQ@6..8 "=" [] [Whitespace(" ")]
-              1: JS_OBJECT_EXPRESSION@8..15
+              1: JS_UNKNOWN_EXPRESSION@8..15
                 0: L_CURLY@8..9 "{" [] []
-                1: JS_OBJECT_MEMBER_LIST@9..14
-                  0: (empty)
-                  1: COMMA@9..11 "," [] [Whitespace(" ")]
-                  2: JS_SHORTHAND_PROPERTY_OBJECT_MEMBER@11..14
+                1: JS_UNKNOWN@9..14
+                  0: COMMA@9..11 "," [] [Whitespace(" ")]
+                  1: JS_SHORTHAND_PROPERTY_OBJECT_MEMBER@11..14
                     0: JS_REFERENCE_IDENTIFIER@11..14
                       0: IDENT@11..14 "foo" [] []
                 2: R_CURLY@14..15 "}" [] []
@@ -111,11 +114,10 @@ JsModule {
               1: JS_OBJECT_EXPRESSION@24..35
                 0: L_CURLY@24..26 "{" [] [Whitespace(" ")]
                 1: JS_OBJECT_MEMBER_LIST@26..34
-                  0: JS_PROPERTY_OBJECT_MEMBER@26..34
+                  0: JS_UNKNOWN_MEMBER@26..34
                     0: JS_LITERAL_MEMBER_NAME@26..30
                       0: IDENT@26..30 "foo" [] [Whitespace(" ")]
-                    1: (empty)
-                    2: JS_IDENTIFIER_EXPRESSION@30..34
+                    1: JS_IDENTIFIER_EXPRESSION@30..34
                       0: JS_REFERENCE_IDENTIFIER@30..34
                         0: IDENT@30..34 "bar" [] [Whitespace(" ")]
                 2: R_CURLY@34..35 "}" [] []

@@ -1,10 +1,10 @@
-use crate::{SyntaxKind, T};
+use crate::{JsSyntaxKind, T};
 
 // We need to keep context for regex literals
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub(crate) struct LexerState {
 	pub(crate) expr_allowed: bool,
-	pub(crate) prev: Option<SyntaxKind>,
+	pub(crate) prev: Option<JsSyntaxKind>,
 	pub(crate) had_linebreak: bool,
 	pub(crate) ctx: Vec<Context>,
 }
@@ -23,12 +23,12 @@ impl LexerState {
 		self.ctx.last() == Some(&Context::Template)
 	}
 
-	pub(crate) fn update(&mut self, next: SyntaxKind) {
+	pub(crate) fn update(&mut self, next: JsSyntaxKind) {
 		self.expr_allowed = self.update_expr_allowed(next);
 		self.prev = Some(next);
 	}
 
-	fn update_expr_allowed(&mut self, next: SyntaxKind) -> bool {
+	fn update_expr_allowed(&mut self, next: JsSyntaxKind) -> bool {
 		if next.is_keyword() && self.prev == Some(T![.]) {
 			return false;
 		}
@@ -69,7 +69,7 @@ impl LexerState {
 				false
 			}
 
-			SyntaxKind::BACKTICK => {
+			JsSyntaxKind::BACKTICK => {
 				if let Some(Context::Template) = self.ctx.last() {
 					self.ctx.pop();
 				} else {
@@ -78,7 +78,7 @@ impl LexerState {
 				false
 			}
 
-			SyntaxKind::DOLLAR_CURLY => {
+			JsSyntaxKind::DOLLAR_CURLY => {
 				self.ctx.push(Context::TplInternal);
 				true
 			}
@@ -145,7 +145,7 @@ fn ctx_is_expr(ctx: Context) -> bool {
 
 fn ctx_is_brace_block(
 	ctx: &[Context],
-	prev: Option<SyntaxKind>,
+	prev: Option<JsSyntaxKind>,
 	had_linebreak: bool,
 	expr_allowed: bool,
 ) -> bool {

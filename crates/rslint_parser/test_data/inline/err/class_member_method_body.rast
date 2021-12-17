@@ -2,39 +2,32 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsClassDeclaration {
-            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
-            id: JsIdentifierBinding {
-                name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
-            },
-            extends_clause: missing (optional),
-            implements_clause: missing (optional),
-            l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
-            members: JsClassMemberList [
-                JsMethodClassMember {
-                    access_modifier: missing (optional),
-                    static_token: missing (optional),
-                    abstract_token: missing (optional),
-                    async_token: missing (optional),
-                    star_token: missing (optional),
-                    name: JsLiteralMemberName {
-                        value: IDENT@10..13 "foo" [] [],
-                    },
-                    type_parameters: missing (optional),
-                    parameters: JsParameters {
-                        l_paren_token: L_PAREN@13..14 "(" [] [],
-                        items: JsParameterList [
-                            JsIdentifierBinding {
-                                name_token: IDENT@14..15 "a" [] [],
+        JsUnknownStatement {
+            items: [
+                CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
+                },
+                L_CURLY@8..10 "{" [] [Whitespace(" ")],
+                JsClassMemberList [
+                    JsUnknownMember {
+                        items: [
+                            JsLiteralMemberName {
+                                value: IDENT@10..13 "foo" [] [],
+                            },
+                            JsParameters {
+                                l_paren_token: L_PAREN@13..14 "(" [] [],
+                                items: JsParameterList [
+                                    JsIdentifierBinding {
+                                        name_token: IDENT@14..15 "a" [] [],
+                                    },
+                                ],
+                                r_paren_token: R_PAREN@15..16 ")" [] [],
                             },
                         ],
-                        r_paren_token: R_PAREN@15..16 ")" [] [],
                     },
-                    return_type: missing (optional),
-                    body: missing (required),
-                },
+                ],
             ],
-            r_curly_token: missing (required),
         },
     ],
     eof_token: EOF@16..17 "" [Whitespace("\n")] [],
@@ -44,32 +37,21 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..16
-    0: JS_CLASS_DECLARATION@0..16
+    0: JS_UNKNOWN_STATEMENT@0..16
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "B" [] [Whitespace(" ")]
-      2: (empty)
-      3: (empty)
-      4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      5: JS_CLASS_MEMBER_LIST@10..16
-        0: JS_METHOD_CLASS_MEMBER@10..16
-          0: (empty)
-          1: (empty)
-          2: (empty)
-          3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@10..13
+      2: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      3: JS_CLASS_MEMBER_LIST@10..16
+        0: JS_UNKNOWN_MEMBER@10..16
+          0: JS_LITERAL_MEMBER_NAME@10..13
             0: IDENT@10..13 "foo" [] []
-          6: (empty)
-          7: JS_PARAMETERS@13..16
+          1: JS_PARAMETERS@13..16
             0: L_PAREN@13..14 "(" [] []
             1: JS_PARAMETER_LIST@14..15
               0: JS_IDENTIFIER_BINDING@14..15
                 0: IDENT@14..15 "a" [] []
             2: R_PAREN@15..16 ")" [] []
-          8: (empty)
-          9: (empty)
-      6: (empty)
   3: EOF@16..17 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected a class method body but instead found ''

@@ -2,38 +2,38 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsFunctionDeclaration {
-            async_token: missing (optional),
-            function_token: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")],
-            star_token: missing (optional),
-            id: missing (required),
-            type_parameters: missing (optional),
-            parameters: JsParameters {
-                l_paren_token: L_PAREN@9..10 "(" [] [],
-                items: JsParameterList [
-                    JsIdentifierBinding {
-                        name_token: IDENT@10..11 "a" [] [],
-                    },
-                    missing separator,
-                    JsUnknownBinding {
-                        items: [
-                            PLUS2@11..13 "++" [] [],
-                        ],
-                    },
-                    COMMA@13..15 "," [] [Whitespace(" ")],
-                    JsIdentifierBinding {
-                        name_token: IDENT@15..16 "c" [] [],
-                    },
-                ],
-                r_paren_token: R_PAREN@16..18 ")" [] [Whitespace(" ")],
-            },
-            return_type: missing (optional),
-            body: JsFunctionBody {
-                l_curly_token: L_CURLY@18..19 "{" [] [],
-                directives: JsDirectiveList [],
-                statements: JsStatementList [],
-                r_curly_token: R_CURLY@19..20 "}" [] [],
-            },
+        JsUnknownStatement {
+            items: [
+                FUNCTION_KW@0..9 "function" [] [Whitespace(" ")],
+                JsUnknown {
+                    items: [
+                        L_PAREN@9..10 "(" [] [],
+                        JsUnknown {
+                            items: [
+                                JsIdentifierBinding {
+                                    name_token: IDENT@10..11 "a" [] [],
+                                },
+                                JsUnknownBinding {
+                                    items: [
+                                        PLUS2@11..13 "++" [] [],
+                                    ],
+                                },
+                                COMMA@13..15 "," [] [Whitespace(" ")],
+                                JsIdentifierBinding {
+                                    name_token: IDENT@15..16 "c" [] [],
+                                },
+                            ],
+                        },
+                        R_PAREN@16..18 ")" [] [Whitespace(" ")],
+                    ],
+                },
+                JsFunctionBody {
+                    l_curly_token: L_CURLY@18..19 "{" [] [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
+                    r_curly_token: R_CURLY@19..20 "}" [] [],
+                },
+            ],
         },
     ],
     eof_token: EOF@20..21 "" [Whitespace("\n")] [],
@@ -43,26 +43,20 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..20
-    0: JS_FUNCTION_DECLARATION@0..20
-      0: (empty)
-      1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
-      2: (empty)
-      3: (empty)
-      4: (empty)
-      5: JS_PARAMETERS@9..18
+    0: JS_UNKNOWN_STATEMENT@0..20
+      0: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
+      1: JS_UNKNOWN@9..18
         0: L_PAREN@9..10 "(" [] []
-        1: JS_PARAMETER_LIST@10..16
+        1: JS_UNKNOWN@10..16
           0: JS_IDENTIFIER_BINDING@10..11
             0: IDENT@10..11 "a" [] []
-          1: (empty)
-          2: JS_UNKNOWN_BINDING@11..13
+          1: JS_UNKNOWN_BINDING@11..13
             0: PLUS2@11..13 "++" [] []
-          3: COMMA@13..15 "," [] [Whitespace(" ")]
-          4: JS_IDENTIFIER_BINDING@15..16
+          2: COMMA@13..15 "," [] [Whitespace(" ")]
+          3: JS_IDENTIFIER_BINDING@15..16
             0: IDENT@15..16 "c" [] []
         2: R_PAREN@16..18 ")" [] [Whitespace(" ")]
-      6: (empty)
-      7: JS_FUNCTION_BODY@18..20
+      2: JS_FUNCTION_BODY@18..20
         0: L_CURLY@18..19 "{" [] []
         1: JS_DIRECTIVE_LIST@19..19
         2: JS_STATEMENT_LIST@19..19

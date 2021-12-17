@@ -1,6 +1,6 @@
 //! Extended AST node definitions for statements which are unique and special enough to generate code for manually
 
-use crate::{ast::*, SyntaxKind::*, SyntaxNodeExt, T};
+use crate::{ast::*, JsSyntaxKind::*, SyntaxNodeExt, T};
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub enum JsVariableKind {

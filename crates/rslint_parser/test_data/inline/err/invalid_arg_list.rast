@@ -3,58 +3,62 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: CallExpr {
-                callee: JsIdentifierExpression {
-                    name: JsReferenceIdentifier {
-                        value_token: IDENT@0..3 "foo" [] [],
+            expression: JsUnknownExpression {
+                items: [
+                    JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@0..3 "foo" [] [],
+                        },
                     },
-                },
-                type_args: missing (optional),
-                arguments: JsCallArguments {
-                    l_paren_token: L_PAREN@3..4 "(" [] [],
-                    args: JsCallArgumentList [
-                        JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@4..5 "a" [] [],
-                            },
-                        },
-                        COMMA@5..6 "," [] [],
-                        JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@6..7 "b" [] [],
-                            },
-                        },
-                    ],
-                    r_paren_token: missing (required),
-                },
+                    JsUnknown {
+                        items: [
+                            L_PAREN@3..4 "(" [] [],
+                            JsCallArgumentList [
+                                JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@4..5 "a" [] [],
+                                    },
+                                },
+                                COMMA@5..6 "," [] [],
+                                JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@6..7 "b" [] [],
+                                    },
+                                },
+                            ],
+                        ],
+                    },
+                ],
             },
             semicolon_token: SEMICOLON@7..8 ";" [] [],
         },
         JsExpressionStatement {
-            expression: CallExpr {
-                callee: JsIdentifierExpression {
-                    name: JsReferenceIdentifier {
-                        value_token: IDENT@8..12 "foo" [Whitespace("\n")] [],
+            expression: JsUnknownExpression {
+                items: [
+                    JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@8..12 "foo" [Whitespace("\n")] [],
+                        },
                     },
-                },
-                type_args: missing (optional),
-                arguments: JsCallArguments {
-                    l_paren_token: L_PAREN@12..13 "(" [] [],
-                    args: JsCallArgumentList [
-                        JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@13..14 "a" [] [],
-                            },
-                        },
-                        COMMA@14..15 "," [] [],
-                        JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@15..17 "b" [] [Whitespace(" ")],
-                            },
-                        },
-                    ],
-                    r_paren_token: missing (required),
-                },
+                    JsUnknown {
+                        items: [
+                            L_PAREN@12..13 "(" [] [],
+                            JsCallArgumentList [
+                                JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@13..14 "a" [] [],
+                                    },
+                                },
+                                COMMA@14..15 "," [] [],
+                                JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@15..17 "b" [] [Whitespace(" ")],
+                                    },
+                                },
+                            ],
+                        ],
+                    },
+                ],
             },
             semicolon_token: missing (optional),
         },
@@ -99,12 +103,11 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..30
     0: JS_EXPRESSION_STATEMENT@0..8
-      0: CALL_EXPR@0..7
+      0: JS_UNKNOWN_EXPRESSION@0..7
         0: JS_IDENTIFIER_EXPRESSION@0..3
           0: JS_REFERENCE_IDENTIFIER@0..3
             0: IDENT@0..3 "foo" [] []
-        1: (empty)
-        2: JS_CALL_ARGUMENTS@3..7
+        1: JS_UNKNOWN@3..7
           0: L_PAREN@3..4 "(" [] []
           1: JS_CALL_ARGUMENT_LIST@4..7
             0: JS_IDENTIFIER_EXPRESSION@4..5
@@ -114,15 +117,13 @@ JsModule {
             2: JS_IDENTIFIER_EXPRESSION@6..7
               0: JS_REFERENCE_IDENTIFIER@6..7
                 0: IDENT@6..7 "b" [] []
-          2: (empty)
       1: SEMICOLON@7..8 ";" [] []
     1: JS_EXPRESSION_STATEMENT@8..17
-      0: CALL_EXPR@8..17
+      0: JS_UNKNOWN_EXPRESSION@8..17
         0: JS_IDENTIFIER_EXPRESSION@8..12
           0: JS_REFERENCE_IDENTIFIER@8..12
             0: IDENT@8..12 "foo" [Whitespace("\n")] []
-        1: (empty)
-        2: JS_CALL_ARGUMENTS@12..17
+        1: JS_UNKNOWN@12..17
           0: L_PAREN@12..13 "(" [] []
           1: JS_CALL_ARGUMENT_LIST@13..17
             0: JS_IDENTIFIER_EXPRESSION@13..14
@@ -132,7 +133,6 @@ JsModule {
             2: JS_IDENTIFIER_EXPRESSION@15..17
               0: JS_REFERENCE_IDENTIFIER@15..17
                 0: IDENT@15..17 "b" [] [Whitespace(" ")]
-          2: (empty)
       1: (empty)
     2: JS_VARIABLE_STATEMENT@17..25
       0: JS_VARIABLE_DECLARATIONS@17..25

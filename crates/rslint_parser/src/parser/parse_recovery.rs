@@ -1,6 +1,6 @@
 use crate::{CompletedMarker, Parser, TokenSet};
-use rslint_syntax::SyntaxKind;
-use rslint_syntax::SyntaxKind::EOF;
+use rslint_syntax::JsSyntaxKind;
+use rslint_syntax::JsSyntaxKind::EOF;
 use std::error::Error;
 use std::fmt::{Display, Formatter};
 
@@ -37,14 +37,14 @@ pub type RecoveryResult = Result<CompletedMarker, RecoveryError>;
 /// the caller knows how to proceed parsing. The recovery wraps all the skipped tokens inside of an `Unknown` node.
 /// A safe recovery point for an array element could by finding the next `,` or `]`.
 pub struct ParseRecovery {
-	node_kind: SyntaxKind,
+	node_kind: JsSyntaxKind,
 	recovery_set: TokenSet,
 	line_break: bool,
 }
 
 impl ParseRecovery {
 	/// Creates a new parse recovery that eats all tokens until it finds any token in the passed recovery set.
-	pub fn new(node_kind: SyntaxKind, recovery_set: TokenSet) -> Self {
+	pub fn new(node_kind: JsSyntaxKind, recovery_set: TokenSet) -> Self {
 		Self {
 			node_kind,
 			recovery_set,

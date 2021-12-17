@@ -598,6 +598,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "init_array"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8b5c2a8a35bc612917d189d02508798b8a05eca555fd95b9007fe73c892258f3"
+
+[[package]]
 name = "insta"
 version = "1.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1125,6 +1131,7 @@ version = "0.0.0"
 dependencies = [
  "countme",
  "hashbrown",
+ "init_array",
  "m_lexer",
  "memoffset",
  "quickcheck 1.0.3",

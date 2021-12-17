@@ -540,7 +540,7 @@ impl<'src> Lexer<'src> {
 	/// but is still part of the identifier, and the characters position.
 	#[inline]
 	fn resolve_identifier(&mut self, first: (char, usize)) -> LexerReturn {
-		use SyntaxKind::*;
+		use JsSyntaxKind::*;
 
 		// Note to keep the buffer large enough to fit every possible keyword that
 		// the lexer can return
@@ -858,7 +858,7 @@ impl<'src> Lexer<'src> {
 			.primary(err_start..self.cur, "an identifier cannot appear here");
 
 			(
-				Token::new(SyntaxKind::ERROR_TOKEN, self.cur - start),
+				Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
 				Some(err),
 			)
 		} else {
@@ -892,7 +892,7 @@ impl<'src> Lexer<'src> {
 			)
 			.primary(0usize..1usize, "");
 
-			(Token::new(SyntaxKind::ERROR_TOKEN, 1), Some(err))
+			(Token::new(JsSyntaxKind::ERROR_TOKEN, 1), Some(err))
 		}
 	}
 
@@ -916,7 +916,10 @@ impl<'src> Lexer<'src> {
 					.primary(self.cur..self.cur + 1, "... but the file ends here")
 					.secondary(start..start + 2, "A block comment starts here");
 
-				(Token::new(SyntaxKind::COMMENT, self.cur - start), Some(err))
+				(
+					Token::new(JsSyntaxKind::COMMENT, self.cur - start),
+					Some(err),
+				)
 			}
 			Some(b'/') => {
 				self.next();
@@ -1009,7 +1012,7 @@ impl<'src> Lexer<'src> {
 									}
 								},
 								_ => {
-									return (Token::new(SyntaxKind::JS_REGEX_LITERAL, self.cur - start), diagnostic)
+									return (Token::new(JsSyntaxKind::JS_REGEX_LITERAL, self.cur - start), diagnostic)
 								}
 							}
 						}
@@ -1020,7 +1023,7 @@ impl<'src> Lexer<'src> {
 						let err = Diagnostic::error(self.file_id, "", "expected a character after a regex escape, but found none")
 							.primary(self.cur..self.cur + 1, "expected a character following this");
 
-						return (Token::new(SyntaxKind::JS_REGEX_LITERAL, self.cur - start), Some(err));
+						return (Token::new(JsSyntaxKind::JS_REGEX_LITERAL, self.cur - start), Some(err));
 					}
 				},
 				None => {
@@ -1028,7 +1031,7 @@ impl<'src> Lexer<'src> {
 						.primary(self.cur..self.cur, "...but the file ends here")
 						.secondary(start..start + 1, "a regex literal starts there...");
 
-					return (Token::new(SyntaxKind::JS_REGEX_LITERAL, self.cur - start), Some(err));
+					return (Token::new(JsSyntaxKind::JS_REGEX_LITERAL, self.cur - start), Some(err));
 				},
 				_ => {},
 			}
@@ -1036,7 +1039,7 @@ impl<'src> Lexer<'src> {
 	}
 
 	#[inline]
-	fn bin_or_assign(&mut self, bin: SyntaxKind, assign: SyntaxKind) -> LexerReturn {
+	fn bin_or_assign(&mut self, bin: JsSyntaxKind, assign: JsSyntaxKind) -> LexerReturn {
 		if let Some(b'=') = self.next() {
 			self.next();
 			(Token::new(assign, 2), None)
@@ -1304,13 +1307,13 @@ impl<'src> Lexer<'src> {
 
 								self.next();
 								(
-									Token::new(SyntaxKind::ERROR_TOKEN, self.cur - start),
+									Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
 									Some(err),
 								)
 							}
 						}
 						Err(err) => (
-							Token::new(SyntaxKind::ERROR_TOKEN, self.cur - start),
+							Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
 							Some(err),
 						),
 					}
@@ -1323,13 +1326,13 @@ impl<'src> Lexer<'src> {
 					.primary(start..self.cur + 1, "");
 					self.next();
 
-					(Token::new(SyntaxKind::ERROR_TOKEN, 1), Some(err))
+					(Token::new(JsSyntaxKind::ERROR_TOKEN, 1), Some(err))
 				}
 			}
 			QOT => {
 				if let Some(err) = self.read_str_literal() {
 					(
-						Token::new(SyntaxKind::ERROR_TOKEN, self.cur - start),
+						Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
 						Some(err),
 					)
 				} else {
@@ -1376,7 +1379,7 @@ impl<'src> Lexer<'src> {
 						self.next();
 
 						(
-							Token::new(SyntaxKind::ERROR_TOKEN, self.cur - start),
+							Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
 							Some(err),
 						)
 					}
@@ -1392,7 +1395,7 @@ impl<'src> Lexer<'src> {
 				.primary(start..self.cur + 1, "");
 				self.next();
 
-				(Token::new(SyntaxKind::ERROR_TOKEN, 1), Some(err))
+				(Token::new(JsSyntaxKind::ERROR_TOKEN, 1), Some(err))
 			}
 		}
 	}
@@ -1409,7 +1412,7 @@ impl<'src> Lexer<'src> {
 				}
 				'`' => {
 					return (
-						Token::new(SyntaxKind::TEMPLATE_CHUNK, self.cur - start),
+						Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
 						diagnostic,
 					);
 				}
@@ -1421,11 +1424,11 @@ impl<'src> Lexer<'src> {
 				}
 				'$' if self.bytes.get(self.cur + 1) == Some(&b'{') && self.cur == start => {
 					self.advance(2);
-					return (Token::new(SyntaxKind::DOLLAR_CURLY, 2), diagnostic);
+					return (Token::new(JsSyntaxKind::DOLLAR_CURLY, 2), diagnostic);
 				}
 				'$' if self.bytes.get(self.cur + 1) == Some(&b'{') => {
 					return (
-						Token::new(SyntaxKind::TEMPLATE_CHUNK, self.cur - start),
+						Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
 						diagnostic,
 					)
 				}
@@ -1439,7 +1442,7 @@ impl<'src> Lexer<'src> {
 			.primary(self.cur..self.cur + 1, "");
 
 		(
-			Token::new(SyntaxKind::TEMPLATE_CHUNK, self.cur - start),
+			Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
 			Some(err),
 		)
 	}
@@ -1469,9 +1472,9 @@ impl Iterator for Lexer<'_> {
 		};
 
 		if ![
-			SyntaxKind::COMMENT,
-			SyntaxKind::WHITESPACE,
-			SyntaxKind::TEMPLATE_CHUNK,
+			JsSyntaxKind::COMMENT,
+			JsSyntaxKind::WHITESPACE,
+			JsSyntaxKind::TEMPLATE_CHUNK,
 		]
 		.contains(&token.0.kind)
 		{

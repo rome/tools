@@ -1,7 +1,7 @@
 ///! A set of traits useful to parse various types of lists
 use super::{ParsedSyntax, ParserProgress, RecoveryResult};
 use crate::{CompletedMarker, Marker, Parser};
-use rslint_syntax::SyntaxKind;
+use rslint_syntax::JsSyntaxKind;
 
 /// Use this trait to parse simple lists that don't have particular requirements.
 ///
@@ -48,7 +48,7 @@ pub trait ParseNodeList {
 	}
 
 	/// The kind of the list node
-	fn list_kind() -> SyntaxKind;
+	fn list_kind() -> JsSyntaxKind;
 
 	/// Parses a simple list
 	///
@@ -59,7 +59,7 @@ pub trait ParseNodeList {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
 
-		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
+		while !p.at(JsSyntaxKind::EOF) && !self.is_at_list_end(p) {
 			progress.assert_progressing(p);
 
 			let parsed_element = self.parse_element(p);
@@ -87,11 +87,8 @@ pub trait ParseNodeList {
 /// }
 /// ```
 pub trait ParseSeparatedList {
-	/// The type returned when calling the function [Self::parse_element]
-	type ParsedElement;
-
 	/// Parses a single element of the list
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement>;
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker>;
 
 	/// It creates a marker just before starting a list
 	fn start_list(&mut self, p: &mut Parser) -> Marker {
@@ -108,7 +105,7 @@ pub trait ParseSeparatedList {
 	fn recover(
 		&mut self,
 		p: &mut Parser,
-		parsed_element: ParsedSyntax<Self::ParsedElement>,
+		parsed_element: ParsedSyntax<CompletedMarker>,
 	) -> RecoveryResult;
 
 	/// It creates a [ParsedSyntax] that will contain the list
@@ -118,10 +115,10 @@ pub trait ParseSeparatedList {
 	}
 
 	/// The kind of the list node
-	fn list_kind() -> SyntaxKind;
+	fn list_kind() -> JsSyntaxKind;
 
 	/// The [SyntaxKind] of the element that separates the elements of the list
-	fn separating_element_kind(&mut self) -> SyntaxKind;
+	fn separating_element_kind(&mut self) -> JsSyntaxKind;
 
 	/// `true` if the list allows for an optional trailing element
 	fn allow_trailing_separating_element(&self) -> bool {
@@ -146,7 +143,7 @@ pub trait ParseSeparatedList {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
 		let mut first = true;
-		while !p.at(SyntaxKind::EOF) && !self.is_at_list_end(p) {
+		while !p.at(JsSyntaxKind::EOF) && !self.is_at_list_end(p) {
 			if first {
 				first = false;
 			} else {
@@ -163,7 +160,6 @@ pub trait ParseSeparatedList {
 
 			if parsed_element.is_absent() && p.at(self.separating_element_kind()) {
 				// a missing element
-				p.missing();
 				continue;
 			} else if self.recover(p, parsed_element).is_err() {
 				break;

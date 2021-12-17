@@ -10,7 +10,7 @@ use crate::syntax::binding::parse_binding_pattern_with_optional_default;
 use crate::syntax::function::function_body;
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_binding;
-use crate::{SyntaxKind::*, *};
+use crate::{JsSyntaxKind::*, *};
 
 #[allow(clippy::unnecessary_unwrap)]
 pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
@@ -43,7 +43,7 @@ pub(super) fn parse_parameter_list(p: &mut Parser) -> ParsedSyntax<CompletedMark
 pub(super) fn parse_parameters_list(
 	p: &mut Parser,
 	parse_param: impl Fn(&mut Parser) -> ParsedSyntax<CompletedMarker>,
-	list_kind: SyntaxKind,
+	list_kind: JsSyntaxKind,
 ) {
 	let mut first = true;
 
@@ -68,7 +68,7 @@ pub(super) fn parse_parameters_list(
 		if p.at(T![...]) {
 			let m = p.start();
 			p.bump_any();
-			parse_binding_pattern(p).or_missing_with_error(p, expected_binding);
+			parse_binding_pattern(p).or_syntax_error(p, expected_binding);
 
 			// TODO #1725 Review error handling and recovery
 			// rest patterns cannot be optional: `...foo?: number[]`

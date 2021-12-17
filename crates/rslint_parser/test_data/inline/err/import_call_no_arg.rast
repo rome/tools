@@ -14,11 +14,12 @@ JsModule {
                         type_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
-                            expression: JsImportCallExpression {
-                                import_token: IMPORT_KW@8..14 "import" [] [],
-                                l_paren_token: L_PAREN@14..15 "(" [] [],
-                                argument: missing (required),
-                                r_paren_token: R_PAREN@15..16 ")" [] [],
+                            expression: JsUnknownExpression {
+                                items: [
+                                    IMPORT_KW@8..14 "import" [] [],
+                                    L_PAREN@14..15 "(" [] [],
+                                    R_PAREN@15..16 ")" [] [],
+                                ],
                             },
                         },
                     },
@@ -61,11 +62,10 @@ JsModule {
             2: (empty)
             3: JS_INITIALIZER_CLAUSE@6..16
               0: EQ@6..8 "=" [] [Whitespace(" ")]
-              1: JS_IMPORT_CALL_EXPRESSION@8..16
+              1: JS_UNKNOWN_EXPRESSION@8..16
                 0: IMPORT_KW@8..14 "import" [] []
                 1: L_PAREN@14..15 "(" [] []
-                2: (empty)
-                3: R_PAREN@15..16 ")" [] []
+                2: R_PAREN@15..16 ")" [] []
       1: SEMICOLON@16..17 ";" [] []
     1: JS_EXPRESSION_STATEMENT@17..24
       0: CALL_EXPR@17..23

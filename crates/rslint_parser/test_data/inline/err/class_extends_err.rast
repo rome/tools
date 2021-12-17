@@ -86,10 +86,9 @@ JsModule {
           0: JS_IDENTIFIER_EXPRESSION@28..32
             0: JS_REFERENCE_IDENTIFIER@28..32
               0: IDENT@28..32 "foo" [] [Whitespace(" ")]
-      3: (empty)
-      4: L_CURLY@32..33 "{" [] []
-      5: JS_CLASS_MEMBER_LIST@33..33
-      6: R_CURLY@33..34 "}" [] []
+      3: L_CURLY@32..33 "{" [] []
+      4: JS_CLASS_MEMBER_LIST@33..33
+      5: R_CURLY@33..34 "}" [] []
     1: JS_UNKNOWN_STATEMENT@34..62
       0: CLASS_KW@34..41 "class" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@41..43
@@ -104,10 +103,9 @@ JsModule {
           0: JS_IDENTIFIER_EXPRESSION@56..60
             0: JS_REFERENCE_IDENTIFIER@56..60
               0: IDENT@56..60 "foo" [] [Whitespace(" ")]
-      3: (empty)
-      4: L_CURLY@60..61 "{" [] []
-      5: JS_CLASS_MEMBER_LIST@61..61
-      6: R_CURLY@61..62 "}" [] []
+      3: L_CURLY@60..61 "{" [] []
+      4: JS_CLASS_MEMBER_LIST@61..61
+      5: R_CURLY@61..62 "}" [] []
   3: EOF@62..63 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: classes cannot extend multiple classes

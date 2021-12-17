@@ -38,17 +38,16 @@ JsModule {
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "B" [] [Whitespace(" ")]
-      2: (empty)
-      3: JS_UNKNOWN@8..21
+      2: JS_UNKNOWN@8..21
         0: IMPLEMENTS_KW@8..19 "implements" [] [Whitespace(" ")]
         1: TS_TYPE_LIST@19..21
           0: TS_EXPR_WITH_TYPE_ARGS@19..21
             0: TS_TYPE_NAME@19..21
               0: IDENT@19..21 "C" [] [Whitespace(" ")]
             1: (empty)
-      4: L_CURLY@21..22 "{" [] []
-      5: JS_CLASS_MEMBER_LIST@22..22
-      6: R_CURLY@22..23 "}" [] []
+      3: L_CURLY@21..22 "{" [] []
+      4: JS_CLASS_MEMBER_LIST@22..22
+      5: R_CURLY@22..23 "}" [] []
   3: EOF@23..24 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: classes can only implement interfaces in TypeScript files

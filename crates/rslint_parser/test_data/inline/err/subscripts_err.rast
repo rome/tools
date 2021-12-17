@@ -3,45 +3,46 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: Template {
-                tag: JsStaticMemberExpression {
-                    object: JsComputedMemberExpression {
-                        object: JsStaticMemberExpression {
-                            object: CallExpr {
-                                callee: JsIdentifierExpression {
-                                    name: JsReferenceIdentifier {
-                                        value_token: IDENT@0..3 "foo" [] [],
+            expression: JsUnknownExpression {
+                items: [
+                    JsStaticMemberExpression {
+                        object: JsUnknownExpression {
+                            items: [
+                                JsStaticMemberExpression {
+                                    object: CallExpr {
+                                        callee: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@0..3 "foo" [] [],
+                                            },
+                                        },
+                                        type_args: missing (optional),
+                                        arguments: JsCallArguments {
+                                            l_paren_token: L_PAREN@3..4 "(" [] [],
+                                            args: JsCallArgumentList [],
+                                            r_paren_token: R_PAREN@4..5 ")" [] [],
+                                        },
+                                    },
+                                    operator: QUESTIONDOT@5..7 "?." [] [],
+                                    member: JsName {
+                                        value_token: IDENT@7..10 "baz" [] [],
                                     },
                                 },
-                                type_args: missing (optional),
-                                arguments: JsCallArguments {
-                                    l_paren_token: L_PAREN@3..4 "(" [] [],
-                                    args: JsCallArgumentList [],
-                                    r_paren_token: R_PAREN@4..5 ")" [] [],
-                                },
-                            },
-                            operator: QUESTIONDOT@5..7 "?." [] [],
-                            member: JsName {
-                                value_token: IDENT@7..10 "baz" [] [],
-                            },
+                                L_BRACK@10..11 "[" [] [],
+                                R_BRACK@11..12 "]" [] [],
+                            ],
                         },
-                        optional_chain_token_token: missing (optional),
-                        l_brack_token: L_BRACK@10..11 "[" [] [],
-                        member: missing (required),
-                        r_brack_token: R_BRACK@11..12 "]" [] [],
+                        operator: DOT@12..13 "." [] [],
+                        member: JsName {
+                            value_token: IDENT@13..17 "BAR" [Whitespace("\n")] [],
+                        },
                     },
-                    operator: DOT@12..13 "." [] [],
-                    member: JsName {
-                        value_token: IDENT@13..17 "BAR" [Whitespace("\n")] [],
-                    },
-                },
-                l_tick_token: BACKTICK@17..18 "`" [] [],
-                elements: TemplateElementList [
-                    TemplateChunkElement {
-                        template_chunk_token: TEMPLATE_CHUNK@18..20 "b\n" [] [],
-                    },
+                    BACKTICK@17..18 "`" [] [],
+                    TemplateElementList [
+                        TemplateChunkElement {
+                            template_chunk_token: TEMPLATE_CHUNK@18..20 "b\n" [] [],
+                        },
+                    ],
                 ],
-                r_tick_token: BACKTICK@17..18 "`" [] [],
             },
             semicolon_token: missing (optional),
         },
@@ -54,9 +55,9 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..20
     0: JS_EXPRESSION_STATEMENT@0..20
-      0: TEMPLATE@0..20
+      0: JS_UNKNOWN_EXPRESSION@0..20
         0: JS_STATIC_MEMBER_EXPRESSION@0..17
-          0: JS_COMPUTED_MEMBER_EXPRESSION@0..12
+          0: JS_UNKNOWN_EXPRESSION@0..12
             0: JS_STATIC_MEMBER_EXPRESSION@0..10
               0: CALL_EXPR@0..5
                 0: JS_IDENTIFIER_EXPRESSION@0..3
@@ -70,10 +71,8 @@ JsModule {
               1: QUESTIONDOT@5..7 "?." [] []
               2: JS_NAME@7..10
                 0: IDENT@7..10 "baz" [] []
-            1: (empty)
-            2: L_BRACK@10..11 "[" [] []
-            3: (empty)
-            4: R_BRACK@11..12 "]" [] []
+            1: L_BRACK@10..11 "[" [] []
+            2: R_BRACK@11..12 "]" [] []
           1: DOT@12..13 "." [] []
           2: JS_NAME@13..17
             0: IDENT@13..17 "BAR" [Whitespace("\n")] []
@@ -81,7 +80,6 @@ JsModule {
         2: TEMPLATE_ELEMENT_LIST@18..20
           0: TEMPLATE_CHUNK_ELEMENT@18..20
             0: TEMPLATE_CHUNK@18..20 "b\n" [] []
-        3: (empty)
       1: (empty)
   3: EOF@20..20 "" [] []
 --

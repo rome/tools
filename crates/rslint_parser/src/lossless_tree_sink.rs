@@ -1,11 +1,9 @@
 use crate::{
-	ParserError,
-	SyntaxKind::{self, *},
-	SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
+	JsSyntaxKind::{self, *},
+	ParserError, SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
 };
 use rome_rowan::TriviaPiece;
 use rslint_lexer::Token;
-use std::mem;
 
 /// Structure for converting events to a syntax tree representation, while preserving whitespace.
 ///
@@ -16,7 +14,7 @@ pub struct LosslessTreeSink<'a> {
 	tokens: &'a [Token],
 	text_pos: TextSize,
 	token_pos: usize,
-	state: State,
+	parents_count: usize,
 	errors: Vec<ParserError>,
 	inner: SyntaxTreeBuilder,
 	/// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
@@ -25,21 +23,8 @@ pub struct LosslessTreeSink<'a> {
 	next_token_leading_trivia: (TextRange, Vec<TriviaPiece>),
 }
 
-#[derive(Debug, Clone, Copy)]
-enum State {
-	PendingStart,
-	Normal,
-	PendingFinish,
-}
-
 impl<'a> TreeSink for LosslessTreeSink<'a> {
-	fn consume_multiple_tokens(&mut self, amount: u8, kind: SyntaxKind) {
-		match mem::replace(&mut self.state, State::Normal) {
-			State::PendingStart => unreachable!(),
-			State::PendingFinish => self.inner.finish_node(),
-			State::Normal => (),
-		}
-
+	fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind) {
 		let len = TextSize::from(
 			self.tokens[self.token_pos..self.token_pos + amount as usize]
 				.iter()
@@ -50,47 +35,28 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 		self.do_tokens(kind, len, amount)
 	}
 
-	fn token(&mut self, kind: SyntaxKind) {
-		match mem::replace(&mut self.state, State::Normal) {
-			State::PendingStart => unreachable!(),
-			State::PendingFinish => self.inner.finish_node(),
-			State::Normal => (),
-		}
-
+	fn token(&mut self, kind: JsSyntaxKind) {
 		let len = TextSize::from(self.tokens[self.token_pos].len as u32);
 		self.do_token(kind, len);
 	}
 
-	fn missing(&mut self) {
-		match mem::replace(&mut self.state, State::Normal) {
-			State::PendingStart => unreachable!(),
-			State::PendingFinish => self.inner.finish_node(),
-			State::Normal => (),
-		}
-
-		self.inner.missing();
-	}
-
-	fn start_node(&mut self, kind: SyntaxKind) {
-		match mem::replace(&mut self.state, State::Normal) {
-			State::PendingStart => {
-				self.inner.start_node(kind);
-				self.next_token_leading_trivia = self.get_trivia(false);
-				return;
-			}
-			State::PendingFinish => self.inner.finish_node(),
-			State::Normal => (),
-		}
-
+	fn start_node(&mut self, kind: JsSyntaxKind) {
 		self.inner.start_node(kind);
+		if self.parents_count == 0 {
+			self.next_token_leading_trivia = self.get_trivia(false);
+		}
+
+		self.parents_count += 1;
 	}
 
 	fn finish_node(&mut self) {
-		match mem::replace(&mut self.state, State::PendingFinish) {
-			State::PendingStart => unreachable!(),
-			State::PendingFinish => self.inner.finish_node(),
-			State::Normal => (),
+		self.parents_count -= 1;
+
+		if self.parents_count == 0 && self.needs_eof {
+			self.do_token(JsSyntaxKind::EOF, 0.into());
 		}
+
+		self.inner.finish_node();
 	}
 
 	fn errors(&mut self, errors: Vec<ParserError>) {
@@ -105,7 +71,7 @@ impl<'a> LosslessTreeSink<'a> {
 			tokens,
 			text_pos: 0.into(),
 			token_pos: 0,
-			state: State::PendingStart,
+			parents_count: 0,
 			inner: SyntaxTreeBuilder::default(),
 			errors: vec![],
 			needs_eof: true,
@@ -113,59 +79,24 @@ impl<'a> LosslessTreeSink<'a> {
 		}
 	}
 
-	/// Make a new tree sink but start the sink at a specific token, this is used for making completed markers
-	/// into AST nodes for rules which need them.
-	///
-	/// # Panics
-	/// Panics if the token start does not line up to a token's start index or is out of bounds
-	pub fn with_offset(text: &'a str, tokens: &'a [Token], token_start: usize) -> Self {
-		let mut len = 0;
-		for (idx, tok) in tokens.iter().enumerate() {
-			if len == token_start {
-				return Self {
-					text,
-					tokens,
-					text_pos: (len as u32).into(),
-					token_pos: idx,
-					state: State::PendingStart,
-					inner: SyntaxTreeBuilder::default(),
-					errors: vec![],
-					needs_eof: true,
-					next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![]),
-				};
-			}
-			len += tok.len;
-		}
-		panic!("Token start does not line up to a token or is out of bounds")
-	}
-
 	/// Finishes the tree and return the root node with possible parser errors.
 	///
 	/// If tree is finished without a [SyntaxKind::EOF], one will be generated and all pending trivia
 	/// will be appended to its leading trivia.
-	pub fn finish(mut self) -> (SyntaxNode, Vec<ParserError>) {
-		if self.needs_eof {
-			self.do_token(SyntaxKind::EOF, 0.into());
-		}
-
-		match mem::replace(&mut self.state, State::Normal) {
-			State::PendingFinish => self.inner.finish_node(),
-			State::PendingStart | State::Normal => unreachable!(),
-		}
-
+	pub fn finish(self) -> (SyntaxNode, Vec<ParserError>) {
 		(self.inner.finish(), self.errors)
 	}
 
 	#[inline]
-	fn do_token(&mut self, kind: SyntaxKind, len: TextSize) {
-		if kind == SyntaxKind::EOF {
+	fn do_token(&mut self, kind: JsSyntaxKind, len: TextSize) {
+		if kind == JsSyntaxKind::EOF {
 			self.needs_eof = false;
 		}
 
 		self.do_tokens(kind, len, 1)
 	}
 
-	fn do_tokens(&mut self, kind: SyntaxKind, len: TextSize, token_count: u8) {
+	fn do_tokens(&mut self, kind: JsSyntaxKind, len: TextSize, token_count: u8) {
 		let token_range = TextRange::at(self.text_pos, len);
 
 		self.text_pos += len;

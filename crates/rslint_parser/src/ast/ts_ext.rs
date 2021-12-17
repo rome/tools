@@ -3,7 +3,7 @@
 use crate::{
 	ast::*,
 	syntax_node::SyntaxNode,
-	SyntaxKind::{self, *},
+	JsSyntaxKind::{self, *},
 };
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -13,7 +13,7 @@ pub enum TsTypeQueryExpr {
 }
 
 impl AstNode for TsTypeQueryExpr {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		TsEntityName::can_cast(kind) || TsImport::can_cast(kind)
 	}
 

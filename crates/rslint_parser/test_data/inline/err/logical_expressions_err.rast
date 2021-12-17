@@ -10,12 +10,13 @@ JsModule {
                     },
                 },
                 operator: QUESTION2@4..7 "??" [] [Whitespace(" ")],
-                right: JsBinaryExpression {
-                    left: JsNumberLiteralExpression {
-                        value_token: JS_NUMBER_LITERAL@9..10 "2" [] [],
-                    },
-                    operator: STAR@7..9 "*" [] [Whitespace(" ")],
-                    right: missing (required),
+                right: JsUnknownExpression {
+                    items: [
+                        STAR@7..9 "*" [] [Whitespace(" ")],
+                        JsNumberLiteralExpression {
+                            value_token: JS_NUMBER_LITERAL@9..10 "2" [] [],
+                        },
+                    ],
                 },
             },
             semicolon_token: SEMICOLON@10..11 ";" [] [],
@@ -50,14 +51,15 @@ JsModule {
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@28..29 "(" [] [],
                     args: JsCallArgumentList [
-                        JsLogicalExpression {
-                            left: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@29..33 "foo" [] [Whitespace(" ")],
+                        JsUnknownExpression {
+                            items: [
+                                JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@29..33 "foo" [] [Whitespace(" ")],
+                                    },
                                 },
-                            },
-                            operator: PIPE2@33..35 "||" [] [],
-                            right: missing (required),
+                                PIPE2@33..35 "||" [] [],
+                            ],
                         },
                     ],
                     r_paren_token: R_PAREN@35..36 ")" [] [],
@@ -79,10 +81,9 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@0..4
             0: IDENT@0..4 "foo" [] [Whitespace(" ")]
         1: QUESTION2@4..7 "??" [] [Whitespace(" ")]
-        2: JS_BINARY_EXPRESSION@7..10
-          0: (empty)
-          1: STAR@7..9 "*" [] [Whitespace(" ")]
-          2: JS_NUMBER_LITERAL_EXPRESSION@9..10
+        2: JS_UNKNOWN_EXPRESSION@7..10
+          0: STAR@7..9 "*" [] [Whitespace(" ")]
+          1: JS_NUMBER_LITERAL_EXPRESSION@9..10
             0: JS_NUMBER_LITERAL@9..10 "2" [] []
       1: SEMICOLON@10..11 ";" [] []
     1: JS_EXPRESSION_STATEMENT@11..24
@@ -106,12 +107,11 @@ JsModule {
         2: JS_CALL_ARGUMENTS@28..36
           0: L_PAREN@28..29 "(" [] []
           1: JS_CALL_ARGUMENT_LIST@29..35
-            0: JS_LOGICAL_EXPRESSION@29..35
+            0: JS_UNKNOWN_EXPRESSION@29..35
               0: JS_IDENTIFIER_EXPRESSION@29..33
                 0: JS_REFERENCE_IDENTIFIER@29..33
                   0: IDENT@29..33 "foo" [] [Whitespace(" ")]
               1: PIPE2@33..35 "||" [] []
-              2: (empty)
           2: R_PAREN@35..36 ")" [] []
       1: (empty)
   3: EOF@36..37 "" [Whitespace("\n")] []

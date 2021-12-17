@@ -11,23 +11,21 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@14..15 "{" [] [],
             members: JsClassMemberList [
-                JsSetterClassMember {
-                    access_modifier: missing (optional),
-                    static_token: missing (optional),
-                    abstract_token: missing (optional),
-                    set_token: SET_KW@15..22 "set" [Whitespace("\n  ")] [Whitespace(" ")],
-                    name: JsLiteralMemberName {
-                        value: IDENT@22..25 "foo" [] [],
-                    },
-                    l_paren_token: L_PAREN@25..26 "(" [] [],
-                    parameter: missing (required),
-                    r_paren_token: R_PAREN@26..28 ")" [] [Whitespace(" ")],
-                    body: JsFunctionBody {
-                        l_curly_token: L_CURLY@28..29 "{" [] [],
-                        directives: JsDirectiveList [],
-                        statements: JsStatementList [],
-                        r_curly_token: R_CURLY@29..30 "}" [] [],
-                    },
+                JsUnknownMember {
+                    items: [
+                        SET_KW@15..22 "set" [Whitespace("\n  ")] [Whitespace(" ")],
+                        JsLiteralMemberName {
+                            value: IDENT@22..25 "foo" [] [],
+                        },
+                        L_PAREN@25..26 "(" [] [],
+                        R_PAREN@26..28 ")" [] [Whitespace(" ")],
+                        JsFunctionBody {
+                            l_curly_token: L_CURLY@28..29 "{" [] [],
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [],
+                            r_curly_token: R_CURLY@29..30 "}" [] [],
+                        },
+                    ],
                 },
             ],
             r_curly_token: R_CURLY@30..32 "}" [Whitespace("\n")] [],
@@ -48,17 +46,13 @@ JsModule {
       3: (empty)
       4: L_CURLY@14..15 "{" [] []
       5: JS_CLASS_MEMBER_LIST@15..30
-        0: JS_SETTER_CLASS_MEMBER@15..30
-          0: (empty)
-          1: (empty)
-          2: (empty)
-          3: SET_KW@15..22 "set" [Whitespace("\n  ")] [Whitespace(" ")]
-          4: JS_LITERAL_MEMBER_NAME@22..25
+        0: JS_UNKNOWN_MEMBER@15..30
+          0: SET_KW@15..22 "set" [Whitespace("\n  ")] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@22..25
             0: IDENT@22..25 "foo" [] []
-          5: L_PAREN@25..26 "(" [] []
-          6: (empty)
-          7: R_PAREN@26..28 ")" [] [Whitespace(" ")]
-          8: JS_FUNCTION_BODY@28..30
+          2: L_PAREN@25..26 "(" [] []
+          3: R_PAREN@26..28 ")" [] [Whitespace(" ")]
+          4: JS_FUNCTION_BODY@28..30
             0: L_CURLY@28..29 "{" [] []
             1: JS_DIRECTIVE_LIST@29..29
             2: JS_STATEMENT_LIST@29..29

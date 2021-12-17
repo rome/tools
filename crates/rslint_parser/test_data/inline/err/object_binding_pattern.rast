@@ -10,13 +10,12 @@ JsModule {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
                             properties: JsObjectBindingPatternPropertyList [
-                                JsObjectBindingPatternProperty {
-                                    member: JsLiteralMemberName {
-                                        value: JS_NUMBER_LITERAL@6..8 "5" [] [Whitespace(" ")],
-                                    },
-                                    colon_token: missing (required),
-                                    pattern: missing (required),
-                                    init: missing (optional),
+                                JsUnknownBinding {
+                                    items: [
+                                        JsLiteralMemberName {
+                                            value: JS_NUMBER_LITERAL@6..8 "5" [] [Whitespace(" ")],
+                                        },
+                                    ],
                                 },
                             ],
                             r_curly_token: R_CURLY@8..10 "}" [] [Whitespace(" ")],
@@ -106,22 +105,20 @@ JsModule {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@67..69 "{" [] [Whitespace(" ")],
                             properties: JsObjectBindingPatternPropertyList [
-                                JsObjectBindingPatternProperty {
-                                    member: JsLiteralMemberName {
-                                        value: JS_NUMBER_LITERAL@69..70 "5" [] [],
-                                    },
-                                    colon_token: missing (required),
-                                    pattern: missing (required),
-                                    init: missing (optional),
+                                JsUnknownBinding {
+                                    items: [
+                                        JsLiteralMemberName {
+                                            value: JS_NUMBER_LITERAL@69..70 "5" [] [],
+                                        },
+                                    ],
                                 },
                                 COMMA@70..72 "," [] [Whitespace(" ")],
-                                JsObjectBindingPatternProperty {
-                                    member: JsLiteralMemberName {
-                                        value: JS_NUMBER_LITERAL@72..74 "6" [] [Whitespace(" ")],
-                                    },
-                                    colon_token: missing (required),
-                                    pattern: missing (required),
-                                    init: missing (optional),
+                                JsUnknownBinding {
+                                    items: [
+                                        JsLiteralMemberName {
+                                            value: JS_NUMBER_LITERAL@72..74 "6" [] [Whitespace(" ")],
+                                        },
+                                    ],
                                 },
                             ],
                             r_curly_token: R_CURLY@74..76 "}" [] [Whitespace(" ")],
@@ -159,22 +156,21 @@ JsModule {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@99..101 "{" [] [Whitespace(" ")],
                             properties: JsObjectBindingPatternPropertyList [
-                                JsObjectBindingPatternProperty {
-                                    member: JsLiteralMemberName {
-                                        value: IDENT@101..109 "default" [] [Whitespace(" ")],
-                                    },
-                                    colon_token: missing (required),
-                                    pattern: missing (required),
-                                    init: missing (optional),
+                                JsUnknownBinding {
+                                    items: [
+                                        JsLiteralMemberName {
+                                            value: IDENT@101..109 "default" [] [Whitespace(" ")],
+                                        },
+                                    ],
                                 },
                                 COMMA@109..111 "," [] [Whitespace(" ")],
-                                JsObjectBindingPatternProperty {
-                                    member: JsLiteralMemberName {
-                                        value: IDENT@111..115 "eval" [] [],
-                                    },
-                                    colon_token: COLON@115..117 ":" [] [Whitespace(" ")],
-                                    pattern: missing (required),
-                                    init: missing (optional),
+                                JsUnknownBinding {
+                                    items: [
+                                        JsLiteralMemberName {
+                                            value: IDENT@111..115 "eval" [] [],
+                                        },
+                                        COLON@115..117 ":" [] [Whitespace(" ")],
+                                    ],
                                 },
                             ],
                             r_curly_token: R_CURLY@117..119 "}" [] [Whitespace(" ")],
@@ -210,12 +206,9 @@ JsModule {
             0: JS_OBJECT_BINDING_PATTERN@4..10
               0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@6..8
-                0: JS_OBJECT_BINDING_PATTERN_PROPERTY@6..8
+                0: JS_UNKNOWN_BINDING@6..8
                   0: JS_LITERAL_MEMBER_NAME@6..8
                     0: JS_NUMBER_LITERAL@6..8 "5" [] [Whitespace(" ")]
-                  1: (empty)
-                  2: (empty)
-                  3: (empty)
               2: R_CURLY@8..10 "}" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
@@ -273,19 +266,13 @@ JsModule {
             0: JS_OBJECT_BINDING_PATTERN@67..76
               0: L_CURLY@67..69 "{" [] [Whitespace(" ")]
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@69..74
-                0: JS_OBJECT_BINDING_PATTERN_PROPERTY@69..70
+                0: JS_UNKNOWN_BINDING@69..70
                   0: JS_LITERAL_MEMBER_NAME@69..70
                     0: JS_NUMBER_LITERAL@69..70 "5" [] []
-                  1: (empty)
-                  2: (empty)
-                  3: (empty)
                 1: COMMA@70..72 "," [] [Whitespace(" ")]
-                2: JS_OBJECT_BINDING_PATTERN_PROPERTY@72..74
+                2: JS_UNKNOWN_BINDING@72..74
                   0: JS_LITERAL_MEMBER_NAME@72..74
                     0: JS_NUMBER_LITERAL@72..74 "6" [] [Whitespace(" ")]
-                  1: (empty)
-                  2: (empty)
-                  3: (empty)
               2: R_CURLY@74..76 "}" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
@@ -310,19 +297,14 @@ JsModule {
             0: JS_OBJECT_BINDING_PATTERN@99..119
               0: L_CURLY@99..101 "{" [] [Whitespace(" ")]
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@101..117
-                0: JS_OBJECT_BINDING_PATTERN_PROPERTY@101..109
+                0: JS_UNKNOWN_BINDING@101..109
                   0: JS_LITERAL_MEMBER_NAME@101..109
                     0: IDENT@101..109 "default" [] [Whitespace(" ")]
-                  1: (empty)
-                  2: (empty)
-                  3: (empty)
                 1: COMMA@109..111 "," [] [Whitespace(" ")]
-                2: JS_OBJECT_BINDING_PATTERN_PROPERTY@111..117
+                2: JS_UNKNOWN_BINDING@111..117
                   0: JS_LITERAL_MEMBER_NAME@111..115
                     0: IDENT@111..115 "eval" [] []
                   1: COLON@115..117 ":" [] [Whitespace(" ")]
-                  2: (empty)
-                  3: (empty)
               2: R_CURLY@117..119 "}" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)

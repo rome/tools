@@ -107,12 +107,12 @@ pub trait SyntaxNodeExt {
 	/// Whether this node is an iteration statement.
 	#[inline]
 	fn is_loop(&self) -> bool {
-		const ITERATION_STMT: [SyntaxKind; 5] = [
-			SyntaxKind::JS_FOR_IN_STATEMENT,
-			SyntaxKind::JS_FOR_OF_STATEMENT,
-			SyntaxKind::FOR_STMT,
-			SyntaxKind::JS_WHILE_STATEMENT,
-			SyntaxKind::JS_DO_WHILE_STATEMENT,
+		const ITERATION_STMT: [JsSyntaxKind; 5] = [
+			JsSyntaxKind::JS_FOR_IN_STATEMENT,
+			JsSyntaxKind::JS_FOR_OF_STATEMENT,
+			JsSyntaxKind::FOR_STMT,
+			JsSyntaxKind::JS_WHILE_STATEMENT,
+			JsSyntaxKind::JS_DO_WHILE_STATEMENT,
 		];
 		ITERATION_STMT.contains(&self.to_node().kind())
 	}
@@ -160,18 +160,18 @@ pub trait SyntaxNodeExt {
 	fn contains_comments(&self) -> bool {
 		self.tokens()
 			.iter()
-			.any(|tok| tok.kind() == SyntaxKind::COMMENT)
+			.any(|tok| tok.kind() == JsSyntaxKind::COMMENT)
 	}
 
 	/// Get the first child with a specific kind.
-	fn child_with_kind(&self, kind: SyntaxKind) -> Option<SyntaxNode> {
+	fn child_with_kind(&self, kind: JsSyntaxKind) -> Option<SyntaxNode> {
 		self.to_node().children().find(|child| child.kind() == kind)
 	}
 
 	/// Get the parent of this node, recursing through any grouping expressions
 	fn expr_parent(&self) -> Option<SyntaxNode> {
 		let parent = self.to_node().parent()?;
-		if parent.kind() == SyntaxKind::JS_PARENTHESIZED_EXPRESSION {
+		if parent.kind() == JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION {
 			parent.parent()
 		} else {
 			Some(parent)
@@ -205,7 +205,7 @@ pub trait SyntaxNodeExt {
 	/// Get a specific token in the node which matches a syntax kind.
 	///
 	/// This does not consider tokens in descendant nodes
-	fn token_with_kind(&self, kind: SyntaxKind) -> Option<SyntaxToken> {
+	fn token_with_kind(&self, kind: JsSyntaxKind) -> Option<SyntaxToken> {
 		self.to_node()
 			.children_with_tokens()
 			.find_map(|t| t.into_token().filter(|it| it.kind() == kind))
@@ -223,7 +223,7 @@ pub trait SyntaxTokenExt {
 
 	/// Convert a comment to a more detailed representation.
 	fn comment(&self) -> Option<Comment> {
-		if self.to_token().kind() != SyntaxKind::COMMENT {
+		if self.to_token().kind() != JsSyntaxKind::COMMENT {
 			return None;
 		}
 
