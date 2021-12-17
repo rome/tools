@@ -15,7 +15,15 @@ use super::token::GreenTokenTrivia;
 type HashMap<K, V> = hashbrown::HashMap<K, V, BuildHasherDefault<FxHasher>>;
 
 #[derive(Debug)]
-struct NoHash<T>(T);
+struct NoHashToken(GreenToken);
+
+#[derive(Debug)]
+struct NoHashNode {
+	node: GreenNode,
+	// Store the hash as it's expensive to re-compute
+	// involves re-computing the hash of the whole sub-tree
+	hash: u64,
+}
 
 /// Interner for GreenTokens and GreenNodes
 // XXX: the impl is a bit tricky. As usual when writing interners, we want to
@@ -38,8 +46,8 @@ struct NoHash<T>(T);
 // we don't accidentally use the wrong hash!
 #[derive(Default, Debug)]
 pub struct NodeCache {
-	nodes: HashMap<NoHash<GreenNode>, ()>,
-	tokens: HashMap<NoHash<GreenToken>, ()>,
+	nodes: HashMap<NoHashNode, ()>,
+	tokens: HashMap<NoHashToken, ()>,
 }
 
 fn token_hash_of(kind: RawSyntaxKind, text: &str) -> u64 {
@@ -51,19 +59,6 @@ fn token_hash_of(kind: RawSyntaxKind, text: &str) -> u64 {
 
 fn token_hash(token: &GreenTokenData) -> u64 {
 	token_hash_of(token.kind(), token.text())
-}
-
-fn node_hash(node: &GreenNodeData) -> u64 {
-	let mut h = FxHasher::default();
-	node.kind().hash(&mut h);
-	for slot in node.slots() {
-		match slot {
-			Slot::Empty { .. } => {}
-			Slot::Node { node, .. } => node_hash(node).hash(&mut h),
-			Slot::Token { token, .. } => token_hash(token).hash(&mut h),
-		}
-	}
-	h.finish()
 }
 
 fn element_id(elem: GreenElementRef<'_>) -> *const () {
@@ -110,9 +105,9 @@ impl NodeCache {
 		// For example, all `#[inline]` in this file share the same green node!
 		// For `libsyntax/parse/parser.rs`, measurements show that deduping saves
 		// 17% of the memory for green nodes!
-		let entry = self.nodes.raw_entry_mut().from_hash(hash, |node| {
-			node.0.kind() == kind && node.0.slots().len() == slots.len() && {
-				let lhs = node.0.slots();
+		let entry = self.nodes.raw_entry_mut().from_hash(hash, |no_hash| {
+			no_hash.node.kind() == kind && no_hash.node.slots().len() == slots.len() && {
+				let lhs = no_hash.node.slots();
 				let lhs = lhs.filter_map(|slot| match slot {
 					Slot::Empty { .. } => None,
 					Slot::Node { node, .. } => Some(element_id(NodeOrToken::Node(node))),
@@ -163,7 +158,8 @@ impl NodeCache {
 			RawEntryMut::Occupied(entry) => entry.key().0.clone(),
 			RawEntryMut::Vacant(entry) => {
 				let token = GreenToken::with_trivia(kind, text, leading, trailing);
-				entry.insert_with_hasher(hash, NoHash(token.clone()), (), |t| token_hash(&t.0));
+				entry
+					.insert_with_hasher(hash, NoHashToken(token.clone()), (), |t| token_hash(&t.0));
 				token
 			}
 		};
@@ -180,17 +176,17 @@ pub(crate) enum NodeCacheNodeEntryMut<'a> {
 
 pub(crate) struct VacantNodeEntry<'a> {
 	hash: u64,
-	raw_entry: RawVacantEntryMut<'a, NoHash<GreenNode>, (), BuildHasherDefault<FxHasher>>,
+	raw_entry: RawVacantEntryMut<'a, NoHashNode, (), BuildHasherDefault<FxHasher>>,
 }
 
 pub(crate) struct CachedNodeEntry<'a> {
 	hash: u64,
-	raw_entry: RawOccupiedEntryMut<'a, NoHash<GreenNode>, (), BuildHasherDefault<FxHasher>>,
+	raw_entry: RawOccupiedEntryMut<'a, NoHashNode, (), BuildHasherDefault<FxHasher>>,
 }
 
 impl<'a> CachedNodeEntry<'a> {
 	pub fn node(&self) -> &GreenNode {
-		&self.raw_entry.key().0
+		&self.raw_entry.key().node
 	}
 
 	pub fn hash(&self) -> u64 {
@@ -203,8 +199,15 @@ impl<'a> VacantNodeEntry<'a> {
 		self.hash
 	}
 	pub fn insert(self, node: GreenNode) {
-		self.raw_entry
-			.insert_with_hasher(self.hash, NoHash(node), (), |n| node_hash(&n.0));
+		self.raw_entry.insert_with_hasher(
+			self.hash,
+			NoHashNode {
+				node,
+				hash: self.hash,
+			},
+			(),
+			|n| n.hash,
+		);
 	}
 }
 
