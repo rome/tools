@@ -46,9 +46,11 @@ x = class aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa extends bbbbbbb
 ---
 # Output
 class Foo extends Boar {
-	constructor(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
-	bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
-	c = d) {
+	constructor(
+		aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
+		bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
+		c = d,
+	) {
 		super();
 	}
 	get g() {}
