@@ -22,7 +22,6 @@ use crate::syntax::js_parse_error::{
 	expected_binding, expected_identifier, expected_parameter, expected_simple_assignment_target,
 };
 use crate::syntax::object::parse_object_expression;
-use crate::syntax::stmt::is_semi;
 use crate::CompletedNodeOrMissingMarker::NodeMarker;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
@@ -1405,15 +1404,13 @@ fn parse_postfix_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 					let assignment_target = expression_to_assignment(p, marker, checkpoint);
 					let m = assignment_target.precede(p);
 					p.bump(T![++]);
-					let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
-					complete
+					m.complete(p, JS_POST_UPDATE_EXPRESSION)
 				}
 				T![--] => {
 					let assignment_target = expression_to_assignment(p, marker, checkpoint);
 					let m = assignment_target.precede(p);
 					p.bump(T![--]);
-					let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
-					complete
+					m.complete(p, JS_POST_UPDATE_EXPRESSION)
 				}
 				_ => marker,
 			}

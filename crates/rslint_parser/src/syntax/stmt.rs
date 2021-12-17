@@ -347,7 +347,6 @@ pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		p.error(err);
 		p.missing();
 	} else {
-		// TODO: review this part when error recovery is fixed
 		p.expr_with_semi_recovery(false).ok();
 	}
 	semi(p, start..p.cur_tok().range.end);
