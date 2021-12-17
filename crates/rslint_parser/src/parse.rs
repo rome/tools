@@ -237,7 +237,7 @@ pub fn parse_expr(text: &str, file_id: usize) -> Parse<JsAnyExpression> {
 	let (tokens, mut errors) = tokenize(text, file_id);
 	let tok_source = TokenSource::new(text, &tokens);
 	let mut parser = crate::Parser::new(tok_source, file_id, Syntax::default());
-	crate::syntax::expr::parse_expression(&mut parser).or_missing(&mut parser);
+	crate::syntax::expr::parse_expression(&mut parser).unwrap();
 	let (events, p_diags) = parser.finish();
 	errors.extend(p_diags);
 	let mut tree_sink = LosslessTreeSink::new(text, &tokens);
