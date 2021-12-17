@@ -6,27 +6,13 @@ expression: getter_setter.js
 # Input
 let a = {
 	get foo() {}
-	get foo(a) {}
 }
 let b = {
-	set foo() {}
 	set foo(a) {}
 }
 
 ---
 # Output
-let a = {
-	get foo() {}
-	get foo(a) {}
-
-}
-let b = 
-{
-	set;
-	foo();
-	{}
-	set;
-	foo(a);
-	{}
-}
+let a = {get foo() {}};
+let b = {set foo(a) {}};
 
