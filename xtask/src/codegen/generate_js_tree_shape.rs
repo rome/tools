@@ -16,10 +16,8 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 			Field::Node { ty, .. } => {
 				let ast_type_name = format_ident!("{}", ty);
 
-				// TODO, optional / non optional branches are identical. It's just the "eq" function that differs
-
 				quote! {
-					if actual_kinds.next().unwrap().map(#ast_type_name::can_cast) == Some(false) {
+					if slots.next().unwrap().map(#ast_type_name::can_cast) == Some(false) {
 						return false;
 					}
 				}
@@ -39,7 +37,11 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 				};
 
 				quote! {
-					if actual_kinds.next().unwrap().map(|actual| #eq_kind) == Some(false) {
+					if current_slot.is_none() {
+
+					}
+
+					if slots.next().unwrap().map(|actual| #eq_kind) == Some(false) {
 						return false;
 					}
 				}
@@ -48,9 +50,7 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 
 		quote! {
 			#kind => {
-				if actual_len != #expected_len {
-					return false;
-				}
+				let mut current_slot = slots.next();
 
 				#(#fields)*
 
@@ -66,11 +66,11 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 			let allow_trailing = separator.allow_trailing;
 			let separator_kind = token_kind_to_code(&separator.separator_token);
 			quote! {
-				#kind => Self::fits_separated_list_shape(#element_type::can_cast, #separator_kind, #allow_trailing, actual_kinds)
+				#kind => Self::forms_separated_list_shape(#element_type::can_cast, #separator_kind, #allow_trailing, slots)
 			}
 		} else {
 			quote! {
-				#kind => Self::fits_list_shape(#element_type::can_cast, actual_kinds)
+				#kind => Self::forms_node_list_shape(#element_type::can_cast, slots)
 			}
 		}
 	});
@@ -85,18 +85,18 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 			ast::*,
 			T,
 			JsLanguage,
-			SyntaxKind::{self, *}
+			SyntaxKind::*
 		};
 
 		use rome_rowan::AstTreeShape;
 
 		impl AstTreeShape for JsLanguage {
-			fn fits_shape_of(kind: &Self::Kind, actual_len: usize, mut actual_kinds: impl Iterator<Item = Option<Self::Kind>>, ) -> bool {
-				match kind {
+			fn forms_exact_shape_for(parent: Self::Kind, mut slots: impl ExactSizeIterator<Item = Option<Self::Kind>>, ) -> bool {
+				match parent {
 					#(#unknown_kinds)|* | ERROR => true,
 					#(#normal_node_arms),*
 					#(#lists),*,
-					_ => unreachable!("Is {:?} a token?", kind),
+					_ => unreachable!("Is {:?} a token?", parent),
 				}
 			}
 		}
