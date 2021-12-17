@@ -703,7 +703,6 @@ pub fn parse_arguments(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // (5 + 5) => {}
 // (a, ,b) => {}
 // (a, b) =>
-// (a, b =>
 pub fn parse_paren_or_arrow_expr(
 	p: &mut Parser,
 	can_be_arrow: bool,
@@ -901,21 +900,18 @@ pub fn parse_paren_or_arrow_expr(
 pub fn parse_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let first = parse_expr_or_assignment(p);
 
-	match first {
-		Present(first_marker) => {
-			if p.at(T![,]) {
-				let sequence_expr_marker = first_marker.precede(p);
+	first.map(|first_marker| {
+		if p.at(T![,]) {
+			let sequence_expr_marker = first_marker.precede(p);
 
-				p.bump_any();
-				parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
+			p.bump_any();
+			parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
 
-				Present(sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION))
-			} else {
-				first_marker.into()
-			}
+			sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION)
+		} else {
+			first_marker
 		}
-		Absent => Absent,
-	}
+	})
 }
 
 /// A primary expression such as a literal, an object, an array, or `this`.
@@ -1092,8 +1088,12 @@ pub fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 
 				// test import_call
 				// import("foo")
+
+				// test_err import_call
+				// import()
 				p.expect_required(T!['(']);
-				parse_expr_or_assignment(p).or_missing(p);
+				parse_expr_or_assignment(p)
+					.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 				p.expect_required(T![')']);
 				m.complete(p, JS_IMPORT_CALL_EXPRESSION)
 			}
