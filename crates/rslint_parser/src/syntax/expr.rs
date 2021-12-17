@@ -22,6 +22,7 @@ use crate::syntax::js_parse_error::{
 	expected_binding, expected_identifier, expected_parameter, expected_simple_assignment_target,
 };
 use crate::syntax::object::parse_object_expression;
+use crate::syntax::stmt::is_semi;
 use crate::CompletedNodeOrMissingMarker::NodeMarker;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
@@ -210,9 +211,11 @@ fn yield_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect_required(T![yield]);
 
-	if p.eat_optional(T![*]) || p.at_ts(STARTS_EXPR) {
+	if !is_semi(p, 0) && (p.at(T![*]) || p.at_ts(STARTS_EXPR)) {
+		p.eat_optional(T![*]);
 		parse_expr_or_assignment(p).or_missing(p);
 	} else {
+		p.missing(); // star_token
 		p.missing(); // argument
 	}
 

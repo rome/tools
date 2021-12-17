@@ -46,7 +46,8 @@ function Foo() {
 	}
 }
 function* Foo() {
-	yield yield x;
+	yield;
+	yield x;
 	yield* x;
 	yield aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
 	yield* aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;

@@ -56,11 +56,15 @@ JsModule {
                         expression: JsYieldExpression {
                             yield_token: YIELD_KW@50..57 "yield" [Whitespace("\n ")] [],
                             star_token: missing (optional),
-                            argument: JsYieldExpression {
-                                yield_token: YIELD_KW@57..64 "yield" [Whitespace("\n ")] [],
-                                star_token: missing (optional),
-                                argument: missing (optional),
-                            },
+                            argument: missing (optional),
+                        },
+                        semicolon_token: missing (optional),
+                    },
+                    JsExpressionStatement {
+                        expression: JsYieldExpression {
+                            yield_token: YIELD_KW@57..64 "yield" [Whitespace("\n ")] [],
+                            star_token: missing (optional),
+                            argument: missing (optional),
                         },
                         semicolon_token: missing (optional),
                     },
@@ -114,14 +118,17 @@ JsModule {
               1: (empty)
               2: (empty)
             1: SEMICOLON@49..50 ";" [] []
-          3: JS_EXPRESSION_STATEMENT@50..64
-            0: JS_YIELD_EXPRESSION@50..64
+          3: JS_EXPRESSION_STATEMENT@50..57
+            0: JS_YIELD_EXPRESSION@50..57
               0: YIELD_KW@50..57 "yield" [Whitespace("\n ")] []
               1: (empty)
-              2: JS_YIELD_EXPRESSION@57..64
-                0: YIELD_KW@57..64 "yield" [Whitespace("\n ")] []
-                1: (empty)
-                2: (empty)
+              2: (empty)
+            1: (empty)
+          4: JS_EXPRESSION_STATEMENT@57..64
+            0: JS_YIELD_EXPRESSION@57..64
+              0: YIELD_KW@57..64 "yield" [Whitespace("\n ")] []
+              1: (empty)
+              2: (empty)
             1: (empty)
         3: R_CURLY@64..66 "}" [Whitespace("\n")] []
   3: EOF@66..67 "" [Whitespace("\n")] []
