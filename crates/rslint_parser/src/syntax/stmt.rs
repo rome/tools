@@ -200,7 +200,6 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // 	}
 // }
 
-#[allow(deprecated)]
 fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let start = p.cur_tok().range.start;
 	// this is *technically* wrong because it would be an expr stmt in js but for our purposes
@@ -323,7 +322,6 @@ pub fn parse_debugger_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 // test throw_stmt
 // throw new Error("foo");
 // throw "foo"
-#[allow(deprecated)]
 pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// test_err throw_stmt_err
 	// throw
@@ -449,7 +447,6 @@ pub fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 //   return
 // }
 /// A return statement with an optional value such as `return a;`
-#[allow(deprecated)]
 pub fn parse_return_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// test_err return_stmt_err
 	// return;
@@ -1162,17 +1159,14 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> SyntaxKind {
 
 	if is_in {
 		p.bump_any();
-		if parse_expression(p).is_absent() {
-			p.missing();
-		}
+		parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
 
 		JS_FOR_IN_STATEMENT
 	} else {
 		p.bump_remap(T![of]);
 
-		if parse_expr_or_assignment(p).is_absent() {
-			p.missing();
-		}
+		parse_expr_or_assignment(p)
+			.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 
 		JS_FOR_OF_STATEMENT
 	}

@@ -494,9 +494,6 @@ impl<'t> Parser<'t> {
 		start..end
 	}
 
-	#[deprecated(
-		note = "Use ParseRecovery instead which signals with a Result if the recovery was successful or not"
-	)]
 	pub fn expr_with_semi_recovery(&mut self, assign: bool) -> RecoveryResult {
 		let func = if assign {
 			syntax::expr::parse_expr_or_assignment
