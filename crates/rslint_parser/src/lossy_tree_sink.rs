@@ -1,5 +1,5 @@
 use crate::{
-	ParserError, SyntaxKind, SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
+	JsSyntaxKind, ParserError, SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
 };
 use rome_rowan::TriviaPiece;
 use rslint_lexer::Token;
@@ -29,7 +29,7 @@ enum State {
 }
 
 impl<'a> TreeSink for LossyTreeSink<'a> {
-	fn consume_multiple_tokens(&mut self, amount: u8, kind: SyntaxKind) {
+	fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind) {
 		match mem::replace(&mut self.state, State::Normal) {
 			State::PendingStart => unreachable!(),
 			State::PendingFinish => self.inner.finish_node(),
@@ -46,7 +46,7 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 		self.do_tokens(kind, len, amount)
 	}
 
-	fn token(&mut self, kind: SyntaxKind) {
+	fn token(&mut self, kind: JsSyntaxKind) {
 		match mem::replace(&mut self.state, State::Normal) {
 			State::PendingStart => unreachable!(),
 			State::PendingFinish => self.inner.finish_node(),
@@ -57,17 +57,7 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 		self.do_token(kind, len);
 	}
 
-	fn missing(&mut self) {
-		match mem::replace(&mut self.state, State::Normal) {
-			State::PendingStart => unreachable!(),
-			State::PendingFinish => self.inner.finish_node(),
-			State::Normal => (),
-		}
-
-		self.inner.missing();
-	}
-
-	fn start_node(&mut self, kind: SyntaxKind) {
+	fn start_node(&mut self, kind: JsSyntaxKind) {
 		match mem::replace(&mut self.state, State::Normal) {
 			State::PendingStart => {
 				self.inner.start_node(kind);
@@ -142,7 +132,7 @@ impl<'a> LossyTreeSink<'a> {
 	/// will be appended to its leading trivia.
 	pub fn finish(mut self) -> (SyntaxNode, Vec<ParserError>) {
 		if self.needs_eof {
-			self.do_token(SyntaxKind::EOF, 0.into());
+			self.do_token(JsSyntaxKind::EOF, 0.into());
 		}
 
 		match mem::replace(&mut self.state, State::Normal) {
@@ -155,18 +145,18 @@ impl<'a> LossyTreeSink<'a> {
 
 	fn is_eof(&self) -> bool {
 		match self.tokens.get(self.token_pos) {
-			Some(token) if token.kind == SyntaxKind::EOF => true,
+			Some(token) if token.kind == JsSyntaxKind::EOF => true,
 			None => true,
 			_ => false,
 		}
 	}
 
 	#[inline]
-	fn do_token(&mut self, kind: SyntaxKind, len: TextSize) {
+	fn do_token(&mut self, kind: JsSyntaxKind, len: TextSize) {
 		self.do_tokens(kind, len, 1)
 	}
 
-	fn do_tokens(&mut self, kind: SyntaxKind, len: TextSize, token_count: u8) {
+	fn do_tokens(&mut self, kind: JsSyntaxKind, len: TextSize, token_count: u8) {
 		let token_range = TextRange::at(self.text_pos, len);
 
 		self.text_pos += len;
@@ -225,8 +215,8 @@ impl<'a> LossyTreeSink<'a> {
 			length += len;
 
 			let current_trivia = match token.kind {
-				SyntaxKind::WHITESPACE => continue,
-				SyntaxKind::COMMENT => TriviaPiece::Comments(token.len),
+				JsSyntaxKind::WHITESPACE => continue,
+				JsSyntaxKind::COMMENT => TriviaPiece::Comments(token.len),
 				_ => unreachable!("Not Trivia"),
 			};
 

@@ -40,18 +40,10 @@ JsModule {
       4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       5: JS_CLASS_MEMBER_LIST@10..16
         0: JS_UNKNOWN_MEMBER@10..16
-          0: (empty)
-          1: (empty)
-          2: (empty)
-          3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@10..13
+          0: JS_LITERAL_MEMBER_NAME@10..13
             0: IDENT@10..13 "foo" [] []
-          6: (empty)
-          7: BANG@13..14 "!" [] []
-          8: (empty)
-          9: (empty)
-          10: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
+          1: BANG@13..14 "!" [] []
+          2: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
       6: R_CURLY@16..17 "}" [] []
   3: EOF@17..18 "" [Whitespace("\n")] []
 --

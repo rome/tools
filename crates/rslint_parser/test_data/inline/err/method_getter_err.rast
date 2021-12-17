@@ -11,21 +11,16 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@10..11 "{" [] [],
             members: JsClassMemberList [
-                JsGetterClassMember {
-                    access_modifier: missing (optional),
-                    static_token: missing (optional),
-                    abstract_token: missing (optional),
-                    get_token: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")],
-                    name: missing (required),
-                    l_paren_token: missing (required),
-                    r_paren_token: missing (required),
-                    return_type: missing (optional),
-                    body: JsFunctionBody {
-                        l_curly_token: L_CURLY@17..18 "{" [] [],
-                        directives: JsDirectiveList [],
-                        statements: JsStatementList [],
-                        r_curly_token: R_CURLY@18..19 "}" [] [],
-                    },
+                JsUnknownMember {
+                    items: [
+                        GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")],
+                        JsFunctionBody {
+                            l_curly_token: L_CURLY@17..18 "{" [] [],
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [],
+                            r_curly_token: R_CURLY@18..19 "}" [] [],
+                        },
+                    ],
                 },
             ],
             r_curly_token: R_CURLY@19..21 "}" [Whitespace("\n")] [],
@@ -46,16 +41,9 @@ JsModule {
       3: (empty)
       4: L_CURLY@10..11 "{" [] []
       5: JS_CLASS_MEMBER_LIST@11..19
-        0: JS_GETTER_CLASS_MEMBER@11..19
-          0: (empty)
-          1: (empty)
-          2: (empty)
-          3: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")]
-          4: (empty)
-          5: (empty)
-          6: (empty)
-          7: (empty)
-          8: JS_FUNCTION_BODY@17..19
+        0: JS_UNKNOWN_MEMBER@11..19
+          0: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")]
+          1: JS_FUNCTION_BODY@17..19
             0: L_CURLY@17..18 "{" [] []
             1: JS_DIRECTIVE_LIST@18..18
             2: JS_STATEMENT_LIST@18..18

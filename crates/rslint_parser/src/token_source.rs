@@ -1,4 +1,4 @@
-use crate::{SyntaxKind::EOF, TextRange, TextSize, Token};
+use crate::{JsSyntaxKind::EOF, TextRange, TextSize, Token};
 use rslint_lexer::is_linebreak;
 use std::collections::HashSet;
 

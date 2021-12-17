@@ -23,7 +23,7 @@ macro_rules! assert_lex {
         $(
             assert_eq!(
                 tokens[idx].0.kind,
-                rslint_syntax::SyntaxKind::$kind,
+                rslint_syntax::JsSyntaxKind::$kind,
                 "expected token kind {}, but found {:?}",
                 stringify!($kind),
                 tokens[idx].0.kind,

@@ -94,20 +94,20 @@ pub fn run(filter: String) {
 					let text = code;
 
 					// Tokenizer
-					println!("Tokenizer");
+					// println!("Tokenizer");
 					#[cfg(feature = "dhat-on")]
 					#[cfg(feature = "dhat-on")]
 					let stats = dhat::get_stats().unwrap();
 					let tokenizer_timing = timing::start();
 					let (tokens, mut errors) = rslint_parser::tokenize(text.as_str(), 0);
 					let tok_source = rslint_parser::TokenSource::new(text.as_str(), &tokens);
-					println!("\tTime");
-					println!("\t\ttook {:?}", tokenizer_timing.stop());
+					// println!("\tTime");
+					// println!("\t\ttook {:?}", tokenizer_timing.stop());
 					#[cfg(feature = "dhat-on")]
 					let stats = print_diff(stats, dhat::get_stats().unwrap());
 
 					// Parser
-					println!("Parser");
+					// println!("Parser");
 					let parser_timing = timing::start();
 					let (events, errors, tokens) = {
 						let mut parser = rslint_parser::Parser::new(
@@ -120,20 +120,20 @@ pub fn run(filter: String) {
 						errors.extend(p_errs);
 						(events, errors, tokens)
 					};
-					println!("\tTime");
-					println!("\t\ttook {:?}", parser_timing.stop());
+					// println!("\tTime");
+					// println!("\t\ttook {:?}", parser_timing.stop());
 					#[cfg(feature = "dhat-on")]
 					let stats = print_diff(stats, dhat::get_stats().unwrap());
 
 					// TreeSink
-					println!("TreeSink");
-					let treesink_timing = timing::start();
-					let mut tree_sink =
-						rslint_parser::LosslessTreeSink::new(text.as_str(), &tokens);
-					rslint_parser::process(&mut tree_sink, events, errors);
-					let (_green, _parse_errors) = tree_sink.finish();
-					println!("\tTime");
-					println!("\t\ttook {:?}", treesink_timing.stop());
+					// println!("TreeSink");
+					// let treesink_timing = timing::start();
+					// let mut tree_sink =
+					// 	rslint_parser::LosslessTreeSink::new(text.as_str(), &tokens);
+					// rslint_parser::process(&mut tree_sink, events, errors);
+					// let (_green, _parse_errors) = tree_sink.finish();
+					// println!("\tTime");
+					// println!("\t\ttook {:?}", treesink_timing.stop());
 					#[cfg(feature = "dhat-on")]
 					let stats = print_diff(stats, dhat::get_stats().unwrap());
 				});

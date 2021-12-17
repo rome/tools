@@ -1,11 +1,15 @@
 use crate::api::SyntaxKind;
-use crate::green::CacheableNode;
+use crate::green::NodeCacheNodeEntryMut;
 use crate::{
 	api::TriviaPiece,
 	cow_mut::CowMut,
 	green::{GreenElement, NodeCache},
-	AstTreeShape, GreenNode, NodeOrToken, SyntaxNode,
+	AstTreeShape, GreenNode, NodeOrToken, NodeShapeCommand, ParsedElements, SyntaxNode,
 };
+use std::iter::FusedIterator;
+
+use crate::ast_shape::NodeShape;
+use std::vec::Drain;
 
 /// A checkpoint for maybe wrapping a node. See `GreenNodeBuilder::checkpoint` for details.
 #[derive(Clone, Copy, Debug)]
@@ -16,7 +20,7 @@ pub struct Checkpoint(usize);
 pub struct TreeBuilder<'cache, L: AstTreeShape> {
 	cache: CowMut<'cache, NodeCache>,
 	parents: Vec<(L::Kind, usize)>,
-	children: Vec<(u64, Option<GreenElement>)>,
+	children: Vec<(u64, GreenElement)>,
 }
 
 impl<L: AstTreeShape> Default for TreeBuilder<'_, L> {
@@ -65,7 +69,7 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 	#[inline]
 	pub fn token(&mut self, kind: L::Kind, text: &str) {
 		let (hash, token) = self.cache.token(L::kind_to_raw(kind), text);
-		self.children.push((hash, Some(token.into())));
+		self.children.push((hash, token.into()));
 	}
 
 	/// Adds new token to the current branch.
@@ -80,7 +84,7 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 		let (hash, token) =
 			self.cache
 				.token_with_trivia(L::kind_to_raw(kind), text, leading, trailing);
-		self.children.push((hash, Some(token.into())));
+		self.children.push((hash, token.into()));
 	}
 
 	/// Inserts a placeholder for a child that is missing in a parent node either because
@@ -88,7 +92,7 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 	/// because of a syntax error.
 	#[inline]
 	pub fn missing(&mut self) {
-		self.children.push(NodeCache::empty());
+		// self.children.push(NodeCache::empty());
 	}
 
 	/// Start new node and make it current.
@@ -103,34 +107,52 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 	#[inline]
 	pub fn finish_node(&mut self) {
 		let (kind, first_child) = self.parents.pop().unwrap();
-
 		let raw_kind = L::kind_to_raw(kind);
-		let (hash, node) =
-			self.cache
-				.node(raw_kind, &mut self.children, first_child, |all_children| {
-					let children = &all_children[first_child..];
-					let child_kinds = children
-						.iter()
-						.map(|(_, element)| element.as_ref().map(|e| L::kind_from_raw(e.kind())));
 
-					let fits_shape = L::forms_exact_shape_for(kind, child_kinds);
-					let slots = all_children.drain(first_child..).map(|(_, it)| it);
+		let slots = &self.children[first_child..];
+		let node_entry = self.cache.node(raw_kind, slots);
 
-					if fits_shape {
-						CacheableNode::Cache(GreenNode::new(raw_kind, slots))
-					} else {
-						// Don't cache unknown nodes:
-						// a) They're rare
-						// b) The hash computed in NodeCache uses the "original" kind. Caching it would
-						//    require re-computing the hash which doesn't seem worth it because of a)
-						CacheableNode::NoCache(GreenNode::new(
-							L::kind_to_raw(kind.to_unknown()),
-							slots,
-						))
-					}
-				});
+		let mut build_node = || {
+			let parsed_elements = ParsedElements::new(&mut self.children, first_child);
 
-		self.children.push((hash, Some(node.into())));
+			L::forms_exact_shape_for(kind, parsed_elements, |result| match result {
+				Ok(NodeShape::List(elements)) => GreenNode::new(
+					raw_kind,
+					elements.elements().map(|(_, element)| Some(element)),
+				),
+				Ok(NodeShape::Normal {
+					parsed_elements,
+					commands,
+				}) => {
+					let slots = SlotShapeIterator {
+						shape: commands.iter(),
+						parsed_elements: parsed_elements.elements(),
+					};
+					GreenNode::new(raw_kind, slots)
+				}
+				Err(elements) => GreenNode::new(
+					L::kind_to_raw(kind.to_unknown()),
+					elements.elements().map(|(_, element)| Some(element)),
+				),
+			})
+		};
+
+		let (hash, node) = match node_entry {
+			NodeCacheNodeEntryMut::NoCache(hash) => (hash, build_node()),
+			NodeCacheNodeEntryMut::Vacant(entry) => {
+				let hash = entry.hash();
+
+				let node = build_node();
+				entry.insert(node.clone());
+				(hash, node)
+			}
+			NodeCacheNodeEntryMut::Cached(cached) => {
+				self.children.truncate(first_child);
+				(cached.hash(), cached.node().clone())
+			}
+		};
+
+		self.children.push((hash, node.into()));
 	}
 
 	/// Prepare for maybe wrapping the next node.
@@ -198,11 +220,40 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 	pub(crate) fn finish_green(mut self) -> GreenNode {
 		assert_eq!(self.children.len(), 1);
 		match self.children.pop().unwrap().1 {
-			Some(NodeOrToken::Node(node)) => node,
+			NodeOrToken::Node(node) => node,
 			_ => panic!(),
 		}
 	}
 }
+
+struct SlotShapeIterator<'a> {
+	shape: std::slice::Iter<'a, NodeShapeCommand>,
+	parsed_elements: Drain<'a, (u64, GreenElement)>,
+}
+
+impl<'a> Iterator for SlotShapeIterator<'a> {
+	type Item = Option<GreenElement>;
+
+	fn next(&mut self) -> Option<Self::Item> {
+		match self.shape.next()? {
+			NodeShapeCommand::Occupied => Some(Some(
+				self.parsed_elements
+					.next()
+					.expect("Expected a next element according to shape descriptor")
+					.1,
+			)),
+			NodeShapeCommand::Empty => Some(None),
+		}
+	}
+}
+
+impl<'a> ExactSizeIterator for SlotShapeIterator<'a> {
+	fn len(&self) -> usize {
+		self.shape.len()
+	}
+}
+
+impl<'a> FusedIterator for SlotShapeIterator<'a> {}
 
 #[cfg(test)]
 mod tests {

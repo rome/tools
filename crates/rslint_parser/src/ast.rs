@@ -10,7 +10,7 @@ mod generated;
 mod stmt_ext;
 mod ts_ext;
 
-use crate::{syntax_node::*, util::SyntaxNodeExt, SyntaxKind, SyntaxList, TextRange};
+use crate::{syntax_node::*, util::SyntaxNodeExt, JsSyntaxKind, SyntaxList, TextRange};
 use std::error::Error;
 use std::fmt::{Debug, Formatter};
 use std::iter::FusedIterator;
@@ -23,7 +23,7 @@ pub use self::{expr_ext::*, generated::nodes::*, stmt_ext::*, ts_ext::*};
 /// the same representation: a pointer to the tree root and a pointer to the
 /// node itself.
 pub trait AstNode {
-	fn can_cast(kind: SyntaxKind) -> bool
+	fn can_cast(kind: JsSyntaxKind) -> bool
 	where
 		Self: Sized;
 
@@ -44,7 +44,7 @@ pub trait AstNode {
 
 /// Like `AstNode`, but wraps tokens rather than interior nodes.
 pub trait AstToken {
-	fn can_cast(token: SyntaxKind) -> bool
+	fn can_cast(token: JsSyntaxKind) -> bool
 	where
 		Self: Sized;
 
@@ -357,7 +357,7 @@ impl std::fmt::Display for SyntaxError {
 }
 
 mod support {
-	use super::{AstNode, SyntaxKind, SyntaxNode, SyntaxToken};
+	use super::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxToken};
 	use crate::ast::{AstChildren, DebugSyntaxElement};
 	use crate::SyntaxElementChildren;
 	use crate::{SyntaxError, SyntaxResult};
@@ -383,7 +383,7 @@ mod support {
 		parent.children().find_map(L::cast).unwrap()
 	}
 
-	pub(super) fn token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
+	pub(super) fn token(parent: &SyntaxNode, kind: JsSyntaxKind) -> Option<SyntaxToken> {
 		parent
 			.children_with_tokens()
 			.filter_map(|it| it.into_token())
@@ -392,14 +392,14 @@ mod support {
 
 	pub(super) fn required_token(
 		parent: &SyntaxNode,
-		kind: SyntaxKind,
+		kind: JsSyntaxKind,
 	) -> SyntaxResult<SyntaxToken> {
 		token(parent, kind).ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
 	}
 
 	pub(super) fn find_token(
 		parent: &SyntaxNode,
-		possible_kinds: &[SyntaxKind],
+		possible_kinds: &[JsSyntaxKind],
 	) -> Option<SyntaxToken> {
 		parent
 			.children_with_tokens()
@@ -413,7 +413,7 @@ mod support {
 
 	pub(super) fn find_required_token(
 		parent: &SyntaxNode,
-		possible_kinds: &[SyntaxKind],
+		possible_kinds: &[JsSyntaxKind],
 	) -> SyntaxResult<SyntaxToken> {
 		find_token(parent, possible_kinds)
 			.ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
@@ -460,7 +460,7 @@ mod support {
 #[cfg(test)]
 mod tests {
 	use crate::ast::{AstSeparatedElement, AstSeparatedList, JsNumberLiteralExpression};
-	use crate::{AstNode, JsLanguage, SyntaxKind, SyntaxNode, SyntaxResult};
+	use crate::{AstNode, JsLanguage, JsSyntaxKind, SyntaxNode, SyntaxResult};
 	use rome_rowan::{SyntaxList, TreeBuilder};
 
 	struct TestList {
@@ -480,7 +480,7 @@ mod tests {
 	}
 
 	impl AstNode for TestList {
-		fn can_cast(_: SyntaxKind) -> bool {
+		fn can_cast(_: JsSyntaxKind) -> bool {
 			unimplemented!()
 		}
 
@@ -503,7 +503,7 @@ mod tests {
 	) -> TestList {
 		let mut builder: TreeBuilder<JsLanguage> = TreeBuilder::new();
 
-		builder.start_node(SyntaxKind::JS_STATEMENT_LIST);
+		builder.start_node(JsSyntaxKind::JS_STATEMENT_LIST);
 
 		let mut had_missing_separator = false;
 
@@ -514,15 +514,15 @@ mod tests {
 			}
 
 			if let Some(node) = node {
-				builder.start_node(SyntaxKind::JS_NUMBER_LITERAL_EXPRESSION);
-				builder.token(SyntaxKind::JS_NUMBER_LITERAL, node.to_string().as_str());
+				builder.start_node(JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION);
+				builder.token(JsSyntaxKind::JS_NUMBER_LITERAL, node.to_string().as_str());
 				builder.finish_node();
 			} else {
 				builder.missing()
 			}
 
 			if let Some(separator) = separator {
-				builder.token(SyntaxKind::COMMA, separator);
+				builder.token(JsSyntaxKind::COMMA, separator);
 			} else {
 				had_missing_separator = true;
 			}
@@ -635,53 +635,53 @@ mod tests {
 		);
 		assert!(list.trailing_separator().is_some());
 	}
-
-	#[test]
-	fn separated_with_two_successive_separators() {
-		// list([1,,])
-		let list = build_list(vec![(Some(1), Some(",")), (None, Some(","))]);
-
-		assert_eq!(list.len(), 2);
-		assert!(!list.is_empty());
-		assert_eq!(list.separators().count(), 2);
-
-		assert_elements(
-			list.elements(),
-			vec![(Some(1.), Some(",")), (None, Some(","))],
-		);
-	}
-
-	#[test]
-	fn separated_with_leading_separator() {
-		// list([,3])
-		let list = build_list(vec![(None, Some(",")), (Some(3), None)]);
-
-		assert_eq!(list.len(), 2);
-		assert!(!list.is_empty());
-		assert_eq!(list.separators().count(), 1);
-
-		assert_elements(
-			list.elements(),
-			vec![
-				// missing first element
-				(None, Some(",")),
-				(Some(3.), None),
-			],
-		);
-	}
-
-	#[test]
-	fn separated_with_two_successive_nodes() {
-		// list([1 2,])
-		let list = build_list(vec![(Some(1), None), (Some(2), Some(","))]);
-
-		assert_eq!(list.len(), 2);
-		assert!(!list.is_empty());
-		assert_eq!(list.separators().count(), 2);
-
-		assert_elements(
-			list.elements(),
-			vec![(Some(1.), None), (Some(2.), Some(","))],
-		);
-	}
+	//
+	// #[test]
+	// fn separated_with_two_successive_separators() {
+	// 	// list([1,,])
+	// 	let list = build_list(vec![(Some(1), Some(",")), (None, Some(","))]);
+	//
+	// 	assert_eq!(list.len(), 2);
+	// 	assert!(!list.is_empty());
+	// 	assert_eq!(list.separators().count(), 2);
+	//
+	// 	assert_elements(
+	// 		list.elements(),
+	// 		vec![(Some(1.), Some(",")), (None, Some(","))],
+	// 	);
+	// }
+	//
+	// #[test]
+	// fn separated_with_leading_separator() {
+	// 	// list([,3])
+	// 	let list = build_list(vec![(None, Some(",")), (Some(3), None)]);
+	//
+	// 	assert_eq!(list.len(), 2);
+	// 	assert!(!list.is_empty());
+	// 	assert_eq!(list.separators().count(), 1);
+	//
+	// 	assert_elements(
+	// 		list.elements(),
+	// 		vec![
+	// 			// missing first element
+	// 			(None, Some(",")),
+	// 			(Some(3.), None),
+	// 		],
+	// 	);
+	// }
+	//
+	// #[test]
+	// fn separated_with_two_successive_nodes() {
+	// 	// list([1 2,])
+	// 	let list = build_list(vec![(Some(1), None), (Some(2), Some(","))]);
+	//
+	// 	assert_eq!(list.len(), 2);
+	// 	assert!(!list.is_empty());
+	// 	assert_eq!(list.separators().count(), 2);
+	//
+	// 	assert_elements(
+	// 		list.elements(),
+	// 		vec![(Some(1.), None), (Some(2.), Some(","))],
+	// 	);
+	// }
 }

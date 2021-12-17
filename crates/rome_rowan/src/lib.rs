@@ -34,7 +34,7 @@ pub use crate::{
 		Language, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList, SyntaxNode,
 		SyntaxNodeChildren, SyntaxSlot, SyntaxSlots, SyntaxToken, TriviaPiece,
 	},
-	ast_shape::AstTreeShape,
+	ast_shape::{AstTreeShape, NodeShapCommands, NodeShape, NodeShapeCommand, ParsedElements},
 	green::RawSyntaxKind,
 	syntax_text::SyntaxText,
 	tree_builder::{Checkpoint, TreeBuilder},

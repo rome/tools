@@ -2,51 +2,45 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsClassDeclaration {
-            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
-            id: JsIdentifierBinding {
-                name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
-            },
-            extends_clause: missing (optional),
-            implements_clause: missing (optional),
-            l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
-            members: JsClassMemberList [
-                JsMethodClassMember {
-                    access_modifier: missing (optional),
-                    static_token: missing (optional),
-                    abstract_token: missing (optional),
-                    async_token: missing (optional),
-                    star_token: missing (optional),
-                    name: JsLiteralMemberName {
-                        value: IDENT@10..13 "foo" [] [],
-                    },
-                    type_parameters: missing (optional),
-                    parameters: JsParameters {
-                        l_paren_token: L_PAREN@13..14 "(" [] [],
-                        items: JsParameterList [
-                            JsIdentifierBinding {
-                                name_token: IDENT@14..16 "a" [] [Whitespace(" ")],
+        JsUnknownStatement {
+            items: [
+                CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
+                },
+                L_CURLY@8..10 "{" [] [Whitespace(" ")],
+                JsClassMemberList [
+                    JsUnknownMember {
+                        items: [
+                            JsLiteralMemberName {
+                                value: IDENT@10..13 "foo" [] [],
                             },
-                            missing separator,
-                            JsObjectBindingPattern {
-                                l_curly_token: L_CURLY@16..17 "{" [] [],
-                                properties: JsObjectBindingPatternPropertyList [],
-                                r_curly_token: R_CURLY@17..19 "}" [] [Whitespace(" ")],
-                            },
-                            missing separator,
-                            JsUnknownBinding {
+                            JsUnknown {
                                 items: [
-                                    R_CURLY@19..20 "}" [] [],
+                                    L_PAREN@13..14 "(" [] [],
+                                    JsUnknown {
+                                        items: [
+                                            JsIdentifierBinding {
+                                                name_token: IDENT@14..16 "a" [] [Whitespace(" ")],
+                                            },
+                                            JsObjectBindingPattern {
+                                                l_curly_token: L_CURLY@16..17 "{" [] [],
+                                                properties: JsObjectBindingPatternPropertyList [],
+                                                r_curly_token: R_CURLY@17..19 "}" [] [Whitespace(" ")],
+                                            },
+                                            JsUnknownBinding {
+                                                items: [
+                                                    R_CURLY@19..20 "}" [] [],
+                                                ],
+                                            },
+                                        ],
+                                    },
                                 ],
                             },
                         ],
-                        r_paren_token: missing (required),
                     },
-                    return_type: missing (optional),
-                    body: missing (required),
-                },
+                ],
             ],
-            r_curly_token: missing (required),
         },
     ],
     eof_token: EOF@20..21 "" [Whitespace("\n")] [],
@@ -56,40 +50,26 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..20
-    0: JS_CLASS_DECLARATION@0..20
+    0: JS_UNKNOWN_STATEMENT@0..20
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "B" [] [Whitespace(" ")]
-      2: (empty)
-      3: (empty)
-      4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      5: JS_CLASS_MEMBER_LIST@10..20
-        0: JS_METHOD_CLASS_MEMBER@10..20
-          0: (empty)
-          1: (empty)
-          2: (empty)
-          3: (empty)
-          4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@10..13
+      2: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      3: JS_CLASS_MEMBER_LIST@10..20
+        0: JS_UNKNOWN_MEMBER@10..20
+          0: JS_LITERAL_MEMBER_NAME@10..13
             0: IDENT@10..13 "foo" [] []
-          6: (empty)
-          7: JS_PARAMETERS@13..20
+          1: JS_UNKNOWN@13..20
             0: L_PAREN@13..14 "(" [] []
-            1: JS_PARAMETER_LIST@14..20
+            1: JS_UNKNOWN@14..20
               0: JS_IDENTIFIER_BINDING@14..16
                 0: IDENT@14..16 "a" [] [Whitespace(" ")]
-              1: (empty)
-              2: JS_OBJECT_BINDING_PATTERN@16..19
+              1: JS_OBJECT_BINDING_PATTERN@16..19
                 0: L_CURLY@16..17 "{" [] []
                 1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@17..17
                 2: R_CURLY@17..19 "}" [] [Whitespace(" ")]
-              3: (empty)
-              4: JS_UNKNOWN_BINDING@19..20
+              2: JS_UNKNOWN_BINDING@19..20
                 0: R_CURLY@19..20 "}" [] []
-            2: (empty)
-          8: (empty)
-          9: (empty)
-      6: (empty)
   3: EOF@20..21 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `,` but instead found `{`

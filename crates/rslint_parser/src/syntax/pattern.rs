@@ -3,17 +3,17 @@ use crate::parser::ParserProgress;
 use crate::syntax::expr::parse_expr_or_assignment;
 use crate::syntax::js_parse_error;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, Invalid, ParseRecovery, ParsedSyntax, Parser, Valid};
-use crate::{ConditionalSyntax, TokenSet};
+use crate::TokenSet;
+use crate::{CompletedMarker, ParseRecovery, ParsedSyntax, Parser};
 use rslint_errors::Diagnostic;
-use rslint_syntax::SyntaxKind::{EOF, JS_ARRAY_HOLE};
-use rslint_syntax::{SyntaxKind, T};
+use rslint_syntax::JsSyntaxKind::{EOF, JS_ARRAY_HOLE};
+use rslint_syntax::{JsSyntaxKind, T};
 use std::ops::Range;
 
 /// Trait for parsing a pattern with an optional default of the form `pattern = default`
 pub(crate) trait ParseWithDefaultPattern {
 	/// The syntax kind of the node for a pattern with a default value
-	fn pattern_with_default_kind() -> SyntaxKind;
+	fn pattern_with_default_kind() -> JsSyntaxKind;
 
 	/// Creates a diagnostic for the case where the pattern is missing. For example, if the
 	/// code only contains ` = default`
@@ -27,12 +27,11 @@ pub(crate) trait ParseWithDefaultPattern {
 		let pattern = self.parse_pattern(p);
 
 		if p.at(T![=]) {
-			let with_default =
-				pattern.precede_or_missing_with_error(p, Self::expected_pattern_error);
+			let with_default = pattern.precede_or_syntax_error(p, Self::expected_pattern_error);
 			p.bump_any(); // eat the = token
 
 			parse_expr_or_assignment(p)
-				.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
+				.or_syntax_error(p, js_parse_error::expected_expression_assignment);
 
 			Present(with_default.complete(p, Self::pattern_with_default_kind()))
 		} else {
@@ -44,13 +43,13 @@ pub(crate) trait ParseWithDefaultPattern {
 /// Trait for parsing an array like pattern of the form `[a, b = "c", { }]`
 pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 	/// The kind of an unknown pattern. Used in case the pattern contains elements that aren't valid patterns
-	fn unknown_pattern_kind() -> SyntaxKind;
+	fn unknown_pattern_kind() -> JsSyntaxKind;
 	/// The kind of the array like pattern (array assignment or array binding)
-	fn array_pattern_kind() -> SyntaxKind;
+	fn array_pattern_kind() -> JsSyntaxKind;
 	/// The kind of the rest pattern
-	fn rest_pattern_kind() -> SyntaxKind;
+	fn rest_pattern_kind() -> JsSyntaxKind;
 	/// The kind of the list
-	fn list_kind() -> SyntaxKind;
+	fn list_kind() -> JsSyntaxKind;
 	///  Creates a diagnostic saying that the parser expected an element at the position passed as an argument.
 	fn expected_element_error(p: &Parser, range: Range<usize>) -> Diagnostic;
 	/// Creates a pattern with default instance. Used to parse the array elements.
@@ -78,10 +77,11 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 				)
 				.enable_recovery_on_line_break();
 
-				let element = self
-					.parse_any_array_element(p, &recovery)
-					.or_invalid_to_unknown(p, Self::unknown_pattern_kind())
-					.or_recover(p, &recovery, Self::expected_element_error);
+				let element = self.parse_any_array_element(p, &recovery).or_recover(
+					p,
+					&recovery,
+					Self::expected_element_error,
+				);
 
 				if element.is_err() {
 					// Failed to recover
@@ -105,16 +105,15 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 		&self,
 		p: &mut Parser,
 		recovery: &ParseRecovery,
-	) -> ParsedSyntax<ConditionalSyntax> {
+	) -> ParsedSyntax<CompletedMarker> {
 		match p.cur() {
-			T![,] => Present(Valid(p.start().complete(p, JS_ARRAY_HOLE))),
+			T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
 			T![...] => self
 				.parse_rest_pattern(p)
 				.map(|rest_pattern| validate_rest_pattern(p, rest_pattern, T![']'], recovery)),
 			_ => self
 				.pattern_with_default()
-				.parse_pattern_with_optional_default(p)
-				.into_valid(),
+				.parse_pattern_with_optional_default(p),
 		}
 	}
 
@@ -132,7 +131,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 
 		with_default
 			.parse_pattern(p)
-			.or_missing_with_error(p, |p, _| P::expected_pattern_error(p, rest_end..rest_end));
+			.or_syntax_error(p, |p, _| P::expected_pattern_error(p, rest_end..rest_end));
 
 		Present(m.complete(p, Self::rest_pattern_kind()))
 	}
@@ -141,11 +140,11 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 /// Trait for parsing an object pattern like node of the form `{ a, b: c}`
 pub(crate) trait ParseObjectPattern {
 	/// Kind used when recovering from invalid properties.
-	fn unknown_pattern_kind() -> SyntaxKind;
+	fn unknown_pattern_kind() -> JsSyntaxKind;
 	/// The kind of the pattern like node this trait parses
-	fn object_pattern_kind() -> SyntaxKind;
+	fn object_pattern_kind() -> JsSyntaxKind;
 	/// The kind of the property list
-	fn list_kind() -> SyntaxKind;
+	fn list_kind() -> JsSyntaxKind;
 	/// Creates a diagnostic saying that a property is expected at the passed in range that isn't present.
 	fn expected_property_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic;
 
@@ -167,7 +166,6 @@ pub(crate) trait ParseObjectPattern {
 
 				if p.at(T![,]) {
 					// missing element
-					p.missing();
 					p.error(Self::expected_property_pattern_error(p, p.cur_tok().range));
 					p.bump_any(); // bump ,
 					continue;
@@ -180,7 +178,6 @@ pub(crate) trait ParseObjectPattern {
 
 				let recover_result = self
 					.parse_any_property_pattern(p, &recovery_set)
-					.or_invalid_to_unknown(p, Self::unknown_pattern_kind())
 					.or_recover(p, &recovery_set, Self::expected_property_pattern_error);
 
 				if recover_result.is_err() {
@@ -204,12 +201,12 @@ pub(crate) trait ParseObjectPattern {
 		&self,
 		p: &mut Parser,
 		recovery: &ParseRecovery,
-	) -> ParsedSyntax<ConditionalSyntax> {
+	) -> ParsedSyntax<CompletedMarker> {
 		if p.at(T![...]) {
 			self.parse_rest_property_pattern(p)
 				.map(|rest_pattern| validate_rest_pattern(p, rest_pattern, T!['}'], recovery))
 		} else {
-			self.parse_property_pattern(p).into_valid()
+			self.parse_property_pattern(p)
 		}
 	}
 
@@ -229,12 +226,12 @@ pub(crate) trait ParseObjectPattern {
 /// * not have a default value
 fn validate_rest_pattern(
 	p: &mut Parser,
-	rest: CompletedMarker,
-	end_token: SyntaxKind,
+	mut rest: CompletedMarker,
+	end_token: JsSyntaxKind,
 	recovery: &ParseRecovery,
-) -> ConditionalSyntax {
+) -> CompletedMarker {
 	if p.at(end_token) {
-		return Valid(rest);
+		return rest;
 	}
 
 	if p.at(T![=]) {
@@ -256,14 +253,17 @@ fn validate_rest_pattern(
 				.secondary(rest_range, "Rest element"),
 		);
 
-		Invalid(rest_marker.complete(p, kind).into())
+		let mut invalid = rest_marker.complete(p, kind);
+		invalid.change_to_unknown(p);
+		invalid
 	} else if p.at(T![,]) && p.nth_at(1, end_token) {
 		p.error(
 			p.err_builder("rest element may not have a trailing comma")
 				.primary(p.cur_tok().range, "Remove the trailing comma here")
 				.secondary(rest.range(p), "Rest element"),
 		);
-		Invalid(rest.into())
+		rest.change_to_unknown(p);
+		rest
 	} else {
 		p.error(
 			p.err_builder("rest element must be the last element")
@@ -275,6 +275,7 @@ fn validate_rest_pattern(
 						),
 				),
 		);
-		Invalid(rest.into())
+		rest.change_to_unknown(p);
+		rest
 	}
 }

@@ -1,4 +1,4 @@
-use crate::SyntaxKind;
+use crate::JsSyntaxKind;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct TokenSet([u128; 2]);
@@ -6,7 +6,7 @@ pub struct TokenSet([u128; 2]);
 impl TokenSet {
 	pub const EMPTY: TokenSet = TokenSet([0; 2]);
 
-	pub const fn singleton(kind: SyntaxKind) -> TokenSet {
+	pub const fn singleton(kind: JsSyntaxKind) -> TokenSet {
 		TokenSet(mask(kind))
 	}
 
@@ -14,7 +14,7 @@ impl TokenSet {
 		TokenSet([self.0[0] | other.0[0], self.0[1] | other.0[1]])
 	}
 
-	pub fn contains(&self, kind: SyntaxKind) -> bool {
+	pub fn contains(&self, kind: JsSyntaxKind) -> bool {
 		let num = kind as usize;
 		match num {
 			0..=127 => self.0[0] & mask(kind)[0] != 0,
@@ -23,7 +23,7 @@ impl TokenSet {
 	}
 }
 
-const fn mask(kind: SyntaxKind) -> [u128; 2] {
+const fn mask(kind: JsSyntaxKind) -> [u128; 2] {
 	let num = kind as usize;
 	match num {
 		0..=127 => [1u128 << num, 0],

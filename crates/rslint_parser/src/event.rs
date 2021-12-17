@@ -3,9 +3,8 @@
 use std::{mem, ops::Range};
 
 use crate::{
-	Parser, ParserError,
-	SyntaxKind::{self, *},
-	TreeSink,
+	JsSyntaxKind::{self, *},
+	Parser, ParserError, TreeSink,
 };
 
 use crate::parser::Checkpoint;
@@ -22,7 +21,7 @@ pub enum Event {
 	/// All tokens between a `Start` and a `Finish` would
 	/// become the children of the respective node.
 	Start {
-		kind: SyntaxKind,
+		kind: JsSyntaxKind,
 		start: usize,
 		forward_parent: Option<u32>,
 	},
@@ -37,17 +36,13 @@ pub enum Event {
 	/// For example, lexer tokenizes `>>` as `>`, `>`, and
 	/// `n_raw_tokens = 2` is used to produced a single `>>`.
 	Token {
-		kind: SyntaxKind,
+		kind: JsSyntaxKind,
 		range: Range<usize>,
 	},
 
-	/// Missing child element, either because the child is optional and wasn't present in the source
-	/// or a required child is missing because of a syntax error
-	Missing,
-
 	MultipleTokens {
 		amount: u8,
-		kind: SyntaxKind,
+		kind: JsSyntaxKind,
 	},
 }
 
@@ -110,7 +105,6 @@ pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Par
 				}
 			}
 			Event::Finish { .. } => sink.finish_node(),
-			Event::Missing => sink.missing(),
 			Event::Token { kind, .. } => {
 				sink.token(kind);
 			}
@@ -125,11 +119,11 @@ struct RewriteParseEventsTreeSink<'r, 'p, T> {
 }
 
 impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 'p, T> {
-	fn token(&mut self, kind: SyntaxKind) {
+	fn token(&mut self, kind: JsSyntaxKind) {
 		self.reparse.token(kind, self.parser);
 	}
 
-	fn start_node(&mut self, kind: SyntaxKind) {
+	fn start_node(&mut self, kind: JsSyntaxKind) {
 		self.reparse.start_node(kind, self.parser);
 	}
 
@@ -137,13 +131,9 @@ impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 
 		self.reparse.finish_node(self.parser);
 	}
 
-	fn missing(&mut self) {
-		self.reparse.missing(self.parser);
-	}
-
 	fn errors(&mut self, _errors: Vec<ParserError>) {}
 
-	fn consume_multiple_tokens(&mut self, amount: u8, kind: SyntaxKind) {
+	fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind) {
 		self.reparse.multiple_token(amount, kind, self.parser);
 	}
 }
@@ -152,24 +142,19 @@ impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 
 /// from already parsed events.
 pub trait RewriteParseEvents {
 	/// Called for a started node in the original tree
-	fn start_node(&mut self, kind: SyntaxKind, p: &mut Parser);
+	fn start_node(&mut self, kind: JsSyntaxKind, p: &mut Parser);
 
 	/// Called for a finished node in the original tree
 	fn finish_node(&mut self, p: &mut Parser);
 
 	/// Called for every token
-	fn token(&mut self, kind: SyntaxKind, p: &mut Parser) {
+	fn token(&mut self, kind: JsSyntaxKind, p: &mut Parser) {
 		p.bump_remap(kind);
 	}
 
 	/// Called for tokens spawning multiple lexer tokens
-	fn multiple_token(&mut self, amount: u8, kind: SyntaxKind, p: &mut Parser) {
+	fn multiple_token(&mut self, amount: u8, kind: JsSyntaxKind, p: &mut Parser) {
 		p.bump_multiple(amount, kind)
-	}
-
-	/// Called for missing children
-	fn missing(&mut self, p: &mut Parser) {
-		p.missing();
 	}
 }
 

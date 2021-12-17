@@ -5,29 +5,29 @@
 #[macro_use]
 mod generated;
 
-pub use self::generated::SyntaxKind;
-use self::generated::SyntaxKind::*;
+pub use self::generated::JsSyntaxKind;
+use self::generated::JsSyntaxKind::*;
 
-impl From<u16> for SyntaxKind {
-	fn from(d: u16) -> SyntaxKind {
-		assert!(d <= (SyntaxKind::__LAST as u16));
-		unsafe { std::mem::transmute::<u16, SyntaxKind>(d) }
+impl From<u16> for JsSyntaxKind {
+	fn from(d: u16) -> JsSyntaxKind {
+		assert!(d <= (JsSyntaxKind::__LAST as u16));
+		unsafe { std::mem::transmute::<u16, JsSyntaxKind>(d) }
 	}
 }
 
-impl From<SyntaxKind> for u16 {
-	fn from(k: SyntaxKind) -> u16 {
+impl From<JsSyntaxKind> for u16 {
+	fn from(k: JsSyntaxKind) -> u16 {
 		k as u16
 	}
 }
 
-impl SyntaxKind {
+impl JsSyntaxKind {
 	pub fn is_trivia(self) -> bool {
-		matches!(self, SyntaxKind::WHITESPACE | SyntaxKind::COMMENT)
+		matches!(self, JsSyntaxKind::WHITESPACE | JsSyntaxKind::COMMENT)
 	}
 }
 
-impl rome_rowan::SyntaxKind for SyntaxKind {
+impl rome_rowan::SyntaxKind for JsSyntaxKind {
 	fn is_unknown(&self) -> bool {
 		matches!(
 			self,
@@ -42,7 +42,7 @@ impl rome_rowan::SyntaxKind for SyntaxKind {
 		)
 	}
 
-	fn to_unknown(&self) -> SyntaxKind {
+	fn to_unknown(&self) -> JsSyntaxKind {
 		match self {
 			JS_BLOCK_STATEMENT
 			| EXPORT_DECL

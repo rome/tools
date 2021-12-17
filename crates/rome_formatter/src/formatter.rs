@@ -83,12 +83,12 @@ impl Formatter {
 	/// ```
 	///
 	/// use rome_formatter::{Formatter, token};
-	/// use rslint_parser::{SyntaxNode, T, SyntaxToken, JsLanguage, SyntaxKind};
+	/// use rslint_parser::{SyntaxNode, T, SyntaxToken, JsLanguage, JsSyntaxKind};
 	/// use rome_rowan::{NodeOrToken, TreeBuilder};
 	///
 	/// let mut builder = TreeBuilder::<'_, JsLanguage>::new();
-	/// builder.start_node(SyntaxKind::JS_STRING_LITERAL_EXPRESSION);
-	/// builder.token(SyntaxKind::JS_STRING_LITERAL, "'abc'");
+	/// builder.start_node(JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
+	/// builder.token(JsSyntaxKind::JS_STRING_LITERAL, "'abc'");
 	/// builder.finish_node();
 	/// let node = builder.finish();
 	///

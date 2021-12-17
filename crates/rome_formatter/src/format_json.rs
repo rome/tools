@@ -10,45 +10,45 @@ use rslint_parser::ast::{
 	JsUnaryExpression,
 };
 use rslint_parser::{
-	parse_text, AstNode, AstSeparatedList, SyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken,
+	parse_text, AstNode, AstSeparatedList, JsSyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken,
 };
 
 fn tokenize_token(syntax_token: SyntaxToken) -> FormatElement {
 	match syntax_token.kind() {
-		SyntaxKind::NULL_KW => token("null"),
-		SyntaxKind::TRUE_KW => token("true"),
-		SyntaxKind::FALSE_KW => token("false"),
-		SyntaxKind::JS_STRING_LITERAL => token(syntax_token.text_trimmed()),
-		SyntaxKind::JS_NUMBER_LITERAL => token(syntax_token.text_trimmed()),
-		SyntaxKind::MINUS => token("-"),
+		JsSyntaxKind::NULL_KW => token("null"),
+		JsSyntaxKind::TRUE_KW => token("true"),
+		JsSyntaxKind::FALSE_KW => token("false"),
+		JsSyntaxKind::JS_STRING_LITERAL => token(syntax_token.text_trimmed()),
+		JsSyntaxKind::JS_NUMBER_LITERAL => token(syntax_token.text_trimmed()),
+		JsSyntaxKind::MINUS => token("-"),
 		_ => panic!("Unsupported JSON token {:?}", syntax_token),
 	}
 }
 
 fn tokenize_node(node: SyntaxNode) -> FormatElement {
 	match node.kind() {
-		SyntaxKind::JS_LITERAL_MEMBER_NAME => {
+		JsSyntaxKind::JS_LITERAL_MEMBER_NAME => {
 			tokenize_token(node.to::<JsLiteralMemberName>().value().unwrap())
 		}
-		SyntaxKind::JS_STRING_LITERAL_EXPRESSION => tokenize_token(
+		JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION => tokenize_token(
 			node.to::<JsStringLiteralExpression>()
 				.value_token()
 				.unwrap(),
 		),
-		SyntaxKind::JS_BOOLEAN_LITERAL_EXPRESSION => tokenize_token(
+		JsSyntaxKind::JS_BOOLEAN_LITERAL_EXPRESSION => tokenize_token(
 			node.to::<JsBooleanLiteralExpression>()
 				.value_token()
 				.unwrap(),
 		),
-		SyntaxKind::JS_NULL_LITERAL_EXPRESSION => {
+		JsSyntaxKind::JS_NULL_LITERAL_EXPRESSION => {
 			tokenize_token(node.to::<JsNullLiteralExpression>().value_token().unwrap())
 		}
-		SyntaxKind::JS_NUMBER_LITERAL_EXPRESSION => tokenize_token(
+		JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION => tokenize_token(
 			node.to::<JsNumberLiteralExpression>()
 				.value_token()
 				.unwrap(),
 		),
-		SyntaxKind::JS_UNARY_EXPRESSION => {
+		JsSyntaxKind::JS_UNARY_EXPRESSION => {
 			let expr = JsUnaryExpression::cast(node).unwrap();
 			format_elements![
 				tokenize_token(expr.operator().unwrap()),
@@ -56,7 +56,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 			]
 		}
 
-		SyntaxKind::JS_PROPERTY_OBJECT_MEMBER => {
+		JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER => {
 			let prop = JsPropertyObjectMember::cast(node).unwrap();
 			format_elements![
 				tokenize_node(prop.name().unwrap().syntax().clone()),
@@ -66,7 +66,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 			]
 		}
 
-		SyntaxKind::JS_OBJECT_EXPRESSION => {
+		JsSyntaxKind::JS_OBJECT_EXPRESSION => {
 			let object = JsObjectExpression::cast(node).unwrap();
 
 			let separator = format_elements![token(","), soft_line_break_or_space()];
@@ -91,7 +91,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 				token("}"),
 			])
 		}
-		SyntaxKind::JS_ARRAY_EXPRESSION => {
+		JsSyntaxKind::JS_ARRAY_EXPRESSION => {
 			let array = JsArrayExpression::cast(node).unwrap();
 
 			let separator = format_elements![token(","), soft_line_break_or_space(),];
@@ -123,7 +123,7 @@ pub fn tokenize_json(content: &str) -> FormatElement {
 		script
 			.syntax()
 			.descendants()
-			.find(|e| e.kind() == SyntaxKind::JS_PARENTHESIZED_EXPRESSION)
+			.find(|e| e.kind() == JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION)
 			.unwrap(),
 	)
 	// TODO: #1725 this should be reviewed for error handling

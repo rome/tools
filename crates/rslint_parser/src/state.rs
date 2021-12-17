@@ -1,4 +1,5 @@
-use crate::{CompletedMarker, Parser, SyntaxKind};
+use crate::{CompletedMarker, Parser};
+use rslint_syntax::JsSyntaxKind;
 use std::collections::HashMap;
 use std::ops::{Deref, DerefMut, Range};
 
@@ -104,7 +105,7 @@ impl ParserState {
 				.primary(marker.range(p), "multiple default exports are erroneous");
 
 			p.error(err);
-			marker.change_kind(p, SyntaxKind::ERROR);
+			marker.change_kind(p, JsSyntaxKind::ERROR);
 		} else if self.is_module {
 			self.default_item = Some(marker.range(p).into());
 		}

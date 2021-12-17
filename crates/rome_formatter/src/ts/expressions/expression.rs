@@ -127,12 +127,18 @@ impl ToFormatElement for JsComputedMemberExpression {
 
 impl ToFormatElement for NewExpr {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+		let arguments = if let Some(arguments) = self.arguments() {
+			formatter.format_node(arguments)?
+		} else {
+			empty_element()
+		};
+
 		Ok(format_elements![
 			formatter.format_token(&self.new_token()?)?,
 			// TODO handle TsTypeArgs
 			space_token(),
 			formatter.format_node(self.object()?)?,
-			formatter.format_node(self.arguments()?)?,
+			arguments,
 		])
 	}
 }

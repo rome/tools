@@ -56,8 +56,7 @@ JsModule {
         2: JS_STATEMENT_LIST@17..24
           0: JS_UNKNOWN_STATEMENT@17..24
             0: BREAK_KW@17..22 "break" [] []
-            1: (empty)
-            2: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
+            1: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
         3: R_CURLY@24..25 "}" [] []
   3: EOF@25..26 "" [Whitespace("\n")] []
 --

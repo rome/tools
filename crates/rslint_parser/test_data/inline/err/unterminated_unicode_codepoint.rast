@@ -46,9 +46,7 @@ JsModule {
           0: JS_UNKNOWN@4..16
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "s" [] [Whitespace(" ")]
-            1: (empty)
-            2: (empty)
-            3: JS_UNKNOWN@6..16
+            1: JS_UNKNOWN@6..16
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: ERROR@8..16
                 0: ERROR_TOKEN@8..16 "\"\\u{200\"" [] []

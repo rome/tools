@@ -7,24 +7,27 @@ JsModule {
                 kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
-                        id: JsObjectBindingPattern {
-                            l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
-                            properties: JsObjectBindingPatternPropertyList [
-                                JsObjectBindingPatternShorthandProperty {
-                                    identifier: JsIdentifierBinding {
-                                        name_token: IDENT@6..8 "a" [] [Whitespace(" ")],
-                                    },
-                                    init: missing (optional),
+                        id: JsUnknownBinding {
+                            items: [
+                                L_CURLY@4..6 "{" [] [Whitespace(" ")],
+                                JsUnknown {
+                                    items: [
+                                        JsObjectBindingPatternShorthandProperty {
+                                            identifier: JsIdentifierBinding {
+                                                name_token: IDENT@6..8 "a" [] [Whitespace(" ")],
+                                            },
+                                            init: missing (optional),
+                                        },
+                                        JsObjectBindingPatternShorthandProperty {
+                                            identifier: JsIdentifierBinding {
+                                                name_token: IDENT@8..10 "b" [] [Whitespace(" ")],
+                                            },
+                                            init: missing (optional),
+                                        },
+                                    ],
                                 },
-                                missing separator,
-                                JsObjectBindingPatternShorthandProperty {
-                                    identifier: JsIdentifierBinding {
-                                        name_token: IDENT@8..10 "b" [] [Whitespace(" ")],
-                                    },
-                                    init: missing (optional),
-                                },
+                                R_CURLY@10..12 "}" [] [Whitespace(" ")],
                             ],
-                            r_curly_token: R_CURLY@10..12 "}" [] [Whitespace(" ")],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -49,14 +52,15 @@ JsModule {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@20..22 "{" [] [Whitespace(" ")],
                             properties: JsObjectBindingPatternPropertyList [
-                                JsObjectBindingPatternShorthandProperty {
-                                    identifier: missing (required),
-                                    init: JsInitializerClause {
-                                        eq_token: EQ@22..24 "=" [] [Whitespace(" ")],
-                                        expression: JsStringLiteralExpression {
-                                            value_token: JS_STRING_LITERAL@24..31 "\"test\"" [] [Whitespace(" ")],
+                                JsUnknownBinding {
+                                    items: [
+                                        JsInitializerClause {
+                                            eq_token: EQ@22..24 "=" [] [Whitespace(" ")],
+                                            expression: JsStringLiteralExpression {
+                                                value_token: JS_STRING_LITERAL@24..31 "\"test\"" [] [Whitespace(" ")],
+                                            },
                                         },
-                                    },
+                                    ],
                                 },
                             ],
                             r_curly_token: R_CURLY@31..33 "}" [] [Whitespace(" ")],
@@ -81,19 +85,22 @@ JsModule {
                 kind_token: LET_KW@36..41 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
-                        id: JsObjectBindingPattern {
-                            l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],
-                            properties: JsObjectBindingPatternPropertyList [
-                                missing element,
-                                COMMA@43..45 "," [] [Whitespace(" ")],
-                                JsObjectBindingPatternShorthandProperty {
-                                    identifier: JsIdentifierBinding {
-                                        name_token: IDENT@45..47 "a" [] [Whitespace(" ")],
-                                    },
-                                    init: missing (optional),
+                        id: JsUnknownBinding {
+                            items: [
+                                L_CURLY@41..43 "{" [] [Whitespace(" ")],
+                                JsUnknown {
+                                    items: [
+                                        COMMA@43..45 "," [] [Whitespace(" ")],
+                                        JsObjectBindingPatternShorthandProperty {
+                                            identifier: JsIdentifierBinding {
+                                                name_token: IDENT@45..47 "a" [] [Whitespace(" ")],
+                                            },
+                                            init: missing (optional),
+                                        },
+                                    ],
                                 },
+                                R_CURLY@47..49 "}" [] [Whitespace(" ")],
                             ],
-                            r_curly_token: R_CURLY@47..49 "}" [] [Whitespace(" ")],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -123,15 +130,14 @@ JsModule {
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@4..15
           0: JS_VARIABLE_DECLARATION@4..15
-            0: JS_OBJECT_BINDING_PATTERN@4..12
+            0: JS_UNKNOWN_BINDING@4..12
               0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
-              1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@6..10
+              1: JS_UNKNOWN@6..10
                 0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@6..8
                   0: JS_IDENTIFIER_BINDING@6..8
                     0: IDENT@6..8 "a" [] [Whitespace(" ")]
                   1: (empty)
-                1: (empty)
-                2: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@8..10
+                1: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@8..10
                   0: JS_IDENTIFIER_BINDING@8..10
                     0: IDENT@8..10 "b" [] [Whitespace(" ")]
                   1: (empty)
@@ -152,9 +158,8 @@ JsModule {
             0: JS_OBJECT_BINDING_PATTERN@20..33
               0: L_CURLY@20..22 "{" [] [Whitespace(" ")]
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@22..31
-                0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@22..31
-                  0: (empty)
-                  1: JS_INITIALIZER_CLAUSE@22..31
+                0: JS_UNKNOWN_BINDING@22..31
+                  0: JS_INITIALIZER_CLAUSE@22..31
                     0: EQ@22..24 "=" [] [Whitespace(" ")]
                     1: JS_STRING_LITERAL_EXPRESSION@24..31
                       0: JS_STRING_LITERAL@24..31 "\"test\"" [] [Whitespace(" ")]
@@ -172,12 +177,11 @@ JsModule {
         0: LET_KW@36..41 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@41..52
           0: JS_VARIABLE_DECLARATION@41..52
-            0: JS_OBJECT_BINDING_PATTERN@41..49
+            0: JS_UNKNOWN_BINDING@41..49
               0: L_CURLY@41..43 "{" [] [Whitespace(" ")]
-              1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@43..47
-                0: (empty)
-                1: COMMA@43..45 "," [] [Whitespace(" ")]
-                2: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@45..47
+              1: JS_UNKNOWN@43..47
+                0: COMMA@43..45 "," [] [Whitespace(" ")]
+                1: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@45..47
                   0: JS_IDENTIFIER_BINDING@45..47
                     0: IDENT@45..47 "a" [] [Whitespace(" ")]
                   1: (empty)

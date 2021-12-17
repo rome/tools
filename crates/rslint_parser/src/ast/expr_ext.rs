@@ -1,7 +1,7 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 use crate::{ast::*, numbers::*, TextRange, T};
 use rome_rowan::{SyntaxText, TextSize};
-use SyntaxKind::*;
+use JsSyntaxKind::*;
 
 impl JsComputedMemberExpression {
 	pub fn member(&self) -> SyntaxResult<JsAnyExpression> {
@@ -28,11 +28,11 @@ impl JsLiteralMemberName {
 	///
 	/// ```
 	/// use rome_rowan::TreeBuilder;
-	/// use rslint_parser::{SyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
+	/// use rslint_parser::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
 	/// use rslint_parser::ast::JsLiteralMemberName;
 	///
-	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
-	///   builder.token(SyntaxKind::JS_STRING_LITERAL, "\"abcd\"");
+	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+	///   builder.token(JsSyntaxKind::JS_STRING_LITERAL, "\"abcd\"");
 	/// });
 	///
 	/// let static_member_name = node.to::<JsLiteralMemberName>();
@@ -44,11 +44,11 @@ impl JsLiteralMemberName {
 	///
 	/// ```
 	/// use rome_rowan::TreeBuilder;
-	/// use rslint_parser::{SyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
+	/// use rslint_parser::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
 	/// use rslint_parser::ast::JsLiteralMemberName;
 	///
-	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
-	///   builder.token(SyntaxKind::JS_NUMBER_LITERAL, "5");
+	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+	///   builder.token(JsSyntaxKind::JS_NUMBER_LITERAL, "5");
 	/// });
 	///
 	/// let static_member_name = node.to::<JsLiteralMemberName>();
@@ -60,11 +60,11 @@ impl JsLiteralMemberName {
 	///
 	/// ```
 	/// use rome_rowan::TreeBuilder;
-	/// use rslint_parser::{SyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
+	/// use rslint_parser::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
 	/// use rslint_parser::ast::JsLiteralMemberName;
 	///
-	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
-	///   builder.token(SyntaxKind::IDENT, "abcd");
+	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+	///   builder.token(JsSyntaxKind::IDENT, "abcd");
 	/// });
 	///
 	/// let static_member_name = node.to::<JsLiteralMemberName>();

@@ -1,7 +1,7 @@
 //! General utility functions for parsing and error checking.
 
 use crate::{Parser, Token};
-use rslint_syntax::{SyntaxKind, T};
+use rslint_syntax::{JsSyntaxKind, T};
 
 /// Check if the use of a statement label is valid and the label is defined.
 ///
@@ -21,7 +21,7 @@ pub(crate) fn check_label_use(p: &mut Parser, label: &Token) {
 }
 
 /// Get the precedence of a token
-pub(crate) fn get_precedence(tok: SyntaxKind) -> Option<u8> {
+pub(crate) fn get_precedence(tok: JsSyntaxKind) -> Option<u8> {
 	Some(match tok {
 		T![||] | T![??] => 1,
 		T![&&] => 2,
@@ -38,11 +38,11 @@ pub(crate) fn get_precedence(tok: SyntaxKind) -> Option<u8> {
 	})
 }
 
-pub(crate) fn expect_keyword(p: &mut Parser, keyword_name: &str, kind: SyntaxKind) {
+pub(crate) fn expect_keyword(p: &mut Parser, keyword_name: &str, kind: JsSyntaxKind) {
 	if p.at(T![ident]) && p.cur_src() == keyword_name {
 		p.bump_remap(kind);
 	} else {
-		let err = if p.cur() == SyntaxKind::EOF {
+		let err = if p.cur() == JsSyntaxKind::EOF {
 			p.err_builder(&format!(
 				"expected `{}` but instead the file ends",
 				keyword_name
@@ -58,6 +58,5 @@ pub(crate) fn expect_keyword(p: &mut Parser, keyword_name: &str, kind: SyntaxKin
 		};
 
 		p.error(err);
-		p.missing();
 	}
 }

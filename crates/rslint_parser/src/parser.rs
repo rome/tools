@@ -11,15 +11,14 @@ pub(crate) mod single_token_parse_recovery;
 
 use drop_bomb::DropBomb;
 use rslint_errors::Diagnostic;
-use rslint_syntax::SyntaxKind::EOF;
+use rslint_syntax::JsSyntaxKind::EOF;
 use std::borrow::BorrowMut;
 use std::ops::Range;
 
 pub use parse_error::*;
 pub use parse_lists::{ParseNodeList, ParseSeparatedList};
-pub use parsed_syntax::{
-	CompletedNodeOrMissingMarker, ConditionalSyntax, InvalidSyntax, ParsedSyntax,
-};
+pub use parsed_syntax::ParsedSyntax;
+use rome_rowan::SyntaxKind as SyntaxKindTrait;
 #[allow(deprecated)]
 pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
@@ -178,7 +177,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Get the current token kind of the parser
-	pub fn cur(&self) -> SyntaxKind {
+	pub fn cur(&self) -> JsSyntaxKind {
 		self.nth(0)
 	}
 
@@ -188,7 +187,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Look ahead at a token and get its kind, **The max lookahead is 4**.
-	pub fn nth(&self, n: usize) -> SyntaxKind {
+	pub fn nth(&self, n: usize) -> JsSyntaxKind {
 		self.tokens.lookahead_nth(n).kind
 	}
 
@@ -198,17 +197,17 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Check if the parser is currently at a specific token
-	pub fn at(&self, kind: SyntaxKind) -> bool {
+	pub fn at(&self, kind: JsSyntaxKind) -> bool {
 		self.nth_at(0, kind)
 	}
 
 	/// Check if a token lookahead is something, `n` must be smaller or equal to `4`
-	pub fn nth_at(&self, n: usize, kind: SyntaxKind) -> bool {
+	pub fn nth_at(&self, n: usize, kind: JsSyntaxKind) -> bool {
 		self.nth_tok(n).kind == kind
 	}
 
 	/// Consume the next token if `kind` matches.
-	pub fn eat(&mut self, kind: SyntaxKind) -> bool {
+	pub fn eat(&mut self, kind: JsSyntaxKind) -> bool {
 		if !self.at(kind) {
 			return false;
 		}
@@ -217,13 +216,8 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Consumes the next optional token if `kind` matches or inserts a missing marker
-	pub fn eat_optional(&mut self, kind: SyntaxKind) -> bool {
-		if self.eat(kind) {
-			true
-		} else {
-			self.missing();
-			false
-		}
+	pub fn eat_optional(&mut self, kind: JsSyntaxKind) -> bool {
+		self.eat(kind)
 	}
 
 	/// Starts a new node in the syntax tree. All nodes and tokens
@@ -241,7 +235,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Consume the next token if `kind` matches.
-	pub fn bump(&mut self, kind: SyntaxKind) {
+	pub fn bump(&mut self, kind: JsSyntaxKind) {
 		assert!(
 			self.eat(kind),
 			"expected {:?} but at {:?}",
@@ -251,7 +245,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Consume any token but cast it as a different kind
-	pub fn bump_remap(&mut self, kind: SyntaxKind) {
+	pub fn bump_remap(&mut self, kind: JsSyntaxKind) {
 		self.do_bump(kind)
 	}
 
@@ -296,19 +290,11 @@ impl<'t> Parser<'t> {
 		kinds.contains(self.cur())
 	}
 
-	fn do_bump(&mut self, kind: SyntaxKind) {
+	fn do_bump(&mut self, kind: JsSyntaxKind) {
 		let range = self.cur_tok().range;
 		self.tokens.bump();
 
 		self.push_event(Event::Token { kind, range });
-	}
-
-	/// Inserts a marker for a missing child element because the child is optional and wasn't present in the source
-	/// or it's a mandatory child that wasn't present in the source because of a syntax error.
-	pub fn missing(&mut self) -> CompletedMissingMarker {
-		let marker = CompletedMissingMarker::new(self.events.len() as u32, self.token_pos());
-		self.push_event(Event::Missing);
-		marker
 	}
 
 	fn push_event(&mut self, event: Event) {
@@ -334,11 +320,11 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Try to eat a specific token kind, if the kind is not there then adds an error to the events stack.
-	pub fn expect(&mut self, kind: SyntaxKind) -> bool {
+	pub fn expect(&mut self, kind: JsSyntaxKind) -> bool {
 		if self.eat(kind) {
 			true
 		} else {
-			let err = if self.cur() == SyntaxKind::EOF {
+			let err = if self.cur() == JsSyntaxKind::EOF {
 				self.err_builder(&format!(
 					"expected `{}` but instead the file ends",
 					kind.to_string()
@@ -363,13 +349,8 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Tries to eat a specific token kind, adds a missing marker and an error to the events stack if it's not there.
-	pub fn expect_required(&mut self, kind: SyntaxKind) -> bool {
-		if !self.expect(kind) {
-			self.missing();
-			false
-		} else {
-			true
-		}
+	pub fn expect_required(&mut self, kind: JsSyntaxKind) -> bool {
+		self.expect(kind)
 	}
 
 	/// Get the byte index range of a completed marker for error reporting.
@@ -431,7 +412,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Bump and add an error event
-	pub fn err_and_bump(&mut self, err: impl Into<ParserError>, unknown_syntax_kind: SyntaxKind) {
+	pub fn err_and_bump(&mut self, err: impl Into<ParserError>, unknown_syntax_kind: JsSyntaxKind) {
 		let m = self.start();
 		self.bump_any();
 		m.complete(self, unknown_syntax_kind);
@@ -442,7 +423,7 @@ impl<'t> Parser<'t> {
 		&mut self,
 		mut marker: impl BorrowMut<CompletedMarker>,
 		err: &str,
-		unknown_syntax_kind: SyntaxKind,
+		unknown_syntax_kind: JsSyntaxKind,
 	) {
 		if self.typescript() {
 			return;
@@ -471,7 +452,7 @@ impl<'t> Parser<'t> {
 		res
 	}
 
-	pub(crate) fn expect_no_recover(&mut self, kind: SyntaxKind) -> Option<bool> {
+	pub(crate) fn expect_no_recover(&mut self, kind: JsSyntaxKind) -> Option<bool> {
 		if self.state.no_recovery {
 			Some(true).filter(|_| self.eat(kind))
 		} else {
@@ -483,7 +464,7 @@ impl<'t> Parser<'t> {
 		&self.tokens.source()[span.as_range()]
 	}
 
-	pub(crate) fn bump_multiple(&mut self, amount: u8, kind: SyntaxKind) {
+	pub(crate) fn bump_multiple(&mut self, amount: u8, kind: JsSyntaxKind) {
 		self.push_event(Event::MultipleTokens { amount, kind });
 		for _ in 0..amount {
 			self.tokens.bump();
@@ -537,7 +518,7 @@ impl Marker {
 	/// Finishes the syntax tree node and assigns `kind` to it,
 	/// and mark the create a `CompletedMarker` for possible future
 	/// operation like `.precede()` to deal with forward_parent.
-	pub fn complete(mut self, p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
+	pub fn complete(mut self, p: &mut Parser, kind: JsSyntaxKind) -> CompletedMarker {
 		self.bomb.defuse();
 		let idx = self.pos as usize;
 		match p.events[idx] {
@@ -564,7 +545,7 @@ impl Marker {
 		if idx == p.events.len() - 1 {
 			match p.events.pop() {
 				Some(Event::Start {
-					kind: SyntaxKind::TOMBSTONE,
+					kind: JsSyntaxKind::TOMBSTONE,
 					forward_parent: None,
 					..
 				}) => (),
@@ -593,11 +574,11 @@ pub struct CompletedMarker {
 	// This should be redone completely in the future
 	pub(crate) old_start: u32,
 	pub(crate) finish_pos: u32,
-	kind: SyntaxKind,
+	kind: JsSyntaxKind,
 }
 
 impl CompletedMarker {
-	pub fn new(start_pos: u32, finish_pos: u32, kind: SyntaxKind) -> Self {
+	pub fn new(start_pos: u32, finish_pos: u32, kind: JsSyntaxKind) -> Self {
 		CompletedMarker {
 			start_pos,
 			old_start: start_pos,
@@ -615,7 +596,7 @@ impl CompletedMarker {
 	}
 
 	/// Change the kind of node this marker represents
-	pub fn change_kind(&mut self, p: &mut Parser, new_kind: SyntaxKind) {
+	pub fn change_kind(&mut self, p: &mut Parser, new_kind: JsSyntaxKind) {
 		self.kind = new_kind;
 		match p
 			.events
@@ -627,6 +608,10 @@ impl CompletedMarker {
 			}
 			_ => unreachable!(),
 		}
+	}
+
+	pub fn change_to_unknown(&mut self, p: &mut Parser) {
+		self.change_kind(p, self.kind().to_unknown());
 	}
 
 	// Get the correct offset range in source code of an item inside of a parsed marker
@@ -694,7 +679,7 @@ impl CompletedMarker {
 				start,
 			} => {
 				start_pos = start;
-				*kind = SyntaxKind::TOMBSTONE
+				*kind = JsSyntaxKind::TOMBSTONE
 			}
 			_ => unreachable!(),
 		}
@@ -705,41 +690,12 @@ impl CompletedMarker {
 		Marker::new(self.start_pos, start_pos)
 	}
 
-	pub fn kind(&self) -> SyntaxKind {
+	pub fn kind(&self) -> JsSyntaxKind {
 		self.kind
 	}
 
 	pub fn err_if_not_ts(&mut self, p: &mut Parser, err: &str) {
-		p.err_if_not_ts(self, err, SyntaxKind::ERROR);
-	}
-}
-
-/// A completed marker for an [Event::Missing]. Allows to undo the missing placeholder.
-/// This can be useful if a missing placeholder is required for some nodes but it's impossible
-/// to determine the node type at the current position.
-#[derive(Debug, PartialEq, Eq)]
-pub struct CompletedMissingMarker {
-	/// The position of this marker in the `positions` array. Guaranteed
-	/// to point to an `Event::Missing`
-	events_pos: u32,
-	/// The tokens position at the moment the missing slot was created
-	token_pos: usize,
-}
-
-impl CompletedMissingMarker {
-	fn new(events_pos: u32, token_pos: usize) -> Self {
-		Self {
-			events_pos,
-			token_pos,
-		}
-	}
-
-	/// Undoes the missing placeholder
-	pub fn undo(self, p: &mut Parser) {
-		match &mut p.events[self.events_pos as usize] {
-			event @ Event::Missing { .. } => *event = Event::tombstone(self.token_pos),
-			_ => unreachable!(),
-		}
+		p.err_if_not_ts(self, err, JsSyntaxKind::ERROR);
 	}
 }
 
@@ -755,14 +711,14 @@ pub struct Checkpoint {
 mod tests {
 	use crate::{Parser, Syntax, TokenSource};
 	use rslint_lexer::Token;
-	use rslint_syntax::SyntaxKind;
+	use rslint_syntax::JsSyntaxKind;
 
 	#[test]
 	#[should_panic(
 		expected = "Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."
 	)]
 	fn uncompleted_markers_panic() {
-		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL, 12)];
+		let tokens = vec![Token::new(JsSyntaxKind::JS_STRING_LITERAL, 12)];
 		let token_source = TokenSource::new("'use strict'", tokens.as_slice());
 
 		let mut parser = Parser::new(token_source, 0, Syntax::default());
@@ -773,19 +729,19 @@ mod tests {
 
 	#[test]
 	fn completed_marker_doesnt_panic() {
-		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL, 12)];
+		let tokens = vec![Token::new(JsSyntaxKind::JS_STRING_LITERAL, 12)];
 		let token_source = TokenSource::new("'use strict'", tokens.as_slice());
 
 		let mut p = Parser::new(token_source, 0, Syntax::default());
 
 		let m = p.start();
-		p.expect_required(SyntaxKind::JS_STRING_LITERAL);
-		m.complete(&mut p, SyntaxKind::JS_STRING_LITERAL_EXPRESSION);
+		p.expect_required(JsSyntaxKind::JS_STRING_LITERAL);
+		m.complete(&mut p, JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
 	}
 
 	#[test]
 	fn abandoned_marker_doesnt_panic() {
-		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL, 12)];
+		let tokens = vec![Token::new(JsSyntaxKind::JS_STRING_LITERAL, 12)];
 		let token_source = TokenSource::new("'use strict'", tokens.as_slice());
 
 		let mut p = Parser::new(token_source, 0, Syntax::default());

@@ -1,5 +1,5 @@
 use rslint_parser::ast::JsBlockStatement;
-use rslint_parser::{AstNode, AstNodeList, SyntaxKind};
+use rslint_parser::{AstNode, AstNodeList, JsSyntaxKind};
 
 use crate::ts::statements::format_statements;
 use crate::{
@@ -36,6 +36,6 @@ fn is_non_collapsable_empty_block(block: &JsBlockStatement) -> bool {
 
 	matches!(
 		block.syntax().parent().map(|p| p.kind()),
-		Some(SyntaxKind::JS_IF_STATEMENT | SyntaxKind::JS_ELSE_CLAUSE)
+		Some(JsSyntaxKind::JS_IF_STATEMENT | JsSyntaxKind::JS_ELSE_CLAUSE)
 	)
 }

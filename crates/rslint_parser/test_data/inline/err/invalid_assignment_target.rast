@@ -43,20 +43,21 @@ JsModule {
             semicolon_token: SEMICOLON@18..19 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@19..21 "(" [Whitespace("\n")] [],
-                expression: JsAssignmentExpression {
-                    left: JsIdentifierAssignment {
-                        name_token: IDENT@21..23 "a" [] [Whitespace(" ")],
-                    },
-                    operator_token: EQ@23..25 "=" [] [Whitespace(" ")],
-                    right: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@25..26 "b" [] [],
+            expression: JsUnknownExpression {
+                items: [
+                    L_PAREN@19..21 "(" [Whitespace("\n")] [],
+                    JsAssignmentExpression {
+                        left: JsIdentifierAssignment {
+                            name_token: IDENT@21..23 "a" [] [Whitespace(" ")],
+                        },
+                        operator_token: EQ@23..25 "=" [] [Whitespace(" ")],
+                        right: JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@25..26 "b" [] [],
+                            },
                         },
                     },
-                },
-                r_paren_token: missing (required),
+                ],
             },
             semicolon_token: SEMICOLON@26..27 ";" [] [],
         },
@@ -168,7 +169,7 @@ JsModule {
             0: IDENT@17..18 "b" [] []
       1: SEMICOLON@18..19 ";" [] []
     2: JS_EXPRESSION_STATEMENT@19..27
-      0: JS_PARENTHESIZED_EXPRESSION@19..26
+      0: JS_UNKNOWN_EXPRESSION@19..26
         0: L_PAREN@19..21 "(" [Whitespace("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@21..26
           0: JS_IDENTIFIER_ASSIGNMENT@21..23
@@ -177,7 +178,6 @@ JsModule {
           2: JS_IDENTIFIER_EXPRESSION@25..26
             0: JS_REFERENCE_IDENTIFIER@25..26
               0: IDENT@25..26 "b" [] []
-        2: (empty)
       1: SEMICOLON@26..27 ";" [] []
     3: JS_EXPRESSION_STATEMENT@27..37
       0: JS_ASSIGNMENT_EXPRESSION@27..36
@@ -218,7 +218,6 @@ JsModule {
               0: JS_REFERENCE_IDENTIFIER@53..55
                 0: IDENT@53..55 "a" [] [Whitespace(" ")]
             1: PLUS@55..56 "+" [] []
-            2: (empty)
           2: R_PAREN@56..58 ")" [] [Whitespace(" ")]
         1: EQ@58..60 "=" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_EXPRESSION@60..61

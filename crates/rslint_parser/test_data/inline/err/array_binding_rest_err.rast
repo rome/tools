@@ -10,9 +10,10 @@ JsModule {
                         id: JsArrayBindingPattern {
                             l_brack_token: L_BRACK@4..6 "[" [] [Whitespace(" ")],
                             elements: JsArrayBindingPatternElementList [
-                                JsArrayBindingPatternRestElement {
-                                    dotdotdot_token: DOT2@6..10 "..." [] [Whitespace(" ")],
-                                    pattern: missing (required),
+                                JsUnknownBinding {
+                                    items: [
+                                        DOT2@6..10 "..." [] [Whitespace(" ")],
+                                    ],
                                 },
                             ],
                             r_brack_token: R_BRACK@10..12 "]" [] [Whitespace(" ")],
@@ -122,9 +123,8 @@ JsModule {
             0: JS_ARRAY_BINDING_PATTERN@4..12
               0: L_BRACK@4..6 "[" [] [Whitespace(" ")]
               1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@6..10
-                0: JS_ARRAY_BINDING_PATTERN_REST_ELEMENT@6..10
+                0: JS_UNKNOWN_BINDING@6..10
                   0: DOT2@6..10 "..." [] [Whitespace(" ")]
-                  1: (empty)
               2: R_BRACK@10..12 "]" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
