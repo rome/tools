@@ -415,7 +415,8 @@ pub fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax<
 		}
 
 		if !new_expr || p.at(T!['(']) {
-			// it's safe to unwrap
+			// it's safe to unwrap to because we check beforehand the existence of '('
+			// which is mandatory for `parse_arguments`
 			parse_arguments(p).unwrap();
 			let complete = m.complete(p, NEW_EXPR);
 			return Present(subscripts(p, complete, true));
@@ -435,7 +436,7 @@ pub fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax<
 		if let Present(mut super_marker) = super_completed {
 			let lhs = match p.cur() {
 				T![.] => parse_static_member_expression(p, super_marker, T![.]),
-				T!['['] => parse_computed_member_expression(p, super_marker, false).unwrap(),
+				T!['['] => parse_computed_member_expression(p, super_marker, false),
 				T![?.] => {
 					super_marker.change_kind(p, JS_UNKNOWN_EXPRESSION);
 					p.error(
@@ -449,14 +450,11 @@ pub fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax<
 				_ => unreachable!(),
 			};
 
-			return Present(subscripts(p, lhs, true));
+			return lhs.map(|lhs| subscripts(p, lhs, true));
 		}
 	}
 
-	match parse_primary_expression(p) {
-		Absent => Absent,
-		Present(lhs) => Present(subscripts(p, lhs, true)),
-	}
+	parse_primary_expression(p).map(|lhs| subscripts(p, lhs, true))
 }
 
 fn parse_super_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
@@ -487,7 +485,8 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 					let m = lhs.precede(p);
 					p.missing(); // type args
 					p.bump_any();
-					// it's safe to unwrap
+					// it's safe to unwrap to because we check beforehand the existence of '('
+					// which is mandatory for `parse_arguments`
 					parse_arguments(p).unwrap();
 					m.complete(p, CALL_EXPR)
 				}
@@ -497,7 +496,8 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 					let m = lhs.precede(p);
 					// type args
 					p.missing();
-					// it's safe to unwrap
+					// it's safe to unwrap to because we check beforehand the existence of '('
+					// which is mandatory for `parse_arguments`
 					parse_arguments(p).unwrap();
 					m.complete(p, CALL_EXPR)
 				}
@@ -506,8 +506,8 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 				lhs = parse_computed_member_expression(p, lhs, true).unwrap()
 			}
 			T!['['] => lhs = parse_computed_member_expression(p, lhs, false).unwrap(),
-			T![?.] => lhs = parse_static_member_expression(p, lhs, T![?.]),
-			T![.] => lhs = parse_static_member_expression(p, lhs, T![.]),
+			T![?.] => lhs = parse_static_member_expression(p, lhs, T![?.]).unwrap(),
+			T![.] => lhs = parse_static_member_expression(p, lhs, T![.]).unwrap(),
 			T![!] if !p.has_linebreak_before_n(0) => {
 				lhs = {
 					// FIXME(RDambrosio016): we need to tell the lexer that an expression is not
@@ -564,17 +564,17 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 // foo?.for
 // foo?.bar
 // foo.#bar
-pub fn parse_static_member_expression(
+fn parse_static_member_expression(
 	p: &mut Parser,
 	lhs: CompletedMarker,
 	operator: SyntaxKind,
-) -> CompletedMarker {
+) -> ParsedSyntax<CompletedMarker> {
 	let m = lhs.precede(p);
 	p.expect_required(operator);
 
 	parse_any_name(p).or_missing_with_error(p, expected_identifier);
 
-	m.complete(p, JS_STATIC_MEMBER_EXPRESSION)
+	Present(m.complete(p, JS_STATIC_MEMBER_EXPRESSION))
 }
 
 pub(super) fn parse_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
@@ -635,9 +635,7 @@ pub fn parse_computed_member_expression(
 	}
 
 	p.expect_required(T!['[']);
-	if parse_expression(p).is_absent() {
-		p.missing();
-	}
+	parse_expression(p).or_missing(p);
 	p.expect_required(T![']']);
 
 	Present(m.complete(p, JS_COMPUTED_MEMBER_EXPRESSION))
@@ -650,10 +648,6 @@ pub fn parse_identifier_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		p.bump_remap(T![ident]);
 		Present(m.complete(p, JS_NAME))
 	} else {
-		let err = p
-			.err_builder("Expected an identifier or keyword")
-			.primary(p.cur_tok().range, "Expected an identifier or keyword here");
-		p.error(err);
 		Absent
 	}
 }
@@ -709,7 +703,11 @@ pub fn parse_arguments(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // (5 + 5) => {}
 // (a, ,b) => {}
 // (a, b) =>
-pub fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarker {
+// (a, b =>
+pub fn parse_paren_or_arrow_expr(
+	p: &mut Parser,
+	can_be_arrow: bool,
+) -> ParsedSyntax<CompletedMarker> {
 	let m = p.start();
 	let checkpoint = p.checkpoint();
 	let start = p.cur_tok().range.start;
@@ -785,14 +783,15 @@ pub fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> Complete
 					temp.bump_any(); // bump )
 					break;
 				} else {
-					let expr = match expr {
-						Present(m) => Some(m),
-						Absent => None,
-					};
 					// start a sequence expression that precedes the before parsed expression statement
 					// and bump the ',' into it.
 					sequence = sequence
-						.or_else(|| expr.map(|expr| expr.precede(&mut *temp)))
+						.or_else(|| {
+							Some(expr.precede_or_missing_with_error(
+								&mut *temp,
+								js_parse_error::expected_expression,
+							))
+						})
 						.or_else(|| Some(temp.start()));
 					temp.bump_any(); // bump ; into sequence expression which may or may not miss a lhs
 				}
@@ -848,7 +847,7 @@ pub fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> Complete
 
 			p.bump_any();
 			parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
-			return m.complete(p, JS_ARROW_FUNCTION_EXPRESSION);
+			return Present(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION));
 		}
 	}
 
@@ -862,7 +861,7 @@ pub fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> Complete
 			.primary(params.range(p), "");
 
 		p.error(err);
-		return m.complete(p, JS_UNKNOWN_EXPRESSION);
+		return Present(m.complete(p, JS_UNKNOWN_EXPRESSION));
 	}
 
 	if is_empty {
@@ -871,7 +870,7 @@ pub fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> Complete
 			.primary(start..p.cur_tok().range.start, "");
 
 		p.error(err);
-		return m.complete(p, JS_PARENTHESIZED_EXPRESSION);
+		return Present(m.complete(p, JS_PARENTHESIZED_EXPRESSION));
 	}
 
 	if let Some(range) = spread_range {
@@ -890,7 +889,7 @@ pub fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> Complete
 		p.error(err);
 	}
 
-	m.complete(p, JS_PARENTHESIZED_EXPRESSION)
+	Present(m.complete(p, JS_PARENTHESIZED_EXPRESSION))
 }
 
 /// A general expression.
@@ -1052,7 +1051,7 @@ pub fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 		// test grouping_expr
 		// ((foo))
 		// (foo)
-		T!['('] => parse_paren_or_arrow_expr(p, p.state.potential_arrow_start),
+		T!['('] => parse_paren_or_arrow_expr(p, p.state.potential_arrow_start).unwrap(),
 		T!['['] => parse_array_expr(p).unwrap(),
 		T!['{'] if p.state.allow_object_expr => parse_object_expression(p).unwrap(),
 		T![import] => {
@@ -1094,9 +1093,7 @@ pub fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 				// test import_call
 				// import("foo")
 				p.expect_required(T!['(']);
-				if parse_expr_or_assignment(p).is_absent() {
-					p.missing();
-				}
+				parse_expr_or_assignment(p).or_missing(p);
 				p.expect_required(T![')']);
 				m.complete(p, JS_IMPORT_CALL_EXPRESSION)
 			}

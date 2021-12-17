@@ -147,8 +147,9 @@ JsModule {
         1: JS_UNKNOWN_EXPRESSION@26..27
           0: COMMA@26..27 "," [] []
         2: JS_SEQUENCE_EXPRESSION@27..29
-          0: COMMA@27..28 "," [] []
-          1: JS_IDENTIFIER_EXPRESSION@28..29
+          0: (empty)
+          1: COMMA@27..28 "," [] []
+          2: JS_IDENTIFIER_EXPRESSION@28..29
             0: JS_REFERENCE_IDENTIFIER@28..29
               0: IDENT@28..29 "b" [] []
         3: R_PAREN@29..30 ")" [] []
@@ -184,6 +185,13 @@ error[SyntaxError]: Expected an expression, but found none
   │
 3 │ foo (,,b)
   │      ^ Expected an expression here
+
+--
+error[SyntaxError]: expected an expression but instead found ','
+  ┌─ invalid_arg_list.js:3:7
+  │
+3 │ foo (,,b)
+  │       ^ Expected an expression here
 
 --
 foo(a,b;
