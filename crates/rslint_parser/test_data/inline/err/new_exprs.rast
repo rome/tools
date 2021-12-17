@@ -2,13 +2,18 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
-            items: [
-                NEW_KW@0..3 "new" [] [],
-            ],
-        },
-        JsEmptyStatement {
-            semicolon_token: SEMICOLON@3..4 ";" [] [],
+        JsExpressionStatement {
+            expression: NewExpr {
+                new_token: NEW_KW@0..3 "new" [] [],
+                object: JsUnknownExpression {
+                    items: [
+                        SEMICOLON@3..4 ";" [] [],
+                    ],
+                },
+                type_args: missing (optional),
+                arguments: missing (required),
+            },
+            semicolon_token: missing (optional),
         },
     ],
     eof_token: EOF@4..5 "" [Whitespace("\n")] [],
@@ -18,17 +23,21 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..4
-    0: JS_UNKNOWN_STATEMENT@0..3
-      0: NEW_KW@0..3 "new" [] []
-    1: JS_EMPTY_STATEMENT@3..4
-      0: SEMICOLON@3..4 ";" [] []
+    0: JS_EXPRESSION_STATEMENT@0..4
+      0: NEW_EXPR@0..4
+        0: NEW_KW@0..3 "new" [] []
+        1: JS_UNKNOWN_EXPRESSION@3..4
+          0: SEMICOLON@3..4 ";" [] []
+        2: (empty)
+        3: (empty)
+      1: (empty)
   3: EOF@4..5 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected a statement but instead found 'new'
-  ┌─ new_exprs.js:1:1
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ new_exprs.js:1:4
   │
 1 │ new;
-  │ ^^^ Expected a statement here
+  │    ^ Expected an expression here
 
 --
 new;

@@ -389,15 +389,10 @@ pub fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax<
 			return Present(subscripts(p, complete, true));
 		}
 
-		let complete = if let Present(expr) = parse_member_or_new_expr(p, new_expr) {
-			expr
-		} else {
+		let complete = parse_member_or_new_expr(p, new_expr);
+		if complete.kind() == Some(JS_ARROW_FUNCTION_EXPRESSION) {
 			m.abandon(p);
-			return Absent;
-		};
-		if complete.kind() == JS_ARROW_FUNCTION_EXPRESSION {
-			m.abandon(p);
-			return Present(complete);
+			return complete;
 		}
 
 		if p.at(T![<]) {
