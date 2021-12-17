@@ -52,19 +52,31 @@ JsModule {
                         },
                         semicolon_token: SEMICOLON@49..50 ";" [] [],
                     },
+                    JsExpressionStatement {
+                        expression: JsYieldExpression {
+                            yield_token: YIELD_KW@50..57 "yield" [Whitespace("\n ")] [],
+                            star_token: missing (optional),
+                            argument: JsYieldExpression {
+                                yield_token: YIELD_KW@57..64 "yield" [Whitespace("\n ")] [],
+                                star_token: missing (optional),
+                                argument: missing (optional),
+                            },
+                        },
+                        semicolon_token: missing (optional),
+                    },
                 ],
-                r_curly_token: R_CURLY@50..52 "}" [Whitespace("\n")] [],
+                r_curly_token: R_CURLY@64..66 "}" [Whitespace("\n")] [],
             },
         },
     ],
-    eof_token: EOF@52..53 "" [Whitespace("\n")] [],
+    eof_token: EOF@66..67 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..53
+0: JS_MODULE@0..67
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..52
-    0: JS_FUNCTION_DECLARATION@0..52
+  2: JS_MODULE_ITEM_LIST@0..66
+    0: JS_FUNCTION_DECLARATION@0..66
       0: (empty)
       1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
       2: STAR@9..10 "*" [] []
@@ -76,10 +88,10 @@ JsModule {
         1: JS_PARAMETER_LIST@14..14
         2: R_PAREN@14..16 ")" [] [Whitespace(" ")]
       6: (empty)
-      7: JS_FUNCTION_BODY@16..52
+      7: JS_FUNCTION_BODY@16..66
         0: L_CURLY@16..17 "{" [] []
         1: JS_DIRECTIVE_LIST@17..17
-        2: JS_STATEMENT_LIST@17..50
+        2: JS_STATEMENT_LIST@17..64
           0: JS_EXPRESSION_STATEMENT@17..29
             0: JS_YIELD_EXPRESSION@17..28
               0: YIELD_KW@17..25 "yield" [Whitespace("\n ")] [Whitespace(" ")]
@@ -102,5 +114,14 @@ JsModule {
               1: (empty)
               2: (empty)
             1: SEMICOLON@49..50 ";" [] []
-        3: R_CURLY@50..52 "}" [Whitespace("\n")] []
-  3: EOF@52..53 "" [Whitespace("\n")] []
+          3: JS_EXPRESSION_STATEMENT@50..64
+            0: JS_YIELD_EXPRESSION@50..64
+              0: YIELD_KW@50..57 "yield" [Whitespace("\n ")] []
+              1: (empty)
+              2: JS_YIELD_EXPRESSION@57..64
+                0: YIELD_KW@57..64 "yield" [Whitespace("\n ")] []
+                1: (empty)
+                2: (empty)
+            1: (empty)
+        3: R_CURLY@64..66 "}" [Whitespace("\n")] []
+  3: EOF@66..67 "" [Whitespace("\n")] []

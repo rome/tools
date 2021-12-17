@@ -203,6 +203,8 @@ fn parse_assign_expr_recursive(
 //  yield foo;
 //  yield* foo;
 //  yield;
+//  yield
+//  yield
 // }
 fn yield_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
