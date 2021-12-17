@@ -113,12 +113,16 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 						.iter()
 						.map(|(_, element)| element.as_ref().map(|e| L::kind_from_raw(e.kind())));
 
-					let fits_shape = L::fits_shape_of(&kind, children.len(), child_kinds);
+					let fits_shape = L::forms_exact_shape_for(kind, child_kinds);
 					let slots = all_children.drain(first_child..).map(|(_, it)| it);
 
 					if fits_shape {
 						CacheableNode::Cache(GreenNode::new(raw_kind, slots))
 					} else {
+						// Don't cache unknown nodes:
+						// a) They're rare
+						// b) The hash computed in NodeCache uses the "original" kind. Caching it would
+						//    require re-computing the hash which doesn't seem worth it because of a)
 						CacheableNode::NoCache(GreenNode::new(
 							L::kind_to_raw(kind.to_unknown()),
 							slots,
