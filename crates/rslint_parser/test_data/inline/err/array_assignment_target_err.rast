@@ -78,13 +78,12 @@ JsModule {
                         L_BRACK@45..47 "[" [Whitespace("\n")] [],
                         JsUnknown {
                             items: [
-                                JsUnknown {
-                                    items: [
-                                        JsIdentifierAssignment {
-                                            name_token: IDENT@47..49 "a" [] [Whitespace(" ")],
-                                        },
-                                        EQ@49..51 "=" [] [Whitespace(" ")],
-                                    ],
+                                JsAssignmentWithDefault {
+                                    pattern: JsIdentifierAssignment {
+                                        name_token: IDENT@47..49 "a" [] [Whitespace(" ")],
+                                    },
+                                    eq_token: EQ@49..51 "=" [] [Whitespace(" ")],
+                                    default: missing (required),
                                 },
                                 COMMA@51..53 "," [] [Whitespace(" ")],
                                 JsUnknown {
@@ -240,10 +239,11 @@ JsModule {
         0: JS_UNKNOWN_ASSIGNMENT@45..63
           0: L_BRACK@45..47 "[" [Whitespace("\n")] []
           1: JS_UNKNOWN@47..61
-            0: JS_UNKNOWN@47..51
+            0: JS_ASSIGNMENT_WITH_DEFAULT@47..51
               0: JS_IDENTIFIER_ASSIGNMENT@47..49
                 0: IDENT@47..49 "a" [] [Whitespace(" ")]
               1: EQ@49..51 "=" [] [Whitespace(" ")]
+              2: (empty)
             1: COMMA@51..53 "," [] [Whitespace(" ")]
             2: JS_UNKNOWN@53..61
               0: EQ@53..55 "=" [] [Whitespace(" ")]

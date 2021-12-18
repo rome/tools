@@ -66,15 +66,15 @@ JsModule {
                 },
             ],
         },
-        JsUnknownStatement {
-            items: [
-                IF_KW@60..64 "if" [Whitespace("\n")] [Whitespace(" ")],
-                L_PAREN@64..65 "(" [] [],
-                JsBooleanLiteralExpression {
-                    value_token: TRUE_KW@65..69 "true" [] [],
-                },
-                R_PAREN@69..70 ")" [] [],
-            ],
+        JsIfStatement {
+            if_token: IF_KW@60..64 "if" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@64..65 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@65..69 "true" [] [],
+            },
+            r_paren_token: R_PAREN@69..70 ")" [] [],
+            consequent: missing (required),
+            else_clause: missing (optional),
         },
         JsUnknownStatement {
             items: [
@@ -139,12 +139,14 @@ JsModule {
           0: L_CURLY@58..59 "{" [] []
           1: JS_STATEMENT_LIST@59..59
           2: R_CURLY@59..60 "}" [] []
-    3: JS_UNKNOWN_STATEMENT@60..70
+    3: JS_IF_STATEMENT@60..70
       0: IF_KW@60..64 "if" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@64..65 "(" [] []
       2: JS_BOOLEAN_LITERAL_EXPRESSION@65..69
         0: TRUE_KW@65..69 "true" [] []
       3: R_PAREN@69..70 ")" [] []
+      4: (empty)
+      5: (empty)
     4: JS_UNKNOWN_STATEMENT@70..75
       0: R_CURLY@70..71 "}" [] []
       1: R_CURLY@71..72 "}" [] []

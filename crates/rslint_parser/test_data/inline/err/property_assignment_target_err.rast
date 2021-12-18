@@ -106,10 +106,9 @@ JsModule {
                             JsUnknownAssignment {
                                 items: [
                                     COLON@47..48 ":" [] [],
-                                    JsUnknown {
-                                        items: [
-                                            EQ@48..49 "=" [] [],
-                                        ],
+                                    JsInitializerClause {
+                                        eq_token: EQ@48..49 "=" [] [],
+                                        expression: missing (required),
                                     },
                                 ],
                             },
@@ -242,8 +241,9 @@ JsModule {
             1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@47..49
               0: JS_UNKNOWN_ASSIGNMENT@47..49
                 0: COLON@47..48 ":" [] []
-                1: JS_UNKNOWN@48..49
+                1: JS_INITIALIZER_CLAUSE@48..49
                   0: EQ@48..49 "=" [] []
+                  1: (empty)
             2: R_CURLY@49..51 "}" [] [Whitespace(" ")]
           1: EQ@51..53 "=" [] [Whitespace(" ")]
           2: JS_OBJECT_EXPRESSION@53..55

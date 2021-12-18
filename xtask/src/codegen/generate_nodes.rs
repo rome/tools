@@ -145,7 +145,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				},
 				quote! {
 					impl AstNode for #name {
-						fn can_cast(kind: SyntaxKind) -> bool {
+						fn can_cast(kind: JsSyntaxKind) -> bool {
 							kind == #node_kind
 						}
 						fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -349,7 +349,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					)*
 
 					impl AstNode for #name {
-						fn can_cast(kind: SyntaxKind) -> bool {
+						fn can_cast(kind: JsSyntaxKind) -> bool {
 							#can_cast_fn
 						}
 						fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -416,7 +416,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			}
 
 			impl AstNode for #name {
-				fn can_cast(kind: SyntaxKind) -> bool {
+				fn can_cast(kind: JsSyntaxKind) -> bool {
 					kind == #kind
 				}
 
@@ -449,7 +449,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 		let node_impl = quote! {
 			impl AstNode for #list_name {
-				fn can_cast(kind: SyntaxKind) -> bool {
+				fn can_cast(kind: JsSyntaxKind) -> bool {
 					kind == #list_kind
 				}
 
@@ -592,7 +592,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 	use crate::{
 		ast::*,
-		SyntaxKind::{self, *},
+		JsSyntaxKind::{self, *},
 		SyntaxNode, SyntaxToken, T,
 		SyntaxResult
 	};

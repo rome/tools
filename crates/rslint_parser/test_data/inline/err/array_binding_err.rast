@@ -132,29 +132,28 @@ JsModule {
                 kind_token: LET_KW@72..77 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
-                        id: JsUnknownBinding {
-                            items: [
-                                L_BRACK@77..78 "[" [] [],
-                                JsArrayBindingPatternElementList [
-                                    JsBindingPatternWithDefault {
-                                        pattern: JsArrayBindingPattern {
-                                            l_brack_token: L_BRACK@78..79 "[" [] [],
-                                            elements: JsArrayBindingPatternElementList [
-                                                JsIdentifierBinding {
-                                                    name_token: IDENT@79..81 "a" [] [Whitespace(" ")],
-                                                },
-                                            ],
-                                            r_brack_token: R_BRACK@81..83 "]" [] [Whitespace(" ")],
-                                        },
-                                        eq_token: EQ@83..85 "=" [] [Whitespace(" ")],
-                                        default: JsArrayExpression {
-                                            l_brack_token: L_BRACK@85..86 "[" [] [],
-                                            elements: JsArrayElementList [],
-                                            r_brack_token: R_BRACK@86..87 "]" [] [],
-                                        },
+                        id: JsArrayBindingPattern {
+                            l_brack_token: L_BRACK@77..78 "[" [] [],
+                            elements: JsArrayBindingPatternElementList [
+                                JsBindingPatternWithDefault {
+                                    pattern: JsArrayBindingPattern {
+                                        l_brack_token: L_BRACK@78..79 "[" [] [],
+                                        elements: JsArrayBindingPatternElementList [
+                                            JsIdentifierBinding {
+                                                name_token: IDENT@79..81 "a" [] [Whitespace(" ")],
+                                            },
+                                        ],
+                                        r_brack_token: R_BRACK@81..83 "]" [] [Whitespace(" ")],
                                     },
-                                ],
+                                    eq_token: EQ@83..85 "=" [] [Whitespace(" ")],
+                                    default: JsArrayExpression {
+                                        l_brack_token: L_BRACK@85..86 "[" [] [],
+                                        elements: JsArrayElementList [],
+                                        r_brack_token: R_BRACK@86..87 "]" [] [],
+                                    },
+                                },
                             ],
+                            r_brack_token: missing (required),
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -256,7 +255,7 @@ JsModule {
         0: LET_KW@72..77 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@77..87
           0: JS_VARIABLE_DECLARATION@77..87
-            0: JS_UNKNOWN_BINDING@77..87
+            0: JS_ARRAY_BINDING_PATTERN@77..87
               0: L_BRACK@77..78 "[" [] []
               1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@78..87
                 0: JS_BINDING_PATTERN_WITH_DEFAULT@78..87
@@ -271,6 +270,7 @@ JsModule {
                     0: L_BRACK@85..86 "[" [] []
                     1: JS_ARRAY_ELEMENT_LIST@86..86
                     2: R_BRACK@86..87 "]" [] []
+              2: (empty)
             1: (empty)
             2: (empty)
             3: (empty)

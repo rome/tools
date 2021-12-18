@@ -10,13 +10,13 @@ JsModule {
                         id: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
                             properties: JsObjectBindingPatternPropertyList [
-                                JsUnknownBinding {
-                                    items: [
-                                        JsLiteralMemberName {
-                                            value: IDENT@6..9 "foo" [] [],
-                                        },
-                                        COLON@9..11 ":" [] [Whitespace(" ")],
-                                    ],
+                                JsObjectBindingPatternProperty {
+                                    member: JsLiteralMemberName {
+                                        value: IDENT@6..9 "foo" [] [],
+                                    },
+                                    colon_token: COLON@9..11 ":" [] [Whitespace(" ")],
+                                    pattern: missing (required),
+                                    init: missing (optional),
                                 },
                                 COMMA@11..13 "," [] [Whitespace(" ")],
                                 JsObjectBindingPatternShorthandProperty {
@@ -140,10 +140,12 @@ JsModule {
             0: JS_OBJECT_BINDING_PATTERN@4..19
               0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@6..17
-                0: JS_UNKNOWN_BINDING@6..11
+                0: JS_OBJECT_BINDING_PATTERN_PROPERTY@6..11
                   0: JS_LITERAL_MEMBER_NAME@6..9
                     0: IDENT@6..9 "foo" [] []
                   1: COLON@9..11 ":" [] [Whitespace(" ")]
+                  2: (empty)
+                  3: (empty)
                 1: COMMA@11..13 "," [] [Whitespace(" ")]
                 2: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@13..17
                   0: JS_IDENTIFIER_BINDING@13..17
