@@ -1,6 +1,7 @@
 use crate::{
-	empty_element, format_elements, group_elements, join_elements, space_token, FormatElement,
-	FormatResult, Formatter, ToFormatElement,
+	empty_element, format_elements, group_elements, if_group_breaks, join_elements, soft_indent,
+	soft_line_break_or_space, space_token, token, FormatElement, FormatResult, Formatter,
+	ToFormatElement,
 };
 use rslint_parser::ast::{
 	JsAnyObjectBindingPatternMember, JsObjectBindingPattern, JsObjectBindingPatternProperty,
@@ -9,17 +10,18 @@ use rslint_parser::ast::{
 
 impl ToFormatElement for JsObjectBindingPattern {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let l_bracket = formatter.format_token(&self.l_curly_token()?)?;
 		let properties = formatter.format_separated(self.properties())?;
-		let r_bracket = formatter.format_token(&self.r_curly_token()?)?;
 
-		Ok(format_elements![group_elements(format_elements![
-			l_bracket,
+		Ok(group_elements(format_elements![
+			formatter.format_token(&self.l_curly_token()?)?,
 			space_token(),
-			join_elements(space_token(), properties),
+			soft_indent(format_elements![
+				join_elements(soft_line_break_or_space(), properties),
+				if_group_breaks(token(",")),
+			]),
 			space_token(),
-			r_bracket
-		])])
+			formatter.format_token(&self.r_curly_token()?)?
+		]))
 	}
 }
 

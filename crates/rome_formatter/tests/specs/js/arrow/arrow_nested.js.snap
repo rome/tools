@@ -36,22 +36,22 @@ runtimeAgent.getProperties(
 # Output
 Seq(typeDef.interface.groups).forEach((group) => Seq(group.members).forEach((
 	member,
-	memberName
-) => markdownDoc(member.doc,{
+	memberName,
+) => markdownDoc(member.doc, {
 	typePath: typePath.concat(memberName.slice(1)),
 	signatures: member.signatures,
 })));
 const promiseFromCallback = (fn) => new Promise((resolve, reject) => fn((
 	err,
-	result
+	result,
 ) => {
 	if (err) return reject(err);
 	return resolve(result);
 }));
-runtimeAgent.getProperties(objectId,false,false,false,(
+runtimeAgent.getProperties(objectId, false, false, false, (
 	error,
 	properties,
-	internalProperties
+	internalProperties,
 ) => {
 	return 1;
 },);

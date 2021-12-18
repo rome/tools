@@ -7,10 +7,16 @@ expression: arrow_function.js
 () => {}
 async () => {}
 (foo) => {}
+(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,ccccccccccccccccccccccccccccc) => {}
 
 ---
 # Output
 () => {};
 async () => {};
 (foo) => {};
+(
+	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
+	bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
+	ccccccccccccccccccccccccccccc,
+) => {};
 
