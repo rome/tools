@@ -80,16 +80,16 @@ impl NodeCache {
 	pub(crate) fn node(
 		&mut self,
 		kind: RawSyntaxKind,
-		slots: &[(u64, GreenElement)],
+		children: &[(u64, GreenElement)],
 	) -> NodeCacheNodeEntryMut {
-		if slots.len() > 3 {
+		if children.len() > 3 {
 			return NodeCacheNodeEntryMut::NoCache(Self::UNCACHED_NODE_HASH);
 		}
 
 		let hash = {
 			let mut h = FxHasher::default();
 			kind.hash(&mut h);
-			for &(hash, _) in slots {
+			for &(hash, _) in children {
 				if hash == Self::UNCACHED_NODE_HASH {
 					return NodeCacheNodeEntryMut::NoCache(Self::UNCACHED_NODE_HASH);
 				}
@@ -106,15 +106,16 @@ impl NodeCache {
 		// For `libsyntax/parse/parser.rs`, measurements show that deduping saves
 		// 17% of the memory for green nodes!
 		let entry = self.nodes.raw_entry_mut().from_hash(hash, |no_hash| {
-			no_hash.node.kind() == kind && no_hash.node.slots().len() == slots.len() && {
+			no_hash.node.kind() == kind && no_hash.node.slots().len() == children.len() && {
 				let lhs = no_hash.node.slots();
 				let lhs = lhs.filter_map(|slot| match slot {
+					// Slots are only added after. The original queried node only holds all present children
 					Slot::Empty { .. } => None,
 					Slot::Node { node, .. } => Some(element_id(NodeOrToken::Node(node))),
 					Slot::Token { token, .. } => Some(element_id(NodeOrToken::Token(token))),
 				});
 
-				let rhs = slots
+				let rhs = children
 					.iter()
 					.map(|(_, element)| element_id(element.as_deref()));
 
@@ -170,15 +171,23 @@ impl NodeCache {
 
 pub(crate) enum NodeCacheNodeEntryMut<'a> {
 	Cached(CachedNodeEntry<'a>),
+
+	/// A node that should not be cached
 	NoCache(u64),
 	Vacant(VacantNodeEntry<'a>),
 }
 
+/// Represents a vacant entry, a node that hasn't been cached yet.
+/// The `insert` method allows to place a node inside of the vacant entry. The inserted node
+/// may have a different representation (kind or children) than the originally queried node.
+/// For example, a node may change its kind to unknown or add empty slots. The only importance is
+/// that these changes apply for all nodes that have the same shape as the originally queried node.
 pub(crate) struct VacantNodeEntry<'a> {
 	hash: u64,
 	raw_entry: RawVacantEntryMut<'a, NoHashNode, (), BuildHasherDefault<FxHasher>>,
 }
 
+/// Represents an entry of a cached node.
 pub(crate) struct CachedNodeEntry<'a> {
 	hash: u64,
 	raw_entry: RawOccupiedEntryMut<'a, NoHashNode, (), BuildHasherDefault<FxHasher>>,

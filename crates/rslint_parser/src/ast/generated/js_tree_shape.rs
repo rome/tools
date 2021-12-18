@@ -1,8 +1,9 @@
 //! Generated file, do not edit by hand, see `xtask/src/codegen`
 
 use crate::{ast::*, JsLanguage, JsSyntaxKind::*, T};
-use rome_rowan::{AstTreeShape, NodeShapCommands, NodeShape, NodeShapeCommand, ParsedElements};
+use rome_rowan::{AstTreeShape, NodeShapCommands, NodeShape, ParsedElements};
 impl AstTreeShape for JsLanguage {
+	#[allow(unused_mut)]
 	fn forms_exact_shape_for<F, R>(
 		parent: Self::Kind,
 		slots: ParsedElements<Self>,
@@ -39,8 +40,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeArgs::can_cast(*current) {
@@ -61,8 +61,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -90,8 +89,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![type] {
@@ -112,8 +110,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -141,8 +138,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![default] {
@@ -173,8 +169,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -202,8 +197,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![type] {
@@ -234,8 +228,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -263,8 +256,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if ExportNamedSpecifierList::can_cast(*current) {
@@ -275,8 +267,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -287,8 +278,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![from] {
@@ -346,8 +336,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![type] {
@@ -368,8 +357,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![as] {
@@ -400,8 +388,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == JS_STRING_LITERAL {
@@ -412,8 +399,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -441,8 +427,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['('] {
@@ -453,8 +438,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyForInitializer::can_cast(*current) {
@@ -475,8 +459,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if ForStmtTest::can_cast(*current) {
@@ -497,8 +480,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if ForStmtUpdate::can_cast(*current) {
@@ -519,8 +501,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyStatement::can_cast(*current) {
@@ -531,8 +512,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -560,8 +540,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -589,8 +568,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -618,8 +596,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -647,8 +624,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [.] {
@@ -659,8 +635,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![meta] {
@@ -671,8 +646,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -700,8 +674,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsArrayAssignmentPatternElementList::can_cast(*current) {
@@ -712,8 +685,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![']'] {
@@ -724,8 +696,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -753,8 +724,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyAssignmentPattern::can_cast(*current) {
@@ -765,8 +735,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -794,8 +763,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsArrayBindingPatternElementList::can_cast(*current) {
@@ -806,8 +774,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![']'] {
@@ -818,8 +785,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -847,8 +813,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyBindingPattern::can_cast(*current) {
@@ -859,8 +824,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -888,8 +852,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsArrayElementList::can_cast(*current) {
@@ -900,8 +863,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![']'] {
@@ -912,8 +874,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -998,8 +959,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyArrowFunctionBody::can_cast(*current) {
@@ -1010,8 +970,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1039,8 +998,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if matches!(
@@ -1059,8 +1017,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -1071,8 +1028,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1100,8 +1056,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [=] {
@@ -1112,8 +1067,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -1124,8 +1078,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1153,8 +1106,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -1165,8 +1117,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1194,8 +1145,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1223,8 +1173,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if matches!(
@@ -1245,8 +1194,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -1257,8 +1205,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1286,8 +1233,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [=] {
@@ -1298,8 +1244,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -1310,8 +1255,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1339,8 +1283,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsStatementList::can_cast(*current) {
@@ -1351,8 +1294,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -1363,8 +1305,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1392,8 +1333,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1421,8 +1361,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == IDENT {
@@ -1470,8 +1409,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsCallArgumentList::can_cast(*current) {
@@ -1482,8 +1420,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -1494,8 +1431,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1523,8 +1459,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -1535,8 +1470,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -1547,8 +1481,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsStatementList::can_cast(*current) {
@@ -1559,8 +1492,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1588,8 +1520,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsCatchDeclaration::can_cast(*current) {
@@ -1610,8 +1541,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1639,8 +1569,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyBindingPattern::can_cast(*current) {
@@ -1651,8 +1580,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -1663,8 +1591,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1692,8 +1619,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyBinding::can_cast(*current) {
@@ -1704,8 +1630,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsExtendsClause::can_cast(*current) {
@@ -1736,8 +1661,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsClassMemberList::can_cast(*current) {
@@ -1748,8 +1672,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -1760,8 +1683,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1789,8 +1711,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyBinding::can_cast(*current) {
@@ -1831,8 +1752,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsClassMemberList::can_cast(*current) {
@@ -1843,8 +1763,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -1855,8 +1774,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1884,8 +1802,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['['] {
@@ -1896,8 +1813,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -1908,8 +1824,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![']'] {
@@ -1920,8 +1835,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -1949,8 +1863,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [?.] {
@@ -1971,8 +1884,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -1983,8 +1895,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![']'] {
@@ -1995,8 +1906,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2024,8 +1934,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -2036,8 +1945,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![']'] {
@@ -2048,8 +1956,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2077,8 +1984,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [?] {
@@ -2089,8 +1995,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -2101,8 +2006,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -2113,8 +2017,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -2125,8 +2028,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2164,8 +2066,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeParams::can_cast(*current) {
@@ -2186,8 +2087,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsFunctionBody::can_cast(*current) {
@@ -2198,8 +2098,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2227,8 +2126,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsConstructorParameterList::can_cast(*current) {
@@ -2239,8 +2137,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -2251,8 +2148,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2280,8 +2176,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == IDENT {
@@ -2329,8 +2224,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [;] {
@@ -2368,8 +2262,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -2380,8 +2273,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsStatementList::can_cast(*current) {
@@ -2392,8 +2284,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2421,8 +2312,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [,] {
@@ -2433,8 +2323,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2462,8 +2351,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [;] {
@@ -2501,8 +2389,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyStatement::can_cast(*current) {
@@ -2513,8 +2400,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![while] {
@@ -2525,8 +2411,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['('] {
@@ -2537,8 +2422,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -2549,8 +2433,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -2561,8 +2444,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [;] {
@@ -2600,8 +2482,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyStatement::can_cast(*current) {
@@ -2612,8 +2493,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2641,8 +2521,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2670,8 +2549,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2699,8 +2577,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![EOF] {
@@ -2711,8 +2588,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2740,8 +2616,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [;] {
@@ -2779,8 +2654,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -2791,8 +2665,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2820,8 +2693,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsBlockStatement::can_cast(*current) {
@@ -2832,8 +2704,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2861,8 +2732,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['('] {
@@ -2873,8 +2743,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyForInOrOfInitializer::can_cast(*current) {
@@ -2885,8 +2754,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![in] {
@@ -2897,8 +2765,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -2909,8 +2776,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -2921,8 +2787,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyStatement::can_cast(*current) {
@@ -2933,8 +2798,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -2962,8 +2826,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![await] {
@@ -2984,8 +2847,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyForInOrOfInitializer::can_cast(*current) {
@@ -2996,8 +2858,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![of] {
@@ -3008,8 +2869,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -3020,8 +2880,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -3032,8 +2891,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyStatement::can_cast(*current) {
@@ -3044,8 +2902,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -3073,8 +2930,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsVariableDeclaration::can_cast(*current) {
@@ -3085,8 +2941,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -3114,8 +2969,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsDirectiveList::can_cast(*current) {
@@ -3126,8 +2980,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsStatementList::can_cast(*current) {
@@ -3138,8 +2991,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -3150,8 +3002,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -3189,8 +3040,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [*] {
@@ -3211,8 +3061,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeParams::can_cast(*current) {
@@ -3233,8 +3082,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeAnnotation::can_cast(*current) {
@@ -3255,8 +3103,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -3294,8 +3141,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [*] {
@@ -3336,8 +3182,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeAnnotation::can_cast(*current) {
@@ -3358,8 +3203,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -3417,8 +3261,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyClassMemberName::can_cast(*current) {
@@ -3429,8 +3272,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['('] {
@@ -3441,8 +3283,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -3453,8 +3294,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeAnnotation::can_cast(*current) {
@@ -3475,8 +3315,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -3504,8 +3343,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyObjectMemberName::can_cast(*current) {
@@ -3516,8 +3354,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['('] {
@@ -3528,8 +3365,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -3540,8 +3376,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeAnnotation::can_cast(*current) {
@@ -3562,8 +3397,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -3591,8 +3425,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -3620,8 +3453,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -3649,8 +3481,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -3678,8 +3509,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['('] {
@@ -3690,8 +3520,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -3702,8 +3531,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -3714,8 +3542,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyStatement::can_cast(*current) {
@@ -3726,8 +3553,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsElseClause::can_cast(*current) {
@@ -3765,8 +3591,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if AnyJsImportClause::can_cast(*current) {
@@ -3777,8 +3602,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [;] {
@@ -3816,8 +3640,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['{'] {
@@ -3828,8 +3651,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsImportAssertionEntryList::can_cast(*current) {
@@ -3840,8 +3662,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -3852,8 +3673,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -3881,8 +3701,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -3893,8 +3712,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == JS_STRING_LITERAL {
@@ -3905,8 +3723,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -3934,8 +3751,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsImportAssertion::can_cast(*current) {
@@ -3973,8 +3789,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['('] {
@@ -3985,8 +3800,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -3997,8 +3811,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -4009,8 +3822,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4038,8 +3850,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![from] {
@@ -4050,8 +3861,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsModuleSource::can_cast(*current) {
@@ -4062,8 +3872,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsImportAssertion::can_cast(*current) {
@@ -4111,8 +3920,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![from] {
@@ -4123,8 +3931,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsModuleSource::can_cast(*current) {
@@ -4135,8 +3942,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsImportAssertion::can_cast(*current) {
@@ -4174,8 +3980,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![as] {
@@ -4186,8 +3991,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyBinding::can_cast(*current) {
@@ -4198,8 +4002,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![from] {
@@ -4210,8 +4013,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsModuleSource::can_cast(*current) {
@@ -4222,8 +4024,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsImportAssertion::can_cast(*current) {
@@ -4261,8 +4062,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -4273,8 +4073,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4302,8 +4101,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -4314,8 +4112,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyStatement::can_cast(*current) {
@@ -4326,8 +4123,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4355,8 +4151,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4384,8 +4179,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4413,8 +4207,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if matches!(*current, T ! [??] | T ! [||] | T ! [&&]) {
@@ -4425,8 +4218,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -4437,8 +4229,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4516,8 +4307,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeParams::can_cast(*current) {
@@ -4538,8 +4328,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeAnnotation::can_cast(*current) {
@@ -4560,8 +4349,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4609,8 +4397,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeParams::can_cast(*current) {
@@ -4631,8 +4418,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeAnnotation::can_cast(*current) {
@@ -4653,8 +4439,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4692,8 +4477,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsModuleItemList::can_cast(*current) {
@@ -4704,8 +4488,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![EOF] {
@@ -4716,8 +4499,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4745,8 +4527,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4774,8 +4555,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4803,8 +4583,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![as] {
@@ -4815,8 +4594,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyBinding::can_cast(*current) {
@@ -4827,8 +4605,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4856,8 +4633,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsNamedImportSpecifierList::can_cast(*current) {
@@ -4868,8 +4644,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -4880,8 +4655,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4909,8 +4683,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![as] {
@@ -4921,8 +4694,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyBinding::can_cast(*current) {
@@ -4933,8 +4705,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4962,8 +4733,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -4991,8 +4761,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5020,8 +4789,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsObjectAssignmentPatternPropertyList::can_cast(*current) {
@@ -5032,8 +4800,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -5044,8 +4811,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5073,8 +4839,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -5085,8 +4850,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyAssignmentPattern::can_cast(*current) {
@@ -5097,8 +4861,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsInitializerClause::can_cast(*current) {
@@ -5136,8 +4899,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyAssignment::can_cast(*current) {
@@ -5148,8 +4910,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5177,8 +4938,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsInitializerClause::can_cast(*current) {
@@ -5216,8 +4976,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsObjectBindingPatternPropertyList::can_cast(*current) {
@@ -5228,8 +4987,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -5240,8 +4998,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5269,8 +5026,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -5281,8 +5037,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyBindingPattern::can_cast(*current) {
@@ -5293,8 +5048,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsInitializerClause::can_cast(*current) {
@@ -5332,8 +5086,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyBinding::can_cast(*current) {
@@ -5344,8 +5097,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5373,8 +5125,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsInitializerClause::can_cast(*current) {
@@ -5412,8 +5163,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsObjectMemberList::can_cast(*current) {
@@ -5424,8 +5174,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -5436,8 +5185,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5465,8 +5213,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsParameterList::can_cast(*current) {
@@ -5477,8 +5224,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -5489,8 +5235,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5518,8 +5263,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyAssignment::can_cast(*current) {
@@ -5530,8 +5274,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -5542,8 +5285,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5571,8 +5313,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -5583,8 +5324,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -5595,8 +5335,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5624,8 +5363,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if matches!(*current, T ! [++] | T ! [--]) {
@@ -5636,8 +5374,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5665,8 +5402,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyAssignment::can_cast(*current) {
@@ -5677,8 +5413,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5706,8 +5441,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == IDENT {
@@ -5718,8 +5452,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5747,8 +5480,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == IDENT {
@@ -5759,8 +5491,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5838,8 +5569,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [?] {
@@ -5917,8 +5647,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -5929,8 +5658,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -5941,8 +5669,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5970,8 +5697,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -5999,8 +5725,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6028,8 +5753,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyBindingPattern::can_cast(*current) {
@@ -6040,8 +5764,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6069,8 +5792,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -6128,8 +5850,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsStatementList::can_cast(*current) {
@@ -6140,8 +5861,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![EOF] {
@@ -6152,8 +5872,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6181,8 +5900,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [,] {
@@ -6193,8 +5911,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -6205,8 +5922,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6264,8 +5980,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyClassMemberName::can_cast(*current) {
@@ -6276,8 +5991,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['('] {
@@ -6288,8 +6002,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyBindingPattern::can_cast(*current) {
@@ -6300,8 +6013,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -6312,8 +6024,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsFunctionBody::can_cast(*current) {
@@ -6324,8 +6035,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6353,8 +6063,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyObjectMemberName::can_cast(*current) {
@@ -6365,8 +6074,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['('] {
@@ -6377,8 +6085,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyBindingPattern::can_cast(*current) {
@@ -6389,8 +6096,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -6401,8 +6107,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsFunctionBody::can_cast(*current) {
@@ -6413,8 +6118,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6442,8 +6146,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6471,8 +6174,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6500,8 +6202,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -6512,8 +6213,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6541,8 +6241,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [.] {
@@ -6553,8 +6252,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyName::can_cast(*current) {
@@ -6565,8 +6263,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6594,8 +6291,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if matches!(*current, T ! [.] | T ! [?.]) {
@@ -6606,8 +6302,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyName::can_cast(*current) {
@@ -6618,8 +6313,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6647,8 +6341,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6676,8 +6369,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6705,8 +6397,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['('] {
@@ -6717,8 +6408,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -6729,8 +6419,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -6741,8 +6430,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['{'] {
@@ -6753,8 +6441,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsSwitchCaseList::can_cast(*current) {
@@ -6765,8 +6452,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -6777,8 +6463,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6806,8 +6491,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6835,8 +6519,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -6847,8 +6530,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [;] {
@@ -6886,8 +6568,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsBlockStatement::can_cast(*current) {
@@ -6898,8 +6579,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsCatchClause::can_cast(*current) {
@@ -6920,8 +6600,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -6949,8 +6628,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsBlockStatement::can_cast(*current) {
@@ -6961,8 +6639,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsCatchClause::can_cast(*current) {
@@ -6973,8 +6650,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7005,8 +6681,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -7017,8 +6692,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7046,8 +6720,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![!] {
@@ -7105,8 +6778,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsVariableDeclarationList::can_cast(*current) {
@@ -7117,8 +6789,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7146,8 +6817,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [;] {
@@ -7185,8 +6855,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['('] {
@@ -7197,8 +6866,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -7209,8 +6877,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -7221,8 +6888,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyStatement::can_cast(*current) {
@@ -7233,8 +6899,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7262,8 +6927,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['('] {
@@ -7274,8 +6938,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -7286,8 +6949,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -7298,8 +6960,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyStatement::can_cast(*current) {
@@ -7310,8 +6971,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7339,8 +6999,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [*] {
@@ -7388,8 +7047,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -7400,8 +7058,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeArgs::can_cast(*current) {
@@ -7449,8 +7106,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [.] {
@@ -7461,8 +7117,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![target] {
@@ -7473,8 +7128,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7502,8 +7156,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![as] {
@@ -7561,8 +7214,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TemplateElementList::can_cast(*current) {
@@ -7573,8 +7225,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['`'] {
@@ -7585,8 +7236,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7614,8 +7264,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7643,8 +7292,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -7655,8 +7303,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -7667,8 +7314,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7696,8 +7342,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7725,8 +7370,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -7737,8 +7381,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![']'] {
@@ -7749,8 +7392,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7778,8 +7420,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if Ident::can_cast(*current) {
@@ -7790,8 +7431,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [<] {
@@ -7802,8 +7442,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -7814,8 +7453,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [>] {
@@ -7826,8 +7464,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7855,8 +7492,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7884,8 +7520,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7913,8 +7548,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsParameters::can_cast(*current) {
@@ -7925,8 +7559,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -7937,8 +7570,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -7949,8 +7581,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -7978,8 +7609,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [?] {
@@ -7990,8 +7620,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -8002,8 +7631,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsExtends::can_cast(*current) {
@@ -8014,8 +7642,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -8043,8 +7670,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if Ident::can_cast(*current) {
@@ -8055,8 +7681,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [<] {
@@ -8067,8 +7692,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![const] {
@@ -8079,8 +7703,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [>] {
@@ -8091,8 +7714,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -8120,8 +7742,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -8132,8 +7753,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -8161,8 +7781,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeParams::can_cast(*current) {
@@ -8173,8 +7792,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsParameters::can_cast(*current) {
@@ -8185,8 +7803,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -8207,8 +7824,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -8256,8 +7872,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -8285,8 +7900,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsParameters::can_cast(*current) {
@@ -8297,8 +7911,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -8309,8 +7922,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -8348,8 +7960,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -8360,8 +7971,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -8399,8 +8009,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if Ident::can_cast(*current) {
@@ -8411,8 +8020,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['{'] {
@@ -8423,8 +8031,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsEnumMemberList::can_cast(*current) {
@@ -8435,8 +8042,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -8447,8 +8053,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -8476,8 +8081,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [=] {
@@ -8488,8 +8092,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -8500,8 +8103,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -8529,8 +8131,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [=] {
@@ -8541,8 +8142,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyExpression::can_cast(*current) {
@@ -8553,8 +8153,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [;] {
@@ -8592,8 +8191,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeArgs::can_cast(*current) {
@@ -8631,8 +8229,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -8643,8 +8240,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -8672,8 +8268,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['('] {
@@ -8684,8 +8279,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == JS_STRING_LITERAL {
@@ -8696,8 +8290,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -8708,8 +8301,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -8737,8 +8329,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [=>] {
@@ -8749,8 +8340,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -8788,8 +8378,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeList::can_cast(*current) {
@@ -8800,8 +8389,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -8829,8 +8417,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeArgs::can_cast(*current) {
@@ -8841,8 +8428,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [.] {
@@ -8863,8 +8449,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsEntityName::can_cast(*current) {
@@ -8875,8 +8460,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -8887,8 +8471,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -8916,8 +8499,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![export] {
@@ -8928,8 +8510,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if Ident::can_cast(*current) {
@@ -8940,8 +8521,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [=] {
@@ -8952,8 +8532,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsModuleRef::can_cast(*current) {
@@ -8964,8 +8543,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [;] {
@@ -9013,8 +8591,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyBinding::can_cast(*current) {
@@ -9025,8 +8602,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -9037,8 +8613,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -9049,8 +8624,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![']'] {
@@ -9061,8 +8635,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -9090,8 +8663,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -9102,8 +8674,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![']'] {
@@ -9114,8 +8685,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -9143,8 +8713,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if Ident::can_cast(*current) {
@@ -9155,8 +8724,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -9194,8 +8762,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeParams::can_cast(*current) {
@@ -9206,8 +8773,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![extends] {
@@ -9238,8 +8804,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeElement::can_cast(*current) {
@@ -9250,8 +8815,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -9262,8 +8826,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -9291,8 +8854,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -9320,8 +8882,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -9349,8 +8910,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsMappedTypeReadonly::can_cast(*current) {
@@ -9401,8 +8961,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -9413,8 +8972,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -9425,8 +8983,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -9437,8 +8994,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [;] {
@@ -9516,8 +9072,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -9602,8 +9157,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeParams::can_cast(*current) {
@@ -9614,8 +9168,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsParameters::can_cast(*current) {
@@ -9626,8 +9179,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [?] {
@@ -9648,8 +9200,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -9660,8 +9211,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -9689,8 +9239,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if JsAnyStatement::can_cast(*current) {
@@ -9701,8 +9250,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -9713,8 +9261,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -9742,8 +9289,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![global] {
@@ -9764,8 +9310,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [.] {
@@ -9786,8 +9331,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsNamespaceBody::can_cast(*current) {
@@ -9798,8 +9342,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -9827,8 +9370,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if Ident::can_cast(*current) {
@@ -9839,8 +9381,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [.] {
@@ -9861,8 +9402,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -9890,8 +9430,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![as] {
@@ -9902,8 +9441,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![namespace] {
@@ -9914,8 +9452,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if Ident::can_cast(*current) {
@@ -9963,8 +9500,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -9992,8 +9528,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![!] {
@@ -10004,8 +9539,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10033,8 +9567,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10062,8 +9595,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10091,8 +9623,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10120,8 +9651,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsObjectMemberList::can_cast(*current) {
@@ -10132,8 +9662,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -10144,8 +9673,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10173,8 +9701,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -10185,8 +9712,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![')'] {
@@ -10197,8 +9723,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10226,8 +9751,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -10238,8 +9762,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10277,8 +9800,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [?] {
@@ -10289,8 +9811,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -10301,8 +9822,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -10313,8 +9833,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10342,8 +9861,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [.] {
@@ -10354,8 +9872,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeName::can_cast(*current) {
@@ -10366,8 +9883,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10395,8 +9911,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10424,8 +9939,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10453,8 +9967,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10482,8 +9995,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T!['}'] {
@@ -10494,8 +10006,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10523,8 +10034,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10552,8 +10062,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTupleElement::can_cast(*current) {
@@ -10564,8 +10073,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T![']'] {
@@ -10576,8 +10084,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10605,8 +10112,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [:] {
@@ -10617,8 +10123,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [?] {
@@ -10629,8 +10134,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [...] {
@@ -10651,8 +10155,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10680,8 +10183,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeParams::can_cast(*current) {
@@ -10692,8 +10194,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [=] {
@@ -10704,8 +10205,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -10716,8 +10216,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10745,8 +10244,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsType::can_cast(*current) {
@@ -10757,8 +10255,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10786,8 +10283,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeArgList::can_cast(*current) {
@@ -10798,8 +10294,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [>] {
@@ -10810,8 +10305,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10839,8 +10333,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10868,8 +10361,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10897,8 +10389,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsConstraint::can_cast(*current) {
@@ -10909,8 +10400,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsDefault::can_cast(*current) {
@@ -10921,8 +10411,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -10960,8 +10449,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if *current == T ! [>] {
@@ -10999,8 +10487,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if let Some(current) = &current_kind {
 					if TsTypeArgs::can_cast(*current) {
@@ -11011,8 +10498,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -11040,8 +10526,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -11069,8 +10554,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -11098,8 +10582,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);
@@ -11127,8 +10610,7 @@ impl AstTreeShape for JsLanguage {
 						return receiver(Err(slots));
 					}
 				} else {
-					drop(kinds);
-					return receiver(Err(slots));
+					shape.empty()
 				}
 				if current_kind.is_some() {
 					drop(kinds);

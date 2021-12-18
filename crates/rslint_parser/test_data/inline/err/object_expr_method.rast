@@ -19,12 +19,12 @@ JsModule {
                                     L_CURLY@8..10 "{" [] [Whitespace(" ")],
                                     JsUnknown {
                                         items: [
-                                            JsUnknownMember {
-                                                items: [
-                                                    JsLiteralMemberName {
-                                                        value: IDENT@10..13 "foo" [] [],
-                                                    },
-                                                ],
+                                            JsPropertyObjectMember {
+                                                name: JsLiteralMemberName {
+                                                    value: IDENT@10..13 "foo" [] [],
+                                                },
+                                                colon_token: missing (required),
+                                                value: missing (required),
                                             },
                                             JsUnknownMember {
                                                 items: [
@@ -64,9 +64,11 @@ JsModule {
               1: JS_UNKNOWN_EXPRESSION@8..16
                 0: L_CURLY@8..10 "{" [] [Whitespace(" ")]
                 1: JS_UNKNOWN@10..15
-                  0: JS_UNKNOWN_MEMBER@10..13
+                  0: JS_PROPERTY_OBJECT_MEMBER@10..13
                     0: JS_LITERAL_MEMBER_NAME@10..13
                       0: IDENT@10..13 "foo" [] []
+                    1: (empty)
+                    2: (empty)
                   1: JS_UNKNOWN_MEMBER@13..15
                     0: R_PAREN@13..15 ")" [] [Whitespace(" ")]
                 2: R_CURLY@15..16 "}" [] []

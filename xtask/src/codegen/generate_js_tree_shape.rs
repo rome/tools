@@ -60,7 +60,7 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 							#invalid_case
 						}
 					} else {
-						#invalid_case
+						shape.empty()
 					}
 			}
 		});
@@ -122,12 +122,13 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 			ast::*,
 			T,
 			JsLanguage,
-			SyntaxKind::*
+			JsSyntaxKind::*
 		};
 
-		use rome_rowan::{AstTreeShape, ParsedElements, NodeShapeCommand, NodeShapCommands, NodeShape};
+		use rome_rowan::{AstTreeShape, ParsedElements, NodeShapCommands, NodeShape};
 
 		impl AstTreeShape for JsLanguage {
+			#[allow(unused_mut)]
 			fn forms_exact_shape_for<F, R>(
 				parent: Self::Kind,
 				slots: ParsedElements<Self>,

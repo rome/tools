@@ -12,16 +12,16 @@ JsModule {
                     assert_token: ASSERT_KW@13..20 "assert" [] [Whitespace(" ")],
                     l_curly_token: L_CURLY@20..22 "{" [] [Whitespace(" ")],
                     assertions: JsImportAssertionEntryList [
-                        JsUnknownImportAssertionEntry {
-                            items: [
-                                IDENT@22..26 "type" [] [],
-                            ],
+                        JsImportAssertionEntry {
+                            key: IDENT@22..26 "type" [] [],
+                            colon_token: missing (required),
+                            value_token: missing (required),
                         },
                         COMMA@26..28 "," [] [Whitespace(" ")],
-                        JsUnknownImportAssertionEntry {
-                            items: [
-                                JS_STRING_LITERAL@28..35 "\"json\"" [] [Whitespace(" ")],
-                            ],
+                        JsImportAssertionEntry {
+                            key: JS_STRING_LITERAL@28..35 "\"json\"" [] [Whitespace(" ")],
+                            colon_token: missing (required),
+                            value_token: JS_STRING_LITERAL@28..35 "\"json\"" [] [Whitespace(" ")],
                         },
                     ],
                     r_curly_token: R_CURLY@35..36 "}" [] [],
@@ -217,23 +217,21 @@ JsModule {
                                             value_token: JS_STRING_LITERAL@301..307 "\"json\"" [] [],
                                         },
                                         COMMA@307..309 "," [] [Whitespace(" ")],
-                                        JsUnknownImportAssertionEntry {
-                                            items: [
-                                                IDENT@309..313 "lazy" [] [],
-                                                COLON@313..315 ":" [] [Whitespace(" ")],
-                                            ],
+                                        JsImportAssertionEntry {
+                                            key: IDENT@309..313 "lazy" [] [],
+                                            colon_token: COLON@313..315 ":" [] [Whitespace(" ")],
+                                            value_token: missing (required),
                                         },
-                                        JsUnknownImportAssertionEntry {
-                                            items: [
-                                                IDENT@315..319 "true" [] [],
-                                            ],
+                                        JsImportAssertionEntry {
+                                            key: IDENT@315..319 "true" [] [],
+                                            colon_token: missing (required),
+                                            value_token: missing (required),
                                         },
                                         COMMA@319..321 "," [] [Whitespace(" ")],
-                                        JsUnknownImportAssertionEntry {
-                                            items: [
-                                                IDENT@321..332 "startAtLine" [] [],
-                                                COLON@332..334 ":" [] [Whitespace(" ")],
-                                            ],
+                                        JsImportAssertionEntry {
+                                            key: IDENT@321..332 "startAtLine" [] [],
+                                            colon_token: COLON@332..334 ":" [] [Whitespace(" ")],
+                                            value_token: missing (required),
                                         },
                                         JsUnknownImportAssertionEntry {
                                             items: [
@@ -295,11 +293,15 @@ JsModule {
           0: ASSERT_KW@13..20 "assert" [] [Whitespace(" ")]
           1: L_CURLY@20..22 "{" [] [Whitespace(" ")]
           2: JS_IMPORT_ASSERTION_ENTRY_LIST@22..35
-            0: JS_UNKNOWN_IMPORT_ASSERTION_ENTRY@22..26
+            0: JS_IMPORT_ASSERTION_ENTRY@22..26
               0: IDENT@22..26 "type" [] []
+              1: (empty)
+              2: (empty)
             1: COMMA@26..28 "," [] [Whitespace(" ")]
-            2: JS_UNKNOWN_IMPORT_ASSERTION_ENTRY@28..35
+            2: JS_IMPORT_ASSERTION_ENTRY@28..35
               0: JS_STRING_LITERAL@28..35 "\"json\"" [] [Whitespace(" ")]
+              1: (empty)
+              2: (empty)
           3: R_CURLY@35..36 "}" [] []
       2: SEMICOLON@36..37 ";" [] []
     1: JS_IMPORT@37..51
@@ -424,15 +426,19 @@ JsModule {
               1: COLON@299..301 ":" [] [Whitespace(" ")]
               2: JS_STRING_LITERAL@301..307 "\"json\"" [] []
             1: COMMA@307..309 "," [] [Whitespace(" ")]
-            2: JS_UNKNOWN_IMPORT_ASSERTION_ENTRY@309..315
+            2: JS_IMPORT_ASSERTION_ENTRY@309..315
               0: IDENT@309..313 "lazy" [] []
               1: COLON@313..315 ":" [] [Whitespace(" ")]
-            3: JS_UNKNOWN_IMPORT_ASSERTION_ENTRY@315..319
+              2: (empty)
+            3: JS_IMPORT_ASSERTION_ENTRY@315..319
               0: IDENT@315..319 "true" [] []
+              1: (empty)
+              2: (empty)
             4: COMMA@319..321 "," [] [Whitespace(" ")]
-            5: JS_UNKNOWN_IMPORT_ASSERTION_ENTRY@321..334
+            5: JS_IMPORT_ASSERTION_ENTRY@321..334
               0: IDENT@321..332 "startAtLine" [] []
               1: COLON@332..334 ":" [] [Whitespace(" ")]
+              2: (empty)
             6: JS_UNKNOWN_IMPORT_ASSERTION_ENTRY@334..336
               0: JS_NUMBER_LITERAL@334..336 "1" [] [Whitespace(" ")]
           3: R_CURLY@336..337 "}" [] []
