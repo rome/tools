@@ -57,13 +57,19 @@ impl GreenElement {
 	/// Returns kind of this element.
 	#[inline]
 	pub fn kind(&self) -> RawSyntaxKind {
-		self.as_deref().kind()
+		match self {
+			NodeOrToken::Node(node) => node.kind(),
+			NodeOrToken::Token(token) => token.kind(),
+		}
 	}
 
 	/// Returns the length of the text covered by this element.
 	#[inline]
 	pub fn text_len(&self) -> TextSize {
-		self.as_deref().text_len()
+		match self {
+			NodeOrToken::Token(token) => token.text_len(),
+			NodeOrToken::Node(node) => node.text_len(),
+		}
 	}
 }
 
