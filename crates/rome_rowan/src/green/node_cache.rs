@@ -148,9 +148,6 @@ impl NodeCache {
 	) -> (u64, GreenToken) {
 		let hash = token_hash_of(kind, text);
 
-		let leading = GreenTokenTrivia::from(leading);
-		let trailing = GreenTokenTrivia::from(trailing);
-
 		let entry = self.tokens.raw_entry_mut().from_hash(hash, |token| {
 			token.0.kind() == kind && token.0.text() == text
 		});
@@ -158,6 +155,9 @@ impl NodeCache {
 		let token = match entry {
 			RawEntryMut::Occupied(entry) => entry.key().0.clone(),
 			RawEntryMut::Vacant(entry) => {
+				let leading = GreenTokenTrivia::from(leading);
+				let trailing = GreenTokenTrivia::from(trailing);
+
 				let token = GreenToken::with_trivia(kind, text, leading, trailing);
 				entry
 					.insert_with_hasher(hash, NoHashToken(token.clone()), (), |t| token_hash(&t.0));
