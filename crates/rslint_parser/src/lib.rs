@@ -252,14 +252,9 @@ pub trait SyntaxFeature: Sized {
 	/// and adds it to the parsing diagnostics if the syntax is [ParsedSyntax::Present] and the `syntax` feature isn't supported
 	///
 	/// Returns [ParsedSyntax::Absent] if the `syntax` is [ParsedSyntax::Absent]
-	fn exclusive_syntax<S, E>(
-		&self,
-		p: &mut Parser,
-		syntax: S,
-		error_builder: E,
-	) -> ParsedSyntax<CompletedMarker>
+	fn exclusive_syntax<S, E>(&self, p: &mut Parser, syntax: S, error_builder: E) -> ParsedSyntax
 	where
-		S: Into<ParsedSyntax<CompletedMarker>>,
+		S: Into<ParsedSyntax>,
 		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
 	{
 		syntax.into().map(|mut syntax| {
@@ -288,9 +283,9 @@ pub trait SyntaxFeature: Sized {
 		p: &mut Parser,
 		parse: P,
 		error_builder: E,
-	) -> ParsedSyntax<CompletedMarker>
+	) -> ParsedSyntax
 	where
-		P: FnOnce(&mut Parser) -> ParsedSyntax<CompletedMarker>,
+		P: FnOnce(&mut Parser) -> ParsedSyntax,
 		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
 	{
 		if self.is_supported(p) {
@@ -322,14 +317,9 @@ pub trait SyntaxFeature: Sized {
 	/// if the parsing context does support this syntax feature and the `syntax` is [ParsedSyntax::Present].
 	///
 	/// Returns [ParsedSyntax::Absent] if the `syntax` is [ParsedSyntax::Absent]
-	fn excluding_syntax<S, E>(
-		&self,
-		p: &mut Parser,
-		syntax: S,
-		error_builder: E,
-	) -> ParsedSyntax<CompletedMarker>
+	fn excluding_syntax<S, E>(&self, p: &mut Parser, syntax: S, error_builder: E) -> ParsedSyntax
 	where
-		S: Into<ParsedSyntax<CompletedMarker>>,
+		S: Into<ParsedSyntax>,
 		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
 	{
 		syntax.into().map(|mut syntax| {

@@ -6,7 +6,7 @@ use crate::syntax::stmt::{is_semi, parse_block_impl};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, SyntaxFeature};
+use crate::SyntaxFeature;
 use crate::{Parser, ParserState};
 use rslint_syntax::JsSyntaxKind::{
 	ERROR, JS_FUNCTION_BODY, JS_FUNCTION_DECLARATION, JS_FUNCTION_EXPRESSION, TS_TYPE_ANNOTATION,
@@ -44,15 +44,15 @@ use std::collections::HashMap;
 //
 // test_err function_broken
 // function foo())})}{{{  {}
-pub(super) fn parse_function_declaration(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_function_declaration(p: &mut Parser) -> ParsedSyntax {
 	parse_function(p, JS_FUNCTION_DECLARATION)
 }
 
-pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
 	parse_function(p, JS_FUNCTION_EXPRESSION)
 }
 
-fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax<CompletedMarker> {
+fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
 	let m = p.start();
 
 	let uses_invalid_syntax =
@@ -63,9 +63,9 @@ fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax<CompletedM
 		p.bump_remap(T![async]);
 	}
 
-	p.expect_required(T![function]);
+	p.expect(T![function]);
 
-	let in_generator = p.eat_optional(T![*]);
+	let in_generator = p.eat(T![*]);
 	let guard = &mut *p.with_state(ParserState {
 		labels: HashMap::new(),
 		in_function: true,
@@ -116,7 +116,7 @@ fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax<CompletedM
 	Present(function)
 }
 
-pub(super) fn function_body(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn function_body(p: &mut Parser) -> ParsedSyntax {
 	let mut guard = p.with_state(ParserState {
 		in_constructor: false,
 		in_function: true,
@@ -156,7 +156,7 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 	}
 }
 
-pub(crate) fn parse_ts_parameter_types(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_ts_parameter_types(p: &mut Parser) -> ParsedSyntax {
 	if p.at(T![<]) {
 		Present(ts_type_params(p).unwrap())
 	} else {
@@ -172,7 +172,7 @@ pub(crate) fn ts_parameter_types(p: &mut Parser) {
 	}
 }
 
-pub(crate) fn parse_ts_type_annotation_or_error(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_ts_type_annotation_or_error(p: &mut Parser) -> ParsedSyntax {
 	if p.at(T![:]) {
 		let return_type = p.start();
 		if let Some(ref mut ty) = ts_type_or_type_predicate_ann(p, T![:]) {

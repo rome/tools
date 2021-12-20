@@ -325,7 +325,7 @@ pub fn ts_ambient_external_module_decl(
 	if p.cur_src() == "global" {
 		p.bump_any();
 	} else {
-		p.expect_required(JS_STRING_LITERAL);
+		p.expect(JS_STRING_LITERAL);
 	}
 	if p.at(T!['{']) {
 		ts_module_block(p);
@@ -399,7 +399,7 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 		m.complete(p, ERROR);
 	}
 
-	p.expect_required(T!['{']);
+	p.expect(T!['{']);
 
 	let members_list = p.start();
 	let mut progress = ParserProgress::default();
@@ -410,7 +410,7 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 	}
 	members_list.complete(p, TS_OBJECT_MEMBER_LIST);
 
-	p.expect_required(T!['}']);
+	p.expect(T!['}']);
 	Some(m.complete(p, TS_INTERFACE_DECL))
 }
 
@@ -562,7 +562,7 @@ pub(crate) fn try_parse_index_signature(
 pub fn ts_signature_member(p: &mut Parser, construct_sig: bool) -> Option<CompletedMarker> {
 	let m = p.start();
 	if construct_sig {
-		p.expect_required(T![new]);
+		p.expect(T![new]);
 	}
 
 	if p.at(T![<]) {
@@ -601,9 +601,9 @@ fn type_member_semi(p: &mut Parser) {
 pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.eat(T![const]);
-	p.expect_required(T![enum]);
+	p.expect(T![enum]);
 	parse_identifier_name(p).or_syntax_error(p, js_parse_error::expected_identifier);
-	p.expect_required(T!['{']);
+	p.expect(T!['{']);
 	let mut first = true;
 
 	let members_list = p.start();
@@ -616,7 +616,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 			p.eat(T![,]);
 			break;
 		} else {
-			p.expect_required(T![,]);
+			p.expect(T![,]);
 		}
 
 		let member = p.start();
@@ -659,7 +659,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 
 	members_list.complete(p, TS_ENUM_MEMBER_LIST);
 
-	p.expect_required(T!['}']);
+	p.expect(T!['}']);
 	m.complete(p, TS_ENUM)
 }
 
@@ -937,7 +937,7 @@ pub fn ts_tuple(p: &mut Parser) -> Option<CompletedMarker> {
 		let opt_range = p.cur_tok().range;
 		let is_opt = name && p.eat(T![?]);
 		if name {
-			p.expect_required(T![:]);
+			p.expect(T![:]);
 		}
 		no_recover!(p, ts_type(p));
 		if !name && p.at(T![?]) {
@@ -1016,7 +1016,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
                         let e = p.start();
                         p.bump_any();
                         ts_type(p);
-                        p.expect_required(T!['}']);
+                        p.expect(T!['}']);
                         e.complete(p, TS_TEMPLATE_ELEMENT);
                     },
                     t => unreachable!("Anything not template chunk or dollar_curly should have been eaten by the lexer, but {:?} was found", t),
@@ -1067,7 +1067,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 					type_member_semi(p);
 				}
 				members_list.complete(p, TS_OBJECT_MEMBER_LIST);
-				p.expect_required(T!['}']);
+				p.expect(T!['}']);
 				Some(m.complete(p, TS_OBJECT_TYPE))
 			}
 		}
@@ -1195,7 +1195,7 @@ pub fn ts_type_params(p: &mut Parser) -> Option<CompletedMarker> {
 	}
 	params_list.complete(p, TS_TYPE_PARAM_LIST);
 
-	p.expect_required(T![>]);
+	p.expect(T![>]);
 	Some(m.complete(p, TS_TYPE_PARAMS))
 }
 

@@ -52,7 +52,7 @@ pub(crate) fn expression_to_assignment_pattern(
 pub(crate) fn parse_assignment_pattern(
 	p: &mut Parser,
 	expression_kind: AssignmentExprPrecedence,
-) -> ParsedSyntax<CompletedMarker> {
+) -> ParsedSyntax {
 	match p.cur() {
 		T!['['] => ArrayAssignmentPattern.parse_array_pattern(p),
 		T!['{'] if p.state.allow_object_expr => ObjectAssignmentPattern.parse_object_pattern(p),
@@ -85,7 +85,7 @@ pub(crate) enum AssignmentExprPrecedence {
 pub(crate) fn parse_assignment(
 	p: &mut Parser,
 	expr_kind: AssignmentExprPrecedence,
-) -> ParsedSyntax<CompletedMarker> {
+) -> ParsedSyntax {
 	let checkpoint = p.checkpoint();
 
 	let assignment_expression = match expr_kind {
@@ -111,7 +111,7 @@ impl ParseWithDefaultPattern for AssignmentPatternWithDefault {
 	}
 
 	#[inline]
-	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
 	}
 }
@@ -215,7 +215,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 	// ({:="test"} = {});
 	// ({:=} = {});
 	// ({ a b } = {});
-	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		if !is_at_identifier_name(p)
 			&& !p.at_ts(token_set![T![:], T![=], T![ident], T![await], T![yield]])
 		{
@@ -226,7 +226,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 
 		let kind = if p.at(T![:]) || p.nth_at(1, T![:]) {
 			parse_name(p).or_syntax_error(p, expected_identifier);
-			p.expect_required(T![:]);
+			p.expect(T![:]);
 			parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
 				.or_syntax_error(p, expected_assignment_target);
 			JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
@@ -255,7 +255,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 	// ({ ...{a} } = b);
 	// ({ ...rest, other_assignment } = a);
 	// ({ ...rest, } = a);
-	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		if !p.at(T![...]) {
 			return Absent;
 		}

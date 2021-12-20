@@ -93,6 +93,7 @@ JsModule {
                                         value_token: IDENT@54..58 "call" [] [],
                                     },
                                 },
+                                optional_chain_token_token: missing (optional),
                                 type_args: missing (optional),
                                 arguments: JsCallArguments {
                                     l_paren_token: L_PAREN@58..59 "(" [] [],
@@ -220,7 +221,8 @@ JsModule {
                   0: JS_REFERENCE_IDENTIFIER@54..58
                     0: IDENT@54..58 "call" [] []
                 1: (empty)
-                2: JS_CALL_ARGUMENTS@58..60
+                2: (empty)
+                3: JS_CALL_ARGUMENTS@58..60
                   0: L_PAREN@58..59 "(" [] []
                   1: JS_CALL_ARGUMENT_LIST@59..59
                   2: R_PAREN@59..60 ")" [] []

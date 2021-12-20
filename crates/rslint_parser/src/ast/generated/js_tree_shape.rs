@@ -6,6 +6,7 @@ use rome_rowan::{ParsedChildren, RawNodeSlots, RawSyntaxNode, SyntaxFactory, Syn
 pub struct JsSyntaxFactory;
 impl SyntaxFactory for JsSyntaxFactory {
 	type Kind = JsSyntaxKind;
+	#[allow(unused_mut)]
 	fn make_syntax(
 		kind: Self::Kind,
 		children: ParsedChildren<Self::Kind>,
@@ -23,17 +24,27 @@ impl SyntaxFactory for JsSyntaxFactory {
 			| ERROR => RawSyntaxNode::new(kind, children.into_iter().map(Some)),
 			CALL_EXPR => {
 				let actual_len = children.len();
-				if actual_len > 3usize {
+				if actual_len > 4usize {
 					return RawSyntaxNode::new(
 						CALL_EXPR.to_unknown(),
 						children.into_iter().map(Some),
 					);
 				}
 				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
+				let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
 				let mut current_element = elements.next();
 				if let Some(element) = &current_element {
 					if JsAnyExpression::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					} else {
+						slots.mark_absent();
+					}
+				} else {
+					slots.mark_absent();
+				}
+				if let Some(element) = &current_element {
+					if element.kind() == T ! [?.] {
 						slots.mark_present();
 						current_element = elements.next();
 					} else {

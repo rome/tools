@@ -29,7 +29,7 @@ macro_rules! at_ident_name {
 
 pub fn parse(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.eat_optional(JS_SHEBANG);
+	p.eat(JS_SHEBANG);
 
 	let old_parser_state = directives(p);
 
@@ -63,7 +63,7 @@ fn named_export_specifier(p: &mut Parser) -> CompletedMarker {
 pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	let start = p.cur_tok().range.start;
 	let m = p.start();
-	p.expect_required(T![export]);
+	p.expect(T![export]);
 
 	let declare = p.typescript() && p.cur_src() == "declare";
 
@@ -306,10 +306,10 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		}
 
 		if exports_ns || export_default {
-			p.expect_required(T![,]);
+			p.expect(T![,]);
 		}
 
-		p.expect_required(T!['{']);
+		p.expect(T!['{']);
 
 		let mut first = true;
 		let specifiers = p.start();
@@ -327,7 +327,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		}
 
 		specifiers.complete(p, EXPORT_NAMED_SPECIFIER_LIST);
-		p.expect_required(T!['}']);
+		p.expect(T!['}']);
 
 		if p.cur_src() == "from" {
 			from_clause_and_semi(p, start);
@@ -352,14 +352,14 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 fn from_clause_and_semi(p: &mut Parser, start: usize) {
 	debug_assert_eq!(p.cur_src(), "from");
 	p.bump_remap(T![from]);
-	p.expect_required(JS_STRING_LITERAL);
+	p.expect(JS_STRING_LITERAL);
 	semi(p, start..p.cur_tok().range.start);
 }
 
 pub fn ts_import_equals_decl(p: &mut Parser, m: Marker) -> CompletedMarker {
 	let start = p.cur_tok().range.start;
 	parse_identifier_name(p).or_syntax_error(p, js_parse_error::expected_identifier);
-	p.expect_required(T![=]);
+	p.expect(T![=]);
 
 	if p.cur_src() == "require" && p.nth_at(1, T!['(']) {
 		ts_external_module_ref(p);
@@ -382,8 +382,8 @@ pub fn ts_external_module_ref(p: &mut Parser) -> CompletedMarker {
 		p.bump_remap(T![require]);
 	}
 
-	p.expect_required(T!['(']);
-	p.expect_required(JS_STRING_LITERAL);
-	p.expect_required(T![')']);
+	p.expect(T!['(']);
+	p.expect(JS_STRING_LITERAL);
+	p.expect(T![')']);
 	m.complete(p, TS_EXTERNAL_MODULE_REF)
 }

@@ -339,7 +339,11 @@ JsSuperExpression = 'super'
 NewExpr = 'new' object:JsAnyExpression type_args:TsTypeArgs?  arguments: JsCallArguments?
 
 // call expression
-CallExpr = callee:JsAnyExpression type_args:TsTypeArgs? arguments: JsCallArguments
+CallExpr =
+	callee:JsAnyExpression
+	optional_chain_token: '?.'?
+	type_args:TsTypeArgs?
+	arguments: JsCallArguments
 
 
 JsAwaitExpression =

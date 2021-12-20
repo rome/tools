@@ -9,6 +9,7 @@ JsModule {
                         value_token: IDENT@0..3 "foo" [] [],
                     },
                 },
+                optional_chain_token_token: missing (optional),
                 type_args: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@3..4 "(" [] [],
@@ -37,6 +38,7 @@ JsModule {
                         value_token: IDENT@8..12 "foo" [Whitespace("\n")] [],
                     },
                 },
+                optional_chain_token_token: missing (optional),
                 type_args: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@12..13 "(" [] [],
@@ -104,7 +106,8 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@0..3
             0: IDENT@0..3 "foo" [] []
         1: (empty)
-        2: JS_CALL_ARGUMENTS@3..7
+        2: (empty)
+        3: JS_CALL_ARGUMENTS@3..7
           0: L_PAREN@3..4 "(" [] []
           1: JS_CALL_ARGUMENT_LIST@4..7
             0: JS_IDENTIFIER_EXPRESSION@4..5
@@ -122,7 +125,8 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@8..12
             0: IDENT@8..12 "foo" [Whitespace("\n")] []
         1: (empty)
-        2: JS_CALL_ARGUMENTS@12..17
+        2: (empty)
+        3: JS_CALL_ARGUMENTS@12..17
           0: L_PAREN@12..13 "(" [] []
           1: JS_CALL_ARGUMENT_LIST@13..17
             0: JS_IDENTIFIER_EXPRESSION@13..14

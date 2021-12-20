@@ -13,6 +13,9 @@ pub struct CallExpr {
 }
 impl CallExpr {
 	pub fn callee(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn optional_chain_token_token(&self) -> Option<SyntaxToken> {
+		support::token(&self.syntax, T ! [?.])
+	}
 	pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax) }
 	pub fn arguments(&self) -> SyntaxResult<JsCallArguments> {
 		support::required_node(&self.syntax)
@@ -2984,6 +2987,10 @@ impl std::fmt::Debug for CallExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("CallExpr")
 			.field("callee", &support::DebugSyntaxResult(self.callee()))
+			.field(
+				"optional_chain_token_token",
+				&support::DebugOptionalElement(self.optional_chain_token_token()),
+			)
 			.field(
 				"type_args",
 				&support::DebugOptionalElement(self.type_args()),

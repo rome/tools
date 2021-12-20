@@ -20,10 +20,10 @@ pub(crate) trait ParseWithDefaultPattern {
 	fn expected_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic;
 
 	/// Parses a pattern (without its default value)
-	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker>;
+	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax;
 
 	/// Parses a pattern and wraps it in a pattern with default if a `=` token follows the pattern
-	fn parse_pattern_with_optional_default(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_pattern_with_optional_default(&self, p: &mut Parser) -> ParsedSyntax {
 		let pattern = self.parse_pattern(p);
 
 		if p.at(T![=]) {
@@ -56,7 +56,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 	fn pattern_with_default(&self) -> P;
 
 	/// Tries to parse an array like pattern
-	fn parse_array_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_array_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		if !p.at(T!['[']) {
 			return Absent;
 		}
@@ -89,23 +89,19 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 				}
 
 				if !p.at(T![']']) {
-					p.expect_required(T![,]);
+					p.expect(T![,]);
 				}
 			}
 		}
 
 		elements.complete(p, Self::list_kind());
-		p.expect_required(T![']']);
+		p.expect(T![']']);
 
 		Present(m.complete(p, Self::array_pattern_kind()))
 	}
 
 	/// Parses a single array element
-	fn parse_any_array_element(
-		&self,
-		p: &mut Parser,
-		recovery: &ParseRecovery,
-	) -> ParsedSyntax<CompletedMarker> {
+	fn parse_any_array_element(&self, p: &mut Parser, recovery: &ParseRecovery) -> ParsedSyntax {
 		match p.cur() {
 			T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
 			T![...] => self
@@ -118,7 +114,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 	}
 
 	/// Parses a rest element
-	fn parse_rest_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_rest_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		if !p.at(T![...]) {
 			return Absent;
 		}
@@ -149,7 +145,7 @@ pub(crate) trait ParseObjectPattern {
 	fn expected_property_pattern_error(p: &Parser, range: Range<usize>) -> Diagnostic;
 
 	/// Parses the object pattern like node
-	fn parse_object_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_object_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		if !p.at(T!['{']) {
 			return Absent;
 		}
@@ -185,7 +181,7 @@ pub(crate) trait ParseObjectPattern {
 				}
 
 				if !p.at(T!['}']) {
-					p.expect_required(T![,]);
+					p.expect(T![,]);
 				}
 			}
 		}
@@ -197,11 +193,7 @@ pub(crate) trait ParseObjectPattern {
 	}
 
 	/// Parses a single property
-	fn parse_any_property_pattern(
-		&self,
-		p: &mut Parser,
-		recovery: &ParseRecovery,
-	) -> ParsedSyntax<CompletedMarker> {
+	fn parse_any_property_pattern(&self, p: &mut Parser, recovery: &ParseRecovery) -> ParsedSyntax {
 		if p.at(T![...]) {
 			self.parse_rest_property_pattern(p)
 				.map(|rest_pattern| validate_rest_pattern(p, rest_pattern, T!['}'], recovery))
@@ -211,10 +203,10 @@ pub(crate) trait ParseObjectPattern {
 	}
 
 	/// Parses a shorthand `{ a }` or a "named" `{ a: b }` property
-	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker>;
+	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax;
 
 	/// Parses a rest property `{ ...a }`
-	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker>;
+	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax;
 }
 
 /// Validates if the parsed completed rest marker is a valid rest element inside of a
