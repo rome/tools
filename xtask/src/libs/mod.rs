@@ -95,7 +95,7 @@ pub fn run(filter: String) {
 			first_lib = false;
 		} else {
 			// Give the CPU some cool down time
-			std::thread::sleep(Duration::from_secs(5));
+			std::thread::sleep(Duration::from_secs(2));
 		}
 
 		let code = get_code(lib);
@@ -109,7 +109,7 @@ pub fn run(filter: String) {
 
 				for i in 0..10 {
 					if i != 0 {
-						std::thread::sleep(Duration::from_millis(1000));
+						std::thread::sleep(Duration::from_secs(1));
 					}
 
 					let result = benchmark_lib(&code);

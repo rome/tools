@@ -111,6 +111,7 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 		impl SyntaxFactory for JsSyntaxFactory {
 			type Kind = JsSyntaxKind;
 
+			#[allow(unused_mut)]
 			fn make_syntax(
 				kind: Self::Kind,
 				children: ParsedChildren<Self::Kind>,
@@ -120,7 +121,7 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 					#(#unknown_kinds)|* | ERROR => {
 						RawSyntaxNode::new(kind, children.into_iter().map(Some))
 					},
-					#(#normal_node_fns),*,
+					#(#normal_node_arms),*,
 					#(#lists),*,
 					_ => unreachable!("Is {:?} a token?", kind),
 				}
