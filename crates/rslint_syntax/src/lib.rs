@@ -7,6 +7,7 @@ mod generated;
 
 pub use self::generated::JsSyntaxKind;
 use self::generated::JsSyntaxKind::*;
+use rome_rowan::RawSyntaxKind;
 
 impl From<u16> for JsSyntaxKind {
 	fn from(d: u16) -> JsSyntaxKind {
@@ -153,5 +154,15 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
 			}
 			_ => JS_UNKNOWN,
 		}
+	}
+
+	#[inline]
+	fn to_raw(&self) -> RawSyntaxKind {
+		RawSyntaxKind(*self as u16)
+	}
+
+	#[inline]
+	fn from_raw(raw: RawSyntaxKind) -> Self {
+		Self::from(raw.0)
 	}
 }

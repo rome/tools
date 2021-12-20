@@ -575,12 +575,6 @@ impl Iterator for SyntaxTriviaPiecesIterator {
 	}
 }
 
-impl DoubleEndedIterator for SyntaxTriviaPiecesIterator {
-	fn next_back(&mut self) -> Option<Self::Item> {
-		todo!()
-	}
-}
-
 impl SyntaxTrivia {
 	pub(crate) fn text(&self) -> &str {
 		let green_token = self.token.green();
@@ -1626,6 +1620,10 @@ impl<'a> Iterator for SyntaxSlots {
 	fn nth(&mut self, n: usize) -> Option<Self::Item> {
 		self.next_position += n as u32;
 		self.next()
+	}
+
+	fn size_hint(&self) -> (usize, Option<usize>) {
+		self.parent.green_ref().slots().size_hint()
 	}
 }
 

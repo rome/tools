@@ -500,26 +500,25 @@ impl FusedIterator for Children<'_> {}
 
 #[cfg(test)]
 mod tests {
-	use crate::api::{RawLanguage, RawLanguageKind};
-	use crate::{GreenNode, TreeBuilder};
+	use crate::raw_language::{RawLanguageKind, RawSyntaxTreeBuilder};
+	use crate::GreenNode;
 
 	fn build_test_list() -> GreenNode {
-		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+		let mut builder: RawSyntaxTreeBuilder = RawSyntaxTreeBuilder::new();
 
 		// list
-		builder.start_node(RawLanguageKind(1));
+		builder.start_node(RawLanguageKind::SEPARATED_EXPRESSION_LIST);
 
 		// element 1
-		builder.start_node(RawLanguageKind(2));
-		builder.token(RawLanguageKind(3), "a");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::STRING_TOKEN, "a");
 		builder.finish_node();
 
 		// Missing ,
-		builder.missing();
 
 		// element 2
-		builder.start_node(RawLanguageKind(2));
-		builder.token(RawLanguageKind(3), "b");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::STRING_TOKEN, "b");
 		builder.finish_node();
 
 		builder.finish_node();

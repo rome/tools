@@ -13,77 +13,72 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 		let expected_len = node.fields.len();
 
 		let fields = node.fields.iter().map(|field| {
-			let valid = match field {
+			let field_predicate = match field {
 				Field::Node { ty, .. } => {
 					let ast_type_name = format_ident!("{}", ty);
 
 					quote! {
-						#ast_type_name::can_cast(*current)
+						#ast_type_name::can_cast(element.kind())
 					}
 				}
 				Field::Token { kind, .. } => match kind {
 					TokenKind::Single(expected) => {
 						let expected_kind = token_kind_to_code(expected);
-						quote! { *current == #expected_kind}
+						quote! { element.kind() == #expected_kind}
 					}
 					TokenKind::Many(expected) => {
 						let expected_kinds = expected.iter().map(|kind| token_kind_to_code(kind));
 						quote! {
-							matches!(*current, #(#expected_kinds)|*)
+							matches!(element.kind(), #(#expected_kinds)|*)
 						}
 					}
 				},
 			};
 
-			let optional = matches!(
-				field,
-				Field::Node { optional: true, .. } | Field::Token { optional: true, .. }
-			);
-
-			let invalid_case = if optional {
-				quote! {
-					shape.empty()
-				}
-			} else {
-				quote! {
-					drop(kinds);
-					return receiver(Err(slots));
-				}
-			};
-
 			quote! {
-				if let Some(current) = &current_kind {
-						if #valid {
-							shape.occupied();
-							current_kind = kinds.next();
-						} else {
-							#invalid_case
-						}
+				if let Some(element) = &current_element {
+					if #field_predicate {
+						slots[current_slot_index]= current_element.take();
+						current_slot_index += 1;
+						current_element = elements.next();
 					} else {
-						shape.empty()
+						slots[current_slot_index] = None;
+						current_slot_index += 1;
 					}
+				} else {
+					slots[current_slot_index] = None;
+					current_slot_index += 1;
+				}
 			}
 		});
 
 		quote! {
 			#kind => {
 				if actual_len > #expected_len {
-					return receiver(Err(slots));
+					return RawSyntaxNode::new(kind.to_unknown(), children.into_iter().map(Some));
 				}
 
-				let mut shape = NodeShapCommands::<#expected_len>::default();
-				let mut kinds = slots.kinds();
-				let mut current_kind = kinds.next();
+				let mut elements = children.into_iter();
+				let mut current_slot_index = 0;
+				let mut slots: [Option<RawSyntaxElement<JsSyntaxKind>>; #expected_len] = Default::default();
+				let mut current_element = elements.next();
 
 				#(#fields)*
 
-				if current_kind.is_some() {
-					drop(kinds);
-					return receiver(Err(slots));
+				// Additional unexpected elements
+				if let Some(element) = current_element {
+					return RawSyntaxNode::new(
+						kind.to_unknown(),
+						UnknownNodeChildrenIterator::new(
+							slots,
+							actual_len,
+							element,
+							elements,
+						),
+					);
 				}
 
-				drop(kinds);
-				receiver(Ok(NodeShape::Normal { commands: shape.as_slice(), parsed_elements: slots }))
+				RawSyntaxNode::new(kind, slots)
 			}
 		}
 	});
@@ -95,19 +90,11 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 			let allow_trailing = separator.allow_trailing;
 			let separator_kind = token_kind_to_code(&separator.separator_token);
 			quote! {
-				#kind => receiver(if Self::forms_separated_list_shape(#element_type::can_cast, #separator_kind, #allow_trailing, slots.kinds()) {
-					Ok(NodeShape::List(slots))
-				} else {
-					Err(slots)
-				})
+				#kind => Self::make_separated_list_syntax(kind, children, #element_type::can_cast, #separator_kind, #allow_trailing)
 			}
 		} else {
 			quote! {
-				#kind => receiver(if Self::forms_node_list_shape(#element_type::can_cast, slots.kinds()) {
-					Ok(NodeShape::List(slots))
-				} else {
-					Err(slots)
-				})
+				#kind => Self::make_node_list_syntax(kind, children, #element_type::can_cast)
 			}
 		}
 	});
@@ -121,29 +108,34 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 		use crate::{
 			ast::*,
 			T,
-			JsLanguage,
 			JsSyntaxKind::*
 		};
 
-		use rome_rowan::{AstTreeShape, ParsedElements, NodeShapCommands, NodeShape};
+		use rome_rowan::{ParsedChildren, SyntaxKind, SyntaxFactory, RawSyntaxElement, RawSyntaxNode, UnknownNodeChildrenIterator};
 
-		impl AstTreeShape for JsLanguage {
+		#[derive(Debug)]
+		pub struct JsSyntaxFactory;
+
+
+		impl SyntaxFactory for JsSyntaxFactory {
+			type Kind = JsSyntaxKind;
+
 			#[allow(unused_mut)]
-			fn forms_exact_shape_for<F, R>(
-				parent: Self::Kind,
-				slots: ParsedElements<Self>,
-				receiver: F,
-			) -> R
-			where
-				F: FnOnce(Result<NodeShape<'_, Self>, ParsedElements<'_, Self>>) -> R {
-				let actual_len = slots.len();
-				match parent {
+			#[allow(unused_assignments)]
+			#[warn(unused_variables)]
+			fn make_syntax(
+				kind: Self::Kind,
+				children: ParsedChildren<Self::Kind>,
+			) -> RawSyntaxNode<Self::Kind>
+			{
+				let actual_len = children.len();
+				match kind {
 					#(#unknown_kinds)|* | ERROR => {
-						receiver(Ok(NodeShape::List(slots)))
+						RawSyntaxNode::new(kind, children.into_iter().map(Some))
 					},
 					#(#normal_node_arms),*,
 					#(#lists),*,
-					_ => unreachable!("Is {:?} a token?", parent),
+					_ => unreachable!("Is {:?} a token?", kind),
 				}
 			}
 		}

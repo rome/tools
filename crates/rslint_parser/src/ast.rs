@@ -18,6 +18,8 @@ use std::marker::PhantomData;
 
 pub use self::{expr_ext::*, generated::nodes::*, stmt_ext::*, ts_ext::*};
 
+pub(crate) use self::generated::js_tree_shape::JsSyntaxFactory;
+
 /// The main trait to go from untyped `SyntaxNode`  to a typed ast. The
 /// conversion itself has zero runtime cost: ast and syntax nodes have exactly
 /// the same representation: a pointer to the tree root and a pointer to the
@@ -459,7 +461,9 @@ mod support {
 
 #[cfg(test)]
 mod tests {
-	use crate::ast::{AstSeparatedElement, AstSeparatedList, JsNumberLiteralExpression};
+	use crate::ast::{
+		AstSeparatedElement, AstSeparatedList, JsNumberLiteralExpression, JsSyntaxFactory,
+	};
 	use crate::{AstNode, JsLanguage, JsSyntaxKind, SyntaxNode, SyntaxResult};
 	use rome_rowan::{SyntaxList, TreeBuilder};
 
@@ -501,31 +505,22 @@ mod tests {
 	fn build_list<'a>(
 		elements: impl IntoIterator<Item = (Option<i32>, Option<&'a str>)>,
 	) -> TestList {
-		let mut builder: TreeBuilder<JsLanguage> = TreeBuilder::new();
+		let mut builder: TreeBuilder<JsLanguage, JsSyntaxFactory> = TreeBuilder::new();
 
 		builder.start_node(JsSyntaxKind::JS_STATEMENT_LIST);
 
-		let mut had_missing_separator = false;
 
 		for (node, separator) in elements.into_iter() {
-			if had_missing_separator {
-				builder.missing();
-				had_missing_separator = false;
-			}
-
 			if let Some(node) = node {
 				builder.start_node(JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION);
 				builder.token(JsSyntaxKind::JS_NUMBER_LITERAL, node.to_string().as_str());
 				builder.finish_node();
 			} else {
-				builder.missing()
 			}
 
 			if let Some(separator) = separator {
 				builder.token(JsSyntaxKind::COMMA, separator);
-			} else {
-				had_missing_separator = true;
-			}
+			} 
 		}
 
 		builder.finish_node();

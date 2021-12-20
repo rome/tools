@@ -3,62 +3,60 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsUnknownExpression {
-                items: [
-                    JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@0..4 "foo" [] [Whitespace(" ")],
-                        },
+            expression: JsConditionalExpression {
+                test: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@0..4 "foo" [] [Whitespace(" ")],
                     },
-                    QUESTION@4..6 "?" [] [Whitespace(" ")],
-                    JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@6..10 "bar" [] [Whitespace(" ")],
-                        },
+                },
+                question_mark_token: QUESTION@4..6 "?" [] [Whitespace(" ")],
+                consequent: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@6..10 "bar" [] [Whitespace(" ")],
                     },
-                    JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@10..13 "baz" [] [],
-                        },
+                },
+                colon_token: missing (required),
+                alternate: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@10..13 "baz" [] [],
                     },
-                ],
+                },
             },
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
-                items: [
-                    JsIdentifierExpression {
+            expression: JsConditionalExpression {
+                test: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@13..18 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                    },
+                },
+                question_mark_token: QUESTION@18..20 "?" [] [Whitespace(" ")],
+                consequent: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@20..24 "bar" [] [Whitespace(" ")],
+                    },
+                },
+                colon_token: missing (required),
+                alternate: JsConditionalExpression {
+                    test: JsIdentifierExpression {
                         name: JsReferenceIdentifier {
-                            value_token: IDENT@13..18 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                            value_token: IDENT@24..28 "baz" [] [Whitespace(" ")],
                         },
                     },
-                    QUESTION@18..20 "?" [] [Whitespace(" ")],
-                    JsIdentifierExpression {
+                    question_mark_token: QUESTION@28..30 "?" [] [Whitespace(" ")],
+                    consequent: JsIdentifierExpression {
                         name: JsReferenceIdentifier {
-                            value_token: IDENT@20..24 "bar" [] [Whitespace(" ")],
+                            value_token: IDENT@30..34 "foo" [] [Whitespace(" ")],
                         },
                     },
-                    JsConditionalExpression {
-                        test: JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@24..28 "baz" [] [Whitespace(" ")],
-                            },
-                        },
-                        question_mark_token: QUESTION@28..30 "?" [] [Whitespace(" ")],
-                        consequent: JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@30..34 "foo" [] [Whitespace(" ")],
-                            },
-                        },
-                        colon_token: COLON@34..36 ":" [] [Whitespace(" ")],
-                        alternate: JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@36..39 "bar" [] [],
-                            },
+                    colon_token: COLON@34..36 ":" [] [Whitespace(" ")],
+                    alternate: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@36..39 "bar" [] [],
                         },
                     },
-                ],
+                },
             },
             semicolon_token: missing (optional),
         },
@@ -89,7 +87,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..51
     0: JS_EXPRESSION_STATEMENT@0..13
-      0: JS_UNKNOWN_EXPRESSION@0..13
+      0: JS_CONDITIONAL_EXPRESSION@0..13
         0: JS_IDENTIFIER_EXPRESSION@0..4
           0: JS_REFERENCE_IDENTIFIER@0..4
             0: IDENT@0..4 "foo" [] [Whitespace(" ")]
@@ -97,12 +95,13 @@ JsModule {
         2: JS_IDENTIFIER_EXPRESSION@6..10
           0: JS_REFERENCE_IDENTIFIER@6..10
             0: IDENT@6..10 "bar" [] [Whitespace(" ")]
-        3: JS_IDENTIFIER_EXPRESSION@10..13
+        3: (empty)
+        4: JS_IDENTIFIER_EXPRESSION@10..13
           0: JS_REFERENCE_IDENTIFIER@10..13
             0: IDENT@10..13 "baz" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@13..39
-      0: JS_UNKNOWN_EXPRESSION@13..39
+      0: JS_CONDITIONAL_EXPRESSION@13..39
         0: JS_IDENTIFIER_EXPRESSION@13..18
           0: JS_REFERENCE_IDENTIFIER@13..18
             0: IDENT@13..18 "foo" [Whitespace("\n")] [Whitespace(" ")]
@@ -110,7 +109,8 @@ JsModule {
         2: JS_IDENTIFIER_EXPRESSION@20..24
           0: JS_REFERENCE_IDENTIFIER@20..24
             0: IDENT@20..24 "bar" [] [Whitespace(" ")]
-        3: JS_CONDITIONAL_EXPRESSION@24..39
+        3: (empty)
+        4: JS_CONDITIONAL_EXPRESSION@24..39
           0: JS_IDENTIFIER_EXPRESSION@24..28
             0: JS_REFERENCE_IDENTIFIER@24..28
               0: IDENT@24..28 "baz" [] [Whitespace(" ")]

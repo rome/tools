@@ -1,15 +1,11 @@
-use crate::api::SyntaxKind;
 use crate::green::NodeCacheNodeEntryMut;
 use crate::{
 	api::TriviaPiece,
 	cow_mut::CowMut,
 	green::{GreenElement, NodeCache},
-	AstTreeShape, GreenNode, NodeOrToken, NodeShapeCommand, ParsedElements, SyntaxNode,
+	GreenNode, Language, NodeOrToken, ParsedChildren, SyntaxFactory, SyntaxNode,
 };
-use std::iter::FusedIterator;
-
-use crate::ast_shape::NodeShape;
-use std::vec::Drain;
+use std::marker::PhantomData;
 
 /// A checkpoint for maybe wrapping a node. See `GreenNodeBuilder::checkpoint` for details.
 #[derive(Clone, Copy, Debug)]
@@ -17,35 +13,38 @@ pub struct Checkpoint(usize);
 
 /// A builder for a syntax tree.
 #[derive(Debug)]
-pub struct TreeBuilder<'cache, L: AstTreeShape> {
+pub struct TreeBuilder<'cache, L: Language, S: SyntaxFactory<Kind = L::Kind>> {
 	cache: CowMut<'cache, NodeCache>,
 	parents: Vec<(L::Kind, usize)>,
 	children: Vec<(u64, GreenElement)>,
+	ph: PhantomData<S>,
 }
 
-impl<L: AstTreeShape> Default for TreeBuilder<'_, L> {
+impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> Default for TreeBuilder<'_, L, S> {
 	fn default() -> Self {
 		Self {
 			cache: CowMut::default(),
 			parents: Vec::default(),
 			children: Vec::default(),
+			ph: PhantomData,
 		}
 	}
 }
 
-impl<L: AstTreeShape> TreeBuilder<'_, L> {
+impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
 	/// Creates new builder.
-	pub fn new() -> TreeBuilder<'static, L> {
+	pub fn new() -> TreeBuilder<'static, L, S> {
 		TreeBuilder::default()
 	}
 
 	/// Reusing `NodeCache` between different [TreeBuilder]`s saves memory.
 	/// It allows to structurally share underlying trees.
-	pub fn with_cache(cache: &mut NodeCache) -> TreeBuilder<'_, L> {
+	pub fn with_cache(cache: &mut NodeCache) -> TreeBuilder<'_, L, S> {
 		TreeBuilder {
 			cache: CowMut::Borrowed(cache),
 			parents: Vec::new(),
 			children: Vec::new(),
+			ph: PhantomData,
 		}
 	}
 
@@ -58,7 +57,7 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 	where
 		F: Fn(&mut Self),
 	{
-		let mut builder = TreeBuilder::<L>::new();
+		let mut builder = TreeBuilder::<L, S>::new();
 		builder.start_node(kind);
 		build(&mut builder);
 		builder.finish_node();
@@ -87,14 +86,6 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 		self.children.push((hash, token.into()));
 	}
 
-	/// Inserts a placeholder for a child that is missing in a parent node either because
-	/// it's an optional node that isn't present or it's a mandatory child that is missing
-	/// because of a syntax error.
-	#[inline]
-	pub fn missing(&mut self) {
-		// self.children.push(NodeCache::empty());
-	}
-
 	/// Start new node and make it current.
 	#[inline]
 	pub fn start_node(&mut self, kind: L::Kind) {
@@ -113,37 +104,17 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 		let node_entry = self.cache.node(raw_kind, slots);
 
 		let mut build_node = || {
-			let parsed_elements = ParsedElements::new(&mut self.children, first_child);
+			let children = ParsedChildren::new(&mut self.children, first_child);
 
-			L::forms_exact_shape_for(kind, parsed_elements, |result| match result {
-				Ok(NodeShape::List(elements)) => GreenNode::new(
-					raw_kind,
-					elements.elements().map(|(_, element)| Some(element)),
-				),
-				Ok(NodeShape::Normal {
-					parsed_elements,
-					commands,
-				}) => {
-					let slots = SlotShapeIterator {
-						shape: commands.iter(),
-						parsed_elements: parsed_elements.elements(),
-					};
-					GreenNode::new(raw_kind, slots)
-				}
-				Err(elements) => GreenNode::new(
-					L::kind_to_raw(kind.to_unknown()),
-					elements.elements().map(|(_, element)| Some(element)),
-				),
-			})
+			S::make_syntax(kind, children).green()
 		};
 
 		let (hash, node) = match node_entry {
 			NodeCacheNodeEntryMut::NoCache(hash) => (hash, build_node()),
 			NodeCacheNodeEntryMut::Vacant(entry) => {
-				let hash = entry.hash();
-
 				let node = build_node();
-				entry.insert(node.clone());
+
+				let hash = entry.insert(node.clone());
 				(hash, node)
 			}
 			NodeCacheNodeEntryMut::Cached(cached) => {
@@ -161,16 +132,15 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 	/// `start_node_at`.
 	/// Example:
 	/// ```rust
-	/// # use rome_rowan::{TreeBuilder, RawSyntaxKind};
-	/// # use rome_rowan::api::{RawLanguage, RawLanguageKind};
-	/// # const PLUS: RawLanguageKind = RawLanguageKind(0);
-	/// # const OPERATION: RawLanguageKind = RawLanguageKind(1);
+	/// # use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+	/// # const PLUS: RawLanguageKind = RawLanguageKind::PLUS_TOKEN;
+	/// # const OPERATION: RawLanguageKind = RawLanguageKind::ROOT;
 	/// # struct Parser;
 	/// # impl Parser {
 	/// #     fn peek(&self) -> Option<RawLanguageKind> { None }
 	/// #     fn parse_expr(&mut self) {}
 	/// # }
-	/// # let mut builder = TreeBuilder::<'_, RawLanguage>::new();
+	/// # let mut builder = RawSyntaxTreeBuilder::new();
 	/// # let mut parser = Parser;
 	/// let checkpoint = builder.checkpoint();
 	/// parser.parse_expr();
@@ -226,62 +196,32 @@ impl<L: AstTreeShape> TreeBuilder<'_, L> {
 	}
 }
 
-struct SlotShapeIterator<'a> {
-	shape: std::slice::Iter<'a, NodeShapeCommand>,
-	parsed_elements: Drain<'a, (u64, GreenElement)>,
-}
-
-impl<'a> Iterator for SlotShapeIterator<'a> {
-	type Item = Option<GreenElement>;
-
-	fn next(&mut self) -> Option<Self::Item> {
-		match self.shape.next()? {
-			NodeShapeCommand::Occupied => Some(Some(
-				self.parsed_elements
-					.next()
-					.expect("Expected a next element according to shape descriptor")
-					.1,
-			)),
-			NodeShapeCommand::Empty => Some(None),
-		}
-	}
-}
-
-impl<'a> ExactSizeIterator for SlotShapeIterator<'a> {
-	fn len(&self) -> usize {
-		self.shape.len()
-	}
-}
-
-impl<'a> FusedIterator for SlotShapeIterator<'a> {}
-
 #[cfg(test)]
 mod tests {
-	use crate::api::{RawLanguage, RawLanguageKind};
 	use crate::green::GreenElementRef;
-	use crate::{GreenNodeData, GreenTokenData, NodeOrToken, TreeBuilder};
+	use crate::raw_language::{RawLanguageKind, RawSyntaxTreeBuilder};
+	use crate::{GreenNodeData, GreenTokenData, NodeOrToken};
 
 	// Builds a "Condition" like structure where the closing ) is missing
-	fn build_condition_with_missing_closing_parenthesis(builder: &mut TreeBuilder<RawLanguage>) {
-		builder.start_node(RawLanguageKind(2));
+	fn build_condition_with_missing_closing_parenthesis(builder: &mut RawSyntaxTreeBuilder) {
+		builder.start_node(RawLanguageKind::CONDITION);
 
-		builder.token(RawLanguageKind(3), "(");
+		builder.token(RawLanguageKind::L_PAREN_TOKEN, "(");
 
-		builder.start_node(RawLanguageKind(4));
-		builder.token(RawLanguageKind(5), "a");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::STRING_TOKEN, "a");
 		builder.finish_node();
 
 		// missing )
-		builder.missing();
 
 		builder.finish_node();
 	}
 
 	#[test]
 	fn caches_identical_nodes_with_empty_slots() {
-		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+		let mut builder = RawSyntaxTreeBuilder::new();
 
-		builder.start_node(RawLanguageKind(1)); // Root
+		builder.start_node(RawLanguageKind::ROOT); // Root
 		build_condition_with_missing_closing_parenthesis(&mut builder);
 		build_condition_with_missing_closing_parenthesis(&mut builder);
 		builder.finish_node();
@@ -297,22 +237,22 @@ mod tests {
 
 	#[test]
 	fn doesnt_cache_node_if_empty_slots_differ() {
-		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+		let mut builder = RawSyntaxTreeBuilder::new();
 
-		builder.start_node(RawLanguageKind(1)); // Root
+		builder.start_node(RawLanguageKind::ROOT); // Root
 		build_condition_with_missing_closing_parenthesis(&mut builder); // misses the ')'
 
 		// Create a well formed condition
-		builder.start_node(RawLanguageKind(2));
+		builder.start_node(RawLanguageKind::CONDITION);
 
-		builder.token(RawLanguageKind(3), "(");
+		builder.token(RawLanguageKind::L_PAREN_TOKEN, "(");
 
-		builder.start_node(RawLanguageKind(4));
-		builder.token(RawLanguageKind(5), "a");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::STRING_TOKEN, "a");
 		builder.finish_node();
 
 		// missing )
-		builder.token(RawLanguageKind(5), ")");
+		builder.token(RawLanguageKind::R_PAREN_TOKEN, ")");
 
 		builder.finish_node();
 
