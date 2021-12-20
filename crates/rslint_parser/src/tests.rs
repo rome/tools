@@ -1,5 +1,5 @@
-use crate::ast::JsAnyRoot;
-use crate::{parse_module, parse_text, Parse, ParserError, SyntaxNode, SyntaxToken};
+use crate::ast::{JsAnyRoot, JsCallArguments};
+use crate::{parse_module, parse_text, AstNode, Parse, ParserError, SyntaxNode, SyntaxToken};
 use expect_test::expect_file;
 use rome_rowan::TextSize;
 use rslint_errors::file::SimpleFile;
@@ -25,31 +25,31 @@ let [a, b] = [1, 2];
 	);
 }
 
-// #[test]
-// fn parser_missing_smoke_test() {
-// 	let src = r#"
-// 		console.log("Hello world";
-// 	"#;
-//
-// 	let module = parse_module(src, 0);
-//
-// 	let arg_list = module
-// 		.syntax()
-// 		.descendants()
-// 		.find_map(JsCallArguments::cast)
-// 		.unwrap();
-//
-// 	let opening = arg_list.syntax.element_in_slot(0);
-// 	let list = arg_list.syntax.element_in_slot(1);
-// 	let closing = arg_list.syntax().element_in_slot(2);
-//
-// 	assert_eq!(opening.map(|o| o.to_string()), Some(String::from("(")));
-// 	assert_eq!(
-// 		list.map(|l| l.kind()),
-// 		Some(SyntaxKind::JS_CALL_ARGUMENT_LIST)
-// 	);
-// 	assert_eq!(closing, None);
-// }
+#[test]
+fn parser_missing_smoke_test() {
+	let src = r#"
+		console.log("Hello world";
+	"#;
+
+	let module = parse_module(src, 0);
+
+	let arg_list = module
+		.syntax()
+		.descendants()
+		.find_map(JsCallArguments::cast)
+		.unwrap();
+
+	let opening = arg_list.syntax.element_in_slot(0);
+	let list = arg_list.syntax.element_in_slot(1);
+	let closing = arg_list.syntax().element_in_slot(2);
+
+	assert_eq!(opening.map(|o| o.to_string()), Some(String::from("(")));
+	assert_eq!(
+		list.map(|l| l.kind()),
+		Some(JsSyntaxKind::JS_CALL_ARGUMENT_LIST)
+	);
+	assert_eq!(closing, None);
+}
 
 fn test_data_dir() -> PathBuf {
 	project_dir().join("rslint_parser/test_data")
