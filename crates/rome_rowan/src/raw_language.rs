@@ -107,7 +107,7 @@ impl SyntaxFactory for RawLanguageSyntaxFactory {
 					return RawSyntaxNode::new(kind, std::iter::once(None));
 				}
 
-				return RawSyntaxNode::new(kind, std::iter::once(current_element));
+				RawSyntaxNode::new(kind, std::iter::once(current_element))
 			}
 
 			RawLanguageKind::CONDITION => {
