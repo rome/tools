@@ -2,13 +2,13 @@ use super::kinds_src::AstSrc;
 use crate::codegen::generate_nodes::token_kind_to_code;
 use crate::codegen::kinds_src::TokenKind;
 use crate::{
-	codegen::{kinds_src::Field, to_upper_snake_case},
+	codegen::{kinds_src::Field, to_lower_snake_case, to_upper_snake_case},
 	Result,
 };
 use quote::{format_ident, quote};
 
 pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
-	let normal_node_arms = ast.nodes.iter().map(|node| {
+	let normal_node_fns = ast.nodes.iter().map(|node| {
 		let kind = format_ident!("{}", to_upper_snake_case(&node.name));
 		let expected_len = node.fields.len();
 
@@ -52,10 +52,15 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 			}
 		});
 
+		let fn_name = format_ident!("make_{}", to_lower_snake_case(&node.name));
 		quote! {
-			#kind => {
+			#[allow(unused_mut)]
+			#[allow(unused_assignments)]
+			#[allow(unused_variables)]
+			fn #fn_name(children: ParsedChildren<JsSyntaxKind>) -> RawSyntaxNode<JsSyntaxKind> {
+				let actual_len = children.len();
 				if actual_len > #expected_len {
-					return RawSyntaxNode::new(kind.to_unknown(), children.into_iter().map(Some));
+					return RawSyntaxNode::new(#kind.to_unknown(), children.into_iter().map(Some));
 				}
 
 				let mut elements = children.into_iter();
@@ -68,9 +73,9 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 				// Additional unexpected elements
 				if let Some(element) = current_element {
 					return RawSyntaxNode::new(
-						kind.to_unknown(),
+						#kind.to_unknown(),
 						UnknownNodeChildrenIterator::new(
-							slots,
+							&mut slots,
 							actual_len,
 							element,
 							elements,
@@ -78,8 +83,17 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 					);
 				}
 
-				RawSyntaxNode::new(kind, slots)
+				RawSyntaxNode::new(#kind, slots)
 			}
+		}
+	});
+
+	let normal_node_arms = ast.nodes.iter().map(|node| {
+		let kind = format_ident!("{}", to_upper_snake_case(&node.name));
+		let fn_name = format_ident!("make_{}", to_lower_snake_case(&node.name));
+
+		quote! {
+			#kind => Self::#fn_name(children)
 		}
 	});
 
@@ -120,15 +134,11 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 		impl SyntaxFactory for JsSyntaxFactory {
 			type Kind = JsSyntaxKind;
 
-			#[allow(unused_mut)]
-			#[allow(unused_assignments)]
-			#[warn(unused_variables)]
 			fn make_syntax(
 				kind: Self::Kind,
 				children: ParsedChildren<Self::Kind>,
 			) -> RawSyntaxNode<Self::Kind>
 			{
-				let actual_len = children.len();
 				match kind {
 					#(#unknown_kinds)|* | ERROR => {
 						RawSyntaxNode::new(kind, children.into_iter().map(Some))
@@ -138,6 +148,10 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 					_ => unreachable!("Is {:?} a token?", kind),
 				}
 			}
+		}
+
+		impl JsSyntaxFactory {
+			#(#normal_node_fns)*
 		}
 	};
 
