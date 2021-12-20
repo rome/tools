@@ -107,7 +107,7 @@ pub fn run(filter: String) {
 				let mut fastest: Option<BenchmarkResult> = Option::None;
 				let mut slowest = Option::None;
 
-				for i in 0..10 {
+				for i in 0..5 {
 					if i != 0 {
 						std::thread::sleep(Duration::from_secs(1));
 					}
