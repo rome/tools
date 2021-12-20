@@ -509,7 +509,6 @@ mod tests {
 
 		builder.start_node(JsSyntaxKind::JS_STATEMENT_LIST);
 
-
 		for (node, separator) in elements.into_iter() {
 			if let Some(node) = node {
 				builder.start_node(JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION);
@@ -520,7 +519,7 @@ mod tests {
 
 			if let Some(separator) = separator {
 				builder.token(JsSyntaxKind::COMMA, separator);
-			} 
+			}
 		}
 
 		builder.finish_node();

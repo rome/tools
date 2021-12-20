@@ -1,4 +1,4 @@
-use crate::{format_elements, token, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::CallExpr;
 
 impl ToFormatElement for CallExpr {
