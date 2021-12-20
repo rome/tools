@@ -84,9 +84,18 @@ pub fn get_code(lib: &str) -> Result<String, String> {
 pub fn run(filter: String) {
 	let regex = regex::Regex::new(filter.as_str()).unwrap();
 	let libs = include_str!("libs.txt").lines();
+
+	let mut first_lib = true;
 	for lib in libs {
 		if !regex.is_match(lib) {
 			continue;
+		}
+
+		if first_lib {
+			first_lib = false;
+		} else {
+			// Give the CPU some cool down time
+			std::thread::sleep(Duration::from_secs(5));
 		}
 
 		let code = get_code(lib);
@@ -95,12 +104,14 @@ pub fn run(filter: String) {
 			Ok(code) => {
 				println!("Benchmark: {}", lib);
 
-				// Give the CPU some cool down time
-				std::thread::sleep(Duration::from_secs(1));
 				let mut fastest: Option<BenchmarkResult> = Option::None;
 				let mut slowest = Option::None;
 
-				for _ in 0..10 {
+				for i in 0..10 {
+					if i != 0 {
+						std::thread::sleep(Duration::from_millis(1000));
+					}
+
 					let result = benchmark_lib(&code);
 
 					if fastest.is_none() || &result < fastest.as_ref().unwrap() {
@@ -110,8 +121,6 @@ pub fn run(filter: String) {
 					if slowest.is_none() || &result > slowest.as_ref().unwrap() {
 						slowest = Some(result);
 					}
-
-					std::thread::sleep(Duration::from_millis(10));
 				}
 
 				println!("\tfastest: {}", fastest.unwrap());

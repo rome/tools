@@ -1,8 +1,8 @@
 use crate::raw_language::RawLanguageKind::{COMMA_TOKEN, LITERAL_EXPRESSION};
 ///! Provides a sample language implementation that is useful in API explanation or tests
 use crate::{
-	Language, ParsedChildren, RawSyntaxElement, RawSyntaxKind, RawSyntaxNode, SyntaxFactory,
-	SyntaxKind, TreeBuilder, UnknownNodeChildrenIterator,
+	Language, ParsedChildren, RawNodeSlots, RawSyntaxKind, RawSyntaxNode, SyntaxFactory,
+	SyntaxKind, TreeBuilder,
 };
 
 #[doc(hidden)]
@@ -117,58 +117,48 @@ impl SyntaxFactory for RawLanguageSyntaxFactory {
 					return RawSyntaxNode::new(kind.to_unknown(), children.into_iter().map(Some));
 				}
 
-				let mut elements = children.into_iter();
+				let mut elements = (&children).into_iter();
 				let mut current_element = elements.next();
-				let mut current_slot_index = 0;
-				let mut slots: [Option<RawSyntaxElement<RawLanguageKind>>; 3] = Default::default();
+				let mut slots: RawNodeSlots<3> = Default::default();
 
 				if let Some(element) = &current_element {
 					if element.kind() == RawLanguageKind::L_PAREN_TOKEN {
-						slots[current_slot_index] = current_element.take();
+						slots.mark_present();
 						current_element = elements.next();
-						current_slot_index += 1;
 					} else {
-						slots[current_slot_index] = None;
-						current_slot_index += 1;
+						slots.mark_absent();
 					}
 				} else {
-					slots[current_slot_index] = None;
-					current_slot_index += 1;
+					slots.mark_absent();
 				}
 
 				if let Some(element) = &current_element {
 					if element.kind() == RawLanguageKind::LITERAL_EXPRESSION {
-						slots[current_slot_index] = current_element.take();
+						slots.mark_present();
 						current_element = elements.next();
-						current_slot_index += 1;
 					} else {
-						slots[current_slot_index] = None;
-						current_slot_index += 1;
+						slots.mark_absent();
 					}
 				} else {
-					slots[current_slot_index] = None;
-					current_slot_index += 1;
+					slots.mark_absent();
 				}
 
 				if let Some(element) = &current_element {
 					if element.kind() == RawLanguageKind::R_PAREN_TOKEN {
-						slots[current_slot_index] = current_element.take();
+						slots.mark_present();
 						current_element = elements.next();
 					} else {
-						slots[current_slot_index] = None;
+						slots.mark_absent();
 					}
 				} else {
-					slots[current_slot_index] = None;
+					slots.mark_absent();
 				}
 
-				if let Some(element) = current_element {
-					return RawSyntaxNode::new(
-						kind.to_unknown(),
-						UnknownNodeChildrenIterator::new(slots, actual_len - 1, element, elements),
-					);
+				if current_element.is_some() {
+					return RawSyntaxNode::new(kind.to_unknown(), children.into_iter().map(Some));
 				}
 
-				RawSyntaxNode::new(kind, slots)
+				slots.into_node(kind, children)
 			}
 			_ => unreachable!("{:?} is not a node kind", kind),
 		}

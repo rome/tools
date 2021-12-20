@@ -1,6 +1,7 @@
 mod parsed_children;
 mod raw_syntax;
 
+use crate::green::GreenElement;
 use crate::SyntaxKind;
 use std::fmt;
 use std::iter::{FusedIterator, Peekable};
@@ -162,62 +163,78 @@ impl<'a, K: SyntaxKind> ExactSizeIterator
 	}
 }
 
-pub struct UnknownNodeChildrenIterator<'a, K: SyntaxKind, const COUNT: usize> {
-	layout_elements: std::array::IntoIter<Option<RawSyntaxElement<K>>, COUNT>,
-	original_len: usize,
-	current_element: Option<RawSyntaxElement<K>>,
-	remaining_elements: ParsedChildrenIntoIterator<'a, K>,
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum SlotContent {
+	Present,
+	Absent,
 }
 
-impl<'a, K: SyntaxKind, const COUNT: usize> UnknownNodeChildrenIterator<'a, K, COUNT> {
-	pub fn new(
-		slots: [Option<RawSyntaxElement<K>>; COUNT],
-		original_len: usize,
-		current_element: RawSyntaxElement<K>,
-		remaining_elements: ParsedChildrenIntoIterator<'a, K>,
-	) -> Self {
+#[derive(Debug)]
+pub struct RawNodeSlots<const COUNT: usize> {
+	slots: [SlotContent; COUNT],
+	current_slot: usize,
+}
+
+impl<const COUNT: usize> Default for RawNodeSlots<COUNT> {
+	fn default() -> Self {
 		Self {
-			layout_elements: slots.into_iter(),
-			original_len,
-			current_element: Some(current_element),
-			remaining_elements,
+			slots: [SlotContent::Absent; COUNT],
+			current_slot: 0,
 		}
 	}
 }
 
-impl<'a, K: SyntaxKind, const COUNT: usize> Iterator for UnknownNodeChildrenIterator<'a, K, COUNT> {
+impl<const COUNT: usize> RawNodeSlots<COUNT> {
+	pub fn mark_absent(&mut self) {
+		self.slots[self.current_slot] = SlotContent::Absent;
+		self.current_slot += 1;
+	}
+
+	pub fn mark_present(&mut self) {
+		self.slots[self.current_slot] = SlotContent::Present;
+		self.current_slot += 1;
+	}
+
+	pub fn into_node<K: SyntaxKind>(
+		self,
+		kind: K,
+		children: ParsedChildren<K>,
+	) -> RawSyntaxNode<K> {
+		RawSyntaxNode::new(
+			kind,
+			RawNodeSlotIterator {
+				children: children.into_iter(),
+				slots: self.slots.as_slice().iter(),
+			},
+		)
+	}
+}
+
+struct RawNodeSlotIterator<'a, K: SyntaxKind> {
+	children: ParsedChildrenIntoIterator<'a, K>,
+	slots: std::slice::Iter<'a, SlotContent>,
+}
+
+impl<'a, K: SyntaxKind> Iterator for RawNodeSlotIterator<'a, K> {
 	type Item = Option<RawSyntaxElement<K>>;
 
-	#[cold]
 	fn next(&mut self) -> Option<Self::Item> {
-		for element in self.layout_elements.by_ref() {
-			if element.is_some() {
-				self.original_len -= 1;
-				return Some(element);
-			}
-		}
+		let slot = self.slots.next()?;
 
-		if let Some(current_element) = self.current_element.take() {
-			self.original_len -= 1;
-			Some(Some(current_element))
-		} else {
-			let next = self.remaining_elements.next()?;
-			self.original_len -= 1;
-			Some(Some(next))
+		match slot {
+			SlotContent::Present => {
+				Some(Some(self.children.next().expect(
+					"Expected a present node according to the slot description",
+				)))
+			}
+			SlotContent::Absent => Some(None),
 		}
 	}
 
 	fn size_hint(&self) -> (usize, Option<usize>) {
-		let len = self.len();
-
-		(len, Some(len))
+		(self.slots.len(), Some(self.slots.len()))
 	}
 }
 
-impl<'a, K: SyntaxKind, const COUNT: usize> ExactSizeIterator
-	for UnknownNodeChildrenIterator<'a, K, COUNT>
-{
-	fn len(&self) -> usize {
-		self.original_len
-	}
-}
+impl<'a, K: SyntaxKind> FusedIterator for RawNodeSlotIterator<'a, K> {}
+impl<'a, K: SyntaxKind> ExactSizeIterator for RawNodeSlotIterator<'a, K> {}

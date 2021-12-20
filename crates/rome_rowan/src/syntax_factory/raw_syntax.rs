@@ -20,7 +20,7 @@ impl<K: SyntaxKind> RawSyntaxNode<K> {
 				kind.to_raw(),
 				slots
 					.into_iter()
-					.map(|slot| slot.map(|element| element.green())),
+					.map(|slot| slot.map(|element| element.into_green())),
 			),
 			ph: PhantomData,
 		}
@@ -81,7 +81,7 @@ impl<K: SyntaxKind> RawSyntaxElement<K> {
 	}
 
 	#[inline]
-	fn green(self) -> GreenElement {
+	fn into_green(self) -> GreenElement {
 		match self {
 			NodeOrToken::Node(node) => NodeOrToken::Node(node.raw),
 			NodeOrToken::Token(token) => NodeOrToken::Token(token.raw),
