@@ -3,6 +3,7 @@ use rustc_hash::FxHasher;
 use std::hash::{BuildHasherDefault, Hash, Hasher};
 
 use crate::api::TriviaPiece;
+use crate::green::Slot;
 use crate::{
 	green::GreenElementRef, GreenNode, GreenNodeData, GreenToken, GreenTokenData, NodeOrToken,
 	RawSyntaxKind,
@@ -106,8 +107,12 @@ impl NodeCache {
 		// 17% of the memory for green nodes!
 		let entry = self.nodes.raw_entry_mut().from_hash(hash, |no_hash| {
 			no_hash.node.kind() == kind && {
-				let lhs = no_hash.node.children();
-				let lhs = lhs.map(|child| element_id(child.element()));
+				let lhs = no_hash.node.slots().filter_map(|slot| match slot {
+					// Ignore empty slots. The queried node only has the present children
+					Slot::Empty { .. } => None,
+					Slot::Node { node, .. } => Some(element_id(NodeOrToken::Node(node))),
+					Slot::Token { token, .. } => Some(element_id(NodeOrToken::Token(token))),
+				});
 
 				let rhs = children
 					.iter()
