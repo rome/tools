@@ -1,7 +1,6 @@
 mod parsed_children;
 mod raw_syntax;
 
-use crate::green::GreenElement;
 use crate::SyntaxKind;
 use std::fmt;
 use std::iter::{FusedIterator, Peekable};
