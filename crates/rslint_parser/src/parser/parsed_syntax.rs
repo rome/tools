@@ -36,20 +36,20 @@ use std::ops::Range;
 /// This is a custom enum over using `Option` because [ParsedSyntax::Absent] values must be handled by the caller.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[must_use = "this `ParsedSyntax` may be an `Absent` variant, which should be handled"]
-pub enum ParsedSyntax<T> {
+pub enum ParsedSyntax {
 	/// A syntax that isn't present in the source code. Used when a parse rule can't match the current
 	/// token of the parser.
 	Absent,
 
 	/// A completed syntax node with all or some of its children.
-	Present(T),
+	Present(CompletedMarker),
 }
 
-impl<T> ParsedSyntax<T> {
+impl ParsedSyntax {
 	/// Converts from `ParsedSyntax<T>` to `Option<T>`.
 	///
 	/// Converts `self` into an `Option<T>`, consuming `self`
-	pub fn ok(self) -> Option<T> {
+	pub fn ok(self) -> Option<CompletedMarker> {
 		match self {
 			Absent => None,
 			Present(marker) => Some(marker),
@@ -57,9 +57,9 @@ impl<T> ParsedSyntax<T> {
 	}
 
 	/// Calls `op` if the syntax is present and otherwise returns [ParsedSyntax::Absent]
-	pub fn and_then<F>(self, op: F) -> ParsedSyntax<T>
+	pub fn and_then<F>(self, op: F) -> ParsedSyntax
 	where
-		F: FnOnce(T) -> ParsedSyntax<T>,
+		F: FnOnce(CompletedMarker) -> ParsedSyntax,
 	{
 		match self {
 			Absent => Absent,
@@ -68,9 +68,9 @@ impl<T> ParsedSyntax<T> {
 	}
 
 	/// Calls `op` if the syntax is absent ond otherwise returns [ParsedSyntax::Present]
-	pub fn or_else<F>(self, op: F) -> ParsedSyntax<T>
+	pub fn or_else<F>(self, op: F) -> ParsedSyntax
 	where
-		F: FnOnce() -> ParsedSyntax<T>,
+		F: FnOnce() -> ParsedSyntax,
 	{
 		match self {
 			Absent => op(),
@@ -95,7 +95,7 @@ impl<T> ParsedSyntax<T> {
 	/// # Panics
 	///
 	///  Panics if the current syntax is [ParsedSyntax::Absent]
-	pub fn unwrap(self) -> T {
+	pub fn unwrap(self) -> CompletedMarker {
 		match self {
 			Absent => {
 				panic!("Called `unwrap` on an `Absent` syntax");
@@ -108,18 +108,16 @@ impl<T> ParsedSyntax<T> {
 	/// leaving an [ParsedSyntax::Absent] value untouched.
 	///
 	/// This function can be used to compose the results of two functions.
-	pub fn map<F, U>(self, mapper: F) -> ParsedSyntax<U>
+	pub fn map<F>(self, mapper: F) -> ParsedSyntax
 	where
-		F: FnOnce(T) -> U,
+		F: FnOnce(CompletedMarker) -> CompletedMarker,
 	{
 		match self {
 			Absent => Absent,
 			Present(element) => Present(mapper(element)),
 		}
 	}
-}
 
-impl ParsedSyntax<CompletedMarker> {
 	/// Returns the kind of the syntax if it is present or [None] otherwise
 	pub fn kind(&self) -> Option<JsSyntaxKind> {
 		match self {
@@ -212,13 +210,13 @@ impl ParsedSyntax<CompletedMarker> {
 	}
 }
 
-impl From<CompletedMarker> for ParsedSyntax<CompletedMarker> {
+impl From<CompletedMarker> for ParsedSyntax {
 	fn from(marker: CompletedMarker) -> Self {
 		Present(marker)
 	}
 }
 
-impl From<Option<CompletedMarker>> for ParsedSyntax<CompletedMarker> {
+impl From<Option<CompletedMarker>> for ParsedSyntax {
 	fn from(option: Option<CompletedMarker>) -> Self {
 		match option {
 			Some(completed) => Present(completed),

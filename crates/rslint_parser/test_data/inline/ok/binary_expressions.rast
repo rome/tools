@@ -48,6 +48,7 @@ JsModule {
                             callee: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@26..27 "3" [] [],
                             },
+                            optional_chain_token_token: missing (optional),
                             type_args: missing (optional),
                             arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@27..29 "(" [Whitespace("\n")] [],
@@ -266,7 +267,8 @@ JsModule {
               0: JS_NUMBER_LITERAL_EXPRESSION@26..27
                 0: JS_NUMBER_LITERAL@26..27 "3" [] []
               1: (empty)
-              2: JS_CALL_ARGUMENTS@27..36
+              2: (empty)
+              3: JS_CALL_ARGUMENTS@27..36
                 0: L_PAREN@27..29 "(" [Whitespace("\n")] []
                 1: JS_CALL_ARGUMENT_LIST@29..34
                   0: JS_BINARY_EXPRESSION@29..34

@@ -103,7 +103,7 @@ pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
 			JsSyntaxKind::*
 		};
 
-		use rome_rowan::{ParsedChildren, SyntaxKind, SyntaxFactory, RawSyntaxElement, RawSyntaxNode, RawNodeSlots};
+		use rome_rowan::{ParsedChildren, SyntaxKind, SyntaxFactory, RawSyntaxNode, RawNodeSlots};
 
 		#[derive(Debug)]
 		pub struct JsSyntaxFactory;

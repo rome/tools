@@ -215,11 +215,6 @@ impl<'t> Parser<'t> {
 		true
 	}
 
-	/// Consumes the next optional token if `kind` matches or inserts a missing marker
-	pub fn eat_optional(&mut self, kind: JsSyntaxKind) -> bool {
-		self.eat(kind)
-	}
-
 	/// Starts a new node in the syntax tree. All nodes and tokens
 	/// consumed between the `start` and the corresponding `Marker::complete`
 	/// belong to the same node.
@@ -348,11 +343,6 @@ impl<'t> Parser<'t> {
 		}
 	}
 
-	/// Tries to eat a specific token kind, adds a missing marker and an error to the events stack if it's not there.
-	pub fn expect_required(&mut self, kind: JsSyntaxKind) -> bool {
-		self.expect(kind)
-	}
-
 	/// Get the byte index range of a completed marker for error reporting.
 	pub fn marker_range(&self, marker: &CompletedMarker) -> Range<usize> {
 		match self.events[marker.start_pos as usize] {
@@ -456,7 +446,7 @@ impl<'t> Parser<'t> {
 		if self.state.no_recovery {
 			Some(true).filter(|_| self.eat(kind))
 		} else {
-			Some(self.expect_required(kind))
+			Some(self.expect(kind))
 		}
 	}
 
@@ -735,7 +725,7 @@ mod tests {
 		let mut p = Parser::new(token_source, 0, Syntax::default());
 
 		let m = p.start();
-		p.expect_required(JsSyntaxKind::JS_STRING_LITERAL);
+		p.expect(JsSyntaxKind::JS_STRING_LITERAL);
 		m.complete(&mut p, JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
 	}
 

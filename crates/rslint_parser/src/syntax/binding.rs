@@ -12,7 +12,7 @@ use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind as SyntaxKindTrait;
 use rslint_errors::Span;
 
-pub(crate) fn parse_binding_pattern(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_binding_pattern(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		T!['['] => ArrayBindingPattern.parse_array_pattern(p),
 		T!['{'] if p.state.allow_object_expr => ObjectBindingPattern.parse_object_pattern(p),
@@ -21,9 +21,7 @@ pub(crate) fn parse_binding_pattern(p: &mut Parser) -> ParsedSyntax<CompletedMar
 	}
 }
 
-pub(crate) fn parse_binding_pattern_with_optional_default(
-	p: &mut Parser,
-) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_binding_pattern_with_optional_default(p: &mut Parser) -> ParsedSyntax {
 	BindingPatternWithDefault.parse_pattern_with_optional_default(p)
 }
 
@@ -31,7 +29,7 @@ fn is_at_identifier_binding(p: &Parser) -> bool {
 	is_at_identifier(p)
 }
 
-pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax {
 	parse_identifier_binding(p)
 }
 
@@ -56,7 +54,7 @@ pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 /// * the same identifier is bound multiple times inside of a `let` or const` declaration
 /// * it is named "yield" inside of a generator function or in strict mode
 /// * it is named "await" inside of an async function
-pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 	let parsed = parse_identifier(p, JS_IDENTIFIER_BINDING);
 
 	parsed.map(|mut identifier| {
@@ -139,7 +137,7 @@ impl ParseWithDefaultPattern for BindingPatternWithDefault {
 	}
 
 	#[inline]
-	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		parse_binding_pattern(p)
 	}
 }
@@ -253,7 +251,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
 	// let { a b } = c
 	// let { = "test" } = c
 	// let { , a } = c
-	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		if !is_at_object_member_name(p) && !p.at_ts(token_set![T![:], T![=]]) {
 			return Absent;
 		}
@@ -265,7 +263,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
 			JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
 		} else {
 			parse_object_member_name(p).or_syntax_error(p, expected_object_member_name);
-			if p.expect_required(T![:]) {
+			if p.expect(T![:]) {
 				parse_binding_pattern(p).or_syntax_error(p, expected_binding);
 			}
 			JS_OBJECT_BINDING_PATTERN_PROPERTY
@@ -289,7 +287,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
 	// async function test() {
 	//   let { ...await } = a;
 	// }
-	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
 		if p.at(T![...]) {
 			let m = p.start();
 			p.bump(T![...]);

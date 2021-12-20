@@ -18,11 +18,8 @@ use rslint_syntax::JsSyntaxKind;
 /// }
 /// ```
 pub trait ParseNodeList {
-	/// The type returned when calling the function [Self::parse_element]
-	type ParsedElement;
-
 	/// Parses a single element of the list
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement>;
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax;
 
 	/// It creates a marker just before starting a list
 	fn start_list(&mut self, p: &mut Parser) -> Marker {
@@ -36,11 +33,7 @@ pub trait ParseNodeList {
 	fn is_at_list_end(&mut self, p: &mut Parser) -> bool;
 
 	/// This method is used to recover the parser in case [Self::parse_element] returns [ParsedSyntax::Absent]
-	fn recover(
-		&mut self,
-		p: &mut Parser,
-		parsed_element: ParsedSyntax<Self::ParsedElement>,
-	) -> RecoveryResult;
+	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult;
 
 	/// It creates a [ParsedSyntax] that will contain the list
 	fn finish_list(&mut self, p: &mut Parser, m: Marker) {
@@ -88,7 +81,7 @@ pub trait ParseNodeList {
 /// ```
 pub trait ParseSeparatedList {
 	/// Parses a single element of the list
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker>;
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax;
 
 	/// It creates a marker just before starting a list
 	fn start_list(&mut self, p: &mut Parser) -> Marker {
@@ -102,11 +95,7 @@ pub trait ParseSeparatedList {
 	fn is_at_list_end(&mut self, p: &mut Parser) -> bool;
 
 	/// This method is used to recover the parser in case [Self::parse_element] returns [ParsedSyntax::Absent]
-	fn recover(
-		&mut self,
-		p: &mut Parser,
-		parsed_element: ParsedSyntax<CompletedMarker>,
-	) -> RecoveryResult;
+	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult;
 
 	/// It creates a [ParsedSyntax] that will contain the list
 	/// Only called if the list isn't empty
@@ -131,7 +120,7 @@ pub trait ParseSeparatedList {
 	/// If present, it [parses](Self::parse_separating_element) it and continues with loop.
 	/// If not present, it adds a missing marker.
 	fn expect_separator(&mut self, p: &mut Parser) -> bool {
-		p.expect_required(self.separating_element_kind())
+		p.expect(self.separating_element_kind())
 	}
 
 	/// Parses a list of elements separated by a recurring element

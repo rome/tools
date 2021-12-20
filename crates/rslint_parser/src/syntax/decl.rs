@@ -13,7 +13,7 @@ use crate::syntax::js_parse_error::expected_binding;
 use crate::{JsSyntaxKind::*, *};
 
 #[allow(clippy::unnecessary_unwrap)]
-pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
 	if p.typescript() {
 		if let Some(modifier) = maybe_eat_incorrect_modifier(p) {
 			let err = p
@@ -30,7 +30,7 @@ pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax<CompletedMa
 // test parameter_list
 // function evalInComputedPropertyKey({ [computed]: ignored }) {}
 /// parse the whole list of parameters, brackets included
-pub(super) fn parse_parameter_list(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_parameter_list(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T!['(']) {
 		return Absent;
 	}
@@ -42,12 +42,12 @@ pub(super) fn parse_parameter_list(p: &mut Parser) -> ParsedSyntax<CompletedMark
 /// Parses a (param, param) list into the current active node
 pub(super) fn parse_parameters_list(
 	p: &mut Parser,
-	parse_param: impl Fn(&mut Parser) -> ParsedSyntax<CompletedMarker>,
+	parse_param: impl Fn(&mut Parser) -> ParsedSyntax,
 	list_kind: JsSyntaxKind,
 ) {
 	let mut first = true;
 
-	p.state.allow_object_expr = p.expect_required(T!['(']);
+	p.state.allow_object_expr = p.expect(T!['(']);
 
 	let parameters_list = p.start();
 	let mut progress = ParserProgress::default();
@@ -58,7 +58,7 @@ pub(super) fn parse_parameters_list(
 		if first {
 			first = false;
 		} else {
-			p.expect_required(T![,]);
+			p.expect(T![,]);
 		}
 
 		if p.at(T![')']) {
@@ -156,10 +156,10 @@ pub(super) fn parse_parameters_list(
 
 	parameters_list.complete(p, list_kind);
 	p.state.allow_object_expr = true;
-	p.expect_required(T![')']);
+	p.expect(T![')']);
 }
 
-pub(super) fn parse_arrow_body(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_arrow_body(p: &mut Parser) -> ParsedSyntax {
 	let mut guard = p.with_state(ParserState {
 		in_function: true,
 		..p.state.clone()

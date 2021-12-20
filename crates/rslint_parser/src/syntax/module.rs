@@ -54,7 +54,7 @@ fn parse_module_items(p: &mut Parser) {
 	list_marker.complete(p, JS_MODULE_ITEM_LIST);
 }
 
-fn parse_module_item(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_module_item(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => parse_import(p),
 		T![export] => export_decl(p).into(),
@@ -73,7 +73,7 @@ fn parse_module_item(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // import { as b } from "c";
 // import 4 from "c";
 // import a from 4;
-pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![import]) {
 		return Absent;
 	}
@@ -104,7 +104,7 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 // test import_default_clause
 // import foo from "test";
-fn parse_import_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		JS_STRING_LITERAL => parse_import_bare_clause(p),
 		T![*] => parse_import_namespace_clause(p),
@@ -115,7 +115,7 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 				let m = binding.precede(p);
 
 				if matches!(p.cur(), T![,] | T!['{']) {
-					p.expect_required(T![,]);
+					p.expect(T![,]);
 
 					let default_specifier = m.complete(p, JS_DEFAULT_IMPORT_SPECIFIER);
 					let named_clause = default_specifier.precede(p);
@@ -141,7 +141,7 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // test import_bare_clause
 // import "test";
 // import "no_semicolon"
-fn parse_import_bare_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_import_bare_clause(p: &mut Parser) -> ParsedSyntax {
 	parse_module_source(p).map(|module_source| {
 		let m = module_source.precede(p);
 		parse_import_assertion(p).ok();
@@ -151,7 +151,7 @@ fn parse_import_bare_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 // test import_decl
 // import * as foo from "bla";
-fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![*]) {
 		return Absent;
 	}
@@ -174,7 +174,7 @@ fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker
 // import b, { a } from "b";
 // import a, * as b from "c";
 // import { a as b, default as c, "a-b-c" as d } from "b";
-fn parse_import_named_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_import_named_clause(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T!['{']) {
 		return Absent;
 	}
@@ -190,22 +190,22 @@ fn parse_import_named_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	Present(m.complete(p, JS_IMPORT_NAMED_CLAUSE))
 }
 
-fn parse_default_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_default_import_specifier(p: &mut Parser) -> ParsedSyntax {
 	parse_binding(p).map(|binding| {
 		let m = binding.precede(p);
-		p.expect_required(T![,]);
+		p.expect(T![,]);
 		m.complete(p, JS_DEFAULT_IMPORT_SPECIFIER)
 	})
 }
 
-fn parse_named_import(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_named_import(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		T![*] => parse_namespace_import_specifier(p),
 		_ => parse_named_import_specifier_list(p),
 	}
 }
 
-fn parse_namespace_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_namespace_import_specifier(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![*]) {
 		return Absent;
 	}
@@ -218,7 +218,7 @@ fn parse_namespace_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMar
 	Present(m.complete(p, JS_NAMESPACE_IMPORT_SPECIFIER))
 }
 
-fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T!['{']) {
 		return Absent;
 	}
@@ -226,7 +226,7 @@ fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<CompletedMa
 	let m = p.start();
 	p.bump_any();
 	NamedImportSpecifierList.parse_list(p);
-	p.expect_required(T!['}']);
+	p.expect(T!['}']);
 
 	Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIERS))
 }
@@ -234,7 +234,7 @@ fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax<CompletedMa
 struct NamedImportSpecifierList;
 
 impl ParseSeparatedList for NamedImportSpecifierList {
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
 		parse_named_import_specifier(p).or_else(|| parse_shorthand_named_import_specifier(p))
 	}
 
@@ -242,11 +242,7 @@ impl ParseSeparatedList for NamedImportSpecifierList {
 		p.at(T!['}'])
 	}
 
-	fn recover(
-		&mut self,
-		p: &mut Parser,
-		parsed_element: ParsedSyntax<CompletedMarker>,
-	) -> RecoveryResult {
+	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
 		parsed_element.or_recover(
 			p,
 			&ParseRecovery::new(
@@ -271,7 +267,7 @@ impl ParseSeparatedList for NamedImportSpecifierList {
 	}
 }
 
-fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 
 	if p.cur_src() == "as" && p.nth_src(1) != "as" {
@@ -289,7 +285,7 @@ fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 	Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIER))
 }
 
-fn parse_shorthand_named_import_specifier(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_shorthand_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 	if p.at(T![default]) {
 		p.error(expected_local_name_for_default_import(p, p.cur_tok().range));
 
@@ -326,18 +322,18 @@ fn parse_shorthand_named_import_specifier(p: &mut Parser) -> ParsedSyntax<Comple
 // import "x" assert;
 // import foo from "foo.json" assert { type: "json", lazy: true, startAtLine: 1 };
 // import { a } from "a.json" assert
-fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![ident]) || p.cur_src() != "assert" || p.has_linebreak_before_n(0) {
 		return Absent;
 	}
 
 	let m = p.start();
 	p.bump_remap(T![assert]);
-	p.expect_required(T!['{']);
+	p.expect(T!['{']);
 
 	ImportAssertionList::default().parse_list(p);
 
-	p.expect_required(T!['}']);
+	p.expect(T!['}']);
 
 	Present(m.complete(p, JS_IMPORT_ASSERTION))
 }
@@ -348,7 +344,7 @@ struct ImportAssertionList {
 }
 
 impl ParseSeparatedList for ImportAssertionList {
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
 		parse_import_assertion_entry(p, &mut self.assertion_keys)
 	}
 
@@ -356,11 +352,7 @@ impl ParseSeparatedList for ImportAssertionList {
 		p.at(T!['}'])
 	}
 
-	fn recover(
-		&mut self,
-		p: &mut Parser,
-		parsed_element: ParsedSyntax<CompletedMarker>,
-	) -> RecoveryResult {
+	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
 		parsed_element.or_recover(
 			p,
 			&ParseRecovery::new(
@@ -388,7 +380,7 @@ impl ParseSeparatedList for ImportAssertionList {
 fn parse_import_assertion_entry(
 	p: &mut Parser,
 	seen_assertion_keys: &mut HashMap<String, Range<usize>>,
-) -> ParsedSyntax<CompletedMarker> {
+) -> ParsedSyntax {
 	let m = p.start();
 	let key_range = p.cur_tok().range;
 
@@ -434,8 +426,8 @@ fn parse_import_assertion_entry(
 		}
 	};
 
-	p.expect_required(T![:]);
-	p.expect_required(JS_STRING_LITERAL);
+	p.expect(T![:]);
+	p.expect(JS_STRING_LITERAL);
 
 	let mut entry = m.complete(p, JS_IMPORT_ASSERTION_ENTRY);
 
@@ -446,7 +438,7 @@ fn parse_import_assertion_entry(
 	Present(entry)
 }
 
-fn parse_export_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_export_name(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		JS_STRING_LITERAL | T![ident] => {
 			let m = p.start();
@@ -462,7 +454,7 @@ fn parse_export_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	}
 }
 
-fn parse_module_source(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_module_source(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(JS_STRING_LITERAL) {
 		Absent
 	} else {

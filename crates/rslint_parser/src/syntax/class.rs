@@ -27,7 +27,7 @@ use rslint_syntax::{JsSyntaxKind, T};
 use std::ops::Range;
 
 /// Parses a class expression, e.g. let a = class {}
-pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 	parse_class(p, ClassKind::Expression)
 }
 
@@ -49,7 +49,7 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<CompletedMa
 ///
 /// A class can be invalid if
 /// * It uses an illegal identifier name
-pub(super) fn parse_class_declaration(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_class_declaration(p: &mut Parser) -> ParsedSyntax {
 	parse_class(p, ClassKind::Declaration)
 }
 
@@ -68,14 +68,14 @@ impl From<ClassKind> for JsSyntaxKind {
 	}
 }
 
-fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<CompletedMarker> {
+fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax {
 	if !p.at(T![class]) {
 		return Absent;
 	}
 	let mut class_is_valid = true;
 	let m = p.start();
 	let class_token_range = p.cur_tok().range;
-	p.expect_required(T![class]);
+	p.expect(T![class]);
 
 	// class bodies are implicitly strict
 	let mut guard = p.with_state(ParserState {
@@ -134,9 +134,9 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<CompletedMarker>
 		class_is_valid = false;
 	}
 
-	guard.expect_required(T!['{']);
+	guard.expect(T!['{']);
 	ClassMembersList.parse_list(&mut *guard);
-	guard.expect_required(T!['}']);
+	guard.expect(T!['}']);
 
 	let mut class_marker = m.complete(&mut *guard, kind.into());
 
@@ -147,7 +147,7 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax<CompletedMarker>
 	Present(class_marker)
 }
 
-fn implements_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn implements_clause(p: &mut Parser) -> ParsedSyntax {
 	if p.cur_src() != "implements" {
 		return Absent;
 	}
@@ -196,7 +196,7 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	Present(implements_clause.complete(p, kind))
 }
 
-fn extends_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn extends_clause(p: &mut Parser) -> ParsedSyntax {
 	if p.cur_src() != "extends" {
 		return Absent;
 	}
@@ -247,9 +247,7 @@ fn extends_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 struct ClassMembersList;
 
 impl ParseNodeList for ClassMembersList {
-	type ParsedElement = CompletedMarker;
-
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
 		parse_class_member(p)
 	}
 
@@ -257,11 +255,7 @@ impl ParseNodeList for ClassMembersList {
 		p.at(T!['}'])
 	}
 
-	fn recover(
-		&mut self,
-		p: &mut Parser,
-		parsed_element: ParsedSyntax<Self::ParsedElement>,
-	) -> RecoveryResult {
+	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
 		// test_err invalid_method_recover
 		// class {
 		//   [1 + 1] = () => {
@@ -295,7 +289,7 @@ impl ParseNodeList for ClassMembersList {
 //  static async *foo() {}
 // }
 
-fn parse_class_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_class_member(p: &mut Parser) -> ParsedSyntax {
 	let member_marker = p.start();
 	// test class_empty_element
 	// class foo { ;;;;;;;;;; get foo() {};;;;}
@@ -324,7 +318,7 @@ fn parse_class_member_impl(
 	p: &mut Parser,
 	member_marker: Marker,
 	modifiers: ClassMemberModifiers,
-) -> ParsedSyntax<CompletedMarker> {
+) -> ParsedSyntax {
 	let generator_range = p.cur_tok().range;
 	let checkpoint = p.checkpoint();
 
@@ -366,7 +360,7 @@ fn parse_class_member_impl(
 	{
 		let async_range = p.cur_tok().range;
 		p.bump_remap(T![async]);
-		let in_generator = p.eat_optional(T![*]);
+		let in_generator = p.eat(T![*]);
 
 		let mut guard = p.with_state(ParserState {
 			in_async: true,
@@ -603,17 +597,17 @@ fn parse_class_member_impl(
 					.or_syntax_error(p, js_parse_error::expected_class_member_name);
 
 				let completed = if is_getter {
-					p.expect_required(T!['(']);
-					p.expect_required(T![')']);
+					p.expect(T!['(']);
+					p.expect(T![')']);
 					parse_ts_type_annotation_or_error(p).ok();
 					function_body(p).or_syntax_error(p, js_parse_error::expected_class_method_body);
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
-					p.state.allow_object_expr = p.expect_required(T!['(']);
+					p.state.allow_object_expr = p.expect(T!['(']);
 					parse_formal_param_pat(p)
 						.or_syntax_error(p, js_parse_error::expected_parameter);
-					p.expect_required(T![')']);
+					p.expect(T![')']);
 					function_body(p).or_syntax_error(p, js_parse_error::expected_class_method_body);
 
 					p.state.allow_object_expr = true;
@@ -640,7 +634,7 @@ fn property_declaration_class_member_body(
 	p: &mut Parser,
 	member_marker: Marker,
 	member_name_kind: JsSyntaxKind,
-) -> ParsedSyntax<CompletedMarker> {
+) -> ParsedSyntax {
 	let property = parse_property_class_member_body(p, member_marker);
 	property.map(|mut property| {
 		if member_name_kind == JS_PRIVATE_CLASS_MEMBER_NAME {
@@ -657,15 +651,12 @@ fn property_declaration_class_member_body(
 }
 
 /// Parses the body of a property class member (anything after the member name)
-fn parse_property_class_member_body(
-	p: &mut Parser,
-	member_marker: Marker,
-) -> ParsedSyntax<CompletedMarker> {
+fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> ParsedSyntax {
 	let optional_token = optional_member_token(p);
 	let mut property_is_valid = optional_token.is_ok();
 
 	let range = p.cur_tok().range;
-	if p.eat_optional(T![!]) {
+	if p.eat(T![!]) {
 		if let Ok(Some(optional_token)) = optional_token {
 			let range = p.cur_tok().range;
 
@@ -739,7 +730,7 @@ fn optional_member_token(p: &mut Parser) -> Result<Option<Range<usize>>, ()> {
 
 // test_err class_property_initializer
 // class B { lorem = ; }
-pub(crate) fn parse_initializer_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_initializer_clause(p: &mut Parser) -> ParsedSyntax {
 	if p.at(T![=]) {
 		let m = p.start();
 		p.bump(T![=]);
@@ -780,10 +771,7 @@ fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker 
 	m.complete(p, member_kind)
 }
 
-fn parse_constructor_class_member_body(
-	p: &mut Parser,
-	member_marker: Marker,
-) -> ParsedSyntax<CompletedMarker> {
+fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> ParsedSyntax {
 	if let Ok(Some(range)) = optional_member_token(p) {
 		let err = p
 			.err_builder("constructors cannot be optional")
@@ -842,7 +830,7 @@ fn parse_constructor_class_member_body(
 	Present(completed_marker)
 }
 
-fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	parse_parameters_list(
 		p,
@@ -852,7 +840,7 @@ fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax<CompletedMar
 	Present(m.complete(p, JS_CONSTRUCTOR_PARAMETERS))
 }
 
-fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax {
 	// test_err class_constructor_parameter
 	// class B { constructor(protected b) {} }
 
@@ -893,7 +881,7 @@ fn is_at_class_member_name(p: &Parser, offset: usize) -> bool {
 }
 
 /// Parses a `JsAnyClassMemberName` and returns its completion marker
-fn parse_class_member_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_class_member_name(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		T![#] => parse_private_class_member_name(p),
 		T!['['] => parse_computed_member_name(p),
@@ -901,13 +889,13 @@ fn parse_class_member_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	}
 }
 
-pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![#]) {
 		return Absent;
 	}
 	let m = p.start();
-	p.expect_required(T![#]);
-	p.expect_required(T![ident]);
+	p.expect(T![#]);
+	p.expect(T![ident]);
 	Present(m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME))
 }
 
