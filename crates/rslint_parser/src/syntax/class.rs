@@ -130,7 +130,7 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax {
 
 	extends_clause(&mut guard).ok();
 
-	if implements_clause(&mut guard).is_present() && TypeScript.is_unsupported(&mut guard) {
+	if implements_clause(&mut guard).is_present() && TypeScript.is_unsupported(&*guard) {
 		class_is_valid = false;
 	}
 

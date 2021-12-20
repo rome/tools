@@ -507,14 +507,13 @@ mod tests {
 	) -> TestList {
 		let mut builder: TreeBuilder<JsLanguage, JsSyntaxFactory> = TreeBuilder::new();
 
-		builder.start_node(JsSyntaxKind::JS_STATEMENT_LIST);
+		builder.start_node(JsSyntaxKind::JS_ARRAY_ELEMENT_LIST);
 
 		for (node, separator) in elements.into_iter() {
 			if let Some(node) = node {
 				builder.start_node(JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION);
 				builder.token(JsSyntaxKind::JS_NUMBER_LITERAL, node.to_string().as_str());
 				builder.finish_node();
-			} else {
 			}
 
 			if let Some(separator) = separator {
@@ -629,53 +628,55 @@ mod tests {
 		);
 		assert!(list.trailing_separator().is_some());
 	}
-	//
-	// #[test]
-	// fn separated_with_two_successive_separators() {
-	// 	// list([1,,])
-	// 	let list = build_list(vec![(Some(1), Some(",")), (None, Some(","))]);
-	//
-	// 	assert_eq!(list.len(), 2);
-	// 	assert!(!list.is_empty());
-	// 	assert_eq!(list.separators().count(), 2);
-	//
-	// 	assert_elements(
-	// 		list.elements(),
-	// 		vec![(Some(1.), Some(",")), (None, Some(","))],
-	// 	);
-	// }
-	//
-	// #[test]
-	// fn separated_with_leading_separator() {
-	// 	// list([,3])
-	// 	let list = build_list(vec![(None, Some(",")), (Some(3), None)]);
-	//
-	// 	assert_eq!(list.len(), 2);
-	// 	assert!(!list.is_empty());
-	// 	assert_eq!(list.separators().count(), 1);
-	//
-	// 	assert_elements(
-	// 		list.elements(),
-	// 		vec![
-	// 			// missing first element
-	// 			(None, Some(",")),
-	// 			(Some(3.), None),
-	// 		],
-	// 	);
-	// }
-	//
-	// #[test]
-	// fn separated_with_two_successive_nodes() {
-	// 	// list([1 2,])
-	// 	let list = build_list(vec![(Some(1), None), (Some(2), Some(","))]);
-	//
-	// 	assert_eq!(list.len(), 2);
-	// 	assert!(!list.is_empty());
-	// 	assert_eq!(list.separators().count(), 2);
-	//
-	// 	assert_elements(
-	// 		list.elements(),
-	// 		vec![(Some(1.), None), (Some(2.), Some(","))],
-	// 	);
-	// }
+
+	#[test]
+	fn separated_with_two_successive_separators() {
+		// list([1,,])
+		let list = build_list(vec![(Some(1), Some(",")), (None, Some(","))]);
+
+		assert_eq!(list.len(), 2);
+		assert!(!list.is_empty());
+		assert_eq!(list.separators().count(), 2);
+
+		assert_elements(
+			list.elements(),
+			vec![(Some(1.), Some(",")), (None, Some(","))],
+		);
+	}
+
+	#[test]
+	fn separated_with_leading_separator() {
+		// list([,3])
+		let list = build_list(vec![(None, Some(",")), (Some(3), None)]);
+
+		dbg!(&list.syntax_list.node());
+
+		assert_eq!(list.len(), 2);
+		assert!(!list.is_empty());
+		assert_eq!(list.separators().count(), 1);
+
+		assert_elements(
+			list.elements(),
+			vec![
+				// missing first element
+				(None, Some(",")),
+				(Some(3.), None),
+			],
+		);
+	}
+
+	#[test]
+	fn separated_with_two_successive_nodes() {
+		// list([1 2,])
+		let list = build_list(vec![(Some(1), None), (Some(2), Some(","))]);
+
+		assert_eq!(list.len(), 2);
+		assert!(!list.is_empty());
+		assert_eq!(list.separators().count(), 2);
+
+		assert_elements(
+			list.elements(),
+			vec![(Some(1.), None), (Some(2.), Some(","))],
+		);
+	}
 }
