@@ -5,6 +5,7 @@
 //!
 //! This is a simple wrapper around the `rowan` crate which does most of the heavy lifting and is language agnostic.
 
+use crate::ast::JsSyntaxFactory;
 use crate::JsSyntaxKind;
 use rome_rowan::{Language, TreeBuilder};
 
@@ -13,14 +14,6 @@ pub struct JsLanguage;
 
 impl Language for JsLanguage {
 	type Kind = JsSyntaxKind;
-
-	fn kind_from_raw(raw: rome_rowan::RawSyntaxKind) -> JsSyntaxKind {
-		JsSyntaxKind::from(raw.0)
-	}
-
-	fn kind_to_raw(kind: JsSyntaxKind) -> rome_rowan::RawSyntaxKind {
-		rome_rowan::RawSyntaxKind(kind.into())
-	}
 }
 
 pub type SyntaxNode = rome_rowan::SyntaxNode<JsLanguage>;
@@ -34,4 +27,4 @@ pub type SyntaxSlot = rome_rowan::SyntaxSlot<JsLanguage>;
 
 pub use rome_rowan::{Direction, NodeOrToken};
 
-pub type SyntaxTreeBuilder = TreeBuilder<'static, JsLanguage>;
+pub type SyntaxTreeBuilder = TreeBuilder<'static, JsLanguage, JsSyntaxFactory>;

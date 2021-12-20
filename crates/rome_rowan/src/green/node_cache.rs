@@ -3,7 +3,6 @@ use rustc_hash::FxHasher;
 use std::hash::{BuildHasherDefault, Hash, Hasher};
 
 use crate::api::TriviaPiece;
-use crate::green::Slot;
 use crate::{
 	green::GreenElementRef, GreenNode, GreenNodeData, GreenToken, GreenTokenData, NodeOrToken,
 	RawSyntaxKind,
@@ -106,14 +105,9 @@ impl NodeCache {
 		// For `libsyntax/parse/parser.rs`, measurements show that deduping saves
 		// 17% of the memory for green nodes!
 		let entry = self.nodes.raw_entry_mut().from_hash(hash, |no_hash| {
-			no_hash.node.kind() == kind && no_hash.node.slots().len() == children.len() && {
-				let lhs = no_hash.node.slots();
-				let lhs = lhs.filter_map(|slot| match slot {
-					// Slots are only added after. The original queried node only holds all present children
-					Slot::Empty { .. } => None,
-					Slot::Node { node, .. } => Some(element_id(NodeOrToken::Node(node))),
-					Slot::Token { token, .. } => Some(element_id(NodeOrToken::Token(token))),
-				});
+			no_hash.node.kind() == kind && {
+				let lhs = no_hash.node.children();
+				let lhs = lhs.map(|child| element_id(child.element()));
 
 				let rhs = children
 					.iter()
@@ -130,6 +124,7 @@ impl NodeCache {
 			}),
 			RawEntryMut::Vacant(entry) => NodeCacheNodeEntryMut::Vacant(VacantNodeEntry {
 				raw_entry: entry,
+				original_kind: kind,
 				hash,
 			}),
 		}
@@ -184,6 +179,7 @@ pub(crate) enum NodeCacheNodeEntryMut<'a> {
 /// that these changes apply for all nodes that have the same shape as the originally queried node.
 pub(crate) struct VacantNodeEntry<'a> {
 	hash: u64,
+	original_kind: RawSyntaxKind,
 	raw_entry: RawVacantEntryMut<'a, NoHashNode, (), BuildHasherDefault<FxHasher>>,
 }
 
@@ -204,19 +200,23 @@ impl<'a> CachedNodeEntry<'a> {
 }
 
 impl<'a> VacantNodeEntry<'a> {
-	pub fn hash(&self) -> u64 {
-		self.hash
-	}
-	pub fn insert(self, node: GreenNode) {
-		self.raw_entry.insert_with_hasher(
-			self.hash,
-			NoHashNode {
-				node,
-				hash: self.hash,
-			},
-			(),
-			|n| n.hash,
-		);
+	pub fn insert(self, node: GreenNode) -> u64 {
+		if self.original_kind != node.kind() {
+			// The kind has changed since it has been queried. For example, the node has been converted to an
+			// unknown node. Never cache these nodes because cache lookups will never match.
+			NodeCache::UNCACHED_NODE_HASH
+		} else {
+			self.raw_entry.insert_with_hasher(
+				self.hash,
+				NoHashNode {
+					node,
+					hash: self.hash,
+				},
+				(),
+				|n| n.hash,
+			);
+			self.hash
+		}
 	}
 }
 

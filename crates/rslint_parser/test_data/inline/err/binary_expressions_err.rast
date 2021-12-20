@@ -36,13 +36,12 @@ JsModule {
                     },
                 },
                 operator: PLUS@16..18 "+" [] [Whitespace(" ")],
-                right: JsUnknownExpression {
-                    items: [
-                        STAR@18..20 "*" [] [Whitespace(" ")],
-                        JsNumberLiteralExpression {
-                            value_token: JS_NUMBER_LITERAL@20..21 "2" [] [],
-                        },
-                    ],
+                right: JsBinaryExpression {
+                    left: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@20..21 "2" [] [],
+                    },
+                    operator: STAR@18..20 "*" [] [Whitespace(" ")],
+                    right: missing (required),
                 },
             },
             semicolon_token: SEMICOLON@21..22 ";" [] [],
@@ -97,9 +96,10 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@11..16
             0: IDENT@11..16 "foo" [Whitespace("\n")] [Whitespace(" ")]
         1: PLUS@16..18 "+" [] [Whitespace(" ")]
-        2: JS_UNKNOWN_EXPRESSION@18..21
-          0: STAR@18..20 "*" [] [Whitespace(" ")]
-          1: JS_NUMBER_LITERAL_EXPRESSION@20..21
+        2: JS_BINARY_EXPRESSION@18..21
+          0: (empty)
+          1: STAR@18..20 "*" [] [Whitespace(" ")]
+          2: JS_NUMBER_LITERAL_EXPRESSION@20..21
             0: JS_NUMBER_LITERAL@20..21 "2" [] []
       1: SEMICOLON@21..22 ";" [] []
     2: JS_EXPRESSION_STATEMENT@22..34

@@ -1098,7 +1098,6 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
 					))
 					.primary(additional_declarations_range, "additional declarations"),
 				);
-				// TODO change kind to UNKNOWN
 			}
 
 			m.complete(p, JS_FOR_VARIABLE_DECLARATION);

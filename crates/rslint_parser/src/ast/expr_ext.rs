@@ -27,11 +27,10 @@ impl JsLiteralMemberName {
 	/// Getting the name of a static member containing a string literal
 	///
 	/// ```
-	/// use rome_rowan::TreeBuilder;
-	/// use rslint_parser::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
+	/// use rslint_parser::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt, SyntaxTreeBuilder};
 	/// use rslint_parser::ast::JsLiteralMemberName;
 	///
-	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+	/// let node: SyntaxNode = SyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
 	///   builder.token(JsSyntaxKind::JS_STRING_LITERAL, "\"abcd\"");
 	/// });
 	///
@@ -43,11 +42,10 @@ impl JsLiteralMemberName {
 	/// Getting the name of a static member containing a number literal
 	///
 	/// ```
-	/// use rome_rowan::TreeBuilder;
-	/// use rslint_parser::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
+	/// use rslint_parser::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt, SyntaxTreeBuilder};
 	/// use rslint_parser::ast::JsLiteralMemberName;
 	///
-	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+	/// let node: SyntaxNode = SyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
 	///   builder.token(JsSyntaxKind::JS_NUMBER_LITERAL, "5");
 	/// });
 	///
@@ -59,11 +57,10 @@ impl JsLiteralMemberName {
 	/// Getting the name of a static member containing an identifier
 	///
 	/// ```
-	/// use rome_rowan::TreeBuilder;
-	/// use rslint_parser::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
+	/// use rslint_parser::{JsSyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt, SyntaxTreeBuilder};
 	/// use rslint_parser::ast::JsLiteralMemberName;
 	///
-	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+	/// let node: SyntaxNode = SyntaxTreeBuilder::wrap_with_node(JsSyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
 	///   builder.token(JsSyntaxKind::IDENT, "abcd");
 	/// });
 	///
