@@ -5,13 +5,13 @@ JsModule {
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: missing (required),
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@6..7 "{" [] [],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -103,7 +103,8 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_COMPUTED_MEMBER_NAME@7..18
+          4: (empty)
+          5: JS_COMPUTED_MEMBER_NAME@7..18
             0: L_BRACK@7..11 "[" [Whitespace("\n  ")] []
             1: JS_BINARY_EXPRESSION@11..16
               0: JS_NUMBER_LITERAL_EXPRESSION@11..13
@@ -112,8 +113,10 @@ JsModule {
               2: JS_NUMBER_LITERAL_EXPRESSION@15..16
                 0: JS_NUMBER_LITERAL@15..16 "1" [] []
             2: R_BRACK@16..18 "]" [] [Whitespace(" ")]
-          5: (empty)
-          6: JS_INITIALIZER_CLAUSE@18..43
+          6: (empty)
+          7: (empty)
+          8: (empty)
+          9: JS_INITIALIZER_CLAUSE@18..43
             0: EQ@18..20 "=" [] [Whitespace(" ")]
             1: JS_ARROW_FUNCTION_EXPRESSION@20..43
               0: (empty)
@@ -143,7 +146,7 @@ JsModule {
                               0: SEMICOLON@38..39 ";" [] []
                     1: (empty)
                 3: R_CURLY@39..43 "}" [Whitespace("\n  ")] []
-          7: SEMICOLON@43..44 ";" [] []
+          10: SEMICOLON@43..44 ";" [] []
       6: R_CURLY@44..46 "}" [Whitespace("\n")] []
     1: JS_EMPTY_STATEMENT@46..47
       0: SEMICOLON@46..47 ";" [] []

@@ -7,13 +7,13 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: DECLARE_KW@10..18 "declare" [] [Whitespace(" ")],
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -53,23 +53,22 @@ JsModule {
       4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       5: JS_CLASS_MEMBER_LIST@10..28
         0: JS_PROPERTY_CLASS_MEMBER@10..28
-          0: (empty)
-          1: DECLARE_KW@10..18 "declare" [] [Whitespace(" ")]
+          0: DECLARE_KW@10..18 "declare" [] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@18..22
+            0: IDENT@18..22 "foo" [] [Whitespace(" ")]
           2: (empty)
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@18..22
-            0: IDENT@18..22 "foo" [] [Whitespace(" ")]
-          5: (empty)
-          6: JS_INITIALIZER_CLAUSE@22..28
+          4: (empty)
+          5: JS_INITIALIZER_CLAUSE@22..28
             0: EQ@22..24 "=" [] [Whitespace(" ")]
             1: JS_IDENTIFIER_EXPRESSION@24..28
               0: JS_REFERENCE_IDENTIFIER@24..28
                 0: IDENT@24..28 "bar" [] [Whitespace(" ")]
-          7: (empty)
+          6: (empty)
       6: R_CURLY@28..29 "}" [] []
   3: EOF@29..30 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: `declare` modifiers can only be used in TypeScript files
+error[SyntaxError]: `declare` modifier can only be used in TypeScript files
   ┌─ class_declare_member.js:1:11
   │
 1 │ class B { declare foo = bar }

@@ -7,8 +7,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..7 "S" [] [],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@7..8 "{" [] [],
             members: JsClassMemberList [
                 JsUnknownMember {

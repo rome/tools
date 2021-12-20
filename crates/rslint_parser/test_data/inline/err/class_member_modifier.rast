@@ -7,20 +7,16 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    access_modifier: TsAccessibility {
-                        private_token: missing (required),
-                        protected_token: missing (required),
-                        public_token: missing (required),
-                    },
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
-                    abstract_token: missing (optional),
+                    abstract_token: ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")],
                     name: JsLiteralMemberName {
                         value: IDENT@19..22 "foo" [] [],
                     },
@@ -53,17 +49,19 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: TS_ACCESSIBILITY@10..19
-            0: ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")]
-          4: JS_LITERAL_MEMBER_NAME@19..22
+          3: (empty)
+          4: ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")]
+          5: JS_LITERAL_MEMBER_NAME@19..22
             0: IDENT@19..22 "foo" [] []
-          5: (empty)
           6: (empty)
-          7: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
+          7: (empty)
+          8: (empty)
+          9: (empty)
+          10: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
       6: R_CURLY@24..25 "}" [] []
   3: EOF@25..26 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: `abstract` and `readonly` modifiers can only be used in TypeScript files
+error[SyntaxError]: `abstract` modifier can only be used in TypeScript files
   ┌─ class_member_modifier.js:1:11
   │
 1 │ class A { abstract foo; }

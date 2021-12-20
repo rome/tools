@@ -7,8 +7,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..10 "Foo" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@10..11 "{" [] [],
             members: JsClassMemberList [
                 JsConstructorClassMember {
@@ -16,6 +16,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@11..24 "constructor" [Whitespace("\n\t")] [],
                     },
+                    type_parameters: missing (optional),
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@24..25 "(" [] [],
                         parameters: JsConstructorParameterList [
@@ -61,8 +62,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@56..60 "Bar" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@60..61 "{" [] [],
             members: JsClassMemberList [
                 JsConstructorClassMember {
@@ -70,6 +71,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: JS_STRING_LITERAL@61..76 "\"constructor\"" [Whitespace("\n\t")] [],
                     },
+                    type_parameters: missing (optional),
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@76..77 "(" [] [],
                         parameters: JsConstructorParameterList [
@@ -128,19 +130,16 @@ JsModule {
       5: JS_CLASS_MEMBER_LIST@11..46
         0: JS_CONSTRUCTOR_CLASS_MEMBER@11..46
           0: (empty)
-          1: (empty)
-          2: (empty)
-          3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@11..24
+          1: JS_LITERAL_MEMBER_NAME@11..24
             0: IDENT@11..24 "constructor" [Whitespace("\n\t")] []
-          5: (empty)
-          6: JS_CONSTRUCTOR_PARAMETERS@24..28
+          2: (empty)
+          3: JS_CONSTRUCTOR_PARAMETERS@24..28
             0: L_PAREN@24..25 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@25..26
               0: JS_IDENTIFIER_BINDING@25..26
                 0: IDENT@25..26 "a" [] []
             2: R_PAREN@26..28 ")" [] [Whitespace(" ")]
-          7: JS_FUNCTION_BODY@28..46
+          4: JS_FUNCTION_BODY@28..46
             0: L_CURLY@28..29 "{" [] []
             1: JS_DIRECTIVE_LIST@29..29
             2: JS_STATEMENT_LIST@29..43
@@ -169,19 +168,16 @@ JsModule {
       5: JS_CLASS_MEMBER_LIST@61..98
         0: JS_CONSTRUCTOR_CLASS_MEMBER@61..98
           0: (empty)
-          1: (empty)
-          2: (empty)
-          3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@61..76
+          1: JS_LITERAL_MEMBER_NAME@61..76
             0: JS_STRING_LITERAL@61..76 "\"constructor\"" [Whitespace("\n\t")] []
-          5: (empty)
-          6: JS_CONSTRUCTOR_PARAMETERS@76..80
+          2: (empty)
+          3: JS_CONSTRUCTOR_PARAMETERS@76..80
             0: L_PAREN@76..77 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@77..78
               0: JS_IDENTIFIER_BINDING@77..78
                 0: IDENT@77..78 "b" [] []
             2: R_PAREN@78..80 ")" [] [Whitespace(" ")]
-          7: JS_FUNCTION_BODY@80..98
+          4: JS_FUNCTION_BODY@80..98
             0: L_CURLY@80..81 "{" [] []
             1: JS_DIRECTIVE_LIST@81..81
             2: JS_STATEMENT_LIST@81..95

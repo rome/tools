@@ -7,8 +7,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..10 "foo" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@10..11 "{" [] [],
             members: JsClassMemberList [
                 JsMethodClassMember {
@@ -80,8 +80,8 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: ASYNC_KW@11..19 "async" [Whitespace("\n ")] [Whitespace(" ")]
+          3: ASYNC_KW@11..19 "async" [Whitespace("\n ")] [Whitespace(" ")]
+          4: (empty)
           5: JS_LITERAL_MEMBER_NAME@19..22
             0: IDENT@19..22 "foo" [] []
           6: (empty)
@@ -99,18 +99,17 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: ASYNC_KW@27..35 "async" [Whitespace("\n ")] [Whitespace(" ")]
-          5: STAR@35..36 "*" [] []
-          6: JS_LITERAL_MEMBER_NAME@36..39
+          3: ASYNC_KW@27..35 "async" [Whitespace("\n ")] [Whitespace(" ")]
+          4: STAR@35..36 "*" [] []
+          5: JS_LITERAL_MEMBER_NAME@36..39
             0: IDENT@36..39 "foo" [] []
-          7: (empty)
-          8: JS_PARAMETERS@39..42
+          6: (empty)
+          7: JS_PARAMETERS@39..42
             0: L_PAREN@39..40 "(" [] []
             1: JS_PARAMETER_LIST@40..40
             2: R_PAREN@40..42 ")" [] [Whitespace(" ")]
-          9: (empty)
-          10: JS_FUNCTION_BODY@42..44
+          8: (empty)
+          9: JS_FUNCTION_BODY@42..44
             0: L_CURLY@42..43 "{" [] []
             1: JS_DIRECTIVE_LIST@43..43
             2: JS_STATEMENT_LIST@43..43

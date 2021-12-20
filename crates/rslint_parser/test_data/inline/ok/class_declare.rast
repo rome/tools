@@ -7,8 +7,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsMethodClassMember {
@@ -42,13 +42,13 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@31..33 "B" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@33..35 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -88,15 +88,20 @@ JsModule {
       4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       5: JS_CLASS_MEMBER_LIST@10..23
         0: JS_METHOD_CLASS_MEMBER@10..23
-          0: JS_LITERAL_MEMBER_NAME@10..17
-            0: IDENT@10..17 "declare" [] []
+          0: (empty)
           1: (empty)
-          2: JS_PARAMETERS@17..20
+          2: (empty)
+          3: (empty)
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@10..17
+            0: IDENT@10..17 "declare" [] []
+          6: (empty)
+          7: JS_PARAMETERS@17..20
             0: L_PAREN@17..18 "(" [] []
             1: JS_PARAMETER_LIST@18..18
             2: R_PAREN@18..20 ")" [] [Whitespace(" ")]
-          3: (empty)
-          4: JS_FUNCTION_BODY@20..23
+          8: (empty)
+          9: JS_FUNCTION_BODY@20..23
             0: L_CURLY@20..21 "{" [] []
             1: JS_DIRECTIVE_LIST@21..21
             2: JS_STATEMENT_LIST@21..21
@@ -111,14 +116,21 @@ JsModule {
       4: L_CURLY@33..35 "{" [] [Whitespace(" ")]
       5: JS_CLASS_MEMBER_LIST@35..49
         0: JS_PROPERTY_CLASS_MEMBER@35..49
-          0: JS_LITERAL_MEMBER_NAME@35..43
-            0: IDENT@35..43 "declare" [] [Whitespace(" ")]
+          0: (empty)
           1: (empty)
-          2: JS_INITIALIZER_CLAUSE@43..49
+          2: (empty)
+          3: (empty)
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@35..43
+            0: IDENT@35..43 "declare" [] [Whitespace(" ")]
+          6: (empty)
+          7: (empty)
+          8: (empty)
+          9: JS_INITIALIZER_CLAUSE@43..49
             0: EQ@43..45 "=" [] [Whitespace(" ")]
             1: JS_IDENTIFIER_EXPRESSION@45..49
               0: JS_REFERENCE_IDENTIFIER@45..49
                 0: IDENT@45..49 "foo" [] [Whitespace(" ")]
-          3: (empty)
+          10: (empty)
       6: R_CURLY@49..50 "}" [] []
   3: EOF@50..51 "" [Whitespace("\n")] []

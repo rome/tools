@@ -444,8 +444,8 @@ impl JsClassDeclaration {
 		support::required_token(&self.syntax, T![class])
 	}
 	pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
-	pub fn implements_clause(&self) -> Option<TsImplementsClause> { support::node(&self.syntax) }
 	pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax) }
+	pub fn implements_clause(&self) -> Option<TsImplementsClause> { support::node(&self.syntax) }
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['{'])
 	}
@@ -464,6 +464,7 @@ impl JsClassExpression {
 	}
 	pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax) }
 	pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax) }
+	pub fn implements_clause(&self) -> Option<TsImplementsClause> { support::node(&self.syntax) }
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['{'])
 	}
@@ -534,8 +535,11 @@ pub struct JsConstructorClassMember {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsConstructorClassMember {
-	pub fn access_modifier(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
+	pub fn access_modifier(&self) -> Option<SyntaxToken> {
+		support::find_token(&self.syntax, &[T![private], T![protected], T![public]])
+	}
 	pub fn name(&self) -> SyntaxResult<JsLiteralMemberName> { support::required_node(&self.syntax) }
+	pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
 	pub fn parameters(&self) -> SyntaxResult<JsConstructorParameters> {
 		support::required_node(&self.syntax)
 	}
@@ -803,7 +807,9 @@ pub struct JsGetterClassMember {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsGetterClassMember {
-	pub fn access_modifier(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
+	pub fn access_modifier(&self) -> Option<SyntaxToken> {
+		support::find_token(&self.syntax, &[T![private], T![protected], T![public]])
+	}
 	pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![static]) }
 	pub fn abstract_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![abstract])
@@ -1063,7 +1069,9 @@ pub struct JsMethodClassMember {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsMethodClassMember {
-	pub fn access_modifier(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
+	pub fn access_modifier(&self) -> Option<SyntaxToken> {
+		support::find_token(&self.syntax, &[T![private], T![protected], T![public]])
+	}
 	pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![static]) }
 	pub fn abstract_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![abstract])
@@ -1381,8 +1389,10 @@ pub struct JsPropertyClassMember {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsPropertyClassMember {
-	pub fn access_modifier(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
 	pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![declare]) }
+	pub fn access_modifier(&self) -> Option<SyntaxToken> {
+		support::find_token(&self.syntax, &[T![private], T![protected], T![public]])
+	}
 	pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![static]) }
 	pub fn readonly_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![readonly])
@@ -1483,7 +1493,9 @@ pub struct JsSetterClassMember {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsSetterClassMember {
-	pub fn access_modifier(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
+	pub fn access_modifier(&self) -> Option<SyntaxToken> {
+		support::find_token(&self.syntax, &[T![private], T![protected], T![public]])
+	}
 	pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![static]) }
 	pub fn abstract_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![abstract])
@@ -1836,21 +1848,6 @@ impl TemplateElement {
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsAccessibility {
-	pub(crate) syntax: SyntaxNode,
-}
-impl TsAccessibility {
-	pub fn private_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![private])
-	}
-	pub fn protected_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![protected])
-	}
-	pub fn public_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![public])
-	}
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsAny {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1972,6 +1969,9 @@ pub struct TsConstructorParam {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsConstructorParam {
+	pub fn accessibility(&self) -> Option<SyntaxToken> {
+		support::find_token(&self.syntax, &[T![private], T![protected], T![public]])
+	}
 	pub fn readonly_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![readonly])
 	}
@@ -3758,12 +3758,12 @@ impl std::fmt::Debug for JsClassDeclaration {
 			)
 			.field("id", &support::DebugSyntaxResult(self.id()))
 			.field(
-				"implements_clause",
-				&support::DebugOptionalElement(self.implements_clause()),
-			)
-			.field(
 				"extends_clause",
 				&support::DebugOptionalElement(self.extends_clause()),
+			)
+			.field(
+				"implements_clause",
+				&support::DebugOptionalElement(self.implements_clause()),
 			)
 			.field(
 				"l_curly_token",
@@ -3799,6 +3799,10 @@ impl std::fmt::Debug for JsClassExpression {
 			.field(
 				"extends_clause",
 				&support::DebugOptionalElement(self.extends_clause()),
+			)
+			.field(
+				"implements_clause",
+				&support::DebugOptionalElement(self.implements_clause()),
 			)
 			.field(
 				"l_curly_token",
@@ -3943,6 +3947,10 @@ impl std::fmt::Debug for JsConstructorClassMember {
 				&support::DebugOptionalElement(self.access_modifier()),
 			)
 			.field("name", &support::DebugSyntaxResult(self.name()))
+			.field(
+				"type_parameters",
+				&support::DebugOptionalElement(self.type_parameters()),
+			)
 			.field("parameters", &support::DebugSyntaxResult(self.parameters()))
 			.field("body", &support::DebugSyntaxResult(self.body()))
 			.finish()
@@ -5587,12 +5595,12 @@ impl std::fmt::Debug for JsPropertyClassMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsPropertyClassMember")
 			.field(
-				"access_modifier",
-				&support::DebugOptionalElement(self.access_modifier()),
-			)
-			.field(
 				"declare_token",
 				&support::DebugOptionalElement(self.declare_token()),
+			)
+			.field(
+				"access_modifier",
+				&support::DebugOptionalElement(self.access_modifier()),
 			)
 			.field(
 				"static_token",
@@ -6448,35 +6456,6 @@ impl std::fmt::Debug for TemplateElement {
 			.finish()
 	}
 }
-impl AstNode for TsAccessibility {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ACCESSIBILITY }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsAccessibility {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsAccessibility")
-			.field(
-				"private_token",
-				&support::DebugSyntaxResult(self.private_token()),
-			)
-			.field(
-				"protected_token",
-				&support::DebugSyntaxResult(self.protected_token()),
-			)
-			.field(
-				"public_token",
-				&support::DebugSyntaxResult(self.public_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsAny {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ANY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6740,6 +6719,10 @@ impl AstNode for TsConstructorParam {
 impl std::fmt::Debug for TsConstructorParam {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("TsConstructorParam")
+			.field(
+				"accessibility",
+				&support::DebugOptionalElement(self.accessibility()),
+			)
 			.field(
 				"readonly_token",
 				&support::DebugOptionalElement(self.readonly_token()),
@@ -11861,11 +11844,6 @@ impl std::fmt::Display for TemplateElement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for TsAccessibility {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for TsAny {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -13746,9 +13724,6 @@ impl Debug for DebugSyntaxElement {
 				}
 				TEMPLATE_ELEMENT_LIST => {
 					std::fmt::Debug::fmt(&TemplateElementList::cast(node.clone()).unwrap(), f)
-				}
-				TS_ACCESSIBILITY => {
-					std::fmt::Debug::fmt(&TsAccessibility::cast(node.clone()).unwrap(), f)
 				}
 				TS_ANY => std::fmt::Debug::fmt(&TsAny::cast(node.clone()).unwrap(), f),
 				TS_ARRAY => std::fmt::Debug::fmt(&TsArray::cast(node.clone()).unwrap(), f),

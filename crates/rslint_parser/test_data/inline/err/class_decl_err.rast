@@ -5,8 +5,8 @@ JsModule {
         JsClassDeclaration {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: missing (required),
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@6..7 "{" [] [],
             members: JsClassMemberList [],
             r_curly_token: R_CURLY@7..8 "}" [] [],
@@ -14,7 +14,6 @@ JsModule {
         JsClassDeclaration {
             class_token: CLASS_KW@8..15 "class" [Whitespace("\n")] [Whitespace(" ")],
             id: missing (required),
-            implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
                 extends_token: EXTENDS_KW@15..23 "extends" [] [Whitespace(" ")],
                 super_class: JsIdentifierExpression {
@@ -23,6 +22,7 @@ JsModule {
                     },
                 },
             },
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@27..28 "{" [] [],
             members: JsClassMemberList [],
             r_curly_token: R_CURLY@28..29 "}" [] [],
@@ -32,8 +32,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@36..40 "foo" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@40..42 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsSetterClassMember {
@@ -58,7 +58,6 @@ JsModule {
         JsClassDeclaration {
             class_token: CLASS_KW@50..57 "class" [Whitespace("\n")] [Whitespace(" ")],
             id: missing (required),
-            implements_clause: missing (optional),
             extends_clause: JsExtendsClause {
                 extends_token: EXTENDS_KW@57..65 "extends" [] [Whitespace(" ")],
                 super_class: JsObjectExpression {
@@ -67,6 +66,7 @@ JsModule {
                     r_curly_token: R_CURLY@66..67 "}" [] [],
                 },
             },
+            implements_clause: missing (optional),
             l_curly_token: missing (required),
             members: JsClassMemberList [],
             r_curly_token: missing (required),
@@ -111,13 +111,12 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: SET_KW@42..46 "set" [] [Whitespace(" ")]
+          3: SET_KW@42..46 "set" [] [Whitespace(" ")]
+          4: (empty)
           5: (empty)
           6: (empty)
           7: (empty)
-          8: (empty)
-          9: JS_FUNCTION_BODY@46..49
+          8: JS_FUNCTION_BODY@46..49
             0: L_CURLY@46..47 "{" [] []
             1: JS_DIRECTIVE_LIST@47..47
             2: JS_STATEMENT_LIST@47..47

@@ -91,13 +91,13 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@61..66 "Test" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@66..67 "{" [] [],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -273,28 +273,32 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_PRIVATE_CLASS_MEMBER_NAME@67..73
+          4: (empty)
+          5: JS_PRIVATE_CLASS_MEMBER_NAME@67..73
             0: HASH@67..70 "#" [Whitespace("\n\t")] []
             1: IDENT@70..73 "bar" [] []
-          5: (empty)
           6: (empty)
           7: (empty)
+          8: (empty)
+          9: (empty)
+          10: (empty)
         1: JS_METHOD_CLASS_MEMBER@73..149
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@73..80
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@73..80
             0: IDENT@73..80 "test" [Whitespace("\n\n\t")] []
-          5: (empty)
-          6: JS_PARAMETERS@80..88
+          6: (empty)
+          7: JS_PARAMETERS@80..88
             0: L_PAREN@80..81 "(" [] []
             1: JS_PARAMETER_LIST@81..86
               0: JS_IDENTIFIER_BINDING@81..86
                 0: IDENT@81..86 "other" [] []
             2: R_PAREN@86..88 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@88..149
+          8: (empty)
+          9: JS_FUNCTION_BODY@88..149
             0: L_CURLY@88..89 "{" [] []
             1: JS_DIRECTIVE_LIST@89..89
             2: JS_STATEMENT_LIST@89..146

@@ -7,8 +7,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsUnknownMember {
@@ -44,19 +44,23 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@10..13
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@10..13
             0: IDENT@10..13 "foo" [] []
-          5: QUESTION@13..14 "?" [] []
-          6: (empty)
+          6: QUESTION@13..14 "?" [] []
           7: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
+          8: (empty)
+          9: (empty)
+          10: (empty)
+          11: (empty)
       6: R_CURLY@16..17 "}" [] []
   3: EOF@17..18 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: `?` modifiers can only be used in TypeScript files
-  ┌─ optional_member.js:1:14
+  ┌─ optional_member.js:1:15
   │
 1 │ class B { foo?; }
-  │              ^
+  │               ^
 
 --
 class B { foo?; }

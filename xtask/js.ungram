@@ -540,8 +540,8 @@ JsShorthandPropertyObjectMember = name: JsReferenceIdentifier
 JsClassDeclaration  =
 	'class'
 	id: JsAnyBinding
-	implements_clause: TsImplementsClause?
 	extends_clause: JsExtendsClause?
+	implements_clause: TsImplementsClause?
 	'{'
 	members: JsClassMemberList
 	'}'
@@ -551,6 +551,7 @@ JsClassExpression =
 	'class'
 	id: JsAnyBinding?
 	extends_clause: JsExtendsClause?
+	implements_clause: TsImplementsClause?
 	'{'
 	members: JsClassMemberList
 	'}'
@@ -596,8 +597,9 @@ JsAnyClassMember =
 // class Test { 'constructor'() {} }
 //              ^^^^^^^^^^^^^^^^^^
 JsConstructorClassMember =
-	access_modifier: TsAccessibility?
+	access_modifier: ('private' | 'protected' | 'public')?
 	name: JsLiteralMemberName
+	type_parameters: TsTypeParams?
 	parameters: JsConstructorParameters
 	body: JsFunctionBody
 
@@ -616,8 +618,8 @@ JsAnyConstructorParameter =
 // class Test { a; b = 1; static c; }
 //              ^^ ^^^^^^ ^^^^^^^^^
 JsPropertyClassMember =
-	access_modifier: TsAccessibility?
 	'declare'?
+	access_modifier: ('private' | 'protected' | 'public')?
 	'static'?
 	'readonly'?
 	'abstract'?
@@ -631,7 +633,7 @@ JsPropertyClassMember =
 // class Test { a() {} }
 //              ^^^^^^
 JsMethodClassMember =
-	access_modifier: TsAccessibility?
+	access_modifier: ('private' | 'protected' | 'public')?
 	'static'?
 	'abstract'?
 	'async'?
@@ -645,7 +647,7 @@ JsMethodClassMember =
 // class Test { get a() {} }
 //              ^^^^^^^^^^
 JsGetterClassMember =
-	access_modifier: TsAccessibility?
+	access_modifier: ('private' | 'protected' | 'public')?
 	'static'?
 	'abstract'?
 	'get'
@@ -657,7 +659,7 @@ JsGetterClassMember =
 // class Test { set a(v) {} }
 //              ^^^^^^^^^^^
 JsSetterClassMember =
-	access_modifier: TsAccessibility?
+	access_modifier: ('private' | 'protected' | 'public')?
 	'static'?
 	'abstract'?
 	'set'
@@ -1452,9 +1454,10 @@ TsImport = 'import' type_args:TsTypeArgs '.'? '(' qualifier:TsEntityName ')'
 TsIndexSignature = 'readonly'? '[' pat:JsAnyBinding ':' ty:TsType ']'
 
 
-TsAccessibility = 'private' | 'protected' | 'public'
-
-TsConstructorParam = 'readonly'? pat:JsAnyBindingPattern
+TsConstructorParam =
+	accessibility: ('private' | 'protected' | 'public')?
+	'readonly'?
+	pat:JsAnyBindingPattern
 
 TsNonNull = expr:JsAnyExpression '!'
 

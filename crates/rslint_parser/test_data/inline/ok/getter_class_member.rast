@@ -7,8 +7,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..14 "Getters" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@14..15 "{" [] [],
             members: JsClassMemberList [
                 JsGetterClassMember {
@@ -156,8 +156,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@145..156 "NotGetters" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@156..157 "{" [] [],
             members: JsClassMemberList [
                 JsMethodClassMember {
@@ -252,14 +252,13 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: GET_KW@15..21 "get" [Whitespace("\n\t")] [Whitespace(" ")]
-          5: JS_LITERAL_MEMBER_NAME@21..24
+          3: GET_KW@15..21 "get" [Whitespace("\n\t")] [Whitespace(" ")]
+          4: JS_LITERAL_MEMBER_NAME@21..24
             0: IDENT@21..24 "foo" [] []
-          6: L_PAREN@24..25 "(" [] []
-          7: R_PAREN@25..27 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@27..29
+          5: L_PAREN@24..25 "(" [] []
+          6: R_PAREN@25..27 ")" [] [Whitespace(" ")]
+          7: (empty)
+          8: JS_FUNCTION_BODY@27..29
             0: L_CURLY@27..28 "{" [] []
             1: JS_DIRECTIVE_LIST@28..28
             2: JS_STATEMENT_LIST@28..28
@@ -268,30 +267,28 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: GET_KW@29..35 "get" [Whitespace("\n\t")] [Whitespace(" ")]
-          5: JS_LITERAL_MEMBER_NAME@35..41
+          3: GET_KW@29..35 "get" [Whitespace("\n\t")] [Whitespace(" ")]
+          4: JS_LITERAL_MEMBER_NAME@35..41
             0: IDENT@35..41 "static" [] []
-          6: L_PAREN@41..42 "(" [] []
-          7: R_PAREN@42..44 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@44..46
+          5: L_PAREN@41..42 "(" [] []
+          6: R_PAREN@42..44 ")" [] [Whitespace(" ")]
+          7: (empty)
+          8: JS_FUNCTION_BODY@44..46
             0: L_CURLY@44..45 "{" [] []
             1: JS_DIRECTIVE_LIST@45..45
             2: JS_STATEMENT_LIST@45..45
             3: R_CURLY@45..46 "}" [] []
         2: JS_GETTER_CLASS_MEMBER@46..67
           0: (empty)
-          1: (empty)
-          2: STATIC_KW@46..55 "static" [Whitespace("\n\t")] [Whitespace(" ")]
-          3: (empty)
-          4: GET_KW@55..59 "get" [] [Whitespace(" ")]
-          5: JS_LITERAL_MEMBER_NAME@59..62
+          1: STATIC_KW@46..55 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          2: (empty)
+          3: GET_KW@55..59 "get" [] [Whitespace(" ")]
+          4: JS_LITERAL_MEMBER_NAME@59..62
             0: IDENT@59..62 "bar" [] []
-          6: L_PAREN@62..63 "(" [] []
-          7: R_PAREN@63..65 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@65..67
+          5: L_PAREN@62..63 "(" [] []
+          6: R_PAREN@63..65 ")" [] [Whitespace(" ")]
+          7: (empty)
+          8: JS_FUNCTION_BODY@65..67
             0: L_CURLY@65..66 "{" [] []
             1: JS_DIRECTIVE_LIST@66..66
             2: JS_STATEMENT_LIST@66..66
@@ -300,14 +297,13 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: GET_KW@67..73 "get" [Whitespace("\n\t")] [Whitespace(" ")]
-          5: JS_LITERAL_MEMBER_NAME@73..78
+          3: GET_KW@67..73 "get" [Whitespace("\n\t")] [Whitespace(" ")]
+          4: JS_LITERAL_MEMBER_NAME@73..78
             0: JS_STRING_LITERAL@73..78 "\"baz\"" [] []
-          6: L_PAREN@78..79 "(" [] []
-          7: R_PAREN@79..81 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@81..83
+          5: L_PAREN@78..79 "(" [] []
+          6: R_PAREN@79..81 ")" [] [Whitespace(" ")]
+          7: (empty)
+          8: JS_FUNCTION_BODY@81..83
             0: L_CURLY@81..82 "{" [] []
             1: JS_DIRECTIVE_LIST@82..82
             2: JS_STATEMENT_LIST@82..82
@@ -316,9 +312,8 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: GET_KW@83..89 "get" [Whitespace("\n\t")] [Whitespace(" ")]
-          5: JS_COMPUTED_MEMBER_NAME@89..100
+          3: GET_KW@83..89 "get" [Whitespace("\n\t")] [Whitespace(" ")]
+          4: JS_COMPUTED_MEMBER_NAME@89..100
             0: L_BRACK@89..90 "[" [] []
             1: JS_BINARY_EXPRESSION@90..99
               0: JS_STRING_LITERAL_EXPRESSION@90..94
@@ -327,10 +322,10 @@ JsModule {
               2: JS_STRING_LITERAL_EXPRESSION@96..99
                 0: JS_STRING_LITERAL@96..99 "\"b\"" [] []
             2: R_BRACK@99..100 "]" [] []
-          6: L_PAREN@100..101 "(" [] []
-          7: R_PAREN@101..103 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@103..105
+          5: L_PAREN@100..101 "(" [] []
+          6: R_PAREN@101..103 ")" [] [Whitespace(" ")]
+          7: (empty)
+          8: JS_FUNCTION_BODY@103..105
             0: L_CURLY@103..104 "{" [] []
             1: JS_DIRECTIVE_LIST@104..104
             2: JS_STATEMENT_LIST@104..104
@@ -339,14 +334,13 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: GET_KW@105..111 "get" [Whitespace("\n\t")] [Whitespace(" ")]
-          5: JS_LITERAL_MEMBER_NAME@111..112
+          3: GET_KW@105..111 "get" [Whitespace("\n\t")] [Whitespace(" ")]
+          4: JS_LITERAL_MEMBER_NAME@111..112
             0: JS_NUMBER_LITERAL@111..112 "5" [] []
-          6: L_PAREN@112..113 "(" [] []
-          7: R_PAREN@113..115 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@115..117
+          5: L_PAREN@112..113 "(" [] []
+          6: R_PAREN@113..115 ")" [] [Whitespace(" ")]
+          7: (empty)
+          8: JS_FUNCTION_BODY@115..117
             0: L_CURLY@115..116 "{" [] []
             1: JS_DIRECTIVE_LIST@116..116
             2: JS_STATEMENT_LIST@116..116
@@ -355,15 +349,14 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: GET_KW@117..123 "get" [Whitespace("\n\t")] [Whitespace(" ")]
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@123..131
+          3: GET_KW@117..123 "get" [Whitespace("\n\t")] [Whitespace(" ")]
+          4: JS_PRIVATE_CLASS_MEMBER_NAME@123..131
             0: HASH@123..124 "#" [] []
             1: IDENT@124..131 "private" [] []
-          6: L_PAREN@131..132 "(" [] []
-          7: R_PAREN@132..134 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@134..136
+          5: L_PAREN@131..132 "(" [] []
+          6: R_PAREN@132..134 ")" [] [Whitespace(" ")]
+          7: (empty)
+          8: JS_FUNCTION_BODY@134..136
             0: L_CURLY@134..135 "{" [] []
             1: JS_DIRECTIVE_LIST@135..135
             2: JS_STATEMENT_LIST@135..135
@@ -382,15 +375,16 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@157..162
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@157..162
             0: IDENT@157..162 "get" [Whitespace("\n\t")] []
-          5: (empty)
-          6: JS_PARAMETERS@162..165
+          6: (empty)
+          7: JS_PARAMETERS@162..165
             0: L_PAREN@162..163 "(" [] []
             1: JS_PARAMETER_LIST@163..163
             2: R_PAREN@163..165 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@165..167
+          8: (empty)
+          9: JS_FUNCTION_BODY@165..167
             0: L_CURLY@165..166 "{" [] []
             1: JS_DIRECTIVE_LIST@166..166
             2: JS_STATEMENT_LIST@166..166
@@ -399,8 +393,8 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: ASYNC_KW@167..175 "async" [Whitespace("\n\t")] [Whitespace(" ")]
+          3: ASYNC_KW@167..175 "async" [Whitespace("\n\t")] [Whitespace(" ")]
+          4: (empty)
           5: JS_LITERAL_MEMBER_NAME@175..178
             0: IDENT@175..178 "get" [] []
           6: (empty)
@@ -416,18 +410,19 @@ JsModule {
             3: R_CURLY@182..183 "}" [] []
         2: JS_METHOD_CLASS_MEMBER@183..200
           0: (empty)
-          1: (empty)
-          2: STATIC_KW@183..192 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          1: STATIC_KW@183..192 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          2: (empty)
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@192..195
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@192..195
             0: IDENT@192..195 "get" [] []
-          5: (empty)
-          6: JS_PARAMETERS@195..198
+          6: (empty)
+          7: JS_PARAMETERS@195..198
             0: L_PAREN@195..196 "(" [] []
             1: JS_PARAMETER_LIST@196..196
             2: R_PAREN@196..198 ")" [] [Whitespace(" ")]
-          7: (empty)
-          8: JS_FUNCTION_BODY@198..200
+          8: (empty)
+          9: JS_FUNCTION_BODY@198..200
             0: L_CURLY@198..199 "{" [] []
             1: JS_DIRECTIVE_LIST@199..199
             2: JS_STATEMENT_LIST@199..199

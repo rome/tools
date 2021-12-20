@@ -99,7 +99,7 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 	parse_parameter_list(guard).or_missing_with_error(guard, js_parse_error::expected_parameters);
 
 	let return_type =
-		TypeScript.parse_exclusive_syntax(guard, parse_ts_return_type_if_ts, |p, marker| {
+		TypeScript.parse_exclusive_syntax(guard, parse_ts_type_annotation_or_error, |p, marker| {
 			p.err_builder("return types can only be used in TypeScript files")
 				.primary(marker.range(p), "")
 		});
@@ -182,7 +182,7 @@ pub(crate) fn ts_parameter_types(p: &mut Parser) {
 	}
 }
 
-pub(crate) fn parse_ts_return_type_if_ts(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_ts_type_annotation_or_error(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if p.at(T![:]) {
 		let return_type = p.start();
 		if let Some(ref mut ty) = ts_type_or_type_predicate_ann(p, T![:]) {

@@ -7,8 +7,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..14 "Setters" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@14..15 "{" [] [],
             members: JsClassMemberList [
                 JsSetterClassMember {
@@ -52,14 +52,13 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: (empty)
-          4: SET_KW@15..22 "set" [Whitespace("\n  ")] [Whitespace(" ")]
-          5: JS_LITERAL_MEMBER_NAME@22..25
+          3: SET_KW@15..22 "set" [Whitespace("\n  ")] [Whitespace(" ")]
+          4: JS_LITERAL_MEMBER_NAME@22..25
             0: IDENT@22..25 "foo" [] []
-          6: L_PAREN@25..26 "(" [] []
-          7: (empty)
-          8: R_PAREN@26..28 ")" [] [Whitespace(" ")]
-          9: JS_FUNCTION_BODY@28..30
+          5: L_PAREN@25..26 "(" [] []
+          6: (empty)
+          7: R_PAREN@26..28 ")" [] [Whitespace(" ")]
+          8: JS_FUNCTION_BODY@28..30
             0: L_CURLY@28..29 "{" [] []
             1: JS_DIRECTIVE_LIST@29..29
             2: JS_STATEMENT_LIST@29..29

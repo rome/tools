@@ -7,8 +7,8 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsConstructorClassMember {
@@ -16,12 +16,16 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@10..21 "constructor" [] [],
                     },
+                    type_parameters: missing (optional),
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@21..22 "(" [] [],
                         parameters: JsConstructorParameterList [
                             TsConstructorParam {
+                                accessibility: PROTECTED_KW@22..32 "protected" [] [Whitespace(" ")],
                                 readonly_token: missing (optional),
-                                pat: missing (required),
+                                pat: JsIdentifierBinding {
+                                    name_token: IDENT@32..33 "b" [] [],
+                                },
                             },
                         ],
                         r_paren_token: R_PAREN@33..35 ")" [] [Whitespace(" ")],
@@ -54,22 +58,19 @@ JsModule {
       5: JS_CLASS_MEMBER_LIST@10..38
         0: JS_CONSTRUCTOR_CLASS_MEMBER@10..38
           0: (empty)
-          1: (empty)
-          2: (empty)
-          3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@10..21
+          1: JS_LITERAL_MEMBER_NAME@10..21
             0: IDENT@10..21 "constructor" [] []
-          5: (empty)
-          6: JS_CONSTRUCTOR_PARAMETERS@21..35
+          2: (empty)
+          3: JS_CONSTRUCTOR_PARAMETERS@21..35
             0: L_PAREN@21..22 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@22..33
               0: TS_CONSTRUCTOR_PARAM@22..33
-                0: IDENT@22..32 "protected" [] [Whitespace(" ")]
+                0: PROTECTED_KW@22..32 "protected" [] [Whitespace(" ")]
                 1: (empty)
-                2: (empty)
-                3: IDENT@32..33 "b" [] []
+                2: JS_IDENTIFIER_BINDING@32..33
+                  0: IDENT@32..33 "b" [] []
             2: R_PAREN@33..35 ")" [] [Whitespace(" ")]
-          7: JS_FUNCTION_BODY@35..38
+          4: JS_FUNCTION_BODY@35..38
             0: L_CURLY@35..36 "{" [] []
             1: JS_DIRECTIVE_LIST@36..36
             2: JS_STATEMENT_LIST@36..36
@@ -77,7 +78,7 @@ JsModule {
       6: R_CURLY@38..39 "}" [] []
   3: EOF@39..40 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: accessibility modifiers can only be used in TypeScript files
+error[SyntaxError]: accessibility modifiers for a parameter inside a constructor can only be used in TypeScript files
   ┌─ class_constructor_parameter.js:1:23
   │
 1 │ class B { constructor(protected b) {} }
