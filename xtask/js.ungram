@@ -272,13 +272,13 @@ JsDebuggerStatement =
 // Expression
 JsAnyExpression =
 	JsAnyLiteralExpression
-	| CallExpr
 	| ImportMeta
 	| JsArrayExpression
 	| JsArrowFunctionExpression
 	| JsAssignmentExpression
 	| JsAwaitExpression
 	| JsBinaryExpression
+	| JsCallExpression
 	| JsClassExpression
 	| JsComputedMemberExpression
 	| JsConditionalExpression
@@ -286,6 +286,7 @@ JsAnyExpression =
 	| JsIdentifierExpression
 	| JsImportCallExpression
 	| JsLogicalExpression
+	| JsNewExpression
 	| JsObjectExpression
 	| JsParenthesizedExpression
 	| JsPostUpdateExpression
@@ -297,7 +298,6 @@ JsAnyExpression =
 	| JsUnaryExpression
 	| JsUnknownExpression
 	| JsYieldExpression
-	| NewExpr
 	| NewTarget
 	| Template
 	| TsAssertion
@@ -329,13 +329,17 @@ JsThisExpression = 'this'
 JsSuperExpression = 'super'
 
 // new expression
-NewExpr = 'new' object:JsAnyExpression type_args:TsTypeArgs?  arguments: JsCallArguments?
+JsNewExpression =
+	'new'
+	callee: JsAnyExpression
+	type_args: TsTypeArgs?
+	arguments: JsCallArguments?
 
 // call expression
-CallExpr =
-	callee:JsAnyExpression
+JsCallExpression =
+	callee: JsAnyExpression
 	optional_chain_token: '?.'?
-	type_args:TsTypeArgs?
+	type_args: TsTypeArgs?
 	arguments: JsCallArguments
 
 

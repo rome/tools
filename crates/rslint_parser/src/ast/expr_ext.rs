@@ -331,15 +331,6 @@ impl Template {
 	}
 }
 
-impl CallExpr {
-	pub fn opt_chain_token(&self) -> Option<SyntaxToken> {
-		self.syntax()
-			.children_with_tokens()
-			.filter_map(|child| child.into_token())
-			.find(|tok| tok.kind() == QUESTIONDOT)
-	}
-}
-
 /// A simple macro for making assign, binop, or unary operators
 #[macro_export]
 macro_rules! op {

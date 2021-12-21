@@ -111,7 +111,7 @@ JsModule {
                                         },
                                     },
                                     l_brack_token: L_BRACK@68..69 "[" [] [],
-                                    member: CallExpr {
+                                    member: JsCallExpression {
                                         callee: JsIdentifierExpression {
                                             name: JsReferenceIdentifier {
                                                 value_token: IDENT@69..73 "call" [] [],
@@ -152,7 +152,7 @@ JsModule {
                             JsArrayAssignmentPatternRestElement {
                                 dotdotdot_token: DOT2@88..91 "..." [] [],
                                 pattern: JsStaticMemberAssignment {
-                                    object: CallExpr {
+                                    object: JsCallExpression {
                                         callee: JsStaticMemberExpression {
                                             object: JsIdentifierExpression {
                                                 name: JsReferenceIdentifier {
@@ -349,7 +349,7 @@ JsModule {
                     0: JS_REFERENCE_IDENTIFIER@67..68
                       0: IDENT@67..68 "m" [] []
                   1: L_BRACK@68..69 "[" [] []
-                  2: CALL_EXPR@69..75
+                  2: JS_CALL_EXPRESSION@69..75
                     0: JS_IDENTIFIER_EXPRESSION@69..73
                       0: JS_REFERENCE_IDENTIFIER@69..73
                         0: IDENT@69..73 "call" [] []
@@ -377,7 +377,7 @@ JsModule {
               0: JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT@88..110
                 0: DOT2@88..91 "..." [] []
                 1: JS_STATIC_MEMBER_ASSIGNMENT@91..110
-                  0: CALL_EXPR@91..107
+                  0: JS_CALL_EXPRESSION@91..107
                     0: JS_STATIC_MEMBER_EXPRESSION@91..105
                       0: JS_IDENTIFIER_EXPRESSION@91..94
                         0: JS_REFERENCE_IDENTIFIER@91..94

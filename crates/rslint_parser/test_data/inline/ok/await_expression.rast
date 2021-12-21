@@ -23,7 +23,7 @@ JsModule {
                     JsExpressionStatement {
                         expression: JsAwaitExpression {
                             await_token: AWAIT_KW@23..31 "await" [Whitespace("\n\t")] [Whitespace(" ")],
-                            argument: CallExpr {
+                            argument: JsCallExpression {
                                 callee: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@31..36 "inner" [] [],
@@ -46,7 +46,7 @@ JsModule {
                                 await_token: AWAIT_KW@39..47 "await" [Whitespace("\n\t")] [Whitespace(" ")],
                                 argument: JsParenthesizedExpression {
                                     l_paren_token: L_PAREN@47..48 "(" [] [],
-                                    expression: CallExpr {
+                                    expression: JsCallExpression {
                                         callee: JsIdentifierExpression {
                                             name: JsReferenceIdentifier {
                                                 value_token: IDENT@48..53 "inner" [] [],
@@ -66,7 +66,7 @@ JsModule {
                             operator: PLUS@57..59 "+" [] [Whitespace(" ")],
                             right: JsAwaitExpression {
                                 await_token: AWAIT_KW@59..65 "await" [] [Whitespace(" ")],
-                                argument: CallExpr {
+                                argument: JsCallExpression {
                                     callee: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
                                             value_token: IDENT@65..70 "inner" [] [],
@@ -144,7 +144,7 @@ JsModule {
           0: JS_EXPRESSION_STATEMENT@23..39
             0: JS_AWAIT_EXPRESSION@23..38
               0: AWAIT_KW@23..31 "await" [Whitespace("\n\t")] [Whitespace(" ")]
-              1: CALL_EXPR@31..38
+              1: JS_CALL_EXPRESSION@31..38
                 0: JS_IDENTIFIER_EXPRESSION@31..36
                   0: JS_REFERENCE_IDENTIFIER@31..36
                     0: IDENT@31..36 "inner" [] []
@@ -161,7 +161,7 @@ JsModule {
                 0: AWAIT_KW@39..47 "await" [Whitespace("\n\t")] [Whitespace(" ")]
                 1: JS_PARENTHESIZED_EXPRESSION@47..57
                   0: L_PAREN@47..48 "(" [] []
-                  1: CALL_EXPR@48..55
+                  1: JS_CALL_EXPRESSION@48..55
                     0: JS_IDENTIFIER_EXPRESSION@48..53
                       0: JS_REFERENCE_IDENTIFIER@48..53
                         0: IDENT@48..53 "inner" [] []
@@ -175,7 +175,7 @@ JsModule {
               1: PLUS@57..59 "+" [] [Whitespace(" ")]
               2: JS_AWAIT_EXPRESSION@59..72
                 0: AWAIT_KW@59..65 "await" [] [Whitespace(" ")]
-                1: CALL_EXPR@65..72
+                1: JS_CALL_EXPRESSION@65..72
                   0: JS_IDENTIFIER_EXPRESSION@65..70
                     0: JS_REFERENCE_IDENTIFIER@65..70
                       0: IDENT@65..70 "inner" [] []

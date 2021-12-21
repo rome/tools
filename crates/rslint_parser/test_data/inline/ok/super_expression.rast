@@ -34,7 +34,7 @@ JsModule {
                         directives: JsDirectiveList [],
                         statements: JsStatementList [
                             JsExpressionStatement {
-                                expression: CallExpr {
+                                expression: JsCallExpression {
                                     callee: JsSuperExpression {
                                         super_token: SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] [],
                                     },
@@ -73,7 +73,7 @@ JsModule {
                         directives: JsDirectiveList [],
                         statements: JsStatementList [
                             JsExpressionStatement {
-                                expression: CallExpr {
+                                expression: JsCallExpression {
                                     callee: JsStaticMemberExpression {
                                         object: JsSuperExpression {
                                             super_token: SUPER_KW@63..71 "super" [Whitespace("\n\t\t")] [],
@@ -160,7 +160,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@39..39
             2: JS_STATEMENT_LIST@39..50
               0: JS_EXPRESSION_STATEMENT@39..50
-                0: CALL_EXPR@39..49
+                0: JS_CALL_EXPRESSION@39..49
                   0: JS_SUPER_EXPRESSION@39..47
                     0: SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] []
                   1: (empty)
@@ -190,7 +190,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@63..63
             2: JS_STATEMENT_LIST@63..95
               0: JS_EXPRESSION_STATEMENT@63..83
-                0: CALL_EXPR@63..82
+                0: JS_CALL_EXPRESSION@63..82
                   0: JS_STATIC_MEMBER_EXPRESSION@63..76
                     0: JS_SUPER_EXPRESSION@63..71
                       0: SUPER_KW@63..71 "super" [Whitespace("\n\t\t")] []

@@ -67,7 +67,7 @@ JsModule {
                                     },
                                     init: JsInitializerClause {
                                         eq_token: EQ@40..42 "=" [] [Whitespace(" ")],
-                                        expression: CallExpr {
+                                        expression: JsCallExpression {
                                             callee: JsIdentifierExpression {
                                                 name: JsReferenceIdentifier {
                                                     value_token: IDENT@42..46 "call" [] [],
@@ -156,7 +156,7 @@ JsModule {
                     0: IDENT@38..40 "b" [] [Whitespace(" ")]
                   1: JS_INITIALIZER_CLAUSE@40..49
                     0: EQ@40..42 "=" [] [Whitespace(" ")]
-                    1: CALL_EXPR@42..49
+                    1: JS_CALL_EXPRESSION@42..49
                       0: JS_IDENTIFIER_EXPRESSION@42..46
                         0: JS_REFERENCE_IDENTIFIER@42..46
                           0: IDENT@42..46 "call" [] []
