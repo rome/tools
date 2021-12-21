@@ -3,22 +3,6 @@ use crate::{ast::*, numbers::*, TextRange, T};
 use rome_rowan::{SyntaxText, TextSize};
 use JsSyntaxKind::*;
 
-impl JsComputedMemberExpression {
-	pub fn member(&self) -> SyntaxResult<JsAnyExpression> {
-		support::children(self.syntax())
-			.nth(1)
-			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
-	}
-}
-
-impl JsComputedMemberAssignment {
-	pub fn member(&self) -> SyntaxResult<JsAnyExpression> {
-		support::children(self.syntax())
-			.nth(1)
-			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
-	}
-}
-
 impl JsLiteralMemberName {
 	/// Returns the name of the member as a syntax text
 	///
@@ -78,31 +62,6 @@ impl JsLiteralMemberName {
 		};
 
 		Ok(result)
-	}
-}
-
-impl JsConditionalExpression {
-	pub fn consequent(&self) -> SyntaxResult<JsAnyExpression> {
-		support::children(self.syntax())
-			.nth(1)
-			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
-	}
-
-	pub fn alternate(&self) -> SyntaxResult<JsAnyExpression> {
-		support::children(self.syntax())
-			.nth(2)
-			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
-	}
-}
-
-impl JsPropertyObjectMember {
-	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
-		let child = self.syntax().children().nth(1);
-		match child {
-			Some(child) => JsAnyExpression::cast(child)
-				.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone())),
-			None => Err(SyntaxError::MissingRequiredChild(self.syntax().clone())),
-		}
 	}
 }
 
@@ -185,13 +144,6 @@ impl JsBinaryExpression {
 
 		Ok(kind)
 	}
-
-	pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
-		support::children(self.syntax())
-			.nth(1)
-			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
-	}
-
 	/// Whether this is a comparison operation, such as `>`, `<`, `==`, `!=`, `===`, etc.
 	pub fn is_comparison_operator(&self) -> bool {
 		matches!(
@@ -220,20 +172,6 @@ impl JsLogicalExpression {
 		};
 
 		Ok(kind)
-	}
-
-	pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
-		support::children(self.syntax())
-			.nth(1)
-			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
-	}
-}
-
-impl JsSequenceExpression {
-	pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
-		support::children(self.syntax())
-			.nth(1)
-			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
 	}
 }
 
@@ -366,16 +304,6 @@ impl JsStringLiteralExpression {
 		self.syntax()
 			.text()
 			.slice(TextRange::new(start - offset, end - offset))
-	}
-}
-
-impl JsArrowFunctionExpression {
-	pub fn body(&self) -> SyntaxResult<JsAnyArrowFunctionBody> {
-		self.syntax()
-			.children()
-			.last()
-			.and_then(JsAnyArrowFunctionBody::cast)
-			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
 	}
 }
 

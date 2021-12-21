@@ -61,29 +61,6 @@ pub trait AstToken {
 	}
 }
 
-/// An iterator over `SyntaxNode` children of a particular AST type.
-#[derive(Debug, Clone)]
-pub struct AstChildren<N> {
-	inner: SyntaxNodeChildren,
-	ph: PhantomData<N>,
-}
-
-impl<N> AstChildren<N> {
-	fn new(parent: &SyntaxNode) -> Self {
-		AstChildren {
-			inner: parent.children(),
-			ph: PhantomData,
-		}
-	}
-}
-
-impl<N: AstNode> Iterator for AstChildren<N> {
-	type Item = N;
-	fn next(&mut self) -> Option<N> {
-		self.inner.find_map(N::cast)
-	}
-}
-
 /// List of homogenous nodes
 pub trait AstNodeList<N>
 where
@@ -359,66 +336,56 @@ impl std::fmt::Display for SyntaxError {
 }
 
 mod support {
-	use super::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxToken};
-	use crate::ast::{AstChildren, DebugSyntaxElement};
-	use crate::SyntaxElementChildren;
+	use super::{AstNode, SyntaxNode, SyntaxToken};
+	use crate::ast::DebugSyntaxElement;
+	use crate::{SyntaxElementChildren, SyntaxNodeExt};
 	use crate::{SyntaxError, SyntaxResult};
+	use rome_rowan::SyntaxSlot;
 	use std::fmt::{Debug, Formatter};
 
-	pub(super) fn node<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
-		parent.children().find_map(N::cast)
+	pub(super) fn node<N: AstNode>(parent: &SyntaxNode, slot_index: usize) -> Option<N> {
+		match parent.slots().nth(slot_index)? {
+			SyntaxSlot::Empty => None,
+			SyntaxSlot::Node(node) => Some(node.to()),
+			SyntaxSlot::Token(token) => panic!(
+				"expected a node in the slot {} but found token {:?}",
+				slot_index, token
+			),
+		}
 	}
 
-	pub(super) fn required_node<N: AstNode>(parent: &SyntaxNode) -> SyntaxResult<N> {
-		node(parent).ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
+	pub(super) fn required_node<N: AstNode>(
+		parent: &SyntaxNode,
+		slot_index: usize,
+	) -> SyntaxResult<N> {
+		self::node(parent, slot_index)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
 	}
 
 	pub(super) fn elements(parent: &SyntaxNode) -> SyntaxElementChildren {
 		parent.children_with_tokens()
 	}
 
-	pub(super) fn children<N: AstNode>(parent: &SyntaxNode) -> AstChildren<N> {
-		AstChildren::new(parent)
+	pub(super) fn list<L: AstNode>(parent: &SyntaxNode, slot_index: usize) -> L {
+		required_node(parent, slot_index).expect(&format!("expected a list in slot {}", slot_index))
 	}
 
-	pub(super) fn list<L: AstNode>(parent: &SyntaxNode) -> L {
-		parent.children().find_map(L::cast).unwrap()
-	}
-
-	pub(super) fn token(parent: &SyntaxNode, kind: JsSyntaxKind) -> Option<SyntaxToken> {
-		parent
-			.children_with_tokens()
-			.filter_map(|it| it.into_token())
-			.find(|it| it.kind() == kind)
+	pub(super) fn token(parent: &SyntaxNode, slot_index: usize) -> Option<SyntaxToken> {
+		match parent.slots().nth(slot_index)? {
+			SyntaxSlot::Empty => None,
+			SyntaxSlot::Token(token) => Some(token),
+			SyntaxSlot::Node(node) => panic!(
+				"expected a token in the slot {} but found node {:?}",
+				slot_index, node
+			),
+		}
 	}
 
 	pub(super) fn required_token(
 		parent: &SyntaxNode,
-		kind: JsSyntaxKind,
+		slot_index: usize,
 	) -> SyntaxResult<SyntaxToken> {
-		token(parent, kind).ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
-	}
-
-	pub(super) fn find_token(
-		parent: &SyntaxNode,
-		possible_kinds: &[JsSyntaxKind],
-	) -> Option<SyntaxToken> {
-		parent
-			.children_with_tokens()
-			.filter_map(|it| it.into_token())
-			.find(|it| {
-				possible_kinds
-					.iter()
-					.any(|possible_kind| *possible_kind == it.kind())
-			})
-	}
-
-	pub(super) fn find_required_token(
-		parent: &SyntaxNode,
-		possible_kinds: &[JsSyntaxKind],
-	) -> SyntaxResult<SyntaxToken> {
-		find_token(parent, possible_kinds)
-			.ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
+		token(parent, slot_index).ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
 	}
 
 	/// New-type wrapper to flatten the debug output of syntax result fields when printing [AstNode]s.

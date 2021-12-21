@@ -21,7 +21,7 @@ JsModule {
                 for_token: FOR_KW@9..14 "for" [Whitespace("\n")] [Whitespace(" ")],
                 l_paren_token: missing (required),
                 initializer: JsVariableDeclarations {
-                    kind_token: LET_KW@14..18 "let" [] [Whitespace(" ")],
+                    kind: LET_KW@14..18 "let" [] [Whitespace(" ")],
                     items: JsVariableDeclarationList [
                         JsVariableDeclaration {
                             id: JsIdentifierBinding {
@@ -73,7 +73,7 @@ JsModule {
             for_token: FOR_KW@39..44 "for" [Whitespace("\n")] [Whitespace(" ")],
             l_paren_token: missing (required),
             initializer: JsVariableDeclarations {
-                kind_token: LET_KW@44..48 "let" [] [Whitespace(" ")],
+                kind: LET_KW@44..48 "let" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -218,7 +218,7 @@ JsModule {
                 AWAIT_KW@144..150 "await" [] [Whitespace(" ")],
                 L_PAREN@150..151 "(" [] [],
                 JsVariableDeclarations {
-                    kind_token: LET_KW@151..155 "let" [] [Whitespace(" ")],
+                    kind: LET_KW@151..155 "let" [] [Whitespace(" ")],
                     items: JsVariableDeclarationList [
                         JsVariableDeclaration {
                             id: JsIdentifierBinding {
@@ -270,7 +270,7 @@ JsModule {
             for_token: FOR_KW@177..182 "for" [Whitespace("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@182..183 "(" [] [],
             initializer: JsVariableDeclarations {
-                kind_token: LET_KW@183..187 "let" [] [Whitespace(" ")],
+                kind: LET_KW@183..187 "let" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {

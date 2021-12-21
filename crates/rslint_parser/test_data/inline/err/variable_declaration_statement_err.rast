@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -57,7 +57,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: CONST_KW@24..31 "const" [Whitespace("\n")] [Whitespace(" ")],
+                kind: CONST_KW@24..31 "const" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -115,7 +115,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: CONST_KW@55..62 "const" [Whitespace("\n")] [Whitespace(" ")],
+                kind: CONST_KW@55..62 "const" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -131,7 +131,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@64..69 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@64..69 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
@@ -153,7 +153,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: CONST_KW@73..80 "const" [Whitespace("\n")] [Whitespace(" ")],
+                kind: CONST_KW@73..80 "const" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {

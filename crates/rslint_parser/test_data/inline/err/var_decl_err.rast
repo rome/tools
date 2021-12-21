@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: VAR_KW@0..4 "var" [] [Whitespace(" ")],
+                kind: VAR_KW@0..4 "var" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -23,7 +23,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: CONST_KW@8..15 "const" [Whitespace("\n")] [Whitespace(" ")],
+                kind: CONST_KW@8..15 "const" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -44,7 +44,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@21..25 "let" [] [Whitespace(" ")],
+                kind: LET_KW@21..25 "let" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {

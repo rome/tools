@@ -49,7 +49,7 @@ JsModule {
                                 statements: JsStatementList [
                                     JsVariableStatement {
                                         declarations: JsVariableDeclarations {
-                                            kind_token: LET_KW@27..36 "let" [Whitespace("\n    ")] [Whitespace(" ")],
+                                            kind: LET_KW@27..36 "let" [Whitespace("\n    ")] [Whitespace(" ")],
                                             items: JsVariableDeclarationList [
                                                 JsVariableDeclaration {
                                                     id: JsIdentifierBinding {

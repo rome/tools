@@ -11,11 +11,11 @@ JsModule {
                 },
                 operator: QUESTION2@4..7 "??" [] [Whitespace(" ")],
                 right: JsBinaryExpression {
-                    left: JsNumberLiteralExpression {
+                    left: missing (required),
+                    operator: STAR@7..9 "*" [] [Whitespace(" ")],
+                    right: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@9..10 "2" [] [],
                     },
-                    operator: STAR@7..9 "*" [] [Whitespace(" ")],
-                    right: missing (required),
                 },
             },
             semicolon_token: SEMICOLON@10..11 ";" [] [],

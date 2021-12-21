@@ -6,7 +6,7 @@ JsModule {
             for_token: FOR_KW@0..4 "for" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@4..5 "(" [] [],
             initializer: JsVariableDeclarations {
-                kind_token: LET_KW@5..9 "let" [] [Whitespace(" ")],
+                kind: LET_KW@5..9 "let" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -163,7 +163,7 @@ JsModule {
             for_token: FOR_KW@117..122 "for" [Whitespace("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@122..123 "(" [] [],
             initializer: JsVariableDeclarations {
-                kind_token: LET_KW@123..127 "let" [] [Whitespace(" ")],
+                kind: LET_KW@123..127 "let" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {

@@ -1151,6 +1151,13 @@ impl<L: Language> SyntaxSlot<L> {
 		}
 	}
 
+	pub fn into_token(self) -> Option<SyntaxToken<L>> {
+		match self {
+			SyntaxSlot::Token(token) => Some(token),
+			_ => None,
+		}
+	}
+
 	pub fn kind(&self) -> Option<L::Kind> {
 		match self {
 			SyntaxSlot::Node(node) => Some(node.kind()),
