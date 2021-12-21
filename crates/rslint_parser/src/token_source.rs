@@ -1,6 +1,7 @@
 use crate::{JsSyntaxKind::EOF, TextRange, TextSize, Token};
 use rslint_lexer::is_linebreak;
 use std::collections::HashSet;
+use std::iter::FusedIterator;
 
 /// The source of tokens for the parser
 pub struct TokenSource<'t> {
@@ -166,3 +167,5 @@ impl Iterator for TokenSource<'_> {
 		}
 	}
 }
+
+impl FusedIterator for TokenSource<'_> {}

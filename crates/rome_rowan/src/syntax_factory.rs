@@ -13,14 +13,31 @@ pub use self::raw_syntax::{
 	RawSyntaxTokenRef,
 };
 
+/// Factory for creating syntax nodes of a particular kind.
 pub trait SyntaxFactory: fmt::Debug {
+	/// The syntax kind used by the nodes constructed by this syntax factory.
 	type Kind: SyntaxKind;
 
+	/// Creates a new syntax node of the passed `kind` with the given children.
+	///
+	/// The `children` contains the parsed direct children of the node. There may be fewer children
+	/// in case there's a syntax error and a required child or an optional child isn't present in the source code.
+	/// The `make_syntax` implementation must then fill in empty slots to match the slots as they're defined in the grammar.
+	///
+	/// The implementation is free to change the `kind` of the node but that has the consequence that
+	/// such a node will not be cached. The reason for not caching these nodes is that the cache lookup is performed
+	/// before calling `make_syntax`, thus querying the cache with the old kind.
+	///
+	/// It's important that the factory function is idempotent, meaning, calling the function
+	/// multiple times with the same `kind` and `children` returns syntax nodes with the same structure.
+	/// This is important because the returned nodes may be cached by `kind` and what `children` are present.
 	fn make_syntax(
 		kind: Self::Kind,
 		children: ParsedChildren<Self::Kind>,
 	) -> RawSyntaxNode<Self::Kind>;
 
+	/// Crates a *node list* syntax node. Validates if all elements are valid and changes the node's kind to
+	/// [SyntaxKind::to_unknown] if that's not the case.
 	fn make_node_list_syntax<F>(
 		kind: Self::Kind,
 		children: ParsedChildren<Self::Kind>,
@@ -38,6 +55,13 @@ pub trait SyntaxFactory: fmt::Debug {
 		RawSyntaxNode::new(kind, children.into_iter().map(Some))
 	}
 
+	/// Creates a *separated list* syntax node. Validates if the elements are valid, are correctly
+	/// separated by the specified separator token.
+	///
+	/// It changes the kind of the node to [SyntaxKind::to_unknown] if an element isn't a valid list-node
+	/// nor separator.
+	///
+	/// It inserts empty slots for missing elements or missing markers
 	fn make_separated_list_syntax<F>(
 		kind: Self::Kind,
 		children: ParsedChildren<Self::Kind>,
@@ -100,6 +124,8 @@ pub trait SyntaxFactory: fmt::Debug {
 	}
 }
 
+/// Iterator that "fixes up" a separated list by inserting empty slots for any missing
+/// separator or element.
 struct SeparatedListWithMissingNodesOrSeparatorSlotsIterator<'a, K: SyntaxKind> {
 	inner: Peekable<ParsedChildrenIntoIterator<'a, K>>,
 	missing_count: usize,
@@ -168,6 +194,9 @@ enum SlotContent {
 	Absent,
 }
 
+/// Description of the slots of a node in combination with [ParsedChildren].
+/// It stores for each slot if the node is present in [ParsedChildren] or not, allowing
+/// to generate a node with the right number of empty slots.
 #[derive(Debug)]
 pub struct RawNodeSlots<const COUNT: usize> {
 	slots: [SlotContent; COUNT],
@@ -184,21 +213,31 @@ impl<const COUNT: usize> Default for RawNodeSlots<COUNT> {
 }
 
 impl<const COUNT: usize> RawNodeSlots<COUNT> {
+	/// Marks that the node for the current slot is *absent* in the source, meaning, that the slot is empty.
+	/// Progresses to the next slot
 	pub fn mark_absent(&mut self) {
+		debug_assert!(self.current_slot < COUNT);
+
 		self.slots[self.current_slot] = SlotContent::Absent;
 		self.current_slot += 1;
 	}
 
+	/// Marks that the node for the current slot is *present* in the source code and progresses to the next slot.
 	pub fn mark_present(&mut self) {
+		debug_assert!(self.current_slot < COUNT);
+
 		self.slots[self.current_slot] = SlotContent::Present;
 		self.current_slot += 1;
 	}
 
+	/// Creates a node with the kind `kind`, filling in the nodes from the `children`.
 	pub fn into_node<K: SyntaxKind>(
 		self,
 		kind: K,
 		children: ParsedChildren<K>,
 	) -> RawSyntaxNode<K> {
+		debug_assert!(self.current_slot == COUNT, "Missing slots");
+
 		RawSyntaxNode::new(
 			kind,
 			RawNodeSlotIterator {

@@ -225,14 +225,14 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 		let m = p.start();
 
 		let kind = if p.at(T![:]) || p.nth_at(1, T![:]) {
-			parse_name(p).or_syntax_error(p, expected_identifier);
+			parse_name(p).or_add_diagnostic(p, expected_identifier);
 			p.expect(T![:]);
 			parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
-				.or_syntax_error(p, expected_assignment_target);
+				.or_add_diagnostic(p, expected_assignment_target);
 			JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
 		} else {
 			parse_assignment(p, AssignmentExprPrecedence::Conditional)
-				.or_syntax_error(p, expected_identifier);
+				.or_add_diagnostic(p, expected_identifier);
 			JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY
 		};
 
@@ -264,7 +264,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 		p.bump(T![...]);
 
 		let target = parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
-			.or_syntax_error(p, expected_assignment_target);
+			.or_add_diagnostic(p, expected_assignment_target);
 
 		if let Some(mut target) = target {
 			if matches!(

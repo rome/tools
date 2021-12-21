@@ -27,11 +27,11 @@ pub(crate) trait ParseWithDefaultPattern {
 		let pattern = self.parse_pattern(p);
 
 		if p.at(T![=]) {
-			let with_default = pattern.precede_or_syntax_error(p, Self::expected_pattern_error);
+			let with_default = pattern.precede_or_add_diagnostic(p, Self::expected_pattern_error);
 			p.bump_any(); // eat the = token
 
 			parse_expr_or_assignment(p)
-				.or_syntax_error(p, js_parse_error::expected_expression_assignment);
+				.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
 			Present(with_default.complete(p, Self::pattern_with_default_kind()))
 		} else {
@@ -127,7 +127,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 
 		with_default
 			.parse_pattern(p)
-			.or_syntax_error(p, |p, _| P::expected_pattern_error(p, rest_end..rest_end));
+			.or_add_diagnostic(p, |p, _| P::expected_pattern_error(p, rest_end..rest_end));
 
 		Present(m.complete(p, Self::rest_pattern_kind()))
 	}

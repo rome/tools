@@ -9,30 +9,23 @@ use crate::{
 	TokenAtOffset, WalkEvent,
 };
 
+/// Type tag for each node or token of a language
 pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
-	/// Returns `true` if this is a kind of an unknown node
+	/// Returns `true` if this is an unknown node kind.
 	fn is_unknown(&self) -> bool;
 
 	/// Converts this into to the best matching unknown node kind.
 	fn to_unknown(&self) -> Self;
 
+	/// Converts this kind to a raw syntax kind.
 	fn to_raw(&self) -> RawSyntaxKind;
 
+	/// Creates a syntax kind from a raw kind.
 	fn from_raw(raw: RawSyntaxKind) -> Self;
 }
 
 pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Hash {
 	type Kind: SyntaxKind;
-
-	#[inline]
-	fn kind_from_raw(raw: RawSyntaxKind) -> Self::Kind {
-		Self::Kind::from_raw(raw)
-	}
-
-	#[inline]
-	fn kind_to_raw(kind: Self::Kind) -> RawSyntaxKind {
-		kind.to_raw()
-	}
 }
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
@@ -450,7 +443,7 @@ impl<L: Language> SyntaxNode<L> {
 	}
 
 	pub fn kind(&self) -> L::Kind {
-		L::kind_from_raw(self.raw.kind())
+		L::Kind::from_raw(self.raw.kind())
 	}
 
 	/// Returns the text of all descendants tokens combined, including all trivia.
@@ -802,7 +795,7 @@ impl<L: Language> SyntaxNode<L> {
 
 impl<L: Language> SyntaxToken<L> {
 	pub fn kind(&self) -> L::Kind {
-		L::kind_from_raw(self.raw.kind())
+		L::Kind::from_raw(self.raw.kind())
 	}
 
 	pub fn text_range(&self) -> TextRange {

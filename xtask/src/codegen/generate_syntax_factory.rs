@@ -7,7 +7,7 @@ use crate::{
 };
 use quote::{format_ident, quote};
 
-pub fn generate_js_tree_shape(ast: &AstSrc) -> Result<String> {
+pub fn generate_syntax_factory(ast: &AstSrc) -> Result<String> {
 	let normal_node_arms = ast.nodes.iter().map(|node| {
 		let kind = format_ident!("{}", to_upper_snake_case(&node.name));
 		let expected_len = node.fields.len();

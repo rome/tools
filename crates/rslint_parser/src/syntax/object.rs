@@ -138,7 +138,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 			let m = p.start();
 			p.bump_any();
 			parse_expr_or_assignment(p)
-				.or_syntax_error(p, js_parse_error::expected_expression_assignment);
+				.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 			Present(m.complete(p, JS_SPREAD))
 		}
 
@@ -154,7 +154,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 			let identifier_member_name =
 				matches!(p.cur(), T![ident] | T![await] | T![yield]) || p.cur().is_keyword();
 			let member_name = parse_object_member_name(p)
-				.or_syntax_error(p, js_parse_error::expected_object_member);
+				.or_add_diagnostic(p, js_parse_error::expected_object_member);
 
 			// test object_expr_method
 			// let b = {
@@ -187,7 +187,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 					// If the member name was a literal OR we're at a colon
 					p.expect(T![:]);
 					parse_expr_or_assignment(p)
-						.or_syntax_error(p, js_parse_error::expected_expression_assignment);
+						.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 					Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
 				}
 			} else {
@@ -203,7 +203,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 
 				if p.eat(T![:]) {
 					parse_expr_or_assignment(p)
-						.or_syntax_error(p, js_parse_error::expected_object_member);
+						.or_add_diagnostic(p, js_parse_error::expected_object_member);
 					Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
 				} else {
 					// It turns out that this isn't a valid member after all. Make sure to throw
@@ -228,14 +228,14 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_remap(T![get]);
 
-	parse_object_member_name(p).or_syntax_error(p, js_parse_error::expected_object_member_name);
+	parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
 	p.expect(T!['(']);
 	p.expect(T![')']);
 
 	parse_ts_type_annotation_or_error(p).ok();
 
-	function_body(p).or_syntax_error(p, js_parse_error::expected_function_body);
+	function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
 
 	Present(m.complete(p, JS_GETTER_OBJECT_MEMBER))
 }
@@ -249,13 +249,13 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_remap(T![set]);
 
-	parse_object_member_name(p).or_syntax_error(p, js_parse_error::expected_object_member_name);
+	parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
 	p.state.allow_object_expr = p.expect(T!['(']);
-	parse_formal_param_pat(p).or_syntax_error(p, js_parse_error::expected_parameter);
+	parse_formal_param_pat(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
 	p.expect(T![')']);
 
-	function_body(p).or_syntax_error(p, js_parse_error::expected_function_body);
+	function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
 
 	p.state.allow_object_expr = true;
 	Present(m.complete(p, JS_SETTER_OBJECT_MEMBER))
@@ -297,7 +297,7 @@ pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax {
 
 	let m = p.start();
 	p.expect(T!['[']);
-	parse_expression(p).or_syntax_error(p, js_parse_error::expected_expression);
+	parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
 	p.expect(T![']']);
 	Present(m.complete(p, JS_COMPUTED_MEMBER_NAME))
 }
@@ -345,7 +345,7 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 	}
 
 	let in_generator = p.eat(T![*]);
-	parse_object_member_name(p).or_syntax_error(p, js_parse_error::expected_object_member_name);
+	parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
 	{
 		let mut guard = p.with_state(ParserState {
@@ -365,9 +365,9 @@ fn parse_method_object_member_body(p: &mut Parser) {
 	p.state.in_function = true;
 
 	parse_ts_parameter_types(p).ok();
-	parse_parameter_list(p).or_syntax_error(p, js_parse_error::expected_parameters);
+	parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);
 	parse_ts_type_annotation_or_error(p).ok();
-	function_body(p).or_syntax_error(p, js_parse_error::expected_function_body);
+	function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
 
 	p.state = old;
 }

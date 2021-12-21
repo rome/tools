@@ -77,7 +77,7 @@ fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
 	let id = parse_binding(guard);
 
 	if kind == JS_FUNCTION_DECLARATION {
-		id.or_syntax_error(guard, |p, range| {
+		id.or_add_diagnostic(guard, |p, range| {
 			p.err_builder(
 				"expected a name for the function in a function declaration, but found none",
 			)
@@ -92,7 +92,7 @@ fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
 		})
 		.ok();
 
-	parse_parameter_list(guard).or_syntax_error(guard, js_parse_error::expected_parameters);
+	parse_parameter_list(guard).or_add_diagnostic(guard, js_parse_error::expected_parameters);
 
 	TypeScript
 		.parse_exclusive_syntax(guard, parse_ts_type_annotation_or_error, |p, marker| {
@@ -104,7 +104,7 @@ fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
 	if kind == JS_FUNCTION_DECLARATION {
 		function_body_or_declaration(guard);
 	} else {
-		function_body(guard).or_syntax_error(guard, js_parse_error::expected_function_body);
+		function_body(guard).or_add_diagnostic(guard, js_parse_error::expected_function_body);
 	}
 
 	let mut function = m.complete(guard, kind);
@@ -151,7 +151,7 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 			})
 			.ok();
 		} else {
-			body.or_syntax_error(p, js_parse_error::expected_function_body);
+			body.or_add_diagnostic(p, js_parse_error::expected_function_body);
 		}
 	}
 }

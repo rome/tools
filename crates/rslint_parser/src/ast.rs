@@ -18,7 +18,7 @@ use std::marker::PhantomData;
 
 pub use self::{expr_ext::*, generated::nodes::*, stmt_ext::*, ts_ext::*};
 
-pub(crate) use self::generated::js_tree_shape::JsSyntaxFactory;
+pub(crate) use self::generated::syntax_factory::JsSyntaxFactory;
 
 /// The main trait to go from untyped `SyntaxNode`  to a typed ast. The
 /// conversion itself has zero runtime cost: ast and syntax nodes have exactly

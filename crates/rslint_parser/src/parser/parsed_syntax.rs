@@ -8,18 +8,11 @@ use std::ops::Range;
 
 /// Syntax that is either present in the source tree or absent.
 ///
-/// This type is commonly used as the return type of a parse function with the following types for `T`
-///
-/// * [CompletedMarker]: Most commonly used type. Parse function that either returns [ParsedSyntax::Absent]
-///   if the syntax isn't present or [ParsedSyntax::Present] with a valid syntax.
-/// * [ConditionalSyntax]: Used for parse functions where the parsed syntax may be invalid (a syntax error)
-///   depending on the parse context. Examples are: 1) Use of a `with` statement in strict mode,
-///   2) use of `await` as an identifier inside of an `async` function, and so on. That's why these
-///   parse functions must differentiate between syntax that is [ParsedSyntax::Absent] in the source text,
-///   syntax that is [ParsedSyntax::Present] and [Valid], and syntax that is [ParsedSyntax::Present] but [Invalid].
+/// This type is commonly used as the return type of parse functions with the following types
 ///
 ///
 /// ## Parse Rule conventions
+///
 /// * A parse rule must return [ParsedSyntax::Present] if it is able to parse a node or at least parts of it. For example,
 /// the `parse_for_statement` should return [ParsedSyntax::Present] for `for (` even tough many of the required children are missing
 /// because it is still able to parse parts of the for statement.
@@ -46,9 +39,9 @@ pub enum ParsedSyntax {
 }
 
 impl ParsedSyntax {
-	/// Converts from `ParsedSyntax<T>` to `Option<T>`.
+	/// Converts from `ParsedSyntax` to `Option<CompletedMarker>`.
 	///
-	/// Converts `self` into an `Option<T>`, consuming `self`
+	/// Converts `self` into an `Option<CompletedMarker>`, consuming `self`
 	pub fn ok(self) -> Option<CompletedMarker> {
 		match self {
 			Absent => None,
@@ -104,7 +97,7 @@ impl ParsedSyntax {
 		}
 	}
 
-	/// Maps a `ParsedSyntax<T>` to `ParsedSyntax<U>` by applying a function to a contained [ParsedSyntax::Present] value,
+	/// Maps a [ParsedSyntax::Present] `ParsedSyntax` by applying a function to a contained [ParsedSyntax::Present] value,
 	/// leaving an [ParsedSyntax::Absent] value untouched.
 	///
 	/// This function can be used to compose the results of two functions.
@@ -126,8 +119,8 @@ impl ParsedSyntax {
 		}
 	}
 
-	/// It returns the syntax if present or adds a missing marker and a diagnostic at the current parser position.
-	pub fn or_syntax_error<E>(self, p: &mut Parser, error_builder: E) -> Option<CompletedMarker>
+	/// It returns the syntax if present or adds a diagnostic at the current parser position.
+	pub fn or_add_diagnostic<E>(self, p: &mut Parser, error_builder: E) -> Option<CompletedMarker>
 	where
 		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
 	{
@@ -142,9 +135,9 @@ impl ParsedSyntax {
 	}
 
 	/// It creates and returns a marker preceding this parsed syntax if it is present or starts
-	/// a new marker, marks the first slot as missing and adds an error to the current parser position.
+	/// a new marker and adds an error to the current parser position.
 	/// See [CompletedMarker.precede]
-	pub fn precede_or_syntax_error<E>(self, p: &mut Parser, error_builder: E) -> Marker
+	pub fn precede_or_add_diagnostic<E>(self, p: &mut Parser, error_builder: E) -> Marker
 	where
 		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
 	{

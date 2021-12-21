@@ -14,11 +14,21 @@ use super::token::GreenTokenTrivia;
 
 type HashMap<K, V> = hashbrown::HashMap<K, V, BuildHasherDefault<FxHasher>>;
 
+/// A token stored in the `NodeCache`.
+/// Does intentionally not implement `Hash` to have compile-time guarantees that the `NodeCache`
+/// uses the correct hash.
 #[derive(Debug)]
-struct NoHashToken(GreenToken);
+struct CachedToken(GreenToken);
 
+/// A node stored in the `NodeCache`. It stores a pre-computed hash
+/// because re-computing the hash requires traversing the whole sub-tree.
+/// The hash also differs from the `GreenNode` hash implementation as it
+/// only hashes occupied slots and excludes empty slots.
+///
+/// Does intentionally not implement `Hash` to have compile-time guarantees that the `NodeCache`
+/// uses the correct hash.
 #[derive(Debug)]
-struct NoHashNode {
+struct CachedNode {
 	node: GreenNode,
 	// Store the hash as it's expensive to re-compute
 	// involves re-computing the hash of the whole sub-tree
@@ -42,12 +52,12 @@ struct NoHashNode {
 // where we accidentally mixed the two hashes, which made the cache much less
 // efficient.
 //
-// To fix that, we additionally wrap the data in `NoHash` wrapper, to make sure
+// To fix that, we additionally wrap the data in `Cached*` wrappers, to make sure
 // we don't accidentally use the wrong hash!
 #[derive(Default, Debug)]
 pub struct NodeCache {
-	nodes: HashMap<NoHashNode, ()>,
-	tokens: HashMap<NoHashToken, ()>,
+	nodes: HashMap<CachedNode, ()>,
+	tokens: HashMap<CachedToken, ()>,
 }
 
 fn token_hash_of(kind: RawSyntaxKind, text: &str) -> u64 {
@@ -73,10 +83,11 @@ impl NodeCache {
 	/// one of its children wasn't cached.
 	const UNCACHED_NODE_HASH: u64 = 0;
 
-	/// Creates a new node or retrieves it from the cache.
-	/// * `kind`: The type of the node
-	/// * `children`: The slots of this node are all the elements in `children` starting from `first_child`
-	/// * `build_node`: Function that constructs a node in case it wasn't part of the cache.
+	/// Tries to retrieve a node with the given `kind` and `children` from the cache.
+	///
+	/// Returns an entry that allows the caller to:
+	/// * Retrieve the cached node if it is present in the cache
+	/// * Insert a node if it isn't present in the cache
 	pub(crate) fn node(
 		&mut self,
 		kind: RawSyntaxKind,
@@ -160,7 +171,7 @@ impl NodeCache {
 
 				let token = GreenToken::with_trivia(kind, text, leading, trailing);
 				entry
-					.insert_with_hasher(hash, NoHashToken(token.clone()), (), |t| token_hash(&t.0));
+					.insert_with_hasher(hash, CachedToken(token.clone()), (), |t| token_hash(&t.0));
 				token
 			}
 		};
@@ -185,13 +196,13 @@ pub(crate) enum NodeCacheNodeEntryMut<'a> {
 pub(crate) struct VacantNodeEntry<'a> {
 	hash: u64,
 	original_kind: RawSyntaxKind,
-	raw_entry: RawVacantEntryMut<'a, NoHashNode, (), BuildHasherDefault<FxHasher>>,
+	raw_entry: RawVacantEntryMut<'a, CachedNode, (), BuildHasherDefault<FxHasher>>,
 }
 
 /// Represents an entry of a cached node.
 pub(crate) struct CachedNodeEntry<'a> {
 	hash: u64,
-	raw_entry: RawOccupiedEntryMut<'a, NoHashNode, (), BuildHasherDefault<FxHasher>>,
+	raw_entry: RawOccupiedEntryMut<'a, CachedNode, (), BuildHasherDefault<FxHasher>>,
 }
 
 impl<'a> CachedNodeEntry<'a> {
@@ -205,7 +216,14 @@ impl<'a> CachedNodeEntry<'a> {
 }
 
 impl<'a> VacantNodeEntry<'a> {
-	pub fn insert(self, node: GreenNode) -> u64 {
+	/// Inserts the `node` into the cache so that future queries for the same kind and children resolve to the passed `node`.
+	///
+	/// Returns the hash of the node.
+	///
+	/// The cache does not cache the `node` if the kind doesn't match the `kind` of the queried node because
+	/// cache lookups wouldn't be successful because the hash collision prevention check compares the kinds of the
+	/// cached and queried node.
+	pub fn cache(self, node: GreenNode) -> u64 {
 		if self.original_kind != node.kind() {
 			// The kind has changed since it has been queried. For example, the node has been converted to an
 			// unknown node. Never cache these nodes because cache lookups will never match.
@@ -213,7 +231,7 @@ impl<'a> VacantNodeEntry<'a> {
 		} else {
 			self.raw_entry.insert_with_hasher(
 				self.hash,
-				NoHashNode {
+				CachedNode {
 					node,
 					hash: self.hash,
 				},
