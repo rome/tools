@@ -367,7 +367,8 @@ mod support {
 	}
 
 	pub(super) fn list<L: AstNode>(parent: &SyntaxNode, slot_index: usize) -> L {
-		required_node(parent, slot_index).expect(&format!("expected a list in slot {}", slot_index))
+		required_node(parent, slot_index)
+			.unwrap_or_else(|_| panic!("expected a list in slot {}", slot_index))
 	}
 
 	pub(super) fn token(parent: &SyntaxNode, slot_index: usize) -> Option<SyntaxToken> {
