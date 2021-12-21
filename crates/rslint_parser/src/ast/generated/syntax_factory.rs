@@ -289,119 +289,6 @@ impl SyntaxFactory for JsSyntaxFactory {
 				}
 				slots.into_node(EXPORT_WILDCARD, children)
 			}
-			FOR_STMT => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<9usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T![for] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T!['('] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if JsAnyForInitializer::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T ! [;] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if ForStmtTest::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T ! [;] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if ForStmtUpdate::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![')'] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if JsAnyStatement::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						FOR_STMT.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(FOR_STMT, children)
-			}
-			FOR_STMT_TEST => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if JsAnyExpression::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						FOR_STMT_TEST.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(FOR_STMT_TEST, children)
-			}
-			FOR_STMT_UPDATE => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if JsAnyExpression::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						FOR_STMT_UPDATE.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(FOR_STMT_UPDATE, children)
-			}
 			IDENT => {
 				let mut elements = (&children).into_iter();
 				let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
@@ -1957,6 +1844,81 @@ impl SyntaxFactory for JsSyntaxFactory {
 					);
 				}
 				slots.into_node(JS_FOR_OF_STATEMENT, children)
+			}
+			JS_FOR_STATEMENT => {
+				let mut elements = (&children).into_iter();
+				let mut slots: RawNodeSlots<9usize> = RawNodeSlots::default();
+				let mut current_element = elements.next();
+				if let Some(element) = &current_element {
+					if element.kind() == T![for] {
+						slots.mark_present();
+						current_element = elements.next();
+					}
+				}
+				slots.next_slot();
+				if let Some(element) = &current_element {
+					if element.kind() == T!['('] {
+						slots.mark_present();
+						current_element = elements.next();
+					}
+				}
+				slots.next_slot();
+				if let Some(element) = &current_element {
+					if JsAnyForInitializer::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					}
+				}
+				slots.next_slot();
+				if let Some(element) = &current_element {
+					if element.kind() == T ! [;] {
+						slots.mark_present();
+						current_element = elements.next();
+					}
+				}
+				slots.next_slot();
+				if let Some(element) = &current_element {
+					if JsAnyExpression::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					}
+				}
+				slots.next_slot();
+				if let Some(element) = &current_element {
+					if element.kind() == T ! [;] {
+						slots.mark_present();
+						current_element = elements.next();
+					}
+				}
+				slots.next_slot();
+				if let Some(element) = &current_element {
+					if JsAnyExpression::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					}
+				}
+				slots.next_slot();
+				if let Some(element) = &current_element {
+					if element.kind() == T![')'] {
+						slots.mark_present();
+						current_element = elements.next();
+					}
+				}
+				slots.next_slot();
+				if let Some(element) = &current_element {
+					if JsAnyStatement::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					}
+				}
+				slots.next_slot();
+				if current_element.is_some() {
+					return RawSyntaxNode::new(
+						JS_FOR_STATEMENT.to_unknown(),
+						children.into_iter().map(Some),
+					);
+				}
+				slots.into_node(JS_FOR_STATEMENT, children)
 			}
 			JS_FOR_VARIABLE_DECLARATION => {
 				let mut elements = (&children).into_iter();

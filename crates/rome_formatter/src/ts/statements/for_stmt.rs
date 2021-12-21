@@ -2,9 +2,9 @@ use crate::{
 	concat_elements, format_elements, group_elements, soft_indent, soft_line_break_or_space,
 	space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{ForStmt, ForStmtTest, ForStmtUpdate, JsAnyForInitializer};
+use rslint_parser::ast::{JsAnyForInitializer, JsForStatement};
 
-impl ToFormatElement for ForStmt {
+impl ToFormatElement for JsForStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let inner =
 			if self.initializer().is_some() || self.test().is_some() || self.update().is_some() {
@@ -42,7 +42,7 @@ impl ToFormatElement for ForStmt {
 			group_elements(soft_indent(inner)),
 			formatter.format_token(&self.r_paren_token()?)?,
 			space_token(),
-			formatter.format_node(self.cons()?)?
+			formatter.format_node(self.body()?)?
 		]))
 	}
 }
@@ -53,17 +53,5 @@ impl ToFormatElement for JsAnyForInitializer {
 			JsAnyForInitializer::JsVariableDeclarations(decl) => decl.to_format_element(formatter),
 			JsAnyForInitializer::JsAnyExpression(expr) => expr.to_format_element(formatter),
 		}
-	}
-}
-
-impl ToFormatElement for ForStmtTest {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		formatter.format_node(self.expr()?)
-	}
-}
-
-impl ToFormatElement for ForStmtUpdate {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		formatter.format_node(self.expr()?)
 	}
 }
