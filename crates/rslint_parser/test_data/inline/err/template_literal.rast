@@ -66,7 +66,7 @@ JsModule {
       1: (empty)
   3: EOF@17..18 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression but instead found '}'
   ┌─ template_literal.js:1:16
   │
 1 │ let a = `foo ${}`

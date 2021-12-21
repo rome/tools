@@ -98,7 +98,7 @@ JsModule {
       6: (empty)
   3: EOF@41..42 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression but instead found ')'
   ┌─ do_while_stmt_err.js:2:11
   │
 2 │ do while ()

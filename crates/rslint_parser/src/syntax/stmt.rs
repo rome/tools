@@ -3,7 +3,7 @@
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
 use super::binding::*;
-use super::expr::{parse_expression, EXPR_RECOVERY_SET, STARTS_EXPR};
+use super::expr::{parse_expression, STARTS_EXPR};
 use super::program::export_decl;
 use super::typescript::*;
 use super::util::check_label_use;
@@ -11,7 +11,9 @@ use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_declaration, parse_initializer_clause};
-use crate::syntax::expr::{parse_expr_or_assignment, parse_identifier};
+use crate::syntax::expr::{
+	parse_expr_or_assignment, parse_expression_or_recover_to_next_statement, parse_identifier,
+};
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement};
@@ -105,8 +107,6 @@ pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
 /// caller has to pass a recovery set.
 ///
 /// If not passed, [STMT_RECOVERY_SET] will be used as recovery set
-// TODO: change return type to `ParsedSyntax` once `expr_or_assignment` returns `ParsedSyntax`
-// TODO: move error recovery to callers once `expr_with_semi_recovery` is refactored/gone
 pub fn parse_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
 		// test_err import_decl_not_top_level
@@ -286,7 +286,7 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		}
 	}
 
-	let expr = p.expr_with_semi_recovery(false);
+	let expr = parse_expression_or_recover_to_next_statement(p, false);
 	if let Ok(expr) = expr {
 		let m = expr.precede(p);
 		semi(p, start..p.cur_tok().range.end);
@@ -346,8 +346,8 @@ pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 		p.error(err);
 		p.missing();
-	} else {
-		p.expr_with_semi_recovery(false).ok();
+	} else if parse_expression_or_recover_to_next_statement(p, false).is_err() {
+		p.missing();
 	}
 	semi(p, start..p.cur_tok().range.end);
 	Present(m.complete(p, JS_THROW_STATEMENT))
@@ -457,8 +457,7 @@ pub fn parse_return_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let start = p.cur_tok().range.start;
 	p.bump_any(); // return keyword
 	if !p.has_linebreak_before_n(0) && p.at_ts(STARTS_EXPR) {
-		// TODO: review this part and make sure it plays well with the new recovery logic
-		p.expr_with_semi_recovery(false).ok();
+		parse_expression(p).unwrap();
 	} else {
 		p.missing();
 	}
@@ -655,10 +654,7 @@ pub fn parse_if_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.bump_any(); // bump if
 
 	// (test)
-	parenthesized_expression(&mut *p.with_state(ParserState {
-		expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![else]]),
-		..p.state.clone()
-	}));
+	parenthesized_expression(p);
 
 	// body
 	parse_statement(p).or_missing_with_error(p, expected_statement);

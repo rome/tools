@@ -43,17 +43,11 @@ impl SingleTokenParseRecovery {
 		}
 	}
 
-	/// Enable check of curly braces as recovery tokens
-	pub fn enabled_braces_check(mut self) -> Self {
-		self.include_braces = true;
-		self
-	}
-
 	/// The main function that tells to the parser how to recover itself.
 	///
 	/// Recover from an error with a [recovery set](TokenSet) or by using a `{` or `}`.
 	///
-	/// If [ParserRecoverer] has an error, it gets tracked in the events.
+	/// If [SingleTokenParseRecovery] has an error, it gets tracked in the events.
 	pub fn recover(&self, p: &mut Parser) {
 		let error = self.get_error();
 		if let Some(error) = error {

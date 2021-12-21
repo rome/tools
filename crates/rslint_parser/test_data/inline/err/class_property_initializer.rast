@@ -7,13 +7,13 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
             },
-            implements_clause: missing (optional),
             extends_clause: missing (optional),
+            implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsPropertyClassMember {
-                    access_modifier: missing (optional),
                     declare_token: missing (optional),
+                    access_modifier: missing (optional),
                     static_token: missing (optional),
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
@@ -25,13 +25,9 @@ JsModule {
                     ty: missing (optional),
                     value: JsInitializerClause {
                         eq_token: EQ@16..18 "=" [] [Whitespace(" ")],
-                        expression: JsUnknownExpression {
-                            items: [
-                                SEMICOLON@18..20 ";" [] [Whitespace(" ")],
-                            ],
-                        },
+                        expression: missing (required),
                     },
-                    semicolon_token: missing (optional),
+                    semicolon_token: SEMICOLON@18..20 ";" [] [Whitespace(" ")],
                 },
             ],
             r_curly_token: R_CURLY@20..21 "}" [] [],
@@ -57,30 +53,24 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: JS_LITERAL_MEMBER_NAME@10..16
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@10..16
             0: IDENT@10..16 "lorem" [] [Whitespace(" ")]
-          5: (empty)
-          6: JS_INITIALIZER_CLAUSE@16..20
-            0: EQ@16..18 "=" [] [Whitespace(" ")]
-            1: JS_UNKNOWN_EXPRESSION@18..20
-              0: SEMICOLON@18..20 ";" [] [Whitespace(" ")]
-            2: (empty)
+          6: (empty)
           7: (empty)
+          8: (empty)
+          9: JS_INITIALIZER_CLAUSE@16..18
+            0: EQ@16..18 "=" [] [Whitespace(" ")]
+            1: (empty)
+          10: SEMICOLON@18..20 ";" [] [Whitespace(" ")]
       6: R_CURLY@20..21 "}" [] []
   3: EOF@21..22 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression, or an assignment but instead found ';'
   ┌─ class_property_initializer.js:1:19
   │
 1 │ class B { lorem = ; }
-  │                   ^ Expected an expression here
-
---
-error[SyntaxError]: expected an expression, or an assignment but instead found '}'
-  ┌─ class_property_initializer.js:1:21
-  │
-1 │ class B { lorem = ; }
-  │                     ^ Expected an expression, or an assignment here
+  │                   ^ Expected an expression, or an assignment here
 
 --
 class B { lorem = ; }

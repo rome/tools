@@ -80,11 +80,11 @@ JsModule {
       1: SEMICOLON@23..24 ";" [] []
   3: EOF@24..25 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression, or an assignment but instead found ')'
   ┌─ import_call_no_arg.js:1:16
   │
 1 │ let a = import();
-  │                ^ Expected an expression here
+  │                ^ Expected an expression, or an assignment here
 
 --
 let a = import();

@@ -77,10 +77,14 @@ JsModule {
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@25..26 "(" [] [],
-                expression: JsUnknownExpression {
-                    items: [
-                        COMMA@26..27 "," [] [],
-                    ],
+                expression: JsSequenceExpression {
+                    left: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@28..29 "b" [] [],
+                        },
+                    },
+                    comma_token: COMMA@26..27 "," [] [],
+                    right: missing (required),
                 },
                 r_paren_token: R_PAREN@29..30 ")" [] [],
             },
@@ -144,15 +148,14 @@ JsModule {
     3: JS_EXPRESSION_STATEMENT@25..30
       0: JS_PARENTHESIZED_EXPRESSION@25..30
         0: L_PAREN@25..26 "(" [] []
-        1: JS_UNKNOWN_EXPRESSION@26..27
-          0: COMMA@26..27 "," [] []
-        2: JS_SEQUENCE_EXPRESSION@27..29
+        1: JS_SEQUENCE_EXPRESSION@26..29
           0: (empty)
-          1: COMMA@27..28 "," [] []
-          2: JS_IDENTIFIER_EXPRESSION@28..29
+          1: COMMA@26..27 "," [] []
+          2: COMMA@27..28 "," [] []
+          3: JS_IDENTIFIER_EXPRESSION@28..29
             0: JS_REFERENCE_IDENTIFIER@28..29
               0: IDENT@28..29 "b" [] []
-        3: R_PAREN@29..30 ")" [] []
+        2: R_PAREN@29..30 ")" [] []
       1: (empty)
   3: EOF@30..31 "" [Whitespace("\n")] []
 --
@@ -180,18 +183,11 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ └────' ...Which is required to end this statement
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression but instead found ','
   ┌─ invalid_arg_list.js:3:6
   │
 3 │ foo (,,b)
   │      ^ Expected an expression here
-
---
-error[SyntaxError]: expected an expression but instead found ','
-  ┌─ invalid_arg_list.js:3:7
-  │
-3 │ foo (,,b)
-  │       ^ Expected an expression here
 
 --
 foo(a,b;

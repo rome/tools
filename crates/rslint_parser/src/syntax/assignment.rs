@@ -89,20 +89,13 @@ pub(crate) fn parse_assignment(
 ) -> ParsedSyntax<CompletedMarker> {
 	let checkpoint = p.checkpoint();
 
-	// TODO remove the rewind inside of the error handle once the `unary_expr` returns a ParsedSyntax
 	let assignment_expression = match expr_kind {
 		AssignmentExprPrecedence::Unary => parse_unary_expr(p),
 		AssignmentExprPrecedence::Conditional => parse_conditional_expr(p),
 		AssignmentExprPrecedence::Any => parse_expression(p),
 	};
 
-	if let Present(expr) = assignment_expression {
-		Present(expression_to_assignment(p, expr, checkpoint))
-	} else {
-		// Only necessary because `unary_expr` always adds a "expected an expression" error.
-		p.rewind(checkpoint);
-		Absent
-	}
+	assignment_expression.map(|expr| expression_to_assignment(p, expr, checkpoint))
 }
 
 struct AssignmentPatternWithDefault;

@@ -14,16 +14,12 @@ JsModule {
                         type_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..7 "=" [] [],
-                            expression: JsUnknownExpression {
-                                items: [
-                                    SEMICOLON@7..8 ";" [] [],
-                                ],
-                            },
+                            expression: missing (required),
                         },
                     },
                 ],
             },
-            semicolon_token: missing (optional),
+            semicolon_token: SEMICOLON@7..8 ";" [] [],
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
@@ -76,20 +72,18 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..31
     0: JS_VARIABLE_STATEMENT@0..8
-      0: JS_VARIABLE_DECLARATIONS@0..8
+      0: JS_VARIABLE_DECLARATIONS@0..7
         0: VAR_KW@0..4 "var" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@4..8
-          0: JS_VARIABLE_DECLARATION@4..8
+        1: JS_VARIABLE_DECLARATION_LIST@4..7
+          0: JS_VARIABLE_DECLARATION@4..7
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
-            3: JS_INITIALIZER_CLAUSE@6..8
+            3: JS_INITIALIZER_CLAUSE@6..7
               0: EQ@6..7 "=" [] []
-              1: JS_UNKNOWN_EXPRESSION@7..8
-                0: SEMICOLON@7..8 ";" [] []
-              2: (empty)
-      1: (empty)
+              1: (empty)
+      1: SEMICOLON@7..8 ";" [] []
     1: JS_VARIABLE_STATEMENT@8..21
       0: JS_VARIABLE_DECLARATIONS@8..21
         0: CONST_KW@8..15 "const" [Whitespace("\n")] [Whitespace(" ")]
@@ -120,18 +114,11 @@ JsModule {
       1: SEMICOLON@30..31 ";" [] []
   3: EOF@31..32 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression, or an assignment but instead found ';'
   ┌─ var_decl_err.js:1:8
   │
 1 │ var a =;
-  │        ^ Expected an expression here
-
---
-error[SyntaxError]: expected an expression, or an assignment but instead found 'const'
-  ┌─ var_decl_err.js:2:1
-  │
-2 │ const a = 5 let b = 5;
-  │ ^^^^^ Expected an expression, or an assignment here
+  │        ^ Expected an expression, or an assignment here
 
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none

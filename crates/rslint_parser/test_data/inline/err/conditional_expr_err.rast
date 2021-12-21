@@ -151,11 +151,11 @@ error[SyntaxError]: expected `:` but instead found `baz`
   │           ^^^ unexpected
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression, or an assignment but instead found ''
   ┌─ conditional_expr_err.js:4:1
   │
 4 │ 
-  │ ^ Expected an expression here
+  │ ^ Expected an expression, or an assignment here
 
 --
 foo ? bar baz

@@ -19,10 +19,11 @@ use crate::syntax::class::parse_class_expression;
 use crate::syntax::function::parse_function_expression;
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
-	expected_binding, expected_identifier, expected_parameter, expected_simple_assignment_target,
+	expected_binding, expected_expression, expected_identifier, expected_parameter,
+	expected_simple_assignment_target,
 };
 use crate::syntax::object::parse_object_expression;
-use crate::syntax::stmt::is_semi;
+use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::CompletedNodeOrMissingMarker::NodeMarker;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
@@ -81,6 +82,28 @@ pub const STARTS_EXPR: TokenSet = token_set![
 	NULL_KW,
 	JS_REGEX_LITERAL
 ];
+
+/// Parses an expression or recovers to the point of where the next statement starts
+pub fn parse_expression_or_recover_to_next_statement(
+	p: &mut Parser,
+	assign: bool,
+) -> RecoveryResult {
+	let func = if assign {
+		syntax::expr::parse_expr_or_assignment
+	} else {
+		syntax::expr::parse_expression
+	};
+
+	func(p).or_recover(
+		p,
+		&ParseRecovery::new(
+			SyntaxKind::JS_UNKNOWN_EXPRESSION,
+			STMT_RECOVERY_SET.union(token_set![T!['}']]),
+		)
+		.enable_recovery_on_line_break(),
+		expected_expression,
+	)
+}
 
 /// A literal expression.
 ///
@@ -174,7 +197,6 @@ fn parse_assign_expr_base(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // test_err assign_expr_right
 // (foo = );
 
-// TODO: review the left missing expression, the green tree might be better
 // test_err assign_expr_left
 // ( = foo);
 fn parse_assign_expr_recursive(
@@ -331,6 +353,11 @@ fn parse_binary_or_logical_expression_recursive(
 		p.bump_any();
 	}
 
+	let expression_kind = match op {
+		T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
+		_ => JS_BINARY_EXPRESSION,
+	};
+
 	// This is a hack to allow us to effectively recover from `foo + / bar`
 	let right = if get_precedence(p.cur()).is_some() && !p.at_ts(token_set![T![-], T![+], T![<]]) {
 		let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.token_src(&op_tok)))
@@ -338,7 +365,8 @@ fn parse_binary_or_logical_expression_recursive(
             .primary(p.cur_tok().range, "But this operator was encountered instead");
 
 		p.error(err);
-		Absent
+
+		parse_binary_or_logical_expression_recursive(p, Absent, 0)
 	} else {
 		parse_unary_expr(p)
 	};
@@ -353,12 +381,7 @@ fn parse_binary_or_logical_expression_recursive(
 			precedence
 		},
 	)
-	.or_missing(p);
-
-	let expression_kind = match op {
-		T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
-		_ => JS_BINARY_EXPRESSION,
-	};
+	.or_missing_with_error(p, expected_expression);
 
 	let complete = m.complete(p, expression_kind);
 	parse_binary_or_logical_expression_recursive(p, Present(complete), min_prec)
@@ -398,6 +421,8 @@ fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax<Comp
 			m.abandon(p);
 			return complete;
 		}
+
+		complete.or_missing_with_error(p, expected_expression);
 
 		if p.at(T![<]) {
 			if let Some(mut complete) = try_parse_ts(p, |p| {
@@ -639,7 +664,7 @@ pub fn parse_computed_member_expression(
 	}
 
 	p.expect_required(T!['[']);
-	parse_expression(p).or_missing(p);
+	parse_expression(p).or_missing_with_error(p, expected_expression);
 	p.expect_required(T![']']);
 
 	Present(m.complete(p, JS_COMPUTED_MEMBER_EXPRESSION))
@@ -1108,18 +1133,6 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		// test_err primary_expr_invalid_recovery
 		// let a = \; foo();
 		_ => {
-			// TODO: remove it and delegate recovery to parent
-			let err = p
-				.err_builder("Expected an expression, but found none")
-				.primary(p.cur_tok().range, "Expected an expression here");
-			#[allow(deprecated)]
-			SingleTokenParseRecovery::with_error(
-				p.state.expr_recovery_set,
-				JS_UNKNOWN_EXPRESSION,
-				err,
-			)
-			.enabled_braces_check()
-			.recover(p);
 			return Absent;
 		}
 	};

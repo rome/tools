@@ -142,12 +142,8 @@ JsModule {
             cases: JsSwitchCaseList [
                 JsCaseClause {
                     case_token: CASE_KW@140..145 "case" [] [Whitespace(" ")],
-                    test: JsUnknownExpression {
-                        items: [
-                            COLON@145..147 ":" [] [Whitespace(" ")],
-                        ],
-                    },
-                    colon_token: missing (required),
+                    test: missing (required),
+                    colon_token: COLON@145..147 ":" [] [Whitespace(" ")],
                     consequent: JsStatementList [],
                 },
             ],
@@ -265,11 +261,9 @@ JsModule {
       5: JS_SWITCH_CASE_LIST@140..147
         0: JS_CASE_CLAUSE@140..147
           0: CASE_KW@140..145 "case" [] [Whitespace(" ")]
-          1: JS_UNKNOWN_EXPRESSION@145..147
-            0: COLON@145..147 ":" [] [Whitespace(" ")]
-          2: (empty)
-          3: (empty)
-          4: JS_STATEMENT_LIST@147..147
+          1: (empty)
+          2: COLON@145..147 ":" [] [Whitespace(" ")]
+          3: JS_STATEMENT_LIST@147..147
       6: R_CURLY@147..148 "}" [] []
   3: EOF@148..149 "" [Whitespace("\n")] []
 --
@@ -331,18 +325,11 @@ error[SyntaxError]: Multiple default clauses inside of a switch statement are no
   │     ^^^^^^^^^^^ a second clause here is not allowed
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression but instead found ':'
   ┌─ switch_stmt_err.js:9:21
   │
 9 │ switch (foo) { case : }
   │                     ^ Expected an expression here
-
---
-error[SyntaxError]: expected an expression but instead found '}'
-  ┌─ switch_stmt_err.js:9:23
-  │
-9 │ switch (foo) { case : }
-  │                       ^ Expected an expression here
 
 --
 switch foo {}

@@ -323,11 +323,11 @@ error[SyntaxError]: expected an identifier, or an assignment target but instead 
   │    ^ Expected an identifier, or an assignment target here
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression, or an assignment but instead found '}'
   ┌─ property_assignment_target_err.js:4:5
   │
 4 │ ({:=} = {});
-  │     ^ Expected an expression here
+  │     ^ Expected an expression, or an assignment here
 
 --
 error[SyntaxError]: expected `,` but instead found `b`

@@ -36,11 +36,11 @@ JsModule {
       1: SEMICOLON@8..9 ";" [] []
   3: EOF@9..10 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression, or an assignment but instead found ')'
   ┌─ assign_expr_right.js:1:8
   │
 1 │ (foo = );
-  │        ^ Expected an expression here
+  │        ^ Expected an expression, or an assignment here
 
 --
 (foo = );

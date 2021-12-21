@@ -31,29 +31,25 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@13..15 "(" [Whitespace("\n")] [],
-                expression: JsSequenceExpression {
-                    left: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@15..16 "a" [] [],
+            expression: JsArrowFunctionExpression {
+                async_token: missing (optional),
+                type_parameters: missing (optional),
+                parameters: JsParameters {
+                    l_paren_token: L_PAREN@13..15 "(" [Whitespace("\n")] [],
+                    items: JsParameterList [
+                        JsIdentifierBinding {
+                            name_token: IDENT@15..16 "a" [] [],
                         },
-                    },
-                    comma_token: COMMA@16..18 "," [] [Whitespace(" ")],
-                    right: JsUnknownExpression {
-                        items: [
-                            COMMA@18..19 "," [] [],
-                        ],
-                    },
+                        COMMA@16..18 "," [] [Whitespace(" ")],
+                    ],
+                    r_paren_token: missing (required),
                 },
-                r_paren_token: missing (required),
-            },
-            semicolon_token: missing (optional),
-        },
-        JsExpressionStatement {
-            expression: JsIdentifierExpression {
-                name: JsReferenceIdentifier {
-                    value_token: IDENT@19..20 "b" [] [],
+                return_type: missing (optional),
+                fat_arrow_token: missing (required),
+                body: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@19..20 "b" [] [],
+                    },
                 },
             },
             semicolon_token: missing (optional),
@@ -120,31 +116,31 @@ JsModule {
           2: JS_STATEMENT_LIST@12..12
           3: R_CURLY@12..13 "}" [] []
       1: (empty)
-    1: JS_EXPRESSION_STATEMENT@13..19
-      0: JS_PARENTHESIZED_EXPRESSION@13..19
-        0: L_PAREN@13..15 "(" [Whitespace("\n")] []
-        1: JS_SEQUENCE_EXPRESSION@15..19
-          0: JS_IDENTIFIER_EXPRESSION@15..16
-            0: JS_REFERENCE_IDENTIFIER@15..16
+    1: JS_EXPRESSION_STATEMENT@13..20
+      0: JS_ARROW_FUNCTION_EXPRESSION@13..20
+        0: (empty)
+        1: (empty)
+        2: JS_PARAMETERS@13..18
+          0: L_PAREN@13..15 "(" [Whitespace("\n")] []
+          1: JS_PARAMETER_LIST@15..18
+            0: JS_IDENTIFIER_BINDING@15..16
               0: IDENT@15..16 "a" [] []
-          1: COMMA@16..18 "," [] [Whitespace(" ")]
-          2: JS_UNKNOWN_EXPRESSION@18..19
-            0: COMMA@18..19 "," [] []
-        2: (empty)
+            1: COMMA@16..18 "," [] [Whitespace(" ")]
+          2: (empty)
+        3: (empty)
+        4: COMMA@18..19 "," [] []
+        5: JS_IDENTIFIER_EXPRESSION@19..20
+          0: JS_REFERENCE_IDENTIFIER@19..20
+            0: IDENT@19..20 "b" [] []
       1: (empty)
-    2: JS_EXPRESSION_STATEMENT@19..20
-      0: JS_IDENTIFIER_EXPRESSION@19..20
-        0: JS_REFERENCE_IDENTIFIER@19..20
-          0: IDENT@19..20 "b" [] []
-      1: (empty)
-    3: JS_UNKNOWN_STATEMENT@20..25
+    2: JS_UNKNOWN_STATEMENT@20..25
       0: R_PAREN@20..22 ")" [] [Whitespace(" ")]
       1: FAT_ARROW@22..25 "=>" [] [Whitespace(" ")]
-    4: JS_BLOCK_STATEMENT@25..27
+    3: JS_BLOCK_STATEMENT@25..27
       0: L_CURLY@25..26 "{" [] []
       1: JS_STATEMENT_LIST@26..26
       2: R_CURLY@26..27 "}" [] []
-    5: JS_EXPRESSION_STATEMENT@27..37
+    4: JS_EXPRESSION_STATEMENT@27..37
       0: JS_ARROW_FUNCTION_EXPRESSION@27..37
         0: (empty)
         1: (empty)
@@ -170,35 +166,28 @@ error[SyntaxError]: expected a parameter but instead found '5 + 5'
   │  ^^^^^ Expected a parameter here
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected a parameter but instead found ','
   ┌─ paren_or_arrow_expr_invalid_params.js:2:5
   │
 2 │ (a, ,b) => {}
-  │     ^ Expected an expression here
-
---
-error[SyntaxError]: expected `')'` but instead found `b`
-  ┌─ paren_or_arrow_expr_invalid_params.js:2:6
-  │
-2 │ (a, ,b) => {}
-  │      ^ unexpected
+  │     ^ Expected a parameter here
 
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ paren_or_arrow_expr_invalid_params.js:2:7
   │
 2 │ (a, ,b) => {}
-  │      -^
-  │      ││
-  │      │An explicit or implicit semicolon is expected here...
-  │      ...Which is required to end this statement
+  │ ------^
+  │ │     │
+  │ │     An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected a function body, or an expression but instead found ''
   ┌─ paren_or_arrow_expr_invalid_params.js:4:1
   │
 4 │ 
-  │ ^ Expected an expression here
+  │ ^ Expected a function body, or an expression here
 
 --
 (5 + 5) => {}

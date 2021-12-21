@@ -493,23 +493,6 @@ impl<'t> Parser<'t> {
 			.unwrap_or_default();
 		start..end
 	}
-
-	pub fn expr_with_semi_recovery(&mut self, assign: bool) -> RecoveryResult {
-		let func = if assign {
-			syntax::expr::parse_expr_or_assignment
-		} else {
-			syntax::expr::parse_expression
-		};
-
-		func(self).or_recover(
-			self,
-			&ParseRecovery::new(SyntaxKind::JS_UNKNOWN_EXPRESSION, token_set![T![;]]),
-			|p, range| {
-				p.err_builder("expected an expression, but found `;` instead")
-					.primary(range, "")
-			},
-		)
-	}
 }
 
 /// A structure signifying the start of parsing of a syntax tree node
