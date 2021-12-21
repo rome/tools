@@ -26,7 +26,7 @@ JsModule {
                                 value_token: IDENT@7..10 "baz" [] [],
                             },
                         },
-                        optional_chain_token_token: missing (optional),
+                        optional_chain_token: missing (optional),
                         l_brack_token: L_BRACK@10..11 "[" [] [],
                         member: missing (required),
                         r_brack_token: R_BRACK@11..12 "]" [] [],

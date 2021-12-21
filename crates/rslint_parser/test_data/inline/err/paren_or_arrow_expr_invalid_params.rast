@@ -31,26 +31,25 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: JsArrowFunctionExpression {
-                async_token: missing (optional),
-                type_parameters: missing (optional),
-                parameters: JsParameters {
-                    l_paren_token: L_PAREN@13..15 "(" [Whitespace("\n")] [],
-                    items: JsParameterList [
-                        JsIdentifierBinding {
-                            name_token: IDENT@15..16 "a" [] [],
-                        },
-                        COMMA@16..18 "," [] [Whitespace(" ")],
-                    ],
-                    r_paren_token: missing (required),
-                },
-                return_type: missing (optional),
-                fat_arrow_token: missing (required),
-                body: JsIdentifierExpression {
-                    name: JsReferenceIdentifier {
-                        value_token: IDENT@19..20 "b" [] [],
+            expression: JsUnknownExpression {
+                items: [
+                    JsParameters {
+                        l_paren_token: L_PAREN@13..15 "(" [Whitespace("\n")] [],
+                        items: JsParameterList [
+                            JsIdentifierBinding {
+                                name_token: IDENT@15..16 "a" [] [],
+                            },
+                            COMMA@16..18 "," [] [Whitespace(" ")],
+                        ],
+                        r_paren_token: missing (required),
                     },
-                },
+                    COMMA@18..19 "," [] [],
+                    JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@19..20 "b" [] [],
+                        },
+                    },
+                ],
             },
             semicolon_token: missing (optional),
         },
@@ -117,19 +116,16 @@ JsModule {
           3: R_CURLY@12..13 "}" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@13..20
-      0: JS_ARROW_FUNCTION_EXPRESSION@13..20
-        0: (empty)
-        1: (empty)
-        2: JS_PARAMETERS@13..18
+      0: JS_UNKNOWN_EXPRESSION@13..20
+        0: JS_PARAMETERS@13..18
           0: L_PAREN@13..15 "(" [Whitespace("\n")] []
           1: JS_PARAMETER_LIST@15..18
             0: JS_IDENTIFIER_BINDING@15..16
               0: IDENT@15..16 "a" [] []
             1: COMMA@16..18 "," [] [Whitespace(" ")]
           2: (empty)
-        3: (empty)
-        4: COMMA@18..19 "," [] []
-        5: JS_IDENTIFIER_EXPRESSION@19..20
+        1: COMMA@18..19 "," [] []
+        2: JS_IDENTIFIER_EXPRESSION@19..20
           0: JS_REFERENCE_IDENTIFIER@19..20
             0: IDENT@19..20 "b" [] []
       1: (empty)

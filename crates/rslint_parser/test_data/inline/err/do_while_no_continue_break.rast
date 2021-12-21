@@ -95,17 +95,14 @@ JsModule {
       6: (empty)
     1: JS_UNKNOWN_STATEMENT@7..13
       0: BREAK_KW@7..13 "break" [] [Whitespace(" ")]
-      1: (empty)
-      2: (empty)
     2: JS_EXPRESSION_STATEMENT@13..14
       0: JS_PARENTHESIZED_EXPRESSION@13..14
         0: L_PAREN@13..14 "(" [] []
         1: (empty)
+        2: (empty)
       1: (empty)
     3: JS_UNKNOWN_STATEMENT@14..22
       0: CONTINUE_KW@14..22 "continue" [] []
-      1: (empty)
-      2: (empty)
     4: JS_UNKNOWN_STATEMENT@22..23
       0: R_PAREN@22..23 ")" [] []
     5: JS_DO_WHILE_STATEMENT@23..31
@@ -121,17 +118,14 @@ JsModule {
       6: (empty)
     6: JS_UNKNOWN_STATEMENT@31..40
       0: CONTINUE_KW@31..40 "continue" [] [Whitespace(" ")]
-      1: (empty)
-      2: (empty)
     7: JS_EXPRESSION_STATEMENT@40..41
       0: JS_PARENTHESIZED_EXPRESSION@40..41
         0: L_PAREN@40..41 "(" [] []
         1: (empty)
+        2: (empty)
       1: (empty)
     8: JS_UNKNOWN_STATEMENT@41..46
       0: BREAK_KW@41..46 "break" [] []
-      1: (empty)
-      2: (empty)
     9: JS_UNKNOWN_STATEMENT@46..47
       0: R_PAREN@46..47 ")" [] []
   3: EOF@47..48 "" [Whitespace("\n")] []
