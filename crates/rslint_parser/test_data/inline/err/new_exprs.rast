@@ -7,7 +7,7 @@ JsModule {
                 new_token: NEW_KW@0..3 "new" [] [],
                 object: missing (required),
                 type_args: missing (optional),
-                arguments: missing (required),
+                arguments: missing (optional),
             },
             semicolon_token: SEMICOLON@3..4 ";" [] [],
         },
