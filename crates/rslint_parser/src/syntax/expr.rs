@@ -802,12 +802,8 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
                     .primary(temp.cur_tok().range, "");
 
 						#[allow(deprecated)]
-						SingleTokenParseRecovery::with_error(
-							EXPR_RECOVERY_SET,
-							JS_UNKNOWN_BINDING,
-							err,
-						)
-						.recover(&mut temp);
+						SingleTokenParseRecovery::with_error(EXPR_RECOVERY_SET, JS_UNKNOWN, err)
+							.recover(&mut temp);
 					}
 				}
 				break;
