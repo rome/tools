@@ -199,7 +199,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 				// let b = {5}
 
 				#[allow(deprecated)]
-				SingleTokenParseRecovery::new(token_set![T![:], T![,]], ERROR).recover(p);
+				SingleTokenParseRecovery::new(token_set![T![:], T![,]], JS_UNKNOWN).recover(p);
 
 				if p.eat(T![:]) {
 					parse_expr_or_assignment(p)

@@ -827,7 +827,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 					// case where we are at a `,)` so the `,` is a trailing comma
 					let trailing_marker = temp.start();
 					temp.bump_any(); // bump ,
-					trailing_comma_marker = Some(trailing_marker.complete(&mut *temp, ERROR));
+					trailing_comma_marker = Some(trailing_marker.complete(&mut *temp, JS_UNKNOWN));
 					temp.bump_any(); // bump )
 					break;
 				} else {
@@ -1101,7 +1101,7 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 						))
 						.primary(p.cur_tok().range, "");
 
-					p.err_and_bump(err, ERROR);
+					p.err_and_bump(err, JS_UNKNOWN);
 					m.complete(p, IMPORT_META)
 				} else {
 					let err = p
@@ -1109,7 +1109,7 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 						.primary(p.cur_tok().range, "");
 
 					p.error(err);
-					m.complete(p, ERROR)
+					m.complete(p, JS_UNKNOWN)
 				}
 			} else {
 				// test_err import_call_no_arg
@@ -1132,7 +1132,7 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 		ERROR_TOKEN => {
 			let m = p.start();
 			p.bump_any();
-			m.complete(p, ERROR)
+			m.complete(p, JS_UNKNOWN)
 		}
 		// test_err primary_expr_invalid_recovery
 		// let a = \; foo();

@@ -110,7 +110,7 @@ pub fn generate_syntax_factory(ast: &AstSrc) -> Result<String> {
 			) -> RawSyntaxNode<Self::Kind>
 			{
 				match kind {
-					#(#unknown_kinds)|* | ERROR => {
+					#(#unknown_kinds)|* => {
 						RawSyntaxNode::new(kind, children.into_iter().map(Some))
 					},
 					#(#normal_node_arms),*,

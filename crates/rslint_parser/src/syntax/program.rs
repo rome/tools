@@ -174,7 +174,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 
 			p.error(err);
 			p.bump_any();
-			m.complete(p, ERROR);
+			m.complete(p, JS_UNKNOWN);
 		} else {
 			p.bump_remap(T![declare]);
 		}
@@ -216,7 +216,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 				p.error(err);
 				let m = p.start();
 				p.bump_any();
-				m.complete(p, ERROR);
+				m.complete(p, JS_UNKNOWN);
 			} else {
 				p.bump_remap(T![abstract]);
 			}

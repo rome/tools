@@ -17,9 +17,11 @@ JsModule {
                                         JsUnknown {
                                             items: [
                                                 EQ@6..8 "=" [] [Whitespace(" ")],
-                                                1: ERROR@8..16
-                                                  0: ERROR_TOKEN@8..16 "\"\\u{200\"" [] []
-                                                ,
+                                                JsUnknown {
+                                                    items: [
+                                                        ERROR_TOKEN@8..16 "\"\\u{200\"" [] [],
+                                                    ],
+                                                },
                                             ],
                                         },
                                     ],
@@ -48,7 +50,7 @@ JsModule {
               0: IDENT@4..6 "s" [] [Whitespace(" ")]
             1: JS_UNKNOWN@6..16
               0: EQ@6..8 "=" [] [Whitespace(" ")]
-              1: ERROR@8..16
+              1: JS_UNKNOWN@8..16
                 0: ERROR_TOKEN@8..16 "\"\\u{200\"" [] []
       1: SEMICOLON@16..17 ";" [] []
   3: EOF@17..18 "" [Whitespace("\n")] []

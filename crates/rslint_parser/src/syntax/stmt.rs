@@ -239,7 +239,7 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
 		let m = p.start();
 		p.bump_any();
 		ts_interface(p);
-		m.complete(p, ERROR);
+		m.complete(p, JS_UNKNOWN);
 	}
 
 	// Labelled statement
@@ -1491,7 +1491,12 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 		let end = ty
 			.map(|x| usize::from(x.range(p).end()))
 			.unwrap_or(p.cur_tok().range.start);
-		error_marker.complete(p, pattern_kind.filter(|_| p.typescript()).unwrap_or(ERROR));
+		error_marker.complete(
+			p,
+			pattern_kind
+				.filter(|_| p.typescript())
+				.unwrap_or(JS_UNKNOWN),
+		);
 
 		if !p.typescript() {
 			let err = p
