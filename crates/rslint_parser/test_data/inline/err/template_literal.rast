@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -27,7 +27,7 @@ JsModule {
                                         r_curly_token: R_CURLY@15..16 "}" [] [],
                                     },
                                 ],
-                                r_tick_token: BACKTICK@8..9 "`" [] [],
+                                r_tick_token: BACKTICK@16..17 "`" [] [],
                             },
                         },
                     },

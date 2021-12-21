@@ -14,7 +14,7 @@ JsModule {
                         TsTypeList [
                             TsExprWithTypeArgs {
                                 item: TsTypeName {
-                                    ident: missing (required),
+                                    ident_token: IDENT@19..21 "C" [] [Whitespace(" ")],
                                 },
                                 type_params: missing (optional),
                             },

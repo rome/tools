@@ -21,7 +21,7 @@ JsModule {
                         JsImportAssertionEntry {
                             key: JS_STRING_LITERAL@28..35 "\"json\"" [] [Whitespace(" ")],
                             colon_token: missing (required),
-                            value_token: JS_STRING_LITERAL@28..35 "\"json\"" [] [Whitespace(" ")],
+                            value_token: missing (required),
                         },
                     ],
                     r_curly_token: R_CURLY@35..36 "}" [] [],
@@ -149,7 +149,7 @@ JsModule {
                         JsImportAssertionEntry {
                             key: JS_STRING_LITERAL@194..200 "\"type\"" [] [],
                             colon_token: COLON@200..202 ":" [] [Whitespace(" ")],
-                            value_token: JS_STRING_LITERAL@194..200 "\"type\"" [] [],
+                            value_token: JS_STRING_LITERAL@202..208 "\"json\"" [] [],
                         },
                         COMMA@208..210 "," [] [Whitespace(" ")],
                         JsUnknownImportAssertionEntry {

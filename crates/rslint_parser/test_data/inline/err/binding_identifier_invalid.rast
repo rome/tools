@@ -19,7 +19,7 @@ JsModule {
                     statements: JsStatementList [
                         JsVariableStatement {
                             declarations: JsVariableDeclarations {
-                                kind_token: LET_KW@14..18 "let" [] [Whitespace(" ")],
+                                kind: LET_KW@14..18 "let" [] [Whitespace(" ")],
                                 items: JsVariableDeclarationList [
                                     JsVariableDeclaration {
                                         id: JsUnknownBinding {
@@ -66,7 +66,7 @@ JsModule {
                 statements: JsStatementList [
                     JsVariableStatement {
                         declarations: JsVariableDeclarations {
-                            kind_token: LET_KW@48..56 "let" [Whitespace("\n   ")] [Whitespace(" ")],
+                            kind: LET_KW@48..56 "let" [Whitespace("\n   ")] [Whitespace(" ")],
                             items: JsVariableDeclarationList [
                                 JsVariableDeclaration {
                                     id: JsUnknownBinding {
@@ -93,7 +93,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@68..73 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@68..73 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
@@ -116,7 +116,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@82..87 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@82..87 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
@@ -139,7 +139,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: CONST_KW@95..102 "const" [Whitespace("\n")] [Whitespace(" ")],
+                kind: CONST_KW@95..102 "const" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
@@ -162,7 +162,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@110..115 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@110..115 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {

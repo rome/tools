@@ -19,51 +19,29 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			let methods = node
 				.fields
 				.iter()
-				.filter(|field| {
-					!matches!(
-						field,
-						Field::Token { manual: true, .. } | Field::Node { manual: true, .. }
-					)
-				})
-				.map(|field| match field {
-					Field::Token { kind, name, .. } => {
-						// TODO: make the mandatory/optional bit
-						let method_name = field.method_name();
+				.enumerate()
+				.map(|(slot_index, field)| match field {
+					Field::Token { name, kind, .. } => {
+						let many = matches!(kind, TokenKind::Many(_));
+
+						let method_name = if many {
+							format_ident!("{}", name)
+						} else {
+							field.method_name()
+						};
+
 						let is_optional = field.is_optional();
 
-						match kind {
-							TokenKind::Many(kinds) => {
-								let tokens = token_kinds_to_code(kinds.as_slice());
-								let method_name = format_ident!("{}", name);
-
-								if is_optional {
-									quote! {
-										pub fn #method_name(&self) -> Option<SyntaxToken> {
-											support::find_token(&self.syntax, #tokens)
-										}
-									}
-								} else {
-									quote! {
-										pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
-											support::find_required_token(&self.syntax, #tokens)
-										}
-									}
+						if is_optional {
+							quote! {
+								pub fn #method_name(&self) -> Option<SyntaxToken> {
+									support::token(&self.syntax, #slot_index)
 								}
 							}
-							TokenKind::Single(kind) => {
-								let token_kind_code = token_kind_to_code(kind.as_str());
-								if is_optional {
-									quote! {
-										pub fn #method_name(&self) -> Option<SyntaxToken> {
-											support::token(&self.syntax, #token_kind_code)
-										}
-									}
-								} else {
-									quote! {
-										pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
-											support::required_token(&self.syntax, #token_kind_code)
-										}
-									}
+						} else {
+							quote! {
+								pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
+									support::required_token(&self.syntax, #slot_index)
 								}
 							}
 						}
@@ -76,19 +54,19 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 						if is_list {
 							quote! {
 								pub fn #method_name(&self) -> #ty {
-									support::list(&self.syntax)
+									support::list(&self.syntax, #slot_index)
 								}
 							}
 						} else if *optional {
 							quote! {
 								pub fn #method_name(&self) -> Option<#ty> {
-									support::node(&self.syntax)
+									support::node(&self.syntax, #slot_index)
 								}
 							}
 						} else {
 							quote! {
 								pub fn #method_name(&self) -> SyntaxResult<#ty> {
-									support::required_node(&self.syntax)
+									support::required_node(&self.syntax, #slot_index)
 								}
 							}
 						}
@@ -593,7 +571,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 	use crate::{
 		ast::*,
 		JsSyntaxKind::{self, *},
-		SyntaxNode, SyntaxToken, T,
+		SyntaxNode, SyntaxToken,
 		SyntaxResult
 	};
 
@@ -627,16 +605,5 @@ pub(crate) fn token_kind_to_code(name: &str) -> proc_macro2::TokenStream {
 	} else {
 		let token: proc_macro2::TokenStream = name.parse().unwrap();
 		quote! { T![#token] }
-	}
-}
-
-fn token_kinds_to_code(kinds: &[String]) -> proc_macro2::TokenStream {
-	let streamed_tokens: Vec<proc_macro2::TokenStream> = kinds
-		.iter()
-		.map(|kind| token_kind_to_code(kind.as_str()))
-		.collect();
-
-	quote! {
-		&[#(#streamed_tokens),*]
 	}
 }

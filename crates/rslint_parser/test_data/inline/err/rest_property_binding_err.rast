@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
@@ -34,7 +34,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@16..21 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@16..21 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
@@ -70,7 +70,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@46..51 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
@@ -113,7 +113,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@66..71 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@66..71 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
@@ -154,7 +154,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@105..110 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@105..110 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
@@ -207,7 +207,7 @@ JsModule {
                 statements: JsStatementList [
                     JsVariableStatement {
                         declarations: JsVariableDeclarations {
-                            kind_token: LET_KW@151..158 "let" [Whitespace("\n  ")] [Whitespace(" ")],
+                            kind: LET_KW@151..158 "let" [Whitespace("\n  ")] [Whitespace(" ")],
                             items: JsVariableDeclarationList [
                                 JsVariableDeclaration {
                                     id: JsObjectBindingPattern {

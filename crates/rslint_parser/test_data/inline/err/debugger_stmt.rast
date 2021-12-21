@@ -29,7 +29,7 @@ JsModule {
                         statements: JsStatementList [
                             JsVariableStatement {
                                 declarations: JsVariableDeclarations {
-                                    kind_token: VAR_KW@28..35 "var" [Whitespace("\n\t\t")] [Whitespace(" ")],
+                                    kind: VAR_KW@28..35 "var" [Whitespace("\n\t\t")] [Whitespace(" ")],
                                     items: JsVariableDeclarationList [
                                         JsVariableDeclaration {
                                             id: JsIdentifierBinding {

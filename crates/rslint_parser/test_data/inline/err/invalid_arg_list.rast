@@ -62,7 +62,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: VAR_KW@17..20 "var" [] [],
+                kind: VAR_KW@17..20 "var" [] [],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {

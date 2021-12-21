@@ -4,7 +4,7 @@ JsScript {
     statements: JsStatementList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@0..14 "let" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@0..14 "let" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
@@ -27,7 +27,7 @@ JsScript {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: CONST_KW@22..29 "const" [Whitespace("\n")] [Whitespace(" ")],
+                kind: CONST_KW@22..29 "const" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {

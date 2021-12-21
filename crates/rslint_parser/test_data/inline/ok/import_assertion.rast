@@ -36,7 +36,7 @@ JsModule {
                         JsImportAssertionEntry {
                             key: JS_STRING_LITERAL@57..63 "\"type\"" [] [],
                             colon_token: COLON@63..65 ":" [] [Whitespace(" ")],
-                            value_token: JS_STRING_LITERAL@57..63 "\"type\"" [] [],
+                            value_token: JS_STRING_LITERAL@65..72 "\"json\"" [] [Whitespace(" ")],
                         },
                     ],
                     r_curly_token: R_CURLY@72..73 "}" [] [],
