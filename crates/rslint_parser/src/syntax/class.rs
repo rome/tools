@@ -1026,9 +1026,6 @@ fn parse_class_member_modifiers(
 	}
 }
 
-// test_err class_declare_member
-// class B { declare foo = bar }
-//
 // test_err class_declare_method
 // class B { declare fn() {} }
 //
