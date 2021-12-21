@@ -1,13 +1,13 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	CallExpr, ForStmt, ForStmtTest, ForStmtUpdate, JsArrayBindingPattern, JsArrayExpression,
-	JsArrowFunctionExpression, JsBlockStatement, JsBooleanLiteralExpression, JsCallArguments,
-	JsCaseClause, JsCatchClause, JsClassDeclaration, JsConstructorParameters, JsContinueStatement,
-	JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement, JsEmptyStatement,
-	JsExpressionStatement, JsFinallyClause, JsForInStatement, JsFunctionDeclaration,
-	JsGetterClassMember, JsIdentifierBinding, JsIdentifierExpression, JsIfStatement,
-	JsLabeledStatement, JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression,
-	JsParameters, JsPropertyClassMember, JsPropertyObjectMember, JsReturnStatement, JsScript,
+	CallExpr, JsArrayBindingPattern, JsArrayExpression, JsArrowFunctionExpression,
+	JsBlockStatement, JsBooleanLiteralExpression, JsCallArguments, JsCaseClause, JsCatchClause,
+	JsClassDeclaration, JsConstructorParameters, JsContinueStatement, JsDebuggerStatement,
+	JsDefaultClause, JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause,
+	JsForInStatement, JsForStatement, JsFunctionDeclaration, JsGetterClassMember,
+	JsIdentifierBinding, JsIdentifierExpression, JsIfStatement, JsLabeledStatement,
+	JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression, JsParameters,
+	JsPropertyClassMember, JsPropertyObjectMember, JsReturnStatement, JsScript,
 	JsSequenceExpression, JsSetterClassMember, JsShorthandPropertyObjectMember, JsSpread,
 	JsStringLiteralExpression, JsSwitchStatement, JsTryStatement, JsVariableDeclaration,
 	JsVariableStatement, JsWhileStatement, JsWithStatement,
@@ -82,13 +82,7 @@ impl ToFormatElement for SyntaxNode {
 			JsSyntaxKind::JS_IF_STATEMENT => JsIfStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			JsSyntaxKind::FOR_STMT => ForStmt::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
-			JsSyntaxKind::FOR_STMT_TEST => ForStmtTest::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
-			JsSyntaxKind::FOR_STMT_UPDATE => ForStmtUpdate::cast(self.clone())
+			JsSyntaxKind::JS_FOR_STATEMENT => JsForStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			JsSyntaxKind::JS_EMPTY_STATEMENT => JsEmptyStatement::cast(self.clone())
