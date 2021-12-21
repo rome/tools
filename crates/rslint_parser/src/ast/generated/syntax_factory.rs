@@ -20,8 +20,7 @@ impl SyntaxFactory for JsSyntaxFactory {
 			| JS_UNKNOWN_MEMBER
 			| JS_UNKNOWN_MODIFIER
 			| JS_UNKNOWN_NAMED_IMPORT_SPECIFIER
-			| JS_UNKNOWN_STATEMENT
-			| ERROR => RawSyntaxNode::new(kind, children.into_iter().map(Some)),
+			| JS_UNKNOWN_STATEMENT => RawSyntaxNode::new(kind, children.into_iter().map(Some)),
 			CALL_EXPR => {
 				let actual_len = children.len();
 				if actual_len > 4usize {

@@ -105,7 +105,7 @@ impl ParserState {
 				.primary(marker.range(p), "multiple default exports are erroneous");
 
 			p.error(err);
-			marker.change_kind(p, JsSyntaxKind::ERROR);
+			marker.change_kind(p, JsSyntaxKind::JS_UNKNOWN);
 		} else if self.is_module {
 			self.default_item = Some(marker.range(p).into());
 		}

@@ -19,9 +19,11 @@ JsModule {
                                 members: JsObjectMemberList [
                                     JsUnknownMember {
                                         items: [
-                                            0: ERROR@10..17
-                                              0: JS_REGEX_LITERAL@10..17 "/: 6, /" [] []
-                                            ,
+                                            JsUnknown {
+                                                items: [
+                                                    JS_REGEX_LITERAL@10..17 "/: 6, /" [] [],
+                                                ],
+                                            },
                                             COLON@17..19 ":" [] [Whitespace(" ")],
                                             JsRegexLiteralExpression {
                                                 value_token: JS_REGEX_LITERAL@19..25 "/foo/" [] [Whitespace(" ")],
@@ -94,7 +96,7 @@ JsModule {
                 0: L_CURLY@8..10 "{" [] [Whitespace(" ")]
                 1: JS_OBJECT_MEMBER_LIST@10..25
                   0: JS_UNKNOWN_MEMBER@10..25
-                    0: ERROR@10..17
+                    0: JS_UNKNOWN@10..17
                       0: JS_REGEX_LITERAL@10..17 "/: 6, /" [] []
                     1: COLON@17..19 ":" [] [Whitespace(" ")]
                     2: JS_REGEX_LITERAL_EXPRESSION@19..25

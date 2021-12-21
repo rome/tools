@@ -97,7 +97,7 @@ pub(crate) fn maybe_ts_type_annotation(p: &mut Parser) -> Option<Range<usize>> {
 				.primary(start..end, "");
 
 			p.error(err);
-			m.complete(p, ERROR);
+			m.complete(p, JS_UNKNOWN);
 		} else {
 			m.complete(p, TS_TYPE_ANNOTATION);
 		}
@@ -388,7 +388,7 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 		p.bump_any();
 		let mut complete = ts_heritage_clause(p, false);
 		for elem in &mut complete {
-			elem.change_kind(p, ERROR);
+			elem.change_kind(p, JS_UNKNOWN);
 		}
 
 		let err = p
@@ -396,7 +396,7 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 			.primary(p.marker_vec_range(&complete), "");
 
 		p.error(err);
-		m.complete(p, ERROR);
+		m.complete(p, JS_UNKNOWN);
 	}
 
 	p.expect(T!['{']);
@@ -493,7 +493,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 						.primary(complete.range(p), "");
 
 					p.error(err);
-					complete.change_kind(p, ERROR);
+					complete.change_kind(p, JS_UNKNOWN);
 				}
 			}
 		}
@@ -631,7 +631,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 			#[allow(deprecated)]
 			SingleTokenParseRecovery::with_error(
 				token_set![T!['}'], T![ident], T![yield], T![await], T![=], T![,]],
-				ERROR,
+				JS_UNKNOWN,
 				err,
 			)
 			.recover(p);
@@ -983,11 +983,11 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 				_ =>
 				/* dummy value */
 				{
-					ERROR
+					JS_UNKNOWN
 				}
 			};
 
-			if kind != ERROR && !p.nth_at(1, T![.]) {
+			if kind != JS_UNKNOWN && !p.nth_at(1, T![.]) {
 				let m = p.start();
 				p.bump_any();
 				Some(m.complete(p, kind))
@@ -1108,7 +1108,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 					T![&],
 					T![|]
 				]),
-				ERROR,
+				JS_UNKNOWN,
 				err,
 			)
 			.recover(p);
@@ -1137,7 +1137,7 @@ pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
 			let m = p.start();
 			let range = p.cur_tok().range;
 			p.bump_any();
-			m.complete(p, ERROR);
+			m.complete(p, JS_UNKNOWN);
 			let err = p
 				.err_builder("type arguments may not contain trailing commas")
 				.primary(range, "help: remove this comma");
@@ -1233,7 +1233,7 @@ fn type_param(p: &mut Parser) -> Option<CompletedMarker> {
 		#[allow(deprecated)]
 		SingleTokenParseRecovery::with_error(
 			token_set![T![ident], T![yield], T![await], T![>], T![=]],
-			ERROR,
+			JS_UNKNOWN,
 			err,
 		)
 		.recover(p);
@@ -1398,9 +1398,9 @@ pub(crate) fn maybe_eat_incorrect_modifier(p: &mut Parser) -> Option<CompletedMa
 	if matches!(p.cur_src(), "public" | "private" | "protected") {
 		let m = p.start();
 		p.bump_any();
-		Some(m.complete(p, ERROR))
+		Some(m.complete(p, JS_UNKNOWN))
 	} else if ts_modifier(p, &["readonly"]).is_some() {
-		Some(maybe_err.complete(p, ERROR))
+		Some(maybe_err.complete(p, JS_UNKNOWN))
 	} else {
 		maybe_err.abandon(p);
 		None
@@ -1480,6 +1480,6 @@ pub fn ts_type_name(
 		.primary(p.cur_tok().range, "");
 
 	#[allow(deprecated)]
-	SingleTokenParseRecovery::with_error(set, ERROR, err).recover(p);
+	SingleTokenParseRecovery::with_error(set, JS_UNKNOWN, err).recover(p);
 	None
 }
