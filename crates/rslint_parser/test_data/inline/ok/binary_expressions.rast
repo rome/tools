@@ -44,7 +44,7 @@ JsModule {
                             value_token: JS_NUMBER_LITERAL@22..24 "2" [] [Whitespace(" ")],
                         },
                         operator: STAR@24..26 "*" [] [Whitespace(" ")],
-                        right: CallExpr {
+                        right: JsCallExpression {
                             callee: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@26..27 "3" [] [],
                             },
@@ -263,7 +263,7 @@ JsModule {
             0: JS_NUMBER_LITERAL_EXPRESSION@22..24
               0: JS_NUMBER_LITERAL@22..24 "2" [] [Whitespace(" ")]
             1: STAR@24..26 "*" [] [Whitespace(" ")]
-            2: CALL_EXPR@26..36
+            2: JS_CALL_EXPRESSION@26..36
               0: JS_NUMBER_LITERAL_EXPRESSION@26..27
                 0: JS_NUMBER_LITERAL@26..27 "3" [] []
               1: (empty)

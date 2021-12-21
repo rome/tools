@@ -21,65 +21,6 @@ impl SyntaxFactory for JsSyntaxFactory {
 			| JS_UNKNOWN_MODIFIER
 			| JS_UNKNOWN_NAMED_IMPORT_SPECIFIER
 			| JS_UNKNOWN_STATEMENT => RawSyntaxNode::new(kind, children.into_iter().map(Some)),
-			CALL_EXPR => {
-				let actual_len = children.len();
-				if actual_len > 4usize {
-					return RawSyntaxNode::new(
-						CALL_EXPR.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if JsAnyExpression::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					} else {
-						slots.mark_absent();
-					}
-				} else {
-					slots.mark_absent();
-				}
-				if let Some(element) = &current_element {
-					if element.kind() == T ! [?.] {
-						slots.mark_present();
-						current_element = elements.next();
-					} else {
-						slots.mark_absent();
-					}
-				} else {
-					slots.mark_absent();
-				}
-				if let Some(element) = &current_element {
-					if TsTypeArgs::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					} else {
-						slots.mark_absent();
-					}
-				} else {
-					slots.mark_absent();
-				}
-				if let Some(element) = &current_element {
-					if JsCallArguments::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					} else {
-						slots.mark_absent();
-					}
-				} else {
-					slots.mark_absent();
-				}
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						CALL_EXPR.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(CALL_EXPR, children)
-			}
 			EXPORT_DECL => {
 				let actual_len = children.len();
 				if actual_len > 3usize {
@@ -1267,6 +1208,65 @@ impl SyntaxFactory for JsSyntaxFactory {
 					);
 				}
 				slots.into_node(JS_CALL_ARGUMENTS, children)
+			}
+			JS_CALL_EXPRESSION => {
+				let actual_len = children.len();
+				if actual_len > 4usize {
+					return RawSyntaxNode::new(
+						JS_CALL_EXPRESSION.to_unknown(),
+						children.into_iter().map(Some),
+					);
+				}
+				let mut elements = (&children).into_iter();
+				let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
+				let mut current_element = elements.next();
+				if let Some(element) = &current_element {
+					if JsAnyExpression::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					} else {
+						slots.mark_absent();
+					}
+				} else {
+					slots.mark_absent();
+				}
+				if let Some(element) = &current_element {
+					if element.kind() == T ! [?.] {
+						slots.mark_present();
+						current_element = elements.next();
+					} else {
+						slots.mark_absent();
+					}
+				} else {
+					slots.mark_absent();
+				}
+				if let Some(element) = &current_element {
+					if TsTypeArgs::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					} else {
+						slots.mark_absent();
+					}
+				} else {
+					slots.mark_absent();
+				}
+				if let Some(element) = &current_element {
+					if JsCallArguments::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					} else {
+						slots.mark_absent();
+					}
+				} else {
+					slots.mark_absent();
+				}
+				if current_element.is_some() {
+					return RawSyntaxNode::new(
+						JS_CALL_EXPRESSION.to_unknown(),
+						children.into_iter().map(Some),
+					);
+				}
+				slots.into_node(JS_CALL_EXPRESSION, children)
 			}
 			JS_CASE_CLAUSE => {
 				let actual_len = children.len();
@@ -4603,6 +4603,65 @@ impl SyntaxFactory for JsSyntaxFactory {
 				}
 				slots.into_node(JS_NAMESPACE_IMPORT_SPECIFIER, children)
 			}
+			JS_NEW_EXPRESSION => {
+				let actual_len = children.len();
+				if actual_len > 4usize {
+					return RawSyntaxNode::new(
+						JS_NEW_EXPRESSION.to_unknown(),
+						children.into_iter().map(Some),
+					);
+				}
+				let mut elements = (&children).into_iter();
+				let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
+				let mut current_element = elements.next();
+				if let Some(element) = &current_element {
+					if element.kind() == T![new] {
+						slots.mark_present();
+						current_element = elements.next();
+					} else {
+						slots.mark_absent();
+					}
+				} else {
+					slots.mark_absent();
+				}
+				if let Some(element) = &current_element {
+					if JsAnyExpression::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					} else {
+						slots.mark_absent();
+					}
+				} else {
+					slots.mark_absent();
+				}
+				if let Some(element) = &current_element {
+					if TsTypeArgs::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					} else {
+						slots.mark_absent();
+					}
+				} else {
+					slots.mark_absent();
+				}
+				if let Some(element) = &current_element {
+					if JsCallArguments::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					} else {
+						slots.mark_absent();
+					}
+				} else {
+					slots.mark_absent();
+				}
+				if current_element.is_some() {
+					return RawSyntaxNode::new(
+						JS_NEW_EXPRESSION.to_unknown(),
+						children.into_iter().map(Some),
+					);
+				}
+				slots.into_node(JS_NEW_EXPRESSION, children)
+			}
 			JS_NULL_LITERAL_EXPRESSION => {
 				let actual_len = children.len();
 				if actual_len > 1usize {
@@ -6898,65 +6957,6 @@ impl SyntaxFactory for JsSyntaxFactory {
 					);
 				}
 				slots.into_node(JS_YIELD_EXPRESSION, children)
-			}
-			NEW_EXPR => {
-				let actual_len = children.len();
-				if actual_len > 4usize {
-					return RawSyntaxNode::new(
-						NEW_EXPR.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T![new] {
-						slots.mark_present();
-						current_element = elements.next();
-					} else {
-						slots.mark_absent();
-					}
-				} else {
-					slots.mark_absent();
-				}
-				if let Some(element) = &current_element {
-					if JsAnyExpression::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					} else {
-						slots.mark_absent();
-					}
-				} else {
-					slots.mark_absent();
-				}
-				if let Some(element) = &current_element {
-					if TsTypeArgs::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					} else {
-						slots.mark_absent();
-					}
-				} else {
-					slots.mark_absent();
-				}
-				if let Some(element) = &current_element {
-					if JsCallArguments::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					} else {
-						slots.mark_absent();
-					}
-				} else {
-					slots.mark_absent();
-				}
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						NEW_EXPR.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(NEW_EXPR, children)
 			}
 			NEW_TARGET => {
 				let actual_len = children.len();

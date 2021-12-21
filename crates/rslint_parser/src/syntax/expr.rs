@@ -450,10 +450,10 @@ fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax {
 			// it's safe to unwrap to because we check beforehand the existence of '('
 			// which is mandatory for `parse_arguments`
 			parse_arguments(p).unwrap();
-			let complete = m.complete(p, NEW_EXPR);
+			let complete = m.complete(p, JS_NEW_EXPRESSION);
 			return Present(subscripts(p, complete, true));
 		}
-		return Present(m.complete(p, NEW_EXPR));
+		return Present(m.complete(p, JS_NEW_EXPRESSION));
 	}
 
 	// super.foo and super[bar]
@@ -537,7 +537,7 @@ fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Comple
 					// it's safe to unwrap to because we check beforehand the existence of '('
 					// which is mandatory for `parse_arguments`
 					parse_arguments(p).unwrap();
-					m.complete(p, CALL_EXPR)
+					m.complete(p, JS_CALL_EXPRESSION)
 				}
 			}
 			T!['('] if !no_call => {
@@ -546,7 +546,7 @@ fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Comple
 					// it's safe to unwrap to because we check beforehand the existence of '('
 					// which is mandatory for `parse_arguments`
 					parse_arguments(p).unwrap();
-					m.complete(p, CALL_EXPR)
+					m.complete(p, JS_CALL_EXPRESSION)
 				}
 			}
 			T![?.] if p.nth_at(1, T!['[']) => {
@@ -583,7 +583,7 @@ fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Comple
 					if !no_call && p.at(T!['(']) {
 						// we already to the check on '(', so it's safe to unwrap
 						parse_arguments(p).unwrap();
-						Some(m.complete(p, CALL_EXPR))
+						Some(m.complete(p, JS_CALL_EXPRESSION))
 					} else if p.at(BACKTICK) {
 						m.abandon(p);
 						Some(parse_template_literal(p, Present(lhs)))
@@ -1378,7 +1378,7 @@ pub(super) fn parse_lhs_expr(p: &mut Parser) -> ParsedSyntax {
 		if p.at(T!['(']) || type_args.is_some() {
 			// it's safe to unwrap
 			parse_arguments(p).unwrap();
-			let lhs = m.complete(p, CALL_EXPR);
+			let lhs = m.complete(p, JS_CALL_EXPRESSION);
 			return subscripts(p, lhs, false);
 		}
 

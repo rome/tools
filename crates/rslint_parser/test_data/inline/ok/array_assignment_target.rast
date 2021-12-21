@@ -87,7 +87,7 @@ JsModule {
                         },
                         COMMA@52..54 "," [] [Whitespace(" ")],
                         JsStaticMemberAssignment {
-                            object: CallExpr {
+                            object: JsCallExpression {
                                 callee: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@54..58 "call" [] [],
@@ -216,7 +216,7 @@ JsModule {
                 0: IDENT@51..52 "b" [] []
             3: COMMA@52..54 "," [] [Whitespace(" ")]
             4: JS_STATIC_MEMBER_ASSIGNMENT@54..62
-              0: CALL_EXPR@54..60
+              0: JS_CALL_EXPRESSION@54..60
                 0: JS_IDENTIFIER_EXPRESSION@54..58
                   0: JS_REFERENCE_IDENTIFIER@54..58
                     0: IDENT@54..58 "call" [] []

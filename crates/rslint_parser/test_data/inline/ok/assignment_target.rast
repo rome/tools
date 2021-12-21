@@ -118,9 +118,9 @@ JsModule {
         JsExpressionStatement {
             expression: JsAssignmentExpression {
                 left: JsStaticMemberAssignment {
-                    object: CallExpr {
+                    object: JsCallExpression {
                         callee: JsStaticMemberExpression {
-                            object: CallExpr {
+                            object: JsCallExpression {
                                 callee: JsStaticMemberExpression {
                                     object: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
@@ -306,9 +306,9 @@ JsModule {
     5: JS_EXPRESSION_STATEMENT@82..111
       0: JS_ASSIGNMENT_EXPRESSION@82..110
         0: JS_STATIC_MEMBER_ASSIGNMENT@82..107
-          0: CALL_EXPR@82..99
+          0: JS_CALL_EXPRESSION@82..99
             0: JS_STATIC_MEMBER_EXPRESSION@82..97
-              0: CALL_EXPR@82..91
+              0: JS_CALL_EXPRESSION@82..91
                 0: JS_STATIC_MEMBER_EXPRESSION@82..89
                   0: JS_IDENTIFIER_EXPRESSION@82..84
                     0: JS_REFERENCE_IDENTIFIER@82..84

@@ -24,7 +24,7 @@ JsModule {
                 statements: JsStatementList [
                     JsThrowStatement {
                         throw_token: THROW_KW@25..31 "throw" [] [Whitespace(" ")],
-                        argument: CallExpr {
+                        argument: JsCallExpression {
                             callee: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@31..36 "Error" [] [],
@@ -103,7 +103,7 @@ JsModule {
         1: JS_STATEMENT_LIST@25..44
           0: JS_THROW_STATEMENT@25..44
             0: THROW_KW@25..31 "throw" [] [Whitespace(" ")]
-            1: CALL_EXPR@31..44
+            1: JS_CALL_EXPRESSION@31..44
               0: JS_IDENTIFIER_EXPRESSION@31..36
                 0: JS_REFERENCE_IDENTIFIER@31..36
                   0: IDENT@31..36 "Error" [] []

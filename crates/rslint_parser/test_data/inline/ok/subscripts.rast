@@ -21,9 +21,9 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsComputedMemberExpression {
-                object: CallExpr {
-                    callee: CallExpr {
-                        callee: CallExpr {
+                object: JsCallExpression {
+                    callee: JsCallExpression {
+                        callee: JsCallExpression {
                             callee: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@8..12 "foo" [Whitespace("\n")] [],
@@ -103,9 +103,9 @@ JsModule {
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@8..32
       0: JS_COMPUTED_MEMBER_EXPRESSION@8..32
-        0: CALL_EXPR@8..27
-          0: CALL_EXPR@8..22
-            0: CALL_EXPR@8..17
+        0: JS_CALL_EXPRESSION@8..27
+          0: JS_CALL_EXPRESSION@8..22
+            0: JS_CALL_EXPRESSION@8..17
               0: JS_IDENTIFIER_EXPRESSION@8..12
                 0: JS_REFERENCE_IDENTIFIER@8..12
                   0: IDENT@8..12 "foo" [Whitespace("\n")] []

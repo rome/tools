@@ -1,7 +1,7 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	CallExpr, JsArrayBindingPattern, JsArrayExpression, JsArrowFunctionExpression,
-	JsBlockStatement, JsBooleanLiteralExpression, JsCallArguments, JsCaseClause, JsCatchClause,
+	JsArrayBindingPattern, JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement,
+	JsBooleanLiteralExpression, JsCallArguments, JsCallExpression, JsCaseClause, JsCatchClause,
 	JsClassDeclaration, JsConstructorParameters, JsContinueStatement, JsDebuggerStatement,
 	JsDefaultClause, JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause,
 	JsForInStatement, JsForStatement, JsFunctionDeclaration, JsGetterClassMember,
@@ -138,7 +138,7 @@ impl ToFormatElement for SyntaxNode {
 			JsSyntaxKind::JS_ARRAY_BINDING_PATTERN => JsArrayBindingPattern::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			JsSyntaxKind::CALL_EXPR => CallExpr::cast(self.clone())
+			JsSyntaxKind::JS_CALL_EXPRESSION => JsCallExpression::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			JsSyntaxKind::JS_CALL_ARGUMENTS => JsCallArguments::cast(self.clone())

@@ -27,7 +27,7 @@ JsModule {
             semicolon_token: SEMICOLON@16..17 ";" [] [],
         },
         JsExpressionStatement {
-            expression: CallExpr {
+            expression: JsCallExpression {
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@17..21 "foo" [Whitespace("\n")] [],
@@ -69,7 +69,7 @@ JsModule {
                 3: R_PAREN@15..16 ")" [] []
       1: SEMICOLON@16..17 ";" [] []
     1: JS_EXPRESSION_STATEMENT@17..24
-      0: CALL_EXPR@17..23
+      0: JS_CALL_EXPRESSION@17..23
         0: JS_IDENTIFIER_EXPRESSION@17..21
           0: JS_REFERENCE_IDENTIFIER@17..21
             0: IDENT@17..21 "foo" [Whitespace("\n")] []
