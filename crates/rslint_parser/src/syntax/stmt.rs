@@ -276,7 +276,7 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
 
 			let labelled_statement = identifier.undo_completion(p);
 			p.bump_any();
-			parse_statement(p).or_syntax_error(p, expected_statement);
+			parse_statement(p).or_add_diagnostic(p, expected_statement);
 
 			return Present(labelled_statement.complete(p, kind));
 		}
@@ -649,7 +649,7 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
 /// An expression wrapped in parentheses such as `()`
 pub fn parenthesized_expression(p: &mut Parser) {
 	p.state.allow_object_expr = p.expect(T!['(']);
-	parse_expression(p).or_syntax_error(p, js_parse_error::expected_expression);
+	parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
 	p.expect(T![')']);
 	p.state.allow_object_expr = true;
 }
@@ -678,13 +678,13 @@ pub fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
 	parenthesized_expression(p);
 
 	// body
-	parse_statement(p).or_syntax_error(p, expected_statement);
+	parse_statement(p).or_add_diagnostic(p, expected_statement);
 
 	// else clause
 	if p.at(T![else]) {
 		let else_clause = p.start();
 		p.bump_any(); // bump else
-		parse_statement(p).or_syntax_error(p, expected_statement);
+		parse_statement(p).or_add_diagnostic(p, expected_statement);
 		else_clause.complete(p, JS_ELSE_CLAUSE);
 	}
 
@@ -708,7 +708,7 @@ pub fn parse_with_statement(p: &mut Parser) -> ParsedSyntax {
 	p.bump_any(); // with
 	parenthesized_expression(p);
 
-	parse_statement(p).or_syntax_error(p, expected_statement);
+	parse_statement(p).or_add_diagnostic(p, expected_statement);
 
 	let with_stmt = m.complete(p, JS_WITH_STATEMENT);
 
@@ -743,7 +743,7 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 			continue_allowed: true,
 			..p.state.clone()
 		});
-		parse_statement(guard).or_syntax_error(guard, expected_statement);
+		parse_statement(guard).or_add_diagnostic(guard, expected_statement);
 	}
 
 	Present(m.complete(p, JS_WHILE_STATEMENT))
@@ -773,7 +773,7 @@ pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax {
 
 	let declaration =
 		parse_variable_declaration_list(p, VariableDeclarationParent::VariableStatement)
-			.or_syntax_error(p, js_parse_error::expected_variable);
+			.or_add_diagnostic(p, js_parse_error::expected_variable);
 	if let Some(declaration) = declaration {
 		let m = declaration.precede(p);
 		semi(p, start..p.cur_tok().range.start);
@@ -1034,7 +1034,7 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 			break_allowed: true,
 			..p.state.clone()
 		});
-		parse_statement(guard).or_syntax_error(guard, expected_statement);
+		parse_statement(guard).or_add_diagnostic(guard, expected_statement);
 	}
 
 	p.expect(T![while]);
@@ -1130,7 +1130,7 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
 			return parse_for_of_or_in_head(p);
 		}
 
-		init_expr.or_syntax_error(p, js_parse_error::expected_expression);
+		init_expr.or_add_diagnostic(p, js_parse_error::expected_expression);
 
 		parse_normal_for_head(p);
 		FOR_STMT
@@ -1144,7 +1144,7 @@ fn parse_normal_for_head(p: &mut Parser) {
 
 	if !p.at(T![;]) {
 		let m = p.start();
-		parse_expression(p).or_syntax_error(p, js_parse_error::expected_expression);
+		parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
 		m.complete(p, FOR_STMT_TEST);
 	}
 
@@ -1152,7 +1152,7 @@ fn parse_normal_for_head(p: &mut Parser) {
 
 	if !p.at(T![')']) {
 		let m = p.start();
-		parse_expression(p).or_syntax_error(p, js_parse_error::expected_expression);
+		parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
 		m.complete(p, FOR_STMT_UPDATE);
 	}
 }
@@ -1163,14 +1163,14 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> JsSyntaxKind {
 
 	if is_in {
 		p.bump_any();
-		parse_expression(p).or_syntax_error(p, js_parse_error::expected_expression);
+		parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
 
 		JS_FOR_IN_STATEMENT
 	} else {
 		p.bump_remap(T![of]);
 
 		parse_expr_or_assignment(p)
-			.or_syntax_error(p, js_parse_error::expected_expression_assignment);
+			.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
 		JS_FOR_OF_STATEMENT
 	}
@@ -1218,7 +1218,7 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 			break_allowed: true,
 			..p.state.clone()
 		});
-		parse_statement(guard).or_syntax_error(guard, expected_statement);
+		parse_statement(guard).or_add_diagnostic(guard, expected_statement);
 	}
 
 	let mut completed = m.complete(p, kind);
@@ -1327,7 +1327,7 @@ fn parse_switch_clause(
 		}
 		T![case] => {
 			p.bump_any();
-			parse_expression(p).or_syntax_error(p, js_parse_error::expected_expression);
+			parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
 			p.expect(T![:]);
 
 			SwitchClausesList.parse_list(p);
@@ -1451,7 +1451,7 @@ fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax {
 	p.bump_any(); // bump catch
 
 	parse_catch_declaration(p).ok();
-	parse_block_stmt(p).or_syntax_error(p, js_parse_error::expected_block_statement);
+	parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
 
 	Present(m.complete(p, JS_CATCH_CLAUSE))
 }
@@ -1465,7 +1465,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_any(); // bump (
 
-	let pattern_marker = parse_binding_pattern(p).or_syntax_error(p, expected_binding);
+	let pattern_marker = parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
 	let pattern_kind = pattern_marker.map(|x| x.kind());
 
 	if p.at(T![:]) {
@@ -1534,7 +1534,7 @@ pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	p.bump_any(); // eat try
 
-	parse_block_stmt(p).or_syntax_error(p, js_parse_error::expected_block_statement);
+	parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
 
 	let catch = parse_catch_clause(p);
 
@@ -1543,11 +1543,11 @@ pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
 
 		let finalizer = p.start();
 		p.bump_any();
-		parse_block_stmt(p).or_syntax_error(p, js_parse_error::expected_block_statement);
+		parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
 		finalizer.complete(p, JS_FINALLY_CLAUSE);
 		Present(m.complete(p, JS_TRY_FINALLY_STATEMENT))
 	} else {
-		catch.or_syntax_error(p, js_parse_error::expected_catch_clause);
+		catch.or_add_diagnostic(p, js_parse_error::expected_catch_clause);
 		Present(m.complete(p, JS_TRY_STATEMENT))
 	}
 }

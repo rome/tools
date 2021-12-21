@@ -259,12 +259,12 @@ impl ParseObjectPattern for ObjectBindingPattern {
 		let m = p.start();
 
 		let kind = if p.at(T![=]) || (is_at_identifier_binding(p) && !p.nth_at(1, T![:])) {
-			parse_binding(p).or_syntax_error(p, expected_identifier);
+			parse_binding(p).or_add_diagnostic(p, expected_identifier);
 			JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
 		} else {
-			parse_object_member_name(p).or_syntax_error(p, expected_object_member_name);
+			parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
 			if p.expect(T![:]) {
-				parse_binding_pattern(p).or_syntax_error(p, expected_binding);
+				parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
 			}
 			JS_OBJECT_BINDING_PATTERN_PROPERTY
 		};
@@ -292,7 +292,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
 			let m = p.start();
 			p.bump(T![...]);
 
-			let inner = parse_binding_pattern(p).or_syntax_error(p, expected_identifier);
+			let inner = parse_binding_pattern(p).or_add_diagnostic(p, expected_identifier);
 
 			if let Some(mut inner) = inner {
 				if inner.kind() != JS_IDENTIFIER_BINDING {

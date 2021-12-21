@@ -394,7 +394,7 @@ fn parse_class_member_impl(
 		"constructor" | "\"constructor\"" | "'constructor'"
 	) && modifiers.get_range(ModifierKind::Static).is_none();
 	let member_name =
-		parse_class_member_name(p).or_syntax_error(p, js_parse_error::expected_class_member_name);
+		parse_class_member_name(p).or_add_diagnostic(p, js_parse_error::expected_class_member_name);
 
 	if is_at_method_class_member(p, 0) {
 		// test class_static_constructor_method
@@ -594,21 +594,23 @@ fn parse_class_member_impl(
 
 				// So we've seen a get that now must be followed by a getter/setter name
 				parse_class_member_name(p)
-					.or_syntax_error(p, js_parse_error::expected_class_member_name);
+					.or_add_diagnostic(p, js_parse_error::expected_class_member_name);
 
 				let completed = if is_getter {
 					p.expect(T!['(']);
 					p.expect(T![')']);
 					parse_ts_type_annotation_or_error(p).ok();
-					function_body(p).or_syntax_error(p, js_parse_error::expected_class_method_body);
+					function_body(p)
+						.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
 					p.state.allow_object_expr = p.expect(T!['(']);
 					parse_formal_param_pat(p)
-						.or_syntax_error(p, js_parse_error::expected_parameter);
+						.or_add_diagnostic(p, js_parse_error::expected_parameter);
 					p.expect(T![')']);
-					function_body(p).or_syntax_error(p, js_parse_error::expected_class_method_body);
+					function_body(p)
+						.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
 
 					p.state.allow_object_expr = true;
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
@@ -736,7 +738,7 @@ pub(crate) fn parse_initializer_clause(p: &mut Parser) -> ParsedSyntax {
 		p.bump(T![=]);
 
 		parse_expr_or_assignment(p)
-			.or_syntax_error(p, js_parse_error::expected_expression_assignment);
+			.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
 		Present(m.complete(p, JS_INITIALIZER_CLAUSE))
 	} else {
@@ -745,7 +747,7 @@ pub(crate) fn parse_initializer_clause(p: &mut Parser) -> ParsedSyntax {
 }
 
 fn parse_method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
-	parse_class_member_name(p).or_syntax_error(p, js_parse_error::expected_class_member_name);
+	parse_class_member_name(p).or_add_diagnostic(p, js_parse_error::expected_class_member_name);
 	parse_method_class_member_body(p, m)
 }
 
@@ -764,9 +766,9 @@ fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker 
 	};
 
 	ts_parameter_types(p);
-	parse_parameter_list(p).or_syntax_error(p, js_parse_error::expected_class_parameters);
+	parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_class_parameters);
 	parse_ts_type_annotation_or_error(p).ok();
-	function_body(p).or_syntax_error(p, js_parse_error::expected_class_method_body);
+	function_body(p).or_add_diagnostic(p, js_parse_error::expected_class_method_body);
 
 	m.complete(p, member_kind)
 }
@@ -795,7 +797,7 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
 	}
 
 	parse_constructor_parameter_list(p)
-		.or_syntax_error(p, js_parse_error::expected_constructor_parameters);
+		.or_add_diagnostic(p, js_parse_error::expected_constructor_parameters);
 
 	if let Some(range) = maybe_ts_type_annotation(p) {
 		let err = p
@@ -816,7 +818,7 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
 		let p = &mut *guard;
 
 		parse_block_impl(p, JS_FUNCTION_BODY)
-			.or_syntax_error(p, js_parse_error::expected_class_method_body);
+			.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
 	}
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
@@ -868,7 +870,7 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax {
 			}
 		}
 
-		parse_formal_param_pat(p).or_syntax_error(p, expected_parameter);
+		parse_formal_param_pat(p).or_add_diagnostic(p, expected_parameter);
 
 		Present(ts_param.complete(p, TS_CONSTRUCTOR_PARAM))
 	} else {

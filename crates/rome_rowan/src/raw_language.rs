@@ -166,4 +166,4 @@ impl SyntaxFactory for RawLanguageSyntaxFactory {
 }
 
 #[doc(hidden)]
-pub type RawSyntaxTreeBuilder = TreeBuilder<'static, RawLanguage, RawLanguageSyntaxFactory>;
+pub type RawSyntaxTreeBuilder<'a> = TreeBuilder<'a, RawLanguage, RawLanguageSyntaxFactory>;

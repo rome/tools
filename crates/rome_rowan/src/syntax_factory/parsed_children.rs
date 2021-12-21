@@ -4,9 +4,13 @@ use crate::SyntaxKind;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
+/// The parsed children of a node, not accounting for any missing children (required or optional)
 #[derive(Debug)]
 pub struct ParsedChildren<'a, K> {
+	/// Reference to an array containing all children of this node or any of its parents
 	all_children: &'a mut Vec<(u64, GreenElement)>,
+
+	/// The index of the first child of this node in the `all_children` array
 	first_child: usize,
 	ph: PhantomData<K>,
 }

@@ -1,4 +1,4 @@
 #[rustfmt::skip]
 pub(super) mod nodes;
 #[rustfmt::skip]
-pub(super) mod js_tree_shape;
+pub(super) mod syntax_factory;

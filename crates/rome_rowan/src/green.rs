@@ -12,7 +12,7 @@ pub(crate) use self::{
 pub use self::node_cache::NodeCache;
 pub(crate) use self::node_cache::NodeCacheNodeEntryMut;
 
-/// SyntaxKind is a type tag for each token or node.
+/// RawSyntaxKind is a type tag for each token or node.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct RawSyntaxKind(pub u16);
 

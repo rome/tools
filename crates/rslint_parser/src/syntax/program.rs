@@ -50,10 +50,10 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 
 fn named_export_specifier(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	parse_identifier_name(p).or_syntax_error(p, js_parse_error::expected_identifier);
+	parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 	if p.cur_src() == "as" {
 		p.bump_remap(T![as]);
-		parse_identifier_name(p).or_syntax_error(p, js_parse_error::expected_identifier);
+		parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 	}
 	m.complete(p, SPECIFIER)
 }
@@ -123,7 +123,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 				"`declare` modifiers cannot be applied to export equals declarations"
 			);
 			p.bump_any();
-			parse_expression(p).or_syntax_error(p, js_parse_error::expected_expression);
+			parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
 			semi(p, start..p.cur_tok().range.start);
 			let mut complete = m.complete(p, TS_EXPORT_ASSIGNMENT);
 			complete.err_if_not_ts(
@@ -150,7 +150,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			}
 
 			// TODO(RDambrosio016): verify, is identifier_name correct here or should it just be ident?
-			parse_identifier_name(p).or_syntax_error(p, js_parse_error::expected_identifier);
+			parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 			semi(p, start..p.cur_tok().range.start);
 			let mut complete = m.complete(p, TS_NAMESPACE_EXPORT_DECL);
 			complete.err_if_not_ts(
@@ -198,7 +198,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		}
 		if p.cur_src() == "as" {
 			p.bump_remap(T![as]);
-			parse_identifier_name(p).or_syntax_error(p, js_parse_error::expected_identifier);
+			parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 			exports_ns = true;
 		}
 	}
@@ -256,7 +256,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		if p.cur_src() == "from" || (p.at(T![,]) && p.nth_at(1, T!['{'])) {
 			export_default = true;
 		} else {
-			parse_expr_or_assignment(p).or_syntax_error(p, js_parse_error::expected_expression);
+			parse_expr_or_assignment(p).or_add_diagnostic(p, js_parse_error::expected_expression);
 			semi(p, start..p.cur_tok().range.start);
 			return m.complete(p, EXPORT_DEFAULT_EXPR);
 		}
@@ -291,7 +291,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			&& (token_set![T![async], T![yield], T![yield]].contains(p.cur())
 				|| p.cur().is_keyword())
 		{
-			parse_identifier_name(p).or_syntax_error(p, js_parse_error::expected_identifier);
+			parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 			export_default = true;
 		}
 
@@ -358,7 +358,7 @@ fn from_clause_and_semi(p: &mut Parser, start: usize) {
 
 pub fn ts_import_equals_decl(p: &mut Parser, m: Marker) -> CompletedMarker {
 	let start = p.cur_tok().range.start;
-	parse_identifier_name(p).or_syntax_error(p, js_parse_error::expected_identifier);
+	parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 	p.expect(T![=]);
 
 	if p.cur_src() == "require" && p.nth_at(1, T!['(']) {

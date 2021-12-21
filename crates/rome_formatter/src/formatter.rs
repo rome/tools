@@ -28,7 +28,6 @@ impl Formatter {
 
 	/// Formats a CST
 	pub fn format_root(self, root: &SyntaxNode) -> FormatResult<Formatted> {
-		dbg!(root);
 		let element = self.format_syntax_node(root)?;
 
 		let printer = Printer::new(self.options);

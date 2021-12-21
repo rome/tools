@@ -249,7 +249,7 @@ pub fn ts_type_alias_decl(p: &mut Parser) -> Option<CompletedMarker> {
 	let start = p.cur_tok().range.start;
 	p.bump_any();
 	let identifier =
-		parse_identifier_name(p).or_syntax_error(p, js_parse_error::expected_identifier);
+		parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 
 	if let Some(marker) = identifier {
 		no_recover!(p, m, t, Some(marker));
@@ -370,7 +370,7 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 
 		p.error(err);
 	}
-	parse_identifier_name(p).or_syntax_error(p, js_parse_error::expected_identifier);
+	parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 	if p.at(T![<]) {
 		ts_type_params(p);
 	}
@@ -420,7 +420,7 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
 	let mut elems = Vec::with_capacity(1);
 	let m = p.start();
 	if exprs {
-		parse_lhs_expr(p).or_syntax_error(p, js_parse_error::expected_expression);
+		parse_lhs_expr(p).or_add_diagnostic(p, js_parse_error::expected_expression);
 	} else {
 		ts_entity_name(p, None, false);
 	}
@@ -439,7 +439,7 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
 		progress.assert_progressing(p);
 		let m = p.start();
 		if exprs {
-			parse_lhs_expr(p).or_syntax_error(p, js_parse_error::expected_expression);
+			parse_lhs_expr(p).or_add_diagnostic(p, js_parse_error::expected_expression);
 		} else {
 			ts_entity_name(p, None, false);
 		}
@@ -478,7 +478,7 @@ pub fn ts_type_member(p: &mut Parser) -> Option<CompletedMarker> {
 fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Option<CompletedMarker> {
 	if p.eat(T!['[']) {
 		parse_expr_or_assignment(p)
-			.or_syntax_error(p, js_parse_error::expected_expression_assignment);
+			.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 		p.expect_no_recover(T![']'])?;
 	} else {
 		match p.cur() {
@@ -504,7 +504,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 		if p.at(T![<]) {
 			no_recover!(p, ts_type_params(p));
 		}
-		parse_parameter_list(p).or_syntax_error(p, js_parse_error::expected_parameters);
+		parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);
 		if p.at(T![:]) {
 			ts_type_or_type_predicate_ann(p, T![:]);
 		}
@@ -602,7 +602,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.eat(T![const]);
 	p.expect(T![enum]);
-	parse_identifier_name(p).or_syntax_error(p, js_parse_error::expected_identifier);
+	parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 	p.expect(T!['{']);
 	let mut first = true;
 
@@ -648,7 +648,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 
 		if p.eat(T![=]) {
 			parse_expr_or_assignment(p)
-				.or_syntax_error(p, js_parse_error::expected_expression_assignment);
+				.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 			member.complete(p, TS_ENUM_MEMBER);
 		} else if err_occured {
 			member.abandon(p);
@@ -714,7 +714,7 @@ pub fn ts_fn_or_constructor_type(p: &mut Parser, fn_type: bool) -> Option<Comple
 	if p.at(T![<]) {
 		ts_type_params(p);
 	}
-	parse_parameter_list(p).or_syntax_error(p, js_parse_error::expected_parameters);
+	parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);
 	if ts_type_or_type_predicate_ann(p, T![=>]).is_none() && p.state.no_recovery {
 		m.abandon(p);
 		return None;
@@ -881,7 +881,7 @@ pub fn ts_type_operator_or_higher(p: &mut Parser) -> Option<CompletedMarker> {
 	} else if p.cur_src() == "infer" {
 		let m = p.start();
 		p.bump_remap(T![infer]);
-		parse_identifier_name(p).or_syntax_error(p, js_parse_error::expected_identifier);
+		parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 		Some(m.complete(p, TS_INFER))
 	} else {
 		// FIXME: readonly should apparently be handled here?
@@ -928,7 +928,7 @@ pub fn ts_tuple(p: &mut Parser) -> Option<CompletedMarker> {
 			&& !DISALLOWED_TYPE_NAMES.contains(&p.cur_src())
 			&& (p.nth_at(1, T![:]) || (p.nth_at(1, T![?]) && p.nth_at(2, T![:])))
 		{
-			parse_identifier_name(p).or_syntax_error(p, js_parse_error::expected_identifier);
+			parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 			true
 		} else {
 			false

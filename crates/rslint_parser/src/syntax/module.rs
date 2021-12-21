@@ -84,7 +84,7 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax {
 
 	p.state.duplicate_binding_parent = Some("import");
 
-	parse_import_clause(p).or_syntax_error(p, |p, range| {
+	parse_import_clause(p).or_add_diagnostic(p, |p, range| {
 		expected_any(
 			&["default import", "namespace import", "named import"],
 			range,
@@ -120,15 +120,15 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
 					let default_specifier = m.complete(p, JS_DEFAULT_IMPORT_SPECIFIER);
 					let named_clause = default_specifier.precede(p);
 
-					parse_named_import(p).or_syntax_error(p, expected_named_import);
+					parse_named_import(p).or_add_diagnostic(p, expected_named_import);
 					expect_keyword(p, "from", T![from]);
-					parse_module_source(p).or_syntax_error(p, expected_module_source);
+					parse_module_source(p).or_add_diagnostic(p, expected_module_source);
 					parse_import_assertion(p).ok();
 
 					Present(named_clause.complete(p, JS_IMPORT_NAMED_CLAUSE))
 				} else {
 					expect_keyword(p, "from", T![from]);
-					parse_module_source(p).or_syntax_error(p, expected_module_source);
+					parse_module_source(p).or_add_diagnostic(p, expected_module_source);
 					parse_import_assertion(p).ok();
 
 					Present(m.complete(p, JS_IMPORT_DEFAULT_CLAUSE))
@@ -160,9 +160,9 @@ fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_any();
 	expect_keyword(p, "as", T![as]);
-	parse_binding(p).or_syntax_error(p, expected_binding);
+	parse_binding(p).or_add_diagnostic(p, expected_binding);
 	expect_keyword(p, "from", T![from]);
-	parse_module_source(p).or_syntax_error(p, expected_module_source);
+	parse_module_source(p).or_add_diagnostic(p, expected_module_source);
 	parse_import_assertion(p).ok();
 
 	Present(m.complete(p, JS_IMPORT_NAMESPACE_CLAUSE))
@@ -182,9 +182,9 @@ fn parse_import_named_clause(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 
 	parse_default_import_specifier(p).ok();
-	parse_named_import(p).or_syntax_error(p, expected_named_import);
+	parse_named_import(p).or_add_diagnostic(p, expected_named_import);
 	expect_keyword(p, "from", T![from]);
-	parse_module_source(p).or_syntax_error(p, expected_module_source);
+	parse_module_source(p).or_add_diagnostic(p, expected_module_source);
 	parse_import_assertion(p).ok();
 
 	Present(m.complete(p, JS_IMPORT_NAMED_CLAUSE))
@@ -213,7 +213,7 @@ fn parse_namespace_import_specifier(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	p.bump_any();
 	expect_keyword(p, "as", T![as]);
-	parse_binding(p).or_syntax_error(p, expected_binding);
+	parse_binding(p).or_add_diagnostic(p, expected_binding);
 
 	Present(m.complete(p, JS_NAMESPACE_IMPORT_SPECIFIER))
 }
@@ -273,14 +273,14 @@ fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 	if p.cur_src() == "as" && p.nth_src(1) != "as" {
 		p.error(expected_export_name_after_as_keyword(p, p.cur_tok().range));
 	} else if p.nth_src(1) == "as" {
-		parse_export_name(p).or_syntax_error(p, expected_export_name);
+		parse_export_name(p).or_add_diagnostic(p, expected_export_name);
 	} else {
 		m.abandon(p);
 		return Absent;
 	}
 
 	expect_keyword(p, "as", T![as]);
-	parse_binding(p).or_syntax_error(p, expected_binding);
+	parse_binding(p).or_add_diagnostic(p, expected_binding);
 
 	Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIER))
 }

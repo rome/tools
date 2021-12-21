@@ -1,5 +1,5 @@
 use crate::{
-	empty_element, format_elements, space_token, FormatElement, FormatResult, Formatter,
+	empty_element, format_elements, space_token, token, FormatElement, FormatResult, Formatter,
 	ToFormatElement,
 };
 use rslint_parser::ast::{
@@ -130,7 +130,7 @@ impl ToFormatElement for NewExpr {
 		let arguments = if let Some(arguments) = self.arguments() {
 			formatter.format_node(arguments)?
 		} else {
-			empty_element()
+			format_elements![token("("), token(")")]
 		};
 
 		Ok(format_elements![

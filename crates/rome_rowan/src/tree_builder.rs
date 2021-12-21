@@ -3,7 +3,7 @@ use crate::{
 	api::TriviaPiece,
 	cow_mut::CowMut,
 	green::{GreenElement, NodeCache},
-	GreenNode, Language, NodeOrToken, ParsedChildren, SyntaxFactory, SyntaxNode,
+	GreenNode, Language, NodeOrToken, ParsedChildren, SyntaxFactory, SyntaxKind, SyntaxNode,
 };
 use std::marker::PhantomData;
 
@@ -67,7 +67,7 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
 	/// Adds new token to the current branch.
 	#[inline]
 	pub fn token(&mut self, kind: L::Kind, text: &str) {
-		let (hash, token) = self.cache.token(L::kind_to_raw(kind), text);
+		let (hash, token) = self.cache.token(kind.to_raw(), text);
 		self.children.push((hash, token.into()));
 	}
 
@@ -80,9 +80,9 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
 		leading: Vec<TriviaPiece>,
 		trailing: Vec<TriviaPiece>,
 	) {
-		let (hash, token) =
-			self.cache
-				.token_with_trivia(L::kind_to_raw(kind), text, leading, trailing);
+		let (hash, token) = self
+			.cache
+			.token_with_trivia(kind.to_raw(), text, leading, trailing);
 		self.children.push((hash, token.into()));
 	}
 
@@ -98,7 +98,7 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
 	#[inline]
 	pub fn finish_node(&mut self) {
 		let (kind, first_child) = self.parents.pop().unwrap();
-		let raw_kind = L::kind_to_raw(kind);
+		let raw_kind = kind.to_raw();
 
 		let slots = &self.children[first_child..];
 		let node_entry = self.cache.node(raw_kind, slots);
@@ -106,7 +106,7 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
 		let mut build_node = || {
 			let children = ParsedChildren::new(&mut self.children, first_child);
 
-			S::make_syntax(kind, children).green()
+			S::make_syntax(kind, children).into_green()
 		};
 
 		let (hash, node) = match node_entry {
@@ -114,7 +114,7 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
 			NodeCacheNodeEntryMut::Vacant(entry) => {
 				let node = build_node();
 
-				let hash = entry.insert(node.clone());
+				let hash = entry.cache(node.clone());
 				(hash, node)
 			}
 			NodeCacheNodeEntryMut::Cached(cached) => {
