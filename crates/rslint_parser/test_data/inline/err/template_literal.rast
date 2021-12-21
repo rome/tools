@@ -1,0 +1,76 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsVariableStatement {
+            declarations: JsVariableDeclarations {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                items: JsVariableDeclarationList [
+                    JsVariableDeclaration {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
+                        },
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
+                            expression: Template {
+                                l_tick_token: BACKTICK@8..9 "`" [] [],
+                                elements: TemplateElementList [
+                                    TemplateChunkElement {
+                                        template_chunk_token: TEMPLATE_CHUNK@9..13 "foo " [] [],
+                                    },
+                                    TemplateElement {
+                                        dollar_curly_token: DOLLAR_CURLY@13..15 "${" [] [],
+                                        expression: missing (required),
+                                        r_curly_token: R_CURLY@15..16 "}" [] [],
+                                    },
+                                ],
+                                r_tick_token: BACKTICK@8..9 "`" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@17..18 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..18
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..17
+    0: JS_VARIABLE_STATEMENT@0..17
+      0: JS_VARIABLE_DECLARATIONS@0..17
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION_LIST@4..17
+          0: JS_VARIABLE_DECLARATION@4..17
+            0: JS_IDENTIFIER_BINDING@4..6
+              0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@6..17
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: TEMPLATE@8..17
+                0: BACKTICK@8..9 "`" [] []
+                1: TEMPLATE_ELEMENT_LIST@9..16
+                  0: TEMPLATE_CHUNK_ELEMENT@9..13
+                    0: TEMPLATE_CHUNK@9..13 "foo " [] []
+                  1: TEMPLATE_ELEMENT@13..16
+                    0: DOLLAR_CURLY@13..15 "${" [] []
+                    1: (empty)
+                    2: R_CURLY@15..16 "}" [] []
+                2: BACKTICK@16..17 "`" [] []
+      1: (empty)
+  3: EOF@17..18 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: expected an expression but instead found '}'
+  ┌─ template_literal.js:1:16
+  │
+1 │ let a = `foo ${}`
+  │                ^ Expected an expression here
+
+--
+let a = `foo ${}`

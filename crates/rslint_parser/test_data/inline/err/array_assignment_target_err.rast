@@ -309,11 +309,11 @@ error[SyntaxError]: rest element may not have a trailing comma
   │        Rest element
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression, or an assignment but instead found ','
   ┌─ array_assignment_target_err.js:3:6
   │
 3 │ [a = , = "test"] = test;
-  │      ^ Expected an expression here
+  │      ^ Expected an expression, or an assignment here
 
 --
 error[SyntaxError]: expected an identifier, or an assignment target but instead found '='

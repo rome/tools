@@ -120,26 +120,18 @@ JsModule {
                 r_curly_token: R_CURLY@68..69 "}" [] [],
             },
         },
-        ForStmt {
+        JsForInStatement {
             for_token: FOR_KW@69..74 "for" [Whitespace("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@74..75 "(" [] [],
-            initializer: JsUnknownExpression {
-                items: [
-                    IN_KW@75..78 "in" [] [Whitespace(" ")],
-                ],
+            initializer: missing (required),
+            in_token: IN_KW@75..78 "in" [] [Whitespace(" ")],
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@78..79 "[" [] [],
+                elements: JsArrayElementList [],
+                r_brack_token: R_BRACK@79..80 "]" [] [],
             },
-            first_semi_token: missing (required),
-            test: ForStmtTest {
-                expr: JsArrayExpression {
-                    l_brack_token: L_BRACK@78..79 "[" [] [],
-                    elements: JsArrayElementList [],
-                    r_brack_token: R_BRACK@79..80 "]" [] [],
-                },
-            },
-            second_semi_token: missing (required),
-            update: missing (optional),
             r_paren_token: R_PAREN@80..82 ")" [] [Whitespace(" ")],
-            cons: JsBlockStatement {
+            body: JsBlockStatement {
                 l_curly_token: L_CURLY@82..83 "{" [] [],
                 statements: JsStatementList [],
                 r_curly_token: R_CURLY@83..84 "}" [] [],
@@ -381,21 +373,17 @@ JsModule {
         0: L_CURLY@67..68 "{" [] []
         1: JS_STATEMENT_LIST@68..68
         2: R_CURLY@68..69 "}" [] []
-    2: FOR_STMT@69..84
+    2: JS_FOR_IN_STATEMENT@69..84
       0: FOR_KW@69..74 "for" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@74..75 "(" [] []
-      2: JS_UNKNOWN_EXPRESSION@75..78
-        0: IN_KW@75..78 "in" [] [Whitespace(" ")]
-      3: (empty)
-      4: FOR_STMT_TEST@78..80
-        0: JS_ARRAY_EXPRESSION@78..80
-          0: L_BRACK@78..79 "[" [] []
-          1: JS_ARRAY_ELEMENT_LIST@79..79
-          2: R_BRACK@79..80 "]" [] []
-      5: (empty)
-      6: (empty)
-      7: R_PAREN@80..82 ")" [] [Whitespace(" ")]
-      8: JS_BLOCK_STATEMENT@82..84
+      2: (empty)
+      3: IN_KW@75..78 "in" [] [Whitespace(" ")]
+      4: JS_ARRAY_EXPRESSION@78..80
+        0: L_BRACK@78..79 "[" [] []
+        1: JS_ARRAY_ELEMENT_LIST@79..79
+        2: R_BRACK@79..80 "]" [] []
+      5: R_PAREN@80..82 ")" [] [Whitespace(" ")]
+      6: JS_BLOCK_STATEMENT@82..84
         0: L_CURLY@82..83 "{" [] []
         1: JS_STATEMENT_LIST@83..83
         2: R_CURLY@83..84 "}" [] []
@@ -556,27 +544,6 @@ error[SyntaxError]: expected `')'` but instead found `{`
   │
 3 │ for let i = 5; i < 10; ++i {}
   │                            ^ unexpected
-
---
-error[SyntaxError]: Expected an expression, but found none
-  ┌─ for_stmt_err.js:4:6
-  │
-4 │ for (in []) {}
-  │      ^^ Expected an expression here
-
---
-error[SyntaxError]: expected `;` but instead found `[`
-  ┌─ for_stmt_err.js:4:9
-  │
-4 │ for (in []) {}
-  │         ^ unexpected
-
---
-error[SyntaxError]: expected `;` but instead found `)`
-  ┌─ for_stmt_err.js:4:11
-  │
-4 │ for (in []) {}
-  │           ^ unexpected
 
 --
 error[SyntaxError]: Only a single declaration is allowed in a `for...of` statement.

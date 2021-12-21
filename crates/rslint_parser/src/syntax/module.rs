@@ -66,17 +66,7 @@ fn parse_module_item(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
 		T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => parse_import(p),
 		T![export] => export_decl(p).into(),
-		_ => {
-			let checkpoint = p.checkpoint();
-
-			if let Present(statement) = parse_statement(p) {
-				Present(statement)
-			} else {
-				// TODO remove once error recovery is removed from `parse_statement`
-				p.rewind(checkpoint);
-				Absent
-			}
-		}
+		_ => parse_statement(p),
 	}
 }
 

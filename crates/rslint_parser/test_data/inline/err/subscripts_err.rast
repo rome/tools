@@ -60,7 +60,7 @@ error: unterminated template literal
   │ ^
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression but instead found ']'
   ┌─ subscripts_err.js:1:12
   │
 1 │ foo()?.baz[].

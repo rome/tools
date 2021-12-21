@@ -109,7 +109,7 @@ impl ToFormatElement for JsParenthesizedExpression {
 
 impl ToFormatElement for JsComputedMemberExpression {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let optional_chain_token = if let Some(chain_token) = self.optional_chain_token_token() {
+		let optional_chain_token = if let Some(chain_token) = self.optional_chain_token() {
 			formatter.format_token(&chain_token)?
 		} else {
 			empty_element()

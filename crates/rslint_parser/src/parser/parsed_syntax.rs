@@ -101,11 +101,11 @@ impl<T> ParsedSyntax<T> {
 	/// Calls `op` if the syntax is present and otherwise returns [ParsedSyntax::Absent]
 	pub fn and_then<F>(self, op: F) -> ParsedSyntax<T>
 	where
-		F: FnOnce(T) -> T,
+		F: FnOnce(T) -> ParsedSyntax<T>,
 	{
 		match self {
 			Absent => Absent,
-			Present(marker) => Present(op(marker)),
+			Present(marker) => op(marker),
 		}
 	}
 

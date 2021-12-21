@@ -95,7 +95,7 @@ impl ParserProgress {
 /// // A completed marker marks the start and end indices in the events vec which signify
 /// // the Start event, and the Finish event.
 /// // Completed markers can be turned into an ast node with parse_marker on the parser
-/// let completed_marker = expr::expr(&mut parser).unwrap();
+/// let completed_marker = expr::parse_expression(&mut parser).unwrap();
 ///
 /// // Make a new text tree sink, its job is assembling events into a rowan GreenNode.
 /// // At each point (Start, Token, Finish, Error) it also consumes whitespace.
@@ -492,31 +492,6 @@ impl<'t> Parser<'t> {
 			.map(|x| usize::from(x.range(self).end()))
 			.unwrap_or_default();
 		start..end
-	}
-
-	#[deprecated(
-		note = "Use ParseRecovery instead which signals with a Result if the recovery was successful or not"
-	)]
-	pub fn expr_with_semi_recovery(&mut self, assign: bool) -> Option<CompletedMarker> {
-		let func = if assign {
-			syntax::expr::expr_or_assignment
-		} else {
-			syntax::expr::expr
-		};
-
-		if self.at(T![;]) {
-			let m = self.start();
-			let err = self
-				.err_builder("expected an expression, but found `;` instead")
-				.primary(self.cur_tok().range, "");
-			self.error(err);
-			self.bump_any();
-			m.complete(self, SyntaxKind::JS_UNKNOWN_EXPRESSION);
-
-			return None;
-		}
-
-		func(self)
 	}
 }
 

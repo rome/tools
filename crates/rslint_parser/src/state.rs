@@ -1,5 +1,4 @@
-use crate::syntax::expr::EXPR_RECOVERY_SET;
-use crate::{CompletedMarker, Parser, SyntaxKind, TokenSet};
+use crate::{CompletedMarker, Parser, SyntaxKind};
 use std::collections::HashMap;
 use std::ops::{Deref, DerefMut, Range};
 
@@ -39,8 +38,6 @@ pub struct ParserState {
 	pub is_module: bool,
 	/// The exported default item, used for checking duplicate defaults
 	pub default_item: Option<Range<usize>>,
-	/// The recovery set primary_expr will use
-	pub expr_recovery_set: TokenSet,
 	/// If set, the parser reports bindings with identical names. The option stores the name of the
 	/// node that disallows duplicate bindings, for example `let`, `const` or `import`.
 	pub duplicate_binding_parent: Option<&'static str>,
@@ -77,7 +74,6 @@ impl Default for ParserState {
 			strict: None,
 			is_module: false,
 			default_item: None,
-			expr_recovery_set: EXPR_RECOVERY_SET,
 			name_map: HashMap::with_capacity(3),
 			duplicate_binding_parent: None,
 			in_cond_expr: false,

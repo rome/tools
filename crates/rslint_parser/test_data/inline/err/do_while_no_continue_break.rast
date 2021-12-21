@@ -11,25 +11,32 @@ JsModule {
             },
             while_token: missing (required),
             l_paren_token: missing (required),
-            test: JsUnknownExpression {
-                items: [
-                    BREAK_KW@7..13 "break" [] [Whitespace(" ")],
-                ],
-            },
+            test: missing (required),
             r_paren_token: missing (required),
             semicolon_token: missing (optional),
+        },
+        JsUnknownStatement {
+            items: [
+                BREAK_KW@7..13 "break" [] [Whitespace(" ")],
+            ],
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@13..14 "(" [] [],
-                expression: JsUnknownExpression {
-                    items: [
-                        CONTINUE_KW@14..22 "continue" [] [],
-                    ],
-                },
-                r_paren_token: R_PAREN@22..23 ")" [] [],
+                expression: missing (required),
+                r_paren_token: missing (required),
             },
             semicolon_token: missing (optional),
+        },
+        JsUnknownStatement {
+            items: [
+                CONTINUE_KW@14..22 "continue" [] [],
+            ],
+        },
+        JsUnknownStatement {
+            items: [
+                R_PAREN@22..23 ")" [] [],
+            ],
         },
         JsDoWhileStatement {
             do_token: DO_KW@23..27 "do" [Whitespace("\n")] [Whitespace(" ")],
@@ -40,25 +47,32 @@ JsModule {
             },
             while_token: missing (required),
             l_paren_token: missing (required),
-            test: JsUnknownExpression {
-                items: [
-                    CONTINUE_KW@31..40 "continue" [] [Whitespace(" ")],
-                ],
-            },
+            test: missing (required),
             r_paren_token: missing (required),
             semicolon_token: missing (optional),
+        },
+        JsUnknownStatement {
+            items: [
+                CONTINUE_KW@31..40 "continue" [] [Whitespace(" ")],
+            ],
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
                 l_paren_token: L_PAREN@40..41 "(" [] [],
-                expression: JsUnknownExpression {
-                    items: [
-                        BREAK_KW@41..46 "break" [] [],
-                    ],
-                },
-                r_paren_token: R_PAREN@46..47 ")" [] [],
+                expression: missing (required),
+                r_paren_token: missing (required),
             },
             semicolon_token: missing (optional),
+        },
+        JsUnknownStatement {
+            items: [
+                BREAK_KW@41..46 "break" [] [],
+            ],
+        },
+        JsUnknownStatement {
+            items: [
+                R_PAREN@46..47 ")" [] [],
+            ],
         },
     ],
     eof_token: EOF@47..48 "" [Whitespace("\n")] [],
@@ -68,7 +82,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..47
-    0: JS_DO_WHILE_STATEMENT@0..13
+    0: JS_DO_WHILE_STATEMENT@0..7
       0: DO_KW@0..3 "do" [] [Whitespace(" ")]
       1: JS_BLOCK_STATEMENT@3..7
         0: L_CURLY@3..5 "{" [] [Whitespace(" ")]
@@ -76,18 +90,25 @@ JsModule {
         2: R_CURLY@5..7 "}" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: JS_UNKNOWN_EXPRESSION@7..13
-        0: BREAK_KW@7..13 "break" [] [Whitespace(" ")]
+      4: (empty)
       5: (empty)
       6: (empty)
-    1: JS_EXPRESSION_STATEMENT@13..23
-      0: JS_PARENTHESIZED_EXPRESSION@13..23
-        0: L_PAREN@13..14 "(" [] []
-        1: JS_UNKNOWN_EXPRESSION@14..22
-          0: CONTINUE_KW@14..22 "continue" [] []
-        2: R_PAREN@22..23 ")" [] []
+    1: JS_UNKNOWN_STATEMENT@7..13
+      0: BREAK_KW@7..13 "break" [] [Whitespace(" ")]
       1: (empty)
-    2: JS_DO_WHILE_STATEMENT@23..40
+      2: (empty)
+    2: JS_EXPRESSION_STATEMENT@13..14
+      0: JS_PARENTHESIZED_EXPRESSION@13..14
+        0: L_PAREN@13..14 "(" [] []
+        1: (empty)
+      1: (empty)
+    3: JS_UNKNOWN_STATEMENT@14..22
+      0: CONTINUE_KW@14..22 "continue" [] []
+      1: (empty)
+      2: (empty)
+    4: JS_UNKNOWN_STATEMENT@22..23
+      0: R_PAREN@22..23 ")" [] []
+    5: JS_DO_WHILE_STATEMENT@23..31
       0: DO_KW@23..27 "do" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_BLOCK_STATEMENT@27..31
         0: L_CURLY@27..29 "{" [] [Whitespace(" ")]
@@ -95,17 +116,24 @@ JsModule {
         2: R_CURLY@29..31 "}" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: JS_UNKNOWN_EXPRESSION@31..40
-        0: CONTINUE_KW@31..40 "continue" [] [Whitespace(" ")]
+      4: (empty)
       5: (empty)
       6: (empty)
-    3: JS_EXPRESSION_STATEMENT@40..47
-      0: JS_PARENTHESIZED_EXPRESSION@40..47
-        0: L_PAREN@40..41 "(" [] []
-        1: JS_UNKNOWN_EXPRESSION@41..46
-          0: BREAK_KW@41..46 "break" [] []
-        2: R_PAREN@46..47 ")" [] []
+    6: JS_UNKNOWN_STATEMENT@31..40
+      0: CONTINUE_KW@31..40 "continue" [] [Whitespace(" ")]
       1: (empty)
+      2: (empty)
+    7: JS_EXPRESSION_STATEMENT@40..41
+      0: JS_PARENTHESIZED_EXPRESSION@40..41
+        0: L_PAREN@40..41 "(" [] []
+        1: (empty)
+      1: (empty)
+    8: JS_UNKNOWN_STATEMENT@41..46
+      0: BREAK_KW@41..46 "break" [] []
+      1: (empty)
+      2: (empty)
+    9: JS_UNKNOWN_STATEMENT@46..47
+      0: R_PAREN@46..47 ")" [] []
   3: EOF@47..48 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `WHILE_KW` but instead found `break`
@@ -115,18 +143,52 @@ error[SyntaxError]: expected `WHILE_KW` but instead found `break`
   │        ^^^^^ unexpected
 
 --
-error[SyntaxError]: expected `')'` but instead found `(`
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ do_while_no_continue_break.js:1:14
   │
 1 │ do { } break (continue)
-  │              ^ unexpected
+  │        ------^
+  │        │     │
+  │        │     An explicit or implicit semicolon is expected here...
+  │        ...Which is required to end this statement
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: Invalid break not inside of a switch, loop, or labelled statement
+  ┌─ do_while_no_continue_break.js:1:8
+  │
+1 │ do { } break (continue)
+  │        ^^^^^
+
+--
+error[SyntaxError]: expected `')'` but instead found `continue`
   ┌─ do_while_no_continue_break.js:1:15
   │
 1 │ do { } break (continue)
-  │               ^^^^^^^^ Expected an expression here
+  │               ^^^^^^^^ unexpected
+
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ do_while_no_continue_break.js:1:23
+  │
+1 │ do { } break (continue)
+  │               --------^
+  │               │       │
+  │               │       An explicit or implicit semicolon is expected here...
+  │               ...Which is required to end this statement
+
+--
+error[SyntaxError]: Invalid continue not inside of a loop
+  ┌─ do_while_no_continue_break.js:1:15
+  │
+1 │ do { } break (continue)
+  │               ^^^^^^^^
+
+--
+error[SyntaxError]: expected a statement but instead found ')'
+  ┌─ do_while_no_continue_break.js:1:23
+  │
+1 │ do { } break (continue)
+  │                       ^ Expected a statement here
 
 --
 error[SyntaxError]: expected `WHILE_KW` but instead found `continue`
@@ -136,18 +198,52 @@ error[SyntaxError]: expected `WHILE_KW` but instead found `continue`
   │        ^^^^^^^^ unexpected
 
 --
-error[SyntaxError]: expected `')'` but instead found `(`
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ do_while_no_continue_break.js:2:17
   │
 2 │ do { } continue (break)
-  │                 ^ unexpected
+  │        ---------^
+  │        │        │
+  │        │        An explicit or implicit semicolon is expected here...
+  │        ...Which is required to end this statement
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: Invalid continue not inside of a loop
+  ┌─ do_while_no_continue_break.js:2:8
+  │
+2 │ do { } continue (break)
+  │        ^^^^^^^^
+
+--
+error[SyntaxError]: expected `')'` but instead found `break`
   ┌─ do_while_no_continue_break.js:2:18
   │
 2 │ do { } continue (break)
-  │                  ^^^^^ Expected an expression here
+  │                  ^^^^^ unexpected
+
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ do_while_no_continue_break.js:2:23
+  │
+2 │ do { } continue (break)
+  │                  -----^
+  │                  │    │
+  │                  │    An explicit or implicit semicolon is expected here...
+  │                  ...Which is required to end this statement
+
+--
+error[SyntaxError]: Invalid break not inside of a switch, loop, or labelled statement
+  ┌─ do_while_no_continue_break.js:2:18
+  │
+2 │ do { } continue (break)
+  │                  ^^^^^
+
+--
+error[SyntaxError]: expected a statement but instead found ')'
+  ┌─ do_while_no_continue_break.js:2:23
+  │
+2 │ do { } continue (break)
+  │                       ^ Expected a statement here
 
 --
 do { } break (continue)

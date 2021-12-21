@@ -435,7 +435,7 @@ JsStaticMemberExpression =
 // a[b]
 JsComputedMemberExpression =
 	object: JsAnyExpression
-	optional_chain_token: '?.'?
+	optional_chain: '?.'?
 	'['
 	manual__member: JsAnyExpression
 	']'

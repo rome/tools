@@ -9,7 +9,7 @@ JsModule {
                         value_token: IDENT@0..3 "foo" [] [],
                     },
                 },
-                optional_chain_token_token: missing (optional),
+                optional_chain_token: missing (optional),
                 l_brack_token: L_BRACK@3..4 "[" [] [],
                 member: missing (required),
                 r_brack_token: R_BRACK@4..5 "]" [] [],
@@ -23,7 +23,7 @@ JsModule {
                         value_token: IDENT@5..9 "foo" [Whitespace("\n")] [],
                     },
                 },
-                optional_chain_token_token: QUESTIONDOT@9..11 "?." [] [],
+                optional_chain_token: QUESTIONDOT@9..11 "?." [] [],
                 l_brack_token: L_BRACK@11..12 "[" [] [],
                 member: missing (required),
                 r_brack_token: R_BRACK@12..13 "]" [] [],
@@ -37,7 +37,7 @@ JsModule {
                         value_token: IDENT@13..17 "foo" [Whitespace("\n")] [],
                     },
                 },
-                optional_chain_token_token: missing (optional),
+                optional_chain_token: missing (optional),
                 l_brack_token: L_BRACK@17..18 "[" [] [],
                 member: missing (required),
                 r_brack_token: missing (required),
@@ -84,21 +84,21 @@ JsModule {
       1: (empty)
   3: EOF@18..19 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression but instead found ']'
   ┌─ bracket_expr_err.js:1:5
   │
 1 │ foo[]
   │     ^ Expected an expression here
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression but instead found ']'
   ┌─ bracket_expr_err.js:2:7
   │
 2 │ foo?.[]
   │       ^ Expected an expression here
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression but instead found ''
   ┌─ bracket_expr_err.js:4:1
   │
 4 │ 

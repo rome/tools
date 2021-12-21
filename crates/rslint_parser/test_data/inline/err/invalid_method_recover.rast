@@ -59,16 +59,12 @@ JsModule {
                                                     type_annotation: missing (optional),
                                                     initializer: JsInitializerClause {
                                                         eq_token: EQ@37..38 "=" [] [],
-                                                        expression: JsUnknownExpression {
-                                                            items: [
-                                                                SEMICOLON@38..39 ";" [] [],
-                                                            ],
-                                                        },
+                                                        expression: missing (required),
                                                     },
                                                 },
                                             ],
                                         },
-                                        semicolon_token: missing (optional),
+                                        semicolon_token: SEMICOLON@38..39 ";" [] [],
                                     },
                                 ],
                                 r_curly_token: R_CURLY@39..43 "}" [Whitespace("\n  ")] [],
@@ -132,19 +128,18 @@ JsModule {
                 1: JS_DIRECTIVE_LIST@27..27
                 2: JS_STATEMENT_LIST@27..39
                   0: JS_VARIABLE_STATEMENT@27..39
-                    0: JS_VARIABLE_DECLARATIONS@27..39
+                    0: JS_VARIABLE_DECLARATIONS@27..38
                       0: LET_KW@27..36 "let" [Whitespace("\n    ")] [Whitespace(" ")]
-                      1: JS_VARIABLE_DECLARATION_LIST@36..39
-                        0: JS_VARIABLE_DECLARATION@36..39
+                      1: JS_VARIABLE_DECLARATION_LIST@36..38
+                        0: JS_VARIABLE_DECLARATION@36..38
                           0: JS_IDENTIFIER_BINDING@36..37
                             0: IDENT@36..37 "a" [] []
                           1: (empty)
                           2: (empty)
-                          3: JS_INITIALIZER_CLAUSE@37..39
+                          3: JS_INITIALIZER_CLAUSE@37..38
                             0: EQ@37..38 "=" [] []
-                            1: JS_UNKNOWN_EXPRESSION@38..39
-                              0: SEMICOLON@38..39 ";" [] []
-                    1: (empty)
+                            1: (empty)
+                    1: SEMICOLON@38..39 ";" [] []
                 3: R_CURLY@39..43 "}" [Whitespace("\n  ")] []
           10: SEMICOLON@43..44 ";" [] []
       6: R_CURLY@44..46 "}" [Whitespace("\n")] []
@@ -159,11 +154,11 @@ error[SyntaxError]: class declarations must have a name
   │ ^^^^^^
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an expression, or an assignment but instead found ';'
   ┌─ invalid_method_recover.js:3:11
   │
 3 │     let a=;
-  │           ^ Expected an expression here
+  │           ^ Expected an expression, or an assignment here
 
 --
 class {

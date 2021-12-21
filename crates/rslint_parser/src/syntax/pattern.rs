@@ -1,8 +1,9 @@
 ///! Provides traits for parsing pattern like nodes
 use crate::parser::ParserProgress;
-use crate::syntax::expr::{expr_or_assignment, EXPR_RECOVERY_SET};
+use crate::syntax::expr::parse_expr_or_assignment;
+use crate::syntax::js_parse_error;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, Invalid, ParseRecovery, ParsedSyntax, Parser, ParserState, Valid};
+use crate::{CompletedMarker, Invalid, ParseRecovery, ParsedSyntax, Parser, Valid};
 use crate::{ConditionalSyntax, TokenSet};
 use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::{EOF, JS_ARRAY_HOLE};
@@ -30,9 +31,8 @@ pub(crate) trait ParseWithDefaultPattern {
 				pattern.precede_or_missing_with_error(p, Self::expected_pattern_error);
 			p.bump_any(); // eat the = token
 
-			if expr_or_assignment(p).is_none() {
-				p.missing();
-			}
+			parse_expr_or_assignment(p)
+				.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 
 			Present(with_default.complete(p, Self::pattern_with_default_kind()))
 		} else {
@@ -69,13 +69,8 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 		let mut progress = ParserProgress::default();
 
 		{
-			let guard = &mut *p.with_state(ParserState {
-				expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...], T![=]]),
-				..p.state.clone()
-			});
-
-			while !guard.at(EOF) && !guard.at(T![']']) {
-				progress.assert_progressing(guard);
+			while !p.at(EOF) && !p.at(T![']']) {
+				progress.assert_progressing(p);
 
 				let recovery = ParseRecovery::new(
 					Self::unknown_pattern_kind(),
@@ -84,17 +79,17 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 				.enable_recovery_on_line_break();
 
 				let element = self
-					.parse_any_array_element(guard, &recovery)
-					.or_invalid_to_unknown(guard, Self::unknown_pattern_kind())
-					.or_recover(guard, &recovery, Self::expected_element_error);
+					.parse_any_array_element(p, &recovery)
+					.or_invalid_to_unknown(p, Self::unknown_pattern_kind())
+					.or_recover(p, &recovery, Self::expected_element_error);
 
 				if element.is_err() {
 					// Failed to recover
 					break;
 				}
 
-				if !guard.at(T![']']) {
-					guard.expect_required(T![,]);
+				if !p.at(T![']']) {
+					p.expect_required(T![,]);
 				}
 			}
 		}
@@ -167,23 +162,14 @@ pub(crate) trait ParseObjectPattern {
 		let mut progress = ParserProgress::default();
 
 		{
-			// TODO remove after migrating expression to `ParsedSyntax`
-			let guard = &mut *p.with_state(ParserState {
-				expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...]]),
-				..p.state.clone()
-			});
+			while !p.at(T!['}']) {
+				progress.assert_progressing(p);
 
-			while !guard.at(T!['}']) {
-				progress.assert_progressing(guard);
-
-				if guard.at(T![,]) {
+				if p.at(T![,]) {
 					// missing element
-					guard.missing();
-					guard.error(Self::expected_property_pattern_error(
-						guard,
-						guard.cur_tok().range,
-					));
-					guard.bump_any(); // bump ,
+					p.missing();
+					p.error(Self::expected_property_pattern_error(p, p.cur_tok().range));
+					p.bump_any(); // bump ,
 					continue;
 				}
 				let recovery_set = ParseRecovery::new(
@@ -193,16 +179,16 @@ pub(crate) trait ParseObjectPattern {
 				.enable_recovery_on_line_break();
 
 				let recover_result = self
-					.parse_any_property_pattern(guard, &recovery_set)
-					.or_invalid_to_unknown(guard, Self::unknown_pattern_kind())
-					.or_recover(guard, &recovery_set, Self::expected_property_pattern_error);
+					.parse_any_property_pattern(p, &recovery_set)
+					.or_invalid_to_unknown(p, Self::unknown_pattern_kind())
+					.or_recover(p, &recovery_set, Self::expected_property_pattern_error);
 
 				if recover_result.is_err() {
 					break;
 				}
 
-				if !guard.at(T!['}']) {
-					guard.expect_required(T![,]);
+				if !p.at(T!['}']) {
+					p.expect_required(T![,]);
 				}
 			}
 		}

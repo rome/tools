@@ -108,7 +108,7 @@ JsModule {
                                     object: JsSuperExpression {
                                         super_token: SUPER_KW@84..92 "super" [Whitespace("\n\t\t")] [],
                                     },
-                                    optional_chain_token_token: missing (optional),
+                                    optional_chain_token: missing (optional),
                                     l_brack_token: L_BRACK@92..93 "[" [] [],
                                     member: JsNumberLiteralExpression {
                                         value_token: JS_NUMBER_LITERAL@93..94 "1" [] [],

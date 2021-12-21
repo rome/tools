@@ -1,0 +1,76 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsClassDeclaration {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
+            },
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
+            members: JsClassMemberList [
+                JsPropertyClassMember {
+                    declare_token: missing (optional),
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@10..16 "lorem" [] [Whitespace(" ")],
+                    },
+                    question_mark_token: missing (optional),
+                    excl_token: missing (optional),
+                    ty: missing (optional),
+                    value: JsInitializerClause {
+                        eq_token: EQ@16..18 "=" [] [Whitespace(" ")],
+                        expression: missing (required),
+                    },
+                    semicolon_token: SEMICOLON@18..20 ";" [] [Whitespace(" ")],
+                },
+            ],
+            r_curly_token: R_CURLY@20..21 "}" [] [],
+        },
+    ],
+    eof_token: EOF@21..22 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..22
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..21
+    0: JS_CLASS_DECLARATION@0..21
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..8
+        0: IDENT@6..8 "B" [] [Whitespace(" ")]
+      2: (empty)
+      3: (empty)
+      4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      5: JS_CLASS_MEMBER_LIST@10..20
+        0: JS_PROPERTY_CLASS_MEMBER@10..20
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@10..16
+            0: IDENT@10..16 "lorem" [] [Whitespace(" ")]
+          6: (empty)
+          7: (empty)
+          8: (empty)
+          9: JS_INITIALIZER_CLAUSE@16..18
+            0: EQ@16..18 "=" [] [Whitespace(" ")]
+            1: (empty)
+          10: SEMICOLON@18..20 ";" [] [Whitespace(" ")]
+      6: R_CURLY@20..21 "}" [] []
+  3: EOF@21..22 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: expected an expression, or an assignment but instead found ';'
+  ┌─ class_property_initializer.js:1:19
+  │
+1 │ class B { lorem = ; }
+  │                   ^ Expected an expression, or an assignment here
+
+--
+class B { lorem = ; }

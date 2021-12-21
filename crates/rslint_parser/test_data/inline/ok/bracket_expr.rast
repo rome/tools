@@ -9,7 +9,7 @@ JsModule {
                         value_token: IDENT@0..3 "foo" [] [],
                     },
                 },
-                optional_chain_token_token: missing (optional),
+                optional_chain_token: missing (optional),
                 l_brack_token: L_BRACK@3..4 "[" [] [],
                 member: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
@@ -27,7 +27,7 @@ JsModule {
                         value_token: IDENT@8..12 "foo" [Whitespace("\n")] [],
                     },
                 },
-                optional_chain_token_token: missing (optional),
+                optional_chain_token: missing (optional),
                 l_brack_token: L_BRACK@12..13 "[" [] [],
                 member: JsBinaryExpression {
                     left: JsNumberLiteralExpression {
@@ -49,7 +49,7 @@ JsModule {
                         value_token: IDENT@19..23 "foo" [Whitespace("\n")] [],
                     },
                 },
-                optional_chain_token_token: missing (optional),
+                optional_chain_token: missing (optional),
                 l_brack_token: L_BRACK@23..24 "[" [] [],
                 member: JsStringLiteralExpression {
                     value_token: JS_STRING_LITERAL@24..29 "\"bar\"" [] [],
@@ -66,7 +66,7 @@ JsModule {
                             value_token: IDENT@30..34 "foo" [Whitespace("\n")] [],
                         },
                     },
-                    optional_chain_token_token: missing (optional),
+                    optional_chain_token: missing (optional),
                     l_brack_token: L_BRACK@34..35 "[" [] [],
                     member: JsIdentifierExpression {
                         name: JsReferenceIdentifier {
@@ -75,7 +75,7 @@ JsModule {
                     },
                     r_brack_token: R_BRACK@38..39 "]" [] [],
                 },
-                optional_chain_token_token: missing (optional),
+                optional_chain_token: missing (optional),
                 l_brack_token: L_BRACK@39..40 "[" [] [],
                 member: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
@@ -93,7 +93,7 @@ JsModule {
                         value_token: IDENT@44..48 "foo" [Whitespace("\n")] [],
                     },
                 },
-                optional_chain_token_token: QUESTIONDOT@48..50 "?." [] [],
+                optional_chain_token: QUESTIONDOT@48..50 "?." [] [],
                 l_brack_token: L_BRACK@50..51 "[" [] [],
                 member: JsIdentifierExpression {
                     name: JsReferenceIdentifier {

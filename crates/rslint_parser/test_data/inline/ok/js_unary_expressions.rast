@@ -11,7 +11,7 @@ JsModule {
                             value_token: IDENT@7..8 "a" [] [],
                         },
                     },
-                    optional_chain_token_token: missing (optional),
+                    optional_chain_token: missing (optional),
                     l_brack_token: L_BRACK@8..9 "[" [] [],
                     member: JsStringLiteralExpression {
                         value_token: JS_STRING_LITERAL@9..15 "'test'" [] [],

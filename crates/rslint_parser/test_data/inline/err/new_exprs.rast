@@ -1,0 +1,38 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: NewExpr {
+                new_token: NEW_KW@0..3 "new" [] [],
+                object: missing (required),
+                type_args: missing (optional),
+                arguments: missing (required),
+            },
+            semicolon_token: SEMICOLON@3..4 ";" [] [],
+        },
+    ],
+    eof_token: EOF@4..5 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..5
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..4
+    0: JS_EXPRESSION_STATEMENT@0..4
+      0: NEW_EXPR@0..3
+        0: NEW_KW@0..3 "new" [] []
+        1: (empty)
+        2: (empty)
+        3: (empty)
+      1: SEMICOLON@3..4 ";" [] []
+  3: EOF@4..5 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: expected an expression but instead found ';'
+  ┌─ new_exprs.js:1:4
+  │
+1 │ new;
+  │    ^ Expected an expression here
+
+--
+new;

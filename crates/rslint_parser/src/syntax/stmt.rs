@@ -3,7 +3,7 @@
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
 use super::binding::*;
-use super::expr::{expr, EXPR_RECOVERY_SET, STARTS_EXPR};
+use super::expr::{parse_expression, STARTS_EXPR};
 use super::program::export_decl;
 use super::typescript::*;
 use super::util::check_label_use;
@@ -11,7 +11,9 @@ use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_declaration, parse_initializer_clause};
-use crate::syntax::expr::{expr_or_assignment, parse_identifier};
+use crate::syntax::expr::{
+	parse_expr_or_assignment, parse_expression_or_recover_to_next_statement, parse_identifier,
+};
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement};
@@ -105,8 +107,6 @@ pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
 /// caller has to pass a recovery set.
 ///
 /// If not passed, [STMT_RECOVERY_SET] will be used as recovery set
-// TODO: change return type to `ParsedSyntax` once `expr_or_assignment` returns `ParsedSyntax`
-// TODO: move error recovery to callers once `expr_with_semi_recovery` is refactored/gone
 pub fn parse_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
 		// test_err import_decl_not_top_level
@@ -200,7 +200,6 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // 	}
 // }
 
-#[allow(deprecated)]
 fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let start = p.cur_tok().range.start;
 	// this is *technically* wrong because it would be an expr stmt in js but for our purposes
@@ -287,8 +286,8 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		}
 	}
 
-	let expr = p.expr_with_semi_recovery(false);
-	if let Some(expr) = expr {
+	let expr = parse_expression_or_recover_to_next_statement(p, false);
+	if let Ok(expr) = expr {
 		let m = expr.precede(p);
 		semi(p, start..p.cur_tok().range.end);
 		Present(m.complete(p, JS_EXPRESSION_STATEMENT))
@@ -323,11 +322,11 @@ pub fn parse_debugger_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 // test throw_stmt
 // throw new Error("foo");
 // throw "foo"
-#[allow(deprecated)]
 pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// test_err throw_stmt_err
 	// throw
 	// new Error("oh no :(")
+	// throw;
 	if !p.at(T![throw]) {
 		return Absent;
 	}
@@ -347,8 +346,8 @@ pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 		p.error(err);
 		p.missing();
-	} else {
-		p.expr_with_semi_recovery(false);
+	} else if parse_expression_or_recover_to_next_statement(p, false).is_err() {
+		p.missing();
 	}
 	semi(p, start..p.cur_tok().range.end);
 	Present(m.complete(p, JS_THROW_STATEMENT))
@@ -447,7 +446,6 @@ pub fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 //   return
 // }
 /// A return statement with an optional value such as `return a;`
-#[allow(deprecated)]
 pub fn parse_return_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// test_err return_stmt_err
 	// return;
@@ -459,8 +457,7 @@ pub fn parse_return_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let start = p.cur_tok().range.start;
 	p.bump_any(); // return keyword
 	if !p.has_linebreak_before_n(0) && p.at_ts(STARTS_EXPR) {
-		// TODO: review this part and make sure it plays well with the new recovery logic
-		p.expr_with_semi_recovery(false);
+		parse_expression(p).unwrap();
 	} else {
 		p.missing();
 	}
@@ -631,12 +628,7 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
 /// An expression wrapped in parentheses such as `()`
 pub fn parenthesized_expression(p: &mut Parser) {
 	p.state.allow_object_expr = p.expect_required(T!['(']);
-
-	let pos = p.token_pos();
-	// Remove the pos check once `expr` has been converted to `ParsedSyntax`
-	if expr(p).is_none() && pos == p.token_pos() {
-		p.missing();
-	}
+	parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
 	p.expect_required(T![')']);
 	p.state.allow_object_expr = true;
 }
@@ -662,10 +654,7 @@ pub fn parse_if_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.bump_any(); // bump if
 
 	// (test)
-	parenthesized_expression(&mut *p.with_state(ParserState {
-		expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![else]]),
-		..p.state.clone()
-	}));
+	parenthesized_expression(p);
 
 	// body
 	parse_statement(p).or_missing_with_error(p, expected_statement);
@@ -1098,12 +1087,12 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 				..p.state.clone()
 			});
 			// Replace the `p.token_pos() == checkpoint.token_pos` once `expr()` returns `ParsedSyntax`
-			expr(guard)
+			parse_expression(guard)
 		};
 
 		if p.at(T![in]) || p.cur_src() == "of" {
 			// for (assignment_pattern in ...
-			if let Some(assignment_expr) = init_expr {
+			if let Present(assignment_expr) = init_expr {
 				let mut assignment = expression_to_assignment_pattern(
 					p,
 					assignment_expr,
@@ -1128,9 +1117,7 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 			return parse_for_of_or_in_head(p);
 		}
 
-		if init_expr.is_none() && p.token_pos() == checkpoint.token_pos {
-			p.missing();
-		}
+		init_expr.or_missing_with_error(p, js_parse_error::expected_expression);
 
 		parse_normal_for_head(p);
 		FOR_STMT
@@ -1146,7 +1133,7 @@ fn parse_normal_for_head(p: &mut Parser) {
 		p.missing(); // missing test
 	} else {
 		let m = p.start();
-		expr(p);
+		parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
 		m.complete(p, FOR_STMT_TEST);
 	}
 
@@ -1156,7 +1143,7 @@ fn parse_normal_for_head(p: &mut Parser) {
 		p.missing(); // Missing update
 	} else {
 		let m = p.start();
-		expr(p);
+		parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
 		m.complete(p, FOR_STMT_UPDATE);
 	}
 }
@@ -1167,17 +1154,14 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> SyntaxKind {
 
 	if is_in {
 		p.bump_any();
-		if expr(p).is_none() {
-			p.missing();
-		}
+		parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
 
 		JS_FOR_IN_STATEMENT
 	} else {
 		p.bump_remap(T![of]);
 
-		if expr_or_assignment(p).is_none() {
-			p.missing();
-		}
+		parse_expr_or_assignment(p)
+			.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
 
 		JS_FOR_OF_STATEMENT
 	}
@@ -1357,7 +1341,7 @@ fn parse_switch_clause(
 		}
 		T![case] => {
 			p.bump_any();
-			expr(p);
+			parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
 			p.expect_required(T![:]);
 
 			SwitchClausesList.parse_list(p);
@@ -1461,6 +1445,7 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// 	default: {}
 	// 	default: {}
 	// }
+	// switch (foo) { case : }
 
 	if !p.at(T![switch]) {
 		return Absent;

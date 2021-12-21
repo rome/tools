@@ -113,7 +113,7 @@ JsModule {
                                         value_token: IDENT@78..81 "foo" [] [],
                                     },
                                 },
-                                optional_chain_token_token: missing (optional),
+                                optional_chain_token: missing (optional),
                                 l_brack_token: L_BRACK@81..82 "[" [] [],
                                 member: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {

@@ -1,7 +1,7 @@
 //! Class and function declarations.
 
 use super::binding::parse_binding_pattern;
-use super::expr::expr_or_assignment;
+use super::expr::parse_expr_or_assignment;
 use super::typescript::*;
 #[allow(deprecated)]
 use crate::parser::ParsedSyntax::{Absent, Present};
@@ -95,10 +95,12 @@ pub(super) fn parse_parameters_list(
 				let start = p.cur_tok().range.start;
 				let m = p.start();
 				p.bump_any();
-				let expr = expr_or_assignment(&mut *p);
-				let end = expr
-					.map(|x| usize::from(x.range(p).end()))
+
+				let end = parse_expr_or_assignment(&mut *p)
+					.ok()
+					.map(|marker| usize::from(marker.range(p).end()))
 					.unwrap_or_else(|| p.cur_tok().range.start);
+
 				let err = p
 					.err_builder("rest elements may not have default initializers")
 					.primary(start..end, "");
@@ -165,6 +167,6 @@ pub(super) fn parse_arrow_body(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 	if guard.at(T!['{']) {
 		function_body(&mut *guard)
 	} else {
-		expr_or_assignment(&mut *guard).into()
+		parse_expr_or_assignment(&mut *guard)
 	}
 }

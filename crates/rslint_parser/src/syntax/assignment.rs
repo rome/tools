@@ -1,7 +1,9 @@
 use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::{conditional_expr, expr, is_at_name, parse_name, unary_expr};
+use crate::syntax::expr::{
+	is_at_identifier_name, parse_conditional_expr, parse_expression, parse_name, parse_unary_expr,
+};
 use crate::syntax::js_parse_error::{expected_assignment_target, expected_identifier};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::CompletedNodeOrMissingMarker::NodeMarker;
@@ -87,20 +89,13 @@ pub(crate) fn parse_assignment(
 ) -> ParsedSyntax<CompletedMarker> {
 	let checkpoint = p.checkpoint();
 
-	// TODO remove the rewind inside of the error handle once the `unary_expr` returns a ParsedSyntax
 	let assignment_expression = match expr_kind {
-		AssignmentExprPrecedence::Unary => unary_expr(p),
-		AssignmentExprPrecedence::Conditional => conditional_expr(p),
-		AssignmentExprPrecedence::Any => expr(p),
+		AssignmentExprPrecedence::Unary => parse_unary_expr(p),
+		AssignmentExprPrecedence::Conditional => parse_conditional_expr(p),
+		AssignmentExprPrecedence::Any => parse_expression(p),
 	};
 
-	if let Some(expr) = assignment_expression {
-		Present(expression_to_assignment(p, expr, checkpoint))
-	} else {
-		// Only necessary because `unary_expr` always adds a "expected an expression" error.
-		p.rewind(checkpoint);
-		Absent
-	}
+	assignment_expression.map(|expr| expression_to_assignment(p, expr, checkpoint))
 }
 
 struct AssignmentPatternWithDefault;
@@ -210,7 +205,9 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 	// ({:=} = {});
 	// ({ a b } = {});
 	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
-		if !is_at_name(p) && !p.at_ts(token_set![T![:], T![=], T![ident], T![await], T![yield]]) {
+		if !is_at_identifier_name(p)
+			&& !p.at_ts(token_set![T![:], T![=], T![ident], T![await], T![yield]])
+		{
 			return Absent;
 		}
 
