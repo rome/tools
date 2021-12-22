@@ -3,7 +3,6 @@ class Foo {
 		this.a = a;
 	}
 }
-
 class Bar {
 	"constructor"(b) {
 		this.b = b;

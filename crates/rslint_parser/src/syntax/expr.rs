@@ -353,6 +353,15 @@ fn parse_binary_or_logical_expression_recursive(
 		p.bump_any();
 	}
 
+	// test logical_expressions
+	// foo ?? bar
+	// a || b
+	// a && b
+	//
+	// test_err logical_expressions_err
+	// foo ?? * 2;
+	// !foo && bar;
+	// foo(foo ||)
 	let expression_kind = match op {
 		T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
 		_ => JS_BINARY_EXPRESSION,
@@ -486,6 +495,25 @@ fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax<Comp
 	parse_primary_expression(p).map(|lhs| subscripts(p, lhs, true))
 }
 
+// test super_expression
+// class Test extends B {
+// 	constructor() {
+// 		super();
+// 	}
+// 	test() {
+// 		super.test(a, b);
+// 		super[1];
+// 	}
+// }
+//
+// test_err super_expression_err
+// class Test extends B {
+// 	test() {
+// 		super();
+// 		super?.test();
+// 	}
+// }
+// super();
 fn parse_super_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![super]) {
 		return Absent;
@@ -585,14 +613,22 @@ fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Comple
 }
 
 /// A static member expression for accessing a property
-// test dot_expr
+// test static_member_expression
 // foo.bar
 // foo.await
 // foo.yield
 // foo.for
 // foo?.for
 // foo?.bar
-// foo.#bar
+// class Test {
+// 	#bar
+// 	test(other) {
+// 		this.#bar;
+// 		this?.#bar;
+// 		other.#bar;
+// 		other?.#bar;
+// 	}
+// }
 fn parse_static_member_expression(
 	p: &mut Parser,
 	lhs: CompletedMarker,
@@ -641,7 +677,7 @@ pub(super) fn parse_any_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 }
 
 /// An array expression for property access or indexing, such as `foo[0]` or `foo?.["bar"]`
-// test bracket_expr
+// test computed_member_expression
 // foo[bar]
 // foo[5 + 5]
 // foo["bar"]
@@ -914,6 +950,9 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 		p.error(err);
 	}
 
+	// test js_parenthesized_expression
+	// ((foo))
+	// (foo)
 	Present(m.complete(p, JS_PARENTHESIZED_EXPRESSION))
 }
 
@@ -1154,6 +1193,9 @@ fn parse_identifier_expression(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax
 	})
 }
 
+// test_err identifier
+// yield;
+// await;
 fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	parse_identifier(p, JS_REFERENCE_IDENTIFIER)
 }
@@ -1417,6 +1459,9 @@ fn parse_postfix_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let lhs = parse_lhs_expr(p);
 	lhs.map(|marker| {
 		if !p.has_linebreak_before_n(0) {
+			// test post_update_expr
+			// foo++
+			// foo--
 			match p.cur() {
 				T![++] => {
 					let assignment_target = expression_to_assignment(p, marker, checkpoint);
@@ -1438,11 +1483,6 @@ fn parse_postfix_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	})
 }
 
-// test_err unary_expr
-// ++ ;
-// -- ;
-// -;
-
 /// A unary expression such as `!foo` or `++bar`
 pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	const UNARY_SINGLE: TokenSet =
@@ -1450,6 +1490,15 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 
 	// FIXME: this shouldn't allow await in sync functions
 	if (p.state.in_async || p.syntax.top_level_await) && p.at(T![await]) {
+		// test await_expression
+		// async function test() {
+		// 	await inner();
+		//
+		// 	await (inner()) + await inner();
+		// }
+		// async function inner() {
+		// 	return 4;
+		// }
 		let m = p.start();
 		p.bump_any();
 		parse_unary_expr(p).or_missing_with_error(p, js_parse_error::expected_unary_expression);
@@ -1475,6 +1524,9 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 		};
 	}
 
+	// test pre_update_expr
+	// ++foo
+	// --foo
 	if p.at(T![++]) {
 		let m = p.start();
 		p.bump(T![++]);
@@ -1491,6 +1543,21 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
 		return Present(complete);
 	}
+
+	// test js_unary_expressions
+	// delete a['test'];
+	// void a;
+	// typeof a;
+	// +1;
+	// -1;
+	// ~1;
+	// !true;
+	// -a + -b + +a;
+
+	// test_err unary_expr
+	// ++ ;
+	// -- ;
+	// -;
 
 	if p.at_ts(UNARY_SINGLE) {
 		let m = p.start();

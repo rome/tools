@@ -5,5 +5,4 @@ typeof a;
 -1;
 ~1;
 !true;
-
 -a + -b + +a;

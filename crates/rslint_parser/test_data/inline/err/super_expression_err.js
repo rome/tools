@@ -4,5 +4,4 @@ class Test extends B {
 		super?.test();
 	}
 }
-
 super();

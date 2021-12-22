@@ -77,11 +77,23 @@ pub(super) fn parse_object_expression(p: &mut Parser) -> ParsedSyntax<CompletedM
 /// An individual object property such as `"a": b` or `5: 6 + 6`.
 fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	match p.cur() {
-		// test object_expr_getter
+		// test getter_object_member
 		// let a = {
 		//  get foo() {
 		//    return foo;
-		//  }
+		//  },
+		//  get "bar"() {
+		// 	 return "bar";
+		//  },
+		//  get ["a" + "b"]() {
+		// 	 return "a" + "b"
+		//  },
+		// 	get 5() {
+		// 	 return 5;
+		// 	},
+		// 	get() {
+		// 	 return "This is a method and not a getter";
+		// 	}
 		// }
 		T![ident]
 			if p.cur_src() == "get"
@@ -91,11 +103,19 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 			parse_getter_object_member(p)
 		}
 
-		// test object_expr_setter
-		// let b = {
-		//  set [foo](bar) {
-		//     return 5;
-		//  }
+		// test setter_object_member
+		// let a = {
+		//  set foo(value) {
+		//  },
+		//  set "bar"(value) {
+		//  },
+		//  set ["a" + "b"](value) {
+		//  },
+		// 	set 5(value) {
+		// 	},
+		// 	set() {
+		// 	 return "This is a method and not a setter";
+		// 	}
 		// }
 
 		// test_err object_expr_setter
@@ -147,10 +167,10 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 			// test object_expr_method
 			// let b = {
-			// foo() {},
-			// "bar"(a, b, c) {},
-			// ["foo" + "bar"](a) {},
-			// 5(...rest) {}
+			// 	foo() {},
+			// 	"bar"(a, b, c) {},
+			// 	["foo" + "bar"](a) {},
+			// 	5(...rest) {}
 			// }
 
 			// test_err object_expr_method
@@ -162,15 +182,20 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 				async_missing.undo(p);
 				generator_missing.undo(p);
 
-				// ({foo})
+				// test object_prop_name
+				// let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
+
 				// test object_expr_ident_prop
+				// ({foo})
 				if identifier_member_name
 					&& (matches!(p.cur(), T![,] | T!['}']) || p.has_linebreak_before_n(0))
 				{
 					member_name.change_kind(p, JS_REFERENCE_IDENTIFIER);
 					Present(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER))
 				} else {
+					// test object_expr_ident_literal_prop
 					// let b = { a: true }
+
 					// If the member name was a literal OR we're at a colon
 					p.expect_required(T![:]);
 					parse_expr_or_assignment(p)

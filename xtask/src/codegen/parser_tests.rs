@@ -149,12 +149,12 @@ fn existing_tests(dir: &Path, ok: bool) -> Result<HashMap<String, (PathBuf, Test
 	for file in fs::read_dir(dir)? {
 		let file = file?;
 		let path = file.path();
-		if path.extension().unwrap_or_default() != "rs" {
+		if path.extension().unwrap_or_default() != "js" {
 			continue;
 		}
 		let name = {
 			let file_name = path.file_name().unwrap().to_str().unwrap();
-			file_name[5..file_name.len() - 3].to_string()
+			file_name[..file_name.len() - 3].to_string()
 		};
 		let text = fs::read_to_string(&path)?;
 		let test = Test {

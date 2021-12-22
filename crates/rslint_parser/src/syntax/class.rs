@@ -30,7 +30,7 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax<Conditional
 	parse_class(p, ClassKind::Expression)
 }
 
-// test class_decl
+// test class_declaration
 // class foo {}
 // class foo extends bar {}
 // class foo extends foo.bar {}
@@ -259,6 +259,12 @@ impl ParseNodeList for ClassMembersList {
 		p: &mut Parser,
 		parsed_element: ParsedSyntax<Self::ParsedElement>,
 	) -> RecoveryResult {
+		// test_err invalid_method_recover
+		// class {
+		//   [1 + 1] = () => {
+		//     let a=;
+		//   };
+		// };
 		parsed_element.or_recover(
 			p,
 			&ParseRecovery::new(
@@ -407,6 +413,18 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	if is_at_method_class_member(p, 0) {
 		// test class_static_constructor_method
 		// class B { static constructor() {} }
+
+		// test constructor_class_member
+		// class Foo {
+		// 	constructor(a) {
+		// 		this.a = a;
+		// 	}
+		// }
+		// class Bar {
+		// 	"constructor"(b) {
+		// 		this.b = b;
+		// 	}
+		// }
 		return if is_constructor {
 			// Undoing the async and generator `missing` markers because constructors offer no slot for
 			// either of them.
@@ -449,6 +467,37 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 				constructor
 			};
 		} else {
+			// test method_class_member
+			// class Test {
+			// 	method() {}
+			// 	async asyncMethod() {}
+			// 	async* asyncGeneratorMethod() {}
+			// 	* generatorMethod() {}
+			// 	"foo"() {}
+			// 	["foo" + "bar"]() {}
+			// 	5() {}
+			// 	#private() {}
+			// }
+			// class ContextualKeywords {
+			// 	// Methods called static
+			// 	static() {}
+			// 	async static() {}
+			// 	* static() {}
+			// 	async* static() {}
+			//	declare() {}
+			// 	get() {} // Method called get
+			// 	set() {} // Method called set
+			// }
+			// class Static {
+			// 	static method() {}
+			// 	static async asyncMethod() {}
+			// 	static async* asyncGeneratorMethod() {}
+			// 	static * generatorMethod() {}
+			//	static static() {}
+			// 	static async static() {}
+			// 	static async* static() {}
+			// 	static * static() {}
+			// }
 			if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
 				let err = p
 					.err_builder("class methods cannot be readonly")
@@ -473,6 +522,21 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	generator_missing_marker.undo(p);
 
 	if let NodeMarker(member_name) = member_name {
+		// test property_class_member
+		// class foo {
+		// 	property
+		// 	declare;
+		// 	initializedProperty = "a"
+		// 	"a";
+		// 	5
+		// 	["a" + "b"]
+		// 	static staticProperty
+		// 	static staticInitializedProperty = 1
+		// 	#private
+		// 	#privateInitialized = "a"
+		// 	static #staticPrivate
+		// 	static #staticPrivateInitializedProperty = 1
+		// }
 		if is_at_property_class_member(p, 0) {
 			let property = if modifiers.get_range(ModifierKind::Declare).is_some() {
 				property_declaration_class_member_body(p, member_marker, member_name.kind())
@@ -514,11 +578,16 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 				// 	async get() {}
 				// 	static get() {}
 				// }
-
+				//
+				// test_err method_getter_err
+				// class foo {
+				//  get {}
+				// }
+				//
 				// test_err getter_class_no_body
 				// class Setters {
 				//   get foo()
-
+				//
 				// test setter_class_member
 				// class Setters {
 				// 	set foo(a) {}
@@ -534,12 +603,12 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 				// 	async set(a) {}
 				// 	static set(a) {}
 				// }
-
+				//
 				// test_err setter_class_member
 				// class Setters {
 				//   set foo() {}
 				// }
-
+				//
 				// test_err setter_class_no_body
 				// class Setters {
 				//   set foo(a)
@@ -1004,6 +1073,14 @@ fn parse_class_member_modifiers(
 	}
 }
 
+// test_err class_declare_member
+// class B { declare foo = bar }
+//
+// test_err class_declare_method
+// class B { declare fn() {} }
+//
+// test_err class_member_modifier
+// class A { abstract foo; }
 fn parse_modifier(p: &mut Parser, modifiers: &mut ClassMemberModifiers) -> Option<Modifier> {
 	// Test if this modifier is followed by another modifier, member name or any other token that
 	// starts a new member. If that's the case, then this is fairly likely a modifier. If not, then

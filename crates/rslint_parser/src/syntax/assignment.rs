@@ -119,6 +119,18 @@ impl ParseWithDefaultPattern for AssignmentPatternWithDefault {
 
 struct ArrayAssignmentPattern;
 
+// test array_assignment_target
+// [foo, bar] = baz;
+// [,,,b,,c,] = baz;
+// [a = "test", a.b, call().b] = baz;
+// [((a))] = baz;
+//
+// test_err array_assignment_target_err
+// [a a, ++b, ] = test;
+// [a, c, ...rest,] = test;
+// [a = , = "test"] = test;
+// [[a b] [c]]= test;
+// [a: b] = c
 impl ParseArrayPattern<AssignmentPatternWithDefault> for ArrayAssignmentPattern {
 	#[inline]
 	fn unknown_pattern_kind() -> SyntaxKind {

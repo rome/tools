@@ -24,6 +24,9 @@ macro_rules! at_ident_name {
     }
 }
 
+// test_err unterminated_unicode_codepoint
+// let s = "\u{200";
+
 pub fn parse(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.eat_optional(JS_SHEBANG);
@@ -58,6 +61,8 @@ fn named_export_specifier(p: &mut Parser) -> CompletedMarker {
 	m.complete(p, SPECIFIER)
 }
 
+// test export
+// export { foo } from "bla";
 pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	let start = p.cur_tok().range.start;
 	let m = p.start();
