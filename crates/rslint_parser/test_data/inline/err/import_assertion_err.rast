@@ -237,14 +237,42 @@ JsModule {
             },
             semicolon_token: SEMICOLON@337..338 ";" [] [],
         },
+        JsImport {
+            import_token: IMPORT_KW@338..346 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_clause: JsImportNamedClause {
+                default_specifier: missing (optional),
+                named_import: JsNamedImportSpecifiers {
+                    l_curly_token: L_CURLY@346..348 "{" [] [Whitespace(" ")],
+                    specifiers: JsNamedImportSpecifierList [
+                        JsShorthandNamedImportSpecifier {
+                            local_name: JsIdentifierBinding {
+                                name_token: IDENT@348..350 "a" [] [Whitespace(" ")],
+                            },
+                        },
+                    ],
+                    r_curly_token: R_CURLY@350..352 "}" [] [Whitespace(" ")],
+                },
+                from_token: FROM_KW@352..357 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@357..366 "\"a.json\"" [] [Whitespace(" ")],
+                },
+                assertion: JsImportAssertion {
+                    assert_token: ASSERT_KW@366..372 "assert" [] [],
+                    l_curly_token: missing (required),
+                    assertions: JsImportAssertionEntryList [],
+                    r_curly_token: missing (required),
+                },
+            },
+            semicolon_token: missing (optional),
+        },
     ],
-    eof_token: EOF@338..339 "" [Whitespace("\n")] [],
+    eof_token: EOF@372..373 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..339
+0: JS_MODULE@0..373
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..338
+  2: JS_MODULE_ITEM_LIST@0..372
     0: JS_IMPORT@0..37
       0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
       1: JS_IMPORT_BARE_CLAUSE@7..36
@@ -411,7 +439,27 @@ JsModule {
               0: JS_NUMBER_LITERAL@334..336 "1" [] [Whitespace(" ")]
           3: R_CURLY@336..337 "}" [] []
       2: SEMICOLON@337..338 ";" [] []
-  3: EOF@338..339 "" [Whitespace("\n")] []
+    12: JS_IMPORT@338..372
+      0: IMPORT_KW@338..346 "import" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IMPORT_NAMED_CLAUSE@346..372
+        0: (empty)
+        1: JS_NAMED_IMPORT_SPECIFIERS@346..352
+          0: L_CURLY@346..348 "{" [] [Whitespace(" ")]
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@348..350
+            0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@348..350
+              0: JS_IDENTIFIER_BINDING@348..350
+                0: IDENT@348..350 "a" [] [Whitespace(" ")]
+          2: R_CURLY@350..352 "}" [] [Whitespace(" ")]
+        2: FROM_KW@352..357 "from" [] [Whitespace(" ")]
+        3: JS_MODULE_SOURCE@357..366
+          0: JS_STRING_LITERAL@357..366 "\"a.json\"" [] [Whitespace(" ")]
+        4: JS_IMPORT_ASSERTION@366..372
+          0: ASSERT_KW@366..372 "assert" [] []
+          1: (empty)
+          2: JS_IMPORT_ASSERTION_ENTRY_LIST@372..372
+          3: (empty)
+      2: (empty)
+  3: EOF@372..373 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `:` but instead found `,`
   ┌─ import_assertion_err.js:1:27
@@ -510,6 +558,13 @@ error[SyntaxError]: expected `string literal` but instead found `1`
   │                                                                            ^ unexpected
 
 --
+error[SyntaxError]: expected `'{'` but instead the file ends
+   ┌─ import_assertion_err.js:10:1
+   │
+10 │ 
+   │ ^ the file ends here
+
+--
 import "foo" assert { type, "json" };
 import "foo" \u{61}ssert { type: "json" };
 import { foo } assert { type: "json" };
@@ -518,3 +573,4 @@ assert { type: "json" }
 import foo from "foo.json" assert { "type": "json", type: "html", "type": "js" };
 import "x" assert;
 import foo from "foo.json" assert { type: "json", lazy: true, startAtLine: 1 };
+import { a } from "a.json" assert

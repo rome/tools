@@ -87,13 +87,13 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsClassDeclaration {
-            class_token: CLASS_KW@53..61 "class" [Whitespace("\n\n")] [Whitespace(" ")],
+            class_token: CLASS_KW@53..60 "class" [Whitespace("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
-                name_token: IDENT@61..66 "Test" [] [Whitespace(" ")],
+                name_token: IDENT@60..65 "Test" [] [Whitespace(" ")],
             },
             extends_clause: missing (optional),
             implements_clause: missing (optional),
-            l_curly_token: L_CURLY@66..67 "{" [] [],
+            l_curly_token: L_CURLY@65..66 "{" [] [],
             members: JsClassMemberList [
                 JsPropertyClassMember {
                     declare_token: missing (optional),
@@ -102,8 +102,8 @@ JsModule {
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
-                        hash_token: HASH@67..70 "#" [Whitespace("\n\t")] [],
-                        id_token: IDENT@70..73 "bar" [] [],
+                        hash_token: HASH@66..69 "#" [Whitespace("\n\t")] [],
+                        id_token: IDENT@69..72 "bar" [] [],
                     },
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
@@ -118,94 +118,94 @@ JsModule {
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
-                        value: IDENT@73..80 "test" [Whitespace("\n\n\t")] [],
+                        value: IDENT@72..78 "test" [Whitespace("\n\t")] [],
                     },
                     type_parameters: missing (optional),
                     parameters: JsParameters {
-                        l_paren_token: L_PAREN@80..81 "(" [] [],
+                        l_paren_token: L_PAREN@78..79 "(" [] [],
                         items: JsParameterList [
                             JsIdentifierBinding {
-                                name_token: IDENT@81..86 "other" [] [],
+                                name_token: IDENT@79..84 "other" [] [],
                             },
                         ],
-                        r_paren_token: R_PAREN@86..88 ")" [] [Whitespace(" ")],
+                        r_paren_token: R_PAREN@84..86 ")" [] [Whitespace(" ")],
                     },
                     return_type: missing (optional),
                     body: JsFunctionBody {
-                        l_curly_token: L_CURLY@88..89 "{" [] [],
+                        l_curly_token: L_CURLY@86..87 "{" [] [],
                         directives: JsDirectiveList [],
                         statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: JsStaticMemberExpression {
                                     object: JsThisExpression {
-                                        this_token: THIS_KW@89..96 "this" [Whitespace("\n\t\t")] [],
+                                        this_token: THIS_KW@87..94 "this" [Whitespace("\n\t\t")] [],
                                     },
-                                    operator: DOT@96..97 "." [] [],
+                                    operator: DOT@94..95 "." [] [],
                                     member: JsPrivateName {
-                                        hash_token: HASH@97..98 "#" [] [],
-                                        value_token: IDENT@98..101 "bar" [] [],
+                                        hash_token: HASH@95..96 "#" [] [],
+                                        value_token: IDENT@96..99 "bar" [] [],
                                     },
                                 },
-                                semicolon_token: SEMICOLON@101..102 ";" [] [],
+                                semicolon_token: SEMICOLON@99..100 ";" [] [],
                             },
                             JsExpressionStatement {
                                 expression: JsStaticMemberExpression {
                                     object: JsThisExpression {
-                                        this_token: THIS_KW@102..109 "this" [Whitespace("\n\t\t")] [],
+                                        this_token: THIS_KW@100..107 "this" [Whitespace("\n\t\t")] [],
                                     },
-                                    operator: QUESTIONDOT@109..111 "?." [] [],
+                                    operator: QUESTIONDOT@107..109 "?." [] [],
                                     member: JsPrivateName {
-                                        hash_token: HASH@111..112 "#" [] [],
-                                        value_token: IDENT@112..115 "bar" [] [],
+                                        hash_token: HASH@109..110 "#" [] [],
+                                        value_token: IDENT@110..113 "bar" [] [],
                                     },
                                 },
-                                semicolon_token: SEMICOLON@115..116 ";" [] [],
+                                semicolon_token: SEMICOLON@113..114 ";" [] [],
                             },
                             JsExpressionStatement {
                                 expression: JsStaticMemberExpression {
                                     object: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
-                                            value_token: IDENT@116..125 "other" [Whitespace("\n\n\t\t")] [],
+                                            value_token: IDENT@114..122 "other" [Whitespace("\n\t\t")] [],
                                         },
                                     },
-                                    operator: DOT@125..126 "." [] [],
+                                    operator: DOT@122..123 "." [] [],
                                     member: JsPrivateName {
-                                        hash_token: HASH@126..127 "#" [] [],
-                                        value_token: IDENT@127..130 "bar" [] [],
+                                        hash_token: HASH@123..124 "#" [] [],
+                                        value_token: IDENT@124..127 "bar" [] [],
                                     },
                                 },
-                                semicolon_token: SEMICOLON@130..131 ";" [] [],
+                                semicolon_token: SEMICOLON@127..128 ";" [] [],
                             },
                             JsExpressionStatement {
                                 expression: JsStaticMemberExpression {
                                     object: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
-                                            value_token: IDENT@131..139 "other" [Whitespace("\n\t\t")] [],
+                                            value_token: IDENT@128..136 "other" [Whitespace("\n\t\t")] [],
                                         },
                                     },
-                                    operator: QUESTIONDOT@139..141 "?." [] [],
+                                    operator: QUESTIONDOT@136..138 "?." [] [],
                                     member: JsPrivateName {
-                                        hash_token: HASH@141..142 "#" [] [],
-                                        value_token: IDENT@142..145 "bar" [] [],
+                                        hash_token: HASH@138..139 "#" [] [],
+                                        value_token: IDENT@139..142 "bar" [] [],
                                     },
                                 },
-                                semicolon_token: SEMICOLON@145..146 ";" [] [],
+                                semicolon_token: SEMICOLON@142..143 ";" [] [],
                             },
                         ],
-                        r_curly_token: R_CURLY@146..149 "}" [Whitespace("\n\t")] [],
+                        r_curly_token: R_CURLY@143..146 "}" [Whitespace("\n\t")] [],
                     },
                 },
             ],
-            r_curly_token: R_CURLY@149..151 "}" [Whitespace("\n")] [],
+            r_curly_token: R_CURLY@146..148 "}" [Whitespace("\n")] [],
         },
     ],
-    eof_token: EOF@151..152 "" [Whitespace("\n")] [],
+    eof_token: EOF@148..149 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..152
+0: JS_MODULE@0..149
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..151
+  2: JS_MODULE_ITEM_LIST@0..148
     0: JS_EXPRESSION_STATEMENT@0..7
       0: JS_STATIC_MEMBER_EXPRESSION@0..7
         0: JS_IDENTIFIER_EXPRESSION@0..3
@@ -260,86 +260,86 @@ JsModule {
         2: JS_NAME@50..53
           0: IDENT@50..53 "bar" [] []
       1: (empty)
-    6: JS_CLASS_DECLARATION@53..151
-      0: CLASS_KW@53..61 "class" [Whitespace("\n\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@61..66
-        0: IDENT@61..66 "Test" [] [Whitespace(" ")]
+    6: JS_CLASS_DECLARATION@53..148
+      0: CLASS_KW@53..60 "class" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@60..65
+        0: IDENT@60..65 "Test" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: L_CURLY@66..67 "{" [] []
-      5: JS_CLASS_MEMBER_LIST@67..149
-        0: JS_PROPERTY_CLASS_MEMBER@67..73
+      4: L_CURLY@65..66 "{" [] []
+      5: JS_CLASS_MEMBER_LIST@66..146
+        0: JS_PROPERTY_CLASS_MEMBER@66..72
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
           4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@67..73
-            0: HASH@67..70 "#" [Whitespace("\n\t")] []
-            1: IDENT@70..73 "bar" [] []
+          5: JS_PRIVATE_CLASS_MEMBER_NAME@66..72
+            0: HASH@66..69 "#" [Whitespace("\n\t")] []
+            1: IDENT@69..72 "bar" [] []
           6: (empty)
           7: (empty)
           8: (empty)
           9: (empty)
           10: (empty)
-        1: JS_METHOD_CLASS_MEMBER@73..149
+        1: JS_METHOD_CLASS_MEMBER@72..146
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
           4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@73..80
-            0: IDENT@73..80 "test" [Whitespace("\n\n\t")] []
+          5: JS_LITERAL_MEMBER_NAME@72..78
+            0: IDENT@72..78 "test" [Whitespace("\n\t")] []
           6: (empty)
-          7: JS_PARAMETERS@80..88
-            0: L_PAREN@80..81 "(" [] []
-            1: JS_PARAMETER_LIST@81..86
-              0: JS_IDENTIFIER_BINDING@81..86
-                0: IDENT@81..86 "other" [] []
-            2: R_PAREN@86..88 ")" [] [Whitespace(" ")]
+          7: JS_PARAMETERS@78..86
+            0: L_PAREN@78..79 "(" [] []
+            1: JS_PARAMETER_LIST@79..84
+              0: JS_IDENTIFIER_BINDING@79..84
+                0: IDENT@79..84 "other" [] []
+            2: R_PAREN@84..86 ")" [] [Whitespace(" ")]
           8: (empty)
-          9: JS_FUNCTION_BODY@88..149
-            0: L_CURLY@88..89 "{" [] []
-            1: JS_DIRECTIVE_LIST@89..89
-            2: JS_STATEMENT_LIST@89..146
-              0: JS_EXPRESSION_STATEMENT@89..102
-                0: JS_STATIC_MEMBER_EXPRESSION@89..101
-                  0: JS_THIS_EXPRESSION@89..96
-                    0: THIS_KW@89..96 "this" [Whitespace("\n\t\t")] []
-                  1: DOT@96..97 "." [] []
-                  2: JS_PRIVATE_NAME@97..101
-                    0: HASH@97..98 "#" [] []
-                    1: IDENT@98..101 "bar" [] []
-                1: SEMICOLON@101..102 ";" [] []
-              1: JS_EXPRESSION_STATEMENT@102..116
-                0: JS_STATIC_MEMBER_EXPRESSION@102..115
-                  0: JS_THIS_EXPRESSION@102..109
-                    0: THIS_KW@102..109 "this" [Whitespace("\n\t\t")] []
-                  1: QUESTIONDOT@109..111 "?." [] []
-                  2: JS_PRIVATE_NAME@111..115
-                    0: HASH@111..112 "#" [] []
-                    1: IDENT@112..115 "bar" [] []
-                1: SEMICOLON@115..116 ";" [] []
-              2: JS_EXPRESSION_STATEMENT@116..131
-                0: JS_STATIC_MEMBER_EXPRESSION@116..130
-                  0: JS_IDENTIFIER_EXPRESSION@116..125
-                    0: JS_REFERENCE_IDENTIFIER@116..125
-                      0: IDENT@116..125 "other" [Whitespace("\n\n\t\t")] []
-                  1: DOT@125..126 "." [] []
-                  2: JS_PRIVATE_NAME@126..130
-                    0: HASH@126..127 "#" [] []
-                    1: IDENT@127..130 "bar" [] []
-                1: SEMICOLON@130..131 ";" [] []
-              3: JS_EXPRESSION_STATEMENT@131..146
-                0: JS_STATIC_MEMBER_EXPRESSION@131..145
-                  0: JS_IDENTIFIER_EXPRESSION@131..139
-                    0: JS_REFERENCE_IDENTIFIER@131..139
-                      0: IDENT@131..139 "other" [Whitespace("\n\t\t")] []
-                  1: QUESTIONDOT@139..141 "?." [] []
-                  2: JS_PRIVATE_NAME@141..145
-                    0: HASH@141..142 "#" [] []
-                    1: IDENT@142..145 "bar" [] []
-                1: SEMICOLON@145..146 ";" [] []
-            3: R_CURLY@146..149 "}" [Whitespace("\n\t")] []
-      6: R_CURLY@149..151 "}" [Whitespace("\n")] []
-  3: EOF@151..152 "" [Whitespace("\n")] []
+          9: JS_FUNCTION_BODY@86..146
+            0: L_CURLY@86..87 "{" [] []
+            1: JS_DIRECTIVE_LIST@87..87
+            2: JS_STATEMENT_LIST@87..143
+              0: JS_EXPRESSION_STATEMENT@87..100
+                0: JS_STATIC_MEMBER_EXPRESSION@87..99
+                  0: JS_THIS_EXPRESSION@87..94
+                    0: THIS_KW@87..94 "this" [Whitespace("\n\t\t")] []
+                  1: DOT@94..95 "." [] []
+                  2: JS_PRIVATE_NAME@95..99
+                    0: HASH@95..96 "#" [] []
+                    1: IDENT@96..99 "bar" [] []
+                1: SEMICOLON@99..100 ";" [] []
+              1: JS_EXPRESSION_STATEMENT@100..114
+                0: JS_STATIC_MEMBER_EXPRESSION@100..113
+                  0: JS_THIS_EXPRESSION@100..107
+                    0: THIS_KW@100..107 "this" [Whitespace("\n\t\t")] []
+                  1: QUESTIONDOT@107..109 "?." [] []
+                  2: JS_PRIVATE_NAME@109..113
+                    0: HASH@109..110 "#" [] []
+                    1: IDENT@110..113 "bar" [] []
+                1: SEMICOLON@113..114 ";" [] []
+              2: JS_EXPRESSION_STATEMENT@114..128
+                0: JS_STATIC_MEMBER_EXPRESSION@114..127
+                  0: JS_IDENTIFIER_EXPRESSION@114..122
+                    0: JS_REFERENCE_IDENTIFIER@114..122
+                      0: IDENT@114..122 "other" [Whitespace("\n\t\t")] []
+                  1: DOT@122..123 "." [] []
+                  2: JS_PRIVATE_NAME@123..127
+                    0: HASH@123..124 "#" [] []
+                    1: IDENT@124..127 "bar" [] []
+                1: SEMICOLON@127..128 ";" [] []
+              3: JS_EXPRESSION_STATEMENT@128..143
+                0: JS_STATIC_MEMBER_EXPRESSION@128..142
+                  0: JS_IDENTIFIER_EXPRESSION@128..136
+                    0: JS_REFERENCE_IDENTIFIER@128..136
+                      0: IDENT@128..136 "other" [Whitespace("\n\t\t")] []
+                  1: QUESTIONDOT@136..138 "?." [] []
+                  2: JS_PRIVATE_NAME@138..142
+                    0: HASH@138..139 "#" [] []
+                    1: IDENT@139..142 "bar" [] []
+                1: SEMICOLON@142..143 ";" [] []
+            3: R_CURLY@143..146 "}" [Whitespace("\n\t")] []
+      6: R_CURLY@146..148 "}" [Whitespace("\n")] []
+  3: EOF@148..149 "" [Whitespace("\n")] []

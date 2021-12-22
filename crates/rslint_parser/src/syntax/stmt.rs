@@ -1050,7 +1050,7 @@ fn parse_variable_declaration(
 //
 // test do_while_stmt
 // do { } while (true)
-// do throw Error("foo") while (true)
+// do { throw Error("foo") } while (true)
 // do { break; } while (true)
 pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// test_err do_while_stmt_err

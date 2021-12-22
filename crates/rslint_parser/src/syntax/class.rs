@@ -479,24 +479,24 @@ fn parse_class_member(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 			// 	#private() {}
 			// }
 			// class ContextualKeywords {
-			// 	// Methods called static
-			// 	static() {}
-			// 	async static() {}
-			// 	* static() {}
-			// 	async* static() {}
-			//	declare() {}
-			// 	get() {} // Method called get
-			// 	set() {} // Method called set
+			//    // Methods called static
+			// 	  static() {}
+			// 	  async static() {}
+			// 	  * static() {}
+			//    async* static() {}
+			//    declare() {}
+			// 	  get() {} // Method called get
+			// 	  set() {} // Method called set
 			// }
 			// class Static {
-			// 	static method() {}
-			// 	static async asyncMethod() {}
-			// 	static async* asyncGeneratorMethod() {}
-			// 	static * generatorMethod() {}
-			//	static static() {}
-			// 	static async static() {}
-			// 	static async* static() {}
-			// 	static * static() {}
+			// 	  static method() {}
+			// 	  static async asyncMethod() {}
+			// 	  static async* asyncGeneratorMethod() {}
+			// 	  static * generatorMethod() {}
+			//    static static() {}
+			// 	  static async static() {}
+			// 	  static async* static() {}
+			// 	  static * static() {}
 			// }
 			if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
 				let err = p
