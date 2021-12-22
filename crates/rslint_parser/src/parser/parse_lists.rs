@@ -132,11 +132,22 @@ pub trait ParseSeparatedList {
 		let elements = self.start_list(p);
 		let mut progress = ParserProgress::default();
 		let mut first = true;
+		let mut fixed_a_separator = false;
+
 		while !p.at(JsSyntaxKind::EOF) && !self.is_at_list_end(p) {
 			if first {
 				first = false;
 			} else {
-				self.expect_separator(p);
+				// test_err separated_list_separator
+				// [1 2];
+				// [1 2 3];
+				// [1 2, 3];
+				// [1 2, 3 4]
+				if !self.expect_separator(p) && !fixed_a_separator {
+					// Fix up to one missing separator
+					p.synthesize_token(self.separating_element_kind());
+					fixed_a_separator = true;
+				}
 
 				if self.allow_trailing_separating_element() && self.is_at_list_end(p) {
 					break;

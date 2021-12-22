@@ -6,7 +6,7 @@ mod token;
 pub(crate) use self::{
 	element::{GreenElement, GreenElementRef},
 	node::{Child, Children, GreenNode, GreenNodeData, Slot},
-	token::{GreenToken, GreenTokenData},
+	token::{GreenToken, GreenTokenData, SourcePresence},
 };
 
 pub use self::node_cache::NodeCache;

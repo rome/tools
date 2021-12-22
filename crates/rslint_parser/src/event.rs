@@ -1,6 +1,6 @@
 //! Events emitted by the Parser which are then constructed into a syntax tree
 
-use std::{mem, ops::Range};
+use std::mem;
 
 use crate::{
 	JsSyntaxKind::{self, *},
@@ -32,12 +32,13 @@ pub enum Event {
 	},
 
 	/// Produce a single leaf-element.
-	/// `n_raw_tokens` is used to glue complex contextual tokens.
-	/// For example, lexer tokenizes `>>` as `>`, `>`, and
-	/// `n_raw_tokens = 2` is used to produced a single `>>`.
 	Token {
 		kind: JsSyntaxKind,
-		range: Range<usize>,
+	},
+
+	/// synthesizes a token that isn't present in the source text.
+	SynthesizeToken {
+		kind: JsSyntaxKind,
 	},
 
 	MultipleTokens {
@@ -105,9 +106,10 @@ pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Par
 				}
 			}
 			Event::Finish { .. } => sink.finish_node(),
-			Event::Token { kind, .. } => {
+			Event::Token { kind } => {
 				sink.token(kind);
 			}
+			Event::SynthesizeToken { kind } => sink.synthesize_token(kind),
 			Event::MultipleTokens { amount, kind } => sink.consume_multiple_tokens(amount, kind),
 		}
 	}
@@ -121,6 +123,10 @@ struct RewriteParseEventsTreeSink<'r, 'p, T> {
 impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 'p, T> {
 	fn token(&mut self, kind: JsSyntaxKind) {
 		self.reparse.token(kind, self.parser);
+	}
+
+	fn synthesize_token(&mut self, kind: JsSyntaxKind) {
+		self.reparse.synthesize(kind, self.parser);
 	}
 
 	fn start_node(&mut self, kind: JsSyntaxKind) {
@@ -150,6 +156,11 @@ pub trait RewriteParseEvents {
 	/// Called for every token
 	fn token(&mut self, kind: JsSyntaxKind, p: &mut Parser) {
 		p.bump_remap(kind);
+	}
+
+	/// Called for synthesized tokens
+	fn synthesize(&mut self, kind: JsSyntaxKind, p: &mut Parser) {
+		p.synthesize_token(kind);
 	}
 
 	/// Called for tokens spawning multiple lexer tokens

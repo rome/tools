@@ -61,9 +61,23 @@ impl From<Vec<TriviaPiece>> for GreenTokenTrivia {
 	}
 }
 
+/// Signals whatever a token is present or written in the source text or if it was inserted by the
+/// parser to construct a valid tree.
+#[repr(u8)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
+pub(crate) enum SourcePresence {
+	/// The token isn't present or written in the original source text but instead has been inserted
+	/// by the parser to form a valid tree.
+	Missing,
+
+	/// The token is present in the source text.
+	Present,
+}
+
 #[derive(PartialEq, Eq, Hash)]
 struct GreenTokenHead {
 	kind: RawSyntaxKind,
+	source_presence: SourcePresence,
 	leading: GreenTokenTrivia,
 	trailing: GreenTokenTrivia,
 	_c: Count<GreenToken>,
@@ -153,6 +167,21 @@ impl GreenTokenData {
 		unsafe { std::str::from_utf8_unchecked(self.data.slice()) }
 	}
 
+	pub fn presence(&self) -> SourcePresence {
+		self.data.header.source_presence
+	}
+
+	/// Returns `true` if this token is present in the source text
+	pub fn is_present(&self) -> bool {
+		self.presence() == SourcePresence::Present
+	}
+
+	/// Returns `true` if this is a synthesized token that isn't present in the original source text.
+	/// Meaning, this token was expected but not written.
+	pub fn is_missing(&self) -> bool {
+		self.presence() == SourcePresence::Missing
+	}
+
 	pub(crate) fn leading_trailing_total_len(&self) -> (TextSize, TextSize, TextSize) {
 		let leading_len = self.data.header.leading.text_len();
 		let trailing_len = self.data.header.trailing.text_len();
@@ -222,11 +251,25 @@ impl GreenToken {
 	) -> GreenToken {
 		let head = GreenTokenHead {
 			kind,
+			source_presence: SourcePresence::Present,
 			leading,
 			trailing,
 			_c: Count::new(),
 		};
 		let ptr = ThinArc::from_header_and_iter(head, text.bytes());
+		GreenToken { ptr }
+	}
+
+	#[inline]
+	pub fn missing(kind: RawSyntaxKind) -> GreenToken {
+		let head = GreenTokenHead {
+			kind,
+			source_presence: SourcePresence::Missing,
+			leading: GreenTokenTrivia::None,
+			trailing: GreenTokenTrivia::None,
+			_c: Count::new(),
+		};
+		let ptr = ThinArc::from_header_and_iter(head, "".bytes());
 		GreenToken { ptr }
 	}
 

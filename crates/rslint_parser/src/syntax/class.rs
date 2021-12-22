@@ -136,7 +136,10 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax {
 
 	guard.expect(T!['{']);
 	ClassMembersList.parse_list(&mut *guard);
-	guard.expect(T!['}']);
+
+	if !guard.expect(T!['}']) {
+		guard.synthesize_token(T!['}']);
+	}
 
 	let mut class_marker = m.complete(&mut *guard, kind.into());
 

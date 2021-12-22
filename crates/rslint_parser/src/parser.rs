@@ -286,10 +286,9 @@ impl<'t> Parser<'t> {
 	}
 
 	fn do_bump(&mut self, kind: JsSyntaxKind) {
-		let range = self.cur_tok().range;
 		self.tokens.bump();
 
-		self.push_event(Event::Token { kind, range });
+		self.push_event(Event::Token { kind });
 	}
 
 	fn push_event(&mut self, event: Event) {
@@ -454,8 +453,14 @@ impl<'t> Parser<'t> {
 		&self.tokens.source()[span.as_range()]
 	}
 
+	/// Makes a missing token corresponding to the given token kind.
+	/// The synthesized tokens can help the creation of valid syntax nodes.
+	pub fn synthesize_token(&mut self, kind: JsSyntaxKind) {
+		self.events.push(Event::SynthesizeToken { kind })
+	}
+
 	pub(crate) fn bump_multiple(&mut self, amount: u8, kind: JsSyntaxKind) {
-		self.push_event(Event::MultipleTokens { amount, kind });
+		self.push_event(Event::MultipleTokens { kind, amount });
 		for _ in 0..amount {
 			self.tokens.bump();
 		}

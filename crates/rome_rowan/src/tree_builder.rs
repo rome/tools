@@ -64,11 +64,17 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
 		builder.finish()
 	}
 
+	/// Creates a synthesized token of the passed `kind`
+	#[inline]
+	pub fn synthesize_token(&mut self, kind: L::Kind) {
+		let (hash, token) = self.cache.missing_token(kind.to_raw());
+		self.children.push((hash, token.into()));
+	}
+
 	/// Adds new token to the current branch.
 	#[inline]
 	pub fn token(&mut self, kind: L::Kind, text: &str) {
-		let (hash, token) = self.cache.token(kind.to_raw(), text);
-		self.children.push((hash, token.into()));
+		self.token_with_trivia(kind, text, Vec::default(), Vec::default())
 	}
 
 	/// Adds new token to the current branch.
@@ -80,9 +86,7 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
 		leading: Vec<TriviaPiece>,
 		trailing: Vec<TriviaPiece>,
 	) {
-		let (hash, token) = self
-			.cache
-			.token_with_trivia(kind.to_raw(), text, leading, trailing);
+		let (hash, token) = self.cache.token(kind.to_raw(), text, leading, trailing);
 		self.children.push((hash, token.into()));
 	}
 

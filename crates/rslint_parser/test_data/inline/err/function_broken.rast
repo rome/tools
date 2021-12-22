@@ -41,13 +41,13 @@ JsModule {
                                     r_curly_token: R_CURLY@24..25 "}" [] [],
                                 },
                             ],
-                            r_curly_token: missing (required),
+                            r_curly_token: missing R_CURLY@25..25,
                         },
                     ],
-                    r_curly_token: missing (required),
+                    r_curly_token: missing R_CURLY@25..25,
                 },
             ],
-            r_curly_token: missing (required),
+            r_curly_token: missing R_CURLY@25..25,
         },
     ],
     eof_token: EOF@25..26 "" [Whitespace("\n")] [],
@@ -88,9 +88,9 @@ JsModule {
                   0: L_CURLY@23..24 "{" [] []
                   1: JS_STATEMENT_LIST@24..24
                   2: R_CURLY@24..25 "}" [] []
-              2: (empty)
-          2: (empty)
-      2: (empty)
+              2: missing R_CURLY@25..25
+          2: missing R_CURLY@25..25
+      2: missing R_CURLY@25..25
   3: EOF@25..26 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected a function body but instead found ')'

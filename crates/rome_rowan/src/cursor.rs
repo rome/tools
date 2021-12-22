@@ -1062,6 +1062,17 @@ impl SyntaxToken {
 		unsafe { self.ptr.as_ref() }
 	}
 
+	/// Returns `true` if this is a synthesized token that isn't present in the original source text.
+	/// For example, it was expected but not written
+	pub fn is_missing(&self) -> bool {
+		self.green().is_missing()
+	}
+
+	/// Returns `true` if this token is present in the source text
+	pub fn is_present(&self) -> bool {
+		self.green().is_present()
+	}
+
 	#[inline]
 	pub fn kind(&self) -> RawSyntaxKind {
 		self.data().kind()

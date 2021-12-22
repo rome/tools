@@ -69,7 +69,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: missing (required),
             members: JsClassMemberList [],
-            r_curly_token: missing (required),
+            r_curly_token: missing R_CURLY@67..67,
         },
     ],
     eof_token: EOF@67..68 "" [Whitespace("\n")] [],
@@ -134,7 +134,7 @@ JsModule {
       3: (empty)
       4: (empty)
       5: JS_CLASS_MEMBER_LIST@67..67
-      6: (empty)
+      6: missing R_CURLY@67..67
   3: EOF@67..68 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: class declarations must have a name

@@ -86,7 +86,7 @@ JsModule {
                                 name_token: IDENT@61..63 "a" [] [Whitespace(" ")],
                             },
                         },
-                        missing separator,
+                        missing COMMA@63..63,
                         JsUnknownNamedImportSpecifier {
                             items: [
                                 PLUS@63..65 "+" [] [Whitespace(" ")],
@@ -325,7 +325,7 @@ JsModule {
             0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@61..63
               0: JS_IDENTIFIER_BINDING@61..63
                 0: IDENT@61..63 "a" [] [Whitespace(" ")]
-            1: (empty)
+            1: missing COMMA@63..63
             2: JS_UNKNOWN_NAMED_IMPORT_SPECIFIER@63..66
               0: PLUS@63..65 "+" [] [Whitespace(" ")]
               1: IDENT@65..66 "b" [] []

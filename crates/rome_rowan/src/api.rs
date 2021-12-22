@@ -324,6 +324,10 @@ fn print_debug_trivia_piece<L: Language>(
 
 impl<L: Language> fmt::Debug for SyntaxToken<L> {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		if self.is_missing() {
+			return write!(f, "missing {:?}@{:?}", self.kind(), self.text_range());
+		}
+
 		write!(
 			f,
 			"{:?}@{:?} {:?} ",
@@ -804,6 +808,17 @@ impl<L: Language> SyntaxToken<L> {
 
 	pub fn text_trimmed_range(&self) -> TextRange {
 		self.raw.text_trimmed_range()
+	}
+
+	/// Returns `true` if this is a synthesized token that isn't present in the original source text.
+	/// For example, it was expected but not written.
+	pub fn is_missing(&self) -> bool {
+		self.raw.is_missing()
+	}
+
+	/// Returns `true` if this token is present in the source text
+	pub fn is_present(&self) -> bool {
+		self.raw.is_present()
 	}
 
 	pub fn index(&self) -> usize {

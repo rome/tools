@@ -213,7 +213,7 @@ JsModule {
                             colon_token: COLON@313..315 ":" [] [Whitespace(" ")],
                             value_token: missing (required),
                         },
-                        missing separator,
+                        missing COMMA@315..315,
                         JsImportAssertionEntry {
                             key: IDENT@315..319 "true" [] [],
                             colon_token: missing (required),
@@ -424,7 +424,7 @@ JsModule {
               0: IDENT@309..313 "lazy" [] []
               1: COLON@313..315 ":" [] [Whitespace(" ")]
               2: (empty)
-            3: (empty)
+            3: missing COMMA@315..315
             4: JS_IMPORT_ASSERTION_ENTRY@315..319
               0: IDENT@315..319 "true" [] []
               1: (empty)

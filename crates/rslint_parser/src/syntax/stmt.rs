@@ -507,7 +507,9 @@ pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> Pars
 
 	parse_statements(p, true);
 
-	p.expect(T!['}']);
+	if !p.expect(T!['}']) {
+		p.synthesize_token(T!['}']);
+	}
 
 	if let Some(old_parser_state) = old_parser_state {
 		p.state = old_parser_state;
@@ -1260,28 +1262,6 @@ impl ParseNodeList for SwitchClausesList {
 	}
 }
 
-struct ConsList;
-impl ParseNodeList for ConsList {
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-		parse_statement(p)
-	}
-
-	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
-		p.at_ts(token_set![T![default], T![case], T!['}']])
-	}
-
-	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
-		parsed_element.or_recover(
-			p,
-			&ParseRecovery::new(JS_UNKNOWN_STATEMENT, token_set!()),
-			js_parse_error::expected_case,
-		)
-	}
-
-	fn list_kind() -> JsSyntaxKind {
-		JS_STATEMENT_LIST
-	}
-}
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
 fn parse_switch_clause(
 	p: &mut Parser,
@@ -1303,7 +1283,7 @@ fn parse_switch_clause(
 			};
 
 			p.expect(T![:]);
-			ConsList.parse_list(p);
+			SwitchClausesList.parse_list(p);
 			let default = m.complete(p, syntax_kind);
 			if first_default.is_some() {
 				let err = p

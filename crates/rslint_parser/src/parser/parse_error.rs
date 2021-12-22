@@ -1,5 +1,6 @@
 use crate::Parser;
 use rslint_errors::{Diagnostic, Span};
+use rslint_syntax::JsSyntaxKind;
 use std::ops::Range;
 
 ///! Provides helper functions to build common diagnostic messages

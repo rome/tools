@@ -25,7 +25,7 @@ JsModule {
                     body: missing (required),
                 },
             ],
-            r_curly_token: missing (required),
+            r_curly_token: missing R_CURLY@27..27,
         },
     ],
     eof_token: EOF@27..28 "" [Whitespace("\n")] [],
@@ -54,7 +54,7 @@ JsModule {
           6: R_PAREN@26..27 ")" [] []
           7: (empty)
           8: (empty)
-      6: (empty)
+      6: missing R_CURLY@27..27
   3: EOF@27..28 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected a class method body but instead found ''

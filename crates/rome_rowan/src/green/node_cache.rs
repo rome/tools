@@ -3,7 +3,7 @@ use rustc_hash::FxHasher;
 use std::hash::{BuildHasherDefault, Hash, Hasher};
 
 use crate::api::TriviaPiece;
-use crate::green::Slot;
+use crate::green::{Slot, SourcePresence};
 use crate::{
 	green::GreenElementRef, GreenNode, GreenNodeData, GreenToken, GreenTokenData, NodeOrToken,
 	RawSyntaxKind,
@@ -60,15 +60,16 @@ pub struct NodeCache {
 	tokens: HashMap<CachedToken, ()>,
 }
 
-fn token_hash_of(kind: RawSyntaxKind, text: &str) -> u64 {
+fn token_hash_of(kind: RawSyntaxKind, text: &str, source_presence: SourcePresence) -> u64 {
 	let mut h = FxHasher::default();
 	kind.hash(&mut h);
 	text.hash(&mut h);
+	source_presence.hash(&mut h);
 	h.finish()
 }
 
 fn token_hash(token: &GreenTokenData) -> u64 {
-	token_hash_of(token.kind(), token.text())
+	token_hash_of(token.kind(), token.text(), token.presence())
 }
 
 fn element_id(elem: GreenElementRef<'_>) -> *const () {
@@ -146,21 +147,38 @@ impl NodeCache {
 		}
 	}
 
-	pub(crate) fn token(&mut self, kind: RawSyntaxKind, text: &str) -> (u64, GreenToken) {
-		self.token_with_trivia(kind, text, Vec::new(), Vec::new())
+	pub(crate) fn missing_token(&mut self, kind: RawSyntaxKind) -> (u64, GreenToken) {
+		self.token_impl(
+			kind,
+			"",
+			Vec::default(),
+			Vec::default(),
+			SourcePresence::Missing,
+		)
 	}
 
-	pub(crate) fn token_with_trivia(
+	pub(crate) fn token(
 		&mut self,
 		kind: RawSyntaxKind,
 		text: &str,
 		leading: Vec<TriviaPiece>,
 		trailing: Vec<TriviaPiece>,
 	) -> (u64, GreenToken) {
-		let hash = token_hash_of(kind, text);
+		self.token_impl(kind, text, leading, trailing, SourcePresence::Present)
+	}
+
+	fn token_impl(
+		&mut self,
+		kind: RawSyntaxKind,
+		text: &str,
+		leading: Vec<TriviaPiece>,
+		trailing: Vec<TriviaPiece>,
+		presence: SourcePresence,
+	) -> (u64, GreenToken) {
+		let hash = token_hash_of(kind, text, presence);
 
 		let entry = self.tokens.raw_entry_mut().from_hash(hash, |token| {
-			token.0.kind() == kind && token.0.text() == text
+			token.0.kind() == kind && token.0.presence() == presence && token.0.text() == text
 		});
 
 		let token = match entry {
@@ -169,7 +187,13 @@ impl NodeCache {
 				let leading = GreenTokenTrivia::from(leading);
 				let trailing = GreenTokenTrivia::from(trailing);
 
-				let token = GreenToken::with_trivia(kind, text, leading, trailing);
+				let token = if presence == SourcePresence::Missing {
+					assert!(text.is_empty());
+					GreenToken::missing(kind)
+				} else {
+					GreenToken::with_trivia(kind, text, leading, trailing)
+				};
+
 				entry
 					.insert_with_hasher(hash, CachedToken(token.clone()), (), |t| token_hash(&t.0));
 				token

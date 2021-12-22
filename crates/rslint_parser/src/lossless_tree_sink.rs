@@ -16,7 +16,7 @@ pub struct LosslessTreeSink<'a> {
 	token_pos: usize,
 	parents_count: usize,
 	errors: Vec<ParserError>,
-	inner: SyntaxTreeBuilder,
+	builder: SyntaxTreeBuilder,
 	/// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
 	needs_eof: bool,
 	/// Trivia start Offset and its pieces.
@@ -41,7 +41,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 	}
 
 	fn start_node(&mut self, kind: JsSyntaxKind) {
-		self.inner.start_node(kind);
+		self.builder.start_node(kind);
 		if self.parents_count == 0 {
 			self.next_token_leading_trivia = self.get_trivia(false);
 		}
@@ -56,11 +56,15 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 			self.do_token(JsSyntaxKind::EOF, 0.into());
 		}
 
-		self.inner.finish_node();
+		self.builder.finish_node();
 	}
 
 	fn errors(&mut self, errors: Vec<ParserError>) {
 		self.errors = errors;
+	}
+
+	fn synthesize_token(&mut self, kind: JsSyntaxKind) {
+		self.builder.synthesize_token(kind);
 	}
 }
 
@@ -72,7 +76,7 @@ impl<'a> LosslessTreeSink<'a> {
 			text_pos: 0.into(),
 			token_pos: 0,
 			parents_count: 0,
-			inner: SyntaxTreeBuilder::default(),
+			builder: SyntaxTreeBuilder::default(),
 			errors: vec![],
 			needs_eof: true,
 			next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![]),
@@ -84,7 +88,7 @@ impl<'a> LosslessTreeSink<'a> {
 	/// If tree is finished without a [SyntaxKind::EOF], one will be generated and all pending trivia
 	/// will be appended to its leading trivia.
 	pub fn finish(self) -> (SyntaxNode, Vec<ParserError>) {
-		(self.inner.finish(), self.errors)
+		(self.builder.finish(), self.errors)
 	}
 
 	#[inline]
@@ -116,7 +120,8 @@ impl<'a> LosslessTreeSink<'a> {
 		let range = leading_range.cover(token_range).cover(trailing_range);
 		let text = &self.text[range];
 
-		self.inner.token_with_trivia(kind, text, leading, trailing);
+		self.builder
+			.token_with_trivia(kind, text, leading, trailing);
 	}
 
 	fn get_trivia(&mut self, break_on_newline: bool) -> (TextRange, Vec<TriviaPiece>) {

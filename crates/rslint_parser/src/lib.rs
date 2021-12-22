@@ -126,6 +126,10 @@ pub trait TreeSink {
 	/// Adds new token to the current branch.
 	fn token(&mut self, kind: JsSyntaxKind);
 
+	/// Adds a synthesized token. A token that isn't present in the orignal source text but
+	/// made to make a node valid.
+	fn synthesize_token(&mut self, kind: JsSyntaxKind);
+
 	/// Start new branch and make it current.
 	fn start_node(&mut self, kind: JsSyntaxKind);
 

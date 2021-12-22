@@ -13,7 +13,7 @@ pub struct LossyTreeSink<'a> {
 	text_pos: TextSize,
 	token_pos: usize,
 	state: State,
-	inner: SyntaxTreeBuilder,
+	builder: SyntaxTreeBuilder,
 	errors: Vec<ParserError>,
 	/// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
 	needs_eof: bool,
@@ -32,7 +32,7 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 	fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind) {
 		match mem::replace(&mut self.state, State::Normal) {
 			State::PendingStart => unreachable!(),
-			State::PendingFinish => self.inner.finish_node(),
+			State::PendingFinish => self.builder.finish_node(),
 			State::Normal => (),
 		}
 
@@ -49,7 +49,7 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 	fn token(&mut self, kind: JsSyntaxKind) {
 		match mem::replace(&mut self.state, State::Normal) {
 			State::PendingStart => unreachable!(),
-			State::PendingFinish => self.inner.finish_node(),
+			State::PendingFinish => self.builder.finish_node(),
 			State::Normal => (),
 		}
 
@@ -60,27 +60,31 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 	fn start_node(&mut self, kind: JsSyntaxKind) {
 		match mem::replace(&mut self.state, State::Normal) {
 			State::PendingStart => {
-				self.inner.start_node(kind);
+				self.builder.start_node(kind);
 				self.next_token_leading_trivia = self.get_trivia(false);
 				return;
 			}
-			State::PendingFinish => self.inner.finish_node(),
+			State::PendingFinish => self.builder.finish_node(),
 			State::Normal => (),
 		}
 
-		self.inner.start_node(kind);
+		self.builder.start_node(kind);
 	}
 
 	fn finish_node(&mut self) {
 		match mem::replace(&mut self.state, State::PendingFinish) {
 			State::PendingStart => unreachable!(),
-			State::PendingFinish => self.inner.finish_node(),
+			State::PendingFinish => self.builder.finish_node(),
 			State::Normal => (),
 		}
 	}
 
 	fn errors(&mut self, errors: Vec<ParserError>) {
 		self.errors = errors;
+	}
+
+	fn synthesize_token(&mut self, kind: JsSyntaxKind) {
+		self.builder.synthesize_token(kind);
 	}
 }
 
@@ -92,7 +96,7 @@ impl<'a> LossyTreeSink<'a> {
 			text_pos: 0.into(),
 			token_pos: 0,
 			state: State::PendingStart,
-			inner: SyntaxTreeBuilder::default(),
+			builder: SyntaxTreeBuilder::default(),
 			errors: vec![],
 			needs_eof: true,
 			next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![]),
@@ -114,7 +118,7 @@ impl<'a> LossyTreeSink<'a> {
 					text_pos: (len as u32).into(),
 					token_pos: idx,
 					state: State::PendingStart,
-					inner: SyntaxTreeBuilder::default(),
+					builder: SyntaxTreeBuilder::default(),
 					errors: vec![],
 					needs_eof: true,
 					next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![]),
@@ -136,11 +140,11 @@ impl<'a> LossyTreeSink<'a> {
 		}
 
 		match mem::replace(&mut self.state, State::Normal) {
-			State::PendingFinish => self.inner.finish_node(),
+			State::PendingFinish => self.builder.finish_node(),
 			State::PendingStart | State::Normal => unreachable!(),
 		}
 
-		(self.inner.finish(), self.errors)
+		(self.builder.finish(), self.errors)
 	}
 
 	fn is_eof(&self) -> bool {
@@ -188,7 +192,8 @@ impl<'a> LossyTreeSink<'a> {
 		let range = leading_range.cover(token_range).cover(trailing_range);
 		let text = &self.text[range];
 
-		self.inner.token_with_trivia(kind, text, leading, trailing);
+		self.builder
+			.token_with_trivia(kind, text, leading, trailing);
 	}
 
 	fn get_trivia(&mut self, break_on_newline: bool) -> (TextRange, Vec<TriviaPiece>) {

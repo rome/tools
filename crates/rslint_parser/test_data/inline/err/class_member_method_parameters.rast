@@ -46,7 +46,7 @@ JsModule {
                     body: missing (required),
                 },
             ],
-            r_curly_token: missing (required),
+            r_curly_token: missing R_CURLY@20..20,
         },
     ],
     eof_token: EOF@20..21 "" [Whitespace("\n")] [],
@@ -89,7 +89,7 @@ JsModule {
             2: (empty)
           8: (empty)
           9: (empty)
-      6: (empty)
+      6: missing R_CURLY@20..20
   3: EOF@20..21 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `,` but instead found `{`
