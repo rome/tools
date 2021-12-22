@@ -16,13 +16,14 @@ impl ToFormatElement for JsObjectExpression {
 			if_group_fits_on_single_line(space_token())
 		};
 
-		let props = formatter.format_separated(members)?;
-
 		Ok(group_elements(format_elements!(
 			formatter.format_token(&self.l_curly_token()?)?,
 			space.clone(),
 			soft_indent(format_elements![
-				join_elements(soft_line_break_or_space(), props),
+				join_elements(
+					soft_line_break_or_space(),
+					formatter.format_separated(members)?
+				),
 				if_group_breaks(token(",")),
 			]),
 			space,

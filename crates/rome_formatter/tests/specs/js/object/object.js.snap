@@ -39,6 +39,6 @@ let a = {
 	) {},
 	[fooooooooooooooooooooooooooooooooooooooooooooooooo()]: () => {},
 	[foo()]: {},
-	...spread,,
+	...spread,
 };
 

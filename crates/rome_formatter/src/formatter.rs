@@ -1,7 +1,7 @@
 use crate::printer::Printer;
 use crate::{
-	concat_elements, format_elements, if_group_breaks, token, FormatElement, FormatOptions,
-	FormatResult, Formatted, ToFormatElement,
+	concat_elements, format_elements, token, FormatElement, FormatOptions, FormatResult, Formatted,
+	ToFormatElement,
 };
 use rome_rowan::SyntaxElement;
 use rslint_parser::{AstNode, AstSeparatedList, SyntaxNode, SyntaxToken};
@@ -135,7 +135,7 @@ impl Formatter {
 			if let Some(separator) = element.trailing_separator()? {
 				let formatted_separator = self.format_token(&separator)?;
 				if index == list.len() - 1 {
-					result.push(format_elements![node, if_group_breaks(formatted_separator)])
+					result.push(node)
 				} else {
 					result.push(format_elements![node, formatted_separator]);
 				}

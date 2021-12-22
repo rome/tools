@@ -54,5 +54,5 @@ runtimeAgent.getProperties(objectId, false, false, false, (
 	internalProperties,
 ) => {
 	return 1;
-},);
+});
 
