@@ -5,7 +5,7 @@ expression: class.js
 ---
 # Input
 class Foo extends Boar {
-	constructor() {
+	constructor(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, c = d) {
 		super();
 	}
 
@@ -22,7 +22,6 @@ class Foo extends Boar {
 	}
 
 	static foo;
-
 
 	static bar() {
 		return "bar"
@@ -47,7 +46,11 @@ x = class aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa extends bbbbbbb
 ---
 # Output
 class Foo extends Boar {
-	constructor() {
+	constructor(
+		aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
+		bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
+		c = d,
+	) {
 		super();
 	}
 	get g() {}

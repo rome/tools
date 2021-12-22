@@ -17,7 +17,7 @@ function foo(
 	someotherlongvariableshould,
 	someotherlongvariableshould,
 	someotherlongvariableshould = foooooooooooo,
-	...someotherlongvariableshould
+	...someotherlongvariableshould,
 ) {
 	return "nothing";
 }

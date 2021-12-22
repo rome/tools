@@ -6,9 +6,15 @@ expression: binding_pattern.js
 # Input
 let [a,b]=c;
 let [a,...b]=c;
+let [aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,...cccccccccccccccccccccccccccccc]=f;
 
 ---
 # Output
 let [a, b] = c;
 let [a, ...b] = c;
+let [
+	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
+	bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
+	...cccccccccccccccccccccccccccccc,
+] = f;
 

@@ -1,0 +1,22 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: literal_expression.js
+
+---
+# Input
+"a"
+1
+45n
+true
+false
+null
+
+---
+# Output
+"a";
+1;
+45n;
+true;
+false;
+null;
+

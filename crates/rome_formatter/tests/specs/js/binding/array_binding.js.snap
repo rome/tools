@@ -1,0 +1,19 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: array_binding.js
+
+---
+# Input
+[a="b"]=c
+let [a="b"]=c
+let [aaaaaaaaaaaaaaaaaaaa=bbbbbbbbbbbbbbbbbbbb,cccccccccccccccccccc=dddddddddddddddddddd]=e
+
+---
+# Output
+[a = "b"] = c;
+let [a = "b"] = c;
+let [
+	aaaaaaaaaaaaaaaaaaaa = bbbbbbbbbbbbbbbbbbbb,
+	cccccccccccccccccccc = dddddddddddddddddddd,
+] = e;
+

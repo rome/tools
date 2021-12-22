@@ -1,0 +1,22 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+expression: arrow_function.js
+
+---
+# Input
+() => {}
+async () => {}
+(foo) => {}
+(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,ccccccccccccccccccccccccccccc) => {}
+
+---
+# Output
+() => {};
+async () => {};
+(foo) => {};
+(
+	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
+	bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
+	ccccccccccccccccccccccccccccc,
+) => {};
+

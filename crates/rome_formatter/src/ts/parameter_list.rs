@@ -1,6 +1,6 @@
 use crate::{
-	format_elements, group_elements, join_elements, soft_indent, soft_line_break_or_space,
-	FormatElement, FormatResult, Formatter, ToFormatElement,
+	format_elements, group_elements, if_group_breaks, join_elements, soft_indent,
+	soft_line_break_or_space, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{JsAnyParameter, JsParameters, JsRestParameter};
 
@@ -10,7 +10,10 @@ impl ToFormatElement for JsParameters {
 
 		Ok(group_elements(format_elements![
 			formatter.format_token(&self.l_paren_token()?)?,
-			soft_indent(join_elements(soft_line_break_or_space(), param_tokens,),),
+			soft_indent(format_elements![
+				join_elements(soft_line_break_or_space(), param_tokens),
+				if_group_breaks(token(",")),
+			]),
 			formatter.format_token(&self.r_paren_token()?)?
 		]))
 	}

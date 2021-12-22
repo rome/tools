@@ -6,9 +6,18 @@ expression: spread.js
 # Input
 let a = [...a, ...b,];
 let b = [...a, ...b];
+[...a]
+let a = [...baaaaaaaaaaaaaaaaaaaaaaaaaaaaa,...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,...cccccccccccccccccccccccccccccc]
+
 
 ---
 # Output
 let a = [...a, ...b];
 let b = [...a, ...b];
+[...a];
+let a = [
+	...baaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
+	...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
+	...cccccccccccccccccccccccccccccc,
+];
 

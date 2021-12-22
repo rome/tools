@@ -1,5 +1,5 @@
 class Foo extends Boar {
-	constructor() {
+	constructor(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, c = d) {
 		super();
 	}
 
@@ -16,7 +16,6 @@ class Foo extends Boar {
 	}
 
 	static foo;
-
 
 	static bar() {
 		return "bar"
