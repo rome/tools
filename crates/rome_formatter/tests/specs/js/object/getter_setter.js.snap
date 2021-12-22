@@ -13,6 +13,6 @@ let b = {
 
 ---
 # Output
-let a = {get foo() {}};
-let b = {set foo(a) {}};
+let a = { get foo() {} };
+let b = { set foo(a) {} };
 
