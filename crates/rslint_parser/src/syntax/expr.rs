@@ -1493,7 +1493,6 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax<CompletedMarker> 
 		// test await_expression
 		// async function test() {
 		// 	await inner();
-		//
 		// 	await (inner()) + await inner();
 		// }
 		// async function inner() {
