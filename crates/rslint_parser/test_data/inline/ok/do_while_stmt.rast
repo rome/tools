@@ -30,6 +30,7 @@ JsModule {
                                     value_token: IDENT@31..36 "Error" [] [],
                                 },
                             },
+                            optional_chain_token_token: missing (optional),
                             type_args: missing (optional),
                             arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@36..37 "(" [] [],
@@ -107,7 +108,8 @@ JsModule {
                 0: JS_REFERENCE_IDENTIFIER@31..36
                   0: IDENT@31..36 "Error" [] []
               1: (empty)
-              2: JS_CALL_ARGUMENTS@36..44
+              2: (empty)
+              3: JS_CALL_ARGUMENTS@36..44
                 0: L_PAREN@36..37 "(" [] []
                 1: JS_CALL_ARGUMENT_LIST@37..42
                   0: JS_STRING_LITERAL_EXPRESSION@37..42

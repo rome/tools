@@ -38,6 +38,7 @@ JsModule {
                                     callee: JsSuperExpression {
                                         super_token: SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] [],
                                     },
+                                    optional_chain_token_token: missing (optional),
                                     type_args: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@47..48 "(" [] [],
@@ -82,6 +83,7 @@ JsModule {
                                             value_token: IDENT@72..76 "test" [] [],
                                         },
                                     },
+                                    optional_chain_token_token: missing (optional),
                                     type_args: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@76..77 "(" [] [],
@@ -162,7 +164,8 @@ JsModule {
                   0: JS_SUPER_EXPRESSION@39..47
                     0: SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] []
                   1: (empty)
-                  2: JS_CALL_ARGUMENTS@47..49
+                  2: (empty)
+                  3: JS_CALL_ARGUMENTS@47..49
                     0: L_PAREN@47..48 "(" [] []
                     1: JS_CALL_ARGUMENT_LIST@48..48
                     2: R_PAREN@48..49 ")" [] []
@@ -195,7 +198,8 @@ JsModule {
                     2: JS_NAME@72..76
                       0: IDENT@72..76 "test" [] []
                   1: (empty)
-                  2: JS_CALL_ARGUMENTS@76..82
+                  2: (empty)
+                  3: JS_CALL_ARGUMENTS@76..82
                     0: L_PAREN@76..77 "(" [] []
                     1: JS_CALL_ARGUMENT_LIST@77..81
                       0: JS_IDENTIFIER_EXPRESSION@77..78

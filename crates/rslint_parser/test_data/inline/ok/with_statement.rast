@@ -53,6 +53,7 @@ JsScript {
                                                 value_token: IDENT@51..54 "log" [] [],
                                             },
                                         },
+                                        optional_chain_token_token: missing (optional),
                                         type_args: missing (optional),
                                         arguments: JsCallArguments {
                                             l_paren_token: L_PAREN@54..55 "(" [] [],
@@ -125,7 +126,8 @@ JsScript {
                       2: JS_NAME@51..54
                         0: IDENT@51..54 "log" [] []
                     1: (empty)
-                    2: JS_CALL_ARGUMENTS@54..57
+                    2: (empty)
+                    3: JS_CALL_ARGUMENTS@54..57
                       0: L_PAREN@54..55 "(" [] []
                       1: JS_CALL_ARGUMENT_LIST@55..56
                         0: JS_IDENTIFIER_EXPRESSION@55..56
