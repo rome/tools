@@ -65,6 +65,13 @@ impl<'t> TokenSource<'t> {
 			if token.kind.is_trivia() {
 				if !has_linebreak && token.kind == rslint_lexer::JsSyntaxKind::NEWLINE {
 					has_linebreak = true;
+				} else if !has_linebreak && token.kind == rslint_lexer::SyntaxKind::COMMENT {
+					let src = source
+						.get(len.into()..(usize::from(len) + token.len))
+						.expect("src and tokens do not match");
+					if src.chars().any(rslint_lexer::is_linebreak) {
+						has_linebreak = true;
+					}
 				}
 			} else {
 				if has_linebreak {
