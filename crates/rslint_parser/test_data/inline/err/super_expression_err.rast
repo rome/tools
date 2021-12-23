@@ -87,26 +87,26 @@ JsModule {
             expression: CallExpr {
                 callee: JsUnknownExpression {
                     items: [
-                        SUPER_KW@65..72 "super" [Whitespace("\n\n")] [],
+                        SUPER_KW@65..71 "super" [Whitespace("\n")] [],
                     ],
                 },
                 type_args: missing (optional),
                 arguments: JsCallArguments {
-                    l_paren_token: L_PAREN@72..73 "(" [] [],
+                    l_paren_token: L_PAREN@71..72 "(" [] [],
                     args: JsCallArgumentList [],
-                    r_paren_token: R_PAREN@73..74 ")" [] [],
+                    r_paren_token: R_PAREN@72..73 ")" [] [],
                 },
             },
-            semicolon_token: SEMICOLON@74..75 ";" [] [],
+            semicolon_token: SEMICOLON@73..74 ";" [] [],
         },
     ],
-    eof_token: EOF@75..76 "" [Whitespace("\n")] [],
+    eof_token: EOF@74..75 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..76
+0: JS_MODULE@0..75
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..75
+  2: JS_MODULE_ITEM_LIST@0..74
     0: JS_CLASS_DECLARATION@0..65
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..11
@@ -163,17 +163,17 @@ JsModule {
                 1: SEMICOLON@59..60 ";" [] []
             3: R_CURLY@60..63 "}" [Whitespace("\n\t")] []
       6: R_CURLY@63..65 "}" [Whitespace("\n")] []
-    1: JS_EXPRESSION_STATEMENT@65..75
-      0: CALL_EXPR@65..74
-        0: JS_UNKNOWN_EXPRESSION@65..72
-          0: SUPER_KW@65..72 "super" [Whitespace("\n\n")] []
+    1: JS_EXPRESSION_STATEMENT@65..74
+      0: CALL_EXPR@65..73
+        0: JS_UNKNOWN_EXPRESSION@65..71
+          0: SUPER_KW@65..71 "super" [Whitespace("\n")] []
         1: (empty)
-        2: JS_CALL_ARGUMENTS@72..74
-          0: L_PAREN@72..73 "(" [] []
-          1: JS_CALL_ARGUMENT_LIST@73..73
-          2: R_PAREN@73..74 ")" [] []
-      1: SEMICOLON@74..75 ";" [] []
-  3: EOF@75..76 "" [Whitespace("\n")] []
+        2: JS_CALL_ARGUMENTS@71..73
+          0: L_PAREN@71..72 "(" [] []
+          1: JS_CALL_ARGUMENT_LIST@72..72
+          2: R_PAREN@72..73 ")" [] []
+      1: SEMICOLON@73..74 ";" [] []
+  3: EOF@74..75 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: `super` is only valid inside of a class constructor of a subclass.
   ┌─ super_expression_err.js:3:3
@@ -190,9 +190,9 @@ error[SyntaxError]: Super doesn't support optional chaining as super can never b
 
 --
 error[SyntaxError]: `super` is only valid inside of a class constructor of a subclass.
-  ┌─ super_expression_err.js:8:1
+  ┌─ super_expression_err.js:7:1
   │
-8 │ super();
+7 │ super();
   │ ^^^^^
 
 --
@@ -202,5 +202,4 @@ class Test extends B {
 		super?.test();
 	}
 }
-
 super();

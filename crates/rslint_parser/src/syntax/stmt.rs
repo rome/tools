@@ -591,6 +591,43 @@ impl ParseNodeList for DirectivesList {
 	}
 }
 
+// test directives
+// // SCRIPT
+// "use new"
+// let a = 10;
+// "use strict"; // not a directive
+// function test() {
+// 	'use strict';
+// 	let a = 10;
+// 	'use strict'; // not a directive
+// }
+// (function () {
+// 	"use strict";
+// 	let a = 10;
+// 	"use strict"; // not a directive
+// });
+// let b = () => {
+// 	"use strict";
+// 	let a = 10;
+// 	"use strict";  // not a directive
+// }
+// {
+// 	"use strict"; // not a directive
+// }
+//
+// test_err directives_err
+// // SCRIPT
+// function test() {
+// 	"use strict";
+// 	function inner_a() {
+// 		"use strict";
+// 	}
+// 	function inner_b() {
+// 		function inner_inner() {
+// 			"use strict";
+// 		}
+// 	}
+// }
 #[must_use]
 pub(crate) fn directives(p: &mut Parser) -> Option<ParserState> {
 	let mut list = DirectivesList::default();
@@ -672,6 +709,13 @@ pub fn parse_if_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	Present(m.complete(p, JS_IF_STATEMENT))
 }
 
+// test with_statement
+// // SCRIPT
+// function f(x, o) {
+// 	with (o) {
+// 		console.log(x);
+// 	}
+// }
 /// A with statement such as `with (foo) something()`
 pub fn parse_with_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![with]) {
@@ -991,9 +1035,22 @@ fn parse_variable_declaration(
 }
 
 // A do.. while statement, such as `do {} while (true)`
-// test do_while_stmtR
+
+// test do_while_statement
+// do console.log("test"); while(true)
+// do {
+// 	console.log("test")
+// } while (true);
+// let a = 1;
+// do
+// do {
+// 	a = a + 1
+// } while(a < 5)
+// while (a < 100)
+//
+// test do_while_stmt
 // do { } while (true)
-// do throw Error("foo") while (true)
+// do { throw Error("foo") } while (true)
 // do { break; } while (true)
 pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// test_err do_while_stmt_err

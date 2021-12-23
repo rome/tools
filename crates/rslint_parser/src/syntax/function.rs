@@ -41,6 +41,9 @@ use std::collections::HashMap;
 // function test(): number {}
 // function foo(await) {}
 // function foo(yield) {}
+//
+// test_err function_broken
+// function foo())})}{{{  {}
 pub(super) fn parse_function_declaration(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
 	parse_function(p, JS_FUNCTION_DECLARATION)
 }

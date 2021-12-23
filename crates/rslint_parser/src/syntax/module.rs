@@ -157,6 +157,8 @@ fn parse_import_bare_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	})
 }
 
+// test import_decl
+// import * as foo from "bla";
 fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![*]) {
 		return Absent;
@@ -334,6 +336,7 @@ fn parse_shorthand_named_import_specifier(p: &mut Parser) -> ParsedSyntax<Comple
 // import foo from "foo.json" assert { "type": "json", type: "html", "type": "js" };
 // import "x" assert;
 // import foo from "foo.json" assert { type: "json", lazy: true, startAtLine: 1 };
+// import { a } from "a.json" assert
 fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	if !p.at(T![ident]) || p.cur_src() != "assert" || p.has_linebreak_before_n(0) {
 		return Absent;

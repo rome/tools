@@ -4,135 +4,135 @@ JsScript {
     statements: JsStatementList [
         JsFunctionDeclaration {
             async_token: missing (optional),
-            function_token: FUNCTION_KW@0..20 "function" [Comments("// SCRIPT"), Whitespace("\n\n")] [Whitespace(" ")],
+            function_token: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
             star_token: missing (optional),
             id: JsIdentifierBinding {
-                name_token: IDENT@20..21 "f" [] [],
+                name_token: IDENT@19..20 "f" [] [],
             },
             type_parameters: missing (optional),
             parameters: JsParameters {
-                l_paren_token: L_PAREN@21..22 "(" [] [],
+                l_paren_token: L_PAREN@20..21 "(" [] [],
                 items: JsParameterList [
                     JsIdentifierBinding {
-                        name_token: IDENT@22..23 "x" [] [],
+                        name_token: IDENT@21..22 "x" [] [],
                     },
-                    COMMA@23..25 "," [] [Whitespace(" ")],
+                    COMMA@22..24 "," [] [Whitespace(" ")],
                     JsIdentifierBinding {
-                        name_token: IDENT@25..26 "o" [] [],
+                        name_token: IDENT@24..25 "o" [] [],
                     },
                 ],
-                r_paren_token: R_PAREN@26..28 ")" [] [Whitespace(" ")],
+                r_paren_token: R_PAREN@25..27 ")" [] [Whitespace(" ")],
             },
             return_type: missing (optional),
             body: JsFunctionBody {
-                l_curly_token: L_CURLY@28..29 "{" [] [],
+                l_curly_token: L_CURLY@27..28 "{" [] [],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
                     JsWithStatement {
-                        with_token: WITH_KW@29..36 "with" [Whitespace("\n\t")] [Whitespace(" ")],
-                        l_paren_token: L_PAREN@36..37 "(" [] [],
+                        with_token: WITH_KW@28..35 "with" [Whitespace("\n\t")] [Whitespace(" ")],
+                        l_paren_token: L_PAREN@35..36 "(" [] [],
                         object: JsIdentifierExpression {
                             name: JsReferenceIdentifier {
-                                value_token: IDENT@37..38 "o" [] [],
+                                value_token: IDENT@36..37 "o" [] [],
                             },
                         },
-                        r_paren_token: R_PAREN@38..40 ")" [] [Whitespace(" ")],
+                        r_paren_token: R_PAREN@37..39 ")" [] [Whitespace(" ")],
                         body: JsBlockStatement {
-                            l_curly_token: L_CURLY@40..41 "{" [] [],
+                            l_curly_token: L_CURLY@39..40 "{" [] [],
                             statements: JsStatementList [
                                 JsExpressionStatement {
                                     expression: CallExpr {
                                         callee: JsStaticMemberExpression {
                                             object: JsIdentifierExpression {
                                                 name: JsReferenceIdentifier {
-                                                    value_token: IDENT@41..51 "console" [Whitespace("\n\t\t")] [],
+                                                    value_token: IDENT@40..50 "console" [Whitespace("\n\t\t")] [],
                                                 },
                                             },
-                                            operator: DOT@51..52 "." [] [],
+                                            operator: DOT@50..51 "." [] [],
                                             member: JsName {
-                                                value_token: IDENT@52..55 "log" [] [],
+                                                value_token: IDENT@51..54 "log" [] [],
                                             },
                                         },
                                         type_args: missing (optional),
                                         arguments: JsCallArguments {
-                                            l_paren_token: L_PAREN@55..56 "(" [] [],
+                                            l_paren_token: L_PAREN@54..55 "(" [] [],
                                             args: JsCallArgumentList [
                                                 JsIdentifierExpression {
                                                     name: JsReferenceIdentifier {
-                                                        value_token: IDENT@56..57 "x" [] [],
+                                                        value_token: IDENT@55..56 "x" [] [],
                                                     },
                                                 },
                                             ],
-                                            r_paren_token: R_PAREN@57..58 ")" [] [],
+                                            r_paren_token: R_PAREN@56..57 ")" [] [],
                                         },
                                     },
-                                    semicolon_token: SEMICOLON@58..59 ";" [] [],
+                                    semicolon_token: SEMICOLON@57..58 ";" [] [],
                                 },
                             ],
-                            r_curly_token: R_CURLY@59..62 "}" [Whitespace("\n\t")] [],
+                            r_curly_token: R_CURLY@58..61 "}" [Whitespace("\n\t")] [],
                         },
                     },
                 ],
-                r_curly_token: R_CURLY@62..64 "}" [Whitespace("\n")] [],
+                r_curly_token: R_CURLY@61..63 "}" [Whitespace("\n")] [],
             },
         },
     ],
-    eof_token: EOF@64..65 "" [Whitespace("\n")] [],
+    eof_token: EOF@63..64 "" [Whitespace("\n")] [],
 }
 
-0: JS_SCRIPT@0..65
+0: JS_SCRIPT@0..64
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_STATEMENT_LIST@0..64
-    0: JS_FUNCTION_DECLARATION@0..64
+  2: JS_STATEMENT_LIST@0..63
+    0: JS_FUNCTION_DECLARATION@0..63
       0: (empty)
-      1: FUNCTION_KW@0..20 "function" [Comments("// SCRIPT"), Whitespace("\n\n")] [Whitespace(" ")]
+      1: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")]
       2: (empty)
-      3: JS_IDENTIFIER_BINDING@20..21
-        0: IDENT@20..21 "f" [] []
+      3: JS_IDENTIFIER_BINDING@19..20
+        0: IDENT@19..20 "f" [] []
       4: (empty)
-      5: JS_PARAMETERS@21..28
-        0: L_PAREN@21..22 "(" [] []
-        1: JS_PARAMETER_LIST@22..26
-          0: JS_IDENTIFIER_BINDING@22..23
-            0: IDENT@22..23 "x" [] []
-          1: COMMA@23..25 "," [] [Whitespace(" ")]
-          2: JS_IDENTIFIER_BINDING@25..26
-            0: IDENT@25..26 "o" [] []
-        2: R_PAREN@26..28 ")" [] [Whitespace(" ")]
+      5: JS_PARAMETERS@20..27
+        0: L_PAREN@20..21 "(" [] []
+        1: JS_PARAMETER_LIST@21..25
+          0: JS_IDENTIFIER_BINDING@21..22
+            0: IDENT@21..22 "x" [] []
+          1: COMMA@22..24 "," [] [Whitespace(" ")]
+          2: JS_IDENTIFIER_BINDING@24..25
+            0: IDENT@24..25 "o" [] []
+        2: R_PAREN@25..27 ")" [] [Whitespace(" ")]
       6: (empty)
-      7: JS_FUNCTION_BODY@28..64
-        0: L_CURLY@28..29 "{" [] []
-        1: JS_DIRECTIVE_LIST@29..29
-        2: JS_STATEMENT_LIST@29..62
-          0: JS_WITH_STATEMENT@29..62
-            0: WITH_KW@29..36 "with" [Whitespace("\n\t")] [Whitespace(" ")]
-            1: L_PAREN@36..37 "(" [] []
-            2: JS_IDENTIFIER_EXPRESSION@37..38
-              0: JS_REFERENCE_IDENTIFIER@37..38
-                0: IDENT@37..38 "o" [] []
-            3: R_PAREN@38..40 ")" [] [Whitespace(" ")]
-            4: JS_BLOCK_STATEMENT@40..62
-              0: L_CURLY@40..41 "{" [] []
-              1: JS_STATEMENT_LIST@41..59
-                0: JS_EXPRESSION_STATEMENT@41..59
-                  0: CALL_EXPR@41..58
-                    0: JS_STATIC_MEMBER_EXPRESSION@41..55
-                      0: JS_IDENTIFIER_EXPRESSION@41..51
-                        0: JS_REFERENCE_IDENTIFIER@41..51
-                          0: IDENT@41..51 "console" [Whitespace("\n\t\t")] []
-                      1: DOT@51..52 "." [] []
-                      2: JS_NAME@52..55
-                        0: IDENT@52..55 "log" [] []
+      7: JS_FUNCTION_BODY@27..63
+        0: L_CURLY@27..28 "{" [] []
+        1: JS_DIRECTIVE_LIST@28..28
+        2: JS_STATEMENT_LIST@28..61
+          0: JS_WITH_STATEMENT@28..61
+            0: WITH_KW@28..35 "with" [Whitespace("\n\t")] [Whitespace(" ")]
+            1: L_PAREN@35..36 "(" [] []
+            2: JS_IDENTIFIER_EXPRESSION@36..37
+              0: JS_REFERENCE_IDENTIFIER@36..37
+                0: IDENT@36..37 "o" [] []
+            3: R_PAREN@37..39 ")" [] [Whitespace(" ")]
+            4: JS_BLOCK_STATEMENT@39..61
+              0: L_CURLY@39..40 "{" [] []
+              1: JS_STATEMENT_LIST@40..58
+                0: JS_EXPRESSION_STATEMENT@40..58
+                  0: CALL_EXPR@40..57
+                    0: JS_STATIC_MEMBER_EXPRESSION@40..54
+                      0: JS_IDENTIFIER_EXPRESSION@40..50
+                        0: JS_REFERENCE_IDENTIFIER@40..50
+                          0: IDENT@40..50 "console" [Whitespace("\n\t\t")] []
+                      1: DOT@50..51 "." [] []
+                      2: JS_NAME@51..54
+                        0: IDENT@51..54 "log" [] []
                     1: (empty)
-                    2: JS_CALL_ARGUMENTS@55..58
-                      0: L_PAREN@55..56 "(" [] []
-                      1: JS_CALL_ARGUMENT_LIST@56..57
-                        0: JS_IDENTIFIER_EXPRESSION@56..57
-                          0: JS_REFERENCE_IDENTIFIER@56..57
-                            0: IDENT@56..57 "x" [] []
-                      2: R_PAREN@57..58 ")" [] []
-                  1: SEMICOLON@58..59 ";" [] []
-              2: R_CURLY@59..62 "}" [Whitespace("\n\t")] []
-        3: R_CURLY@62..64 "}" [Whitespace("\n")] []
-  3: EOF@64..65 "" [Whitespace("\n")] []
+                    2: JS_CALL_ARGUMENTS@54..57
+                      0: L_PAREN@54..55 "(" [] []
+                      1: JS_CALL_ARGUMENT_LIST@55..56
+                        0: JS_IDENTIFIER_EXPRESSION@55..56
+                          0: JS_REFERENCE_IDENTIFIER@55..56
+                            0: IDENT@55..56 "x" [] []
+                      2: R_PAREN@56..57 ")" [] []
+                  1: SEMICOLON@57..58 ";" [] []
+              2: R_CURLY@58..61 "}" [Whitespace("\n\t")] []
+        3: R_CURLY@61..63 "}" [Whitespace("\n")] []
+  3: EOF@63..64 "" [Whitespace("\n")] []

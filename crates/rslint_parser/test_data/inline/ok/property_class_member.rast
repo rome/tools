@@ -68,13 +68,13 @@ JsModule {
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
                     name: JsLiteralMemberName {
-                        value: JS_STRING_LITERAL@58..64 "\"a\"" [Whitespace("\n\n\t")] [],
+                        value: JS_STRING_LITERAL@58..63 "\"a\"" [Whitespace("\n\t")] [],
                     },
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
                     ty: missing (optional),
                     value: missing (optional),
-                    semicolon_token: SEMICOLON@64..65 ";" [] [],
+                    semicolon_token: SEMICOLON@63..64 ";" [] [],
                 },
                 JsPropertyClassMember {
                     declare_token: missing (optional),
@@ -83,7 +83,7 @@ JsModule {
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
                     name: JsLiteralMemberName {
-                        value: JS_NUMBER_LITERAL@65..68 "5" [Whitespace("\n\t")] [],
+                        value: JS_NUMBER_LITERAL@64..67 "5" [Whitespace("\n\t")] [],
                     },
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
@@ -98,17 +98,17 @@ JsModule {
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
                     name: JsComputedMemberName {
-                        l_brack_token: L_BRACK@68..71 "[" [Whitespace("\n\t")] [],
+                        l_brack_token: L_BRACK@67..70 "[" [Whitespace("\n\t")] [],
                         expression: JsBinaryExpression {
                             left: JsStringLiteralExpression {
-                                value_token: JS_STRING_LITERAL@71..75 "\"a\"" [] [Whitespace(" ")],
+                                value_token: JS_STRING_LITERAL@70..74 "\"a\"" [] [Whitespace(" ")],
                             },
-                            operator: PLUS@75..77 "+" [] [Whitespace(" ")],
+                            operator: PLUS@74..76 "+" [] [Whitespace(" ")],
                             right: JsStringLiteralExpression {
-                                value_token: JS_STRING_LITERAL@77..80 "\"b\"" [] [],
+                                value_token: JS_STRING_LITERAL@76..79 "\"b\"" [] [],
                             },
                         },
-                        r_brack_token: R_BRACK@80..81 "]" [] [],
+                        r_brack_token: R_BRACK@79..80 "]" [] [],
                     },
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
@@ -119,11 +119,11 @@ JsModule {
                 JsPropertyClassMember {
                     declare_token: missing (optional),
                     access_modifier: missing (optional),
-                    static_token: STATIC_KW@81..91 "static" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                    static_token: STATIC_KW@80..89 "static" [Whitespace("\n\t")] [Whitespace(" ")],
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
                     name: JsLiteralMemberName {
-                        value: IDENT@91..105 "staticProperty" [] [],
+                        value: IDENT@89..103 "staticProperty" [] [],
                     },
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
@@ -134,19 +134,19 @@ JsModule {
                 JsPropertyClassMember {
                     declare_token: missing (optional),
                     access_modifier: missing (optional),
-                    static_token: STATIC_KW@105..114 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    static_token: STATIC_KW@103..112 "static" [Whitespace("\n\t")] [Whitespace(" ")],
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
                     name: JsLiteralMemberName {
-                        value: IDENT@114..140 "staticInitializedProperty" [] [Whitespace(" ")],
+                        value: IDENT@112..138 "staticInitializedProperty" [] [Whitespace(" ")],
                     },
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
                     ty: missing (optional),
                     value: JsInitializerClause {
-                        eq_token: EQ@140..142 "=" [] [Whitespace(" ")],
+                        eq_token: EQ@138..140 "=" [] [Whitespace(" ")],
                         expression: JsNumberLiteralExpression {
-                            value_token: JS_NUMBER_LITERAL@142..143 "1" [] [],
+                            value_token: JS_NUMBER_LITERAL@140..141 "1" [] [],
                         },
                     },
                     semicolon_token: missing (optional),
@@ -158,8 +158,8 @@ JsModule {
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
-                        hash_token: HASH@143..147 "#" [Whitespace("\n\n\t")] [],
-                        id_token: IDENT@147..154 "private" [] [],
+                        hash_token: HASH@141..144 "#" [Whitespace("\n\t")] [],
+                        id_token: IDENT@144..151 "private" [] [],
                     },
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
@@ -174,16 +174,16 @@ JsModule {
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
-                        hash_token: HASH@154..157 "#" [Whitespace("\n\t")] [],
-                        id_token: IDENT@157..176 "privateInitialized" [] [Whitespace(" ")],
+                        hash_token: HASH@151..154 "#" [Whitespace("\n\t")] [],
+                        id_token: IDENT@154..173 "privateInitialized" [] [Whitespace(" ")],
                     },
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
                     ty: missing (optional),
                     value: JsInitializerClause {
-                        eq_token: EQ@176..178 "=" [] [Whitespace(" ")],
+                        eq_token: EQ@173..175 "=" [] [Whitespace(" ")],
                         expression: JsStringLiteralExpression {
-                            value_token: JS_STRING_LITERAL@178..181 "\"a\"" [] [],
+                            value_token: JS_STRING_LITERAL@175..178 "\"a\"" [] [],
                         },
                     },
                     semicolon_token: missing (optional),
@@ -191,12 +191,12 @@ JsModule {
                 JsPropertyClassMember {
                     declare_token: missing (optional),
                     access_modifier: missing (optional),
-                    static_token: STATIC_KW@181..191 "static" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                    static_token: STATIC_KW@178..187 "static" [Whitespace("\n\t")] [Whitespace(" ")],
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
-                        hash_token: HASH@191..192 "#" [] [],
-                        id_token: IDENT@192..205 "staticPrivate" [] [],
+                        hash_token: HASH@187..188 "#" [] [],
+                        id_token: IDENT@188..201 "staticPrivate" [] [],
                     },
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
@@ -207,43 +207,43 @@ JsModule {
                 JsPropertyClassMember {
                     declare_token: missing (optional),
                     access_modifier: missing (optional),
-                    static_token: STATIC_KW@205..214 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    static_token: STATIC_KW@201..210 "static" [Whitespace("\n\t")] [Whitespace(" ")],
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
                     name: JsPrivateClassMemberName {
-                        hash_token: HASH@214..215 "#" [] [],
-                        id_token: IDENT@215..248 "staticPrivateInitializedProperty" [] [Whitespace(" ")],
+                        hash_token: HASH@210..211 "#" [] [],
+                        id_token: IDENT@211..244 "staticPrivateInitializedProperty" [] [Whitespace(" ")],
                     },
                     question_mark_token: missing (optional),
                     excl_token: missing (optional),
                     ty: missing (optional),
                     value: JsInitializerClause {
-                        eq_token: EQ@248..250 "=" [] [Whitespace(" ")],
+                        eq_token: EQ@244..246 "=" [] [Whitespace(" ")],
                         expression: JsNumberLiteralExpression {
-                            value_token: JS_NUMBER_LITERAL@250..251 "1" [] [],
+                            value_token: JS_NUMBER_LITERAL@246..247 "1" [] [],
                         },
                     },
                     semicolon_token: missing (optional),
                 },
             ],
-            r_curly_token: R_CURLY@251..253 "}" [Whitespace("\n")] [],
+            r_curly_token: R_CURLY@247..249 "}" [Whitespace("\n")] [],
         },
     ],
-    eof_token: EOF@253..255 "" [Whitespace("\n\n")] [],
+    eof_token: EOF@249..250 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..255
+0: JS_MODULE@0..250
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..253
-    0: JS_CLASS_DECLARATION@0..253
+  2: JS_MODULE_ITEM_LIST@0..249
+    0: JS_CLASS_DECLARATION@0..249
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..10
         0: IDENT@6..10 "foo" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
       4: L_CURLY@10..11 "{" [] []
-      5: JS_CLASS_MEMBER_LIST@11..251
+      5: JS_CLASS_MEMBER_LIST@11..247
         0: JS_PROPERTY_CLASS_MEMBER@11..21
           0: (empty)
           1: (empty)
@@ -286,142 +286,142 @@ JsModule {
             1: JS_STRING_LITERAL_EXPRESSION@55..58
               0: JS_STRING_LITERAL@55..58 "\"a\"" [] []
           10: (empty)
-        3: JS_PROPERTY_CLASS_MEMBER@58..65
+        3: JS_PROPERTY_CLASS_MEMBER@58..64
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
           4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@58..64
-            0: JS_STRING_LITERAL@58..64 "\"a\"" [Whitespace("\n\n\t")] []
+          5: JS_LITERAL_MEMBER_NAME@58..63
+            0: JS_STRING_LITERAL@58..63 "\"a\"" [Whitespace("\n\t")] []
           6: (empty)
           7: (empty)
           8: (empty)
           9: (empty)
-          10: SEMICOLON@64..65 ";" [] []
-        4: JS_PROPERTY_CLASS_MEMBER@65..68
+          10: SEMICOLON@63..64 ";" [] []
+        4: JS_PROPERTY_CLASS_MEMBER@64..67
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
           4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@65..68
-            0: JS_NUMBER_LITERAL@65..68 "5" [Whitespace("\n\t")] []
+          5: JS_LITERAL_MEMBER_NAME@64..67
+            0: JS_NUMBER_LITERAL@64..67 "5" [Whitespace("\n\t")] []
           6: (empty)
           7: (empty)
           8: (empty)
           9: (empty)
           10: (empty)
-        5: JS_PROPERTY_CLASS_MEMBER@68..81
+        5: JS_PROPERTY_CLASS_MEMBER@67..80
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
           4: (empty)
-          5: JS_COMPUTED_MEMBER_NAME@68..81
-            0: L_BRACK@68..71 "[" [Whitespace("\n\t")] []
-            1: JS_BINARY_EXPRESSION@71..80
-              0: JS_STRING_LITERAL_EXPRESSION@71..75
-                0: JS_STRING_LITERAL@71..75 "\"a\"" [] [Whitespace(" ")]
-              1: PLUS@75..77 "+" [] [Whitespace(" ")]
-              2: JS_STRING_LITERAL_EXPRESSION@77..80
-                0: JS_STRING_LITERAL@77..80 "\"b\"" [] []
-            2: R_BRACK@80..81 "]" [] []
+          5: JS_COMPUTED_MEMBER_NAME@67..80
+            0: L_BRACK@67..70 "[" [Whitespace("\n\t")] []
+            1: JS_BINARY_EXPRESSION@70..79
+              0: JS_STRING_LITERAL_EXPRESSION@70..74
+                0: JS_STRING_LITERAL@70..74 "\"a\"" [] [Whitespace(" ")]
+              1: PLUS@74..76 "+" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL_EXPRESSION@76..79
+                0: JS_STRING_LITERAL@76..79 "\"b\"" [] []
+            2: R_BRACK@79..80 "]" [] []
           6: (empty)
           7: (empty)
           8: (empty)
           9: (empty)
           10: (empty)
-        6: JS_PROPERTY_CLASS_MEMBER@81..105
+        6: JS_PROPERTY_CLASS_MEMBER@80..103
           0: (empty)
           1: (empty)
-          2: STATIC_KW@81..91 "static" [Whitespace("\n\n\t")] [Whitespace(" ")]
+          2: STATIC_KW@80..89 "static" [Whitespace("\n\t")] [Whitespace(" ")]
           3: (empty)
           4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@91..105
-            0: IDENT@91..105 "staticProperty" [] []
+          5: JS_LITERAL_MEMBER_NAME@89..103
+            0: IDENT@89..103 "staticProperty" [] []
           6: (empty)
           7: (empty)
           8: (empty)
           9: (empty)
           10: (empty)
-        7: JS_PROPERTY_CLASS_MEMBER@105..143
+        7: JS_PROPERTY_CLASS_MEMBER@103..141
           0: (empty)
           1: (empty)
-          2: STATIC_KW@105..114 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          2: STATIC_KW@103..112 "static" [Whitespace("\n\t")] [Whitespace(" ")]
           3: (empty)
           4: (empty)
-          5: JS_LITERAL_MEMBER_NAME@114..140
-            0: IDENT@114..140 "staticInitializedProperty" [] [Whitespace(" ")]
+          5: JS_LITERAL_MEMBER_NAME@112..138
+            0: IDENT@112..138 "staticInitializedProperty" [] [Whitespace(" ")]
           6: (empty)
           7: (empty)
           8: (empty)
-          9: JS_INITIALIZER_CLAUSE@140..143
-            0: EQ@140..142 "=" [] [Whitespace(" ")]
-            1: JS_NUMBER_LITERAL_EXPRESSION@142..143
-              0: JS_NUMBER_LITERAL@142..143 "1" [] []
+          9: JS_INITIALIZER_CLAUSE@138..141
+            0: EQ@138..140 "=" [] [Whitespace(" ")]
+            1: JS_NUMBER_LITERAL_EXPRESSION@140..141
+              0: JS_NUMBER_LITERAL@140..141 "1" [] []
           10: (empty)
-        8: JS_PROPERTY_CLASS_MEMBER@143..154
+        8: JS_PROPERTY_CLASS_MEMBER@141..151
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
           4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@143..154
-            0: HASH@143..147 "#" [Whitespace("\n\n\t")] []
-            1: IDENT@147..154 "private" [] []
+          5: JS_PRIVATE_CLASS_MEMBER_NAME@141..151
+            0: HASH@141..144 "#" [Whitespace("\n\t")] []
+            1: IDENT@144..151 "private" [] []
           6: (empty)
           7: (empty)
           8: (empty)
           9: (empty)
           10: (empty)
-        9: JS_PROPERTY_CLASS_MEMBER@154..181
+        9: JS_PROPERTY_CLASS_MEMBER@151..178
           0: (empty)
           1: (empty)
           2: (empty)
           3: (empty)
           4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@154..176
-            0: HASH@154..157 "#" [Whitespace("\n\t")] []
-            1: IDENT@157..176 "privateInitialized" [] [Whitespace(" ")]
+          5: JS_PRIVATE_CLASS_MEMBER_NAME@151..173
+            0: HASH@151..154 "#" [Whitespace("\n\t")] []
+            1: IDENT@154..173 "privateInitialized" [] [Whitespace(" ")]
           6: (empty)
           7: (empty)
           8: (empty)
-          9: JS_INITIALIZER_CLAUSE@176..181
-            0: EQ@176..178 "=" [] [Whitespace(" ")]
-            1: JS_STRING_LITERAL_EXPRESSION@178..181
-              0: JS_STRING_LITERAL@178..181 "\"a\"" [] []
+          9: JS_INITIALIZER_CLAUSE@173..178
+            0: EQ@173..175 "=" [] [Whitespace(" ")]
+            1: JS_STRING_LITERAL_EXPRESSION@175..178
+              0: JS_STRING_LITERAL@175..178 "\"a\"" [] []
           10: (empty)
-        10: JS_PROPERTY_CLASS_MEMBER@181..205
+        10: JS_PROPERTY_CLASS_MEMBER@178..201
           0: (empty)
           1: (empty)
-          2: STATIC_KW@181..191 "static" [Whitespace("\n\n\t")] [Whitespace(" ")]
+          2: STATIC_KW@178..187 "static" [Whitespace("\n\t")] [Whitespace(" ")]
           3: (empty)
           4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@191..205
-            0: HASH@191..192 "#" [] []
-            1: IDENT@192..205 "staticPrivate" [] []
+          5: JS_PRIVATE_CLASS_MEMBER_NAME@187..201
+            0: HASH@187..188 "#" [] []
+            1: IDENT@188..201 "staticPrivate" [] []
           6: (empty)
           7: (empty)
           8: (empty)
           9: (empty)
           10: (empty)
-        11: JS_PROPERTY_CLASS_MEMBER@205..251
+        11: JS_PROPERTY_CLASS_MEMBER@201..247
           0: (empty)
           1: (empty)
-          2: STATIC_KW@205..214 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          2: STATIC_KW@201..210 "static" [Whitespace("\n\t")] [Whitespace(" ")]
           3: (empty)
           4: (empty)
-          5: JS_PRIVATE_CLASS_MEMBER_NAME@214..248
-            0: HASH@214..215 "#" [] []
-            1: IDENT@215..248 "staticPrivateInitializedProperty" [] [Whitespace(" ")]
+          5: JS_PRIVATE_CLASS_MEMBER_NAME@210..244
+            0: HASH@210..211 "#" [] []
+            1: IDENT@211..244 "staticPrivateInitializedProperty" [] [Whitespace(" ")]
           6: (empty)
           7: (empty)
           8: (empty)
-          9: JS_INITIALIZER_CLAUSE@248..251
-            0: EQ@248..250 "=" [] [Whitespace(" ")]
-            1: JS_NUMBER_LITERAL_EXPRESSION@250..251
-              0: JS_NUMBER_LITERAL@250..251 "1" [] []
+          9: JS_INITIALIZER_CLAUSE@244..247
+            0: EQ@244..246 "=" [] [Whitespace(" ")]
+            1: JS_NUMBER_LITERAL_EXPRESSION@246..247
+              0: JS_NUMBER_LITERAL@246..247 "1" [] []
           10: (empty)
-      6: R_CURLY@251..253 "}" [Whitespace("\n")] []
-  3: EOF@253..255 "" [Whitespace("\n\n")] []
+      6: R_CURLY@247..249 "}" [Whitespace("\n")] []
+  3: EOF@249..250 "" [Whitespace("\n")] []

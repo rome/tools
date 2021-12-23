@@ -4,220 +4,218 @@ JsScript {
     statements: JsStatementList [
         JsFunctionDeclaration {
             async_token: missing (optional),
-            function_token: FUNCTION_KW@0..20 "function" [Comments("// SCRIPT"), Whitespace("\n\n")] [Whitespace(" ")],
+            function_token: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
             star_token: missing (optional),
             id: JsIdentifierBinding {
-                name_token: IDENT@20..24 "test" [] [],
+                name_token: IDENT@19..23 "test" [] [],
             },
             type_parameters: missing (optional),
             parameters: JsParameters {
-                l_paren_token: L_PAREN@24..25 "(" [] [],
+                l_paren_token: L_PAREN@23..24 "(" [] [],
                 items: JsParameterList [],
-                r_paren_token: R_PAREN@25..27 ")" [] [Whitespace(" ")],
+                r_paren_token: R_PAREN@24..26 ")" [] [Whitespace(" ")],
             },
             return_type: missing (optional),
             body: JsFunctionBody {
-                l_curly_token: L_CURLY@27..28 "{" [] [],
+                l_curly_token: L_CURLY@26..27 "{" [] [],
                 directives: JsDirectiveList [
                     JsDirective {
-                        value_token: JS_STRING_LITERAL@28..42 "\"use strict\"" [Whitespace("\n\t")] [],
-                        semicolon_token: SEMICOLON@42..43 ";" [] [],
+                        value_token: JS_STRING_LITERAL@27..41 "\"use strict\"" [Whitespace("\n\t")] [],
+                        semicolon_token: SEMICOLON@41..42 ";" [] [],
                     },
                 ],
                 statements: JsStatementList [
                     JsFunctionDeclaration {
                         async_token: missing (optional),
-                        function_token: FUNCTION_KW@43..54 "function" [Whitespace("\n\t")] [Whitespace(" ")],
+                        function_token: FUNCTION_KW@42..53 "function" [Whitespace("\n\t")] [Whitespace(" ")],
                         star_token: missing (optional),
                         id: JsIdentifierBinding {
-                            name_token: IDENT@54..61 "inner_a" [] [],
+                            name_token: IDENT@53..60 "inner_a" [] [],
                         },
                         type_parameters: missing (optional),
                         parameters: JsParameters {
-                            l_paren_token: L_PAREN@61..62 "(" [] [],
+                            l_paren_token: L_PAREN@60..61 "(" [] [],
                             items: JsParameterList [],
-                            r_paren_token: R_PAREN@62..64 ")" [] [Whitespace(" ")],
+                            r_paren_token: R_PAREN@61..63 ")" [] [Whitespace(" ")],
                         },
                         return_type: missing (optional),
                         body: JsFunctionBody {
-                            l_curly_token: L_CURLY@64..65 "{" [] [],
+                            l_curly_token: L_CURLY@63..64 "{" [] [],
                             directives: JsDirectiveList [
                                 JsDirective {
-                                    value_token: JS_STRING_LITERAL@65..80 "\"use strict\"" [Whitespace("\n\t\t")] [],
-                                    semicolon_token: SEMICOLON@80..81 ";" [] [],
+                                    value_token: JS_STRING_LITERAL@64..79 "\"use strict\"" [Whitespace("\n\t\t")] [],
+                                    semicolon_token: SEMICOLON@79..80 ";" [] [],
                                 },
                             ],
                             statements: JsStatementList [],
-                            r_curly_token: R_CURLY@81..84 "}" [Whitespace("\n\t")] [],
+                            r_curly_token: R_CURLY@80..83 "}" [Whitespace("\n\t")] [],
                         },
                     },
                     JsFunctionDeclaration {
                         async_token: missing (optional),
-                        function_token: FUNCTION_KW@84..96 "function" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                        function_token: FUNCTION_KW@83..94 "function" [Whitespace("\n\t")] [Whitespace(" ")],
                         star_token: missing (optional),
                         id: JsIdentifierBinding {
-                            name_token: IDENT@96..103 "inner_b" [] [],
+                            name_token: IDENT@94..101 "inner_b" [] [],
                         },
                         type_parameters: missing (optional),
                         parameters: JsParameters {
-                            l_paren_token: L_PAREN@103..104 "(" [] [],
+                            l_paren_token: L_PAREN@101..102 "(" [] [],
                             items: JsParameterList [],
-                            r_paren_token: R_PAREN@104..106 ")" [] [Whitespace(" ")],
+                            r_paren_token: R_PAREN@102..104 ")" [] [Whitespace(" ")],
                         },
                         return_type: missing (optional),
                         body: JsFunctionBody {
-                            l_curly_token: L_CURLY@106..107 "{" [] [],
+                            l_curly_token: L_CURLY@104..105 "{" [] [],
                             directives: JsDirectiveList [],
                             statements: JsStatementList [
                                 JsFunctionDeclaration {
                                     async_token: missing (optional),
-                                    function_token: FUNCTION_KW@107..119 "function" [Whitespace("\n\t\t")] [Whitespace(" ")],
+                                    function_token: FUNCTION_KW@105..117 "function" [Whitespace("\n\t\t")] [Whitespace(" ")],
                                     star_token: missing (optional),
                                     id: JsIdentifierBinding {
-                                        name_token: IDENT@119..130 "inner_inner" [] [],
+                                        name_token: IDENT@117..128 "inner_inner" [] [],
                                     },
                                     type_parameters: missing (optional),
                                     parameters: JsParameters {
-                                        l_paren_token: L_PAREN@130..131 "(" [] [],
+                                        l_paren_token: L_PAREN@128..129 "(" [] [],
                                         items: JsParameterList [],
-                                        r_paren_token: R_PAREN@131..133 ")" [] [Whitespace(" ")],
+                                        r_paren_token: R_PAREN@129..131 ")" [] [Whitespace(" ")],
                                     },
                                     return_type: missing (optional),
                                     body: JsFunctionBody {
-                                        l_curly_token: L_CURLY@133..134 "{" [] [],
+                                        l_curly_token: L_CURLY@131..132 "{" [] [],
                                         directives: JsDirectiveList [
                                             JsDirective {
-                                                value_token: JS_STRING_LITERAL@134..150 "\"use strict\"" [Whitespace("\n\t\t\t")] [],
-                                                semicolon_token: SEMICOLON@150..151 ";" [] [],
+                                                value_token: JS_STRING_LITERAL@132..148 "\"use strict\"" [Whitespace("\n\t\t\t")] [],
+                                                semicolon_token: SEMICOLON@148..149 ";" [] [],
                                             },
                                         ],
                                         statements: JsStatementList [],
-                                        r_curly_token: R_CURLY@151..155 "}" [Whitespace("\n\t\t")] [],
+                                        r_curly_token: R_CURLY@149..153 "}" [Whitespace("\n\t\t")] [],
                                     },
                                 },
                             ],
-                            r_curly_token: R_CURLY@155..158 "}" [Whitespace("\n\t")] [],
+                            r_curly_token: R_CURLY@153..156 "}" [Whitespace("\n\t")] [],
                         },
                     },
                 ],
-                r_curly_token: R_CURLY@158..160 "}" [Whitespace("\n")] [],
+                r_curly_token: R_CURLY@156..158 "}" [Whitespace("\n")] [],
             },
         },
     ],
-    eof_token: EOF@160..161 "" [Whitespace("\n")] [],
+    eof_token: EOF@158..159 "" [Whitespace("\n")] [],
 }
 
-0: JS_SCRIPT@0..161
+0: JS_SCRIPT@0..159
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_STATEMENT_LIST@0..160
-    0: JS_FUNCTION_DECLARATION@0..160
+  2: JS_STATEMENT_LIST@0..158
+    0: JS_FUNCTION_DECLARATION@0..158
       0: (empty)
-      1: FUNCTION_KW@0..20 "function" [Comments("// SCRIPT"), Whitespace("\n\n")] [Whitespace(" ")]
+      1: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")]
       2: (empty)
-      3: JS_IDENTIFIER_BINDING@20..24
-        0: IDENT@20..24 "test" [] []
+      3: JS_IDENTIFIER_BINDING@19..23
+        0: IDENT@19..23 "test" [] []
       4: (empty)
-      5: JS_PARAMETERS@24..27
-        0: L_PAREN@24..25 "(" [] []
-        1: JS_PARAMETER_LIST@25..25
-        2: R_PAREN@25..27 ")" [] [Whitespace(" ")]
+      5: JS_PARAMETERS@23..26
+        0: L_PAREN@23..24 "(" [] []
+        1: JS_PARAMETER_LIST@24..24
+        2: R_PAREN@24..26 ")" [] [Whitespace(" ")]
       6: (empty)
-      7: JS_FUNCTION_BODY@27..160
-        0: L_CURLY@27..28 "{" [] []
-        1: JS_DIRECTIVE_LIST@28..43
-          0: JS_DIRECTIVE@28..43
-            0: JS_STRING_LITERAL@28..42 "\"use strict\"" [Whitespace("\n\t")] []
-            1: SEMICOLON@42..43 ";" [] []
-        2: JS_STATEMENT_LIST@43..158
-          0: JS_FUNCTION_DECLARATION@43..84
+      7: JS_FUNCTION_BODY@26..158
+        0: L_CURLY@26..27 "{" [] []
+        1: JS_DIRECTIVE_LIST@27..42
+          0: JS_DIRECTIVE@27..42
+            0: JS_STRING_LITERAL@27..41 "\"use strict\"" [Whitespace("\n\t")] []
+            1: SEMICOLON@41..42 ";" [] []
+        2: JS_STATEMENT_LIST@42..156
+          0: JS_FUNCTION_DECLARATION@42..83
             0: (empty)
-            1: FUNCTION_KW@43..54 "function" [Whitespace("\n\t")] [Whitespace(" ")]
+            1: FUNCTION_KW@42..53 "function" [Whitespace("\n\t")] [Whitespace(" ")]
             2: (empty)
-            3: JS_IDENTIFIER_BINDING@54..61
-              0: IDENT@54..61 "inner_a" [] []
+            3: JS_IDENTIFIER_BINDING@53..60
+              0: IDENT@53..60 "inner_a" [] []
             4: (empty)
-            5: JS_PARAMETERS@61..64
-              0: L_PAREN@61..62 "(" [] []
-              1: JS_PARAMETER_LIST@62..62
-              2: R_PAREN@62..64 ")" [] [Whitespace(" ")]
+            5: JS_PARAMETERS@60..63
+              0: L_PAREN@60..61 "(" [] []
+              1: JS_PARAMETER_LIST@61..61
+              2: R_PAREN@61..63 ")" [] [Whitespace(" ")]
             6: (empty)
-            7: JS_FUNCTION_BODY@64..84
-              0: L_CURLY@64..65 "{" [] []
-              1: JS_DIRECTIVE_LIST@65..81
-                0: JS_DIRECTIVE@65..81
-                  0: JS_STRING_LITERAL@65..80 "\"use strict\"" [Whitespace("\n\t\t")] []
-                  1: SEMICOLON@80..81 ";" [] []
-              2: JS_STATEMENT_LIST@81..81
-              3: R_CURLY@81..84 "}" [Whitespace("\n\t")] []
-          1: JS_FUNCTION_DECLARATION@84..158
+            7: JS_FUNCTION_BODY@63..83
+              0: L_CURLY@63..64 "{" [] []
+              1: JS_DIRECTIVE_LIST@64..80
+                0: JS_DIRECTIVE@64..80
+                  0: JS_STRING_LITERAL@64..79 "\"use strict\"" [Whitespace("\n\t\t")] []
+                  1: SEMICOLON@79..80 ";" [] []
+              2: JS_STATEMENT_LIST@80..80
+              3: R_CURLY@80..83 "}" [Whitespace("\n\t")] []
+          1: JS_FUNCTION_DECLARATION@83..156
             0: (empty)
-            1: FUNCTION_KW@84..96 "function" [Whitespace("\n\n\t")] [Whitespace(" ")]
+            1: FUNCTION_KW@83..94 "function" [Whitespace("\n\t")] [Whitespace(" ")]
             2: (empty)
-            3: JS_IDENTIFIER_BINDING@96..103
-              0: IDENT@96..103 "inner_b" [] []
+            3: JS_IDENTIFIER_BINDING@94..101
+              0: IDENT@94..101 "inner_b" [] []
             4: (empty)
-            5: JS_PARAMETERS@103..106
-              0: L_PAREN@103..104 "(" [] []
-              1: JS_PARAMETER_LIST@104..104
-              2: R_PAREN@104..106 ")" [] [Whitespace(" ")]
+            5: JS_PARAMETERS@101..104
+              0: L_PAREN@101..102 "(" [] []
+              1: JS_PARAMETER_LIST@102..102
+              2: R_PAREN@102..104 ")" [] [Whitespace(" ")]
             6: (empty)
-            7: JS_FUNCTION_BODY@106..158
-              0: L_CURLY@106..107 "{" [] []
-              1: JS_DIRECTIVE_LIST@107..107
-              2: JS_STATEMENT_LIST@107..155
-                0: JS_FUNCTION_DECLARATION@107..155
+            7: JS_FUNCTION_BODY@104..156
+              0: L_CURLY@104..105 "{" [] []
+              1: JS_DIRECTIVE_LIST@105..105
+              2: JS_STATEMENT_LIST@105..153
+                0: JS_FUNCTION_DECLARATION@105..153
                   0: (empty)
-                  1: FUNCTION_KW@107..119 "function" [Whitespace("\n\t\t")] [Whitespace(" ")]
+                  1: FUNCTION_KW@105..117 "function" [Whitespace("\n\t\t")] [Whitespace(" ")]
                   2: (empty)
-                  3: JS_IDENTIFIER_BINDING@119..130
-                    0: IDENT@119..130 "inner_inner" [] []
+                  3: JS_IDENTIFIER_BINDING@117..128
+                    0: IDENT@117..128 "inner_inner" [] []
                   4: (empty)
-                  5: JS_PARAMETERS@130..133
-                    0: L_PAREN@130..131 "(" [] []
-                    1: JS_PARAMETER_LIST@131..131
-                    2: R_PAREN@131..133 ")" [] [Whitespace(" ")]
+                  5: JS_PARAMETERS@128..131
+                    0: L_PAREN@128..129 "(" [] []
+                    1: JS_PARAMETER_LIST@129..129
+                    2: R_PAREN@129..131 ")" [] [Whitespace(" ")]
                   6: (empty)
-                  7: JS_FUNCTION_BODY@133..155
-                    0: L_CURLY@133..134 "{" [] []
-                    1: JS_DIRECTIVE_LIST@134..151
-                      0: JS_DIRECTIVE@134..151
-                        0: JS_STRING_LITERAL@134..150 "\"use strict\"" [Whitespace("\n\t\t\t")] []
-                        1: SEMICOLON@150..151 ";" [] []
-                    2: JS_STATEMENT_LIST@151..151
-                    3: R_CURLY@151..155 "}" [Whitespace("\n\t\t")] []
-              3: R_CURLY@155..158 "}" [Whitespace("\n\t")] []
-        3: R_CURLY@158..160 "}" [Whitespace("\n")] []
-  3: EOF@160..161 "" [Whitespace("\n")] []
+                  7: JS_FUNCTION_BODY@131..153
+                    0: L_CURLY@131..132 "{" [] []
+                    1: JS_DIRECTIVE_LIST@132..149
+                      0: JS_DIRECTIVE@132..149
+                        0: JS_STRING_LITERAL@132..148 "\"use strict\"" [Whitespace("\n\t\t\t")] []
+                        1: SEMICOLON@148..149 ";" [] []
+                    2: JS_STATEMENT_LIST@149..149
+                    3: R_CURLY@149..153 "}" [Whitespace("\n\t\t")] []
+              3: R_CURLY@153..156 "}" [Whitespace("\n\t")] []
+        3: R_CURLY@156..158 "}" [Whitespace("\n")] []
+  3: EOF@158..159 "" [Whitespace("\n")] []
 --
 warning[SyntaxError]: Redundant strict mode declaration
-  ┌─ directives_err.js:4:2
+  ┌─ directives_err.js:3:2
   │
-4 │     "use strict";
+3 │     "use strict";
   │     ------------ strict mode is previous declared here
-5 │     function inner_a() {
-6 │         "use strict";
+4 │     function inner_a() {
+5 │         "use strict";
   │         ------------ this declaration is redundant
 
 --
 warning[SyntaxError]: Redundant strict mode declaration
-   ┌─ directives_err.js:4:2
-   │
- 4 │     "use strict";
-   │     ------------ strict mode is previous declared here
-   ·
-11 │             "use strict";
-   │             ------------ this declaration is redundant
+  ┌─ directives_err.js:3:2
+  │
+3 │     "use strict";
+  │     ------------ strict mode is previous declared here
+  ·
+9 │             "use strict";
+  │             ------------ this declaration is redundant
 
 --
 // SCRIPT
-
 function test() {
 	"use strict";
 	function inner_a() {
 		"use strict";
 	}
-
 	function inner_b() {
 		function inner_inner() {
 			"use strict";

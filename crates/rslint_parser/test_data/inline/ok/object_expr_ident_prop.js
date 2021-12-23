@@ -1,1 +1,1 @@
-let b = {foo}
+({foo})
