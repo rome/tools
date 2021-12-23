@@ -137,7 +137,7 @@ impl<'src> Lexer<'src> {
 				self.state.had_linebreak = true;
 				self.cur += chr.len_utf8();
 			}
-			
+
 			break;
 		}
 	}
@@ -1253,7 +1253,6 @@ impl<'src> Lexer<'src> {
 
 		match dispatched {
 			WHS => {
-				
 				self.consume_newline();
 				let len = self.cur - start;
 				if len > 0 {

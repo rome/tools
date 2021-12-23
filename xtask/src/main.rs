@@ -68,7 +68,7 @@ fn main() -> Result<()> {
 			let criterion: bool = args
 				.opt_value_from_str("--criterion")
 				.unwrap()
-				.unwrap_or_else(|| true);
+				.unwrap_or(true);
 			xtask::libs::run(filter, criterion);
 			Ok(())
 		}

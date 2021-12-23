@@ -106,8 +106,7 @@ pub fn run(filter: String, criterion: bool) {
 				
 				// Do all steps with criterion now
 				if criterion {
-					let mut criterion = criterion::Criterion::default()
-						.without_plots();
+					let mut criterion = criterion::Criterion::default().without_plots();
 					criterion.bench_function(lib, |b| {
 						b.iter(|| {
 							let _ = rslint_parser::parse_module(text, 0);
