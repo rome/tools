@@ -3,6 +3,7 @@ use std::cmp::Ordering;
 use std::fmt::{Display, Formatter};
 use std::ops::Add;
 use std::time::Duration;
+use itertools::Itertools;
 use std::{path::PathBuf, str::FromStr};
 
 fn err_to_string<E: std::fmt::Debug>(e: E) -> String {
@@ -81,7 +82,7 @@ pub fn get_code(lib: &str) -> Result<String, String> {
 	}
 }
 
-pub fn run(filter: String) {
+pub fn run(filter: String, criterion: bool) {
 	let regex = regex::Regex::new(filter.as_str()).unwrap();
 	let libs = include_str!("libs.txt").lines();
 
@@ -101,12 +102,22 @@ pub fn run(filter: String) {
 				println!("\tTree_sink:    {:>10?}", result.tree_sink);
 				println!("\t              ----------");
 				println!("\tTotal:        {:>10?}", result.total());
+				let text = code.as_str();
+				
+				// Do all steps with criterion now
+				if criterion {
+					let mut criterion = criterion::Criterion::default()
+						.without_plots();
+					criterion.bench_function(lib, |b| {
+						b.iter(|| {
+							let _ = rslint_parser::parse_module(text, 0);
+						})
+					});
+				}
 			}
 			Err(e) => println!("{:?}", e),
 		}
 	}
-
-	println!("end");
 }
 
 fn benchmark_lib(code: &str) -> BenchmarkResult {

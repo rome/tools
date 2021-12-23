@@ -169,6 +169,26 @@ fn all_whitespace() {
 		NEWLINE:2
 		WHITESPACE:2
 	}
+	assert_lex! {
+		"\n\n",
+		NEWLINE:1
+		NEWLINE:1
+	}
+	assert_lex! {
+		"\n\r\n",
+		NEWLINE:1
+		NEWLINE:2
+	}
+	assert_lex! {
+		"\r\n\r\n",
+		NEWLINE:2
+		NEWLINE:2
+	}
+	assert_lex! {
+		"\r\n\n",
+		NEWLINE:2
+		NEWLINE:1
+	}
 }
 
 #[test]
@@ -889,6 +909,13 @@ fn regex() {
 		WHITESPACE:1,
 		EQ:1,
 		WHITESPACE:1,
+		JS_REGEX_LITERAL:7
+	}
+
+	assert_lex! {
+		"{\n/aa/gim",
+		L_CURLY:1
+		NEWLINE:1
 		JS_REGEX_LITERAL:7
 	}
 }

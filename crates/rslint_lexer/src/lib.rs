@@ -124,18 +124,22 @@ impl<'src> Lexer<'src> {
 		tok
 	}
 
-	fn consume_newlines(&mut self) -> usize {
-		let start = self.cur;
+	fn consume_newline(&mut self) {
 		while self.current().is_some() {
 			let chr = self.get_unicode_char();
+
+			if chr == '\r' {
+				self.cur += chr.len_utf8();
+				continue;
+			}
+
 			if is_linebreak(chr) {
 				self.state.had_linebreak = true;
 				self.cur += chr.len_utf8();
-			} else {
-				break;
 			}
+			
+			break;
 		}
-		self.cur - start
 	}
 
 	fn consume_whitespace_until_newline(&mut self) {
@@ -155,11 +159,6 @@ impl<'src> Lexer<'src> {
 				break;
 			}
 		}
-	}
-
-	// Consume all whitespace starting from the current byte
-	fn consume_whitespace(&mut self) {
-		self.consume_whitespace_until_newline();
 	}
 
 	// Get the unicode char which starts at the current byte and advance the lexer's cursor
@@ -1254,11 +1253,13 @@ impl<'src> Lexer<'src> {
 
 		match dispatched {
 			WHS => {
-				let count = self.consume_newlines();
-				if count > 0 {
-					tok!(NEWLINE, count)
+				
+				self.consume_newline();
+				let len = self.cur - start;
+				if len > 0 {
+					tok!(NEWLINE, len)
 				} else {
-					self.consume_whitespace();
+					self.consume_whitespace_until_newline();
 					tok!(WHITESPACE, self.cur - start)
 				}
 			}
@@ -1369,11 +1370,12 @@ impl<'src> Lexer<'src> {
 				if is_linebreak(chr)
 					|| (UNICODE_WHITESPACE_STARTS.contains(&byte) && UNICODE_SPACES.contains(&chr))
 				{
-					let count = self.consume_newlines();
-					if count > 0 {
-						tok!(NEWLINE, count)
+					self.consume_newline();
+					let len = self.cur - start;
+					if len > 0 {
+						tok!(NEWLINE, len)
 					} else {
-						self.consume_whitespace();
+						self.consume_whitespace_until_newline();
 						tok!(WHITESPACE, self.cur - start)
 					}
 				} else {
@@ -1485,6 +1487,7 @@ impl Iterator for Lexer<'_> {
 		if ![
 			JsSyntaxKind::COMMENT,
 			JsSyntaxKind::WHITESPACE,
+			JsSyntaxKind::NEWLINE,
 			JsSyntaxKind::TEMPLATE_CHUNK,
 		]
 		.contains(&token.0.kind)

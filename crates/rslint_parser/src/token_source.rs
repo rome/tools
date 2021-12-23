@@ -1,5 +1,4 @@
 use crate::{JsSyntaxKind::EOF, TextRange, TextSize, Token};
-use rslint_lexer::is_linebreak;
 use std::collections::HashSet;
 use std::iter::FusedIterator;
 
@@ -64,10 +63,7 @@ impl<'t> TokenSource<'t> {
 
 		for token in raw_tokens {
 			if token.kind.is_trivia() {
-				let src = source
-					.get(len.into()..(usize::from(len) + token.len))
-					.expect("src and tokens do not match");
-				if !has_linebreak && src.chars().any(is_linebreak) {
+				if !has_linebreak && token.kind == rslint_lexer::JsSyntaxKind::NEWLINE {
 					has_linebreak = true;
 				}
 			} else {

@@ -270,9 +270,13 @@ fn exec_test(mut code: String, strict: bool, module: bool) -> (String, ExecRes) 
 
 	let result = std::panic::catch_unwind(|| {
 		if module {
-			parse_module(&code, 0).ok().map(drop)
+			let p = parse_module(&code, 0);
+			// dbg!(p.syntax());
+			p.ok().map(drop)
 		} else {
-			parse_text(&code, 0).ok().map(drop)
+			let p = parse_text(&code, 0);
+			// dbg!(p.syntax());
+			p.ok().map(drop)
 		}
 	});
 
