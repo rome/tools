@@ -22,17 +22,17 @@ JsModule {
                 l_curly_token: L_CURLY@21..22 "{" [] [],
                 statements: JsStatementList [
                     JsContinueStatement {
-                        continue_token: CONTINUE_KW@22..33 "continue" [Whitespace("\n  ")] [],
+                        continue_token: CONTINUE_KW@22..33 "continue" [Whitespace("\n"), Whitespace("  ")] [],
                         label_token: missing (optional),
                         semicolon_token: SEMICOLON@33..34 ";" [] [],
                     },
                     JsContinueStatement {
-                        continue_token: CONTINUE_KW@34..46 "continue" [Whitespace("\n  ")] [Whitespace(" ")],
+                        continue_token: CONTINUE_KW@34..46 "continue" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")],
                         label_token: IDENT@46..49 "foo" [] [],
                         semicolon_token: SEMICOLON@49..50 ";" [] [],
                     },
                     JsContinueStatement {
-                        continue_token: CONTINUE_KW@50..61 "continue" [Whitespace("\n  ")] [],
+                        continue_token: CONTINUE_KW@50..61 "continue" [Whitespace("\n"), Whitespace("  ")] [],
                         label_token: missing (optional),
                         semicolon_token: missing (optional),
                     },
@@ -65,15 +65,15 @@ JsModule {
         0: L_CURLY@21..22 "{" [] []
         1: JS_STATEMENT_LIST@22..61
           0: JS_CONTINUE_STATEMENT@22..34
-            0: CONTINUE_KW@22..33 "continue" [Whitespace("\n  ")] []
+            0: CONTINUE_KW@22..33 "continue" [Whitespace("\n"), Whitespace("  ")] []
             1: (empty)
             2: SEMICOLON@33..34 ";" [] []
           1: JS_CONTINUE_STATEMENT@34..50
-            0: CONTINUE_KW@34..46 "continue" [Whitespace("\n  ")] [Whitespace(" ")]
+            0: CONTINUE_KW@34..46 "continue" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")]
             1: IDENT@46..49 "foo" [] []
             2: SEMICOLON@49..50 ";" [] []
           2: JS_CONTINUE_STATEMENT@50..61
-            0: CONTINUE_KW@50..61 "continue" [Whitespace("\n  ")] []
+            0: CONTINUE_KW@50..61 "continue" [Whitespace("\n"), Whitespace("  ")] []
             1: (empty)
             2: (empty)
         2: R_CURLY@61..63 "}" [Whitespace("\n")] []

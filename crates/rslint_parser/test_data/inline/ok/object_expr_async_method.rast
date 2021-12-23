@@ -18,7 +18,7 @@ JsModule {
                                 l_curly_token: L_CURLY@8..9 "{" [] [],
                                 members: JsObjectMemberList [
                                     JsMethodObjectMember {
-                                        async_token: ASYNC_KW@9..18 "async" [Whitespace("\n  ")] [Whitespace(" ")],
+                                        async_token: ASYNC_KW@9..18 "async" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")],
                                         star_token: missing (optional),
                                         name: JsLiteralMemberName {
                                             value: IDENT@18..21 "foo" [] [],
@@ -39,7 +39,7 @@ JsModule {
                                     },
                                     COMMA@26..27 "," [] [],
                                     JsMethodObjectMember {
-                                        async_token: ASYNC_KW@27..36 "async" [Whitespace("\n  ")] [Whitespace(" ")],
+                                        async_token: ASYNC_KW@27..36 "async" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")],
                                         star_token: STAR@36..37 "*" [] [],
                                         name: JsLiteralMemberName {
                                             value: IDENT@37..40 "foo" [] [],
@@ -90,7 +90,7 @@ JsModule {
                 0: L_CURLY@8..9 "{" [] []
                 1: JS_OBJECT_MEMBER_LIST@9..45
                   0: JS_METHOD_OBJECT_MEMBER@9..26
-                    0: ASYNC_KW@9..18 "async" [Whitespace("\n  ")] [Whitespace(" ")]
+                    0: ASYNC_KW@9..18 "async" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")]
                     1: (empty)
                     2: JS_LITERAL_MEMBER_NAME@18..21
                       0: IDENT@18..21 "foo" [] []
@@ -107,7 +107,7 @@ JsModule {
                       3: R_CURLY@25..26 "}" [] []
                   1: COMMA@26..27 "," [] []
                   2: JS_METHOD_OBJECT_MEMBER@27..45
-                    0: ASYNC_KW@27..36 "async" [Whitespace("\n  ")] [Whitespace(" ")]
+                    0: ASYNC_KW@27..36 "async" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")]
                     1: STAR@36..37 "*" [] []
                     2: JS_LITERAL_MEMBER_NAME@37..40
                       0: IDENT@37..40 "foo" [] []

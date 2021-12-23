@@ -21,7 +21,7 @@ JsModule {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
                                         name: JsLiteralMemberName {
-                                            value: IDENT@9..14 "foo" [Whitespace("\n\t")] [],
+                                            value: IDENT@9..14 "foo" [Whitespace("\n"), Whitespace("\t")] [],
                                         },
                                         type_params: missing (optional),
                                         parameters: JsParameters {
@@ -42,7 +42,7 @@ JsModule {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
                                         name: JsLiteralMemberName {
-                                            value: JS_STRING_LITERAL@20..27 "\"bar\"" [Whitespace("\n\t")] [],
+                                            value: JS_STRING_LITERAL@20..27 "\"bar\"" [Whitespace("\n"), Whitespace("\t")] [],
                                         },
                                         type_params: missing (optional),
                                         parameters: JsParameters {
@@ -75,7 +75,7 @@ JsModule {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
                                         name: JsComputedMemberName {
-                                            l_brack_token: L_BRACK@40..43 "[" [Whitespace("\n\t")] [],
+                                            l_brack_token: L_BRACK@40..43 "[" [Whitespace("\n"), Whitespace("\t")] [],
                                             expression: JsBinaryExpression {
                                                 left: JsStringLiteralExpression {
                                                     value_token: JS_STRING_LITERAL@43..49 "\"foo\"" [] [Whitespace(" ")],
@@ -110,7 +110,7 @@ JsModule {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
                                         name: JsLiteralMemberName {
-                                            value: JS_NUMBER_LITERAL@64..67 "5" [Whitespace("\n\t")] [],
+                                            value: JS_NUMBER_LITERAL@64..67 "5" [Whitespace("\n"), Whitespace("\t")] [],
                                         },
                                         type_params: missing (optional),
                                         parameters: JsParameters {
@@ -168,7 +168,7 @@ JsModule {
                     0: (empty)
                     1: (empty)
                     2: JS_LITERAL_MEMBER_NAME@9..14
-                      0: IDENT@9..14 "foo" [Whitespace("\n\t")] []
+                      0: IDENT@9..14 "foo" [Whitespace("\n"), Whitespace("\t")] []
                     3: (empty)
                     4: JS_PARAMETERS@14..17
                       0: L_PAREN@14..15 "(" [] []
@@ -185,7 +185,7 @@ JsModule {
                     0: (empty)
                     1: (empty)
                     2: JS_LITERAL_MEMBER_NAME@20..27
-                      0: JS_STRING_LITERAL@20..27 "\"bar\"" [Whitespace("\n\t")] []
+                      0: JS_STRING_LITERAL@20..27 "\"bar\"" [Whitespace("\n"), Whitespace("\t")] []
                     3: (empty)
                     4: JS_PARAMETERS@27..37
                       0: L_PAREN@27..28 "(" [] []
@@ -210,7 +210,7 @@ JsModule {
                     0: (empty)
                     1: (empty)
                     2: JS_COMPUTED_MEMBER_NAME@40..57
-                      0: L_BRACK@40..43 "[" [Whitespace("\n\t")] []
+                      0: L_BRACK@40..43 "[" [Whitespace("\n"), Whitespace("\t")] []
                       1: JS_BINARY_EXPRESSION@43..56
                         0: JS_STRING_LITERAL_EXPRESSION@43..49
                           0: JS_STRING_LITERAL@43..49 "\"foo\"" [] [Whitespace(" ")]
@@ -236,7 +236,7 @@ JsModule {
                     0: (empty)
                     1: (empty)
                     2: JS_LITERAL_MEMBER_NAME@64..67
-                      0: JS_NUMBER_LITERAL@64..67 "5" [Whitespace("\n\t")] []
+                      0: JS_NUMBER_LITERAL@64..67 "5" [Whitespace("\n"), Whitespace("\t")] []
                     3: (empty)
                     4: JS_PARAMETERS@67..77
                       0: L_PAREN@67..68 "(" [] []

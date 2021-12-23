@@ -124,7 +124,8 @@ impl<'src> Lexer<'src> {
 		tok
 	}
 
-	fn consume_newlines(&mut self) {
+	fn consume_newlines(&mut self) -> usize {
+		let start = self.cur;
 		while self.current().is_some() {
 			let chr = self.get_unicode_char();
 			if is_linebreak(chr) {
@@ -134,6 +135,7 @@ impl<'src> Lexer<'src> {
 				break;
 			}
 		}
+		self.cur - start
 	}
 
 	fn consume_whitespace_until_newline(&mut self) {
@@ -157,7 +159,6 @@ impl<'src> Lexer<'src> {
 
 	// Consume all whitespace starting from the current byte
 	fn consume_whitespace(&mut self) {
-		self.consume_newlines();
 		self.consume_whitespace_until_newline();
 	}
 
@@ -1253,8 +1254,13 @@ impl<'src> Lexer<'src> {
 
 		match dispatched {
 			WHS => {
-				self.consume_whitespace();
-				tok!(WHITESPACE, self.cur - start)
+				let count = self.consume_newlines();
+				if count > 0 {
+					tok!(NEWLINE, count)
+				} else {
+					self.consume_whitespace();
+					tok!(WHITESPACE, self.cur - start)
+				}
 			}
 			EXL => self.resolve_bang(),
 			HAS => self.read_shebang(),
@@ -1363,8 +1369,13 @@ impl<'src> Lexer<'src> {
 				if is_linebreak(chr)
 					|| (UNICODE_WHITESPACE_STARTS.contains(&byte) && UNICODE_SPACES.contains(&chr))
 				{
-					self.consume_whitespace();
-					tok!(WHITESPACE, self.cur - start)
+					let count = self.consume_newlines();
+					if count > 0 {
+						tok!(NEWLINE, count)
+					} else {
+						self.consume_whitespace();
+						tok!(WHITESPACE, self.cur - start)
+					}
 				} else {
 					self.cur += chr.len_utf8() - 1;
 					if is_id_start(chr) {

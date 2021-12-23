@@ -22,7 +22,7 @@ JsModule {
                 statements: JsStatementList [
                     JsExpressionStatement {
                         expression: JsAwaitExpression {
-                            await_token: AWAIT_KW@23..31 "await" [Whitespace("\n\t")] [Whitespace(" ")],
+                            await_token: AWAIT_KW@23..31 "await" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")],
                             argument: JsCallExpression {
                                 callee: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
@@ -43,7 +43,7 @@ JsModule {
                     JsExpressionStatement {
                         expression: JsBinaryExpression {
                             left: JsAwaitExpression {
-                                await_token: AWAIT_KW@39..47 "await" [Whitespace("\n\t")] [Whitespace(" ")],
+                                await_token: AWAIT_KW@39..47 "await" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")],
                                 argument: JsParenthesizedExpression {
                                     l_paren_token: L_PAREN@47..48 "(" [] [],
                                     expression: JsCallExpression {
@@ -107,7 +107,7 @@ JsModule {
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
                     JsReturnStatement {
-                        return_token: RETURN_KW@100..109 "return" [Whitespace("\n\t")] [Whitespace(" ")],
+                        return_token: RETURN_KW@100..109 "return" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")],
                         argument: JsNumberLiteralExpression {
                             value_token: JS_NUMBER_LITERAL@109..110 "4" [] [],
                         },
@@ -143,7 +143,7 @@ JsModule {
         2: JS_STATEMENT_LIST@23..73
           0: JS_EXPRESSION_STATEMENT@23..39
             0: JS_AWAIT_EXPRESSION@23..38
-              0: AWAIT_KW@23..31 "await" [Whitespace("\n\t")] [Whitespace(" ")]
+              0: AWAIT_KW@23..31 "await" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")]
               1: JS_CALL_EXPRESSION@31..38
                 0: JS_IDENTIFIER_EXPRESSION@31..36
                   0: JS_REFERENCE_IDENTIFIER@31..36
@@ -158,7 +158,7 @@ JsModule {
           1: JS_EXPRESSION_STATEMENT@39..73
             0: JS_BINARY_EXPRESSION@39..72
               0: JS_AWAIT_EXPRESSION@39..57
-                0: AWAIT_KW@39..47 "await" [Whitespace("\n\t")] [Whitespace(" ")]
+                0: AWAIT_KW@39..47 "await" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")]
                 1: JS_PARENTHESIZED_EXPRESSION@47..57
                   0: L_PAREN@47..48 "(" [] []
                   1: JS_CALL_EXPRESSION@48..55
@@ -204,7 +204,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@100..100
         2: JS_STATEMENT_LIST@100..111
           0: JS_RETURN_STATEMENT@100..111
-            0: RETURN_KW@100..109 "return" [Whitespace("\n\t")] [Whitespace(" ")]
+            0: RETURN_KW@100..109 "return" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")]
             1: JS_NUMBER_LITERAL_EXPRESSION@109..110
               0: JS_NUMBER_LITERAL@109..110 "4" [] []
             2: SEMICOLON@110..111 ";" [] []

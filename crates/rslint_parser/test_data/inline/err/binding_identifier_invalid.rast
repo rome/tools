@@ -66,7 +66,7 @@ JsModule {
                 statements: JsStatementList [
                     JsVariableStatement {
                         declarations: JsVariableDeclarations {
-                            kind: LET_KW@48..56 "let" [Whitespace("\n   ")] [Whitespace(" ")],
+                            kind: LET_KW@48..56 "let" [Whitespace("\n"), Whitespace("   ")] [Whitespace(" ")],
                             items: JsVariableDeclarationList [
                                 JsVariableDeclaration {
                                     id: JsUnknownBinding {
@@ -243,7 +243,7 @@ JsModule {
         2: JS_STATEMENT_LIST@48..66
           0: JS_VARIABLE_STATEMENT@48..66
             0: JS_VARIABLE_DECLARATIONS@48..65
-              0: LET_KW@48..56 "let" [Whitespace("\n   ")] [Whitespace(" ")]
+              0: LET_KW@48..56 "let" [Whitespace("\n"), Whitespace("   ")] [Whitespace(" ")]
               1: JS_VARIABLE_DECLARATION_LIST@56..65
                 0: JS_VARIABLE_DECLARATION@56..65
                   0: JS_UNKNOWN_BINDING@56..62

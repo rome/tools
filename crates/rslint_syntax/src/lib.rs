@@ -24,7 +24,13 @@ impl From<JsSyntaxKind> for u16 {
 
 impl JsSyntaxKind {
 	pub fn is_trivia(self) -> bool {
-		matches!(self, JsSyntaxKind::WHITESPACE | JsSyntaxKind::COMMENT)
+		matches!(
+			self,
+			JsSyntaxKind::WHITESPACE
+				| JsSyntaxKind::COMMENT
+				| JsSyntaxKind::NEWLINE
+				| JsSyntaxKind::MULTILINE_COMMENT
+		)
 	}
 }
 

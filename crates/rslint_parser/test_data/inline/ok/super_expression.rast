@@ -21,7 +21,7 @@ JsModule {
                 JsConstructorClassMember {
                     access_modifier: missing (optional),
                     name: JsLiteralMemberName {
-                        value: IDENT@22..35 "constructor" [Whitespace("\n\t")] [],
+                        value: IDENT@22..35 "constructor" [Whitespace("\n"), Whitespace("\t")] [],
                     },
                     type_parameters: missing (optional),
                     parameters: JsConstructorParameters {
@@ -36,7 +36,7 @@ JsModule {
                             JsExpressionStatement {
                                 expression: JsCallExpression {
                                     callee: JsSuperExpression {
-                                        super_token: SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] [],
+                                        super_token: SUPER_KW@39..47 "super" [Whitespace("\n"), Whitespace("\t\t")] [],
                                     },
                                     optional_chain_token_token: missing (optional),
                                     type_args: missing (optional),
@@ -49,7 +49,7 @@ JsModule {
                                 semicolon_token: SEMICOLON@49..50 ";" [] [],
                             },
                         ],
-                        r_curly_token: R_CURLY@50..53 "}" [Whitespace("\n\t")] [],
+                        r_curly_token: R_CURLY@50..53 "}" [Whitespace("\n"), Whitespace("\t")] [],
                     },
                 },
                 JsMethodClassMember {
@@ -59,7 +59,7 @@ JsModule {
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
-                        value: IDENT@53..59 "test" [Whitespace("\n\t")] [],
+                        value: IDENT@53..59 "test" [Whitespace("\n"), Whitespace("\t")] [],
                     },
                     type_parameters: missing (optional),
                     parameters: JsParameters {
@@ -76,7 +76,7 @@ JsModule {
                                 expression: JsCallExpression {
                                     callee: JsStaticMemberExpression {
                                         object: JsSuperExpression {
-                                            super_token: SUPER_KW@63..71 "super" [Whitespace("\n\t\t")] [],
+                                            super_token: SUPER_KW@63..71 "super" [Whitespace("\n"), Whitespace("\t\t")] [],
                                         },
                                         operator: DOT@71..72 "." [] [],
                                         member: JsName {
@@ -108,7 +108,7 @@ JsModule {
                             JsExpressionStatement {
                                 expression: JsComputedMemberExpression {
                                     object: JsSuperExpression {
-                                        super_token: SUPER_KW@83..91 "super" [Whitespace("\n\t\t")] [],
+                                        super_token: SUPER_KW@83..91 "super" [Whitespace("\n"), Whitespace("\t\t")] [],
                                     },
                                     optional_chain_token: missing (optional),
                                     l_brack_token: L_BRACK@91..92 "[" [] [],
@@ -120,7 +120,7 @@ JsModule {
                                 semicolon_token: SEMICOLON@94..95 ";" [] [],
                             },
                         ],
-                        r_curly_token: R_CURLY@95..98 "}" [Whitespace("\n\t")] [],
+                        r_curly_token: R_CURLY@95..98 "}" [Whitespace("\n"), Whitespace("\t")] [],
                     },
                 },
             ],
@@ -149,7 +149,7 @@ JsModule {
         0: JS_CONSTRUCTOR_CLASS_MEMBER@22..53
           0: (empty)
           1: JS_LITERAL_MEMBER_NAME@22..35
-            0: IDENT@22..35 "constructor" [Whitespace("\n\t")] []
+            0: IDENT@22..35 "constructor" [Whitespace("\n"), Whitespace("\t")] []
           2: (empty)
           3: JS_CONSTRUCTOR_PARAMETERS@35..38
             0: L_PAREN@35..36 "(" [] []
@@ -162,7 +162,7 @@ JsModule {
               0: JS_EXPRESSION_STATEMENT@39..50
                 0: JS_CALL_EXPRESSION@39..49
                   0: JS_SUPER_EXPRESSION@39..47
-                    0: SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] []
+                    0: SUPER_KW@39..47 "super" [Whitespace("\n"), Whitespace("\t\t")] []
                   1: (empty)
                   2: (empty)
                   3: JS_CALL_ARGUMENTS@47..49
@@ -170,7 +170,7 @@ JsModule {
                     1: JS_CALL_ARGUMENT_LIST@48..48
                     2: R_PAREN@48..49 ")" [] []
                 1: SEMICOLON@49..50 ";" [] []
-            3: R_CURLY@50..53 "}" [Whitespace("\n\t")] []
+            3: R_CURLY@50..53 "}" [Whitespace("\n"), Whitespace("\t")] []
         1: JS_METHOD_CLASS_MEMBER@53..98
           0: (empty)
           1: (empty)
@@ -178,7 +178,7 @@ JsModule {
           3: (empty)
           4: (empty)
           5: JS_LITERAL_MEMBER_NAME@53..59
-            0: IDENT@53..59 "test" [Whitespace("\n\t")] []
+            0: IDENT@53..59 "test" [Whitespace("\n"), Whitespace("\t")] []
           6: (empty)
           7: JS_PARAMETERS@59..62
             0: L_PAREN@59..60 "(" [] []
@@ -193,7 +193,7 @@ JsModule {
                 0: JS_CALL_EXPRESSION@63..82
                   0: JS_STATIC_MEMBER_EXPRESSION@63..76
                     0: JS_SUPER_EXPRESSION@63..71
-                      0: SUPER_KW@63..71 "super" [Whitespace("\n\t\t")] []
+                      0: SUPER_KW@63..71 "super" [Whitespace("\n"), Whitespace("\t\t")] []
                     1: DOT@71..72 "." [] []
                     2: JS_NAME@72..76
                       0: IDENT@72..76 "test" [] []
@@ -214,13 +214,13 @@ JsModule {
               1: JS_EXPRESSION_STATEMENT@83..95
                 0: JS_COMPUTED_MEMBER_EXPRESSION@83..94
                   0: JS_SUPER_EXPRESSION@83..91
-                    0: SUPER_KW@83..91 "super" [Whitespace("\n\t\t")] []
+                    0: SUPER_KW@83..91 "super" [Whitespace("\n"), Whitespace("\t\t")] []
                   1: (empty)
                   2: L_BRACK@91..92 "[" [] []
                   3: JS_NUMBER_LITERAL_EXPRESSION@92..93
                     0: JS_NUMBER_LITERAL@92..93 "1" [] []
                   4: R_BRACK@93..94 "]" [] []
                 1: SEMICOLON@94..95 ";" [] []
-            3: R_CURLY@95..98 "}" [Whitespace("\n\t")] []
+            3: R_CURLY@95..98 "}" [Whitespace("\n"), Whitespace("\t")] []
       6: R_CURLY@98..100 "}" [Whitespace("\n")] []
   3: EOF@100..101 "" [Whitespace("\n")] []

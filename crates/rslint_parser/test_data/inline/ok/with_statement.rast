@@ -29,7 +29,7 @@ JsScript {
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
                     JsWithStatement {
-                        with_token: WITH_KW@28..35 "with" [Whitespace("\n\t")] [Whitespace(" ")],
+                        with_token: WITH_KW@28..35 "with" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")],
                         l_paren_token: L_PAREN@35..36 "(" [] [],
                         object: JsIdentifierExpression {
                             name: JsReferenceIdentifier {
@@ -45,7 +45,7 @@ JsScript {
                                         callee: JsStaticMemberExpression {
                                             object: JsIdentifierExpression {
                                                 name: JsReferenceIdentifier {
-                                                    value_token: IDENT@40..50 "console" [Whitespace("\n\t\t")] [],
+                                                    value_token: IDENT@40..50 "console" [Whitespace("\n"), Whitespace("\t\t")] [],
                                                 },
                                             },
                                             operator: DOT@50..51 "." [] [],
@@ -70,7 +70,7 @@ JsScript {
                                     semicolon_token: SEMICOLON@57..58 ";" [] [],
                                 },
                             ],
-                            r_curly_token: R_CURLY@58..61 "}" [Whitespace("\n\t")] [],
+                            r_curly_token: R_CURLY@58..61 "}" [Whitespace("\n"), Whitespace("\t")] [],
                         },
                     },
                 ],
@@ -107,7 +107,7 @@ JsScript {
         1: JS_DIRECTIVE_LIST@28..28
         2: JS_STATEMENT_LIST@28..61
           0: JS_WITH_STATEMENT@28..61
-            0: WITH_KW@28..35 "with" [Whitespace("\n\t")] [Whitespace(" ")]
+            0: WITH_KW@28..35 "with" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")]
             1: L_PAREN@35..36 "(" [] []
             2: JS_IDENTIFIER_EXPRESSION@36..37
               0: JS_REFERENCE_IDENTIFIER@36..37
@@ -121,7 +121,7 @@ JsScript {
                     0: JS_STATIC_MEMBER_EXPRESSION@40..54
                       0: JS_IDENTIFIER_EXPRESSION@40..50
                         0: JS_REFERENCE_IDENTIFIER@40..50
-                          0: IDENT@40..50 "console" [Whitespace("\n\t\t")] []
+                          0: IDENT@40..50 "console" [Whitespace("\n"), Whitespace("\t\t")] []
                       1: DOT@50..51 "." [] []
                       2: JS_NAME@51..54
                         0: IDENT@51..54 "log" [] []
@@ -135,6 +135,6 @@ JsScript {
                             0: IDENT@55..56 "x" [] []
                       2: R_PAREN@56..57 ")" [] []
                   1: SEMICOLON@57..58 ";" [] []
-              2: R_CURLY@58..61 "}" [Whitespace("\n\t")] []
+              2: R_CURLY@58..61 "}" [Whitespace("\n"), Whitespace("\t")] []
         3: R_CURLY@61..63 "}" [Whitespace("\n")] []
   3: EOF@63..64 "" [Whitespace("\n")] []
