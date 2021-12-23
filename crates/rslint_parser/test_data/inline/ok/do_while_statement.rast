@@ -17,6 +17,7 @@ JsModule {
                             value_token: IDENT@11..14 "log" [] [],
                         },
                     },
+                    optional_chain_token_token: missing (optional),
                     type_args: missing (optional),
                     arguments: JsCallArguments {
                         l_paren_token: L_PAREN@14..15 "(" [] [],
@@ -56,6 +57,7 @@ JsModule {
                                     value_token: IDENT@50..53 "log" [] [],
                                 },
                             },
+                            optional_chain_token_token: missing (optional),
                             type_args: missing (optional),
                             arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@53..54 "(" [] [],
@@ -183,7 +185,8 @@ JsModule {
             2: JS_NAME@11..14
               0: IDENT@11..14 "log" [] []
           1: (empty)
-          2: JS_CALL_ARGUMENTS@14..22
+          2: (empty)
+          3: JS_CALL_ARGUMENTS@14..22
             0: L_PAREN@14..15 "(" [] []
             1: JS_CALL_ARGUMENT_LIST@15..21
               0: JS_STRING_LITERAL_EXPRESSION@15..21
@@ -211,7 +214,8 @@ JsModule {
                 2: JS_NAME@50..53
                   0: IDENT@50..53 "log" [] []
               1: (empty)
-              2: JS_CALL_ARGUMENTS@53..61
+              2: (empty)
+              3: JS_CALL_ARGUMENTS@53..61
                 0: L_PAREN@53..54 "(" [] []
                 1: JS_CALL_ARGUMENT_LIST@54..60
                   0: JS_STRING_LITERAL_EXPRESSION@54..60
