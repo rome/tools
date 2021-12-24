@@ -128,7 +128,12 @@ pub fn get_test_files(query: Option<&str>, pool: &Pool, json: bool) -> Vec<TestF
 					let code = read_to_string(entry.path()).ok()?;
 					let meta = read_metadata(&code).ok()?;
 					let path = entry.into_path();
-					Some(TestFile { meta, code, path }).filter(|file| file.meta.features.is_empty())
+					Some(TestFile { meta, code, path }).filter(|file| {
+						file.meta
+							.negative
+							.as_ref()
+							.map_or(true, |negative| negative.phase == Phase::Parse)
+					})
 				}
 
 				if let Some(file) = parse_file(file) {
