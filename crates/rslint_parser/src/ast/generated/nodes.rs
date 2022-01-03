@@ -1778,6 +1778,16 @@ impl JsWithStatement {
 	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsYieldArgument {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsYieldArgument {
+	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
+	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+		support::required_node(&self.syntax)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsYieldExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1785,8 +1795,7 @@ impl JsYieldExpression {
 	pub fn yield_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![yield])
 	}
-	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
-	pub fn argument(&self) -> Option<JsAnyExpression> { support::node(&self.syntax) }
+	pub fn argument(&self) -> Option<JsYieldArgument> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct NewExpr {
@@ -6328,6 +6337,28 @@ impl std::fmt::Debug for JsWithStatement {
 			.finish()
 	}
 }
+impl AstNode for JsYieldArgument {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_YIELD_ARGUMENT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsYieldArgument {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsYieldArgument")
+			.field(
+				"star_token",
+				&support::DebugOptionalElement(self.star_token()),
+			)
+			.field("expression", &support::DebugSyntaxResult(self.expression()))
+			.finish()
+	}
+}
 impl AstNode for JsYieldExpression {
 	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_YIELD_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6345,10 +6376,6 @@ impl std::fmt::Debug for JsYieldExpression {
 			.field(
 				"yield_token",
 				&support::DebugSyntaxResult(self.yield_token()),
-			)
-			.field(
-				"star_token",
-				&support::DebugOptionalElement(self.star_token()),
 			)
 			.field("argument", &support::DebugOptionalElement(self.argument()))
 			.finish()
@@ -11864,6 +11891,11 @@ impl std::fmt::Display for JsWithStatement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsYieldArgument {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsYieldExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -13792,6 +13824,9 @@ impl Debug for DebugSyntaxElement {
 				}
 				JS_WITH_STATEMENT => {
 					std::fmt::Debug::fmt(&JsWithStatement::cast(node.clone()).unwrap(), f)
+				}
+				JS_YIELD_ARGUMENT => {
+					std::fmt::Debug::fmt(&JsYieldArgument::cast(node.clone()).unwrap(), f)
 				}
 				JS_YIELD_EXPRESSION => {
 					std::fmt::Debug::fmt(&JsYieldExpression::cast(node.clone()).unwrap(), f)

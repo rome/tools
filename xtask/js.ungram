@@ -353,8 +353,11 @@ JsAwaitExpression =
 
 JsYieldExpression =
 	'yield'
+	argument: JsYieldArgument?
+
+JsYieldArgument =
 	'*'?
-	argument: JsAnyExpression?
+	expression: JsAnyExpression
 
 JsImportCallExpression =
 	'import'

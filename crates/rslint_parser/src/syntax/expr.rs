@@ -235,8 +235,11 @@ fn yield_expr(p: &mut Parser) -> CompletedMarker {
 	p.expect(T![yield]);
 
 	if !is_semi(p, 0) && (p.at(T![*]) || p.at_ts(STARTS_EXPR)) {
+		let argument = p.start();
 		p.eat(T![*]);
 		parse_expr_or_assignment(p).ok();
+
+		argument.complete(p, JS_YIELD_ARGUMENT);
 	}
 
 	m.complete(p, JS_YIELD_EXPRESSION)
