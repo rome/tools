@@ -1,6 +1,6 @@
 //! Events emitted by the Parser which are then constructed into a syntax tree
 
-use std::{mem, ops::Range};
+use std::mem;
 
 use crate::{
 	JsSyntaxKind::{self, *},
@@ -37,7 +37,6 @@ pub enum Event {
 	/// `n_raw_tokens = 2` is used to produced a single `>>`.
 	Token {
 		kind: JsSyntaxKind,
-		range: Range<usize>,
 	},
 
 	MultipleTokens {

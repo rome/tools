@@ -286,10 +286,9 @@ impl<'t> Parser<'t> {
 	}
 
 	fn do_bump(&mut self, kind: JsSyntaxKind) {
-		let range = self.cur_tok().range;
 		self.tokens.bump();
 
-		self.push_event(Event::Token { kind, range });
+		self.push_event(Event::Token { kind });
 	}
 
 	fn push_event(&mut self, event: Event) {
