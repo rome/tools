@@ -213,21 +213,18 @@ impl<const COUNT: usize> Default for RawNodeSlots<COUNT> {
 }
 
 impl<const COUNT: usize> RawNodeSlots<COUNT> {
-	/// Marks that the node for the current slot is *absent* in the source, meaning, that the slot is empty.
 	/// Progresses to the next slot
-	pub fn mark_absent(&mut self) {
+	pub fn next_slot(&mut self) {
 		debug_assert!(self.current_slot < COUNT);
 
-		self.slots[self.current_slot] = SlotContent::Absent;
 		self.current_slot += 1;
 	}
 
-	/// Marks that the node for the current slot is *present* in the source code and progresses to the next slot.
+	/// Marks that the node for the current slot is *present* in the source code.
 	pub fn mark_present(&mut self) {
 		debug_assert!(self.current_slot < COUNT);
 
 		self.slots[self.current_slot] = SlotContent::Present;
-		self.current_slot += 1;
 	}
 
 	/// Creates a node with the kind `kind`, filling in the nodes from the `children`.

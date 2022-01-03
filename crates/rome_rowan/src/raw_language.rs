@@ -111,12 +111,6 @@ impl SyntaxFactory for RawLanguageSyntaxFactory {
 			}
 
 			RawLanguageKind::CONDITION => {
-				let actual_len = children.len();
-
-				if actual_len > 3 {
-					return RawSyntaxNode::new(kind.to_unknown(), children.into_iter().map(Some));
-				}
-
 				let mut elements = (&children).into_iter();
 				let mut current_element = elements.next();
 				let mut slots: RawNodeSlots<3> = Default::default();
@@ -125,34 +119,26 @@ impl SyntaxFactory for RawLanguageSyntaxFactory {
 					if element.kind() == RawLanguageKind::L_PAREN_TOKEN {
 						slots.mark_present();
 						current_element = elements.next();
-					} else {
-						slots.mark_absent();
 					}
-				} else {
-					slots.mark_absent();
 				}
 
+				slots.next_slot();
 				if let Some(element) = &current_element {
 					if element.kind() == RawLanguageKind::LITERAL_EXPRESSION {
 						slots.mark_present();
 						current_element = elements.next();
-					} else {
-						slots.mark_absent();
 					}
-				} else {
-					slots.mark_absent();
 				}
 
+				slots.next_slot();
 				if let Some(element) = &current_element {
 					if element.kind() == RawLanguageKind::R_PAREN_TOKEN {
 						slots.mark_present();
 						current_element = elements.next();
-					} else {
-						slots.mark_absent();
 					}
-				} else {
-					slots.mark_absent();
 				}
+
+				slots.next_slot();
 
 				if current_element.is_some() {
 					return RawSyntaxNode::new(kind.to_unknown(), children.into_iter().map(Some));

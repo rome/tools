@@ -40,12 +40,9 @@ pub fn generate_syntax_factory(ast: &AstSrc) -> Result<String> {
 					if #field_predicate {
 						slots.mark_present();
 						current_element = elements.next();
-					} else {
-						slots.mark_absent();
 					}
-				} else {
-					slots.mark_absent();
 				}
+				slots.next_slot();
 			}
 		});
 
