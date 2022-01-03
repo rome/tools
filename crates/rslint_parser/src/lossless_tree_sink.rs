@@ -19,33 +19,19 @@ pub struct LosslessTreeSink<'a> {
 	inner: SyntaxTreeBuilder,
 	/// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
 	needs_eof: bool,
-	/// Trivia start Offset and its pieces.
-	next_token_leading_trivia: (TextRange, Vec<TriviaPiece>),
 }
 
 impl<'a> TreeSink for LosslessTreeSink<'a> {
 	fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind) {
-		let len = TextSize::from(
-			self.tokens[self.token_pos..self.token_pos + amount as usize]
-				.iter()
-				.map(|x| x.len)
-				.sum::<usize>() as u32,
-		);
-
-		self.do_tokens(kind, len, amount)
+		self.do_tokens(kind, amount)
 	}
 
 	fn token(&mut self, kind: JsSyntaxKind) {
-		let len = TextSize::from(self.tokens[self.token_pos].len as u32);
-		self.do_token(kind, len);
+		self.do_token(kind);
 	}
 
 	fn start_node(&mut self, kind: JsSyntaxKind) {
 		self.inner.start_node(kind);
-		if self.parents_count == 0 {
-			self.next_token_leading_trivia = self.get_trivia(false);
-		}
-
 		self.parents_count += 1;
 	}
 
@@ -53,7 +39,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 		self.parents_count -= 1;
 
 		if self.parents_count == 0 && self.needs_eof {
-			self.do_token(JsSyntaxKind::EOF, 0.into());
+			self.do_token(JsSyntaxKind::EOF);
 		}
 
 		self.inner.finish_node();
@@ -75,7 +61,6 @@ impl<'a> LosslessTreeSink<'a> {
 			inner: SyntaxTreeBuilder::default(),
 			errors: vec![],
 			needs_eof: true,
-			next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![]),
 		}
 	}
 
@@ -88,15 +73,29 @@ impl<'a> LosslessTreeSink<'a> {
 	}
 
 	#[inline]
-	fn do_token(&mut self, kind: JsSyntaxKind, len: TextSize) {
+	fn do_token(&mut self, kind: JsSyntaxKind) {
 		if kind == JsSyntaxKind::EOF {
 			self.needs_eof = false;
 		}
 
-		self.do_tokens(kind, len, 1)
+		self.do_tokens(kind, 1)
 	}
 
-	fn do_tokens(&mut self, kind: JsSyntaxKind, len: TextSize, token_count: u8) {
+	fn do_tokens(&mut self, kind: JsSyntaxKind, token_count: u8) {
+		// Every trivia up to the token (including line breaks) will be the leading trivia
+		let (leading_range, leading) = self.get_trivia(false);
+
+		let len = TextSize::from(
+			(if token_count == 1 {
+				self.tokens[self.token_pos].len
+			} else {
+				self.tokens[self.token_pos..self.token_pos + token_count as usize]
+					.iter()
+					.map(|x| x.len)
+					.sum::<usize>()
+			}) as u32,
+		);
+
 		let token_range = TextRange::at(self.text_pos, len);
 
 		self.text_pos += len;
@@ -105,13 +104,6 @@ impl<'a> LosslessTreeSink<'a> {
 		// Everything until the next linebreak (but not including it)
 		// will be the trailing trivia...
 		let (trailing_range, trailing) = self.get_trivia(true);
-
-		// ... and everything after and including the linebreak will be in the next
-		// token leading trivia. If there is none, we will use the EOF.
-		let next_token_leading = self.get_trivia(false);
-
-		let (leading_range, leading) =
-			std::mem::replace(&mut self.next_token_leading_trivia, next_token_leading);
 
 		let range = leading_range.cover(token_range).cover(trailing_range);
 		let text = &self.text[range];
@@ -123,9 +115,9 @@ impl<'a> LosslessTreeSink<'a> {
 		let mut trivia = vec![];
 
 		let start_text_pos = self.text_pos;
-		let mut length = TextSize::of("");
+		let mut length = TextSize::from(0);
 
-		while let Some(&token) = self.tokens.get(self.token_pos) {
+		for token in &self.tokens[self.token_pos..] {
 			if !token.kind.is_trivia() {
 				break;
 			}
