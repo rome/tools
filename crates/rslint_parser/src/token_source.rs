@@ -5,12 +5,7 @@ use std::iter::FusedIterator;
 /// The source of tokens for the parser
 pub struct TokenSource<'t> {
 	source: &'t str,
-	/// Hashset of offsets for tokens which occur after a linebreak.
-	/// This is required for things such as ASI and postfix expressions
-	tokens_after_linebreaks: HashSet<TextSize>,
 
-	/// A vector of tokens and their offset from the start.
-	token_offset_pairs: Vec<(rslint_lexer::Token, TextSize)>,
 	/// A list of the tokens including whitespace.
 	pub raw_tokens: &'t [rslint_lexer::Token],
 
@@ -18,33 +13,12 @@ pub struct TokenSource<'t> {
 	cur: (Token, usize),
 }
 
-fn mk_token(pos: usize, token_offset_pairs: &[(rslint_lexer::Token, TextSize)]) -> Token {
-	let kind = match token_offset_pairs.get(pos) {
-		Some((token, _)) => token.kind,
-		None => EOF,
-	};
-	let range = token_offset_pairs
-		.get(pos)
-		.map(|x| {
-			let start: usize = x.1.into();
-			let end = start + x.0.len;
-			start..end
-		})
-		.unwrap_or_else(|| {
-			token_offset_pairs
-				.last()
-				.map(|x| {
-					let start: usize = x.1.into();
-					let end = start + x.0.len;
-					start..end
-				})
-				.unwrap_or(0..0)
-		});
-
+fn mk_token2(pos: usize, raw_tokens: &[rslint_lexer::Token]) -> Token {
+	let t = &raw_tokens[pos];
 	Token {
-		kind,
-		range: range.to_owned(),
-		len: TextSize::from(range.len() as u32),
+		kind: t.kind,
+		range: t.offset..(t.offset + t.len),
+		len: TextSize::from(t.len as u32),
 	}
 }
 
@@ -55,105 +29,104 @@ impl<'t> TokenSource<'t> {
 	/// This method will panic in case the source and raw tokens do not match
 	/// as it relies on the source code for checking if trivia contains linebreaks
 	pub fn new(source: &'t str, raw_tokens: &'t [rslint_lexer::Token]) -> TokenSource<'t> {
-		let mut tokens_after_linebreaks = HashSet::new();
-		let mut token_offset_pairs = Vec::with_capacity(raw_tokens.len() / 2);
-
-		let mut len: TextSize = 0.into();
-		let mut has_linebreak = false;
-
-		for token in raw_tokens {
-			if token.kind.is_trivia() {
-				if !has_linebreak && token.kind == rslint_lexer::JsSyntaxKind::NEWLINE {
-					has_linebreak = true;
-				} else if !has_linebreak && token.kind == rslint_lexer::SyntaxKind::COMMENT {
-					let src = source
-						.get(len.into()..(usize::from(len) + token.len))
-						.expect("src and tokens do not match");
-					if src.chars().any(rslint_lexer::is_linebreak) {
-						has_linebreak = true;
-					}
-				}
-			} else {
-				if has_linebreak {
-					tokens_after_linebreaks.insert(len);
-					has_linebreak = false;
-				}
-				token_offset_pairs.push((*token, len));
-			};
-
-			len += TextSize::from(token.len as u32);
+		let mut pos = 0usize;
+		while raw_tokens[pos].kind.is_trivia() {
+			pos += 1;
 		}
-
-		let first = mk_token(0, token_offset_pairs.as_slice());
+		let first = mk_token2(pos, raw_tokens);
 		TokenSource {
 			source,
-			token_offset_pairs,
-			cur: (first, 0),
-			tokens_after_linebreaks,
+			cur: (first, pos),
 			raw_tokens,
 		}
 	}
 
+	fn next_non_trivia(&self, pos: usize, dir: isize) -> Option<usize> {
+		let mut pos = pos as isize + dir;
+		if (pos < 0) || ((pos as usize) >= self.raw_tokens.len()) {
+			return None
+		} 
+		while self.raw_tokens[pos as usize].kind.is_trivia() {
+			pos += dir;
+			if (pos < 0) || ((pos as usize) >= self.raw_tokens.len()) {
+				return None
+			}
+		}
+		Some(pos as usize)
+	}
+
 	/// Rewind the current position to a former position.
 	pub fn rewind(&mut self, pos: usize) {
-		self.cur = (mk_token(pos, &self.token_offset_pairs), pos);
+		//println!("rewind: {}", pos);
+		self.cur = (mk_token2(pos, &self.raw_tokens), pos);
 	}
 
 	pub fn last_tok(&self) -> Option<Token> {
-		if self.cur.1 == 0 {
-			return None;
-		}
-		Some(mk_token(self.cur.1 - 1, &self.token_offset_pairs))
+		//println!("last_tok");
+		self.next_non_trivia(self.cur.1, -1).map(|idx| {
+			mk_token2(idx, &self.raw_tokens)
+		})
 	}
 
 	pub fn current(&self) -> Token {
+		//println!("current");
 		self.cur.0.to_owned()
 	}
 
 	pub fn source(&self) -> &str {
+		//println!("source");
 		self.source
 	}
 
+	fn raw_lookahead_nth(&self, n: usize) -> usize {
+		let mut idx = self.cur.1;
+		for _ in 0..n {
+			idx = self.next_non_trivia(idx, 1).unwrap();
+		}
+		idx
+	}
+
 	pub fn lookahead_nth(&self, n: usize) -> Token {
-		mk_token(self.cur.1 + n, &self.token_offset_pairs)
+		//println!("lookahead_nth: {} {:?}", n, self.cur);
+		let idx = self.raw_lookahead_nth(n);
+		mk_token2(idx, &self.raw_tokens)
 	}
 
 	pub fn bump(&mut self) {
+		//println!("bump");
 		if self.cur.0.kind == EOF {
 			return;
 		}
 
-		let pos = self.cur.1 + 1;
-		self.cur = (mk_token(pos, &self.token_offset_pairs), pos);
+		let pos = self.next_non_trivia(self.cur.1, 1).unwrap();
+		self.cur = (mk_token2(pos, &self.raw_tokens), pos);
 	}
 
 	pub fn is_keyword(&self, kw: &str) -> bool {
-		self.token_offset_pairs
-			.get(self.cur.1)
-			.map(|(token, offset)| {
-				&self.source[TextRange::at(*offset, TextSize::from(token.len as u32))] == kw
-			})
-			.unwrap_or(false)
+		//println!("is_keyword");
+		let t = self.current();
+		&self.source[t.range] == kw
 	}
 
 	pub fn had_linebreak_before_nth(&self, n: usize) -> bool {
-		if let Some(i) = self.token_offset_pairs.get(self.cur.1 + n) {
-			self.tokens_after_linebreaks.contains(&i.1)
-		} else {
-			false
-		}
+		//println!("had_linebreak_before_nth");
+		let idx = self.raw_lookahead_nth(n);
+		self.raw_tokens[idx].after_newline
 	}
 
 	pub fn cur_pos(&self) -> usize {
-		self.token_offset_pairs[self.cur.1].1.into()
+		//println!("cur_pos");
+		self.raw_tokens[self.cur.1].offset
 	}
 
 	pub fn cur_token_idx(&self) -> usize {
+		//println!("cur_token_idx");
 		self.cur.1
 	}
 
 	pub fn size_hint(&self) -> usize {
-		self.token_offset_pairs.len()
+		//println!("size_hint");
+		self.raw_tokens.len()
 	}
 }
 
@@ -161,6 +134,10 @@ impl Iterator for TokenSource<'_> {
 	type Item = Token;
 
 	fn next(&mut self) -> Option<Self::Item> {
+		while self.cur.0.kind.is_trivia() {
+			self.bump();
+		}
+
 		let cur = self.cur.0.clone();
 		if cur.kind != EOF {
 			self.bump();

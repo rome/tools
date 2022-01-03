@@ -1477,11 +1477,19 @@ impl Iterator for Lexer<'_> {
 			return None;
 		}
 
-		let token = if self.state.is_in_template() {
+		let mut token = if self.state.is_in_template() {
 			self.lex_template()
 		} else {
 			self.lex_token()
 		};
+
+		let after_newline = match token.0.kind {
+			SyntaxKind::NEWLINE => true,
+			_ => false
+		};
+
+		token.0.offset = self.cur - token.0.len;
+		token.0.after_newline = std::mem::replace(&mut self.state.after_newline, after_newline);
 
 		if ![
 			JsSyntaxKind::COMMENT,
