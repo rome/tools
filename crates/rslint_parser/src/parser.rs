@@ -164,10 +164,10 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Get the source code of a token
-	pub fn token_src(&self, token: &Token) -> &str {
+	pub fn token_src(&self, token: &rslint_lexer::Token) -> &str {
 		self.tokens
 			.source()
-			.get(token.range.to_owned())
+			.get(token.range())
 			.expect("Token range and src mismatch")
 	}
 
@@ -182,7 +182,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Get the current token of the parser
-	pub fn cur_tok(&self) -> Token {
+	pub fn cur_tok(&self) -> &'t rslint_lexer::Token {
 		self.nth_tok(0)
 	}
 
@@ -192,7 +192,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Look ahead at a token, **The max lookahead is 4**.
-	pub fn nth_tok(&self, n: usize) -> Token {
+	pub fn nth_tok(&self, n: usize) -> &'t rslint_lexer::Token {
 		self.tokens.lookahead_nth(n)
 	}
 
@@ -286,6 +286,7 @@ impl<'t> Parser<'t> {
 	}
 
 	fn do_bump(&mut self, kind: JsSyntaxKind) {
+		let range = self.cur_tok().range();
 		self.tokens.bump();
 
 		self.push_event(Event::Token { kind });
@@ -302,14 +303,14 @@ impl<'t> Parser<'t> {
 	pub fn cur_src(&self) -> &str {
 		self.tokens
 			.source()
-			.get(self.nth_tok(0).range)
+			.get(self.nth_tok(0).range())
 			.expect("Parser source and tokens mismatch")
 	}
 
 	pub fn nth_src(&self, n: usize) -> &str {
 		self.tokens
 			.source()
-			.get(self.nth_tok(n).range)
+			.get(self.nth_tok(n).range())
 			.expect("Parser source and tokens mismatch")
 	}
 
@@ -325,7 +326,7 @@ impl<'t> Parser<'t> {
 						.map(|x| x.to_string())
 						.unwrap_or_else(|| format!("{:?}", kind))
 				))
-				.primary(self.cur_tok().range, "the file ends here")
+				.primary(self.cur_tok().range(), "the file ends here")
 			} else {
 				self.err_builder(&format!(
 					"expected `{}` but instead found `{}`",
@@ -334,7 +335,7 @@ impl<'t> Parser<'t> {
 						.unwrap_or_else(|| format!("{:?}", kind)),
 					self.cur_src()
 				))
-				.primary(self.cur_tok().range, "unexpected")
+				.primary(self.cur_tok().range(), "unexpected")
 			};
 
 			self.error(err);
@@ -520,7 +521,7 @@ impl Marker {
 		}
 		let finish_pos = p.events.len() as u32;
 		p.push_event(Event::Finish {
-			end: p.tokens.last_tok().map(|t| t.range.end).unwrap_or(0),
+			end: p.tokens.last_tok().map(|t| t.range().end).unwrap_or(0),
 		});
 		let new = CompletedMarker::new(self.pos, finish_pos, kind);
 		new.old_start(self.old_start)

@@ -1,4 +1,4 @@
-use crate::{JsSyntaxKind::EOF, TextRange, TextSize, Token};
+use crate::{JsSyntaxKind::EOF, TextRange, TextSize};
 use std::collections::HashSet;
 use std::iter::FusedIterator;
 
@@ -9,17 +9,8 @@ pub struct TokenSource<'t> {
 	/// A list of the tokens including whitespace.
 	pub raw_tokens: &'t [rslint_lexer::Token],
 
-	/// Current token and position
-	cur: (Token, usize),
-}
-
-fn mk_token2(pos: usize, raw_tokens: &[rslint_lexer::Token]) -> Token {
-	let t = &raw_tokens[pos];
-	Token {
-		kind: t.kind,
-		range: t.offset..(t.offset + t.len),
-		len: TextSize::from(t.len as u32),
-	}
+	/// Current token index at raw_tokens.
+	cur: usize,
 }
 
 impl<'t> TokenSource<'t> {
@@ -33,14 +24,14 @@ impl<'t> TokenSource<'t> {
 		while raw_tokens[pos].kind.is_trivia() {
 			pos += 1;
 		}
-		let first = mk_token2(pos, raw_tokens);
 		TokenSource {
 			source,
-			cur: (first, pos),
+			cur: pos,
 			raw_tokens,
 		}
 	}
 
+	#[inline(always)]
 	fn next_non_trivia(&self, pos: usize, dir: isize) -> Option<usize> {
 		let mut pos = pos as isize + dir;
 		if (pos < 0) || ((pos as usize) >= self.raw_tokens.len()) {
@@ -55,64 +46,74 @@ impl<'t> TokenSource<'t> {
 		Some(pos as usize)
 	}
 
-	/// Rewind the current position to a former position.
-	pub fn rewind(&mut self, pos: usize) {
-		self.cur = (mk_token2(pos, &self.raw_tokens), pos);
-	}
-
-	pub fn last_tok(&self) -> Option<Token> {
-		self.next_non_trivia(self.cur.1, -1)
-			.map(|idx| mk_token2(idx, &self.raw_tokens))
-	}
-
-	pub fn current(&self) -> Token {
-		self.cur.0.to_owned()
-	}
-
-	pub fn source(&self) -> &str {
-		self.source
-	}
-
+	#[inline(always)]
 	fn raw_lookahead_nth(&self, n: usize) -> usize {
-		let mut idx = self.cur.1;
+		let mut idx = self.cur;
 		for _ in 0..n {
 			idx = self.next_non_trivia(idx, 1).unwrap();
 		}
 		idx
 	}
 
-	pub fn lookahead_nth(&self, n: usize) -> Token {
-		let idx = self.raw_lookahead_nth(n);
-		mk_token2(idx, &self.raw_tokens)
+	/// Rewind the current position to a former position.
+	#[inline(always)]
+	pub fn rewind(&mut self, pos: usize) {
+		self.cur = pos;
 	}
 
+	#[inline(always)]
+	pub fn last_tok(&self) -> Option<&rslint_lexer::Token> {
+		self.next_non_trivia(self.cur, -1)
+			.and_then(|idx| self.raw_tokens.get(idx))
+	}
+
+	#[inline(always)]
+	pub fn current(&self) -> &rslint_lexer::Token {
+		&self.raw_tokens[self.cur]
+	}
+
+	#[inline(always)]
+	pub fn source(&self) -> &str {
+		self.source
+	}
+
+	#[inline(always)]
+	pub fn lookahead_nth(&self, n: usize) -> &'t rslint_lexer::Token {
+		let idx = self.raw_lookahead_nth(n);
+		&self.raw_tokens[idx]
+	}
+
+	#[inline(always)]
 	pub fn bump(&mut self) {
-		if self.cur.0.kind == EOF {
+		if self.current().kind == EOF {
 			return;
 		}
 
-		let pos = self
-			.next_non_trivia(self.cur.1, 1)
+		self.cur = self
+			.next_non_trivia(self.cur, 1)
 			.unwrap_or(self.raw_tokens.len() - 1);
-		self.cur = (mk_token2(pos, &self.raw_tokens), pos);
 	}
 
+	#[inline(always)]
 	pub fn is_keyword(&self, kw: &str) -> bool {
 		let t = self.current();
-		&self.source[t.range] == kw
+		&self.source[t.offset..(t.offset + t.len)] == kw
 	}
 
+	#[inline(always)]
 	pub fn had_linebreak_before_nth(&self, n: usize) -> bool {
-		let idx = self.raw_lookahead_nth(n);
-		self.raw_tokens[idx].after_newline
+		let t = self.lookahead_nth(n);
+		t.after_newline
 	}
 
+	#[inline(always)]
 	pub fn cur_pos(&self) -> usize {
-		self.raw_tokens[self.cur.1].offset
+		self.current().offset
 	}
 
+	#[inline(always)]
 	pub fn cur_token_idx(&self) -> usize {
-		self.cur.1
+		self.cur
 	}
 
 	pub fn size_hint(&self) -> usize {
@@ -121,14 +122,14 @@ impl<'t> TokenSource<'t> {
 }
 
 impl Iterator for TokenSource<'_> {
-	type Item = Token;
+	type Item = rslint_lexer::Token;
 
 	fn next(&mut self) -> Option<Self::Item> {
-		while self.cur.0.kind.is_trivia() {
+		while self.current().kind.is_trivia() {
 			self.bump();
 		}
 
-		let cur = self.cur.0.clone();
+		let cur = self.current().to_owned();
 		if cur.kind != EOF {
 			self.bump();
 			Some(cur)

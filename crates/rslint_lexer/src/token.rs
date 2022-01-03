@@ -35,6 +35,11 @@ impl Token {
 			after_newline: false,
 		}
 	}
+
+	#[inline(always)]
+	pub fn range(&self) -> std::ops::Range<usize> {
+		self.offset..(self.offset + self.len)
+	}
 }
 
 macro_rules! tok {

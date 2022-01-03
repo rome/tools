@@ -120,7 +120,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 		}
 
 		let m = p.start();
-		let rest_end = p.cur_tok().range.end;
+		let rest_end = p.cur_tok().range().end;
 		p.bump(T![...]);
 
 		let with_default = self.pattern_with_default();
@@ -162,7 +162,7 @@ pub(crate) trait ParseObjectPattern {
 
 				if p.at(T![,]) {
 					// missing element
-					p.error(Self::expected_property_pattern_error(p, p.cur_tok().range));
+					p.error(Self::expected_property_pattern_error(p, p.cur_tok().range()));
 					p.bump_any(); // bump ,
 					continue;
 				}
@@ -229,7 +229,7 @@ fn validate_rest_pattern(
 	if p.at(T![=]) {
 		let rest_range = rest.range(p);
 		let rest_marker = rest.undo_completion(p);
-		let default_start = p.cur_tok().range.start;
+		let default_start = p.cur_tok().range().start;
 		let kind = rest.kind();
 		p.bump(T![=]);
 
@@ -239,7 +239,7 @@ fn validate_rest_pattern(
 		p.error(
 			p.err_builder("rest element cannot have a default")
 				.primary(
-					default_start..p.cur_tok().range.start,
+					default_start..p.cur_tok().range().start,
 					"Remove the default value here",
 				)
 				.secondary(rest_range, "Rest element"),
@@ -251,7 +251,7 @@ fn validate_rest_pattern(
 	} else if p.at(T![,]) && p.nth_at(1, end_token) {
 		p.error(
 			p.err_builder("rest element may not have a trailing comma")
-				.primary(p.cur_tok().range, "Remove the trailing comma here")
+				.primary(p.cur_tok().range(), "Remove the trailing comma here")
 				.secondary(rest.range(p), "Rest element"),
 		);
 		rest.change_to_unknown(p);

@@ -69,7 +69,7 @@ pub fn semi(p: &mut Parser, err_range: Range<usize>) -> bool {
 				"Expected a semicolon or an implicit semicolon after a statement, but found none",
 			)
 			.primary(
-				p.cur_tok().range,
+				p.cur_tok().range(),
 				"An explicit or implicit semicolon is expected here...",
 			)
 			.secondary(err_range, "...Which is required to end this statement");
@@ -197,7 +197,7 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 // }
 
 fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
-	let start = p.cur_tok().range.start;
+	let start = p.cur_tok().range().start;
 	// this is *technically* wrong because it would be an expr stmt in js but for our purposes
 	// we treat these as always being ts declarations since ambiguity is inefficient in this style of
 	// parsing and it results in better errors usually
@@ -232,8 +232,8 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
 	{
 		let err = p
 			.err_builder("interface declarations cannot have accessibility modifiers")
-			.primary(p.cur_tok().range, "")
-			.secondary(p.nth_tok(1).range, "");
+			.primary(p.cur_tok().range(), "")
+			.secondary(p.nth_tok(1).range(), "");
 
 		p.error(err);
 		let m = p.start();
@@ -285,7 +285,7 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
 	let expr = parse_expression_or_recover_to_next_statement(p, false);
 	if let Ok(expr) = expr {
 		let m = expr.precede(p);
-		semi(p, start..p.cur_tok().range.end);
+		semi(p, start..p.cur_tok().range().end);
 		Present(m.complete(p, JS_EXPRESSION_STATEMENT))
 	} else {
 		Absent
@@ -308,7 +308,7 @@ pub fn parse_debugger_statement(p: &mut Parser) -> ParsedSyntax {
 		return Absent;
 	}
 	let m = p.start();
-	let range = p.cur_tok().range;
+	let range = p.cur_tok().range();
 	p.bump_any(); // debugger keyword
 	semi(p, range);
 	Present(m.complete(p, JS_DEBUGGER_STATEMENT))
@@ -327,17 +327,17 @@ pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
 		return Absent;
 	}
 	let m = p.start();
-	let start = p.cur_tok().range.start;
+	let start = p.cur_tok().range().start;
 	p.bump_any(); // throw keyword
 	if p.has_linebreak_before_n(0) {
 		let mut err = p
 			.err_builder(
 				"Linebreaks between a throw statement and the error to be thrown are not allowed",
 			)
-			.primary(p.cur_tok().range, "A linebreak is not allowed here");
+			.primary(p.cur_tok().range(), "A linebreak is not allowed here");
 
 		if p.at_ts(STARTS_EXPR) {
-			err = err.secondary(p.cur_tok().range, "Help: did you mean to throw this?");
+			err = err.secondary(p.cur_tok().range(), "Help: did you mean to throw this?");
 		}
 
 		p.error(err);
@@ -345,7 +345,7 @@ pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
 		parse_expression_or_recover_to_next_statement(p, false).ok();
 	}
 
-	semi(p, start..p.cur_tok().range.end);
+	semi(p, start..p.cur_tok().range().end);
 	Present(m.complete(p, JS_THROW_STATEMENT))
 }
 
@@ -364,19 +364,19 @@ pub fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
 		return Absent;
 	}
 	let m = p.start();
-	let start = p.cur_tok().range;
+	let start = p.cur_tok().range();
 	p.bump_any(); // break keyword
 	let end = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
 		let label_token = p.cur_tok();
 		p.bump_any();
-		check_label_use(p, &label_token);
+		check_label_use(p, label_token);
 
-		label_token.range.end
+		label_token.range().end
 	} else {
 		start.end
 	};
 
-	semi(p, start.start..p.cur_tok().range.end);
+	semi(p, start.start..p.cur_tok().range().end);
 
 	if !p.state.break_allowed && p.state.labels.is_empty() {
 		let err = p
@@ -406,20 +406,20 @@ pub fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
 		return Absent;
 	}
 	let m = p.start();
-	let start = p.cur_tok().range;
+	let start = p.cur_tok().range();
 	p.bump_any(); // continue keyword
 
 	let end = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
 		let label_token = p.cur_tok();
 		p.bump_any();
-		check_label_use(p, &label_token);
+		check_label_use(p, label_token);
 
-		label_token.range.end
+		label_token.range().end
 	} else {
 		start.end
 	};
 
-	semi(p, start.start..p.cur_tok().range.end);
+	semi(p, start.start..p.cur_tok().range().end);
 
 	if !p.state.break_allowed && p.state.labels.is_empty() {
 		let err = p
@@ -448,13 +448,13 @@ pub fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
 		return Absent;
 	}
 	let m = p.start();
-	let start = p.cur_tok().range.start;
+	let start = p.cur_tok().range().start;
 	p.bump_any(); // return keyword
 	if !p.has_linebreak_before_n(0) && p.at_ts(STARTS_EXPR) {
 		parse_expression(p).unwrap();
 	}
 
-	semi(p, start..p.cur_tok().range.end);
+	semi(p, start..p.cur_tok().range().end);
 	let mut complete = m.complete(p, JS_RETURN_STATEMENT);
 
 	if !p.state.in_function && !p.syntax.global_return {
@@ -546,7 +546,7 @@ impl ParseNodeList for DirectivesList {
 
 		let completed_marker = directive.complete(p, JS_DIRECTIVE);
 
-		let directive_text = p.token_src(&directive_token);
+		let directive_text = p.token_src(directive_token);
 
 		if directive_text == "\"use strict\"" || directive_text == "'use strict'" {
 			if self.old_state == None {
@@ -554,7 +554,7 @@ impl ParseNodeList for DirectivesList {
 			}
 
 			let mut new_state = p.state.clone();
-			new_state.strict(p, directive_token.range);
+			new_state.strict(p, directive_token.range());
 			p.state = new_state;
 		}
 
@@ -769,14 +769,14 @@ pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err var_decl_err
 	// var a =;
 	// const a = 5 let b = 5;
-	let start = p.cur_tok().range.start;
+	let start = p.cur_tok().range().start;
 
 	let declaration =
 		parse_variable_declaration_list(p, VariableDeclarationParent::VariableStatement)
 			.or_add_diagnostic(p, js_parse_error::expected_variable);
 	if let Some(declaration) = declaration {
 		let m = declaration.precede(p);
-		semi(p, start..p.cur_tok().range.start);
+		semi(p, start..p.cur_tok().range().start);
 		Present(m.complete(p, JS_VARIABLE_STATEMENT))
 	} else {
 		Absent
@@ -821,7 +821,7 @@ fn parse_variable_declarations(
 	match p.cur() {
 		T![var] => p.bump_any(),
 		T![const] => {
-			context.is_const = Some(p.cur_tok().range);
+			context.is_const = Some(p.cur_tok().range());
 			p.bump_any()
 		}
 		T![ident] if p.cur_src() == "let" => {
@@ -937,7 +937,7 @@ fn parse_variable_declaration(
 	id.map(|id| {
 		let m = id.precede(p);
 
-		let cur = p.cur_tok().range;
+		let cur = p.cur_tok().range();
 		let opt = p.eat(T![!]);
 		if opt && !p.typescript() {
 			let err = p
@@ -1025,7 +1025,7 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 		return Absent;
 	}
 	let m = p.start();
-	let start = p.cur_tok().range.start;
+	let start = p.cur_tok().range().start;
 	p.bump_any(); // do keyword
 
 	{
@@ -1039,7 +1039,7 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 
 	p.expect(T![while]);
 	parenthesized_expression(p);
-	let end_range = p.cur_tok().range.end;
+	let end_range = p.cur_tok().range().end;
 	semi(p, start..end_range);
 	Present(m.complete(p, JS_DO_WHILE_STATEMENT))
 }
@@ -1200,7 +1200,7 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 
 	let mut await_range = None;
 	if p.at(T![await]) {
-		await_range = Some(p.cur_tok().range);
+		await_range = Some(p.cur_tok().range());
 		p.bump_any();
 	}
 
@@ -1469,7 +1469,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 			Some(pattern_node) => pattern_node.precede(p),
 			_ => p.start(),
 		};
-		let start = p.cur_tok().range.start;
+		let start = p.cur_tok().range().start;
 		p.bump_any();
 		let ty = ts_type(p);
 		if !matches!(
@@ -1486,7 +1486,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 
 		let end = ty
 			.map(|x| usize::from(x.range(p).end()))
-			.unwrap_or(p.cur_tok().range.start);
+			.unwrap_or(p.cur_tok().range().start);
 		error_marker.complete(
 			p,
 			pattern_kind

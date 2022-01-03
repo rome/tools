@@ -61,7 +61,7 @@ fn named_export_specifier(p: &mut Parser) -> CompletedMarker {
 // test export
 // export { foo } from "bla";
 pub fn export_decl(p: &mut Parser) -> CompletedMarker {
-	let start = p.cur_tok().range.start;
+	let start = p.cur_tok().range().start;
 	let m = p.start();
 	p.expect(T![export]);
 
@@ -92,7 +92,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	macro_rules! err_if_declare {
 		($p:expr, $declare:expr, $msg:literal) => {
 			if $declare {
-				let range = $p.cur_tok().range;
+				let range = $p.cur_tok().range();
 				$p.bump_remap(T![declare]);
 				let err = $p.err_builder($msg).primary(range, "");
 
@@ -124,7 +124,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			);
 			p.bump_any();
 			parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
-			semi(p, start..p.cur_tok().range.start);
+			semi(p, start..p.cur_tok().range().start);
 			let mut complete = m.complete(p, TS_EXPORT_ASSIGNMENT);
 			complete.err_if_not_ts(
 				p,
@@ -142,7 +142,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			if p.cur_src() != "namespace" {
 				let err = p
 					.err_builder("expected `namespace`, but found none")
-					.primary(p.cur_tok().range, "");
+					.primary(p.cur_tok().range(), "");
 
 				p.error(err);
 			} else {
@@ -151,7 +151,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 
 			// TODO(RDambrosio016): verify, is identifier_name correct here or should it just be ident?
 			parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
-			semi(p, start..p.cur_tok().range.start);
+			semi(p, start..p.cur_tok().range().start);
 			let mut complete = m.complete(p, TS_NAMESPACE_EXPORT_DECL);
 			complete.err_if_not_ts(
 				p,
@@ -170,7 +170,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			let m = p.start();
 			let err = p
 				.err_builder("declare modifiers can only be used in TypeScript files")
-				.primary(p.cur_tok().range, "");
+				.primary(p.cur_tok().range(), "");
 
 			p.error(err);
 			p.bump_any();
@@ -211,7 +211,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			if !p.typescript() {
 				let err = p
 					.err_builder("`abstract` modifiers can only be used in TypeScript files")
-					.primary(p.cur_tok().range, "");
+					.primary(p.cur_tok().range(), "");
 
 				p.error(err);
 				let m = p.start();
@@ -257,7 +257,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			export_default = true;
 		} else {
 			parse_expr_or_assignment(p).or_add_diagnostic(p, js_parse_error::expected_expression);
-			semi(p, start..p.cur_tok().range.start);
+			semi(p, start..p.cur_tok().range().start);
 			return m.complete(p, EXPORT_DEFAULT_EXPR);
 		}
 	}
@@ -332,13 +332,13 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		if p.cur_src() == "from" {
 			from_clause_and_semi(p, start);
 		} else {
-			semi(p, start..p.cur_tok().range.start);
+			semi(p, start..p.cur_tok().range().start);
 			if export_default || exports_ns {
 				let err = p
 					.err_builder(
 						"`export default` and `export as` declarations must have a `from` clause",
 					)
-					.primary(start..p.cur_tok().range.start, "");
+					.primary(start..p.cur_tok().range().start, "");
 
 				p.error(err);
 			}
@@ -353,7 +353,7 @@ fn from_clause_and_semi(p: &mut Parser, start: usize) {
 	debug_assert_eq!(p.cur_src(), "from");
 	p.bump_remap(T![from]);
 	p.expect(JS_STRING_LITERAL);
-	semi(p, start..p.cur_tok().range.start);
+	semi(p, start..p.cur_tok().range().start);
 }
 
 pub fn ts_import_equals_decl(p: &mut Parser, m: Marker) -> CompletedMarker {
@@ -366,7 +366,7 @@ pub fn ts_import_equals_decl(p: &mut Parser, m: Marker) -> CompletedMarker {
 	} else {
 		ts_entity_name(p, None, false);
 	}
-	semi(p, start..p.cur_tok().range.start);
+	semi(p, start..p.cur_tok().range().start);
 	m.complete(p, TS_IMPORT_EQUALS_DECL)
 }
 
@@ -375,7 +375,7 @@ pub fn ts_external_module_ref(p: &mut Parser) -> CompletedMarker {
 	if p.cur_src() != "require" {
 		let err = p
 			.err_builder("expected `require` for an external module reference, but found none")
-			.primary(p.cur_tok().range, "");
+			.primary(p.cur_tok().range(), "");
 
 		p.error(err);
 	} else {

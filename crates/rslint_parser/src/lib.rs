@@ -104,23 +104,6 @@ pub use crate::ParsedSyntax::{Absent, Present};
 use rslint_errors::Diagnostic;
 use std::ops::Range;
 
-/// Abstracted token for `TokenSource`
-#[derive(Debug, Clone, Eq, PartialEq, Hash)]
-pub struct Token {
-	/// What kind of token it is
-	pub kind: JsSyntaxKind,
-	/// The range (in byte indices) of the token
-	pub range: Range<usize>,
-	/// How long the token is
-	pub len: TextSize,
-}
-
-impl From<Token> for Range<usize> {
-	fn from(token: Token) -> Self {
-		token.range
-	}
-}
-
 /// An abstraction for syntax tree implementations
 pub trait TreeSink {
 	/// Adds new token to the current branch.

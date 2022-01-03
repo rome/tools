@@ -78,7 +78,7 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax {
 		return Absent;
 	}
 
-	let start = p.cur_tok().range.start;
+	let start = p.cur_tok().range().start;
 	let import = p.start();
 	p.bump_any();
 
@@ -95,7 +95,7 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax {
 	p.state.duplicate_binding_parent = None;
 	p.state.name_map.clear();
 
-	let end = p.cur_tok().range.start;
+	let end = p.cur_tok().range().start;
 
 	semi(p, start..end);
 
@@ -271,7 +271,7 @@ fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 
 	if p.cur_src() == "as" && p.nth_src(1) != "as" {
-		p.error(expected_export_name_after_as_keyword(p, p.cur_tok().range));
+		p.error(expected_export_name_after_as_keyword(p, p.cur_tok().range()));
 	} else if p.nth_src(1) == "as" {
 		parse_export_name(p).or_add_diagnostic(p, expected_export_name);
 	} else {
@@ -287,7 +287,10 @@ fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 
 fn parse_shorthand_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 	if p.at(T![default]) {
-		p.error(expected_local_name_for_default_import(p, p.cur_tok().range));
+		p.error(expected_local_name_for_default_import(
+			p,
+			p.cur_tok().range(),
+		));
 
 		let shorthand = p.start();
 		let binding = p.start();
@@ -382,7 +385,7 @@ fn parse_import_assertion_entry(
 	seen_assertion_keys: &mut HashMap<String, Range<usize>>,
 ) -> ParsedSyntax {
 	let m = p.start();
-	let key_range = p.cur_tok().range;
+	let key_range = p.cur_tok().range();
 
 	let key = match p.cur() {
 		JS_STRING_LITERAL => Some(p.cur_src().trim_matches(&['\'', '"'][..])),
@@ -401,7 +404,8 @@ fn parse_import_assertion_entry(
 		}
 		T![:] => {
 			p.error(
-				expected_any(&["identifier", "string literal"], p.cur_tok().range).to_diagnostic(p),
+				expected_any(&["identifier", "string literal"], p.cur_tok().range())
+					.to_diagnostic(p),
 			);
 		}
 		_ => {

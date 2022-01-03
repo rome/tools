@@ -74,12 +74,12 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax {
 	}
 	let mut class_is_valid = true;
 	let m = p.start();
-	let class_token_range = p.cur_tok().range;
+	let class_token_range = p.cur_tok().range();
 	p.expect(T![class]);
 
 	// class bodies are implicitly strict
 	let mut guard = p.with_state(ParserState {
-		strict: Some(StrictMode::Class(p.cur_tok().range)),
+		strict: Some(StrictMode::Class(p.cur_tok().range())),
 		..p.state.clone()
 	});
 
@@ -155,7 +155,7 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax {
 	let mut is_valid = true;
 	let implements_clause = p.start();
 
-	let start = p.cur_tok().range.start;
+	let start = p.cur_tok().range().start;
 	p.bump_remap(T![implements]);
 
 	let list = p.start();
@@ -174,7 +174,7 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax {
 	let mut progress = ParserProgress::default();
 	while p.cur_src() == "implements" {
 		progress.assert_progressing(p);
-		let start = p.cur_tok().range.start;
+		let start = p.cur_tok().range().start;
 		p.bump_any();
 		let elems = ts_heritage_clause(&mut *p, false);
 
@@ -319,7 +319,7 @@ fn parse_class_member_impl(
 	member_marker: Marker,
 	modifiers: ClassMemberModifiers,
 ) -> ParsedSyntax {
-	let generator_range = p.cur_tok().range;
+	let generator_range = p.cur_tok().range();
 	let checkpoint = p.checkpoint();
 
 	// Seems like we're at a generator method
@@ -358,7 +358,7 @@ fn parse_class_member_impl(
 		&& !is_at_method_class_member(p, 1)
 		&& !p.has_linebreak_before_n(1)
 	{
-		let async_range = p.cur_tok().range;
+		let async_range = p.cur_tok().range();
 		p.bump_remap(T![async]);
 		let in_generator = p.eat(T![*]);
 
@@ -694,7 +694,7 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Pa
 
 		let err = p
 			.err_builder("expected a semicolon for a class property, but found none")
-			.primary(start..p.cur_tok().range.start, "");
+			.primary(start..p.cur_tok().range().start, "");
 
 		p.error(err);
 	}
@@ -710,7 +710,7 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Pa
 /// Eats the ? token for optional member. Emits an error if this isn't typescript
 fn optional_member_token(p: &mut Parser) -> Result<Option<Range<usize>>, ()> {
 	if p.eat(T![?]) {
-		let range = p.cur_tok().range;
+		let range = p.cur_tok().range();
 		p.bump_any();
 
 		// test_err optional_member
@@ -909,7 +909,7 @@ fn parse_access_modifier(p: &mut Parser) -> Option<Range<usize>> {
 		_ => return None,
 	};
 
-	let range = p.cur_tok().range;
+	let range = p.cur_tok().range();
 	p.bump_remap(kind);
 	Some(range)
 }
@@ -1047,7 +1047,7 @@ fn parse_modifier(p: &mut Parser) -> Option<Modifier> {
 		return None;
 	}
 
-	let range = p.cur_tok().range;
+	let range = p.cur_tok().range();
 
 	let (modifier_kind, kw_kind) = match p.cur_src() {
 		"declare" => (ModifierKind::Declare, DECLARE_KW),

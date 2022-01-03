@@ -75,7 +75,7 @@ pub(super) fn parse_parameters_list(
 			if p.at(T![?]) {
 				let err = p
 					.err_builder("rest patterns cannot be optional")
-					.primary(p.cur_tok().range, "");
+					.primary(p.cur_tok().range(), "");
 
 				p.error(err);
 				let m = p.start();
@@ -92,14 +92,14 @@ pub(super) fn parse_parameters_list(
 			}
 
 			if p.at(T![=]) {
-				let start = p.cur_tok().range.start;
+				let start = p.cur_tok().range().start;
 				let m = p.start();
 				p.bump_any();
 
 				let end = parse_expr_or_assignment(&mut *p)
 					.ok()
 					.map(|marker| usize::from(marker.range(p).end()))
-					.unwrap_or_else(|| p.cur_tok().range.start);
+					.unwrap_or_else(|| p.cur_tok().range().start);
 
 				let err = p
 					.err_builder("rest elements may not have default initializers")
@@ -115,7 +115,7 @@ pub(super) fn parse_parameters_list(
 			// which would allow for better recovery from `foo, ...bar, foo`
 			if p.at(T![,]) {
 				let m = p.start();
-				let range = p.cur_tok().range;
+				let range = p.cur_tok().range();
 				p.bump_any();
 				m.complete(p, JS_UNKNOWN);
 				let err = p

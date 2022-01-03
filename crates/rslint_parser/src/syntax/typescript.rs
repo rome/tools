@@ -61,7 +61,7 @@ pub fn ts_modifier(p: &mut Parser, modifiers: &[&'static str]) -> Option<Range<u
 		return None;
 	}
 
-	let range = p.cur_tok().range;
+	let range = p.cur_tok().range();
 
 	if p.has_linebreak_before_n(1)
 		|| token_set![T!['('], T![')'], T![:], T![=], T![?]].contains(p.nth(1))
@@ -83,13 +83,13 @@ pub(crate) fn maybe_ts_type_annotation(p: &mut Parser) -> Option<Range<usize>> {
 	if p.at(T![:]) {
 		let m = p.start();
 
-		let start = p.cur_tok().range.start;
+		let start = p.cur_tok().range().start;
 		p.bump_any();
 		let compl = ts_type(p);
 
 		let end = compl
 			.map(|x| usize::from(x.range(p).end()))
-			.unwrap_or_else(|| p.cur_tok().range.start);
+			.unwrap_or_else(|| p.cur_tok().range().start);
 
 		if !p.typescript() {
 			let err = p
@@ -192,7 +192,7 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.cur_src() == "abstract" {
 		let m = p.start();
-		let range = p.cur_tok().range;
+		let range = p.cur_tok().range();
 		p.bump_remap(T![abstract]);
 		if !p.at(T![class]) {
 			let err = p.err_builder("abstract modifiers can only be applied to classes, methods, or property definitions")
@@ -246,7 +246,7 @@ pub fn ts_type_alias_decl(p: &mut Parser) -> Option<CompletedMarker> {
 	let t = p.checkpoint();
 
 	let m = p.start();
-	let start = p.cur_tok().range.start;
+	let start = p.cur_tok().range().start;
 	p.bump_any();
 	let identifier =
 		parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
@@ -258,7 +258,7 @@ pub fn ts_type_alias_decl(p: &mut Parser) -> Option<CompletedMarker> {
 		no_recover!(p, ts_type_params(p));
 	}
 
-	let end = p.cur_tok().range.end;
+	let end = p.cur_tok().range().end;
 
 	if p.expect_no_recover(T![=]).is_none() {
 		m.abandon(p);
@@ -307,21 +307,21 @@ pub fn ts_ambient_external_module_decl(
 	check_for_module: bool,
 ) -> Option<CompletedMarker> {
 	let m = p.start();
-	let start = p.cur_tok().range.start;
+	let start = p.cur_tok().range().start;
 	if check_for_module && p.cur_src() != "module" {
 		let err = p
 			.err_builder(&format!(
 				"expected keyword `module`, but instead found `{}`",
 				p.cur_src()
 			))
-			.primary(p.cur_tok().range, "");
+			.primary(p.cur_tok().range(), "");
 
 		p.error(err);
 	} else if check_for_module {
 		p.bump_remap(T![module]);
 	}
 
-	let end = p.cur_tok().range.end;
+	let end = p.cur_tok().range().end;
 	if p.cur_src() == "global" {
 		p.bump_any();
 	} else {
@@ -352,7 +352,7 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 				"expected keyword `interface`, but instead found `{}`",
 				p.cur_src()
 			))
-			.primary(p.cur_tok().range, "");
+			.primary(p.cur_tok().range(), "");
 
 		p.error(err);
 	} else {
@@ -365,7 +365,7 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 				"`{}` cannot be used as the name of an interface",
 				p.cur_src()
 			))
-			.primary(p.cur_tok().range, "")
+			.primary(p.cur_tok().range(), "")
 			.footer_note(format!("`{}` is already reserved as a type", p.cur_src()));
 
 		p.error(err);
@@ -626,7 +626,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 		{
 			let err = p
 				.err_builder("expected an identifier or string for an enum variant, but found none")
-				.primary(p.cur_tok().range, "");
+				.primary(p.cur_tok().range(), "");
 
 			#[allow(deprecated)]
 			SingleTokenParseRecovery::with_error(
@@ -922,7 +922,7 @@ pub fn ts_tuple(p: &mut Parser) -> Option<CompletedMarker> {
 	while !p.at(EOF) && !p.at(T![']']) {
 		progress.assert_progressing(p);
 		let m = p.start();
-		let rest_range = p.cur_tok().range;
+		let rest_range = p.cur_tok().range();
 		let rest = p.eat(T![...]);
 		let name = if crate::at_ident_name!(p)
 			&& !DISALLOWED_TYPE_NAMES.contains(&p.cur_src())
@@ -934,7 +934,7 @@ pub fn ts_tuple(p: &mut Parser) -> Option<CompletedMarker> {
 			false
 		};
 
-		let opt_range = p.cur_tok().range;
+		let opt_range = p.cur_tok().range();
 		let is_opt = name && p.eat(T![?]);
 		if name {
 			p.expect(T![:]);
@@ -1087,7 +1087,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 		_ => {
 			let err = p
 				.err_builder("expected a type")
-				.primary(p.cur_tok().range, "");
+				.primary(p.cur_tok().range(), "");
 
 			#[allow(deprecated)]
 			SingleTokenParseRecovery::with_error(
@@ -1135,7 +1135,7 @@ pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
 			first = false;
 		} else if p.at(T![,]) && p.nth_at(1, T![>]) {
 			let m = p.start();
-			let range = p.cur_tok().range;
+			let range = p.cur_tok().range();
 			p.bump_any();
 			m.complete(p, JS_UNKNOWN);
 			let err = p
@@ -1228,7 +1228,7 @@ fn type_param(p: &mut Parser) -> Option<CompletedMarker> {
 		m.abandon(p);
 		let err = p
 			.err_builder("expected a type parameter, but found none")
-			.primary(p.cur_tok().range, "");
+			.primary(p.cur_tok().range(), "");
 
 		#[allow(deprecated)]
 		SingleTokenParseRecovery::with_error(
@@ -1272,7 +1272,7 @@ pub fn ts_type_query(p: &mut Parser) -> Option<CompletedMarker> {
 pub fn ts_mapped_type(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
 	p.expect_no_recover(T!['{'])?;
-	let tok = p.cur_tok().range;
+	let tok = p.cur_tok().range();
 	let _m = p.start();
 	if p.eat(T![+]) || p.eat(T![-]) {
 		if p.cur_src() != "readonly" {
@@ -1301,7 +1301,7 @@ pub fn ts_mapped_type(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.cur_src() != "in" {
 		let err = p
 			.err_builder("expected `in` after a mapped type parameter name")
-			.primary(p.cur_tok().range, "");
+			.primary(p.cur_tok().range(), "");
 
 		p.error(err);
 	} else {
@@ -1314,7 +1314,7 @@ pub fn ts_mapped_type(p: &mut Parser) -> Option<CompletedMarker> {
 	}
 	p.expect_no_recover(T![']'])?;
 	param.complete(p, TS_MAPPED_TYPE_PARAM);
-	let tok = p.cur_tok().range;
+	let tok = p.cur_tok().range();
 	if p.eat(T![+]) || p.eat(T![-]) {
 		if !p.at(T![?]) {
 			// TODO: Im not sure of the proper terminology for this, someone should clarify this error
@@ -1477,7 +1477,7 @@ pub fn ts_type_name(
 			"expected a TypeScript type name, but instead found `{}`",
 			p.cur_src()
 		))
-		.primary(p.cur_tok().range, "");
+		.primary(p.cur_tok().range(), "");
 
 	#[allow(deprecated)]
 	SingleTokenParseRecovery::with_error(set, JS_UNKNOWN, err).recover(p);
