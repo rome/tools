@@ -51,11 +51,6 @@ pub fn generate_syntax_factory(ast: &AstSrc) -> Result<String> {
 
 		quote! {
 			#kind => {
-				let actual_len = children.len();
-				if actual_len > #expected_len {
-					return RawSyntaxNode::new(#kind.to_unknown(), children.into_iter().map(Some));
-				}
-
 				let mut elements = (&children).into_iter();
 				let mut slots: RawNodeSlots<#expected_len> = RawNodeSlots::default();
 				let mut current_element = elements.next();
