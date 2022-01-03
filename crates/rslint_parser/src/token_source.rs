@@ -98,7 +98,8 @@ impl<'t> TokenSource<'t> {
 			return;
 		}
 
-		let pos = self.next_non_trivia(self.cur.1, 1).unwrap();
+		let pos = self.next_non_trivia(self.cur.1, 1)
+			.unwrap_or(self.raw_tokens.len() - 1);
 		self.cur = (mk_token2(pos, &self.raw_tokens), pos);
 	}
 
@@ -109,7 +110,7 @@ impl<'t> TokenSource<'t> {
 	}
 
 	pub fn had_linebreak_before_nth(&self, n: usize) -> bool {
-		//println!("had_linebreak_before_nth");
+		// println!("had_linebreak_before_nth: {} {:?}", n, self.cur);
 		let idx = self.raw_lookahead_nth(n);
 		self.raw_tokens[idx].after_newline
 	}

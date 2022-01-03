@@ -1472,7 +1472,10 @@ impl Iterator for Lexer<'_> {
 		if self.cur >= self.bytes.len() {
 			if !self.returned_eof {
 				self.returned_eof = true;
-				return Some(tok!(EOF, 0));
+				let mut token = tok!(EOF, 0);
+				token.0.offset = self.cur;
+				token.0.after_newline = self.state.after_newline;
+				return Some(token);
 			}
 			return None;
 		}
@@ -1485,6 +1488,7 @@ impl Iterator for Lexer<'_> {
 
 		let after_newline = match token.0.kind {
 			SyntaxKind::NEWLINE => true,
+			SyntaxKind::WHITESPACE | SyntaxKind::COMMENT => self.state.after_newline,
 			_ => false
 		};
 
