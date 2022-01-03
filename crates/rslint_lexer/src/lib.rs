@@ -1489,7 +1489,7 @@ impl Iterator for Lexer<'_> {
 		let after_newline = match token.0.kind {
 			SyntaxKind::NEWLINE => true,
 			SyntaxKind::WHITESPACE | SyntaxKind::COMMENT => self.state.after_newline,
-			_ => false
+			_ => false,
 		};
 
 		token.0.offset = self.cur - token.0.len;

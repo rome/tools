@@ -44,12 +44,12 @@ impl<'t> TokenSource<'t> {
 	fn next_non_trivia(&self, pos: usize, dir: isize) -> Option<usize> {
 		let mut pos = pos as isize + dir;
 		if (pos < 0) || ((pos as usize) >= self.raw_tokens.len()) {
-			return None
-		} 
+			return None;
+		}
 		while self.raw_tokens[pos as usize].kind.is_trivia() {
 			pos += dir;
 			if (pos < 0) || ((pos as usize) >= self.raw_tokens.len()) {
-				return None
+				return None;
 			}
 		}
 		Some(pos as usize)
@@ -57,24 +57,19 @@ impl<'t> TokenSource<'t> {
 
 	/// Rewind the current position to a former position.
 	pub fn rewind(&mut self, pos: usize) {
-		//println!("rewind: {}", pos);
 		self.cur = (mk_token2(pos, &self.raw_tokens), pos);
 	}
 
 	pub fn last_tok(&self) -> Option<Token> {
-		//println!("last_tok");
-		self.next_non_trivia(self.cur.1, -1).map(|idx| {
-			mk_token2(idx, &self.raw_tokens)
-		})
+		self.next_non_trivia(self.cur.1, -1)
+			.map(|idx| mk_token2(idx, &self.raw_tokens))
 	}
 
 	pub fn current(&self) -> Token {
-		//println!("current");
 		self.cur.0.to_owned()
 	}
 
 	pub fn source(&self) -> &str {
-		//println!("source");
 		self.source
 	}
 
@@ -87,46 +82,40 @@ impl<'t> TokenSource<'t> {
 	}
 
 	pub fn lookahead_nth(&self, n: usize) -> Token {
-		//println!("lookahead_nth: {} {:?}", n, self.cur);
 		let idx = self.raw_lookahead_nth(n);
 		mk_token2(idx, &self.raw_tokens)
 	}
 
 	pub fn bump(&mut self) {
-		//println!("bump");
 		if self.cur.0.kind == EOF {
 			return;
 		}
 
-		let pos = self.next_non_trivia(self.cur.1, 1)
+		let pos = self
+			.next_non_trivia(self.cur.1, 1)
 			.unwrap_or(self.raw_tokens.len() - 1);
 		self.cur = (mk_token2(pos, &self.raw_tokens), pos);
 	}
 
 	pub fn is_keyword(&self, kw: &str) -> bool {
-		//println!("is_keyword");
 		let t = self.current();
 		&self.source[t.range] == kw
 	}
 
 	pub fn had_linebreak_before_nth(&self, n: usize) -> bool {
-		// println!("had_linebreak_before_nth: {} {:?}", n, self.cur);
 		let idx = self.raw_lookahead_nth(n);
 		self.raw_tokens[idx].after_newline
 	}
 
 	pub fn cur_pos(&self) -> usize {
-		//println!("cur_pos");
 		self.raw_tokens[self.cur.1].offset
 	}
 
 	pub fn cur_token_idx(&self) -> usize {
-		//println!("cur_token_idx");
 		self.cur.1
 	}
 
 	pub fn size_hint(&self) -> usize {
-		//println!("size_hint");
 		self.raw_tokens.len()
 	}
 }

@@ -12,27 +12,27 @@ pub struct Token {
 	pub len: usize,
 
 	pub offset: usize,
-	pub after_newline: bool
+	pub after_newline: bool,
 }
 
 impl Token {
 	/// Create a new token which has an exact length of 1.
 	pub fn single(kind: JsSyntaxKind, offset: usize) -> Self {
-		Self { 
+		Self {
 			kind,
 			len: 1,
 			offset,
-			after_newline: false
+			after_newline: false,
 		}
 	}
 
 	/// Create a new token which has a specific length.
 	pub fn new(kind: JsSyntaxKind, len: usize) -> Self {
-		Self { 
+		Self {
 			kind,
 			len,
 			offset: 0,
-			after_newline: false
+			after_newline: false,
 		}
 	}
 }
