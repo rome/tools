@@ -180,7 +180,7 @@ impl<'src> Lexer<'src> {
 		chr
 	}
 
-	// Get the next byte and advance the index
+	// Get the current byte
 	#[inline]
 	fn current(&mut self) -> Option<&u8> {
 		self.bytes.get(self.cur)
@@ -899,16 +899,29 @@ impl<'src> Lexer<'src> {
 	#[inline]
 	fn read_slash(&mut self) -> LexerReturn {
 		let start = self.cur;
+		
 		match self.bytes.get(self.cur + 1) {
 			Some(b'*') => {
 				self.next();
+				let mut has_newline = false;
 				while let Some(b) = self.next().copied() {
 					match b {
 						b'*' if self.bytes.get(self.cur + 1) == Some(&b'/') => {
 							self.advance(2);
-							return tok!(COMMENT, self.cur - start);
+							if has_newline {
+								return tok!(MULTILINE_COMMENT, self.cur - start);
+							} else {
+								return tok!(COMMENT, self.cur - start);
+							}
 						}
-						_ => {}
+						x @ _ => {
+							if is_linebreak(x as char) {
+								has_newline = true;
+							} else if UNICODE_WHITESPACE_STARTS.contains(&x) {
+								let x = self.get_unicode_char();
+								has_newline |= is_linebreak(x as char);
+							}
+						}
 					}
 				}
 
@@ -1487,7 +1500,7 @@ impl Iterator for Lexer<'_> {
 		};
 
 		let after_newline = match token.0.kind {
-			SyntaxKind::NEWLINE => true,
+			SyntaxKind::NEWLINE | SyntaxKind::MULTILINE_COMMENT=> true,
 			SyntaxKind::WHITESPACE | SyntaxKind::COMMENT => self.state.after_newline,
 			_ => false,
 		};
@@ -1497,6 +1510,7 @@ impl Iterator for Lexer<'_> {
 
 		if ![
 			JsSyntaxKind::COMMENT,
+			JsSyntaxKind::MULTILINE_COMMENT,
 			JsSyntaxKind::WHITESPACE,
 			JsSyntaxKind::NEWLINE,
 			JsSyntaxKind::TEMPLATE_CHUNK,

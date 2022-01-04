@@ -1129,7 +1129,7 @@ fn newline_space_must_be_two_tokens() {
 		WHITESPACE:1
 		IDENT:1
 		WHITESPACE:1
-		COMMENT:12
+		MULTILINE_COMMENT:12
 	}
 	assert_lex! {
 		"a //COMMENT \n /*COMMENT*/ b /*COM\nMENT*/",
@@ -1142,7 +1142,7 @@ fn newline_space_must_be_two_tokens() {
 		WHITESPACE:1
 		IDENT:1
 		WHITESPACE:1
-		COMMENT:12
+		MULTILINE_COMMENT:12
 	}
 
 	//Now with CR
@@ -1186,7 +1186,7 @@ fn newline_space_must_be_two_tokens() {
 		WHITESPACE:1
 		IDENT:1
 		WHITESPACE:1
-		COMMENT:13
+		MULTILINE_COMMENT:13
 	}
 	assert_lex! {
 		"a //COMMENT \r\n /*COMMENT*/ b /*COM\r\nMENT*/",
@@ -1199,6 +1199,6 @@ fn newline_space_must_be_two_tokens() {
 		WHITESPACE:1
 		IDENT:1
 		WHITESPACE:1
-		COMMENT:13
+		MULTILINE_COMMENT:13
 	}
 }

@@ -26,10 +26,10 @@ impl JsSyntaxKind {
 	pub fn is_trivia(self) -> bool {
 		matches!(
 			self,
-			JsSyntaxKind::WHITESPACE
-				| JsSyntaxKind::COMMENT
+			JsSyntaxKind::WHITESPACE 
+				| JsSyntaxKind::COMMENT 
+				| JsSyntaxKind::MULTILINE_COMMENT 
 				| JsSyntaxKind::NEWLINE
-				| JsSyntaxKind::MULTILINE_COMMENT
 		)
 	}
 }
