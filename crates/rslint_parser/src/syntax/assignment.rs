@@ -2,7 +2,8 @@ use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{
-	is_at_identifier, parse_conditional_expr, parse_expression, parse_name, parse_unary_expr,
+	is_at_identifier, is_at_identifier_name, parse_conditional_expr, parse_expression, parse_name,
+	parse_unary_expr,
 };
 use crate::syntax::js_parse_error::{expected_assignment_target, expected_identifier};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
@@ -247,22 +248,21 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 	// ({:=} = {});
 	// ({ a b } = {});
 	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
-		if !is_at_identifier(p) && !p.at_ts(token_set![T![:], T![=]]) {
-			return Absent;
-		}
-
 		let m = p.start();
 
-		let kind = if p.at(T![:]) || p.nth_at(1, T![:]) {
+		let kind = if (is_at_identifier(p) || p.at(T![=])) && !p.nth_at(1, T![:]) {
+			parse_assignment(p, AssignmentExprPrecedence::Conditional)
+				.or_add_diagnostic(p, expected_identifier);
+			JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY
+		} else if is_at_identifier_name(p) || p.at(T![:]) || p.nth_at(1, T![:]) {
 			parse_name(p).or_add_diagnostic(p, expected_identifier);
 			p.expect(T![:]);
 			parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
 				.or_add_diagnostic(p, expected_assignment_target);
 			JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
 		} else {
-			parse_assignment(p, AssignmentExprPrecedence::Conditional)
-				.or_add_diagnostic(p, expected_identifier);
-			JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY
+			m.abandon(p);
+			return Absent;
 		};
 
 		parse_initializer_clause(p).ok();
