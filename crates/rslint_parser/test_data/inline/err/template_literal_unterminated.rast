@@ -15,6 +15,7 @@ JsModule {
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: Template {
+                                tag: missing (optional),
                                 l_tick_token: BACKTICK@8..9 "`" [] [],
                                 elements: TemplateElementList [
                                     TemplateElement {
@@ -58,8 +59,9 @@ JsModule {
             3: JS_INITIALIZER_CLAUSE@6..20
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: TEMPLATE@8..20
-                0: BACKTICK@8..9 "`" [] []
-                1: TEMPLATE_ELEMENT_LIST@9..20
+                0: (empty)
+                1: BACKTICK@8..9 "`" [] []
+                2: TEMPLATE_ELEMENT_LIST@9..20
                   0: TEMPLATE_ELEMENT@9..15
                     0: DOLLAR_CURLY@9..11 "${" [] []
                     1: JS_IDENTIFIER_EXPRESSION@11..14
@@ -68,6 +70,7 @@ JsModule {
                     2: R_CURLY@14..15 "}" [] []
                   1: TEMPLATE_CHUNK_ELEMENT@15..20
                     0: TEMPLATE_CHUNK@15..20 " bar\n" [] []
+                3: (empty)
       1: (empty)
   3: EOF@20..20 "" [] []
 --

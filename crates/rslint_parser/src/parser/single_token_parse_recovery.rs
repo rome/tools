@@ -1,6 +1,6 @@
 use crate::{Parser, ParserError, TokenSet};
 use rslint_errors::Diagnostic;
-use rslint_lexer::{SyntaxKind, T};
+use rslint_lexer::{JsSyntaxKind, T};
 
 /// This struct contains the information needed to the parser to recover from a certain error
 ///
@@ -16,12 +16,12 @@ pub struct SingleTokenParseRecovery {
 	include_braces: bool,
 	/// The kind of the unknown node the parser inserts if it isn't able to recover because
 	/// the current token is neither in the recovery set nor any of `{` or `}`.
-	unknown_node_kind: SyntaxKind,
+	unknown_node_kind: JsSyntaxKind,
 }
 
 #[allow(deprecated)]
 impl SingleTokenParseRecovery {
-	pub fn new(recovery: TokenSet, unknown_node_kind: SyntaxKind) -> Self {
+	pub fn new(recovery: TokenSet, unknown_node_kind: JsSyntaxKind) -> Self {
 		Self {
 			error: None,
 			recovery,
@@ -32,7 +32,7 @@ impl SingleTokenParseRecovery {
 
 	pub fn with_error<Err: Into<ParserError>>(
 		recovery: TokenSet,
-		unknown_node_kind: SyntaxKind,
+		unknown_node_kind: JsSyntaxKind,
 		error: Err,
 	) -> Self {
 		Self {
@@ -76,7 +76,7 @@ impl SingleTokenParseRecovery {
 	}
 
 	/// It returns the unknown node kind that will be used to complete the parsing
-	fn get_unknown_node_kind(&self) -> SyntaxKind {
+	fn get_unknown_node_kind(&self) -> JsSyntaxKind {
 		self.unknown_node_kind
 	}
 
@@ -89,6 +89,6 @@ impl SingleTokenParseRecovery {
 	}
 
 	fn is_at_eof(&self, parser: &Parser) -> bool {
-		parser.cur() == SyntaxKind::EOF
+		parser.cur() == JsSyntaxKind::EOF
 	}
 }

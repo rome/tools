@@ -45,6 +45,7 @@ JsModule {
                                             SUPER_KW@32..40 "super" [Whitespace("\n\t\t")] [],
                                         ],
                                     },
+                                    optional_chain_token_token: missing (optional),
                                     type_args: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@40..41 "(" [] [],
@@ -67,6 +68,7 @@ JsModule {
                                             value_token: IDENT@53..57 "test" [] [],
                                         },
                                     },
+                                    optional_chain_token_token: missing (optional),
                                     type_args: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@57..58 "(" [] [],
@@ -90,6 +92,7 @@ JsModule {
                         SUPER_KW@65..71 "super" [Whitespace("\n")] [],
                     ],
                 },
+                optional_chain_token_token: missing (optional),
                 type_args: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@71..72 "(" [] [],
@@ -142,7 +145,8 @@ JsModule {
                   0: JS_UNKNOWN_EXPRESSION@32..40
                     0: SUPER_KW@32..40 "super" [Whitespace("\n\t\t")] []
                   1: (empty)
-                  2: JS_CALL_ARGUMENTS@40..42
+                  2: (empty)
+                  3: JS_CALL_ARGUMENTS@40..42
                     0: L_PAREN@40..41 "(" [] []
                     1: JS_CALL_ARGUMENT_LIST@41..41
                     2: R_PAREN@41..42 ")" [] []
@@ -156,7 +160,8 @@ JsModule {
                     2: JS_NAME@53..57
                       0: IDENT@53..57 "test" [] []
                   1: (empty)
-                  2: JS_CALL_ARGUMENTS@57..59
+                  2: (empty)
+                  3: JS_CALL_ARGUMENTS@57..59
                     0: L_PAREN@57..58 "(" [] []
                     1: JS_CALL_ARGUMENT_LIST@58..58
                     2: R_PAREN@58..59 ")" [] []
@@ -168,7 +173,8 @@ JsModule {
         0: JS_UNKNOWN_EXPRESSION@65..71
           0: SUPER_KW@65..71 "super" [Whitespace("\n")] []
         1: (empty)
-        2: JS_CALL_ARGUMENTS@71..73
+        2: (empty)
+        3: JS_CALL_ARGUMENTS@71..73
           0: L_PAREN@71..72 "(" [] []
           1: JS_CALL_ARGUMENT_LIST@72..72
           2: R_PAREN@72..73 ")" [] []

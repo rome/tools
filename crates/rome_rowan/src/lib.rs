@@ -20,20 +20,23 @@ mod utility_types;
 #[allow(unsafe_code)]
 mod arc;
 mod cow_mut;
+pub mod raw_language;
 #[cfg(feature = "serde1")]
 mod serde_impls;
 #[allow(unsafe_code)]
 mod sll;
+mod syntax_factory;
 mod tree_builder;
 
 pub use text_size::{TextLen, TextRange, TextSize};
 
 pub use crate::{
 	api::{
-		Language, SyntaxElement, SyntaxElementChildren, SyntaxList, SyntaxNode, SyntaxNodeChildren,
-		SyntaxSlot, SyntaxSlots, SyntaxToken, TriviaPiece,
+		Language, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList, SyntaxNode,
+		SyntaxNodeChildren, SyntaxSlot, SyntaxSlots, SyntaxToken, TriviaPiece,
 	},
-	green::SyntaxKind,
+	green::RawSyntaxKind,
+	syntax_factory::*,
 	syntax_text::SyntaxText,
 	tree_builder::{Checkpoint, TreeBuilder},
 	utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},

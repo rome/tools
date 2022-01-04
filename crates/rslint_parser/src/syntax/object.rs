@@ -8,10 +8,9 @@ use crate::syntax::function::{
 	function_body, parse_ts_parameter_types, parse_ts_type_annotation_or_error,
 };
 use crate::syntax::js_parse_error;
-use crate::CompletedNodeOrMissingMarker::NodeMarker;
-use crate::{CompletedMarker, ParseRecovery, ParseSeparatedList, Parser, ParserState, TokenSet};
-use rslint_syntax::SyntaxKind::*;
-use rslint_syntax::{SyntaxKind, T};
+use crate::{ParseRecovery, ParseSeparatedList, Parser, ParserState, TokenSet};
+use rslint_syntax::JsSyntaxKind::*;
+use rslint_syntax::{JsSyntaxKind, T};
 
 // test object_expr
 // let a = {};
@@ -24,9 +23,7 @@ use rslint_syntax::{SyntaxKind, T};
 struct ObjectMembersList;
 
 impl ParseSeparatedList for ObjectMembersList {
-	type ParsedElement = CompletedMarker;
-
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
 		parse_object_member(p)
 	}
 
@@ -34,11 +31,7 @@ impl ParseSeparatedList for ObjectMembersList {
 		p.at(T!['}'])
 	}
 
-	fn recover(
-		&mut self,
-		p: &mut Parser,
-		parsed_element: ParsedSyntax<Self::ParsedElement>,
-	) -> RecoveryResult {
+	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
 		parsed_element.or_recover(
 			p,
 			&ParseRecovery::new(JS_UNKNOWN_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
@@ -47,11 +40,11 @@ impl ParseSeparatedList for ObjectMembersList {
 		)
 	}
 
-	fn list_kind() -> SyntaxKind {
+	fn list_kind() -> JsSyntaxKind {
 		JS_OBJECT_MEMBER_LIST
 	}
 
-	fn separating_element_kind(&mut self) -> SyntaxKind {
+	fn separating_element_kind(&mut self) -> JsSyntaxKind {
 		T![,]
 	}
 
@@ -61,7 +54,7 @@ impl ParseSeparatedList for ObjectMembersList {
 }
 
 /// An object literal such as `{ a: b, "b": 5 + 5 }`.
-pub(super) fn parse_object_expression(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_object_expression(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T!['{']) {
 		return Absent;
 	}
@@ -70,12 +63,12 @@ pub(super) fn parse_object_expression(p: &mut Parser) -> ParsedSyntax<CompletedM
 
 	ObjectMembersList.parse_list(p);
 
-	p.expect_required(T!['}']);
+	p.expect(T!['}']);
 	Present(m.complete(p, JS_OBJECT_EXPRESSION))
 }
 
 /// An individual object property such as `"a": b` or `5: 6 + 6`.
-fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		// test getter_object_member
 		// let a = {
@@ -145,7 +138,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 			let m = p.start();
 			p.bump_any();
 			parse_expr_or_assignment(p)
-				.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
+				.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 			Present(m.complete(p, JS_SPREAD))
 		}
 
@@ -158,12 +151,10 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		_ => {
 			let checkpoint = p.checkpoint();
 			let m = p.start();
-			let async_missing = p.missing();
-			let generator_missing = p.missing();
 			let identifier_member_name =
 				matches!(p.cur(), T![ident] | T![await] | T![yield]) || p.cur().is_keyword();
 			let member_name = parse_object_member_name(p)
-				.or_missing_with_error(p, js_parse_error::expected_object_member);
+				.or_add_diagnostic(p, js_parse_error::expected_object_member);
 
 			// test object_expr_method
 			// let b = {
@@ -178,10 +169,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 			if p.at(T!['(']) || p.at(T![<]) {
 				parse_method_object_member_body(p);
 				Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
-			} else if let NodeMarker(mut member_name) = member_name {
-				async_missing.undo(p);
-				generator_missing.undo(p);
-
+			} else if let Some(mut member_name) = member_name {
 				// test object_prop_name
 				// let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
 
@@ -197,15 +185,12 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 					// let b = { a: true }
 
 					// If the member name was a literal OR we're at a colon
-					p.expect_required(T![:]);
+					p.expect(T![:]);
 					parse_expr_or_assignment(p)
-						.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
+						.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 					Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
 				}
 			} else {
-				async_missing.undo(p);
-				generator_missing.undo(p);
-
 				// test_err object_expr_error_prop_name
 				// let a = { /: 6, /: /foo/ }
 				// let a = {{}}
@@ -218,7 +203,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 				if p.eat(T![:]) {
 					parse_expr_or_assignment(p)
-						.or_missing_with_error(p, js_parse_error::expected_object_member);
+						.or_add_diagnostic(p, js_parse_error::expected_object_member);
 					Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
 				} else {
 					// It turns out that this isn't a valid member after all. Make sure to throw
@@ -234,7 +219,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 }
 
 /// Parses a getter object member: `{ get a() { return "a"; } }`
-fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![ident]) || p.cur_src() != "get" {
 		return Absent;
 	}
@@ -243,21 +228,20 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 	p.bump_remap(T![get]);
 
-	parse_object_member_name(p)
-		.or_missing_with_error(p, js_parse_error::expected_object_member_name);
+	parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
-	p.expect_required(T!['(']);
-	p.expect_required(T![')']);
+	p.expect(T!['(']);
+	p.expect(T![')']);
 
-	parse_ts_type_annotation_or_error(p).or_missing(p);
+	parse_ts_type_annotation_or_error(p).ok();
 
-	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
+	function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
 
 	Present(m.complete(p, JS_GETTER_OBJECT_MEMBER))
 }
 
 /// Parses a setter object member like `{ set a(value) { .. } }`
-fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![ident]) || p.cur_src() != "set" {
 		return Absent;
 	}
@@ -265,14 +249,13 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 	p.bump_remap(T![set]);
 
-	parse_object_member_name(p)
-		.or_missing_with_error(p, js_parse_error::expected_object_member_name);
+	parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
-	p.state.allow_object_expr = p.expect_required(T!['(']);
-	parse_formal_param_pat(p).or_missing_with_error(p, js_parse_error::expected_parameter);
-	p.expect_required(T![')']);
+	p.state.allow_object_expr = p.expect(T!['(']);
+	parse_formal_param_pat(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
+	p.expect(T![')']);
 
-	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
+	function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
 
 	p.state.allow_object_expr = true;
 	Present(m.complete(p, JS_SETTER_OBJECT_MEMBER))
@@ -281,7 +264,7 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // test object_member_name
 // let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
 /// Parses a `JsAnyObjectMemberName` and returns its completion marker
-pub(crate) fn parse_object_member_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_object_member_name(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		T!['['] => parse_computed_member_name(p),
 		_ => parse_literal_member_name(p),
@@ -307,15 +290,15 @@ pub(crate) fn is_at_object_member_name(p: &Parser) -> bool {
 	is_nth_at_object_member_name(p, 0)
 }
 
-pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T!['[']) {
 		return Absent;
 	}
 
 	let m = p.start();
-	p.expect_required(T!['[']);
-	parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
-	p.expect_required(T![']']);
+	p.expect(T!['[']);
+	parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+	p.expect(T![']']);
 	Present(m.complete(p, JS_COMPUTED_MEMBER_NAME))
 }
 
@@ -326,7 +309,7 @@ pub(super) fn is_at_literal_member_name(p: &Parser, offset: usize) -> bool {
 	) || p.nth(offset).is_keyword()
 }
 
-pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	match p.cur() {
 		JS_STRING_LITERAL | JS_NUMBER_LITERAL | T![ident] => {
@@ -344,7 +327,7 @@ pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax<Complete
 }
 
 /// Parses a method object member
-fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 	let is_async = is_parser_at_async_method_member(p);
 	if !is_async && !p.at(T![*]) && !is_at_object_member_name(p) {
 		return Absent;
@@ -359,13 +342,10 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// }
 	if is_async {
 		p.bump_remap(T![async]);
-	} else {
-		p.missing();
 	}
 
-	let in_generator = p.eat_optional(T![*]);
-	parse_object_member_name(p)
-		.or_missing_with_error(p, js_parse_error::expected_object_member_name);
+	let in_generator = p.eat(T![*]);
+	parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
 	{
 		let mut guard = p.with_state(ParserState {
@@ -384,10 +364,10 @@ fn parse_method_object_member_body(p: &mut Parser) {
 	let old = p.state.to_owned();
 	p.state.in_function = true;
 
-	parse_ts_parameter_types(p).or_missing(p);
-	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_parameters);
-	parse_ts_type_annotation_or_error(p).or_missing(p);
-	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
+	parse_ts_parameter_types(p).ok();
+	parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);
+	parse_ts_type_annotation_or_error(p).ok();
+	function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
 
 	p.state = old;
 }

@@ -3,7 +3,7 @@
 use crate::{
 	ast::*,
 	syntax_node::SyntaxNode,
-	SyntaxKind::{self, *},
+	JsSyntaxKind::{self, *},
 };
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -13,7 +13,7 @@ pub enum TsTypeQueryExpr {
 }
 
 impl AstNode for TsTypeQueryExpr {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		TsEntityName::can_cast(kind) || TsImport::can_cast(kind)
 	}
 
@@ -57,35 +57,5 @@ impl TsMappedTypeParam {
 			.children()
 			.filter_map(|x| x.try_to::<TsType>())
 			.nth(1)
-	}
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub enum TsModuleRef {
-	TsExternalModuleRef(TsExternalModuleRef),
-	TsEntityName(TsEntityName),
-}
-
-impl AstNode for TsModuleRef {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		kind == TS_EXTERNAL_MODULE_REF || TsEntityName::can_cast(kind)
-	}
-
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			None
-		} else {
-			Some(match syntax.kind() {
-				TS_EXTERNAL_MODULE_REF => TsModuleRef::TsExternalModuleRef(syntax.to()),
-				_ => TsModuleRef::TsEntityName(syntax.to()),
-			})
-		}
-	}
-
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			TsModuleRef::TsExternalModuleRef(it) => it.syntax(),
-			TsModuleRef::TsEntityName(it) => it.syntax(),
-		}
 	}
 }

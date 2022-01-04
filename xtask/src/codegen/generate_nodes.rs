@@ -145,7 +145,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				},
 				quote! {
 					impl AstNode for #name {
-						fn can_cast(kind: SyntaxKind) -> bool {
+						fn can_cast(kind: JsSyntaxKind) -> bool {
 							kind == #node_kind
 						}
 						fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -349,7 +349,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					)*
 
 					impl AstNode for #name {
-						fn can_cast(kind: SyntaxKind) -> bool {
+						fn can_cast(kind: JsSyntaxKind) -> bool {
 							#can_cast_fn
 						}
 						fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -416,7 +416,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			}
 
 			impl AstNode for #name {
-				fn can_cast(kind: SyntaxKind) -> bool {
+				fn can_cast(kind: JsSyntaxKind) -> bool {
 					kind == #kind
 				}
 
@@ -449,7 +449,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 		let node_impl = quote! {
 			impl AstNode for #list_name {
-				fn can_cast(kind: SyntaxKind) -> bool {
+				fn can_cast(kind: JsSyntaxKind) -> bool {
 					kind == #list_kind
 				}
 
@@ -468,7 +468,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		};
 
 		let padded_name = format!("{} ", name);
-		let list_impl = if list.separated {
+		let list_impl = if list.separator.is_some() {
 			quote! {
 				impl AstSeparatedList<#element_type> for #list_name {
 					fn syntax_list(&self) -> &SyntaxList {
@@ -592,7 +592,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 	use crate::{
 		ast::*,
-		SyntaxKind::{self, *},
+		JsSyntaxKind::{self, *},
 		SyntaxNode, SyntaxToken, T,
 		SyntaxResult
 	};
@@ -617,7 +617,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 	Ok(pretty)
 }
 
-fn token_kind_to_code(name: &str) -> proc_macro2::TokenStream {
+pub(crate) fn token_kind_to_code(name: &str) -> proc_macro2::TokenStream {
 	let kind_variant_name = to_upper_snake_case(name);
 	if KINDS_SRC.literals.contains(&kind_variant_name.as_str())
 		|| KINDS_SRC.tokens.contains(&kind_variant_name.as_str())

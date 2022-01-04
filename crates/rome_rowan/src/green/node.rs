@@ -13,14 +13,14 @@ use countme::Count;
 
 use crate::{
 	arc::{Arc, HeaderSlice, ThinArc},
-	green::{GreenElement, GreenElementRef, SyntaxKind},
+	green::{GreenElement, GreenElementRef, RawSyntaxKind},
 	utility_types::static_assert,
 	GreenToken, NodeOrToken, TextRange, TextSize,
 };
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub(super) struct GreenNodeHead {
-	kind: SyntaxKind,
+	kind: RawSyntaxKind,
 	text_len: TextSize,
 	_c: Count<GreenNode>,
 }
@@ -148,7 +148,7 @@ impl GreenNodeData {
 
 	/// Kind of this node.
 	#[inline]
-	pub fn kind(&self) -> SyntaxKind {
+	pub fn kind(&self) -> RawSyntaxKind {
 		self.header().kind
 	}
 
@@ -253,7 +253,7 @@ impl ops::Deref for GreenNode {
 impl GreenNode {
 	/// Creates new Node.
 	#[inline]
-	pub fn new<I>(kind: SyntaxKind, slots: I) -> GreenNode
+	pub fn new<I>(kind: RawSyntaxKind, slots: I) -> GreenNode
 	where
 		I: IntoIterator<Item = Option<GreenElement>>,
 		I::IntoIter: ExactSizeIterator,
@@ -500,26 +500,25 @@ impl FusedIterator for Children<'_> {}
 
 #[cfg(test)]
 mod tests {
-	use crate::api::RawLanguage;
-	use crate::{GreenNode, SyntaxKind, TreeBuilder};
+	use crate::raw_language::{RawLanguageKind, RawSyntaxTreeBuilder};
+	use crate::GreenNode;
 
 	fn build_test_list() -> GreenNode {
-		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+		let mut builder: RawSyntaxTreeBuilder = RawSyntaxTreeBuilder::new();
 
 		// list
-		builder.start_node(SyntaxKind(1));
+		builder.start_node(RawLanguageKind::SEPARATED_EXPRESSION_LIST);
 
 		// element 1
-		builder.start_node(SyntaxKind(2));
-		builder.token(SyntaxKind(3), "a");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::STRING_TOKEN, "a");
 		builder.finish_node();
 
 		// Missing ,
-		builder.missing();
 
 		// element 2
-		builder.start_node(SyntaxKind(2));
-		builder.token(SyntaxKind(3), "b");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::STRING_TOKEN, "b");
 		builder.finish_node();
 
 		builder.finish_node();

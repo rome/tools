@@ -4,7 +4,7 @@
 #![allow(clippy::match_like_matches_macro)]
 use crate::{
 	ast::*,
-	SyntaxKind::{self, *},
+	JsSyntaxKind::{self, *},
 	SyntaxNode, SyntaxResult, SyntaxToken, T,
 };
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -13,6 +13,9 @@ pub struct CallExpr {
 }
 impl CallExpr {
 	pub fn callee(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn optional_chain_token_token(&self) -> Option<SyntaxToken> {
+		support::token(&self.syntax, T ! [?.])
+	}
 	pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax) }
 	pub fn arguments(&self) -> SyntaxResult<JsCallArguments> {
 		support::required_node(&self.syntax)
@@ -659,6 +662,18 @@ pub struct JsEmptyStatement {
 impl JsEmptyStatement {
 	pub fn semicolon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [;])
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExpressionSnipped {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExpressionSnipped {
+	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+		support::required_node(&self.syntax)
+	}
+	pub fn eof_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![EOF])
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1763,6 +1778,16 @@ impl JsWithStatement {
 	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsYieldArgument {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsYieldArgument {
+	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
+	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+		support::required_node(&self.syntax)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsYieldExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1770,8 +1795,7 @@ impl JsYieldExpression {
 	pub fn yield_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![yield])
 	}
-	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
-	pub fn argument(&self) -> Option<JsAnyExpression> { support::node(&self.syntax) }
+	pub fn argument(&self) -> Option<JsYieldArgument> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct NewExpr {
@@ -1783,9 +1807,7 @@ impl NewExpr {
 	}
 	pub fn object(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax) }
-	pub fn arguments(&self) -> SyntaxResult<JsCallArguments> {
-		support::required_node(&self.syntax)
-	}
+	pub fn arguments(&self) -> Option<JsCallArguments> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct NewTarget {
@@ -1815,6 +1837,7 @@ pub struct Template {
 	pub(crate) syntax: SyntaxNode,
 }
 impl Template {
+	pub fn tag(&self) -> Option<JsAnyExpression> { support::node(&self.syntax) }
 	pub fn l_tick_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['`'])
 	}
@@ -2050,7 +2073,7 @@ pub struct TsExprWithTypeArgs {
 }
 impl TsExprWithTypeArgs {
 	pub fn item(&self) -> SyntaxResult<TsEntityName> { support::required_node(&self.syntax) }
-	pub fn type_params(&self) -> SyntaxResult<TsTypeArgs> { support::required_node(&self.syntax) }
+	pub fn type_params(&self) -> Option<TsTypeArgs> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExtends {
@@ -2856,6 +2879,7 @@ pub enum JsAnyParameter {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyRoot {
+	JsExpressionSnipped(JsExpressionSnipped),
 	JsModule(JsModule),
 	JsScript(JsScript),
 }
@@ -2958,7 +2982,7 @@ pub enum TsTypeElement {
 	TsPropertySignature(TsPropertySignature),
 }
 impl AstNode for CallExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == CALL_EXPR }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == CALL_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -2973,6 +2997,10 @@ impl std::fmt::Debug for CallExpr {
 		f.debug_struct("CallExpr")
 			.field("callee", &support::DebugSyntaxResult(self.callee()))
 			.field(
+				"optional_chain_token_token",
+				&support::DebugOptionalElement(self.optional_chain_token_token()),
+			)
+			.field(
 				"type_args",
 				&support::DebugOptionalElement(self.type_args()),
 			)
@@ -2981,7 +3009,7 @@ impl std::fmt::Debug for CallExpr {
 	}
 }
 impl AstNode for ExportDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_DECL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == EXPORT_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3007,7 +3035,7 @@ impl std::fmt::Debug for ExportDecl {
 	}
 }
 impl AstNode for ExportDefaultDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_DEFAULT_DECL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == EXPORT_DEFAULT_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3037,7 +3065,7 @@ impl std::fmt::Debug for ExportDefaultDecl {
 	}
 }
 impl AstNode for ExportDefaultExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_DEFAULT_EXPR }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == EXPORT_DEFAULT_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3067,7 +3095,7 @@ impl std::fmt::Debug for ExportDefaultExpr {
 	}
 }
 impl AstNode for ExportNamed {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_NAMED }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == EXPORT_NAMED }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3105,7 +3133,7 @@ impl std::fmt::Debug for ExportNamed {
 	}
 }
 impl AstNode for ExportWildcard {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_WILDCARD }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == EXPORT_WILDCARD }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3138,7 +3166,7 @@ impl std::fmt::Debug for ExportWildcard {
 	}
 }
 impl AstNode for ForStmt {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == FOR_STMT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == FOR_STMT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3179,7 +3207,7 @@ impl std::fmt::Debug for ForStmt {
 	}
 }
 impl AstNode for ForStmtTest {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == FOR_STMT_TEST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == FOR_STMT_TEST }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3197,7 +3225,7 @@ impl std::fmt::Debug for ForStmtTest {
 	}
 }
 impl AstNode for ForStmtUpdate {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == FOR_STMT_UPDATE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == FOR_STMT_UPDATE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3215,7 +3243,7 @@ impl std::fmt::Debug for ForStmtUpdate {
 	}
 }
 impl AstNode for Ident {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == IDENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == IDENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3236,7 +3264,7 @@ impl std::fmt::Debug for Ident {
 	}
 }
 impl AstNode for ImportMeta {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == IMPORT_META }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == IMPORT_META }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3259,7 +3287,7 @@ impl std::fmt::Debug for ImportMeta {
 	}
 }
 impl AstNode for JsArrayAssignmentPattern {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_PATTERN }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_PATTERN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3285,7 +3313,7 @@ impl std::fmt::Debug for JsArrayAssignmentPattern {
 	}
 }
 impl AstNode for JsArrayAssignmentPatternRestElement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3307,7 +3335,7 @@ impl std::fmt::Debug for JsArrayAssignmentPatternRestElement {
 	}
 }
 impl AstNode for JsArrayBindingPattern {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_BINDING_PATTERN }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_BINDING_PATTERN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3333,7 +3361,7 @@ impl std::fmt::Debug for JsArrayBindingPattern {
 	}
 }
 impl AstNode for JsArrayBindingPatternRestElement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_BINDING_PATTERN_REST_ELEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_BINDING_PATTERN_REST_ELEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3355,7 +3383,7 @@ impl std::fmt::Debug for JsArrayBindingPatternRestElement {
 	}
 }
 impl AstNode for JsArrayExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3381,7 +3409,7 @@ impl std::fmt::Debug for JsArrayExpression {
 	}
 }
 impl AstNode for JsArrayHole {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_HOLE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_HOLE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3397,7 +3425,7 @@ impl std::fmt::Debug for JsArrayHole {
 	}
 }
 impl AstNode for JsArrowFunctionExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARROW_FUNCTION_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARROW_FUNCTION_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3435,7 +3463,7 @@ impl std::fmt::Debug for JsArrowFunctionExpression {
 	}
 }
 impl AstNode for JsAssignmentExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ASSIGNMENT_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ASSIGNMENT_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3458,7 +3486,7 @@ impl std::fmt::Debug for JsAssignmentExpression {
 	}
 }
 impl AstNode for JsAssignmentWithDefault {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ASSIGNMENT_WITH_DEFAULT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ASSIGNMENT_WITH_DEFAULT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3478,7 +3506,7 @@ impl std::fmt::Debug for JsAssignmentWithDefault {
 	}
 }
 impl AstNode for JsAwaitExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_AWAIT_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_AWAIT_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3500,7 +3528,7 @@ impl std::fmt::Debug for JsAwaitExpression {
 	}
 }
 impl AstNode for JsBigIntLiteralExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BIG_INT_LITERAL_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_BIG_INT_LITERAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3521,7 +3549,7 @@ impl std::fmt::Debug for JsBigIntLiteralExpression {
 	}
 }
 impl AstNode for JsBinaryExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BINARY_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_BINARY_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3541,7 +3569,7 @@ impl std::fmt::Debug for JsBinaryExpression {
 	}
 }
 impl AstNode for JsBindingPatternWithDefault {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BINDING_PATTERN_WITH_DEFAULT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_BINDING_PATTERN_WITH_DEFAULT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3561,7 +3589,7 @@ impl std::fmt::Debug for JsBindingPatternWithDefault {
 	}
 }
 impl AstNode for JsBlockStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BLOCK_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_BLOCK_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3587,7 +3615,7 @@ impl std::fmt::Debug for JsBlockStatement {
 	}
 }
 impl AstNode for JsBooleanLiteralExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOOLEAN_LITERAL_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_BOOLEAN_LITERAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3608,7 +3636,7 @@ impl std::fmt::Debug for JsBooleanLiteralExpression {
 	}
 }
 impl AstNode for JsBreakStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BREAK_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_BREAK_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3637,7 +3665,7 @@ impl std::fmt::Debug for JsBreakStatement {
 	}
 }
 impl AstNode for JsCallArguments {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CALL_ARGUMENTS }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CALL_ARGUMENTS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3663,7 +3691,7 @@ impl std::fmt::Debug for JsCallArguments {
 	}
 }
 impl AstNode for JsCaseClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CASE_CLAUSE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CASE_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3687,7 +3715,7 @@ impl std::fmt::Debug for JsCaseClause {
 	}
 }
 impl AstNode for JsCatchClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CATCH_CLAUSE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CATCH_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3713,7 +3741,7 @@ impl std::fmt::Debug for JsCatchClause {
 	}
 }
 impl AstNode for JsCatchDeclaration {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CATCH_DECLARATION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CATCH_DECLARATION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3739,7 +3767,7 @@ impl std::fmt::Debug for JsCatchDeclaration {
 	}
 }
 impl AstNode for JsClassDeclaration {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CLASS_DECLARATION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CLASS_DECLARATION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3778,7 +3806,7 @@ impl std::fmt::Debug for JsClassDeclaration {
 	}
 }
 impl AstNode for JsClassExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CLASS_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CLASS_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3817,7 +3845,7 @@ impl std::fmt::Debug for JsClassExpression {
 	}
 }
 impl AstNode for JsComputedMemberAssignment {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_ASSIGNMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_ASSIGNMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3844,7 +3872,7 @@ impl std::fmt::Debug for JsComputedMemberAssignment {
 	}
 }
 impl AstNode for JsComputedMemberExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3875,7 +3903,7 @@ impl std::fmt::Debug for JsComputedMemberExpression {
 	}
 }
 impl AstNode for JsComputedMemberName {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_NAME }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3901,7 +3929,7 @@ impl std::fmt::Debug for JsComputedMemberName {
 	}
 }
 impl AstNode for JsConditionalExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONDITIONAL_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CONDITIONAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3929,7 +3957,7 @@ impl std::fmt::Debug for JsConditionalExpression {
 	}
 }
 impl AstNode for JsConstructorClassMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONSTRUCTOR_CLASS_MEMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CONSTRUCTOR_CLASS_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3957,7 +3985,7 @@ impl std::fmt::Debug for JsConstructorClassMember {
 	}
 }
 impl AstNode for JsConstructorParameters {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONSTRUCTOR_PARAMETERS }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CONSTRUCTOR_PARAMETERS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3983,7 +4011,7 @@ impl std::fmt::Debug for JsConstructorParameters {
 	}
 }
 impl AstNode for JsContinueStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONTINUE_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CONTINUE_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4012,7 +4040,7 @@ impl std::fmt::Debug for JsContinueStatement {
 	}
 }
 impl AstNode for JsDebuggerStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DEBUGGER_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_DEBUGGER_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4037,7 +4065,7 @@ impl std::fmt::Debug for JsDebuggerStatement {
 	}
 }
 impl AstNode for JsDefaultClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DEFAULT_CLAUSE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_DEFAULT_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4063,7 +4091,7 @@ impl std::fmt::Debug for JsDefaultClause {
 	}
 }
 impl AstNode for JsDefaultImportSpecifier {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DEFAULT_IMPORT_SPECIFIER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_DEFAULT_IMPORT_SPECIFIER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4085,7 +4113,7 @@ impl std::fmt::Debug for JsDefaultImportSpecifier {
 	}
 }
 impl AstNode for JsDirective {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DIRECTIVE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_DIRECTIVE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4110,7 +4138,7 @@ impl std::fmt::Debug for JsDirective {
 	}
 }
 impl AstNode for JsDoWhileStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DO_WHILE_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_DO_WHILE_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4146,7 +4174,7 @@ impl std::fmt::Debug for JsDoWhileStatement {
 	}
 }
 impl AstNode for JsElseClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ELSE_CLAUSE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ELSE_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4165,7 +4193,7 @@ impl std::fmt::Debug for JsElseClause {
 	}
 }
 impl AstNode for JsEmptyClassMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EMPTY_CLASS_MEMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EMPTY_CLASS_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4186,7 +4214,7 @@ impl std::fmt::Debug for JsEmptyClassMember {
 	}
 }
 impl AstNode for JsEmptyStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EMPTY_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EMPTY_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4206,8 +4234,27 @@ impl std::fmt::Debug for JsEmptyStatement {
 			.finish()
 	}
 }
+impl AstNode for JsExpressionSnipped {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPRESSION_SNIPPED }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExpressionSnipped {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExpressionSnipped")
+			.field("expression", &support::DebugSyntaxResult(self.expression()))
+			.field("eof_token", &support::DebugSyntaxResult(self.eof_token()))
+			.finish()
+	}
+}
 impl AstNode for JsExpressionStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPRESSION_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPRESSION_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4229,7 +4276,7 @@ impl std::fmt::Debug for JsExpressionStatement {
 	}
 }
 impl AstNode for JsExtendsClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXTENDS_CLAUSE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXTENDS_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4254,7 +4301,7 @@ impl std::fmt::Debug for JsExtendsClause {
 	}
 }
 impl AstNode for JsFinallyClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FINALLY_CLAUSE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FINALLY_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4276,7 +4323,7 @@ impl std::fmt::Debug for JsFinallyClause {
 	}
 }
 impl AstNode for JsForInStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FOR_IN_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FOR_IN_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4309,7 +4356,7 @@ impl std::fmt::Debug for JsForInStatement {
 	}
 }
 impl AstNode for JsForOfStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FOR_OF_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FOR_OF_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4346,7 +4393,7 @@ impl std::fmt::Debug for JsForOfStatement {
 	}
 }
 impl AstNode for JsForVariableDeclaration {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FOR_VARIABLE_DECLARATION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FOR_VARIABLE_DECLARATION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4368,7 +4415,7 @@ impl std::fmt::Debug for JsForVariableDeclaration {
 	}
 }
 impl AstNode for JsFunctionBody {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FUNCTION_BODY }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FUNCTION_BODY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4395,7 +4442,7 @@ impl std::fmt::Debug for JsFunctionBody {
 	}
 }
 impl AstNode for JsFunctionDeclaration {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FUNCTION_DECLARATION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FUNCTION_DECLARATION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4435,7 +4482,7 @@ impl std::fmt::Debug for JsFunctionDeclaration {
 	}
 }
 impl AstNode for JsFunctionExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FUNCTION_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FUNCTION_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4475,7 +4522,7 @@ impl std::fmt::Debug for JsFunctionExpression {
 	}
 }
 impl AstNode for JsGetterClassMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_GETTER_CLASS_MEMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_GETTER_CLASS_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4519,7 +4566,7 @@ impl std::fmt::Debug for JsGetterClassMember {
 	}
 }
 impl AstNode for JsGetterObjectMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_GETTER_OBJECT_MEMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_GETTER_OBJECT_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4551,7 +4598,7 @@ impl std::fmt::Debug for JsGetterObjectMember {
 	}
 }
 impl AstNode for JsIdentifierAssignment {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IDENTIFIER_ASSIGNMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IDENTIFIER_ASSIGNMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4569,7 +4616,7 @@ impl std::fmt::Debug for JsIdentifierAssignment {
 	}
 }
 impl AstNode for JsIdentifierBinding {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IDENTIFIER_BINDING }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IDENTIFIER_BINDING }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4587,7 +4634,7 @@ impl std::fmt::Debug for JsIdentifierBinding {
 	}
 }
 impl AstNode for JsIdentifierExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IDENTIFIER_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IDENTIFIER_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4605,7 +4652,7 @@ impl std::fmt::Debug for JsIdentifierExpression {
 	}
 }
 impl AstNode for JsIfStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IF_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IF_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4637,7 +4684,7 @@ impl std::fmt::Debug for JsIfStatement {
 	}
 }
 impl AstNode for JsImport {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4666,7 +4713,7 @@ impl std::fmt::Debug for JsImport {
 	}
 }
 impl AstNode for JsImportAssertion {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_ASSERTION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_ASSERTION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4696,7 +4743,7 @@ impl std::fmt::Debug for JsImportAssertion {
 	}
 }
 impl AstNode for JsImportAssertionEntry {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_ASSERTION_ENTRY }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_ASSERTION_ENTRY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4722,7 +4769,7 @@ impl std::fmt::Debug for JsImportAssertionEntry {
 	}
 }
 impl AstNode for JsImportBareClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_BARE_CLAUSE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_BARE_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4744,7 +4791,7 @@ impl std::fmt::Debug for JsImportBareClause {
 	}
 }
 impl AstNode for JsImportCallExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_CALL_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_CALL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4774,7 +4821,7 @@ impl std::fmt::Debug for JsImportCallExpression {
 	}
 }
 impl AstNode for JsImportDefaultClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_DEFAULT_CLAUSE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_DEFAULT_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4798,7 +4845,7 @@ impl std::fmt::Debug for JsImportDefaultClause {
 	}
 }
 impl AstNode for JsImportNamedClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_NAMED_CLAUSE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_NAMED_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4829,7 +4876,7 @@ impl std::fmt::Debug for JsImportNamedClause {
 	}
 }
 impl AstNode for JsImportNamespaceClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_NAMESPACE_CLAUSE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_NAMESPACE_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4855,7 +4902,7 @@ impl std::fmt::Debug for JsImportNamespaceClause {
 	}
 }
 impl AstNode for JsInitializerClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_INITIALIZER_CLAUSE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_INITIALIZER_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4874,7 +4921,7 @@ impl std::fmt::Debug for JsInitializerClause {
 	}
 }
 impl AstNode for JsLabeledStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LABELED_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_LABELED_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4900,7 +4947,7 @@ impl std::fmt::Debug for JsLabeledStatement {
 	}
 }
 impl AstNode for JsLiteralExportName {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LITERAL_EXPORT_NAME }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_LITERAL_EXPORT_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4918,7 +4965,7 @@ impl std::fmt::Debug for JsLiteralExportName {
 	}
 }
 impl AstNode for JsLiteralMemberName {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LITERAL_MEMBER_NAME }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_LITERAL_MEMBER_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4936,7 +4983,7 @@ impl std::fmt::Debug for JsLiteralMemberName {
 	}
 }
 impl AstNode for JsLogicalExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LOGICAL_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_LOGICAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4956,7 +5003,7 @@ impl std::fmt::Debug for JsLogicalExpression {
 	}
 }
 impl AstNode for JsMethodClassMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_METHOD_CLASS_MEMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_METHOD_CLASS_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5004,7 +5051,7 @@ impl std::fmt::Debug for JsMethodClassMember {
 	}
 }
 impl AstNode for JsMethodObjectMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_METHOD_OBJECT_MEMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_METHOD_OBJECT_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5040,7 +5087,7 @@ impl std::fmt::Debug for JsMethodObjectMember {
 	}
 }
 impl AstNode for JsModule {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_MODULE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_MODULE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5064,7 +5111,7 @@ impl std::fmt::Debug for JsModule {
 	}
 }
 impl AstNode for JsModuleSource {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_MODULE_SOURCE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_MODULE_SOURCE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5085,7 +5132,7 @@ impl std::fmt::Debug for JsModuleSource {
 	}
 }
 impl AstNode for JsName {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NAME }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5106,7 +5153,7 @@ impl std::fmt::Debug for JsName {
 	}
 }
 impl AstNode for JsNamedImportSpecifier {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NAMED_IMPORT_SPECIFIER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NAMED_IMPORT_SPECIFIER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5126,7 +5173,7 @@ impl std::fmt::Debug for JsNamedImportSpecifier {
 	}
 }
 impl AstNode for JsNamedImportSpecifiers {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NAMED_IMPORT_SPECIFIERS }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NAMED_IMPORT_SPECIFIERS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5152,7 +5199,7 @@ impl std::fmt::Debug for JsNamedImportSpecifiers {
 	}
 }
 impl AstNode for JsNamespaceImportSpecifier {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NAMESPACE_IMPORT_SPECIFIER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NAMESPACE_IMPORT_SPECIFIER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5172,7 +5219,7 @@ impl std::fmt::Debug for JsNamespaceImportSpecifier {
 	}
 }
 impl AstNode for JsNullLiteralExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NULL_LITERAL_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NULL_LITERAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5193,7 +5240,7 @@ impl std::fmt::Debug for JsNullLiteralExpression {
 	}
 }
 impl AstNode for JsNumberLiteralExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NUMBER_LITERAL_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NUMBER_LITERAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5214,7 +5261,7 @@ impl std::fmt::Debug for JsNumberLiteralExpression {
 	}
 }
 impl AstNode for JsObjectAssignmentPattern {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5240,7 +5287,7 @@ impl std::fmt::Debug for JsObjectAssignmentPattern {
 	}
 }
 impl AstNode for JsObjectAssignmentPatternProperty {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5264,7 +5311,7 @@ impl std::fmt::Debug for JsObjectAssignmentPatternProperty {
 	}
 }
 impl AstNode for JsObjectAssignmentPatternRest {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN_REST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN_REST }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5286,7 +5333,7 @@ impl std::fmt::Debug for JsObjectAssignmentPatternRest {
 	}
 }
 impl AstNode for JsObjectAssignmentPatternShorthandProperty {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		kind == JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5307,7 +5354,7 @@ impl std::fmt::Debug for JsObjectAssignmentPatternShorthandProperty {
 	}
 }
 impl AstNode for JsObjectBindingPattern {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5333,7 +5380,7 @@ impl std::fmt::Debug for JsObjectBindingPattern {
 	}
 }
 impl AstNode for JsObjectBindingPatternProperty {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_PROPERTY }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_PROPERTY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5357,7 +5404,7 @@ impl std::fmt::Debug for JsObjectBindingPatternProperty {
 	}
 }
 impl AstNode for JsObjectBindingPatternRest {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_REST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_REST }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5379,7 +5426,7 @@ impl std::fmt::Debug for JsObjectBindingPatternRest {
 	}
 }
 impl AstNode for JsObjectBindingPatternShorthandProperty {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5398,7 +5445,7 @@ impl std::fmt::Debug for JsObjectBindingPatternShorthandProperty {
 	}
 }
 impl AstNode for JsObjectExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5424,7 +5471,7 @@ impl std::fmt::Debug for JsObjectExpression {
 	}
 }
 impl AstNode for JsParameters {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARAMETERS }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PARAMETERS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5450,7 +5497,7 @@ impl std::fmt::Debug for JsParameters {
 	}
 }
 impl AstNode for JsParenthesizedAssignment {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARENTHESIZED_ASSIGNMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PARENTHESIZED_ASSIGNMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5476,7 +5523,7 @@ impl std::fmt::Debug for JsParenthesizedAssignment {
 	}
 }
 impl AstNode for JsParenthesizedExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARENTHESIZED_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PARENTHESIZED_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5502,7 +5549,7 @@ impl std::fmt::Debug for JsParenthesizedExpression {
 	}
 }
 impl AstNode for JsPostUpdateExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_POST_UPDATE_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_POST_UPDATE_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5521,7 +5568,7 @@ impl std::fmt::Debug for JsPostUpdateExpression {
 	}
 }
 impl AstNode for JsPreUpdateExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PRE_UPDATE_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PRE_UPDATE_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5540,7 +5587,7 @@ impl std::fmt::Debug for JsPreUpdateExpression {
 	}
 }
 impl AstNode for JsPrivateClassMemberName {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PRIVATE_CLASS_MEMBER_NAME }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PRIVATE_CLASS_MEMBER_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5559,7 +5606,7 @@ impl std::fmt::Debug for JsPrivateClassMemberName {
 	}
 }
 impl AstNode for JsPrivateName {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PRIVATE_NAME }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PRIVATE_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5581,7 +5628,7 @@ impl std::fmt::Debug for JsPrivateName {
 	}
 }
 impl AstNode for JsPropertyClassMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PROPERTY_CLASS_MEMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PROPERTY_CLASS_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5633,7 +5680,7 @@ impl std::fmt::Debug for JsPropertyClassMember {
 	}
 }
 impl AstNode for JsPropertyObjectMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PROPERTY_OBJECT_MEMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PROPERTY_OBJECT_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5656,7 +5703,7 @@ impl std::fmt::Debug for JsPropertyObjectMember {
 	}
 }
 impl AstNode for JsReferenceIdentifier {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REFERENCE_IDENTIFIER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_REFERENCE_IDENTIFIER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5677,7 +5724,7 @@ impl std::fmt::Debug for JsReferenceIdentifier {
 	}
 }
 impl AstNode for JsRegexLiteralExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REGEX_LITERAL_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_REGEX_LITERAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5698,7 +5745,7 @@ impl std::fmt::Debug for JsRegexLiteralExpression {
 	}
 }
 impl AstNode for JsRestParameter {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REST_PARAMETER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_REST_PARAMETER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5720,7 +5767,7 @@ impl std::fmt::Debug for JsRestParameter {
 	}
 }
 impl AstNode for JsReturnStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_RETURN_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_RETURN_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5746,7 +5793,7 @@ impl std::fmt::Debug for JsReturnStatement {
 	}
 }
 impl AstNode for JsScript {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SCRIPT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SCRIPT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5770,7 +5817,7 @@ impl std::fmt::Debug for JsScript {
 	}
 }
 impl AstNode for JsSequenceExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SEQUENCE_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SEQUENCE_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5793,7 +5840,7 @@ impl std::fmt::Debug for JsSequenceExpression {
 	}
 }
 impl AstNode for JsSetterClassMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SETTER_CLASS_MEMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SETTER_CLASS_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5834,7 +5881,7 @@ impl std::fmt::Debug for JsSetterClassMember {
 	}
 }
 impl AstNode for JsSetterObjectMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SETTER_OBJECT_MEMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SETTER_OBJECT_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5863,7 +5910,7 @@ impl std::fmt::Debug for JsSetterObjectMember {
 	}
 }
 impl AstNode for JsShorthandNamedImportSpecifier {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SHORTHAND_NAMED_IMPORT_SPECIFIER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SHORTHAND_NAMED_IMPORT_SPECIFIER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5881,7 +5928,7 @@ impl std::fmt::Debug for JsShorthandNamedImportSpecifier {
 	}
 }
 impl AstNode for JsShorthandPropertyObjectMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SHORTHAND_PROPERTY_OBJECT_MEMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SHORTHAND_PROPERTY_OBJECT_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5899,7 +5946,7 @@ impl std::fmt::Debug for JsShorthandPropertyObjectMember {
 	}
 }
 impl AstNode for JsSpread {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SPREAD }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SPREAD }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5921,7 +5968,7 @@ impl std::fmt::Debug for JsSpread {
 	}
 }
 impl AstNode for JsStaticMemberAssignment {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATIC_MEMBER_ASSIGNMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_STATIC_MEMBER_ASSIGNMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5941,7 +5988,7 @@ impl std::fmt::Debug for JsStaticMemberAssignment {
 	}
 }
 impl AstNode for JsStaticMemberExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATIC_MEMBER_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_STATIC_MEMBER_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5961,7 +6008,7 @@ impl std::fmt::Debug for JsStaticMemberExpression {
 	}
 }
 impl AstNode for JsStringLiteralExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STRING_LITERAL_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_STRING_LITERAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5982,7 +6029,7 @@ impl std::fmt::Debug for JsStringLiteralExpression {
 	}
 }
 impl AstNode for JsSuperExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SUPER_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SUPER_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6003,7 +6050,7 @@ impl std::fmt::Debug for JsSuperExpression {
 	}
 }
 impl AstNode for JsSwitchStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SWITCH_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SWITCH_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6045,7 +6092,7 @@ impl std::fmt::Debug for JsSwitchStatement {
 	}
 }
 impl AstNode for JsThisExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_THIS_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_THIS_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6063,7 +6110,7 @@ impl std::fmt::Debug for JsThisExpression {
 	}
 }
 impl AstNode for JsThrowStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_THROW_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_THROW_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6089,7 +6136,7 @@ impl std::fmt::Debug for JsThrowStatement {
 	}
 }
 impl AstNode for JsTryFinallyStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TRY_FINALLY_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_TRY_FINALLY_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6116,7 +6163,7 @@ impl std::fmt::Debug for JsTryFinallyStatement {
 	}
 }
 impl AstNode for JsTryStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TRY_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_TRY_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6139,7 +6186,7 @@ impl std::fmt::Debug for JsTryStatement {
 	}
 }
 impl AstNode for JsUnaryExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNARY_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNARY_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6158,7 +6205,7 @@ impl std::fmt::Debug for JsUnaryExpression {
 	}
 }
 impl AstNode for JsVariableDeclaration {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6188,7 +6235,7 @@ impl std::fmt::Debug for JsVariableDeclaration {
 	}
 }
 impl AstNode for JsVariableDeclarations {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATIONS }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATIONS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6207,7 +6254,7 @@ impl std::fmt::Debug for JsVariableDeclarations {
 	}
 }
 impl AstNode for JsVariableStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_VARIABLE_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6232,7 +6279,7 @@ impl std::fmt::Debug for JsVariableStatement {
 	}
 }
 impl AstNode for JsWhileStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_WHILE_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_WHILE_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6263,7 +6310,7 @@ impl std::fmt::Debug for JsWhileStatement {
 	}
 }
 impl AstNode for JsWithStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_WITH_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_WITH_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6290,8 +6337,30 @@ impl std::fmt::Debug for JsWithStatement {
 			.finish()
 	}
 }
+impl AstNode for JsYieldArgument {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_YIELD_ARGUMENT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsYieldArgument {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsYieldArgument")
+			.field(
+				"star_token",
+				&support::DebugOptionalElement(self.star_token()),
+			)
+			.field("expression", &support::DebugSyntaxResult(self.expression()))
+			.finish()
+	}
+}
 impl AstNode for JsYieldExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_YIELD_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_YIELD_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6308,16 +6377,12 @@ impl std::fmt::Debug for JsYieldExpression {
 				"yield_token",
 				&support::DebugSyntaxResult(self.yield_token()),
 			)
-			.field(
-				"star_token",
-				&support::DebugOptionalElement(self.star_token()),
-			)
 			.field("argument", &support::DebugOptionalElement(self.argument()))
 			.finish()
 	}
 }
 impl AstNode for NewExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == NEW_EXPR }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == NEW_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6336,12 +6401,15 @@ impl std::fmt::Debug for NewExpr {
 				"type_args",
 				&support::DebugOptionalElement(self.type_args()),
 			)
-			.field("arguments", &support::DebugSyntaxResult(self.arguments()))
+			.field(
+				"arguments",
+				&support::DebugOptionalElement(self.arguments()),
+			)
 			.finish()
 	}
 }
 impl AstNode for NewTarget {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == NEW_TARGET }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == NEW_TARGET }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6364,7 +6432,7 @@ impl std::fmt::Debug for NewTarget {
 	}
 }
 impl AstNode for Specifier {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == SPECIFIER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == SPECIFIER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6384,7 +6452,7 @@ impl std::fmt::Debug for Specifier {
 	}
 }
 impl AstNode for Template {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TEMPLATE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6397,6 +6465,7 @@ impl AstNode for Template {
 impl std::fmt::Debug for Template {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("Template")
+			.field("tag", &support::DebugOptionalElement(self.tag()))
 			.field(
 				"l_tick_token",
 				&support::DebugSyntaxResult(self.l_tick_token()),
@@ -6410,7 +6479,7 @@ impl std::fmt::Debug for Template {
 	}
 }
 impl AstNode for TemplateChunkElement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE_CHUNK_ELEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TEMPLATE_CHUNK_ELEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6431,7 +6500,7 @@ impl std::fmt::Debug for TemplateChunkElement {
 	}
 }
 impl AstNode for TemplateElement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE_ELEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TEMPLATE_ELEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6457,7 +6526,7 @@ impl std::fmt::Debug for TemplateElement {
 	}
 }
 impl AstNode for TsAny {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ANY }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ANY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6475,7 +6544,7 @@ impl std::fmt::Debug for TsAny {
 	}
 }
 impl AstNode for TsArray {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ARRAY }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ARRAY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6501,7 +6570,7 @@ impl std::fmt::Debug for TsArray {
 	}
 }
 impl AstNode for TsAssertion {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ASSERTION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ASSERTION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6529,7 +6598,7 @@ impl std::fmt::Debug for TsAssertion {
 	}
 }
 impl AstNode for TsBigint {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_BIGINT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_BIGINT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6547,7 +6616,7 @@ impl std::fmt::Debug for TsBigint {
 	}
 }
 impl AstNode for TsBoolean {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_BOOLEAN }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_BOOLEAN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6565,7 +6634,7 @@ impl std::fmt::Debug for TsBoolean {
 	}
 }
 impl AstNode for TsCallSignatureDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CALL_SIGNATURE_DECL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CALL_SIGNATURE_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6595,7 +6664,7 @@ impl std::fmt::Debug for TsCallSignatureDecl {
 	}
 }
 impl AstNode for TsConditionalType {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONDITIONAL_TYPE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONDITIONAL_TYPE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6622,7 +6691,7 @@ impl std::fmt::Debug for TsConditionalType {
 	}
 }
 impl AstNode for TsConstAssertion {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONST_ASSERTION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONST_ASSERTION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6653,7 +6722,7 @@ impl std::fmt::Debug for TsConstAssertion {
 	}
 }
 impl AstNode for TsConstraint {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONSTRAINT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRAINT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6675,7 +6744,7 @@ impl std::fmt::Debug for TsConstraint {
 	}
 }
 impl AstNode for TsConstructSignatureDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONSTRUCT_SIGNATURE_DECL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCT_SIGNATURE_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6706,7 +6775,7 @@ impl std::fmt::Debug for TsConstructSignatureDecl {
 	}
 }
 impl AstNode for TsConstructorParam {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONSTRUCTOR_PARAM }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCTOR_PARAM }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6732,7 +6801,7 @@ impl std::fmt::Debug for TsConstructorParam {
 	}
 }
 impl AstNode for TsConstructorType {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONSTRUCTOR_TYPE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCTOR_TYPE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6759,7 +6828,7 @@ impl std::fmt::Debug for TsConstructorType {
 	}
 }
 impl AstNode for TsDefault {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_DEFAULT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_DEFAULT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6778,7 +6847,7 @@ impl std::fmt::Debug for TsDefault {
 	}
 }
 impl AstNode for TsEnum {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ENUM }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ENUM }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6810,7 +6879,7 @@ impl std::fmt::Debug for TsEnum {
 	}
 }
 impl AstNode for TsEnumMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ENUM_MEMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ENUM_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6830,7 +6899,7 @@ impl std::fmt::Debug for TsEnumMember {
 	}
 }
 impl AstNode for TsExportAssignment {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXPORT_ASSIGNMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXPORT_ASSIGNMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6857,7 +6926,7 @@ impl std::fmt::Debug for TsExportAssignment {
 	}
 }
 impl AstNode for TsExprWithTypeArgs {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXPR_WITH_TYPE_ARGS }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXPR_WITH_TYPE_ARGS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6873,13 +6942,13 @@ impl std::fmt::Debug for TsExprWithTypeArgs {
 			.field("item", &support::DebugSyntaxResult(self.item()))
 			.field(
 				"type_params",
-				&support::DebugSyntaxResult(self.type_params()),
+				&support::DebugOptionalElement(self.type_params()),
 			)
 			.finish()
 	}
 }
 impl AstNode for TsExtends {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXTENDS }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXTENDS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6901,7 +6970,7 @@ impl std::fmt::Debug for TsExtends {
 	}
 }
 impl AstNode for TsExternalModuleRef {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXTERNAL_MODULE_REF }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXTERNAL_MODULE_REF }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6934,7 +7003,7 @@ impl std::fmt::Debug for TsExternalModuleRef {
 	}
 }
 impl AstNode for TsFnType {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_FN_TYPE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_FN_TYPE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6960,7 +7029,7 @@ impl std::fmt::Debug for TsFnType {
 	}
 }
 impl AstNode for TsImplementsClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IMPLEMENTS_CLAUSE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_IMPLEMENTS_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6982,7 +7051,7 @@ impl std::fmt::Debug for TsImplementsClause {
 	}
 }
 impl AstNode for TsImport {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IMPORT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_IMPORT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7017,7 +7086,7 @@ impl std::fmt::Debug for TsImport {
 	}
 }
 impl AstNode for TsImportEqualsDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IMPORT_EQUALS_DECL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_IMPORT_EQUALS_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7049,7 +7118,7 @@ impl std::fmt::Debug for TsImportEqualsDecl {
 	}
 }
 impl AstNode for TsIndexSignature {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7084,7 +7153,7 @@ impl std::fmt::Debug for TsIndexSignature {
 	}
 }
 impl AstNode for TsIndexedArray {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INDEXED_ARRAY }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INDEXED_ARRAY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7110,7 +7179,7 @@ impl std::fmt::Debug for TsIndexedArray {
 	}
 }
 impl AstNode for TsInfer {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INFER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INFER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7132,7 +7201,7 @@ impl std::fmt::Debug for TsInfer {
 	}
 }
 impl AstNode for TsInterfaceDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INTERFACE_DECL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INTERFACE_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7175,7 +7244,7 @@ impl std::fmt::Debug for TsInterfaceDecl {
 	}
 }
 impl AstNode for TsIntersection {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INTERSECTION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INTERSECTION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7193,7 +7262,7 @@ impl std::fmt::Debug for TsIntersection {
 	}
 }
 impl AstNode for TsLiteral {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_LITERAL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_LITERAL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7211,7 +7280,7 @@ impl std::fmt::Debug for TsLiteral {
 	}
 }
 impl AstNode for TsMappedType {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MAPPED_TYPE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_MAPPED_TYPE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7262,7 +7331,7 @@ impl std::fmt::Debug for TsMappedType {
 	}
 }
 impl AstNode for TsMappedTypeParam {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MAPPED_TYPE_PARAM }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_MAPPED_TYPE_PARAM }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7290,7 +7359,7 @@ impl std::fmt::Debug for TsMappedTypeParam {
 	}
 }
 impl AstNode for TsMappedTypeReadonly {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MAPPED_TYPE_READONLY }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_MAPPED_TYPE_READONLY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7319,7 +7388,7 @@ impl std::fmt::Debug for TsMappedTypeReadonly {
 	}
 }
 impl AstNode for TsMethodSignature {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_METHOD_SIGNATURE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_METHOD_SIGNATURE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7358,7 +7427,7 @@ impl std::fmt::Debug for TsMethodSignature {
 	}
 }
 impl AstNode for TsModuleBlock {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MODULE_BLOCK }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_MODULE_BLOCK }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7384,7 +7453,7 @@ impl std::fmt::Debug for TsModuleBlock {
 	}
 }
 impl AstNode for TsModuleDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MODULE_DECL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_MODULE_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7419,7 +7488,7 @@ impl std::fmt::Debug for TsModuleDecl {
 	}
 }
 impl AstNode for TsNamespaceDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NAMESPACE_DECL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NAMESPACE_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7446,7 +7515,7 @@ impl std::fmt::Debug for TsNamespaceDecl {
 	}
 }
 impl AstNode for TsNamespaceExportDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NAMESPACE_EXPORT_DECL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NAMESPACE_EXPORT_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7477,7 +7546,7 @@ impl std::fmt::Debug for TsNamespaceExportDecl {
 	}
 }
 impl AstNode for TsNever {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NEVER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NEVER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7498,7 +7567,7 @@ impl std::fmt::Debug for TsNever {
 	}
 }
 impl AstNode for TsNonNull {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NON_NULL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NON_NULL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7517,7 +7586,7 @@ impl std::fmt::Debug for TsNonNull {
 	}
 }
 impl AstNode for TsNull {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NULL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NULL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7535,7 +7604,7 @@ impl std::fmt::Debug for TsNull {
 	}
 }
 impl AstNode for TsNumber {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NUMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NUMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7553,7 +7622,7 @@ impl std::fmt::Debug for TsNumber {
 	}
 }
 impl AstNode for TsObject {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_OBJECT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_OBJECT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7571,7 +7640,7 @@ impl std::fmt::Debug for TsObject {
 	}
 }
 impl AstNode for TsObjectType {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_OBJECT_TYPE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_OBJECT_TYPE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7597,7 +7666,7 @@ impl std::fmt::Debug for TsObjectType {
 	}
 }
 impl AstNode for TsParen {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_PAREN }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PAREN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7623,7 +7692,7 @@ impl std::fmt::Debug for TsParen {
 	}
 }
 impl AstNode for TsPredicate {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_PREDICATE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PREDICATE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7642,7 +7711,7 @@ impl std::fmt::Debug for TsPredicate {
 	}
 }
 impl AstNode for TsPropertySignature {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_PROPERTY_SIGNATURE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PROPERTY_SIGNATURE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7673,7 +7742,7 @@ impl std::fmt::Debug for TsPropertySignature {
 	}
 }
 impl AstNode for TsQualifiedPath {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_QUALIFIED_PATH }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_QUALIFIED_PATH }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7693,7 +7762,7 @@ impl std::fmt::Debug for TsQualifiedPath {
 	}
 }
 impl AstNode for TsString {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_STRING }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_STRING }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7711,7 +7780,7 @@ impl std::fmt::Debug for TsString {
 	}
 }
 impl AstNode for TsSymbol {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_SYMBOL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_SYMBOL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7729,7 +7798,7 @@ impl std::fmt::Debug for TsSymbol {
 	}
 }
 impl AstNode for TsTemplate {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TEMPLATE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TEMPLATE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7747,7 +7816,7 @@ impl std::fmt::Debug for TsTemplate {
 	}
 }
 impl AstNode for TsTemplateElement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TEMPLATE_ELEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TEMPLATE_ELEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7769,7 +7838,7 @@ impl std::fmt::Debug for TsTemplateElement {
 	}
 }
 impl AstNode for TsThis {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_THIS }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_THIS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7787,7 +7856,7 @@ impl std::fmt::Debug for TsThis {
 	}
 }
 impl AstNode for TsTuple {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TUPLE }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TUPLE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7813,7 +7882,7 @@ impl std::fmt::Debug for TsTuple {
 	}
 }
 impl AstNode for TsTupleElement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TUPLE_ELEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TUPLE_ELEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7844,7 +7913,7 @@ impl std::fmt::Debug for TsTupleElement {
 	}
 }
 impl AstNode for TsTypeAliasDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ALIAS_DECL }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ALIAS_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7868,7 +7937,7 @@ impl std::fmt::Debug for TsTypeAliasDecl {
 	}
 }
 impl AstNode for TsTypeAnnotation {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ANNOTATION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ANNOTATION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7890,7 +7959,7 @@ impl std::fmt::Debug for TsTypeAnnotation {
 	}
 }
 impl AstNode for TsTypeArgs {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ARGS }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ARGS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7916,7 +7985,7 @@ impl std::fmt::Debug for TsTypeArgs {
 	}
 }
 impl AstNode for TsTypeName {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_NAME }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7934,7 +8003,7 @@ impl std::fmt::Debug for TsTypeName {
 	}
 }
 impl AstNode for TsTypeOperator {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_OPERATOR }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_OPERATOR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7952,7 +8021,7 @@ impl std::fmt::Debug for TsTypeOperator {
 	}
 }
 impl AstNode for TsTypeParam {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_PARAM }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_PARAM }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7972,7 +8041,7 @@ impl std::fmt::Debug for TsTypeParam {
 	}
 }
 impl AstNode for TsTypeParams {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_PARAMS }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_PARAMS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -7998,7 +8067,7 @@ impl std::fmt::Debug for TsTypeParams {
 	}
 }
 impl AstNode for TsTypeRef {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_REF }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_REF }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -8017,7 +8086,7 @@ impl std::fmt::Debug for TsTypeRef {
 	}
 }
 impl AstNode for TsUndefined {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_UNDEFINED }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_UNDEFINED }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -8038,7 +8107,7 @@ impl std::fmt::Debug for TsUndefined {
 	}
 }
 impl AstNode for TsUnion {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_UNION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_UNION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -8056,7 +8125,7 @@ impl std::fmt::Debug for TsUnion {
 	}
 }
 impl AstNode for TsUnknown {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_UNKNOWN }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_UNKNOWN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -8077,7 +8146,7 @@ impl std::fmt::Debug for TsUnknown {
 	}
 }
 impl AstNode for TsVoid {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_VOID }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_VOID }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -8118,7 +8187,7 @@ impl From<JsName> for AnyJsImportClause {
 	fn from(node: JsName) -> AnyJsImportClause { AnyJsImportClause::JsName(node) }
 }
 impl AstNode for AnyJsImportClause {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			JS_IMPORT_BARE_CLAUSE
@@ -8179,7 +8248,7 @@ impl From<TemplateElement> for AnyTemplateElement {
 	}
 }
 impl AstNode for AnyTemplateElement {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(kind, TEMPLATE_CHUNK_ELEMENT | TEMPLATE_ELEMENT)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -8214,7 +8283,7 @@ impl From<JsFunctionDeclaration> for DefaultDecl {
 	fn from(node: JsFunctionDeclaration) -> DefaultDecl { DefaultDecl::JsFunctionDeclaration(node) }
 }
 impl AstNode for DefaultDecl {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(kind, JS_CLASS_DECLARATION | JS_FUNCTION_DECLARATION)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -8263,7 +8332,7 @@ impl From<JsUnknownAssignment> for JsAnyArrayAssignmentPatternElement {
 	}
 }
 impl AstNode for JsAnyArrayAssignmentPatternElement {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT
 			| JS_ARRAY_HOLE
@@ -8351,7 +8420,7 @@ impl From<JsBindingPatternWithDefault> for JsAnyArrayBindingPatternElement {
 	}
 }
 impl AstNode for JsAnyArrayBindingPatternElement {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			JS_ARRAY_BINDING_PATTERN_REST_ELEMENT
 			| JS_ARRAY_HOLE
@@ -8414,7 +8483,7 @@ impl From<JsSpread> for JsAnyArrayElement {
 	fn from(node: JsSpread) -> JsAnyArrayElement { JsAnyArrayElement::JsSpread(node) }
 }
 impl AstNode for JsAnyArrayElement {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			JS_ARRAY_HOLE | JS_SPREAD => true,
 			k if JsAnyExpression::can_cast(k) => true,
@@ -8457,7 +8526,7 @@ impl From<JsFunctionBody> for JsAnyArrowFunctionBody {
 	}
 }
 impl AstNode for JsAnyArrowFunctionBody {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			JS_FUNCTION_BODY => true,
 			k if JsAnyExpression::can_cast(k) => true,
@@ -8497,7 +8566,7 @@ impl From<JsParameters> for JsAnyArrowFunctionParameters {
 	}
 }
 impl AstNode for JsAnyArrowFunctionParameters {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			JS_PARAMETERS => true,
 			k if JsAnyBinding::can_cast(k) => true,
@@ -8557,7 +8626,7 @@ impl From<JsUnknownAssignment> for JsAnyAssignment {
 	}
 }
 impl AstNode for JsAnyAssignment {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			JS_COMPUTED_MEMBER_ASSIGNMENT
@@ -8620,7 +8689,7 @@ impl From<JsObjectAssignmentPattern> for JsAnyAssignmentPattern {
 	}
 }
 impl AstNode for JsAnyAssignmentPattern {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			JS_ARRAY_ASSIGNMENT_PATTERN | JS_OBJECT_ASSIGNMENT_PATTERN => true,
 			k if JsAnyAssignment::can_cast(k) => true,
@@ -8672,7 +8741,7 @@ impl From<JsUnknownBinding> for JsAnyBinding {
 	fn from(node: JsUnknownBinding) -> JsAnyBinding { JsAnyBinding::JsUnknownBinding(node) }
 }
 impl AstNode for JsAnyBinding {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(kind, JS_IDENTIFIER_BINDING | JS_UNKNOWN_BINDING)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -8711,7 +8780,7 @@ impl From<JsObjectBindingPattern> for JsAnyBindingPattern {
 	}
 }
 impl AstNode for JsAnyBindingPattern {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			JS_ARRAY_BINDING_PATTERN | JS_OBJECT_BINDING_PATTERN => true,
 			k if JsAnyBinding::can_cast(k) => true,
@@ -8789,7 +8858,7 @@ impl From<TsIndexSignature> for JsAnyClassMember {
 	fn from(node: TsIndexSignature) -> JsAnyClassMember { JsAnyClassMember::TsIndexSignature(node) }
 }
 impl AstNode for JsAnyClassMember {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			JS_CONSTRUCTOR_CLASS_MEMBER
@@ -8871,7 +8940,7 @@ impl From<JsPrivateClassMemberName> for JsAnyClassMemberName {
 	}
 }
 impl AstNode for JsAnyClassMemberName {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			JS_COMPUTED_MEMBER_NAME | JS_LITERAL_MEMBER_NAME | JS_PRIVATE_CLASS_MEMBER_NAME
@@ -8920,7 +8989,7 @@ impl From<TsConstructorParam> for JsAnyConstructorParameter {
 	}
 }
 impl AstNode for JsAnyConstructorParameter {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			JS_BINDING_PATTERN_WITH_DEFAULT | TS_CONSTRUCTOR_PARAM => true,
 			k if JsAnyBindingPattern::can_cast(k) => true,
@@ -9011,7 +9080,7 @@ impl From<TsTypeAliasDecl> for JsAnyExportDeclaration {
 	}
 }
 impl AstNode for JsAnyExportDeclaration {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			EXPORT_NAMED
@@ -9205,7 +9274,7 @@ impl From<TsNonNull> for JsAnyExpression {
 	fn from(node: TsNonNull) -> JsAnyExpression { JsAnyExpression::TsNonNull(node) }
 }
 impl AstNode for JsAnyExpression {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			CALL_EXPR
 			| IMPORT_META
@@ -9399,7 +9468,7 @@ impl From<JsForVariableDeclaration> for JsAnyForInOrOfInitializer {
 	}
 }
 impl AstNode for JsAnyForInOrOfInitializer {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			JS_FOR_VARIABLE_DECLARATION => true,
 			k if JsAnyAssignmentPattern::can_cast(k) => true,
@@ -9445,7 +9514,7 @@ impl From<JsVariableDeclarations> for JsAnyForInitializer {
 	}
 }
 impl AstNode for JsAnyForInitializer {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			JS_VARIABLE_DECLARATIONS => true,
 			k if JsAnyExpression::can_cast(k) => true,
@@ -9492,7 +9561,7 @@ impl From<JsUnknownImportAssertionEntry> for JsAnyImportAssertionEntry {
 	}
 }
 impl AstNode for JsAnyImportAssertionEntry {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			JS_IMPORT_ASSERTION_ENTRY | JS_UNKNOWN_IMPORT_ASSERTION_ENTRY
@@ -9560,7 +9629,7 @@ impl From<JsStringLiteralExpression> for JsAnyLiteralExpression {
 	}
 }
 impl AstNode for JsAnyLiteralExpression {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			JS_BIG_INT_LITERAL_EXPRESSION
@@ -9659,7 +9728,7 @@ impl From<TsNamespaceExportDecl> for JsAnyModuleItem {
 	}
 }
 impl AstNode for JsAnyModuleItem {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			EXPORT_DECL
 			| EXPORT_DEFAULT_DECL
@@ -9734,7 +9803,7 @@ impl From<JsPrivateName> for JsAnyName {
 	fn from(node: JsPrivateName) -> JsAnyName { JsAnyName::JsPrivateName(node) }
 }
 impl AstNode for JsAnyName {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_NAME | JS_PRIVATE_NAME) }
+	fn can_cast(kind: JsSyntaxKind) -> bool { matches!(kind, JS_NAME | JS_PRIVATE_NAME) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			JS_NAME => JsAnyName::JsName(JsName { syntax }),
@@ -9769,7 +9838,7 @@ impl From<JsNamespaceImportSpecifier> for JsAnyNamedImport {
 	}
 }
 impl AstNode for JsAnyNamedImport {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			JS_NAMED_IMPORT_SPECIFIERS | JS_NAMESPACE_IMPORT_SPECIFIER
@@ -9818,7 +9887,7 @@ impl From<JsUnknownNamedImportSpecifier> for JsAnyNamedImportSpecifier {
 	}
 }
 impl AstNode for JsAnyNamedImportSpecifier {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			JS_NAMED_IMPORT_SPECIFIER
@@ -9889,7 +9958,7 @@ impl From<JsUnknownAssignment> for JsAnyObjectAssignmentPatternMember {
 	}
 }
 impl AstNode for JsAnyObjectAssignmentPatternMember {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
@@ -9979,7 +10048,7 @@ impl From<JsUnknownBinding> for JsAnyObjectBindingPatternMember {
 	}
 }
 impl AstNode for JsAnyObjectBindingPatternMember {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			JS_IDENTIFIER_BINDING
@@ -10077,7 +10146,7 @@ impl From<JsUnknownMember> for JsAnyObjectMember {
 	fn from(node: JsUnknownMember) -> JsAnyObjectMember { JsAnyObjectMember::JsUnknownMember(node) }
 }
 impl AstNode for JsAnyObjectMember {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			JS_GETTER_OBJECT_MEMBER
@@ -10149,7 +10218,7 @@ impl From<JsLiteralMemberName> for JsAnyObjectMemberName {
 	}
 }
 impl AstNode for JsAnyObjectMemberName {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(kind, JS_COMPUTED_MEMBER_NAME | JS_LITERAL_MEMBER_NAME)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -10188,7 +10257,7 @@ impl From<JsRestParameter> for JsAnyParameter {
 	fn from(node: JsRestParameter) -> JsAnyParameter { JsAnyParameter::JsRestParameter(node) }
 }
 impl AstNode for JsAnyParameter {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			JS_BINDING_PATTERN_WITH_DEFAULT | JS_REST_PARAMETER => true,
 			k if JsAnyBindingPattern::can_cast(k) => true,
@@ -10227,6 +10296,9 @@ impl std::fmt::Debug for JsAnyParameter {
 		}
 	}
 }
+impl From<JsExpressionSnipped> for JsAnyRoot {
+	fn from(node: JsExpressionSnipped) -> JsAnyRoot { JsAnyRoot::JsExpressionSnipped(node) }
+}
 impl From<JsModule> for JsAnyRoot {
 	fn from(node: JsModule) -> JsAnyRoot { JsAnyRoot::JsModule(node) }
 }
@@ -10234,9 +10306,12 @@ impl From<JsScript> for JsAnyRoot {
 	fn from(node: JsScript) -> JsAnyRoot { JsAnyRoot::JsScript(node) }
 }
 impl AstNode for JsAnyRoot {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_MODULE | JS_SCRIPT) }
+	fn can_cast(kind: JsSyntaxKind) -> bool {
+		matches!(kind, JS_EXPRESSION_SNIPPED | JS_MODULE | JS_SCRIPT)
+	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
+			JS_EXPRESSION_SNIPPED => JsAnyRoot::JsExpressionSnipped(JsExpressionSnipped { syntax }),
 			JS_MODULE => JsAnyRoot::JsModule(JsModule { syntax }),
 			JS_SCRIPT => JsAnyRoot::JsScript(JsScript { syntax }),
 			_ => return None,
@@ -10245,6 +10320,7 @@ impl AstNode for JsAnyRoot {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
+			JsAnyRoot::JsExpressionSnipped(it) => &it.syntax,
 			JsAnyRoot::JsModule(it) => &it.syntax,
 			JsAnyRoot::JsScript(it) => &it.syntax,
 		}
@@ -10253,6 +10329,7 @@ impl AstNode for JsAnyRoot {
 impl std::fmt::Debug for JsAnyRoot {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
+			JsAnyRoot::JsExpressionSnipped(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyRoot::JsModule(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyRoot::JsScript(it) => std::fmt::Debug::fmt(it, f),
 		}
@@ -10355,7 +10432,7 @@ impl From<TsTypeAliasDecl> for JsAnyStatement {
 	fn from(node: TsTypeAliasDecl) -> JsAnyStatement { JsAnyStatement::TsTypeAliasDecl(node) }
 }
 impl AstNode for JsAnyStatement {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			FOR_STMT
@@ -10514,7 +10591,7 @@ impl From<JsDefaultClause> for JsAnySwitchClause {
 	fn from(node: JsDefaultClause) -> JsAnySwitchClause { JsAnySwitchClause::JsDefaultClause(node) }
 }
 impl AstNode for JsAnySwitchClause {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_CASE_CLAUSE | JS_DEFAULT_CLAUSE) }
+	fn can_cast(kind: JsSyntaxKind) -> bool { matches!(kind, JS_CASE_CLAUSE | JS_DEFAULT_CLAUSE) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			JS_CASE_CLAUSE => JsAnySwitchClause::JsCaseClause(JsCaseClause { syntax }),
@@ -10545,7 +10622,7 @@ impl From<TsTypeName> for TsEntityName {
 	fn from(node: TsTypeName) -> TsEntityName { TsEntityName::TsTypeName(node) }
 }
 impl AstNode for TsEntityName {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, TS_QUALIFIED_PATH | TS_TYPE_NAME) }
+	fn can_cast(kind: JsSyntaxKind) -> bool { matches!(kind, TS_QUALIFIED_PATH | TS_TYPE_NAME) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			TS_QUALIFIED_PATH => TsEntityName::TsQualifiedPath(TsQualifiedPath { syntax }),
@@ -10573,7 +10650,7 @@ impl From<TsExternalModuleRef> for TsModuleRef {
 	fn from(node: TsExternalModuleRef) -> TsModuleRef { TsModuleRef::TsExternalModuleRef(node) }
 }
 impl AstNode for TsModuleRef {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		match kind {
 			TS_EXTERNAL_MODULE_REF => true,
 			k if TsEntityName::can_cast(k) => true,
@@ -10616,7 +10693,7 @@ impl From<TsNamespaceDecl> for TsNamespaceBody {
 	fn from(node: TsNamespaceDecl) -> TsNamespaceBody { TsNamespaceBody::TsNamespaceDecl(node) }
 }
 impl AstNode for TsNamespaceBody {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, TS_MODULE_BLOCK | TS_NAMESPACE_DECL) }
+	fn can_cast(kind: JsSyntaxKind) -> bool { matches!(kind, TS_MODULE_BLOCK | TS_NAMESPACE_DECL) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			TS_MODULE_BLOCK => TsNamespaceBody::TsModuleBlock(TsModuleBlock { syntax }),
@@ -10647,7 +10724,7 @@ impl From<TsTypeName> for TsThisOrMore {
 	fn from(node: TsTypeName) -> TsThisOrMore { TsThisOrMore::TsTypeName(node) }
 }
 impl AstNode for TsThisOrMore {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, TS_THIS | TS_TYPE_NAME) }
+	fn can_cast(kind: JsSyntaxKind) -> bool { matches!(kind, TS_THIS | TS_TYPE_NAME) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			TS_THIS => TsThisOrMore::TsThis(TsThis { syntax }),
@@ -10765,7 +10842,7 @@ impl From<TsVoid> for TsType {
 	fn from(node: TsVoid) -> TsType { TsType::TsVoid(node) }
 }
 impl AstNode for TsType {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			TS_ANY
@@ -10916,7 +10993,7 @@ impl From<TsPropertySignature> for TsTypeElement {
 	fn from(node: TsPropertySignature) -> TsTypeElement { TsTypeElement::TsPropertySignature(node) }
 }
 impl AstNode for TsTypeElement {
-	fn can_cast(kind: SyntaxKind) -> bool {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
 			TS_CALL_SIGNATURE_DECL
@@ -11399,6 +11476,11 @@ impl std::fmt::Display for JsEmptyStatement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsExpressionSnipped {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsExpressionStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -11809,6 +11891,11 @@ impl std::fmt::Display for JsWithStatement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsYieldArgument {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsYieldExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -12175,6 +12262,31 @@ impl std::fmt::Display for TsVoid {
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsUnknown {
+	syntax: SyntaxNode,
+}
+impl JsUnknown {
+	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+impl AstNode for JsUnknown {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsUnknown {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsUnknown")
+			.field("items", &support::DebugSyntaxElementChildren(self.items()))
+			.finish()
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownAssignment {
 	syntax: SyntaxNode,
 }
@@ -12182,7 +12294,7 @@ impl JsUnknownAssignment {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 impl AstNode for JsUnknownAssignment {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_ASSIGNMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_ASSIGNMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -12207,7 +12319,7 @@ impl JsUnknownBinding {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 impl AstNode for JsUnknownBinding {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_BINDING }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_BINDING }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -12232,7 +12344,7 @@ impl JsUnknownExpression {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 impl AstNode for JsUnknownExpression {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_EXPRESSION }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -12257,7 +12369,7 @@ impl JsUnknownImportAssertionEntry {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 impl AstNode for JsUnknownImportAssertionEntry {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_IMPORT_ASSERTION_ENTRY }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_IMPORT_ASSERTION_ENTRY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -12282,7 +12394,7 @@ impl JsUnknownMember {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 impl AstNode for JsUnknownMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_MEMBER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -12307,7 +12419,7 @@ impl JsUnknownModifier {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 impl AstNode for JsUnknownModifier {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_MODIFIER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_MODIFIER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -12332,7 +12444,7 @@ impl JsUnknownNamedImportSpecifier {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 impl AstNode for JsUnknownNamedImportSpecifier {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_NAMED_IMPORT_SPECIFIER }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_NAMED_IMPORT_SPECIFIER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -12357,7 +12469,7 @@ impl JsUnknownStatement {
 	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 impl AstNode for JsUnknownStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_STATEMENT }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -12379,7 +12491,7 @@ pub struct ExportNamedSpecifierList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for ExportNamedSpecifierList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_NAMED_SPECIFIER_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == EXPORT_NAMED_SPECIFIER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<ExportNamedSpecifierList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(ExportNamedSpecifierList {
@@ -12415,7 +12527,7 @@ pub struct JsArrayAssignmentPatternElementList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsArrayAssignmentPatternElementList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsArrayAssignmentPatternElementList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsArrayAssignmentPatternElementList {
@@ -12451,7 +12563,7 @@ pub struct JsArrayBindingPatternElementList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsArrayBindingPatternElementList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsArrayBindingPatternElementList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsArrayBindingPatternElementList {
@@ -12487,7 +12599,7 @@ pub struct JsArrayElementList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsArrayElementList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_ELEMENT_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_ELEMENT_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsArrayElementList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsArrayElementList {
@@ -12523,7 +12635,7 @@ pub struct JsCallArgumentList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsCallArgumentList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CALL_ARGUMENT_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CALL_ARGUMENT_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsCallArgumentList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsCallArgumentList {
@@ -12559,7 +12671,7 @@ pub struct JsClassMemberList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsClassMemberList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CLASS_MEMBER_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CLASS_MEMBER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsClassMemberList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsClassMemberList {
@@ -12595,7 +12707,7 @@ pub struct JsConstructorParameterList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsConstructorParameterList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONSTRUCTOR_PARAMETER_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CONSTRUCTOR_PARAMETER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsConstructorParameterList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsConstructorParameterList {
@@ -12631,7 +12743,7 @@ pub struct JsDirectiveList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsDirectiveList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DIRECTIVE_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_DIRECTIVE_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsDirectiveList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsDirectiveList {
@@ -12667,7 +12779,7 @@ pub struct JsImportAssertionEntryList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsImportAssertionEntryList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_ASSERTION_ENTRY_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_ASSERTION_ENTRY_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsImportAssertionEntryList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsImportAssertionEntryList {
@@ -12703,7 +12815,7 @@ pub struct JsModuleItemList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsModuleItemList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_MODULE_ITEM_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_MODULE_ITEM_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsModuleItemList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsModuleItemList {
@@ -12739,7 +12851,7 @@ pub struct JsNamedImportSpecifierList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsNamedImportSpecifierList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NAMED_IMPORT_SPECIFIER_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NAMED_IMPORT_SPECIFIER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsNamedImportSpecifierList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsNamedImportSpecifierList {
@@ -12775,7 +12887,7 @@ pub struct JsObjectAssignmentPatternPropertyList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsObjectAssignmentPatternPropertyList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsObjectAssignmentPatternPropertyList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsObjectAssignmentPatternPropertyList {
@@ -12813,7 +12925,7 @@ pub struct JsObjectBindingPatternPropertyList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsObjectBindingPatternPropertyList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsObjectBindingPatternPropertyList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsObjectBindingPatternPropertyList {
@@ -12849,7 +12961,7 @@ pub struct JsObjectMemberList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsObjectMemberList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_MEMBER_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_MEMBER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsObjectMemberList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsObjectMemberList {
@@ -12885,7 +12997,7 @@ pub struct JsParameterList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsParameterList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARAMETER_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PARAMETER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsParameterList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsParameterList {
@@ -12921,7 +13033,7 @@ pub struct JsStatementList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsStatementList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATEMENT_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_STATEMENT_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsStatementList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsStatementList {
@@ -12957,7 +13069,7 @@ pub struct JsSwitchCaseList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsSwitchCaseList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SWITCH_CASE_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SWITCH_CASE_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsSwitchCaseList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsSwitchCaseList {
@@ -12993,7 +13105,7 @@ pub struct JsVariableDeclarationList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for JsVariableDeclarationList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<JsVariableDeclarationList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(JsVariableDeclarationList {
@@ -13029,7 +13141,7 @@ pub struct TemplateElementList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for TemplateElementList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE_ELEMENT_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TEMPLATE_ELEMENT_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<TemplateElementList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(TemplateElementList {
@@ -13065,7 +13177,7 @@ pub struct TsEnumMemberList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for TsEnumMemberList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ENUM_MEMBER_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ENUM_MEMBER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<TsEnumMemberList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(TsEnumMemberList {
@@ -13101,7 +13213,7 @@ pub struct TsObjectMemberList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for TsObjectMemberList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_OBJECT_MEMBER_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_OBJECT_MEMBER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<TsObjectMemberList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(TsObjectMemberList {
@@ -13137,7 +13249,7 @@ pub struct TsTypeArgList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for TsTypeArgList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ARG_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ARG_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<TsTypeArgList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(TsTypeArgList {
@@ -13173,7 +13285,7 @@ pub struct TsTypeList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for TsTypeList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<TsTypeList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(TsTypeList {
@@ -13209,7 +13321,7 @@ pub struct TsTypeParamList {
 	syntax_list: SyntaxList,
 }
 impl AstNode for TsTypeParamList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_PARAM_LIST }
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_PARAM_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<TsTypeParamList> {
 		if Self::can_cast(syntax.kind()) {
 			Some(TsTypeParamList {
@@ -13403,6 +13515,9 @@ impl Debug for DebugSyntaxElement {
 				}
 				JS_EMPTY_STATEMENT => {
 					std::fmt::Debug::fmt(&JsEmptyStatement::cast(node.clone()).unwrap(), f)
+				}
+				JS_EXPRESSION_SNIPPED => {
+					std::fmt::Debug::fmt(&JsExpressionSnipped::cast(node.clone()).unwrap(), f)
 				}
 				JS_EXPRESSION_STATEMENT => {
 					std::fmt::Debug::fmt(&JsExpressionStatement::cast(node.clone()).unwrap(), f)
@@ -13665,6 +13780,7 @@ impl Debug for DebugSyntaxElement {
 				JS_UNARY_EXPRESSION => {
 					std::fmt::Debug::fmt(&JsUnaryExpression::cast(node.clone()).unwrap(), f)
 				}
+				JS_UNKNOWN => std::fmt::Debug::fmt(&JsUnknown::cast(node.clone()).unwrap(), f),
 				JS_UNKNOWN_ASSIGNMENT => {
 					std::fmt::Debug::fmt(&JsUnknownAssignment::cast(node.clone()).unwrap(), f)
 				}
@@ -13708,6 +13824,9 @@ impl Debug for DebugSyntaxElement {
 				}
 				JS_WITH_STATEMENT => {
 					std::fmt::Debug::fmt(&JsWithStatement::cast(node.clone()).unwrap(), f)
+				}
+				JS_YIELD_ARGUMENT => {
+					std::fmt::Debug::fmt(&JsYieldArgument::cast(node.clone()).unwrap(), f)
 				}
 				JS_YIELD_EXPRESSION => {
 					std::fmt::Debug::fmt(&JsYieldExpression::cast(node.clone()).unwrap(), f)

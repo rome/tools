@@ -1,12 +1,12 @@
 use crate::{
-	empty_element, format_elements, space_token, FormatElement, FormatResult, Formatter,
+	empty_element, format_elements, space_token, token, FormatElement, FormatResult, Formatter,
 	ToFormatElement,
 };
 use rslint_parser::ast::{
 	JsAnyExpression, JsAssignmentExpression, JsAwaitExpression, JsBinaryExpression,
 	JsComputedMemberExpression, JsConditionalExpression, JsLogicalExpression,
-	JsParenthesizedExpression, JsThisExpression, JsUnaryExpression, JsYieldExpression, NewExpr,
-	NewTarget,
+	JsParenthesizedExpression, JsThisExpression, JsUnaryExpression, JsYieldArgument,
+	JsYieldExpression, NewExpr, NewTarget,
 };
 use rslint_parser::{token_set, TokenSet, T};
 
@@ -127,12 +127,18 @@ impl ToFormatElement for JsComputedMemberExpression {
 
 impl ToFormatElement for NewExpr {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+		let arguments = if let Some(arguments) = self.arguments() {
+			formatter.format_node(arguments)?
+		} else {
+			format_elements![token("("), token(")")]
+		};
+
 		Ok(format_elements![
 			formatter.format_token(&self.new_token()?)?,
 			// TODO handle TsTypeArgs
 			space_token(),
 			formatter.format_node(self.object()?)?,
-			formatter.format_node(self.arguments()?)?,
+			arguments,
 		])
 	}
 }
@@ -206,20 +212,31 @@ impl ToFormatElement for NewTarget {
 
 impl ToFormatElement for JsYieldExpression {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+		let argument = if let Some(node) = self.argument() {
+			formatter.format_node(node)?
+		} else {
+			empty_element()
+		};
+
+		Ok(format_elements![
+			formatter.format_token(&self.yield_token()?)?,
+			argument
+		])
+	}
+}
+
+impl ToFormatElement for JsYieldArgument {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let star_token = if let Some(token) = self.star_token() {
 			formatter.format_token(&token)?
 		} else {
 			empty_element()
 		};
-		let argument = if let Some(node) = self.argument() {
-			format_elements![space_token(), formatter.format_node(node)?]
-		} else {
-			empty_element()
-		};
+
 		Ok(format_elements![
-			formatter.format_token(&self.yield_token()?)?,
 			star_token,
-			argument
+			space_token(),
+			formatter.format_node(self.expression()?)?
 		])
 	}
 }

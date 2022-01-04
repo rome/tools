@@ -29,6 +29,7 @@ JsModule {
                                         value_token: IDENT@31..36 "inner" [] [],
                                     },
                                 },
+                                optional_chain_token_token: missing (optional),
                                 type_args: missing (optional),
                                 arguments: JsCallArguments {
                                     l_paren_token: L_PAREN@36..37 "(" [] [],
@@ -51,6 +52,7 @@ JsModule {
                                                 value_token: IDENT@48..53 "inner" [] [],
                                             },
                                         },
+                                        optional_chain_token_token: missing (optional),
                                         type_args: missing (optional),
                                         arguments: JsCallArguments {
                                             l_paren_token: L_PAREN@53..54 "(" [] [],
@@ -70,6 +72,7 @@ JsModule {
                                             value_token: IDENT@65..70 "inner" [] [],
                                         },
                                     },
+                                    optional_chain_token_token: missing (optional),
                                     type_args: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@70..71 "(" [] [],
@@ -146,7 +149,8 @@ JsModule {
                   0: JS_REFERENCE_IDENTIFIER@31..36
                     0: IDENT@31..36 "inner" [] []
                 1: (empty)
-                2: JS_CALL_ARGUMENTS@36..38
+                2: (empty)
+                3: JS_CALL_ARGUMENTS@36..38
                   0: L_PAREN@36..37 "(" [] []
                   1: JS_CALL_ARGUMENT_LIST@37..37
                   2: R_PAREN@37..38 ")" [] []
@@ -162,7 +166,8 @@ JsModule {
                       0: JS_REFERENCE_IDENTIFIER@48..53
                         0: IDENT@48..53 "inner" [] []
                     1: (empty)
-                    2: JS_CALL_ARGUMENTS@53..55
+                    2: (empty)
+                    3: JS_CALL_ARGUMENTS@53..55
                       0: L_PAREN@53..54 "(" [] []
                       1: JS_CALL_ARGUMENT_LIST@54..54
                       2: R_PAREN@54..55 ")" [] []
@@ -175,7 +180,8 @@ JsModule {
                     0: JS_REFERENCE_IDENTIFIER@65..70
                       0: IDENT@65..70 "inner" [] []
                   1: (empty)
-                  2: JS_CALL_ARGUMENTS@70..72
+                  2: (empty)
+                  3: JS_CALL_ARGUMENTS@70..72
                     0: L_PAREN@70..71 "(" [] []
                     1: JS_CALL_ARGUMENT_LIST@71..71
                     2: R_PAREN@71..72 ")" [] []

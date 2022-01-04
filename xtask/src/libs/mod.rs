@@ -1,4 +1,8 @@
 use ansi_rgb::{red, Foreground};
+use std::cmp::Ordering;
+use std::fmt::{Display, Formatter};
+use std::ops::Add;
+use std::time::Duration;
 use std::{path::PathBuf, str::FromStr};
 
 fn err_to_string<E: std::fmt::Debug>(e: E) -> String {
@@ -7,7 +11,6 @@ fn err_to_string<E: std::fmt::Debug>(e: E) -> String {
 
 #[cfg(feature = "dhat-on")]
 fn print_diff(before: dhat::Stats, current: dhat::Stats) -> dhat::Stats {
-	use dhat::HeapStats;
 	use humansize::{file_size_opts as options, FileSize};
 
 	println!("\tMemory");
@@ -81,68 +84,116 @@ pub fn get_code(lib: &str) -> Result<String, String> {
 pub fn run(filter: String) {
 	let regex = regex::Regex::new(filter.as_str()).unwrap();
 	let libs = include_str!("libs.txt").lines();
+
 	for lib in libs {
 		if !regex.is_match(lib) {
 			continue;
 		}
 
 		let code = get_code(lib);
+
 		match code {
 			Ok(code) => {
-				let t = timing::start();
-				let _ = std::panic::catch_unwind(|| {
-					let text = code;
-
-					// Tokenizer
-					println!("Tokenizer");
-					#[cfg(feature = "dhat-on")]
-					#[cfg(feature = "dhat-on")]
-					let stats = dhat::get_stats().unwrap();
-					let tokenizer_timing = timing::start();
-					let (tokens, mut errors) = rslint_parser::tokenize(text.as_str(), 0);
-					let tok_source = rslint_parser::TokenSource::new(text.as_str(), &tokens);
-					println!("\tTime");
-					println!("\t\ttook {:?}", tokenizer_timing.stop());
-					#[cfg(feature = "dhat-on")]
-					let stats = print_diff(stats, dhat::get_stats().unwrap());
-
-					// Parser
-					println!("Parser");
-					let parser_timing = timing::start();
-					let (events, errors, tokens) = {
-						let mut parser = rslint_parser::Parser::new(
-							tok_source,
-							0,
-							rslint_parser::Syntax::default().module(),
-						);
-						rslint_parser::syntax::program::parse(&mut parser);
-						let (events, p_errs) = parser.finish();
-						errors.extend(p_errs);
-						(events, errors, tokens)
-					};
-					println!("\tTime");
-					println!("\t\ttook {:?}", parser_timing.stop());
-					#[cfg(feature = "dhat-on")]
-					let stats = print_diff(stats, dhat::get_stats().unwrap());
-
-					// TreeSink
-					println!("TreeSink");
-					let treesink_timing = timing::start();
-					let mut tree_sink =
-						rslint_parser::LosslessTreeSink::new(text.as_str(), &tokens);
-					rslint_parser::process(&mut tree_sink, events, errors);
-					let (_green, _parse_errors) = tree_sink.finish();
-					println!("\tTime");
-					println!("\t\ttook {:?}", treesink_timing.stop());
-					#[cfg(feature = "dhat-on")]
-					let stats = print_diff(stats, dhat::get_stats().unwrap());
-				});
-				let dur = t.stop();
-				println!("Total Time: {:?}", dur);
+				println!("Benchmark: {}", lib);
+				let result = benchmark_lib(&code);
+				println!("\tTokenization: {:>10?}", result.tokenization);
+				println!("\tParsing:      {:>10?}", result.parsing);
+				println!("\tTree_sink:    {:>10?}", result.tree_sink);
+				println!("\t              ----------");
+				println!("\tTotal:        {:>10?}", result.total());
 			}
 			Err(e) => println!("{:?}", e),
 		}
 	}
 
 	println!("end");
+}
+
+fn benchmark_lib(code: &str) -> BenchmarkResult {
+	#[cfg(feature = "dhat-on")]
+	println!("Start");
+	#[cfg(feature = "dhat-on")]
+	let stats = dhat::get_stats().unwrap();
+
+	let tokenizer_timer = timing::start();
+	let (tokens, mut errors) = rslint_parser::tokenize(code, 0);
+	let tok_source = rslint_parser::TokenSource::new(code, &tokens);
+	let tokenization_duration = tokenizer_timer.stop();
+
+	#[cfg(feature = "dhat-on")]
+	println!("Tokenizer");
+	#[cfg(feature = "dhat-on")]
+	let stats = print_diff(stats, dhat::get_stats().unwrap());
+
+	let parser_timer = timing::start();
+	let (events, parse_errors, tokens) = {
+		let mut parser =
+			rslint_parser::Parser::new(tok_source, 0, rslint_parser::Syntax::default().module());
+		rslint_parser::syntax::program::parse(&mut parser);
+		let (events, p_errs) = parser.finish();
+		(events, p_errs, tokens)
+	};
+	let parse_duration = parser_timer.stop();
+
+	errors.extend(parse_errors);
+
+	#[cfg(feature = "dhat-on")]
+	println!("Parsed");
+	#[cfg(feature = "dhat-on")]
+	let stats = print_diff(stats, dhat::get_stats().unwrap());
+
+	let tree_sink_timer = timing::start();
+	let mut tree_sink = rslint_parser::LosslessTreeSink::new(code, &tokens);
+	rslint_parser::process(&mut tree_sink, events, errors);
+	let (_green, _parse_errors) = tree_sink.finish();
+
+	#[cfg(feature = "dhat-on")]
+	println!("Tree-Sink");
+	#[cfg(feature = "dhat-on")]
+	print_diff(stats, dhat::get_stats().unwrap());
+
+	let tree_sink_duration = tree_sink_timer.stop();
+	BenchmarkResult {
+		tokenization: tokenization_duration,
+		parsing: parse_duration,
+		tree_sink: tree_sink_duration,
+	}
+}
+
+#[derive(Eq, PartialEq, Debug, Clone)]
+struct BenchmarkResult {
+	tokenization: Duration,
+	parsing: Duration,
+	tree_sink: Duration,
+}
+
+impl BenchmarkResult {
+	fn total(&self) -> Duration {
+		self.tokenization.add(self.parsing).add(self.tree_sink)
+	}
+}
+
+impl PartialOrd for BenchmarkResult {
+	fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+		Some(self.cmp(other))
+	}
+}
+
+impl Ord for BenchmarkResult {
+	fn cmp(&self, other: &Self) -> Ordering {
+		self.total().cmp(&other.total())
+	}
+}
+
+impl Display for BenchmarkResult {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		write!(
+			f,
+			"total: {:?} (tokenization: {:?}, parsing: {:?}, tree_sink: {:?})",
+			self.total(),
+			&self.tokenization,
+			&self.parsing,
+			&self.tree_sink,
+		)
+	}
 }

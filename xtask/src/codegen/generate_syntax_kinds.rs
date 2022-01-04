@@ -68,7 +68,7 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 		/// The kind of syntax node, e.g. `IDENT`, `FUNCTION_KW`, or `FOR_STMT`.
 		#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Debug)]
 		#[repr(u16)]
-		pub enum SyntaxKind {
+		pub enum JsSyntaxKind {
 			// Technical SyntaxKinds: they appear temporally during parsing,
 			// but never end up in the final tree
 			#[doc(hidden)]
@@ -85,9 +85,9 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 			#[doc(hidden)]
 			__LAST,
 		}
-		use self::SyntaxKind::*;
+		use self::JsSyntaxKind::*;
 
-		impl SyntaxKind {
+		impl JsSyntaxKind {
 			pub fn is_keyword(self) -> bool {
 				match self {
 					#(#all_keywords)|* => true,
@@ -121,7 +121,7 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 				}
 			}
 
-			pub fn from_keyword(ident: &str) -> Option<SyntaxKind> {
+			pub fn from_keyword(ident: &str) -> Option<JsSyntaxKind> {
 				let kw = match ident {
 					#(#full_keywords_values => #full_keywords,)*
 					_ => return None,
@@ -129,7 +129,7 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 				Some(kw)
 			}
 
-			pub fn from_char(c: char) -> Option<SyntaxKind> {
+			pub fn from_char(c: char) -> Option<JsSyntaxKind> {
 				let tok = match c {
 					#(#single_byte_tokens_values => #single_byte_tokens,)*
 					_ => return None,
@@ -150,11 +150,11 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 		/// Utility macro for creating a SyntaxKind through simple macro syntax
 		#[macro_export]
 		macro_rules! T {
-			#([#punctuation_values] => { $crate::SyntaxKind::#punctuation };)*
-			#([#all_keywords_idents] => { $crate::SyntaxKind::#all_keywords };)*
-			[ident] => { $crate::SyntaxKind::IDENT };
-			[EOF] => { $crate::SyntaxKind::EOF };
-			[#] => { $crate::SyntaxKind::HASH };
+			#([#punctuation_values] => { $crate::JsSyntaxKind::#punctuation };)*
+			#([#all_keywords_idents] => { $crate::JsSyntaxKind::#all_keywords };)*
+			[ident] => { $crate::JsSyntaxKind::IDENT };
+			[EOF] => { $crate::JsSyntaxKind::EOF };
+			[#] => { $crate::JsSyntaxKind::HASH };
 		}
 	};
 

@@ -3,18 +3,26 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: ImportMeta {
-                import_token: IMPORT_KW@0..6 "import" [] [],
-                dot_token: DOT@6..7 "." [] [],
-                meta_token: missing (required),
+            expression: JsUnknownExpression {
+                items: [
+                    IMPORT_KW@0..6 "import" [] [],
+                    DOT@6..7 "." [] [],
+                    2: ERROR@7..10
+                      0: IDENT@7..10 "foo" [] []
+                    ,
+                ],
             },
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: ImportMeta {
-                import_token: IMPORT_KW@10..17 "import" [Whitespace("\n")] [],
-                dot_token: DOT@17..18 "." [] [],
-                meta_token: missing (required),
+            expression: JsUnknownExpression {
+                items: [
+                    IMPORT_KW@10..17 "import" [Whitespace("\n")] [],
+                    DOT@17..18 "." [] [],
+                    2: ERROR@18..23
+                      0: IDENT@18..23 "metaa" [] []
+                    ,
+                ],
             },
             semicolon_token: missing (optional),
         },
@@ -27,14 +35,14 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..23
     0: JS_EXPRESSION_STATEMENT@0..10
-      0: IMPORT_META@0..10
+      0: JS_UNKNOWN_EXPRESSION@0..10
         0: IMPORT_KW@0..6 "import" [] []
         1: DOT@6..7 "." [] []
         2: ERROR@7..10
           0: IDENT@7..10 "foo" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@10..23
-      0: IMPORT_META@10..23
+      0: JS_UNKNOWN_EXPRESSION@10..23
         0: IMPORT_KW@10..17 "import" [Whitespace("\n")] []
         1: DOT@17..18 "." [] []
         2: ERROR@18..23

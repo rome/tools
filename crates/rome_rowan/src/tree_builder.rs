@@ -1,9 +1,11 @@
+use crate::green::NodeCacheNodeEntryMut;
 use crate::{
 	api::TriviaPiece,
 	cow_mut::CowMut,
 	green::{GreenElement, NodeCache},
-	GreenNode, Language, NodeOrToken, SyntaxNode,
+	GreenNode, Language, NodeOrToken, ParsedChildren, SyntaxFactory, SyntaxKind, SyntaxNode,
 };
+use std::marker::PhantomData;
 
 /// A checkpoint for maybe wrapping a node. See `GreenNodeBuilder::checkpoint` for details.
 #[derive(Clone, Copy, Debug)]
@@ -11,48 +13,51 @@ pub struct Checkpoint(usize);
 
 /// A builder for a syntax tree.
 #[derive(Debug)]
-pub struct TreeBuilder<'cache, L: Language> {
+pub struct TreeBuilder<'cache, L: Language, S: SyntaxFactory<Kind = L::Kind>> {
 	cache: CowMut<'cache, NodeCache>,
 	parents: Vec<(L::Kind, usize)>,
-	children: Vec<(u64, Option<GreenElement>)>,
+	children: Vec<(u64, GreenElement)>,
+	ph: PhantomData<S>,
 }
 
-impl<L: Language> Default for TreeBuilder<'_, L> {
+impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> Default for TreeBuilder<'_, L, S> {
 	fn default() -> Self {
 		Self {
 			cache: CowMut::default(),
 			parents: Vec::default(),
 			children: Vec::default(),
+			ph: PhantomData,
 		}
 	}
 }
 
-impl<L: Language> TreeBuilder<'_, L> {
+impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
 	/// Creates new builder.
-	pub fn new() -> TreeBuilder<'static, L> {
+	pub fn new() -> TreeBuilder<'static, L, S> {
 		TreeBuilder::default()
 	}
 
 	/// Reusing `NodeCache` between different [TreeBuilder]`s saves memory.
 	/// It allows to structurally share underlying trees.
-	pub fn with_cache(cache: &mut NodeCache) -> TreeBuilder<'_, L> {
+	pub fn with_cache(cache: &mut NodeCache) -> TreeBuilder<'_, L, S> {
 		TreeBuilder {
 			cache: CowMut::Borrowed(cache),
 			parents: Vec::new(),
 			children: Vec::new(),
+			ph: PhantomData,
 		}
 	}
 
 	/// Method to quickly wrap a tree with a node.
 	///
-	/// TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0), |builder| {
-	///     builder.token(SyntaxKind(1), "let");
+	/// TreeBuilder::<RawLanguage>::wrap_with_node(RawSyntaxKind(0), |builder| {
+	///     builder.token(RawSyntaxKind(1), "let");
 	/// });
 	pub fn wrap_with_node<F>(kind: L::Kind, build: F) -> SyntaxNode<L>
 	where
 		F: Fn(&mut Self),
 	{
-		let mut builder = TreeBuilder::<L>::new();
+		let mut builder = TreeBuilder::<L, S>::new();
 		builder.start_node(kind);
 		build(&mut builder);
 		builder.finish_node();
@@ -62,8 +67,8 @@ impl<L: Language> TreeBuilder<'_, L> {
 	/// Adds new token to the current branch.
 	#[inline]
 	pub fn token(&mut self, kind: L::Kind, text: &str) {
-		let (hash, token) = self.cache.token(L::kind_to_raw(kind), text);
-		self.children.push((hash, Some(token.into())));
+		let (hash, token) = self.cache.token(kind.to_raw(), text);
+		self.children.push((hash, token.into()));
 	}
 
 	/// Adds new token to the current branch.
@@ -75,18 +80,10 @@ impl<L: Language> TreeBuilder<'_, L> {
 		leading: Vec<TriviaPiece>,
 		trailing: Vec<TriviaPiece>,
 	) {
-		let (hash, token) =
-			self.cache
-				.token_with_trivia(L::kind_to_raw(kind), text, leading, trailing);
-		self.children.push((hash, Some(token.into())));
-	}
-
-	/// Inserts a placeholder for a child that is missing in a parent node either because
-	/// it's an optional node that isn't present or it's a mandatory child that is missing
-	/// because of a syntax error.
-	#[inline]
-	pub fn missing(&mut self) {
-		self.children.push(NodeCache::empty());
+		let (hash, token) = self
+			.cache
+			.token_with_trivia(kind.to_raw(), text, leading, trailing);
+		self.children.push((hash, token.into()));
 	}
 
 	/// Start new node and make it current.
@@ -101,10 +98,32 @@ impl<L: Language> TreeBuilder<'_, L> {
 	#[inline]
 	pub fn finish_node(&mut self) {
 		let (kind, first_child) = self.parents.pop().unwrap();
-		let (hash, node) = self
-			.cache
-			.node(L::kind_to_raw(kind), &mut self.children, first_child);
-		self.children.push((hash, Some(node.into())));
+		let raw_kind = kind.to_raw();
+
+		let slots = &self.children[first_child..];
+		let node_entry = self.cache.node(raw_kind, slots);
+
+		let mut build_node = || {
+			let children = ParsedChildren::new(&mut self.children, first_child);
+
+			S::make_syntax(kind, children).into_green()
+		};
+
+		let (hash, node) = match node_entry {
+			NodeCacheNodeEntryMut::NoCache(hash) => (hash, build_node()),
+			NodeCacheNodeEntryMut::Vacant(entry) => {
+				let node = build_node();
+
+				let hash = entry.cache(node.clone());
+				(hash, node)
+			}
+			NodeCacheNodeEntryMut::Cached(cached) => {
+				self.children.truncate(first_child);
+				(cached.hash(), cached.node().clone())
+			}
+		};
+
+		self.children.push((hash, node.into()));
 	}
 
 	/// Prepare for maybe wrapping the next node.
@@ -113,16 +132,15 @@ impl<L: Language> TreeBuilder<'_, L> {
 	/// `start_node_at`.
 	/// Example:
 	/// ```rust
-	/// # use rome_rowan::{TreeBuilder, SyntaxKind};
-	/// # use rome_rowan::api::RawLanguage;
-	/// # const PLUS: SyntaxKind = SyntaxKind(0);
-	/// # const OPERATION: SyntaxKind = SyntaxKind(1);
+	/// # use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+	/// # const PLUS: RawLanguageKind = RawLanguageKind::PLUS_TOKEN;
+	/// # const OPERATION: RawLanguageKind = RawLanguageKind::ROOT;
 	/// # struct Parser;
 	/// # impl Parser {
-	/// #     fn peek(&self) -> Option<SyntaxKind> { None }
+	/// #     fn peek(&self) -> Option<RawLanguageKind> { None }
 	/// #     fn parse_expr(&mut self) {}
 	/// # }
-	/// # let mut builder = TreeBuilder::<'_, RawLanguage>::new();
+	/// # let mut builder = RawSyntaxTreeBuilder::new();
 	/// # let mut parser = Parser;
 	/// let checkpoint = builder.checkpoint();
 	/// parser.parse_expr();
@@ -172,7 +190,7 @@ impl<L: Language> TreeBuilder<'_, L> {
 	pub(crate) fn finish_green(mut self) -> GreenNode {
 		assert_eq!(self.children.len(), 1);
 		match self.children.pop().unwrap().1 {
-			Some(NodeOrToken::Node(node)) => node,
+			NodeOrToken::Node(node) => node,
 			_ => panic!(),
 		}
 	}
@@ -180,31 +198,30 @@ impl<L: Language> TreeBuilder<'_, L> {
 
 #[cfg(test)]
 mod tests {
-	use crate::api::RawLanguage;
 	use crate::green::GreenElementRef;
-	use crate::{GreenNodeData, GreenTokenData, NodeOrToken, SyntaxKind, TreeBuilder};
+	use crate::raw_language::{RawLanguageKind, RawSyntaxTreeBuilder};
+	use crate::{GreenNodeData, GreenTokenData, NodeOrToken};
 
 	// Builds a "Condition" like structure where the closing ) is missing
-	fn build_condition_with_missing_closing_parenthesis(builder: &mut TreeBuilder<RawLanguage>) {
-		builder.start_node(SyntaxKind(2));
+	fn build_condition_with_missing_closing_parenthesis(builder: &mut RawSyntaxTreeBuilder) {
+		builder.start_node(RawLanguageKind::CONDITION);
 
-		builder.token(SyntaxKind(3), "(");
+		builder.token(RawLanguageKind::L_PAREN_TOKEN, "(");
 
-		builder.start_node(SyntaxKind(4));
-		builder.token(SyntaxKind(5), "a");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::STRING_TOKEN, "a");
 		builder.finish_node();
 
 		// missing )
-		builder.missing();
 
 		builder.finish_node();
 	}
 
 	#[test]
 	fn caches_identical_nodes_with_empty_slots() {
-		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+		let mut builder = RawSyntaxTreeBuilder::new();
 
-		builder.start_node(SyntaxKind(1)); // Root
+		builder.start_node(RawLanguageKind::ROOT); // Root
 		build_condition_with_missing_closing_parenthesis(&mut builder);
 		build_condition_with_missing_closing_parenthesis(&mut builder);
 		builder.finish_node();
@@ -220,22 +237,22 @@ mod tests {
 
 	#[test]
 	fn doesnt_cache_node_if_empty_slots_differ() {
-		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+		let mut builder = RawSyntaxTreeBuilder::new();
 
-		builder.start_node(SyntaxKind(1)); // Root
+		builder.start_node(RawLanguageKind::ROOT); // Root
 		build_condition_with_missing_closing_parenthesis(&mut builder); // misses the ')'
 
 		// Create a well formed condition
-		builder.start_node(SyntaxKind(2));
+		builder.start_node(RawLanguageKind::CONDITION);
 
-		builder.token(SyntaxKind(3), "(");
+		builder.token(RawLanguageKind::L_PAREN_TOKEN, "(");
 
-		builder.start_node(SyntaxKind(4));
-		builder.token(SyntaxKind(5), "a");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::STRING_TOKEN, "a");
 		builder.finish_node();
 
 		// missing )
-		builder.token(SyntaxKind(5), ")");
+		builder.token(RawLanguageKind::R_PAREN_TOKEN, ")");
 
 		builder.finish_node();
 

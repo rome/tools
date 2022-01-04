@@ -3,6 +3,7 @@
 //!
 mod ast;
 mod generate_nodes;
+mod generate_syntax_factory;
 mod generate_syntax_kinds;
 mod kinds_src;
 mod parser_tests;
@@ -14,12 +15,9 @@ use crate::{glue::fs2, Result};
 pub use self::ast::generate_ast;
 pub use self::parser_tests::generate_parser_tests;
 
-// const GRAMMAR_DIR: &str = "crates/ra_parser/src/grammar";
-// const OK_INLINE_TESTS_DIR: &str = "crates/ra_syntax/test_data/parser/inline/ok";
-// const ERR_INLINE_TESTS_DIR: &str = "crates/ra_syntax/test_data/parser/inline/err";
-
 const SYNTAX_KINDS: &str = "crates/rslint_syntax/src/generated.rs";
 const AST_NODES: &str = "crates/rslint_parser/src/ast/generated/nodes.rs";
+const SYNTAX_FACTORY: &str = "crates/rslint_parser/src/ast/generated/syntax_factory.rs";
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Mode {

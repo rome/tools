@@ -148,7 +148,6 @@ JsModule {
                                         r_brack_token: R_BRACK@86..87 "]" [] [],
                                     },
                                 },
-                                missing separator,
                             ],
                             r_brack_token: missing (required),
                         },
@@ -269,7 +268,6 @@ JsModule {
                     0: L_BRACK@85..86 "[" [] []
                     1: JS_ARRAY_ELEMENT_LIST@86..86
                     2: R_BRACK@86..87 "]" [] []
-                1: (empty)
               2: (empty)
             1: (empty)
             2: (empty)

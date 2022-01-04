@@ -74,8 +74,8 @@ impl<L: Language> Serialize for Children<&'_ SyntaxNode<L>> {
 #[test]
 pub fn serialization() {
 	let mut builder: crate::TreeBuilder<crate::api::RawLanguage> = crate::TreeBuilder::new();
-	builder.start_node(crate::SyntaxKind(0));
-	builder.token(crate::SyntaxKind(0), "\n\tlet ");
+	builder.start_node(crate::RawSyntaxKind(0));
+	builder.token(crate::RawSyntaxKind(0), "\n\tlet ");
 	builder.finish_node();
 	let root = builder.finish();
 

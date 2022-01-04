@@ -1,33 +1,31 @@
 use std::fmt::{Debug, Formatter};
+
 use std::iter::FusedIterator;
 use std::{fmt, iter, marker::PhantomData, ops::Range};
 
 use crate::{
 	cursor::{self},
-	Direction, GreenNode, NodeOrToken, SyntaxKind, SyntaxText, TextRange, TextSize, TokenAtOffset,
-	WalkEvent,
+	Direction, GreenNode, NodeOrToken, RawSyntaxKind, SyntaxText, TextRange, TextSize,
+	TokenAtOffset, WalkEvent,
 };
 
-pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Hash {
-	type Kind: fmt::Debug + PartialEq;
+/// Type tag for each node or token of a language
+pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
+	/// Returns `true` if this is an unknown node kind.
+	fn is_unknown(&self) -> bool;
 
-	fn kind_from_raw(raw: SyntaxKind) -> Self::Kind;
-	fn kind_to_raw(kind: Self::Kind) -> SyntaxKind;
+	/// Converts this into to the best matching unknown node kind.
+	fn to_unknown(&self) -> Self;
+
+	/// Converts this kind to a raw syntax kind.
+	fn to_raw(&self) -> RawSyntaxKind;
+
+	/// Creates a syntax kind from a raw kind.
+	fn from_raw(raw: RawSyntaxKind) -> Self;
 }
 
-#[derive(Debug, Default, Hash, Copy, Eq, Ord, PartialEq, PartialOrd, Clone)]
-pub struct RawLanguage;
-
-impl Language for RawLanguage {
-	type Kind = SyntaxKind;
-
-	fn kind_from_raw(raw: SyntaxKind) -> Self::Kind {
-		raw
-	}
-
-	fn kind_to_raw(kind: Self::Kind) -> SyntaxKind {
-		kind
-	}
+pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Hash {
+	type Kind: SyntaxKind;
 }
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
@@ -84,7 +82,7 @@ impl<L: Language> SyntaxTriviaPieceComments<L> {
 ///
 /// ```ignore
 /// builder.token_with_trivia(
-///     SyntaxKind(1),
+///     RawSyntaxKind(1),
 ///     "\n\t /**/let \t\t",
 ///     vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
 ///     vec![TriviaPiece::Whitespace(3)],
@@ -108,11 +106,11 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
 	/// use std::iter::Iterator;
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
 	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -134,11 +132,11 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
 	/// use std::iter::Iterator;
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
 	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -156,11 +154,11 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
 	/// use std::iter::Iterator;
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
 	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -177,11 +175,11 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
 	/// use std::iter::Iterator;
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
 	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -204,11 +202,11 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
 	/// use std::iter::Iterator;
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
 	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -399,12 +397,12 @@ impl<L: Language> SyntaxTrivia<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
 	/// use std::iter::Iterator;
 	/// use crate::*;
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	/// builder.token_with_trivia(
-	///     SyntaxKind(1),
+	///     RawLanguageKind::LET_TOKEN,
 	///     "\n\t /**/let \t\t",
 	///     vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
 	///     vec![TriviaPiece::Whitespace(3)],
@@ -445,24 +443,24 @@ impl<L: Language> SyntaxNode<L> {
 	}
 
 	pub fn kind(&self) -> L::Kind {
-		L::kind_from_raw(self.raw.kind())
+		L::Kind::from_raw(self.raw.kind())
 	}
 
 	/// Returns the text of all descendants tokens combined, including all trivia.
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
 	///         vec![TriviaPiece::Whitespace(3)],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
-	///     builder.token(SyntaxKind(1), "a");
+	///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::SEMICOLON_TOKEN,
 	///         "; \t\t",
 	///         vec![TriviaPiece::Whitespace(3)],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -480,17 +478,17 @@ impl<L: Language> SyntaxNode<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
 	///         vec![TriviaPiece::Whitespace(3)],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
-	///     builder.token(SyntaxKind(1), "a");
+	///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::SEMICOLON_TOKEN,
 	///         "; \t\t",
 	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -506,17 +504,17 @@ impl<L: Language> SyntaxNode<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
 	///         vec![TriviaPiece::Whitespace(3)],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
-	///     builder.token(SyntaxKind(1), "a");
+	///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::SEMICOLON_TOKEN,
 	///         "; \t\t",
 	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -536,17 +534,17 @@ impl<L: Language> SyntaxNode<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
 	///         vec![TriviaPiece::Whitespace(3)],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
-	///     builder.token(SyntaxKind(1), "a");
+	///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::SEMICOLON_TOKEN,
 	///         "; \t\t",
 	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -564,17 +562,17 @@ impl<L: Language> SyntaxNode<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
 	///         vec![TriviaPiece::Whitespace(3)],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
-	///     builder.token(SyntaxKind(1), "a");
+	///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::SEMICOLON_TOKEN,
 	///         "; \t\t",
 	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -584,7 +582,7 @@ impl<L: Language> SyntaxNode<L> {
 	/// assert!(trivia.is_some());
 	/// assert_eq!("\n\t ", trivia.unwrap().text());
 	///
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {});
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {});
 	/// let trivia = node.first_leading_trivia();
 	/// assert!(trivia.is_none());
 	/// ```
@@ -599,17 +597,17 @@ impl<L: Language> SyntaxNode<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
 	///         vec![TriviaPiece::Whitespace(3)],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
-	///     builder.token(SyntaxKind(1), "a");
+	///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::SEMICOLON_TOKEN,
 	///         "; \t\t",
 	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -619,7 +617,7 @@ impl<L: Language> SyntaxNode<L> {
 	/// assert!(trivia.is_some());
 	/// assert_eq!(" \t\t", trivia.unwrap().text());
 	///
-	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {});
+	/// let mut node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {});
 	/// let trivia = node.last_trailing_trivia();
 	/// assert!(trivia.is_none());
 	/// ```
@@ -797,7 +795,7 @@ impl<L: Language> SyntaxNode<L> {
 
 impl<L: Language> SyntaxToken<L> {
 	pub fn kind(&self) -> L::Kind {
-		L::kind_from_raw(self.raw.kind())
+		L::Kind::from_raw(self.raw.kind())
 	}
 
 	pub fn text_range(&self) -> TextRange {
@@ -816,10 +814,10 @@ impl<L: Language> SyntaxToken<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
-	/// let mut token = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+	/// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
 	///         vec![TriviaPiece::Whitespace(3)],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -835,10 +833,10 @@ impl<L: Language> SyntaxToken<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
-	/// let mut token = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+	/// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
 	///         vec![TriviaPiece::Whitespace(3)],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -891,10 +889,10 @@ impl<L: Language> SyntaxToken<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
-	/// let mut token = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+	/// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
 	///         vec![TriviaPiece::Whitespace(3)],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -914,10 +912,10 @@ impl<L: Language> SyntaxToken<L> {
 	///
 	/// ```
 	/// use rome_rowan::*;
-	/// use rome_rowan::api::RawLanguage;
-	/// let mut token = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	/// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
+	/// let mut token = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT,|builder| {
 	///     builder.token_with_trivia(
-	///         SyntaxKind(1),
+	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
 	///         vec![TriviaPiece::Whitespace(3)],
 	///         vec![TriviaPiece::Whitespace(3)],
@@ -1186,8 +1184,8 @@ impl<L: Language> Iterator for SyntaxSlots<L> {
 		self.raw.next().map(SyntaxSlot::from)
 	}
 
-	fn nth(&mut self, n: usize) -> Option<Self::Item> {
-		self.raw.nth(n).map(SyntaxSlot::from)
+	fn size_hint(&self) -> (usize, Option<usize>) {
+		self.raw.size_hint()
 	}
 
 	fn last(self) -> Option<Self::Item>
@@ -1195,6 +1193,10 @@ impl<L: Language> Iterator for SyntaxSlots<L> {
 		Self: Sized,
 	{
 		self.raw.last().map(SyntaxSlot::from)
+	}
+
+	fn nth(&mut self, n: usize) -> Option<Self::Item> {
+		self.raw.nth(n).map(SyntaxSlot::from)
 	}
 }
 
@@ -1267,15 +1269,14 @@ impl<L: Language> IntoIterator for SyntaxList<L> {
 mod tests {
 	use text_size::TextRange;
 
-	use crate::api::{RawLanguage, TriviaPiece};
-	use crate::{Direction, SyntaxKind, TreeBuilder};
-
-	const LIST_KIND: SyntaxKind = SyntaxKind(0);
+	use crate::api::TriviaPiece;
+	use crate::raw_language::{RawLanguageKind, RawSyntaxTreeBuilder};
+	use crate::Direction;
 
 	#[test]
 	fn empty_list() {
-		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
-		builder.start_node(LIST_KIND);
+		let mut builder: RawSyntaxTreeBuilder = RawSyntaxTreeBuilder::new();
+		builder.start_node(RawLanguageKind::EXPRESSION_LIST);
 		builder.finish_node();
 		let list = builder.finish().into_list();
 
@@ -1290,16 +1291,16 @@ mod tests {
 
 	#[test]
 	fn node_list() {
-		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+		let mut builder = RawSyntaxTreeBuilder::new();
 
-		builder.start_node(LIST_KIND);
+		builder.start_node(RawLanguageKind::EXPRESSION_LIST);
 
-		builder.start_node(SyntaxKind(1));
-		builder.token(SyntaxKind(2), "1");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::NUMBER_TOKEN, "1");
 		builder.finish_node();
 
-		builder.start_node(SyntaxKind(1));
-		builder.token(SyntaxKind(2), "2");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::NUMBER_TOKEN, "2");
 		builder.finish_node();
 
 		builder.finish_node();
@@ -1311,11 +1312,11 @@ mod tests {
 		assert_eq!(list.len(), 2);
 
 		let first = list.first().and_then(|e| e.into_node()).unwrap();
-		assert_eq!(first.kind(), SyntaxKind(1));
+		assert_eq!(first.kind(), RawLanguageKind::LITERAL_EXPRESSION);
 		assert_eq!(first.text(), "1");
 
 		let last = list.last().and_then(|e| e.into_node()).unwrap();
-		assert_eq!(last.kind(), SyntaxKind(1));
+		assert_eq!(last.kind(), RawLanguageKind::LITERAL_EXPRESSION);
 		assert_eq!(last.text(), "2");
 
 		let node_texts: Vec<_> = list
@@ -1331,18 +1332,18 @@ mod tests {
 
 	#[test]
 	fn node_or_token_list() {
-		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+		let mut builder = RawSyntaxTreeBuilder::new();
 
-		builder.start_node(LIST_KIND);
+		builder.start_node(RawLanguageKind::SEPARATED_EXPRESSION_LIST);
 
-		builder.start_node(SyntaxKind(1));
-		builder.token(SyntaxKind(2), "1");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::NUMBER_TOKEN, "1");
 		builder.finish_node();
 
-		builder.token(SyntaxKind(3), ",");
+		builder.token(RawLanguageKind::NUMBER_TOKEN, ",");
 
-		builder.start_node(SyntaxKind(1));
-		builder.token(SyntaxKind(2), "2");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::NUMBER_TOKEN, "2");
 		builder.finish_node();
 
 		builder.finish_node();
@@ -1354,11 +1355,11 @@ mod tests {
 		assert_eq!(list.len(), 3);
 
 		let first = list.first().and_then(|e| e.into_node()).unwrap();
-		assert_eq!(first.kind(), SyntaxKind(1));
+		assert_eq!(first.kind(), RawLanguageKind::LITERAL_EXPRESSION);
 		assert_eq!(first.text(), "1");
 
 		let last = list.last().and_then(|e| e.into_node()).unwrap();
-		assert_eq!(last.kind(), SyntaxKind(1));
+		assert_eq!(last.kind(), RawLanguageKind::LITERAL_EXPRESSION);
 		assert_eq!(last.text(), "2");
 
 		let kinds: Vec<_> = list.iter().map(|e| e.kind()).collect();
@@ -1366,36 +1367,35 @@ mod tests {
 		assert_eq!(
 			kinds,
 			vec![
-				Some(SyntaxKind(1)),
-				Some(SyntaxKind(3)),
-				Some(SyntaxKind(1))
+				Some(RawLanguageKind::LITERAL_EXPRESSION),
+				Some(RawLanguageKind::NUMBER_TOKEN),
+				Some(RawLanguageKind::LITERAL_EXPRESSION)
 			]
 		)
 	}
 
 	#[test]
 	fn siblings() {
-		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+		let mut builder = RawSyntaxTreeBuilder::new();
 
 		// list
-		builder.start_node(SyntaxKind(1));
+		builder.start_node(RawLanguageKind::SEPARATED_EXPRESSION_LIST);
 
 		// element 1
-		builder.start_node(SyntaxKind(2));
-		builder.token(SyntaxKind(3), "a");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::NUMBER_TOKEN, "a");
 		builder.finish_node();
 
 		// element 2
-		builder.start_node(SyntaxKind(2));
-		builder.token(SyntaxKind(3), "b");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::NUMBER_TOKEN, "b");
 		builder.finish_node();
 
 		// Missing ,
-		builder.missing();
 
 		// element 3
-		builder.start_node(SyntaxKind(2));
-		builder.token(SyntaxKind(3), "c");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::NUMBER_TOKEN, "c");
 		builder.finish_node();
 
 		builder.finish_node();
@@ -1449,20 +1449,20 @@ mod tests {
 
 	#[test]
 	fn siblings_with_tokens() {
-		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+		let mut builder = RawSyntaxTreeBuilder::new();
 
-		builder.start_node(LIST_KIND);
+		builder.start_node(RawLanguageKind::ROOT);
 
-		builder.token(SyntaxKind(1), "for");
-		builder.token(SyntaxKind(2), "(");
-		builder.token(SyntaxKind(3), ";");
+		builder.token(RawLanguageKind::FOR_KW, "for");
+		builder.token(RawLanguageKind::L_PAREN_TOKEN, "(");
+		builder.token(RawLanguageKind::SEMICOLON_TOKEN, ";");
 
-		builder.start_node(SyntaxKind(4));
-		builder.token(SyntaxKind(5), "x");
+		builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+		builder.token(RawLanguageKind::STRING_TOKEN, "x");
 		builder.finish_node();
 
-		builder.token(SyntaxKind(3), ";");
-		builder.token(SyntaxKind(6), ")");
+		builder.token(RawLanguageKind::SEMICOLON_TOKEN, ";");
+		builder.token(RawLanguageKind::R_PAREN_TOKEN, ")");
 
 		builder.finish_node();
 
@@ -1496,10 +1496,10 @@ mod tests {
 
 	#[test]
 	pub fn syntax_text_and_len() {
-		let mut builder: crate::TreeBuilder<crate::api::RawLanguage> = crate::TreeBuilder::new();
-		builder.start_node(crate::SyntaxKind(0));
+		let mut builder = RawSyntaxTreeBuilder::new();
+		builder.start_node(RawLanguageKind::ROOT);
 		builder.token_with_trivia(
-			crate::SyntaxKind(0),
+			RawLanguageKind::LET_TOKEN,
 			"\n\t let \t\t",
 			vec![TriviaPiece::Whitespace(3)],
 			vec![TriviaPiece::Whitespace(3)],
@@ -1525,29 +1525,29 @@ mod tests {
 
 	#[test]
 	pub fn syntax_range() {
-		let mut builder: crate::TreeBuilder<crate::api::RawLanguage> = crate::TreeBuilder::new();
-		builder.start_node(crate::SyntaxKind(0));
+		let mut builder = RawSyntaxTreeBuilder::new();
+		builder.start_node(RawLanguageKind::ROOT);
 		builder.token_with_trivia(
-			crate::SyntaxKind(0),
+			RawLanguageKind::LET_TOKEN,
 			"\n\t let \t\t",
 			vec![TriviaPiece::Whitespace(3)],
 			vec![TriviaPiece::Whitespace(3)],
 		);
 		builder.token_with_trivia(
-			crate::SyntaxKind(0),
+			RawLanguageKind::LET_TOKEN,
 			"a ",
 			vec![TriviaPiece::Whitespace(0)],
 			vec![TriviaPiece::Whitespace(1)],
 		);
 		builder.token_with_trivia(
-			crate::SyntaxKind(1),
+			RawLanguageKind::EQUAL_TOKEN,
 			"\n=\n",
 			vec![TriviaPiece::Whitespace(1)],
 			vec![TriviaPiece::Whitespace(1)],
 		);
-		builder.token(crate::SyntaxKind(0), "1");
+		builder.token(RawLanguageKind::NUMBER_TOKEN, "1");
 		builder.token_with_trivia(
-			crate::SyntaxKind(0),
+			RawLanguageKind::SEMICOLON_TOKEN,
 			";\t\t",
 			vec![],
 			vec![TriviaPiece::Whitespace(2)],
@@ -1576,7 +1576,7 @@ mod tests {
 
 		let eq_token = node
 			.descendants_with_tokens()
-			.find(|x| x.kind().0 == 1)
+			.find(|x| x.kind() == RawLanguageKind::EQUAL_TOKEN)
 			.unwrap();
 
 		assert_eq!(TextRange::new(11.into(), 14.into()), eq_token.text_range());
@@ -1614,9 +1614,9 @@ mod tests {
 	#[test]
 	pub fn syntax_trivia_pieces() {
 		use crate::*;
-		let node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0), |builder| {
+		let node = RawSyntaxTreeBuilder::wrap_with_node(RawLanguageKind::ROOT, |builder| {
 			builder.token_with_trivia(
-				SyntaxKind(1),
+				RawLanguageKind::LET_TOKEN,
 				"\n\t /**/let \t\t",
 				vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
 				vec![TriviaPiece::Whitespace(3)],

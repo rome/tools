@@ -39,6 +39,7 @@ JsModule {
         0: JS_PARENTHESIZED_ASSIGNMENT@0..2
           0: L_PAREN@0..2 "(" [] [Whitespace(" ")]
           1: (empty)
+          2: (empty)
         1: EQ@2..4 "=" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_EXPRESSION@4..7
           0: JS_REFERENCE_IDENTIFIER@4..7

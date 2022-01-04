@@ -29,8 +29,7 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..19
     0: JS_UNKNOWN_STATEMENT@0..7
       0: RETURN_KW@0..6 "return" [] []
-      1: (empty)
-      2: SEMICOLON@6..7 ";" [] []
+      1: SEMICOLON@6..7 ";" [] []
     1: JS_UNKNOWN_STATEMENT@7..19
       0: RETURN_KW@7..15 "return" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_EXPRESSION@15..18

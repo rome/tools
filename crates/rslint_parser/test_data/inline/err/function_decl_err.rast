@@ -134,8 +134,10 @@ JsModule {
         JsExpressionStatement {
             expression: JsUnknownExpression {
                 items: [
-                    JsReferenceIdentifier {
-                        value_token: IDENT@118..125 "yield" [Whitespace("\n")] [Whitespace(" ")],
+                    JsUnknown {
+                        items: [
+                            IDENT@118..125 "yield" [Whitespace("\n")] [Whitespace(" ")],
+                        ],
                     },
                 ],
             },
@@ -160,9 +162,13 @@ JsModule {
                     items: JsParameterList [],
                     r_paren_token: R_PAREN@144..145 ")" [] [],
                 },
-                TsTypeAnnotation {
-                    colon_token: COLON@145..147 ":" [] [Whitespace(" ")],
-                    ty: missing (required),
+                JsUnknown {
+                    items: [
+                        COLON@145..147 ":" [] [Whitespace(" ")],
+                        1: ERROR@147..154
+                          0: IDENT@147..154 "number" [] [Whitespace(" ")]
+                        ,
+                    ],
                 },
                 JsFunctionBody {
                     l_curly_token: L_CURLY@154..155 "{" [] [],
@@ -344,7 +350,7 @@ JsModule {
         3: R_CURLY@117..118 "}" [] []
     7: JS_EXPRESSION_STATEMENT@118..125
       0: JS_UNKNOWN_EXPRESSION@118..125
-        0: JS_REFERENCE_IDENTIFIER@118..125
+        0: JS_UNKNOWN@118..125
           0: IDENT@118..125 "yield" [Whitespace("\n")] [Whitespace(" ")]
       1: (empty)
     8: JS_EXPRESSION_STATEMENT@125..129
@@ -353,21 +359,18 @@ JsModule {
           0: IDENT@125..128 "foo" [] []
       1: SEMICOLON@128..129 ";" [] []
     9: JS_UNKNOWN_STATEMENT@129..156
-      0: (empty)
-      1: FUNCTION_KW@129..139 "function" [Whitespace("\n")] [Whitespace(" ")]
-      2: (empty)
-      3: JS_IDENTIFIER_BINDING@139..143
+      0: FUNCTION_KW@129..139 "function" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@139..143
         0: IDENT@139..143 "test" [] []
-      4: (empty)
-      5: JS_PARAMETERS@143..145
+      2: JS_PARAMETERS@143..145
         0: L_PAREN@143..144 "(" [] []
         1: JS_PARAMETER_LIST@144..144
         2: R_PAREN@144..145 ")" [] []
-      6: TS_TYPE_ANNOTATION@145..154
+      3: JS_UNKNOWN@145..154
         0: COLON@145..147 ":" [] [Whitespace(" ")]
         1: ERROR@147..154
           0: IDENT@147..154 "number" [] [Whitespace(" ")]
-      7: JS_FUNCTION_BODY@154..156
+      4: JS_FUNCTION_BODY@154..156
         0: L_CURLY@154..155 "{" [] []
         1: JS_DIRECTIVE_LIST@155..155
         2: JS_STATEMENT_LIST@155..155

@@ -132,6 +132,7 @@ JsModule {
                                         value_token: IDENT@85..89 "call" [] [],
                                     },
                                 },
+                                optional_chain_token_token: missing (optional),
                                 type_args: missing (optional),
                                 arguments: JsCallArguments {
                                     l_paren_token: L_PAREN@89..90 "(" [] [],
@@ -144,6 +145,7 @@ JsModule {
                                 value_token: IDENT@92..97 "chain" [] [],
                             },
                         },
+                        optional_chain_token_token: missing (optional),
                         type_args: missing (optional),
                         arguments: JsCallArguments {
                             l_paren_token: L_PAREN@97..98 "(" [] [],
@@ -315,7 +317,8 @@ JsModule {
                   2: JS_NAME@85..89
                     0: IDENT@85..89 "call" [] []
                 1: (empty)
-                2: JS_CALL_ARGUMENTS@89..91
+                2: (empty)
+                3: JS_CALL_ARGUMENTS@89..91
                   0: L_PAREN@89..90 "(" [] []
                   1: JS_CALL_ARGUMENT_LIST@90..90
                   2: R_PAREN@90..91 ")" [] []
@@ -323,7 +326,8 @@ JsModule {
               2: JS_NAME@92..97
                 0: IDENT@92..97 "chain" [] []
             1: (empty)
-            2: JS_CALL_ARGUMENTS@97..99
+            2: (empty)
+            3: JS_CALL_ARGUMENTS@97..99
               0: L_PAREN@97..98 "(" [] []
               1: JS_CALL_ARGUMENT_LIST@98..98
               2: R_PAREN@98..99 ")" [] []

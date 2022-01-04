@@ -6,12 +6,12 @@ use crate::syntax::stmt::{is_semi, parse_block_impl};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, ConditionalSyntax, SyntaxFeature};
+use crate::SyntaxFeature;
 use crate::{Parser, ParserState};
-use rslint_syntax::SyntaxKind::{
+use rslint_syntax::JsSyntaxKind::{
 	ERROR, JS_FUNCTION_BODY, JS_FUNCTION_DECLARATION, JS_FUNCTION_EXPRESSION, TS_TYPE_ANNOTATION,
 };
-use rslint_syntax::{SyntaxKind, T};
+use rslint_syntax::{JsSyntaxKind, T};
 use std::collections::HashMap;
 
 /// A function declaration, this could be async and or a generator. This takes a marker
@@ -44,30 +44,28 @@ use std::collections::HashMap;
 //
 // test_err function_broken
 // function foo())})}{{{  {}
-pub(super) fn parse_function_declaration(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+pub(super) fn parse_function_declaration(p: &mut Parser) -> ParsedSyntax {
 	parse_function(p, JS_FUNCTION_DECLARATION)
 }
 
-pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax<ConditionalSyntax> {
+pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
 	parse_function(p, JS_FUNCTION_EXPRESSION)
 }
 
-fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalSyntax> {
+fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
 	let m = p.start();
 
-	let mut uses_invalid_syntax =
+	let uses_invalid_syntax =
 		kind == JS_FUNCTION_DECLARATION && p.eat(T![declare]) && TypeScript.is_unsupported(p);
 
 	let in_async = is_at_async_function(p, LineBreak::DoNotCheck);
 	if in_async {
 		p.bump_remap(T![async]);
-	} else {
-		p.missing();
 	}
 
-	p.expect_required(T![function]);
+	p.expect(T![function]);
 
-	let in_generator = p.eat_optional(T![*]);
+	let in_generator = p.eat(T![*]);
 	let guard = &mut *p.with_state(ParserState {
 		labels: HashMap::new(),
 		in_function: true,
@@ -79,54 +77,46 @@ fn parse_function(p: &mut Parser, kind: SyntaxKind) -> ParsedSyntax<ConditionalS
 	let id = parse_binding(guard);
 
 	if kind == JS_FUNCTION_DECLARATION {
-		id.or_missing_with_error(guard, |p, range| {
+		id.or_add_diagnostic(guard, |p, range| {
 			p.err_builder(
 				"expected a name for the function in a function declaration, but found none",
 			)
 			.primary(range, "")
-		})
-	} else {
-		id.or_missing(guard)
-	};
+		});
+	}
 
-	let type_parameters =
-		TypeScript.parse_exclusive_syntax(guard, parse_ts_parameter_types, |p, marker| {
+	TypeScript
+		.parse_exclusive_syntax(guard, parse_ts_parameter_types, |p, marker| {
 			p.err_builder("type parameters can only be used in TypeScript files")
 				.primary(marker.range(p), "")
-		});
+		})
+		.ok();
 
-	if type_parameters.or_missing(guard).is_err() {
-		uses_invalid_syntax = true;
-	}
+	parse_parameter_list(guard).or_add_diagnostic(guard, js_parse_error::expected_parameters);
 
-	parse_parameter_list(guard).or_missing_with_error(guard, js_parse_error::expected_parameters);
-
-	let return_type =
-		TypeScript.parse_exclusive_syntax(guard, parse_ts_type_annotation_or_error, |p, marker| {
+	TypeScript
+		.parse_exclusive_syntax(guard, parse_ts_type_annotation_or_error, |p, marker| {
 			p.err_builder("return types can only be used in TypeScript files")
 				.primary(marker.range(p), "")
-		});
-
-	if return_type.or_missing(guard).is_err() {
-		uses_invalid_syntax = true;
-	}
+		})
+		.ok();
 
 	if kind == JS_FUNCTION_DECLARATION {
 		function_body_or_declaration(guard);
 	} else {
-		function_body(guard).or_missing_with_error(guard, js_parse_error::expected_function_body);
+		function_body(guard).or_add_diagnostic(guard, js_parse_error::expected_function_body);
 	}
 
-	let function = Present(m.complete(guard, kind));
+	let mut function = m.complete(guard, kind);
 
 	if uses_invalid_syntax {
-		function.into_invalid()
-	} else {
-		function.into_valid()
+		function.change_to_unknown(guard);
 	}
+
+	Present(function)
 }
 
-pub(super) fn function_body(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn function_body(p: &mut Parser) -> ParsedSyntax {
 	let mut guard = p.with_state(ParserState {
 		in_constructor: false,
 		in_function: true,
@@ -148,28 +138,25 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 	} else {
 		let body = function_body(p);
 		if p.state.in_declare {
-			match body {
-				Present(mut body) => {
-					let err = p
-						.err_builder(
-							"function implementations cannot be given in ambient (declare) contexts",
-						)
-						.primary(body.range(p), "");
+			body.map(|mut body| {
+				let err = p
+					.err_builder(
+						"function implementations cannot be given in ambient (declare) contexts",
+					)
+					.primary(body.range(p), "");
 
-					p.error(err);
-					body.change_kind(p, ERROR);
-				}
-				_ => {
-					p.missing();
-				}
-			}
+				p.error(err);
+				body.change_kind(p, ERROR);
+				body
+			})
+			.ok();
 		} else {
-			body.or_missing_with_error(p, js_parse_error::expected_function_body);
+			body.or_add_diagnostic(p, js_parse_error::expected_function_body);
 		}
 	}
 }
 
-pub(crate) fn parse_ts_parameter_types(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_ts_parameter_types(p: &mut Parser) -> ParsedSyntax {
 	if p.at(T![<]) {
 		Present(ts_type_params(p).unwrap())
 	} else {
@@ -185,7 +172,7 @@ pub(crate) fn ts_parameter_types(p: &mut Parser) {
 	}
 }
 
-pub(crate) fn parse_ts_type_annotation_or_error(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_ts_type_annotation_or_error(p: &mut Parser) -> ParsedSyntax {
 	if p.at(T![:]) {
 		let return_type = p.start();
 		if let Some(ref mut ty) = ts_type_or_type_predicate_ann(p, T![:]) {

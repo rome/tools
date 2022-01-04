@@ -10,7 +10,7 @@ mod generated;
 mod stmt_ext;
 mod ts_ext;
 
-use crate::{syntax_node::*, util::SyntaxNodeExt, SyntaxKind, SyntaxList, TextRange};
+use crate::{syntax_node::*, util::SyntaxNodeExt, JsSyntaxKind, SyntaxList, TextRange};
 use std::error::Error;
 use std::fmt::{Debug, Formatter};
 use std::iter::FusedIterator;
@@ -18,12 +18,14 @@ use std::marker::PhantomData;
 
 pub use self::{expr_ext::*, generated::nodes::*, stmt_ext::*, ts_ext::*};
 
+pub(crate) use self::generated::syntax_factory::JsSyntaxFactory;
+
 /// The main trait to go from untyped `SyntaxNode`  to a typed ast. The
 /// conversion itself has zero runtime cost: ast and syntax nodes have exactly
 /// the same representation: a pointer to the tree root and a pointer to the
 /// node itself.
 pub trait AstNode {
-	fn can_cast(kind: SyntaxKind) -> bool
+	fn can_cast(kind: JsSyntaxKind) -> bool
 	where
 		Self: Sized;
 
@@ -44,7 +46,7 @@ pub trait AstNode {
 
 /// Like `AstNode`, but wraps tokens rather than interior nodes.
 pub trait AstToken {
-	fn can_cast(token: SyntaxKind) -> bool
+	fn can_cast(token: JsSyntaxKind) -> bool
 	where
 		Self: Sized;
 
@@ -357,7 +359,7 @@ impl std::fmt::Display for SyntaxError {
 }
 
 mod support {
-	use super::{AstNode, SyntaxKind, SyntaxNode, SyntaxToken};
+	use super::{AstNode, JsSyntaxKind, SyntaxNode, SyntaxToken};
 	use crate::ast::{AstChildren, DebugSyntaxElement};
 	use crate::SyntaxElementChildren;
 	use crate::{SyntaxError, SyntaxResult};
@@ -383,7 +385,7 @@ mod support {
 		parent.children().find_map(L::cast).unwrap()
 	}
 
-	pub(super) fn token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
+	pub(super) fn token(parent: &SyntaxNode, kind: JsSyntaxKind) -> Option<SyntaxToken> {
 		parent
 			.children_with_tokens()
 			.filter_map(|it| it.into_token())
@@ -392,14 +394,14 @@ mod support {
 
 	pub(super) fn required_token(
 		parent: &SyntaxNode,
-		kind: SyntaxKind,
+		kind: JsSyntaxKind,
 	) -> SyntaxResult<SyntaxToken> {
 		token(parent, kind).ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
 	}
 
 	pub(super) fn find_token(
 		parent: &SyntaxNode,
-		possible_kinds: &[SyntaxKind],
+		possible_kinds: &[JsSyntaxKind],
 	) -> Option<SyntaxToken> {
 		parent
 			.children_with_tokens()
@@ -413,7 +415,7 @@ mod support {
 
 	pub(super) fn find_required_token(
 		parent: &SyntaxNode,
-		possible_kinds: &[SyntaxKind],
+		possible_kinds: &[JsSyntaxKind],
 	) -> SyntaxResult<SyntaxToken> {
 		find_token(parent, possible_kinds)
 			.ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
@@ -459,8 +461,10 @@ mod support {
 
 #[cfg(test)]
 mod tests {
-	use crate::ast::{AstSeparatedElement, AstSeparatedList, JsNumberLiteralExpression};
-	use crate::{AstNode, JsLanguage, SyntaxKind, SyntaxNode, SyntaxResult};
+	use crate::ast::{
+		AstSeparatedElement, AstSeparatedList, JsNumberLiteralExpression, JsSyntaxFactory,
+	};
+	use crate::{AstNode, JsLanguage, JsSyntaxKind, SyntaxNode, SyntaxResult};
 	use rome_rowan::{SyntaxList, TreeBuilder};
 
 	struct TestList {
@@ -480,7 +484,7 @@ mod tests {
 	}
 
 	impl AstNode for TestList {
-		fn can_cast(_: SyntaxKind) -> bool {
+		fn can_cast(_: JsSyntaxKind) -> bool {
 			unimplemented!()
 		}
 
@@ -501,30 +505,19 @@ mod tests {
 	fn build_list<'a>(
 		elements: impl IntoIterator<Item = (Option<i32>, Option<&'a str>)>,
 	) -> TestList {
-		let mut builder: TreeBuilder<JsLanguage> = TreeBuilder::new();
+		let mut builder: TreeBuilder<JsLanguage, JsSyntaxFactory> = TreeBuilder::new();
 
-		builder.start_node(SyntaxKind::JS_STATEMENT_LIST);
-
-		let mut had_missing_separator = false;
+		builder.start_node(JsSyntaxKind::JS_ARRAY_ELEMENT_LIST);
 
 		for (node, separator) in elements.into_iter() {
-			if had_missing_separator {
-				builder.missing();
-				had_missing_separator = false;
-			}
-
 			if let Some(node) = node {
-				builder.start_node(SyntaxKind::JS_NUMBER_LITERAL_EXPRESSION);
-				builder.token(SyntaxKind::JS_NUMBER_LITERAL, node.to_string().as_str());
+				builder.start_node(JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION);
+				builder.token(JsSyntaxKind::JS_NUMBER_LITERAL, node.to_string().as_str());
 				builder.finish_node();
-			} else {
-				builder.missing()
 			}
 
 			if let Some(separator) = separator {
-				builder.token(SyntaxKind::COMMA, separator);
-			} else {
-				had_missing_separator = true;
+				builder.token(JsSyntaxKind::COMMA, separator);
 			}
 		}
 
@@ -655,6 +648,8 @@ mod tests {
 	fn separated_with_leading_separator() {
 		// list([,3])
 		let list = build_list(vec![(None, Some(",")), (Some(3), None)]);
+
+		dbg!(&list.syntax_list.node());
 
 		assert_eq!(list.len(), 2);
 		assert!(!list.is_empty());

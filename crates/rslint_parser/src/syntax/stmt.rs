@@ -18,11 +18,11 @@ use crate::syntax::function::{is_at_async_function, parse_function_declaration, 
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement};
 use crate::syntax::module::parse_import;
-use crate::CompletedNodeOrMissingMarker::NodeMarker;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
-use crate::{SyntaxKind::*, *};
+use crate::{JsSyntaxKind::*, *};
+use rome_rowan::SyntaxKind;
 use rslint_errors::Span;
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![
@@ -87,7 +87,7 @@ pub fn semi(p: &mut Parser, err_range: Range<usize>) -> bool {
 /// Returns false if neither a semicolon was present and the current position doesn't allow an automatic
 /// semicolon insertion.
 pub(crate) fn optional_semi(p: &mut Parser) -> bool {
-	if p.eat_optional(T![;]) {
+	if p.eat(T![;]) {
 		return true;
 	}
 
@@ -107,7 +107,7 @@ pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
 /// caller has to pass a recovery set.
 ///
 /// If not passed, [STMT_RECOVERY_SET] will be used as recovery set
-pub fn parse_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		// test_err import_decl_not_top_level
 		// {
@@ -176,13 +176,9 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		T![continue] => parse_continue_statement(p), // It is only ever Err if there's no continue keyword
 		T![throw] => parse_throw_statement(p),
 		T![debugger] => parse_debugger_statement(p),
-		T![function] => {
-			parse_function_declaration(p).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
-		}
-		T![class] => parse_class_declaration(p).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT),
-		T![ident] if is_at_async_function(p, LineBreak::DoCheck) => {
-			parse_function_declaration(p).or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
-		}
+		T![function] => parse_function_declaration(p),
+		T![class] => parse_class_declaration(p),
+		T![ident] if is_at_async_function(p, LineBreak::DoCheck) => parse_function_declaration(p),
 
 		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
 			variable_declaration_statement(p)
@@ -200,7 +196,7 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // 	}
 // }
 
-fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
 	let start = p.cur_tok().range.start;
 	// this is *technically* wrong because it would be an expr stmt in js but for our purposes
 	// we treat these as always being ts declarations since ambiguity is inefficient in this style of
@@ -249,7 +245,7 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	// Labelled statement
 	if p.nth_at(1, T![:]) {
 		if let Present(identifier) = parse_identifier(p, JS_LABELED_STATEMENT) {
-			if let Valid(identifier) = &identifier {
+			if !identifier.kind().is_unknown() {
 				let range = identifier.range(p);
 				let label = p.source(range);
 
@@ -272,15 +268,15 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 				}
 			}
 
-			let kind = if identifier.is_valid() {
-				JS_LABELED_STATEMENT
-			} else {
+			let kind = if identifier.kind().is_unknown() {
 				JS_UNKNOWN_STATEMENT
+			} else {
+				JS_LABELED_STATEMENT
 			};
 
 			let labelled_statement = identifier.undo_completion(p);
 			p.bump_any();
-			parse_statement(p).or_missing_with_error(p, expected_statement);
+			parse_statement(p).or_add_diagnostic(p, expected_statement);
 
 			return Present(labelled_statement.complete(p, kind));
 		}
@@ -307,7 +303,7 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // }
 
 /// A debugger statement such as `debugger;`
-pub fn parse_debugger_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_debugger_statement(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![debugger]) {
 		return Absent;
 	}
@@ -322,7 +318,7 @@ pub fn parse_debugger_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 // test throw_stmt
 // throw new Error("foo");
 // throw "foo"
-pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err throw_stmt_err
 	// throw
 	// new Error("oh no :(")
@@ -345,10 +341,10 @@ pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		}
 
 		p.error(err);
-		p.missing();
-	} else if parse_expression_or_recover_to_next_statement(p, false).is_err() {
-		p.missing();
+	} else {
+		parse_expression_or_recover_to_next_statement(p, false).ok();
 	}
+
 	semi(p, start..p.cur_tok().range.end);
 	Present(m.complete(p, JS_THROW_STATEMENT))
 }
@@ -363,7 +359,7 @@ pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // test_err break_stmt
 // function foo() { break; }
 /// A break statement with an optional label such as `break a;`
-pub fn parse_break_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![break]) {
 		return Absent;
 	}
@@ -377,7 +373,6 @@ pub fn parse_break_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 		label_token.range.end
 	} else {
-		p.missing();
 		start.end
 	};
 
@@ -406,7 +401,7 @@ pub fn parse_break_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // test_err continue_stmt
 // function foo() { continue; }
 /// A continue statement with an optional label such as `continue a;`
-pub fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![continue]) {
 		return Absent;
 	}
@@ -421,7 +416,6 @@ pub fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 
 		label_token.range.end
 	} else {
-		p.missing();
 		start.end
 	};
 
@@ -446,7 +440,7 @@ pub fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker>
 //   return
 // }
 /// A return statement with an optional value such as `return a;`
-pub fn parse_return_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err return_stmt_err
 	// return;
 	// return foo;
@@ -458,9 +452,8 @@ pub fn parse_return_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.bump_any(); // return keyword
 	if !p.has_linebreak_before_n(0) && p.at_ts(STARTS_EXPR) {
 		parse_expression(p).unwrap();
-	} else {
-		p.missing();
 	}
+
 	semi(p, start..p.cur_tok().range.end);
 	let mut complete = m.complete(p, JS_RETURN_STATEMENT);
 
@@ -478,7 +471,7 @@ pub fn parse_return_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // test empty_stmt
 // ;
 /// An empty statement denoted by a single semicolon.
-pub fn parse_empty_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_empty_statement(p: &mut Parser) -> ParsedSyntax {
 	if p.at(T![;]) {
 		let m = p.start();
 		p.bump_any(); // bump ;
@@ -493,15 +486,12 @@ pub fn parse_empty_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // {{{{}}}}
 // { foo = bar; }
 /// A block statement consisting of statements wrapped in curly brackets.
-pub(crate) fn parse_block_stmt(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub(crate) fn parse_block_stmt(p: &mut Parser) -> ParsedSyntax {
 	parse_block_impl(p, JS_BLOCK_STATEMENT)
 }
 
 /// A block wrapped in curly brackets. Can either be a function body or a block statement.
-pub(super) fn parse_block_impl(
-	p: &mut Parser,
-	block_kind: SyntaxKind,
-) -> ParsedSyntax<CompletedMarker> {
+pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> ParsedSyntax {
 	if !p.at(T!['{']) {
 		return Absent;
 	}
@@ -517,7 +507,7 @@ pub(super) fn parse_block_impl(
 
 	parse_statements(p, true);
 
-	p.expect_required(T!['}']);
+	p.expect(T!['}']);
 
 	if let Some(old_parser_state) = old_parser_state {
 		p.state = old_parser_state;
@@ -544,9 +534,7 @@ impl DirectivesList {
 }
 
 impl ParseNodeList for DirectivesList {
-	type ParsedElement = CompletedMarker;
-
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
 		let directive_token = p.cur_tok();
 
 		let directive = p.start();
@@ -554,7 +542,7 @@ impl ParseNodeList for DirectivesList {
 		p.bump_any();
 
 		// eat semicolon if present, correct termination guaranteed by is_directive
-		p.eat_optional(SyntaxKind::SEMICOLON);
+		p.eat(JsSyntaxKind::SEMICOLON);
 
 		let completed_marker = directive.complete(p, JS_DIRECTIVE);
 
@@ -577,16 +565,12 @@ impl ParseNodeList for DirectivesList {
 		!self.is_at_directives(p)
 	}
 
-	fn recover(
-		&mut self,
-		_p: &mut Parser,
-		_parsed_element: ParsedSyntax<Self::ParsedElement>,
-	) -> RecoveryResult {
+	fn recover(&mut self, _p: &mut Parser, _parsed_element: ParsedSyntax) -> RecoveryResult {
 		// directives don't need proper error recovery
 		Err(RecoveryError::AlreadyRecovered)
 	}
 
-	fn list_kind() -> SyntaxKind {
+	fn list_kind() -> JsSyntaxKind {
 		JS_DIRECTIVE_LIST
 	}
 }
@@ -664,9 +648,9 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
 
 /// An expression wrapped in parentheses such as `()`
 pub fn parenthesized_expression(p: &mut Parser) {
-	p.state.allow_object_expr = p.expect_required(T!['(']);
-	parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
-	p.expect_required(T![')']);
+	p.state.allow_object_expr = p.expect(T!['(']);
+	parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+	p.expect(T![')']);
 	p.state.allow_object_expr = true;
 }
 
@@ -676,7 +660,7 @@ pub fn parenthesized_expression(p: &mut Parser) {
 // if (true) {}
 // if (true) false
 // if (bar) {} else if (true) {} else {}
-pub fn parse_if_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err if_stmt_err
 	// if (true) else {}
 	// if (true) else
@@ -694,16 +678,14 @@ pub fn parse_if_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	parenthesized_expression(p);
 
 	// body
-	parse_statement(p).or_missing_with_error(p, expected_statement);
+	parse_statement(p).or_add_diagnostic(p, expected_statement);
 
 	// else clause
 	if p.at(T![else]) {
 		let else_clause = p.start();
 		p.bump_any(); // bump else
-		parse_statement(p).or_missing_with_error(p, expected_statement);
+		parse_statement(p).or_add_diagnostic(p, expected_statement);
 		else_clause.complete(p, JS_ELSE_CLAUSE);
-	} else {
-		p.missing();
 	}
 
 	Present(m.complete(p, JS_IF_STATEMENT))
@@ -717,7 +699,7 @@ pub fn parse_if_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // 	}
 // }
 /// A with statement such as `with (foo) something()`
-pub fn parse_with_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_with_statement(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![with]) {
 		return Absent;
 	}
@@ -726,25 +708,23 @@ pub fn parse_with_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.bump_any(); // with
 	parenthesized_expression(p);
 
-	parse_statement(p).or_missing_with_error(p, expected_statement);
+	parse_statement(p).or_add_diagnostic(p, expected_statement);
 
 	let with_stmt = m.complete(p, JS_WITH_STATEMENT);
 
 	// or SloppyMode.exclusive_syntax(...) but this reads better with the error message, saying that
 	// it's only forbidden in strict mode
-	let conditional = StrictMode.excluding_syntax(p, with_stmt, |p, marker| {
+	StrictMode.excluding_syntax(p, with_stmt, |p, marker| {
 		p.err_builder("`with` statements are not allowed in strict mode")
 			.primary(marker.range(p), "")
-	});
-
-	conditional.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
+	})
 }
 
 /// A while statement such as `while(true) { do_something() }`
 // test while_stmt
 // while (true) {}
 // while (5) {}
-pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err while_stmt_err
 	// while true {}
 	// while {}
@@ -763,7 +743,7 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 			continue_allowed: true,
 			..p.state.clone()
 		});
-		parse_statement(guard).or_missing_with_error(guard, expected_statement);
+		parse_statement(guard).or_add_diagnostic(guard, expected_statement);
 	}
 
 	Present(m.complete(p, JS_WHILE_STATEMENT))
@@ -785,7 +765,7 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // const a;
 // let [a];
 // const { b };
-pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err var_decl_err
 	// var a =;
 	// const a = 5 let b = 5;
@@ -793,8 +773,8 @@ pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax<CompletedM
 
 	let declaration =
 		parse_variable_declaration_list(p, VariableDeclarationParent::VariableStatement)
-			.or_missing_with_error(p, js_parse_error::expected_variable);
-	if let NodeMarker(declaration) = declaration {
+			.or_add_diagnostic(p, js_parse_error::expected_variable);
+	if let Some(declaration) = declaration {
 		let m = declaration.precede(p);
 		semi(p, start..p.cur_tok().range.start);
 		Present(m.complete(p, JS_VARIABLE_STATEMENT))
@@ -806,15 +786,13 @@ pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax<CompletedM
 fn parse_variable_declaration_list(
 	p: &mut Parser,
 	declaration_context: VariableDeclarationParent,
-) -> ParsedSyntax<CompletedMarker> {
+) -> ParsedSyntax {
 	let m = p.start();
-
-	match parse_variable_declarations(p, declaration_context) {
-		Absent => {
-			m.abandon(p);
-			Absent
-		}
-		Present(_) => Present(m.complete(p, JS_VARIABLE_DECLARATIONS)),
+	if parse_variable_declarations(p, declaration_context).is_some() {
+		Present(m.complete(p, JS_VARIABLE_DECLARATIONS))
+	} else {
+		m.abandon(p);
+		Absent
 	}
 }
 
@@ -837,7 +815,7 @@ enum VariableDeclarationParent {
 fn parse_variable_declarations(
 	p: &mut Parser,
 	declaration_parent: VariableDeclarationParent,
-) -> ParsedSyntax<(CompletedMarker, Option<Range<usize>>)> {
+) -> Option<(CompletedMarker, Option<Range<usize>>)> {
 	let mut context = VariableDeclarationContext::new(declaration_parent);
 
 	match p.cur() {
@@ -853,7 +831,7 @@ fn parse_variable_declarations(
 			context.is_let = true;
 		}
 		_ => {
-			return Absent;
+			return None;
 		}
 	}
 
@@ -865,7 +843,7 @@ fn parse_variable_declarations(
 	let list = parse_declarations.parse_list(p);
 
 	p.state.name_map.clear();
-	Present((list, parse_declarations.remaining_declaration_range))
+	Some((list, parse_declarations.remaining_declaration_range))
 }
 
 struct ParseVariableDeclarations {
@@ -876,9 +854,7 @@ struct ParseVariableDeclarations {
 }
 
 impl ParseSeparatedList for ParseVariableDeclarations {
-	type ParsedElement = CompletedMarker;
-
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
 		parse_variable_declaration(p, &self.declaration_context).map(|declaration| {
 			if self.declaration_context.is_first {
 				self.declaration_context.is_first = false;
@@ -899,29 +875,20 @@ impl ParseSeparatedList for ParseVariableDeclarations {
 		}
 	}
 
-	fn recover(
-		&mut self,
-		p: &mut Parser,
-		parsed_element: ParsedSyntax<Self::ParsedElement>,
-	) -> RecoveryResult {
+	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
 		parsed_element.or_recover(
 			p,
-			&ParseRecovery::new(
-				// TODO this isn't really valid. Either `parse_variable_declarations` should return `ConditionalSyntax`
-				// or we use an `Unknown` node here
-				JS_VARIABLE_DECLARATION,
-				STMT_RECOVERY_SET.union(token_set!(T![,])),
-			)
-			.enable_recovery_on_line_break(),
+			&ParseRecovery::new(JS_UNKNOWN, STMT_RECOVERY_SET.union(token_set!(T![,])))
+				.enable_recovery_on_line_break(),
 			expected_binding,
 		)
 	}
 
-	fn list_kind() -> SyntaxKind {
+	fn list_kind() -> JsSyntaxKind {
 		JS_VARIABLE_DECLARATION_LIST
 	}
 
-	fn separating_element_kind(&mut self) -> SyntaxKind {
+	fn separating_element_kind(&mut self) -> JsSyntaxKind {
 		T![,]
 	}
 }
@@ -962,7 +929,7 @@ impl VariableDeclarationContext {
 fn parse_variable_declaration(
 	p: &mut Parser,
 	context: &VariableDeclarationContext,
-) -> ParsedSyntax<CompletedMarker> {
+) -> ParsedSyntax {
 	p.state.duplicate_binding_parent = context.duplicate_binding_parent_name();
 	let id = parse_binding_pattern(p);
 	p.state.duplicate_binding_parent = None;
@@ -971,7 +938,7 @@ fn parse_variable_declaration(
 		let m = id.precede(p);
 
 		let cur = p.cur_tok().range;
-		let opt = p.eat_optional(T![!]);
+		let opt = p.eat(T![!]);
 		if opt && !p.typescript() {
 			let err = p
 				.err_builder("definite assignment assertions can only be used in TypeScript files")
@@ -982,11 +949,7 @@ fn parse_variable_declaration(
 
 		let type_annotation = maybe_ts_type_annotation(p);
 
-		if type_annotation.is_none() {
-			p.missing();
-		}
-
-		let initializer = parse_initializer_clause(p).or_missing(p);
+		let initializer = parse_initializer_clause(p).ok();
 
 		// Heuristic to determine if we're in a for of or for in loop. This may be off if
 		// the user uses a for of/in with multiple declarations but this isn't allowed anyway.
@@ -1004,7 +967,7 @@ fn parse_variable_declaration(
 					p.error(err);
 				}
 			}
-		} else if initializer.is_missing_marker()
+		} else if initializer.is_none()
 			&& matches!(
 				id.kind(),
 				JS_ARRAY_BINDING_PATTERN | JS_OBJECT_BINDING_PATTERN
@@ -1019,10 +982,7 @@ fn parse_variable_declaration(
 
 			p.error(err);
 		// FIXME: does ts allow const var declarations without initializers in .d.ts files?
-		} else if initializer.is_missing_marker()
-			&& context.is_const.is_some()
-			&& !p.state.in_declare
-		{
+		} else if initializer.is_none() && context.is_const.is_some() && !p.state.in_declare {
 			let err = p
 				.err_builder("Const var declarations must have an initialized value")
 				.primary(id.range(p), "this variable needs to be initialized");
@@ -1052,7 +1012,7 @@ fn parse_variable_declaration(
 // do { } while (true)
 // do { throw Error("foo") } while (true)
 // do { break; } while (true)
-pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err do_while_stmt_err
 	// do while (true)
 	// do while ()
@@ -1074,10 +1034,10 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 			break_allowed: true,
 			..p.state.clone()
 		});
-		parse_statement(guard).or_missing_with_error(guard, expected_statement);
+		parse_statement(guard).or_add_diagnostic(guard, expected_statement);
 	}
 
-	p.expect_required(T![while]);
+	p.expect(T![while]);
 	parenthesized_expression(p);
 	let end_range = p.cur_tok().range.end;
 	semi(p, start..end_range);
@@ -1085,10 +1045,9 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 }
 
 /// Parses the header of a for statement into the current node and returns whatever it is a for in/of or "regular" for statement
-fn parse_for_head(p: &mut Parser) -> SyntaxKind {
+fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
 	// for (;...
 	if p.at(T![;]) {
-		p.missing();
 		parse_normal_for_head(p);
 		return FOR_STMT;
 	}
@@ -1124,7 +1083,6 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 					))
 					.primary(additional_declarations_range, "additional declarations"),
 				);
-				// TODO change kind to UNKNOWN
 			}
 
 			m.complete(p, JS_FOR_VARIABLE_DECLARATION);
@@ -1167,14 +1125,12 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 					p.error(err);
 					assignment.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
 				}
-			} else {
-				p.missing();
 			}
 
 			return parse_for_of_or_in_head(p);
 		}
 
-		init_expr.or_missing_with_error(p, js_parse_error::expected_expression);
+		init_expr.or_add_diagnostic(p, js_parse_error::expected_expression);
 
 		parse_normal_for_head(p);
 		FOR_STMT
@@ -1184,41 +1140,37 @@ fn parse_for_head(p: &mut Parser) -> SyntaxKind {
 /// Parses the parenthesized part of a non for in or for of statement
 /// Expects to be positioned right after the initializer
 fn parse_normal_for_head(p: &mut Parser) {
-	p.expect_required(T![;]);
+	p.expect(T![;]);
 
-	if p.at(T![;]) {
-		p.missing(); // missing test
-	} else {
+	if !p.at(T![;]) {
 		let m = p.start();
-		parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
+		parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
 		m.complete(p, FOR_STMT_TEST);
 	}
 
-	p.expect_required(T![;]);
+	p.expect(T![;]);
 
-	if p.at(T![')']) {
-		p.missing(); // Missing update
-	} else {
+	if !p.at(T![')']) {
 		let m = p.start();
-		parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
+		parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
 		m.complete(p, FOR_STMT_UPDATE);
 	}
 }
 
 /// Expects to be positioned right before the of or in keyword
-fn parse_for_of_or_in_head(p: &mut Parser) -> SyntaxKind {
+fn parse_for_of_or_in_head(p: &mut Parser) -> JsSyntaxKind {
 	let is_in = p.at(T![in]);
 
 	if is_in {
 		p.bump_any();
-		parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
+		parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
 
 		JS_FOR_IN_STATEMENT
 	} else {
 		p.bump_remap(T![of]);
 
 		parse_expr_or_assignment(p)
-			.or_missing_with_error(p, js_parse_error::expected_expression_assignment);
+			.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
 		JS_FOR_OF_STATEMENT
 	}
@@ -1233,7 +1185,7 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> SyntaxKind {
 // for (let foo of []) {}
 // for (let i = 5, j = 6; i < j; ++j) {}
 // for await (let a of []) {}
-pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err for_stmt_err
 	// for ;; {}
 	// for let i = 5; i < 10; i++ {}
@@ -1251,19 +1203,14 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	p.bump_any(); // for keyword
 
 	let mut await_range = None;
-	let mut await_missing_marker = None;
 	if p.at(T![await]) {
 		await_range = Some(p.cur_tok().range);
 		p.bump_any();
-	} else {
-		// Add the missing await for for...of but we may need to undo it later if the for loop turns out
-		// to be a for...in or normal for loop
-		await_missing_marker = Some(p.missing());
 	}
 
-	p.expect_required(T!['(']);
+	p.expect(T!['(']);
 	let kind = parse_for_head(p);
-	p.expect_required(T![')']);
+	p.expect(T![')']);
 
 	{
 		let guard = &mut *p.with_state(ParserState {
@@ -1271,7 +1218,7 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 			break_allowed: true,
 			..p.state.clone()
 		});
-		parse_statement(guard).or_missing_with_error(guard, expected_statement);
+		parse_statement(guard).or_add_diagnostic(guard, expected_statement);
 	}
 
 	let mut completed = m.complete(p, kind);
@@ -1288,10 +1235,6 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 			);
 			completed.change_kind(p, JS_UNKNOWN_STATEMENT)
 		}
-
-		if let Some(await_missing_marker) = await_missing_marker {
-			await_missing_marker.undo(p);
-		}
 	}
 
 	Present(completed)
@@ -1300,9 +1243,7 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 struct SwitchClausesList;
 
 impl ParseNodeList for SwitchClausesList {
-	type ParsedElement = CompletedMarker;
-
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
 		parse_statement(p)
 	}
 
@@ -1310,11 +1251,7 @@ impl ParseNodeList for SwitchClausesList {
 		p.at_ts(token_set![T![default], T![case], T!['}']])
 	}
 
-	fn recover(
-		&mut self,
-		p: &mut Parser,
-		parsed_element: ParsedSyntax<Self::ParsedElement>,
-	) -> parser::RecoveryResult {
+	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> parser::RecoveryResult {
 		parsed_element.or_recover(
 			p,
 			&ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
@@ -1322,16 +1259,14 @@ impl ParseNodeList for SwitchClausesList {
 		)
 	}
 
-	fn list_kind() -> SyntaxKind {
+	fn list_kind() -> JsSyntaxKind {
 		JS_STATEMENT_LIST
 	}
 }
 
 struct ConsList;
 impl ParseNodeList for ConsList {
-	type ParsedElement = CompletedMarker;
-
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
 		parse_statement(p)
 	}
 
@@ -1339,11 +1274,7 @@ impl ParseNodeList for ConsList {
 		p.at_ts(token_set![T![default], T![case], T!['}']])
 	}
 
-	fn recover(
-		&mut self,
-		p: &mut Parser,
-		parsed_element: ParsedSyntax<Self::ParsedElement>,
-	) -> RecoveryResult {
+	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
 		parsed_element.or_recover(
 			p,
 			&ParseRecovery::new(JS_UNKNOWN_STATEMENT, token_set!()),
@@ -1351,7 +1282,7 @@ impl ParseNodeList for ConsList {
 		)
 	}
 
-	fn list_kind() -> SyntaxKind {
+	fn list_kind() -> JsSyntaxKind {
 		JS_STATEMENT_LIST
 	}
 }
@@ -1359,25 +1290,23 @@ impl ParseNodeList for ConsList {
 fn parse_switch_clause(
 	p: &mut Parser,
 	first_default: &mut Option<CompletedMarker>,
-) -> ParsedSyntax<CompletedMarker> {
+) -> ParsedSyntax {
 	let m = p.start();
 	match p.cur() {
 		T![default] => {
 			// in case we have two `default` expression, we mark the second one
 			// as `JS_CASE_CLAUSE` where the the "default" keyword is an Unknown node
 			let syntax_kind = if first_default.is_some() {
-				// missing "case" keyword
-				p.missing();
 				let discriminant = p.start();
 				p.bump_any(); // interpret `default` as the test of the case
-				discriminant.complete(p, JS_UNARY_EXPRESSION);
+				discriminant.complete(p, JS_UNKNOWN_EXPRESSION);
 				JS_CASE_CLAUSE
 			} else {
 				p.bump_any();
 				JS_DEFAULT_CLAUSE
 			};
 
-			p.expect_required(T![:]);
+			p.expect(T![:]);
 			ConsList.parse_list(p);
 			let default = m.complete(p, syntax_kind);
 			if first_default.is_some() {
@@ -1398,8 +1327,8 @@ fn parse_switch_clause(
 		}
 		T![case] => {
 			p.bump_any();
-			parse_expression(p).or_missing_with_error(p, js_parse_error::expected_expression);
-			p.expect_required(T![:]);
+			parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+			p.expect(T![:]);
 
 			SwitchClausesList.parse_list(p);
 			Present(m.complete(p, JS_CASE_CLAUSE))
@@ -1416,9 +1345,7 @@ struct SwitchCasesList {
 }
 
 impl ParseNodeList for SwitchCasesList {
-	type ParsedElement = CompletedMarker;
-
-	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax<Self::ParsedElement> {
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
 		let clause = parse_switch_clause(p, &mut self.first_default);
 
 		if let Present(marker) = clause {
@@ -1434,19 +1361,11 @@ impl ParseNodeList for SwitchCasesList {
 		p.at(T!['}'])
 	}
 
-	fn recover(
-		&mut self,
-		p: &mut Parser,
-		parsed_element: ParsedSyntax<Self::ParsedElement>,
-	) -> RecoveryResult {
+	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
 		if let Present(marker) = parsed_element {
 			Ok(marker)
 		} else {
 			let m = p.start();
-			p.missing(); // case
-			p.missing(); // discriminant
-			p.missing(); // colon
-
 			let statements = p.start();
 
 			let recovered_element = parsed_element.or_recover(
@@ -1474,7 +1393,7 @@ impl ParseNodeList for SwitchCasesList {
 		}
 	}
 
-	fn list_kind() -> SyntaxKind {
+	fn list_kind() -> JsSyntaxKind {
 		JS_SWITCH_CASE_LIST
 	}
 }
@@ -1492,7 +1411,7 @@ impl ParseNodeList for SwitchCasesList {
 //  case bar:
 //  default:
 // }
-pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err switch_stmt_err
 	// switch foo {}
 	// switch {}
@@ -1510,7 +1429,7 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let m = p.start();
 	p.bump_any(); // switch keyword
 	parenthesized_expression(p);
-	p.expect_required(T!['{']);
+	p.expect(T!['{']);
 
 	{
 		let mut temp = p.with_state(ParserState {
@@ -1519,11 +1438,11 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 		});
 		SwitchCasesList::default().parse_list(&mut *temp);
 	}
-	p.expect_required(T!['}']);
+	p.expect(T!['}']);
 	Present(m.complete(p, JS_SWITCH_STATEMENT))
 }
 
-fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![catch]) {
 		return Absent;
 	}
@@ -1531,13 +1450,13 @@ fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let m = p.start();
 	p.bump_any(); // bump catch
 
-	parse_catch_declaration(p).or_missing(p);
-	parse_block_stmt(p).or_missing_with_error(p, js_parse_error::expected_block_statement);
+	parse_catch_declaration(p).ok();
+	parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
 
 	Present(m.complete(p, JS_CATCH_CLAUSE))
 }
 
-fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T!['(']) {
 		return Absent;
 	}
@@ -1546,12 +1465,12 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 
 	p.bump_any(); // bump (
 
-	let pattern_marker = parse_binding_pattern(p).or_missing_with_error(p, expected_binding);
-	let pattern_kind = pattern_marker.kind();
+	let pattern_marker = parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
+	let pattern_kind = pattern_marker.map(|x| x.kind());
 
 	if p.at(T![:]) {
 		let error_marker = match pattern_marker {
-			NodeMarker(pattern_node) => pattern_node.precede(p),
+			Some(pattern_node) => pattern_node.precede(p),
 			_ => p.start(),
 		};
 		let start = p.cur_tok().range.start;
@@ -1582,7 +1501,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 			p.error(err);
 		}
 	}
-	p.expect_required(T![')']);
+	p.expect(T![')']);
 
 	Present(declaration_marker.complete(p, JS_CATCH_DECLARATION))
 }
@@ -1602,7 +1521,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 // try {} catch {} finally {}
 // try {} catch (e) {} finally {}
 // try {} finally {}
-pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
+pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
 	// TODO: recover from `try catch` and `try finally`. The issue is block_items
 	// will cause infinite recursion because parsing a stmt would not consume the catch token
 	// and block_items would not exit, and if we exited on any error that would greatly limit
@@ -1615,20 +1534,20 @@ pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax<CompletedMarker> {
 	let m = p.start();
 	p.bump_any(); // eat try
 
-	parse_block_stmt(p).or_missing_with_error(p, js_parse_error::expected_block_statement);
+	parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
 
 	let catch = parse_catch_clause(p);
 
 	if p.at(T![finally]) {
-		catch.or_missing(p);
+		catch.ok();
 
 		let finalizer = p.start();
 		p.bump_any();
-		parse_block_stmt(p).or_missing_with_error(p, js_parse_error::expected_block_statement);
+		parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
 		finalizer.complete(p, JS_FINALLY_CLAUSE);
 		Present(m.complete(p, JS_TRY_FINALLY_STATEMENT))
 	} else {
-		catch.or_missing_with_error(p, js_parse_error::expected_catch_clause);
+		catch.or_add_diagnostic(p, js_parse_error::expected_catch_clause);
 		Present(m.complete(p, JS_TRY_STATEMENT))
 	}
 }
