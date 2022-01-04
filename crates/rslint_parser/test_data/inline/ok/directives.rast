@@ -9,7 +9,7 @@ JsScript {
     statements: JsStatementList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@19..24 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@19..24 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -59,7 +59,7 @@ JsScript {
                 statements: JsStatementList [
                     JsVariableStatement {
                         declarations: JsVariableDeclarations {
-                            kind_token: LET_KW@97..103 "let" [Whitespace("\n\t")] [Whitespace(" ")],
+                            kind: LET_KW@97..103 "let" [Whitespace("\n\t")] [Whitespace(" ")],
                             items: JsVariableDeclarationList [
                                 JsVariableDeclaration {
                                     id: JsIdentifierBinding {
@@ -114,7 +114,7 @@ JsScript {
                         statements: JsStatementList [
                             JsVariableStatement {
                                 declarations: JsVariableDeclarations {
-                                    kind_token: LET_KW@176..182 "let" [Whitespace("\n\t")] [Whitespace(" ")],
+                                    kind: LET_KW@176..182 "let" [Whitespace("\n\t")] [Whitespace(" ")],
                                     items: JsVariableDeclarationList [
                                         JsVariableDeclaration {
                                             id: JsIdentifierBinding {
@@ -149,7 +149,7 @@ JsScript {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@227..232 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@227..232 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -180,7 +180,7 @@ JsScript {
                                     statements: JsStatementList [
                                         JsVariableStatement {
                                             declarations: JsVariableDeclarations {
-                                                kind_token: LET_KW@258..264 "let" [Whitespace("\n\t")] [Whitespace(" ")],
+                                                kind: LET_KW@258..264 "let" [Whitespace("\n\t")] [Whitespace(" ")],
                                                 items: JsVariableDeclarationList [
                                                     JsVariableDeclaration {
                                                         id: JsIdentifierBinding {

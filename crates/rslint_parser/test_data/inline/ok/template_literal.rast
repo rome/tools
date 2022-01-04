@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -31,7 +31,7 @@ JsModule {
                                         r_curly_token: R_CURLY@18..19 "}" [] [],
                                     },
                                 ],
-                                r_tick_token: BACKTICK@8..9 "`" [] [],
+                                r_tick_token: BACKTICK@19..20 "`" [] [],
                             },
                         },
                     },
@@ -41,7 +41,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@21..26 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@21..26 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -55,7 +55,7 @@ JsModule {
                                 tag: missing (optional),
                                 l_tick_token: BACKTICK@30..31 "`" [] [],
                                 elements: TemplateElementList [],
-                                r_tick_token: BACKTICK@30..31 "`" [] [],
+                                r_tick_token: BACKTICK@31..32 "`" [] [],
                             },
                         },
                     },
@@ -65,7 +65,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@33..38 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@33..38 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -89,7 +89,7 @@ JsModule {
                                         r_curly_token: R_CURLY@48..49 "}" [] [],
                                     },
                                 ],
-                                r_tick_token: BACKTICK@42..43 "`" [] [],
+                                r_tick_token: BACKTICK@49..50 "`" [] [],
                             },
                         },
                     },
@@ -99,7 +99,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind_token: LET_KW@51..56 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@51..56 "let" [Whitespace("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -117,7 +117,7 @@ JsModule {
                                         template_chunk_token: TEMPLATE_CHUNK@61..64 "foo" [] [],
                                     },
                                 ],
-                                r_tick_token: BACKTICK@60..61 "`" [] [],
+                                r_tick_token: BACKTICK@64..65 "`" [] [],
                             },
                         },
                     },

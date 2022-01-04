@@ -42,7 +42,7 @@ JsModule {
                         template_chunk_token: TEMPLATE_CHUNK@18..20 "b\n" [] [],
                     },
                 ],
-                r_tick_token: BACKTICK@17..18 "`" [] [],
+                r_tick_token: missing (required),
             },
             semicolon_token: missing (optional),
         },

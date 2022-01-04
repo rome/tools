@@ -495,13 +495,11 @@ pub enum Field {
 		name: String,
 		kind: TokenKind,
 		optional: bool,
-		manual: bool,
 	},
 	Node {
 		name: String,
 		ty: String,
 		optional: bool,
-		manual: bool,
 	},
 }
 

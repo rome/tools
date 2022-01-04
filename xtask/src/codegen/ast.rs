@@ -62,7 +62,7 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 			}),
 			NodeRuleClassification::Node => {
 				let mut fields = vec![];
-				handle_rule(&mut fields, grammar, rule, None, false, false);
+				handle_rule(&mut fields, grammar, rule, None, false);
 				ast.nodes.push(AstNodeSrc {
 					documentation: vec![],
 					name,
@@ -177,7 +177,6 @@ fn handle_rule(
 	rule: &Rule,
 	label: Option<&str>,
 	optional: bool,
-	manual: bool,
 ) {
 	match rule {
 		Rule::Labeled { label, rule } => {
@@ -188,31 +187,14 @@ fn handle_rule(
 				return;
 			}
 
-			let manually_implemented = label.as_str().starts_with("manual__");
-			handle_rule(
-				fields,
-				grammar,
-				rule,
-				Some(if manually_implemented {
-					label.trim_start_matches("manual__")
-				} else {
-					label
-				}),
-				optional,
-				manually_implemented,
-			)
+			handle_rule(fields, grammar, rule, Some(label), optional)
 		}
 		Rule::Node(node) => {
 			let ty = grammar[*node].name.clone();
 			let name = label
 				.map(String::from)
 				.unwrap_or_else(|| to_lower_snake_case(&ty));
-			let field = Field::Node {
-				name,
-				ty,
-				optional,
-				manual,
-			};
+			let field = Field::Node { name, ty, optional };
 			fields.push(field);
 		}
 		Rule::Token(token) => {
@@ -227,7 +209,6 @@ fn handle_rule(
 				name: label.map(String::from).unwrap_or_else(|| name.clone()),
 				kind: TokenKind::Single(name),
 				optional,
-				manual,
 			};
 			fields.push(field);
 		}
@@ -236,17 +217,17 @@ fn handle_rule(
 			panic!("Create a list node for *many* children {:?}", label);
 		}
 		Rule::Opt(rule) => {
-			handle_rule(fields, grammar, rule, label, true, manual);
+			handle_rule(fields, grammar, rule, label, true);
 		}
 		Rule::Alt(rules) => {
 			for rule in rules {
-				handle_rule(fields, grammar, rule, label, false, manual);
+				handle_rule(fields, grammar, rule, label, false);
 			}
 		}
 
 		Rule::Seq(rules) => {
 			for rule in rules {
-				handle_rule(fields, grammar, rule, label, false, manual);
+				handle_rule(fields, grammar, rule, label, false);
 			}
 		}
 	};
@@ -336,7 +317,6 @@ fn handle_tokens_in_unions(
 		name: label.to_string(),
 		kind: TokenKind::Many(token_kinds),
 		optional,
-		manual: false,
 	};
 	fields.push(field);
 	true

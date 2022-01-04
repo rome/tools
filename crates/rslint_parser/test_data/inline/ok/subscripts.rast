@@ -15,7 +15,7 @@ JsModule {
                         template_chunk_token: TEMPLATE_CHUNK@4..7 "bar" [] [],
                     },
                 ],
-                r_tick_token: BACKTICK@3..4 "`" [] [],
+                r_tick_token: BACKTICK@7..8 "`" [] [],
             },
             semicolon_token: missing (optional),
         },

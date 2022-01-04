@@ -38,11 +38,11 @@ JsModule {
                 },
                 operator: PLUS@16..18 "+" [] [Whitespace(" ")],
                 right: JsBinaryExpression {
-                    left: JsNumberLiteralExpression {
+                    left: missing (required),
+                    operator: STAR@18..20 "*" [] [Whitespace(" ")],
+                    right: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@20..21 "2" [] [],
                     },
-                    operator: STAR@18..20 "*" [] [Whitespace(" ")],
-                    right: missing (required),
                 },
             },
             semicolon_token: SEMICOLON@21..22 ";" [] [],
