@@ -162,7 +162,10 @@ pub(crate) trait ParseObjectPattern {
 
 				if p.at(T![,]) {
 					// missing element
-					p.error(Self::expected_property_pattern_error(p, p.cur_tok().range()));
+					p.error(Self::expected_property_pattern_error(
+						p,
+						p.cur_tok().range(),
+					));
 					p.bump_any(); // bump ,
 					continue;
 				}

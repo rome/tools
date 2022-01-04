@@ -357,7 +357,7 @@ fn from_clause_and_semi(p: &mut Parser, start: usize) {
 }
 
 pub fn ts_import_equals_decl(p: &mut Parser, m: Marker) -> CompletedMarker {
-	let start = p.cur_tok().range.start;
+	let start = p.cur_tok().range().start;
 	parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 	p.expect(T![=]);
 

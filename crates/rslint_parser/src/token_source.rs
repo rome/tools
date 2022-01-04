@@ -1,5 +1,4 @@
-use crate::{JsSyntaxKind::EOF, TextRange, TextSize};
-use std::collections::HashSet;
+use crate::JsSyntaxKind::EOF;
 use std::iter::FusedIterator;
 
 /// The source of tokens for the parser

@@ -271,7 +271,10 @@ fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 
 	if p.cur_src() == "as" && p.nth_src(1) != "as" {
-		p.error(expected_export_name_after_as_keyword(p, p.cur_tok().range()));
+		p.error(expected_export_name_after_as_keyword(
+			p,
+			p.cur_tok().range(),
+		));
 	} else if p.nth_src(1) == "as" {
 		parse_export_name(p).or_add_diagnostic(p, expected_export_name);
 	} else {

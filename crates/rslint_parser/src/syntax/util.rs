@@ -1,8 +1,7 @@
 //! General utility functions for parsing and error checking.
 
-use crate::{Parser};
-use rslint_syntax::{JsSyntaxKind, T};
 use crate::Parser;
+use rslint_syntax::{JsSyntaxKind, T};
 
 /// Check if the use of a statement label is valid and the label is defined.
 ///

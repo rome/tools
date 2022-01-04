@@ -112,7 +112,7 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax {
 			if kind == ClassKind::Declaration && !guard.state.in_default {
 				let err = guard
 					.err_builder("class declarations must have a name")
-					.primary(class_token_range.start..guard.cur_tok().range.start, "");
+					.primary(class_token_range.start..guard.cur_tok().range().start, "");
 
 				guard.error(err);
 			}
@@ -657,10 +657,10 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Pa
 	let optional_token = optional_member_token(p);
 	let mut property_is_valid = optional_token.is_ok();
 
-	let range = p.cur_tok().range;
+	let range = p.cur_tok().range();
 	if p.eat(T![!]) {
 		if let Ok(Some(optional_token)) = optional_token {
-			let range = p.cur_tok().range;
+			let range = p.cur_tok().range();
 
 			let error = p
 				.err_builder("class properties cannot be both optional and definite")

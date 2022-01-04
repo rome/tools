@@ -885,7 +885,7 @@ fn block_comment() {
 	assert_lex! {
 		"/*
 		*/",
-		COMMENT:7
+		MULTILINE_COMMENT:7
 	}
 
 	assert_lex! {

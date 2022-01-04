@@ -899,7 +899,7 @@ impl<'src> Lexer<'src> {
 	#[inline]
 	fn read_slash(&mut self) -> LexerReturn {
 		let start = self.cur;
-		
+
 		match self.bytes.get(self.cur + 1) {
 			Some(b'*') => {
 				self.next();
@@ -914,7 +914,7 @@ impl<'src> Lexer<'src> {
 								return tok!(COMMENT, self.cur - start);
 							}
 						}
-						x @ _ => {
+						x => {
 							if is_linebreak(x as char) {
 								has_newline = true;
 							} else if UNICODE_WHITESPACE_STARTS.contains(&x) {
@@ -1500,8 +1500,8 @@ impl Iterator for Lexer<'_> {
 		};
 
 		let after_newline = match token.0.kind {
-			SyntaxKind::NEWLINE | SyntaxKind::MULTILINE_COMMENT=> true,
-			SyntaxKind::WHITESPACE | SyntaxKind::COMMENT => self.state.after_newline,
+			JsSyntaxKind::NEWLINE | JsSyntaxKind::MULTILINE_COMMENT => true,
+			JsSyntaxKind::WHITESPACE | JsSyntaxKind::COMMENT => self.state.after_newline,
 			_ => false,
 		};
 
