@@ -106,7 +106,7 @@ pub(super) fn parse_parameters_list(
 					.primary(start..end, "");
 
 				p.error(err);
-				m.complete(p, ERROR);
+				m.complete(p, JS_UNKNOWN);
 			}
 
 			m.complete(p, JS_REST_PARAMETER);
@@ -117,7 +117,7 @@ pub(super) fn parse_parameters_list(
 				let m = p.start();
 				let range = p.cur_tok().range;
 				p.bump_any();
-				m.complete(p, ERROR);
+				m.complete(p, JS_UNKNOWN);
 				let err = p
 					.err_builder("rest elements may not have trailing commas")
 					.primary(range, "");

@@ -9,7 +9,8 @@ use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
 use crate::{Parser, ParserState};
 use rslint_syntax::JsSyntaxKind::{
-	ERROR, JS_FUNCTION_BODY, JS_FUNCTION_DECLARATION, JS_FUNCTION_EXPRESSION, TS_TYPE_ANNOTATION,
+	JS_FUNCTION_BODY, JS_FUNCTION_DECLARATION, JS_FUNCTION_EXPRESSION, JS_UNKNOWN,
+	TS_TYPE_ANNOTATION,
 };
 use rslint_syntax::{JsSyntaxKind, T};
 use std::collections::HashMap;
@@ -146,7 +147,7 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 					.primary(body.range(p), "");
 
 				p.error(err);
-				body.change_kind(p, ERROR);
+				body.change_kind(p, JS_UNKNOWN);
 				body
 			})
 			.ok();
