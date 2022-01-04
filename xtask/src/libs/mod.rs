@@ -96,10 +96,10 @@ pub fn run(filter: String, criterion: bool) {
 		match code {
 			Ok(code) => {
 				let result = benchmark_lib(&code);
-				
+
 				println!("Benchmark: {}", lib);
 				println!("{}", result);
-				
+
 				let text = code.as_str();
 
 				// Do all steps with criterion now
@@ -165,7 +165,7 @@ fn benchmark_lib(code: &str) -> BenchmarkResult {
 		tokenization: tokenization_duration,
 		parsing: parse_duration,
 		tree_sink: tree_sink_duration,
-		diagnostics
+		diagnostics,
 	}
 }
 
@@ -174,7 +174,7 @@ struct BenchmarkResult {
 	tokenization: Duration,
 	parsing: Duration,
 	tree_sink: Duration,
-	diagnostics: Vec<Diagnostic>
+	diagnostics: Vec<Diagnostic>,
 }
 
 impl BenchmarkResult {
@@ -190,7 +190,7 @@ impl Display for BenchmarkResult {
 		let _ = writeln!(f, "\tTree_sink:    {:>10?}", self.tree_sink);
 		let _ = writeln!(f, "\t              ----------");
 		let _ = writeln!(f, "\tTotal:        {:>10?}", self.total());
-		
+
 		let _ = writeln!(
 			f,
 			"total: {:?} (tokenization: {:?}, parsing: {:?}, tree_sink: {:?})",
@@ -201,10 +201,7 @@ impl Display for BenchmarkResult {
 		);
 
 		let _ = writeln!(f, "\tDiagnostics");
-		for (severity, items) in &self.diagnostics
-			.iter()
-			.group_by(|x| x.severity)
-		{
+		for (severity, items) in &self.diagnostics.iter().group_by(|x| x.severity) {
 			let _ = writeln!(f, "\t\t{:?}: {}", severity, items.count());
 		}
 
