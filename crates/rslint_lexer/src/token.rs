@@ -7,12 +7,11 @@ use crate::JsSyntaxKind;
 pub struct Token {
 	/// The kind of token this is.
 	pub kind: JsSyntaxKind,
+	pub after_newline: bool,
 	/// How long the token is in bytes. For tokens with escape sequences
 	/// like strings with `\uXXXX` escapes, the length is the raw length, not considering the char backed by the escape.
 	pub len: usize,
-
 	pub offset: usize,
-	pub after_newline: bool,
 }
 
 impl Token {
@@ -39,6 +38,11 @@ impl Token {
 	#[inline(always)]
 	pub fn range(&self) -> std::ops::Range<usize> {
 		self.offset..(self.offset + self.len)
+	}
+
+	#[inline(always)]
+	pub fn end(&self) -> usize {
+		self.offset + self.len
 	}
 }
 

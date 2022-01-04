@@ -120,7 +120,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 		}
 
 		let m = p.start();
-		let rest_end = p.cur_tok().range().end;
+		let rest_end = p.cur_tok().end();
 		p.bump(T![...]);
 
 		let with_default = self.pattern_with_default();
@@ -232,7 +232,7 @@ fn validate_rest_pattern(
 	if p.at(T![=]) {
 		let rest_range = rest.range(p);
 		let rest_marker = rest.undo_completion(p);
-		let default_start = p.cur_tok().range().start;
+		let default_start = p.cur_tok().offset;
 		let kind = rest.kind();
 		p.bump(T![=]);
 
@@ -242,7 +242,7 @@ fn validate_rest_pattern(
 		p.error(
 			p.err_builder("rest element cannot have a default")
 				.primary(
-					default_start..p.cur_tok().range().start,
+					default_start..p.cur_tok().offset,
 					"Remove the default value here",
 				)
 				.secondary(rest_range, "Rest element"),
