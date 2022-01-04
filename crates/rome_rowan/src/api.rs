@@ -30,8 +30,8 @@ pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Ha
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum TriviaPiece {
-	Whitespace(usize),
-	Comments(usize),
+	Whitespace(u32),
+	Comments(u32),
 }
 
 impl TriviaPiece {

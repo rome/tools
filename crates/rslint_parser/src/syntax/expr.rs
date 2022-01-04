@@ -762,7 +762,7 @@ fn parse_arguments(p: &mut Parser) -> ParsedSyntax {
 fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax {
 	let m = p.start();
 	let checkpoint = p.checkpoint();
-	let start = p.cur_tok().offset;
+	let start = p.cur_tok().start();
 
 	p.expect(T!['(']);
 	let mut spread_range = None;
@@ -903,7 +903,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 	if is_empty {
 		let err = p
 			.err_builder("grouping expressions cannot be empty")
-			.primary(start..p.cur_tok().offset, "");
+			.primary(start..p.cur_tok().start(), "");
 
 		p.error(err);
 		return Present(m.complete(p, JS_PARENTHESIZED_EXPRESSION));

@@ -1486,7 +1486,7 @@ impl Iterator for Lexer<'_> {
 			if !self.returned_eof {
 				self.returned_eof = true;
 				let mut token = tok!(EOF, 0);
-				token.0.offset = self.cur;
+				token.0.offset = self.cur as u32;
 				token.0.after_newline = self.state.after_newline;
 				return Some(token);
 			}
@@ -1505,7 +1505,7 @@ impl Iterator for Lexer<'_> {
 			_ => false,
 		};
 
-		token.0.offset = self.cur - token.0.len;
+		token.0.offset = self.cur as u32 - token.0.len;
 		token.0.after_newline = std::mem::replace(&mut self.state.after_newline, after_newline);
 
 		if ![

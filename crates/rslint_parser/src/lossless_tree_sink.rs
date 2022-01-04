@@ -86,14 +86,14 @@ impl<'a> LosslessTreeSink<'a> {
 		let (leading_range, leading) = self.get_trivia(false);
 
 		let len = TextSize::from(
-			(if token_count == 1 {
+			if token_count == 1 {
 				self.tokens[self.token_pos].len
 			} else {
 				self.tokens[self.token_pos..self.token_pos + token_count as usize]
 					.iter()
 					.map(|x| x.len)
-					.sum::<usize>()
-			}) as u32,
+					.sum::<u32>()
+			}
 		);
 
 		let token_range = TextRange::at(self.text_pos, len);
@@ -127,7 +127,7 @@ impl<'a> LosslessTreeSink<'a> {
 			}
 
 			self.token_pos += 1;
-			let len = TextSize::from(token.len as u32);
+			let len = TextSize::from(token.len);
 			self.text_pos += len;
 			length += len;
 

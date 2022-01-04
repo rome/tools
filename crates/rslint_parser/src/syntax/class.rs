@@ -112,7 +112,7 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax {
 			if kind == ClassKind::Declaration && !guard.state.in_default {
 				let err = guard
 					.err_builder("class declarations must have a name")
-					.primary(class_token_range.start..guard.cur_tok().offset, "");
+					.primary(class_token_range.start..guard.cur_tok().start(), "");
 
 				guard.error(err);
 			}
@@ -155,7 +155,7 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax {
 	let mut is_valid = true;
 	let implements_clause = p.start();
 
-	let start = p.cur_tok().offset;
+	let start = p.cur_tok().start();
 	p.bump_remap(T![implements]);
 
 	let list = p.start();
@@ -174,7 +174,7 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax {
 	let mut progress = ParserProgress::default();
 	while p.cur_src() == "implements" {
 		progress.assert_progressing(p);
-		let start = p.cur_tok().offset;
+		let start = p.cur_tok().start();
 		p.bump_any();
 		let elems = ts_heritage_clause(&mut *p, false);
 
@@ -694,7 +694,7 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Pa
 
 		let err = p
 			.err_builder("expected a semicolon for a class property, but found none")
-			.primary(start..p.cur_tok().offset, "");
+			.primary(start..p.cur_tok().start(), "");
 
 		p.error(err);
 	}

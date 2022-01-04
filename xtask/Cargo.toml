@@ -36,6 +36,8 @@ dhat = { version = "0.2.4", optional = true }
 humansize = "1.1.1"
 itertools = "0.10.3"
 criterion = "0.3.5"
+mimalloc = { version = "0.1.27",  default-features = false, optional = true }
 
 [features]
 dhat-on = ["dhat"]
+mimalloc-on = ["mimalloc"]

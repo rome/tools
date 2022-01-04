@@ -83,13 +83,13 @@ pub(crate) fn maybe_ts_type_annotation(p: &mut Parser) -> Option<Range<usize>> {
 	if p.at(T![:]) {
 		let m = p.start();
 
-		let start = p.cur_tok().offset;
+		let start = p.cur_tok().start();
 		p.bump_any();
 		let compl = ts_type(p);
 
 		let end = compl
 			.map(|x| usize::from(x.range(p).end()))
-			.unwrap_or_else(|| p.cur_tok().offset);
+			.unwrap_or_else(|| p.cur_tok().start());
 
 		if !p.typescript() {
 			let err = p
@@ -246,7 +246,7 @@ pub fn ts_type_alias_decl(p: &mut Parser) -> Option<CompletedMarker> {
 	let t = p.checkpoint();
 
 	let m = p.start();
-	let start = p.cur_tok().offset;
+	let start = p.cur_tok().start();
 	p.bump_any();
 	let identifier =
 		parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
@@ -307,7 +307,7 @@ pub fn ts_ambient_external_module_decl(
 	check_for_module: bool,
 ) -> Option<CompletedMarker> {
 	let m = p.start();
-	let start = p.cur_tok().offset;
+	let start = p.cur_tok().start();
 	if check_for_module && p.cur_src() != "module" {
 		let err = p
 			.err_builder(&format!(

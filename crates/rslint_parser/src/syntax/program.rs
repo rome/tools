@@ -61,7 +61,7 @@ fn named_export_specifier(p: &mut Parser) -> CompletedMarker {
 // test export
 // export { foo } from "bla";
 pub fn export_decl(p: &mut Parser) -> CompletedMarker {
-	let start = p.cur_tok().offset;
+	let start = p.cur_tok().start();
 	let m = p.start();
 	p.expect(T![export]);
 
@@ -124,7 +124,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			);
 			p.bump_any();
 			parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
-			semi(p, start..p.cur_tok().offset);
+			semi(p, start..p.cur_tok().start());
 			let mut complete = m.complete(p, TS_EXPORT_ASSIGNMENT);
 			complete.err_if_not_ts(
 				p,
@@ -151,7 +151,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 
 			// TODO(RDambrosio016): verify, is identifier_name correct here or should it just be ident?
 			parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
-			semi(p, start..p.cur_tok().offset);
+			semi(p, start..p.cur_tok().start());
 			let mut complete = m.complete(p, TS_NAMESPACE_EXPORT_DECL);
 			complete.err_if_not_ts(
 				p,
@@ -257,7 +257,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			export_default = true;
 		} else {
 			parse_expr_or_assignment(p).or_add_diagnostic(p, js_parse_error::expected_expression);
-			semi(p, start..p.cur_tok().offset);
+			semi(p, start..p.cur_tok().start());
 			return m.complete(p, EXPORT_DEFAULT_EXPR);
 		}
 	}
@@ -332,13 +332,13 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		if p.cur_src() == "from" {
 			from_clause_and_semi(p, start);
 		} else {
-			semi(p, start..p.cur_tok().offset);
+			semi(p, start..p.cur_tok().start());
 			if export_default || exports_ns {
 				let err = p
 					.err_builder(
 						"`export default` and `export as` declarations must have a `from` clause",
 					)
-					.primary(start..p.cur_tok().offset, "");
+					.primary(start..p.cur_tok().start(), "");
 
 				p.error(err);
 			}
@@ -353,11 +353,11 @@ fn from_clause_and_semi(p: &mut Parser, start: usize) {
 	debug_assert_eq!(p.cur_src(), "from");
 	p.bump_remap(T![from]);
 	p.expect(JS_STRING_LITERAL);
-	semi(p, start..p.cur_tok().offset);
+	semi(p, start..p.cur_tok().start());
 }
 
 pub fn ts_import_equals_decl(p: &mut Parser, m: Marker) -> CompletedMarker {
-	let start = p.cur_tok().offset;
+	let start = p.cur_tok().start();
 	parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 	p.expect(T![=]);
 
@@ -366,7 +366,7 @@ pub fn ts_import_equals_decl(p: &mut Parser, m: Marker) -> CompletedMarker {
 	} else {
 		ts_entity_name(p, None, false);
 	}
-	semi(p, start..p.cur_tok().offset);
+	semi(p, start..p.cur_tok().start());
 	m.complete(p, TS_IMPORT_EQUALS_DECL)
 }
 

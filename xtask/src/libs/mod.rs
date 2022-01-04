@@ -42,7 +42,7 @@ fn print_diff(before: dhat::Stats, current: dhat::Stats) -> dhat::Stats {
 	current
 }
 
-pub fn get_code(lib: &str) -> Result<String, String> {
+pub fn get_code(lib: &str) -> Result<(String,String), String> {
 	let url = url::Url::from_str(lib).map_err(err_to_string)?;
 	let segments = url
 		.path_segments()
@@ -57,7 +57,7 @@ pub fn get_code(lib: &str) -> Result<String, String> {
 	match std::fs::read_to_string(&file) {
 		Ok(code) => {
 			println!("[{}] - using [{}]", filename.fg(red()), file.display());
-			Ok(code)
+			Ok((filename.to_string(), code))
 		}
 		Err(_) => {
 			println!(
@@ -74,7 +74,9 @@ pub fn get_code(lib: &str) -> Result<String, String> {
 					let mut writer = std::fs::File::create(&file).map_err(err_to_string)?;
 					let _ = std::io::copy(&mut reader, &mut writer);
 
-					std::fs::read_to_string(&file).map_err(err_to_string)
+					std::fs::read_to_string(&file)
+						.map_err(err_to_string)
+						.map(|code| (filename.to_string(), code))
 				}
 				Err(e) => Err(format!("{:?}", e)),
 			}
@@ -94,30 +96,34 @@ pub fn run(filter: String, criterion: bool) {
 		let code = get_code(lib);
 
 		match code {
-			Ok(code) => {
-				let result = benchmark_lib(&code);
-
-				println!("Benchmark: {}", lib);
-				println!("{}", result);
-
-				let text = code.as_str();
+			Ok((id, code)) => {
+				let code = code.as_str();
 
 				// Do all steps with criterion now
 				if criterion {
 					let mut criterion = criterion::Criterion::default().without_plots();
 					criterion.bench_function(lib, |b| {
 						b.iter(|| {
-							let _ = rslint_parser::parse_module(text, 0);
+							let _ = criterion::black_box(
+								rslint_parser::parse_module(code, 0)
+							);
 						})
 					});
+				} else {
+					//warmup
+					rslint_parser::parse_module(code, 0);
 				}
+
+				let result = benchmark_lib(&id, code);
+				println!("Benchmark: {}", lib);
+				println!("{}", result);
 			}
 			Err(e) => println!("{:?}", e),
 		}
 	}
 }
 
-fn benchmark_lib(code: &str) -> BenchmarkResult {
+fn benchmark_lib(id: &str, code: &str) -> BenchmarkResult {
 	#[cfg(feature = "dhat-on")]
 	println!("Start");
 	#[cfg(feature = "dhat-on")]
@@ -152,16 +158,16 @@ fn benchmark_lib(code: &str) -> BenchmarkResult {
 	let mut tree_sink = rslint_parser::LosslessTreeSink::new(code, &tokens);
 	rslint_parser::process(&mut tree_sink, events, parsing_diags);
 	let (_green, sink_diags) = tree_sink.finish();
+	let tree_sink_duration = tree_sink_timer.stop();
 
 	#[cfg(feature = "dhat-on")]
 	println!("Tree-Sink");
 	#[cfg(feature = "dhat-on")]
 	print_diff(stats, dhat::get_stats().unwrap());
 
-	let tree_sink_duration = tree_sink_timer.stop();
-
 	diagnostics.extend(sink_diags);
 	BenchmarkResult {
+		id: id.to_string(),
 		tokenization: tokenization_duration,
 		parsing: parse_duration,
 		tree_sink: tree_sink_duration,
@@ -171,6 +177,7 @@ fn benchmark_lib(code: &str) -> BenchmarkResult {
 
 #[derive(Debug, Clone)]
 struct BenchmarkResult {
+	id: String,
 	tokenization: Duration,
 	parsing: Duration,
 	tree_sink: Duration,
@@ -193,11 +200,12 @@ impl Display for BenchmarkResult {
 
 		let _ = writeln!(
 			f,
-			"total: {:?} (tokenization: {:?}, parsing: {:?}, tree_sink: {:?})",
+			"\t[{}] Total Time: {:?} (tokenization: {:?}, parsing: {:?}, tree_sink: {:?})",
+			self.id,
 			self.total(),
-			&self.tokenization,
-			&self.parsing,
-			&self.tree_sink,
+			self.tokenization,
+			self.parsing,
+			self.tree_sink,
 		);
 
 		let _ = writeln!(f, "\tDiagnostics");

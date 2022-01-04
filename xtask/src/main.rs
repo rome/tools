@@ -13,6 +13,14 @@ use dhat::DhatAlloc;
 #[global_allocator]
 static ALLOCATOR: DhatAlloc = DhatAlloc;
 
+
+#[cfg(feature = "mimalloc-on")]
+use mimalloc::MiMalloc;
+
+#[cfg(feature = "mimalloc-on")]
+#[global_allocator]
+static GLOBAL: MiMalloc = MiMalloc;
+
 fn main() -> Result<()> {
 	#[cfg(feature = "dhat-on")]
 	let _dhat = dhat::Dhat::start_heap_profiling();

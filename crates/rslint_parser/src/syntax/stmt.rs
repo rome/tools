@@ -197,7 +197,7 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 // }
 
 fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
-	let start = p.cur_tok().offset;
+	let start = p.cur_tok().start();
 	// this is *technically* wrong because it would be an expr stmt in js but for our purposes
 	// we treat these as always being ts declarations since ambiguity is inefficient in this style of
 	// parsing and it results in better errors usually
@@ -327,7 +327,7 @@ pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
 		return Absent;
 	}
 	let m = p.start();
-	let start = p.cur_tok().offset;
+	let start = p.cur_tok().start();
 	p.bump_any(); // throw keyword
 	if p.has_linebreak_before_n(0) {
 		let mut err = p
@@ -448,7 +448,7 @@ pub fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
 		return Absent;
 	}
 	let m = p.start();
-	let start = p.cur_tok().offset;
+	let start = p.cur_tok().start();
 	p.bump_any(); // return keyword
 	if !p.has_linebreak_before_n(0) && p.at_ts(STARTS_EXPR) {
 		parse_expression(p).unwrap();
@@ -769,14 +769,14 @@ pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err var_decl_err
 	// var a =;
 	// const a = 5 let b = 5;
-	let start = p.cur_tok().offset;
+	let start = p.cur_tok().start();
 
 	let declaration =
 		parse_variable_declaration_list(p, VariableDeclarationParent::VariableStatement)
 			.or_add_diagnostic(p, js_parse_error::expected_variable);
 	if let Some(declaration) = declaration {
 		let m = declaration.precede(p);
-		semi(p, start..p.cur_tok().offset);
+		semi(p, start..p.cur_tok().start());
 		Present(m.complete(p, JS_VARIABLE_STATEMENT))
 	} else {
 		Absent
@@ -1025,7 +1025,7 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 		return Absent;
 	}
 	let m = p.start();
-	let start = p.cur_tok().offset;
+	let start = p.cur_tok().start();
 	p.bump_any(); // do keyword
 
 	{
@@ -1469,7 +1469,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 			Some(pattern_node) => pattern_node.precede(p),
 			_ => p.start(),
 		};
-		let start = p.cur_tok().offset;
+		let start = p.cur_tok().start();
 		p.bump_any();
 		let ty = ts_type(p);
 		if !matches!(
@@ -1486,7 +1486,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 
 		let end = ty
 			.map(|x| usize::from(x.range(p).end()))
-			.unwrap_or(p.cur_tok().offset);
+			.unwrap_or(p.cur_tok().start());
 		error_marker.complete(
 			p,
 			pattern_kind

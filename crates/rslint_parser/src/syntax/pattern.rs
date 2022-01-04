@@ -232,7 +232,7 @@ fn validate_rest_pattern(
 	if p.at(T![=]) {
 		let rest_range = rest.range(p);
 		let rest_marker = rest.undo_completion(p);
-		let default_start = p.cur_tok().offset;
+		let default_start = p.cur_tok().start();
 		let kind = rest.kind();
 		p.bump(T![=]);
 
@@ -242,7 +242,7 @@ fn validate_rest_pattern(
 		p.error(
 			p.err_builder("rest element cannot have a default")
 				.primary(
-					default_start..p.cur_tok().offset,
+					default_start..p.cur_tok().start(),
 					"Remove the default value here",
 				)
 				.secondary(rest_range, "Rest element"),

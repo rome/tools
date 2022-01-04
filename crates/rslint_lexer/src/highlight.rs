@@ -64,7 +64,8 @@ impl<'s> Highlighter<'s> {
 	}
 
 	fn src(&self) -> &'s str {
-		&self.source[self.cur_idx..self.cur_idx + self.tokens.get(self.cur).unwrap().len]
+		let end = self.cur_idx + self.tokens.get(self.cur).unwrap().len as usize;
+		&self.source[self.cur_idx..end]
 	}
 }
 
@@ -133,7 +134,7 @@ impl<'s> Iterator for Highlighter<'s> {
 		};
 
 		let string = self.src();
-		self.cur_idx += self.tokens.get(self.cur).unwrap().len;
+		self.cur_idx += self.tokens.get(self.cur).unwrap().len as usize;
 		self.cur += 1;
 		Some(color.paint(string))
 	}

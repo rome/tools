@@ -40,7 +40,7 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 			self.tokens[self.token_pos..self.token_pos + amount as usize]
 				.iter()
 				.map(|x| x.len)
-				.sum::<usize>() as u32,
+				.sum::<u32>(),
 		);
 
 		self.do_tokens(kind, len, amount)
@@ -120,7 +120,7 @@ impl<'a> LossyTreeSink<'a> {
 					next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![]),
 				};
 			}
-			len += tok.len;
+			len += tok.len as usize;
 		}
 		panic!("Token start does not line up to a token or is out of bounds")
 	}
@@ -204,7 +204,7 @@ impl<'a> LossyTreeSink<'a> {
 
 			let pos: u32 = self.text_pos.into();
 			let pos = pos as usize;
-			let text = &self.text[pos..(pos + token.len)];
+			let text = &self.text[pos..(pos + token.len as usize)];
 			if break_on_newline && text.chars().any(rslint_lexer::is_linebreak) {
 				break;
 			}

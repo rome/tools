@@ -78,7 +78,7 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax {
 		return Absent;
 	}
 
-	let start = p.cur_tok().offset;
+	let start = p.cur_tok().start();
 	let import = p.start();
 	p.bump_any();
 
@@ -95,7 +95,7 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax {
 	p.state.duplicate_binding_parent = None;
 	p.state.name_map.clear();
 
-	let end = p.cur_tok().offset;
+	let end = p.cur_tok().start();
 
 	semi(p, start..end);
 

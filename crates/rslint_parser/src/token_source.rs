@@ -95,19 +95,18 @@ impl<'t> TokenSource<'t> {
 
 	#[inline(always)]
 	pub fn is_keyword(&self, kw: &str) -> bool {
-		let t = self.current();
-		&self.source[t.offset..(t.offset + t.len)] == kw
+		let range = self.current().range();
+		&self.source[range] == kw
 	}
 
 	#[inline(always)]
 	pub fn had_linebreak_before_nth(&self, n: usize) -> bool {
-		let t = self.lookahead_nth(n);
-		t.after_newline
+		self.lookahead_nth(n).after_newline
 	}
 
 	#[inline(always)]
 	pub fn cur_pos(&self) -> usize {
-		self.current().offset
+		self.current().offset as usize
 	}
 
 	#[inline(always)]
