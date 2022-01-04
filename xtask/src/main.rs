@@ -13,7 +13,6 @@ use dhat::DhatAlloc;
 #[global_allocator]
 static ALLOCATOR: DhatAlloc = DhatAlloc;
 
-
 #[cfg(feature = "mimalloc-on")]
 use mimalloc::MiMalloc;
 

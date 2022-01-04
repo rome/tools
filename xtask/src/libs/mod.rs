@@ -42,7 +42,7 @@ fn print_diff(before: dhat::Stats, current: dhat::Stats) -> dhat::Stats {
 	current
 }
 
-pub fn get_code(lib: &str) -> Result<(String,String), String> {
+pub fn get_code(lib: &str) -> Result<(String, String), String> {
 	let url = url::Url::from_str(lib).map_err(err_to_string)?;
 	let segments = url
 		.path_segments()
@@ -104,9 +104,7 @@ pub fn run(filter: String, criterion: bool) {
 					let mut criterion = criterion::Criterion::default().without_plots();
 					criterion.bench_function(lib, |b| {
 						b.iter(|| {
-							let _ = criterion::black_box(
-								rslint_parser::parse_module(code, 0)
-							);
+							let _ = criterion::black_box(rslint_parser::parse_module(code, 0));
 						})
 					});
 				} else {

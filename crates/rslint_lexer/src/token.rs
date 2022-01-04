@@ -14,7 +14,7 @@ pub struct Token {
 	/// How long the token is in bytes. For tokens with escape sequences
 	/// like strings with `\uXXXX` escapes, the length is the raw length, not considering the char backed by the escape.
 	pub len: u32,
-} 
+}
 
 impl Token {
 	/// Create a new token which has an exact length of 1.
@@ -49,7 +49,7 @@ impl Token {
 	pub fn start(&self) -> usize {
 		self.offset as usize
 	}
- 
+
 	/// Same as [Token::range()].end.
 	#[inline(always)]
 	pub fn end(&self) -> usize {

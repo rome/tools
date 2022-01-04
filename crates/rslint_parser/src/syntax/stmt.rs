@@ -1486,7 +1486,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 
 		let end = ty
 			.map(|x| usize::from(x.range(p).end()))
-			.unwrap_or(p.cur_tok().start());
+			.unwrap_or_else(|| p.cur_tok().start());
 		error_marker.complete(
 			p,
 			pattern_kind
