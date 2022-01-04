@@ -80,14 +80,50 @@ JsModule {
                 r_curly_token: R_CURLY@67..68 "}" [] [],
             },
         },
+        JsExpressionStatement {
+            expression: JsUnknownExpression {
+                items: [
+                    JsUnknown {
+                        items: [
+                            IDENT@68..73 "enum" [Whitespace("\n")] [],
+                        ],
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@73..74 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsUnknownExpression {
+                items: [
+                    JsUnknown {
+                        items: [
+                            IDENT@74..85 "implements" [Whitespace("\n")] [],
+                        ],
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@85..86 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsUnknownExpression {
+                items: [
+                    JsUnknown {
+                        items: [
+                            IDENT@86..96 "interface" [Whitespace("\n")] [],
+                        ],
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@96..97 ";" [] [],
+        },
     ],
-    eof_token: EOF@68..69 "" [Whitespace("\n")] [],
+    eof_token: EOF@97..98 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..69
+0: JS_MODULE@0..98
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..68
+  2: JS_MODULE_ITEM_LIST@0..97
     0: JS_EXPRESSION_STATEMENT@0..6
       0: JS_UNKNOWN_EXPRESSION@0..5
         0: JS_UNKNOWN@0..5
@@ -136,9 +172,24 @@ JsModule {
         1: JS_DIRECTIVE_LIST@67..67
         2: JS_STATEMENT_LIST@67..67
         3: R_CURLY@67..68 "}" [] []
-  3: EOF@68..69 "" [Whitespace("\n")] []
+    4: JS_EXPRESSION_STATEMENT@68..74
+      0: JS_UNKNOWN_EXPRESSION@68..73
+        0: JS_UNKNOWN@68..73
+          0: IDENT@68..73 "enum" [Whitespace("\n")] []
+      1: SEMICOLON@73..74 ";" [] []
+    5: JS_EXPRESSION_STATEMENT@74..86
+      0: JS_UNKNOWN_EXPRESSION@74..85
+        0: JS_UNKNOWN@74..85
+          0: IDENT@74..85 "implements" [Whitespace("\n")] []
+      1: SEMICOLON@85..86 ";" [] []
+    6: JS_EXPRESSION_STATEMENT@86..97
+      0: JS_UNKNOWN_EXPRESSION@86..96
+        0: JS_UNKNOWN@86..96
+          0: IDENT@86..96 "interface" [Whitespace("\n")] []
+      1: SEMICOLON@96..97 ";" [] []
+  3: EOF@97..98 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode
+error[SyntaxError]: Illegal use of reserved keyword `yield` as an identifier in strict mode
   ┌─ identifier_err.js:1:1
   │
 1 │ yield;
@@ -166,7 +217,31 @@ error[SyntaxError]: Illegal use of `yield` as an identifier in generator functio
   │                ^^^^^
 
 --
+error[SyntaxError]: Illegal use of reserved keyword `enum` as an identifier
+  ┌─ identifier_err.js:5:1
+  │
+5 │ enum;
+  │ ^^^^
+
+--
+error[SyntaxError]: Illegal use of reserved keyword `implements` as an identifier in strict mode
+  ┌─ identifier_err.js:6:1
+  │
+6 │ implements;
+  │ ^^^^^^^^^^
+
+--
+error[SyntaxError]: Illegal use of reserved keyword `interface` as an identifier in strict mode
+  ┌─ identifier_err.js:7:1
+  │
+7 │ interface;
+  │ ^^^^^^^^^
+
+--
 yield;
 await;
 async function test(await) {}
 function* test(yield) {}
+enum;
+implements;
+interface;

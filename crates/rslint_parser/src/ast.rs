@@ -617,8 +617,6 @@ mod tests {
 		// list([,3])
 		let list = build_list(vec![(None, Some(",")), (Some(3), None)]);
 
-		dbg!(&list.syntax_list.node());
-
 		assert_eq!(list.len(), 2);
 		assert!(!list.is_empty());
 		assert_eq!(list.separators().count(), 1);
