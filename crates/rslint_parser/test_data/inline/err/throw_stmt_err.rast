@@ -8,9 +8,9 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: NewExpr {
+            expression: JsNewExpression {
                 new_token: NEW_KW@5..10 "new" [Whitespace("\n")] [Whitespace(" ")],
-                object: JsIdentifierExpression {
+                callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@10..15 "Error" [] [],
                     },
@@ -46,7 +46,7 @@ JsModule {
       1: (empty)
       2: (empty)
     1: JS_EXPRESSION_STATEMENT@5..27
-      0: NEW_EXPR@5..27
+      0: JS_NEW_EXPRESSION@5..27
         0: NEW_KW@5..10 "new" [Whitespace("\n")] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@10..15
           0: JS_REFERENCE_IDENTIFIER@10..15

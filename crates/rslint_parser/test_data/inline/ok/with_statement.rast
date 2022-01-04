@@ -41,7 +41,7 @@ JsScript {
                             l_curly_token: L_CURLY@39..40 "{" [] [],
                             statements: JsStatementList [
                                 JsExpressionStatement {
-                                    expression: CallExpr {
+                                    expression: JsCallExpression {
                                         callee: JsStaticMemberExpression {
                                             object: JsIdentifierExpression {
                                                 name: JsReferenceIdentifier {
@@ -117,7 +117,7 @@ JsScript {
               0: L_CURLY@39..40 "{" [] []
               1: JS_STATEMENT_LIST@40..58
                 0: JS_EXPRESSION_STATEMENT@40..58
-                  0: CALL_EXPR@40..57
+                  0: JS_CALL_EXPRESSION@40..57
                     0: JS_STATIC_MEMBER_EXPRESSION@40..54
                       0: JS_IDENTIFIER_EXPRESSION@40..50
                         0: JS_REFERENCE_IDENTIFIER@40..50

@@ -73,7 +73,7 @@ JsModule {
                                 },
                                 colon_token: COLON@28..30 ":" [] [Whitespace(" ")],
                                 pattern: JsStaticMemberAssignment {
-                                    object: CallExpr {
+                                    object: JsCallExpression {
                                         callee: JsStaticMemberExpression {
                                             object: JsIdentifierExpression {
                                                 name: JsReferenceIdentifier {
@@ -322,7 +322,7 @@ JsModule {
                   0: IDENT@27..28 "x" [] []
                 1: COLON@28..30 ":" [] [Whitespace(" ")]
                 2: JS_STATIC_MEMBER_ASSIGNMENT@30..40
-                  0: CALL_EXPR@30..38
+                  0: JS_CALL_EXPRESSION@30..38
                     0: JS_STATIC_MEMBER_EXPRESSION@30..36
                       0: JS_IDENTIFIER_EXPRESSION@30..31
                         0: JS_REFERENCE_IDENTIFIER@30..31

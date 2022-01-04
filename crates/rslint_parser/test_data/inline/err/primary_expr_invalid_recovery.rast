@@ -34,7 +34,7 @@ JsModule {
             ],
         },
         JsExpressionStatement {
-            expression: CallExpr {
+            expression: JsCallExpression {
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@11..14 "foo" [] [],
@@ -71,7 +71,7 @@ JsModule {
                 0: ERROR_TOKEN@8..9 "\\" [] []
       1: SEMICOLON@9..11 ";" [] [Whitespace(" ")]
     1: JS_EXPRESSION_STATEMENT@11..17
-      0: CALL_EXPR@11..16
+      0: JS_CALL_EXPRESSION@11..16
         0: JS_IDENTIFIER_EXPRESSION@11..14
           0: JS_REFERENCE_IDENTIFIER@11..14
             0: IDENT@11..14 "foo" [] []

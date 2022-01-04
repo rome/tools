@@ -1049,7 +1049,7 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
 	// for (;...
 	if p.at(T![;]) {
 		parse_normal_for_head(p);
-		return FOR_STMT;
+		return JS_FOR_STATEMENT;
 	}
 
 	// `for (let...` | `for (const...` | `for (var...`
@@ -1091,7 +1091,7 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
 		} else {
 			m.complete(p, JS_VARIABLE_DECLARATIONS);
 			parse_normal_for_head(p);
-			FOR_STMT
+			JS_FOR_STATEMENT
 		}
 	} else {
 		// for (some_expression`
@@ -1133,7 +1133,7 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
 		init_expr.or_add_diagnostic(p, js_parse_error::expected_expression);
 
 		parse_normal_for_head(p);
-		FOR_STMT
+		JS_FOR_STATEMENT
 	}
 }
 
@@ -1143,17 +1143,13 @@ fn parse_normal_for_head(p: &mut Parser) {
 	p.expect(T![;]);
 
 	if !p.at(T![;]) {
-		let m = p.start();
 		parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
-		m.complete(p, FOR_STMT_TEST);
 	}
 
 	p.expect(T![;]);
 
 	if !p.at(T![')']) {
-		let m = p.start();
 		parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
-		m.complete(p, FOR_STMT_UPDATE);
 	}
 }
 

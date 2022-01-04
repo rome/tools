@@ -3,9 +3,9 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: NewExpr {
+            expression: JsNewExpression {
                 new_token: NEW_KW@0..3 "new" [] [],
-                object: missing (required),
+                callee: missing (required),
                 type_args: missing (optional),
                 arguments: missing (optional),
             },
@@ -20,7 +20,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..4
     0: JS_EXPRESSION_STATEMENT@0..4
-      0: NEW_EXPR@0..3
+      0: JS_NEW_EXPRESSION@0..3
         0: NEW_KW@0..3 "new" [] []
         1: (empty)
         2: (empty)

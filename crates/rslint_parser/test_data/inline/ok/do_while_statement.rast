@@ -5,7 +5,7 @@ JsModule {
         JsDoWhileStatement {
             do_token: DO_KW@0..3 "do" [] [Whitespace(" ")],
             body: JsExpressionStatement {
-                expression: CallExpr {
+                expression: JsCallExpression {
                     callee: JsStaticMemberExpression {
                         object: JsIdentifierExpression {
                             name: JsReferenceIdentifier {
@@ -45,7 +45,7 @@ JsModule {
                 l_curly_token: L_CURLY@39..40 "{" [] [],
                 statements: JsStatementList [
                     JsExpressionStatement {
-                        expression: CallExpr {
+                        expression: JsCallExpression {
                             callee: JsStaticMemberExpression {
                                 object: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
@@ -176,7 +176,7 @@ JsModule {
     0: JS_DO_WHILE_STATEMENT@0..35
       0: DO_KW@0..3 "do" [] [Whitespace(" ")]
       1: JS_EXPRESSION_STATEMENT@3..24
-        0: CALL_EXPR@3..22
+        0: JS_CALL_EXPRESSION@3..22
           0: JS_STATIC_MEMBER_EXPRESSION@3..14
             0: JS_IDENTIFIER_EXPRESSION@3..10
               0: JS_REFERENCE_IDENTIFIER@3..10
@@ -205,7 +205,7 @@ JsModule {
         0: L_CURLY@39..40 "{" [] []
         1: JS_STATEMENT_LIST@40..61
           0: JS_EXPRESSION_STATEMENT@40..61
-            0: CALL_EXPR@40..61
+            0: JS_CALL_EXPRESSION@40..61
               0: JS_STATIC_MEMBER_EXPRESSION@40..53
                 0: JS_IDENTIFIER_EXPRESSION@40..49
                   0: JS_REFERENCE_IDENTIFIER@40..49

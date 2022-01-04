@@ -81,7 +81,6 @@ JsDirectiveList = JsDirective*
 
 JsAnyStatement =
 	JsBlockStatement
-	| ForStmt
 	| JsBreakStatement
 	| JsClassDeclaration
 	| JsContinueStatement
@@ -91,6 +90,7 @@ JsAnyStatement =
 	| JsExpressionStatement
 	| JsForInStatement
 	| JsForOfStatement
+	| JsForStatement
 	| JsIfStatement
 	| JsLabeledStatement
 	| JsReturnStatement
@@ -148,23 +148,18 @@ JsElseClause =
 
 
 // for..in statement
-ForStmt =
+JsForStatement =
 	'for'
 	'('
 	initializer: JsAnyForInitializer?
 	first_semi: ';'
-	test:ForStmtTest?
+	test: JsAnyExpression?
 	second_semi: ';'
-	update:ForStmtUpdate?
+	update: JsAnyExpression?
 	')'
-	cons:JsAnyStatement
+	body: JsAnyStatement
 
 JsAnyForInitializer = JsVariableDeclarations | JsAnyExpression
-
-// TODO #1724 Inline when AST facade uses fixed offsets
-ForStmtTest = expr:JsAnyExpression
-ForStmtUpdate = expr:JsAnyExpression
-
 
 // for..in statement
 JsForInStatement =
@@ -277,13 +272,13 @@ JsDebuggerStatement =
 // Expression
 JsAnyExpression =
 	JsAnyLiteralExpression
-	| CallExpr
 	| ImportMeta
 	| JsArrayExpression
 	| JsArrowFunctionExpression
 	| JsAssignmentExpression
 	| JsAwaitExpression
 	| JsBinaryExpression
+	| JsCallExpression
 	| JsClassExpression
 	| JsComputedMemberExpression
 	| JsConditionalExpression
@@ -291,6 +286,7 @@ JsAnyExpression =
 	| JsIdentifierExpression
 	| JsImportCallExpression
 	| JsLogicalExpression
+	| JsNewExpression
 	| JsObjectExpression
 	| JsParenthesizedExpression
 	| JsPostUpdateExpression
@@ -302,7 +298,6 @@ JsAnyExpression =
 	| JsUnaryExpression
 	| JsUnknownExpression
 	| JsYieldExpression
-	| NewExpr
 	| NewTarget
 	| Template
 	| TsAssertion
@@ -334,13 +329,17 @@ JsThisExpression = 'this'
 JsSuperExpression = 'super'
 
 // new expression
-NewExpr = 'new' object:JsAnyExpression type_args:TsTypeArgs?  arguments: JsCallArguments?
+JsNewExpression =
+	'new'
+	callee: JsAnyExpression
+	type_args: TsTypeArgs?
+	arguments: JsCallArguments?
 
 // call expression
-CallExpr =
-	callee:JsAnyExpression
+JsCallExpression =
+	callee: JsAnyExpression
 	optional_chain_token: '?.'?
-	type_args:TsTypeArgs?
+	type_args: TsTypeArgs?
 	arguments: JsCallArguments
 
 

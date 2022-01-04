@@ -3,9 +3,9 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: NewExpr {
+            expression: JsNewExpression {
                 new_token: NEW_KW@0..4 "new" [] [Whitespace(" ")],
-                object: JsIdentifierExpression {
+                callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@4..7 "Foo" [] [],
                     },
@@ -20,9 +20,9 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: NewExpr {
+            expression: JsNewExpression {
                 new_token: NEW_KW@9..14 "new" [Whitespace("\n")] [Whitespace(" ")],
-                object: JsIdentifierExpression {
+                callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@14..17 "foo" [] [],
                     },
@@ -41,15 +41,15 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: NewExpr {
+            expression: JsNewExpression {
                 new_token: NEW_KW@29..34 "new" [Whitespace("\n")] [Whitespace(" ")],
-                object: NewExpr {
+                callee: JsNewExpression {
                     new_token: NEW_KW@34..38 "new" [] [Whitespace(" ")],
-                    object: NewExpr {
+                    callee: JsNewExpression {
                         new_token: NEW_KW@38..42 "new" [] [Whitespace(" ")],
-                        object: NewExpr {
+                        callee: JsNewExpression {
                             new_token: NEW_KW@42..46 "new" [] [Whitespace(" ")],
-                            object: JsIdentifierExpression {
+                            callee: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@46..49 "Foo" [] [],
                                 },
@@ -73,9 +73,9 @@ JsModule {
             semicolon_token: SEMICOLON@51..52 ";" [] [],
         },
         JsExpressionStatement {
-            expression: NewExpr {
+            expression: JsNewExpression {
                 new_token: NEW_KW@52..57 "new" [Whitespace("\n")] [Whitespace(" ")],
-                object: JsIdentifierExpression {
+                callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@57..60 "Foo" [] [],
                     },
@@ -174,7 +174,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..112
     0: JS_EXPRESSION_STATEMENT@0..9
-      0: NEW_EXPR@0..9
+      0: JS_NEW_EXPRESSION@0..9
         0: NEW_KW@0..4 "new" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@4..7
           0: JS_REFERENCE_IDENTIFIER@4..7
@@ -186,7 +186,7 @@ JsModule {
           2: R_PAREN@8..9 ")" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@9..18
-      0: NEW_EXPR@9..17
+      0: JS_NEW_EXPRESSION@9..17
         0: NEW_KW@9..14 "new" [Whitespace("\n")] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@14..17
           0: JS_REFERENCE_IDENTIFIER@14..17
@@ -201,13 +201,13 @@ JsModule {
         2: TARGET_KW@23..29 "target" [] []
       1: (empty)
     3: JS_EXPRESSION_STATEMENT@29..52
-      0: NEW_EXPR@29..51
+      0: JS_NEW_EXPRESSION@29..51
         0: NEW_KW@29..34 "new" [Whitespace("\n")] [Whitespace(" ")]
-        1: NEW_EXPR@34..51
+        1: JS_NEW_EXPRESSION@34..51
           0: NEW_KW@34..38 "new" [] [Whitespace(" ")]
-          1: NEW_EXPR@38..51
+          1: JS_NEW_EXPRESSION@38..51
             0: NEW_KW@38..42 "new" [] [Whitespace(" ")]
-            1: NEW_EXPR@42..51
+            1: JS_NEW_EXPRESSION@42..51
               0: NEW_KW@42..46 "new" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@46..49
                 0: JS_REFERENCE_IDENTIFIER@46..49
@@ -225,7 +225,7 @@ JsModule {
         3: (empty)
       1: SEMICOLON@51..52 ";" [] []
     4: JS_EXPRESSION_STATEMENT@52..112
-      0: NEW_EXPR@52..112
+      0: JS_NEW_EXPRESSION@52..112
         0: NEW_KW@52..57 "new" [Whitespace("\n")] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@57..60
           0: JS_REFERENCE_IDENTIFIER@57..60

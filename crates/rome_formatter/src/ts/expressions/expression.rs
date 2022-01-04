@@ -4,9 +4,9 @@ use crate::{
 };
 use rslint_parser::ast::{
 	JsAnyExpression, JsAssignmentExpression, JsAwaitExpression, JsBinaryExpression,
-	JsComputedMemberExpression, JsConditionalExpression, JsLogicalExpression,
+	JsComputedMemberExpression, JsConditionalExpression, JsLogicalExpression, JsNewExpression,
 	JsParenthesizedExpression, JsThisExpression, JsUnaryExpression, JsYieldArgument,
-	JsYieldExpression, NewExpr, NewTarget,
+	JsYieldExpression, NewTarget,
 };
 use rslint_parser::{token_set, TokenSet, T};
 
@@ -39,8 +39,8 @@ impl ToFormatElement for JsAnyExpression {
 			JsAnyExpression::JsStaticMemberExpression(static_member_expression) => {
 				static_member_expression.to_format_element(formatter)
 			}
-			JsAnyExpression::NewExpr(new_expr) => new_expr.to_format_element(formatter),
-			JsAnyExpression::CallExpr(call_expression) => {
+			JsAnyExpression::JsNewExpression(new_expr) => new_expr.to_format_element(formatter),
+			JsAnyExpression::JsCallExpression(call_expression) => {
 				call_expression.to_format_element(formatter)
 			}
 			JsAnyExpression::JsUnaryExpression(unary_expression) => {
@@ -125,7 +125,7 @@ impl ToFormatElement for JsComputedMemberExpression {
 	}
 }
 
-impl ToFormatElement for NewExpr {
+impl ToFormatElement for JsNewExpression {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let arguments = if let Some(arguments) = self.arguments() {
 			formatter.format_node(arguments)?
@@ -137,7 +137,7 @@ impl ToFormatElement for NewExpr {
 			formatter.format_token(&self.new_token()?)?,
 			// TODO handle TsTypeArgs
 			space_token(),
-			formatter.format_node(self.object()?)?,
+			formatter.format_node(self.callee()?)?,
 			arguments,
 		])
 	}

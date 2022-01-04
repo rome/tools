@@ -190,7 +190,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_ELSE_CLAUSE",
 		"JS_DO_WHILE_STATEMENT",
 		"JS_WHILE_STATEMENT",
-		"FOR_STMT",
+		"JS_FOR_STATEMENT",
 		"JS_FOR_IN_STATEMENT",
 		"JS_FOR_OF_STATEMENT",
 		"JS_FOR_VARIABLE_DECLARATION",
@@ -234,11 +234,11 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_METHOD_OBJECT_MEMBER",
 		"JS_SUPER_EXPRESSION",
 		"JS_PARENTHESIZED_EXPRESSION",
-		"NEW_EXPR",
+		"JS_NEW_EXPRESSION",
 		"JS_FUNCTION_EXPRESSION",
 		"JS_STATIC_MEMBER_EXPRESSION",
 		"JS_COMPUTED_MEMBER_EXPRESSION",
-		"CALL_EXPR",
+		"JS_CALL_EXPRESSION",
 		"JS_UNARY_EXPRESSION",
 		"JS_PRE_UPDATE_EXPRESSION",
 		"JS_POST_UPDATE_EXPRESSION",
@@ -327,12 +327,6 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"EXPORT_DEFAULT_EXPR",
 		"EXPORT_WILDCARD",
 		"JS_AWAIT_EXPRESSION",
-		// These three are just hacks for converting to ast node without
-		// having to handle every error recovery case.
-		// in the future we might just tag the underlying rowan nodes
-		"FOR_STMT_TEST",
-		"FOR_STMT_UPDATE",
-		"FOR_STMT_INIT",
 		// TypeScript
 		"TS_ANY",
 		"TS_UNKNOWN",

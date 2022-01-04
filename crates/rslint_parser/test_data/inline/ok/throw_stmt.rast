@@ -4,9 +4,9 @@ JsModule {
     items: JsModuleItemList [
         JsThrowStatement {
             throw_token: THROW_KW@0..6 "throw" [] [Whitespace(" ")],
-            argument: NewExpr {
+            argument: JsNewExpression {
                 new_token: NEW_KW@6..10 "new" [] [Whitespace(" ")],
-                object: JsIdentifierExpression {
+                callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@10..15 "Error" [] [],
                     },
@@ -41,7 +41,7 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..35
     0: JS_THROW_STATEMENT@0..23
       0: THROW_KW@0..6 "throw" [] [Whitespace(" ")]
-      1: NEW_EXPR@6..22
+      1: JS_NEW_EXPRESSION@6..22
         0: NEW_KW@6..10 "new" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@10..15
           0: JS_REFERENCE_IDENTIFIER@10..15

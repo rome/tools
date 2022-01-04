@@ -110,7 +110,7 @@ pub trait SyntaxNodeExt {
 		const ITERATION_STMT: [JsSyntaxKind; 5] = [
 			JsSyntaxKind::JS_FOR_IN_STATEMENT,
 			JsSyntaxKind::JS_FOR_OF_STATEMENT,
-			JsSyntaxKind::FOR_STMT,
+			JsSyntaxKind::JS_FOR_STATEMENT,
 			JsSyntaxKind::JS_WHILE_STATEMENT,
 			JsSyntaxKind::JS_DO_WHILE_STATEMENT,
 		];
