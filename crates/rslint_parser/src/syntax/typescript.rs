@@ -107,20 +107,6 @@ pub(crate) fn maybe_ts_type_annotation(p: &mut Parser) -> Option<Range<usize>> {
 	}
 }
 
-pub(crate) fn ts_expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
-	match p.cur_src() {
-		"declare" => ts_declare(p),
-		"global" => {
-			if p.nth_at(1, T!['{']) {
-				ts_ambient_external_module_decl(p, false)
-			} else {
-				None
-			}
-		}
-		_ => ts_decl(p),
-	}
-}
-
 pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 	debug_assert_eq!(p.cur_src(), "declare");
 	let p = &mut *p.with_state(ParserState {

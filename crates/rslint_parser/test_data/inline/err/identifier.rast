@@ -46,7 +46,7 @@ JsModule {
       1: SEMICOLON@12..13 ";" [] []
   3: EOF@13..14 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode
+error[SyntaxError]: Illegal use of reserved keyword `yield` as an identifier in strict mode
   ┌─ identifier.js:1:1
   │
 1 │ yield;

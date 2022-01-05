@@ -339,14 +339,14 @@ error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
   │     ^^^^
 
 --
-error[SyntaxError]: Illegal use of `let` as an identifier in strict mode
+error[SyntaxError]: Illegal use of reserved keyword `let` as an identifier in strict mode
   ┌─ binding_identifier_invalid.js:6:5
   │
 6 │ let let = 5;
   │     ^^^
 
 --
-error[SyntaxError]: Illegal use of `let` as an identifier in strict mode
+error[SyntaxError]: Illegal use of reserved keyword `let` as an identifier in strict mode
   ┌─ binding_identifier_invalid.js:7:7
   │
 7 │ const let = 5;

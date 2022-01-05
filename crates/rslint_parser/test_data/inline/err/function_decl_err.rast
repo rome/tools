@@ -459,7 +459,7 @@ error[SyntaxError]: expected a name for the function in a function declaration, 
   │                 ^
 
 --
-error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode
+error[SyntaxError]: Illegal use of reserved keyword `yield` as an identifier in strict mode
   ┌─ function_decl_err.js:8:1
   │
 8 │ yield foo;
@@ -490,7 +490,7 @@ error[SyntaxError]: Illegal use of `await` as an identifier inside of a module
    │              ^^^^^
 
 --
-error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode
+error[SyntaxError]: Illegal use of reserved keyword `yield` as an identifier in strict mode
    ┌─ function_decl_err.js:11:14
    │
 11 │ function foo(yield) {}

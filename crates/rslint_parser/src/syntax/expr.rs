@@ -50,7 +50,7 @@ pub const ASSIGN_TOKENS: TokenSet = token_set![
 	T![**=],
 ];
 
-pub const STARTS_EXPR: TokenSet = token_set![
+const STARTS_EXPR: TokenSet = token_set![
 	T![!],
 	T!['('],
 	T!['['],
@@ -69,6 +69,7 @@ pub const STARTS_EXPR: TokenSet = token_set![
 	T![...],
 	T![this],
 	T![yield],
+	T![enum],
 	T![await],
 	T![function],
 	T![class],
@@ -959,6 +960,10 @@ pub(crate) fn parse_expression(p: &mut Parser) -> ParsedSyntax {
 	})
 }
 
+pub(crate) fn is_at_expression(p: &Parser) -> bool {
+	p.at_ts(STARTS_EXPR) || p.at(T![<]) || (p.at(T![enum]) && !p.has_linebreak_before_n(0))
+}
+
 /// A primary expression such as a literal, an object, an array, or `this`.
 fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 	let parsed_literal_expression = parse_literal_expression(p);
@@ -995,7 +1000,7 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 			} else {
 				// `async a => {}` and `async (a) => {}`
 				if p.state.potential_arrow_start
-					&& token_set![T![ident], T![yield], T![await], T!['(']].contains(p.nth(1))
+					&& (is_nth_at_identifier_name(p, 1) || p.nth(1) == T!['('])
 				{
 					// test async_arrow_expr
 					// let a = async foo => {}
@@ -1046,7 +1051,7 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 
 			parse_function_expression(p).unwrap()
 		}
-		T![ident] | T![yield] | T![await] => {
+		T![ident] | T![yield] | T![await] | T![enum] => {
 			// test identifier_reference
 			// // SCRIPT
 			// foo;
@@ -1166,6 +1171,9 @@ fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax {
 // await;
 // async function test(await) {}
 // function* test(yield) {}
+// enum;
+// implements;
+// interface;
 
 /// Parses an identifier if it is valid in this context or returns `Invalid` if the context isn't valid in this context.
 /// An identifier is invalid if:
@@ -1173,7 +1181,7 @@ fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax {
 /// * It is named `yield` inside of a generator function or in strict mode
 pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
 	match p.cur() {
-		T![yield] | T![await] | T![ident] => {
+		T![yield] | T![await] | T![ident] | T![enum] => {
 			let m = p.start();
 			let name = p.cur_src();
 
@@ -1190,18 +1198,23 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
 					p.err_builder("Illegal use of `yield` as an identifier in generator function")
 						.primary(p.cur_tok().range, ""),
 				),
+
 				"yield" | "let" | "public" | "protected" | "private" | "package" | "implements"
 				| "interface" | "static"
 					if StrictMode.is_supported(p) =>
 				{
 					Some(
 						p.err_builder(&format!(
-							"Illegal use of `{}` as an identifier in strict mode",
+							"Illegal use of reserved keyword `{}` as an identifier in strict mode",
 							name
 						))
 						.primary(p.cur_tok().range, ""),
 					)
 				}
+				_ if p.cur() == T![enum] => Some(
+					p.err_builder("Illegal use of reserved keyword `enum` as an identifier")
+						.primary(p.cur_tok().range, ""),
+				),
 				_ => None,
 			};
 
@@ -1220,7 +1233,7 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
 }
 
 pub(crate) fn is_at_identifier(p: &Parser) -> bool {
-	matches!(p.cur(), T![ident] | T![await] | T![yield])
+	matches!(p.cur(), T![ident] | T![await] | T![yield] | T![enum])
 }
 
 /// A template literal such as "`abcd ${efg}`"
@@ -1528,5 +1541,9 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
 }
 
 pub(super) fn is_at_identifier_name(p: &Parser) -> bool {
-	p.at(T![ident]) || p.cur().is_keyword()
+	is_nth_at_identifier_name(p, 0)
+}
+
+pub(super) fn is_nth_at_identifier_name(p: &Parser, offset: usize) -> bool {
+	p.nth_at(offset, T![ident]) || p.nth(offset).is_keyword()
 }
