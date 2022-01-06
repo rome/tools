@@ -281,8 +281,6 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	{
 		variable_declaration_statement(p).unwrap();
 	} else {
-		// let m = p.start();
-
 		if p.cur_src() == "from" && exports_ns {
 			from_clause_and_semi(p, start);
 			return m.complete(p, EXPORT_WILDCARD);
