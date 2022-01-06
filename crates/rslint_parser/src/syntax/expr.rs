@@ -144,7 +144,7 @@ pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
 
 /// Parses an expression that might turn out to be an assignment target if an assignment operator is found
 pub(crate) fn parse_expr_or_assignment(p: &mut Parser) -> ParsedSyntax {
-	if p.at(T![<]) && is_nth_at_identifier_name(p, 1) {
+	if p.at(T![<]) && is_nth_at_name(p, 1) {
 		let res = try_parse_ts(p, |p| {
 			let m = p.start();
 			if ts_type_params(p).is_none() {
@@ -634,22 +634,6 @@ fn parse_static_member_expression(
 	Present(m.complete(p, JS_STATIC_MEMBER_EXPRESSION))
 }
 
-pub(super) fn parse_name(p: &mut Parser) -> ParsedSyntax {
-	match p.cur() {
-		T![ident] => {
-			let m = p.start();
-			p.bump_any();
-			Present(m.complete(p, JS_NAME))
-		}
-		t if t.is_keyword() => {
-			let m = p.start();
-			p.bump_remap(T![ident]);
-			Present(m.complete(p, JS_NAME))
-		}
-		_ => Absent,
-	}
-}
-
 fn parse_private_name(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![#]) {
 		return Absent;
@@ -697,8 +681,8 @@ pub fn parse_computed_member_expression(
 }
 
 /// An identifier name, either an ident or a keyword
-pub(super) fn parse_identifier_name(p: &mut Parser) -> ParsedSyntax {
-	if is_at_identifier_name(p) {
+pub(super) fn parse_name(p: &mut Parser) -> ParsedSyntax {
+	if is_at_name(p) {
 		let m = p.start();
 		p.bump_remap(T![ident]);
 		Present(m.complete(p, JS_NAME))
@@ -997,9 +981,7 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 				parse_function_expression(p).unwrap()
 			} else {
 				// `async a => {}` and `async (a) => {}`
-				if p.state.potential_arrow_start
-					&& (is_nth_at_identifier_name(p, 1) || p.nth(1) == T!['('])
-				{
+				if p.state.potential_arrow_start && (is_nth_at_name(p, 1) || p.nth(1) == T!['(']) {
 					// test async_arrow_expr
 					// let a = async foo => {}
 					// let b = async (bar) => {}
@@ -1538,10 +1520,10 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
 	parse_postfix_expr(p)
 }
 
-pub(super) fn is_at_identifier_name(p: &Parser) -> bool {
-	is_nth_at_identifier_name(p, 0)
+pub(super) fn is_at_name(p: &Parser) -> bool {
+	is_nth_at_name(p, 0)
 }
 
-pub(super) fn is_nth_at_identifier_name(p: &Parser, offset: usize) -> bool {
+pub(super) fn is_nth_at_name(p: &Parser, offset: usize) -> bool {
 	p.nth_at(offset, T![ident]) || p.nth(offset).is_keyword()
 }

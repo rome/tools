@@ -3,7 +3,7 @@ use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
-use crate::syntax::expr::{is_at_identifier_name, parse_expr_or_assignment, parse_expression};
+use crate::syntax::expr::{is_at_name, parse_expr_or_assignment, parse_expression};
 use crate::syntax::function::{
 	function_body, parse_ts_parameter_types, parse_ts_type_annotation_or_error,
 };
@@ -151,7 +151,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 		_ => {
 			let checkpoint = p.checkpoint();
 			let m = p.start();
-			let identifier_member_name = is_at_identifier_name(p);
+			let identifier_member_name = is_at_name(p);
 			let member_name = parse_object_member_name(p)
 				.or_add_diagnostic(p, js_parse_error::expected_object_member);
 
@@ -207,7 +207,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 				} else {
 					// It turns out that this isn't a valid member after all. Make sure to throw
 					// away everything that has been parsed so far so that the caller can
-					// do it's error recovery
+					// do its error recovery
 					m.abandon(p);
 					p.rewind(checkpoint);
 					Absent

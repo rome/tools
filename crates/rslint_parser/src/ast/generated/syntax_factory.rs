@@ -136,8 +136,22 @@ impl SyntaxFactory for JsSyntaxFactory {
 			}
 			EXPORT_NAMED => {
 				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
+				let mut slots: RawNodeSlots<8usize> = RawNodeSlots::default();
 				let mut current_element = elements.next();
+				if let Some(element) = &current_element {
+					if element.kind() == T![export] {
+						slots.mark_present();
+						current_element = elements.next();
+					}
+				}
+				slots.next_slot();
+				if let Some(element) = &current_element {
+					if JsName::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					}
+				}
+				slots.next_slot();
 				if let Some(element) = &current_element {
 					if element.kind() == T!['{'] {
 						slots.mark_present();

@@ -955,6 +955,7 @@ JsAnyModuleItem =
 	| ExportDefaultExpr
 	| ExportWildcard
 	| ExportDecl
+	| ExportNamed
 	| TsImportEqualsDecl
 	| TsExportAssignment
 	| TsNamespaceExportDecl
@@ -1139,7 +1140,7 @@ TsNamespaceExportDecl = 'export' 'as' 'namespace' ident: Ident? ';'?
 Specifier = name:JsName 'as'? alias: JsName?
 
 // @ematipico this one is not entirely correct I think..
-ExportNamed = '{' specifiers: ExportNamedSpecifierList '}' 'from'?  'js_string_literal'? ';'?
+ExportNamed = 'export' default: JsName? named: '{'? specifiers: ExportNamedSpecifierList? '}'? 'from'?  'js_string_literal'? ';'?
 
 ExportNamedSpecifierList = (Specifier (',' Specifier)* ','?)
 

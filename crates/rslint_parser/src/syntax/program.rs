@@ -1,10 +1,11 @@
 //! Top level functions for parsing a script or module, also includes module specific items.
 
-use super::expr::{parse_expr_or_assignment, parse_expression, parse_identifier_name};
+use super::expr::{parse_expr_or_assignment, parse_expression, parse_name};
 use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use super::typescript::*;
 use crate::parser::ParserProgress;
 use crate::syntax::class::parse_class_declaration;
+use crate::syntax::expr::is_at_name;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::function::{is_at_async_function, LineBreak};
 use crate::syntax::js_parse_error;
@@ -50,10 +51,10 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 
 fn named_export_specifier(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
+	parse_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 	if p.cur_src() == "as" {
 		p.bump_remap(T![as]);
-		parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
+		parse_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 	}
 	m.complete(p, SPECIFIER)
 }
@@ -150,7 +151,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			}
 
 			// TODO(RDambrosio016): verify, is identifier_name correct here or should it just be ident?
-			parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
+			parse_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 			semi(p, start..p.cur_tok().range.start);
 			let mut complete = m.complete(p, TS_NAMESPACE_EXPORT_DECL);
 			complete.err_if_not_ts(
@@ -198,7 +199,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		}
 		if p.cur_src() == "as" {
 			p.bump_remap(T![as]);
-			parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
+			parse_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 			exports_ns = true;
 		}
 	}
@@ -280,18 +281,15 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	{
 		variable_declaration_statement(p).unwrap();
 	} else {
-		let m = p.start();
+		// let m = p.start();
 
 		if p.cur_src() == "from" && exports_ns {
 			from_clause_and_semi(p, start);
 			return m.complete(p, EXPORT_WILDCARD);
 		}
 
-		if !export_default
-			&& (token_set![T![async], T![yield], T![yield]].contains(p.cur())
-				|| p.cur().is_keyword())
-		{
-			parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
+		if !export_default && is_at_name(p) {
+			parse_name(p).unwrap();
 			export_default = true;
 		}
 
@@ -344,7 +342,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			}
 		}
 
-		m.complete(p, EXPORT_NAMED);
+		return m.complete(p, EXPORT_NAMED);
 	}
 	m.complete(p, EXPORT_DECL)
 }
@@ -358,7 +356,7 @@ fn from_clause_and_semi(p: &mut Parser, start: usize) {
 
 pub fn ts_import_equals_decl(p: &mut Parser, m: Marker) -> CompletedMarker {
 	let start = p.cur_tok().range.start;
-	parse_identifier_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
+	parse_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
 	p.expect(T![=]);
 
 	if p.cur_src() == "require" && p.nth_at(1, T!['(']) {
