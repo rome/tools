@@ -156,33 +156,31 @@ pub(crate) trait ParseObjectPattern {
 		let elements = p.start();
 		let mut progress = ParserProgress::default();
 
-		{
-			while !p.at(T!['}']) {
-				progress.assert_progressing(p);
+		while !p.at(T!['}']) {
+			progress.assert_progressing(p);
 
-				if p.at(T![,]) {
-					// missing element
-					p.error(Self::expected_property_pattern_error(p, p.cur_tok().range));
-					p.bump_any(); // bump ,
-					continue;
-				}
-				let recovery_set = ParseRecovery::new(
-					Self::unknown_pattern_kind(),
-					token_set!(EOF, T![,], T!['}'], T![...], T![;], T![')']),
-				)
-				.enable_recovery_on_line_break();
+			if p.at(T![,]) {
+				// missing element
+				p.error(Self::expected_property_pattern_error(p, p.cur_tok().range));
+				p.bump_any(); // bump ,
+				continue;
+			}
+			let recovery_set = ParseRecovery::new(
+				Self::unknown_pattern_kind(),
+				token_set!(EOF, T![,], T!['}'], T![...], T![;], T![')']),
+			)
+			.enable_recovery_on_line_break();
 
-				let recover_result = self
-					.parse_any_property_pattern(p, &recovery_set)
-					.or_recover(p, &recovery_set, Self::expected_property_pattern_error);
+			let recover_result = self
+				.parse_any_property_pattern(p, &recovery_set)
+				.or_recover(p, &recovery_set, Self::expected_property_pattern_error);
 
-				if recover_result.is_err() {
-					break;
-				}
+			if recover_result.is_err() {
+				break;
+			}
 
-				if !p.at(T!['}']) {
-					p.expect(T![,]);
-				}
+			if !p.at(T!['}']) {
+				p.expect(T![,]);
 			}
 		}
 

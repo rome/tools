@@ -2,7 +2,8 @@ use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{
-	is_at_identifier_name, parse_conditional_expr, parse_expression, parse_name, parse_unary_expr,
+	is_at_identifier, is_at_identifier_name, parse_conditional_expr, parse_expression, parse_name,
+	parse_unary_expr,
 };
 use crate::syntax::js_parse_error::{expected_assignment_target, expected_identifier};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
@@ -49,15 +50,41 @@ pub(crate) fn expression_to_assignment_pattern(
 	}
 }
 
+// test array_or_object_member_assignment
+// [{
+//   get y() {
+//     throw new Test262Error('The property should not be accessed.');
+//   },
+//   set y(val) {
+//     setValue = val;
+//   }
+// }.y = 42] = [23];
+// ({ x: {
+//   get y() {
+//     throw new Test262Error('The property should not be accessed.');
+//   },
+//   set y(val) {
+//     setValue = val;
+//   }
+// }.y = 42 } = { x: 23 });
 pub(crate) fn parse_assignment_pattern(
 	p: &mut Parser,
 	expression_kind: AssignmentExprPrecedence,
 ) -> ParsedSyntax {
-	match p.cur() {
-		T!['['] => ArrayAssignmentPattern.parse_array_pattern(p),
-		T!['{'] if p.state.allow_object_expr => ObjectAssignmentPattern.parse_object_pattern(p),
-		_ => parse_assignment(p, expression_kind),
-	}
+	let checkpoint = p.checkpoint();
+	let assignment_expression = expression_kind.parse_expression(p);
+
+	assignment_expression.and_then(|expr| match expr.kind() {
+		JS_OBJECT_EXPRESSION => {
+			p.rewind(checkpoint);
+			ObjectAssignmentPattern.parse_object_pattern(p)
+		}
+		JS_ARRAY_EXPRESSION => {
+			p.rewind(checkpoint);
+			ArrayAssignmentPattern.parse_array_pattern(p)
+		}
+		_ => Present(expression_to_assignment(p, expr, checkpoint)),
+	})
 }
 
 /// Re-parses an expression as an assignment.
@@ -82,17 +109,22 @@ pub(crate) enum AssignmentExprPrecedence {
 	Any,
 }
 
+impl AssignmentExprPrecedence {
+	fn parse_expression(&self, p: &mut Parser) -> ParsedSyntax {
+		match self {
+			AssignmentExprPrecedence::Unary => parse_unary_expr(p),
+			AssignmentExprPrecedence::Conditional => parse_conditional_expr(p),
+			AssignmentExprPrecedence::Any => parse_expression(p),
+		}
+	}
+}
+
 pub(crate) fn parse_assignment(
 	p: &mut Parser,
 	expr_kind: AssignmentExprPrecedence,
 ) -> ParsedSyntax {
 	let checkpoint = p.checkpoint();
-
-	let assignment_expression = match expr_kind {
-		AssignmentExprPrecedence::Unary => parse_unary_expr(p),
-		AssignmentExprPrecedence::Conditional => parse_conditional_expr(p),
-		AssignmentExprPrecedence::Any => parse_expression(p),
-	};
+	let assignment_expression = expr_kind.parse_expression(p);
 
 	assignment_expression.map(|expr| expression_to_assignment(p, expr, checkpoint))
 }
@@ -216,24 +248,21 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 	// ({:=} = {});
 	// ({ a b } = {});
 	fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
-		if !is_at_identifier_name(p)
-			&& !p.at_ts(token_set![T![:], T![=], T![ident], T![await], T![yield]])
-		{
-			return Absent;
-		}
-
 		let m = p.start();
 
-		let kind = if p.at(T![:]) || p.nth_at(1, T![:]) {
+		let kind = if (is_at_identifier(p) || p.at(T![=])) && !p.nth_at(1, T![:]) {
+			parse_assignment(p, AssignmentExprPrecedence::Conditional)
+				.or_add_diagnostic(p, expected_identifier);
+			JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY
+		} else if is_at_identifier_name(p) || p.at(T![:]) || p.nth_at(1, T![:]) {
 			parse_name(p).or_add_diagnostic(p, expected_identifier);
 			p.expect(T![:]);
 			parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
 				.or_add_diagnostic(p, expected_assignment_target);
 			JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
 		} else {
-			parse_assignment(p, AssignmentExprPrecedence::Conditional)
-				.or_add_diagnostic(p, expected_identifier);
-			JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY
+			m.abandon(p);
+			return Absent;
 		};
 
 		parse_initializer_clause(p).ok();

@@ -105,27 +105,30 @@ JsModule {
                 left: JsArrayAssignmentPattern {
                     l_brack_token: L_BRACK@70..72 "[" [Whitespace("\n")] [],
                     elements: JsArrayAssignmentPatternElementList [
-                        JsArrayAssignmentPattern {
-                            l_brack_token: L_BRACK@72..73 "[" [] [],
-                            elements: JsArrayAssignmentPatternElementList [
-                                JsIdentifierAssignment {
-                                    name_token: IDENT@73..75 "a" [] [Whitespace(" ")],
-                                },
-                                missing separator,
-                                JsIdentifierAssignment {
-                                    name_token: IDENT@75..76 "b" [] [],
-                                },
-                            ],
-                            r_brack_token: R_BRACK@76..78 "]" [] [Whitespace(" ")],
-                        },
-                        missing separator,
-                        JsArrayAssignmentPattern {
+                        JsComputedMemberAssignment {
+                            object: JsArrayExpression {
+                                l_brack_token: L_BRACK@72..73 "[" [] [],
+                                elements: JsArrayElementList [
+                                    JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@73..75 "a" [] [Whitespace(" ")],
+                                        },
+                                    },
+                                    missing separator,
+                                    JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@75..76 "b" [] [],
+                                        },
+                                    },
+                                ],
+                                r_brack_token: R_BRACK@76..78 "]" [] [Whitespace(" ")],
+                            },
                             l_brack_token: L_BRACK@78..79 "[" [] [],
-                            elements: JsArrayAssignmentPatternElementList [
-                                JsIdentifierAssignment {
-                                    name_token: IDENT@79..80 "c" [] [],
+                            member: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@79..80 "c" [] [],
                                 },
-                            ],
+                            },
                             r_brack_token: R_BRACK@80..81 "]" [] [],
                         },
                     ],
@@ -245,22 +248,23 @@ JsModule {
         0: JS_ARRAY_ASSIGNMENT_PATTERN@70..82
           0: L_BRACK@70..72 "[" [Whitespace("\n")] []
           1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@72..81
-            0: JS_ARRAY_ASSIGNMENT_PATTERN@72..78
-              0: L_BRACK@72..73 "[" [] []
-              1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@73..76
-                0: JS_IDENTIFIER_ASSIGNMENT@73..75
-                  0: IDENT@73..75 "a" [] [Whitespace(" ")]
-                1: (empty)
-                2: JS_IDENTIFIER_ASSIGNMENT@75..76
-                  0: IDENT@75..76 "b" [] []
-              2: R_BRACK@76..78 "]" [] [Whitespace(" ")]
-            1: (empty)
-            2: JS_ARRAY_ASSIGNMENT_PATTERN@78..81
-              0: L_BRACK@78..79 "[" [] []
-              1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@79..80
-                0: JS_IDENTIFIER_ASSIGNMENT@79..80
+            0: JS_COMPUTED_MEMBER_ASSIGNMENT@72..81
+              0: JS_ARRAY_EXPRESSION@72..78
+                0: L_BRACK@72..73 "[" [] []
+                1: JS_ARRAY_ELEMENT_LIST@73..76
+                  0: JS_IDENTIFIER_EXPRESSION@73..75
+                    0: JS_REFERENCE_IDENTIFIER@73..75
+                      0: IDENT@73..75 "a" [] [Whitespace(" ")]
+                  1: (empty)
+                  2: JS_IDENTIFIER_EXPRESSION@75..76
+                    0: JS_REFERENCE_IDENTIFIER@75..76
+                      0: IDENT@75..76 "b" [] []
+                2: R_BRACK@76..78 "]" [] [Whitespace(" ")]
+              1: L_BRACK@78..79 "[" [] []
+              2: JS_IDENTIFIER_EXPRESSION@79..80
+                0: JS_REFERENCE_IDENTIFIER@79..80
                   0: IDENT@79..80 "c" [] []
-              2: R_BRACK@80..81 "]" [] []
+              3: R_BRACK@80..81 "]" [] []
           2: R_BRACK@81..82 "]" [] []
         1: EQ@82..84 "=" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_EXPRESSION@84..88
@@ -321,20 +325,6 @@ error[SyntaxError]: expected an identifier, or an assignment target but instead 
   │
 3 │ [a = , = "test"] = test;
   │        ^ Expected an identifier, or an assignment target here
-
---
-error[SyntaxError]: expected `,` but instead found `b`
-  ┌─ array_assignment_target_err.js:4:5
-  │
-4 │ [[a b] [c]]= test;
-  │     ^ unexpected
-
---
-error[SyntaxError]: expected `,` but instead found `[`
-  ┌─ array_assignment_target_err.js:4:8
-  │
-4 │ [[a b] [c]]= test;
-  │        ^ unexpected
 
 --
 error[SyntaxError]: expected `,` but instead found `:`
