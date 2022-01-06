@@ -9,7 +9,6 @@ mod parse_recovery;
 mod parsed_syntax;
 pub(crate) mod single_token_parse_recovery;
 
-use drop_bomb::DropBomb;
 use rslint_errors::Diagnostic;
 use rslint_syntax::JsSyntaxKind::EOF;
 use std::borrow::BorrowMut;
@@ -24,6 +23,9 @@ pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
 pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::*;
+
+#[cfg(any(debug_assertions, feature = "force-markerbomb"))]
+use drop_bomb::DropBomb;
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Hash, Default)]
@@ -473,6 +475,29 @@ impl<'t> Parser<'t> {
 	}
 }
 
+#[derive(Debug)]
+pub struct MarkerDropBomb
+{
+	#[cfg(any(debug_assertions, feature = "force-markerbomb"))]
+	bomb: DropBomb,
+}
+
+impl MarkerDropBomb {
+    pub fn defuse(&mut self) {
+		#[cfg(any(debug_assertions, feature = "force-markerbomb"))]
+		self.bomb.defuse();
+	}
+}
+
+impl Default for MarkerDropBomb {
+    fn default() -> Self {
+		Self {
+			#[cfg(any(debug_assertions, feature = "force-markerbomb"))]
+			bomb: DropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."),		
+		}
+    }
+}
+
 /// A structure signifying the start of parsing of a syntax tree node
 #[derive(Debug)]
 #[must_use = "Marker must either be `completed` or `abandoned`"]
@@ -483,7 +508,7 @@ pub struct Marker {
 	pub start: usize,
 	pub old_start: u32,
 	pub(crate) child_idx: Option<usize>,
-	bomb: DropBomb,
+	bomb: MarkerDropBomb,
 }
 
 impl Marker {
@@ -493,7 +518,7 @@ impl Marker {
 			start,
 			old_start: pos,
 			child_idx: None,
-			bomb: DropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."),
+			bomb: MarkerDropBomb::default()
 		}
 	}
 

@@ -14,7 +14,10 @@ rslint_lexer = { path = "../rslint_lexer", version = "0.2", features = ["highlig
 rome_rowan = { path = "../rome_rowan", version = "0.0.0" }
 num-bigint = "0.3.0"
 lexical = { version = "5.2.0", features = ["radix"] }
-drop_bomb = "0.1.5"
+drop_bomb = { version = "0.1.5", optional = true }
 
 [dev-dependencies]
 expect-test = "1.0"
+
+[features]
+force-markerbomb = ["drop_bomb"]
