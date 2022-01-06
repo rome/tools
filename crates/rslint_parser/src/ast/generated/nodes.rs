@@ -51,18 +51,18 @@ pub struct ExportNamed {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ExportNamed {
-	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, 0usize)
 	}
-	pub fn specifiers(&self) -> ExportNamedSpecifierList { support::list(&self.syntax, 1usize) }
-	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, 2usize)
-	}
-	pub fn from_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
+	pub fn default(&self) -> Option<JsName> { support::node(&self.syntax, 1usize) }
+	pub fn named_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+	pub fn specifiers(&self) -> ExportNamedSpecifierList { support::list(&self.syntax, 3usize) }
+	pub fn r_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+	pub fn from_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 	pub fn js_string_literal_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, 4usize)
+		support::token(&self.syntax, 6usize)
 	}
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct ExportWildcard {
@@ -2968,6 +2968,7 @@ pub enum JsAnyModuleItem {
 	ExportDecl(ExportDecl),
 	ExportDefaultDecl(ExportDefaultDecl),
 	ExportDefaultExpr(ExportDefaultExpr),
+	ExportNamed(ExportNamed),
 	ExportWildcard(ExportWildcard),
 	JsAnyStatement(JsAnyStatement),
 	JsImport(JsImport),
@@ -3232,13 +3233,18 @@ impl std::fmt::Debug for ExportNamed {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("ExportNamed")
 			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
+				"export_token",
+				&support::DebugSyntaxResult(self.export_token()),
+			)
+			.field("default", &support::DebugOptionalElement(self.default()))
+			.field(
+				"named_token",
+				&support::DebugOptionalElement(self.named_token()),
 			)
 			.field("specifiers", &self.specifiers())
 			.field(
 				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
+				&support::DebugOptionalElement(self.r_curly_token()),
 			)
 			.field(
 				"from_token",
@@ -9823,6 +9829,9 @@ impl From<ExportDefaultDecl> for JsAnyModuleItem {
 impl From<ExportDefaultExpr> for JsAnyModuleItem {
 	fn from(node: ExportDefaultExpr) -> JsAnyModuleItem { JsAnyModuleItem::ExportDefaultExpr(node) }
 }
+impl From<ExportNamed> for JsAnyModuleItem {
+	fn from(node: ExportNamed) -> JsAnyModuleItem { JsAnyModuleItem::ExportNamed(node) }
+}
 impl From<ExportWildcard> for JsAnyModuleItem {
 	fn from(node: ExportWildcard) -> JsAnyModuleItem { JsAnyModuleItem::ExportWildcard(node) }
 }
@@ -9850,6 +9859,7 @@ impl AstNode for JsAnyModuleItem {
 			EXPORT_DECL
 			| EXPORT_DEFAULT_DECL
 			| EXPORT_DEFAULT_EXPR
+			| EXPORT_NAMED
 			| EXPORT_WILDCARD
 			| JS_IMPORT
 			| TS_EXPORT_ASSIGNMENT
@@ -9864,6 +9874,7 @@ impl AstNode for JsAnyModuleItem {
 			EXPORT_DECL => JsAnyModuleItem::ExportDecl(ExportDecl { syntax }),
 			EXPORT_DEFAULT_DECL => JsAnyModuleItem::ExportDefaultDecl(ExportDefaultDecl { syntax }),
 			EXPORT_DEFAULT_EXPR => JsAnyModuleItem::ExportDefaultExpr(ExportDefaultExpr { syntax }),
+			EXPORT_NAMED => JsAnyModuleItem::ExportNamed(ExportNamed { syntax }),
 			EXPORT_WILDCARD => JsAnyModuleItem::ExportWildcard(ExportWildcard { syntax }),
 			JS_IMPORT => JsAnyModuleItem::JsImport(JsImport { syntax }),
 			TS_EXPORT_ASSIGNMENT => {
@@ -9889,6 +9900,7 @@ impl AstNode for JsAnyModuleItem {
 			JsAnyModuleItem::ExportDecl(it) => &it.syntax,
 			JsAnyModuleItem::ExportDefaultDecl(it) => &it.syntax,
 			JsAnyModuleItem::ExportDefaultExpr(it) => &it.syntax,
+			JsAnyModuleItem::ExportNamed(it) => &it.syntax,
 			JsAnyModuleItem::ExportWildcard(it) => &it.syntax,
 			JsAnyModuleItem::JsImport(it) => &it.syntax,
 			JsAnyModuleItem::TsExportAssignment(it) => &it.syntax,
@@ -9904,6 +9916,7 @@ impl std::fmt::Debug for JsAnyModuleItem {
 			JsAnyModuleItem::ExportDecl(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyModuleItem::ExportDefaultDecl(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyModuleItem::ExportDefaultExpr(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyModuleItem::ExportNamed(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyModuleItem::ExportWildcard(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyModuleItem::JsAnyStatement(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyModuleItem::JsImport(it) => std::fmt::Debug::fmt(it, f),

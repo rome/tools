@@ -16,25 +16,23 @@ JsModule {
             },
             semicolon_token: SEMICOLON@17..18 ";" [] [],
         },
-        ExportDecl {
+        ExportNamed {
             export_token: EXPORT_KW@18..26 "export" [Whitespace("\n")] [Whitespace(" ")],
-            type_token: missing (optional),
-            decl: ExportNamed {
-                l_curly_token: L_CURLY@26..28 "{" [] [Whitespace(" ")],
-                specifiers: ExportNamedSpecifierList [
-                    Specifier {
-                        name: JsName {
-                            value_token: IDENT@28..30 "a" [] [Whitespace(" ")],
-                        },
-                        as_token: missing (optional),
-                        alias: missing (optional),
+            default: missing (optional),
+            named_token: L_CURLY@26..28 "{" [] [Whitespace(" ")],
+            specifiers: ExportNamedSpecifierList [
+                Specifier {
+                    name: JsName {
+                        value_token: IDENT@28..30 "a" [] [Whitespace(" ")],
                     },
-                ],
-                r_curly_token: R_CURLY@30..31 "}" [] [],
-                from_token: missing (optional),
-                js_string_literal_token: missing (optional),
-                semicolon_token: SEMICOLON@31..32 ";" [] [],
-            },
+                    as_token: missing (optional),
+                    alias: missing (optional),
+                },
+            ],
+            r_curly_token: R_CURLY@30..31 "}" [] [],
+            from_token: missing (optional),
+            js_string_literal_token: missing (optional),
+            semicolon_token: SEMICOLON@31..32 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsCallExpression {
@@ -94,21 +92,20 @@ JsModule {
           0: JS_STRING_LITERAL@14..17 "\"b\"" [] []
         3: (empty)
       2: SEMICOLON@17..18 ";" [] []
-    1: EXPORT_DECL@18..32
+    1: EXPORT_NAMED@18..32
       0: EXPORT_KW@18..26 "export" [Whitespace("\n")] [Whitespace(" ")]
       1: (empty)
-      2: EXPORT_NAMED@26..32
-        0: L_CURLY@26..28 "{" [] [Whitespace(" ")]
-        1: EXPORT_NAMED_SPECIFIER_LIST@28..30
-          0: SPECIFIER@28..30
-            0: JS_NAME@28..30
-              0: IDENT@28..30 "a" [] [Whitespace(" ")]
-            1: (empty)
-            2: (empty)
-        2: R_CURLY@30..31 "}" [] []
-        3: (empty)
-        4: (empty)
-        5: SEMICOLON@31..32 ";" [] []
+      2: L_CURLY@26..28 "{" [] [Whitespace(" ")]
+      3: EXPORT_NAMED_SPECIFIER_LIST@28..30
+        0: SPECIFIER@28..30
+          0: JS_NAME@28..30
+            0: IDENT@28..30 "a" [] [Whitespace(" ")]
+          1: (empty)
+          2: (empty)
+      4: R_CURLY@30..31 "}" [] []
+      5: (empty)
+      6: (empty)
+      7: SEMICOLON@31..32 ";" [] []
     2: JS_EXPRESSION_STATEMENT@32..37
       0: JS_CALL_EXPRESSION@32..36
         0: JS_IDENTIFIER_EXPRESSION@32..34

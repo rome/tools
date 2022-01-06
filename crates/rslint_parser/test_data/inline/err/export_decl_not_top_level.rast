@@ -8,22 +8,20 @@ JsModule {
                 JsUnknownStatement {
                     items: [
                         EXPORT_KW@1..10 "export" [Whitespace("\n ")] [Whitespace(" ")],
-                        ExportNamed {
-                            l_curly_token: L_CURLY@10..12 "{" [] [Whitespace(" ")],
-                            specifiers: ExportNamedSpecifierList [
-                                Specifier {
-                                    name: JsName {
-                                        value_token: IDENT@12..17 "pain" [] [Whitespace(" ")],
-                                    },
-                                    as_token: missing (optional),
-                                    alias: missing (optional),
+                        L_CURLY@10..12 "{" [] [Whitespace(" ")],
+                        ExportNamedSpecifierList [
+                            Specifier {
+                                name: JsName {
+                                    value_token: IDENT@12..17 "pain" [] [Whitespace(" ")],
                                 },
-                            ],
-                            r_curly_token: R_CURLY@17..19 "}" [] [Whitespace(" ")],
-                            from_token: FROM_KW@19..24 "from" [] [Whitespace(" ")],
-                            js_string_literal_token: JS_STRING_LITERAL@24..30 "\"life\"" [] [],
-                            semicolon_token: SEMICOLON@30..31 ";" [] [],
-                        },
+                                as_token: missing (optional),
+                                alias: missing (optional),
+                            },
+                        ],
+                        R_CURLY@17..19 "}" [] [Whitespace(" ")],
+                        FROM_KW@19..24 "from" [] [Whitespace(" ")],
+                        JS_STRING_LITERAL@24..30 "\"life\"" [] [],
+                        SEMICOLON@30..31 ";" [] [],
                     ],
                 },
             ],
@@ -42,18 +40,17 @@ JsModule {
       1: JS_STATEMENT_LIST@1..31
         0: JS_UNKNOWN_STATEMENT@1..31
           0: EXPORT_KW@1..10 "export" [Whitespace("\n ")] [Whitespace(" ")]
-          1: EXPORT_NAMED@10..31
-            0: L_CURLY@10..12 "{" [] [Whitespace(" ")]
-            1: EXPORT_NAMED_SPECIFIER_LIST@12..17
-              0: SPECIFIER@12..17
-                0: JS_NAME@12..17
-                  0: IDENT@12..17 "pain" [] [Whitespace(" ")]
-                1: (empty)
-                2: (empty)
-            2: R_CURLY@17..19 "}" [] [Whitespace(" ")]
-            3: FROM_KW@19..24 "from" [] [Whitespace(" ")]
-            4: JS_STRING_LITERAL@24..30 "\"life\"" [] []
-            5: SEMICOLON@30..31 ";" [] []
+          1: L_CURLY@10..12 "{" [] [Whitespace(" ")]
+          2: EXPORT_NAMED_SPECIFIER_LIST@12..17
+            0: SPECIFIER@12..17
+              0: JS_NAME@12..17
+                0: IDENT@12..17 "pain" [] [Whitespace(" ")]
+              1: (empty)
+              2: (empty)
+          3: R_CURLY@17..19 "}" [] [Whitespace(" ")]
+          4: FROM_KW@19..24 "from" [] [Whitespace(" ")]
+          5: JS_STRING_LITERAL@24..30 "\"life\"" [] []
+          6: SEMICOLON@30..31 ";" [] []
       2: R_CURLY@31..33 "}" [Whitespace("\n")] []
   3: EOF@33..34 "" [Whitespace("\n")] []
 --

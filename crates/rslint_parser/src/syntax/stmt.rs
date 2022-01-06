@@ -12,7 +12,7 @@ use crate::parser::{RecoveryError, RecoveryResult};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_declaration, parse_initializer_clause};
 use crate::syntax::expr::{
-	is_at_expression, is_at_identifier, is_nth_at_identifier_name, parse_expr_or_assignment,
+	is_at_expression, is_at_identifier, is_nth_at_name, parse_expr_or_assignment,
 	parse_expression_or_recover_to_next_statement, parse_identifier,
 };
 use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
@@ -162,8 +162,8 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 		T![if] => parse_if_statement(p),   // It is only ever Err if there's no if
 		T![with] => parse_with_statement(p), // ever only Err if there's no with keyword
 		T![while] => parse_while_statement(p), // It is only ever Err if there's no while keyword
-		t if (t == T![enum] && is_nth_at_identifier_name(p, 1))
-			|| (t == T![const] && p.nth_at(1, T![enum]) && is_nth_at_identifier_name(p, 2)) =>
+		t if (t == T![enum] && is_nth_at_name(p, 1))
+			|| (t == T![const] && p.nth_at(1, T![enum]) && is_nth_at_name(p, 2)) =>
 		{
 			let mut res = ts_enum(p);
 			res.err_if_not_ts(p, "enums can only be declared in TypeScript files");
