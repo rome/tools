@@ -65,7 +65,11 @@ fn main() -> Result<()> {
 				.opt_value_from_str("--filter")
 				.unwrap()
 				.unwrap_or_else(|| ".*".to_string());
-			xtask::libs::run(filter);
+			let criterion: bool = args
+				.opt_value_from_str("--criterion")
+				.unwrap()
+				.unwrap_or(true);
+			xtask::libs::run(filter, criterion);
 			Ok(())
 		}
 		_ => {
