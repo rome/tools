@@ -26,9 +26,9 @@ JsModule {
                                                 statements: JsStatementList [
                                                     JsThrowStatement {
                                                         throw_token: THROW_KW@14..25 "throw" [Whitespace("\n    ")] [Whitespace(" ")],
-                                                        argument: NewExpr {
+                                                        argument: JsNewExpression {
                                                             new_token: NEW_KW@25..29 "new" [] [Whitespace(" ")],
-                                                            object: JsIdentifierExpression {
+                                                            callee: JsIdentifierExpression {
                                                                 name: JsReferenceIdentifier {
                                                                     value_token: IDENT@29..41 "Test262Error" [] [],
                                                                 },
@@ -142,9 +142,9 @@ JsModule {
                                                     statements: JsStatementList [
                                                         JsThrowStatement {
                                                             throw_token: THROW_KW@164..175 "throw" [Whitespace("\n    ")] [Whitespace(" ")],
-                                                            argument: NewExpr {
+                                                            argument: JsNewExpression {
                                                                 new_token: NEW_KW@175..179 "new" [] [Whitespace(" ")],
-                                                                object: JsIdentifierExpression {
+                                                                callee: JsIdentifierExpression {
                                                                     name: JsReferenceIdentifier {
                                                                         value_token: IDENT@179..191 "Test262Error" [] [],
                                                                     },
@@ -269,7 +269,7 @@ JsModule {
                         2: JS_STATEMENT_LIST@14..82
                           0: JS_THROW_STATEMENT@14..82
                             0: THROW_KW@14..25 "throw" [Whitespace("\n    ")] [Whitespace(" ")]
-                            1: NEW_EXPR@25..81
+                            1: JS_NEW_EXPRESSION@25..81
                               0: NEW_KW@25..29 "new" [] [Whitespace(" ")]
                               1: JS_IDENTIFIER_EXPRESSION@29..41
                                 0: JS_REFERENCE_IDENTIFIER@29..41
@@ -350,7 +350,7 @@ JsModule {
                           2: JS_STATEMENT_LIST@164..232
                             0: JS_THROW_STATEMENT@164..232
                               0: THROW_KW@164..175 "throw" [Whitespace("\n    ")] [Whitespace(" ")]
-                              1: NEW_EXPR@175..231
+                              1: JS_NEW_EXPRESSION@175..231
                                 0: NEW_KW@175..179 "new" [] [Whitespace(" ")]
                                 1: JS_IDENTIFIER_EXPRESSION@179..191
                                   0: JS_REFERENCE_IDENTIFIER@179..191
