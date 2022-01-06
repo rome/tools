@@ -217,12 +217,8 @@ impl Display for BenchmarkResult {
 		let _ = writeln!(f, "\t              ----------");
 		let _ = writeln!(f, "\tTotal:        {:>10?}", self.total());
 
-		
-
 		let _ = writeln!(f, "\tDiagnostics");
-		let diagnostics = &self.diagnostics
-			.iter()
-			.group_by(|x| x.severity);
+		let diagnostics = &self.diagnostics.iter().group_by(|x| x.severity);
 		for (severity, items) in diagnostics {
 			let _ = writeln!(f, "\t\t{:?}: {}", severity, items.count());
 		}
