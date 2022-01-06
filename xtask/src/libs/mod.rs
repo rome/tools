@@ -88,6 +88,8 @@ pub fn run(filter: String, criterion: bool) {
 	let regex = regex::Regex::new(filter.as_str()).unwrap();
 	let libs = include_str!("libs.txt").lines();
 
+	let mut summary = vec![];
+
 	for lib in libs {
 		if !regex.is_match(lib) {
 			continue;
@@ -113,11 +115,19 @@ pub fn run(filter: String, criterion: bool) {
 				}
 
 				let result = benchmark_lib(&id, code);
+				summary.push(result.summary());
+
 				println!("Benchmark: {}", lib);
 				println!("{}", result);
 			}
 			Err(e) => println!("{:?}", e),
 		}
+	}
+
+	println!("Summary");
+	println!("-------");
+	for l in summary {
+		println!("{}", l);
 	}
 }
 
@@ -186,6 +196,17 @@ impl BenchmarkResult {
 	fn total(&self) -> Duration {
 		self.tokenization.add(self.parsing).add(self.tree_sink)
 	}
+
+	fn summary(&self) -> String {
+		format!(
+			"{},Total Time,{:?},tokenization,{:?},parsing,{:?},tree_sink,{:?}",
+			self.id,
+			self.total(),
+			self.tokenization,
+			self.parsing,
+			self.tree_sink,
+		)
+	}
 }
 
 impl Display for BenchmarkResult {
@@ -196,18 +217,13 @@ impl Display for BenchmarkResult {
 		let _ = writeln!(f, "\t              ----------");
 		let _ = writeln!(f, "\tTotal:        {:>10?}", self.total());
 
-		let _ = writeln!(
-			f,
-			"\t[{}] Total Time: {:?} (tokenization: {:?}, parsing: {:?}, tree_sink: {:?})",
-			self.id,
-			self.total(),
-			self.tokenization,
-			self.parsing,
-			self.tree_sink,
-		);
+		
 
 		let _ = writeln!(f, "\tDiagnostics");
-		for (severity, items) in &self.diagnostics.iter().group_by(|x| x.severity) {
+		let diagnostics = &self.diagnostics
+			.iter()
+			.group_by(|x| x.severity);
+		for (severity, items) in diagnostics {
 			let _ = writeln!(f, "\t\t{:?}: {}", severity, items.count());
 		}
 
