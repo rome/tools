@@ -24,9 +24,6 @@ pub use single_token_parse_recovery::SingleTokenParseRecovery;
 pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::*;
 
-#[cfg(any(debug_assertions, feature = "force-markerbomb"))]
-use drop_bomb::DropBomb;
-
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Hash, Default)]
 pub struct ParserProgress(Option<usize>);
@@ -476,26 +473,25 @@ impl<'t> Parser<'t> {
 }
 
 #[derive(Debug)]
-pub struct MarkerDropBomb
-{
+pub struct MarkerDropBomb {
 	#[cfg(any(debug_assertions, feature = "force-markerbomb"))]
-	bomb: DropBomb,
+	bomb: drop_bomb::DropBomb,
 }
 
 impl MarkerDropBomb {
-    pub fn defuse(&mut self) {
+	pub fn defuse(&mut self) {
 		#[cfg(any(debug_assertions, feature = "force-markerbomb"))]
 		self.bomb.defuse();
 	}
 }
 
 impl Default for MarkerDropBomb {
-    fn default() -> Self {
+	fn default() -> Self {
 		Self {
 			#[cfg(any(debug_assertions, feature = "force-markerbomb"))]
-			bomb: DropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."),		
+			bomb: drop_bomb::DropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."),		
 		}
-    }
+	}
 }
 
 /// A structure signifying the start of parsing of a syntax tree node
@@ -518,7 +514,7 @@ impl Marker {
 			start,
 			old_start: pos,
 			child_idx: None,
-			bomb: MarkerDropBomb::default()
+			bomb: MarkerDropBomb::default(),
 		}
 	}
 
