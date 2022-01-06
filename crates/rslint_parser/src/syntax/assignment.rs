@@ -2,10 +2,12 @@ use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{
-	is_at_identifier, is_at_identifier_name, parse_conditional_expr, parse_expression, parse_name,
-	parse_unary_expr,
+	is_at_identifier, parse_conditional_expr, parse_expression, parse_unary_expr,
 };
-use crate::syntax::js_parse_error::{expected_assignment_target, expected_identifier};
+use crate::syntax::js_parse_error::{
+	expected_assignment_target, expected_identifier, expected_object_member_name,
+};
+use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Parser};
@@ -240,6 +242,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 	// ({x: z["computed"]}= {});
 	// ({x = "default"}= {});
 	// ({x: y = "default"}= {});
+	// ({0: y, [computed]: z} = {});
 	//
 	// test_err property_assignment_target_err
 	// ({:y} = {});
@@ -254,8 +257,8 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 			parse_assignment(p, AssignmentExprPrecedence::Conditional)
 				.or_add_diagnostic(p, expected_identifier);
 			JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY
-		} else if is_at_identifier_name(p) || p.at(T![:]) || p.nth_at(1, T![:]) {
-			parse_name(p).or_add_diagnostic(p, expected_identifier);
+		} else if is_at_object_member_name(p) || p.at(T![:]) || p.nth_at(1, T![:]) {
+			parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
 			p.expect(T![:]);
 			parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
 				.or_add_diagnostic(p, expected_assignment_target);

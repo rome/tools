@@ -64,8 +64,8 @@ JsModule {
                         l_curly_token: L_CURLY@33..35 "{" [] [Whitespace(" ")],
                         properties: JsObjectAssignmentPatternPropertyList [
                             JsObjectAssignmentPatternProperty {
-                                member: JsName {
-                                    value_token: IDENT@35..38 "bar" [] [],
+                                member: JsLiteralMemberName {
+                                    value: IDENT@35..38 "bar" [] [],
                                 },
                                 colon_token: COLON@38..40 ":" [] [Whitespace(" ")],
                                 pattern: JsArrayAssignmentPattern {
@@ -173,7 +173,7 @@ JsModule {
             0: L_CURLY@33..35 "{" [] [Whitespace(" ")]
             1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@35..76
               0: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY@35..53
-                0: JS_NAME@35..38
+                0: JS_LITERAL_MEMBER_NAME@35..38
                   0: IDENT@35..38 "bar" [] []
                 1: COLON@38..40 ":" [] [Whitespace(" ")]
                 2: JS_ARRAY_ASSIGNMENT_PATTERN@40..53

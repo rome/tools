@@ -1287,7 +1287,9 @@ pub struct JsObjectAssignmentPatternProperty {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsObjectAssignmentPatternProperty {
-	pub fn member(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 0usize) }
+	pub fn member(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+		support::required_node(&self.syntax, 0usize)
+	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, 1usize)
 	}
