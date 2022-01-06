@@ -26,9 +26,9 @@ JsModule {
                                                 statements: JsStatementList [
                                                     JsThrowStatement {
                                                         throw_token: THROW_KW@14..25 "throw" [Whitespace("\n    ")] [Whitespace(" ")],
-                                                        argument: NewExpr {
+                                                        argument: JsNewExpression {
                                                             new_token: NEW_KW@25..29 "new" [] [Whitespace(" ")],
-                                                            object: JsIdentifierExpression {
+                                                            callee: JsIdentifierExpression {
                                                                 name: JsReferenceIdentifier {
                                                                     value_token: IDENT@29..41 "Test262Error" [] [],
                                                                 },
@@ -120,8 +120,8 @@ JsModule {
                         l_curly_token: L_CURLY@146..148 "{" [] [Whitespace(" ")],
                         properties: JsObjectAssignmentPatternPropertyList [
                             JsObjectAssignmentPatternProperty {
-                                member: JsName {
-                                    value_token: IDENT@148..149 "x" [] [],
+                                member: JsLiteralMemberName {
+                                    value: IDENT@148..149 "x" [] [],
                                 },
                                 colon_token: COLON@149..151 ":" [] [Whitespace(" ")],
                                 pattern: JsStaticMemberAssignment {
@@ -142,9 +142,9 @@ JsModule {
                                                     statements: JsStatementList [
                                                         JsThrowStatement {
                                                             throw_token: THROW_KW@164..175 "throw" [Whitespace("\n    ")] [Whitespace(" ")],
-                                                            argument: NewExpr {
+                                                            argument: JsNewExpression {
                                                                 new_token: NEW_KW@175..179 "new" [] [Whitespace(" ")],
-                                                                object: JsIdentifierExpression {
+                                                                callee: JsIdentifierExpression {
                                                                     name: JsReferenceIdentifier {
                                                                         value_token: IDENT@179..191 "Test262Error" [] [],
                                                                     },
@@ -269,7 +269,7 @@ JsModule {
                         2: JS_STATEMENT_LIST@14..82
                           0: JS_THROW_STATEMENT@14..82
                             0: THROW_KW@14..25 "throw" [Whitespace("\n    ")] [Whitespace(" ")]
-                            1: NEW_EXPR@25..81
+                            1: JS_NEW_EXPRESSION@25..81
                               0: NEW_KW@25..29 "new" [] [Whitespace(" ")]
                               1: JS_IDENTIFIER_EXPRESSION@29..41
                                 0: JS_REFERENCE_IDENTIFIER@29..41
@@ -330,7 +330,7 @@ JsModule {
             0: L_CURLY@146..148 "{" [] [Whitespace(" ")]
             1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@148..286
               0: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY@148..286
-                0: JS_NAME@148..149
+                0: JS_LITERAL_MEMBER_NAME@148..149
                   0: IDENT@148..149 "x" [] []
                 1: COLON@149..151 ":" [] [Whitespace(" ")]
                 2: JS_STATIC_MEMBER_ASSIGNMENT@151..281
@@ -350,7 +350,7 @@ JsModule {
                           2: JS_STATEMENT_LIST@164..232
                             0: JS_THROW_STATEMENT@164..232
                               0: THROW_KW@164..175 "throw" [Whitespace("\n    ")] [Whitespace(" ")]
-                              1: NEW_EXPR@175..231
+                              1: JS_NEW_EXPRESSION@175..231
                                 0: NEW_KW@175..179 "new" [] [Whitespace(" ")]
                                 1: JS_IDENTIFIER_EXPRESSION@179..191
                                   0: JS_REFERENCE_IDENTIFIER@179..191

@@ -144,9 +144,7 @@ pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
 
 /// Parses an expression that might turn out to be an assignment target if an assignment operator is found
 pub(crate) fn parse_expr_or_assignment(p: &mut Parser) -> ParsedSyntax {
-	if p.at(T![<])
-		&& (token_set![T![ident], T![await], T![yield]].contains(p.nth(1)) || p.nth(1).is_keyword())
-	{
+	if p.at(T![<]) && is_nth_at_identifier_name(p, 1) {
 		let res = try_parse_ts(p, |p| {
 			let m = p.start();
 			if ts_type_params(p).is_none() {

@@ -3,7 +3,7 @@ use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
-use crate::syntax::expr::{parse_expr_or_assignment, parse_expression};
+use crate::syntax::expr::{is_at_identifier_name, parse_expr_or_assignment, parse_expression};
 use crate::syntax::function::{
 	function_body, parse_ts_parameter_types, parse_ts_type_annotation_or_error,
 };
@@ -151,8 +151,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 		_ => {
 			let checkpoint = p.checkpoint();
 			let m = p.start();
-			let identifier_member_name =
-				matches!(p.cur(), T![ident] | T![await] | T![yield]) || p.cur().is_keyword();
+			let identifier_member_name = is_at_identifier_name(p);
 			let member_name = parse_object_member_name(p)
 				.or_add_diagnostic(p, js_parse_error::expected_object_member);
 

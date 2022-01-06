@@ -777,7 +777,7 @@ JsObjectAssignmentPatternShorthandProperty =
 // ({ x: a } = b) or ({ x: a = "test" } = b)
 //    ^^^^              ^^^^^^^^^^^^^
 JsObjectAssignmentPatternProperty =
-	member: JsName
+	member: JsAnyObjectMemberName
 	':'
 	pattern: JsAnyAssignmentPattern
 	init: JsInitializerClause?

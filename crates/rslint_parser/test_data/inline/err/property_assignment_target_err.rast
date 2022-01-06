@@ -281,11 +281,11 @@ JsModule {
       1: SEMICOLON@72..73 ";" [] []
   3: EOF@73..74 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected an identifier but instead found ':'
+error[SyntaxError]: expected an identifier, a string literal, a number literal, or a computed property but instead found ':'
   ┌─ property_assignment_target_err.js:1:3
   │
 1 │ ({:y} = {});
-  │   ^ Expected an identifier here
+  │   ^ Expected an identifier, a string literal, a number literal, or a computed property here
 
 --
 error[SyntaxError]: expected an identifier but instead found '='
@@ -295,11 +295,11 @@ error[SyntaxError]: expected an identifier but instead found '='
   │   ^ Expected an identifier here
 
 --
-error[SyntaxError]: expected an identifier but instead found ':'
+error[SyntaxError]: expected an identifier, a string literal, a number literal, or a computed property but instead found ':'
   ┌─ property_assignment_target_err.js:3:3
   │
 3 │ ({:="test"} = {});
-  │   ^ Expected an identifier here
+  │   ^ Expected an identifier, a string literal, a number literal, or a computed property here
 
 --
 error[SyntaxError]: expected an identifier, or an assignment target but instead found '='
@@ -309,11 +309,11 @@ error[SyntaxError]: expected an identifier, or an assignment target but instead 
   │    ^ Expected an identifier, or an assignment target here
 
 --
-error[SyntaxError]: expected an identifier but instead found ':'
+error[SyntaxError]: expected an identifier, a string literal, a number literal, or a computed property but instead found ':'
   ┌─ property_assignment_target_err.js:4:3
   │
 4 │ ({:=} = {});
-  │   ^ Expected an identifier here
+  │   ^ Expected an identifier, a string literal, a number literal, or a computed property here
 
 --
 error[SyntaxError]: expected an identifier, or an assignment target but instead found '='
