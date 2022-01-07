@@ -149,13 +149,8 @@ JsScript {
                   0: JS_STRING_LITERAL@64..79 "\"use strict\"" [Whitespace("\n"), Whitespace("\t\t")] []
                   1: SEMICOLON@79..80 ";" [] []
               2: JS_STATEMENT_LIST@80..80
-<<<<<<< HEAD
-              3: R_CURLY@80..83 "}" [Whitespace("\n\t")] []
-          1: JS_FUNCTION_STATEMENT@83..156
-=======
               3: R_CURLY@80..83 "}" [Whitespace("\n"), Whitespace("\t")] []
-          1: JS_FUNCTION_DECLARATION@83..156
->>>>>>> 197f9ec33 (new NEWLINE and MULTILINE_COMMENT tokens)
+          1: JS_FUNCTION_STATEMENT@83..156
             0: (empty)
             1: FUNCTION_KW@83..94 "function" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")]
             2: (empty)
