@@ -511,16 +511,6 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ ...Which is required to end this statement
 
 --
-error[SyntaxError]: Duplicate statement labels are not allowed
-  ┌─ import_assertion_err.js:5:10
-  │
-2 │ import "foo" \u{61}ssert { type: "json" };
-  │                            ---- `type` is first used as a label here
-  ·
-5 │ assert { type: "json" }
-  │          ^^^^ a second use of `type` here is not allowed
-
---
 error[SyntaxError]: Duplicate assertion keys are not allowed
   ┌─ import_assertion_err.js:6:37
   │

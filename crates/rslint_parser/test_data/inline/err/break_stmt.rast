@@ -30,14 +30,33 @@ JsModule {
                 r_curly_token: R_CURLY@24..25 "}" [] [],
             },
         },
+        JsWhileStatement {
+            while_token: WHILE_KW@25..32 "while" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@32..33 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@33..37 "true" [] [],
+            },
+            r_paren_token: R_PAREN@37..39 ")" [] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@39..40 "{" [] [],
+                statements: JsStatementList [
+                    JsBreakStatement {
+                        break_token: BREAK_KW@40..49 "break" [Whitespace("\n  ")] [Whitespace(" ")],
+                        label_token: IDENT@49..52 "foo" [] [],
+                        semicolon_token: SEMICOLON@52..53 ";" [] [],
+                    },
+                ],
+                r_curly_token: R_CURLY@53..55 "}" [Whitespace("\n")] [],
+            },
+        },
     ],
-    eof_token: EOF@25..26 "" [Whitespace("\n")] [],
+    eof_token: EOF@55..56 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..26
+0: JS_MODULE@0..56
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..25
+  2: JS_MODULE_ITEM_LIST@0..55
     0: JS_FUNCTION_DECLARATION@0..25
       0: (empty)
       1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
@@ -58,7 +77,21 @@ JsModule {
             0: BREAK_KW@17..22 "break" [] []
             1: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
         3: R_CURLY@24..25 "}" [] []
-  3: EOF@25..26 "" [Whitespace("\n")] []
+    1: JS_WHILE_STATEMENT@25..55
+      0: WHILE_KW@25..32 "while" [Whitespace("\n")] [Whitespace(" ")]
+      1: L_PAREN@32..33 "(" [] []
+      2: JS_BOOLEAN_LITERAL_EXPRESSION@33..37
+        0: TRUE_KW@33..37 "true" [] []
+      3: R_PAREN@37..39 ")" [] [Whitespace(" ")]
+      4: JS_BLOCK_STATEMENT@39..55
+        0: L_CURLY@39..40 "{" [] []
+        1: JS_STATEMENT_LIST@40..53
+          0: JS_BREAK_STATEMENT@40..53
+            0: BREAK_KW@40..49 "break" [Whitespace("\n  ")] [Whitespace(" ")]
+            1: IDENT@49..52 "foo" [] []
+            2: SEMICOLON@52..53 ";" [] []
+        2: R_CURLY@53..55 "}" [Whitespace("\n")] []
+  3: EOF@55..56 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Invalid break not inside of a switch, loop, or labelled statement
   ┌─ break_stmt.js:1:18
@@ -67,4 +100,14 @@ error[SyntaxError]: Invalid break not inside of a switch, loop, or labelled stat
   │                  ^^^^^
 
 --
+error[SyntaxError]: Use of undefined statement label `foo`
+  ┌─ break_stmt.js:3:9
+  │
+3 │   break foo;
+  │         ^^^ This label is used, but it is never defined
+
+--
 function foo() { break; }
+while (true) {
+  break foo;
+}
