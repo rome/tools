@@ -82,6 +82,7 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax {
 	let import = p.start();
 	p.bump_any();
 
+	debug_assert!(p.state.name_map.is_empty());
 	p.state.duplicate_binding_parent = Some("import");
 
 	parse_import_clause(p).or_add_diagnostic(p, |p, range| {

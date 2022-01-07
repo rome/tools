@@ -30,14 +30,33 @@ JsModule {
                 r_curly_token: R_CURLY@27..28 "}" [] [],
             },
         },
+        JsWhileStatement {
+            while_token: WHILE_KW@28..35 "while" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@35..36 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@36..40 "true" [] [],
+            },
+            r_paren_token: R_PAREN@40..42 ")" [] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@42..43 "{" [] [],
+                statements: JsStatementList [
+                    JsContinueStatement {
+                        continue_token: CONTINUE_KW@43..55 "continue" [Whitespace("\n  ")] [Whitespace(" ")],
+                        label_token: IDENT@55..58 "foo" [] [],
+                        semicolon_token: SEMICOLON@58..59 ";" [] [],
+                    },
+                ],
+                r_curly_token: R_CURLY@59..61 "}" [Whitespace("\n")] [],
+            },
+        },
     ],
-    eof_token: EOF@28..29 "" [Whitespace("\n")] [],
+    eof_token: EOF@61..62 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..29
+0: JS_MODULE@0..62
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..28
+  2: JS_MODULE_ITEM_LIST@0..61
     0: JS_FUNCTION_STATEMENT@0..28
       0: (empty)
       1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
@@ -58,7 +77,21 @@ JsModule {
             0: CONTINUE_KW@17..25 "continue" [] []
             1: SEMICOLON@25..27 ";" [] [Whitespace(" ")]
         3: R_CURLY@27..28 "}" [] []
-  3: EOF@28..29 "" [Whitespace("\n")] []
+    1: JS_WHILE_STATEMENT@28..61
+      0: WHILE_KW@28..35 "while" [Whitespace("\n")] [Whitespace(" ")]
+      1: L_PAREN@35..36 "(" [] []
+      2: JS_BOOLEAN_LITERAL_EXPRESSION@36..40
+        0: TRUE_KW@36..40 "true" [] []
+      3: R_PAREN@40..42 ")" [] [Whitespace(" ")]
+      4: JS_BLOCK_STATEMENT@42..61
+        0: L_CURLY@42..43 "{" [] []
+        1: JS_STATEMENT_LIST@43..59
+          0: JS_CONTINUE_STATEMENT@43..59
+            0: CONTINUE_KW@43..55 "continue" [Whitespace("\n  ")] [Whitespace(" ")]
+            1: IDENT@55..58 "foo" [] []
+            2: SEMICOLON@58..59 ";" [] []
+        2: R_CURLY@59..61 "}" [Whitespace("\n")] []
+  3: EOF@61..62 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Invalid continue not inside of a loop
   ┌─ continue_stmt.js:1:18
@@ -67,4 +100,14 @@ error[SyntaxError]: Invalid continue not inside of a loop
   │                  ^^^^^^^^
 
 --
+error[SyntaxError]: Use of undefined statement label `foo`
+  ┌─ continue_stmt.js:3:12
+  │
+3 │   continue foo;
+  │            ^^^ This label is used, but it is never defined
+
+--
 function foo() { continue; }
+while (true) {
+  continue foo;
+}

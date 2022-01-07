@@ -1,5 +1,6 @@
-foo: {}
-rust: {}
-break;
-break foo;
-break rust
+while (true) {
+  break;
+	foo: {
+   break foo;
+	}
+}
