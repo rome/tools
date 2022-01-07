@@ -101,7 +101,7 @@ JsModule {
             l_curly_token: L_CURLY@95..96 "{" [] [],
             cases: JsSwitchCaseList [
                 JsDefaultClause {
-                    default_token: DEFAULT_KW@96..105 "default" [Whitespace("\n\t")] [],
+                    default_token: DEFAULT_KW@96..105 "default" [Whitespace("\n"), Whitespace("\t")] [],
                     colon_token: COLON@105..107 ":" [] [Whitespace(" ")],
                     consequent: JsStatementList [
                         JsBlockStatement {
@@ -115,7 +115,7 @@ JsModule {
                     case_token: missing (required),
                     test: JsUnknownExpression {
                         items: [
-                            DEFAULT_KW@109..118 "default" [Whitespace("\n\t")] [],
+                            DEFAULT_KW@109..118 "default" [Whitespace("\n"), Whitespace("\t")] [],
                         ],
                     },
                     colon_token: COLON@118..120 ":" [] [Whitespace(" ")],
@@ -233,7 +233,7 @@ JsModule {
       4: L_CURLY@95..96 "{" [] []
       5: JS_SWITCH_CASE_LIST@96..122
         0: JS_DEFAULT_CLAUSE@96..109
-          0: DEFAULT_KW@96..105 "default" [Whitespace("\n\t")] []
+          0: DEFAULT_KW@96..105 "default" [Whitespace("\n"), Whitespace("\t")] []
           1: COLON@105..107 ":" [] [Whitespace(" ")]
           2: JS_STATEMENT_LIST@107..109
             0: JS_BLOCK_STATEMENT@107..109
@@ -243,7 +243,7 @@ JsModule {
         1: JS_CASE_CLAUSE@109..122
           0: (empty)
           1: JS_UNKNOWN_EXPRESSION@109..118
-            0: DEFAULT_KW@109..118 "default" [Whitespace("\n\t")] []
+            0: DEFAULT_KW@109..118 "default" [Whitespace("\n"), Whitespace("\t")] []
           2: COLON@118..120 ":" [] [Whitespace(" ")]
           3: JS_STATEMENT_LIST@120..122
             0: JS_BLOCK_STATEMENT@120..122

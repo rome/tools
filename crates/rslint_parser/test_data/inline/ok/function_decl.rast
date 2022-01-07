@@ -106,7 +106,7 @@ JsModule {
                 statements: JsStatementList [
                     JsExpressionStatement {
                         expression: JsYieldExpression {
-                            yield_token: YIELD_KW@103..112 "yield" [Whitespace("\n  ")] [Whitespace(" ")],
+                            yield_token: YIELD_KW@103..112 "yield" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")],
                             argument: JsYieldArgument {
                                 star_token: missing (optional),
                                 expression: JsIdentifierExpression {
@@ -216,7 +216,7 @@ JsModule {
         2: JS_STATEMENT_LIST@103..116
           0: JS_EXPRESSION_STATEMENT@103..116
             0: JS_YIELD_EXPRESSION@103..115
-              0: YIELD_KW@103..112 "yield" [Whitespace("\n  ")] [Whitespace(" ")]
+              0: YIELD_KW@103..112 "yield" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")]
               1: JS_YIELD_ARGUMENT@112..115
                 0: (empty)
                 1: JS_IDENTIFIER_EXPRESSION@112..115

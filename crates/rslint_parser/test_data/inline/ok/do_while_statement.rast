@@ -49,7 +49,7 @@ JsModule {
                             callee: JsStaticMemberExpression {
                                 object: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
-                                        value_token: IDENT@40..49 "console" [Whitespace("\n\t")] [],
+                                        value_token: IDENT@40..49 "console" [Whitespace("\n"), Whitespace("\t")] [],
                                     },
                                 },
                                 operator: DOT@49..50 "." [] [],
@@ -113,7 +113,7 @@ JsModule {
                         JsExpressionStatement {
                             expression: JsAssignmentExpression {
                                 left: JsIdentifierAssignment {
-                                    name_token: IDENT@96..100 "a" [Whitespace("\n\t")] [Whitespace(" ")],
+                                    name_token: IDENT@96..100 "a" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")],
                                 },
                                 operator_token: EQ@100..102 "=" [] [Whitespace(" ")],
                                 right: JsBinaryExpression {
@@ -209,7 +209,7 @@ JsModule {
               0: JS_STATIC_MEMBER_EXPRESSION@40..53
                 0: JS_IDENTIFIER_EXPRESSION@40..49
                   0: JS_REFERENCE_IDENTIFIER@40..49
-                    0: IDENT@40..49 "console" [Whitespace("\n\t")] []
+                    0: IDENT@40..49 "console" [Whitespace("\n"), Whitespace("\t")] []
                 1: DOT@49..50 "." [] []
                 2: JS_NAME@50..53
                   0: IDENT@50..53 "log" [] []
@@ -253,7 +253,7 @@ JsModule {
             0: JS_EXPRESSION_STATEMENT@96..107
               0: JS_ASSIGNMENT_EXPRESSION@96..107
                 0: JS_IDENTIFIER_ASSIGNMENT@96..100
-                  0: IDENT@96..100 "a" [Whitespace("\n\t")] [Whitespace(" ")]
+                  0: IDENT@96..100 "a" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")]
                 1: EQ@100..102 "=" [] [Whitespace(" ")]
                 2: JS_BINARY_EXPRESSION@102..107
                   0: JS_IDENTIFIER_EXPRESSION@102..104

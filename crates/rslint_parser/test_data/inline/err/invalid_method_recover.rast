@@ -16,7 +16,7 @@ JsModule {
                     readonly_token: missing (optional),
                     abstract_token: missing (optional),
                     name: JsComputedMemberName {
-                        l_brack_token: L_BRACK@7..11 "[" [Whitespace("\n  ")] [],
+                        l_brack_token: L_BRACK@7..11 "[" [Whitespace("\n"), Whitespace("  ")] [],
                         expression: JsBinaryExpression {
                             left: JsNumberLiteralExpression {
                                 value_token: JS_NUMBER_LITERAL@11..13 "1" [] [Whitespace(" ")],
@@ -49,7 +49,7 @@ JsModule {
                                 statements: JsStatementList [
                                     JsVariableStatement {
                                         declarations: JsVariableDeclarations {
-                                            kind: LET_KW@27..36 "let" [Whitespace("\n    ")] [Whitespace(" ")],
+                                            kind: LET_KW@27..36 "let" [Whitespace("\n"), Whitespace("    ")] [Whitespace(" ")],
                                             items: JsVariableDeclarationList [
                                                 JsVariableDeclaration {
                                                     id: JsIdentifierBinding {
@@ -67,7 +67,7 @@ JsModule {
                                         semicolon_token: SEMICOLON@38..39 ";" [] [],
                                     },
                                 ],
-                                r_curly_token: R_CURLY@39..43 "}" [Whitespace("\n  ")] [],
+                                r_curly_token: R_CURLY@39..43 "}" [Whitespace("\n"), Whitespace("  ")] [],
                             },
                         },
                     },
@@ -101,7 +101,7 @@ JsModule {
           3: (empty)
           4: (empty)
           5: JS_COMPUTED_MEMBER_NAME@7..18
-            0: L_BRACK@7..11 "[" [Whitespace("\n  ")] []
+            0: L_BRACK@7..11 "[" [Whitespace("\n"), Whitespace("  ")] []
             1: JS_BINARY_EXPRESSION@11..16
               0: JS_NUMBER_LITERAL_EXPRESSION@11..13
                 0: JS_NUMBER_LITERAL@11..13 "1" [] [Whitespace(" ")]
@@ -129,7 +129,7 @@ JsModule {
                 2: JS_STATEMENT_LIST@27..39
                   0: JS_VARIABLE_STATEMENT@27..39
                     0: JS_VARIABLE_DECLARATIONS@27..38
-                      0: LET_KW@27..36 "let" [Whitespace("\n    ")] [Whitespace(" ")]
+                      0: LET_KW@27..36 "let" [Whitespace("\n"), Whitespace("    ")] [Whitespace(" ")]
                       1: JS_VARIABLE_DECLARATION_LIST@36..38
                         0: JS_VARIABLE_DECLARATION@36..38
                           0: JS_IDENTIFIER_BINDING@36..37
@@ -140,7 +140,7 @@ JsModule {
                             0: EQ@37..38 "=" [] []
                             1: (empty)
                     1: SEMICOLON@38..39 ";" [] []
-                3: R_CURLY@39..43 "}" [Whitespace("\n  ")] []
+                3: R_CURLY@39..43 "}" [Whitespace("\n"), Whitespace("  ")] []
           10: SEMICOLON@43..44 ";" [] []
       6: R_CURLY@44..46 "}" [Whitespace("\n")] []
     1: JS_EMPTY_STATEMENT@46..47
