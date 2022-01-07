@@ -187,7 +187,7 @@ JsModule {
             },
             semicolon_token: SEMICOLON@126..127 ";" [] [],
         },
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: ASYNC_KW@127..134 "async" [Whitespace("\n")] [Whitespace(" ")],
             function_token: FUNCTION_KW@134..143 "function" [] [Whitespace(" ")],
             star_token: missing (optional),
@@ -369,7 +369,7 @@ JsModule {
                 0: JS_REFERENCE_IDENTIFIER@125..126
                   0: IDENT@125..126 "a" [] []
       1: SEMICOLON@126..127 ";" [] []
-    5: JS_FUNCTION_DECLARATION@127..177
+    5: JS_FUNCTION_STATEMENT@127..177
       0: ASYNC_KW@127..134 "async" [Whitespace("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@134..143 "function" [] [Whitespace(" ")]
       2: (empty)

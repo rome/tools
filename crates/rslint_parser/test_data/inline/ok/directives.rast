@@ -34,7 +34,7 @@ JsScript {
             },
             semicolon_token: SEMICOLON@44..64 ";" [] [Whitespace(" "), Comments("// not a directive")],
         },
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: missing (optional),
             function_token: FUNCTION_KW@64..74 "function" [Whitespace("\n")] [Whitespace(" ")],
             star_token: missing (optional),
@@ -256,7 +256,7 @@ JsScript {
       0: JS_STRING_LITERAL_EXPRESSION@31..44
         0: JS_STRING_LITERAL@31..44 "\"use strict\"" [Whitespace("\n")] []
       1: SEMICOLON@44..64 ";" [] [Whitespace(" "), Comments("// not a directive")]
-    2: JS_FUNCTION_DECLARATION@64..146
+    2: JS_FUNCTION_STATEMENT@64..146
       0: (empty)
       1: FUNCTION_KW@64..74 "function" [Whitespace("\n")] [Whitespace(" ")]
       2: (empty)

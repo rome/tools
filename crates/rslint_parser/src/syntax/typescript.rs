@@ -7,9 +7,9 @@ use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
 use crate::syntax::binding::parse_binding;
-use crate::syntax::class::parse_class_declaration;
+use crate::syntax::class::parse_class_statement;
 use crate::syntax::expr::parse_any_name;
-use crate::syntax::function::parse_function_declaration;
+use crate::syntax::function::parse_function_statement;
 use crate::syntax::js_parse_error;
 use crate::{JsSyntaxKind::*, *};
 
@@ -112,11 +112,11 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 		..p.state.clone()
 	});
 	Some(match p.nth(1) {
-		T![function] => parse_function_declaration(p).unwrap(),
+		T![function] => parse_function_statement(p).unwrap(),
 		T![class] => {
 			let m = p.start();
 			p.bump_remap(T![declare]);
-			parse_class_declaration(p)
+			parse_class_statement(p)
 				.unwrap()
 				.undo_completion(p)
 				.abandon(p);
@@ -186,7 +186,7 @@ pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 			m.abandon(p);
 			return None;
 		}
-		parse_class_declaration(p)
+		parse_class_statement(p)
 			.unwrap()
 			.undo_completion(p)
 			.abandon(p);

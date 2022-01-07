@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: ASYNC_KW@0..6 "async" [] [Whitespace(" ")],
             function_token: FUNCTION_KW@6..15 "function" [] [Whitespace(" ")],
             star_token: missing (optional),
@@ -88,7 +88,7 @@ JsModule {
                 r_curly_token: R_CURLY@73..75 "}" [Whitespace("\n")] [],
             },
         },
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: ASYNC_KW@75..82 "async" [Whitespace("\n")] [Whitespace(" ")],
             function_token: FUNCTION_KW@82..91 "function" [] [Whitespace(" ")],
             star_token: missing (optional),
@@ -125,7 +125,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..113
-    0: JS_FUNCTION_DECLARATION@0..75
+    0: JS_FUNCTION_STATEMENT@0..75
       0: ASYNC_KW@0..6 "async" [] [Whitespace(" ")]
       1: FUNCTION_KW@6..15 "function" [] [Whitespace(" ")]
       2: (empty)
@@ -187,7 +187,7 @@ JsModule {
                     2: R_PAREN@71..72 ")" [] []
             1: SEMICOLON@72..73 ";" [] []
         3: R_CURLY@73..75 "}" [Whitespace("\n")] []
-    1: JS_FUNCTION_DECLARATION@75..113
+    1: JS_FUNCTION_STATEMENT@75..113
       0: ASYNC_KW@75..82 "async" [Whitespace("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@82..91 "function" [] [Whitespace(" ")]
       2: (empty)

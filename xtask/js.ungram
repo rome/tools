@@ -82,7 +82,7 @@ JsDirectiveList = JsDirective*
 JsAnyStatement =
 	JsBlockStatement
 	| JsBreakStatement
-	| JsClassDeclaration
+	| JsClassStatement
 	| JsContinueStatement
 	| JsDebuggerStatement
 	| JsDoWhileStatement
@@ -107,7 +107,7 @@ JsAnyStatement =
 	| TsModuleDecl
 	| TsNamespaceDecl
 	| TsTypeAliasDecl
-  | JsFunctionDeclaration
+  | JsFunctionStatement
 
 
 JsBlockStatement =
@@ -390,13 +390,13 @@ JsFunctionExpression =
 JsArrowFunctionExpression =
 	'async'?
 	type_parameters: TsTypeParams?
-	parameters: JsAnyArrowFunctionParameters?
+	parameters: JsAnyArrowFunctionParameters
 	return_type: TsTypeAnnotation?
 	'=>'
-	body: JsAnyArrowFunctionBody
+	body: JsAnyFunctionBody
 
 JsAnyArrowFunctionParameters = JsParameters | JsAnyBinding
-JsAnyArrowFunctionBody = JsAnyExpression | JsFunctionBody
+JsAnyFunctionBody = JsAnyExpression | JsFunctionBody
 
 // Array expression
 JsArrayExpression =
@@ -547,7 +547,7 @@ JsShorthandPropertyObjectMember = name: JsReferenceIdentifier
 // CLASSES
 ///////////////
 
-JsClassDeclaration  =
+JsClassStatement =
 	'class'
 	id: JsAnyBinding
 	extends_clause: JsExtendsClause?
@@ -567,6 +567,10 @@ JsClassExpression =
 	'}'
 
 JsClassMemberList = JsAnyClassMember*
+
+JsAnyClass =
+	JsClassStatement
+	| JsClassExpression
 
 
 TsImplementsClause =
@@ -908,7 +912,7 @@ JsRegexLiteralExpression = value: 'js_regex_literal'
 // DECLARATIONS
 ///////////////
 
-JsFunctionDeclaration =
+JsFunctionStatement =
 	'async'?
 	'function'
 	'*'?
@@ -1104,8 +1108,8 @@ JsModuleSource = value: 'js_string_literal'
 // export default declaration
 ExportDefaultDecl = 'export' 'default'? 'type'? decl:DefaultDecl
 DefaultDecl =
-	JsFunctionDeclaration
-	| JsClassDeclaration
+	JsFunctionStatement
+	| JsClassStatement
 
 
 // export default expression
@@ -1119,8 +1123,8 @@ ExportWildcard = 'export' 'type'? '*' 'as'? ident: Ident? 'from' source: 'js_str
 ExportDecl = 'export' 'type'? decl: JsAnyExportDeclaration
 
 JsAnyExportDeclaration =
-	JsFunctionDeclaration
-	| JsClassDeclaration
+	JsFunctionStatement
+	| JsClassStatement
 	| JsVariableStatement
 	| ExportNamed
 	| TsEnum
@@ -1171,6 +1175,12 @@ JsPrivateName =
 JsAnyName =
 	JsName
 	| JsPrivateName
+
+
+JsAnyFunction =
+	JsFunctionExpression
+	| JsFunctionStatement
+	| JsArrowFunctionExpression
 
 
 // { a: ..., "b": ..., 4: ... }

@@ -4,9 +4,9 @@ use super::expr::{parse_expr_or_assignment, parse_expression, parse_name};
 use super::stmt::{parse_statements, semi, variable_declaration_statement};
 use super::typescript::*;
 use crate::parser::ParserProgress;
-use crate::syntax::class::parse_class_declaration;
+use crate::syntax::class::parse_class_statement;
 use crate::syntax::expr::is_at_name;
-use crate::syntax::function::parse_function_declaration;
+use crate::syntax::function::parse_function_statement;
 use crate::syntax::function::{is_at_async_function, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::module::parse_module_body;
@@ -221,14 +221,14 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			} else {
 				p.bump_remap(T![abstract]);
 			}
-			let decl = parse_class_declaration(&mut *p.with_state(ParserState {
+			let decl = parse_class_statement(&mut *p.with_state(ParserState {
 				in_default: true,
 				..p.state.clone()
 			}))
 			.unwrap();
 
 			decl.undo_completion(p).abandon(p);
-			inner.complete(p, JS_CLASS_DECLARATION);
+			inner.complete(p, JS_CLASS_STATEMENT);
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
 
@@ -244,12 +244,12 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 				in_default: true,
 				..p.state.clone()
 			});
-			parse_class_declaration(p).unwrap();
+			parse_class_statement(p).unwrap();
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
 
 		if is_at_async_function(p, LineBreak::DoCheck) {
-			if let Present(_) = parse_function_declaration(p) {
+			if let Present(_) = parse_function_statement(p) {
 				return m.complete(p, EXPORT_DEFAULT_DECL);
 			}
 		}
@@ -264,14 +264,14 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	}
 
 	if !only_ty && p.at(T![class]) {
-		parse_class_declaration(p).unwrap();
+		parse_class_statement(p).unwrap();
 	} else if !only_ty
 		// function ...
 		&& (p.at(T![function])
 			||
 		is_at_async_function(p, LineBreak::DoCheck))
 	{
-		parse_function_declaration(p).unwrap();
+		parse_function_statement(p).unwrap();
 	} else if !only_ty && p.at(T![const]) && p.nth_src(1) == "enum" {
 		ts_enum(p).err_if_not_ts(p, "enums can only be used in TypeScript files");
 	} else if !only_ty

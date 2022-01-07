@@ -37,16 +37,6 @@ impl JsVariableDeclarations {
 	}
 }
 
-impl JsAnySwitchClause {
-	pub fn into_case(self) -> Option<JsCaseClause> {
-		if let JsAnySwitchClause::JsCaseClause(clause) = self {
-			Some(clause)
-		} else {
-			None
-		}
-	}
-}
-
 #[cfg(test)]
 mod tests {
 	use crate::*;

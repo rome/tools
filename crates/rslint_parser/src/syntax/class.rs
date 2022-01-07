@@ -49,20 +49,20 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 ///
 /// A class can be invalid if
 /// * It uses an illegal identifier name
-pub(super) fn parse_class_declaration(p: &mut Parser) -> ParsedSyntax {
-	parse_class(p, ClassKind::Declaration)
+pub(super) fn parse_class_statement(p: &mut Parser) -> ParsedSyntax {
+	parse_class(p, ClassKind::Statement)
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 enum ClassKind {
-	Declaration,
+	Statement,
 	Expression,
 }
 
 impl From<ClassKind> for JsSyntaxKind {
 	fn from(kind: ClassKind) -> Self {
 		match kind {
-			ClassKind::Declaration => JsSyntaxKind::JS_CLASS_DECLARATION,
+			ClassKind::Statement => JsSyntaxKind::JS_CLASS_STATEMENT,
 			ClassKind::Expression => JsSyntaxKind::JS_CLASS_EXPRESSION,
 		}
 	}
@@ -109,7 +109,7 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax {
 			}
 		}
 		Absent => {
-			if kind == ClassKind::Declaration && !guard.state.in_default {
+			if kind == ClassKind::Statement && !guard.state.in_default {
 				let err = guard
 					.err_builder("class declarations must have a name")
 					.primary(class_token_range.start..guard.cur_tok().range.start, "");

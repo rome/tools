@@ -2,7 +2,7 @@ JsScript {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     statements: JsStatementList [
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: missing (optional),
             function_token: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
             star_token: missing (optional),
@@ -25,7 +25,7 @@ JsScript {
                     },
                 ],
                 statements: JsStatementList [
-                    JsFunctionDeclaration {
+                    JsFunctionStatement {
                         async_token: missing (optional),
                         function_token: FUNCTION_KW@42..53 "function" [Whitespace("\n\t")] [Whitespace(" ")],
                         star_token: missing (optional),
@@ -51,7 +51,7 @@ JsScript {
                             r_curly_token: R_CURLY@80..83 "}" [Whitespace("\n\t")] [],
                         },
                     },
-                    JsFunctionDeclaration {
+                    JsFunctionStatement {
                         async_token: missing (optional),
                         function_token: FUNCTION_KW@83..94 "function" [Whitespace("\n\t")] [Whitespace(" ")],
                         star_token: missing (optional),
@@ -69,7 +69,7 @@ JsScript {
                             l_curly_token: L_CURLY@104..105 "{" [] [],
                             directives: JsDirectiveList [],
                             statements: JsStatementList [
-                                JsFunctionDeclaration {
+                                JsFunctionStatement {
                                     async_token: missing (optional),
                                     function_token: FUNCTION_KW@105..117 "function" [Whitespace("\n\t\t")] [Whitespace(" ")],
                                     star_token: missing (optional),
@@ -111,7 +111,7 @@ JsScript {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_STATEMENT_LIST@0..158
-    0: JS_FUNCTION_DECLARATION@0..158
+    0: JS_FUNCTION_STATEMENT@0..158
       0: (empty)
       1: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")]
       2: (empty)
@@ -130,7 +130,7 @@ JsScript {
             0: JS_STRING_LITERAL@27..41 "\"use strict\"" [Whitespace("\n\t")] []
             1: SEMICOLON@41..42 ";" [] []
         2: JS_STATEMENT_LIST@42..156
-          0: JS_FUNCTION_DECLARATION@42..83
+          0: JS_FUNCTION_STATEMENT@42..83
             0: (empty)
             1: FUNCTION_KW@42..53 "function" [Whitespace("\n\t")] [Whitespace(" ")]
             2: (empty)
@@ -150,7 +150,7 @@ JsScript {
                   1: SEMICOLON@79..80 ";" [] []
               2: JS_STATEMENT_LIST@80..80
               3: R_CURLY@80..83 "}" [Whitespace("\n\t")] []
-          1: JS_FUNCTION_DECLARATION@83..156
+          1: JS_FUNCTION_STATEMENT@83..156
             0: (empty)
             1: FUNCTION_KW@83..94 "function" [Whitespace("\n\t")] [Whitespace(" ")]
             2: (empty)
@@ -166,7 +166,7 @@ JsScript {
               0: L_CURLY@104..105 "{" [] []
               1: JS_DIRECTIVE_LIST@105..105
               2: JS_STATEMENT_LIST@105..153
-                0: JS_FUNCTION_DECLARATION@105..153
+                0: JS_FUNCTION_STATEMENT@105..153
                   0: (empty)
                   1: FUNCTION_KW@105..117 "function" [Whitespace("\n\t\t")] [Whitespace(" ")]
                   2: (empty)

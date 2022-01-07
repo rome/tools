@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: missing (optional),
             function_token: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")],
             star_token: missing (optional),
@@ -57,7 +57,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..61
-    0: JS_FUNCTION_DECLARATION@0..28
+    0: JS_FUNCTION_STATEMENT@0..28
       0: (empty)
       1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
       2: (empty)

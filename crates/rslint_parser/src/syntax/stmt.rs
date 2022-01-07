@@ -10,12 +10,12 @@ use super::util::check_label_use;
 use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
-use crate::syntax::class::{parse_class_declaration, parse_initializer_clause};
+use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
 use crate::syntax::expr::{
 	is_at_expression, is_at_identifier, is_nth_at_name, parse_expr_or_assignment,
 	parse_expression_or_recover_to_next_statement, parse_identifier,
 };
-use crate::syntax::function::{is_at_async_function, parse_function_declaration, LineBreak};
+use crate::syntax::function::{is_at_async_function, parse_function_statement, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement};
 use crate::syntax::module::parse_import;
@@ -180,9 +180,9 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 		T![continue] => parse_continue_statement(p), // It is only ever Err if there's no continue keyword
 		T![throw] => parse_throw_statement(p),
 		T![debugger] => parse_debugger_statement(p),
-		T![function] => parse_function_declaration(p),
-		T![class] => parse_class_declaration(p),
-		T![ident] if is_at_async_function(p, LineBreak::DoCheck) => parse_function_declaration(p),
+		T![function] => parse_function_statement(p),
+		T![class] => parse_class_statement(p),
+		T![ident] if is_at_async_function(p, LineBreak::DoCheck) => parse_function_statement(p),
 
 		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
 			variable_declaration_statement(p)
