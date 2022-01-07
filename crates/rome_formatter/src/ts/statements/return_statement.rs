@@ -12,7 +12,7 @@ impl ToFormatElement for JsReturnStatement {
             tokens.push(formatter.format_node(argument)?);
         }
 
-        tokens.push(token(";"));
+        tokens.push(formatter.format_or_create_token(self.semicolon_token(), || token(';'))?);
 
         Ok(concat_elements(tokens))
     }

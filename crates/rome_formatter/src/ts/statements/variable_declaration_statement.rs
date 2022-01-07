@@ -8,7 +8,7 @@ impl ToFormatElement for JsVariableStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
             formatter.format_node(self.declarations()?)?,
-            token(";"),
+            formatter.format_or_create_token(self.semicolon_token(), || token(';'))?,
         ])
     }
 }

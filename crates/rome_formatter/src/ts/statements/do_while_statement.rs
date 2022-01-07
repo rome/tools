@@ -18,7 +18,7 @@ impl ToFormatElement for JsDoWhileStatement {
                 soft_indent(formatter.format_node(self.test()?)?),
                 formatter.format_token(&self.r_paren_token()?)?
             ]),
-            token(";")
+            formatter.format_or_create_token(self.semicolon_token(), || token(';'))?
         ])
     }
 }

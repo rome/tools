@@ -12,10 +12,12 @@ impl ToFormatElement for JsBreakStatement {
             empty_element()
         };
 
+        let semicolon = formatter.format_or_create_token(self.semicolon_token(), || token(';'))?;
+
         Ok(format_elements![
             formatter.format_token(&self.break_token()?)?,
             label,
-            token(";")
+            semicolon,
         ])
     }
 }

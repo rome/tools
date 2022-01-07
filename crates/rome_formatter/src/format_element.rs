@@ -155,6 +155,11 @@ pub fn token<S: Into<String>>(text: S) -> FormatElement {
     }
 }
 
+#[inline]
+pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
+    FormatElement::LineSuffix(Box::new(element.into()))
+}
+
 /// Inserts a single space. Allows to separate different tokens.
 ///
 /// ## Examples
@@ -608,6 +613,8 @@ pub enum FormatElement {
 
     /// A token that should be printed as is, see [token] for documentation and examples.
     Token(Token),
+
+    LineSuffix(Box<FormatElement>),
 }
 
 /// Inserts a new line
@@ -766,6 +773,7 @@ impl FormatElement {
                 FormatElement::List(List::new(content))
             }
             FormatElement::Token(s) => token(s.trim_start()),
+            FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_start())),
         }
     }
 
@@ -810,6 +818,7 @@ impl FormatElement {
                 }
             }
             FormatElement::Token(s) => token(s.trim_end()),
+            FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_end())),
         }
     }
 }

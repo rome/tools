@@ -62,5 +62,5 @@ a[b] = c[d];
 	dddddddddd: eeeeeeeeee,
 	ffffffffff: gggggggggg = hhhhhhhhhh,
 	...jjjjjjjjjj
- } = x);
+} = x);
 

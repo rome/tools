@@ -5,7 +5,7 @@ impl ToFormatElement for JsDebuggerStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
             formatter.format_token(&self.debugger_token()?)?,
-            token(";")
+            formatter.format_or_create_token(self.semicolon_token(), || token(';'))?
         ])
     }
 }

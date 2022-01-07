@@ -165,10 +165,8 @@ pub struct Formatted {
 }
 
 impl Formatted {
-    pub fn new(code: &str) -> Self {
-        Self {
-            code: String::from(code),
-        }
+    pub fn new(code: String) -> Self {
+        Self { code }
     }
 
     pub fn code(&self) -> &String {
