@@ -965,16 +965,33 @@ fn parse_variable_declaration(
 
 		// Heuristic to determine if we're in a for of or for in loop. This may be off if
 		// the user uses a for of/in with multiple declarations but this isn't allowed anyway.
-		let is_in_for_of_or_in = context.parent == VariableDeclarationParent::For
-			&& context.is_first
-			&& (p.cur_src() == "of" || p.at(T![in]));
+		let is_in_for_loop = context.parent == VariableDeclarationParent::For && context.is_first;
+		let is_in_for_of = is_in_for_loop && p.cur_src() == "of";
+		let is_in_for_in = is_in_for_loop && p.at(T![in]);
 
-		if is_in_for_of_or_in {
+		if is_in_for_of || is_in_for_in {
 			if p.typescript() {
 				if let Some(type_annotation) = type_annotation {
 					let err = p
 						.err_builder("`for` statement declarators cannot have a type annotation")
 						.primary(type_annotation.start..type_annotation.end, "");
+
+					p.error(err);
+				}
+			}
+			if let Some(initializer) = initializer {
+				// Initializers are disallowed in strict mode for `for..in`
+				// and `for..of`, except for `for(var ... in ...)`
+				let is_strict = StrictMode.is_supported(p);
+				let is_var = !context.is_let && context.is_const.is_none();
+				if is_strict || !is_in_for_in || !is_var {
+					let err = p
+						.err_builder(if is_in_for_in {
+							"`for..in` statement declarators cannot have an initializer expression"
+						} else {
+							"`for..of` statement declarators cannot have an initializer expression"
+						})
+						.primary(initializer.range(p), "");
 
 					p.error(err);
 				}
