@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: missing (optional),
             function_token: FUNCTION_KW@0..8 "function" [] [],
             star_token: missing (optional),
@@ -21,7 +21,7 @@ JsModule {
                 r_curly_token: R_CURLY@12..13 "}" [] [],
             },
         },
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: missing (optional),
             function_token: FUNCTION_KW@13..23 "function" [Whitespace("\n")] [Whitespace(" ")],
             star_token: missing (optional),
@@ -38,7 +38,7 @@ JsModule {
                 r_curly_token: R_CURLY@28..29 "}" [] [],
             },
         },
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: missing (optional),
             function_token: FUNCTION_KW@29..39 "function" [Whitespace("\n")] [Whitespace(" ")],
             star_token: missing (optional),
@@ -53,7 +53,7 @@ JsModule {
                 r_curly_token: R_CURLY@40..41 "}" [] [],
             },
         },
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: missing (optional),
             function_token: FUNCTION_KW@41..51 "function" [Whitespace("\n")] [Whitespace(" ")],
             star_token: STAR@51..52 "*" [] [],
@@ -72,7 +72,7 @@ JsModule {
                 r_curly_token: R_CURLY@56..57 "}" [] [],
             },
         },
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: ASYNC_KW@57..64 "async" [Whitespace("\n")] [Whitespace(" ")],
             function_token: FUNCTION_KW@64..72 "function" [] [],
             star_token: missing (optional),
@@ -91,7 +91,7 @@ JsModule {
                 r_curly_token: R_CURLY@76..77 "}" [] [],
             },
         },
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: ASYNC_KW@77..84 "async" [Whitespace("\n")] [Whitespace(" ")],
             function_token: FUNCTION_KW@84..93 "function" [] [Whitespace(" ")],
             star_token: STAR@93..94 "*" [] [],
@@ -110,7 +110,7 @@ JsModule {
                 r_curly_token: R_CURLY@98..99 "}" [] [],
             },
         },
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: missing (optional),
             function_token: FUNCTION_KW@99..109 "function" [Whitespace("\n")] [Whitespace(" ")],
             star_token: STAR@109..110 "*" [] [],
@@ -180,7 +180,7 @@ JsModule {
                 },
             ],
         },
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: missing (optional),
             function_token: FUNCTION_KW@156..166 "function" [Whitespace("\n")] [Whitespace(" ")],
             star_token: missing (optional),
@@ -207,7 +207,7 @@ JsModule {
                 r_curly_token: R_CURLY@178..179 "}" [] [],
             },
         },
-        JsFunctionDeclaration {
+        JsFunctionStatement {
             async_token: missing (optional),
             function_token: FUNCTION_KW@179..189 "function" [Whitespace("\n")] [Whitespace(" ")],
             star_token: missing (optional),
@@ -242,7 +242,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..202
-    0: JS_FUNCTION_DECLARATION@0..13
+    0: JS_FUNCTION_STATEMENT@0..13
       0: (empty)
       1: FUNCTION_KW@0..8 "function" [] []
       2: (empty)
@@ -258,7 +258,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@12..12
         2: JS_STATEMENT_LIST@12..12
         3: R_CURLY@12..13 "}" [] []
-    1: JS_FUNCTION_DECLARATION@13..29
+    1: JS_FUNCTION_STATEMENT@13..29
       0: (empty)
       1: FUNCTION_KW@13..23 "function" [Whitespace("\n")] [Whitespace(" ")]
       2: (empty)
@@ -272,7 +272,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@28..28
         2: JS_STATEMENT_LIST@28..28
         3: R_CURLY@28..29 "}" [] []
-    2: JS_FUNCTION_DECLARATION@29..41
+    2: JS_FUNCTION_STATEMENT@29..41
       0: (empty)
       1: FUNCTION_KW@29..39 "function" [Whitespace("\n")] [Whitespace(" ")]
       2: (empty)
@@ -285,7 +285,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@40..40
         2: JS_STATEMENT_LIST@40..40
         3: R_CURLY@40..41 "}" [] []
-    3: JS_FUNCTION_DECLARATION@41..57
+    3: JS_FUNCTION_STATEMENT@41..57
       0: (empty)
       1: FUNCTION_KW@41..51 "function" [Whitespace("\n")] [Whitespace(" ")]
       2: STAR@51..52 "*" [] []
@@ -301,7 +301,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@56..56
         2: JS_STATEMENT_LIST@56..56
         3: R_CURLY@56..57 "}" [] []
-    4: JS_FUNCTION_DECLARATION@57..77
+    4: JS_FUNCTION_STATEMENT@57..77
       0: ASYNC_KW@57..64 "async" [Whitespace("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@64..72 "function" [] []
       2: (empty)
@@ -317,7 +317,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@76..76
         2: JS_STATEMENT_LIST@76..76
         3: R_CURLY@76..77 "}" [] []
-    5: JS_FUNCTION_DECLARATION@77..99
+    5: JS_FUNCTION_STATEMENT@77..99
       0: ASYNC_KW@77..84 "async" [Whitespace("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@84..93 "function" [] [Whitespace(" ")]
       2: STAR@93..94 "*" [] []
@@ -333,7 +333,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@98..98
         2: JS_STATEMENT_LIST@98..98
         3: R_CURLY@98..99 "}" [] []
-    6: JS_FUNCTION_DECLARATION@99..118
+    6: JS_FUNCTION_STATEMENT@99..118
       0: (empty)
       1: FUNCTION_KW@99..109 "function" [Whitespace("\n")] [Whitespace(" ")]
       2: STAR@109..110 "*" [] []
@@ -377,7 +377,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@155..155
         2: JS_STATEMENT_LIST@155..155
         3: R_CURLY@155..156 "}" [] []
-    10: JS_FUNCTION_DECLARATION@156..179
+    10: JS_FUNCTION_STATEMENT@156..179
       0: (empty)
       1: FUNCTION_KW@156..166 "function" [Whitespace("\n")] [Whitespace(" ")]
       2: (empty)
@@ -396,7 +396,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@178..178
         2: JS_STATEMENT_LIST@178..178
         3: R_CURLY@178..179 "}" [] []
-    11: JS_FUNCTION_DECLARATION@179..202
+    11: JS_FUNCTION_STATEMENT@179..202
       0: (empty)
       1: FUNCTION_KW@179..189 "function" [Whitespace("\n")] [Whitespace(" ")]
       2: (empty)

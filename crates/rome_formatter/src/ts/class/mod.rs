@@ -1,7 +1,8 @@
-mod class_declaration;
+mod any_class;
 mod class_expression;
 mod class_member;
 mod class_member_name;
+mod class_statement;
 mod constructor_class_member;
 mod empty_class_member;
 mod extends_clause;

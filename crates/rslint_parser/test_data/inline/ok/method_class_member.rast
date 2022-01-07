@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsClassDeclaration {
+        JsClassStatement {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..11 "Test" [] [Whitespace(" ")],
@@ -209,7 +209,7 @@ JsModule {
             ],
             r_curly_token: R_CURLY@164..166 "}" [Whitespace("\n")] [],
         },
-        JsClassDeclaration {
+        JsClassStatement {
             class_token: CLASS_KW@166..173 "class" [Whitespace("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@173..192 "ContextualKeywords" [] [Whitespace(" ")],
@@ -382,7 +382,7 @@ JsModule {
             ],
             r_curly_token: R_CURLY@378..380 "}" [Whitespace("\n")] [],
         },
-        JsClassDeclaration {
+        JsClassStatement {
             class_token: CLASS_KW@380..387 "class" [Whitespace("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@387..394 "Static" [] [Whitespace(" ")],
@@ -586,7 +586,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..631
-    0: JS_CLASS_DECLARATION@0..166
+    0: JS_CLASS_STATEMENT@0..166
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..11
         0: IDENT@6..11 "Test" [] [Whitespace(" ")]
@@ -755,7 +755,7 @@ JsModule {
             2: JS_STATEMENT_LIST@163..163
             3: R_CURLY@163..164 "}" [] []
       6: R_CURLY@164..166 "}" [Whitespace("\n")] []
-    1: JS_CLASS_DECLARATION@166..380
+    1: JS_CLASS_STATEMENT@166..380
       0: CLASS_KW@166..173 "class" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@173..192
         0: IDENT@173..192 "ContextualKeywords" [] [Whitespace(" ")]
@@ -897,7 +897,7 @@ JsModule {
             2: JS_STATEMENT_LIST@356..356
             3: R_CURLY@356..378 "}" [] [Whitespace(" "), Comments("// Method called set")]
       6: R_CURLY@378..380 "}" [Whitespace("\n")] []
-    2: JS_CLASS_DECLARATION@380..631
+    2: JS_CLASS_STATEMENT@380..631
       0: CLASS_KW@380..387 "class" [Whitespace("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@387..394
         0: IDENT@387..394 "Static" [] [Whitespace(" ")]

@@ -9,8 +9,7 @@ use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
 use crate::{Parser, ParserState};
 use rslint_syntax::JsSyntaxKind::{
-	JS_FUNCTION_BODY, JS_FUNCTION_DECLARATION, JS_FUNCTION_EXPRESSION, JS_UNKNOWN,
-	TS_TYPE_ANNOTATION,
+	JS_FUNCTION_BODY, JS_FUNCTION_EXPRESSION, JS_FUNCTION_STATEMENT, JS_UNKNOWN, TS_TYPE_ANNOTATION,
 };
 use rslint_syntax::{JsSyntaxKind, T};
 use std::collections::HashMap;
@@ -45,8 +44,8 @@ use std::collections::HashMap;
 //
 // test_err function_broken
 // function foo())})}{{{  {}
-pub(super) fn parse_function_declaration(p: &mut Parser) -> ParsedSyntax {
-	parse_function(p, JS_FUNCTION_DECLARATION)
+pub(super) fn parse_function_statement(p: &mut Parser) -> ParsedSyntax {
+	parse_function(p, JS_FUNCTION_STATEMENT)
 }
 
 pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
@@ -57,7 +56,7 @@ fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
 	let m = p.start();
 
 	let uses_invalid_syntax =
-		kind == JS_FUNCTION_DECLARATION && p.eat(T![declare]) && TypeScript.is_unsupported(p);
+		kind == JS_FUNCTION_STATEMENT && p.eat(T![declare]) && TypeScript.is_unsupported(p);
 
 	let in_async = is_at_async_function(p, LineBreak::DoNotCheck);
 	if in_async {
@@ -77,7 +76,7 @@ fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
 
 	let id = parse_binding(guard);
 
-	if kind == JS_FUNCTION_DECLARATION {
+	if kind == JS_FUNCTION_STATEMENT {
 		id.or_add_diagnostic(guard, |p, range| {
 			p.err_builder(
 				"expected a name for the function in a function declaration, but found none",
@@ -102,7 +101,7 @@ fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
 		})
 		.ok();
 
-	if kind == JS_FUNCTION_DECLARATION {
+	if kind == JS_FUNCTION_STATEMENT {
 		function_body_or_declaration(guard);
 	} else {
 		function_body(guard).or_add_diagnostic(guard, js_parse_error::expected_function_body);

@@ -9,6 +9,7 @@ mod expr_ext;
 mod generated;
 mod stmt_ext;
 mod ts_ext;
+mod union_ext;
 
 use crate::{syntax_node::*, util::SyntaxNodeExt, JsSyntaxKind, SyntaxList, TextRange};
 use std::error::Error;

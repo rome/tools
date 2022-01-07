@@ -12,6 +12,7 @@ mod expression_statement;
 mod for_in_statement;
 mod for_of_statement;
 mod for_stmt;
+mod function_statement;
 mod if_stmt;
 mod label_statement;
 mod return_statement;
@@ -19,6 +20,7 @@ mod statement;
 mod switch_statement;
 mod throw_statement;
 mod try_statement;
+mod variable_declaration_statement;
 mod while_statement;
 mod with_statement;
 
