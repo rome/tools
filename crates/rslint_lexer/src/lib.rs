@@ -909,7 +909,7 @@ impl<'src> Lexer<'src> {
 		match self.bytes.get(self.cur + 1) {
 			Some(b'*') => {
 				self.next();
-				let mut has_newline = false;	
+				let mut has_newline = false;
 				while let Some(b) = self.next().copied() {
 					match b {
 						b'*' if self.bytes.get(self.cur + 1) == Some(&b'/') => {
@@ -920,7 +920,7 @@ impl<'src> Lexer<'src> {
 								return tok!(COMMENT, self.cur - start);
 							}
 						}
-						x @ _ => {
+						x => {
 							if is_linebreak(x as char) {
 								has_newline = true;
 							} else if UNICODE_WHITESPACE_STARTS.contains(&x) {
