@@ -1,6 +1,7 @@
-foo: {}
 while (true) {
   continue;
-  continue foo;
+  foo: {
+    continue foo;
+	 }
   continue
 }

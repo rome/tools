@@ -25,6 +25,7 @@ use crate::SyntaxFeature;
 use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 use rslint_errors::Span;
+use std::collections::HashMap;
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![
 	L_CURLY,
@@ -198,6 +199,11 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 	}
 }
 
+// test labeled_statement
+// label1: 1
+// label1: 1
+// label2: 2
+
 // test_err double_label
 // label1: {
 // 	label2: {
@@ -206,7 +212,7 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 // }
 fn parse_labeled_statement(p: &mut Parser) -> ParsedSyntax {
 	parse_identifier(p, JS_LABELED_STATEMENT).map(|identifier| {
-		if !identifier.kind().is_unknown() {
+		let label = if !identifier.kind().is_unknown() {
 			let range = identifier.range(p);
 			let label = p.source(range);
 
@@ -223,15 +229,23 @@ fn parse_labeled_statement(p: &mut Parser) -> ParsedSyntax {
 					);
 
 				p.error(err);
+				None
 			} else {
 				let string = label.to_string();
-				p.state.labels.insert(string, range.into());
+				p.state.labels.insert(string.clone(), range.into());
+				Some(string)
 			}
-		}
+		} else {
+			None
+		};
 
 		let labelled_statement = identifier.undo_completion(p);
 		p.bump_any();
 		parse_statement(p).or_add_diagnostic(p, expected_statement);
+
+		if let Some(label) = label {
+			p.state.labels.remove(&label);
+		}
 
 		labelled_statement.complete(p, JS_LABELED_STATEMENT)
 	})
@@ -324,14 +338,19 @@ pub fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 // test break_stmt
-// foo: {}
-// rust: {}
-// break;
-// break foo;
-// break rust
+// while (true) {
+//   break;
+// 	foo: {
+//    break foo;
+// 	}
+// }
 
 // test_err break_stmt
 // function foo() { break; }
+// while (true) {
+//   break foo;
+// }
+
 /// A break statement with an optional label such as `break a;`
 pub fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![break]) {
@@ -365,15 +384,19 @@ pub fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 // test continue_stmt
-// foo: {}
 // while (true) {
 //   continue;
-//   continue foo;
+//   foo: {
+//     continue foo;
+// 	 }
 //   continue
 // }
 
 // test_err continue_stmt
 // function foo() { continue; }
+// while (true) {
+//   continue foo;
+// }
 /// A continue statement with an optional label such as `continue a;`
 pub fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![continue]) {
@@ -814,6 +837,7 @@ fn parse_variable_declarations(
 		remaining_declaration_range: None,
 	};
 
+	debug_assert!(p.state.name_map.is_empty());
 	let list = parse_declarations.parse_list(p);
 
 	p.state.name_map.clear();
@@ -899,6 +923,13 @@ impl VariableDeclarationContext {
 	}
 }
 
+// test scoped_declarations
+// let a = {
+//   test() {
+//     let a = "inner";
+//   }
+// };
+//
 // A single declarator, either `ident` or `ident = assign_expr`
 fn parse_variable_declaration(
 	p: &mut Parser,
@@ -923,7 +954,14 @@ fn parse_variable_declaration(
 
 		let type_annotation = maybe_ts_type_annotation(p);
 
-		let initializer = parse_initializer_clause(p).ok();
+		let initializer = {
+			let p = &mut *p.with_state(ParserState {
+				name_map: HashMap::default(),
+				duplicate_binding_parent: None,
+				..p.state.clone()
+			});
+			parse_initializer_clause(p).ok()
+		};
 
 		// Heuristic to determine if we're in a for of or for in loop. This may be off if
 		// the user uses a for of/in with multiple declarations but this isn't allowed anyway.

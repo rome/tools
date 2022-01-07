@@ -106,12 +106,12 @@ pub fn run(filter: String, criterion: bool) {
 					let mut criterion = criterion::Criterion::default().without_plots();
 					criterion.bench_function(lib, |b| {
 						b.iter(|| {
-							let _ = criterion::black_box(rslint_parser::parse_module(code, 0));
+							let _ = criterion::black_box(rslint_parser::parse_text(code, 0));
 						})
 					});
 				} else {
 					//warmup
-					rslint_parser::parse_module(code, 0);
+					rslint_parser::parse_text(code, 0);
 				}
 
 				let result = benchmark_lib(&id, code);
@@ -150,7 +150,7 @@ fn benchmark_lib(id: &str, code: &str) -> BenchmarkResult {
 	let parser_timer = timing::start();
 	let (events, parsing_diags, tokens) = {
 		let mut parser =
-			rslint_parser::Parser::new(tok_source, 0, rslint_parser::Syntax::default().module());
+			rslint_parser::Parser::new(tok_source, 0, rslint_parser::Syntax::default().script());
 		rslint_parser::syntax::program::parse(&mut parser);
 		let (events, parsing_diags) = parser.finish();
 		(events, parsing_diags, tokens)
