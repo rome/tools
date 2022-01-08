@@ -9,6 +9,8 @@ on:
 env:
   RUST_LOG: info
   RUST_BACKTRACE: 1
+  CARGO_INCREMENTAL: 0
+  CI: 1
 
 jobs:
   format:
@@ -23,6 +25,8 @@ jobs:
           toolchain: 1.57.0
           profile: minimal
           components: rustfmt
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
       - name: Run rustfmt
         uses: actions-rs/cargo@v1
         with:
@@ -41,6 +45,8 @@ jobs:
           toolchain: 1.57.0
           profile: minimal
           components: clippy
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
       - name: Run clippy
         uses: actions-rs/cargo@v1
         with:

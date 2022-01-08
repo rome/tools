@@ -4,6 +4,13 @@
 resolver = "2"
 members = ["xtask/", "crates/*"]
 
-# TODO: Possibly setup profiles for dev to speed up tests/etc
+[profile.dev]
+# Disabling debug info speeds up both local and CI build,
+# enable only if neccessary
+debug = 0
 
-# TODO: Setup release profile (incremental mode?)
+[profile.release]
+# Speed up local release build,
+# we disable it in CI with `CARGO_INCREMENTAL: 0`
+incremental = true
+debug = 0

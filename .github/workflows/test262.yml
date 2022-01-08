@@ -8,71 +8,98 @@ on:
 env:
   RUST_LOG: info
   RUST_BACKTRACE: 1
+  CARGO_INCREMENTAL: 0
+  CI: 1
 
 jobs:
   coverage:
     name: Test262 coverage
     runs-on: ${{ matrix.os }}
+
     strategy:
       fail-fast: false
       matrix:
        os: [windows-latest, ubuntu-latest]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           submodules: recursive
+
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: 1.57.0
           profile: minimal
+
       - name: Cache
         uses: Swatinem/rust-cache@v1
+
+      - name: Compile
+        run: cargo build --release --locked -p xtask
+
       - name: Run Test262 suite
         continue-on-error: true
-        run:  cargo xtask coverage --json > new_results.json
+        run: cargo run -p xtask --release -- coverage --json > new_results.json
+
       - name: Save test results
         uses: actions/upload-artifact@v2
         with:
-          name: new_results
+          name: new_results_${{ matrix.os }}_${{ github.sha }}
           path: new_results.json
+
+      - name: Clean cache
+        run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
 
 # This job compares the coverage results from this PR and the coverage results from master
   coverage-comparison:
     needs: coverage
     name: Compare coverage
     runs-on: ${{ matrix.os }}
+
     strategy:
       fail-fast: false
       matrix:
        os: [windows-latest, ubuntu-latest]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           submodules: recursive
           ref: main
+
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: 1.57.0
           profile: minimal
+
       - name: Cache
         uses: Swatinem/rust-cache@v1
+
+      - name: Compile
+        run: cargo build --release --locked -p xtask
+
       - name: Run Test262 suite on main branch
         continue-on-error: true
-        run:  cargo xtask coverage --json > base_results.json
+        run: cargo run -p xtask --release -- coverage --json > base_results.json
+
       - name: Download PRs test results
         uses: actions/download-artifact@v2
         with:
-          name: new_results
+          name: new_results_${{ matrix.os }}_${{ github.sha }}
+
       - name: Compare results on ${{ matrix.os }}
         if: github.event_name == 'pull_request'
         id: comparison
         shell: bash
         run: |
-          comment="$(cargo xtask compare ./base_results.json ./new_results.json  --markdown)"
+          echo "### Test262 comparison coverage results on ${{ matrix.os }}" > output
+          cargo run -p xtask --release -- compare ./base_results.json ./new_results.json --markdown >> output
+          cat output
+          comment="$(cat output)"
           comment="${comment//'%'/'%25'}"
           comment="${comment//$'\n'/'%0A'}"
           comment="${comment//$'\r'/'%0D'}"
@@ -98,8 +125,6 @@ jobs:
         with:
           comment-id: ${{ steps.previous-comment.outputs.comment-id }}
           body: |
-            ### Test262 comparison coverage results on ${{ matrix.os }}
-
             ${{ steps.comparison.outputs.comment }}
           edit-mode: replace
 
@@ -110,7 +135,7 @@ jobs:
         with:
           issue-number: ${{ steps.pr-number.outputs.pr }}
           body: |
-            ### Test262 comparison coverage results on ${{ matrix.os }}
-
             ${{ steps.comparison.outputs.comment }}
 
+      - name: Clean cache
+        run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache

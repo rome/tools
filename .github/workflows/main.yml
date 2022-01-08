@@ -11,6 +11,8 @@ on:
 env:
   RUST_LOG: info
   RUST_BACKTRACE: 1
+  CARGO_INCREMENTAL: 0
+  CI: 1
 
 jobs:
   format:
@@ -25,6 +27,8 @@ jobs:
           toolchain: 1.57.0
           profile: minimal
           components: rustfmt
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
       - name: Run rustfmt
         uses: actions-rs/cargo@v1
         with:
@@ -43,6 +47,8 @@ jobs:
           toolchain: 1.57.0
           profile: minimal
           components: clippy
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
       - name: Run clippy
         uses: actions-rs/cargo@v1
         with:
@@ -74,6 +80,9 @@ jobs:
         with:
           command: test
           args: --workspace --verbose
+      - name: Clean cache
+        run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
+
   coverage:
     name: Test262 coverage
     runs-on: ${{ matrix.os }}
@@ -93,7 +102,10 @@ jobs:
           profile: minimal
       - name: Cache
         uses: Swatinem/rust-cache@v1
+      - name: Compile
+        run: cargo build --release --locked -p xtask
       - name: Run Test262 suite
         continue-on-error: true
-        run:  cargo xtask coverage
-
+        run: cargo xtask coverage
+      - name: Clean cache
+        run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
