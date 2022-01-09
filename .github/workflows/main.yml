@@ -24,9 +24,11 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
+          target: x86_64-unknown-linux-musl
           toolchain: 1.57.0
           profile: minimal
           components: rustfmt
+          override: true
       - name: Cache
         uses: Swatinem/rust-cache@v1
       - name: Run rustfmt
@@ -44,9 +46,11 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
+          target: x86_64-unknown-linux-musl
           toolchain: 1.57.0
           profile: minimal
           components: clippy
+          override: true
       - name: Cache
         uses: Swatinem/rust-cache@v1
       - name: Run clippy
@@ -64,8 +68,10 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
+          target: x86_64-unknown-linux-musl
           profile: minimal
           toolchain: 1.57.0
+          override: true
       - name: Cache
         uses: Swatinem/rust-cache@v1
       - name: Compile for tests
@@ -86,10 +92,17 @@ jobs:
   coverage:
     name: Test262 coverage
     runs-on: ${{ matrix.os }}
+
     strategy:
       fail-fast: false
       matrix:
        os: [windows-latest, ubuntu-latest]
+       include:
+         - os: windows-latest
+           TARGET: x86_64-pc-windows-msvc
+         - os: ubuntu-latest
+           TARGET: x86_64-unknown-linux-musl
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -98,8 +111,10 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
+          target: ${{ matrix.TARGET }}
           toolchain: 1.57.0
           profile: minimal
+          override: true
       - name: Cache
         uses: Swatinem/rust-cache@v1
       - name: Compile

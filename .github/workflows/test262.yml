@@ -19,8 +19,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-       # os: [windows-latest, ubuntu-latest]
-       os: [ubuntu-latest]
+       os: [windows-latest, ubuntu-latest]
+       include:
+         - os: windows-latest
+           TARGET: x86_64-pc-windows-msvc
+         - os: ubuntu-latest
+           TARGET: x86_64-unknown-linux-musl
 
     steps:
       - name: Checkout repository
@@ -31,8 +35,10 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
+          target: ${{ matrix.TARGET }}
           toolchain: 1.57.0
           profile: minimal
+          override: true
 
       - name: Cache
         uses: Swatinem/rust-cache@v1
