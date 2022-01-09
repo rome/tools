@@ -19,7 +19,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-       os: [windows-latest, ubuntu-latest]
+       # os: [windows-latest, ubuntu-latest]
+       os: [ubuntu-latest]
 
     steps:
       - name: Checkout repository
@@ -49,38 +50,10 @@ jobs:
           name: new_results_${{ matrix.os }}_${{ github.sha }}
           path: new_results.json
 
-      - name: Clean cache
-        run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache
-
-# This job compares the coverage results from this PR and the coverage results from master
-  coverage-comparison:
-    needs: coverage
-    name: Compare coverage
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-       os: [windows-latest, ubuntu-latest]
-
-    steps:
-      - name: Checkout repository
+      - name: Checkout Main Branch
         uses: actions/checkout@v2
         with:
-          submodules: recursive
           ref: main
-
-      - name: Install toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: 1.57.0
-          profile: minimal
-
-      - name: Cache
-        uses: Swatinem/rust-cache@v1
-
-      - name: Compile
-        run: cargo build --release --locked -p xtask
 
       - name: Run Test262 suite on main branch
         continue-on-error: true
