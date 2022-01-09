@@ -50,25 +50,15 @@ jobs:
         continue-on-error: true
         run: cargo run -p xtask --release -- coverage --json > new_results.json
 
-      - name: Save test results
-        uses: actions/upload-artifact@v2
-        with:
-          name: new_results_${{ matrix.os }}_${{ github.sha }}
-          path: new_results.json
-
       - name: Checkout Main Branch
         uses: actions/checkout@v2
         with:
           ref: main
+          clean: false
 
       - name: Run Test262 suite on main branch
         continue-on-error: true
         run: cargo run -p xtask --release -- coverage --json > base_results.json
-
-      - name: Download PRs test results
-        uses: actions/download-artifact@v2
-        with:
-          name: new_results_${{ matrix.os }}_${{ github.sha }}
 
       - name: Compare results on ${{ matrix.os }}
         if: github.event_name == 'pull_request'
