@@ -20,10 +20,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Install toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: 1.57.0
-          profile: minimal
+        run: rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v1
       - name: Run rustfmt
@@ -39,10 +36,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Install toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: 1.57.0
-          profile: minimal
+        run: rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v1
       - name: Run clippy
@@ -58,10 +52,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Install toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: 1.57.0
-          profile: minimal
+        run: rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v1
       - name: Compile for tests
@@ -94,10 +85,7 @@ jobs:
         with:
           submodules: recursive
       - name: Install toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: 1.57.0
-          profile: minimal
+        run: rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v1
       - name: Compile

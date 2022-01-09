@@ -26,10 +26,7 @@ jobs:
           submodules: recursive
 
       - name: Install toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: 1.57.0
-          profile: minimal
+        run: rustup show
 
       - name: Cache
         uses: Swatinem/rust-cache@v1
