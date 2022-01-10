@@ -7,7 +7,7 @@ JsModule {
             statements: JsStatementList [
                 JsUnknownStatement {
                     items: [
-                        EXPORT_KW@1..10 "export" [Whitespace("\n ")] [Whitespace(" ")],
+                        EXPORT_KW@1..10 "export" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")],
                         JsExportNamedFromClause {
                             l_curly_token: L_CURLY@10..12 "{" [] [Whitespace(" ")],
                             specifiers: JsExportNamedFromSpecifierList [
@@ -44,7 +44,7 @@ JsModule {
       0: L_CURLY@0..1 "{" [] []
       1: JS_STATEMENT_LIST@1..31
         0: JS_UNKNOWN_STATEMENT@1..31
-          0: EXPORT_KW@1..10 "export" [Whitespace("\n ")] [Whitespace(" ")]
+          0: EXPORT_KW@1..10 "export" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")]
           1: JS_EXPORT_NAMED_FROM_CLAUSE@10..31
             0: L_CURLY@10..12 "{" [] [Whitespace(" ")]
             1: JS_EXPORT_NAMED_FROM_SPECIFIER_LIST@12..17
