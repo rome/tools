@@ -38,7 +38,9 @@ macro_rules! assert_lex {
                 tokens[idx].0.kind,
             );
 
-            new_str.push_str($src.get(tok_idx..(tok_idx + tokens[idx].0.len)).unwrap());
+            let tok_start = tok_idx as usize;
+            let tok_end = tok_idx as usize + tokens[idx].0.len as usize;
+            new_str.push_str($src.get(tok_start..tok_end).unwrap());
             tok_idx += tokens[idx].0.len;
 
             idx += 1;
@@ -75,7 +77,9 @@ fn losslessness(string: String) -> bool {
 	let mut idx = 0;
 
 	for token in tokens {
-		new_str.push_str(string.get(idx..(idx + token.len)).unwrap());
+		let start = idx as usize;
+		let end = idx as usize + token.len as usize;
+		new_str.push_str(string.get(start..end).unwrap());
 		idx += token.len;
 	}
 

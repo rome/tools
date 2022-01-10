@@ -40,7 +40,7 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 			self.tokens[self.token_pos..self.token_pos + amount as usize]
 				.iter()
 				.map(|x| x.len)
-				.sum::<usize>() as u32,
+				.sum::<u32>(),
 		);
 
 		self.do_tokens(kind, len, amount)
@@ -104,7 +104,7 @@ impl<'a> LossyTreeSink<'a> {
 	///
 	/// # Panics
 	/// Panics if the token start does not line up to a token's start index or is out of bounds
-	pub fn with_offset(text: &'a str, tokens: &'a [Token], token_start: usize) -> Self {
+	pub fn with_offset(text: &'a str, tokens: &'a [Token], token_start: u32) -> Self {
 		let mut len = 0;
 		for (idx, tok) in tokens.iter().enumerate() {
 			if len == token_start {
@@ -212,7 +212,7 @@ impl<'a> LossyTreeSink<'a> {
 			length += len;
 
 			let current_trivia = match token.kind {
-				JsSyntaxKind::WHITESPACE => continue,
+				JsSyntaxKind::WHITESPACE | JsSyntaxKind::NEWLINE => continue,
 				JsSyntaxKind::COMMENT => TriviaPiece::Comments(token.len),
 				_ => unreachable!("Not Trivia"),
 			};

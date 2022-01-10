@@ -7,6 +7,7 @@ pub(crate) struct LexerState {
 	pub(crate) prev: Option<JsSyntaxKind>,
 	pub(crate) had_linebreak: bool,
 	pub(crate) ctx: Vec<Context>,
+	pub(crate) after_newline: bool,
 }
 
 impl LexerState {
@@ -16,6 +17,7 @@ impl LexerState {
 			prev: None,
 			had_linebreak: false,
 			ctx: vec![Context::BraceStmt],
+			after_newline: false,
 		}
 	}
 

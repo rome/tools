@@ -1475,22 +1475,34 @@ impl Iterator for Lexer<'_> {
 		if self.cur >= self.bytes.len() {
 			if !self.returned_eof {
 				self.returned_eof = true;
-				return Some(tok!(EOF, 0));
+				let mut token = tok!(EOF, 0);
+				token.0.offset = self.cur as u32;
+				token.0.after_newline = self.state.after_newline;
+				return Some(token);
 			}
 			return None;
 		}
 
-		let token = if self.state.is_in_template() {
+		let mut token = if self.state.is_in_template() {
 			self.lex_template()
 		} else {
 			self.lex_token()
 		};
 
+		let after_newline = match token.0.kind {
+			JsSyntaxKind::NEWLINE | JsSyntaxKind::MULTILINE_COMMENT => true,
+			JsSyntaxKind::WHITESPACE | JsSyntaxKind::COMMENT => self.state.after_newline,
+			_ => false,
+		};
+
+		token.0.offset = self.cur as u32 - token.0.len;
+		token.0.after_newline = std::mem::replace(&mut self.state.after_newline, after_newline);
+
 		if ![
-			JsSyntaxKind::NEWLINE,
-			JsSyntaxKind::WHITESPACE,
 			JsSyntaxKind::COMMENT,
 			JsSyntaxKind::MULTILINE_COMMENT,
+			JsSyntaxKind::WHITESPACE,
+			JsSyntaxKind::NEWLINE,
 			JsSyntaxKind::TEMPLATE_CHUNK,
 		]
 		.contains(&token.0.kind)

@@ -18,8 +18,8 @@ use crate::{
 #[allow(clippy::box_collection)]
 pub enum GreenTokenTrivia {
 	None,
-	Whitespace(usize),
-	Comments(usize),
+	Whitespace(u32),
+	Comments(u32),
 	Many(Box<Vec<TriviaPiece>>),
 }
 
@@ -291,13 +291,13 @@ mod tests {
 	}
 
 	#[quickcheck]
-	fn whitespace_and_comments_text_len(len: usize) {
+	fn whitespace_and_comments_text_len(len: u32) {
 		assert_eq!(
-			TextSize::from(len as u32),
+			TextSize::from(len),
 			GreenTokenTrivia::Whitespace(len).text_len()
 		);
 		assert_eq!(
-			TextSize::from(len as u32),
+			TextSize::from(len),
 			GreenTokenTrivia::Comments(len).text_len()
 		);
 	}
@@ -305,7 +305,7 @@ mod tests {
 	#[test]
 	fn many_text_len_dont_panic() {
 		let trivia = GreenTokenTrivia::Many(Box::new(vec![
-			TriviaPiece::Whitespace(usize::MAX),
+			TriviaPiece::Whitespace(u32::MAX),
 			TriviaPiece::Comments(1),
 		]));
 		assert_eq!(TextSize::from(u32::MAX), trivia.text_len());
@@ -315,7 +315,7 @@ mod tests {
 	fn many_text_len(lengths: Vec<u32>) {
 		let trivia: Vec<_> = lengths
 			.iter()
-			.map(|x| TriviaPiece::Whitespace(*x as usize))
+			.map(|x| TriviaPiece::Whitespace(*x))
 			.collect();
 		let trivia = GreenTokenTrivia::Many(Box::new(trivia));
 

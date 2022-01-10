@@ -127,7 +127,7 @@ impl ParsedSyntax {
 		match self {
 			Present(syntax) => Some(syntax),
 			Absent => {
-				let diagnostic = error_builder(p, p.cur_tok().range);
+				let diagnostic = error_builder(p, p.cur_tok().range());
 				p.error(diagnostic);
 				None
 			}
@@ -144,7 +144,7 @@ impl ParsedSyntax {
 		match self {
 			Present(completed) => completed.precede(p),
 			Absent => {
-				let diagnostic = error_builder(p, p.cur_tok().range);
+				let diagnostic = error_builder(p, p.cur_tok().range());
 				p.error(diagnostic);
 				p.start()
 			}
@@ -187,7 +187,7 @@ impl ParsedSyntax {
 				}
 
 				Err(recovery_error) => {
-					let diagnostic = error_builder(p, p.cur_tok().range);
+					let diagnostic = error_builder(p, p.cur_tok().range());
 					p.error(diagnostic);
 					Err(recovery_error)
 				}

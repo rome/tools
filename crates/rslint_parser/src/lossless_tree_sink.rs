@@ -92,7 +92,7 @@ impl<'a> LosslessTreeSink<'a> {
 				self.tokens[self.token_pos..self.token_pos + token_count as usize]
 					.iter()
 					.map(|x| x.len)
-					.sum::<usize>()
+					.sum()
 			}) as u32,
 		);
 

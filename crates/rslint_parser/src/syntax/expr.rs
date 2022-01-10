@@ -369,9 +369,9 @@ fn parse_binary_or_logical_expression_recursive(
 
 	// This is a hack to allow us to effectively recover from `foo + / bar`
 	let right = if get_precedence(p.cur()).is_some() && !p.at_ts(token_set![T![-], T![+], T![<]]) {
-		let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.token_src(&op_tok)))
-            .secondary(op_tok.range, "This operator requires a right hand side value")
-            .primary(p.cur_tok().range, "But this operator was encountered instead");
+		let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.token_src(op_tok)))
+            .secondary(op_tok.range(), "This operator requires a right hand side value")
+            .primary(p.cur_tok().range(), "But this operator was encountered instead");
 
 		p.error(err);
 
@@ -418,7 +418,7 @@ fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax {
 		p.bump_any();
 
 		// new.target
-		if p.at(T![.]) && p.token_src(&p.nth_tok(1)) == "target" {
+		if p.at(T![.]) && p.token_src(p.nth_tok(1)) == "target" {
 			p.bump_any();
 			p.bump_remap(T![target]);
 			let complete = m.complete(p, NEW_TARGET);
@@ -745,7 +745,7 @@ fn parse_arguments(p: &mut Parser) -> ParsedSyntax {
 fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax {
 	let m = p.start();
 	let checkpoint = p.checkpoint();
-	let start = p.cur_tok().range.start;
+	let start = p.cur_tok().start();
 
 	p.expect(T!['(']);
 	let mut spread_range = None;
@@ -785,7 +785,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 						temp.expect(T![')']);
 					} else {
 						let err = temp.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", temp.cur_src()))
-                    .primary(temp.cur_tok().range, "");
+                    .primary(temp.cur_tok().range(), "");
 
 						#[allow(deprecated)]
 						SingleTokenParseRecovery::with_error(EXPR_RECOVERY_SET, JS_UNKNOWN, err)
@@ -845,9 +845,10 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 	// FIXME: verify that this logic is correct
 	if (p.at(T![=>]) && !p.has_linebreak_before_n(0)) || has_ret_type || params_marker.is_some() {
 		if !can_be_arrow && !p.at(T![:]) {
-			let err = p
-				.err_builder("Unexpected token `=>`")
-				.primary(p.cur_tok().range, "an arrow expression is not allowed here");
+			let err = p.err_builder("Unexpected token `=>`").primary(
+				p.cur_tok().range(),
+				"an arrow expression is not allowed here",
+			);
 
 			p.error(err);
 		} else {
@@ -885,7 +886,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 	if is_empty {
 		let err = p
 			.err_builder("grouping expressions cannot be empty")
-			.primary(start..p.cur_tok().range.start, "");
+			.primary(start..p.cur_tok().start(), "");
 
 		p.error(err);
 		return Present(m.complete(p, JS_PARENTHESIZED_EXPRESSION));
@@ -1071,23 +1072,23 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 				// test_err import_no_meta
 				// import.foo
 				// import.metaa
-				if p.at(T![ident]) && p.token_src(&p.cur_tok()) == "meta" {
+				if p.at(T![ident]) && p.token_src(p.cur_tok()) == "meta" {
 					p.bump_remap(T![meta]);
 					m.complete(p, IMPORT_META)
 				} else if p.at(T![ident]) {
 					let err = p
 						.err_builder(&format!(
 							"Expected `meta` following an import keyword, but found `{}`",
-							p.token_src(&p.cur_tok())
+							p.token_src(p.cur_tok())
 						))
-						.primary(p.cur_tok().range, "");
+						.primary(p.cur_tok().range(), "");
 
 					p.err_and_bump(err, JS_UNKNOWN);
 					m.complete(p, IMPORT_META)
 				} else {
 					let err = p
 						.err_builder("Expected `meta` following an import keyword, but found none")
-						.primary(p.cur_tok().range, "");
+						.primary(p.cur_tok().range(), "");
 
 					p.error(err);
 					m.complete(p, JS_UNKNOWN)
@@ -1168,15 +1169,15 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
 			let error = match name {
 				"await" if p.state.in_async => Some(
 					p.err_builder("Illegal use of `await` as an identifier in an async context")
-						.primary(p.cur_tok().range, ""),
+						.primary(p.cur_tok().range(), ""),
 				),
 				"await" if p.syntax.file_kind == FileKind::Module => Some(
 					p.err_builder("Illegal use of `await` as an identifier inside of a module")
-						.primary(p.cur_tok().range, ""),
+						.primary(p.cur_tok().range(), ""),
 				),
 				"yield" if p.state.in_generator => Some(
 					p.err_builder("Illegal use of `yield` as an identifier in generator function")
-						.primary(p.cur_tok().range, ""),
+						.primary(p.cur_tok().range(), ""),
 				),
 
 				"yield" | "let" | "public" | "protected" | "private" | "package" | "implements"
@@ -1188,12 +1189,12 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
 							"Illegal use of reserved keyword `{}` as an identifier in strict mode",
 							name
 						))
-						.primary(p.cur_tok().range, ""),
+						.primary(p.cur_tok().range(), ""),
 					)
 				}
 				_ if p.cur() == T![enum] => Some(
 					p.err_builder("Illegal use of reserved keyword `enum` as an identifier")
-						.primary(p.cur_tok().range, ""),
+						.primary(p.cur_tok().range(), ""),
 				),
 				_ => None,
 			};
