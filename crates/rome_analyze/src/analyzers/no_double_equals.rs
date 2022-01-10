@@ -1,7 +1,7 @@
 use anyhow::Result;
 use rslint_parser::{
 	ast::{self, JsAnyExpression},
-	make, AstNode,
+	AstNode,
 	JsSyntaxKind::*,
 	SyntaxResult,
 };
@@ -30,24 +30,9 @@ fn analyze(ctx: &AnalyzerContext) -> Result<Analysis> {
 				return None;
 			}
 
-			Some(op)
-		})
-		.map(|op| {
-			let replacement = match op.kind() {
-				EQ2 => make::punct_token(EQ3).unwrap(),
-				NEQ => make::punct_token(NEQ2).unwrap(),
-				_ => unreachable!(),
-			};
 			let message = format!("rome: do not use the {} operator", op.text_trimmed());
-			let action_title = format!("rome: change to {}", replacement.text());
-
-			Signal::diagnostic_with_replacement(
-				op,
-				message,
-				action_title,
-				replacement,
-				ActionCategory::SafeFix,
-			)
+			let signal = Signal::diagnostic(op, message);
+			Some(signal)
 		})
 		.collect()
 }

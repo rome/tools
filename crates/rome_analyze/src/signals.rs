@@ -1,5 +1,5 @@
 use anyhow::Result;
-use rslint_parser::{SyntaxElement, SyntaxNode, TextRange};
+use rslint_parser::{SyntaxElement, TextRange};
 
 use crate::{ActionCategory, Indel, SyntaxEdit};
 
@@ -12,7 +12,7 @@ pub enum Signal {
 }
 
 impl Signal {
-	pub fn node_diagnostic(target: impl Into<SyntaxNode>, message: impl Into<String>) -> Self {
+	pub fn diagnostic(target: impl Into<SyntaxElement>, message: impl Into<String>) -> Self {
 		let range = target.into().text_trimmed_range();
 		let diag = AnalyzeDiagnostic {
 			range,
