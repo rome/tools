@@ -1100,21 +1100,57 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 					p.error(err);
 					m.complete(p, JS_UNKNOWN)
 				}
-			} else {
-				// test_err import_call_no_arg
-				// let a = import();
-				// foo();
-
+			} else if p.at(T!['(']) {
 				// test import_call
 				// import("foo")
+				// import("foo", { assert: { type: 'json' } })
 
-				// test_err import_call
+				// test_err import_invalid_args
 				// import()
-				p.expect(T!['(']);
-				parse_expr_or_assignment(p)
-					.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
+				// import(...["foo"])
+				// import("foo", { assert: { type: 'json' } }, "bar")
+
+				let args = p.start();
+				p.bump(T!['(']);
+				let args_list = p.start();
+
+				let mut progress = ParserProgress::default();
+				let mut args_count = 0;
+
+				while !p.at(EOF) && !p.at(T![')']) {
+					progress.assert_progressing(p);
+					args_count += 1;
+
+					if p.at(T![...]) {
+						let err = p
+							.err_builder("`...` is not allowed in `import()`")
+							.primary(p.cur_tok().range(), "");
+						p.error(err);
+					} else {
+						parse_expr_or_assignment(p)
+							.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
+					}
+
+					if p.at(T![,]) {
+						p.bump_any();
+					} else {
+						break;
+					}
+				}
+
+				let completed_args_list = args_list.complete(p, JS_CALL_ARGUMENT_LIST);
+				if args_count == 0 || args_count > 2 {
+					let err = p
+						.err_builder("`import()` requires exactly one or two arguments. ")
+						.primary(completed_args_list.range(p), "");
+					p.error(err);
+				}
+
 				p.expect(T![')']);
+				args.complete(p, JS_CALL_ARGUMENTS);
 				m.complete(p, JS_IMPORT_CALL_EXPRESSION)
+			} else {
+				return Absent;
 			}
 		}
 		BACKTICK => parse_template_literal(p, Absent),
