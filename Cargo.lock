@@ -1349,7 +1349,6 @@ dependencies = [
  "once_cell",
  "rslint_errors",
  "rslint_parser",
- "salsa",
  "tracing",
 ]
 
@@ -1521,35 +1520,6 @@ name = "ryu"
 version = "1.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "71d301d4193d031abdd79ff7e3dd721168a9572ef3fe51a1517aba235bd8f86e"
-
-[[package]]
-name = "salsa"
-version = "0.17.0-pre.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9b223dccb46c32753144d0b51290da7230bb4aedcd8379d6b4c9a474c18bf17a"
-dependencies = [
- "crossbeam-utils",
- "indexmap",
- "lock_api",
- "log",
- "oorandom",
- "parking_lot",
- "rustc-hash",
- "salsa-macros",
- "smallvec",
-]
-
-[[package]]
-name = "salsa-macros"
-version = "0.17.0-pre.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ac6c2e352df550bf019da7b16164ed2f7fa107c39653d1311d1bba42d1582ff7"
-dependencies = [
- "heck",
- "proc-macro2",
- "quote",
- "syn",
-]
 
 [[package]]
 name = "same-file"

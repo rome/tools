@@ -13,7 +13,7 @@ pub fn create() -> Analyzer {
 
 fn analyze(ctx: &AnalyzerContext) -> Result<Analysis> {
 	ctx.query_nodes::<ast::JsVariableDeclarations>()
-		.filter(|n| n.kind().map(|k| k.kind()).ok() == Some(JsSyntaxKind::VAR_KW))
+		.filter(|n| n.kind().map(|k| k.kind()) == Ok(JsSyntaxKind::VAR_KW))
 		.map(|n| Signal::diagnostic(n, "rome: do not use var"))
 		.collect()
 }

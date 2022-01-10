@@ -25,24 +25,27 @@ pub struct Analyzer {
 
 pub struct AnalyzerContext<'a> {
 	pub file_id: FileId,
-	analysis: &'a AnalysisServer,
+	analysis_server: &'a AnalysisServer,
 }
 
 impl<'a> AnalyzerContext<'a> {
-	pub fn new(analysis: &'a AnalysisServer, file_id: FileId) -> Self {
-		Self { analysis, file_id }
+	pub fn new(analysis_server: &'a AnalysisServer, file_id: FileId) -> Self {
+		Self {
+			analysis_server,
+			file_id,
+		}
 	}
 
 	pub fn tree(&self) -> SyntaxNode {
-		self.analysis.parse(self.file_id)
+		self.analysis_server.parse(self.file_id)
 	}
 
 	pub fn query_nodes<T: AstNode>(&self) -> impl Iterator<Item = T> {
-		self.analysis.query_nodes(self.file_id)
+		self.analysis_server.query_nodes(self.file_id)
 	}
 
 	pub fn find_node_at_range<T: AstNode>(&self, range: TextRange) -> Option<T> {
-		self.analysis.find_node_at_range(self.file_id, range)
+		self.analysis_server.find_node_at_range(self.file_id, range)
 	}
 }
 
