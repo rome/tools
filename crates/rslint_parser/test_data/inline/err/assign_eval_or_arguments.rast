@@ -38,14 +38,38 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
+        JsExpressionStatement {
+            expression: JsAssignmentExpression {
+                left: JsIdentifierAssignment {
+                    name_token: IDENT@29..40 "arguments" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                operator_token: EQ@40..42 "=" [] [Whitespace(" ")],
+                right: JsStringLiteralExpression {
+                    value_token: JS_STRING_LITERAL@42..47 "\"foo\"" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsAssignmentExpression {
+                left: JsIdentifierAssignment {
+                    name_token: IDENT@47..58 "arguments" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                operator_token: PIPE2EQ@58..62 "||=" [] [Whitespace(" ")],
+                right: JsStringLiteralExpression {
+                    value_token: JS_STRING_LITERAL@62..67 "\"baz\"" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
     ],
-    eof_token: EOF@29..30 "" [Whitespace("\n")] [],
+    eof_token: EOF@67..68 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..30
+0: JS_MODULE@0..68
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..29
+  2: JS_MODULE_ITEM_LIST@0..67
     0: JS_EXPRESSION_STATEMENT@0..8
       0: JS_ASSIGNMENT_EXPRESSION@0..8
         0: JS_IDENTIFIER_ASSIGNMENT@0..5
@@ -70,29 +94,61 @@ JsModule {
         2: JS_NUMBER_LITERAL_EXPRESSION@28..29
           0: JS_NUMBER_LITERAL@28..29 "4" [] []
       1: (empty)
-  3: EOF@29..30 "" [Whitespace("\n")] []
+    3: JS_EXPRESSION_STATEMENT@29..47
+      0: JS_ASSIGNMENT_EXPRESSION@29..47
+        0: JS_IDENTIFIER_ASSIGNMENT@29..40
+          0: IDENT@29..40 "arguments" [Whitespace("\n")] [Whitespace(" ")]
+        1: EQ@40..42 "=" [] [Whitespace(" ")]
+        2: JS_STRING_LITERAL_EXPRESSION@42..47
+          0: JS_STRING_LITERAL@42..47 "\"foo\"" [] []
+      1: (empty)
+    4: JS_EXPRESSION_STATEMENT@47..67
+      0: JS_ASSIGNMENT_EXPRESSION@47..67
+        0: JS_IDENTIFIER_ASSIGNMENT@47..58
+          0: IDENT@47..58 "arguments" [Whitespace("\n")] [Whitespace(" ")]
+        1: PIPE2EQ@58..62 "||=" [] [Whitespace(" ")]
+        2: JS_STRING_LITERAL_EXPRESSION@62..67
+          0: JS_STRING_LITERAL@62..67 "\"baz\"" [] []
+      1: (empty)
+  3: EOF@67..68 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: `eval` or `arguments` not allowed as assignment targets in strict mode
-  ┌─ assign_eval.js:1:1
+  ┌─ assign_eval_or_arguments.js:1:1
   │
 1 │ eval = 0
   │ ^^^^
 
 --
 error[SyntaxError]: `eval` or `arguments` not allowed as assignment targets in strict mode
-  ┌─ assign_eval.js:2:1
+  ┌─ assign_eval_or_arguments.js:2:1
   │
 2 │ eval ??= 2
   │ ^^^^
 
 --
 error[SyntaxError]: `eval` or `arguments` not allowed as assignment targets in strict mode
-  ┌─ assign_eval.js:3:1
+  ┌─ assign_eval_or_arguments.js:3:1
   │
 3 │ eval *= 4
   │ ^^^^
 
 --
+error[SyntaxError]: `eval` or `arguments` not allowed as assignment targets in strict mode
+  ┌─ assign_eval_or_arguments.js:4:1
+  │
+4 │ arguments = "foo"
+  │ ^^^^^^^^^
+
+--
+error[SyntaxError]: `eval` or `arguments` not allowed as assignment targets in strict mode
+  ┌─ assign_eval_or_arguments.js:5:1
+  │
+5 │ arguments ||= "baz"
+  │ ^^^^^^^^^
+
+--
 eval = 0
 eval ??= 2
 eval *= 4
+arguments = "foo"
+arguments ||= "baz"
