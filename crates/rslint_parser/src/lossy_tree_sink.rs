@@ -40,7 +40,7 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 			self.tokens[self.token_pos..self.token_pos + amount as usize]
 				.iter()
 				.map(|x| x.len)
-				.sum::<u32>()
+				.sum::<u32>(),
 		);
 
 		self.do_tokens(kind, len, amount)

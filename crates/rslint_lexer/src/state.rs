@@ -17,7 +17,7 @@ impl LexerState {
 			prev: None,
 			had_linebreak: false,
 			ctx: vec![Context::BraceStmt],
-			after_newline: false
+			after_newline: false,
 		}
 	}
 

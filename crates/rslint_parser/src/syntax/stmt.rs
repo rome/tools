@@ -362,7 +362,7 @@ pub fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
 	let end = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
 		let label_token = p.cur_tok();
 		p.bump_any();
-		check_label_use(p, &label_token);
+		check_label_use(p, label_token);
 
 		label_token.end()
 	} else {
@@ -409,7 +409,7 @@ pub fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
 	let end = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
 		let label_token = p.cur_tok();
 		p.bump_any();
-		check_label_use(p, &label_token);
+		check_label_use(p, label_token);
 
 		label_token.end()
 	} else {
@@ -543,7 +543,7 @@ impl ParseNodeList for DirectivesList {
 
 		let completed_marker = directive.complete(p, JS_DIRECTIVE);
 
-		let directive_text = p.token_src(&directive_token);
+		let directive_text = p.token_src(directive_token);
 
 		if directive_text == "\"use strict\"" || directive_text == "'use strict'" {
 			if self.old_state == None {
@@ -1498,7 +1498,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 
 		let end = ty
 			.map(|x| usize::from(x.range(p).end()))
-			.unwrap_or(p.cur_tok().start());
+			.unwrap_or_else(|| p.cur_tok().start());
 		error_marker.complete(
 			p,
 			pattern_kind

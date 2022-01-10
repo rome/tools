@@ -369,7 +369,7 @@ fn parse_binary_or_logical_expression_recursive(
 
 	// This is a hack to allow us to effectively recover from `foo + / bar`
 	let right = if get_precedence(p.cur()).is_some() && !p.at_ts(token_set![T![-], T![+], T![<]]) {
-		let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.token_src(&op_tok)))
+		let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.token_src(op_tok)))
             .secondary(op_tok.range(), "This operator requires a right hand side value")
             .primary(p.cur_tok().range(), "But this operator was encountered instead");
 
@@ -418,7 +418,7 @@ fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax {
 		p.bump_any();
 
 		// new.target
-		if p.at(T![.]) && p.token_src(&p.nth_tok(1)) == "target" {
+		if p.at(T![.]) && p.token_src(p.nth_tok(1)) == "target" {
 			p.bump_any();
 			p.bump_remap(T![target]);
 			let complete = m.complete(p, NEW_TARGET);
@@ -845,9 +845,10 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 	// FIXME: verify that this logic is correct
 	if (p.at(T![=>]) && !p.has_linebreak_before_n(0)) || has_ret_type || params_marker.is_some() {
 		if !can_be_arrow && !p.at(T![:]) {
-			let err = p
-				.err_builder("Unexpected token `=>`")
-				.primary(p.cur_tok().range(), "an arrow expression is not allowed here");
+			let err = p.err_builder("Unexpected token `=>`").primary(
+				p.cur_tok().range(),
+				"an arrow expression is not allowed here",
+			);
 
 			p.error(err);
 		} else {
@@ -1071,14 +1072,14 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 				// test_err import_no_meta
 				// import.foo
 				// import.metaa
-				if p.at(T![ident]) && p.token_src(&p.cur_tok()) == "meta" {
+				if p.at(T![ident]) && p.token_src(p.cur_tok()) == "meta" {
 					p.bump_remap(T![meta]);
 					m.complete(p, IMPORT_META)
 				} else if p.at(T![ident]) {
 					let err = p
 						.err_builder(&format!(
 							"Expected `meta` following an import keyword, but found `{}`",
-							p.token_src(&p.cur_tok())
+							p.token_src(p.cur_tok())
 						))
 						.primary(p.cur_tok().range(), "");
 
