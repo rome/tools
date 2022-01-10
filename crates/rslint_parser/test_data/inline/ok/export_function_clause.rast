@@ -1,0 +1,183 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExport {
+            export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
+            export_clause: JsExportFunctionClause {
+                async_token: missing (optional),
+                function_token: FUNCTION_KW@7..16 "function" [] [Whitespace(" ")],
+                star_token: missing (optional),
+                id: JsIdentifierBinding {
+                    name_token: IDENT@16..20 "test" [] [],
+                },
+                type_parameters: missing (optional),
+                parameters: JsParameters {
+                    l_paren_token: L_PAREN@20..21 "(" [] [],
+                    items: JsParameterList [
+                        JsIdentifierBinding {
+                            name_token: IDENT@21..22 "a" [] [],
+                        },
+                        COMMA@22..24 "," [] [Whitespace(" ")],
+                        JsIdentifierBinding {
+                            name_token: IDENT@24..25 "b" [] [],
+                        },
+                    ],
+                    r_paren_token: R_PAREN@25..27 ")" [] [Whitespace(" ")],
+                },
+                return_type: missing (optional),
+                body: JsFunctionBody {
+                    l_curly_token: L_CURLY@27..28 "{" [] [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
+                    r_curly_token: R_CURLY@28..29 "}" [] [],
+                },
+            },
+        },
+        JsExport {
+            export_token: EXPORT_KW@29..37 "export" [Whitespace("\n")] [Whitespace(" ")],
+            export_clause: JsExportFunctionClause {
+                async_token: missing (optional),
+                function_token: FUNCTION_KW@37..45 "function" [] [],
+                star_token: STAR@45..47 "*" [] [Whitespace(" ")],
+                id: JsIdentifierBinding {
+                    name_token: IDENT@47..51 "test" [] [],
+                },
+                type_parameters: missing (optional),
+                parameters: JsParameters {
+                    l_paren_token: L_PAREN@51..52 "(" [] [],
+                    items: JsParameterList [
+                        JsIdentifierBinding {
+                            name_token: IDENT@52..53 "a" [] [],
+                        },
+                        COMMA@53..55 "," [] [Whitespace(" ")],
+                        JsIdentifierBinding {
+                            name_token: IDENT@55..56 "b" [] [],
+                        },
+                    ],
+                    r_paren_token: R_PAREN@56..58 ")" [] [Whitespace(" ")],
+                },
+                return_type: missing (optional),
+                body: JsFunctionBody {
+                    l_curly_token: L_CURLY@58..59 "{" [] [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
+                    r_curly_token: R_CURLY@59..60 "}" [] [],
+                },
+            },
+        },
+        JsExport {
+            export_token: EXPORT_KW@60..68 "export" [Whitespace("\n")] [Whitespace(" ")],
+            export_clause: JsExportFunctionClause {
+                async_token: ASYNC_KW@68..74 "async" [] [Whitespace(" ")],
+                function_token: FUNCTION_KW@74..83 "function" [] [Whitespace(" ")],
+                star_token: missing (optional),
+                id: JsIdentifierBinding {
+                    name_token: IDENT@83..87 "test" [] [],
+                },
+                type_parameters: missing (optional),
+                parameters: JsParameters {
+                    l_paren_token: L_PAREN@87..88 "(" [] [],
+                    items: JsParameterList [
+                        JsIdentifierBinding {
+                            name_token: IDENT@88..89 "a" [] [],
+                        },
+                        COMMA@89..91 "," [] [Whitespace(" ")],
+                        JsIdentifierBinding {
+                            name_token: IDENT@91..92 "b" [] [],
+                        },
+                        COMMA@92..94 "," [] [Whitespace(" ")],
+                    ],
+                    r_paren_token: R_PAREN@94..96 ")" [] [Whitespace(" ")],
+                },
+                return_type: missing (optional),
+                body: JsFunctionBody {
+                    l_curly_token: L_CURLY@96..97 "{" [] [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
+                    r_curly_token: R_CURLY@97..98 "}" [] [],
+                },
+            },
+        },
+    ],
+    eof_token: EOF@98..99 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..99
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..98
+    0: JS_EXPORT@0..29
+      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      1: JS_EXPORT_FUNCTION_CLAUSE@7..29
+        0: (empty)
+        1: FUNCTION_KW@7..16 "function" [] [Whitespace(" ")]
+        2: (empty)
+        3: JS_IDENTIFIER_BINDING@16..20
+          0: IDENT@16..20 "test" [] []
+        4: (empty)
+        5: JS_PARAMETERS@20..27
+          0: L_PAREN@20..21 "(" [] []
+          1: JS_PARAMETER_LIST@21..25
+            0: JS_IDENTIFIER_BINDING@21..22
+              0: IDENT@21..22 "a" [] []
+            1: COMMA@22..24 "," [] [Whitespace(" ")]
+            2: JS_IDENTIFIER_BINDING@24..25
+              0: IDENT@24..25 "b" [] []
+          2: R_PAREN@25..27 ")" [] [Whitespace(" ")]
+        6: (empty)
+        7: JS_FUNCTION_BODY@27..29
+          0: L_CURLY@27..28 "{" [] []
+          1: JS_DIRECTIVE_LIST@28..28
+          2: JS_STATEMENT_LIST@28..28
+          3: R_CURLY@28..29 "}" [] []
+    1: JS_EXPORT@29..60
+      0: EXPORT_KW@29..37 "export" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_FUNCTION_CLAUSE@37..60
+        0: (empty)
+        1: FUNCTION_KW@37..45 "function" [] []
+        2: STAR@45..47 "*" [] [Whitespace(" ")]
+        3: JS_IDENTIFIER_BINDING@47..51
+          0: IDENT@47..51 "test" [] []
+        4: (empty)
+        5: JS_PARAMETERS@51..58
+          0: L_PAREN@51..52 "(" [] []
+          1: JS_PARAMETER_LIST@52..56
+            0: JS_IDENTIFIER_BINDING@52..53
+              0: IDENT@52..53 "a" [] []
+            1: COMMA@53..55 "," [] [Whitespace(" ")]
+            2: JS_IDENTIFIER_BINDING@55..56
+              0: IDENT@55..56 "b" [] []
+          2: R_PAREN@56..58 ")" [] [Whitespace(" ")]
+        6: (empty)
+        7: JS_FUNCTION_BODY@58..60
+          0: L_CURLY@58..59 "{" [] []
+          1: JS_DIRECTIVE_LIST@59..59
+          2: JS_STATEMENT_LIST@59..59
+          3: R_CURLY@59..60 "}" [] []
+    2: JS_EXPORT@60..98
+      0: EXPORT_KW@60..68 "export" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_FUNCTION_CLAUSE@68..98
+        0: ASYNC_KW@68..74 "async" [] [Whitespace(" ")]
+        1: FUNCTION_KW@74..83 "function" [] [Whitespace(" ")]
+        2: (empty)
+        3: JS_IDENTIFIER_BINDING@83..87
+          0: IDENT@83..87 "test" [] []
+        4: (empty)
+        5: JS_PARAMETERS@87..96
+          0: L_PAREN@87..88 "(" [] []
+          1: JS_PARAMETER_LIST@88..94
+            0: JS_IDENTIFIER_BINDING@88..89
+              0: IDENT@88..89 "a" [] []
+            1: COMMA@89..91 "," [] [Whitespace(" ")]
+            2: JS_IDENTIFIER_BINDING@91..92
+              0: IDENT@91..92 "b" [] []
+            3: COMMA@92..94 "," [] [Whitespace(" ")]
+          2: R_PAREN@94..96 ")" [] [Whitespace(" ")]
+        6: (empty)
+        7: JS_FUNCTION_BODY@96..98
+          0: L_CURLY@96..97 "{" [] []
+          1: JS_DIRECTIVE_LIST@97..97
+          2: JS_STATEMENT_LIST@97..97
+          3: R_CURLY@97..98 "}" [] []
+  3: EOF@98..99 "" [Whitespace("\n")] []

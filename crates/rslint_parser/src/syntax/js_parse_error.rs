@@ -129,7 +129,7 @@ pub(crate) fn expected_named_import(p: &Parser, range: Range<usize>) -> Diagnost
 	expected_any(&["namespace import", "named imports"], range).to_diagnostic(p)
 }
 
-pub(crate) fn expected_export_name(p: &Parser, range: Range<usize>) -> Diagnostic {
+pub(crate) fn expected_literal_export_name(p: &Parser, range: Range<usize>) -> Diagnostic {
 	expected_any(&["string literal", "identifier"], range).to_diagnostic(p)
 }
 

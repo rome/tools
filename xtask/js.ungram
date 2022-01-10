@@ -571,6 +571,8 @@ JsClassMemberList = JsAnyClassMember*
 JsAnyClass =
 	JsClassStatement
 	| JsClassExpression
+	| JsExportClassClause
+	| JsExportDefaultClassClause
 
 
 TsImplementsClause =
@@ -954,6 +956,7 @@ JsVariableDeclaration =
 
 JsAnyModuleItem =
 	JsAnyStatement
+	| JsExport
 	| JsImport
 	| ExportDefaultDecl
 	| ExportDefaultExpr
@@ -1105,6 +1108,148 @@ JsLiteralExportName = value: ('ident' | 'js_string_literal')
 //               ^^^
 JsModuleSource = value: 'js_string_literal'
 
+
+JsExport =
+	'export'
+	export_clause: JsAnyExportClause
+
+JsAnyExportClause =
+	JsExportFunctionClause
+	| JsExportDefaultFunctionClause
+	| JsExportClassClause
+	| JsExportDefaultClassClause
+	| JsExportVariableClause
+	| JsExportDefaultExpressionClause
+	| JsExportNamedClause
+	| JsExportFromClause
+	| JsExportNamedFromClause
+
+// export let a, b, c;
+//        ^^^^^^^^^^^
+JsExportVariableClause =
+	declarations: JsVariableDeclarations
+	';'?
+
+// export function a() {}
+//        ^^^^^^^^^^^^^^^
+JsExportFunctionClause =
+	'async'?
+	'function'
+	'*'?
+	id: JsAnyBinding
+	type_parameters: TsTypeParams?
+	parameters: JsParameters
+	return_type: TsTypeAnnotation?
+	body: JsFunctionBody
+
+// export class A {}
+//        ^^^^^^^^^^
+JsExportClassClause =
+	'class'
+	id: JsAnyBinding
+	extends_clause: JsExtendsClause?
+	implements_clause: TsImplementsClause?
+	'{'
+	members: JsClassMemberList
+	'}'
+
+// export default a;
+//        ^^^^^^^^^^
+JsExportDefaultExpressionClause =
+	'default'
+	expression: JsAnyExpression
+	';'?
+
+// export default class {}
+//        ^^^^^^^^^^^^^^^^
+JsExportDefaultClassClause =
+	'default'
+	'class'
+	id: JsAnyBinding?
+	extends_clause: JsExtendsClause?
+	implements_clause: TsImplementsClause?
+	'{'
+	members: JsClassMemberList
+	'}'
+
+// export default function () {}
+//        ^^^^^^^^^^^^^^^^^^^^^^
+JsExportDefaultFunctionClause =
+	'default'
+	'async'?
+	'function'
+	'*'?
+	id: JsAnyBinding?
+	type_parameters: TsTypeParams?
+	parameters: JsParameters
+	return_type: TsTypeAnnotation?
+	body: JsFunctionBody
+
+// export { myFunction as default };
+// export { myFunction, myVariable };
+JsExportNamedClause =
+    '{'
+    specifiers: JsExportNamedSpecifierList
+    '}'
+    ';'?
+
+JsExportNamedSpecifierList = (JsAnyExportNamedSpecifier (',' JsAnyExportNamedSpecifier)* ','?)
+
+JsAnyExportNamedSpecifier =
+    JsExportNamedShorthandSpecifier
+    | JsExportNamedSpecifier
+
+// export { a };
+//          ^
+JsExportNamedShorthandSpecifier =
+    'type'?
+    name: JsReferenceIdentifier
+
+// export { a as b };
+//          ^^^^^^
+// export { a as default };
+//          ^^^^^^^^^^^^
+JsExportNamedSpecifier =
+    'type'?
+    local_name: JsReferenceIdentifier
+    'as'
+    exported_name: JsLiteralExportName
+
+JsExportFromClause =
+	'*'
+	export_as: JsExportAsClause?
+	'from'
+	source: JsModuleSource
+	';'?
+
+// export { a } from "b";
+JsExportNamedFromClause =
+    '{'
+    specifiers: JsExportNamedFromSpecifierList
+    '}'
+    'from'
+    source: JsModuleSource
+    ';'?
+
+JsExportNamedFromSpecifierList = (JsExportNamedFromSpecifier (',' JsExportNamedFromSpecifier)* ','?)
+
+// export { a } from "b";
+//          ^
+// export { a as b } from "c";
+//          ^^^^^^
+JsExportNamedFromSpecifier =
+    'type'?
+    source_name: JsLiteralExportName
+    export_as: JsExportAsClause?
+
+
+// export { a as b } from "c";
+//            ^^^^
+JsExportAsClause =
+    'as'
+    exported_name: JsLiteralExportName
+
+
 // export default declaration
 ExportDefaultDecl = 'export' 'default'? 'type'? decl:DefaultDecl
 DefaultDecl =
@@ -1181,6 +1326,8 @@ JsAnyFunction =
 	JsFunctionExpression
 	| JsFunctionStatement
 	| JsArrowFunctionExpression
+	| JsExportFunctionClause
+	| JsExportDefaultFunctionClause
 
 
 // { a: ..., "b": ..., 4: ... }

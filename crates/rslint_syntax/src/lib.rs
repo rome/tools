@@ -57,6 +57,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
 			| EXPORT_DEFAULT_EXPR
 			| EXPORT_WILDCARD
 			| EXPORT_NAMED
+			| JS_EXPORT
 			| JS_FOR_STATEMENT
 			| JS_BREAK_STATEMENT
 			| JS_CLASS_STATEMENT

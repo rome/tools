@@ -1,0 +1,74 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExport {
+            export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
+            export_clause: JsExportClassClause {
+                class_token: CLASS_KW@7..13 "class" [] [Whitespace(" ")],
+                id: JsIdentifierBinding {
+                    name_token: IDENT@13..15 "A" [] [Whitespace(" ")],
+                },
+                extends_clause: missing (optional),
+                implements_clause: missing (optional),
+                l_curly_token: L_CURLY@15..16 "{" [] [],
+                members: JsClassMemberList [],
+                r_curly_token: R_CURLY@16..17 "}" [] [],
+            },
+        },
+        JsExport {
+            export_token: EXPORT_KW@17..25 "export" [Whitespace("\n")] [Whitespace(" ")],
+            export_clause: JsExportClassClause {
+                class_token: CLASS_KW@25..31 "class" [] [Whitespace(" ")],
+                id: JsIdentifierBinding {
+                    name_token: IDENT@31..33 "A" [] [Whitespace(" ")],
+                },
+                extends_clause: JsExtendsClause {
+                    extends_token: EXTENDS_KW@33..41 "extends" [] [Whitespace(" ")],
+                    super_class: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@41..43 "B" [] [Whitespace(" ")],
+                        },
+                    },
+                },
+                implements_clause: missing (optional),
+                l_curly_token: L_CURLY@43..44 "{" [] [],
+                members: JsClassMemberList [],
+                r_curly_token: R_CURLY@44..45 "}" [] [],
+            },
+        },
+    ],
+    eof_token: EOF@45..46 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..46
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..45
+    0: JS_EXPORT@0..17
+      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      1: JS_EXPORT_CLASS_CLAUSE@7..17
+        0: CLASS_KW@7..13 "class" [] [Whitespace(" ")]
+        1: JS_IDENTIFIER_BINDING@13..15
+          0: IDENT@13..15 "A" [] [Whitespace(" ")]
+        2: (empty)
+        3: (empty)
+        4: L_CURLY@15..16 "{" [] []
+        5: JS_CLASS_MEMBER_LIST@16..16
+        6: R_CURLY@16..17 "}" [] []
+    1: JS_EXPORT@17..45
+      0: EXPORT_KW@17..25 "export" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_CLASS_CLAUSE@25..45
+        0: CLASS_KW@25..31 "class" [] [Whitespace(" ")]
+        1: JS_IDENTIFIER_BINDING@31..33
+          0: IDENT@31..33 "A" [] [Whitespace(" ")]
+        2: JS_EXTENDS_CLAUSE@33..43
+          0: EXTENDS_KW@33..41 "extends" [] [Whitespace(" ")]
+          1: JS_IDENTIFIER_EXPRESSION@41..43
+            0: JS_REFERENCE_IDENTIFIER@41..43
+              0: IDENT@41..43 "B" [] [Whitespace(" ")]
+        3: (empty)
+        4: L_CURLY@43..44 "{" [] []
+        5: JS_CLASS_MEMBER_LIST@44..44
+        6: R_CURLY@44..45 "}" [] []
+  3: EOF@45..46 "" [Whitespace("\n")] []

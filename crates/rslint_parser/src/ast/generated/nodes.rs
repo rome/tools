@@ -645,6 +645,231 @@ impl JsEmptyStatement {
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExport {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExport {
+	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 0usize)
+	}
+	pub fn export_clause(&self) -> SyntaxResult<JsAnyExportClause> {
+		support::required_node(&self.syntax, 1usize)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExportAsClause {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExportAsClause {
+	pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 0usize)
+	}
+	pub fn exported_name(&self) -> SyntaxResult<JsLiteralExportName> {
+		support::required_node(&self.syntax, 1usize)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExportClassClause {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExportClassClause {
+	pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 0usize)
+	}
+	pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 1usize) }
+	pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 2usize) }
+	pub fn implements_clause(&self) -> Option<TsImplementsClause> {
+		support::node(&self.syntax, 3usize)
+	}
+	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 4usize)
+	}
+	pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 5usize) }
+	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 6usize)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExportDefaultClassClause {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExportDefaultClassClause {
+	pub fn default_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 0usize)
+	}
+	pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 1usize)
+	}
+	pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 2usize) }
+	pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 3usize) }
+	pub fn implements_clause(&self) -> Option<TsImplementsClause> {
+		support::node(&self.syntax, 4usize)
+	}
+	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 5usize)
+	}
+	pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 6usize) }
+	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 7usize)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExportDefaultExpressionClause {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExportDefaultExpressionClause {
+	pub fn default_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 0usize)
+	}
+	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+		support::required_node(&self.syntax, 1usize)
+	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExportDefaultFunctionClause {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExportDefaultFunctionClause {
+	pub fn default_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 0usize)
+	}
+	pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+	pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 2usize)
+	}
+	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
+	pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 4usize) }
+	pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax, 5usize) }
+	pub fn parameters(&self) -> SyntaxResult<JsParameters> {
+		support::required_node(&self.syntax, 6usize)
+	}
+	pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 7usize) }
+	pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
+		support::required_node(&self.syntax, 8usize)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExportFromClause {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExportFromClause {
+	pub fn star_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 0usize)
+	}
+	pub fn export_as(&self) -> Option<JsExportAsClause> { support::node(&self.syntax, 1usize) }
+	pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 2usize)
+	}
+	pub fn source(&self) -> SyntaxResult<JsModuleSource> {
+		support::required_node(&self.syntax, 3usize)
+	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExportFunctionClause {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExportFunctionClause {
+	pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+	pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 1usize)
+	}
+	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+	pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 3usize) }
+	pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax, 4usize) }
+	pub fn parameters(&self) -> SyntaxResult<JsParameters> {
+		support::required_node(&self.syntax, 5usize)
+	}
+	pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 6usize) }
+	pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
+		support::required_node(&self.syntax, 7usize)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExportNamedClause {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExportNamedClause {
+	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 0usize)
+	}
+	pub fn specifiers(&self) -> JsExportNamedSpecifierList { support::list(&self.syntax, 1usize) }
+	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 2usize)
+	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExportNamedFromClause {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExportNamedFromClause {
+	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 0usize)
+	}
+	pub fn specifiers(&self) -> JsExportNamedFromSpecifierList {
+		support::list(&self.syntax, 1usize)
+	}
+	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 2usize)
+	}
+	pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 3usize)
+	}
+	pub fn source(&self) -> SyntaxResult<JsModuleSource> {
+		support::required_node(&self.syntax, 4usize)
+	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExportNamedFromSpecifier {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExportNamedFromSpecifier {
+	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+	pub fn source_name(&self) -> SyntaxResult<JsLiteralExportName> {
+		support::required_node(&self.syntax, 1usize)
+	}
+	pub fn export_as(&self) -> Option<JsExportAsClause> { support::node(&self.syntax, 2usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExportNamedShorthandSpecifier {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExportNamedShorthandSpecifier {
+	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+	pub fn name(&self) -> SyntaxResult<JsReferenceIdentifier> {
+		support::required_node(&self.syntax, 1usize)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExportNamedSpecifier {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExportNamedSpecifier {
+	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+	pub fn local_name(&self) -> SyntaxResult<JsReferenceIdentifier> {
+		support::required_node(&self.syntax, 1usize)
+	}
+	pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 2usize)
+	}
+	pub fn exported_name(&self) -> SyntaxResult<JsLiteralExportName> {
+		support::required_node(&self.syntax, 3usize)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsExportVariableClause {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsExportVariableClause {
+	pub fn declarations(&self) -> SyntaxResult<JsVariableDeclarations> {
+		support::required_node(&self.syntax, 0usize)
+	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExpressionSnipped {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2868,6 +3093,8 @@ pub enum JsAnyBindingPattern {
 pub enum JsAnyClass {
 	JsClassExpression(JsClassExpression),
 	JsClassStatement(JsClassStatement),
+	JsExportClassClause(JsExportClassClause),
+	JsExportDefaultClassClause(JsExportDefaultClassClause),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyClassMember {
@@ -2893,6 +3120,18 @@ pub enum JsAnyConstructorParameter {
 	TsConstructorParam(TsConstructorParam),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyExportClause {
+	JsExportClassClause(JsExportClassClause),
+	JsExportDefaultClassClause(JsExportDefaultClassClause),
+	JsExportDefaultExpressionClause(JsExportDefaultExpressionClause),
+	JsExportDefaultFunctionClause(JsExportDefaultFunctionClause),
+	JsExportFromClause(JsExportFromClause),
+	JsExportFunctionClause(JsExportFunctionClause),
+	JsExportNamedClause(JsExportNamedClause),
+	JsExportNamedFromClause(JsExportNamedFromClause),
+	JsExportVariableClause(JsExportVariableClause),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExportDeclaration {
 	ExportNamed(ExportNamed),
 	JsClassStatement(JsClassStatement),
@@ -2903,6 +3142,11 @@ pub enum JsAnyExportDeclaration {
 	TsModuleDecl(TsModuleDecl),
 	TsNamespaceDecl(TsNamespaceDecl),
 	TsTypeAliasDecl(TsTypeAliasDecl),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyExportNamedSpecifier {
+	JsExportNamedShorthandSpecifier(JsExportNamedShorthandSpecifier),
+	JsExportNamedSpecifier(JsExportNamedSpecifier),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExpression {
@@ -2952,6 +3196,8 @@ pub enum JsAnyForInitializer {
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyFunction {
 	JsArrowFunctionExpression(JsArrowFunctionExpression),
+	JsExportDefaultFunctionClause(JsExportDefaultFunctionClause),
+	JsExportFunctionClause(JsExportFunctionClause),
 	JsFunctionExpression(JsFunctionExpression),
 	JsFunctionStatement(JsFunctionStatement),
 }
@@ -2982,6 +3228,7 @@ pub enum JsAnyModuleItem {
 	ExportNamed(ExportNamed),
 	ExportWildcard(ExportWildcard),
 	JsAnyStatement(JsAnyStatement),
+	JsExport(JsExport),
 	JsImport(JsImport),
 	TsExportAssignment(TsExportAssignment),
 	TsImportEqualsDecl(TsImportEqualsDecl),
@@ -4590,6 +4837,522 @@ impl From<JsEmptyStatement> for SyntaxNode {
 }
 impl From<JsEmptyStatement> for SyntaxElement {
 	fn from(n: JsEmptyStatement) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExport {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExport {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExport")
+			.field(
+				"export_token",
+				&support::DebugSyntaxResult(self.export_token()),
+			)
+			.field(
+				"export_clause",
+				&support::DebugSyntaxResult(self.export_clause()),
+			)
+			.finish()
+	}
+}
+impl From<JsExport> for SyntaxNode {
+	fn from(n: JsExport) -> SyntaxNode { n.syntax }
+}
+impl From<JsExport> for SyntaxElement {
+	fn from(n: JsExport) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExportAsClause {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_AS_CLAUSE }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExportAsClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExportAsClause")
+			.field("as_token", &support::DebugSyntaxResult(self.as_token()))
+			.field(
+				"exported_name",
+				&support::DebugSyntaxResult(self.exported_name()),
+			)
+			.finish()
+	}
+}
+impl From<JsExportAsClause> for SyntaxNode {
+	fn from(n: JsExportAsClause) -> SyntaxNode { n.syntax }
+}
+impl From<JsExportAsClause> for SyntaxElement {
+	fn from(n: JsExportAsClause) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExportClassClause {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_CLASS_CLAUSE }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExportClassClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExportClassClause")
+			.field(
+				"class_token",
+				&support::DebugSyntaxResult(self.class_token()),
+			)
+			.field("id", &support::DebugSyntaxResult(self.id()))
+			.field(
+				"extends_clause",
+				&support::DebugOptionalElement(self.extends_clause()),
+			)
+			.field(
+				"implements_clause",
+				&support::DebugOptionalElement(self.implements_clause()),
+			)
+			.field(
+				"l_curly_token",
+				&support::DebugSyntaxResult(self.l_curly_token()),
+			)
+			.field("members", &self.members())
+			.field(
+				"r_curly_token",
+				&support::DebugSyntaxResult(self.r_curly_token()),
+			)
+			.finish()
+	}
+}
+impl From<JsExportClassClause> for SyntaxNode {
+	fn from(n: JsExportClassClause) -> SyntaxNode { n.syntax }
+}
+impl From<JsExportClassClause> for SyntaxElement {
+	fn from(n: JsExportClassClause) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExportDefaultClassClause {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_DEFAULT_CLASS_CLAUSE }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExportDefaultClassClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExportDefaultClassClause")
+			.field(
+				"default_token",
+				&support::DebugSyntaxResult(self.default_token()),
+			)
+			.field(
+				"class_token",
+				&support::DebugSyntaxResult(self.class_token()),
+			)
+			.field("id", &support::DebugOptionalElement(self.id()))
+			.field(
+				"extends_clause",
+				&support::DebugOptionalElement(self.extends_clause()),
+			)
+			.field(
+				"implements_clause",
+				&support::DebugOptionalElement(self.implements_clause()),
+			)
+			.field(
+				"l_curly_token",
+				&support::DebugSyntaxResult(self.l_curly_token()),
+			)
+			.field("members", &self.members())
+			.field(
+				"r_curly_token",
+				&support::DebugSyntaxResult(self.r_curly_token()),
+			)
+			.finish()
+	}
+}
+impl From<JsExportDefaultClassClause> for SyntaxNode {
+	fn from(n: JsExportDefaultClassClause) -> SyntaxNode { n.syntax }
+}
+impl From<JsExportDefaultClassClause> for SyntaxElement {
+	fn from(n: JsExportDefaultClassClause) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExportDefaultExpressionClause {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExportDefaultExpressionClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExportDefaultExpressionClause")
+			.field(
+				"default_token",
+				&support::DebugSyntaxResult(self.default_token()),
+			)
+			.field("expression", &support::DebugSyntaxResult(self.expression()))
+			.field(
+				"semicolon_token",
+				&support::DebugOptionalElement(self.semicolon_token()),
+			)
+			.finish()
+	}
+}
+impl From<JsExportDefaultExpressionClause> for SyntaxNode {
+	fn from(n: JsExportDefaultExpressionClause) -> SyntaxNode { n.syntax }
+}
+impl From<JsExportDefaultExpressionClause> for SyntaxElement {
+	fn from(n: JsExportDefaultExpressionClause) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExportDefaultFunctionClause {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_DEFAULT_FUNCTION_CLAUSE }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExportDefaultFunctionClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExportDefaultFunctionClause")
+			.field(
+				"default_token",
+				&support::DebugSyntaxResult(self.default_token()),
+			)
+			.field(
+				"async_token",
+				&support::DebugOptionalElement(self.async_token()),
+			)
+			.field(
+				"function_token",
+				&support::DebugSyntaxResult(self.function_token()),
+			)
+			.field(
+				"star_token",
+				&support::DebugOptionalElement(self.star_token()),
+			)
+			.field("id", &support::DebugOptionalElement(self.id()))
+			.field(
+				"type_parameters",
+				&support::DebugOptionalElement(self.type_parameters()),
+			)
+			.field("parameters", &support::DebugSyntaxResult(self.parameters()))
+			.field(
+				"return_type",
+				&support::DebugOptionalElement(self.return_type()),
+			)
+			.field("body", &support::DebugSyntaxResult(self.body()))
+			.finish()
+	}
+}
+impl From<JsExportDefaultFunctionClause> for SyntaxNode {
+	fn from(n: JsExportDefaultFunctionClause) -> SyntaxNode { n.syntax }
+}
+impl From<JsExportDefaultFunctionClause> for SyntaxElement {
+	fn from(n: JsExportDefaultFunctionClause) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExportFromClause {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_FROM_CLAUSE }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExportFromClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExportFromClause")
+			.field("star_token", &support::DebugSyntaxResult(self.star_token()))
+			.field(
+				"export_as",
+				&support::DebugOptionalElement(self.export_as()),
+			)
+			.field("from_token", &support::DebugSyntaxResult(self.from_token()))
+			.field("source", &support::DebugSyntaxResult(self.source()))
+			.field(
+				"semicolon_token",
+				&support::DebugOptionalElement(self.semicolon_token()),
+			)
+			.finish()
+	}
+}
+impl From<JsExportFromClause> for SyntaxNode {
+	fn from(n: JsExportFromClause) -> SyntaxNode { n.syntax }
+}
+impl From<JsExportFromClause> for SyntaxElement {
+	fn from(n: JsExportFromClause) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExportFunctionClause {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_FUNCTION_CLAUSE }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExportFunctionClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExportFunctionClause")
+			.field(
+				"async_token",
+				&support::DebugOptionalElement(self.async_token()),
+			)
+			.field(
+				"function_token",
+				&support::DebugSyntaxResult(self.function_token()),
+			)
+			.field(
+				"star_token",
+				&support::DebugOptionalElement(self.star_token()),
+			)
+			.field("id", &support::DebugSyntaxResult(self.id()))
+			.field(
+				"type_parameters",
+				&support::DebugOptionalElement(self.type_parameters()),
+			)
+			.field("parameters", &support::DebugSyntaxResult(self.parameters()))
+			.field(
+				"return_type",
+				&support::DebugOptionalElement(self.return_type()),
+			)
+			.field("body", &support::DebugSyntaxResult(self.body()))
+			.finish()
+	}
+}
+impl From<JsExportFunctionClause> for SyntaxNode {
+	fn from(n: JsExportFunctionClause) -> SyntaxNode { n.syntax }
+}
+impl From<JsExportFunctionClause> for SyntaxElement {
+	fn from(n: JsExportFunctionClause) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExportNamedClause {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_CLAUSE }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExportNamedClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExportNamedClause")
+			.field(
+				"l_curly_token",
+				&support::DebugSyntaxResult(self.l_curly_token()),
+			)
+			.field("specifiers", &self.specifiers())
+			.field(
+				"r_curly_token",
+				&support::DebugSyntaxResult(self.r_curly_token()),
+			)
+			.field(
+				"semicolon_token",
+				&support::DebugOptionalElement(self.semicolon_token()),
+			)
+			.finish()
+	}
+}
+impl From<JsExportNamedClause> for SyntaxNode {
+	fn from(n: JsExportNamedClause) -> SyntaxNode { n.syntax }
+}
+impl From<JsExportNamedClause> for SyntaxElement {
+	fn from(n: JsExportNamedClause) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExportNamedFromClause {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_FROM_CLAUSE }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExportNamedFromClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExportNamedFromClause")
+			.field(
+				"l_curly_token",
+				&support::DebugSyntaxResult(self.l_curly_token()),
+			)
+			.field("specifiers", &self.specifiers())
+			.field(
+				"r_curly_token",
+				&support::DebugSyntaxResult(self.r_curly_token()),
+			)
+			.field("from_token", &support::DebugSyntaxResult(self.from_token()))
+			.field("source", &support::DebugSyntaxResult(self.source()))
+			.field(
+				"semicolon_token",
+				&support::DebugOptionalElement(self.semicolon_token()),
+			)
+			.finish()
+	}
+}
+impl From<JsExportNamedFromClause> for SyntaxNode {
+	fn from(n: JsExportNamedFromClause) -> SyntaxNode { n.syntax }
+}
+impl From<JsExportNamedFromClause> for SyntaxElement {
+	fn from(n: JsExportNamedFromClause) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExportNamedFromSpecifier {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_FROM_SPECIFIER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExportNamedFromSpecifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExportNamedFromSpecifier")
+			.field(
+				"type_token",
+				&support::DebugOptionalElement(self.type_token()),
+			)
+			.field(
+				"source_name",
+				&support::DebugSyntaxResult(self.source_name()),
+			)
+			.field(
+				"export_as",
+				&support::DebugOptionalElement(self.export_as()),
+			)
+			.finish()
+	}
+}
+impl From<JsExportNamedFromSpecifier> for SyntaxNode {
+	fn from(n: JsExportNamedFromSpecifier) -> SyntaxNode { n.syntax }
+}
+impl From<JsExportNamedFromSpecifier> for SyntaxElement {
+	fn from(n: JsExportNamedFromSpecifier) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExportNamedShorthandSpecifier {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_SHORTHAND_SPECIFIER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExportNamedShorthandSpecifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExportNamedShorthandSpecifier")
+			.field(
+				"type_token",
+				&support::DebugOptionalElement(self.type_token()),
+			)
+			.field("name", &support::DebugSyntaxResult(self.name()))
+			.finish()
+	}
+}
+impl From<JsExportNamedShorthandSpecifier> for SyntaxNode {
+	fn from(n: JsExportNamedShorthandSpecifier) -> SyntaxNode { n.syntax }
+}
+impl From<JsExportNamedShorthandSpecifier> for SyntaxElement {
+	fn from(n: JsExportNamedShorthandSpecifier) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExportNamedSpecifier {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_SPECIFIER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExportNamedSpecifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExportNamedSpecifier")
+			.field(
+				"type_token",
+				&support::DebugOptionalElement(self.type_token()),
+			)
+			.field("local_name", &support::DebugSyntaxResult(self.local_name()))
+			.field("as_token", &support::DebugSyntaxResult(self.as_token()))
+			.field(
+				"exported_name",
+				&support::DebugSyntaxResult(self.exported_name()),
+			)
+			.finish()
+	}
+}
+impl From<JsExportNamedSpecifier> for SyntaxNode {
+	fn from(n: JsExportNamedSpecifier) -> SyntaxNode { n.syntax }
+}
+impl From<JsExportNamedSpecifier> for SyntaxElement {
+	fn from(n: JsExportNamedSpecifier) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsExportVariableClause {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_VARIABLE_CLAUSE }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsExportVariableClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsExportVariableClause")
+			.field(
+				"declarations",
+				&support::DebugSyntaxResult(self.declarations()),
+			)
+			.field(
+				"semicolon_token",
+				&support::DebugOptionalElement(self.semicolon_token()),
+			)
+			.finish()
+	}
+}
+impl From<JsExportVariableClause> for SyntaxNode {
+	fn from(n: JsExportVariableClause) -> SyntaxNode { n.syntax }
+}
+impl From<JsExportVariableClause> for SyntaxElement {
+	fn from(n: JsExportVariableClause) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for JsExpressionSnipped {
 	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPRESSION_SNIPPED }
@@ -10306,14 +11069,34 @@ impl From<JsClassExpression> for JsAnyClass {
 impl From<JsClassStatement> for JsAnyClass {
 	fn from(node: JsClassStatement) -> JsAnyClass { JsAnyClass::JsClassStatement(node) }
 }
+impl From<JsExportClassClause> for JsAnyClass {
+	fn from(node: JsExportClassClause) -> JsAnyClass { JsAnyClass::JsExportClassClause(node) }
+}
+impl From<JsExportDefaultClassClause> for JsAnyClass {
+	fn from(node: JsExportDefaultClassClause) -> JsAnyClass {
+		JsAnyClass::JsExportDefaultClassClause(node)
+	}
+}
 impl AstNode for JsAnyClass {
 	fn can_cast(kind: JsSyntaxKind) -> bool {
-		matches!(kind, JS_CLASS_EXPRESSION | JS_CLASS_STATEMENT)
+		matches!(
+			kind,
+			JS_CLASS_EXPRESSION
+				| JS_CLASS_STATEMENT
+				| JS_EXPORT_CLASS_CLAUSE
+				| JS_EXPORT_DEFAULT_CLASS_CLAUSE
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			JS_CLASS_EXPRESSION => JsAnyClass::JsClassExpression(JsClassExpression { syntax }),
 			JS_CLASS_STATEMENT => JsAnyClass::JsClassStatement(JsClassStatement { syntax }),
+			JS_EXPORT_CLASS_CLAUSE => {
+				JsAnyClass::JsExportClassClause(JsExportClassClause { syntax })
+			}
+			JS_EXPORT_DEFAULT_CLASS_CLAUSE => {
+				JsAnyClass::JsExportDefaultClassClause(JsExportDefaultClassClause { syntax })
+			}
 			_ => return None,
 		};
 		Some(res)
@@ -10322,6 +11105,8 @@ impl AstNode for JsAnyClass {
 		match self {
 			JsAnyClass::JsClassExpression(it) => &it.syntax,
 			JsAnyClass::JsClassStatement(it) => &it.syntax,
+			JsAnyClass::JsExportClassClause(it) => &it.syntax,
+			JsAnyClass::JsExportDefaultClassClause(it) => &it.syntax,
 		}
 	}
 }
@@ -10330,6 +11115,8 @@ impl std::fmt::Debug for JsAnyClass {
 		match self {
 			JsAnyClass::JsClassExpression(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyClass::JsClassStatement(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyClass::JsExportClassClause(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyClass::JsExportDefaultClassClause(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -10338,6 +11125,8 @@ impl From<JsAnyClass> for SyntaxNode {
 		match n {
 			JsAnyClass::JsClassExpression(it) => it.into(),
 			JsAnyClass::JsClassStatement(it) => it.into(),
+			JsAnyClass::JsExportClassClause(it) => it.into(),
+			JsAnyClass::JsExportDefaultClassClause(it) => it.into(),
 		}
 	}
 }
@@ -10612,6 +11401,153 @@ impl From<JsAnyConstructorParameter> for SyntaxElement {
 		node.into()
 	}
 }
+impl From<JsExportClassClause> for JsAnyExportClause {
+	fn from(node: JsExportClassClause) -> JsAnyExportClause {
+		JsAnyExportClause::JsExportClassClause(node)
+	}
+}
+impl From<JsExportDefaultClassClause> for JsAnyExportClause {
+	fn from(node: JsExportDefaultClassClause) -> JsAnyExportClause {
+		JsAnyExportClause::JsExportDefaultClassClause(node)
+	}
+}
+impl From<JsExportDefaultExpressionClause> for JsAnyExportClause {
+	fn from(node: JsExportDefaultExpressionClause) -> JsAnyExportClause {
+		JsAnyExportClause::JsExportDefaultExpressionClause(node)
+	}
+}
+impl From<JsExportDefaultFunctionClause> for JsAnyExportClause {
+	fn from(node: JsExportDefaultFunctionClause) -> JsAnyExportClause {
+		JsAnyExportClause::JsExportDefaultFunctionClause(node)
+	}
+}
+impl From<JsExportFromClause> for JsAnyExportClause {
+	fn from(node: JsExportFromClause) -> JsAnyExportClause {
+		JsAnyExportClause::JsExportFromClause(node)
+	}
+}
+impl From<JsExportFunctionClause> for JsAnyExportClause {
+	fn from(node: JsExportFunctionClause) -> JsAnyExportClause {
+		JsAnyExportClause::JsExportFunctionClause(node)
+	}
+}
+impl From<JsExportNamedClause> for JsAnyExportClause {
+	fn from(node: JsExportNamedClause) -> JsAnyExportClause {
+		JsAnyExportClause::JsExportNamedClause(node)
+	}
+}
+impl From<JsExportNamedFromClause> for JsAnyExportClause {
+	fn from(node: JsExportNamedFromClause) -> JsAnyExportClause {
+		JsAnyExportClause::JsExportNamedFromClause(node)
+	}
+}
+impl From<JsExportVariableClause> for JsAnyExportClause {
+	fn from(node: JsExportVariableClause) -> JsAnyExportClause {
+		JsAnyExportClause::JsExportVariableClause(node)
+	}
+}
+impl AstNode for JsAnyExportClause {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
+		matches!(
+			kind,
+			JS_EXPORT_CLASS_CLAUSE
+				| JS_EXPORT_DEFAULT_CLASS_CLAUSE
+				| JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE
+				| JS_EXPORT_DEFAULT_FUNCTION_CLAUSE
+				| JS_EXPORT_FROM_CLAUSE
+				| JS_EXPORT_FUNCTION_CLAUSE
+				| JS_EXPORT_NAMED_CLAUSE
+				| JS_EXPORT_NAMED_FROM_CLAUSE
+				| JS_EXPORT_VARIABLE_CLAUSE
+		)
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_EXPORT_CLASS_CLAUSE => {
+				JsAnyExportClause::JsExportClassClause(JsExportClassClause { syntax })
+			}
+			JS_EXPORT_DEFAULT_CLASS_CLAUSE => {
+				JsAnyExportClause::JsExportDefaultClassClause(JsExportDefaultClassClause { syntax })
+			}
+			JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE => {
+				JsAnyExportClause::JsExportDefaultExpressionClause(
+					JsExportDefaultExpressionClause { syntax },
+				)
+			}
+			JS_EXPORT_DEFAULT_FUNCTION_CLAUSE => {
+				JsAnyExportClause::JsExportDefaultFunctionClause(JsExportDefaultFunctionClause {
+					syntax,
+				})
+			}
+			JS_EXPORT_FROM_CLAUSE => {
+				JsAnyExportClause::JsExportFromClause(JsExportFromClause { syntax })
+			}
+			JS_EXPORT_FUNCTION_CLAUSE => {
+				JsAnyExportClause::JsExportFunctionClause(JsExportFunctionClause { syntax })
+			}
+			JS_EXPORT_NAMED_CLAUSE => {
+				JsAnyExportClause::JsExportNamedClause(JsExportNamedClause { syntax })
+			}
+			JS_EXPORT_NAMED_FROM_CLAUSE => {
+				JsAnyExportClause::JsExportNamedFromClause(JsExportNamedFromClause { syntax })
+			}
+			JS_EXPORT_VARIABLE_CLAUSE => {
+				JsAnyExportClause::JsExportVariableClause(JsExportVariableClause { syntax })
+			}
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			JsAnyExportClause::JsExportClassClause(it) => &it.syntax,
+			JsAnyExportClause::JsExportDefaultClassClause(it) => &it.syntax,
+			JsAnyExportClause::JsExportDefaultExpressionClause(it) => &it.syntax,
+			JsAnyExportClause::JsExportDefaultFunctionClause(it) => &it.syntax,
+			JsAnyExportClause::JsExportFromClause(it) => &it.syntax,
+			JsAnyExportClause::JsExportFunctionClause(it) => &it.syntax,
+			JsAnyExportClause::JsExportNamedClause(it) => &it.syntax,
+			JsAnyExportClause::JsExportNamedFromClause(it) => &it.syntax,
+			JsAnyExportClause::JsExportVariableClause(it) => &it.syntax,
+		}
+	}
+}
+impl std::fmt::Debug for JsAnyExportClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		match self {
+			JsAnyExportClause::JsExportClassClause(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyExportClause::JsExportDefaultClassClause(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyExportClause::JsExportDefaultExpressionClause(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyExportClause::JsExportDefaultFunctionClause(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyExportClause::JsExportFromClause(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyExportClause::JsExportFunctionClause(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyExportClause::JsExportNamedClause(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyExportClause::JsExportNamedFromClause(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyExportClause::JsExportVariableClause(it) => std::fmt::Debug::fmt(it, f),
+		}
+	}
+}
+impl From<JsAnyExportClause> for SyntaxNode {
+	fn from(n: JsAnyExportClause) -> SyntaxNode {
+		match n {
+			JsAnyExportClause::JsExportClassClause(it) => it.into(),
+			JsAnyExportClause::JsExportDefaultClassClause(it) => it.into(),
+			JsAnyExportClause::JsExportDefaultExpressionClause(it) => it.into(),
+			JsAnyExportClause::JsExportDefaultFunctionClause(it) => it.into(),
+			JsAnyExportClause::JsExportFromClause(it) => it.into(),
+			JsAnyExportClause::JsExportFunctionClause(it) => it.into(),
+			JsAnyExportClause::JsExportNamedClause(it) => it.into(),
+			JsAnyExportClause::JsExportNamedFromClause(it) => it.into(),
+			JsAnyExportClause::JsExportVariableClause(it) => it.into(),
+		}
+	}
+}
+impl From<JsAnyExportClause> for SyntaxElement {
+	fn from(n: JsAnyExportClause) -> SyntaxElement {
+		let node: SyntaxNode = n.into();
+		node.into()
+	}
+}
 impl From<ExportNamed> for JsAnyExportDeclaration {
 	fn from(node: ExportNamed) -> JsAnyExportDeclaration {
 		JsAnyExportDeclaration::ExportNamed(node)
@@ -10741,6 +11677,68 @@ impl From<JsAnyExportDeclaration> for SyntaxNode {
 }
 impl From<JsAnyExportDeclaration> for SyntaxElement {
 	fn from(n: JsAnyExportDeclaration) -> SyntaxElement {
+		let node: SyntaxNode = n.into();
+		node.into()
+	}
+}
+impl From<JsExportNamedShorthandSpecifier> for JsAnyExportNamedSpecifier {
+	fn from(node: JsExportNamedShorthandSpecifier) -> JsAnyExportNamedSpecifier {
+		JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(node)
+	}
+}
+impl From<JsExportNamedSpecifier> for JsAnyExportNamedSpecifier {
+	fn from(node: JsExportNamedSpecifier) -> JsAnyExportNamedSpecifier {
+		JsAnyExportNamedSpecifier::JsExportNamedSpecifier(node)
+	}
+}
+impl AstNode for JsAnyExportNamedSpecifier {
+	fn can_cast(kind: JsSyntaxKind) -> bool {
+		matches!(
+			kind,
+			JS_EXPORT_NAMED_SHORTHAND_SPECIFIER | JS_EXPORT_NAMED_SPECIFIER
+		)
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_EXPORT_NAMED_SHORTHAND_SPECIFIER => {
+				JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(
+					JsExportNamedShorthandSpecifier { syntax },
+				)
+			}
+			JS_EXPORT_NAMED_SPECIFIER => {
+				JsAnyExportNamedSpecifier::JsExportNamedSpecifier(JsExportNamedSpecifier { syntax })
+			}
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(it) => &it.syntax,
+			JsAnyExportNamedSpecifier::JsExportNamedSpecifier(it) => &it.syntax,
+		}
+	}
+}
+impl std::fmt::Debug for JsAnyExportNamedSpecifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		match self {
+			JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(it) => {
+				std::fmt::Debug::fmt(it, f)
+			}
+			JsAnyExportNamedSpecifier::JsExportNamedSpecifier(it) => std::fmt::Debug::fmt(it, f),
+		}
+	}
+}
+impl From<JsAnyExportNamedSpecifier> for SyntaxNode {
+	fn from(n: JsAnyExportNamedSpecifier) -> SyntaxNode {
+		match n {
+			JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(it) => it.into(),
+			JsAnyExportNamedSpecifier::JsExportNamedSpecifier(it) => it.into(),
+		}
+	}
+}
+impl From<JsAnyExportNamedSpecifier> for SyntaxElement {
+	fn from(n: JsAnyExportNamedSpecifier) -> SyntaxElement {
 		let node: SyntaxNode = n.into();
 		node.into()
 	}
@@ -11224,6 +12222,16 @@ impl From<JsArrowFunctionExpression> for JsAnyFunction {
 		JsAnyFunction::JsArrowFunctionExpression(node)
 	}
 }
+impl From<JsExportDefaultFunctionClause> for JsAnyFunction {
+	fn from(node: JsExportDefaultFunctionClause) -> JsAnyFunction {
+		JsAnyFunction::JsExportDefaultFunctionClause(node)
+	}
+}
+impl From<JsExportFunctionClause> for JsAnyFunction {
+	fn from(node: JsExportFunctionClause) -> JsAnyFunction {
+		JsAnyFunction::JsExportFunctionClause(node)
+	}
+}
 impl From<JsFunctionExpression> for JsAnyFunction {
 	fn from(node: JsFunctionExpression) -> JsAnyFunction {
 		JsAnyFunction::JsFunctionExpression(node)
@@ -11236,13 +12244,25 @@ impl AstNode for JsAnyFunction {
 	fn can_cast(kind: JsSyntaxKind) -> bool {
 		matches!(
 			kind,
-			JS_ARROW_FUNCTION_EXPRESSION | JS_FUNCTION_EXPRESSION | JS_FUNCTION_STATEMENT
+			JS_ARROW_FUNCTION_EXPRESSION
+				| JS_EXPORT_DEFAULT_FUNCTION_CLAUSE
+				| JS_EXPORT_FUNCTION_CLAUSE
+				| JS_FUNCTION_EXPRESSION
+				| JS_FUNCTION_STATEMENT
 		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			JS_ARROW_FUNCTION_EXPRESSION => {
 				JsAnyFunction::JsArrowFunctionExpression(JsArrowFunctionExpression { syntax })
+			}
+			JS_EXPORT_DEFAULT_FUNCTION_CLAUSE => {
+				JsAnyFunction::JsExportDefaultFunctionClause(JsExportDefaultFunctionClause {
+					syntax,
+				})
+			}
+			JS_EXPORT_FUNCTION_CLAUSE => {
+				JsAnyFunction::JsExportFunctionClause(JsExportFunctionClause { syntax })
 			}
 			JS_FUNCTION_EXPRESSION => {
 				JsAnyFunction::JsFunctionExpression(JsFunctionExpression { syntax })
@@ -11257,6 +12277,8 @@ impl AstNode for JsAnyFunction {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			JsAnyFunction::JsArrowFunctionExpression(it) => &it.syntax,
+			JsAnyFunction::JsExportDefaultFunctionClause(it) => &it.syntax,
+			JsAnyFunction::JsExportFunctionClause(it) => &it.syntax,
 			JsAnyFunction::JsFunctionExpression(it) => &it.syntax,
 			JsAnyFunction::JsFunctionStatement(it) => &it.syntax,
 		}
@@ -11266,6 +12288,8 @@ impl std::fmt::Debug for JsAnyFunction {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
 			JsAnyFunction::JsArrowFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyFunction::JsExportDefaultFunctionClause(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyFunction::JsExportFunctionClause(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyFunction::JsFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyFunction::JsFunctionStatement(it) => std::fmt::Debug::fmt(it, f),
 		}
@@ -11275,6 +12299,8 @@ impl From<JsAnyFunction> for SyntaxNode {
 	fn from(n: JsAnyFunction) -> SyntaxNode {
 		match n {
 			JsAnyFunction::JsArrowFunctionExpression(it) => it.into(),
+			JsAnyFunction::JsExportDefaultFunctionClause(it) => it.into(),
+			JsAnyFunction::JsExportFunctionClause(it) => it.into(),
 			JsAnyFunction::JsFunctionExpression(it) => it.into(),
 			JsAnyFunction::JsFunctionStatement(it) => it.into(),
 		}
@@ -11532,6 +12558,9 @@ impl From<ExportNamed> for JsAnyModuleItem {
 impl From<ExportWildcard> for JsAnyModuleItem {
 	fn from(node: ExportWildcard) -> JsAnyModuleItem { JsAnyModuleItem::ExportWildcard(node) }
 }
+impl From<JsExport> for JsAnyModuleItem {
+	fn from(node: JsExport) -> JsAnyModuleItem { JsAnyModuleItem::JsExport(node) }
+}
 impl From<JsImport> for JsAnyModuleItem {
 	fn from(node: JsImport) -> JsAnyModuleItem { JsAnyModuleItem::JsImport(node) }
 }
@@ -11558,6 +12587,7 @@ impl AstNode for JsAnyModuleItem {
 			| EXPORT_DEFAULT_EXPR
 			| EXPORT_NAMED
 			| EXPORT_WILDCARD
+			| JS_EXPORT
 			| JS_IMPORT
 			| TS_EXPORT_ASSIGNMENT
 			| TS_IMPORT_EQUALS_DECL
@@ -11573,6 +12603,7 @@ impl AstNode for JsAnyModuleItem {
 			EXPORT_DEFAULT_EXPR => JsAnyModuleItem::ExportDefaultExpr(ExportDefaultExpr { syntax }),
 			EXPORT_NAMED => JsAnyModuleItem::ExportNamed(ExportNamed { syntax }),
 			EXPORT_WILDCARD => JsAnyModuleItem::ExportWildcard(ExportWildcard { syntax }),
+			JS_EXPORT => JsAnyModuleItem::JsExport(JsExport { syntax }),
 			JS_IMPORT => JsAnyModuleItem::JsImport(JsImport { syntax }),
 			TS_EXPORT_ASSIGNMENT => {
 				JsAnyModuleItem::TsExportAssignment(TsExportAssignment { syntax })
@@ -11599,6 +12630,7 @@ impl AstNode for JsAnyModuleItem {
 			JsAnyModuleItem::ExportDefaultExpr(it) => &it.syntax,
 			JsAnyModuleItem::ExportNamed(it) => &it.syntax,
 			JsAnyModuleItem::ExportWildcard(it) => &it.syntax,
+			JsAnyModuleItem::JsExport(it) => &it.syntax,
 			JsAnyModuleItem::JsImport(it) => &it.syntax,
 			JsAnyModuleItem::TsExportAssignment(it) => &it.syntax,
 			JsAnyModuleItem::TsImportEqualsDecl(it) => &it.syntax,
@@ -11616,6 +12648,7 @@ impl std::fmt::Debug for JsAnyModuleItem {
 			JsAnyModuleItem::ExportNamed(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyModuleItem::ExportWildcard(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyModuleItem::JsAnyStatement(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyModuleItem::JsExport(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyModuleItem::JsImport(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyModuleItem::TsExportAssignment(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyModuleItem::TsImportEqualsDecl(it) => std::fmt::Debug::fmt(it, f),
@@ -11632,6 +12665,7 @@ impl From<JsAnyModuleItem> for SyntaxNode {
 			JsAnyModuleItem::ExportNamed(it) => it.into(),
 			JsAnyModuleItem::ExportWildcard(it) => it.into(),
 			JsAnyModuleItem::JsAnyStatement(it) => it.into(),
+			JsAnyModuleItem::JsExport(it) => it.into(),
 			JsAnyModuleItem::JsImport(it) => it.into(),
 			JsAnyModuleItem::TsExportAssignment(it) => it.into(),
 			JsAnyModuleItem::TsImportEqualsDecl(it) => it.into(),
@@ -13276,7 +14310,17 @@ impl std::fmt::Display for JsAnyConstructorParameter {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsAnyExportClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsAnyExportDeclaration {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsAnyExportNamedSpecifier {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -13627,6 +14671,76 @@ impl std::fmt::Display for JsEmptyClassMember {
 	}
 }
 impl std::fmt::Display for JsEmptyStatement {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExport {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExportAsClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExportClassClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExportDefaultClassClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExportDefaultExpressionClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExportDefaultFunctionClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExportFromClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExportFunctionClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExportNamedClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExportNamedFromClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExportNamedFromSpecifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExportNamedShorthandSpecifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExportNamedSpecifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsExportVariableClause {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -14989,6 +16103,78 @@ impl IntoIterator for JsDirectiveList {
 	fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
+pub struct JsExportNamedFromSpecifierList {
+	syntax_list: SyntaxList,
+}
+impl AstNode for JsExportNamedFromSpecifierList {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_FROM_SPECIFIER_LIST }
+	fn cast(syntax: SyntaxNode) -> Option<JsExportNamedFromSpecifierList> {
+		if Self::can_cast(syntax.kind()) {
+			Some(JsExportNamedFromSpecifierList {
+				syntax_list: syntax.into_list(),
+			})
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstSeparatedList<JsExportNamedFromSpecifier> for JsExportNamedFromSpecifierList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for JsExportNamedFromSpecifierList {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		f.write_str("JsExportNamedFromSpecifierList ")?;
+		f.debug_list().entries(self.elements()).finish()
+	}
+}
+impl IntoIterator for JsExportNamedFromSpecifierList {
+	type Item = SyntaxResult<JsExportNamedFromSpecifier>;
+	type IntoIter = AstSeparatedListNodesIterator<JsExportNamedFromSpecifier>;
+	fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for &JsExportNamedFromSpecifierList {
+	type Item = SyntaxResult<JsExportNamedFromSpecifier>;
+	type IntoIter = AstSeparatedListNodesIterator<JsExportNamedFromSpecifier>;
+	fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
+pub struct JsExportNamedSpecifierList {
+	syntax_list: SyntaxList,
+}
+impl AstNode for JsExportNamedSpecifierList {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_SPECIFIER_LIST }
+	fn cast(syntax: SyntaxNode) -> Option<JsExportNamedSpecifierList> {
+		if Self::can_cast(syntax.kind()) {
+			Some(JsExportNamedSpecifierList {
+				syntax_list: syntax.into_list(),
+			})
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstSeparatedList<JsAnyExportNamedSpecifier> for JsExportNamedSpecifierList {
+	fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for JsExportNamedSpecifierList {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		f.write_str("JsExportNamedSpecifierList ")?;
+		f.debug_list().entries(self.elements()).finish()
+	}
+}
+impl IntoIterator for JsExportNamedSpecifierList {
+	type Item = SyntaxResult<JsAnyExportNamedSpecifier>;
+	type IntoIter = AstSeparatedListNodesIterator<JsAnyExportNamedSpecifier>;
+	fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for &JsExportNamedSpecifierList {
+	type Item = SyntaxResult<JsAnyExportNamedSpecifier>;
+	type IntoIter = AstSeparatedListNodesIterator<JsAnyExportNamedSpecifier>;
+	fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsImportAssertionEntryList {
 	syntax_list: SyntaxList,
 }
@@ -15726,6 +16912,59 @@ impl Debug for DebugSyntaxElement {
 				}
 				JS_EMPTY_STATEMENT => {
 					std::fmt::Debug::fmt(&JsEmptyStatement::cast(node.clone()).unwrap(), f)
+				}
+				JS_EXPORT => std::fmt::Debug::fmt(&JsExport::cast(node.clone()).unwrap(), f),
+				JS_EXPORT_AS_CLAUSE => {
+					std::fmt::Debug::fmt(&JsExportAsClause::cast(node.clone()).unwrap(), f)
+				}
+				JS_EXPORT_CLASS_CLAUSE => {
+					std::fmt::Debug::fmt(&JsExportClassClause::cast(node.clone()).unwrap(), f)
+				}
+				JS_EXPORT_DEFAULT_CLASS_CLAUSE => std::fmt::Debug::fmt(
+					&JsExportDefaultClassClause::cast(node.clone()).unwrap(),
+					f,
+				),
+				JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE => std::fmt::Debug::fmt(
+					&JsExportDefaultExpressionClause::cast(node.clone()).unwrap(),
+					f,
+				),
+				JS_EXPORT_DEFAULT_FUNCTION_CLAUSE => std::fmt::Debug::fmt(
+					&JsExportDefaultFunctionClause::cast(node.clone()).unwrap(),
+					f,
+				),
+				JS_EXPORT_FROM_CLAUSE => {
+					std::fmt::Debug::fmt(&JsExportFromClause::cast(node.clone()).unwrap(), f)
+				}
+				JS_EXPORT_FUNCTION_CLAUSE => {
+					std::fmt::Debug::fmt(&JsExportFunctionClause::cast(node.clone()).unwrap(), f)
+				}
+				JS_EXPORT_NAMED_CLAUSE => {
+					std::fmt::Debug::fmt(&JsExportNamedClause::cast(node.clone()).unwrap(), f)
+				}
+				JS_EXPORT_NAMED_FROM_CLAUSE => {
+					std::fmt::Debug::fmt(&JsExportNamedFromClause::cast(node.clone()).unwrap(), f)
+				}
+				JS_EXPORT_NAMED_FROM_SPECIFIER => std::fmt::Debug::fmt(
+					&JsExportNamedFromSpecifier::cast(node.clone()).unwrap(),
+					f,
+				),
+				JS_EXPORT_NAMED_FROM_SPECIFIER_LIST => std::fmt::Debug::fmt(
+					&JsExportNamedFromSpecifierList::cast(node.clone()).unwrap(),
+					f,
+				),
+				JS_EXPORT_NAMED_SHORTHAND_SPECIFIER => std::fmt::Debug::fmt(
+					&JsExportNamedShorthandSpecifier::cast(node.clone()).unwrap(),
+					f,
+				),
+				JS_EXPORT_NAMED_SPECIFIER => {
+					std::fmt::Debug::fmt(&JsExportNamedSpecifier::cast(node.clone()).unwrap(), f)
+				}
+				JS_EXPORT_NAMED_SPECIFIER_LIST => std::fmt::Debug::fmt(
+					&JsExportNamedSpecifierList::cast(node.clone()).unwrap(),
+					f,
+				),
+				JS_EXPORT_VARIABLE_CLAUSE => {
+					std::fmt::Debug::fmt(&JsExportVariableClause::cast(node.clone()).unwrap(), f)
 				}
 				JS_EXPRESSION_SNIPPED => {
 					std::fmt::Debug::fmt(&JsExpressionSnipped::cast(node.clone()).unwrap(), f)

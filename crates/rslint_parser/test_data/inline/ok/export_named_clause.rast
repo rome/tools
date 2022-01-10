@@ -1,0 +1,112 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExport {
+            export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
+            export_clause: JsExportNamedClause {
+                l_curly_token: L_CURLY@7..9 "{" [] [Whitespace(" ")],
+                specifiers: JsExportNamedSpecifierList [
+                    JsExportNamedShorthandSpecifier {
+                        type_token: missing (optional),
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@9..11 "a" [] [Whitespace(" ")],
+                        },
+                    },
+                ],
+                r_curly_token: R_CURLY@11..12 "}" [] [],
+                semicolon_token: SEMICOLON@12..13 ";" [] [],
+            },
+        },
+        JsExport {
+            export_token: EXPORT_KW@13..21 "export" [Whitespace("\n")] [Whitespace(" ")],
+            export_clause: JsExportNamedClause {
+                l_curly_token: L_CURLY@21..23 "{" [] [Whitespace(" ")],
+                specifiers: JsExportNamedSpecifierList [
+                    JsExportNamedSpecifier {
+                        type_token: missing (optional),
+                        local_name: JsReferenceIdentifier {
+                            value_token: IDENT@23..25 "a" [] [Whitespace(" ")],
+                        },
+                        as_token: AS_KW@25..28 "as" [] [Whitespace(" ")],
+                        exported_name: JsLiteralExportName {
+                            value: IDENT@28..29 "z" [] [],
+                        },
+                    },
+                    COMMA@29..31 "," [] [Whitespace(" ")],
+                    JsExportNamedSpecifier {
+                        type_token: missing (optional),
+                        local_name: JsReferenceIdentifier {
+                            value_token: IDENT@31..33 "b" [] [Whitespace(" ")],
+                        },
+                        as_token: AS_KW@33..36 "as" [] [Whitespace(" ")],
+                        exported_name: JsLiteralExportName {
+                            value: JS_STRING_LITERAL@36..39 "\"y\"" [] [],
+                        },
+                    },
+                    COMMA@39..41 "," [] [Whitespace(" ")],
+                    JsExportNamedSpecifier {
+                        type_token: missing (optional),
+                        local_name: JsReferenceIdentifier {
+                            value_token: IDENT@41..43 "c" [] [Whitespace(" ")],
+                        },
+                        as_token: AS_KW@43..46 "as" [] [Whitespace(" ")],
+                        exported_name: JsLiteralExportName {
+                            value: IDENT@46..54 "default" [] [Whitespace(" ")],
+                        },
+                    },
+                ],
+                r_curly_token: R_CURLY@54..55 "}" [] [],
+                semicolon_token: missing (optional),
+            },
+        },
+    ],
+    eof_token: EOF@55..56 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..56
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..55
+    0: JS_EXPORT@0..13
+      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      1: JS_EXPORT_NAMED_CLAUSE@7..13
+        0: L_CURLY@7..9 "{" [] [Whitespace(" ")]
+        1: JS_EXPORT_NAMED_SPECIFIER_LIST@9..11
+          0: JS_EXPORT_NAMED_SHORTHAND_SPECIFIER@9..11
+            0: (empty)
+            1: JS_REFERENCE_IDENTIFIER@9..11
+              0: IDENT@9..11 "a" [] [Whitespace(" ")]
+        2: R_CURLY@11..12 "}" [] []
+        3: SEMICOLON@12..13 ";" [] []
+    1: JS_EXPORT@13..55
+      0: EXPORT_KW@13..21 "export" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_NAMED_CLAUSE@21..55
+        0: L_CURLY@21..23 "{" [] [Whitespace(" ")]
+        1: JS_EXPORT_NAMED_SPECIFIER_LIST@23..54
+          0: JS_EXPORT_NAMED_SPECIFIER@23..29
+            0: (empty)
+            1: JS_REFERENCE_IDENTIFIER@23..25
+              0: IDENT@23..25 "a" [] [Whitespace(" ")]
+            2: AS_KW@25..28 "as" [] [Whitespace(" ")]
+            3: JS_LITERAL_EXPORT_NAME@28..29
+              0: IDENT@28..29 "z" [] []
+          1: COMMA@29..31 "," [] [Whitespace(" ")]
+          2: JS_EXPORT_NAMED_SPECIFIER@31..39
+            0: (empty)
+            1: JS_REFERENCE_IDENTIFIER@31..33
+              0: IDENT@31..33 "b" [] [Whitespace(" ")]
+            2: AS_KW@33..36 "as" [] [Whitespace(" ")]
+            3: JS_LITERAL_EXPORT_NAME@36..39
+              0: JS_STRING_LITERAL@36..39 "\"y\"" [] []
+          3: COMMA@39..41 "," [] [Whitespace(" ")]
+          4: JS_EXPORT_NAMED_SPECIFIER@41..54
+            0: (empty)
+            1: JS_REFERENCE_IDENTIFIER@41..43
+              0: IDENT@41..43 "c" [] [Whitespace(" ")]
+            2: AS_KW@43..46 "as" [] [Whitespace(" ")]
+            3: JS_LITERAL_EXPORT_NAME@46..54
+              0: IDENT@46..54 "default" [] [Whitespace(" ")]
+        2: R_CURLY@54..55 "}" [] []
+        3: (empty)
+  3: EOF@55..56 "" [Whitespace("\n")] []
