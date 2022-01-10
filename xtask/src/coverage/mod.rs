@@ -258,7 +258,7 @@ fn extract_outcome(fail: &Option<FailReason>) -> Outcome {
 }
 
 enum ExecRes {
-	Errors(Vec<ParserError>),
+	Errors(Vec<Box<ParserError>>),
 	ParseCorrectly,
 	ParserPanic(Box<dyn Any + Send + 'static>),
 }

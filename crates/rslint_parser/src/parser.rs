@@ -132,7 +132,7 @@ pub struct Parser<'t> {
 	pub(crate) events: Vec<Event>,
 	pub state: ParserState,
 	pub syntax: Syntax,
-	pub errors: Vec<ParserError>,
+	pub errors: Vec<Box<ParserError>>,
 }
 
 impl<'t> Parser<'t> {
@@ -173,7 +173,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Consume the parser and return the list of events it produced
-	pub fn finish(self) -> (Vec<Event>, Vec<ParserError>) {
+	pub fn finish(self) -> (Vec<Event>, Vec<Box<ParserError>>) {
 		(self.events, self.errors)
 	}
 
@@ -278,7 +278,7 @@ impl<'t> Parser<'t> {
 				}
 			}
 		}
-		self.errors.push(err)
+		self.errors.push(Box::new(err))
 	}
 
 	/// Check if the parser's current token is contained in a token set

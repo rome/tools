@@ -189,7 +189,7 @@ struct BenchmarkResult {
 	tokenization: Duration,
 	parsing: Duration,
 	tree_sink: Duration,
-	diagnostics: Vec<Diagnostic>,
+	diagnostics: Vec<Box<Diagnostic>>,
 }
 
 impl BenchmarkResult {
