@@ -39,7 +39,7 @@ macro_rules! assert_lex {
             );
 
             let tok_start = tok_idx as usize;
-			let tok_end = tok_idx as usize + tokens[idx].0.len as usize;
+            let tok_end = tok_idx as usize + tokens[idx].0.len as usize;
             new_str.push_str($src.get(tok_start..tok_end).unwrap());
             tok_idx += tokens[idx].0.len;
 
