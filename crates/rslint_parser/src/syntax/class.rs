@@ -76,9 +76,7 @@ pub(super) fn parse_export_class_clause(p: &mut Parser) -> ParsedSyntax {
 }
 
 // test export_default_class_clause
-// export default class A {}
-// export default class A extends B {}
-// export default class extends B {}
+// export default class {}
 pub(super) fn parse_export_default_class_case(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![default]) && !p.nth_at(1, T![class]) {
 		return Absent;

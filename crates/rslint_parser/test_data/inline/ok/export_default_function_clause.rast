@@ -35,111 +35,14 @@ JsModule {
                 },
             },
         },
-        JsExport {
-            export_token: EXPORT_KW@37..45 "export" [Whitespace("\n")] [Whitespace(" ")],
-            export_clause: JsExportDefaultFunctionClause {
-                default_token: DEFAULT_KW@45..53 "default" [] [Whitespace(" ")],
-                async_token: missing (optional),
-                function_token: FUNCTION_KW@53..62 "function" [] [Whitespace(" ")],
-                star_token: STAR@62..63 "*" [] [],
-                id: JsIdentifierBinding {
-                    name_token: IDENT@63..67 "test" [] [],
-                },
-                type_parameters: missing (optional),
-                parameters: JsParameters {
-                    l_paren_token: L_PAREN@67..68 "(" [] [],
-                    items: JsParameterList [
-                        JsIdentifierBinding {
-                            name_token: IDENT@68..69 "a" [] [],
-                        },
-                        COMMA@69..71 "," [] [Whitespace(" ")],
-                        JsIdentifierBinding {
-                            name_token: IDENT@71..72 "b" [] [],
-                        },
-                    ],
-                    r_paren_token: R_PAREN@72..74 ")" [] [Whitespace(" ")],
-                },
-                return_type: missing (optional),
-                body: JsFunctionBody {
-                    l_curly_token: L_CURLY@74..75 "{" [] [],
-                    directives: JsDirectiveList [],
-                    statements: JsStatementList [],
-                    r_curly_token: R_CURLY@75..76 "}" [] [],
-                },
-            },
-        },
-        JsExport {
-            export_token: EXPORT_KW@76..84 "export" [Whitespace("\n")] [Whitespace(" ")],
-            export_clause: JsExportDefaultFunctionClause {
-                default_token: DEFAULT_KW@84..92 "default" [] [Whitespace(" ")],
-                async_token: ASYNC_KW@92..98 "async" [] [Whitespace(" ")],
-                function_token: FUNCTION_KW@98..107 "function" [] [Whitespace(" ")],
-                star_token: missing (optional),
-                id: JsIdentifierBinding {
-                    name_token: IDENT@107..111 "test" [] [],
-                },
-                type_parameters: missing (optional),
-                parameters: JsParameters {
-                    l_paren_token: L_PAREN@111..112 "(" [] [],
-                    items: JsParameterList [
-                        JsIdentifierBinding {
-                            name_token: IDENT@112..113 "a" [] [],
-                        },
-                        COMMA@113..115 "," [] [Whitespace(" ")],
-                        JsIdentifierBinding {
-                            name_token: IDENT@115..116 "b" [] [],
-                        },
-                    ],
-                    r_paren_token: R_PAREN@116..118 ")" [] [Whitespace(" ")],
-                },
-                return_type: missing (optional),
-                body: JsFunctionBody {
-                    l_curly_token: L_CURLY@118..119 "{" [] [],
-                    directives: JsDirectiveList [],
-                    statements: JsStatementList [],
-                    r_curly_token: R_CURLY@119..120 "}" [] [],
-                },
-            },
-        },
-        JsExport {
-            export_token: EXPORT_KW@120..128 "export" [Whitespace("\n")] [Whitespace(" ")],
-            export_clause: JsExportDefaultFunctionClause {
-                default_token: DEFAULT_KW@128..136 "default" [] [Whitespace(" ")],
-                async_token: missing (optional),
-                function_token: FUNCTION_KW@136..144 "function" [] [],
-                star_token: missing (optional),
-                id: missing (optional),
-                type_parameters: missing (optional),
-                parameters: JsParameters {
-                    l_paren_token: L_PAREN@144..145 "(" [] [],
-                    items: JsParameterList [
-                        JsIdentifierBinding {
-                            name_token: IDENT@145..146 "a" [] [],
-                        },
-                        COMMA@146..148 "," [] [Whitespace(" ")],
-                        JsIdentifierBinding {
-                            name_token: IDENT@148..149 "b" [] [],
-                        },
-                    ],
-                    r_paren_token: R_PAREN@149..151 ")" [] [Whitespace(" ")],
-                },
-                return_type: missing (optional),
-                body: JsFunctionBody {
-                    l_curly_token: L_CURLY@151..152 "{" [] [],
-                    directives: JsDirectiveList [],
-                    statements: JsStatementList [],
-                    r_curly_token: R_CURLY@152..153 "}" [] [],
-                },
-            },
-        },
     ],
-    eof_token: EOF@153..154 "" [Whitespace("\n")] [],
+    eof_token: EOF@37..38 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..154
+0: JS_MODULE@0..38
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..153
+  2: JS_MODULE_ITEM_LIST@0..37
     0: JS_EXPORT@0..37
       0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
       1: JS_EXPORT_DEFAULT_FUNCTION_CLAUSE@7..37
@@ -165,78 +68,4 @@ JsModule {
           1: JS_DIRECTIVE_LIST@36..36
           2: JS_STATEMENT_LIST@36..36
           3: R_CURLY@36..37 "}" [] []
-    1: JS_EXPORT@37..76
-      0: EXPORT_KW@37..45 "export" [Whitespace("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_DEFAULT_FUNCTION_CLAUSE@45..76
-        0: DEFAULT_KW@45..53 "default" [] [Whitespace(" ")]
-        1: (empty)
-        2: FUNCTION_KW@53..62 "function" [] [Whitespace(" ")]
-        3: STAR@62..63 "*" [] []
-        4: JS_IDENTIFIER_BINDING@63..67
-          0: IDENT@63..67 "test" [] []
-        5: (empty)
-        6: JS_PARAMETERS@67..74
-          0: L_PAREN@67..68 "(" [] []
-          1: JS_PARAMETER_LIST@68..72
-            0: JS_IDENTIFIER_BINDING@68..69
-              0: IDENT@68..69 "a" [] []
-            1: COMMA@69..71 "," [] [Whitespace(" ")]
-            2: JS_IDENTIFIER_BINDING@71..72
-              0: IDENT@71..72 "b" [] []
-          2: R_PAREN@72..74 ")" [] [Whitespace(" ")]
-        7: (empty)
-        8: JS_FUNCTION_BODY@74..76
-          0: L_CURLY@74..75 "{" [] []
-          1: JS_DIRECTIVE_LIST@75..75
-          2: JS_STATEMENT_LIST@75..75
-          3: R_CURLY@75..76 "}" [] []
-    2: JS_EXPORT@76..120
-      0: EXPORT_KW@76..84 "export" [Whitespace("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_DEFAULT_FUNCTION_CLAUSE@84..120
-        0: DEFAULT_KW@84..92 "default" [] [Whitespace(" ")]
-        1: ASYNC_KW@92..98 "async" [] [Whitespace(" ")]
-        2: FUNCTION_KW@98..107 "function" [] [Whitespace(" ")]
-        3: (empty)
-        4: JS_IDENTIFIER_BINDING@107..111
-          0: IDENT@107..111 "test" [] []
-        5: (empty)
-        6: JS_PARAMETERS@111..118
-          0: L_PAREN@111..112 "(" [] []
-          1: JS_PARAMETER_LIST@112..116
-            0: JS_IDENTIFIER_BINDING@112..113
-              0: IDENT@112..113 "a" [] []
-            1: COMMA@113..115 "," [] [Whitespace(" ")]
-            2: JS_IDENTIFIER_BINDING@115..116
-              0: IDENT@115..116 "b" [] []
-          2: R_PAREN@116..118 ")" [] [Whitespace(" ")]
-        7: (empty)
-        8: JS_FUNCTION_BODY@118..120
-          0: L_CURLY@118..119 "{" [] []
-          1: JS_DIRECTIVE_LIST@119..119
-          2: JS_STATEMENT_LIST@119..119
-          3: R_CURLY@119..120 "}" [] []
-    3: JS_EXPORT@120..153
-      0: EXPORT_KW@120..128 "export" [Whitespace("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_DEFAULT_FUNCTION_CLAUSE@128..153
-        0: DEFAULT_KW@128..136 "default" [] [Whitespace(" ")]
-        1: (empty)
-        2: FUNCTION_KW@136..144 "function" [] []
-        3: (empty)
-        4: (empty)
-        5: (empty)
-        6: JS_PARAMETERS@144..151
-          0: L_PAREN@144..145 "(" [] []
-          1: JS_PARAMETER_LIST@145..149
-            0: JS_IDENTIFIER_BINDING@145..146
-              0: IDENT@145..146 "a" [] []
-            1: COMMA@146..148 "," [] [Whitespace(" ")]
-            2: JS_IDENTIFIER_BINDING@148..149
-              0: IDENT@148..149 "b" [] []
-          2: R_PAREN@149..151 ")" [] [Whitespace(" ")]
-        7: (empty)
-        8: JS_FUNCTION_BODY@151..153
-          0: L_CURLY@151..152 "{" [] []
-          1: JS_DIRECTIVE_LIST@152..152
-          2: JS_STATEMENT_LIST@152..152
-          3: R_CURLY@152..153 "}" [] []
-  3: EOF@153..154 "" [Whitespace("\n")] []
+  3: EOF@37..38 "" [Whitespace("\n")] []

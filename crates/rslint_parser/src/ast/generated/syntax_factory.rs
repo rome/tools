@@ -21,248 +21,6 @@ impl SyntaxFactory for JsSyntaxFactory {
 			| JS_UNKNOWN_MODIFIER
 			| JS_UNKNOWN_NAMED_IMPORT_SPECIFIER
 			| JS_UNKNOWN_STATEMENT => RawSyntaxNode::new(kind, children.into_iter().map(Some)),
-			EXPORT_DECL => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T![export] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![type] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if JsAnyExportDeclaration::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						EXPORT_DECL.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(EXPORT_DECL, children)
-			}
-			EXPORT_DEFAULT_DECL => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T![export] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![default] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![type] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if DefaultDecl::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						EXPORT_DEFAULT_DECL.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(EXPORT_DEFAULT_DECL, children)
-			}
-			EXPORT_DEFAULT_EXPR => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T![export] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![type] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![default] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if JsAnyExpression::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						EXPORT_DEFAULT_EXPR.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(EXPORT_DEFAULT_EXPR, children)
-			}
-			EXPORT_NAMED => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<8usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T![export] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if JsName::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T!['{'] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if ExportNamedSpecifierList::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T!['}'] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![from] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == JS_STRING_LITERAL {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T ! [;] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						EXPORT_NAMED.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(EXPORT_NAMED, children)
-			}
-			EXPORT_WILDCARD => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<7usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T![export] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![type] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T ! [*] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![as] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if Ident::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![from] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == JS_STRING_LITERAL {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						EXPORT_WILDCARD.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(EXPORT_WILDCARD, children)
-			}
 			IDENT => {
 				let mut elements = (&children).into_iter();
 				let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
@@ -1917,7 +1675,7 @@ impl SyntaxFactory for JsSyntaxFactory {
 			}
 			JS_EXPORT_FROM_CLAUSE => {
 				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
+				let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
 				let mut current_element = elements.next();
 				if let Some(element) = &current_element {
 					if element.kind() == T ! [*] {
@@ -1942,6 +1700,13 @@ impl SyntaxFactory for JsSyntaxFactory {
 				slots.next_slot();
 				if let Some(element) = &current_element {
 					if JsModuleSource::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					}
+				}
+				slots.next_slot();
+				if let Some(element) = &current_element {
+					if JsImportAssertion::can_cast(element.kind()) {
 						slots.mark_present();
 						current_element = elements.next();
 					}
@@ -2072,7 +1837,7 @@ impl SyntaxFactory for JsSyntaxFactory {
 			}
 			JS_EXPORT_NAMED_FROM_CLAUSE => {
 				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
+				let mut slots: RawNodeSlots<7usize> = RawNodeSlots::default();
 				let mut current_element = elements.next();
 				if let Some(element) = &current_element {
 					if element.kind() == T!['{'] {
@@ -2104,6 +1869,13 @@ impl SyntaxFactory for JsSyntaxFactory {
 				slots.next_slot();
 				if let Some(element) = &current_element {
 					if JsModuleSource::can_cast(element.kind()) {
+						slots.mark_present();
+						current_element = elements.next();
+					}
+				}
+				slots.next_slot();
+				if let Some(element) = &current_element {
+					if JsImportAssertion::can_cast(element.kind()) {
 						slots.mark_present();
 						current_element = elements.next();
 					}
@@ -5404,39 +5176,6 @@ impl SyntaxFactory for JsSyntaxFactory {
 				}
 				slots.into_node(NEW_TARGET, children)
 			}
-			SPECIFIER => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if JsName::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![as] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if JsName::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						SPECIFIER.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(SPECIFIER, children)
-			}
 			TEMPLATE => {
 				let mut elements = (&children).into_iter();
 				let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
@@ -6049,46 +5788,6 @@ impl SyntaxFactory for JsSyntaxFactory {
 				}
 				slots.into_node(TS_ENUM_MEMBER, children)
 			}
-			TS_EXPORT_ASSIGNMENT => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T![export] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T ! [=] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if JsAnyExpression::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T ! [;] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						TS_EXPORT_ASSIGNMENT.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(TS_EXPORT_ASSIGNMENT, children)
-			}
 			TS_EXPR_WITH_TYPE_ARGS => {
 				let mut elements = (&children).into_iter();
 				let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
@@ -6461,74 +6160,6 @@ impl SyntaxFactory for JsSyntaxFactory {
 				}
 				slots.into_node(TS_INFER, children)
 			}
-			TS_INTERFACE_DECL => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<8usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T![declare] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![interface] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if TsTypeParams::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![extends] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if TsExprWithTypeArgs::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T!['{'] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if TsTypeElement::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T!['}'] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						TS_INTERFACE_DECL.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(TS_INTERFACE_DECL, children)
-			}
 			TS_INTERSECTION => {
 				let mut elements = (&children).into_iter();
 				let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
@@ -6789,180 +6420,6 @@ impl SyntaxFactory for JsSyntaxFactory {
 					);
 				}
 				slots.into_node(TS_METHOD_SIGNATURE, children)
-			}
-			TS_MODULE_BLOCK => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T!['{'] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if JsAnyStatement::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T!['}'] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						TS_MODULE_BLOCK.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(TS_MODULE_BLOCK, children)
-			}
-			TS_MODULE_DECL => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T![declare] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![global] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![module] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T ! [.] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if Ident::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if TsNamespaceBody::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						TS_MODULE_DECL.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(TS_MODULE_DECL, children)
-			}
-			TS_NAMESPACE_DECL => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T![declare] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if Ident::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T ! [.] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if TsNamespaceBody::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						TS_NAMESPACE_DECL.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(TS_NAMESPACE_DECL, children)
-			}
-			TS_NAMESPACE_EXPORT_DECL => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T![export] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![as] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T![namespace] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if Ident::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T ! [;] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						TS_NAMESPACE_EXPORT_DECL.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(TS_NAMESPACE_EXPORT_DECL, children)
 			}
 			TS_NEVER => {
 				let mut elements = (&children).into_iter();
@@ -7420,46 +6877,6 @@ impl SyntaxFactory for JsSyntaxFactory {
 				}
 				slots.into_node(TS_TUPLE_ELEMENT, children)
 			}
-			TS_TYPE_ALIAS_DECL => {
-				let mut elements = (&children).into_iter();
-				let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
-				let mut current_element = elements.next();
-				if let Some(element) = &current_element {
-					if element.kind() == T![type] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if TsTypeParams::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if element.kind() == T ! [=] {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if let Some(element) = &current_element {
-					if TsType::can_cast(element.kind()) {
-						slots.mark_present();
-						current_element = elements.next();
-					}
-				}
-				slots.next_slot();
-				if current_element.is_some() {
-					return RawSyntaxNode::new(
-						TS_TYPE_ALIAS_DECL.to_unknown(),
-						children.into_iter().map(Some),
-					);
-				}
-				slots.into_node(TS_TYPE_ALIAS_DECL, children)
-			}
 			TS_TYPE_ANNOTATION => {
 				let mut elements = (&children).into_iter();
 				let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
@@ -7724,9 +7141,6 @@ impl SyntaxFactory for JsSyntaxFactory {
 					);
 				}
 				slots.into_node(TS_VOID, children)
-			}
-			EXPORT_NAMED_SPECIFIER_LIST => {
-				Self::make_separated_list_syntax(kind, children, Specifier::can_cast, T ! [,], true)
 			}
 			JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST => Self::make_separated_list_syntax(
 				kind,

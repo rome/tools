@@ -949,7 +949,9 @@ pub(crate) fn is_at_expression(p: &Parser) -> bool {
 }
 
 pub(crate) fn is_nth_at_expression(p: &Parser, n: usize) -> bool {
-	STARTS_EXPR.contains(p.nth(n)) || p.nth_at(n, T![<]) || (p.nth_at(n, T![enum]) && !p.has_linebreak_before_n(n))
+	STARTS_EXPR.contains(p.nth(n))
+		|| p.nth_at(n, T![<])
+		|| (p.nth_at(n, T![enum]) && !p.has_linebreak_before_n(n))
 }
 
 /// A primary expression such as a literal, an object, an array, or `this`.
@@ -1143,6 +1145,10 @@ pub(crate) fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax {
 	parse_identifier(p, JS_REFERENCE_IDENTIFIER)
 }
 
+pub(crate) fn is_nth_at_reference_identifier(p: &Parser, n: usize) -> bool {
+	is_nth_at_identifier(p, n)
+}
+
 // test identifier_loose_mode
 // // SCRIPT
 // foo;
@@ -1218,8 +1224,13 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
 	}
 }
 
+#[inline]
 pub(crate) fn is_at_identifier(p: &Parser) -> bool {
-	matches!(p.cur(), T![ident] | T![await] | T![yield] | T![enum])
+	is_nth_at_identifier(p, 0)
+}
+
+pub(crate) fn is_nth_at_identifier(p: &Parser, n: usize) -> bool {
+	matches!(p.nth(n), T![ident] | T![await] | T![yield] | T![enum])
 }
 
 /// A template literal such as "`abcd ${efg}`"

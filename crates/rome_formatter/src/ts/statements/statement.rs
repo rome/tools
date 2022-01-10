@@ -63,10 +63,6 @@ impl ToFormatElement for JsAnyStatement {
 				try_finally.to_format_element(formatter)
 			}
 			JsAnyStatement::TsEnum(_) => todo!(),
-			JsAnyStatement::TsTypeAliasDecl(_) => todo!(),
-			JsAnyStatement::TsNamespaceDecl(_) => todo!(),
-			JsAnyStatement::TsModuleDecl(_) => todo!(),
-			JsAnyStatement::TsInterfaceDecl(_) => todo!(),
 		}
 	}
 }

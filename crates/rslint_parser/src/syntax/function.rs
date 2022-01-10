@@ -63,11 +63,8 @@ pub(super) fn parse_export_function_clause(p: &mut Parser) -> ParsedSyntax {
 
 // test export_default_function_clause
 // export default function test(a, b) {}
-// export default function *test(a, b) {}
-// export default async function test(a, b) {}
-// export default function(a, b) {}
 pub(super) fn parse_export_default_function_case(p: &mut Parser) -> ParsedSyntax {
-	if !p.at(T![default]) && !(p.nth_at(1, T![function]) || p.nth_src(1) == "async") {
+	if !(p.at(T![default]) || p.nth_at(1, T![function]) || p.nth_src(1) == "async") {
 		return Absent;
 	}
 

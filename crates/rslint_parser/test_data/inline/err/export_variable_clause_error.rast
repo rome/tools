@@ -1,0 +1,159 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExport {
+            export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
+            export_clause: JsExportVariableClause {
+                declarations: JsVariableDeclarations {
+                    kind: LET_KW@7..11 "let" [] [Whitespace(" ")],
+                    items: JsVariableDeclarationList [
+                        JsVariableDeclaration {
+                            id: JsIdentifierBinding {
+                                name_token: IDENT@11..13 "a" [] [Whitespace(" ")],
+                            },
+                            excl_token: missing (optional),
+                            type_annotation: missing (optional),
+                            initializer: JsInitializerClause {
+                                eq_token: EQ@13..15 "=" [] [Whitespace(" ")],
+                                expression: missing (required),
+                            },
+                        },
+                    ],
+                },
+                semicolon_token: SEMICOLON@15..16 ";" [] [],
+            },
+        },
+        JsExport {
+            export_token: EXPORT_KW@16..24 "export" [Whitespace("\n")] [Whitespace(" ")],
+            export_clause: JsExportVariableClause {
+                declarations: JsVariableDeclarations {
+                    kind: CONST_KW@24..30 "const" [] [Whitespace(" ")],
+                    items: JsVariableDeclarationList [
+                        JsVariableDeclaration {
+                            id: JsIdentifierBinding {
+                                name_token: IDENT@30..31 "b" [] [],
+                            },
+                            excl_token: missing (optional),
+                            type_annotation: missing (optional),
+                            initializer: missing (optional),
+                        },
+                    ],
+                },
+                semicolon_token: SEMICOLON@31..32 ";" [] [],
+            },
+        },
+        JsExport {
+            export_token: EXPORT_KW@32..40 "export" [Whitespace("\n")] [Whitespace(" ")],
+            export_clause: JsExportVariableClause {
+                declarations: JsVariableDeclarations {
+                    kind: LET_KW@40..44 "let" [] [Whitespace(" ")],
+                    items: JsVariableDeclarationList [
+                        JsVariableDeclaration {
+                            id: JsIdentifierBinding {
+                                name_token: IDENT@44..45 "a" [] [],
+                            },
+                            excl_token: missing (optional),
+                            type_annotation: missing (optional),
+                            initializer: missing (optional),
+                        },
+                        COMMA@45..47 "," [] [Whitespace(" ")],
+                        JsVariableDeclaration {
+                            id: JsUnknownBinding {
+                                items: [
+                                    IDENT@47..48 "a" [] [],
+                                ],
+                            },
+                            excl_token: missing (optional),
+                            type_annotation: missing (optional),
+                            initializer: missing (optional),
+                        },
+                    ],
+                },
+                semicolon_token: SEMICOLON@48..49 ";" [] [],
+            },
+        },
+    ],
+    eof_token: EOF@49..50 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..50
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..49
+    0: JS_EXPORT@0..16
+      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      1: JS_EXPORT_VARIABLE_CLAUSE@7..16
+        0: JS_VARIABLE_DECLARATIONS@7..15
+          0: LET_KW@7..11 "let" [] [Whitespace(" ")]
+          1: JS_VARIABLE_DECLARATION_LIST@11..15
+            0: JS_VARIABLE_DECLARATION@11..15
+              0: JS_IDENTIFIER_BINDING@11..13
+                0: IDENT@11..13 "a" [] [Whitespace(" ")]
+              1: (empty)
+              2: (empty)
+              3: JS_INITIALIZER_CLAUSE@13..15
+                0: EQ@13..15 "=" [] [Whitespace(" ")]
+                1: (empty)
+        1: SEMICOLON@15..16 ";" [] []
+    1: JS_EXPORT@16..32
+      0: EXPORT_KW@16..24 "export" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_VARIABLE_CLAUSE@24..32
+        0: JS_VARIABLE_DECLARATIONS@24..31
+          0: CONST_KW@24..30 "const" [] [Whitespace(" ")]
+          1: JS_VARIABLE_DECLARATION_LIST@30..31
+            0: JS_VARIABLE_DECLARATION@30..31
+              0: JS_IDENTIFIER_BINDING@30..31
+                0: IDENT@30..31 "b" [] []
+              1: (empty)
+              2: (empty)
+              3: (empty)
+        1: SEMICOLON@31..32 ";" [] []
+    2: JS_EXPORT@32..49
+      0: EXPORT_KW@32..40 "export" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_VARIABLE_CLAUSE@40..49
+        0: JS_VARIABLE_DECLARATIONS@40..48
+          0: LET_KW@40..44 "let" [] [Whitespace(" ")]
+          1: JS_VARIABLE_DECLARATION_LIST@44..48
+            0: JS_VARIABLE_DECLARATION@44..45
+              0: JS_IDENTIFIER_BINDING@44..45
+                0: IDENT@44..45 "a" [] []
+              1: (empty)
+              2: (empty)
+              3: (empty)
+            1: COMMA@45..47 "," [] [Whitespace(" ")]
+            2: JS_VARIABLE_DECLARATION@47..48
+              0: JS_UNKNOWN_BINDING@47..48
+                0: IDENT@47..48 "a" [] []
+              1: (empty)
+              2: (empty)
+              3: (empty)
+        1: SEMICOLON@48..49 ";" [] []
+  3: EOF@49..50 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: expected an expression, or an assignment but instead found ';'
+  ┌─ export_variable_clause_error.js:1:16
+  │
+1 │ export let a = ;
+  │                ^ Expected an expression, or an assignment here
+
+--
+error[SyntaxError]: Const var declarations must have an initialized value
+  ┌─ export_variable_clause_error.js:2:14
+  │
+2 │ export const b;
+  │              ^ this variable needs to be initialized
+
+--
+error[SyntaxError]: Declarations inside of a `let` declaration may not have duplicates
+  ┌─ export_variable_clause_error.js:3:15
+  │
+3 │ export let a, a;
+  │            -  ^ a second declaration of `a` is not allowed
+  │            │   
+  │            `a` is first declared here
+
+--
+export let a = ;
+export const b;
+export let a, a;

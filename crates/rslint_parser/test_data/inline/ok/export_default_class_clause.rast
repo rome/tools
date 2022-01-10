@@ -7,107 +7,31 @@ JsModule {
             export_clause: JsExportDefaultClassClause {
                 default_token: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")],
                 class_token: CLASS_KW@15..21 "class" [] [Whitespace(" ")],
-                id: JsIdentifierBinding {
-                    name_token: IDENT@21..23 "A" [] [Whitespace(" ")],
-                },
+                id: missing (optional),
                 extends_clause: missing (optional),
                 implements_clause: missing (optional),
-                l_curly_token: L_CURLY@23..24 "{" [] [],
+                l_curly_token: L_CURLY@21..22 "{" [] [],
                 members: JsClassMemberList [],
-                r_curly_token: R_CURLY@24..25 "}" [] [],
-            },
-        },
-        JsExport {
-            export_token: EXPORT_KW@25..33 "export" [Whitespace("\n")] [Whitespace(" ")],
-            export_clause: JsExportDefaultClassClause {
-                default_token: DEFAULT_KW@33..41 "default" [] [Whitespace(" ")],
-                class_token: CLASS_KW@41..47 "class" [] [Whitespace(" ")],
-                id: JsIdentifierBinding {
-                    name_token: IDENT@47..49 "A" [] [Whitespace(" ")],
-                },
-                extends_clause: JsExtendsClause {
-                    extends_token: EXTENDS_KW@49..57 "extends" [] [Whitespace(" ")],
-                    super_class: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@57..59 "B" [] [Whitespace(" ")],
-                        },
-                    },
-                },
-                implements_clause: missing (optional),
-                l_curly_token: L_CURLY@59..60 "{" [] [],
-                members: JsClassMemberList [],
-                r_curly_token: R_CURLY@60..61 "}" [] [],
-            },
-        },
-        JsExport {
-            export_token: EXPORT_KW@61..69 "export" [Whitespace("\n")] [Whitespace(" ")],
-            export_clause: JsExportDefaultClassClause {
-                default_token: DEFAULT_KW@69..77 "default" [] [Whitespace(" ")],
-                class_token: CLASS_KW@77..83 "class" [] [Whitespace(" ")],
-                id: missing (optional),
-                extends_clause: JsExtendsClause {
-                    extends_token: EXTENDS_KW@83..91 "extends" [] [Whitespace(" ")],
-                    super_class: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@91..93 "B" [] [Whitespace(" ")],
-                        },
-                    },
-                },
-                implements_clause: missing (optional),
-                l_curly_token: L_CURLY@93..94 "{" [] [],
-                members: JsClassMemberList [],
-                r_curly_token: R_CURLY@94..95 "}" [] [],
+                r_curly_token: R_CURLY@22..23 "}" [] [],
             },
         },
     ],
-    eof_token: EOF@95..96 "" [Whitespace("\n")] [],
+    eof_token: EOF@23..24 "" [Whitespace("\n")] [],
 }
 
-0: JS_MODULE@0..96
+0: JS_MODULE@0..24
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..95
-    0: JS_EXPORT@0..25
+  2: JS_MODULE_ITEM_LIST@0..23
+    0: JS_EXPORT@0..23
       0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: JS_EXPORT_DEFAULT_CLASS_CLAUSE@7..25
+      1: JS_EXPORT_DEFAULT_CLASS_CLAUSE@7..23
         0: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")]
         1: CLASS_KW@15..21 "class" [] [Whitespace(" ")]
-        2: JS_IDENTIFIER_BINDING@21..23
-          0: IDENT@21..23 "A" [] [Whitespace(" ")]
+        2: (empty)
         3: (empty)
         4: (empty)
-        5: L_CURLY@23..24 "{" [] []
-        6: JS_CLASS_MEMBER_LIST@24..24
-        7: R_CURLY@24..25 "}" [] []
-    1: JS_EXPORT@25..61
-      0: EXPORT_KW@25..33 "export" [Whitespace("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_DEFAULT_CLASS_CLAUSE@33..61
-        0: DEFAULT_KW@33..41 "default" [] [Whitespace(" ")]
-        1: CLASS_KW@41..47 "class" [] [Whitespace(" ")]
-        2: JS_IDENTIFIER_BINDING@47..49
-          0: IDENT@47..49 "A" [] [Whitespace(" ")]
-        3: JS_EXTENDS_CLAUSE@49..59
-          0: EXTENDS_KW@49..57 "extends" [] [Whitespace(" ")]
-          1: JS_IDENTIFIER_EXPRESSION@57..59
-            0: JS_REFERENCE_IDENTIFIER@57..59
-              0: IDENT@57..59 "B" [] [Whitespace(" ")]
-        4: (empty)
-        5: L_CURLY@59..60 "{" [] []
-        6: JS_CLASS_MEMBER_LIST@60..60
-        7: R_CURLY@60..61 "}" [] []
-    2: JS_EXPORT@61..95
-      0: EXPORT_KW@61..69 "export" [Whitespace("\n")] [Whitespace(" ")]
-      1: JS_EXPORT_DEFAULT_CLASS_CLAUSE@69..95
-        0: DEFAULT_KW@69..77 "default" [] [Whitespace(" ")]
-        1: CLASS_KW@77..83 "class" [] [Whitespace(" ")]
-        2: (empty)
-        3: JS_EXTENDS_CLAUSE@83..93
-          0: EXTENDS_KW@83..91 "extends" [] [Whitespace(" ")]
-          1: JS_IDENTIFIER_EXPRESSION@91..93
-            0: JS_REFERENCE_IDENTIFIER@91..93
-              0: IDENT@91..93 "B" [] [Whitespace(" ")]
-        4: (empty)
-        5: L_CURLY@93..94 "{" [] []
-        6: JS_CLASS_MEMBER_LIST@94..94
-        7: R_CURLY@94..95 "}" [] []
-  3: EOF@95..96 "" [Whitespace("\n")] []
+        5: L_CURLY@21..22 "{" [] []
+        6: JS_CLASS_MEMBER_LIST@22..22
+        7: R_CURLY@22..23 "}" [] []
+  3: EOF@23..24 "" [Whitespace("\n")] []

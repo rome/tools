@@ -1,0 +1,98 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsImport {
+            import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
+            import_clause: JsImportNamedClause {
+                default_specifier: missing (optional),
+                named_import: JsNamedImportSpecifiers {
+                    l_curly_token: L_CURLY@7..9 "{" [] [Whitespace(" ")],
+                    specifiers: JsNamedImportSpecifierList [
+                        JsShorthandNamedImportSpecifier {
+                            local_name: JsIdentifierBinding {
+                                name_token: IDENT@9..12 "as" [] [Whitespace(" ")],
+                            },
+                        },
+                    ],
+                    r_curly_token: R_CURLY@12..14 "}" [] [Whitespace(" ")],
+                },
+                from_token: FROM_KW@14..19 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@19..25 "\"test\"" [] [],
+                },
+                assertion: missing (optional),
+            },
+            semicolon_token: SEMICOLON@25..26 ";" [] [],
+        },
+        JsImport {
+            import_token: IMPORT_KW@26..34 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_clause: JsImportNamedClause {
+                default_specifier: missing (optional),
+                named_import: JsNamedImportSpecifiers {
+                    l_curly_token: L_CURLY@34..36 "{" [] [Whitespace(" ")],
+                    specifiers: JsNamedImportSpecifierList [
+                        JsNamedImportSpecifier {
+                            name: JsLiteralExportName {
+                                value: IDENT@36..39 "as" [] [Whitespace(" ")],
+                            },
+                            as_token: AS_KW@39..42 "as" [] [Whitespace(" ")],
+                            local_name: JsIdentifierBinding {
+                                name_token: IDENT@42..45 "as" [] [Whitespace(" ")],
+                            },
+                        },
+                    ],
+                    r_curly_token: R_CURLY@45..47 "}" [] [Whitespace(" ")],
+                },
+                from_token: FROM_KW@47..52 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@52..58 "\"test\"" [] [],
+                },
+                assertion: missing (optional),
+            },
+            semicolon_token: SEMICOLON@58..59 ";" [] [],
+        },
+    ],
+    eof_token: EOF@59..60 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..60
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..59
+    0: JS_IMPORT@0..26
+      0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
+      1: JS_IMPORT_NAMED_CLAUSE@7..25
+        0: (empty)
+        1: JS_NAMED_IMPORT_SPECIFIERS@7..14
+          0: L_CURLY@7..9 "{" [] [Whitespace(" ")]
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@9..12
+            0: JS_SHORTHAND_NAMED_IMPORT_SPECIFIER@9..12
+              0: JS_IDENTIFIER_BINDING@9..12
+                0: IDENT@9..12 "as" [] [Whitespace(" ")]
+          2: R_CURLY@12..14 "}" [] [Whitespace(" ")]
+        2: FROM_KW@14..19 "from" [] [Whitespace(" ")]
+        3: JS_MODULE_SOURCE@19..25
+          0: JS_STRING_LITERAL@19..25 "\"test\"" [] []
+        4: (empty)
+      2: SEMICOLON@25..26 ";" [] []
+    1: JS_IMPORT@26..59
+      0: IMPORT_KW@26..34 "import" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IMPORT_NAMED_CLAUSE@34..58
+        0: (empty)
+        1: JS_NAMED_IMPORT_SPECIFIERS@34..47
+          0: L_CURLY@34..36 "{" [] [Whitespace(" ")]
+          1: JS_NAMED_IMPORT_SPECIFIER_LIST@36..45
+            0: JS_NAMED_IMPORT_SPECIFIER@36..45
+              0: JS_LITERAL_EXPORT_NAME@36..39
+                0: IDENT@36..39 "as" [] [Whitespace(" ")]
+              1: AS_KW@39..42 "as" [] [Whitespace(" ")]
+              2: JS_IDENTIFIER_BINDING@42..45
+                0: IDENT@42..45 "as" [] [Whitespace(" ")]
+          2: R_CURLY@45..47 "}" [] [Whitespace(" ")]
+        2: FROM_KW@47..52 "from" [] [Whitespace(" ")]
+        3: JS_MODULE_SOURCE@52..58
+          0: JS_STRING_LITERAL@52..58 "\"test\"" [] []
+        4: (empty)
+      2: SEMICOLON@58..59 ";" [] []
+  3: EOF@59..60 "" [Whitespace("\n")] []

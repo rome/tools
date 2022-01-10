@@ -1,0 +1,168 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExport {
+            export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
+            export_clause: JsExportDefaultExpressionClause {
+                default_token: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")],
+                expression: JsParenthesizedExpression {
+                    l_paren_token: L_PAREN@15..16 "(" [] [],
+                    expression: JsClassExpression {
+                        class_token: CLASS_KW@16..22 "class" [] [Whitespace(" ")],
+                        id: missing (optional),
+                        extends_clause: missing (optional),
+                        implements_clause: missing (optional),
+                        l_curly_token: L_CURLY@22..23 "{" [] [],
+                        members: JsClassMemberList [],
+                        r_curly_token: R_CURLY@23..24 "}" [] [],
+                    },
+                    r_paren_token: R_PAREN@24..25 ")" [] [],
+                },
+                semicolon_token: missing (optional),
+            },
+        },
+        JsUnknownStatement {
+            items: [
+                EXPORT_KW@25..33 "export" [Whitespace("\n")] [Whitespace(" ")],
+                JsUnknown {
+                    items: [
+                        DEFAULT_KW@33..41 "default" [] [Whitespace(" ")],
+                        JsBinaryExpression {
+                            left: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@41..43 "a" [] [Whitespace(" ")],
+                                },
+                            },
+                            operator: PLUS@43..45 "+" [] [Whitespace(" ")],
+                            right: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@45..46 "b" [] [],
+                                },
+                            },
+                        },
+                        SEMICOLON@46..47 ";" [] [],
+                    ],
+                },
+            ],
+        },
+        JsUnknownStatement {
+            items: [
+                EXPORT_KW@47..55 "export" [Whitespace("\n")] [Whitespace(" ")],
+                JsUnknown {
+                    items: [
+                        DEFAULT_KW@55..63 "default" [] [Whitespace(" ")],
+                        JsParenthesizedExpression {
+                            l_paren_token: L_PAREN@63..64 "(" [] [],
+                            expression: JsFunctionExpression {
+                                async_token: missing (optional),
+                                function_token: FUNCTION_KW@64..73 "function" [] [Whitespace(" ")],
+                                star_token: missing (optional),
+                                id: JsIdentifierBinding {
+                                    name_token: IDENT@73..74 "a" [] [],
+                                },
+                                type_parameters: missing (optional),
+                                parameters: JsParameters {
+                                    l_paren_token: L_PAREN@74..75 "(" [] [],
+                                    items: JsParameterList [],
+                                    r_paren_token: R_PAREN@75..77 ")" [] [Whitespace(" ")],
+                                },
+                                return_type: missing (optional),
+                                body: JsFunctionBody {
+                                    l_curly_token: L_CURLY@77..78 "{" [] [],
+                                    directives: JsDirectiveList [],
+                                    statements: JsStatementList [],
+                                    r_curly_token: R_CURLY@78..79 "}" [] [],
+                                },
+                            },
+                            r_paren_token: R_PAREN@79..80 ")" [] [],
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+    eof_token: EOF@80..81 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..81
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..80
+    0: JS_EXPORT@0..25
+      0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
+      1: JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE@7..25
+        0: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")]
+        1: JS_PARENTHESIZED_EXPRESSION@15..25
+          0: L_PAREN@15..16 "(" [] []
+          1: JS_CLASS_EXPRESSION@16..24
+            0: CLASS_KW@16..22 "class" [] [Whitespace(" ")]
+            1: (empty)
+            2: (empty)
+            3: (empty)
+            4: L_CURLY@22..23 "{" [] []
+            5: JS_CLASS_MEMBER_LIST@23..23
+            6: R_CURLY@23..24 "}" [] []
+          2: R_PAREN@24..25 ")" [] []
+        2: (empty)
+    1: JS_UNKNOWN_STATEMENT@25..47
+      0: EXPORT_KW@25..33 "export" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_UNKNOWN@33..47
+        0: DEFAULT_KW@33..41 "default" [] [Whitespace(" ")]
+        1: JS_BINARY_EXPRESSION@41..46
+          0: JS_IDENTIFIER_EXPRESSION@41..43
+            0: JS_REFERENCE_IDENTIFIER@41..43
+              0: IDENT@41..43 "a" [] [Whitespace(" ")]
+          1: PLUS@43..45 "+" [] [Whitespace(" ")]
+          2: JS_IDENTIFIER_EXPRESSION@45..46
+            0: JS_REFERENCE_IDENTIFIER@45..46
+              0: IDENT@45..46 "b" [] []
+        2: SEMICOLON@46..47 ";" [] []
+    2: JS_UNKNOWN_STATEMENT@47..80
+      0: EXPORT_KW@47..55 "export" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_UNKNOWN@55..80
+        0: DEFAULT_KW@55..63 "default" [] [Whitespace(" ")]
+        1: JS_PARENTHESIZED_EXPRESSION@63..80
+          0: L_PAREN@63..64 "(" [] []
+          1: JS_FUNCTION_EXPRESSION@64..79
+            0: (empty)
+            1: FUNCTION_KW@64..73 "function" [] [Whitespace(" ")]
+            2: (empty)
+            3: JS_IDENTIFIER_BINDING@73..74
+              0: IDENT@73..74 "a" [] []
+            4: (empty)
+            5: JS_PARAMETERS@74..77
+              0: L_PAREN@74..75 "(" [] []
+              1: JS_PARAMETER_LIST@75..75
+              2: R_PAREN@75..77 ")" [] [Whitespace(" ")]
+            6: (empty)
+            7: JS_FUNCTION_BODY@77..79
+              0: L_CURLY@77..78 "{" [] []
+              1: JS_DIRECTIVE_LIST@78..78
+              2: JS_STATEMENT_LIST@78..78
+              3: R_CURLY@78..79 "}" [] []
+          2: R_PAREN@79..80 ")" [] []
+  3: EOF@80..81 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: Illegal duplicate default export declarations
+  ┌─ multiple_default_exports_err.js:2:8
+  │
+1 │ export default (class {})
+  │        ------------------ the module's default export is first defined here
+2 │ export default a + b;
+  │        ^^^^^^^^^^^^^^ multiple default exports are erroneous
+
+--
+error[SyntaxError]: Illegal duplicate default export declarations
+  ┌─ multiple_default_exports_err.js:3:8
+  │
+1 │ export default (class {})
+  │        ------------------ the module's default export is first defined here
+2 │ export default a + b;
+3 │ export default (function a() {})
+  │        ^^^^^^^^^^^^^^^^^^^^^^^^^ multiple default exports are erroneous
+
+--
+export default (class {})
+export default a + b;
+export default (function a() {})

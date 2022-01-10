@@ -8,16 +8,6 @@ use crate::syntax::module::parse_module_body;
 use crate::syntax::stmt::directives;
 use crate::{JsSyntaxKind::*, *};
 
-#[macro_export]
-macro_rules! at_ident_name {
-    ($p:expr) => {
-        ($p.at_ts(token_set![T![ident], T![await], T![yield]]) || $p.cur().is_keyword())
-    };
-    ($p:expr, $offset:expr) => {
-        (token_set![T![ident], T![await], T![yield]].contains($p.nth($offset)) || $p.nth($offset).is_keyword())
-    }
-}
-
 // test_err unterminated_unicode_codepoint
 // let s = "\u{200";
 

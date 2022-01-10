@@ -746,10 +746,11 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 pub(crate) fn is_at_variable_declarations(p: &Parser) -> bool {
-	matches!(p.cur(),
-		T![var] | T![const] |
-		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1))
-	)
+	match p.cur() {
+		T![var] | T![const] => true,
+		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => true,
+		_ => false,
+	}
 }
 
 /// A var, const, or let declaration statement such as `var a = 5, b;` or `let {a, b} = foo;`

@@ -6,7 +6,7 @@ use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
 use crate::syntax::binding::parse_binding;
-use crate::syntax::expr::parse_any_name;
+use crate::syntax::expr::{is_at_name, parse_any_name};
 use crate::syntax::js_parse_error;
 use crate::{JsSyntaxKind::*, *};
 
@@ -609,7 +609,7 @@ pub fn ts_tuple(p: &mut Parser) -> Option<CompletedMarker> {
 		let m = p.start();
 		let rest_range = p.cur_tok().range();
 		let rest = p.eat(T![...]);
-		let name = if crate::at_ident_name!(p)
+		let name = if is_at_name(p)
 			&& !DISALLOWED_TYPE_NAMES.contains(&p.cur_src())
 			&& (p.nth_at(1, T![:]) || (p.nth_at(1, T![?]) && p.nth_at(2, T![:])))
 		{
