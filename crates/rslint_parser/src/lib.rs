@@ -73,6 +73,7 @@ mod tests;
 
 #[macro_use]
 pub mod ast;
+pub mod make;
 pub mod syntax;
 pub mod util;
 
@@ -91,7 +92,7 @@ pub use crate::{
 	util::{SyntaxNodeExt, SyntaxTokenExt},
 };
 
-pub use rome_rowan::{SyntaxText, TextRange, TextSize, WalkEvent};
+pub use rome_rowan::{SyntaxText, TextRange, TextSize, TokenAtOffset, WalkEvent};
 
 pub use rslint_syntax::*;
 

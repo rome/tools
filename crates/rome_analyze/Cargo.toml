@@ -1,0 +1,14 @@
+[package]
+name = "rome_analyze"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rslint_parser = { path = "../rslint_parser" }
+salsa = "0.17.0-pre.1"
+anyhow = "1.0.35"
+once_cell = "1"
+tracing = { version = "0.1", features = ["max_level_trace"] }
+rslint_errors = { path = "../rslint_errors", version = "0.2.0" }

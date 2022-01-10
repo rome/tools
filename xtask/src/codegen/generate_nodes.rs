@@ -139,6 +139,18 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 								.finish()
 						}
 					}
+
+					impl From<#name> for SyntaxNode {
+						fn from(n: #name) -> SyntaxNode {
+							n.syntax
+						}
+					}
+
+					impl From<#name> for SyntaxElement {
+						fn from(n: #name) -> SyntaxElement {
+							n.syntax.into()
+						}
+					}
 				},
 			)
 		})
@@ -304,10 +316,11 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				})
 				.collect();
 
-			let all_variant_names = union
+			let all_variant_names: Vec<_> = union
 				.variants
 				.iter()
-				.map(|variant| format_ident!("{}", variant));
+				.map(|variant| format_ident!("{}", variant))
+				.collect();
 
 			(
 				quote! {
@@ -354,6 +367,23 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 							)*
 						}
 							}
+					}
+
+					impl From<#name> for SyntaxNode {
+						fn from(n: #name) -> SyntaxNode {
+							match n {
+								#(
+								#name::#all_variant_names(it) => it.into(),
+								)*
+							}
+						}
+					}
+
+					impl From<#name> for SyntaxElement {
+						fn from(n: #name) -> SyntaxElement {
+							let node: SyntaxNode = n.into();
+							node.into()
+						}
 					}
 				},
 			)
@@ -415,6 +445,18 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					f.debug_struct(#string_name)
 						.field("items", &support::DebugSyntaxElementChildren(self.items()))
 						.finish()
+				}
+			}
+
+			impl From<#name> for SyntaxNode {
+				fn from(n: #name) -> SyntaxNode {
+					n.syntax
+				}
+			}
+
+			impl From<#name> for SyntaxElement {
+				fn from(n: #name) -> SyntaxElement {
+					n.syntax.into()
 				}
 			}
 		}
