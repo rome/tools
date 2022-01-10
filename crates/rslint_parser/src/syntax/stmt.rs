@@ -980,10 +980,32 @@ fn parse_variable_declaration(
 				}
 			}
 			if let Some(initializer) = initializer {
-				// Initializers are disallowed in strict mode for `for..in`
-				// and `for..of`, except for `for(var ... in ...)`
+				// Initializers are disallowed for `for..in` and `for..of`,
+				// except for `for(var ... in ...)` in loose mode
+
+				// test for_in_initializer_loose_mode
+				// // SCRIPT
+				// for (var i = 0 in []) {}
+
+				// test_err for_in_and_of_initializer_loose_mode
+				// // SCRIPT
+				// for (let i = 0 in []) {}
+				// for (const i = 0 in []) {}
+				// for (var i = 0 of []) {}
+				// for (let i = 0 of []) {}
+				// for (const i = 0 of []) {}
+
+				// test_err for_in_and_of_initializer_strict_mode
+				// for (var i = 0 in []) {}
+				// for (let i = 0 in []) {}
+				// for (const i = 0 in []) {}
+				// for (var i = 0 of []) {}
+				// for (let i = 0 of []) {}
+				// for (const i = 0 of []) {}
+
 				let is_strict = StrictMode.is_supported(p);
 				let is_var = !context.is_let && context.is_const.is_none();
+
 				if is_strict || !is_in_for_in || !is_var {
 					let err = p
 						.err_builder(if is_in_for_in {

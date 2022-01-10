@@ -1,0 +1,404 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsForInStatement {
+            for_token: FOR_KW@0..4 "for" [] [Whitespace(" ")],
+            l_paren_token: L_PAREN@4..5 "(" [] [],
+            initializer: JsForVariableDeclaration {
+                kind_token: VAR_KW@5..9 "var" [] [Whitespace(" ")],
+                declaration: JsVariableDeclaration {
+                    id: JsIdentifierBinding {
+                        name_token: IDENT@9..11 "i" [] [Whitespace(" ")],
+                    },
+                    excl_token: missing (optional),
+                    type_annotation: missing (optional),
+                    initializer: JsInitializerClause {
+                        eq_token: EQ@11..13 "=" [] [Whitespace(" ")],
+                        expression: JsNumberLiteralExpression {
+                            value_token: JS_NUMBER_LITERAL@13..15 "0" [] [Whitespace(" ")],
+                        },
+                    },
+                },
+            },
+            in_token: IN_KW@15..18 "in" [] [Whitespace(" ")],
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@18..19 "[" [] [],
+                elements: JsArrayElementList [],
+                r_brack_token: R_BRACK@19..20 "]" [] [],
+            },
+            r_paren_token: R_PAREN@20..22 ")" [] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@22..23 "{" [] [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@23..24 "}" [] [],
+            },
+        },
+        JsForInStatement {
+            for_token: FOR_KW@24..29 "for" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@29..30 "(" [] [],
+            initializer: JsForVariableDeclaration {
+                kind_token: LET_KW@30..34 "let" [] [Whitespace(" ")],
+                declaration: JsVariableDeclaration {
+                    id: JsIdentifierBinding {
+                        name_token: IDENT@34..36 "i" [] [Whitespace(" ")],
+                    },
+                    excl_token: missing (optional),
+                    type_annotation: missing (optional),
+                    initializer: JsInitializerClause {
+                        eq_token: EQ@36..38 "=" [] [Whitespace(" ")],
+                        expression: JsNumberLiteralExpression {
+                            value_token: JS_NUMBER_LITERAL@38..40 "0" [] [Whitespace(" ")],
+                        },
+                    },
+                },
+            },
+            in_token: IN_KW@40..43 "in" [] [Whitespace(" ")],
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@43..44 "[" [] [],
+                elements: JsArrayElementList [],
+                r_brack_token: R_BRACK@44..45 "]" [] [],
+            },
+            r_paren_token: R_PAREN@45..47 ")" [] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@47..48 "{" [] [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@48..49 "}" [] [],
+            },
+        },
+        JsForInStatement {
+            for_token: FOR_KW@49..54 "for" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@54..55 "(" [] [],
+            initializer: JsForVariableDeclaration {
+                kind_token: CONST_KW@55..61 "const" [] [Whitespace(" ")],
+                declaration: JsVariableDeclaration {
+                    id: JsIdentifierBinding {
+                        name_token: IDENT@61..63 "i" [] [Whitespace(" ")],
+                    },
+                    excl_token: missing (optional),
+                    type_annotation: missing (optional),
+                    initializer: JsInitializerClause {
+                        eq_token: EQ@63..65 "=" [] [Whitespace(" ")],
+                        expression: JsNumberLiteralExpression {
+                            value_token: JS_NUMBER_LITERAL@65..67 "0" [] [Whitespace(" ")],
+                        },
+                    },
+                },
+            },
+            in_token: IN_KW@67..70 "in" [] [Whitespace(" ")],
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@70..71 "[" [] [],
+                elements: JsArrayElementList [],
+                r_brack_token: R_BRACK@71..72 "]" [] [],
+            },
+            r_paren_token: R_PAREN@72..74 ")" [] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@74..75 "{" [] [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@75..76 "}" [] [],
+            },
+        },
+        JsForOfStatement {
+            for_token: FOR_KW@76..81 "for" [Whitespace("\n")] [Whitespace(" ")],
+            await_token: missing (optional),
+            l_paren_token: L_PAREN@81..82 "(" [] [],
+            initializer: JsForVariableDeclaration {
+                kind_token: VAR_KW@82..86 "var" [] [Whitespace(" ")],
+                declaration: JsVariableDeclaration {
+                    id: JsIdentifierBinding {
+                        name_token: IDENT@86..88 "i" [] [Whitespace(" ")],
+                    },
+                    excl_token: missing (optional),
+                    type_annotation: missing (optional),
+                    initializer: JsInitializerClause {
+                        eq_token: EQ@88..90 "=" [] [Whitespace(" ")],
+                        expression: JsNumberLiteralExpression {
+                            value_token: JS_NUMBER_LITERAL@90..92 "0" [] [Whitespace(" ")],
+                        },
+                    },
+                },
+            },
+            of_token: OF_KW@92..95 "of" [] [Whitespace(" ")],
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@95..96 "[" [] [],
+                elements: JsArrayElementList [],
+                r_brack_token: R_BRACK@96..97 "]" [] [],
+            },
+            r_paren_token: R_PAREN@97..99 ")" [] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@99..100 "{" [] [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@100..101 "}" [] [],
+            },
+        },
+        JsForOfStatement {
+            for_token: FOR_KW@101..106 "for" [Whitespace("\n")] [Whitespace(" ")],
+            await_token: missing (optional),
+            l_paren_token: L_PAREN@106..107 "(" [] [],
+            initializer: JsForVariableDeclaration {
+                kind_token: LET_KW@107..111 "let" [] [Whitespace(" ")],
+                declaration: JsVariableDeclaration {
+                    id: JsIdentifierBinding {
+                        name_token: IDENT@111..113 "i" [] [Whitespace(" ")],
+                    },
+                    excl_token: missing (optional),
+                    type_annotation: missing (optional),
+                    initializer: JsInitializerClause {
+                        eq_token: EQ@113..115 "=" [] [Whitespace(" ")],
+                        expression: JsNumberLiteralExpression {
+                            value_token: JS_NUMBER_LITERAL@115..117 "0" [] [Whitespace(" ")],
+                        },
+                    },
+                },
+            },
+            of_token: OF_KW@117..120 "of" [] [Whitespace(" ")],
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@120..121 "[" [] [],
+                elements: JsArrayElementList [],
+                r_brack_token: R_BRACK@121..122 "]" [] [],
+            },
+            r_paren_token: R_PAREN@122..124 ")" [] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@124..125 "{" [] [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@125..126 "}" [] [],
+            },
+        },
+        JsForOfStatement {
+            for_token: FOR_KW@126..131 "for" [Whitespace("\n")] [Whitespace(" ")],
+            await_token: missing (optional),
+            l_paren_token: L_PAREN@131..132 "(" [] [],
+            initializer: JsForVariableDeclaration {
+                kind_token: CONST_KW@132..138 "const" [] [Whitespace(" ")],
+                declaration: JsVariableDeclaration {
+                    id: JsIdentifierBinding {
+                        name_token: IDENT@138..140 "i" [] [Whitespace(" ")],
+                    },
+                    excl_token: missing (optional),
+                    type_annotation: missing (optional),
+                    initializer: JsInitializerClause {
+                        eq_token: EQ@140..142 "=" [] [Whitespace(" ")],
+                        expression: JsNumberLiteralExpression {
+                            value_token: JS_NUMBER_LITERAL@142..144 "0" [] [Whitespace(" ")],
+                        },
+                    },
+                },
+            },
+            of_token: OF_KW@144..147 "of" [] [Whitespace(" ")],
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@147..148 "[" [] [],
+                elements: JsArrayElementList [],
+                r_brack_token: R_BRACK@148..149 "]" [] [],
+            },
+            r_paren_token: R_PAREN@149..151 ")" [] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@151..152 "{" [] [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@152..153 "}" [] [],
+            },
+        },
+    ],
+    eof_token: EOF@153..154 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..154
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..153
+    0: JS_FOR_IN_STATEMENT@0..24
+      0: FOR_KW@0..4 "for" [] [Whitespace(" ")]
+      1: L_PAREN@4..5 "(" [] []
+      2: JS_FOR_VARIABLE_DECLARATION@5..15
+        0: VAR_KW@5..9 "var" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION@9..15
+          0: JS_IDENTIFIER_BINDING@9..11
+            0: IDENT@9..11 "i" [] [Whitespace(" ")]
+          1: (empty)
+          2: (empty)
+          3: JS_INITIALIZER_CLAUSE@11..15
+            0: EQ@11..13 "=" [] [Whitespace(" ")]
+            1: JS_NUMBER_LITERAL_EXPRESSION@13..15
+              0: JS_NUMBER_LITERAL@13..15 "0" [] [Whitespace(" ")]
+      3: IN_KW@15..18 "in" [] [Whitespace(" ")]
+      4: JS_ARRAY_EXPRESSION@18..20
+        0: L_BRACK@18..19 "[" [] []
+        1: JS_ARRAY_ELEMENT_LIST@19..19
+        2: R_BRACK@19..20 "]" [] []
+      5: R_PAREN@20..22 ")" [] [Whitespace(" ")]
+      6: JS_BLOCK_STATEMENT@22..24
+        0: L_CURLY@22..23 "{" [] []
+        1: JS_STATEMENT_LIST@23..23
+        2: R_CURLY@23..24 "}" [] []
+    1: JS_FOR_IN_STATEMENT@24..49
+      0: FOR_KW@24..29 "for" [Whitespace("\n")] [Whitespace(" ")]
+      1: L_PAREN@29..30 "(" [] []
+      2: JS_FOR_VARIABLE_DECLARATION@30..40
+        0: LET_KW@30..34 "let" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION@34..40
+          0: JS_IDENTIFIER_BINDING@34..36
+            0: IDENT@34..36 "i" [] [Whitespace(" ")]
+          1: (empty)
+          2: (empty)
+          3: JS_INITIALIZER_CLAUSE@36..40
+            0: EQ@36..38 "=" [] [Whitespace(" ")]
+            1: JS_NUMBER_LITERAL_EXPRESSION@38..40
+              0: JS_NUMBER_LITERAL@38..40 "0" [] [Whitespace(" ")]
+      3: IN_KW@40..43 "in" [] [Whitespace(" ")]
+      4: JS_ARRAY_EXPRESSION@43..45
+        0: L_BRACK@43..44 "[" [] []
+        1: JS_ARRAY_ELEMENT_LIST@44..44
+        2: R_BRACK@44..45 "]" [] []
+      5: R_PAREN@45..47 ")" [] [Whitespace(" ")]
+      6: JS_BLOCK_STATEMENT@47..49
+        0: L_CURLY@47..48 "{" [] []
+        1: JS_STATEMENT_LIST@48..48
+        2: R_CURLY@48..49 "}" [] []
+    2: JS_FOR_IN_STATEMENT@49..76
+      0: FOR_KW@49..54 "for" [Whitespace("\n")] [Whitespace(" ")]
+      1: L_PAREN@54..55 "(" [] []
+      2: JS_FOR_VARIABLE_DECLARATION@55..67
+        0: CONST_KW@55..61 "const" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION@61..67
+          0: JS_IDENTIFIER_BINDING@61..63
+            0: IDENT@61..63 "i" [] [Whitespace(" ")]
+          1: (empty)
+          2: (empty)
+          3: JS_INITIALIZER_CLAUSE@63..67
+            0: EQ@63..65 "=" [] [Whitespace(" ")]
+            1: JS_NUMBER_LITERAL_EXPRESSION@65..67
+              0: JS_NUMBER_LITERAL@65..67 "0" [] [Whitespace(" ")]
+      3: IN_KW@67..70 "in" [] [Whitespace(" ")]
+      4: JS_ARRAY_EXPRESSION@70..72
+        0: L_BRACK@70..71 "[" [] []
+        1: JS_ARRAY_ELEMENT_LIST@71..71
+        2: R_BRACK@71..72 "]" [] []
+      5: R_PAREN@72..74 ")" [] [Whitespace(" ")]
+      6: JS_BLOCK_STATEMENT@74..76
+        0: L_CURLY@74..75 "{" [] []
+        1: JS_STATEMENT_LIST@75..75
+        2: R_CURLY@75..76 "}" [] []
+    3: JS_FOR_OF_STATEMENT@76..101
+      0: FOR_KW@76..81 "for" [Whitespace("\n")] [Whitespace(" ")]
+      1: (empty)
+      2: L_PAREN@81..82 "(" [] []
+      3: JS_FOR_VARIABLE_DECLARATION@82..92
+        0: VAR_KW@82..86 "var" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION@86..92
+          0: JS_IDENTIFIER_BINDING@86..88
+            0: IDENT@86..88 "i" [] [Whitespace(" ")]
+          1: (empty)
+          2: (empty)
+          3: JS_INITIALIZER_CLAUSE@88..92
+            0: EQ@88..90 "=" [] [Whitespace(" ")]
+            1: JS_NUMBER_LITERAL_EXPRESSION@90..92
+              0: JS_NUMBER_LITERAL@90..92 "0" [] [Whitespace(" ")]
+      4: OF_KW@92..95 "of" [] [Whitespace(" ")]
+      5: JS_ARRAY_EXPRESSION@95..97
+        0: L_BRACK@95..96 "[" [] []
+        1: JS_ARRAY_ELEMENT_LIST@96..96
+        2: R_BRACK@96..97 "]" [] []
+      6: R_PAREN@97..99 ")" [] [Whitespace(" ")]
+      7: JS_BLOCK_STATEMENT@99..101
+        0: L_CURLY@99..100 "{" [] []
+        1: JS_STATEMENT_LIST@100..100
+        2: R_CURLY@100..101 "}" [] []
+    4: JS_FOR_OF_STATEMENT@101..126
+      0: FOR_KW@101..106 "for" [Whitespace("\n")] [Whitespace(" ")]
+      1: (empty)
+      2: L_PAREN@106..107 "(" [] []
+      3: JS_FOR_VARIABLE_DECLARATION@107..117
+        0: LET_KW@107..111 "let" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION@111..117
+          0: JS_IDENTIFIER_BINDING@111..113
+            0: IDENT@111..113 "i" [] [Whitespace(" ")]
+          1: (empty)
+          2: (empty)
+          3: JS_INITIALIZER_CLAUSE@113..117
+            0: EQ@113..115 "=" [] [Whitespace(" ")]
+            1: JS_NUMBER_LITERAL_EXPRESSION@115..117
+              0: JS_NUMBER_LITERAL@115..117 "0" [] [Whitespace(" ")]
+      4: OF_KW@117..120 "of" [] [Whitespace(" ")]
+      5: JS_ARRAY_EXPRESSION@120..122
+        0: L_BRACK@120..121 "[" [] []
+        1: JS_ARRAY_ELEMENT_LIST@121..121
+        2: R_BRACK@121..122 "]" [] []
+      6: R_PAREN@122..124 ")" [] [Whitespace(" ")]
+      7: JS_BLOCK_STATEMENT@124..126
+        0: L_CURLY@124..125 "{" [] []
+        1: JS_STATEMENT_LIST@125..125
+        2: R_CURLY@125..126 "}" [] []
+    5: JS_FOR_OF_STATEMENT@126..153
+      0: FOR_KW@126..131 "for" [Whitespace("\n")] [Whitespace(" ")]
+      1: (empty)
+      2: L_PAREN@131..132 "(" [] []
+      3: JS_FOR_VARIABLE_DECLARATION@132..144
+        0: CONST_KW@132..138 "const" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION@138..144
+          0: JS_IDENTIFIER_BINDING@138..140
+            0: IDENT@138..140 "i" [] [Whitespace(" ")]
+          1: (empty)
+          2: (empty)
+          3: JS_INITIALIZER_CLAUSE@140..144
+            0: EQ@140..142 "=" [] [Whitespace(" ")]
+            1: JS_NUMBER_LITERAL_EXPRESSION@142..144
+              0: JS_NUMBER_LITERAL@142..144 "0" [] [Whitespace(" ")]
+      4: OF_KW@144..147 "of" [] [Whitespace(" ")]
+      5: JS_ARRAY_EXPRESSION@147..149
+        0: L_BRACK@147..148 "[" [] []
+        1: JS_ARRAY_ELEMENT_LIST@148..148
+        2: R_BRACK@148..149 "]" [] []
+      6: R_PAREN@149..151 ")" [] [Whitespace(" ")]
+      7: JS_BLOCK_STATEMENT@151..153
+        0: L_CURLY@151..152 "{" [] []
+        1: JS_STATEMENT_LIST@152..152
+        2: R_CURLY@152..153 "}" [] []
+  3: EOF@153..154 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: `for..in` statement declarators cannot have an initializer expression
+  ┌─ for_in_and_of_initializer_strict_mode.js:1:12
+  │
+1 │ for (var i = 0 in []) {}
+  │            ^^^
+
+--
+error[SyntaxError]: `for..in` statement declarators cannot have an initializer expression
+  ┌─ for_in_and_of_initializer_strict_mode.js:2:12
+  │
+2 │ for (let i = 0 in []) {}
+  │            ^^^
+
+--
+error[SyntaxError]: `for..in` statement declarators cannot have an initializer expression
+  ┌─ for_in_and_of_initializer_strict_mode.js:3:14
+  │
+3 │ for (const i = 0 in []) {}
+  │              ^^^
+
+--
+error[SyntaxError]: `for..of` statement declarators cannot have an initializer expression
+  ┌─ for_in_and_of_initializer_strict_mode.js:4:12
+  │
+4 │ for (var i = 0 of []) {}
+  │            ^^^
+
+--
+error[SyntaxError]: `for..of` statement declarators cannot have an initializer expression
+  ┌─ for_in_and_of_initializer_strict_mode.js:5:12
+  │
+5 │ for (let i = 0 of []) {}
+  │            ^^^
+
+--
+error[SyntaxError]: `for..of` statement declarators cannot have an initializer expression
+  ┌─ for_in_and_of_initializer_strict_mode.js:6:14
+  │
+6 │ for (const i = 0 of []) {}
+  │              ^^^
+
+--
+for (var i = 0 in []) {}
+for (let i = 0 in []) {}
+for (const i = 0 in []) {}
+for (var i = 0 of []) {}
+for (let i = 0 of []) {}
+for (const i = 0 of []) {}
