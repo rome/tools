@@ -20,9 +20,9 @@ impl JsVariableDeclarations {
 		self.variable_kind() == Ok(JsVariableKind::Let)
 	}
 
-	/// Whether the declaration is a let declaration
+	/// Whether the declaration is a var declaration
 	pub fn is_var(&self) -> bool {
-		self.variable_kind() == Ok(JsVariableKind::Const)
+		self.variable_kind() == Ok(JsVariableKind::Var)
 	}
 
 	pub fn variable_kind(&self) -> SyntaxResult<JsVariableKind> {
@@ -50,5 +50,15 @@ mod tests {
 			.find_map(|stmt| ast::JsVariableStatement::cast(stmt.syntax().clone()));
 
 		assert!(var_decl.is_some());
+	}
+
+	#[test]
+	fn is_var_check() {
+		let root = parse_text("var a = 5;", 0).syntax();
+		let var_decl = root
+			.descendants()
+			.find_map(ast::JsVariableDeclarations::cast);
+
+		assert!(var_decl.unwrap().is_var());
 	}
 }
