@@ -222,26 +222,27 @@ pub fn test_trivia_attached_to_tokens() {
 
 	// first let leading trivia asserts
 	let pieces: Vec<_> = first_let.leading_trivia().pieces().collect();
-	matches!(pieces.get(0).map(|x| x.text()), Some("/**/"));
-	matches!(pieces.get(1), None);
+	assert!(matches!(pieces.get(0).map(|x| x.text()), Some("/**/")));
+	assert!(matches!(pieces.get(1), None));
 
 	// first let trailing trivia asserts
 	let pieces: Vec<_> = first_let.trailing_trivia().pieces().collect();
-	matches!(pieces.get(0).map(|x| x.text()), Some(" "));
-	matches!(pieces.get(1), None);
+	assert!(matches!(pieces.get(0).map(|x| x.text()), Some(" ")));
+	assert!(matches!(pieces.get(1), None));
 
 	// second let leading trivia asserts
 	let second_let = tokens.iter().filter(is_let).nth(1).unwrap();
 	let pieces: Vec<_> = second_let.leading_trivia().pieces().collect();
-	assert_eq!(3, pieces.len());
-	matches!(pieces.get(0).map(|x| x.text()), Some("\n "));
-	matches!(pieces.get(1).map(|x| x.text()), Some("/*hey*/"));
-	matches!(pieces.get(2).map(|x| x.text()), Some(" "));
+	assert_eq!(4, pieces.len());
+	assert!(matches!(pieces.get(0).map(|x| x.text()), Some("\n")));
+	assert!(matches!(pieces.get(1).map(|x| x.text()), Some(" ")));
+	assert!(matches!(pieces.get(2).map(|x| x.text()), Some("/*hey*/")));
+	assert!(matches!(pieces.get(3).map(|x| x.text()), Some(" ")));
 
 	// second let trailing trivia asserts
 	let pieces: Vec<_> = second_let.trailing_trivia().pieces().collect();
 	assert_eq!(1, pieces.len());
-	matches!(pieces.get(0).map(|x| x.text()), Some(" \t "));
+	assert!(matches!(pieces.get(0).map(|x| x.text()), Some(" \t ")));
 }
 
 #[test]

@@ -18,12 +18,12 @@ JsModule {
                     directives: JsDirectiveList [],
                     statements: JsStatementList [
                         JsReturnStatement {
-                            return_token: RETURN_KW@7..16 "return" [Whitespace("\n  ")] [],
+                            return_token: RETURN_KW@7..16 "return" [Whitespace("\n"), Whitespace("  ")] [],
                             argument: missing (optional),
                             semicolon_token: SEMICOLON@16..17 ";" [] [],
                         },
                         JsReturnStatement {
-                            return_token: RETURN_KW@17..27 "return" [Whitespace("\n  ")] [Whitespace(" ")],
+                            return_token: RETURN_KW@17..27 "return" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")],
                             argument: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@27..30 "foo" [] [],
@@ -32,7 +32,7 @@ JsModule {
                             semicolon_token: SEMICOLON@30..31 ";" [] [],
                         },
                         JsReturnStatement {
-                            return_token: RETURN_KW@31..40 "return" [Whitespace("\n  ")] [],
+                            return_token: RETURN_KW@31..40 "return" [Whitespace("\n"), Whitespace("  ")] [],
                             argument: missing (optional),
                             semicolon_token: missing (optional),
                         },
@@ -65,17 +65,17 @@ JsModule {
           1: JS_DIRECTIVE_LIST@7..7
           2: JS_STATEMENT_LIST@7..40
             0: JS_RETURN_STATEMENT@7..17
-              0: RETURN_KW@7..16 "return" [Whitespace("\n  ")] []
+              0: RETURN_KW@7..16 "return" [Whitespace("\n"), Whitespace("  ")] []
               1: (empty)
               2: SEMICOLON@16..17 ";" [] []
             1: JS_RETURN_STATEMENT@17..31
-              0: RETURN_KW@17..27 "return" [Whitespace("\n  ")] [Whitespace(" ")]
+              0: RETURN_KW@17..27 "return" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@27..30
                 0: JS_REFERENCE_IDENTIFIER@27..30
                   0: IDENT@27..30 "foo" [] []
               2: SEMICOLON@30..31 ";" [] []
             2: JS_RETURN_STATEMENT@31..40
-              0: RETURN_KW@31..40 "return" [Whitespace("\n  ")] []
+              0: RETURN_KW@31..40 "return" [Whitespace("\n"), Whitespace("  ")] []
               1: (empty)
               2: (empty)
           3: R_CURLY@40..42 "}" [Whitespace("\n")] []

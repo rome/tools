@@ -52,14 +52,14 @@ JsScript {
                 l_curly_token: L_CURLY@81..82 "{" [] [],
                 directives: JsDirectiveList [
                     JsDirective {
-                        value_token: JS_STRING_LITERAL@82..96 "'use strict'" [Whitespace("\n\t")] [],
+                        value_token: JS_STRING_LITERAL@82..96 "'use strict'" [Whitespace("\n"), Whitespace("\t")] [],
                         semicolon_token: SEMICOLON@96..97 ";" [] [],
                     },
                 ],
                 statements: JsStatementList [
                     JsVariableStatement {
                         declarations: JsVariableDeclarations {
-                            kind: LET_KW@97..103 "let" [Whitespace("\n\t")] [Whitespace(" ")],
+                            kind: LET_KW@97..103 "let" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")],
                             items: JsVariableDeclarationList [
                                 JsVariableDeclaration {
                                     id: JsIdentifierBinding {
@@ -80,7 +80,7 @@ JsScript {
                     },
                     JsExpressionStatement {
                         expression: JsStringLiteralExpression {
-                            value_token: JS_STRING_LITERAL@110..124 "'use strict'" [Whitespace("\n\t")] [],
+                            value_token: JS_STRING_LITERAL@110..124 "'use strict'" [Whitespace("\n"), Whitespace("\t")] [],
                         },
                         semicolon_token: SEMICOLON@124..144 ";" [] [Whitespace(" "), Comments("// not a directive")],
                     },
@@ -107,14 +107,14 @@ JsScript {
                         l_curly_token: L_CURLY@160..161 "{" [] [],
                         directives: JsDirectiveList [
                             JsDirective {
-                                value_token: JS_STRING_LITERAL@161..175 "\"use strict\"" [Whitespace("\n\t")] [],
+                                value_token: JS_STRING_LITERAL@161..175 "\"use strict\"" [Whitespace("\n"), Whitespace("\t")] [],
                                 semicolon_token: SEMICOLON@175..176 ";" [] [],
                             },
                         ],
                         statements: JsStatementList [
                             JsVariableStatement {
                                 declarations: JsVariableDeclarations {
-                                    kind: LET_KW@176..182 "let" [Whitespace("\n\t")] [Whitespace(" ")],
+                                    kind: LET_KW@176..182 "let" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")],
                                     items: JsVariableDeclarationList [
                                         JsVariableDeclaration {
                                             id: JsIdentifierBinding {
@@ -135,7 +135,7 @@ JsScript {
                             },
                             JsExpressionStatement {
                                 expression: JsStringLiteralExpression {
-                                    value_token: JS_STRING_LITERAL@189..203 "\"use strict\"" [Whitespace("\n\t")] [],
+                                    value_token: JS_STRING_LITERAL@189..203 "\"use strict\"" [Whitespace("\n"), Whitespace("\t")] [],
                                 },
                                 semicolon_token: SEMICOLON@203..223 ";" [] [Whitespace(" "), Comments("// not a directive")],
                             },
@@ -173,14 +173,14 @@ JsScript {
                                     l_curly_token: L_CURLY@242..243 "{" [] [],
                                     directives: JsDirectiveList [
                                         JsDirective {
-                                            value_token: JS_STRING_LITERAL@243..257 "\"use strict\"" [Whitespace("\n\t")] [],
+                                            value_token: JS_STRING_LITERAL@243..257 "\"use strict\"" [Whitespace("\n"), Whitespace("\t")] [],
                                             semicolon_token: SEMICOLON@257..258 ";" [] [],
                                         },
                                     ],
                                     statements: JsStatementList [
                                         JsVariableStatement {
                                             declarations: JsVariableDeclarations {
-                                                kind: LET_KW@258..264 "let" [Whitespace("\n\t")] [Whitespace(" ")],
+                                                kind: LET_KW@258..264 "let" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")],
                                                 items: JsVariableDeclarationList [
                                                     JsVariableDeclaration {
                                                         id: JsIdentifierBinding {
@@ -201,7 +201,7 @@ JsScript {
                                         },
                                         JsExpressionStatement {
                                             expression: JsStringLiteralExpression {
-                                                value_token: JS_STRING_LITERAL@271..285 "\"use strict\"" [Whitespace("\n\t")] [],
+                                                value_token: JS_STRING_LITERAL@271..285 "\"use strict\"" [Whitespace("\n"), Whitespace("\t")] [],
                                             },
                                             semicolon_token: SEMICOLON@285..306 ";" [] [Whitespace("  "), Comments("// not a directive")],
                                         },
@@ -220,7 +220,7 @@ JsScript {
             statements: JsStatementList [
                 JsExpressionStatement {
                     expression: JsStringLiteralExpression {
-                        value_token: JS_STRING_LITERAL@310..324 "\"use strict\"" [Whitespace("\n\t")] [],
+                        value_token: JS_STRING_LITERAL@310..324 "\"use strict\"" [Whitespace("\n"), Whitespace("\t")] [],
                     },
                     semicolon_token: SEMICOLON@324..344 ";" [] [Whitespace(" "), Comments("// not a directive")],
                 },
@@ -272,12 +272,12 @@ JsScript {
         0: L_CURLY@81..82 "{" [] []
         1: JS_DIRECTIVE_LIST@82..97
           0: JS_DIRECTIVE@82..97
-            0: JS_STRING_LITERAL@82..96 "'use strict'" [Whitespace("\n\t")] []
+            0: JS_STRING_LITERAL@82..96 "'use strict'" [Whitespace("\n"), Whitespace("\t")] []
             1: SEMICOLON@96..97 ";" [] []
         2: JS_STATEMENT_LIST@97..144
           0: JS_VARIABLE_STATEMENT@97..110
             0: JS_VARIABLE_DECLARATIONS@97..109
-              0: LET_KW@97..103 "let" [Whitespace("\n\t")] [Whitespace(" ")]
+              0: LET_KW@97..103 "let" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")]
               1: JS_VARIABLE_DECLARATION_LIST@103..109
                 0: JS_VARIABLE_DECLARATION@103..109
                   0: JS_IDENTIFIER_BINDING@103..105
@@ -291,7 +291,7 @@ JsScript {
             1: SEMICOLON@109..110 ";" [] []
           1: JS_EXPRESSION_STATEMENT@110..144
             0: JS_STRING_LITERAL_EXPRESSION@110..124
-              0: JS_STRING_LITERAL@110..124 "'use strict'" [Whitespace("\n\t")] []
+              0: JS_STRING_LITERAL@110..124 "'use strict'" [Whitespace("\n"), Whitespace("\t")] []
             1: SEMICOLON@124..144 ";" [] [Whitespace(" "), Comments("// not a directive")]
         3: R_CURLY@144..146 "}" [Whitespace("\n")] []
     3: JS_EXPRESSION_STATEMENT@146..227
@@ -312,12 +312,12 @@ JsScript {
             0: L_CURLY@160..161 "{" [] []
             1: JS_DIRECTIVE_LIST@161..176
               0: JS_DIRECTIVE@161..176
-                0: JS_STRING_LITERAL@161..175 "\"use strict\"" [Whitespace("\n\t")] []
+                0: JS_STRING_LITERAL@161..175 "\"use strict\"" [Whitespace("\n"), Whitespace("\t")] []
                 1: SEMICOLON@175..176 ";" [] []
             2: JS_STATEMENT_LIST@176..223
               0: JS_VARIABLE_STATEMENT@176..189
                 0: JS_VARIABLE_DECLARATIONS@176..188
-                  0: LET_KW@176..182 "let" [Whitespace("\n\t")] [Whitespace(" ")]
+                  0: LET_KW@176..182 "let" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")]
                   1: JS_VARIABLE_DECLARATION_LIST@182..188
                     0: JS_VARIABLE_DECLARATION@182..188
                       0: JS_IDENTIFIER_BINDING@182..184
@@ -331,7 +331,7 @@ JsScript {
                 1: SEMICOLON@188..189 ";" [] []
               1: JS_EXPRESSION_STATEMENT@189..223
                 0: JS_STRING_LITERAL_EXPRESSION@189..203
-                  0: JS_STRING_LITERAL@189..203 "\"use strict\"" [Whitespace("\n\t")] []
+                  0: JS_STRING_LITERAL@189..203 "\"use strict\"" [Whitespace("\n"), Whitespace("\t")] []
                 1: SEMICOLON@203..223 ";" [] [Whitespace(" "), Comments("// not a directive")]
             3: R_CURLY@223..225 "}" [Whitespace("\n")] []
         2: R_PAREN@225..226 ")" [] []
@@ -360,12 +360,12 @@ JsScript {
                   0: L_CURLY@242..243 "{" [] []
                   1: JS_DIRECTIVE_LIST@243..258
                     0: JS_DIRECTIVE@243..258
-                      0: JS_STRING_LITERAL@243..257 "\"use strict\"" [Whitespace("\n\t")] []
+                      0: JS_STRING_LITERAL@243..257 "\"use strict\"" [Whitespace("\n"), Whitespace("\t")] []
                       1: SEMICOLON@257..258 ";" [] []
                   2: JS_STATEMENT_LIST@258..306
                     0: JS_VARIABLE_STATEMENT@258..271
                       0: JS_VARIABLE_DECLARATIONS@258..270
-                        0: LET_KW@258..264 "let" [Whitespace("\n\t")] [Whitespace(" ")]
+                        0: LET_KW@258..264 "let" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")]
                         1: JS_VARIABLE_DECLARATION_LIST@264..270
                           0: JS_VARIABLE_DECLARATION@264..270
                             0: JS_IDENTIFIER_BINDING@264..266
@@ -379,7 +379,7 @@ JsScript {
                       1: SEMICOLON@270..271 ";" [] []
                     1: JS_EXPRESSION_STATEMENT@271..306
                       0: JS_STRING_LITERAL_EXPRESSION@271..285
-                        0: JS_STRING_LITERAL@271..285 "\"use strict\"" [Whitespace("\n\t")] []
+                        0: JS_STRING_LITERAL@271..285 "\"use strict\"" [Whitespace("\n"), Whitespace("\t")] []
                       1: SEMICOLON@285..306 ";" [] [Whitespace("  "), Comments("// not a directive")]
                   3: R_CURLY@306..308 "}" [Whitespace("\n")] []
       1: (empty)
@@ -388,7 +388,7 @@ JsScript {
       1: JS_STATEMENT_LIST@310..344
         0: JS_EXPRESSION_STATEMENT@310..344
           0: JS_STRING_LITERAL_EXPRESSION@310..324
-            0: JS_STRING_LITERAL@310..324 "\"use strict\"" [Whitespace("\n\t")] []
+            0: JS_STRING_LITERAL@310..324 "\"use strict\"" [Whitespace("\n"), Whitespace("\t")] []
           1: SEMICOLON@324..344 ";" [] [Whitespace(" "), Comments("// not a directive")]
       2: R_CURLY@344..346 "}" [Whitespace("\n")] []
   3: EOF@346..347 "" [Whitespace("\n")] []

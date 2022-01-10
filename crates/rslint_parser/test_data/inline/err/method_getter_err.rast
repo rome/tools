@@ -15,7 +15,7 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     abstract_token: missing (optional),
-                    get_token: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")],
+                    get_token: GET_KW@11..17 "get" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")],
                     name: missing (required),
                     l_paren_token: missing (required),
                     r_paren_token: missing (required),
@@ -50,7 +50,7 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")]
+          3: GET_KW@11..17 "get" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")]
           4: (empty)
           5: (empty)
           6: (empty)

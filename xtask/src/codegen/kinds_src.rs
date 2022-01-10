@@ -165,8 +165,10 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"DOLLAR_CURLY", // ${
 		"ERROR_TOKEN",
 		"IDENT",
+		"NEWLINE",
 		"WHITESPACE",
 		"COMMENT",
+		"MULTILINE_COMMENT",
 		"JS_SHEBANG",
 	],
 	nodes: &[

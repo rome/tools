@@ -124,7 +124,8 @@ impl<'src> Lexer<'src> {
 		tok
 	}
 
-	fn consume_newlines(&mut self) {
+	fn consume_newlines(&mut self) -> usize {
+		let start = self.cur;
 		while self.current().is_some() {
 			let chr = self.get_unicode_char();
 			if is_linebreak(chr) {
@@ -134,9 +135,11 @@ impl<'src> Lexer<'src> {
 				break;
 			}
 		}
+		self.cur - start
 	}
 
-	fn consume_whitespace_until_newline(&mut self) {
+	fn consume_whitespace_until_newline(&mut self) -> usize {
+		let start = self.cur;
 		while let Some(current) = self.current().copied() {
 			let chr = self.get_unicode_char();
 
@@ -153,12 +156,16 @@ impl<'src> Lexer<'src> {
 				break;
 			}
 		}
+		self.cur - start
 	}
 
-	// Consume all whitespace starting from the current byte
-	fn consume_whitespace(&mut self) {
-		self.consume_newlines();
-		self.consume_whitespace_until_newline();
+	fn consume_newline_or_whitespace(&mut self) -> LexerReturn {
+		let count = self.consume_newlines();
+		if count > 0 {
+			tok!(NEWLINE, count)
+		} else {
+			tok!(WHITESPACE, self.consume_whitespace_until_newline())
+		}
 	}
 
 	// Get the unicode char which starts at the current byte and advance the lexer's cursor
@@ -180,7 +187,7 @@ impl<'src> Lexer<'src> {
 		chr
 	}
 
-	// Get the next byte and advance the index
+	// Get the current byte
 	#[inline]
 	fn current(&mut self) -> Option<&u8> {
 		self.bytes.get(self.cur)
@@ -902,13 +909,25 @@ impl<'src> Lexer<'src> {
 		match self.bytes.get(self.cur + 1) {
 			Some(b'*') => {
 				self.next();
+				let mut has_newline = false;
 				while let Some(b) = self.next().copied() {
 					match b {
 						b'*' if self.bytes.get(self.cur + 1) == Some(&b'/') => {
 							self.advance(2);
-							return tok!(COMMENT, self.cur - start);
+							if has_newline {
+								return tok!(MULTILINE_COMMENT, self.cur - start);
+							} else {
+								return tok!(COMMENT, self.cur - start);
+							}
 						}
-						_ => {}
+						x => {
+							if is_linebreak(x as char) {
+								has_newline = true;
+							} else if UNICODE_WHITESPACE_STARTS.contains(&x) {
+								let x = self.get_unicode_char();
+								has_newline |= is_linebreak(x as char);
+							}
+						}
 					}
 				}
 
@@ -1252,10 +1271,7 @@ impl<'src> Lexer<'src> {
 		let dispatched = Self::lookup(byte);
 
 		match dispatched {
-			WHS => {
-				self.consume_whitespace();
-				tok!(WHITESPACE, self.cur - start)
-			}
+			WHS => self.consume_newline_or_whitespace(),
 			EXL => self.resolve_bang(),
 			HAS => self.read_shebang(),
 			PRC => self.bin_or_assign(T![%], T![%=]),
@@ -1363,8 +1379,7 @@ impl<'src> Lexer<'src> {
 				if is_linebreak(chr)
 					|| (UNICODE_WHITESPACE_STARTS.contains(&byte) && UNICODE_SPACES.contains(&chr))
 				{
-					self.consume_whitespace();
-					tok!(WHITESPACE, self.cur - start)
+					self.consume_newline_or_whitespace()
 				} else {
 					self.cur += chr.len_utf8() - 1;
 					if is_id_start(chr) {
@@ -1472,8 +1487,10 @@ impl Iterator for Lexer<'_> {
 		};
 
 		if ![
-			JsSyntaxKind::COMMENT,
+			JsSyntaxKind::NEWLINE,
 			JsSyntaxKind::WHITESPACE,
+			JsSyntaxKind::COMMENT,
+			JsSyntaxKind::MULTILINE_COMMENT,
 			JsSyntaxKind::TEMPLATE_CHUNK,
 		]
 		.contains(&token.0.kind)

@@ -202,10 +202,7 @@ impl<'a> LossyTreeSink<'a> {
 				break;
 			}
 
-			let pos: u32 = self.text_pos.into();
-			let pos = pos as usize;
-			let text = &self.text[pos..(pos + token.len)];
-			if break_on_newline && text.chars().any(rslint_lexer::is_linebreak) {
+			if break_on_newline && token.kind == JsSyntaxKind::NEWLINE {
 				break;
 			}
 

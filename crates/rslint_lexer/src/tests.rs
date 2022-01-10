@@ -160,9 +160,14 @@ fn unicode_whitespace_ident_part() {
 #[test]
 fn all_whitespace() {
 	assert_lex! {
-		"
-		",
-		WHITESPACE:3
+		"\n\t\t",
+		NEWLINE:1
+		WHITESPACE:2
+	}
+	assert_lex! {
+		"\r\n\t\t",
+		NEWLINE:2
+		WHITESPACE:2
 	}
 }
 
@@ -809,13 +814,19 @@ fn shebang() {
 	assert_lex! {
 		"#!/bin/node\n",
 		JS_SHEBANG:11,
-		WHITESPACE:1
+		NEWLINE:1
+	}
+
+	assert_lex! {
+		"#!/bin/node\r\n",
+		JS_SHEBANG:11,
+		NEWLINE:2
 	}
 
 	assert_lex! {
 		"#!/usr/bin/env deno\u{2028}",
 		JS_SHEBANG:19,
-		WHITESPACE:3
+		NEWLINE:3
 	}
 
 	assert_lex! {
@@ -839,7 +850,8 @@ fn single_line_comments() {
 		"//abc
 	",
 		COMMENT:5,
-		WHITESPACE:2
+		NEWLINE:1,
+		WHITESPACE:1
 	}
 
 	assert_lex! {
@@ -853,7 +865,7 @@ fn block_comment() {
 	assert_lex! {
 		"/*
 		*/",
-		COMMENT:7
+		MULTILINE_COMMENT:7
 	}
 
 	assert_lex! {
@@ -952,7 +964,7 @@ fn fuzz_fail_5() {
 	assert_lex! {
 		"//\u{2028}",
 		COMMENT:2,
-		WHITESPACE:3
+		NEWLINE:3
 	}
 }
 
@@ -1053,101 +1065,113 @@ fn object_expr_getter() {
 fn newline_space_must_be_two_tokens() {
 	assert_lex! {
 		"\n ",
-		WHITESPACE:2
+		NEWLINE:1
+		WHITESPACE:1
 	}
 	assert_lex! {
 		" \n",
 		WHITESPACE:1
-		WHITESPACE:1
+		NEWLINE:1
 	}
 	assert_lex! {
 		" \n ",
 		WHITESPACE:1
-		WHITESPACE:2
+		NEWLINE:1
+		WHITESPACE:1
 	}
 
 	assert_lex! {
 		" a\n b \n ",
 		WHITESPACE:1
 		IDENT:1
-		WHITESPACE:2
+		NEWLINE:1
+		WHITESPACE:1
 		IDENT:1
 		WHITESPACE:1
-		WHITESPACE:2
+		NEWLINE:1
+		WHITESPACE:1
 	}
 	assert_lex! {
 		"a //COMMENT \n /*COMMENT*/ b /*COM\nMENT*/",
 		IDENT:1
 		WHITESPACE:1
 		COMMENT:10
-		WHITESPACE:2
+		NEWLINE:1
+		WHITESPACE:1
 		COMMENT:11
 		WHITESPACE:1
 		IDENT:1
 		WHITESPACE:1
-		COMMENT:12
+		MULTILINE_COMMENT:12
 	}
 	assert_lex! {
 		"a //COMMENT \n /*COMMENT*/ b /*COM\nMENT*/",
 		IDENT:1
 		WHITESPACE:1
 		COMMENT:10
-		WHITESPACE:2
+		NEWLINE:1
+		WHITESPACE:1
 		COMMENT:11
 		WHITESPACE:1
 		IDENT:1
 		WHITESPACE:1
-		COMMENT:12
+		MULTILINE_COMMENT:12
 	}
 
 	//Now with CR
 	assert_lex! {
 		"\r\n ",
-		WHITESPACE:3
+		NEWLINE:2
+		WHITESPACE:1
 	}
 
 	assert_lex! {
 		" \r\n",
 		WHITESPACE:1
-		WHITESPACE:2
+		NEWLINE:2
 	}
 	assert_lex! {
 		" \r\n ",
 		WHITESPACE:1
-		WHITESPACE:3
+		NEWLINE:2
+		WHITESPACE:1
 	}
 
 	assert_lex! {
 		" a\r\n b \r\n ",
 		WHITESPACE:1
 		IDENT:1
-		WHITESPACE:3
+		NEWLINE:2
+		WHITESPACE:1
 		IDENT:1
 		WHITESPACE:1
-		WHITESPACE:3
+		NEWLINE:2
+		WHITESPACE:1
 	}
 	assert_lex! {
 		"a //COMMENT \r\n /*COMMENT*/ b /*COM\r\nMENT*/",
 		IDENT:1
 		WHITESPACE:1
 		COMMENT:10
-		WHITESPACE:3
+		NEWLINE:2
+		WHITESPACE:1
 		COMMENT:11
 		WHITESPACE:1
 		IDENT:1
 		WHITESPACE:1
-		COMMENT:13
+		MULTILINE_COMMENT:13
 	}
 	assert_lex! {
 		"a //COMMENT \r\n /*COMMENT*/ b /*COM\r\nMENT*/",
 		IDENT:1
 		WHITESPACE:1
 		COMMENT:10
-		WHITESPACE:3
+		NEWLINE:2
+		WHITESPACE:1
 		COMMENT:11
 		WHITESPACE:1
 		IDENT:1
 		WHITESPACE:1
-		COMMENT:13
+		MULTILINE_COMMENT:13
 	}
 }
