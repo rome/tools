@@ -1,0 +1,2 @@
+* text=auto
+crates/rslint_parser/test_data/**/*.js text eol=lf
