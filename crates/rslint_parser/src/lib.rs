@@ -91,7 +91,7 @@ pub use crate::{
 	util::{SyntaxNodeExt, SyntaxTokenExt},
 };
 
-pub use rome_rowan::{SyntaxText, TextRange, TextSize, WalkEvent};
+pub use rome_rowan::{SyntaxText, TextRange, TextSize, TokenAtOffset, WalkEvent};
 
 pub use rslint_syntax::*;
 

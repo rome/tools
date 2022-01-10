@@ -1,0 +1,50 @@
+{
+	"name": "rome-dev",
+	"publisher": "rome",
+	"displayName": "Rome Dev",
+	"description": "Rome LSP Dev Client",
+	"version": "0.0.1",
+	"icon": "icon.png",
+	"activationEvents": [
+		"onLanguage:javascript",
+		"onLanguage:typescript"
+	],
+	"main": "./out/extension.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/rome/tools.git"
+	},
+	"bugs": {
+		"url": "https://github.com/rome/tools/issues"
+	},
+	"engines": {
+		"vscode": "^1.52.0"
+	},
+	"contributes": {
+		"configuration": {
+			"title": "Rome Dev",
+			"properties": {
+				"rome.lspBin": {
+					"type": "string",
+					"default": "rome_lsp",
+					"description": "The rome lsp server executable."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"compile": "tsc -b",
+		"package": "vsce package -o rome_lsp.vsix",
+		"build": "npm run compile && npm run package",
+		"install-extension": "code --install-extension rome_lsp.vsix"
+	},
+	"dependencies": {
+		"vscode-languageclient": "8.0.0-next.7"
+	},
+	"devDependencies": {
+		"@types/node": "^16.11.9",
+		"@types/vscode": "^1.52.0",
+		"typescript": "^4.5.2",
+		"vsce": "^2.4.0"
+	}
+}
