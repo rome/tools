@@ -564,7 +564,7 @@ impl ParseSeparatedList for ExportNamedSpecifierList {
 	}
 
 	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
-		let result = parsed_element.or_recover(
+		parsed_element.or_recover(
 			p,
 			&ParseRecovery::new(
 				JS_UNKNOWN,
@@ -572,8 +572,7 @@ impl ParseSeparatedList for ExportNamedSpecifierList {
 			)
 			.enable_recovery_on_line_break(),
 			expected_export_name_specifier,
-		);
-		result
+		)
 	}
 
 	fn list_kind() -> JsSyntaxKind {
