@@ -1,6 +1,7 @@
 //! General utility functions for parsing and error checking.
 
-use crate::{Parser, Token};
+use crate::Parser;
+use rslint_lexer::Token;
 use rslint_syntax::{JsSyntaxKind, T};
 
 /// Check if the use of a statement label is valid and the label is defined.
@@ -14,8 +15,7 @@ pub(crate) fn check_label_use(p: &mut Parser, label: &Token) {
 	if p.state.labels.get(name).is_none() {
 		let err = p
 			.err_builder(&format!("Use of undefined statement label `{}`", name))
-			.primary(&label.range, "This label is used, but it is never defined");
-
+			.primary(label.range(), "This label is used, but it is never defined");
 		p.error(err);
 	}
 }
@@ -47,14 +47,14 @@ pub(crate) fn expect_keyword(p: &mut Parser, keyword_name: &str, kind: JsSyntaxK
 				"expected `{}` but instead the file ends",
 				keyword_name
 			))
-			.primary(p.cur_tok().range, "the file ends here")
+			.primary(p.cur_tok().range(), "the file ends here")
 		} else {
 			p.err_builder(&format!(
 				"expected `{}` but instead found `{}`",
 				keyword_name,
 				p.cur_src()
 			))
-			.primary(p.cur_tok().range, "unexpected")
+			.primary(p.cur_tok().range(), "unexpected")
 		};
 
 		p.error(err);

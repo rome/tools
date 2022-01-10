@@ -30,16 +30,16 @@ pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Ha
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum TriviaPiece {
-	Whitespace(usize),
-	Comments(usize),
+	Whitespace(u32),
+	Comments(u32),
 }
 
 impl TriviaPiece {
 	#[inline]
 	pub fn text_len(&self) -> TextSize {
 		match self {
-			TriviaPiece::Whitespace(n) => (*n as u32).into(),
-			TriviaPiece::Comments(n) => (*n as u32).into(),
+			TriviaPiece::Whitespace(n) => (*n).into(),
+			TriviaPiece::Comments(n) => (*n).into(),
 		}
 	}
 }

@@ -147,7 +147,7 @@ pub(crate) fn expected_local_name_for_default_import(
 	range: Range<usize>,
 ) -> Diagnostic {
 	p.err_builder("`default` imports must be aliased")
-		.primary(p.cur_tok().range, "`default` used here")
+		.primary(p.cur_tok().range(), "`default` used here")
 		.secondary(
 			range.end..range.end,
 			"add the `as` keyword followed by an identifier name here",
