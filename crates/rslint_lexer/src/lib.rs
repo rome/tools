@@ -982,7 +982,7 @@ impl<'src> Lexer<'src> {
 				Some(b']') => in_class = false,
 				Some(b'/') => {
 					if !in_class {
-						let (mut g, mut i, mut m, mut s, mut u, mut y) = (false, false, false, false, false, false);
+						let (mut g, mut i, mut m, mut s, mut u, mut y, mut d) = (false, false, false, false, false, false, false);
 
 						unwind_loop! {
 							let next = self.next_bounded().copied();
@@ -1023,6 +1023,12 @@ impl<'src> Lexer<'src> {
 										diagnostic = Some(self.flag_err('y'))
 									}
 									y = true;
+								},
+							   Some(b'd') => {
+									if d && diagnostic.is_none() {
+										diagnostic = Some(self.flag_err('d'))
+									}
+									d = true;
 								},
 								Some(_) if self.cur_ident_part().is_some() => {
 									if diagnostic.is_none() {
