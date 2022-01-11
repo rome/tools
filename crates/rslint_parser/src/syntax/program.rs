@@ -3,7 +3,7 @@
 use super::expr::parse_name;
 use super::stmt::{parse_statements, semi};
 use super::typescript::*;
-use crate::state::{EnableStrictMode, ChangeParserState};
+use crate::state::{ChangeParserState, EnableStrictMode};
 use crate::syntax::js_parse_error;
 use crate::syntax::module::parse_module_body;
 use crate::syntax::stmt::directives;
