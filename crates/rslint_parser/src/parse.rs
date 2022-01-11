@@ -68,8 +68,8 @@ impl<T> Parse<T> {
 	}
 
 	/// Get the errors which occurred when parsing
-	pub fn errors(&self) -> &[ParserError] {
-		&*self.errors
+	pub fn errors(&self) -> &[Diagnostic] {
+		self.errors.as_slice()
 	}
 
 	/// The source type of this file. Is it a "classic" script or an ES Module?
@@ -109,7 +109,8 @@ pub fn tokenize(text: &str, file_id: usize) -> (Vec<rslint_lexer::Token>, Vec<Pa
 	for (tok, error) in rslint_lexer::Lexer::from_str(text, file_id) {
 		tokens.push(tok);
 		if let Some(err) = error {
-			errors.push(err)
+			// waiting for https://github.com/rust-lang/rust/issues/80437
+			errors.push(*err)
 		}
 	}
 	(tokens, errors)

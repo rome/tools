@@ -36,7 +36,7 @@ use state::LexerState;
 use tables::derived_property::*;
 
 pub use rslint_syntax::*;
-pub type LexerReturn = (Token, Option<Diagnostic>);
+pub type LexerReturn = (Token, Option<Box<Diagnostic>>);
 
 // Simple macro for unwinding a loop
 macro_rules! unwind_loop {
@@ -334,7 +334,7 @@ impl<'src> Lexer<'src> {
 
 	// Validate a `\x00 escape sequence, this expects the current char to be the `x`, it also does not skip over the escape sequence
 	// The pos after this method is the last hex digit
-	fn validate_hex_escape(&mut self) -> Option<Diagnostic> {
+	fn validate_hex_escape(&mut self) -> Option<Box<Diagnostic>> {
 		debug_assert_eq!(self.bytes[self.cur], b'x');
 
 		let diagnostic =
@@ -346,8 +346,8 @@ impl<'src> Lexer<'src> {
 
 		for _ in 0..2 {
 			match self.next_bounded() {
-				None => return Some(diagnostic),
-				Some(b) if !(*b as u8).is_ascii_hexdigit() => return Some(diagnostic),
+				None => return Some(Box::new(diagnostic)),
+				Some(b) if !(*b as u8).is_ascii_hexdigit() => return Some(Box::new(diagnostic)),
 				_ => {}
 			}
 		}
@@ -355,17 +355,17 @@ impl<'src> Lexer<'src> {
 	}
 
 	// Validate a `\..` escape sequence and advance the lexer based on it
-	fn validate_escape_sequence(&mut self) -> Option<Diagnostic> {
+	fn validate_escape_sequence(&mut self) -> Option<Box<Diagnostic>> {
 		let cur = self.cur;
 		if let Some(escape) = self.bytes.get(self.cur + 1) {
 			match escape {
 				b'u' if self.bytes.get(self.cur + 2) == Some(&b'{') => {
 					self.advance(2);
-					self.read_codepoint_escape().err()
+					self.read_codepoint_escape().err().map(Box::new)
 				}
 				b'u' => {
 					self.next();
-					self.read_unicode_escape(true).err()
+					self.read_unicode_escape(true).err().map(Box::new)
 				}
 				b'x' => {
 					self.next();
@@ -379,10 +379,10 @@ impl<'src> Lexer<'src> {
 				}
 			}
 		} else {
-			Some(Diagnostic::error(self.file_id, "", "").primary(
+			Some(Box::new(Diagnostic::error(self.file_id, "", "").primary(
 				cur..cur + 1,
 				"expected an escape sequence following a backslash, but found none",
-			))
+			)))
 		}
 	}
 
@@ -428,7 +428,7 @@ impl<'src> Lexer<'src> {
 
 	// Consume a string literal and advance the lexer, and returning a list of errors that occurred when reading the string
 	// This could include unterminated string and invalid escape sequences
-	fn read_str_literal(&mut self) -> Option<Diagnostic> {
+	fn read_str_literal(&mut self) -> Option<Box<Diagnostic>> {
 		// Safety: this is only ever called from lex_token, which is guaranteed to be called on a char position
 		let quote = unsafe { *self.bytes.get_unchecked(self.cur) };
 		let start = self.cur;
@@ -451,7 +451,7 @@ impl<'src> Lexer<'src> {
 			.primary(self.cur..self.cur, "input ends here")
 			.secondary(start..start + 1, "string literal starts here");
 
-		Some(unterminated)
+		Some(Box::new(unterminated))
 	}
 
 	/// Returns `Some(x)` if the current position is an identifier, with the character at
@@ -628,7 +628,7 @@ impl<'src> Lexer<'src> {
 	}
 
 	#[inline]
-	fn read_zero(&mut self) -> Option<Diagnostic> {
+	fn read_zero(&mut self) -> Option<Box<Diagnostic>> {
 		// TODO: Octal literals
 		match self.bytes.get(self.cur + 1) {
 			Some(b'x') | Some(b'X') => {
@@ -694,7 +694,7 @@ impl<'src> Lexer<'src> {
 	}
 
 	#[inline]
-	fn read_hexnumber(&mut self) -> Option<Diagnostic> {
+	fn read_hexnumber(&mut self) -> Option<Box<Diagnostic>> {
 		let mut diag = None;
 		unwind_loop! {
 			match self.next() {
@@ -706,7 +706,7 @@ impl<'src> Lexer<'src> {
 	}
 
 	#[inline]
-	fn handle_numeric_separator(&mut self, radix: u8) -> Option<Diagnostic> {
+	fn handle_numeric_separator(&mut self, radix: u8) -> Option<Box<Diagnostic>> {
 		debug_assert_eq!(self.bytes[self.cur], b'_');
 
 		let err_diag = Diagnostic::error(
@@ -719,7 +719,7 @@ impl<'src> Lexer<'src> {
 		let peeked = self.bytes.get(self.cur + 1).copied();
 
 		if peeked.is_none() || !char::from(peeked.unwrap()).is_digit(radix as u32) {
-			return Some(err_diag);
+			return Some(Box::new(err_diag));
 		}
 
 		let forbidden = |c: Option<u8>| {
@@ -738,7 +738,7 @@ impl<'src> Lexer<'src> {
 		let prev = self.bytes.get(self.cur - 1).copied();
 
 		if forbidden(prev) || forbidden(peeked) {
-			return Some(err_diag);
+			return Some(Box::new(err_diag));
 		}
 
 		self.next_bounded();
@@ -748,7 +748,7 @@ impl<'src> Lexer<'src> {
 	// Read a number which does not start with 0, since that can be more things and is handled
 	// by another function
 	#[inline]
-	fn read_number(&mut self) -> Option<Diagnostic> {
+	fn read_number(&mut self) -> Option<Box<Diagnostic>> {
 		let mut diag = None;
 		unwind_loop! {
 			match self.next_bounded() {
@@ -783,7 +783,7 @@ impl<'src> Lexer<'src> {
 	}
 
 	#[inline]
-	fn read_float(&mut self) -> Option<Diagnostic> {
+	fn read_float(&mut self) -> Option<Box<Diagnostic>> {
 		let mut diag = None;
 
 		unwind_loop! {
@@ -813,7 +813,7 @@ impl<'src> Lexer<'src> {
 	}
 
 	#[inline]
-	fn read_exponent(&mut self) -> Option<Diagnostic> {
+	fn read_exponent(&mut self) -> Option<Box<Diagnostic>> {
 		if let Some(b'-') | Some(b'+') = self.bytes.get(self.cur + 1) {
 			self.next();
 		}
@@ -829,7 +829,7 @@ impl<'src> Lexer<'src> {
 	}
 
 	#[inline]
-	fn read_bindigits(&mut self) -> Option<Diagnostic> {
+	fn read_bindigits(&mut self) -> Option<Box<Diagnostic>> {
 		let mut diag = None;
 		unwind_loop! {
 			match self.next() {
@@ -841,7 +841,7 @@ impl<'src> Lexer<'src> {
 	}
 
 	#[inline]
-	fn read_octaldigits(&mut self) -> Option<Diagnostic> {
+	fn read_octaldigits(&mut self) -> Option<Box<Diagnostic>> {
 		let mut diag = None;
 		unwind_loop! {
 			match self.next() {
@@ -866,7 +866,7 @@ impl<'src> Lexer<'src> {
 
 			(
 				Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-				Some(err),
+				Some(Box::new(err)),
 			)
 		} else {
 			tok!(JS_NUMBER_LITERAL, self.cur - start)
@@ -899,7 +899,10 @@ impl<'src> Lexer<'src> {
 			)
 			.primary(0usize..1usize, "");
 
-			(Token::new(JsSyntaxKind::ERROR_TOKEN, 1), Some(err))
+			(
+				Token::new(JsSyntaxKind::ERROR_TOKEN, 1),
+				Some(Box::new(err)),
+			)
 		}
 	}
 
@@ -937,7 +940,7 @@ impl<'src> Lexer<'src> {
 
 				(
 					Token::new(JsSyntaxKind::COMMENT, self.cur - start),
-					Some(err),
+					Some(Box::new(err)),
 				)
 			}
 			Some(b'/') => {
@@ -1037,7 +1040,10 @@ impl<'src> Lexer<'src> {
 									}
 								},
 								_ => {
-									return (Token::new(JsSyntaxKind::JS_REGEX_LITERAL, self.cur - start), diagnostic)
+									return (
+										Token::new(JsSyntaxKind::JS_REGEX_LITERAL, self.cur - start),
+										diagnostic.map(Box::new)
+									)
 								}
 							}
 						}
@@ -1048,7 +1054,7 @@ impl<'src> Lexer<'src> {
 						let err = Diagnostic::error(self.file_id, "", "expected a character after a regex escape, but found none")
 							.primary(self.cur..self.cur + 1, "expected a character following this");
 
-						return (Token::new(JsSyntaxKind::JS_REGEX_LITERAL, self.cur - start), Some(err));
+						return (Token::new(JsSyntaxKind::JS_REGEX_LITERAL, self.cur - start), Some(Box::new(err)));
 					}
 				},
 				None => {
@@ -1056,7 +1062,7 @@ impl<'src> Lexer<'src> {
 						.primary(self.cur..self.cur, "...but the file ends here")
 						.secondary(start..start + 1, "a regex literal starts there...");
 
-					return (Token::new(JsSyntaxKind::JS_REGEX_LITERAL, self.cur - start), Some(err));
+					return (Token::new(JsSyntaxKind::JS_REGEX_LITERAL, self.cur - start), Some(Box::new(err)));
 				},
 				_ => {},
 			}
@@ -1330,13 +1336,13 @@ impl<'src> Lexer<'src> {
 								self.next();
 								(
 									Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-									Some(err),
+									Some(Box::new(err)),
 								)
 							}
 						}
 						Err(err) => (
 							Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-							Some(err),
+							Some(Box::new(err)),
 						),
 					}
 				} else {
@@ -1348,7 +1354,10 @@ impl<'src> Lexer<'src> {
 					.primary(start..self.cur + 1, "");
 					self.next();
 
-					(Token::new(JsSyntaxKind::ERROR_TOKEN, 1), Some(err))
+					(
+						Token::new(JsSyntaxKind::ERROR_TOKEN, 1),
+						Some(Box::new(err)),
+					)
 				}
 			}
 			QOT => {
@@ -1401,7 +1410,7 @@ impl<'src> Lexer<'src> {
 
 						(
 							Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-							Some(err),
+							Some(Box::new(err)),
 						)
 					}
 				}
@@ -1416,7 +1425,10 @@ impl<'src> Lexer<'src> {
 				.primary(start..self.cur + 1, "");
 				self.next();
 
-				(Token::new(JsSyntaxKind::ERROR_TOKEN, 1), Some(err))
+				(
+					Token::new(JsSyntaxKind::ERROR_TOKEN, 1),
+					Some(Box::new(err)),
+				)
 			}
 		}
 	}
@@ -1464,7 +1476,7 @@ impl<'src> Lexer<'src> {
 
 		(
 			Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
-			Some(err),
+			Some(Box::new(err)),
 		)
 	}
 }
