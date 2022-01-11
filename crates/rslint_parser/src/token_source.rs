@@ -12,6 +12,13 @@ pub struct TokenSource<'t> {
 	cur: usize,
 }
 
+#[repr(isize)]
+enum Direction
+{
+	Forward = 1,
+	Backward = -1
+}
+
 impl<'t> TokenSource<'t> {
 	/// Creates a new [TokenSource] and set its
 	/// [TokenSource::cur] to the first non-trivia
@@ -29,25 +36,38 @@ impl<'t> TokenSource<'t> {
 	}
 
 	#[inline(always)]
-	fn next_non_trivia(&self, pos: usize, dir: isize) -> Option<usize> {
+	fn next_non_trivia(&self, pos: usize, dir: Direction) -> usize {
+		let dir = dir as isize;
 		let mut pos = pos as isize + dir;
-		if (pos < 0) || ((pos as usize) >= self.raw_tokens.len()) {
-			return None;
+
+		if pos < 0 {
+			return 0;
 		}
+
+		if (pos as usize) >= self.raw_tokens.len() {
+			return self.raw_tokens.len() - 1;
+		}
+
 		while self.raw_tokens[pos as usize].kind.is_trivia() {
 			pos += dir;
-			if (pos < 0) || ((pos as usize) >= self.raw_tokens.len()) {
-				return None;
+			
+			if pos < 0 {
+				return 0;
+			}
+			
+			if (pos as usize) >= self.raw_tokens.len() {
+				return self.raw_tokens.len() - 1;
 			}
 		}
-		Some(pos as usize)
+
+		pos as usize
 	}
 
 	#[inline(always)]
 	fn raw_lookahead_nth(&self, n: usize) -> usize {
 		let mut idx = self.cur;
 		for _ in 0..n {
-			idx = self.next_non_trivia(idx, 1).unwrap();
+			idx = self.next_non_trivia(idx, Direction::Forward)
 		}
 		idx
 	}
@@ -60,8 +80,8 @@ impl<'t> TokenSource<'t> {
 
 	#[inline(always)]
 	pub fn last_tok(&self) -> Option<&rslint_lexer::Token> {
-		self.next_non_trivia(self.cur, -1)
-			.and_then(|idx| self.raw_tokens.get(idx))
+		let idx = self.next_non_trivia(self.cur, Direction::Backward);
+		self.raw_tokens.get(idx)
 	}
 
 	#[inline(always)]
@@ -87,8 +107,7 @@ impl<'t> TokenSource<'t> {
 		}
 
 		self.cur = self
-			.next_non_trivia(self.cur, 1)
-			.unwrap_or(self.raw_tokens.len() - 1);
+			.next_non_trivia(self.cur, Direction::Forward)
 	}
 
 	#[inline(always)]
