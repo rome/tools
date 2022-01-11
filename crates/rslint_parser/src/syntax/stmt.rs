@@ -25,7 +25,6 @@ use crate::SyntaxFeature;
 use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 use rslint_errors::Span;
-use std::collections::HashMap;
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![
 	L_CURLY,
@@ -979,7 +978,7 @@ fn parse_variable_declaration(
 
 		let type_annotation = maybe_ts_type_annotation(p);
 
-		let last_name_map = std::mem::replace(&mut p.state.name_map, HashMap::default());
+		let last_name_map = std::mem::take(&mut p.state.name_map);
 		let duplicate_binding_parent = p.state.duplicate_binding_parent.take();
 
 		let initializer = parse_initializer_clause(p).ok();

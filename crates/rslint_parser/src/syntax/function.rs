@@ -9,7 +9,6 @@ use crate::ParsedSyntax::{Absent, Present};
 use crate::{Marker, Parser, SyntaxFeature};
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
-use std::collections::HashMap;
 
 /// A function declaration, this could be async and or a generator. This takes a marker
 /// because you need to first advance over async or start a marker and feed it in.
@@ -113,7 +112,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax
 	let last_in_function = std::mem::replace(&mut p.state.in_function, true);
 	let last_in_async = std::mem::replace(&mut p.state.in_async, in_async);
 	let last_in_generator = std::mem::replace(&mut p.state.in_generator, in_generator);
-	let last_labels = std::mem::replace(&mut p.state.labels, HashMap::new());
+	let last_labels = std::mem::take(&mut p.state.labels);
 
 	let id = parse_binding(p);
 
