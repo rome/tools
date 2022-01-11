@@ -13,10 +13,9 @@ pub struct TokenSource<'t> {
 }
 
 #[repr(isize)]
-enum Direction
-{
+enum Direction {
 	Forward = 1,
-	Backward = -1
+	Backward = -1,
 }
 
 impl<'t> TokenSource<'t> {
@@ -50,11 +49,11 @@ impl<'t> TokenSource<'t> {
 
 		while self.raw_tokens[pos as usize].kind.is_trivia() {
 			pos += dir;
-			
+
 			if pos < 0 {
 				return 0;
 			}
-			
+
 			if (pos as usize) >= self.raw_tokens.len() {
 				return self.raw_tokens.len() - 1;
 			}
@@ -106,8 +105,7 @@ impl<'t> TokenSource<'t> {
 			return;
 		}
 
-		self.cur = self
-			.next_non_trivia(self.cur, Direction::Forward)
+		self.cur = self.next_non_trivia(self.cur, Direction::Forward)
 	}
 
 	#[inline(always)]
