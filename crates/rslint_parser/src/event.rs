@@ -57,7 +57,7 @@ impl Event {
 
 /// Generate the syntax tree with the control of events.
 #[inline]
-pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Box<ParserError>>) {
+pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<ParserError>) {
 	sink.errors(errors);
 	let mut forward_parents = Vec::new();
 
@@ -130,7 +130,7 @@ impl<'r, 'p, T: RewriteParseEvents> TreeSink for RewriteParseEventsTreeSink<'r, 
 		self.reparse.finish_node(self.parser);
 	}
 
-	fn errors(&mut self, _errors: Vec<Box<ParserError>>) {}
+	fn errors(&mut self, _errors: Vec<ParserError>) {}
 
 	fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind) {
 		self.reparse.multiple_token(amount, kind, self.parser);

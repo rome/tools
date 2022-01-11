@@ -899,7 +899,10 @@ impl<'src> Lexer<'src> {
 			)
 			.primary(0usize..1usize, "");
 
-			(Token::new(JsSyntaxKind::ERROR_TOKEN, 1), Some(Box::new(err)))
+			(
+				Token::new(JsSyntaxKind::ERROR_TOKEN, 1),
+				Some(Box::new(err)),
+			)
 		}
 	}
 
@@ -1345,7 +1348,10 @@ impl<'src> Lexer<'src> {
 					.primary(start..self.cur + 1, "");
 					self.next();
 
-					(Token::new(JsSyntaxKind::ERROR_TOKEN, 1), Some(Box::new(err)))
+					(
+						Token::new(JsSyntaxKind::ERROR_TOKEN, 1),
+						Some(Box::new(err)),
+					)
 				}
 			}
 			QOT => {
@@ -1413,7 +1419,10 @@ impl<'src> Lexer<'src> {
 				.primary(start..self.cur + 1, "");
 				self.next();
 
-				(Token::new(JsSyntaxKind::ERROR_TOKEN, 1), Some(Box::new(err)))
+				(
+					Token::new(JsSyntaxKind::ERROR_TOKEN, 1),
+					Some(Box::new(err)),
+				)
 			}
 		}
 	}
@@ -1458,7 +1467,7 @@ impl<'src> Lexer<'src> {
 
 		let err = Diagnostic::error(self.file_id, "", "unterminated template literal")
 			.primary(self.cur..self.cur + 1, "");
-			
+
 		(
 			Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
 			Some(Box::new(err)),

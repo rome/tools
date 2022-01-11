@@ -15,7 +15,7 @@ pub struct LosslessTreeSink<'a> {
 	text_pos: TextSize,
 	token_pos: usize,
 	parents_count: usize,
-	errors: Vec<Box<ParserError>>,
+	errors: Vec<ParserError>,
 	inner: SyntaxTreeBuilder,
 	/// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
 	needs_eof: bool,
@@ -45,7 +45,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 		self.inner.finish_node();
 	}
 
-	fn errors(&mut self, errors: Vec<Box<ParserError>>) {
+	fn errors(&mut self, errors: Vec<ParserError>) {
 		self.errors = errors;
 	}
 }
@@ -68,7 +68,7 @@ impl<'a> LosslessTreeSink<'a> {
 	///
 	/// If tree is finished without a [SyntaxKind::EOF], one will be generated and all pending trivia
 	/// will be appended to its leading trivia.
-	pub fn finish(self) -> (SyntaxNode, Vec<Box<ParserError>>) {
+	pub fn finish(self) -> (SyntaxNode, Vec<ParserError>) {
 		(self.inner.finish(), self.errors)
 	}
 

@@ -174,7 +174,7 @@ pub struct TestResult {
 #[derive(Debug)]
 pub enum FailReason {
 	IncorrectlyPassed,
-	IncorrectlyErrored(Vec<Box<ParserError>>),
+	IncorrectlyErrored(Vec<ParserError>),
 	ParserPanic(Box<dyn Any + Send + 'static>),
 }
 
