@@ -49,7 +49,7 @@ pub struct ParserState {
 	pub in_binding_list_for_signature: bool,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum StrictMode {
 	Module,
 	Explicit(Range<usize>),

@@ -499,20 +499,24 @@ pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> Pars
 	let old_strict = if block_kind == JS_FUNCTION_BODY {
 		directives(p)
 	} else {
-		p.state.strict.clone()
+		None
 	};
 
 	parse_statements(p, true);
 
 	p.expect(T!['}']);
 
-	p.state.strict = old_strict;
+	if let Some(old_strict) = old_strict {
+		p.state.strict = old_strict;
+	}
 
 	Present(m.complete(p, block_kind))
 }
 
 #[derive(Default)]
-struct DirectivesList;
+struct DirectivesList {
+	old_strict: Option<Option<StrictModeState>>,
+}
 
 impl DirectivesList {
 	fn is_at_directives(&self, p: &mut Parser) -> bool {
@@ -560,6 +564,10 @@ impl ParseNodeList for DirectivesList {
 				err = err.primary(directive_token.range(), "this declaration is redundant");
 				p.error(err);
 			} else {
+				if self.old_strict.is_none() {
+					self.old_strict = Some(p.state.strict.take());
+				}
+
 				p.state.strict = Some(StrictModeState::Explicit(directive_token.range()));
 			}
 		}
@@ -619,11 +627,10 @@ impl ParseNodeList for DirectivesList {
 // 	}
 // }
 #[must_use]
-pub(crate) fn directives(p: &mut Parser) -> Option<StrictModeState> {
+pub(crate) fn directives(p: &mut Parser) -> Option<Option<StrictModeState>> {
 	let mut list = DirectivesList::default();
-	let old_strict = p.state.strict.clone();
 	list.parse_list(p);
-	old_strict
+	list.old_strict
 }
 
 /// Top level items or items inside of a block statement, this also handles module items so we can

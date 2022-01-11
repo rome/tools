@@ -25,7 +25,9 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 		FileKind::Module | FileKind::TypeScript => parse_module_body(p, m),
 	};
 
-	p.state.strict = last_strict;
+	if let Some(last_strict) = last_strict {
+		p.state.strict = last_strict;
+	}
 
 	result
 }

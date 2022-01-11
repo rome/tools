@@ -856,13 +856,13 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
 	}
 
 	let last_in_constructor = std::mem::replace(&mut p.state.in_constructor, true);
-	let last_in_generator = std::mem::replace(&mut p.state.in_generator, true);
+	let last_in_function = std::mem::replace(&mut p.state.in_function, true);
 
 	parse_block_impl(p, JS_FUNCTION_BODY)
 		.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
 
 	p.state.in_constructor = last_in_constructor;
-	p.state.in_generator = last_in_generator;
+	p.state.in_function = last_in_function;
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 
