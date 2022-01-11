@@ -218,16 +218,6 @@ fn parse_assign_expr_recursive(
 			AssignmentExprPrecedence::Conditional,
 		);
 
-		let target_text = target.text(p);
-		// if (target_text == "eval" || target_text == "arguments") && p.state.strict.is_some() {
-		// 	p.error(
-		// 		p.err_builder(
-		// 			"`eval` or `arguments` not allowed as assignment targets in strict mode",
-		// 		)
-		// 		.primary(target.range(p), ""),
-		// 	);
-		// }
-
 		let m = target.precede(p);
 		p.bump_any(); // operator
 		parse_expr_or_assignment(p)

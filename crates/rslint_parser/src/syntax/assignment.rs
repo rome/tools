@@ -428,7 +428,7 @@ impl RewriteParseEvents for ReparseAssignment {
 					p.err_builder(
 						"`eval` or `arguments` not allowed as assignment targets in strict mode",
 					)
-					.primary(, ""),
+					.primary(p.cur_tok().range(), ""),
 				);
 			}
 		}
