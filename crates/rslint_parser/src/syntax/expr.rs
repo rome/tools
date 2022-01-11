@@ -172,7 +172,7 @@ fn parse_assign_expr_base(p: &mut Parser) -> ParsedSyntax {
 	if p.state.in_generator && p.at(T![yield]) {
 		return Present(yield_expr(p));
 	}
-	let potential_arrow_start = matches!(p.cur(), T![ident] | T!['('] | T![yield] | T![await]);
+	let potential_arrow_start = p.at(T!['(']) | is_at_identifier(p);
 	let mut guard = p.with_state(ParserState {
 		potential_arrow_start,
 		..p.state.clone()
@@ -943,8 +943,15 @@ pub(crate) fn parse_expression(p: &mut Parser) -> ParsedSyntax {
 	})
 }
 
+#[inline]
 pub(crate) fn is_at_expression(p: &Parser) -> bool {
-	p.at_ts(STARTS_EXPR) || p.at(T![<]) || (p.at(T![enum]) && !p.has_linebreak_before_n(0))
+	is_nth_at_expression(p, 0)
+}
+
+pub(crate) fn is_nth_at_expression(p: &Parser, n: usize) -> bool {
+	STARTS_EXPR.contains(p.nth(n))
+		|| p.nth_at(n, T![<])
+		|| (p.nth_at(n, T![enum]) && !p.has_linebreak_before_n(n))
 }
 
 /// A primary expression such as a literal, an object, an array, or `this`.
@@ -1134,8 +1141,12 @@ fn parse_identifier_expression(p: &mut Parser) -> ParsedSyntax {
 // test_err identifier
 // yield;
 // await;
-fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax {
 	parse_identifier(p, JS_REFERENCE_IDENTIFIER)
+}
+
+pub(crate) fn is_nth_at_reference_identifier(p: &Parser, n: usize) -> bool {
+	is_nth_at_identifier(p, n)
 }
 
 // test identifier_loose_mode
@@ -1213,8 +1224,13 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
 	}
 }
 
+#[inline]
 pub(crate) fn is_at_identifier(p: &Parser) -> bool {
-	matches!(p.cur(), T![ident] | T![await] | T![yield] | T![enum])
+	is_nth_at_identifier(p, 0)
+}
+
+pub(crate) fn is_nth_at_identifier(p: &Parser, n: usize) -> bool {
+	matches!(p.nth(n), T![ident] | T![await] | T![yield] | T![enum])
 }
 
 /// A template literal such as "`abcd ${efg}`"

@@ -1,13 +1,25 @@
 use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
 use crate::syntax::binding::parse_binding;
-use crate::syntax::js_parse_error::{
-	duplicate_assertion_keys_error, expected_binding, expected_export_name,
-	expected_export_name_after_as_keyword, expected_local_name_for_default_import,
-	expected_module_source, expected_named_import, expected_named_import_specifier,
-	expected_statement,
+use crate::syntax::class::{parse_export_class_clause, parse_export_default_class_case};
+use crate::syntax::expr::{
+	is_nth_at_expression, is_nth_at_reference_identifier, parse_expr_or_assignment,
+	parse_reference_identifier,
 };
-use crate::syntax::program::export_decl;
-use crate::syntax::stmt::{parse_statement, semi, STMT_RECOVERY_SET};
+use crate::syntax::function::{
+	is_at_async_function, parse_export_default_function_case, parse_export_function_clause,
+	LineBreak,
+};
+use crate::syntax::js_parse_error;
+use crate::syntax::js_parse_error::{
+	duplicate_assertion_keys_error, expected_binding, expected_export_clause,
+	expected_export_name_specifier, expected_expression, expected_identifier,
+	expected_literal_export_name, expected_local_name_for_default_import, expected_module_source,
+	expected_named_import, expected_named_import_specifier, expected_statement,
+};
+use crate::syntax::stmt::{
+	is_at_variable_declarations, parse_statement, parse_variable_declaration_list, semi,
+	VariableDeclarationParent, STMT_RECOVERY_SET,
+};
 use crate::syntax::util::expect_keyword;
 use crate::{
 	Absent, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax, Parser,
@@ -57,7 +69,7 @@ fn parse_module_items(p: &mut Parser) {
 fn parse_module_item(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => parse_import(p),
-		T![export] => export_decl(p).into(),
+		T![export] => parse_export(p),
 		_ => parse_statement(p),
 	}
 }
@@ -271,13 +283,16 @@ impl ParseSeparatedList for NamedImportSpecifierList {
 fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 
-	if p.cur_src() == "as" && p.nth_src(1) != "as" {
-		p.error(expected_export_name_after_as_keyword(
-			p,
-			p.cur_tok().range(),
-		));
-	} else if p.nth_src(1) == "as" {
-		parse_export_name(p).or_add_diagnostic(p, expected_export_name);
+	// test import_as_identifier
+	// import { as } from "test";
+	// import { as as as } from "test";
+	//
+	// test_err import_as_identifier_err
+	// import { as c } from "test";
+	if is_nth_at_literal_export_name(p, 0) && p.nth_src(1) == "as" {
+		parse_literal_export_name(p).ok();
+	} else if p.cur_src() == "as" && is_nth_at_literal_export_name(p, 1) {
+		p.error(expected_literal_export_name(p, p.cur_tok().range()));
 	} else {
 		m.abandon(p);
 		return Absent;
@@ -446,7 +461,362 @@ fn parse_import_assertion_entry(
 	Present(entry)
 }
 
-fn parse_export_name(p: &mut Parser) -> ParsedSyntax {
+// test_err export_err
+// export
+pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T![export]) {
+		return Absent;
+	}
+
+	let m = p.start();
+	p.bump(T![export]);
+
+	let clause = match p.cur() {
+		T![class] => parse_export_class_clause(p),
+		T![function] => parse_export_function_clause(p),
+		T!['{'] => {
+			let checkpoint = p.checkpoint();
+			match parse_export_named_clause(p) {
+				Present(_) if p.at(T![ident]) && p.cur_src() == "from" => {
+					p.rewind(checkpoint);
+					parse_export_named_from_clause(p)
+				}
+				t => t,
+			}
+		}
+		T![default] => parse_export_default_clause(p),
+		T![ident] if is_at_async_function(p, LineBreak::DoNotCheck) => {
+			parse_export_function_clause(p)
+		}
+		T![*] => parse_export_from_clause(p),
+		T![ident] if p.cur_src() == "from" => parse_export_from_clause(p),
+		_ if p.nth_at(1, T![ident]) && p.nth_src(1) == "from" => parse_export_from_clause(p),
+		_ if is_at_variable_declarations(p) => parse_export_variable_clause(p),
+		_ => Absent,
+	};
+
+	clause.or_add_diagnostic(p, expected_export_clause);
+
+	Present(m.complete(p, JS_EXPORT))
+}
+
+// test export_variable_clause
+// export let a;
+// export const b = 3;
+// export var c, d, e = 3;
+//
+// test_err export_variable_clause_error
+// export let a = ;
+// export const b;
+// export let a, a;
+fn parse_export_variable_clause(p: &mut Parser) -> ParsedSyntax {
+	if !is_at_variable_declarations(p) {
+		return Absent;
+	}
+
+	let m = p.start();
+	let start = p.cur_tok().range().start;
+	parse_variable_declaration_list(p, VariableDeclarationParent::Export)
+		.or_add_diagnostic(p, js_parse_error::expected_variable);
+
+	semi(p, start..p.cur_tok().range().end);
+
+	Present(m.complete(p, JS_EXPORT_VARIABLE_CLAUSE))
+}
+
+// test export_named_clause
+// export { a };
+// export { a as z, b as "y", c as default }
+// export { as };
+//
+// test_err export_named_clause_err
+// export { default as "b" };
+// export { "a" as b };
+// export { as b };
+// export { a as 5 };
+// export { a b c };
+fn parse_export_named_clause(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T!['{']) {
+		return Absent;
+	}
+
+	let start = p.cur_tok().range().start;
+	let m = p.start();
+
+	p.bump(T!['{']);
+	ExportNamedSpecifierList.parse_list(p);
+	p.expect(T!['}']);
+
+	semi(p, start..p.cur_tok().range().start);
+
+	Present(m.complete(p, JS_EXPORT_NAMED_CLAUSE))
+}
+
+struct ExportNamedSpecifierList;
+
+impl ParseSeparatedList for ExportNamedSpecifierList {
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+		parse_export_named_specifier(p).or_else(|| parse_export_named_shorthand_specifier(p))
+	}
+
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		p.at(T!['}'])
+	}
+
+	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+		parsed_element.or_recover(
+			p,
+			&ParseRecovery::new(
+				JS_UNKNOWN,
+				STMT_RECOVERY_SET.union(token_set![T![,], T!['}'], T![;]]),
+			)
+			.enable_recovery_on_line_break(),
+			expected_export_name_specifier,
+		)
+	}
+
+	fn list_kind() -> JsSyntaxKind {
+		JS_EXPORT_NAMED_SPECIFIER_LIST
+	}
+
+	fn separating_element_kind(&mut self) -> JsSyntaxKind {
+		T![,]
+	}
+
+	fn allow_trailing_separating_element(&self) -> bool {
+		true
+	}
+}
+
+fn parse_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
+	let m = p.start();
+
+	// test export_as_identifier
+	// export { as };
+	// export { as as as }
+	//
+	// test_err export_as_identifier_err
+	// export { as c }
+	if is_nth_at_reference_identifier(p, 0) && p.nth_src(1) == "as" {
+		parse_reference_identifier(p).or_add_diagnostic(p, expected_identifier);
+	} else if p.cur_src() == "as" && is_nth_at_literal_export_name(p, 1) {
+		p.error(expected_literal_export_name(p, p.cur_tok().range()));
+	} else {
+		m.abandon(p);
+		return Absent;
+	}
+
+	expect_keyword(p, "as", T![as]);
+	parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
+
+	Present(m.complete(p, JS_EXPORT_NAMED_SPECIFIER))
+}
+
+fn parse_export_named_shorthand_specifier(p: &mut Parser) -> ParsedSyntax {
+	parse_reference_identifier(p).map(|identifier| {
+		identifier
+			.precede(p)
+			.complete(p, JS_EXPORT_NAMED_SHORTHAND_SPECIFIER)
+	})
+}
+
+// test export_from_clause
+// export * from "a";
+// export * as c from "b";
+// export * as default from "b"
+// export * from "mod" assert { type: "json" }
+//
+// test_err export_from_clause_err
+// export *;
+// export * from 5;
+// export as from "test";
+// export from "test";
+fn parse_export_from_clause(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T![*])
+		&& !(p.at(T![ident]) && p.cur_src() == "from")
+		&& !(p.nth_at(1, T![ident]) && p.nth_src(1) == "from")
+	{
+		return Absent;
+	}
+
+	let start = p.cur_tok().range().start;
+	let m = p.start();
+	p.expect(T![*]);
+
+	parse_export_as_clause(p).ok();
+	expect_keyword(p, "from", T![from]);
+	parse_module_source(p).or_add_diagnostic(p, expected_module_source);
+	parse_import_assertion(p).ok();
+	semi(p, start..p.cur_tok().range().end);
+
+	Present(m.complete(p, JS_EXPORT_FROM_CLAUSE))
+}
+
+// test export_named_from_clause
+// export { a, default } from "mod";
+// export { a as z, b as "y", c as default } from "mod"
+// export { as } from "mod";
+// export { default as "b" } from "mod";
+// export { "a" as b } from "mod";
+// export { a } from "mod" assert { type: "json" }
+//
+// test_err export_named_from_clause_err
+// export { as b } from "mod";
+// export { a as 5 } from "mod";
+// export { a b c } from "mod";
+// export { 5 as b } from "mod";
+fn parse_export_named_from_clause(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T!['{']) {
+		return Absent;
+	}
+
+	let start = p.cur_tok().range().start;
+	let m = p.start();
+
+	p.bump(T!['{']);
+	ExportNamedFromSpecifierList.parse_list(p);
+	p.expect(T!['}']);
+
+	expect_keyword(p, "from", T![from]);
+
+	parse_module_source(p).or_add_diagnostic(p, expected_module_source);
+	parse_import_assertion(p).ok();
+
+	semi(p, start..p.cur_tok().range().start);
+
+	Present(m.complete(p, JS_EXPORT_NAMED_FROM_CLAUSE))
+}
+
+struct ExportNamedFromSpecifierList;
+
+impl ParseSeparatedList for ExportNamedFromSpecifierList {
+	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+		parse_export_named_from_specifier(p)
+	}
+
+	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+		p.at(T!['}'])
+	}
+
+	fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+		parsed_element.or_recover(
+			p,
+			&ParseRecovery::new(
+				JS_UNKNOWN,
+				STMT_RECOVERY_SET.union(token_set![T![,], T!['}'], T![;]]),
+			)
+			.enable_recovery_on_line_break(),
+			expected_literal_export_name,
+		)
+	}
+
+	fn list_kind() -> JsSyntaxKind {
+		JS_EXPORT_NAMED_FROM_SPECIFIER_LIST
+	}
+
+	fn separating_element_kind(&mut self) -> JsSyntaxKind {
+		T![,]
+	}
+
+	fn allow_trailing_separating_element(&self) -> bool {
+		true
+	}
+}
+
+fn parse_export_named_from_specifier(p: &mut Parser) -> ParsedSyntax {
+	let name = parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
+
+	let as_clause = parse_export_as_clause(p);
+
+	let m = match (name, as_clause) {
+		(Some(name), _) => name.precede(p),
+		(_, Present(as_clause)) => as_clause.precede(p),
+		_ => return Absent,
+	};
+
+	Present(m.complete(p, JS_EXPORT_NAMED_FROM_SPECIFIER))
+}
+
+fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T![default]) {
+		return Absent;
+	}
+
+	let clause = match p.nth(1) {
+		T![class] => parse_export_default_class_case(p),
+		T![function] => parse_export_default_function_case(p),
+		T![ident] if p.nth_src(1) == "async" && p.nth_at(2, T![function]) => {
+			parse_export_default_function_case(p)
+		}
+		_ => parse_export_default_expression_clause(p),
+	};
+
+	clause.map(|mut clause| {
+		// test_err multiple_default_exports_err
+		// export default (class {})
+		// export default a + b;
+		// export default (function a() {})
+		if let Some(range) = p.state.default_item.as_ref().filter(|_| p.state.is_module) {
+			let err = p
+				.err_builder("Illegal duplicate default export declarations")
+				.secondary(
+					range.to_owned(),
+					"the module's default export is first defined here",
+				)
+				.primary(clause.range(p), "multiple default exports are erroneous");
+
+			p.error(err);
+			clause.change_kind(p, JsSyntaxKind::JS_UNKNOWN);
+		} else {
+			p.state.default_item = Some(clause.range(p).into());
+		}
+
+		clause
+	})
+}
+
+// test export_default_expression_clause
+// export default a;
+//
+// test_err export_default_expression_clause_err
+// export default a, b;
+fn parse_export_default_expression_clause(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T![default]) && !is_nth_at_expression(p, 1) {
+		return Absent;
+	}
+
+	let start = p.cur_tok().range().start;
+	let m = p.start();
+	p.expect(T![default]);
+
+	parse_expr_or_assignment(p).or_add_diagnostic(p, expected_expression);
+
+	semi(p, start..p.cur_tok().range().start);
+	Present(m.complete(p, JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE))
+}
+
+fn parse_export_as_clause(p: &mut Parser) -> ParsedSyntax {
+	if p.cur_src() != "as" {
+		return Absent;
+	}
+
+	let m = p.start();
+	expect_keyword(p, "as", T![as]);
+
+	parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
+
+	Present(m.complete(p, JS_EXPORT_AS_CLAUSE))
+}
+
+fn is_nth_at_literal_export_name(p: &Parser, n: usize) -> bool {
+	match p.nth(n) {
+		JS_STRING_LITERAL | T![ident] => true,
+		t if t.is_keyword() => true,
+		_ => false,
+	}
+}
+
+fn parse_literal_export_name(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		JS_STRING_LITERAL | T![ident] => {
 			let m = p.start();

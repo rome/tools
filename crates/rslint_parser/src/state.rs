@@ -1,5 +1,4 @@
-use crate::{CompletedMarker, Parser};
-use rslint_syntax::JsSyntaxKind;
+use crate::Parser;
 use std::collections::HashMap;
 use std::ops::{Deref, DerefMut, Range};
 
@@ -49,7 +48,6 @@ pub struct ParserState {
 	pub(crate) no_recovery: bool,
 	pub in_declare: bool,
 	pub in_binding_list_for_signature: bool,
-	pub in_default: bool,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -82,36 +80,11 @@ impl Default for ParserState {
 			no_recovery: false,
 			in_declare: false,
 			in_binding_list_for_signature: false,
-			in_default: false,
 		}
 	}
 }
 
 impl ParserState {
-	/// Check for duplicate defaults and update state
-	pub fn check_default(
-		&mut self,
-		p: &mut Parser,
-		mut marker: CompletedMarker,
-	) -> CompletedMarker {
-		// A default export is already present
-		if let Some(range) = self.default_item.as_ref().filter(|_| self.is_module) {
-			let err = p
-				.err_builder("Illegal duplicate default export declarations")
-				.secondary(
-					range.to_owned(),
-					"the module's default export is first defined here",
-				)
-				.primary(marker.range(p), "multiple default exports are erroneous");
-
-			p.error(err);
-			marker.change_kind(p, JsSyntaxKind::JS_UNKNOWN);
-		} else if self.is_module {
-			self.default_item = Some(marker.range(p).into());
-		}
-		marker
-	}
-
 	/// Turn on strict mode and issue a warning for redundant strict mode declarations
 	pub(crate) fn strict(&mut self, p: &mut Parser, range: Range<usize>) {
 		if let Some(strict) = self.strict.to_owned() {

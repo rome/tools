@@ -6,11 +6,9 @@ use crate::syntax::stmt::{is_semi, parse_block_impl};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::SyntaxFeature;
+use crate::{Marker, SyntaxFeature};
 use crate::{Parser, ParserState};
-use rslint_syntax::JsSyntaxKind::{
-	JS_FUNCTION_BODY, JS_FUNCTION_EXPRESSION, JS_FUNCTION_STATEMENT, JS_UNKNOWN, TS_TYPE_ANNOTATION,
-};
+use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
 use std::collections::HashMap;
 
@@ -45,18 +43,64 @@ use std::collections::HashMap;
 // test_err function_broken
 // function foo())})}{{{  {}
 pub(super) fn parse_function_statement(p: &mut Parser) -> ParsedSyntax {
-	parse_function(p, JS_FUNCTION_STATEMENT)
+	let m = p.start();
+	parse_function(p, m, FunctionKind::Statement)
 }
 
 pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
-	parse_function(p, JS_FUNCTION_EXPRESSION)
+	let m = p.start();
+	parse_function(p, m, FunctionKind::Expression)
 }
 
-fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
+// test export_function_clause
+// export function test(a, b) {}
+// export function* test(a, b) {}
+// export async function test(a, b, ) {}
+pub(super) fn parse_export_function_clause(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
+	parse_function(p, m, FunctionKind::Export)
+}
 
+// test export_default_function_clause
+// export default function test(a, b) {}
+pub(super) fn parse_export_default_function_case(p: &mut Parser) -> ParsedSyntax {
+	if !(p.at(T![default]) || p.nth_at(1, T![function]) || p.nth_src(1) == "async") {
+		return Absent;
+	}
+
+	let m = p.start();
+	p.bump(T![default]);
+	parse_function(p, m, FunctionKind::ExportDefault)
+}
+
+#[derive(PartialEq, Eq, Debug, Copy, Clone)]
+enum FunctionKind {
+	Statement,
+	Expression,
+	Export,
+	ExportDefault,
+}
+
+impl FunctionKind {
+	fn is_id_optional(&self) -> bool {
+		matches!(self, FunctionKind::Expression | FunctionKind::ExportDefault)
+	}
+}
+
+impl From<FunctionKind> for JsSyntaxKind {
+	fn from(kind: FunctionKind) -> Self {
+		match kind {
+			FunctionKind::Statement => JS_FUNCTION_STATEMENT,
+			FunctionKind::Expression => JS_FUNCTION_EXPRESSION,
+			FunctionKind::Export => JS_EXPORT_FUNCTION_CLAUSE,
+			FunctionKind::ExportDefault => JS_EXPORT_DEFAULT_FUNCTION_CLAUSE,
+		}
+	}
+}
+
+fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax {
 	let uses_invalid_syntax =
-		kind == JS_FUNCTION_STATEMENT && p.eat(T![declare]) && TypeScript.is_unsupported(p);
+		kind == FunctionKind::Statement && p.eat(T![declare]) && TypeScript.is_unsupported(p);
 
 	let in_async = is_at_async_function(p, LineBreak::DoNotCheck);
 	if in_async {
@@ -76,7 +120,7 @@ fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
 
 	let id = parse_binding(guard);
 
-	if kind == JS_FUNCTION_STATEMENT {
+	if !kind.is_id_optional() {
 		id.or_add_diagnostic(guard, |p, range| {
 			p.err_builder(
 				"expected a name for the function in a function declaration, but found none",
@@ -101,13 +145,13 @@ fn parse_function(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
 		})
 		.ok();
 
-	if kind == JS_FUNCTION_STATEMENT {
+	if kind == FunctionKind::Statement {
 		function_body_or_declaration(guard);
 	} else {
 		function_body(guard).or_add_diagnostic(guard, js_parse_error::expected_function_body);
 	}
 
-	let mut function = m.complete(guard, kind);
+	let mut function = m.complete(guard, kind.into());
 
 	if uses_invalid_syntax {
 		function.change_to_unknown(guard);

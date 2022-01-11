@@ -1,0 +1,6 @@
+export { a, default } from "mod";
+export { a as z, b as "y", c as default } from "mod"
+export { as } from "mod";
+export { default as "b" } from "mod";
+export { "a" as b } from "mod";
+export { a } from "mod" assert { type: "json" }

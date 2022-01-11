@@ -28,7 +28,12 @@ use std::ops::Range;
 
 /// Parses a class expression, e.g. let a = class {}
 pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
-	parse_class(p, ClassKind::Expression)
+	if !p.at(T![class]) {
+		return Absent;
+	}
+
+	let m = p.start();
+	parse_class(p, m, ClassKind::Expression)
 }
 
 // test class_declaration
@@ -50,31 +55,68 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 /// A class can be invalid if
 /// * It uses an illegal identifier name
 pub(super) fn parse_class_statement(p: &mut Parser) -> ParsedSyntax {
-	parse_class(p, ClassKind::Statement)
+	if !p.at(T![class]) {
+		return Absent;
+	}
+
+	let m = p.start();
+	parse_class(p, m, ClassKind::Statement)
+}
+
+// test export_class_clause
+// export class A {}
+// export class A extends B {}
+pub(super) fn parse_export_class_clause(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T![class]) {
+		return Absent;
+	}
+
+	let m = p.start();
+	parse_class(p, m, ClassKind::Export)
+}
+
+// test export_default_class_clause
+// export default class {}
+pub(super) fn parse_export_default_class_case(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T![default]) && !p.nth_at(1, T![class]) {
+		return Absent;
+	}
+
+	let m = p.start();
+	p.bump(T![default]);
+
+	parse_class(p, m, ClassKind::ExportDefault)
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 enum ClassKind {
 	Statement,
 	Expression,
+	Export,
+	ExportDefault,
+}
+
+impl ClassKind {
+	fn is_id_optional(&self) -> bool {
+		matches!(self, ClassKind::Expression | ClassKind::ExportDefault)
+	}
 }
 
 impl From<ClassKind> for JsSyntaxKind {
 	fn from(kind: ClassKind) -> Self {
 		match kind {
-			ClassKind::Statement => JsSyntaxKind::JS_CLASS_STATEMENT,
-			ClassKind::Expression => JsSyntaxKind::JS_CLASS_EXPRESSION,
+			ClassKind::Statement => JS_CLASS_STATEMENT,
+			ClassKind::Expression => JS_CLASS_EXPRESSION,
+			ClassKind::Export => JS_EXPORT_CLASS_CLAUSE,
+			ClassKind::ExportDefault => JS_EXPORT_DEFAULT_CLASS_CLAUSE,
 		}
 	}
 }
 
-fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax {
-	if !p.at(T![class]) {
-		return Absent;
-	}
+fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> ParsedSyntax {
 	let mut class_is_valid = true;
-	let m = p.start();
 	let class_token_range = p.cur_tok().range();
+
 	p.expect(T![class]);
 
 	// class bodies are implicitly strict
@@ -109,7 +151,7 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> ParsedSyntax {
 			}
 		}
 		Absent => {
-			if kind == ClassKind::Statement && !guard.state.in_default {
+			if !kind.is_id_optional() {
 				let err = guard
 					.err_builder("class declarations must have a name")
 					.primary(class_token_range.start..guard.cur_tok().start(), "");

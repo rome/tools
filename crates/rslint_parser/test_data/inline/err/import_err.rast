@@ -503,11 +503,11 @@ error[SyntaxError]: expected an identifier but instead found '"a"'
   │          ^^^ Expected an identifier here
 
 --
-error[SyntaxError]: Expected an identifier or string literal before the as keyword
+error[SyntaxError]: expected a string literal, or an identifier but instead found 'as'
   ┌─ import_err.js:8:10
   │
 8 │ import { as b } from "c";
-  │          ^^ as keyword
+  │          ^^ Expected a string literal, or an identifier here
 
 --
 error[SyntaxError]: expected a default import, a namespace import, or a named import but instead found '4'

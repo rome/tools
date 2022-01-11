@@ -1,0 +1,29 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExport {
+            export_token: EXPORT_KW@0..6 "export" [] [],
+            export_clause: missing (required),
+        },
+    ],
+    eof_token: EOF@6..7 "" [Whitespace("\n")] [],
+}
+
+0: JS_MODULE@0..7
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..6
+    0: JS_EXPORT@0..6
+      0: EXPORT_KW@0..6 "export" [] []
+      1: (empty)
+  3: EOF@6..7 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: expected a class, a function, or a variable declaration but instead found ''
+  ┌─ export_err.js:2:1
+  │
+2 │ 
+  │ ^ Expected a class, a function, or a variable declaration here
+
+--
+export

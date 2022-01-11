@@ -4,7 +4,6 @@
 
 use super::binding::*;
 use super::expr::parse_expression;
-use super::program::export_decl;
 use super::typescript::*;
 use super::util::check_label_use;
 use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
@@ -18,7 +17,7 @@ use crate::syntax::expr::{
 use crate::syntax::function::{is_at_async_function, parse_function_statement, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement};
-use crate::syntax::module::parse_import;
+use crate::syntax::module::{parse_export, parse_import};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
@@ -50,7 +49,8 @@ pub const STMT_RECOVERY_SET: TokenSet = token_set![
 	T![;]
 ];
 
-pub const FOLLOWS_LET: TokenSet = token_set![T!['{'], T!['['], T![ident], T![yield], T![await]];
+const FOLLOWS_LET: TokenSet =
+	token_set![T!['{'], T!['['], T![ident], T![yield], T![await], T![enum]];
 
 /// Consume an explicit semicolon, or try to automatically insert one,
 /// or add an error to the parser if there was none and it could not be inserted
@@ -140,24 +140,23 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 		// {
 		//  export { pain } from "life";
 		// }
-		T![export] => {
-			let mut m = export_decl(p);
+		T![export] => parse_export(p).map(|mut export| {
 			if !p.state.is_module && !p.typescript() {
 				let err = p
 					.err_builder("Illegal use of an export declaration outside of a module")
-					.primary(m.range(p), "not allowed inside scripts");
+					.primary(export.range(p), "not allowed inside scripts");
 
 				p.error(err);
 			} else {
 				let err = p
 					.err_builder("Illegal use of an import declaration not at the top level")
-					.primary(m.range(p), "move this declaration to the top level");
+					.primary(export.range(p), "move this declaration to the top level");
 
 				p.error(err);
 			}
-			m.change_kind(p, JS_UNKNOWN_STATEMENT);
-			Present(m)
-		}
+			export.change_kind(p, JS_UNKNOWN_STATEMENT);
+			export
+		}),
 		T![;] => parse_empty_statement(p), // It is only ever Err if there's no ;
 		T!['{'] => parse_block_stmt(p),    // It is only ever None if there is no `{`,
 		T![if] => parse_if_statement(p),   // It is only ever Err if there's no if
@@ -170,7 +169,7 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 			res.err_if_not_ts(p, "enums can only be declared in TypeScript files");
 			Present(res)
 		}
-		T![var] | T![const] => variable_declaration_statement(p),
+		T![var] | T![const] => parse_variable_statement(p),
 		T![for] => parse_for_statement(p),
 		T![do] => parse_do_statement(p),
 		T![switch] => parse_switch_statement(p),
@@ -185,7 +184,7 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 		T![ident] if is_at_async_function(p, LineBreak::DoCheck) => parse_function_statement(p),
 
 		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
-			variable_declaration_statement(p)
+			parse_variable_statement(p)
 		}
 		// TODO: handle `<T>() => {};` with less of a hack
 		_ if is_at_expression(p) => {
@@ -746,6 +745,14 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 	Present(m.complete(p, JS_WHILE_STATEMENT))
 }
 
+pub(crate) fn is_at_variable_declarations(p: &Parser) -> bool {
+	match p.cur() {
+		T![var] | T![const] => true,
+		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => true,
+		_ => false,
+	}
+}
+
 /// A var, const, or let declaration statement such as `var a = 5, b;` or `let {a, b} = foo;`
 // test var_decl
 // var a = 5;
@@ -762,7 +769,7 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 // const a;
 // let [a];
 // const { b };
-pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_variable_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err var_decl_err
 	// var a =;
 	// const a = 5 let b = 5;
@@ -780,7 +787,7 @@ pub fn variable_declaration_statement(p: &mut Parser) -> ParsedSyntax {
 	}
 }
 
-fn parse_variable_declaration_list(
+pub(super) fn parse_variable_declaration_list(
 	p: &mut Parser,
 	declaration_context: VariableDeclarationParent,
 ) -> ParsedSyntax {
@@ -796,12 +803,15 @@ fn parse_variable_declaration_list(
 /// What's the parent node of the variable declaration
 #[repr(u8)]
 #[derive(Clone, Debug, Copy, Eq, PartialEq)]
-enum VariableDeclarationParent {
+pub(super) enum VariableDeclarationParent {
 	/// Declaration inside a `for...of` or `for...in` or `for (;;)` loop
 	For,
 
 	/// Declaration as part of a variable statement (`let a`, `const b`, or `var c`).
 	VariableStatement,
+
+	/// Declaration as part of an export statement: `export let ...`
+	Export,
 }
 
 /// Parses a list of JS_VARIABLE_DECLARATION_LIST

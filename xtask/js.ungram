@@ -103,10 +103,6 @@ JsAnyStatement =
 	| JsWhileStatement
 	| JsWithStatement
 	| TsEnum
-	| TsInterfaceDecl
-	| TsModuleDecl
-	| TsNamespaceDecl
-	| TsTypeAliasDecl
   | JsFunctionStatement
 
 
@@ -571,6 +567,8 @@ JsClassMemberList = JsAnyClassMember*
 JsAnyClass =
 	JsClassStatement
 	| JsClassExpression
+	| JsExportClassClause
+	| JsExportDefaultClassClause
 
 
 TsImplementsClause =
@@ -954,16 +952,8 @@ JsVariableDeclaration =
 
 JsAnyModuleItem =
 	JsAnyStatement
+	| JsExport
 	| JsImport
-	| ExportDefaultDecl
-	| ExportDefaultExpr
-	| ExportWildcard
-	| ExportDecl
-	| ExportNamed
-	| TsImportEqualsDecl
-	| TsExportAssignment
-	| TsNamespaceExportDecl
-
 JsModuleItemList = JsAnyModuleItem*
 
 JsImport = 'import'
@@ -1105,48 +1095,170 @@ JsLiteralExportName = value: ('ident' | 'js_string_literal')
 //               ^^^
 JsModuleSource = value: 'js_string_literal'
 
-// export default declaration
-ExportDefaultDecl = 'export' 'default'? 'type'? decl:DefaultDecl
-DefaultDecl =
-	JsFunctionStatement
-	| JsClassStatement
+
+JsExport =
+	'export'
+	export_clause: JsAnyExportClause
 
 
-// export default expression
-ExportDefaultExpr = 'export' 'type'? 'default'? expr:JsAnyExpression
+// export function a() {}
+// export default function () {}
+// export class A {}
+// export default class A {}
+// export let a, b, c, d;
+// export default a, b, c;
+// export { a, b as c };
+// export * from "b";
+// export { a, b as c } from "b";
+//
+// Typescript:
+// export type A = string;
+// export enum B { A, B }
+// export interface C {}
+// export namespace D {}
+// export as namespace c;
+// export = b;
+// export import a = b;
+JsAnyExportClause =
+	JsExportFunctionClause
+	| JsExportDefaultFunctionClause
+	| JsExportClassClause
+	| JsExportDefaultClassClause
+	| JsExportVariableClause
+	| JsExportDefaultExpressionClause
+	| JsExportNamedClause
+	| JsExportFromClause
+	| JsExportNamedFromClause
 
-// export wildcard
-ExportWildcard = 'export' 'type'? '*' 'as'? ident: Ident? 'from' source: 'js_string_literal'
+// export let a, b, c;
+//        ^^^^^^^^^^^
+JsExportVariableClause =
+	declarations: JsVariableDeclarations
+	';'?
+
+// export function a() {}
+//        ^^^^^^^^^^^^^^^
+JsExportFunctionClause =
+	'async'?
+	'function'
+	'*'?
+	id: JsAnyBinding
+	type_parameters: TsTypeParams?
+	parameters: JsParameters
+	return_type: TsTypeAnnotation?
+	body: JsFunctionBody
+
+// export class A {}
+//        ^^^^^^^^^^
+JsExportClassClause =
+	'class'
+	id: JsAnyBinding
+	extends_clause: JsExtendsClause?
+	implements_clause: TsImplementsClause?
+	'{'
+	members: JsClassMemberList
+	'}'
+
+// export default a;
+//        ^^^^^^^^^^
+JsExportDefaultExpressionClause =
+	'default'
+	expression: JsAnyExpression
+	';'?
+
+// export default class {}
+//        ^^^^^^^^^^^^^^^^
+JsExportDefaultClassClause =
+	'default'
+	'class'
+	id: JsAnyBinding?
+	extends_clause: JsExtendsClause?
+	implements_clause: TsImplementsClause?
+	'{'
+	members: JsClassMemberList
+	'}'
+
+// export default function () {}
+//        ^^^^^^^^^^^^^^^^^^^^^^
+JsExportDefaultFunctionClause =
+	'default'
+	'async'?
+	'function'
+	'*'?
+	id: JsAnyBinding?
+	type_parameters: TsTypeParams?
+	parameters: JsParameters
+	return_type: TsTypeAnnotation?
+	body: JsFunctionBody
+
+// export { myFunction as default };
+// export { myFunction, myVariable };
+JsExportNamedClause =
+    '{'
+    specifiers: JsExportNamedSpecifierList
+    '}'
+    ';'?
+
+JsExportNamedSpecifierList = (JsAnyExportNamedSpecifier (',' JsAnyExportNamedSpecifier)* ','?)
+
+JsAnyExportNamedSpecifier =
+    JsExportNamedShorthandSpecifier
+    | JsExportNamedSpecifier
+
+// export { a };
+//          ^
+JsExportNamedShorthandSpecifier =
+    'type'?
+    name: JsReferenceIdentifier
+
+// export { a as b };
+//          ^^^^^^
+// export { a as default };
+//          ^^^^^^^^^^^^
+JsExportNamedSpecifier =
+    'type'?
+    local_name: JsReferenceIdentifier
+    'as'
+    exported_name: JsLiteralExportName
+
+JsExportFromClause =
+	'*'
+	export_as: JsExportAsClause?
+	'from'
+	source: JsModuleSource
+	assertion: JsImportAssertion?
+	';'?
+
+// export { a } from "b";
+// export { default, … } from …;
+// export { type default as C } from "a";
+// export { type default } from "a";
+JsExportNamedFromClause =
+    '{'
+    specifiers: JsExportNamedFromSpecifierList
+    '}'
+    'from'
+    source: JsModuleSource
+    assertion: JsImportAssertion?
+    ';'?
+
+JsExportNamedFromSpecifierList = (JsExportNamedFromSpecifier (',' JsExportNamedFromSpecifier)* ','?)
+
+// export { a } from "b";
+//          ^
+// export { a as b } from "c";
+//          ^^^^^^
+JsExportNamedFromSpecifier =
+    'type'?
+    source_name: JsLiteralExportName
+    export_as: JsExportAsClause?
 
 
-// export declaration
-ExportDecl = 'export' 'type'? decl: JsAnyExportDeclaration
-
-JsAnyExportDeclaration =
-	JsFunctionStatement
-	| JsClassStatement
-	| JsVariableStatement
-	| ExportNamed
-	| TsEnum
-	| TsTypeAliasDecl
-	| TsNamespaceDecl
-	| TsModuleDecl
-	| TsInterfaceDecl
-
-
-// typescript export assignment
-TsExportAssignment = 'export' '=' expr: JsAnyExpression ';'?
-
-
-// typescript namespace export
-TsNamespaceExportDecl = 'export' 'as' 'namespace' ident: Ident? ';'?
-
-Specifier = name:JsName 'as'? alias: JsName?
-
-// @ematipico this one is not entirely correct I think..
-ExportNamed = 'export' default: JsName? named: '{'? specifiers: ExportNamedSpecifierList? '}'? 'from'?  'js_string_literal'? ';'?
-
-ExportNamedSpecifierList = (Specifier (',' Specifier)* ','?)
+// export { a as b } from "c";
+//            ^^^^
+JsExportAsClause =
+    'as'
+    exported_name: JsLiteralExportName
 
 ///////////////
 // AUXILIARY
@@ -1181,6 +1293,8 @@ JsAnyFunction =
 	JsFunctionExpression
 	| JsFunctionStatement
 	| JsArrowFunctionExpression
+	| JsExportFunctionClause
+	| JsExportDefaultFunctionClause
 
 
 // { a: ..., "b": ..., 4: ... }
@@ -1394,16 +1508,7 @@ TsInfer = 'infer' ident: Ident
 // TsImport = 'import' '(' qualifier:TsEntityName '.' ')' type_args:TsTypeArgs
 
 
-// typescrit namesapce
-// TODO: not sure where to put the dot
-// https://github.com/rome/tools/issues/1729
-TsNamespaceDecl = 'declare' ident: Ident '.'? body: TsNamespaceBody
-TsNamespaceBody = TsModuleBlock | TsNamespaceDecl
-TsModuleBlock = '{' items: JsAnyStatement '}'
-
-
 // type alias declaration
-TsTypeAliasDecl = 'type' type_params:TsTypeParams '=' ty:TsType
 TsTypeParams = '<'? params:TsTypeParam '>'?
 TsTypeParamList = (TsTypeParam (',' TsTypeParam)*)
 TsTypeParam = ident: Ident constraint:TsConstraint default:TsDefault
@@ -1412,18 +1517,6 @@ TsDefault = '=' ty:TsType
 TsConstraint = 'extends' ty:TsType
 
 
-
-// typescript module declaration
-// TODO: where does the dot go exactly?
-TsModuleDecl = 'declare' 'global'? 'module' '.'? ident: Ident body:TsNamespaceBody
-
-
-// typescript interface declaration
-// TODO: extends and its children should be optional, together
-TsInterfaceDecl =
-	'declare'? 'interface' type_params:TsTypeParams
-	'extends'? extends:TsExprWithTypeArgs?
-	'{' members:TsTypeElement '}'
 
 
 TsExprWithTypeArgs = item: TsEntityName type_params: TsTypeArgs?
