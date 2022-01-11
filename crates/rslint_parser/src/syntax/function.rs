@@ -1,6 +1,6 @@
 use crate::parser::ParsedSyntax;
 use crate::state::{
-	InAsync, InConstructor, InFunction, InGenerator, NewLabelsScope, ChangeParserState,
+	ChangeParserState, InAsync, InConstructor, InFunction, InGenerator, NewLabelsScope,
 };
 use crate::syntax::binding::parse_binding;
 use crate::syntax::decl::parse_parameter_list;

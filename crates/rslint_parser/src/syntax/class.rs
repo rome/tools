@@ -1,7 +1,7 @@
 use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
 use crate::state::{
-	AllowObjectExpression, EnableStrictMode, InAsync, InConstructor, InFunction, InGenerator,
-	ChangeParserState,
+	AllowObjectExpression, ChangeParserState, EnableStrictMode, InAsync, InConstructor, InFunction,
+	InGenerator,
 };
 use crate::syntax::binding::parse_binding;
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
@@ -401,6 +401,8 @@ fn parse_class_member_impl(
 		&& !p.has_linebreak_before_n(1)
 	{
 		let async_range = p.cur_tok().range();
+		p.bump_remap(T![async]);
+		let in_generator = p.eat(T![*]);
 
 		if p.cur_src() == "constructor" {
 			let err = p
@@ -417,9 +419,6 @@ fn parse_class_member_impl(
 
 			p.error(err);
 		}
-
-		p.bump_remap(T![async]);
-		let in_generator = p.eat(T![*]);
 
 		let method = {
 			let p = &mut *p.with_state(
