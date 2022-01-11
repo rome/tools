@@ -6,8 +6,7 @@ use crate::syntax::stmt::{is_semi, parse_block_impl};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{Marker, SyntaxFeature};
-use crate::{Parser, ParserState};
+use crate::{Marker, Parser, SyntaxFeature};
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
 use std::collections::HashMap;
@@ -110,18 +109,16 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax
 	p.expect(T![function]);
 
 	let in_generator = p.eat(T![*]);
-	let guard = &mut *p.with_state(ParserState {
-		labels: HashMap::new(),
-		in_function: true,
-		in_async,
-		in_generator,
-		..p.state.clone()
-	});
 
-	let id = parse_binding(guard);
+	let last_in_function = std::mem::replace(&mut p.state.in_function, true);
+	let last_in_async = std::mem::replace(&mut p.state.in_async, in_async);
+	let last_in_generator = std::mem::replace(&mut p.state.in_generator, in_generator);
+	let last_labels = std::mem::replace(&mut p.state.labels, HashMap::new());
+
+	let id = parse_binding(p);
 
 	if !kind.is_id_optional() {
-		id.or_add_diagnostic(guard, |p, range| {
+		id.or_add_diagnostic(p, |p, range| {
 			p.err_builder(
 				"expected a name for the function in a function declaration, but found none",
 			)
@@ -130,44 +127,51 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax
 	}
 
 	TypeScript
-		.parse_exclusive_syntax(guard, parse_ts_parameter_types, |p, marker| {
+		.parse_exclusive_syntax(p, parse_ts_parameter_types, |p, marker| {
 			p.err_builder("type parameters can only be used in TypeScript files")
 				.primary(marker.range(p), "")
 		})
 		.ok();
 
-	parse_parameter_list(guard).or_add_diagnostic(guard, js_parse_error::expected_parameters);
+	parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);
 
 	TypeScript
-		.parse_exclusive_syntax(guard, parse_ts_type_annotation_or_error, |p, marker| {
+		.parse_exclusive_syntax(p, parse_ts_type_annotation_or_error, |p, marker| {
 			p.err_builder("return types can only be used in TypeScript files")
 				.primary(marker.range(p), "")
 		})
 		.ok();
 
 	if kind == FunctionKind::Statement {
-		function_body_or_declaration(guard);
+		function_body_or_declaration(p);
 	} else {
-		function_body(guard).or_add_diagnostic(guard, js_parse_error::expected_function_body);
+		function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
 	}
 
-	let mut function = m.complete(guard, kind.into());
+	p.state.in_function = last_in_function;
+	p.state.in_async = last_in_async;
+	p.state.in_generator = last_in_generator;
+	p.state.labels = last_labels;
+
+	let mut function = m.complete(p, kind.into());
 
 	if uses_invalid_syntax {
-		function.change_to_unknown(guard);
+		function.change_to_unknown(p);
 	}
 
 	Present(function)
 }
 
 pub(super) fn function_body(p: &mut Parser) -> ParsedSyntax {
-	let mut guard = p.with_state(ParserState {
-		in_constructor: false,
-		in_function: true,
-		..p.state.clone()
-	});
+	let last_in_constructor = std::mem::replace(&mut p.state.in_constructor, false);
+	let last_in_function = std::mem::replace(&mut p.state.in_function, true);
 
-	parse_block_impl(&mut *guard, JS_FUNCTION_BODY)
+	let body = parse_block_impl(p, JS_FUNCTION_BODY);
+
+	p.state.in_constructor = last_in_constructor;
+	p.state.in_function = last_in_function;
+
+	body
 }
 
 // TODO 1725 This is probably not ideal (same with the `declare` keyword). We should

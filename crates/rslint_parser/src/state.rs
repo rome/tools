@@ -1,10 +1,9 @@
-use crate::Parser;
 use std::collections::HashMap;
-use std::ops::{Deref, DerefMut, Range};
+use std::ops::Range;
 
 /// State kept by the parser while parsing.
 /// It is required for things such as strict mode or async functions
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, PartialEq)]
 pub struct ParserState {
 	/// If false, object expressions are not allowed to be parsed
 	/// inside an expression.
@@ -81,67 +80,5 @@ impl Default for ParserState {
 			in_declare: false,
 			in_binding_list_for_signature: false,
 		}
-	}
-}
-
-impl ParserState {
-	/// Turn on strict mode and issue a warning for redundant strict mode declarations
-	pub(crate) fn strict(&mut self, p: &mut Parser, range: Range<usize>) {
-		if let Some(strict) = self.strict.to_owned() {
-			let mut err = p.warning_builder("Redundant strict mode declaration");
-
-			match strict {
-				StrictMode::Explicit(prev_range) => {
-					err = err.secondary(prev_range, "strict mode is previous declared here");
-				}
-				StrictMode::Module => {
-					err = err.footer_note("modules are always strict mode");
-				}
-				StrictMode::Class(prev_range) => {
-					err = err.secondary(prev_range, "class bodies are always strict mode");
-				}
-			}
-
-			err = err.primary(range, "this declaration is redundant");
-			p.error(err);
-		} else {
-			self.strict = Some(StrictMode::Explicit(range));
-		}
-	}
-}
-
-impl<'t> Parser<'t> {
-	pub fn with_state<'a>(&'a mut self, state: ParserState) -> StateGuard<'a, 't> {
-		let original_state = self.state.clone();
-		self.state = state;
-		StateGuard {
-			original_state,
-			inner: self,
-		}
-	}
-}
-
-pub struct StateGuard<'p, 't> {
-	inner: &'p mut Parser<'t>,
-	original_state: ParserState,
-}
-
-impl<'p, 't> Deref for StateGuard<'p, 't> {
-	type Target = Parser<'t>;
-
-	fn deref(&self) -> &Parser<'t> {
-		self.inner
-	}
-}
-
-impl<'p, 't> DerefMut for StateGuard<'p, 't> {
-	fn deref_mut(&mut self) -> &mut Parser<'t> {
-		self.inner
-	}
-}
-
-impl<'p, 't> Drop for StateGuard<'p, 't> {
-	fn drop(&mut self) {
-		std::mem::swap(&mut self.inner.state, &mut self.original_state);
 	}
 }

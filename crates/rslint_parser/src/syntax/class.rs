@@ -18,7 +18,7 @@ use crate::syntax::typescript::{
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-	CompletedMarker, Event, Marker, ParseNodeList, ParseRecovery, Parser, ParserState, StrictMode,
+	CompletedMarker, Event, Marker, ParseNodeList, ParseRecovery, Parser, StrictMode,
 	SyntaxFeature, TokenSet,
 };
 use rome_rowan::SyntaxKind;
@@ -120,70 +120,70 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> ParsedSyntax {
 	p.expect(T![class]);
 
 	// class bodies are implicitly strict
-	let mut guard = p.with_state(ParserState {
-		strict: Some(StrictMode::Class(p.cur_tok().range())),
-		..p.state.clone()
-	});
+	let mut last_strict = Some(StrictMode::Class(p.cur_tok().range()));
+	std::mem::swap(&mut p.state.strict, &mut last_strict);
 
 	// test_err class_decl_no_id
 	// class {}
 	// class implements B {}
 
-	let id = if guard.cur_src() == "implements" {
+	let id = if p.cur_src() == "implements" {
 		Absent
 	} else {
-		parse_binding(&mut *guard)
+		parse_binding(p)
 	};
 
 	// parse class id
 	match id {
 		Present(id) => {
-			let text = guard.span_text(id.range(&*guard));
-			if guard.typescript() && DISALLOWED_TYPE_NAMES.contains(&text) {
-				let err = guard
+			let text = p.span_text(id.range(p));
+			if p.typescript() && DISALLOWED_TYPE_NAMES.contains(&text) {
+				let err = p
 					.err_builder(&format!(
 							"`{}` cannot be used as a class name because it is already reserved as a type",
 							text
 						))
-					.primary(id.range(&*guard), "");
+					.primary(id.range(p), "");
 
-				guard.error(err);
+				p.error(err);
 			}
 		}
 		Absent => {
 			if !kind.is_id_optional() {
-				let err = guard
+				let err = p
 					.err_builder("class declarations must have a name")
-					.primary(class_token_range.start..guard.cur_tok().start(), "");
+					.primary(class_token_range.start..p.cur_tok().start(), "");
 
-				guard.error(err);
+				p.error(err);
 			}
 		}
 	}
 
-	if guard.at(T![<]) {
-		if let Some(mut complete) = ts_type_params(&mut *guard) {
+	if p.at(T![<]) {
+		if let Some(mut complete) = ts_type_params(p) {
 			complete.err_if_not_ts(
-				&mut *guard,
+				p,
 				"classes can only have type parameters in TypeScript files",
 			);
 		}
 	}
 
-	extends_clause(&mut guard).ok();
+	extends_clause(p).ok();
 
-	if implements_clause(&mut guard).is_present() && TypeScript.is_unsupported(&*guard) {
+	if implements_clause(p).is_present() && TypeScript.is_unsupported(p) {
 		class_is_valid = false;
 	}
 
-	guard.expect(T!['{']);
-	ClassMembersList.parse_list(&mut *guard);
-	guard.expect(T!['}']);
+	p.expect(T!['{']);
+	ClassMembersList.parse_list(p);
+	p.expect(T!['}']);
 
-	let mut class_marker = m.complete(&mut *guard, kind.into());
+	p.state.strict = last_strict;
+
+	let mut class_marker = m.complete(p, kind.into());
 
 	if !class_is_valid {
-		class_marker.change_to_unknown(&mut *guard);
+		class_marker.change_to_unknown(p);
 	}
 
 	Present(class_marker)
@@ -369,29 +369,31 @@ fn parse_class_member_impl(
 		p.bump_any(); // bump * token
 
 		let is_constructor = p.cur_src() == "constructor";
-		let mut guard = p.with_state(ParserState {
-			in_generator: true,
-			in_function: true,
-			..p.state.clone()
-		});
+		let last_in_generator = std::mem::replace(&mut p.state.in_generator, true);
+		let last_in_function = std::mem::replace(&mut p.state.in_function, true);
 
 		if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
-			let err = guard
+			let err = p
 				.err_builder("class methods cannot be readonly")
 				.primary(range, "");
 
-			guard.error(err);
+			p.error(err);
 		}
 
 		if is_constructor {
-			let err = guard
+			let err = p
 				.err_builder("constructors can't be generators")
 				.primary(generator_range, "");
 
-			guard.error(err);
+			p.error(err);
 		}
 
-		return Present(parse_method_class_member(&mut *guard, member_marker));
+		let member = Present(parse_method_class_member(p, member_marker));
+
+		p.state.in_function = last_in_function;
+		p.state.in_generator = last_in_generator;
+
+		return member;
 	};
 
 	// Seems like we're at an async method
@@ -404,30 +406,33 @@ fn parse_class_member_impl(
 		p.bump_remap(T![async]);
 		let in_generator = p.eat(T![*]);
 
-		let mut guard = p.with_state(ParserState {
-			in_async: true,
-			in_generator,
-			in_function: true,
-			..p.state.clone()
-		});
+		let last_in_async = std::mem::replace(&mut p.state.in_async, true);
+		let last_in_generator = std::mem::replace(&mut p.state.in_generator, in_generator);
+		let last_in_function = std::mem::replace(&mut p.state.in_function, true);
 
-		if guard.cur_src() == "constructor" {
-			let err = guard
+		if p.cur_src() == "constructor" {
+			let err = p
 				.err_builder("constructors cannot be async")
 				.primary(async_range, "");
 
-			guard.error(err);
+			p.error(err);
 		}
 
 		if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
-			let err = guard
+			let err = p
 				.err_builder("methods cannot be readonly")
 				.primary(range, "");
 
-			guard.error(err);
+			p.error(err);
 		}
 
-		return Present(parse_method_class_member(&mut *guard, member_marker));
+		let method = parse_method_class_member(p, member_marker);
+
+		p.state.in_async = last_in_async;
+		p.state.in_generator = last_in_generator;
+		p.state.in_function = last_in_function;
+
+		return Present(method);
 	}
 
 	let member_name = p.cur_src();
@@ -850,18 +855,14 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
 		constructor_is_valid = false;
 	}
 
-	{
-		let mut guard = p.with_state(ParserState {
-			in_function: true,
-			in_constructor: true,
-			..p.state.clone()
-		});
+	let last_in_constructor = std::mem::replace(&mut p.state.in_constructor, true);
+	let last_in_generator = std::mem::replace(&mut p.state.in_generator, true);
 
-		let p = &mut *guard;
+	parse_block_impl(p, JS_FUNCTION_BODY)
+		.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
 
-		parse_block_impl(p, JS_FUNCTION_BODY)
-			.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
-	}
+	p.state.in_constructor = last_in_constructor;
+	p.state.in_generator = last_in_generator;
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 

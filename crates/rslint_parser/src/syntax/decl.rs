@@ -160,13 +160,15 @@ pub(super) fn parse_parameters_list(
 }
 
 pub(super) fn parse_arrow_body(p: &mut Parser) -> ParsedSyntax {
-	let mut guard = p.with_state(ParserState {
-		in_function: true,
-		..p.state.clone()
-	});
-	if guard.at(T!['{']) {
-		function_body(&mut *guard)
+	let last_in_function = std::mem::replace(&mut p.state.in_function, true);
+
+	let result = if p.at(T!['{']) {
+		function_body(p)
 	} else {
-		parse_expr_or_assignment(&mut *guard)
-	}
+		parse_expr_or_assignment(p)
+	};
+
+	p.state.in_function = last_in_function;
+
+	result
 }

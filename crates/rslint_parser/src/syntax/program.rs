@@ -15,7 +15,7 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.eat(JS_SHEBANG);
 
-	let old_parser_state = directives(p);
+	let last_strict = directives(p);
 
 	let result = match p.syntax.file_kind {
 		FileKind::Script => {
@@ -25,9 +25,7 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 		FileKind::Module | FileKind::TypeScript => parse_module_body(p, m),
 	};
 
-	if let Some(old_parser_state) = old_parser_state {
-		p.state = old_parser_state;
-	}
+	p.state.strict = last_strict;
 
 	result
 }

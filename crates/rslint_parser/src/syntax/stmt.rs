@@ -8,6 +8,7 @@ use super::typescript::*;
 use super::util::check_label_use;
 use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
+use crate::state::StrictMode as StrictModeState;
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
 use crate::syntax::expr::{
@@ -495,27 +496,23 @@ pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> Pars
 	let m = p.start();
 	p.bump(T!['{']);
 
-	let old_parser_state = if block_kind == JS_FUNCTION_BODY {
+	let old_strict = if block_kind == JS_FUNCTION_BODY {
 		directives(p)
 	} else {
-		None
+		p.state.strict.clone()
 	};
 
 	parse_statements(p, true);
 
 	p.expect(T!['}']);
 
-	if let Some(old_parser_state) = old_parser_state {
-		p.state = old_parser_state;
-	}
+	p.state.strict = old_strict;
 
 	Present(m.complete(p, block_kind))
 }
 
 #[derive(Default)]
-struct DirectivesList {
-	old_state: Option<ParserState>,
-}
+struct DirectivesList;
 
 impl DirectivesList {
 	fn is_at_directives(&self, p: &mut Parser) -> bool {
@@ -545,13 +542,26 @@ impl ParseNodeList for DirectivesList {
 		let directive_text = p.token_src(directive_token);
 
 		if directive_text == "\"use strict\"" || directive_text == "'use strict'" {
-			if self.old_state == None {
-				self.old_state = Some(p.state.clone());
-			}
+			if let Some(strict) = p.state.strict.as_ref() {
+				let mut err = p.warning_builder("Redundant strict mode declaration");
 
-			let mut new_state = p.state.clone();
-			new_state.strict(p, directive_token.range());
-			p.state = new_state;
+				match strict {
+					StrictModeState::Explicit(prev_range) => {
+						err = err.secondary(prev_range, "strict mode is previous declared here");
+					}
+					StrictModeState::Module => {
+						err = err.footer_note("modules are always strict mode");
+					}
+					StrictModeState::Class(prev_range) => {
+						err = err.secondary(prev_range, "class bodies are always strict mode");
+					}
+				}
+
+				err = err.primary(directive_token.range(), "this declaration is redundant");
+				p.error(err);
+			} else {
+				p.state.strict = Some(StrictModeState::Explicit(directive_token.range()));
+			}
 		}
 
 		Present(completed_marker)
@@ -609,10 +619,11 @@ impl ParseNodeList for DirectivesList {
 // 	}
 // }
 #[must_use]
-pub(crate) fn directives(p: &mut Parser) -> Option<ParserState> {
+pub(crate) fn directives(p: &mut Parser) -> Option<StrictModeState> {
 	let mut list = DirectivesList::default();
+	let old_strict = p.state.strict.clone();
 	list.parse_list(p);
-	list.old_state
+	old_strict
 }
 
 /// Top level items or items inside of a block statement, this also handles module items so we can
@@ -733,14 +744,11 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 	p.bump_any(); // while
 	parenthesized_expression(p);
 
-	{
-		let guard = &mut *p.with_state(ParserState {
-			break_allowed: true,
-			continue_allowed: true,
-			..p.state.clone()
-		});
-		parse_statement(guard).or_add_diagnostic(guard, expected_statement);
-	}
+	let last_break_allowed = std::mem::replace(&mut p.state.break_allowed, true);
+	let last_continue_allowed = std::mem::replace(&mut p.state.continue_allowed, true);
+	parse_statement(p).or_add_diagnostic(p, expected_statement);
+	p.state.break_allowed = last_break_allowed;
+	p.state.continue_allowed = last_continue_allowed;
 
 	Present(m.complete(p, JS_WHILE_STATEMENT))
 }
@@ -964,14 +972,13 @@ fn parse_variable_declaration(
 
 		let type_annotation = maybe_ts_type_annotation(p);
 
-		let initializer = {
-			let p = &mut *p.with_state(ParserState {
-				name_map: HashMap::default(),
-				duplicate_binding_parent: None,
-				..p.state.clone()
-			});
-			parse_initializer_clause(p).ok()
-		};
+		let last_name_map = std::mem::replace(&mut p.state.name_map, HashMap::default());
+		let duplicate_binding_parent = p.state.duplicate_binding_parent.take();
+
+		let initializer = parse_initializer_clause(p).ok();
+
+		p.state.name_map = last_name_map;
+		p.state.duplicate_binding_parent = duplicate_binding_parent;
 
 		// Heuristic to determine if we're in a for of or for in loop. This may be off if
 		// the user uses a for of/in with multiple declarations but this isn't allowed anyway.
@@ -1089,14 +1096,11 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 	let start = p.cur_tok().start();
 	p.bump_any(); // do keyword
 
-	{
-		let guard = &mut *p.with_state(ParserState {
-			continue_allowed: true,
-			break_allowed: true,
-			..p.state.clone()
-		});
-		parse_statement(guard).or_add_diagnostic(guard, expected_statement);
-	}
+	let last_continue_allowed = std::mem::replace(&mut p.state.continue_allowed, true);
+	let last_break_allowed = std::mem::replace(&mut p.state.break_allowed, true);
+	parse_statement(p).or_add_diagnostic(p, expected_statement);
+	p.state.continue_allowed = last_continue_allowed;
+	p.state.break_allowed = last_break_allowed;
 
 	p.expect(T![while]);
 	parenthesized_expression(p);
@@ -1119,14 +1123,10 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
 	{
 		let m = p.start();
 
-		let (declarations, additional_declarations) = {
-			let guard = &mut *p.with_state(ParserState {
-				include_in: false,
-				..p.state.clone()
-			});
-
-			parse_variable_declarations(&mut *guard, VariableDeclarationParent::For).unwrap()
-		};
+		let last_include_in = std::mem::replace(&mut p.state.include_in, false);
+		let (declarations, additional_declarations) =
+			parse_variable_declarations(p, VariableDeclarationParent::For).unwrap();
+		p.state.include_in = last_include_in;
 
 		let is_in = p.at(T![in]);
 		let is_of = p.cur_src() == "of";
@@ -1157,14 +1157,9 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
 	} else {
 		// for (some_expression`
 		let checkpoint = p.checkpoint();
-		let init_expr = {
-			let guard = &mut *p.with_state(ParserState {
-				include_in: false,
-				..p.state.clone()
-			});
-			// Replace the `p.token_pos() == checkpoint.token_pos` once `expr()` returns `ParsedSyntax`
-			parse_expression(guard)
-		};
+		let last_include_in = std::mem::replace(&mut p.state.include_in, false);
+		let init_expr = parse_expression(p);
+		p.state.include_in = last_include_in;
 
 		if p.at(T![in]) || p.cur_src() == "of" {
 			// for (assignment_pattern in ...
@@ -1269,14 +1264,11 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 	let kind = parse_for_head(p);
 	p.expect(T![')']);
 
-	{
-		let guard = &mut *p.with_state(ParserState {
-			continue_allowed: true,
-			break_allowed: true,
-			..p.state.clone()
-		});
-		parse_statement(guard).or_add_diagnostic(guard, expected_statement);
-	}
+	let last_continue_allowed = std::mem::replace(&mut p.state.continue_allowed, true);
+	let last_break_allowed = std::mem::replace(&mut p.state.break_allowed, true);
+	parse_statement(p).or_add_diagnostic(p, expected_statement);
+	p.state.continue_allowed = last_continue_allowed;
+	p.state.break_allowed = last_break_allowed;
 
 	let mut completed = m.complete(p, kind);
 
@@ -1488,13 +1480,10 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 	parenthesized_expression(p);
 	p.expect(T!['{']);
 
-	{
-		let mut temp = p.with_state(ParserState {
-			break_allowed: true,
-			..p.state.clone()
-		});
-		SwitchCasesList::default().parse_list(&mut *temp);
-	}
+	let last_break_allowed = std::mem::replace(&mut p.state.break_allowed, true);
+	SwitchCasesList::default().parse_list(p);
+	p.state.break_allowed = last_break_allowed;
+
 	p.expect(T!['}']);
 	Present(m.complete(p, JS_SWITCH_STATEMENT))
 }

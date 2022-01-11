@@ -257,13 +257,11 @@ pub fn ts_signature_member(p: &mut Parser, construct_sig: bool) -> Option<Comple
 		no_recover!(p, ts_type_params(p));
 	}
 
-	{
-		let guard = &mut *p.with_state(ParserState {
-			in_binding_list_for_signature: true,
-			..p.state.clone()
-		});
-		parse_parameter_list(guard).ok();
-	}
+	let last_in_binding_list_for_signature =
+		std::mem::replace(&mut p.state.in_binding_list_for_signature, true);
+	parse_parameter_list(p).ok();
+	p.state.in_binding_list_for_signature = last_in_binding_list_for_signature;
+
 	if p.at(T![:]) {
 		no_recover!(p, ts_type_or_type_predicate_ann(p, T![:]));
 	}
@@ -357,10 +355,10 @@ pub fn try_parse_ts(
 	let res = if p.state.no_recovery {
 		func(p)
 	} else {
-		func(&mut *p.with_state(ParserState {
-			no_recovery: true,
-			..p.state.clone()
-		}))
+		let last_no_recovery = std::mem::replace(&mut p.state.no_recovery, true);
+		let res = func(p);
+		p.state.no_recovery = last_no_recovery;
+		res
 	};
 
 	if res.is_none() {

@@ -173,15 +173,16 @@ fn parse_assign_expr_base(p: &mut Parser) -> ParsedSyntax {
 		return Present(yield_expr(p));
 	}
 	let potential_arrow_start = p.at(T!['(']) | is_at_identifier(p);
-	let mut guard = p.with_state(ParserState {
-		potential_arrow_start,
-		..p.state.clone()
-	});
+	let last_potential_arrow_start =
+		std::mem::replace(&mut p.state.potential_arrow_start, potential_arrow_start);
 
-	let checkpoint = guard.checkpoint();
+	let checkpoint = p.checkpoint();
 
-	parse_conditional_expr(&mut *guard)
-		.and_then(|target| parse_assign_expr_recursive(&mut *guard, target, checkpoint))
+	let expr = parse_conditional_expr(p)
+		.and_then(|target| parse_assign_expr_recursive(p, target, checkpoint));
+
+	p.state.potential_arrow_start = last_potential_arrow_start;
+	expr
 }
 
 // test assign_expr
@@ -259,14 +260,12 @@ pub(super) fn parse_conditional_expr(p: &mut Parser) -> ParsedSyntax {
 		return lhs.map(|marker| {
 			let m = marker.precede(p);
 			p.bump_any();
-			{
-				let p = &mut *p.with_state(ParserState {
-					in_cond_expr: true,
-					..p.state.clone()
-				});
-				parse_expr_or_assignment(p)
-					.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
-			}
+
+			let last_in_cond_expr = std::mem::replace(&mut p.state.in_cond_expr, true);
+			parse_expr_or_assignment(p)
+				.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
+			p.state.in_cond_expr = last_in_cond_expr;
+
 			p.expect(T![:]);
 			parse_expr_or_assignment(p)
 				.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
@@ -752,91 +751,88 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 	let mut trailing_comma_marker = None;
 	let mut params_marker = None;
 
-	let mut temp = p.with_state(ParserState {
-		potential_arrow_start: true,
-		..p.state.clone()
-	});
+	let last_potential_arrow_start = std::mem::replace(&mut p.state.potential_arrow_start, true);
 
-	let is_empty = temp.eat(T![')']);
+	let is_empty = p.eat(T![')']);
 
 	if !is_empty {
 		// stores a potentially started sequence expression
 		let mut sequence: Option<Marker> = None;
 
 		loop {
-			if temp.at(T![...]) {
-				let m = temp.start();
-				temp.bump_any();
-				parse_binding_pattern(&mut *temp).or_add_diagnostic(&mut *temp, expected_binding);
-				if temp.eat(T![:]) {
-					if let Some(mut ty) = ts_type(&mut *temp) {
+			if p.at(T![...]) {
+				let m = p.start();
+				p.bump_any();
+				parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
+				if p.eat(T![:]) {
+					if let Some(mut ty) = ts_type(p) {
 						ty.err_if_not_ts(
-							&mut *temp,
+							p,
 							"spread elements can only have type annotations in TypeScript files",
 						);
 					}
 				}
-				let complete = m.complete(&mut *temp, JS_REST_PARAMETER);
-				spread_range = Some(complete.range(&*temp));
-				if !temp.eat(T![')']) {
-					if temp.eat(T![=]) {
-						parse_expr_or_assignment(&mut *temp)
-							.or_add_diagnostic(&mut *temp, expected_expression);
-						temp.expect(T![')']);
+				let complete = m.complete(p, JS_REST_PARAMETER);
+				spread_range = Some(complete.range(p));
+				if !p.eat(T![')']) {
+					if p.eat(T![=]) {
+						parse_expr_or_assignment(p).or_add_diagnostic(p, expected_expression);
+						p.expect(T![')']);
 					} else {
-						let err = temp.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", temp.cur_src()))
-                    .primary(temp.cur_tok().range(), "");
+						let err = p.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", p.cur_src()))
+                    .primary(p.cur_tok().range(), "");
 
 						#[allow(deprecated)]
 						SingleTokenParseRecovery::with_error(EXPR_RECOVERY_SET, JS_UNKNOWN, err)
-							.recover(&mut temp);
+							.recover(p);
 					}
 				}
 				break;
 			}
-			let expr = parse_expr_or_assignment(&mut *temp);
-			if expr.is_absent() && temp.at(T![:]) {
-				temp.rewind(checkpoint);
-				params_marker = Some(parse_parameter_list(&mut *temp).unwrap());
+			let expr = parse_expr_or_assignment(p);
+			if expr.is_absent() && p.at(T![:]) {
+				p.rewind(checkpoint);
+				params_marker = Some(parse_parameter_list(p).unwrap());
 				break;
 			}
 
-			if temp.at(T![,]) {
-				if temp.at(T![')']) {
+			if p.at(T![,]) {
+				if p.at(T![')']) {
 					// case where we are at a `,)` so the `,` is a trailing comma
-					let trailing_marker = temp.start();
-					temp.bump_any(); // bump ,
-					trailing_comma_marker = Some(trailing_marker.complete(&mut *temp, JS_UNKNOWN));
-					temp.bump_any(); // bump )
+					let trailing_marker = p.start();
+					p.bump_any(); // bump ,
+					trailing_comma_marker = Some(trailing_marker.complete(p, JS_UNKNOWN));
+					p.bump_any(); // bump )
 					break;
 				} else {
 					// start a sequence expression that precedes the before parsed expression statement
 					// and bump the ',' into it.
-					sequence = sequence
-						.or_else(|| {
-							Some(expr.precede_or_add_diagnostic(
-								&mut *temp,
-								js_parse_error::expected_expression,
-							))
-						})
-						.or_else(|| Some(temp.start()));
-					temp.bump_any(); // bump ; into sequence expression which may or may not miss a lhs
+					sequence =
+						sequence
+							.or_else(|| {
+								Some(expr.precede_or_add_diagnostic(
+									p,
+									js_parse_error::expected_expression,
+								))
+							})
+							.or_else(|| Some(p.start()));
+					p.bump_any(); // bump ; into sequence expression which may or may not miss a lhs
 				}
 			} else {
 				if let Some(sequence) = sequence.take() {
-					sequence.complete(&mut *temp, JS_SEQUENCE_EXPRESSION);
+					sequence.complete(p, JS_SEQUENCE_EXPRESSION);
 				}
-				temp.expect(T![')']);
+				p.expect(T![')']);
 				break;
 			}
 		}
 
 		if let Some(sequence) = sequence.take() {
-			sequence.complete(&mut *temp, JS_SEQUENCE_EXPRESSION);
+			sequence.complete(p, JS_SEQUENCE_EXPRESSION);
 		}
 	}
 
-	drop(temp);
+	p.state.potential_arrow_start = last_potential_arrow_start;
 
 	let has_ret_type = !p.state.in_cond_expr && p.at(T![:]) && !p.state.in_case_cond;
 
@@ -996,35 +992,31 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 					// async (foo, bar, ...baz) => foo
 					let m = p.start();
 					p.bump_remap(T![async]);
-					{
-						let in_async_p = &mut *p.with_state(ParserState {
-							in_async: true,
-							..p.state.clone()
-						});
 
-						let parsed_parameters = parse_parameter_list(in_async_p);
-						if parsed_parameters.is_absent() {
-							// test_err async_arrow_expr_await_parameter
-							// let a = async await => {}
-							parse_binding(in_async_p)
-								.or_add_diagnostic(in_async_p, expected_parameter);
-						}
+					let last_in_async = std::mem::replace(&mut p.state.in_async, true);
 
-						if in_async_p.at(T![:]) {
-							let complete = ts_type_or_type_predicate_ann(in_async_p, T![:]);
-							if let Some(mut complete) = complete {
-								complete.err_if_not_ts(
-									in_async_p,
+					let parsed_parameters = parse_parameter_list(p);
+					if parsed_parameters.is_absent() {
+						// test_err async_arrow_expr_await_parameter
+						// let a = async await => {}
+						parse_binding(p).or_add_diagnostic(p, expected_parameter);
+					}
+
+					if p.at(T![:]) {
+						let complete = ts_type_or_type_predicate_ann(p, T![:]);
+						if let Some(mut complete) = complete {
+							complete.err_if_not_ts(
+								p,
 								"arrow functions can only have return types in TypeScript files",
 							);
-							}
 						}
-
-						in_async_p.expect(T![=>]);
-
-						parse_arrow_body(in_async_p)
-							.or_add_diagnostic(in_async_p, js_parse_error::expected_arrow_body);
 					}
+
+					p.expect(T![=>]);
+
+					parse_arrow_body(p).or_add_diagnostic(p, js_parse_error::expected_arrow_body);
+
+					p.state.in_async = last_in_async;
 
 					m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 				} else {
