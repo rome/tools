@@ -23,6 +23,7 @@ impl From<JsSyntaxKind> for u16 {
 }
 
 impl JsSyntaxKind {
+	#[inline(always)]
 	pub fn is_trivia(self) -> bool {
 		matches!(
 			self,

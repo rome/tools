@@ -117,7 +117,7 @@ pub trait TreeSink {
 	fn finish_node(&mut self);
 
 	/// Emit errors
-	fn errors(&mut self, errors: Vec<ParserError>);
+	fn errors(&mut self, errors: Vec<Box<ParserError>>);
 
 	/// Consume multiple tokens and glue them into one kind
 	fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind);

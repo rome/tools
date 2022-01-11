@@ -77,8 +77,8 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
 		&mut self,
 		kind: L::Kind,
 		text: &str,
-		leading: Vec<TriviaPiece>,
-		trailing: Vec<TriviaPiece>,
+		leading: smallvec::SmallVec<[TriviaPiece;1]>,
+		trailing: smallvec::SmallVec<[TriviaPiece;1]>,
 	) {
 		let (hash, token) = self
 			.cache

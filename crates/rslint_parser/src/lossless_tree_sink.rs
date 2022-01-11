@@ -15,7 +15,7 @@ pub struct LosslessTreeSink<'a> {
 	text_pos: TextSize,
 	token_pos: usize,
 	parents_count: usize,
-	errors: Vec<ParserError>,
+	errors: Vec<Box<ParserError>>,
 	inner: SyntaxTreeBuilder,
 	/// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
 	needs_eof: bool,
@@ -45,7 +45,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 		self.inner.finish_node();
 	}
 
-	fn errors(&mut self, errors: Vec<ParserError>) {
+	fn errors(&mut self, errors: Vec<Box<ParserError>>) {
 		self.errors = errors;
 	}
 }
@@ -68,7 +68,7 @@ impl<'a> LosslessTreeSink<'a> {
 	///
 	/// If tree is finished without a [SyntaxKind::EOF], one will be generated and all pending trivia
 	/// will be appended to its leading trivia.
-	pub fn finish(self) -> (SyntaxNode, Vec<ParserError>) {
+	pub fn finish(self) -> (SyntaxNode, Vec<Box<ParserError>>) {
 		(self.inner.finish(), self.errors)
 	}
 
@@ -109,8 +109,8 @@ impl<'a> LosslessTreeSink<'a> {
 		self.inner.token_with_trivia(kind, text, leading, trailing);
 	}
 
-	fn get_trivia(&mut self, break_on_newline: bool) -> (TextRange, Vec<TriviaPiece>) {
-		let mut trivia = vec![];
+	fn get_trivia(&mut self, break_on_newline: bool) -> (TextRange, smallvec::SmallVec<[TriviaPiece;1]>) {
+		let mut trivia = smallvec::SmallVec::<[TriviaPiece;1]>::new();
 
 		let start_text_pos = self.text_pos;
 		let mut length = TextSize::from(0);

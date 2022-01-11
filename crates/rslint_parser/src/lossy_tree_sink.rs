@@ -3,6 +3,7 @@ use crate::{
 };
 use rome_rowan::TriviaPiece;
 use rslint_lexer::Token;
+use smallvec::smallvec;
 use std::mem;
 
 /// Structure to convert events to a lossy syntax tree which does not preserve whitespace.
@@ -14,11 +15,11 @@ pub struct LossyTreeSink<'a> {
 	token_pos: usize,
 	state: State,
 	inner: SyntaxTreeBuilder,
-	errors: Vec<ParserError>,
+	errors: Vec<Box<ParserError>>,
 	/// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
 	needs_eof: bool,
 	/// Trivia start offset and its [TriviaPiece].
-	next_token_leading_trivia: (TextRange, Vec<TriviaPiece>),
+	next_token_leading_trivia: (TextRange, smallvec::SmallVec<[TriviaPiece;1]>),
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -79,7 +80,7 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 		}
 	}
 
-	fn errors(&mut self, errors: Vec<ParserError>) {
+	fn errors(&mut self, errors: Vec<Box<ParserError>>) {
 		self.errors = errors;
 	}
 }
@@ -95,7 +96,7 @@ impl<'a> LossyTreeSink<'a> {
 			inner: SyntaxTreeBuilder::default(),
 			errors: vec![],
 			needs_eof: true,
-			next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![]),
+			next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), smallvec![]),
 		}
 	}
 
@@ -117,7 +118,7 @@ impl<'a> LossyTreeSink<'a> {
 					inner: SyntaxTreeBuilder::default(),
 					errors: vec![],
 					needs_eof: true,
-					next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![]),
+					next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), smallvec![]),
 				};
 			}
 			len += tok.len as usize;
@@ -130,7 +131,7 @@ impl<'a> LossyTreeSink<'a> {
 	/// If tree is finished with pending trivia, but no tokens were generated, for example,
 	/// a completely commented file, a [SyntaxKind::EOF] will be generated and all pending trivia
 	/// will be appended to its leading trivia.
-	pub fn finish(mut self) -> (SyntaxNode, Vec<ParserError>) {
+	pub fn finish(mut self) -> (SyntaxNode, Vec<Box<ParserError>>) {
 		if self.needs_eof {
 			self.do_token(JsSyntaxKind::EOF, 0.into());
 		}
@@ -176,7 +177,7 @@ impl<'a> LossyTreeSink<'a> {
 			if self.is_eof() {
 				trailing_range = trailing_range.cover(range);
 				trailing.extend(pieces);
-				(TextRange::new(0.into(), 0.into()), vec![])
+				(TextRange::new(0.into(), 0.into()), smallvec::SmallVec::new())
 			} else {
 				(range, pieces)
 			}
@@ -191,8 +192,8 @@ impl<'a> LossyTreeSink<'a> {
 		self.inner.token_with_trivia(kind, text, leading, trailing);
 	}
 
-	fn get_trivia(&mut self, break_on_newline: bool) -> (TextRange, Vec<TriviaPiece>) {
-		let mut trivia = vec![];
+	fn get_trivia(&mut self, break_on_newline: bool) -> (TextRange, smallvec::SmallVec<[TriviaPiece;1]>) {
+		let mut trivia = smallvec::SmallVec::new();
 
 		let start_text_pos = self.text_pos;
 		let mut length = TextSize::of("");

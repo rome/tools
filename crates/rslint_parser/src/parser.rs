@@ -131,7 +131,7 @@ pub struct Parser<'t> {
 	pub(crate) events: Vec<Event>,
 	pub state: ParserState,
 	pub syntax: Syntax,
-	pub errors: Vec<ParserError>,
+	pub errors: Vec<Box<ParserError>>,
 }
 
 impl<'t> Parser<'t> {
@@ -172,7 +172,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Consume the parser and return the list of events it produced
-	pub fn finish(self) -> (Vec<Event>, Vec<ParserError>) {
+	pub fn finish(self) -> (Vec<Event>, Vec<Box<ParserError>>) {
 		(self.events, self.errors)
 	}
 
@@ -259,7 +259,7 @@ impl<'t> Parser<'t> {
 	/// Add an error
 	#[cold]
 	pub fn error(&mut self, err: impl Into<ParserError>) {
-		let err = err.into();
+		let err = Box::new(err.into());
 
 		// Don't report another error if it would just be at the same position as the last error.
 		if let Some(previous) = self.errors.last() {
@@ -482,7 +482,7 @@ pub struct Marker {
 	pub start: usize,
 	pub old_start: u32,
 	pub(crate) child_idx: Option<usize>,
-	bomb: DropBomb,
+	// bomb: DropBomb,
 }
 
 impl Marker {
@@ -492,7 +492,7 @@ impl Marker {
 			start,
 			old_start: pos,
 			child_idx: None,
-			bomb: DropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."),
+			// bomb: DropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."),
 		}
 	}
 
@@ -507,7 +507,7 @@ impl Marker {
 	/// and mark the create a `CompletedMarker` for possible future
 	/// operation like `.precede()` to deal with forward_parent.
 	pub fn complete(mut self, p: &mut Parser, kind: JsSyntaxKind) -> CompletedMarker {
-		self.bomb.defuse();
+		// self.bomb.defuse();
 		let idx = self.pos as usize;
 		match p.events[idx] {
 			Event::Start {
@@ -528,7 +528,7 @@ impl Marker {
 	/// Abandons the syntax tree node. All its children
 	/// are attached to its parent instead.
 	pub fn abandon(mut self, p: &mut Parser) {
-		self.bomb.defuse();
+		// self.bomb.defuse();
 		let idx = self.pos as usize;
 		if idx == p.events.len() - 1 {
 			match p.events.pop() {

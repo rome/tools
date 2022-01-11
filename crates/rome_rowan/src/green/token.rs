@@ -50,13 +50,13 @@ impl GreenTokenTrivia {
 	}
 }
 
-impl From<Vec<TriviaPiece>> for GreenTokenTrivia {
-	fn from(trivias: Vec<TriviaPiece>) -> Self {
+impl From<smallvec::SmallVec<[TriviaPiece;1]>> for GreenTokenTrivia {
+	fn from(trivias: smallvec::SmallVec<[TriviaPiece;1]>) -> Self {
 		match trivias.as_slice() {
 			[] => GreenTokenTrivia::None,
 			[TriviaPiece::Whitespace(len)] => GreenTokenTrivia::Whitespace(*len),
 			[TriviaPiece::Comments(len)] => GreenTokenTrivia::Comments(*len),
-			_ => GreenTokenTrivia::Many(Box::new(trivias)),
+			_ => GreenTokenTrivia::Many(Box::new(trivias.to_vec())),
 		}
 	}
 }

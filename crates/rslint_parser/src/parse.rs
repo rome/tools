@@ -16,20 +16,20 @@ pub enum JsSourceType {
 pub struct Parse<T> {
 	root: SyntaxNode,
 	source_type: JsSourceType,
-	errors: Vec<ParserError>,
+	errors: Vec<Box<ParserError>>,
 	_ty: PhantomData<T>,
 }
 
 impl<T> Parse<T> {
-	pub fn new_module(root: SyntaxNode, errors: Vec<ParserError>) -> Parse<T> {
+	pub fn new_module(root: SyntaxNode, errors: Vec<Box<ParserError>>) -> Parse<T> {
 		Self::new(root, errors, JsSourceType::Module)
 	}
 
-	pub fn new_script(root: SyntaxNode, errors: Vec<ParserError>) -> Parse<T> {
+	pub fn new_script(root: SyntaxNode, errors: Vec<Box<ParserError>>) -> Parse<T> {
 		Self::new(root, errors, JsSourceType::Script)
 	}
 
-	pub fn new(root: SyntaxNode, errors: Vec<ParserError>, source_type: JsSourceType) -> Parse<T> {
+	pub fn new(root: SyntaxNode, errors: Vec<Box<ParserError>>, source_type: JsSourceType) -> Parse<T> {
 		Parse {
 			root,
 			errors,
@@ -68,8 +68,8 @@ impl<T> Parse<T> {
 	}
 
 	/// Get the errors which occurred when parsing
-	pub fn errors(&self) -> &[ParserError] {
-		&*self.errors
+	pub fn errors(&self) -> impl Iterator<Item = &Diagnostic> {
+		self.errors.iter().map(|x| x.as_ref())
 	}
 
 	/// The source type of this file. Is it a "classic" script or an ES Module?
@@ -93,7 +93,7 @@ impl<T: AstNode> Parse<T> {
 	}
 
 	/// Convert this parse into a result
-	pub fn ok(self) -> Result<T, Vec<ParserError>> {
+	pub fn ok(self) -> Result<T, Vec<Box<ParserError>>> {
 		if !self.errors.iter().any(|d| d.severity == Severity::Error) {
 			Ok(self.tree())
 		} else {
@@ -103,23 +103,17 @@ impl<T: AstNode> Parse<T> {
 }
 
 /// Run the rslint_lexer lexer to turn source code into tokens and errors produced by the lexer
-pub fn tokenize(text: &str, file_id: usize) -> (Vec<rslint_lexer::Token>, Vec<ParserError>) {
-	let mut tokens = Vec::new();
-	let mut errors = Vec::new();
-	for (tok, error) in rslint_lexer::Lexer::from_str(text, file_id) {
-		tokens.push(tok);
-		if let Some(err) = error {
-			errors.push(err)
-		}
-	}
-	(tokens, errors)
+pub fn tokenize(text: &str, file_id: usize) -> (Vec<rslint_lexer::Token>, Vec<Box<ParserError>>) {
+	let mut lexer = rslint_lexer::Lexer::from_str(text, file_id);
+	let (tokens, diagnostics) = lexer.get_all();
+	(tokens, diagnostics)
 }
 
 fn parse_common(
 	text: &str,
 	file_id: usize,
 	syntax: Syntax,
-) -> (Vec<Event>, Vec<ParserError>, Vec<rslint_lexer::Token>) {
+) -> (Vec<Event>, Vec<Box<ParserError>>, Vec<rslint_lexer::Token>) {
 	let (tokens, mut errors) = tokenize(text, file_id);
 
 	let tok_source = TokenSource::new(text, &tokens);

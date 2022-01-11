@@ -241,7 +241,8 @@ fn passed(res: ExecRes, meta: MetaData) -> Option<FailReason> {
 		ExecRes::ParseCorrectly if !should_fail => None,
 		ExecRes::Errors(_) if should_fail => None,
 		ExecRes::ParseCorrectly if should_fail => Some(FailReason::IncorrectlyPassed),
-		ExecRes::Errors(err) if !should_fail => Some(FailReason::IncorrectlyErrored(err)),
+		ExecRes::Errors(err) 
+			if !should_fail => Some(FailReason::IncorrectlyErrored(err)),
 		_ => unreachable!(),
 	}
 }
@@ -258,7 +259,7 @@ fn extract_outcome(fail: &Option<FailReason>) -> Outcome {
 }
 
 enum ExecRes {
-	Errors(Vec<ParserError>),
+	Errors(Vec<Box<ParserError>>),
 	ParseCorrectly,
 	ParserPanic(Box<dyn Any + Send + 'static>),
 }

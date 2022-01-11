@@ -15,8 +15,8 @@ hashbrown = { version = "0.11.2", features = [
 text-size = "1.1.0"
 memoffset = "0.6"
 countme = "2.0.0"
-
 serde = { version = "1.0.89", optional = true, default-features = false }
+smallvec = "1.7.0"
 
 [dev-dependencies]
 m_lexer = "0.0.4"
