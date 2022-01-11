@@ -988,25 +988,25 @@ impl<'src> Lexer<'src> {
 							let next = self.next_bounded().copied();
 							let chr_start = self.cur;
 							match next {
-							   Some(b'g') => {
-								   if g && diagnostic.is_none() {
+								Some(b'g') => {
+									if g && diagnostic.is_none() {
 										diagnostic = Some(self.flag_err('g'))
-								   }
-								   g = true;
-							   },
-							   Some(b'i') => {
+									}
+									g = true;
+								},
+								Some(b'i') => {
 									if i && diagnostic.is_none() {
 										diagnostic = Some(self.flag_err('i'))
 									}
 									i = true;
-							   },
-							   Some(b'm') => {
+								},
+								Some(b'm') => {
 									if m && diagnostic.is_none() {
 										diagnostic = Some(self.flag_err('m'))
 									}
 									m = true;
-							   },
-							   Some(b's') => {
+								},
+								Some(b's') => {
 									if s && diagnostic.is_none() {
 										diagnostic = Some(self.flag_err('s'))
 									}
@@ -1017,14 +1017,14 @@ impl<'src> Lexer<'src> {
 										diagnostic = Some(self.flag_err('u'))
 									}
 									u = true;
-							   },
-							   Some(b'y') => {
+								},
+								Some(b'y') => {
 									if y && diagnostic.is_none() {
 										diagnostic = Some(self.flag_err('y'))
 									}
 									y = true;
 								},
-							   Some(b'd') => {
+								Some(b'd') => {
 									if d && diagnostic.is_none() {
 										diagnostic = Some(self.flag_err('d'))
 									}
