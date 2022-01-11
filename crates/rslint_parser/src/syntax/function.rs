@@ -1,4 +1,7 @@
 use crate::parser::ParsedSyntax;
+use crate::state::{
+	InAsync, InConstructor, InFunction, InGenerator, NewLabelsScope, ChangeParserState,
+};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::decl::parse_parameter_list;
 use crate::syntax::js_parse_error;
@@ -109,48 +112,47 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax
 
 	let in_generator = p.eat(T![*]);
 
-	let last_in_function = std::mem::replace(&mut p.state.in_function, true);
-	let last_in_async = std::mem::replace(&mut p.state.in_async, in_async);
-	let last_in_generator = std::mem::replace(&mut p.state.in_generator, in_generator);
-	let last_labels = std::mem::take(&mut p.state.labels);
+	{
+		let p = &mut *p.with_state(
+			InFunction
+				.and(InGenerator::new(in_generator))
+				.and(InAsync::new(in_async))
+				.and(NewLabelsScope),
+		);
 
-	let id = parse_binding(p);
+		let id = parse_binding(p);
 
-	if !kind.is_id_optional() {
-		id.or_add_diagnostic(p, |p, range| {
-			p.err_builder(
-				"expected a name for the function in a function declaration, but found none",
-			)
-			.primary(range, "")
-		});
+		if !kind.is_id_optional() {
+			id.or_add_diagnostic(p, |p, range| {
+				p.err_builder(
+					"expected a name for the function in a function declaration, but found none",
+				)
+				.primary(range, "")
+			});
+		}
+
+		TypeScript
+			.parse_exclusive_syntax(p, parse_ts_parameter_types, |p, marker| {
+				p.err_builder("type parameters can only be used in TypeScript files")
+					.primary(marker.range(p), "")
+			})
+			.ok();
+
+		parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);
+
+		TypeScript
+			.parse_exclusive_syntax(p, parse_ts_type_annotation_or_error, |p, marker| {
+				p.err_builder("return types can only be used in TypeScript files")
+					.primary(marker.range(p), "")
+			})
+			.ok();
+
+		if kind == FunctionKind::Statement {
+			function_body_or_declaration(p);
+		} else {
+			function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
+		}
 	}
-
-	TypeScript
-		.parse_exclusive_syntax(p, parse_ts_parameter_types, |p, marker| {
-			p.err_builder("type parameters can only be used in TypeScript files")
-				.primary(marker.range(p), "")
-		})
-		.ok();
-
-	parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);
-
-	TypeScript
-		.parse_exclusive_syntax(p, parse_ts_type_annotation_or_error, |p, marker| {
-			p.err_builder("return types can only be used in TypeScript files")
-				.primary(marker.range(p), "")
-		})
-		.ok();
-
-	if kind == FunctionKind::Statement {
-		function_body_or_declaration(p);
-	} else {
-		function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
-	}
-
-	p.state.in_function = last_in_function;
-	p.state.in_async = last_in_async;
-	p.state.in_generator = last_in_generator;
-	p.state.labels = last_labels;
 
 	let mut function = m.complete(p, kind.into());
 
@@ -162,15 +164,8 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax
 }
 
 pub(super) fn function_body(p: &mut Parser) -> ParsedSyntax {
-	let last_in_constructor = std::mem::replace(&mut p.state.in_constructor, false);
-	let last_in_function = std::mem::replace(&mut p.state.in_function, true);
-
-	let body = parse_block_impl(p, JS_FUNCTION_BODY);
-
-	p.state.in_constructor = last_in_constructor;
-	p.state.in_function = last_in_function;
-
-	body
+	let p = &mut *p.with_state(InFunction.and(InConstructor::new(false)));
+	parse_block_impl(p, JS_FUNCTION_BODY)
 }
 
 // TODO 1725 This is probably not ideal (same with the `declare` keyword). We should
@@ -184,22 +179,7 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 		p.eat(T![;]);
 	} else {
 		let body = function_body(p);
-		if p.state.in_declare {
-			body.map(|mut body| {
-				let err = p
-					.err_builder(
-						"function implementations cannot be given in ambient (declare) contexts",
-					)
-					.primary(body.range(p), "");
-
-				p.error(err);
-				body.change_kind(p, JS_UNKNOWN);
-				body
-			})
-			.ok();
-		} else {
-			body.or_add_diagnostic(p, js_parse_error::expected_function_body);
-		}
+		body.or_add_diagnostic(p, js_parse_error::expected_function_body);
 	}
 }
 

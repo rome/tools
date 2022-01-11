@@ -1,4 +1,8 @@
 use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
+use crate::state::{
+	AllowObjectExpression, EnableStrictMode, InAsync, InConstructor, InFunction, InGenerator,
+	ChangeParserState,
+};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
 use crate::syntax::expr::parse_expr_or_assignment;
@@ -119,9 +123,9 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> ParsedSyntax {
 
 	p.expect(T![class]);
 
-	// class bodies are implicitly strict
-	let mut last_strict = Some(StrictMode::Class(p.cur_tok().range()));
-	std::mem::swap(&mut p.state.strict, &mut last_strict);
+	let p = &mut *p.with_state(EnableStrictMode::new(StrictMode::Class(
+		p.cur_tok().range(),
+	)));
 
 	// test_err class_decl_no_id
 	// class {}
@@ -177,8 +181,6 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> ParsedSyntax {
 	p.expect(T!['{']);
 	ClassMembersList.parse_list(p);
 	p.expect(T!['}']);
-
-	p.state.strict = last_strict;
 
 	let mut class_marker = m.complete(p, kind.into());
 
@@ -369,9 +371,6 @@ fn parse_class_member_impl(
 		p.bump_any(); // bump * token
 
 		let is_constructor = p.cur_src() == "constructor";
-		let last_in_generator = std::mem::replace(&mut p.state.in_generator, true);
-		let last_in_function = std::mem::replace(&mut p.state.in_function, true);
-
 		if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
 			let err = p
 				.err_builder("class methods cannot be readonly")
@@ -388,12 +387,11 @@ fn parse_class_member_impl(
 			p.error(err);
 		}
 
-		let member = Present(parse_method_class_member(p, member_marker));
+		{
+			let p = &mut *p.with_state(InFunction.and(InGenerator::new(true)));
 
-		p.state.in_function = last_in_function;
-		p.state.in_generator = last_in_generator;
-
-		return member;
+			return Present(parse_method_class_member(p, member_marker));
+		}
 	};
 
 	// Seems like we're at an async method
@@ -403,12 +401,6 @@ fn parse_class_member_impl(
 		&& !p.has_linebreak_before_n(1)
 	{
 		let async_range = p.cur_tok().range();
-		p.bump_remap(T![async]);
-		let in_generator = p.eat(T![*]);
-
-		let last_in_async = std::mem::replace(&mut p.state.in_async, true);
-		let last_in_generator = std::mem::replace(&mut p.state.in_generator, in_generator);
-		let last_in_function = std::mem::replace(&mut p.state.in_function, true);
 
 		if p.cur_src() == "constructor" {
 			let err = p
@@ -426,11 +418,17 @@ fn parse_class_member_impl(
 			p.error(err);
 		}
 
-		let method = parse_method_class_member(p, member_marker);
+		p.bump_remap(T![async]);
+		let in_generator = p.eat(T![*]);
 
-		p.state.in_async = last_in_async;
-		p.state.in_generator = last_in_generator;
-		p.state.in_function = last_in_function;
+		let method = {
+			let p = &mut *p.with_state(
+				InFunction
+					.and(InGenerator::new(in_generator))
+					.and(InAsync::new(true)),
+			);
+			parse_method_class_member(p, member_marker)
+		};
 
 		return Present(method);
 	}
@@ -652,14 +650,16 @@ fn parse_class_member_impl(
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
-					p.state.allow_object_expr = p.expect(T!['(']);
-					parse_formal_param_pat(p)
-						.or_add_diagnostic(p, js_parse_error::expected_parameter);
-					p.expect(T![')']);
-					function_body(p)
-						.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+					{
+						let has_l_paren = p.expect(T!['(']);
+						let p = &mut *p.with_state(AllowObjectExpression::new(has_l_paren));
+						parse_formal_param_pat(p)
+							.or_add_diagnostic(p, js_parse_error::expected_parameter);
+						p.expect(T![')']);
+						function_body(p)
+							.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+					}
 
-					p.state.allow_object_expr = true;
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
 				};
 
@@ -855,14 +855,11 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
 		constructor_is_valid = false;
 	}
 
-	let last_in_constructor = std::mem::replace(&mut p.state.in_constructor, true);
-	let last_in_function = std::mem::replace(&mut p.state.in_function, true);
-
-	parse_block_impl(p, JS_FUNCTION_BODY)
-		.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
-
-	p.state.in_constructor = last_in_constructor;
-	p.state.in_function = last_in_function;
+	{
+		let p = &mut *p.with_state(InFunction.and(InConstructor::new(true)));
+		parse_block_impl(p, JS_FUNCTION_BODY)
+			.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+	}
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 

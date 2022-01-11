@@ -8,7 +8,10 @@ use super::typescript::*;
 use super::util::check_label_use;
 use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
-use crate::state::StrictMode as StrictModeState;
+use crate::state::{
+	AllowObjectExpression, BreakAllowed, ChangeParserState, ContinueAllowed, EnableStrictMode,
+	EnableStrictModeSnapshot, ExcludeIn, StrictMode as StrictModeState,
+};
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
 use crate::syntax::expr::{
@@ -141,7 +144,7 @@ pub fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 		//  export { pain } from "life";
 		// }
 		T![export] => parse_export(p).map(|mut export| {
-			if !p.state.is_module && !p.typescript() {
+			if !p.is_module() && !p.typescript() {
 				let err = p
 					.err_builder("Illegal use of an export declaration outside of a module")
 					.primary(export.range(p), "not allowed inside scripts");
@@ -370,7 +373,7 @@ pub fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
 
 	semi(p, start.start..p.cur_tok().end());
 
-	if !p.state.break_allowed && p.state.labels.is_empty() {
+	if !p.state.break_allowed() && p.state.labels.is_empty() {
 		let err = p
 			.err_builder("Invalid break not inside of a switch, loop, or labelled statement")
 			.primary(start.start..end, "");
@@ -417,7 +420,7 @@ pub fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
 
 	semi(p, start.start..p.cur_tok().end());
 
-	if !p.state.break_allowed && p.state.labels.is_empty() {
+	if !p.state.continue_allowed() && p.state.labels.is_empty() {
 		let err = p
 			.err_builder("Invalid continue not inside of a loop")
 			.primary(start.start..end, "");
@@ -453,7 +456,7 @@ pub fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
 	semi(p, start..p.cur_tok().end());
 	let mut complete = m.complete(p, JS_RETURN_STATEMENT);
 
-	if !p.state.in_function && !p.syntax.global_return {
+	if !p.state.in_function() && !p.syntax.global_return {
 		let err = p
 			.err_builder("Illegal return statement outside of a function")
 			.primary(complete.range(p), "");
@@ -495,7 +498,7 @@ pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> Pars
 	let m = p.start();
 	p.bump(T!['{']);
 
-	let old_strict = if block_kind == JS_FUNCTION_BODY {
+	let strict_snapshot = if block_kind == JS_FUNCTION_BODY {
 		directives(p)
 	} else {
 		None
@@ -505,8 +508,8 @@ pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> Pars
 
 	p.expect(T!['}']);
 
-	if let Some(old_strict) = old_strict {
-		p.state.strict = old_strict;
+	if let Some(strict_snapshot) = strict_snapshot {
+		EnableStrictMode::restore(&mut p.state, strict_snapshot);
 	}
 
 	Present(m.complete(p, block_kind))
@@ -514,7 +517,7 @@ pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> Pars
 
 #[derive(Default)]
 struct DirectivesList {
-	old_strict: Option<Option<StrictModeState>>,
+	strict_snapshot: Option<EnableStrictModeSnapshot>,
 }
 
 impl DirectivesList {
@@ -545,7 +548,7 @@ impl ParseNodeList for DirectivesList {
 		let directive_text = p.token_src(directive_token);
 
 		if directive_text == "\"use strict\"" || directive_text == "'use strict'" {
-			if let Some(strict) = p.state.strict.as_ref() {
+			if let Some(strict) = p.state.strict() {
 				let mut err = p.warning_builder("Redundant strict mode declaration");
 
 				match strict {
@@ -562,12 +565,11 @@ impl ParseNodeList for DirectivesList {
 
 				err = err.primary(directive_token.range(), "this declaration is redundant");
 				p.error(err);
-			} else {
-				if self.old_strict.is_none() {
-					self.old_strict = Some(p.state.strict.take());
-				}
-
-				p.state.strict = Some(StrictModeState::Explicit(directive_token.range()));
+			} else if self.strict_snapshot.is_none() {
+				self.strict_snapshot = Some(
+					EnableStrictMode::new(StrictModeState::Explicit(directive_token.range()))
+						.apply(&mut p.state),
+				);
 			}
 		}
 
@@ -626,10 +628,10 @@ impl ParseNodeList for DirectivesList {
 // 	}
 // }
 #[must_use]
-pub(crate) fn directives(p: &mut Parser) -> Option<Option<StrictModeState>> {
+pub(crate) fn directives(p: &mut Parser) -> Option<EnableStrictModeSnapshot> {
 	let mut list = DirectivesList::default();
 	list.parse_list(p);
-	list.old_strict
+	list.strict_snapshot
 }
 
 /// Top level items or items inside of a block statement, this also handles module items so we can
@@ -661,10 +663,14 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
 
 /// An expression wrapped in parentheses such as `()`
 pub fn parenthesized_expression(p: &mut Parser) {
-	p.state.allow_object_expr = p.expect(T!['(']);
-	parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+	let has_l_paren = p.expect(T!['(']);
+
+	{
+		let p = &mut *p.with_state(AllowObjectExpression::new(has_l_paren));
+		parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+	}
+
 	p.expect(T![')']);
-	p.state.allow_object_expr = true;
 }
 
 /// An if statement such as `if (foo) { bar(); }`
@@ -750,11 +756,10 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 	p.bump_any(); // while
 	parenthesized_expression(p);
 
-	let last_break_allowed = std::mem::replace(&mut p.state.break_allowed, true);
-	let last_continue_allowed = std::mem::replace(&mut p.state.continue_allowed, true);
-	parse_statement(p).or_add_diagnostic(p, expected_statement);
-	p.state.break_allowed = last_break_allowed;
-	p.state.continue_allowed = last_continue_allowed;
+	{
+		let p = &mut *p.with_state(ContinueAllowed.and(BreakAllowed));
+		parse_statement(p).or_add_diagnostic(p, expected_statement);
+	}
 
 	Present(m.complete(p, JS_WHILE_STATEMENT))
 }
@@ -1045,8 +1050,7 @@ fn parse_variable_declaration(
 			&& matches!(
 				id.kind(),
 				JS_ARRAY_BINDING_PATTERN | JS_OBJECT_BINDING_PATTERN
-			) && !p.state.in_declare
-		{
+			) {
 			let err = p
 				.err_builder("Object and Array patterns require initializers")
 				.primary(
@@ -1055,8 +1059,7 @@ fn parse_variable_declaration(
 				);
 
 			p.error(err);
-		// FIXME: does ts allow const var declarations without initializers in .d.ts files?
-		} else if initializer.is_none() && context.is_const.is_some() && !p.state.in_declare {
+		} else if initializer.is_none() && context.is_const.is_some() {
 			let err = p
 				.err_builder("Const var declarations must have an initialized value")
 				.primary(id.range(p), "this variable needs to be initialized");
@@ -1102,11 +1105,10 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 	let start = p.cur_tok().start();
 	p.bump_any(); // do keyword
 
-	let last_continue_allowed = std::mem::replace(&mut p.state.continue_allowed, true);
-	let last_break_allowed = std::mem::replace(&mut p.state.break_allowed, true);
-	parse_statement(p).or_add_diagnostic(p, expected_statement);
-	p.state.continue_allowed = last_continue_allowed;
-	p.state.break_allowed = last_break_allowed;
+	{
+		let p = &mut *p.with_state(ContinueAllowed.and(BreakAllowed));
+		parse_statement(p).or_add_diagnostic(p, expected_statement);
+	}
 
 	p.expect(T![while]);
 	parenthesized_expression(p);
@@ -1129,10 +1131,10 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
 	{
 		let m = p.start();
 
-		let last_include_in = std::mem::replace(&mut p.state.include_in, false);
-		let (declarations, additional_declarations) =
-			parse_variable_declarations(p, VariableDeclarationParent::For).unwrap();
-		p.state.include_in = last_include_in;
+		let (declarations, additional_declarations) = {
+			let p = &mut *p.with_state(ExcludeIn);
+			parse_variable_declarations(p, VariableDeclarationParent::For).unwrap()
+		};
 
 		let is_in = p.at(T![in]);
 		let is_of = p.cur_src() == "of";
@@ -1163,9 +1165,11 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
 	} else {
 		// for (some_expression`
 		let checkpoint = p.checkpoint();
-		let last_include_in = std::mem::replace(&mut p.state.include_in, false);
-		let init_expr = parse_expression(p);
-		p.state.include_in = last_include_in;
+
+		let init_expr = {
+			let p = &mut *p.with_state(ExcludeIn);
+			parse_expression(p)
+		};
 
 		if p.at(T![in]) || p.cur_src() == "of" {
 			// for (assignment_pattern in ...
@@ -1270,11 +1274,10 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 	let kind = parse_for_head(p);
 	p.expect(T![')']);
 
-	let last_continue_allowed = std::mem::replace(&mut p.state.continue_allowed, true);
-	let last_break_allowed = std::mem::replace(&mut p.state.break_allowed, true);
-	parse_statement(p).or_add_diagnostic(p, expected_statement);
-	p.state.continue_allowed = last_continue_allowed;
-	p.state.break_allowed = last_break_allowed;
+	{
+		let p = &mut *p.with_state(ContinueAllowed.and(BreakAllowed));
+		parse_statement(p).or_add_diagnostic(p, expected_statement);
+	}
 
 	let mut completed = m.complete(p, kind);
 
@@ -1486,9 +1489,10 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 	parenthesized_expression(p);
 	p.expect(T!['{']);
 
-	let last_break_allowed = std::mem::replace(&mut p.state.break_allowed, true);
-	SwitchCasesList::default().parse_list(p);
-	p.state.break_allowed = last_break_allowed;
+	{
+		let p = &mut *p.with_state(BreakAllowed);
+		SwitchCasesList::default().parse_list(p);
+	}
 
 	p.expect(T!['}']);
 	Present(m.complete(p, JS_SWITCH_STATEMENT))

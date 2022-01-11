@@ -138,23 +138,11 @@ pub struct Parser<'t> {
 impl<'t> Parser<'t> {
 	/// Make a new parser
 	pub fn new(tokens: TokenSource<'t>, file_id: usize, syntax: Syntax) -> Parser<'t> {
-		// TODO(RDambrosio016): Does TypeScript imply Module/Strict?
-		let strict = if syntax.file_kind == FileKind::Module {
-			Some(StrictMode::Module)
-		} else {
-			None
-		};
-		let state = ParserState {
-			is_module: syntax.file_kind == FileKind::Module,
-			strict,
-			..ParserState::default()
-		};
-
 		Parser {
 			file_id,
 			tokens,
 			events: vec![],
-			state,
+			state: ParserState::new(syntax),
 			syntax,
 			errors: vec![],
 		}
@@ -471,6 +459,11 @@ impl<'t> Parser<'t> {
 			.map(|x| usize::from(x.range(self).end()))
 			.unwrap_or_default();
 		start..end
+	}
+
+	/// Whether the code we are parsing is a module
+	pub fn is_module(&self) -> bool {
+		self.syntax.file_kind == FileKind::Module
 	}
 }
 

@@ -2,6 +2,7 @@
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
+use crate::state::{AllowObjectExpression, InAsync, InFunction, InGenerator, ChangeParserState};
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
 use crate::syntax::expr::{is_at_name, parse_expr_or_assignment, parse_expression};
 use crate::syntax::function::{
@@ -249,14 +250,16 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
 	p.bump_remap(T![set]);
 
 	parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
+	let has_l_paren = p.expect(T!['(']);
 
-	p.state.allow_object_expr = p.expect(T!['(']);
-	parse_formal_param_pat(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
-	p.expect(T![')']);
+	{
+		let p = &mut *p.with_state(AllowObjectExpression::new(has_l_paren));
+		parse_formal_param_pat(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
+		p.expect(T![')']);
 
-	function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
+		function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
+	}
 
-	p.state.allow_object_expr = true;
 	Present(m.complete(p, JS_SETTER_OBJECT_MEMBER))
 }
 
@@ -346,27 +349,22 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 	let in_generator = p.eat(T![*]);
 	parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
-	let last_in_async = std::mem::replace(&mut p.state.in_async, is_async);
-	let last_in_generator = std::mem::replace(&mut p.state.in_generator, in_generator);
+	let p =
+		&mut *p.with_state(InGenerator::new(in_generator).and(InAsync::new(is_async)));
 
 	parse_method_object_member_body(p);
-
-	p.state.in_async = last_in_async;
-	p.state.in_generator = last_in_generator;
 
 	Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 }
 
 /// Parses the body of a method object member starting right after the member name.
 fn parse_method_object_member_body(p: &mut Parser) {
-	let last_in_function = std::mem::replace(&mut p.state.in_function, true);
+	let p = &mut *p.with_state(InFunction);
 
 	parse_ts_parameter_types(p).ok();
 	parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);
 	parse_ts_type_annotation_or_error(p).ok();
 	function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
-
-	p.state.in_function = last_in_function;
 }
 
 fn is_parser_at_async_method_member(p: &Parser) -> bool {

@@ -15,7 +15,9 @@ use rslint_errors::Span;
 pub(crate) fn parse_binding_pattern(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		T!['['] => ArrayBindingPattern.parse_array_pattern(p),
-		T!['{'] if p.state.allow_object_expr => ObjectBindingPattern.parse_object_pattern(p),
+		T!['{'] if p.state.allow_object_expression() => {
+			ObjectBindingPattern.parse_object_pattern(p)
+		}
 		T![ident] | T![yield] | T![await] => parse_identifier_binding(p),
 		_ => Absent,
 	}
