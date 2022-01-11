@@ -55,6 +55,11 @@ fn test_data_dir() -> PathBuf {
 	project_dir().join("rslint_parser/test_data")
 }
 
+#[test]
+fn test_eval() {
+	println!("{:?}", try_parse("", " ({ eval }) = 0"));
+}
+
 fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
 	let res = catch_unwind(|| {
 		// Files containing a // SCRIPT comment are parsed as script and not as module

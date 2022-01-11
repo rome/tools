@@ -423,6 +423,14 @@ impl RewriteParseEvents for ReparseAssignment {
 			{
 				*parent_kind = JS_UNKNOWN_ASSIGNMENT
 			}
+			if matches!(kind, IDENT) && (p.cur_src() == "eval" || p.cur_src() == "arguments") {
+				p.error(
+					p.err_builder(
+						"`eval` or `arguments` not allowed as assignment targets in strict mode",
+					)
+					.primary(, ""),
+				);
+			}
 		}
 
 		p.bump_remap(kind);
