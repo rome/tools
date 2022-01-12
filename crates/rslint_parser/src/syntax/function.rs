@@ -112,47 +112,46 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax
 
 	let in_generator = p.eat(T![*]);
 
-	{
-		let p = &mut *p.with_state(
-			InFunction
-				.and(InGenerator::new(in_generator))
-				.and(InAsync::new(in_async))
-				.and(NewLabelsScope),
-		);
+	p.with_state(
+		InFunction(true)
+			.and(InGenerator(in_generator))
+			.and(InAsync(in_async))
+			.and(NewLabelsScope),
+		|p| {
+			let id = parse_binding(p);
 
-		let id = parse_binding(p);
-
-		if !kind.is_id_optional() {
-			id.or_add_diagnostic(p, |p, range| {
-				p.err_builder(
+			if !kind.is_id_optional() {
+				id.or_add_diagnostic(p, |p, range| {
+					p.err_builder(
 					"expected a name for the function in a function declaration, but found none",
 				)
 				.primary(range, "")
-			});
-		}
+				});
+			}
 
-		TypeScript
-			.parse_exclusive_syntax(p, parse_ts_parameter_types, |p, marker| {
-				p.err_builder("type parameters can only be used in TypeScript files")
-					.primary(marker.range(p), "")
-			})
-			.ok();
+			TypeScript
+				.parse_exclusive_syntax(p, parse_ts_parameter_types, |p, marker| {
+					p.err_builder("type parameters can only be used in TypeScript files")
+						.primary(marker.range(p), "")
+				})
+				.ok();
 
-		parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);
+			parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);
 
-		TypeScript
-			.parse_exclusive_syntax(p, parse_ts_type_annotation_or_error, |p, marker| {
-				p.err_builder("return types can only be used in TypeScript files")
-					.primary(marker.range(p), "")
-			})
-			.ok();
+			TypeScript
+				.parse_exclusive_syntax(p, parse_ts_type_annotation_or_error, |p, marker| {
+					p.err_builder("return types can only be used in TypeScript files")
+						.primary(marker.range(p), "")
+				})
+				.ok();
 
-		if kind == FunctionKind::Statement {
-			function_body_or_declaration(p);
-		} else {
-			function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
-		}
-	}
+			if kind == FunctionKind::Statement {
+				function_body_or_declaration(p);
+			} else {
+				function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
+			}
+		},
+	);
 
 	let mut function = m.complete(p, kind.into());
 
@@ -164,8 +163,9 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax
 }
 
 pub(super) fn function_body(p: &mut Parser) -> ParsedSyntax {
-	let p = &mut *p.with_state(InFunction.and(InConstructor::new(false)));
-	parse_block_impl(p, JS_FUNCTION_BODY)
+	p.with_state(InFunction(true).and(InConstructor(false)), |p| {
+		parse_block_impl(p, JS_FUNCTION_BODY)
+	})
 }
 
 // TODO 1725 This is probably not ideal (same with the `declare` keyword). We should

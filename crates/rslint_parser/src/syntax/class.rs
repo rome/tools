@@ -123,9 +123,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> ParsedSyntax {
 
 	p.expect(T![class]);
 
-	let p = &mut *p.with_state(EnableStrictMode::new(StrictMode::Class(
-		p.cur_tok().range(),
-	)));
+	let p = &mut *p.with_scoped_state(EnableStrictMode(StrictMode::Class(p.cur_tok().range())));
 
 	// test_err class_decl_no_id
 	// class {}
@@ -387,11 +385,9 @@ fn parse_class_member_impl(
 			p.error(err);
 		}
 
-		{
-			let p = &mut *p.with_state(InFunction.and(InGenerator::new(true)));
-
-			return Present(parse_method_class_member(p, member_marker));
-		}
+		return p.with_state(InFunction(true).and(InGenerator(true)), |p| {
+			Present(parse_method_class_member(p, member_marker))
+		});
 	};
 
 	// Seems like we're at an async method
@@ -420,16 +416,14 @@ fn parse_class_member_impl(
 			p.error(err);
 		}
 
-		let method = {
-			let p = &mut *p.with_state(
-				InFunction
-					.and(InGenerator::new(in_generator))
-					.and(InAsync::new(true)),
-			);
-			parse_method_class_member(p, member_marker)
-		};
-
-		return Present(method);
+		return Present(
+			p.with_state(
+				InFunction(true)
+					.and(InGenerator(in_generator))
+					.and(InAsync(true)),
+				|p| parse_method_class_member(p, member_marker),
+			),
+		);
 	}
 
 	let member_name = p.cur_src();
@@ -649,15 +643,14 @@ fn parse_class_member_impl(
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
-					{
-						let has_l_paren = p.expect(T!['(']);
-						let p = &mut *p.with_state(AllowObjectExpression::new(has_l_paren));
+					let has_l_paren = p.expect(T!['(']);
+					p.with_state(AllowObjectExpression(has_l_paren), |p| {
 						parse_formal_param_pat(p)
 							.or_add_diagnostic(p, js_parse_error::expected_parameter);
 						p.expect(T![')']);
 						function_body(p)
 							.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
-					}
+					});
 
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
 				};
@@ -854,11 +847,10 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
 		constructor_is_valid = false;
 	}
 
-	{
-		let p = &mut *p.with_state(InFunction.and(InConstructor::new(true)));
+	p.with_state(InFunction(true).and(InConstructor(true)), |p| {
 		parse_block_impl(p, JS_FUNCTION_BODY)
 			.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
-	}
+	});
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 

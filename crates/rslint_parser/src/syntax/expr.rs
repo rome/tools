@@ -175,13 +175,12 @@ fn parse_assign_expr_base(p: &mut Parser) -> ParsedSyntax {
 	}
 	let potential_arrow_start = p.at(T!['(']) | is_at_identifier(p);
 
-	{
-		let p = &mut *p.with_state(PotentialArrowStart::new(potential_arrow_start));
+	p.with_state(PotentialArrowStart(potential_arrow_start), |p| {
 		let checkpoint = p.checkpoint();
 
 		parse_conditional_expr(p)
 			.and_then(|target| parse_assign_expr_recursive(p, target, checkpoint))
-	}
+	})
 }
 
 // test assign_expr
@@ -260,11 +259,8 @@ pub(super) fn parse_conditional_expr(p: &mut Parser) -> ParsedSyntax {
 			let m = marker.precede(p);
 			p.bump_any();
 
-			{
-				let p = &mut *p.with_state(InConditionExpression);
-				parse_expr_or_assignment(p)
-					.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
-			}
+			p.with_state(InConditionExpression(true), parse_expr_or_assignment)
+				.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
 			p.expect(T![:]);
 			parse_expr_or_assignment(p)
@@ -753,10 +749,8 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 
 	let is_empty = p.eat(T![')']);
 
-	{
-		let p = &mut *p.with_state(PotentialArrowStart::new(true));
-
-		if !is_empty {
+	if !is_empty {
+		p.with_state(PotentialArrowStart(true), |p| {
 			// stores a potentially started sequence expression
 			let mut sequence: Option<Marker> = None;
 
@@ -834,7 +828,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 			if let Some(sequence) = sequence.take() {
 				sequence.complete(p, JS_SEQUENCE_EXPRESSION);
 			}
-		}
+		});
 	}
 
 	let has_ret_type = !p.state.in_condition_expression() && p.at(T![:]);
@@ -997,8 +991,7 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 					let m = p.start();
 					p.bump_remap(T![async]);
 
-					{
-						let p = &mut *p.with_state(InAsync::new(true));
+					p.with_state(InAsync(true), |p| {
 						let parsed_parameters = parse_parameter_list(p);
 						if parsed_parameters.is_absent() {
 							// test_err async_arrow_expr_await_parameter
@@ -1020,7 +1013,7 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 
 						parse_arrow_body(p)
 							.or_add_diagnostic(p, js_parse_error::expected_arrow_body);
-					}
+					});
 
 					m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 				} else {

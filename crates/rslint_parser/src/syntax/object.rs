@@ -252,13 +252,12 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
 	parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 	let has_l_paren = p.expect(T!['(']);
 
-	{
-		let p = &mut *p.with_state(AllowObjectExpression::new(has_l_paren));
+	p.with_state(AllowObjectExpression(has_l_paren), |p| {
 		parse_formal_param_pat(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
 		p.expect(T![')']);
 
 		function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
-	}
+	});
 
 	Present(m.complete(p, JS_SETTER_OBJECT_MEMBER))
 }
@@ -349,16 +348,17 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 	let in_generator = p.eat(T![*]);
 	parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
-	let p = &mut *p.with_state(InGenerator::new(in_generator).and(InAsync::new(is_async)));
-
-	parse_method_object_member_body(p);
+	p.with_state(
+		InGenerator(in_generator).and(InAsync(is_async)),
+		parse_method_object_member_body,
+	);
 
 	Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 }
 
 /// Parses the body of a method object member starting right after the member name.
 fn parse_method_object_member_body(p: &mut Parser) {
-	let p = &mut *p.with_state(InFunction);
+	let p = &mut *p.with_scoped_state(InFunction(true));
 
 	parse_ts_parameter_types(p).ok();
 	parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);

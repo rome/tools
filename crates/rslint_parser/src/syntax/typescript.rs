@@ -258,10 +258,8 @@ pub fn ts_signature_member(p: &mut Parser, construct_sig: bool) -> Option<Comple
 		no_recover!(p, ts_type_params(p));
 	}
 
-	{
-		let p = &mut *p.with_state(InBindingListForSignature);
-		parse_parameter_list(p).ok();
-	}
+	p.with_state(InBindingListForSignature(true), parse_parameter_list)
+		.ok();
 
 	if p.at(T![:]) {
 		no_recover!(p, ts_type_or_type_predicate_ann(p, T![:]));

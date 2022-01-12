@@ -49,8 +49,7 @@ pub(super) fn parse_parameters_list(
 	let mut first = true;
 	let has_l_paren = p.expect(T!['(']);
 
-	{
-		let p = &mut *p.with_state(AllowObjectExpression::new(has_l_paren));
+	p.with_state(AllowObjectExpression(has_l_paren), |p| {
 		let parameters_list = p.start();
 		let mut progress = ParserProgress::default();
 
@@ -160,17 +159,17 @@ pub(super) fn parse_parameters_list(
 		}
 
 		parameters_list.complete(p, list_kind);
-	}
+	});
 
 	p.expect(T![')']);
 }
 
 pub(super) fn parse_arrow_body(p: &mut Parser) -> ParsedSyntax {
-	let p = &mut *p.with_state(InFunction);
-
-	if p.at(T!['{']) {
-		function_body(p)
-	} else {
-		parse_expr_or_assignment(p)
-	}
+	p.with_state(InFunction(true), |p| {
+		if p.at(T!['{']) {
+			function_body(p)
+		} else {
+			parse_expr_or_assignment(p)
+		}
+	})
 }

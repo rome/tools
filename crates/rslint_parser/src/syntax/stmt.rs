@@ -10,7 +10,7 @@ use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::state::{
 	AllowObjectExpression, BreakAllowed, ChangeParserState, ContinueAllowed, EnableStrictMode,
-	EnableStrictModeSnapshot, ExcludeIn, StrictMode as StrictModeState,
+	EnableStrictModeSnapshot, IncludeIn, StrictMode as StrictModeState,
 };
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
@@ -567,7 +567,7 @@ impl ParseNodeList for DirectivesList {
 				p.error(err);
 			} else if self.strict_snapshot.is_none() {
 				self.strict_snapshot = Some(
-					EnableStrictMode::new(StrictModeState::Explicit(directive_token.range()))
+					EnableStrictMode(StrictModeState::Explicit(directive_token.range()))
 						.apply(&mut p.state),
 				);
 			}
@@ -665,10 +665,8 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
 pub fn parenthesized_expression(p: &mut Parser) {
 	let has_l_paren = p.expect(T!['(']);
 
-	{
-		let p = &mut *p.with_state(AllowObjectExpression::new(has_l_paren));
-		parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
-	}
+	p.with_state(AllowObjectExpression(has_l_paren), parse_expression)
+		.or_add_diagnostic(p, js_parse_error::expected_expression);
 
 	p.expect(T![')']);
 }
@@ -756,10 +754,11 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 	p.bump_any(); // while
 	parenthesized_expression(p);
 
-	{
-		let p = &mut *p.with_state(ContinueAllowed.and(BreakAllowed));
-		parse_statement(p).or_add_diagnostic(p, expected_statement);
-	}
+	p.with_state(
+		ContinueAllowed(true).and(BreakAllowed(true)),
+		parse_statement,
+	)
+	.or_add_diagnostic(p, expected_statement);
 
 	Present(m.complete(p, JS_WHILE_STATEMENT))
 }
@@ -1105,10 +1104,11 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 	let start = p.cur_tok().start();
 	p.bump_any(); // do keyword
 
-	{
-		let p = &mut *p.with_state(ContinueAllowed.and(BreakAllowed));
-		parse_statement(p).or_add_diagnostic(p, expected_statement);
-	}
+	p.with_state(
+		ContinueAllowed(true).and(BreakAllowed(true)),
+		parse_statement,
+	)
+	.or_add_diagnostic(p, expected_statement);
 
 	p.expect(T![while]);
 	parenthesized_expression(p);
@@ -1131,10 +1131,9 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
 	{
 		let m = p.start();
 
-		let (declarations, additional_declarations) = {
-			let p = &mut *p.with_state(ExcludeIn);
+		let (declarations, additional_declarations) = p.with_state(IncludeIn(false), |p| {
 			parse_variable_declarations(p, VariableDeclarationParent::For).unwrap()
-		};
+		});
 
 		let is_in = p.at(T![in]);
 		let is_of = p.cur_src() == "of";
@@ -1166,10 +1165,7 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
 		// for (some_expression`
 		let checkpoint = p.checkpoint();
 
-		let init_expr = {
-			let p = &mut *p.with_state(ExcludeIn);
-			parse_expression(p)
-		};
+		let init_expr = p.with_state(IncludeIn(false), parse_expression);
 
 		if p.at(T![in]) || p.cur_src() == "of" {
 			// for (assignment_pattern in ...
@@ -1274,10 +1270,11 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 	let kind = parse_for_head(p);
 	p.expect(T![')']);
 
-	{
-		let p = &mut *p.with_state(ContinueAllowed.and(BreakAllowed));
-		parse_statement(p).or_add_diagnostic(p, expected_statement);
-	}
+	p.with_state(
+		ContinueAllowed(true).and(BreakAllowed(true)),
+		parse_statement,
+	)
+	.or_add_diagnostic(p, expected_statement);
 
 	let mut completed = m.complete(p, kind);
 
@@ -1489,10 +1486,9 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 	parenthesized_expression(p);
 	p.expect(T!['{']);
 
-	{
-		let p = &mut *p.with_state(BreakAllowed);
-		SwitchCasesList::default().parse_list(p);
-	}
+	p.with_state(BreakAllowed(true), |p| {
+		SwitchCasesList::default().parse_list(p)
+	});
 
 	p.expect(T!['}']);
 	Present(m.complete(p, JS_SWITCH_STATEMENT))

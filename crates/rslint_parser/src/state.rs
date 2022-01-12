@@ -141,14 +141,28 @@ impl ParserState {
 }
 
 impl<'t> Parser<'t> {
-	/// Changes the state of the parser applying the passed in `modifier`. Reverts the
-	/// state changes when the state guard goes out of scope.
-	pub fn with_state<'p, C: ChangeParserState>(
+	/// Applies the passed in change to the parser's state and reverts the
+	/// changes when the returned [ParserStateGuard] goes out of scope.
+	pub fn with_scoped_state<'p, C: ChangeParserState>(
 		&'p mut self,
 		change: C,
 	) -> ParserStateGuard<'p, 't, C> {
 		let snapshot = change.apply(&mut self.state);
 		ParserStateGuard::new(self, snapshot)
+	}
+
+	/// Applies the passed in change to the parser state before applying the passed `func` and
+	/// restores the state to before the change before returning the result.
+	#[inline]
+	pub fn with_state<C, F, R>(&mut self, change: C, func: F) -> R
+	where
+		C: ChangeParserState,
+		F: FnOnce(&mut Parser) -> R,
+	{
+		let snapshot = change.apply(&mut self.state);
+		let result = func(self);
+		C::restore(&mut self.state, snapshot);
+		result
 	}
 }
 
@@ -260,134 +274,46 @@ where
 	}
 }
 
-#[derive(Debug, Copy, Clone, Default)]
-pub struct InGeneratorSnapshot(bool);
+/// Macro for creating a [ChangeParserState] that changes the value of a single [ParserState] field.
+/// * `$name`: The name of the [ChangeParserState] implementation
+/// * `$field`: The [ParserState] field's name that the implementation *changes*
+/// * `$type`: The [ParserState] field's type
+/// * `snapshot`: The name of the snapshot struct
+macro_rules! gen_change_parser_state {
+	($name:ident { $field: ident: $type:ty } => $snapshot: ident) => {
+		#[derive(Debug, Clone, Default)]
+		pub(crate) struct $snapshot(pub(crate) $type);
 
-/// Changes the [ParserState] `in_generator` field
-#[derive(Debug)]
-pub struct InGenerator(bool);
+		/// Changes the [ParserState] `$field` field
+		#[derive(Debug)]
+		pub(crate) struct $name(pub(crate) $type);
 
-impl InGenerator {
-	pub fn new(in_generator: bool) -> Self {
-		Self(in_generator)
-	}
+		impl ChangeParserState for $name {
+			type Snapshot = $snapshot;
+
+			#[inline]
+			fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+				$snapshot(std::mem::replace(&mut state.$field, self.0))
+			}
+
+			#[inline]
+			fn restore(state: &mut ParserState, value: Self::Snapshot) {
+				state.$field = value.0
+			}
+		}
+	};
 }
 
-impl ChangeParserState for InGenerator {
-	type Snapshot = InGeneratorSnapshot;
-
-	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-		InGeneratorSnapshot(std::mem::replace(&mut state.in_generator, self.0))
-	}
-
-	fn restore(state: &mut ParserState, value: Self::Snapshot) {
-		state.in_generator = value.0
-	}
-}
-
-#[derive(Debug, Copy, Clone, Default)]
-pub struct InFunctionSnapshot(bool);
-
-/// Sets the [ParserState] `in_function` state to true
-#[derive(Debug)]
-pub struct InFunction;
-
-impl ChangeParserState for InFunction {
-	type Snapshot = InFunctionSnapshot;
-
-	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-		InFunctionSnapshot(std::mem::replace(&mut state.in_function, true))
-	}
-
-	fn restore(state: &mut ParserState, value: Self::Snapshot) {
-		state.in_function = value.0
-	}
-}
-
-#[derive(Debug, Copy, Clone, Default)]
-pub struct InAsyncSnapshot(bool);
-
-/// Changes the `ParserState] `in_async` flag
-#[derive(Debug)]
-pub struct InAsync(bool);
-
-impl InAsync {
-	pub fn new(in_async: bool) -> Self {
-		Self(in_async)
-	}
-}
-
-impl ChangeParserState for InAsync {
-	type Snapshot = InAsyncSnapshot;
-
-	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-		InAsyncSnapshot(std::mem::replace(&mut state.in_async, self.0))
-	}
-
-	fn restore(state: &mut ParserState, value: Self::Snapshot) {
-		state.in_async = value.0;
-	}
-}
-
-#[derive(Debug, Copy, Clone, Default)]
-pub struct InConstructorSnapshot(bool);
-
-/// Sets the [ParserState] `in_constructor` field to true
-pub struct InConstructor(bool);
-
-impl InConstructor {
-	pub fn new(in_constructor: bool) -> Self {
-		Self(in_constructor)
-	}
-}
-
-impl ChangeParserState for InConstructor {
-	type Snapshot = InConstructorSnapshot;
-
-	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-		InConstructorSnapshot(std::mem::replace(&mut state.in_constructor, self.0))
-	}
-
-	fn restore(state: &mut ParserState, value: Self::Snapshot) {
-		state.in_constructor = value.0;
-	}
-}
-
-#[derive(Debug, Copy, Clone, Default)]
-pub struct BreakAllowedSnapshot(bool);
-
-/// Sets the [ParserState] `break_allowed` field to true
-pub struct BreakAllowed;
-
-impl ChangeParserState for BreakAllowed {
-	type Snapshot = BreakAllowedSnapshot;
-
-	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-		BreakAllowedSnapshot(std::mem::replace(&mut state.break_allowed, true))
-	}
-
-	fn restore(state: &mut ParserState, value: Self::Snapshot) {
-		state.break_allowed = value.0;
-	}
-}
-
-#[derive(Debug, Copy, Clone, Default)]
-pub struct ContinueAllowedSnapshot(bool);
-
-/// Sets the [ParserState] `continue_allowed` field to true
-pub struct ContinueAllowed;
-
-impl ChangeParserState for ContinueAllowed {
-	type Snapshot = ContinueAllowedSnapshot;
-
-	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-		ContinueAllowedSnapshot(std::mem::replace(&mut state.continue_allowed, true))
-	}
-
-	fn restore(state: &mut ParserState, value: Self::Snapshot) {
-		state.continue_allowed = value.0;
-	}
-}
+gen_change_parser_state!(InGenerator { in_generator: bool } => InGeneratorSnapshot);
+gen_change_parser_state!(InFunction { in_function: bool } => InFunctionSnapshot);
+gen_change_parser_state!(InAsync { in_async: bool } => InAsyncSnapshot);
+gen_change_parser_state!(InConstructor { in_constructor: bool } => InConstructorSnapshot);
+gen_change_parser_state!(BreakAllowed {break_allowed: bool} =>BreakAllowedSnapshot);
+gen_change_parser_state!(ContinueAllowed {continue_allowed: bool} => ContinueAllowedSnapshot);
+gen_change_parser_state!(IncludeIn { include_in: bool } => IncludeInSnapshot);
+gen_change_parser_state!(InConditionExpression { in_cond_expr: bool } => InConditionExpressionSnapshot);
+gen_change_parser_state!(AllowObjectExpression { allow_object_expr: bool } => AllowObjectExpressionSnapshot);
+gen_change_parser_state!(InBindingListForSignature { in_binding_list_for_signature: bool } => InBindingListForSignatureSnapshot);
 
 #[derive(Debug, Clone, Default)]
 pub struct SeenLabelsSnapshot(HashMap<String, Range<usize>>);
@@ -398,48 +324,14 @@ pub struct NewLabelsScope;
 impl ChangeParserState for NewLabelsScope {
 	type Snapshot = SeenLabelsSnapshot;
 
+	#[inline]
 	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
 		SeenLabelsSnapshot(std::mem::take(&mut state.labels))
 	}
 
+	#[inline]
 	fn restore(state: &mut ParserState, value: Self::Snapshot) {
 		state.labels = value.0
-	}
-}
-
-#[derive(Debug, Copy, Clone, Default)]
-pub struct ExcludeInSnapshot(bool);
-
-/// Sets the [ParserState] `include_in` state to `false`
-pub struct ExcludeIn;
-
-impl ChangeParserState for ExcludeIn {
-	type Snapshot = ExcludeInSnapshot;
-
-	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-		ExcludeInSnapshot(std::mem::replace(&mut state.include_in, false))
-	}
-
-	fn restore(state: &mut ParserState, value: Self::Snapshot) {
-		state.include_in = value.0;
-	}
-}
-
-#[derive(Debug, Clone, Default)]
-pub struct InConditionExpressionSnapshot(bool);
-
-/// Sets the [ParserState] `in_cond_expr` state to `true`
-pub struct InConditionExpression;
-
-impl ChangeParserState for InConditionExpression {
-	type Snapshot = InConditionExpressionSnapshot;
-
-	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-		InConditionExpressionSnapshot(std::mem::replace(&mut state.in_cond_expr, true))
-	}
-
-	fn restore(state: &mut ParserState, value: Self::Snapshot) {
-		state.in_cond_expr = value.0;
 	}
 }
 
@@ -447,47 +339,19 @@ impl ChangeParserState for InConditionExpression {
 pub struct PotentialArrowStartSnapshot(bool);
 
 /// Changes the [ParserState] `potential_arrow_expr` field
-pub struct PotentialArrowStart(bool);
-
-impl PotentialArrowStart {
-	pub fn new(potential_arrow_start: bool) -> Self {
-		Self(potential_arrow_start)
-	}
-}
+pub struct PotentialArrowStart(pub bool);
 
 impl ChangeParserState for PotentialArrowStart {
 	type Snapshot = PotentialArrowStartSnapshot;
 
+	#[inline]
 	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
 		PotentialArrowStartSnapshot(std::mem::replace(&mut state.potential_arrow_start, self.0))
 	}
 
+	#[inline]
 	fn restore(state: &mut ParserState, value: Self::Snapshot) {
 		state.potential_arrow_start = value.0;
-	}
-}
-
-#[derive(Default, Debug, Clone)]
-pub struct AllowObjectExpressionSnapshot(bool);
-
-/// Sets the [ParserState] `allow_object_expr` field
-pub struct AllowObjectExpression(bool);
-
-impl AllowObjectExpression {
-	pub fn new(allow_object_expr: bool) -> Self {
-		Self(allow_object_expr)
-	}
-}
-
-impl ChangeParserState for AllowObjectExpression {
-	type Snapshot = AllowObjectExpressionSnapshot;
-
-	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-		AllowObjectExpressionSnapshot(std::mem::replace(&mut state.allow_object_expr, self.0))
-	}
-
-	fn restore(state: &mut ParserState, value: Self::Snapshot) {
-		state.allow_object_expr = value.0;
 	}
 }
 
@@ -495,43 +359,18 @@ impl ChangeParserState for AllowObjectExpression {
 pub struct EnableStrictModeSnapshot(Option<StrictMode>);
 
 /// Enables strict mode
-pub struct EnableStrictMode(StrictMode);
-
-impl EnableStrictMode {
-	pub fn new(mode: StrictMode) -> Self {
-		Self(mode)
-	}
-}
+pub struct EnableStrictMode(pub StrictMode);
 
 impl ChangeParserState for EnableStrictMode {
 	type Snapshot = EnableStrictModeSnapshot;
 
+	#[inline]
 	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
 		EnableStrictModeSnapshot(std::mem::replace(&mut state.strict, Some(self.0)))
 	}
 
+	#[inline]
 	fn restore(state: &mut ParserState, value: Self::Snapshot) {
 		state.strict = value.0
-	}
-}
-
-#[derive(Debug, Clone, Default)]
-pub struct InBindingListForSignatureSnapshot(bool);
-
-/// Sets [ParserState] `in_binding_list_for_signature` to true
-pub struct InBindingListForSignature;
-
-impl ChangeParserState for InBindingListForSignature {
-	type Snapshot = InBindingListForSignatureSnapshot;
-
-	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-		InBindingListForSignatureSnapshot(std::mem::replace(
-			&mut state.in_binding_list_for_signature,
-			true,
-		))
-	}
-
-	fn restore(state: &mut ParserState, value: Self::Snapshot) {
-		state.in_binding_list_for_signature = value.0;
 	}
 }
