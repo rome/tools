@@ -30,22 +30,39 @@ pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Ha
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum TriviaPiece {
-	Whitespace(u32),
-	Comments(u32),
+	Newline(u32), // length
+	Whitespace(u32), // length
+	Comments(u32, bool), // length, has_newline
 }
 
 impl TriviaPiece {
 	#[inline]
 	pub fn text_len(&self) -> TextSize {
 		match self {
+			TriviaPiece::Newline(n) => (*n).into(),
 			TriviaPiece::Whitespace(n) => (*n).into(),
-			TriviaPiece::Comments(n) => (*n).into(),
+			TriviaPiece::Comments(n, _) => (*n).into(),
 		}
 	}
 }
 
+pub struct SyntaxTriviaPieceNewline<L: Language>(SyntaxTriviaPiece<L>);
 pub struct SyntaxTriviaPieceWhitespace<L: Language>(SyntaxTriviaPiece<L>);
 pub struct SyntaxTriviaPieceComments<L: Language>(SyntaxTriviaPiece<L>);
+
+impl<L: Language> SyntaxTriviaPieceNewline<L> {
+	pub fn text(&self) -> &str {
+		self.0.text()
+	}
+
+	pub fn text_len(&self) -> TextSize {
+		self.0.text_len()
+	}
+
+	pub fn text_range(&self) -> TextRange {
+		self.0.text_range()
+	}
+}
 
 impl<L: Language> SyntaxTriviaPieceWhitespace<L> {
 	pub fn text(&self) -> &str {
@@ -73,6 +90,13 @@ impl<L: Language> SyntaxTriviaPieceComments<L> {
 	pub fn text_range(&self) -> TextRange {
 		self.0.text_range()
 	}
+
+	pub fn has_newline(&self) -> bool {
+		match self.0.trivia {
+			TriviaPiece::Comments(_, has_newline) => has_newline,
+			_ => unreachable!("trivia is not a comment"),
+		}
+	}
 }
 
 /// [SyntaxTriviaPiece] gives access to the most granular information about the trivia
@@ -84,7 +108,7 @@ impl<L: Language> SyntaxTriviaPieceComments<L> {
 /// builder.token_with_trivia(
 ///     RawSyntaxKind(1),
 ///     "\n\t /**/let \t\t",
-///     vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
+///     vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
 ///     vec![TriviaPiece::Whitespace(3)],
 /// );
 /// });
@@ -112,7 +136,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
-	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
+	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -138,7 +162,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
-	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
+	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -160,7 +184,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
-	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
+	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -181,7 +205,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
-	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
+	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -208,7 +232,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
-	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
+	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -220,7 +244,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	/// ```
 	pub fn as_comments(&self) -> Option<SyntaxTriviaPieceComments<L>> {
 		match &self.trivia {
-			TriviaPiece::Comments(_) => Some(SyntaxTriviaPieceComments(self.clone())),
+			TriviaPiece::Comments(..) => Some(SyntaxTriviaPieceComments(self.clone())),
 			_ => None,
 		}
 	}
@@ -309,17 +333,12 @@ fn print_debug_trivia_piece<L: Language>(
 	f: &mut fmt::Formatter<'_>,
 ) -> fmt::Result {
 	match piece.trivia {
-		TriviaPiece::Whitespace(_) => {
-			write!(f, "Whitespace(")?;
-			print_debug_str(piece.text(), f)?;
-			write!(f, ")")
-		}
-		TriviaPiece::Comments(_) => {
-			write!(f, "Comments(")?;
-			print_debug_str(piece.text(), f)?;
-			write!(f, ")")
-		}
+		TriviaPiece::Newline(_) => write!(f, "Newline(")?,
+		TriviaPiece::Whitespace(_) => write!(f, "Whitespace(")?,
+		TriviaPiece::Comments(..) => write!(f, "Comments(")?,
 	}
+	print_debug_str(piece.text(), f)?;
+	write!(f, ")")
 }
 
 impl<L: Language> fmt::Debug for SyntaxToken<L> {
@@ -404,7 +423,7 @@ impl<L: Language> SyntaxTrivia<L> {
 	/// builder.token_with_trivia(
 	///     RawLanguageKind::LET_TOKEN,
 	///     "\n\t /**/let \t\t",
-	///     vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
+	///     vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
 	///     vec![TriviaPiece::Whitespace(3)],
 	/// );
 	/// });
@@ -1625,7 +1644,7 @@ mod tests {
 			builder.token_with_trivia(
 				RawLanguageKind::LET_TOKEN,
 				"\n\t /**/let \t\t",
-				vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4)],
+				vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
 				vec![TriviaPiece::Whitespace(3)],
 			);
 		});

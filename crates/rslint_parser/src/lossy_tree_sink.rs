@@ -213,7 +213,8 @@ impl<'a> LossyTreeSink<'a> {
 
 			let current_trivia = match token.kind {
 				JsSyntaxKind::WHITESPACE | JsSyntaxKind::NEWLINE => continue,
-				JsSyntaxKind::COMMENT => TriviaPiece::Comments(token.len),
+				JsSyntaxKind::COMMENT => TriviaPiece::Comments(token.len, false),
+				JsSyntaxKind::MULTILINE_COMMENT => TriviaPiece::Comments(token.len, true),
 				_ => unreachable!("Not Trivia"),
 			};
 

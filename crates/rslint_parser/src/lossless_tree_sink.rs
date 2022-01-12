@@ -133,7 +133,8 @@ impl<'a> LosslessTreeSink<'a> {
 
 			let current_trivia = match token.kind {
 				NEWLINE | WHITESPACE => TriviaPiece::Whitespace(token.len),
-				COMMENT | MULTILINE_COMMENT => TriviaPiece::Comments(token.len),
+				COMMENT => TriviaPiece::Comments(token.len, false),
+				MULTILINE_COMMENT => TriviaPiece::Comments(token.len, true),
 				_ => unreachable!("Not Trivia"),
 			};
 
