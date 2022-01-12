@@ -8,9 +8,9 @@ use super::typescript::*;
 use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::state::{
-    AllowObjectExpression, BreakableKind, ChangeParserState, EnableStrictMode,
-    EnableStrictModeSnapshot, EnterBreakable, IncludeIn, LabelledItem,
-    StrictMode as StrictModeState,
+    AllowObjectExpression, BindingContext, BreakableKind, ChangeParserState, EnableStrictMode,
+    EnableStrictModeSnapshot, EnterBreakable, EnterScope, EnterVariableDeclaration, IncludeIn,
+    LabelledItem, LexicalType, NameType, StrictMode as StrictModeState,
 };
 use crate::syntax::assignment::expression_to_assignment_pattern;
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
@@ -58,11 +58,11 @@ const FOLLOWS_LET: TokenSet =
 /// Consume an explicit semicolon, or try to automatically insert one,
 /// or add an error to the parser if there was none and it could not be inserted
 // test semicolons
-// let foo = bar;
-// let foo = b;
-// let foo;
-// let foo
-// let foo
+// let foo1 = bar;
+// let foo2 = b;
+// let foo3;
+// let foo4
+// let foo5
 // function foo() { return true }
 pub fn semi(p: &mut Parser, err_range: Range<usize>) -> bool {
     // test_err semicolons_err
@@ -599,9 +599,12 @@ fn parse_empty_statement(p: &mut Parser) -> ParsedSyntax {
 // {}
 // {{{{}}}}
 // { foo = bar; }
+// let a; { let a; }
 /// A block statement consisting of statements wrapped in curly brackets.
 pub(crate) fn parse_block_stmt(p: &mut Parser) -> ParsedSyntax {
-    parse_block_impl(p, JS_BLOCK_STATEMENT)
+    p.with_state(EnterScope(BindingContext::Block), |p| {
+        parse_block_impl(p, JS_BLOCK_STATEMENT)
+    })
 }
 
 /// A block wrapped in curly brackets. Can either be a function body or a block statement.
@@ -712,17 +715,17 @@ impl ParseNodeList for DirectivesList {
 // "use strict"; // not a directive
 // function test() {
 //   'use strict';
-//   let a = 10;
+//   let b = 10;
 //   'use strict'; // not a directive
 // }
 // (function () {
 //   "use strict";
-//   let a = 10;
+//   let c = 10;
 //   "use strict"; // not a directive
 // });
 // let b = () => {
 //   "use strict";
-//   let a = 10;
+//   let e = 10;
 //   "use strict";  // not a directive
 // }
 // {
@@ -890,22 +893,22 @@ pub(crate) fn is_at_variable_declarations(p: &Parser) -> bool {
 // test var_decl
 // var a = 5;
 // let { foo, bar } = 5;
-// let bar, foo;
-// const a = 5;
-// const { foo: [bar], baz } = {};
-// let foo = "lorem", bar = "ipsum", third = "value", fourth = 6;
-// var a, a, a, a, a;
+// let bar2, foo2;
+// const b = 5;
+// const { foo5: [bar11], baz6 } = {};
+// let foo6 = "lorem", bar7 = "ipsum", third8 = "value", fourth = 6;
+// var q, w, e, r, t;
 //
 // test_err variable_declaration_statement_err
-// let a, { a } = { a: 10 }
-// const a = 1, { a } = { a: 10 }
-// const a;
-// let [a];
-// const { b };
+// let a, { b } = { a: 10 }
+// const c = 1, { d } = { a: 10 }
+// const e;
+// let [f];
+// const { g };
 fn parse_variable_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     // test_err var_decl_err
     // var a =;
-    // const a = 5 let b = 5;
+    // const b = 5 let c = 5;
     let start = p.cur_tok().start();
     let is_var = p.at(T![var]);
 
@@ -978,10 +981,15 @@ fn parse_variable_declarations(
 ) -> Option<(CompletedMarker, Option<Range<usize>>)> {
     let mut context = VariableDeclarationContext::new(declaration_parent);
 
+    let name_type;
     match p.cur() {
-        T![var] => p.bump_any(),
+        T![var] => {
+            p.bump_any();
+            name_type = NameType::Hoisted;
+        }
         T![const] => {
             context.is_const = Some(p.cur_tok().range());
+            name_type = NameType::Lexical(LexicalType::Const);
             p.bump_any()
         }
         T![ident] if p.cur_src() == "let" => {
@@ -989,6 +997,7 @@ fn parse_variable_declarations(
             // remap it here because we know from the context that this is the let keyword.
             p.bump_remap(T![let]);
             context.is_let = true;
+            name_type = NameType::Lexical(LexicalType::Let);
         }
         _ => {
             return None;
@@ -1000,10 +1009,17 @@ fn parse_variable_declarations(
         remaining_declaration_range: None,
     };
 
-    debug_assert!(p.state.name_map.is_empty());
-    let list = parse_declarations.parse_list(p);
+    let list = p.with_state(EnterVariableDeclaration(name_type), |p| {
+        parse_declarations.parse_list(p)
+    });
 
-    p.state.name_map.clear();
+    // debug_assert!(p.state.name_map.is_empty());
+    // let list = p.with_state(EnterScope(binding_context), |p| {
+    // let list = parse_declarations.parse_list(p);
+    // });
+    // let list = parse_declarations.parse_list(p);
+
+    // p.state.name_map.clear();
     Some((list, parse_declarations.remaining_declaration_range))
 }
 
@@ -1074,16 +1090,6 @@ impl VariableDeclarationContext {
             is_first: true,
         }
     }
-
-    fn duplicate_binding_parent_name(&self) -> Option<&'static str> {
-        if self.is_const.is_some() {
-            Some("const")
-        } else if self.is_let {
-            Some("let")
-        } else {
-            None
-        }
-    }
 }
 
 // test scoped_declarations
@@ -1098,9 +1104,7 @@ fn parse_variable_declaration(
     p: &mut Parser,
     context: &VariableDeclarationContext,
 ) -> ParsedSyntax {
-    p.state.duplicate_binding_parent = context.duplicate_binding_parent_name();
     let id = parse_binding_pattern(p);
-    p.state.duplicate_binding_parent = None;
 
     id.map(|id| {
         let m = id.precede(p);
@@ -1117,13 +1121,9 @@ fn parse_variable_declaration(
 
         let type_annotation = maybe_ts_type_annotation(p);
 
-        let last_name_map = std::mem::take(&mut p.state.name_map);
-        let duplicate_binding_parent = p.state.duplicate_binding_parent.take();
-
-        let initializer = parse_initializer_clause(p).ok();
-
-        p.state.name_map = last_name_map;
-        p.state.duplicate_binding_parent = duplicate_binding_parent;
+        let initializer = p.with_state(EnterScope(BindingContext::Assignment), |p| {
+            parse_initializer_clause(p).ok()
+        });
 
         // Heuristic to determine if we're in a for of or for in loop. This may be off if
         // the user uses a for of/in with multiple declarations but this isn't allowed anyway.
@@ -1264,9 +1264,13 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
         return JS_FOR_STATEMENT;
     }
 
+    let p = &mut *p.with_scoped_state(EnterScope(BindingContext::Lexical));
+
     // `for (let...` | `for (const...` | `for (var...`
 
-    if p.at(T![const]) || p.at(T![var]) || (p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)))
+    let for_statement = if p.at(T![const])
+        || p.at(T![var])
+        || (p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)))
     {
         let m = p.start();
 
@@ -1333,7 +1337,9 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
 
         parse_normal_for_head(p);
         JS_FOR_STATEMENT
-    }
+    };
+
+    for_statement
 }
 
 /// Parses the parenthesized part of a non for in or for of statement
@@ -1359,14 +1365,12 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> JsSyntaxKind {
     if is_in {
         p.bump_any();
         parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
-
         JS_FOR_IN_STATEMENT
     } else {
         p.bump_remap(T![of]);
 
         parse_expr_or_assignment(p)
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
-
         JS_FOR_OF_STATEMENT
     }
 }
@@ -1380,7 +1384,10 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> JsSyntaxKind {
 // for (let foo of []) {}
 // for (let i = 5, j = 6; i < j; ++j) {}
 // for await (let a of []) {}
-fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
+//
+// test for_stmt_redeclaration
+// let a; for (let a; a > 3; a++) {}
+pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
     // test_err for_stmt_err
     // for ;; {}
     // for let i = 5; i < 10; i++ {}
@@ -1465,6 +1472,7 @@ fn parse_switch_clause(
     first_default: &mut Option<CompletedMarker>,
 ) -> ParsedSyntax {
     let m = p.start();
+    let p = &mut *p.with_scoped_state(EnterScope(BindingContext::Block));
     match p.cur() {
         T![default] => {
             // in case we have two `default` expression, we mark the second one
@@ -1584,15 +1592,23 @@ impl ParseNodeList for SwitchCasesList {
 //  case bar:
 //  default:
 // }
-fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
+//
+// test switch_stmt_redeclaration
+// let a;
+// switch (foo) {
+//   default: {
+//     let a;
+//   }
+// }
+pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
     // test_err switch_stmt_err
     // switch foo {}
     // switch {}
     // switch { var i = 0 }
     // switch { var i = 0; case "bar": {} }
     // switch (foo) {
-    //   default: {}
-    //   default: {}
+    // 	default: {}
+    // 	default: {}
     // }
     // switch (foo) { case : }
 

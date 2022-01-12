@@ -1,9 +1,13 @@
 use crate::{FileKind, Parser, Syntax};
 use bitflags::bitflags;
 use std::collections::HashMap;
+use std::fmt::Formatter;
+
 use std::ops::{Deref, DerefMut, Range};
 
 type LabelSet = HashMap<String, LabelledItem>;
+type HoistedNames = HashMap<String, Range<usize>>;
+type LexicalNames = HashMap<String, Range<usize>>;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub(crate) enum LabelledItem {
@@ -32,11 +36,89 @@ pub struct ParserState {
     strict: Option<StrictMode>,
     /// The exported default item, used for checking duplicate defaults
     pub default_item: Option<Range<usize>>,
-    /// If set, the parser reports bindings with identical names. The option stores the name of the
-    /// node that disallows duplicate bindings, for example `let`, `const` or `import`.
-    pub duplicate_binding_parent: Option<&'static str>,
+
+    pub binding_variable: Option<NameType>,
+
     pub name_map: HashMap<String, Range<usize>>,
     pub(crate) no_recovery: bool,
+
+    /// If set, the parser reports bindings with identical names. The option stores the name of the
+    /// node that disallows duplicate bindings, for example `let`, `const` or `import`.
+    binding_context: Option<BindingContext>,
+    /// Tracks variables inside each scope
+    lexical_names: LexicalNames,
+
+    /// Tracks hoisted variables
+    hoisted_names: HoistedNames,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum BindingContext {
+    // variables `var`
+    Hoisted,
+
+    // functions `function f()`
+    Function,
+    // import
+    Module,
+
+    // { }
+    Block,
+
+    // var a; let b = a;
+    Assignment,
+
+    // functions arguments, for statement
+    Lexical,
+}
+
+impl Default for BindingContext {
+    fn default() -> Self {
+        Self::Hoisted
+    }
+}
+
+impl From<&BindingContext> for BindingContext {
+    fn from(b: &BindingContext) -> Self {
+        match b {
+            BindingContext::Hoisted => BindingContext::Hoisted,
+            BindingContext::Function => BindingContext::Function,
+            BindingContext::Module => BindingContext::Module,
+            BindingContext::Block => BindingContext::Block,
+            BindingContext::Assignment => BindingContext::Assignment,
+            BindingContext::Lexical => BindingContext::Lexical,
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum NameType {
+    Hoisted,
+    Lexical(LexicalType),
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum LexicalType {
+    Let,
+    Const,
+}
+
+impl std::fmt::Display for LexicalType {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LexicalType::Let => write!(f, "let"),
+            LexicalType::Const => write!(f, "const"),
+        }
+    }
+}
+
+impl From<&LexicalType> for LexicalType {
+    fn from(l: &LexicalType) -> Self {
+        match l {
+            LexicalType::Let => LexicalType::Let,
+            LexicalType::Const => LexicalType::Const,
+        }
+    }
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -66,8 +148,11 @@ impl ParserState {
             },
             default_item: None,
             name_map: HashMap::with_capacity(3),
-            duplicate_binding_parent: None,
+            binding_variable: None,
+            binding_context: Some(BindingContext::default()),
             no_recovery: false,
+            lexical_names: HashMap::default(),
+            hoisted_names: HashMap::default(),
         };
 
         if syntax.top_level_await {
@@ -134,9 +219,103 @@ impl ParserState {
         self.strict.as_ref()
     }
 
+    pub fn binding_variable(&self) -> Option<&NameType> {
+        self.binding_variable.as_ref()
+    }
+
+    pub fn binding_context(&self) -> Option<&BindingContext> {
+        self.binding_context.as_ref()
+    }
+
     pub fn in_binding_list_for_signature(&self) -> bool {
         self.parsing_context
             .contains(ParsingContextFlags::IN_BINDING_LIST_FOR_SIGNATURE)
+    }
+
+    /// Checks if a binding has been already registered
+    pub fn clashes_with_defined_binding(&self, identifier_name: &str) -> Option<&Range<usize>> {
+        if let Some(binding_context) = self.binding_context() {
+            match binding_context {
+                // hoisted variables can be redeclared without problems
+                // which means that we only need to check the variables the lexical environment
+                BindingContext::Block => self.lexical_names.get(identifier_name),
+                BindingContext::Hoisted => match self.binding_variable() {
+                    Some(name_type) => match name_type {
+                        NameType::Hoisted => self.lexical_names.get(identifier_name),
+                        NameType::Lexical(_) => self
+                            .hoisted_names
+                            .get(identifier_name)
+                            .or_else(|| self.lexical_names.get(identifier_name)),
+                    },
+                    _ => None,
+                },
+                _ => match self.binding_variable() {
+                    None => self.hoisted_names.get(identifier_name),
+                    Some(binding_variable) => match binding_variable {
+                        NameType::Hoisted => self.lexical_names.get(identifier_name),
+                        NameType::Lexical(_) => self
+                            .hoisted_names
+                            .get(identifier_name)
+                            .or_else(|| self.lexical_names.get(identifier_name)),
+                    },
+                },
+            }
+        } else {
+            None
+        }
+    }
+
+    /// It register the name of variable based in its name type and its current binding context
+    pub fn register_name(&mut self, identifier_name: String, range: Range<usize>) {
+        if let Some(binding_variable) = self.binding_variable() {
+            if let Some(binding_context) = self.binding_context() {
+                match binding_context {
+                    BindingContext::Hoisted => self.register_lexical_type(identifier_name, range),
+                    BindingContext::Module => {
+                        self.hoisted_names.insert(identifier_name, range);
+                    }
+                    BindingContext::Block => {
+                        match binding_variable {
+                            NameType::Hoisted => {
+                                // inside a block scope, hoisted variables needs to be tracked
+                                // inside a lexical environment too;
+                                // For example `ar a; { var b; let b; }` should throw an error for  redeclaration of `b`
+                                // but `var a; var b; { let b; }` should not
+                                self.hoisted_names
+                                    .insert(identifier_name.clone(), range.clone());
+                                self.lexical_names.insert(identifier_name, range);
+                            }
+                            NameType::Lexical(_) => {
+                                self.lexical_names.insert(identifier_name, range);
+                            }
+                        }
+                    }
+                    BindingContext::Function => {
+                        self.lexical_names.insert(identifier_name, range);
+                    }
+                    _ => {}
+                }
+            }
+        } else {
+            self.hoisted_names
+                .insert(identifier_name.clone(), range.clone());
+        }
+    }
+
+    fn register_lexical_type(&mut self, identifier_name: String, range: Range<usize>) {
+        match self.binding_variable() {
+            Some(name_type) => match name_type {
+                NameType::Hoisted => {
+                    self.hoisted_names.insert(identifier_name, range);
+                }
+                NameType::Lexical(_) => {
+                    self.lexical_names.insert(identifier_name, range);
+                }
+            },
+            None => {
+                self.hoisted_names.insert(identifier_name, range);
+            }
+        }
     }
 }
 
@@ -518,5 +697,101 @@ impl ChangeParserState for EnterClassStaticInitializationBlock {
     fn restore(state: &mut ParserState, value: Self::Snapshot) {
         state.parsing_context = value.flags;
         state.label_set = value.label_set;
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct EnterScopeSnapshot {
+    lexical_names: LexicalNames,
+    binding_context: Option<BindingContext>,
+}
+
+pub(crate) struct EnterScope(pub(crate) BindingContext);
+
+impl ChangeParserState for EnterScope {
+    type Snapshot = EnterScopeSnapshot;
+
+    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+        EnterScopeSnapshot {
+            lexical_names: std::mem::take(&mut state.lexical_names),
+            binding_context: std::mem::replace(&mut state.binding_context, Some(self.0)),
+        }
+    }
+
+    fn restore(state: &mut ParserState, value: Self::Snapshot) {
+        state.lexical_names = value.lexical_names;
+        state.binding_context = value.binding_context;
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct EnterHoistedScopeSnapshot {
+    scoped_variables: LexicalNames,
+    binding_context: Option<BindingContext>,
+    hoisted_names: HoistedNames,
+}
+
+pub(crate) struct EnterHoistedScope(pub(crate) BindingContext);
+
+impl ChangeParserState for EnterHoistedScope {
+    type Snapshot = EnterHoistedScopeSnapshot;
+
+    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+        EnterHoistedScopeSnapshot {
+            scoped_variables: std::mem::take(&mut state.lexical_names),
+            binding_context: std::mem::replace(&mut state.binding_context, Some(self.0)),
+            hoisted_names: std::mem::take(&mut state.hoisted_names),
+        }
+    }
+
+    fn restore(state: &mut ParserState, value: Self::Snapshot) {
+        state.lexical_names = value.scoped_variables;
+        state.binding_context = value.binding_context;
+        state.hoisted_names = value.hoisted_names;
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct EnterLexicalScopeSnapshot {
+    lexical_names: LexicalNames,
+    binding_context: Option<BindingContext>,
+}
+
+pub(crate) struct EnterLexicalScope(pub(crate) BindingContext);
+
+impl ChangeParserState for EnterLexicalScope {
+    type Snapshot = EnterLexicalScopeSnapshot;
+
+    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+        EnterLexicalScopeSnapshot {
+            lexical_names: std::mem::take(&mut state.lexical_names),
+            binding_context: std::mem::replace(&mut state.binding_context, Some(self.0)),
+        }
+    }
+
+    fn restore(state: &mut ParserState, value: Self::Snapshot) {
+        state.lexical_names = value.lexical_names;
+        state.binding_context = value.binding_context;
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct EnterVariableDeclarationSnapshot {
+    binding_variable: Option<NameType>,
+}
+
+pub(crate) struct EnterVariableDeclaration(pub(crate) NameType);
+
+impl ChangeParserState for EnterVariableDeclaration {
+    type Snapshot = EnterVariableDeclarationSnapshot;
+
+    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+        EnterVariableDeclarationSnapshot {
+            binding_variable: std::mem::replace(&mut state.binding_variable, Some(self.0)),
+        }
+    }
+
+    fn restore(state: &mut ParserState, value: Self::Snapshot) {
+        state.binding_variable = value.binding_variable;
     }
 }

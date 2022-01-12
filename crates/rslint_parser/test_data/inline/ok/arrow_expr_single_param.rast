@@ -61,7 +61,7 @@ JsScript {
                 async_token: missing (optional),
                 type_parameters: missing (optional),
                 parameters: JsIdentifierBinding {
-                    name_token: IDENT@43..48 "foo" [Newline("\n")] [Whitespace(" ")],
+                    name_token: IDENT@43..48 "bar" [Newline("\n")] [Whitespace(" ")],
                 },
                 return_type: missing (optional),
                 fat_arrow_token: FAT_ARROW@48..50 "=>" [] [],
@@ -129,7 +129,7 @@ JsScript {
         0: (empty)
         1: (empty)
         2: JS_IDENTIFIER_BINDING@43..48
-          0: IDENT@43..48 "foo" [Newline("\n")] [Whitespace(" ")]
+          0: IDENT@43..48 "bar" [Newline("\n")] [Whitespace(" ")]
         3: (empty)
         4: FAT_ARROW@48..50 "=>" [] []
         5: JS_FUNCTION_BODY@50..53

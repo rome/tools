@@ -45,7 +45,7 @@ JsModule {
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
-                            name_token: IDENT@31..33 "a" [] [Whitespace(" ")],
+                            name_token: IDENT@31..33 "b" [] [Whitespace(" ")],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -109,7 +109,7 @@ JsModule {
         1: JS_VARIABLE_DECLARATION_LIST@31..38
           0: JS_VARIABLE_DECLARATION@31..38
             0: JS_IDENTIFIER_BINDING@31..33
-              0: IDENT@31..33 "a" [] [Whitespace(" ")]
+              0: IDENT@31..33 "b" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
             3: JS_INITIALIZER_CLAUSE@33..38
@@ -135,16 +135,16 @@ error[SyntaxError]: expected a property, a shorthand property, a getter, a sette
 error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '{'
   ┌─ object_expr_error_prop_name.js:2:10
   │
-2 │ let a = {{}}
+2 │ let b = {{}}
   │          ^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
 --
 error[SyntaxError]: expected a statement but instead found '}'
   ┌─ object_expr_error_prop_name.js:2:12
   │
-2 │ let a = {{}}
+2 │ let b = {{}}
   │            ^ Expected a statement here
 
 --
 let a = { /: 6, /: /foo/ }
-let a = {{}}
+let b = {{}}

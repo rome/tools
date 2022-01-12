@@ -93,7 +93,7 @@ error[SyntaxError]: `let` cannot be declared as a variable name inside of a `let
   │     ^^^ Rename the let identifier here
 
 --
-error[SyntaxError]: `let` cannot be declared as a variable name inside of a `const` declaration
+error[SyntaxError]: `const` cannot be declared as a variable name inside of a `let` declaration
   ┌─ binding_identifier_invalid_script.js:3:7
   │
 3 │ const let = 5;

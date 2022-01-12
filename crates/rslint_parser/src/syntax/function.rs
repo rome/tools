@@ -1,5 +1,7 @@
 use crate::parser::{ParsedSyntax, ParserProgress};
-use crate::state::{EnterFunction, EnterParameters, SignatureFlags};
+use crate::state::{
+    BindingContext, EnterFunction, EnterHoistedScope, EnterParameters, SignatureFlags,
+};
 use crate::syntax::binding::{parse_binding, parse_binding_pattern};
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::parse_expr_or_assignment;
@@ -20,11 +22,11 @@ use rslint_syntax::{JsSyntaxKind, T};
 /// A function declaration, this could be async and or a generator. This takes a marker
 /// because you need to first advance over async or start a marker and feed it in.
 // test function_decl
-// function foo() {}
-// function *foo() {}
-// async function *foo() {}
-// async function foo() {}
-// function *foo() {
+// function foo1() {}
+// function *foo2() {}
+// async function *foo3() {}
+// async function foo4() {}
+// function *foo5() {
 //   yield foo;
 // }
 //
@@ -47,6 +49,17 @@ use rslint_syntax::{JsSyntaxKind, T};
 //
 // test_err function_broken
 // function foo())})}{{{  {}
+//
+// test function_block_declaration
+// let a = 2; function f() { let a = 7; }
+//
+// test function_redeclaration_script
+// // SCRIPT
+// function f() {} function f() {}
+//
+// test function_redeclaration_block_script
+// // SCRIPT
+// { function a() {} function a() {} }
 pub(super) fn parse_function_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     if !is_at_function(p) {
         return Absent;
@@ -94,9 +107,9 @@ pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
 }
 
 // test export_function_clause
-// export function test(a, b) {}
-// export function* test(a, b) {}
-// export async function test(a, b, ) {}
+// export function test1(a, b) {}
+// export function* test2(a, b) {}
+// export async function test3(a, b, ) {}
 pub(super) fn parse_export_function_clause(p: &mut Parser) -> ParsedSyntax {
     if !is_at_function(p) {
         return Absent;
@@ -152,6 +165,7 @@ fn is_at_function(p: &Parser) -> bool {
 }
 
 fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMarker {
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Function));
     let mut uses_invalid_syntax =
         kind.is_statement() && p.eat(T![declare]) && TypeScript.is_unsupported(p);
     let mut flags = SignatureFlags::empty();

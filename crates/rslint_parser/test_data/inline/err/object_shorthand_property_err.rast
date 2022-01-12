@@ -88,7 +88,7 @@ JsModule {
                                 COMMA@43..45 "," [] [Whitespace(" ")],
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsIdentifierBinding {
-                                        name_token: IDENT@45..47 "a" [] [Whitespace(" ")],
+                                        name_token: IDENT@45..47 "d" [] [Whitespace(" ")],
                                     },
                                     init: missing (optional),
                                 },
@@ -179,7 +179,7 @@ JsModule {
                 1: COMMA@43..45 "," [] [Whitespace(" ")]
                 2: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@45..47
                   0: JS_IDENTIFIER_BINDING@45..47
-                    0: IDENT@45..47 "a" [] [Whitespace(" ")]
+                    0: IDENT@45..47 "d" [] [Whitespace(" ")]
                   1: (empty)
               2: R_CURLY@47..49 "}" [] [Whitespace(" ")]
             1: (empty)
@@ -209,10 +209,10 @@ error[SyntaxError]: expected an identifier but instead found '='
 error[SyntaxError]: expected an identifier, a member name, or a rest pattern but instead found ','
   ┌─ object_shorthand_property_err.js:3:7
   │
-3 │ let { , a } = c
+3 │ let { , d } = c
   │       ^ Expected an identifier, a member name, or a rest pattern here
 
 --
 let { a b } = c
 let { = "test" } = c
-let { , a } = c
+let { , d } = c

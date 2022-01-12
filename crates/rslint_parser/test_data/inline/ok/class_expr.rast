@@ -35,7 +35,7 @@ JsModule {
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
-                            name_token: IDENT@22..24 "a" [] [Whitespace(" ")],
+                            name_token: IDENT@22..24 "c" [] [Whitespace(" ")],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -133,7 +133,7 @@ JsModule {
         1: JS_VARIABLE_DECLARATION_LIST@22..57
           0: JS_VARIABLE_DECLARATION@22..57
             0: JS_IDENTIFIER_BINDING@22..24
-              0: IDENT@22..24 "a" [] [Whitespace(" ")]
+              0: IDENT@22..24 "c" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
             3: JS_INITIALIZER_CLAUSE@24..57

@@ -1,5 +1,5 @@
 let a = class {};
-let a = class foo {
+let c = class foo {
  constructor() {}
 }
 foo[class {}]

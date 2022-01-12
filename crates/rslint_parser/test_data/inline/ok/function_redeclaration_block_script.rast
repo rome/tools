@@ -1,0 +1,99 @@
+JsScript {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    statements: JsStatementList [
+        JsBlockStatement {
+            l_curly_token: L_CURLY@0..12 "{" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")],
+            statements: JsStatementList [
+                JsFunctionStatement {
+                    async_token: missing (optional),
+                    function_token: FUNCTION_KW@12..21 "function" [] [Whitespace(" ")],
+                    star_token: missing (optional),
+                    id: JsIdentifierBinding {
+                        name_token: IDENT@21..22 "a" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameters: JsParameters {
+                        l_paren_token: L_PAREN@22..23 "(" [] [],
+                        items: JsParameterList [],
+                        r_paren_token: R_PAREN@23..25 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@25..26 "{" [] [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
+                        r_curly_token: R_CURLY@26..28 "}" [] [Whitespace(" ")],
+                    },
+                },
+                JsFunctionStatement {
+                    async_token: missing (optional),
+                    function_token: FUNCTION_KW@28..37 "function" [] [Whitespace(" ")],
+                    star_token: missing (optional),
+                    id: JsIdentifierBinding {
+                        name_token: IDENT@37..38 "a" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameters: JsParameters {
+                        l_paren_token: L_PAREN@38..39 "(" [] [],
+                        items: JsParameterList [],
+                        r_paren_token: R_PAREN@39..41 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@41..42 "{" [] [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
+                        r_curly_token: R_CURLY@42..44 "}" [] [Whitespace(" ")],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@44..45 "}" [] [],
+        },
+    ],
+    eof_token: EOF@45..46 "" [Newline("\n")] [],
+}
+
+0: JS_SCRIPT@0..46
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_STATEMENT_LIST@0..45
+    0: JS_BLOCK_STATEMENT@0..45
+      0: L_CURLY@0..12 "{" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
+      1: JS_STATEMENT_LIST@12..44
+        0: JS_FUNCTION_STATEMENT@12..28
+          0: (empty)
+          1: FUNCTION_KW@12..21 "function" [] [Whitespace(" ")]
+          2: (empty)
+          3: JS_IDENTIFIER_BINDING@21..22
+            0: IDENT@21..22 "a" [] []
+          4: (empty)
+          5: JS_PARAMETERS@22..25
+            0: L_PAREN@22..23 "(" [] []
+            1: JS_PARAMETER_LIST@23..23
+            2: R_PAREN@23..25 ")" [] [Whitespace(" ")]
+          6: (empty)
+          7: JS_FUNCTION_BODY@25..28
+            0: L_CURLY@25..26 "{" [] []
+            1: JS_DIRECTIVE_LIST@26..26
+            2: JS_STATEMENT_LIST@26..26
+            3: R_CURLY@26..28 "}" [] [Whitespace(" ")]
+        1: JS_FUNCTION_STATEMENT@28..44
+          0: (empty)
+          1: FUNCTION_KW@28..37 "function" [] [Whitespace(" ")]
+          2: (empty)
+          3: JS_IDENTIFIER_BINDING@37..38
+            0: IDENT@37..38 "a" [] []
+          4: (empty)
+          5: JS_PARAMETERS@38..41
+            0: L_PAREN@38..39 "(" [] []
+            1: JS_PARAMETER_LIST@39..39
+            2: R_PAREN@39..41 ")" [] [Whitespace(" ")]
+          6: (empty)
+          7: JS_FUNCTION_BODY@41..44
+            0: L_CURLY@41..42 "{" [] []
+            1: JS_DIRECTIVE_LIST@42..42
+            2: JS_STATEMENT_LIST@42..42
+            3: R_CURLY@42..44 "}" [] [Whitespace(" ")]
+      2: R_CURLY@44..45 "}" [] []
+  3: EOF@45..46 "" [Newline("\n")] []

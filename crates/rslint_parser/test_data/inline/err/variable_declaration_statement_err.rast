@@ -20,10 +20,8 @@ JsModule {
                             l_curly_token: L_CURLY@7..9 "{" [] [Whitespace(" ")],
                             properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
-                                    identifier: JsUnknownBinding {
-                                        items: [
-                                            IDENT@9..11 "a" [] [Whitespace(" ")],
-                                        ],
+                                    identifier: JsIdentifierBinding {
+                                        name_token: IDENT@9..11 "b" [] [Whitespace(" ")],
                                     },
                                     init: missing (optional),
                                 },
@@ -61,7 +59,7 @@ JsModule {
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
-                            name_token: IDENT@31..33 "a" [] [Whitespace(" ")],
+                            name_token: IDENT@31..33 "c" [] [Whitespace(" ")],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -78,10 +76,8 @@ JsModule {
                             l_curly_token: L_CURLY@38..40 "{" [] [Whitespace(" ")],
                             properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
-                                    identifier: JsUnknownBinding {
-                                        items: [
-                                            IDENT@40..42 "a" [] [Whitespace(" ")],
-                                        ],
+                                    identifier: JsIdentifierBinding {
+                                        name_token: IDENT@40..42 "d" [] [Whitespace(" ")],
                                     },
                                     init: missing (optional),
                                 },
@@ -119,7 +115,7 @@ JsModule {
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
-                            name_token: IDENT@62..63 "a" [] [],
+                            name_token: IDENT@62..63 "e" [] [],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -138,7 +134,7 @@ JsModule {
                             l_brack_token: L_BRACK@69..70 "[" [] [],
                             elements: JsArrayBindingPatternElementList [
                                 JsIdentifierBinding {
-                                    name_token: IDENT@70..71 "a" [] [],
+                                    name_token: IDENT@70..71 "f" [] [],
                                 },
                             ],
                             r_brack_token: R_BRACK@71..72 "]" [] [],
@@ -161,7 +157,7 @@ JsModule {
                             properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsIdentifierBinding {
-                                        name_token: IDENT@82..84 "b" [] [Whitespace(" ")],
+                                        name_token: IDENT@82..84 "g" [] [Whitespace(" ")],
                                     },
                                     init: missing (optional),
                                 },
@@ -200,8 +196,8 @@ JsModule {
               0: L_CURLY@7..9 "{" [] [Whitespace(" ")]
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@9..11
                 0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@9..11
-                  0: JS_UNKNOWN_BINDING@9..11
-                    0: IDENT@9..11 "a" [] [Whitespace(" ")]
+                  0: JS_IDENTIFIER_BINDING@9..11
+                    0: IDENT@9..11 "b" [] [Whitespace(" ")]
                   1: (empty)
               2: R_CURLY@11..13 "}" [] [Whitespace(" ")]
             1: (empty)
@@ -225,7 +221,7 @@ JsModule {
         1: JS_VARIABLE_DECLARATION_LIST@31..55
           0: JS_VARIABLE_DECLARATION@31..36
             0: JS_IDENTIFIER_BINDING@31..33
-              0: IDENT@31..33 "a" [] [Whitespace(" ")]
+              0: IDENT@31..33 "c" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
             3: JS_INITIALIZER_CLAUSE@33..36
@@ -238,8 +234,8 @@ JsModule {
               0: L_CURLY@38..40 "{" [] [Whitespace(" ")]
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@40..42
                 0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@40..42
-                  0: JS_UNKNOWN_BINDING@40..42
-                    0: IDENT@40..42 "a" [] [Whitespace(" ")]
+                  0: JS_IDENTIFIER_BINDING@40..42
+                    0: IDENT@40..42 "d" [] [Whitespace(" ")]
                   1: (empty)
               2: R_CURLY@42..44 "}" [] [Whitespace(" ")]
             1: (empty)
@@ -263,7 +259,7 @@ JsModule {
         1: JS_VARIABLE_DECLARATION_LIST@62..63
           0: JS_VARIABLE_DECLARATION@62..63
             0: JS_IDENTIFIER_BINDING@62..63
-              0: IDENT@62..63 "a" [] []
+              0: IDENT@62..63 "e" [] []
             1: (empty)
             2: (empty)
             3: (empty)
@@ -277,7 +273,7 @@ JsModule {
               0: L_BRACK@69..70 "[" [] []
               1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@70..71
                 0: JS_IDENTIFIER_BINDING@70..71
-                  0: IDENT@70..71 "a" [] []
+                  0: IDENT@70..71 "f" [] []
               2: R_BRACK@71..72 "]" [] []
             1: (empty)
             2: (empty)
@@ -293,7 +289,7 @@ JsModule {
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@82..84
                 0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@82..84
                   0: JS_IDENTIFIER_BINDING@82..84
-                    0: IDENT@82..84 "b" [] [Whitespace(" ")]
+                    0: IDENT@82..84 "g" [] [Whitespace(" ")]
                   1: (empty)
               2: R_CURLY@84..85 "}" [] []
             1: (empty)
@@ -302,47 +298,29 @@ JsModule {
       1: SEMICOLON@85..86 ";" [] []
   3: EOF@86..87 "" [Newline("\n")] []
 --
-error[SyntaxError]: Declarations inside of a `let` declaration may not have duplicates
-  ┌─ variable_declaration_statement_err.js:1:10
-  │
-1 │ let a, { a } = { a: 10 }
-  │     -    ^ a second declaration of `a` is not allowed
-  │     │     
-  │     `a` is first declared here
-
---
-error[SyntaxError]: Declarations inside of a `const` declaration may not have duplicates
-  ┌─ variable_declaration_statement_err.js:2:16
-  │
-2 │ const a = 1, { a } = { a: 10 }
-  │       -        ^ a second declaration of `a` is not allowed
-  │       │         
-  │       `a` is first declared here
-
---
 error[SyntaxError]: Const var declarations must have an initialized value
   ┌─ variable_declaration_statement_err.js:3:7
   │
-3 │ const a;
+3 │ const e;
   │       ^ this variable needs to be initialized
 
 --
 error[SyntaxError]: Object and Array patterns require initializers
   ┌─ variable_declaration_statement_err.js:4:5
   │
-4 │ let [a];
+4 │ let [f];
   │     ^^^ this pattern is declared, but it is not given an initialized value
 
 --
 error[SyntaxError]: Object and Array patterns require initializers
   ┌─ variable_declaration_statement_err.js:5:7
   │
-5 │ const { b };
+5 │ const { g };
   │       ^^^^^ this pattern is declared, but it is not given an initialized value
 
 --
-let a, { a } = { a: 10 }
-const a = 1, { a } = { a: 10 }
-const a;
-let [a];
-const { b };
+let a, { b } = { a: 10 }
+const c = 1, { d } = { a: 10 }
+const e;
+let [f];
+const { g };

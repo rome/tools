@@ -214,10 +214,10 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
             } else {
                 // test_err object_expr_error_prop_name
                 // let a = { /: 6, /: /foo/ }
-                // let a = {{}}
+                // let b = {{}}
 
                 // test_err object_expr_non_ident_literal_prop
-                // let b = {5}
+                // let c = {5}
 
                 #[allow(deprecated)]
                 SingleTokenParseRecovery::new(token_set![T![:], T![,]], JS_UNKNOWN).recover(p);

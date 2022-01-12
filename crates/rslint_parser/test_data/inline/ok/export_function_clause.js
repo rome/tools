@@ -1,3 +1,3 @@
-export function test(a, b) {}
-export function* test(a, b) {}
-export async function test(a, b, ) {}
+export function test1(a, b) {}
+export function* test2(a, b) {}
+export async function test3(a, b, ) {}

@@ -164,93 +164,93 @@ JsModule {
                                     items: [
                                         DOT2@112..115 "..." [] [],
                                         JsIdentifierBinding {
-                                            name_token: IDENT@115..119 "rest" [] [],
+                                            name_token: IDENT@115..120 "rest2" [] [],
                                         },
                                     ],
                                 },
-                                COMMA@119..121 "," [] [Whitespace(" ")],
+                                COMMA@120..122 "," [] [Whitespace(" ")],
                             ],
-                            r_curly_token: R_CURLY@121..123 "}" [] [Whitespace(" ")],
+                            r_curly_token: R_CURLY@122..124 "}" [] [Whitespace(" ")],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
                         initializer: JsInitializerClause {
-                            eq_token: EQ@123..125 "=" [] [Whitespace(" ")],
+                            eq_token: EQ@124..126 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
-                                    value_token: IDENT@125..126 "a" [] [],
+                                    value_token: IDENT@126..127 "a" [] [],
                                 },
                             },
                         },
                     },
                 ],
             },
-            semicolon_token: SEMICOLON@126..127 ";" [] [],
+            semicolon_token: SEMICOLON@127..128 ";" [] [],
         },
         JsFunctionStatement {
-            async_token: ASYNC_KW@127..134 "async" [Newline("\n")] [Whitespace(" ")],
-            function_token: FUNCTION_KW@134..143 "function" [] [Whitespace(" ")],
+            async_token: ASYNC_KW@128..135 "async" [Newline("\n")] [Whitespace(" ")],
+            function_token: FUNCTION_KW@135..144 "function" [] [Whitespace(" ")],
             star_token: missing (optional),
             id: JsIdentifierBinding {
-                name_token: IDENT@143..147 "test" [] [],
+                name_token: IDENT@144..148 "test" [] [],
             },
             type_parameters: missing (optional),
             parameters: JsParameters {
-                l_paren_token: L_PAREN@147..148 "(" [] [],
+                l_paren_token: L_PAREN@148..149 "(" [] [],
                 items: JsParameterList [],
-                r_paren_token: R_PAREN@148..150 ")" [] [Whitespace(" ")],
+                r_paren_token: R_PAREN@149..151 ")" [] [Whitespace(" ")],
             },
             return_type: missing (optional),
             body: JsFunctionBody {
-                l_curly_token: L_CURLY@150..151 "{" [] [],
+                l_curly_token: L_CURLY@151..152 "{" [] [],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
                     JsVariableStatement {
                         declarations: JsVariableDeclarations {
-                            kind: LET_KW@151..158 "let" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
+                            kind: LET_KW@152..159 "let" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                             items: JsVariableDeclarationList [
                                 JsVariableDeclaration {
                                     id: JsObjectBindingPattern {
-                                        l_curly_token: L_CURLY@158..160 "{" [] [Whitespace(" ")],
+                                        l_curly_token: L_CURLY@159..161 "{" [] [Whitespace(" ")],
                                         properties: JsObjectBindingPatternPropertyList [
                                             JsObjectBindingPatternRest {
-                                                dotdotdot_token: DOT2@160..163 "..." [] [],
+                                                dotdotdot_token: DOT2@161..164 "..." [] [],
                                                 binding: JsUnknownBinding {
                                                     items: [
-                                                        IDENT@163..169 "await" [] [Whitespace(" ")],
+                                                        IDENT@164..170 "await" [] [Whitespace(" ")],
                                                     ],
                                                 },
                                             },
                                         ],
-                                        r_curly_token: R_CURLY@169..171 "}" [] [Whitespace(" ")],
+                                        r_curly_token: R_CURLY@170..172 "}" [] [Whitespace(" ")],
                                     },
                                     excl_token: missing (optional),
                                     type_annotation: missing (optional),
                                     initializer: JsInitializerClause {
-                                        eq_token: EQ@171..173 "=" [] [Whitespace(" ")],
+                                        eq_token: EQ@172..174 "=" [] [Whitespace(" ")],
                                         expression: JsIdentifierExpression {
                                             name: JsReferenceIdentifier {
-                                                value_token: IDENT@173..174 "a" [] [],
+                                                value_token: IDENT@174..175 "a" [] [],
                                             },
                                         },
                                     },
                                 },
                             ],
                         },
-                        semicolon_token: SEMICOLON@174..175 ";" [] [],
+                        semicolon_token: SEMICOLON@175..176 ";" [] [],
                     },
                 ],
-                r_curly_token: R_CURLY@175..177 "}" [Newline("\n")] [],
+                r_curly_token: R_CURLY@176..178 "}" [Newline("\n")] [],
             },
         },
     ],
-    eof_token: EOF@177..178 "" [Newline("\n")] [],
+    eof_token: EOF@178..179 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..178
+0: JS_MODULE@0..179
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..177
+  2: JS_MODULE_ITEM_LIST@0..178
     0: JS_VARIABLE_STATEMENT@0..16
       0: JS_VARIABLE_DECLARATIONS@0..15
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -347,67 +347,67 @@ JsModule {
                 0: JS_REFERENCE_IDENTIFIER@103..104
                   0: IDENT@103..104 "a" [] []
       1: SEMICOLON@104..105 ";" [] []
-    4: JS_VARIABLE_STATEMENT@105..127
-      0: JS_VARIABLE_DECLARATIONS@105..126
+    4: JS_VARIABLE_STATEMENT@105..128
+      0: JS_VARIABLE_DECLARATIONS@105..127
         0: LET_KW@105..110 "let" [Newline("\n")] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@110..126
-          0: JS_VARIABLE_DECLARATION@110..126
-            0: JS_OBJECT_BINDING_PATTERN@110..123
+        1: JS_VARIABLE_DECLARATION_LIST@110..127
+          0: JS_VARIABLE_DECLARATION@110..127
+            0: JS_OBJECT_BINDING_PATTERN@110..124
               0: L_CURLY@110..112 "{" [] [Whitespace(" ")]
-              1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@112..121
-                0: JS_UNKNOWN_BINDING@112..119
+              1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@112..122
+                0: JS_UNKNOWN_BINDING@112..120
                   0: DOT2@112..115 "..." [] []
-                  1: JS_IDENTIFIER_BINDING@115..119
-                    0: IDENT@115..119 "rest" [] []
-                1: COMMA@119..121 "," [] [Whitespace(" ")]
-              2: R_CURLY@121..123 "}" [] [Whitespace(" ")]
+                  1: JS_IDENTIFIER_BINDING@115..120
+                    0: IDENT@115..120 "rest2" [] []
+                1: COMMA@120..122 "," [] [Whitespace(" ")]
+              2: R_CURLY@122..124 "}" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
-            3: JS_INITIALIZER_CLAUSE@123..126
-              0: EQ@123..125 "=" [] [Whitespace(" ")]
-              1: JS_IDENTIFIER_EXPRESSION@125..126
-                0: JS_REFERENCE_IDENTIFIER@125..126
-                  0: IDENT@125..126 "a" [] []
-      1: SEMICOLON@126..127 ";" [] []
-    5: JS_FUNCTION_STATEMENT@127..177
-      0: ASYNC_KW@127..134 "async" [Newline("\n")] [Whitespace(" ")]
-      1: FUNCTION_KW@134..143 "function" [] [Whitespace(" ")]
+            3: JS_INITIALIZER_CLAUSE@124..127
+              0: EQ@124..126 "=" [] [Whitespace(" ")]
+              1: JS_IDENTIFIER_EXPRESSION@126..127
+                0: JS_REFERENCE_IDENTIFIER@126..127
+                  0: IDENT@126..127 "a" [] []
+      1: SEMICOLON@127..128 ";" [] []
+    5: JS_FUNCTION_STATEMENT@128..178
+      0: ASYNC_KW@128..135 "async" [Newline("\n")] [Whitespace(" ")]
+      1: FUNCTION_KW@135..144 "function" [] [Whitespace(" ")]
       2: (empty)
-      3: JS_IDENTIFIER_BINDING@143..147
-        0: IDENT@143..147 "test" [] []
+      3: JS_IDENTIFIER_BINDING@144..148
+        0: IDENT@144..148 "test" [] []
       4: (empty)
-      5: JS_PARAMETERS@147..150
-        0: L_PAREN@147..148 "(" [] []
-        1: JS_PARAMETER_LIST@148..148
-        2: R_PAREN@148..150 ")" [] [Whitespace(" ")]
+      5: JS_PARAMETERS@148..151
+        0: L_PAREN@148..149 "(" [] []
+        1: JS_PARAMETER_LIST@149..149
+        2: R_PAREN@149..151 ")" [] [Whitespace(" ")]
       6: (empty)
-      7: JS_FUNCTION_BODY@150..177
-        0: L_CURLY@150..151 "{" [] []
-        1: JS_DIRECTIVE_LIST@151..151
-        2: JS_STATEMENT_LIST@151..175
-          0: JS_VARIABLE_STATEMENT@151..175
-            0: JS_VARIABLE_DECLARATIONS@151..174
-              0: LET_KW@151..158 "let" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-              1: JS_VARIABLE_DECLARATION_LIST@158..174
-                0: JS_VARIABLE_DECLARATION@158..174
-                  0: JS_OBJECT_BINDING_PATTERN@158..171
-                    0: L_CURLY@158..160 "{" [] [Whitespace(" ")]
-                    1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@160..169
-                      0: JS_OBJECT_BINDING_PATTERN_REST@160..169
-                        0: DOT2@160..163 "..." [] []
-                        1: JS_UNKNOWN_BINDING@163..169
-                          0: IDENT@163..169 "await" [] [Whitespace(" ")]
-                    2: R_CURLY@169..171 "}" [] [Whitespace(" ")]
+      7: JS_FUNCTION_BODY@151..178
+        0: L_CURLY@151..152 "{" [] []
+        1: JS_DIRECTIVE_LIST@152..152
+        2: JS_STATEMENT_LIST@152..176
+          0: JS_VARIABLE_STATEMENT@152..176
+            0: JS_VARIABLE_DECLARATIONS@152..175
+              0: LET_KW@152..159 "let" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
+              1: JS_VARIABLE_DECLARATION_LIST@159..175
+                0: JS_VARIABLE_DECLARATION@159..175
+                  0: JS_OBJECT_BINDING_PATTERN@159..172
+                    0: L_CURLY@159..161 "{" [] [Whitespace(" ")]
+                    1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@161..170
+                      0: JS_OBJECT_BINDING_PATTERN_REST@161..170
+                        0: DOT2@161..164 "..." [] []
+                        1: JS_UNKNOWN_BINDING@164..170
+                          0: IDENT@164..170 "await" [] [Whitespace(" ")]
+                    2: R_CURLY@170..172 "}" [] [Whitespace(" ")]
                   1: (empty)
                   2: (empty)
-                  3: JS_INITIALIZER_CLAUSE@171..174
-                    0: EQ@171..173 "=" [] [Whitespace(" ")]
-                    1: JS_IDENTIFIER_EXPRESSION@173..174
-                      0: JS_REFERENCE_IDENTIFIER@173..174
-                        0: IDENT@173..174 "a" [] []
-            1: SEMICOLON@174..175 ";" [] []
-        3: R_CURLY@175..177 "}" [Newline("\n")] []
-  3: EOF@177..178 "" [Newline("\n")] []
+                  3: JS_INITIALIZER_CLAUSE@172..175
+                    0: EQ@172..174 "=" [] [Whitespace(" ")]
+                    1: JS_IDENTIFIER_EXPRESSION@174..175
+                      0: JS_REFERENCE_IDENTIFIER@174..175
+                        0: IDENT@174..175 "a" [] []
+            1: SEMICOLON@175..176 ";" [] []
+        3: R_CURLY@176..178 "}" [Newline("\n")] []
+  3: EOF@178..179 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected an identifier but instead found '}'
   ┌─ rest_property_binding_err.js:1:11
@@ -440,11 +440,11 @@ error[SyntaxError]: rest element must be the last element
 
 --
 error[SyntaxError]: rest element may not have a trailing comma
-  ┌─ rest_property_binding_err.js:5:14
+  ┌─ rest_property_binding_err.js:5:15
   │
-5 │ let { ...rest, } = a;
-  │       -------^ Remove the trailing comma here
-  │       │       
+5 │ let { ...rest2, } = a;
+  │       --------^ Remove the trailing comma here
+  │       │        
   │       Rest element
 
 --
@@ -459,7 +459,7 @@ let { ... } = a;
 let { ...c = "default" } = a;
 let { ...{a} } = b;
 let { ...rest, other_assignment } = a;
-let { ...rest, } = a;
+let { ...rest2, } = a;
 async function test() {
   let { ...await } = a;
 }

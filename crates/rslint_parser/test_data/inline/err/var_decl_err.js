@@ -1,2 +1,2 @@
 var a =;
-const a = 5 let b = 5;
+const b = 5 let c = 5;

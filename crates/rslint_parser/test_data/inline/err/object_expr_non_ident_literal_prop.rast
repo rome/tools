@@ -8,7 +8,7 @@ JsModule {
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
-                            name_token: IDENT@4..6 "b" [] [Whitespace(" ")],
+                            name_token: IDENT@4..6 "c" [] [Whitespace(" ")],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -47,7 +47,7 @@ JsModule {
         1: JS_VARIABLE_DECLARATION_LIST@4..11
           0: JS_VARIABLE_DECLARATION@4..11
             0: JS_IDENTIFIER_BINDING@4..6
-              0: IDENT@4..6 "b" [] [Whitespace(" ")]
+              0: IDENT@4..6 "c" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
             3: JS_INITIALIZER_CLAUSE@6..11
@@ -67,8 +67,8 @@ JsModule {
 error[SyntaxError]: expected `:` but instead found `}`
   ┌─ object_expr_non_ident_literal_prop.js:1:11
   │
-1 │ let b = {5}
+1 │ let c = {5}
   │           ^ unexpected
 
 --
-let b = {5}
+let c = {5}

@@ -1,0 +1,155 @@
+JsScript {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    statements: JsStatementList [
+        JsExpressionStatement {
+            expression: JsParenthesizedExpression {
+                l_paren_token: L_PAREN@0..11 "(" [Comments("// SCRIPT"), Newline("\n")] [],
+                expression: JsFunctionExpression {
+                    async_token: missing (optional),
+                    function_token: FUNCTION_KW@11..19 "function" [] [],
+                    star_token: missing (optional),
+                    id: missing (optional),
+                    type_parameters: missing (optional),
+                    parameters: JsParameters {
+                        l_paren_token: L_PAREN@19..20 "(" [] [],
+                        items: JsParameterList [],
+                        r_paren_token: R_PAREN@20..22 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@22..24 "{" [] [Whitespace(" ")],
+                        directives: JsDirectiveList [
+                            JsDirective {
+                                value_token: JS_STRING_LITERAL@24..36 "'use strict'" [] [],
+                                semicolon_token: SEMICOLON@36..38 ";" [] [Whitespace(" ")],
+                            },
+                        ],
+                        statements: JsStatementList [
+                            JsBlockStatement {
+                                l_curly_token: L_CURLY@38..40 "{" [] [Whitespace(" ")],
+                                statements: JsStatementList [
+                                    JsVariableStatement {
+                                        declarations: JsVariableDeclarations {
+                                            kind: CONST_KW@40..46 "const" [] [Whitespace(" ")],
+                                            items: JsVariableDeclarationList [
+                                                JsVariableDeclaration {
+                                                    id: JsIdentifierBinding {
+                                                        name_token: IDENT@46..48 "f" [] [Whitespace(" ")],
+                                                    },
+                                                    excl_token: missing (optional),
+                                                    type_annotation: missing (optional),
+                                                    initializer: JsInitializerClause {
+                                                        eq_token: EQ@48..50 "=" [] [Whitespace(" ")],
+                                                        expression: JsNumberLiteralExpression {
+                                                            value_token: JS_NUMBER_LITERAL@50..51 "1" [] [],
+                                                        },
+                                                    },
+                                                },
+                                            ],
+                                        },
+                                        semicolon_token: SEMICOLON@51..53 ";" [] [Whitespace(" ")],
+                                    },
+                                    JsVariableStatement {
+                                        declarations: JsVariableDeclarations {
+                                            kind: VAR_KW@53..57 "var" [] [Whitespace(" ")],
+                                            items: JsVariableDeclarationList [
+                                                JsVariableDeclaration {
+                                                    id: JsUnknownBinding {
+                                                        items: [
+                                                            IDENT@57..58 "f" [] [],
+                                                        ],
+                                                    },
+                                                    excl_token: missing (optional),
+                                                    type_annotation: missing (optional),
+                                                    initializer: missing (optional),
+                                                },
+                                            ],
+                                        },
+                                        semicolon_token: SEMICOLON@58..60 ";" [] [Whitespace(" ")],
+                                    },
+                                ],
+                                r_curly_token: R_CURLY@60..62 "}" [] [Whitespace(" ")],
+                            },
+                        ],
+                        r_curly_token: R_CURLY@62..63 "}" [] [],
+                    },
+                },
+                r_paren_token: R_PAREN@63..64 ")" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@64..65 "" [Newline("\n")] [],
+}
+
+0: JS_SCRIPT@0..65
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_STATEMENT_LIST@0..64
+    0: JS_EXPRESSION_STATEMENT@0..64
+      0: JS_PARENTHESIZED_EXPRESSION@0..64
+        0: L_PAREN@0..11 "(" [Comments("// SCRIPT"), Newline("\n")] []
+        1: JS_FUNCTION_EXPRESSION@11..63
+          0: (empty)
+          1: FUNCTION_KW@11..19 "function" [] []
+          2: (empty)
+          3: (empty)
+          4: (empty)
+          5: JS_PARAMETERS@19..22
+            0: L_PAREN@19..20 "(" [] []
+            1: JS_PARAMETER_LIST@20..20
+            2: R_PAREN@20..22 ")" [] [Whitespace(" ")]
+          6: (empty)
+          7: JS_FUNCTION_BODY@22..63
+            0: L_CURLY@22..24 "{" [] [Whitespace(" ")]
+            1: JS_DIRECTIVE_LIST@24..38
+              0: JS_DIRECTIVE@24..38
+                0: JS_STRING_LITERAL@24..36 "'use strict'" [] []
+                1: SEMICOLON@36..38 ";" [] [Whitespace(" ")]
+            2: JS_STATEMENT_LIST@38..62
+              0: JS_BLOCK_STATEMENT@38..62
+                0: L_CURLY@38..40 "{" [] [Whitespace(" ")]
+                1: JS_STATEMENT_LIST@40..60
+                  0: JS_VARIABLE_STATEMENT@40..53
+                    0: JS_VARIABLE_DECLARATIONS@40..51
+                      0: CONST_KW@40..46 "const" [] [Whitespace(" ")]
+                      1: JS_VARIABLE_DECLARATION_LIST@46..51
+                        0: JS_VARIABLE_DECLARATION@46..51
+                          0: JS_IDENTIFIER_BINDING@46..48
+                            0: IDENT@46..48 "f" [] [Whitespace(" ")]
+                          1: (empty)
+                          2: (empty)
+                          3: JS_INITIALIZER_CLAUSE@48..51
+                            0: EQ@48..50 "=" [] [Whitespace(" ")]
+                            1: JS_NUMBER_LITERAL_EXPRESSION@50..51
+                              0: JS_NUMBER_LITERAL@50..51 "1" [] []
+                    1: SEMICOLON@51..53 ";" [] [Whitespace(" ")]
+                  1: JS_VARIABLE_STATEMENT@53..60
+                    0: JS_VARIABLE_DECLARATIONS@53..58
+                      0: VAR_KW@53..57 "var" [] [Whitespace(" ")]
+                      1: JS_VARIABLE_DECLARATION_LIST@57..58
+                        0: JS_VARIABLE_DECLARATION@57..58
+                          0: JS_UNKNOWN_BINDING@57..58
+                            0: IDENT@57..58 "f" [] []
+                          1: (empty)
+                          2: (empty)
+                          3: (empty)
+                    1: SEMICOLON@58..60 ";" [] [Whitespace(" ")]
+                2: R_CURLY@60..62 "}" [] [Whitespace(" ")]
+            3: R_CURLY@62..63 "}" [] []
+        2: R_PAREN@63..64 ")" [] []
+      1: (empty)
+  3: EOF@64..65 "" [Newline("\n")] []
+--
+error[SyntaxError]: The binding "f" has been already declared
+  ┌─ binding_redeclaration_in_func_strict.js:2:37
+  │
+2 │ (function() { 'use strict'; { const f = 1; var f; } })
+  │                                     ^          - Second declaration here
+  │                                     │           
+  │                                     First declaration here
+
+--
+// SCRIPT
+(function() { 'use strict'; { const f = 1; var f; } })

@@ -63,7 +63,7 @@ JsScript {
                             items: JsVariableDeclarationList [
                                 JsVariableDeclaration {
                                     id: JsIdentifierBinding {
-                                        name_token: IDENT@105..107 "a" [] [Whitespace(" ")],
+                                        name_token: IDENT@105..107 "b" [] [Whitespace(" ")],
                                     },
                                     excl_token: missing (optional),
                                     type_annotation: missing (optional),
@@ -118,7 +118,7 @@ JsScript {
                                     items: JsVariableDeclarationList [
                                         JsVariableDeclaration {
                                             id: JsIdentifierBinding {
-                                                name_token: IDENT@187..189 "a" [] [Whitespace(" ")],
+                                                name_token: IDENT@187..189 "c" [] [Whitespace(" ")],
                                             },
                                             excl_token: missing (optional),
                                             type_annotation: missing (optional),
@@ -184,7 +184,7 @@ JsScript {
                                                 items: JsVariableDeclarationList [
                                                     JsVariableDeclaration {
                                                         id: JsIdentifierBinding {
-                                                            name_token: IDENT@272..274 "a" [] [Whitespace(" ")],
+                                                            name_token: IDENT@272..274 "e" [] [Whitespace(" ")],
                                                         },
                                                         excl_token: missing (optional),
                                                         type_annotation: missing (optional),
@@ -281,7 +281,7 @@ JsScript {
               1: JS_VARIABLE_DECLARATION_LIST@105..111
                 0: JS_VARIABLE_DECLARATION@105..111
                   0: JS_IDENTIFIER_BINDING@105..107
-                    0: IDENT@105..107 "a" [] [Whitespace(" ")]
+                    0: IDENT@105..107 "b" [] [Whitespace(" ")]
                   1: (empty)
                   2: (empty)
                   3: JS_INITIALIZER_CLAUSE@107..111
@@ -321,7 +321,7 @@ JsScript {
                   1: JS_VARIABLE_DECLARATION_LIST@187..193
                     0: JS_VARIABLE_DECLARATION@187..193
                       0: JS_IDENTIFIER_BINDING@187..189
-                        0: IDENT@187..189 "a" [] [Whitespace(" ")]
+                        0: IDENT@187..189 "c" [] [Whitespace(" ")]
                       1: (empty)
                       2: (empty)
                       3: JS_INITIALIZER_CLAUSE@189..193
@@ -369,7 +369,7 @@ JsScript {
                         1: JS_VARIABLE_DECLARATION_LIST@272..278
                           0: JS_VARIABLE_DECLARATION@272..278
                             0: JS_IDENTIFIER_BINDING@272..274
-                              0: IDENT@272..274 "a" [] [Whitespace(" ")]
+                              0: IDENT@272..274 "e" [] [Whitespace(" ")]
                             1: (empty)
                             2: (empty)
                             3: JS_INITIALIZER_CLAUSE@274..278

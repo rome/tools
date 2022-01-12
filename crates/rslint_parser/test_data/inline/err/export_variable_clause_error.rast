@@ -50,8 +50,10 @@ JsModule {
                     kind: LET_KW@40..44 "let" [] [Whitespace(" ")],
                     items: JsVariableDeclarationList [
                         JsVariableDeclaration {
-                            id: JsIdentifierBinding {
-                                name_token: IDENT@44..45 "a" [] [],
+                            id: JsUnknownBinding {
+                                items: [
+                                    IDENT@44..45 "a" [] [],
+                                ],
                             },
                             excl_token: missing (optional),
                             type_annotation: missing (optional),
@@ -116,7 +118,7 @@ JsModule {
           0: LET_KW@40..44 "let" [] [Whitespace(" ")]
           1: JS_VARIABLE_DECLARATION_LIST@44..48
             0: JS_VARIABLE_DECLARATION@44..45
-              0: JS_IDENTIFIER_BINDING@44..45
+              0: JS_UNKNOWN_BINDING@44..45
                 0: IDENT@44..45 "a" [] []
               1: (empty)
               2: (empty)
@@ -145,13 +147,14 @@ error[SyntaxError]: Const var declarations must have an initialized value
   │              ^ this variable needs to be initialized
 
 --
-error[SyntaxError]: Declarations inside of a `let` declaration may not have duplicates
-  ┌─ export_variable_clause_error.js:3:15
+error[SyntaxError]: The binding "a" has been already declared
+  ┌─ export_variable_clause_error.js:1:12
   │
+1 │ export let a = ;
+  │            ^ First declaration here
+2 │ export const b;
 3 │ export let a, a;
-  │            -  ^ a second declaration of `a` is not allowed
-  │            │   
-  │            `a` is first declared here
+  │            - Second declaration here
 
 --
 export let a = ;

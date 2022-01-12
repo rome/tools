@@ -1,4 +1,5 @@
 use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
+use crate::state::{BindingContext, EnterScope};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::class::{parse_export_class_clause, parse_export_default_class_case};
 use crate::syntax::expr::{
@@ -77,14 +78,14 @@ fn parse_module_item(p: &mut Parser) -> ParsedSyntax {
 // test_err import_err
 // import;
 // import *;
-// import * as b, { a, b } from "c";
-// import { a + b, d } from "c";
-// import { a, a } from "c";
+// import * as c, { a, b } from "c";
+// import { aa + bb, dd } from "c";
+// import { ab, ac } from "c";
 // import { default } from "c";
 // import { "a" } from "c";
-// import { as b } from "c";
+// import { as x } from "c";
 // import 4 from "c";
-// import a from 4;
+// import y from 4;
 pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![import]) {
         return Absent;
@@ -94,19 +95,19 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax {
     let import = p.start();
     p.bump_any();
 
-    debug_assert!(p.state.name_map.is_empty());
-    p.state.duplicate_binding_parent = Some("import");
-
-    parse_import_clause(p).or_add_diagnostic(p, |p, range| {
-        expected_any(
-            &["default import", "namespace import", "named import"],
-            range,
-        )
-        .to_diagnostic(p)
+    // p.state.binding_context = Some("import");
+    p.with_state(EnterScope(BindingContext::Module), |p| {
+        parse_import_clause(p).or_add_diagnostic(p, |p, range| {
+            expected_any(
+                &["default import", "namespace import", "named import"],
+                range,
+            )
+            .to_diagnostic(p)
+        });
     });
 
-    p.state.duplicate_binding_parent = None;
-    p.state.name_map.clear();
+    // p.state.binding_context = None;
+    // p.state.name_map.clear();
 
     let end = p.cur_tok().start();
 
@@ -184,9 +185,9 @@ fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax {
 // test import_named_clause
 // import {} from "a";
 // import { a, b, c, } from "b";
-// import b, { a } from "b";
-// import a, * as b from "c";
-// import { a as b, default as c, "a-b-c" as d } from "b";
+// import e, { f } from "b";
+// import g, * as lorem from "c";
+// import { f as x, default as w, "a-b-c" as y } from "b";
 fn parse_import_named_clause(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T!['{']) {
         return Absent;
@@ -285,6 +286,8 @@ fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 
     // test import_as_identifier
     // import { as } from "test";
+    //
+    // test import_as_as_as_identifier
     // import { as as as } from "test";
     //
     // test_err import_as_identifier_err
@@ -330,19 +333,19 @@ fn parse_shorthand_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 // import "foo" assert { "type": "json" };
 // import foo from "foo.json" assert { type: "json" };
 // import {test} from "foo.json" assert { for: "for" }
-// import foo from "foo.json" assert { type: "json", hasOwnProperty: "true" };
+// import foo_json from "foo.json" assert { type: "json", hasOwnProperty: "true" };
 // import "x" assert
 // { type: "json" }
 
 // test_err import_assertion_err
 // import "foo" assert { type, "json" };
-// import "foo" \u{61}ssert { type: "json" };
+// import "bar" \u{61}ssert { type: "json" };
 // import { foo } assert { type: "json" };
-// import "foo"
+// import "lorem"
 // assert { type: "json" }
-// import foo from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+// import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
 // import "x" assert;
-// import foo from "foo.json" assert { type: "json", lazy: true, startAtLine: 1 };
+// import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
 // import { a } from "a.json" assert
 fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![ident]) || p.cur_src() != "assert" || p.has_linebreak_before_n(0) {
