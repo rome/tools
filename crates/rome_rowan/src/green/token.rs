@@ -55,7 +55,9 @@ impl From<Vec<TriviaPiece>> for GreenTokenTrivia {
 		match trivias.as_slice() {
 			[] => GreenTokenTrivia::None,
 			[TriviaPiece::Whitespace(len)] => GreenTokenTrivia::Whitespace(*len),
-			[TriviaPiece::Comments(len, has_newline)] => GreenTokenTrivia::Comments(*len, *has_newline),
+			[TriviaPiece::Comments(len, has_newline)] => {
+				GreenTokenTrivia::Comments(*len, *has_newline)
+			}
 			_ => GreenTokenTrivia::Many(Box::new(trivias)),
 		}
 	}
