@@ -9,7 +9,7 @@ mod parse_recovery;
 mod parsed_syntax;
 pub(crate) mod single_token_parse_recovery;
 
-use drop_bomb::DropBomb;
+use drop_bomb::DebugDropBomb;
 use rslint_errors::Diagnostic;
 use rslint_lexer::Token;
 use rslint_syntax::JsSyntaxKind::EOF;
@@ -484,7 +484,7 @@ pub struct Marker {
 	pub start: usize,
 	pub old_start: u32,
 	pub(crate) child_idx: Option<usize>,
-	bomb: DropBomb,
+	bomb: DebugDropBomb,
 }
 
 impl Marker {
@@ -494,7 +494,7 @@ impl Marker {
 			start,
 			old_start: pos,
 			child_idx: None,
-			bomb: DropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."),
+			bomb: DebugDropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."),
 		}
 	}
 
