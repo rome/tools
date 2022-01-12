@@ -1,4 +1,7 @@
 use crate::parser::ParsedSyntax;
+use crate::state::{
+	ChangeParserState, InAsync, InConstructor, InFunction, InGenerator, NewLabelsScope,
+};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::decl::parse_parameter_list;
 use crate::syntax::js_parse_error;
@@ -6,11 +9,9 @@ use crate::syntax::stmt::{is_semi, parse_block_impl};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{Marker, SyntaxFeature};
-use crate::{Parser, ParserState};
+use crate::{Marker, Parser, SyntaxFeature};
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
-use std::collections::HashMap;
 
 /// A function declaration, this could be async and or a generator. This takes a marker
 /// because you need to first advance over async or start a marker and feed it in.
@@ -110,64 +111,61 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax
 	p.expect(T![function]);
 
 	let in_generator = p.eat(T![*]);
-	let guard = &mut *p.with_state(ParserState {
-		labels: HashMap::new(),
-		in_function: true,
-		in_async,
-		in_generator,
-		..p.state.clone()
-	});
 
-	let id = parse_binding(guard);
+	p.with_state(
+		InFunction(true)
+			.and(InGenerator(in_generator))
+			.and(InAsync(in_async))
+			.and(NewLabelsScope),
+		|p| {
+			let id = parse_binding(p);
 
-	if !kind.is_id_optional() {
-		id.or_add_diagnostic(guard, |p, range| {
-			p.err_builder(
-				"expected a name for the function in a function declaration, but found none",
-			)
-			.primary(range, "")
-		});
-	}
+			if !kind.is_id_optional() {
+				id.or_add_diagnostic(p, |p, range| {
+					p.err_builder(
+					"expected a name for the function in a function declaration, but found none",
+				)
+				.primary(range, "")
+				});
+			}
 
-	TypeScript
-		.parse_exclusive_syntax(guard, parse_ts_parameter_types, |p, marker| {
-			p.err_builder("type parameters can only be used in TypeScript files")
-				.primary(marker.range(p), "")
-		})
-		.ok();
+			TypeScript
+				.parse_exclusive_syntax(p, parse_ts_parameter_types, |p, marker| {
+					p.err_builder("type parameters can only be used in TypeScript files")
+						.primary(marker.range(p), "")
+				})
+				.ok();
 
-	parse_parameter_list(guard).or_add_diagnostic(guard, js_parse_error::expected_parameters);
+			parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);
 
-	TypeScript
-		.parse_exclusive_syntax(guard, parse_ts_type_annotation_or_error, |p, marker| {
-			p.err_builder("return types can only be used in TypeScript files")
-				.primary(marker.range(p), "")
-		})
-		.ok();
+			TypeScript
+				.parse_exclusive_syntax(p, parse_ts_type_annotation_or_error, |p, marker| {
+					p.err_builder("return types can only be used in TypeScript files")
+						.primary(marker.range(p), "")
+				})
+				.ok();
 
-	if kind == FunctionKind::Statement {
-		function_body_or_declaration(guard);
-	} else {
-		function_body(guard).or_add_diagnostic(guard, js_parse_error::expected_function_body);
-	}
+			if kind == FunctionKind::Statement {
+				function_body_or_declaration(p);
+			} else {
+				function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
+			}
+		},
+	);
 
-	let mut function = m.complete(guard, kind.into());
+	let mut function = m.complete(p, kind.into());
 
 	if uses_invalid_syntax {
-		function.change_to_unknown(guard);
+		function.change_to_unknown(p);
 	}
 
 	Present(function)
 }
 
 pub(super) fn function_body(p: &mut Parser) -> ParsedSyntax {
-	let mut guard = p.with_state(ParserState {
-		in_constructor: false,
-		in_function: true,
-		..p.state.clone()
-	});
-
-	parse_block_impl(&mut *guard, JS_FUNCTION_BODY)
+	p.with_state(InFunction(true).and(InConstructor(false)), |p| {
+		parse_block_impl(p, JS_FUNCTION_BODY)
+	})
 }
 
 // TODO 1725 This is probably not ideal (same with the `declare` keyword). We should
@@ -181,22 +179,7 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 		p.eat(T![;]);
 	} else {
 		let body = function_body(p);
-		if p.state.in_declare {
-			body.map(|mut body| {
-				let err = p
-					.err_builder(
-						"function implementations cannot be given in ambient (declare) contexts",
-					)
-					.primary(body.range(p), "");
-
-				p.error(err);
-				body.change_kind(p, JS_UNKNOWN);
-				body
-			})
-			.ok();
-		} else {
-			body.or_add_diagnostic(p, js_parse_error::expected_function_body);
-		}
+		body.or_add_diagnostic(p, js_parse_error::expected_function_body);
 	}
 }
 

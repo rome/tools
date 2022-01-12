@@ -3,6 +3,7 @@
 use super::expr::parse_name;
 use super::stmt::{parse_statements, semi};
 use super::typescript::*;
+use crate::state::{ChangeParserState, EnableStrictMode};
 use crate::syntax::js_parse_error;
 use crate::syntax::module::parse_module_body;
 use crate::syntax::stmt::directives;
@@ -15,7 +16,7 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.eat(JS_SHEBANG);
 
-	let old_parser_state = directives(p);
+	let strict_snapshot = directives(p);
 
 	let result = match p.syntax.file_kind {
 		FileKind::Script => {
@@ -25,8 +26,8 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 		FileKind::Module | FileKind::TypeScript => parse_module_body(p, m),
 	};
 
-	if let Some(old_parser_state) = old_parser_state {
-		p.state = old_parser_state;
+	if let Some(strict_snapshot) = strict_snapshot {
+		EnableStrictMode::restore(&mut p.state, strict_snapshot);
 	}
 
 	result

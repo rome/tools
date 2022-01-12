@@ -313,8 +313,8 @@ pub enum JsSyntaxFeature {
 impl SyntaxFeature for JsSyntaxFeature {
 	fn is_supported(&self, p: &Parser) -> bool {
 		match self {
-			JsSyntaxFeature::SloppyMode => p.state.strict.is_none(),
-			JsSyntaxFeature::StrictMode => p.state.strict.is_some(),
+			JsSyntaxFeature::SloppyMode => p.state.strict().is_none(),
+			JsSyntaxFeature::StrictMode => p.state.strict().is_some(),
 			JsSyntaxFeature::TypeScript => p.syntax.file_kind == FileKind::TypeScript,
 		}
 	}

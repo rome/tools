@@ -1,4 +1,8 @@
 use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
+use crate::state::{
+	AllowObjectExpression, ChangeParserState, EnableStrictMode, InAsync, InConstructor, InFunction,
+	InGenerator,
+};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
 use crate::syntax::expr::parse_expr_or_assignment;
@@ -18,7 +22,7 @@ use crate::syntax::typescript::{
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-	CompletedMarker, Event, Marker, ParseNodeList, ParseRecovery, Parser, ParserState, StrictMode,
+	CompletedMarker, Event, Marker, ParseNodeList, ParseRecovery, Parser, StrictMode,
 	SyntaxFeature, TokenSet,
 };
 use rome_rowan::SyntaxKind;
@@ -119,71 +123,67 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> ParsedSyntax {
 
 	p.expect(T![class]);
 
-	// class bodies are implicitly strict
-	let mut guard = p.with_state(ParserState {
-		strict: Some(StrictMode::Class(p.cur_tok().range())),
-		..p.state.clone()
-	});
+	let p = &mut *p.with_scoped_state(EnableStrictMode(StrictMode::Class(p.cur_tok().range())));
 
 	// test_err class_decl_no_id
 	// class {}
 	// class implements B {}
 
-	let id = if guard.cur_src() == "implements" {
+	let id = if p.cur_src() == "implements" {
 		Absent
 	} else {
-		parse_binding(&mut *guard)
+		parse_binding(p)
 	};
 
 	// parse class id
 	match id {
 		Present(id) => {
-			let text = guard.span_text(id.range(&*guard));
-			if guard.typescript() && DISALLOWED_TYPE_NAMES.contains(&text) {
-				let err = guard
+			let text = p.span_text(id.range(p));
+			if p.typescript() && DISALLOWED_TYPE_NAMES.contains(&text) {
+				let err = p
 					.err_builder(&format!(
 							"`{}` cannot be used as a class name because it is already reserved as a type",
 							text
 						))
-					.primary(id.range(&*guard), "");
+					.primary(id.range(p), "");
 
-				guard.error(err);
+				p.error(err);
 			}
 		}
 		Absent => {
 			if !kind.is_id_optional() {
-				let err = guard
+				let err = p
 					.err_builder("class declarations must have a name")
-					.primary(class_token_range.start..guard.cur_tok().start(), "");
+					.primary(class_token_range.start..p.cur_tok().start(), "");
 
-				guard.error(err);
+				p.error(err);
 			}
 		}
 	}
 
-	if guard.at(T![<]) {
-		if let Some(mut complete) = ts_type_params(&mut *guard) {
+	if p.at(T![<]) {
+		if let Some(mut complete) = ts_type_params(p) {
 			complete.err_if_not_ts(
-				&mut *guard,
+				p,
 				"classes can only have type parameters in TypeScript files",
 			);
 		}
 	}
 
-	extends_clause(&mut guard).ok();
+	extends_clause(p).ok();
 
-	if implements_clause(&mut guard).is_present() && TypeScript.is_unsupported(&*guard) {
+	if implements_clause(p).is_present() && TypeScript.is_unsupported(p) {
 		class_is_valid = false;
 	}
 
-	guard.expect(T!['{']);
-	ClassMembersList.parse_list(&mut *guard);
-	guard.expect(T!['}']);
+	p.expect(T!['{']);
+	ClassMembersList.parse_list(p);
+	p.expect(T!['}']);
 
-	let mut class_marker = m.complete(&mut *guard, kind.into());
+	let mut class_marker = m.complete(p, kind.into());
 
 	if !class_is_valid {
-		class_marker.change_to_unknown(&mut *guard);
+		class_marker.change_to_unknown(p);
 	}
 
 	Present(class_marker)
@@ -369,29 +369,25 @@ fn parse_class_member_impl(
 		p.bump_any(); // bump * token
 
 		let is_constructor = p.cur_src() == "constructor";
-		let mut guard = p.with_state(ParserState {
-			in_generator: true,
-			in_function: true,
-			..p.state.clone()
-		});
-
 		if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
-			let err = guard
+			let err = p
 				.err_builder("class methods cannot be readonly")
 				.primary(range, "");
 
-			guard.error(err);
+			p.error(err);
 		}
 
 		if is_constructor {
-			let err = guard
+			let err = p
 				.err_builder("constructors can't be generators")
 				.primary(generator_range, "");
 
-			guard.error(err);
+			p.error(err);
 		}
 
-		return Present(parse_method_class_member(&mut *guard, member_marker));
+		return p.with_state(InFunction(true).and(InGenerator(true)), |p| {
+			Present(parse_method_class_member(p, member_marker))
+		});
 	};
 
 	// Seems like we're at an async method
@@ -404,30 +400,30 @@ fn parse_class_member_impl(
 		p.bump_remap(T![async]);
 		let in_generator = p.eat(T![*]);
 
-		let mut guard = p.with_state(ParserState {
-			in_async: true,
-			in_generator,
-			in_function: true,
-			..p.state.clone()
-		});
-
-		if guard.cur_src() == "constructor" {
-			let err = guard
+		if p.cur_src() == "constructor" {
+			let err = p
 				.err_builder("constructors cannot be async")
 				.primary(async_range, "");
 
-			guard.error(err);
+			p.error(err);
 		}
 
 		if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
-			let err = guard
+			let err = p
 				.err_builder("methods cannot be readonly")
 				.primary(range, "");
 
-			guard.error(err);
+			p.error(err);
 		}
 
-		return Present(parse_method_class_member(&mut *guard, member_marker));
+		return Present(
+			p.with_state(
+				InFunction(true)
+					.and(InGenerator(in_generator))
+					.and(InAsync(true)),
+				|p| parse_method_class_member(p, member_marker),
+			),
+		);
 	}
 
 	let member_name = p.cur_src();
@@ -647,14 +643,15 @@ fn parse_class_member_impl(
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
-					p.state.allow_object_expr = p.expect(T!['(']);
-					parse_formal_param_pat(p)
-						.or_add_diagnostic(p, js_parse_error::expected_parameter);
-					p.expect(T![')']);
-					function_body(p)
-						.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+					let has_l_paren = p.expect(T!['(']);
+					p.with_state(AllowObjectExpression(has_l_paren), |p| {
+						parse_formal_param_pat(p)
+							.or_add_diagnostic(p, js_parse_error::expected_parameter);
+						p.expect(T![')']);
+						function_body(p)
+							.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+					});
 
-					p.state.allow_object_expr = true;
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
 				};
 
@@ -850,18 +847,10 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
 		constructor_is_valid = false;
 	}
 
-	{
-		let mut guard = p.with_state(ParserState {
-			in_function: true,
-			in_constructor: true,
-			..p.state.clone()
-		});
-
-		let p = &mut *guard;
-
+	p.with_state(InFunction(true).and(InConstructor(true)), |p| {
 		parse_block_impl(p, JS_FUNCTION_BODY)
 			.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
-	}
+	});
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 

@@ -756,7 +756,7 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
 		// export default (class {})
 		// export default a + b;
 		// export default (function a() {})
-		if let Some(range) = p.state.default_item.as_ref().filter(|_| p.state.is_module) {
+		if let Some(range) = p.state.default_item.as_ref().filter(|_| p.is_module()) {
 			let err = p
 				.err_builder("Illegal duplicate default export declarations")
 				.secondary(

@@ -1,41 +1,39 @@
-use crate::Parser;
+use crate::{FileKind, Parser, Syntax};
 use std::collections::HashMap;
 use std::ops::{Deref, DerefMut, Range};
 
 /// State kept by the parser while parsing.
 /// It is required for things such as strict mode or async functions
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, PartialEq)]
 pub struct ParserState {
 	/// If false, object expressions are not allowed to be parsed
 	/// inside an expression.
 	///
 	/// Also applies for object patterns
-	pub allow_object_expr: bool,
+	allow_object_expr: bool,
 	/// Whether `in` should be counted in a binary expression
 	/// this is for `for...in` statements to prevent ambiguity.
-	pub include_in: bool,
+	include_in: bool,
 	/// Whether the parser is in an iteration statement and `continue` is allowed.
-	pub continue_allowed: bool,
+	continue_allowed: bool,
 	/// Whether the parser is in an iteration or switch statement and
 	/// `break` is allowed.
-	pub break_allowed: bool,
+	break_allowed: bool,
 	/// A list of labels for labelled statements used to report undefined label errors
 	/// for break and continue, as well as duplicate labels
 	pub labels: HashMap<String, Range<usize>>,
 	/// Whether the parser is in a generator function like `function* a() {}`
-	pub in_generator: bool,
+	in_generator: bool,
 	/// Whether the parser is inside of a function
-	pub in_function: bool,
+	in_function: bool,
 	/// Whatever the parser is inside of a constructor
-	pub in_constructor: bool,
+	in_constructor: bool,
 	/// Whether we potentially are in a place to parse an arrow expression
-	pub potential_arrow_start: bool,
+	potential_arrow_start: bool,
 	/// Whether we are in an async function
-	pub in_async: bool,
+	in_async: bool,
 	/// Whether we are in strict mode code
-	pub strict: Option<StrictMode>,
-	/// Whether the code we are parsing is a module
-	pub is_module: bool,
+	strict: Option<StrictMode>,
 	/// The exported default item, used for checking duplicate defaults
 	pub default_item: Option<Range<usize>>,
 	/// If set, the parser reports bindings with identical names. The option stores the name of the
@@ -43,14 +41,12 @@ pub struct ParserState {
 	pub duplicate_binding_parent: Option<&'static str>,
 	pub name_map: HashMap<String, Range<usize>>,
 	/// Whether the parser is in a conditional expr (ternary expr)
-	pub in_cond_expr: bool,
-	pub in_case_cond: bool,
+	in_cond_expr: bool,
 	pub(crate) no_recovery: bool,
-	pub in_declare: bool,
-	pub in_binding_list_for_signature: bool,
+	in_binding_list_for_signature: bool,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum StrictMode {
 	Module,
 	Explicit(Range<usize>),
@@ -71,77 +67,310 @@ impl Default for ParserState {
 			potential_arrow_start: false,
 			in_async: false,
 			strict: None,
-			is_module: false,
 			default_item: None,
 			name_map: HashMap::with_capacity(3),
 			duplicate_binding_parent: None,
 			in_cond_expr: false,
-			in_case_cond: false,
 			no_recovery: false,
-			in_declare: false,
 			in_binding_list_for_signature: false,
 		}
 	}
 }
 
 impl ParserState {
-	/// Turn on strict mode and issue a warning for redundant strict mode declarations
-	pub(crate) fn strict(&mut self, p: &mut Parser, range: Range<usize>) {
-		if let Some(strict) = self.strict.to_owned() {
-			let mut err = p.warning_builder("Redundant strict mode declaration");
-
-			match strict {
-				StrictMode::Explicit(prev_range) => {
-					err = err.secondary(prev_range, "strict mode is previous declared here");
-				}
-				StrictMode::Module => {
-					err = err.footer_note("modules are always strict mode");
-				}
-				StrictMode::Class(prev_range) => {
-					err = err.secondary(prev_range, "class bodies are always strict mode");
-				}
-			}
-
-			err = err.primary(range, "this declaration is redundant");
-			p.error(err);
+	pub fn new(syntax: Syntax) -> Self {
+		// TODO(RDambrosio016): Does TypeScript imply Module/Strict?
+		let strict = if syntax.file_kind == FileKind::Module {
+			Some(StrictMode::Module)
 		} else {
-			self.strict = Some(StrictMode::Explicit(range));
+			None
+		};
+
+		Self {
+			strict,
+			..ParserState::default()
 		}
+	}
+
+	pub fn in_function(&self) -> bool {
+		self.in_function
+	}
+
+	pub fn in_generator(&self) -> bool {
+		self.in_generator
+	}
+
+	pub fn in_async(&self) -> bool {
+		self.in_async
+	}
+
+	pub fn in_constructor(&self) -> bool {
+		self.in_constructor
+	}
+
+	pub fn continue_allowed(&self) -> bool {
+		self.continue_allowed
+	}
+	pub fn break_allowed(&self) -> bool {
+		self.break_allowed
+	}
+
+	pub fn include_in(&self) -> bool {
+		self.include_in
+	}
+
+	pub fn in_condition_expression(&self) -> bool {
+		self.in_cond_expr
+	}
+
+	pub fn potential_arrow_start(&self) -> bool {
+		self.potential_arrow_start
+	}
+
+	pub fn allow_object_expression(&self) -> bool {
+		self.allow_object_expr
+	}
+
+	pub fn strict(&self) -> Option<&StrictMode> {
+		self.strict.as_ref()
+	}
+
+	pub fn in_binding_list_for_signature(&self) -> bool {
+		self.in_binding_list_for_signature
 	}
 }
 
 impl<'t> Parser<'t> {
-	pub fn with_state<'a>(&'a mut self, state: ParserState) -> StateGuard<'a, 't> {
-		let original_state = self.state.clone();
-		self.state = state;
-		StateGuard {
-			original_state,
-			inner: self,
+	/// Applies the passed in change to the parser's state and reverts the
+	/// changes when the returned [ParserStateGuard] goes out of scope.
+	pub fn with_scoped_state<'p, C: ChangeParserState>(
+		&'p mut self,
+		change: C,
+	) -> ParserStateGuard<'p, 't, C> {
+		let snapshot = change.apply(&mut self.state);
+		ParserStateGuard::new(self, snapshot)
+	}
+
+	/// Applies the passed in change to the parser state before applying the passed `func` and
+	/// restores the state to before the change before returning the result.
+	#[inline]
+	pub fn with_state<C, F, R>(&mut self, change: C, func: F) -> R
+	where
+		C: ChangeParserState,
+		F: FnOnce(&mut Parser) -> R,
+	{
+		let snapshot = change.apply(&mut self.state);
+		let result = func(self);
+		C::restore(&mut self.state, snapshot);
+		result
+	}
+}
+
+/// Reverts state changes to their previous value when it goes out of scope.
+/// Can be used like a regular parser.
+pub struct ParserStateGuard<'parser, 't, C>
+where
+	C: ChangeParserState,
+{
+	snapshot: C::Snapshot,
+	inner: &'parser mut Parser<'t>,
+}
+
+impl<'parser, 't, C: ChangeParserState> ParserStateGuard<'parser, 't, C> {
+	fn new(parser: &'parser mut Parser<'t>, snapshot: C::Snapshot) -> Self {
+		Self {
+			snapshot,
+			inner: parser,
 		}
 	}
 }
 
-pub struct StateGuard<'p, 't> {
-	inner: &'p mut Parser<'t>,
-	original_state: ParserState,
+impl<'parser, 't, C: ChangeParserState> Drop for ParserStateGuard<'parser, 't, C> {
+	fn drop(&mut self) {
+		let snapshot = std::mem::take(&mut self.snapshot);
+
+		C::restore(&mut self.inner.state, snapshot);
+	}
 }
 
-impl<'p, 't> Deref for StateGuard<'p, 't> {
+impl<'parser, 't, C: ChangeParserState> Deref for ParserStateGuard<'parser, 't, C> {
 	type Target = Parser<'t>;
 
-	fn deref(&self) -> &Parser<'t> {
+	fn deref(&self) -> &Self::Target {
 		self.inner
 	}
 }
 
-impl<'p, 't> DerefMut for StateGuard<'p, 't> {
-	fn deref_mut(&mut self) -> &mut Parser<'t> {
+impl<'parser, 't, C: ChangeParserState> DerefMut for ParserStateGuard<'parser, 't, C> {
+	fn deref_mut(&mut self) -> &mut Self::Target {
 		self.inner
 	}
 }
 
-impl<'p, 't> Drop for StateGuard<'p, 't> {
-	fn drop(&mut self) {
-		std::mem::swap(&mut self.inner.state, &mut self.original_state);
+/// Implements a specific modification to the parser state that can later be reverted.
+pub trait ChangeParserState {
+	type Snapshot: Default;
+
+	/// Applies the change to the passed in state and returns snapshot that allows restoring the previous state.
+	fn apply(self, state: &mut ParserState) -> Self::Snapshot;
+
+	/// Restores the state to its previous value
+	fn restore(state: &mut ParserState, value: Self::Snapshot);
+
+	/// Allows composing two changes.
+	/// The returned change first applies this modifier and then `other`.
+	fn and<O>(self, other: O) -> ComposedParserStateChange<Self, O>
+	where
+		Self: Sized,
+		O: ChangeParserState,
+	{
+		ComposedParserStateChange::new(self, other)
+	}
+}
+
+#[derive(Debug, Default)]
+pub struct ComposedSnapshot<A, B>
+where
+	A: Default,
+	B: Default,
+{
+	a: A,
+	b: B,
+}
+
+#[derive(Debug)]
+pub struct ComposedParserStateChange<A, B> {
+	a: A,
+	b: B,
+}
+
+impl<A, B> ComposedParserStateChange<A, B>
+where
+	A: ChangeParserState,
+	B: ChangeParserState,
+{
+	pub fn new(a: A, b: B) -> Self {
+		Self { a, b }
+	}
+}
+
+impl<A, B> ChangeParserState for ComposedParserStateChange<A, B>
+where
+	A: ChangeParserState,
+	B: ChangeParserState,
+{
+	type Snapshot = ComposedSnapshot<A::Snapshot, B::Snapshot>;
+
+	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+		ComposedSnapshot {
+			a: self.a.apply(state),
+			b: self.b.apply(state),
+		}
+	}
+
+	fn restore(state: &mut ParserState, value: Self::Snapshot) {
+		B::restore(state, value.b);
+		A::restore(state, value.a);
+	}
+}
+
+/// Macro for creating a [ChangeParserState] that changes the value of a single [ParserState] field.
+/// * `$name`: The name of the [ChangeParserState] implementation
+/// * `$field`: The [ParserState] field's name that the implementation *changes*
+/// * `$type`: The [ParserState] field's type
+/// * `snapshot`: The name of the snapshot struct
+macro_rules! gen_change_parser_state {
+	($name:ident { $field: ident: $type:ty } => $snapshot: ident) => {
+		#[derive(Debug, Clone, Default)]
+		pub(crate) struct $snapshot(pub(crate) $type);
+
+		/// Changes the [ParserState] `$field` field
+		#[derive(Debug)]
+		pub(crate) struct $name(pub(crate) $type);
+
+		impl ChangeParserState for $name {
+			type Snapshot = $snapshot;
+
+			#[inline]
+			fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+				$snapshot(std::mem::replace(&mut state.$field, self.0))
+			}
+
+			#[inline]
+			fn restore(state: &mut ParserState, value: Self::Snapshot) {
+				state.$field = value.0
+			}
+		}
+	};
+}
+
+gen_change_parser_state!(InGenerator { in_generator: bool } => InGeneratorSnapshot);
+gen_change_parser_state!(InFunction { in_function: bool } => InFunctionSnapshot);
+gen_change_parser_state!(InAsync { in_async: bool } => InAsyncSnapshot);
+gen_change_parser_state!(InConstructor { in_constructor: bool } => InConstructorSnapshot);
+gen_change_parser_state!(BreakAllowed {break_allowed: bool} =>BreakAllowedSnapshot);
+gen_change_parser_state!(ContinueAllowed {continue_allowed: bool} => ContinueAllowedSnapshot);
+gen_change_parser_state!(IncludeIn { include_in: bool } => IncludeInSnapshot);
+gen_change_parser_state!(InConditionExpression { in_cond_expr: bool } => InConditionExpressionSnapshot);
+gen_change_parser_state!(AllowObjectExpression { allow_object_expr: bool } => AllowObjectExpressionSnapshot);
+gen_change_parser_state!(InBindingListForSignature { in_binding_list_for_signature: bool } => InBindingListForSignatureSnapshot);
+
+#[derive(Debug, Clone, Default)]
+pub struct SeenLabelsSnapshot(HashMap<String, Range<usize>>);
+
+/// Resets the [ParserState] `labels` field to an empty map
+pub struct NewLabelsScope;
+
+impl ChangeParserState for NewLabelsScope {
+	type Snapshot = SeenLabelsSnapshot;
+
+	#[inline]
+	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+		SeenLabelsSnapshot(std::mem::take(&mut state.labels))
+	}
+
+	#[inline]
+	fn restore(state: &mut ParserState, value: Self::Snapshot) {
+		state.labels = value.0
+	}
+}
+
+#[derive(Debug, Clone, Default)]
+pub struct PotentialArrowStartSnapshot(bool);
+
+/// Changes the [ParserState] `potential_arrow_expr` field
+pub struct PotentialArrowStart(pub bool);
+
+impl ChangeParserState for PotentialArrowStart {
+	type Snapshot = PotentialArrowStartSnapshot;
+
+	#[inline]
+	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+		PotentialArrowStartSnapshot(std::mem::replace(&mut state.potential_arrow_start, self.0))
+	}
+
+	#[inline]
+	fn restore(state: &mut ParserState, value: Self::Snapshot) {
+		state.potential_arrow_start = value.0;
+	}
+}
+
+#[derive(Default, Debug)]
+pub struct EnableStrictModeSnapshot(Option<StrictMode>);
+
+/// Enables strict mode
+pub struct EnableStrictMode(pub StrictMode);
+
+impl ChangeParserState for EnableStrictMode {
+	type Snapshot = EnableStrictModeSnapshot;
+
+	#[inline]
+	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+		EnableStrictModeSnapshot(std::mem::replace(&mut state.strict, Some(self.0)))
+	}
+
+	#[inline]
+	fn restore(state: &mut ParserState, value: Self::Snapshot) {
+		state.strict = value.0
 	}
 }

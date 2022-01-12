@@ -5,6 +5,7 @@ use super::expr::{parse_expr_or_assignment, parse_lhs_expr, parse_literal_expres
 use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
+use crate::state::InBindingListForSignature;
 use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::{is_at_name, parse_any_name};
 use crate::syntax::js_parse_error;
@@ -257,13 +258,9 @@ pub fn ts_signature_member(p: &mut Parser, construct_sig: bool) -> Option<Comple
 		no_recover!(p, ts_type_params(p));
 	}
 
-	{
-		let guard = &mut *p.with_state(ParserState {
-			in_binding_list_for_signature: true,
-			..p.state.clone()
-		});
-		parse_parameter_list(guard).ok();
-	}
+	p.with_state(InBindingListForSignature(true), parse_parameter_list)
+		.ok();
+
 	if p.at(T![:]) {
 		no_recover!(p, ts_type_or_type_predicate_ann(p, T![:]));
 	}
@@ -357,10 +354,10 @@ pub fn try_parse_ts(
 	let res = if p.state.no_recovery {
 		func(p)
 	} else {
-		func(&mut *p.with_state(ParserState {
-			no_recovery: true,
-			..p.state.clone()
-		}))
+		let last_no_recovery = std::mem::replace(&mut p.state.no_recovery, true);
+		let res = func(p);
+		p.state.no_recovery = last_no_recovery;
+		res
 	};
 
 	if res.is_none() {
