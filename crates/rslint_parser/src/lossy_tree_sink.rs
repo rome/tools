@@ -188,7 +188,7 @@ impl<'a> LossyTreeSink<'a> {
 		let range = leading_range.cover(token_range).cover(trailing_range);
 		let text = &self.text[range];
 
-		self.inner.token_with_trivia(kind, text, leading, trailing);
+		self.inner.token_with_trivia(kind, text, &leading, &trailing);
 	}
 
 	fn get_trivia(&mut self, break_on_newline: bool) -> (TextRange, Vec<TriviaPiece>) {
