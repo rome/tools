@@ -117,14 +117,34 @@ JsModule {
                 r_curly_token: R_CURLY@111..113 "}" [Newline("\n")] [],
             },
         },
+        JsExpressionStatement {
+            expression: JsAwaitExpression {
+                await_token: AWAIT_KW@113..120 "await" [Newline("\n")] [Whitespace(" ")],
+                argument: JsCallExpression {
+                    callee: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@120..124 "test" [] [],
+                        },
+                    },
+                    optional_chain_token_token: missing (optional),
+                    type_args: missing (optional),
+                    arguments: JsCallArguments {
+                        l_paren_token: L_PAREN@124..125 "(" [] [],
+                        args: JsCallArgumentList [],
+                        r_paren_token: R_PAREN@125..126 ")" [] [],
+                    },
+                },
+            },
+            semicolon_token: SEMICOLON@126..127 ";" [] [],
+        },
     ],
-    eof_token: EOF@113..114 "" [Newline("\n")] [],
+    eof_token: EOF@127..128 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..114
+0: JS_MODULE@0..128
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..113
+  2: JS_MODULE_ITEM_LIST@0..127
     0: JS_FUNCTION_STATEMENT@0..75
       0: ASYNC_KW@0..6 "async" [] [Whitespace(" ")]
       1: FUNCTION_KW@6..15 "function" [] [Whitespace(" ")]
@@ -209,4 +229,18 @@ JsModule {
               0: JS_NUMBER_LITERAL@109..110 "4" [] []
             2: SEMICOLON@110..111 ";" [] []
         3: R_CURLY@111..113 "}" [Newline("\n")] []
-  3: EOF@113..114 "" [Newline("\n")] []
+    2: JS_EXPRESSION_STATEMENT@113..127
+      0: JS_AWAIT_EXPRESSION@113..126
+        0: AWAIT_KW@113..120 "await" [Newline("\n")] [Whitespace(" ")]
+        1: JS_CALL_EXPRESSION@120..126
+          0: JS_IDENTIFIER_EXPRESSION@120..124
+            0: JS_REFERENCE_IDENTIFIER@120..124
+              0: IDENT@120..124 "test" [] []
+          1: (empty)
+          2: (empty)
+          3: JS_CALL_ARGUMENTS@124..126
+            0: L_PAREN@124..125 "(" [] []
+            1: JS_CALL_ARGUMENT_LIST@125..125
+            2: R_PAREN@125..126 ")" [] []
+      1: SEMICOLON@126..127 ";" [] []
+  3: EOF@127..128 "" [Newline("\n")] []

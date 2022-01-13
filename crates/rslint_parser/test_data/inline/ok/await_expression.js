@@ -5,3 +5,4 @@ async function test() {
 async function inner() {
 	return 4;
 }
+await test();

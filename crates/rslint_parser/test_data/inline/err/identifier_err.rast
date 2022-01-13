@@ -15,14 +15,9 @@ JsModule {
             semicolon_token: SEMICOLON@5..6 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
-                items: [
-                    JsUnknown {
-                        items: [
-                            IDENT@6..12 "await" [Newline("\n")] [],
-                        ],
-                    },
-                ],
+            expression: JsAwaitExpression {
+                await_token: AWAIT_KW@6..12 "await" [Newline("\n")] [],
+                argument: missing (required),
             },
             semicolon_token: SEMICOLON@12..13 ";" [] [],
         },
@@ -138,9 +133,9 @@ JsModule {
           0: IDENT@0..5 "yield" [] []
       1: SEMICOLON@5..6 ";" [] []
     1: JS_EXPRESSION_STATEMENT@6..13
-      0: JS_UNKNOWN_EXPRESSION@6..12
-        0: JS_UNKNOWN@6..12
-          0: IDENT@6..12 "await" [Newline("\n")] []
+      0: JS_AWAIT_EXPRESSION@6..12
+        0: AWAIT_KW@6..12 "await" [Newline("\n")] []
+        1: (empty)
       1: SEMICOLON@12..13 ";" [] []
     2: JS_FUNCTION_STATEMENT@13..43
       0: ASYNC_KW@13..20 "async" [Newline("\n")] [Whitespace(" ")]
@@ -210,11 +205,11 @@ error[SyntaxError]: Illegal use of reserved keyword `yield` as an identifier in 
   │ ^^^^^
 
 --
-error[SyntaxError]: Illegal use of `await` as an identifier inside of a module
-  ┌─ identifier_err.js:2:1
+error[SyntaxError]: expected an unary expression but instead found ';'
+  ┌─ identifier_err.js:2:6
   │
 2 │ await;
-  │ ^^^^^
+  │      ^ Expected an unary expression here
 
 --
 error[SyntaxError]: Illegal use of `await` as an identifier in an async context

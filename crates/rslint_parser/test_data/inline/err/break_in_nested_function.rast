@@ -1,0 +1,98 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsWhileStatement {
+            while_token: WHILE_KW@0..6 "while" [] [Whitespace(" ")],
+            l_paren_token: L_PAREN@6..7 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@7..11 "true" [] [],
+            },
+            r_paren_token: R_PAREN@11..13 ")" [] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@13..14 "{" [] [],
+                statements: JsStatementList [
+                    JsFunctionStatement {
+                        async_token: missing (optional),
+                        function_token: FUNCTION_KW@14..25 "function" [Newline("\n"), Whitespace("\t")] [Whitespace(" ")],
+                        star_token: missing (optional),
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@25..31 "helper" [] [],
+                        },
+                        type_parameters: missing (optional),
+                        parameters: JsParameters {
+                            l_paren_token: L_PAREN@31..32 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@32..34 ")" [] [Whitespace(" ")],
+                        },
+                        return_type: missing (optional),
+                        body: JsFunctionBody {
+                            l_curly_token: L_CURLY@34..35 "{" [] [],
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [
+                                JsUnknownStatement {
+                                    items: [
+                                        BREAK_KW@35..44 "break" [Newline("\n"), Whitespace(" \t ")] [],
+                                        SEMICOLON@44..45 ";" [] [],
+                                    ],
+                                },
+                            ],
+                            r_curly_token: R_CURLY@45..48 "}" [Newline("\n"), Whitespace("\t")] [],
+                        },
+                    },
+                ],
+                r_curly_token: R_CURLY@48..50 "}" [Newline("\n")] [],
+            },
+        },
+    ],
+    eof_token: EOF@50..51 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..51
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..50
+    0: JS_WHILE_STATEMENT@0..50
+      0: WHILE_KW@0..6 "while" [] [Whitespace(" ")]
+      1: L_PAREN@6..7 "(" [] []
+      2: JS_BOOLEAN_LITERAL_EXPRESSION@7..11
+        0: TRUE_KW@7..11 "true" [] []
+      3: R_PAREN@11..13 ")" [] [Whitespace(" ")]
+      4: JS_BLOCK_STATEMENT@13..50
+        0: L_CURLY@13..14 "{" [] []
+        1: JS_STATEMENT_LIST@14..48
+          0: JS_FUNCTION_STATEMENT@14..48
+            0: (empty)
+            1: FUNCTION_KW@14..25 "function" [Newline("\n"), Whitespace("\t")] [Whitespace(" ")]
+            2: (empty)
+            3: JS_IDENTIFIER_BINDING@25..31
+              0: IDENT@25..31 "helper" [] []
+            4: (empty)
+            5: JS_PARAMETERS@31..34
+              0: L_PAREN@31..32 "(" [] []
+              1: JS_PARAMETER_LIST@32..32
+              2: R_PAREN@32..34 ")" [] [Whitespace(" ")]
+            6: (empty)
+            7: JS_FUNCTION_BODY@34..48
+              0: L_CURLY@34..35 "{" [] []
+              1: JS_DIRECTIVE_LIST@35..35
+              2: JS_STATEMENT_LIST@35..45
+                0: JS_UNKNOWN_STATEMENT@35..45
+                  0: BREAK_KW@35..44 "break" [Newline("\n"), Whitespace(" \t ")] []
+                  1: SEMICOLON@44..45 ";" [] []
+              3: R_CURLY@45..48 "}" [Newline("\n"), Whitespace("\t")] []
+        2: R_CURLY@48..50 "}" [Newline("\n")] []
+  3: EOF@50..51 "" [Newline("\n")] []
+--
+error[SyntaxError]: Invalid break not inside of a switch, loop, or labelled statement
+  ┌─ break_in_nested_function.js:3:4
+  │
+3 │      break;
+  │      ^^^^^
+
+--
+while (true) {
+	function helper() {
+ 	 break;
+	}
+}
