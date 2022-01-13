@@ -27,7 +27,7 @@ JsModule {
             ],
         },
     ],
-    eof_token: EOF@23..24 "" [Whitespace("\n")] [],
+    eof_token: EOF@23..24 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..24
@@ -48,7 +48,7 @@ JsModule {
       3: L_CURLY@21..22 "{" [] []
       4: JS_CLASS_MEMBER_LIST@22..22
       5: R_CURLY@22..23 "}" [] []
-  3: EOF@23..24 "" [Whitespace("\n")] []
+  3: EOF@23..24 "" [Newline("\n")] []
 --
 error[SyntaxError]: classes can only implement interfaces in TypeScript files
   ┌─ class_implements.js:1:9

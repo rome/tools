@@ -19,7 +19,7 @@ pub struct LosslessTreeSink<'a> {
 	inner: SyntaxTreeBuilder,
 	/// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
 	needs_eof: bool,
-	trivia: Vec<TriviaPiece>
+	trivia: Vec<TriviaPiece>,
 }
 
 impl<'a> TreeSink for LosslessTreeSink<'a> {
@@ -62,7 +62,7 @@ impl<'a> LosslessTreeSink<'a> {
 			inner: SyntaxTreeBuilder::default(),
 			errors: vec![],
 			needs_eof: true,
-			trivia: Vec::with_capacity(128)
+			trivia: Vec::with_capacity(128),
 		}
 	}
 
@@ -87,7 +87,6 @@ impl<'a> LosslessTreeSink<'a> {
 		// Every trivia up to the token (including line breaks) will be the leading trivia
 		self.trivia.clear();
 		let (leading_range, leading_end) = self.get_trivia(false);
-		let leading_end = if leading_end == 0 { 0 } else { leading_end - 1 };
 
 		let len = TextSize::from(
 			(if token_count == 1 {
@@ -139,7 +138,8 @@ impl<'a> LosslessTreeSink<'a> {
 			length += len;
 
 			let current_trivia = match token.kind {
-				NEWLINE | WHITESPACE => TriviaPiece::Whitespace(token.len),
+				NEWLINE => TriviaPiece::Newline(token.len),
+				WHITESPACE => TriviaPiece::Whitespace(token.len),
 				COMMENT => TriviaPiece::Comments(token.len, false),
 				MULTILINE_COMMENT => TriviaPiece::Comments(token.len, true),
 				_ => unreachable!("Not Trivia"),

@@ -19,7 +19,7 @@ JsModule {
                 items: [
                     JsUnknown {
                         items: [
-                            IDENT@6..12 "await" [Whitespace("\n")] [],
+                            IDENT@6..12 "await" [Newline("\n")] [],
                         ],
                     },
                 ],
@@ -27,7 +27,7 @@ JsModule {
             semicolon_token: SEMICOLON@12..13 ";" [] [],
         },
     ],
-    eof_token: EOF@13..14 "" [Whitespace("\n")] [],
+    eof_token: EOF@13..14 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..14
@@ -42,9 +42,9 @@ JsModule {
     1: JS_EXPRESSION_STATEMENT@6..13
       0: JS_UNKNOWN_EXPRESSION@6..12
         0: JS_UNKNOWN@6..12
-          0: IDENT@6..12 "await" [Whitespace("\n")] []
+          0: IDENT@6..12 "await" [Newline("\n")] []
       1: SEMICOLON@12..13 ";" [] []
-  3: EOF@13..14 "" [Whitespace("\n")] []
+  3: EOF@13..14 "" [Newline("\n")] []
 --
 error[SyntaxError]: Illegal use of reserved keyword `yield` as an identifier in strict mode
   ┌─ identifier.js:1:1

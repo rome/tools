@@ -41,7 +41,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@26..31 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@26..31 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -74,7 +74,7 @@ JsModule {
             ],
         },
     ],
-    eof_token: EOF@39..40 "" [Whitespace("\n")] [],
+    eof_token: EOF@39..40 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..40
@@ -105,7 +105,7 @@ JsModule {
       1: (empty)
     1: JS_VARIABLE_STATEMENT@26..38
       0: JS_VARIABLE_DECLARATIONS@26..38
-        0: LET_KW@26..31 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@26..31 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@31..38
           0: JS_VARIABLE_DECLARATION@31..38
             0: JS_IDENTIFIER_BINDING@31..33
@@ -123,7 +123,7 @@ JsModule {
       1: (empty)
     2: JS_UNKNOWN_STATEMENT@38..39
       0: R_CURLY@38..39 "}" [] []
-  3: EOF@39..40 "" [Whitespace("\n")] []
+  3: EOF@39..40 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '/: 6, /'
   ┌─ object_expr_error_prop_name.js:1:11

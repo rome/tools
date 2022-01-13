@@ -15,7 +15,7 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     abstract_token: missing (optional),
-                    get_token: GET_KW@15..22 "get" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")],
+                    get_token: GET_KW@15..22 "get" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                     name: JsLiteralMemberName {
                         value: IDENT@22..25 "foo" [] [],
                     },
@@ -28,7 +28,7 @@ JsModule {
             r_curly_token: missing (required),
         },
     ],
-    eof_token: EOF@27..28 "" [Whitespace("\n")] [],
+    eof_token: EOF@27..28 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..28
@@ -47,7 +47,7 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: GET_KW@15..22 "get" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")]
+          3: GET_KW@15..22 "get" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           4: JS_LITERAL_MEMBER_NAME@22..25
             0: IDENT@22..25 "foo" [] []
           5: L_PAREN@25..26 "(" [] []
@@ -55,7 +55,7 @@ JsModule {
           7: (empty)
           8: (empty)
       6: (empty)
-  3: EOF@27..28 "" [Whitespace("\n")] []
+  3: EOF@27..28 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected a class method body but instead found ''
   ┌─ getter_class_no_body.js:3:1

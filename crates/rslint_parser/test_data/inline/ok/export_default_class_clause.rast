@@ -16,7 +16,7 @@ JsModule {
             },
         },
     ],
-    eof_token: EOF@23..24 "" [Whitespace("\n")] [],
+    eof_token: EOF@23..24 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..24
@@ -34,4 +34,4 @@ JsModule {
         5: L_CURLY@21..22 "{" [] []
         6: JS_CLASS_MEMBER_LIST@22..22
         7: R_CURLY@22..23 "}" [] []
-  3: EOF@23..24 "" [Whitespace("\n")] []
+  3: EOF@23..24 "" [Newline("\n")] []

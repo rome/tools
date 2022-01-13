@@ -28,7 +28,7 @@ JsModule {
             expression: JsConditionalExpression {
                 test: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
-                        value_token: IDENT@13..18 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                        value_token: IDENT@13..18 "foo" [Newline("\n")] [Whitespace(" ")],
                     },
                 },
                 question_mark_token: QUESTION@18..20 "?" [] [Whitespace(" ")],
@@ -64,7 +64,7 @@ JsModule {
             expression: JsConditionalExpression {
                 test: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
-                        value_token: IDENT@39..44 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                        value_token: IDENT@39..44 "foo" [Newline("\n")] [Whitespace(" ")],
                     },
                 },
                 question_mark_token: QUESTION@44..46 "?" [] [Whitespace(" ")],
@@ -79,7 +79,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@51..52 "" [Whitespace("\n")] [],
+    eof_token: EOF@51..52 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..52
@@ -104,7 +104,7 @@ JsModule {
       0: JS_CONDITIONAL_EXPRESSION@13..39
         0: JS_IDENTIFIER_EXPRESSION@13..18
           0: JS_REFERENCE_IDENTIFIER@13..18
-            0: IDENT@13..18 "foo" [Whitespace("\n")] [Whitespace(" ")]
+            0: IDENT@13..18 "foo" [Newline("\n")] [Whitespace(" ")]
         1: QUESTION@18..20 "?" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_EXPRESSION@20..24
           0: JS_REFERENCE_IDENTIFIER@20..24
@@ -127,7 +127,7 @@ JsModule {
       0: JS_CONDITIONAL_EXPRESSION@39..51
         0: JS_IDENTIFIER_EXPRESSION@39..44
           0: JS_REFERENCE_IDENTIFIER@39..44
-            0: IDENT@39..44 "foo" [Whitespace("\n")] [Whitespace(" ")]
+            0: IDENT@39..44 "foo" [Newline("\n")] [Whitespace(" ")]
         1: QUESTION@44..46 "?" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_EXPRESSION@46..50
           0: JS_REFERENCE_IDENTIFIER@46..50
@@ -135,7 +135,7 @@ JsModule {
         3: COLON@50..51 ":" [] []
         4: (empty)
       1: (empty)
-  3: EOF@51..52 "" [Whitespace("\n")] []
+  3: EOF@51..52 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected `:` but instead found `baz`
   ┌─ conditional_expr_err.js:1:11

@@ -30,7 +30,7 @@ JsModule {
             },
         },
     ],
-    eof_token: EOF@21..22 "" [Whitespace("\n")] [],
+    eof_token: EOF@21..22 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..22
@@ -56,7 +56,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@20..20
         2: JS_STATEMENT_LIST@20..20
         3: R_CURLY@20..21 "}" [] []
-  3: EOF@21..22 "" [Whitespace("\n")] []
+  3: EOF@21..22 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected a parameter but instead found 'true'
   ┌─ formal_params_no_binding_element.js:1:14

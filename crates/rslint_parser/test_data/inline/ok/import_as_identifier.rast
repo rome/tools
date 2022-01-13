@@ -26,7 +26,7 @@ JsModule {
             semicolon_token: SEMICOLON@25..26 ";" [] [],
         },
         JsImport {
-            import_token: IMPORT_KW@26..34 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_token: IMPORT_KW@26..34 "import" [Newline("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
@@ -53,7 +53,7 @@ JsModule {
             semicolon_token: SEMICOLON@58..59 ";" [] [],
         },
     ],
-    eof_token: EOF@59..60 "" [Whitespace("\n")] [],
+    eof_token: EOF@59..60 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..60
@@ -77,7 +77,7 @@ JsModule {
         4: (empty)
       2: SEMICOLON@25..26 ";" [] []
     1: JS_IMPORT@26..59
-      0: IMPORT_KW@26..34 "import" [Whitespace("\n")] [Whitespace(" ")]
+      0: IMPORT_KW@26..34 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@34..58
         0: (empty)
         1: JS_NAMED_IMPORT_SPECIFIERS@34..47
@@ -95,4 +95,4 @@ JsModule {
           0: JS_STRING_LITERAL@52..58 "\"test\"" [] []
         4: (empty)
       2: SEMICOLON@58..59 ";" [] []
-  3: EOF@59..60 "" [Whitespace("\n")] []
+  3: EOF@59..60 "" [Newline("\n")] []

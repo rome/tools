@@ -45,7 +45,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@23..28 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@23..28 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
@@ -84,7 +84,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@51..56 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@51..56 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
@@ -121,7 +121,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@75..76 "" [Whitespace("\n")] [],
+    eof_token: EOF@75..76 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..76
@@ -159,7 +159,7 @@ JsModule {
       1: (empty)
     1: JS_VARIABLE_STATEMENT@23..51
       0: JS_VARIABLE_DECLARATIONS@23..51
-        0: LET_KW@23..28 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@23..28 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@28..51
           0: JS_VARIABLE_DECLARATION@28..51
             0: JS_OBJECT_BINDING_PATTERN@28..47
@@ -186,7 +186,7 @@ JsModule {
       1: (empty)
     2: JS_VARIABLE_STATEMENT@51..75
       0: JS_VARIABLE_DECLARATIONS@51..75
-        0: LET_KW@51..56 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@51..56 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@56..75
           0: JS_VARIABLE_DECLARATION@56..75
             0: JS_OBJECT_BINDING_PATTERN@56..71
@@ -211,7 +211,7 @@ JsModule {
                 1: JS_OBJECT_MEMBER_LIST@74..74
                 2: R_CURLY@74..75 "}" [] []
       1: (empty)
-  3: EOF@75..76 "" [Whitespace("\n")] []
+  3: EOF@75..76 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected an identifier, an array pattern, or an object pattern but instead found ','
   ┌─ object_property_binding_err.js:1:12

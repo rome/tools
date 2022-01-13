@@ -48,7 +48,7 @@ JsModule {
         },
         JsFunctionStatement {
             async_token: missing (optional),
-            function_token: FUNCTION_KW@30..40 "function" [Whitespace("\n")] [Whitespace(" ")],
+            function_token: FUNCTION_KW@30..40 "function" [Newline("\n")] [Whitespace(" ")],
             star_token: STAR@40..41 "*" [] [],
             id: JsIdentifierBinding {
                 name_token: IDENT@41..44 "foo" [] [],
@@ -66,7 +66,7 @@ JsModule {
                 statements: JsStatementList [
                     JsVariableStatement {
                         declarations: JsVariableDeclarations {
-                            kind: LET_KW@48..56 "let" [Whitespace("\n"), Whitespace("   ")] [Whitespace(" ")],
+                            kind: LET_KW@48..56 "let" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")],
                             items: JsVariableDeclarationList [
                                 JsVariableDeclaration {
                                     id: JsUnknownBinding {
@@ -88,12 +88,12 @@ JsModule {
                         semicolon_token: SEMICOLON@65..66 ";" [] [],
                     },
                 ],
-                r_curly_token: R_CURLY@66..68 "}" [Whitespace("\n")] [],
+                r_curly_token: R_CURLY@66..68 "}" [Newline("\n")] [],
             },
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@68..73 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@68..73 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
@@ -116,7 +116,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@82..87 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@82..87 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
@@ -139,7 +139,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: CONST_KW@95..102 "const" [Whitespace("\n")] [Whitespace(" ")],
+                kind: CONST_KW@95..102 "const" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsUnknownBinding {
@@ -162,7 +162,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@110..115 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@110..115 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -188,7 +188,7 @@ JsModule {
             semicolon_token: SEMICOLON@119..120 ";" [] [],
         },
     ],
-    eof_token: EOF@120..121 "" [Whitespace("\n")] [],
+    eof_token: EOF@120..121 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..121
@@ -227,7 +227,7 @@ JsModule {
       1: (empty)
     1: JS_FUNCTION_STATEMENT@30..68
       0: (empty)
-      1: FUNCTION_KW@30..40 "function" [Whitespace("\n")] [Whitespace(" ")]
+      1: FUNCTION_KW@30..40 "function" [Newline("\n")] [Whitespace(" ")]
       2: STAR@40..41 "*" [] []
       3: JS_IDENTIFIER_BINDING@41..44
         0: IDENT@41..44 "foo" [] []
@@ -243,7 +243,7 @@ JsModule {
         2: JS_STATEMENT_LIST@48..66
           0: JS_VARIABLE_STATEMENT@48..66
             0: JS_VARIABLE_DECLARATIONS@48..65
-              0: LET_KW@48..56 "let" [Whitespace("\n"), Whitespace("   ")] [Whitespace(" ")]
+              0: LET_KW@48..56 "let" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
               1: JS_VARIABLE_DECLARATION_LIST@56..65
                 0: JS_VARIABLE_DECLARATION@56..65
                   0: JS_UNKNOWN_BINDING@56..62
@@ -255,10 +255,10 @@ JsModule {
                     1: JS_NUMBER_LITERAL_EXPRESSION@64..65
                       0: JS_NUMBER_LITERAL@64..65 "5" [] []
             1: SEMICOLON@65..66 ";" [] []
-        3: R_CURLY@66..68 "}" [Whitespace("\n")] []
+        3: R_CURLY@66..68 "}" [Newline("\n")] []
     2: JS_VARIABLE_STATEMENT@68..82
       0: JS_VARIABLE_DECLARATIONS@68..81
-        0: LET_KW@68..73 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@68..73 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@73..81
           0: JS_VARIABLE_DECLARATION@73..81
             0: JS_UNKNOWN_BINDING@73..78
@@ -272,7 +272,7 @@ JsModule {
       1: SEMICOLON@81..82 ";" [] []
     3: JS_VARIABLE_STATEMENT@82..95
       0: JS_VARIABLE_DECLARATIONS@82..94
-        0: LET_KW@82..87 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@82..87 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@87..94
           0: JS_VARIABLE_DECLARATION@87..94
             0: JS_UNKNOWN_BINDING@87..91
@@ -286,7 +286,7 @@ JsModule {
       1: SEMICOLON@94..95 ";" [] []
     4: JS_VARIABLE_STATEMENT@95..110
       0: JS_VARIABLE_DECLARATIONS@95..109
-        0: CONST_KW@95..102 "const" [Whitespace("\n")] [Whitespace(" ")]
+        0: CONST_KW@95..102 "const" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@102..109
           0: JS_VARIABLE_DECLARATION@102..109
             0: JS_UNKNOWN_BINDING@102..106
@@ -300,7 +300,7 @@ JsModule {
       1: SEMICOLON@109..110 ";" [] []
     5: JS_VARIABLE_STATEMENT@110..120
       0: JS_VARIABLE_DECLARATIONS@110..119
-        0: LET_KW@110..115 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@110..115 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@115..119
           0: JS_VARIABLE_DECLARATION@115..116
             0: JS_IDENTIFIER_BINDING@115..116
@@ -316,7 +316,7 @@ JsModule {
             2: (empty)
             3: (empty)
       1: SEMICOLON@119..120 ";" [] []
-  3: EOF@120..121 "" [Whitespace("\n")] []
+  3: EOF@120..121 "" [Newline("\n")] []
 --
 error[SyntaxError]: Illegal use of `await` as an identifier in an async context
   ┌─ binding_identifier_invalid.js:1:19

@@ -28,7 +28,7 @@ JsModule {
             expression: JsConditionalExpression {
                 test: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
-                        value_token: IDENT@15..20 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                        value_token: IDENT@15..20 "foo" [Newline("\n")] [Whitespace(" ")],
                     },
                 },
                 question_mark_token: QUESTION@20..22 "?" [] [Whitespace(" ")],
@@ -61,7 +61,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@43..44 "" [Whitespace("\n")] [],
+    eof_token: EOF@43..44 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..44
@@ -86,7 +86,7 @@ JsModule {
       0: JS_CONDITIONAL_EXPRESSION@15..43
         0: JS_IDENTIFIER_EXPRESSION@15..20
           0: JS_REFERENCE_IDENTIFIER@15..20
-            0: IDENT@15..20 "foo" [Whitespace("\n")] [Whitespace(" ")]
+            0: IDENT@15..20 "foo" [Newline("\n")] [Whitespace(" ")]
         1: QUESTION@20..22 "?" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_EXPRESSION@22..26
           0: JS_REFERENCE_IDENTIFIER@22..26
@@ -105,4 +105,4 @@ JsModule {
             0: JS_REFERENCE_IDENTIFIER@40..43
               0: IDENT@40..43 "baz" [] []
       1: (empty)
-  3: EOF@43..44 "" [Whitespace("\n")] []
+  3: EOF@43..44 "" [Newline("\n")] []

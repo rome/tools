@@ -29,7 +29,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@14..16 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@14..16 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsArrayAssignmentPattern {
                         l_brack_token: L_BRACK@16..18 "[" [] [Whitespace(" ")],
@@ -60,7 +60,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@42..44 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@42..44 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsArrayAssignmentPattern {
                         l_brack_token: L_BRACK@44..46 "[" [] [Whitespace(" ")],
@@ -92,7 +92,7 @@ JsModule {
             semicolon_token: SEMICOLON@78..79 ";" [] [],
         },
     ],
-    eof_token: EOF@79..80 "" [Whitespace("\n")] [],
+    eof_token: EOF@79..80 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..80
@@ -118,7 +118,7 @@ JsModule {
       1: SEMICOLON@13..14 ";" [] []
     1: JS_EXPRESSION_STATEMENT@14..42
       0: JS_PARENTHESIZED_EXPRESSION@14..41
-        0: L_PAREN@14..16 "(" [Whitespace("\n")] []
+        0: L_PAREN@14..16 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@16..40
           0: JS_ARRAY_ASSIGNMENT_PATTERN@16..37
             0: L_BRACK@16..18 "[" [] [Whitespace(" ")]
@@ -138,7 +138,7 @@ JsModule {
       1: SEMICOLON@41..42 ";" [] []
     2: JS_EXPRESSION_STATEMENT@42..79
       0: JS_PARENTHESIZED_EXPRESSION@42..78
-        0: L_PAREN@42..44 "(" [Whitespace("\n")] []
+        0: L_PAREN@42..44 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@44..77
           0: JS_ARRAY_ASSIGNMENT_PATTERN@44..74
             0: L_BRACK@44..46 "[" [] [Whitespace(" ")]
@@ -157,7 +157,7 @@ JsModule {
               0: IDENT@76..77 "a" [] []
         2: R_PAREN@77..78 ")" [] []
       1: SEMICOLON@78..79 ";" [] []
-  3: EOF@79..80 "" [Whitespace("\n")] []
+  3: EOF@79..80 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected an identifier, or an assignment target but instead found ''
   ┌─ array_assignment_target_rest_err.js:1:7

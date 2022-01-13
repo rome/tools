@@ -25,7 +25,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@12..17 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@12..17 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
@@ -66,7 +66,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@33..38 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@33..38 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
@@ -106,7 +106,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@57..62 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@57..62 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
@@ -145,7 +145,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@85..90 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@85..90 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
@@ -183,7 +183,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@109..114 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@109..114 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
@@ -233,7 +233,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@137..138 "" [Whitespace("\n")] [],
+    eof_token: EOF@137..138 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..138
@@ -256,7 +256,7 @@ JsModule {
       1: SEMICOLON@11..12 ";" [] []
     1: JS_VARIABLE_STATEMENT@12..33
       0: JS_VARIABLE_DECLARATIONS@12..32
-        0: LET_KW@12..17 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@12..17 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@17..32
           0: JS_VARIABLE_DECLARATION@17..32
             0: JS_ARRAY_BINDING_PATTERN@17..24
@@ -284,7 +284,7 @@ JsModule {
       1: SEMICOLON@32..33 ";" [] []
     2: JS_VARIABLE_STATEMENT@33..57
       0: JS_VARIABLE_DECLARATIONS@33..56
-        0: LET_KW@33..38 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@33..38 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@38..56
           0: JS_VARIABLE_DECLARATION@38..56
             0: JS_ARRAY_BINDING_PATTERN@38..51
@@ -311,7 +311,7 @@ JsModule {
       1: SEMICOLON@56..57 ";" [] []
     3: JS_VARIABLE_STATEMENT@57..85
       0: JS_VARIABLE_DECLARATIONS@57..85
-        0: LET_KW@57..62 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@57..62 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@62..85
           0: JS_VARIABLE_DECLARATION@62..85
             0: JS_ARRAY_BINDING_PATTERN@62..81
@@ -338,7 +338,7 @@ JsModule {
       1: (empty)
     4: JS_VARIABLE_STATEMENT@85..109
       0: JS_VARIABLE_DECLARATIONS@85..109
-        0: LET_KW@85..90 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@85..90 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@90..109
           0: JS_VARIABLE_DECLARATION@90..109
             0: JS_ARRAY_BINDING_PATTERN@90..105
@@ -365,7 +365,7 @@ JsModule {
       1: (empty)
     5: JS_VARIABLE_STATEMENT@109..137
       0: JS_VARIABLE_DECLARATIONS@109..137
-        0: LET_KW@109..114 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@109..114 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@114..137
           0: JS_VARIABLE_DECLARATION@114..137
             0: JS_ARRAY_BINDING_PATTERN@114..133
@@ -398,4 +398,4 @@ JsModule {
                 1: JS_ARRAY_ELEMENT_LIST@136..136
                 2: R_BRACK@136..137 "]" [] []
       1: (empty)
-  3: EOF@137..138 "" [Whitespace("\n")] []
+  3: EOF@137..138 "" [Newline("\n")] []

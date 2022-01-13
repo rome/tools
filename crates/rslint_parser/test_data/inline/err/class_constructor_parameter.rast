@@ -43,7 +43,7 @@ JsModule {
             r_curly_token: R_CURLY@38..39 "}" [] [],
         },
     ],
-    eof_token: EOF@39..40 "" [Whitespace("\n")] [],
+    eof_token: EOF@39..40 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..40
@@ -80,7 +80,7 @@ JsModule {
             2: JS_STATEMENT_LIST@36..36
             3: R_CURLY@36..38 "}" [] [Whitespace(" ")]
       6: R_CURLY@38..39 "}" [] []
-  3: EOF@39..40 "" [Whitespace("\n")] []
+  3: EOF@39..40 "" [Newline("\n")] []
 --
 error[SyntaxError]: accessibility modifiers for a parameter inside a constructor can only be used in TypeScript files
   ┌─ class_constructor_parameter.js:1:23

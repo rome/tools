@@ -16,7 +16,7 @@ JsModule {
             },
             r_paren_token: missing (required),
             body: JsForStatement {
-                for_token: FOR_KW@9..14 "for" [Whitespace("\n")] [Whitespace(" ")],
+                for_token: FOR_KW@9..14 "for" [Newline("\n")] [Whitespace(" ")],
                 l_paren_token: missing (required),
                 initializer: JsVariableDeclarations {
                     kind: LET_KW@14..18 "let" [] [Whitespace(" ")],
@@ -64,7 +64,7 @@ JsModule {
             },
         },
         JsForStatement {
-            for_token: FOR_KW@39..44 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@39..44 "for" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: missing (required),
             initializer: JsVariableDeclarations {
                 kind: LET_KW@44..48 "let" [] [Whitespace(" ")],
@@ -111,7 +111,7 @@ JsModule {
             },
         },
         JsForInStatement {
-            for_token: FOR_KW@69..74 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@69..74 "for" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@74..75 "(" [] [],
             initializer: missing (required),
             in_token: IN_KW@75..78 "in" [] [Whitespace(" ")],
@@ -129,7 +129,7 @@ JsModule {
         },
         JsUnknownStatement {
             items: [
-                FOR_KW@84..89 "for" [Whitespace("\n")] [Whitespace(" ")],
+                FOR_KW@84..89 "for" [Newline("\n")] [Whitespace(" ")],
                 L_PAREN@89..90 "(" [] [],
                 JsUnknown {
                     items: [
@@ -174,7 +174,7 @@ JsModule {
         },
         JsUnknownStatement {
             items: [
-                FOR_KW@112..117 "for" [Whitespace("\n")] [Whitespace(" ")],
+                FOR_KW@112..117 "for" [Newline("\n")] [Whitespace(" ")],
                 AWAIT_KW@117..123 "await" [] [Whitespace(" ")],
                 L_PAREN@123..124 "(" [] [],
                 JsForVariableDeclaration {
@@ -204,7 +204,7 @@ JsModule {
         },
         JsUnknownStatement {
             items: [
-                FOR_KW@139..144 "for" [Whitespace("\n")] [Whitespace(" ")],
+                FOR_KW@139..144 "for" [Newline("\n")] [Whitespace(" ")],
                 AWAIT_KW@144..150 "await" [] [Whitespace(" ")],
                 L_PAREN@150..151 "(" [] [],
                 JsVariableDeclarations {
@@ -253,7 +253,7 @@ JsModule {
             ],
         },
         JsForStatement {
-            for_token: FOR_KW@177..182 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@177..182 "for" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@182..183 "(" [] [],
             initializer: JsVariableDeclarations {
                 kind: LET_KW@183..187 "let" [] [Whitespace(" ")],
@@ -286,7 +286,7 @@ JsModule {
             },
         },
     ],
-    eof_token: EOF@196..197 "" [Whitespace("\n")] [],
+    eof_token: EOF@196..197 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..197
@@ -306,7 +306,7 @@ JsModule {
         2: R_CURLY@8..9 "}" [] []
       7: (empty)
       8: JS_FOR_STATEMENT@9..39
-        0: FOR_KW@9..14 "for" [Whitespace("\n")] [Whitespace(" ")]
+        0: FOR_KW@9..14 "for" [Newline("\n")] [Whitespace(" ")]
         1: (empty)
         2: JS_VARIABLE_DECLARATIONS@14..23
           0: LET_KW@14..18 "let" [] [Whitespace(" ")]
@@ -339,7 +339,7 @@ JsModule {
           1: JS_STATEMENT_LIST@38..38
           2: R_CURLY@38..39 "}" [] []
     1: JS_FOR_STATEMENT@39..69
-      0: FOR_KW@39..44 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@39..44 "for" [Newline("\n")] [Whitespace(" ")]
       1: (empty)
       2: JS_VARIABLE_DECLARATIONS@44..53
         0: LET_KW@44..48 "let" [] [Whitespace(" ")]
@@ -372,7 +372,7 @@ JsModule {
         1: JS_STATEMENT_LIST@68..68
         2: R_CURLY@68..69 "}" [] []
     2: JS_FOR_IN_STATEMENT@69..84
-      0: FOR_KW@69..74 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@69..74 "for" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@74..75 "(" [] []
       2: (empty)
       3: IN_KW@75..78 "in" [] [Whitespace(" ")]
@@ -386,7 +386,7 @@ JsModule {
         1: JS_STATEMENT_LIST@83..83
         2: R_CURLY@83..84 "}" [] []
     3: JS_UNKNOWN_STATEMENT@84..112
-      0: FOR_KW@84..89 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@84..89 "for" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@89..90 "(" [] []
       2: JS_UNKNOWN@90..103
         0: LET_KW@90..94 "let" [] [Whitespace(" ")]
@@ -417,7 +417,7 @@ JsModule {
         1: JS_STATEMENT_LIST@111..111
         2: R_CURLY@111..112 "}" [] []
     4: JS_UNKNOWN_STATEMENT@112..139
-      0: FOR_KW@112..117 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@112..117 "for" [Newline("\n")] [Whitespace(" ")]
       1: AWAIT_KW@117..123 "await" [] [Whitespace(" ")]
       2: L_PAREN@123..124 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@124..130
@@ -439,7 +439,7 @@ JsModule {
         1: JS_STATEMENT_LIST@138..138
         2: R_CURLY@138..139 "}" [] []
     5: JS_UNKNOWN_STATEMENT@139..177
-      0: FOR_KW@139..144 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@139..144 "for" [Newline("\n")] [Whitespace(" ")]
       1: AWAIT_KW@144..150 "await" [] [Whitespace(" ")]
       2: L_PAREN@150..151 "(" [] []
       3: JS_VARIABLE_DECLARATIONS@151..160
@@ -473,7 +473,7 @@ JsModule {
         1: JS_STATEMENT_LIST@176..176
         2: R_CURLY@176..177 "}" [] []
     6: JS_FOR_STATEMENT@177..196
-      0: FOR_KW@177..182 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@177..182 "for" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@182..183 "(" [] []
       2: JS_VARIABLE_DECLARATIONS@183..190
         0: LET_KW@183..187 "let" [] [Whitespace(" ")]
@@ -497,7 +497,7 @@ JsModule {
         0: L_CURLY@194..195 "{" [] []
         1: JS_STATEMENT_LIST@195..195
         2: R_CURLY@195..196 "}" [] []
-  3: EOF@196..197 "" [Whitespace("\n")] []
+  3: EOF@196..197 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected `'('` but instead found `;`
   ┌─ for_stmt_err.js:1:5

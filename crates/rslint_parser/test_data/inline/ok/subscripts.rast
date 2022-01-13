@@ -26,7 +26,7 @@ JsModule {
                         callee: JsCallExpression {
                             callee: JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
-                                    value_token: IDENT@8..12 "foo" [Whitespace("\n")] [],
+                                    value_token: IDENT@8..12 "foo" [Newline("\n")] [],
                                 },
                             },
                             optional_chain_token_token: missing (optional),
@@ -83,7 +83,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@32..33 "" [Whitespace("\n")] [],
+    eof_token: EOF@32..33 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..33
@@ -108,7 +108,7 @@ JsModule {
             0: JS_CALL_EXPRESSION@8..17
               0: JS_IDENTIFIER_EXPRESSION@8..12
                 0: JS_REFERENCE_IDENTIFIER@8..12
-                  0: IDENT@8..12 "foo" [Whitespace("\n")] []
+                  0: IDENT@8..12 "foo" [Newline("\n")] []
               1: (empty)
               2: (empty)
               3: JS_CALL_ARGUMENTS@12..17
@@ -143,4 +143,4 @@ JsModule {
             0: IDENT@28..31 "bar" [] []
         4: R_BRACK@31..32 "]" [] []
       1: (empty)
-  3: EOF@32..33 "" [Whitespace("\n")] []
+  3: EOF@32..33 "" [Newline("\n")] []

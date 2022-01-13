@@ -13,31 +13,31 @@ JsModule {
                 l_curly_token: L_CURLY@13..14 "{" [] [],
                 statements: JsStatementList [
                     JsBreakStatement {
-                        break_token: BREAK_KW@14..22 "break" [Whitespace("\n"), Whitespace("  ")] [],
+                        break_token: BREAK_KW@14..22 "break" [Newline("\n"), Whitespace("  ")] [],
                         label_token: missing (optional),
                         semicolon_token: SEMICOLON@22..23 ";" [] [],
                     },
                     JsLabeledStatement {
-                        label_token: IDENT@23..28 "foo" [Whitespace("\n"), Whitespace("\t")] [],
+                        label_token: IDENT@23..28 "foo" [Newline("\n"), Whitespace("\t")] [],
                         colon_token: COLON@28..30 ":" [] [Whitespace(" ")],
                         body: JsBlockStatement {
                             l_curly_token: L_CURLY@30..31 "{" [] [],
                             statements: JsStatementList [
                                 JsBreakStatement {
-                                    break_token: BREAK_KW@31..41 "break" [Whitespace("\n"), Whitespace("   ")] [Whitespace(" ")],
+                                    break_token: BREAK_KW@31..41 "break" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")],
                                     label_token: IDENT@41..44 "foo" [] [],
                                     semicolon_token: SEMICOLON@44..45 ";" [] [],
                                 },
                             ],
-                            r_curly_token: R_CURLY@45..48 "}" [Whitespace("\n"), Whitespace("\t")] [],
+                            r_curly_token: R_CURLY@45..48 "}" [Newline("\n"), Whitespace("\t")] [],
                         },
                     },
                 ],
-                r_curly_token: R_CURLY@48..50 "}" [Whitespace("\n")] [],
+                r_curly_token: R_CURLY@48..50 "}" [Newline("\n")] [],
             },
         },
     ],
-    eof_token: EOF@50..51 "" [Whitespace("\n")] [],
+    eof_token: EOF@50..51 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..51
@@ -54,19 +54,19 @@ JsModule {
         0: L_CURLY@13..14 "{" [] []
         1: JS_STATEMENT_LIST@14..48
           0: JS_BREAK_STATEMENT@14..23
-            0: BREAK_KW@14..22 "break" [Whitespace("\n"), Whitespace("  ")] []
+            0: BREAK_KW@14..22 "break" [Newline("\n"), Whitespace("  ")] []
             1: (empty)
             2: SEMICOLON@22..23 ";" [] []
           1: JS_LABELED_STATEMENT@23..48
-            0: IDENT@23..28 "foo" [Whitespace("\n"), Whitespace("\t")] []
+            0: IDENT@23..28 "foo" [Newline("\n"), Whitespace("\t")] []
             1: COLON@28..30 ":" [] [Whitespace(" ")]
             2: JS_BLOCK_STATEMENT@30..48
               0: L_CURLY@30..31 "{" [] []
               1: JS_STATEMENT_LIST@31..45
                 0: JS_BREAK_STATEMENT@31..45
-                  0: BREAK_KW@31..41 "break" [Whitespace("\n"), Whitespace("   ")] [Whitespace(" ")]
+                  0: BREAK_KW@31..41 "break" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
                   1: IDENT@41..44 "foo" [] []
                   2: SEMICOLON@44..45 ";" [] []
-              2: R_CURLY@45..48 "}" [Whitespace("\n"), Whitespace("\t")] []
-        2: R_CURLY@48..50 "}" [Whitespace("\n")] []
-  3: EOF@50..51 "" [Whitespace("\n")] []
+              2: R_CURLY@45..48 "}" [Newline("\n"), Whitespace("\t")] []
+        2: R_CURLY@48..50 "}" [Newline("\n")] []
+  3: EOF@50..51 "" [Newline("\n")] []

@@ -35,7 +35,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@23..24 "" [Whitespace("\n")] [],
+    eof_token: EOF@23..24 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..24
@@ -63,7 +63,7 @@ JsModule {
         0: JS_REFERENCE_IDENTIFIER@20..23
           0: IDENT@20..23 "foo" [] []
       2: (empty)
-  3: EOF@23..24 "" [Whitespace("\n")] []
+  3: EOF@23..24 "" [Newline("\n")] []
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ semicolons_err.js:1:15

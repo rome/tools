@@ -35,7 +35,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@15..20 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@15..20 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -69,7 +69,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@35..36 "" [Whitespace("\n")] [],
+    eof_token: EOF@35..36 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..36
@@ -99,7 +99,7 @@ JsModule {
       1: (empty)
     1: JS_VARIABLE_STATEMENT@15..35
       0: JS_VARIABLE_DECLARATIONS@15..35
-        0: LET_KW@15..20 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@15..20 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@20..35
           0: JS_VARIABLE_DECLARATION@20..35
             0: JS_IDENTIFIER_BINDING@20..22
@@ -120,7 +120,7 @@ JsModule {
                         0: IDENT@30..34 "bar" [] [Whitespace(" ")]
                 2: R_CURLY@34..35 "}" [] []
       1: (empty)
-  3: EOF@35..36 "" [Whitespace("\n")] []
+  3: EOF@35..36 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected `:` but instead found `bar`
   ┌─ object_expr_err.js:2:15

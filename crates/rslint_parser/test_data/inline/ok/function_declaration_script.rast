@@ -4,7 +4,7 @@ JsScript {
     statements: JsStatementList [
         JsFunctionStatement {
             async_token: missing (optional),
-            function_token: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
+            function_token: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")],
             star_token: missing (optional),
             id: JsIdentifierBinding {
                 name_token: IDENT@19..23 "test" [] [],
@@ -32,7 +32,7 @@ JsScript {
             },
         },
     ],
-    eof_token: EOF@33..34 "" [Whitespace("\n")] [],
+    eof_token: EOF@33..34 "" [Newline("\n")] [],
 }
 
 0: JS_SCRIPT@0..34
@@ -41,7 +41,7 @@ JsScript {
   2: JS_STATEMENT_LIST@0..33
     0: JS_FUNCTION_STATEMENT@0..33
       0: (empty)
-      1: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")]
+      1: FUNCTION_KW@0..19 "function" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
       2: (empty)
       3: JS_IDENTIFIER_BINDING@19..23
         0: IDENT@19..23 "test" [] []
@@ -61,4 +61,4 @@ JsScript {
         1: JS_DIRECTIVE_LIST@32..32
         2: JS_STATEMENT_LIST@32..32
         3: R_CURLY@32..33 "}" [] []
-  3: EOF@33..34 "" [Whitespace("\n")] []
+  3: EOF@33..34 "" [Newline("\n")] []

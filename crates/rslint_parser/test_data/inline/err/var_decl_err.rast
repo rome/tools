@@ -23,7 +23,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: CONST_KW@8..15 "const" [Whitespace("\n")] [Whitespace(" ")],
+                kind: CONST_KW@8..15 "const" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -64,7 +64,7 @@ JsModule {
             semicolon_token: SEMICOLON@30..31 ";" [] [],
         },
     ],
-    eof_token: EOF@31..32 "" [Whitespace("\n")] [],
+    eof_token: EOF@31..32 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..32
@@ -86,7 +86,7 @@ JsModule {
       1: SEMICOLON@7..8 ";" [] []
     1: JS_VARIABLE_STATEMENT@8..21
       0: JS_VARIABLE_DECLARATIONS@8..21
-        0: CONST_KW@8..15 "const" [Whitespace("\n")] [Whitespace(" ")]
+        0: CONST_KW@8..15 "const" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@15..21
           0: JS_VARIABLE_DECLARATION@15..21
             0: JS_IDENTIFIER_BINDING@15..17
@@ -112,7 +112,7 @@ JsModule {
               1: JS_NUMBER_LITERAL_EXPRESSION@29..30
                 0: JS_NUMBER_LITERAL@29..30 "5" [] []
       1: SEMICOLON@30..31 ";" [] []
-  3: EOF@31..32 "" [Whitespace("\n")] []
+  3: EOF@31..32 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected an expression, or an assignment but instead found ';'
   ┌─ var_decl_err.js:1:8

@@ -17,7 +17,7 @@ JsModule {
             semicolon_token: SEMICOLON@17..18 ";" [] [],
         },
         JsExport {
-            export_token: EXPORT_KW@18..26 "export" [Whitespace("\n")] [Whitespace(" ")],
+            export_token: EXPORT_KW@18..26 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportNamedClause {
                 l_curly_token: L_CURLY@26..28 "{" [] [Whitespace(" ")],
                 specifiers: JsExportNamedSpecifierList [
@@ -36,7 +36,7 @@ JsModule {
             expression: JsCallExpression {
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
-                        value_token: IDENT@32..34 "c" [Whitespace("\n")] [],
+                        value_token: IDENT@32..34 "c" [Newline("\n")] [],
                     },
                 },
                 optional_chain_token_token: missing (optional),
@@ -50,7 +50,7 @@ JsModule {
             semicolon_token: SEMICOLON@36..37 ";" [] [],
         },
         JsImport {
-            import_token: IMPORT_KW@37..45 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_token: IMPORT_KW@37..45 "import" [Newline("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
@@ -73,7 +73,7 @@ JsModule {
             semicolon_token: SEMICOLON@59..60 ";" [] [],
         },
     ],
-    eof_token: EOF@60..61 "" [Whitespace("\n")] [],
+    eof_token: EOF@60..61 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..61
@@ -91,7 +91,7 @@ JsModule {
         3: (empty)
       2: SEMICOLON@17..18 ";" [] []
     1: JS_EXPORT@18..32
-      0: EXPORT_KW@18..26 "export" [Whitespace("\n")] [Whitespace(" ")]
+      0: EXPORT_KW@18..26 "export" [Newline("\n")] [Whitespace(" ")]
       1: JS_EXPORT_NAMED_CLAUSE@26..32
         0: L_CURLY@26..28 "{" [] [Whitespace(" ")]
         1: JS_EXPORT_NAMED_SPECIFIER_LIST@28..30
@@ -105,7 +105,7 @@ JsModule {
       0: JS_CALL_EXPRESSION@32..36
         0: JS_IDENTIFIER_EXPRESSION@32..34
           0: JS_REFERENCE_IDENTIFIER@32..34
-            0: IDENT@32..34 "c" [Whitespace("\n")] []
+            0: IDENT@32..34 "c" [Newline("\n")] []
         1: (empty)
         2: (empty)
         3: JS_CALL_ARGUMENTS@34..36
@@ -114,7 +114,7 @@ JsModule {
           2: R_PAREN@35..36 ")" [] []
       1: SEMICOLON@36..37 ";" [] []
     3: JS_IMPORT@37..60
-      0: IMPORT_KW@37..45 "import" [Whitespace("\n")] [Whitespace(" ")]
+      0: IMPORT_KW@37..45 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@45..59
         0: (empty)
         1: JS_NAMED_IMPORT_SPECIFIERS@45..51
@@ -129,4 +129,4 @@ JsModule {
           0: JS_STRING_LITERAL@56..59 "\"c\"" [] []
         4: (empty)
       2: SEMICOLON@59..60 ";" [] []
-  3: EOF@60..61 "" [Whitespace("\n")] []
+  3: EOF@60..61 "" [Newline("\n")] []

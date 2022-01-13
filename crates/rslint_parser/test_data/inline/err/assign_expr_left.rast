@@ -27,7 +27,7 @@ JsModule {
             semicolon_token: SEMICOLON@8..9 ";" [] [],
         },
     ],
-    eof_token: EOF@9..10 "" [Whitespace("\n")] [],
+    eof_token: EOF@9..10 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..10
@@ -49,7 +49,7 @@ JsModule {
       0: R_PAREN@7..8 ")" [] []
     2: JS_EMPTY_STATEMENT@8..9
       0: SEMICOLON@8..9 ";" [] []
-  3: EOF@9..10 "" [Whitespace("\n")] []
+  3: EOF@9..10 "" [Newline("\n")] []
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ assign_expr_left.js:1:8

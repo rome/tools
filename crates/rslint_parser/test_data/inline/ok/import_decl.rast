@@ -19,7 +19,7 @@ JsModule {
             semicolon_token: SEMICOLON@26..27 ";" [] [],
         },
     ],
-    eof_token: EOF@27..28 "" [Whitespace("\n")] [],
+    eof_token: EOF@27..28 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..28
@@ -38,4 +38,4 @@ JsModule {
           0: JS_STRING_LITERAL@21..26 "\"bla\"" [] []
         5: (empty)
       2: SEMICOLON@26..27 ";" [] []
-  3: EOF@27..28 "" [Whitespace("\n")] []
+  3: EOF@27..28 "" [Newline("\n")] []

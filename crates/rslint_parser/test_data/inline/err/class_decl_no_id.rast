@@ -13,7 +13,7 @@ JsModule {
         },
         JsUnknownStatement {
             items: [
-                CLASS_KW@8..15 "class" [Whitespace("\n")] [Whitespace(" ")],
+                CLASS_KW@8..15 "class" [Newline("\n")] [Whitespace(" ")],
                 JsUnknown {
                     items: [
                         IMPLEMENTS_KW@15..26 "implements" [] [Whitespace(" ")],
@@ -33,7 +33,7 @@ JsModule {
             ],
         },
     ],
-    eof_token: EOF@30..31 "" [Whitespace("\n")] [],
+    eof_token: EOF@30..31 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..31
@@ -49,7 +49,7 @@ JsModule {
       5: JS_CLASS_MEMBER_LIST@7..7
       6: R_CURLY@7..8 "}" [] []
     1: JS_UNKNOWN_STATEMENT@8..30
-      0: CLASS_KW@8..15 "class" [Whitespace("\n")] [Whitespace(" ")]
+      0: CLASS_KW@8..15 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_UNKNOWN@15..28
         0: IMPLEMENTS_KW@15..26 "implements" [] [Whitespace(" ")]
         1: TS_TYPE_LIST@26..28
@@ -60,7 +60,7 @@ JsModule {
       2: L_CURLY@28..29 "{" [] []
       3: JS_CLASS_MEMBER_LIST@29..29
       4: R_CURLY@29..30 "}" [] []
-  3: EOF@30..31 "" [Whitespace("\n")] []
+  3: EOF@30..31 "" [Newline("\n")] []
 --
 error[SyntaxError]: class declarations must have a name
   ┌─ class_decl_no_id.js:1:1

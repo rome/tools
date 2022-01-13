@@ -13,36 +13,36 @@ JsModule {
                 l_curly_token: L_CURLY@13..14 "{" [] [],
                 statements: JsStatementList [
                     JsContinueStatement {
-                        continue_token: CONTINUE_KW@14..25 "continue" [Whitespace("\n"), Whitespace("  ")] [],
+                        continue_token: CONTINUE_KW@14..25 "continue" [Newline("\n"), Whitespace("  ")] [],
                         label_token: missing (optional),
                         semicolon_token: SEMICOLON@25..26 ";" [] [],
                     },
                     JsLabeledStatement {
-                        label_token: IDENT@26..32 "foo" [Whitespace("\n"), Whitespace("  ")] [],
+                        label_token: IDENT@26..32 "foo" [Newline("\n"), Whitespace("  ")] [],
                         colon_token: COLON@32..34 ":" [] [Whitespace(" ")],
                         body: JsBlockStatement {
                             l_curly_token: L_CURLY@34..35 "{" [] [],
                             statements: JsStatementList [
                                 JsContinueStatement {
-                                    continue_token: CONTINUE_KW@35..49 "continue" [Whitespace("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    continue_token: CONTINUE_KW@35..49 "continue" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                                     label_token: IDENT@49..52 "foo" [] [],
                                     semicolon_token: SEMICOLON@52..53 ";" [] [],
                                 },
                             ],
-                            r_curly_token: R_CURLY@53..57 "}" [Whitespace("\n"), Whitespace("\t ")] [],
+                            r_curly_token: R_CURLY@53..57 "}" [Newline("\n"), Whitespace("\t ")] [],
                         },
                     },
                     JsContinueStatement {
-                        continue_token: CONTINUE_KW@57..68 "continue" [Whitespace("\n"), Whitespace("  ")] [],
+                        continue_token: CONTINUE_KW@57..68 "continue" [Newline("\n"), Whitespace("  ")] [],
                         label_token: missing (optional),
                         semicolon_token: missing (optional),
                     },
                 ],
-                r_curly_token: R_CURLY@68..70 "}" [Whitespace("\n")] [],
+                r_curly_token: R_CURLY@68..70 "}" [Newline("\n")] [],
             },
         },
     ],
-    eof_token: EOF@70..71 "" [Whitespace("\n")] [],
+    eof_token: EOF@70..71 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..71
@@ -59,23 +59,23 @@ JsModule {
         0: L_CURLY@13..14 "{" [] []
         1: JS_STATEMENT_LIST@14..68
           0: JS_CONTINUE_STATEMENT@14..26
-            0: CONTINUE_KW@14..25 "continue" [Whitespace("\n"), Whitespace("  ")] []
+            0: CONTINUE_KW@14..25 "continue" [Newline("\n"), Whitespace("  ")] []
             1: (empty)
             2: SEMICOLON@25..26 ";" [] []
           1: JS_LABELED_STATEMENT@26..57
-            0: IDENT@26..32 "foo" [Whitespace("\n"), Whitespace("  ")] []
+            0: IDENT@26..32 "foo" [Newline("\n"), Whitespace("  ")] []
             1: COLON@32..34 ":" [] [Whitespace(" ")]
             2: JS_BLOCK_STATEMENT@34..57
               0: L_CURLY@34..35 "{" [] []
               1: JS_STATEMENT_LIST@35..53
                 0: JS_CONTINUE_STATEMENT@35..53
-                  0: CONTINUE_KW@35..49 "continue" [Whitespace("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  0: CONTINUE_KW@35..49 "continue" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
                   1: IDENT@49..52 "foo" [] []
                   2: SEMICOLON@52..53 ";" [] []
-              2: R_CURLY@53..57 "}" [Whitespace("\n"), Whitespace("\t ")] []
+              2: R_CURLY@53..57 "}" [Newline("\n"), Whitespace("\t ")] []
           2: JS_CONTINUE_STATEMENT@57..68
-            0: CONTINUE_KW@57..68 "continue" [Whitespace("\n"), Whitespace("  ")] []
+            0: CONTINUE_KW@57..68 "continue" [Newline("\n"), Whitespace("  ")] []
             1: (empty)
             2: (empty)
-        2: R_CURLY@68..70 "}" [Whitespace("\n")] []
-  3: EOF@70..71 "" [Whitespace("\n")] []
+        2: R_CURLY@68..70 "}" [Newline("\n")] []
+  3: EOF@70..71 "" [Newline("\n")] []

@@ -34,7 +34,7 @@ JsModule {
             ],
         },
     ],
-    eof_token: EOF@17..18 "" [Whitespace("\n")] [],
+    eof_token: EOF@17..18 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..18
@@ -53,7 +53,7 @@ JsModule {
               1: JS_UNKNOWN@8..16
                 0: ERROR_TOKEN@8..16 "\"\\u{200\"" [] []
       1: SEMICOLON@16..17 ";" [] []
-  3: EOF@17..18 "" [Whitespace("\n")] []
+  3: EOF@17..18 "" [Newline("\n")] []
 --
 error: expected hex digits for a unicode code point escape, but encountered an invalid character
   ┌─ unterminated_unicode_codepoint.js:1:16

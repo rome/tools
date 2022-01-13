@@ -75,7 +75,7 @@ JsModule {
             r_curly_token: R_CURLY@39..40 "}" [] [],
         },
     ],
-    eof_token: EOF@40..41 "" [Whitespace("\n")] [],
+    eof_token: EOF@40..41 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..41
@@ -134,4 +134,4 @@ JsModule {
         14: JS_EMPTY_CLASS_MEMBER@38..39
           0: SEMICOLON@38..39 ";" [] []
       6: R_CURLY@39..40 "}" [] []
-  3: EOF@40..41 "" [Whitespace("\n")] []
+  3: EOF@40..41 "" [Newline("\n")] []

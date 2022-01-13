@@ -25,7 +25,7 @@ JsModule {
                     async_token: missing (optional),
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
-                        value: IDENT@22..28 "test" [Whitespace("\n"), Whitespace("\t")] [],
+                        value: IDENT@22..28 "test" [Newline("\n"), Whitespace("\t")] [],
                     },
                     type_parameters: missing (optional),
                     parameters: JsParameters {
@@ -42,7 +42,7 @@ JsModule {
                                 expression: JsCallExpression {
                                     callee: JsUnknownExpression {
                                         items: [
-                                            SUPER_KW@32..40 "super" [Whitespace("\n"), Whitespace("\t\t")] [],
+                                            SUPER_KW@32..40 "super" [Newline("\n"), Whitespace("\t\t")] [],
                                         ],
                                     },
                                     optional_chain_token_token: missing (optional),
@@ -60,7 +60,7 @@ JsModule {
                                     callee: JsStaticMemberExpression {
                                         object: JsUnknownExpression {
                                             items: [
-                                                SUPER_KW@43..51 "super" [Whitespace("\n"), Whitespace("\t\t")] [],
+                                                SUPER_KW@43..51 "super" [Newline("\n"), Whitespace("\t\t")] [],
                                             ],
                                         },
                                         operator: QUESTIONDOT@51..53 "?." [] [],
@@ -79,17 +79,17 @@ JsModule {
                                 semicolon_token: SEMICOLON@59..60 ";" [] [],
                             },
                         ],
-                        r_curly_token: R_CURLY@60..63 "}" [Whitespace("\n"), Whitespace("\t")] [],
+                        r_curly_token: R_CURLY@60..63 "}" [Newline("\n"), Whitespace("\t")] [],
                     },
                 },
             ],
-            r_curly_token: R_CURLY@63..65 "}" [Whitespace("\n")] [],
+            r_curly_token: R_CURLY@63..65 "}" [Newline("\n")] [],
         },
         JsExpressionStatement {
             expression: JsCallExpression {
                 callee: JsUnknownExpression {
                     items: [
-                        SUPER_KW@65..71 "super" [Whitespace("\n")] [],
+                        SUPER_KW@65..71 "super" [Newline("\n")] [],
                     ],
                 },
                 optional_chain_token_token: missing (optional),
@@ -103,7 +103,7 @@ JsModule {
             semicolon_token: SEMICOLON@73..74 ";" [] [],
         },
     ],
-    eof_token: EOF@74..75 "" [Whitespace("\n")] [],
+    eof_token: EOF@74..75 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..75
@@ -129,7 +129,7 @@ JsModule {
           3: (empty)
           4: (empty)
           5: JS_LITERAL_MEMBER_NAME@22..28
-            0: IDENT@22..28 "test" [Whitespace("\n"), Whitespace("\t")] []
+            0: IDENT@22..28 "test" [Newline("\n"), Whitespace("\t")] []
           6: (empty)
           7: JS_PARAMETERS@28..31
             0: L_PAREN@28..29 "(" [] []
@@ -143,7 +143,7 @@ JsModule {
               0: JS_EXPRESSION_STATEMENT@32..43
                 0: JS_CALL_EXPRESSION@32..42
                   0: JS_UNKNOWN_EXPRESSION@32..40
-                    0: SUPER_KW@32..40 "super" [Whitespace("\n"), Whitespace("\t\t")] []
+                    0: SUPER_KW@32..40 "super" [Newline("\n"), Whitespace("\t\t")] []
                   1: (empty)
                   2: (empty)
                   3: JS_CALL_ARGUMENTS@40..42
@@ -155,7 +155,7 @@ JsModule {
                 0: JS_CALL_EXPRESSION@43..59
                   0: JS_STATIC_MEMBER_EXPRESSION@43..57
                     0: JS_UNKNOWN_EXPRESSION@43..51
-                      0: SUPER_KW@43..51 "super" [Whitespace("\n"), Whitespace("\t\t")] []
+                      0: SUPER_KW@43..51 "super" [Newline("\n"), Whitespace("\t\t")] []
                     1: QUESTIONDOT@51..53 "?." [] []
                     2: JS_NAME@53..57
                       0: IDENT@53..57 "test" [] []
@@ -166,12 +166,12 @@ JsModule {
                     1: JS_CALL_ARGUMENT_LIST@58..58
                     2: R_PAREN@58..59 ")" [] []
                 1: SEMICOLON@59..60 ";" [] []
-            3: R_CURLY@60..63 "}" [Whitespace("\n"), Whitespace("\t")] []
-      6: R_CURLY@63..65 "}" [Whitespace("\n")] []
+            3: R_CURLY@60..63 "}" [Newline("\n"), Whitespace("\t")] []
+      6: R_CURLY@63..65 "}" [Newline("\n")] []
     1: JS_EXPRESSION_STATEMENT@65..74
       0: JS_CALL_EXPRESSION@65..73
         0: JS_UNKNOWN_EXPRESSION@65..71
-          0: SUPER_KW@65..71 "super" [Whitespace("\n")] []
+          0: SUPER_KW@65..71 "super" [Newline("\n")] []
         1: (empty)
         2: (empty)
         3: JS_CALL_ARGUMENTS@71..73
@@ -179,7 +179,7 @@ JsModule {
           1: JS_CALL_ARGUMENT_LIST@72..72
           2: R_PAREN@72..73 ")" [] []
       1: SEMICOLON@73..74 ";" [] []
-  3: EOF@74..75 "" [Whitespace("\n")] []
+  3: EOF@74..75 "" [Newline("\n")] []
 --
 error[SyntaxError]: `super` is only valid inside of a class constructor of a subclass.
   ┌─ super_expression_err.js:3:3

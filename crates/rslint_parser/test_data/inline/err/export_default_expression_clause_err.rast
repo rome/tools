@@ -24,7 +24,7 @@ JsModule {
             semicolon_token: SEMICOLON@19..20 ";" [] [],
         },
     ],
-    eof_token: EOF@20..21 "" [Whitespace("\n")] [],
+    eof_token: EOF@20..21 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..21
@@ -44,7 +44,7 @@ JsModule {
       1: IDENT@18..19 "b" [] []
     2: JS_EMPTY_STATEMENT@19..20
       0: SEMICOLON@19..20 ";" [] []
-  3: EOF@20..21 "" [Whitespace("\n")] []
+  3: EOF@20..21 "" [Newline("\n")] []
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ export_default_expression_clause_err.js:1:17

@@ -20,7 +20,7 @@ JsModule {
             },
         },
         JsTryStatement {
-            try_token: TRY_KW@15..20 "try" [Whitespace("\n")] [Whitespace(" ")],
+            try_token: TRY_KW@15..20 "try" [Newline("\n")] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@20..21 "{" [] [],
                 statements: JsStatementList [],
@@ -43,7 +43,7 @@ JsModule {
             },
         },
         JsTryFinallyStatement {
-            try_token: TRY_KW@35..40 "try" [Whitespace("\n")] [Whitespace(" ")],
+            try_token: TRY_KW@35..40 "try" [Newline("\n")] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@40..41 "{" [] [],
                 statements: JsStatementList [],
@@ -68,7 +68,7 @@ JsModule {
             },
         },
         JsTryFinallyStatement {
-            try_token: TRY_KW@62..67 "try" [Whitespace("\n")] [Whitespace(" ")],
+            try_token: TRY_KW@62..67 "try" [Newline("\n")] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@67..68 "{" [] [],
                 statements: JsStatementList [],
@@ -99,7 +99,7 @@ JsModule {
             },
         },
         JsTryFinallyStatement {
-            try_token: TRY_KW@93..98 "try" [Whitespace("\n")] [Whitespace(" ")],
+            try_token: TRY_KW@93..98 "try" [Newline("\n")] [Whitespace(" ")],
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@98..99 "{" [] [],
                 statements: JsStatementList [],
@@ -116,7 +116,7 @@ JsModule {
             },
         },
     ],
-    eof_token: EOF@111..112 "" [Whitespace("\n")] [],
+    eof_token: EOF@111..112 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..112
@@ -137,7 +137,7 @@ JsModule {
           1: JS_STATEMENT_LIST@14..14
           2: R_CURLY@14..15 "}" [] []
     1: JS_TRY_STATEMENT@15..35
-      0: TRY_KW@15..20 "try" [Whitespace("\n")] [Whitespace(" ")]
+      0: TRY_KW@15..20 "try" [Newline("\n")] [Whitespace(" ")]
       1: JS_BLOCK_STATEMENT@20..23
         0: L_CURLY@20..21 "{" [] []
         1: JS_STATEMENT_LIST@21..21
@@ -154,7 +154,7 @@ JsModule {
           1: JS_STATEMENT_LIST@34..34
           2: R_CURLY@34..35 "}" [] []
     2: JS_TRY_FINALLY_STATEMENT@35..62
-      0: TRY_KW@35..40 "try" [Whitespace("\n")] [Whitespace(" ")]
+      0: TRY_KW@35..40 "try" [Newline("\n")] [Whitespace(" ")]
       1: JS_BLOCK_STATEMENT@40..43
         0: L_CURLY@40..41 "{" [] []
         1: JS_STATEMENT_LIST@41..41
@@ -173,7 +173,7 @@ JsModule {
           1: JS_STATEMENT_LIST@61..61
           2: R_CURLY@61..62 "}" [] []
     3: JS_TRY_FINALLY_STATEMENT@62..93
-      0: TRY_KW@62..67 "try" [Whitespace("\n")] [Whitespace(" ")]
+      0: TRY_KW@62..67 "try" [Newline("\n")] [Whitespace(" ")]
       1: JS_BLOCK_STATEMENT@67..70
         0: L_CURLY@67..68 "{" [] []
         1: JS_STATEMENT_LIST@68..68
@@ -196,7 +196,7 @@ JsModule {
           1: JS_STATEMENT_LIST@92..92
           2: R_CURLY@92..93 "}" [] []
     4: JS_TRY_FINALLY_STATEMENT@93..111
-      0: TRY_KW@93..98 "try" [Whitespace("\n")] [Whitespace(" ")]
+      0: TRY_KW@93..98 "try" [Newline("\n")] [Whitespace(" ")]
       1: JS_BLOCK_STATEMENT@98..101
         0: L_CURLY@98..99 "{" [] []
         1: JS_STATEMENT_LIST@99..99
@@ -208,4 +208,4 @@ JsModule {
           0: L_CURLY@109..110 "{" [] []
           1: JS_STATEMENT_LIST@110..110
           2: R_CURLY@110..111 "}" [] []
-  3: EOF@111..112 "" [Whitespace("\n")] []
+  3: EOF@111..112 "" [Newline("\n")] []

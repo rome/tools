@@ -29,7 +29,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsAssignmentExpression {
                 left: JsArrayAssignmentPattern {
-                    l_brack_token: L_BRACK@17..19 "[" [Whitespace("\n")] [],
+                    l_brack_token: L_BRACK@17..19 "[" [Newline("\n")] [],
                     elements: JsArrayAssignmentPatternElementList [
                         JsArrayHole,
                         COMMA@19..20 "," [] [],
@@ -62,7 +62,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsAssignmentExpression {
                 left: JsArrayAssignmentPattern {
-                    l_brack_token: L_BRACK@35..37 "[" [Whitespace("\n")] [],
+                    l_brack_token: L_BRACK@35..37 "[" [Newline("\n")] [],
                     elements: JsArrayAssignmentPatternElementList [
                         JsAssignmentWithDefault {
                             pattern: JsIdentifierAssignment {
@@ -121,7 +121,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsAssignmentExpression {
                 left: JsArrayAssignmentPattern {
-                    l_brack_token: L_BRACK@70..72 "[" [Whitespace("\n")] [],
+                    l_brack_token: L_BRACK@70..72 "[" [Newline("\n")] [],
                     elements: JsArrayAssignmentPatternElementList [
                         JsParenthesizedAssignment {
                             l_paren_token: L_PAREN@72..73 "(" [] [],
@@ -147,7 +147,7 @@ JsModule {
             semicolon_token: SEMICOLON@84..85 ";" [] [],
         },
     ],
-    eof_token: EOF@85..86 "" [Whitespace("\n")] [],
+    eof_token: EOF@85..86 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..86
@@ -173,7 +173,7 @@ JsModule {
     1: JS_EXPRESSION_STATEMENT@17..35
       0: JS_ASSIGNMENT_EXPRESSION@17..34
         0: JS_ARRAY_ASSIGNMENT_PATTERN@17..29
-          0: L_BRACK@17..19 "[" [Whitespace("\n")] []
+          0: L_BRACK@17..19 "[" [Newline("\n")] []
           1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@19..27
             0: JS_ARRAY_HOLE@19..19
             1: COMMA@19..20 "," [] []
@@ -198,7 +198,7 @@ JsModule {
     2: JS_EXPRESSION_STATEMENT@35..70
       0: JS_ASSIGNMENT_EXPRESSION@35..69
         0: JS_ARRAY_ASSIGNMENT_PATTERN@35..64
-          0: L_BRACK@35..37 "[" [Whitespace("\n")] []
+          0: L_BRACK@35..37 "[" [Newline("\n")] []
           1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@37..62
             0: JS_ASSIGNMENT_WITH_DEFAULT@37..47
               0: JS_IDENTIFIER_ASSIGNMENT@37..39
@@ -238,7 +238,7 @@ JsModule {
     3: JS_EXPRESSION_STATEMENT@70..85
       0: JS_ASSIGNMENT_EXPRESSION@70..84
         0: JS_ARRAY_ASSIGNMENT_PATTERN@70..79
-          0: L_BRACK@70..72 "[" [Whitespace("\n")] []
+          0: L_BRACK@70..72 "[" [Newline("\n")] []
           1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@72..77
             0: JS_PARENTHESIZED_ASSIGNMENT@72..77
               0: L_PAREN@72..73 "(" [] []
@@ -254,4 +254,4 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@81..84
             0: IDENT@81..84 "baz" [] []
       1: SEMICOLON@84..85 ";" [] []
-  3: EOF@85..86 "" [Whitespace("\n")] []
+  3: EOF@85..86 "" [Newline("\n")] []

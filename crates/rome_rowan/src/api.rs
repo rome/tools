@@ -108,8 +108,8 @@ impl<L: Language> SyntaxTriviaPieceComments<L> {
 /// builder.token_with_trivia(
 ///     RawSyntaxKind(1),
 ///     "\n\t /**/let \t\t",
-///     vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
-///     vec![TriviaPiece::Whitespace(3)],
+///     &[TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
+///     &[TriviaPiece::Whitespace(3)],
 /// );
 /// });
 ///
@@ -136,8 +136,8 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
-	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
 	/// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
@@ -162,8 +162,8 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
-	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
 	/// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
@@ -184,8 +184,8 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
-	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
 	/// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
@@ -205,8 +205,8 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
-	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
 	/// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
@@ -232,8 +232,8 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t /**/let \t\t",
-	///         vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
 	/// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
@@ -423,8 +423,8 @@ impl<L: Language> SyntaxTrivia<L> {
 	/// builder.token_with_trivia(
 	///     RawLanguageKind::LET_TOKEN,
 	///     "\n\t /**/let \t\t",
-	///     vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
-	///     vec![TriviaPiece::Whitespace(3)],
+	///     &[TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
+	///     &[TriviaPiece::Whitespace(3)],
 	/// );
 	/// });
 	/// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
@@ -474,15 +474,15 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::SEMICOLON_TOKEN,
 	///         "; \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
 	/// assert_eq!("\n\t let \t\ta; \t\t", node.text());
@@ -502,15 +502,15 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::SEMICOLON_TOKEN,
 	///         "; \t\t",
-	///         vec![],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
 	/// assert_eq!("let \t\ta;", node.text_trimmed());
@@ -528,15 +528,15 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::SEMICOLON_TOKEN,
 	///         "; \t\t",
-	///         vec![],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
 	/// let range = node.text_range();
@@ -558,15 +558,15 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::SEMICOLON_TOKEN,
 	///         "; \t\t",
-	///         vec![],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
 	/// let range = node.text_trimmed_range();
@@ -586,15 +586,15 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::SEMICOLON_TOKEN,
 	///         "; \t\t",
-	///         vec![],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
 	/// let trivia = node.first_leading_trivia();
@@ -621,15 +621,15 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	///     builder.token(RawLanguageKind::STRING_TOKEN, "a");
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::SEMICOLON_TOKEN,
 	///         "; \t\t",
-	///         vec![],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
 	/// let trivia = node.last_trailing_trivia();
@@ -838,8 +838,8 @@ impl<L: Language> SyntaxToken<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// }).first_token().unwrap();
 	/// assert_eq!("\n\t let \t\t", token.text());
@@ -857,8 +857,8 @@ impl<L: Language> SyntaxToken<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// }).first_token().unwrap();
 	/// assert_eq!("let", token.text_trimmed());
@@ -913,8 +913,8 @@ impl<L: Language> SyntaxToken<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// }).first_token().unwrap();
 	/// assert_eq!("\n\t ", token.leading_trivia().text());
@@ -936,8 +936,8 @@ impl<L: Language> SyntaxToken<L> {
 	///     builder.token_with_trivia(
 	///         RawLanguageKind::LET_TOKEN,
 	///         "\n\t let \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
+	///         &[TriviaPiece::Whitespace(3)],
 	///     );
 	/// }).first_token().unwrap();
 	/// assert_eq!(" \t\t", token.trailing_trivia().text());
@@ -1527,8 +1527,8 @@ mod tests {
 		builder.token_with_trivia(
 			RawLanguageKind::LET_TOKEN,
 			"\n\t let \t\t",
-			vec![TriviaPiece::Whitespace(3)],
-			vec![TriviaPiece::Whitespace(3)],
+			&[TriviaPiece::Whitespace(3)],
+			&[TriviaPiece::Whitespace(3)],
 		);
 		builder.finish_node();
 
@@ -1556,27 +1556,27 @@ mod tests {
 		builder.token_with_trivia(
 			RawLanguageKind::LET_TOKEN,
 			"\n\t let \t\t",
-			vec![TriviaPiece::Whitespace(3)],
-			vec![TriviaPiece::Whitespace(3)],
+			&[TriviaPiece::Whitespace(3)],
+			&[TriviaPiece::Whitespace(3)],
 		);
 		builder.token_with_trivia(
 			RawLanguageKind::LET_TOKEN,
 			"a ",
-			vec![TriviaPiece::Whitespace(0)],
-			vec![TriviaPiece::Whitespace(1)],
+			&[TriviaPiece::Whitespace(0)],
+			&[TriviaPiece::Whitespace(1)],
 		);
 		builder.token_with_trivia(
 			RawLanguageKind::EQUAL_TOKEN,
 			"\n=\n",
-			vec![TriviaPiece::Whitespace(1)],
-			vec![TriviaPiece::Whitespace(1)],
+			&[TriviaPiece::Whitespace(1)],
+			&[TriviaPiece::Whitespace(1)],
 		);
 		builder.token(RawLanguageKind::NUMBER_TOKEN, "1");
 		builder.token_with_trivia(
 			RawLanguageKind::SEMICOLON_TOKEN,
 			";\t\t",
-			vec![],
-			vec![TriviaPiece::Whitespace(2)],
+			&[],
+			&[TriviaPiece::Whitespace(2)],
 		);
 		builder.finish_node();
 
@@ -1644,8 +1644,8 @@ mod tests {
 			builder.token_with_trivia(
 				RawLanguageKind::LET_TOKEN,
 				"\n\t /**/let \t\t",
-				vec![TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
-				vec![TriviaPiece::Whitespace(3)],
+				&[TriviaPiece::Whitespace(3), TriviaPiece::Comments(4, false)],
+				&[TriviaPiece::Whitespace(3)],
 			);
 		});
 		let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();

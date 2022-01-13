@@ -29,7 +29,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@14..16 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@14..16 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@16..18 "{" [] [Whitespace(" ")],
@@ -60,7 +60,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@42..44 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@42..44 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@44..46 "{" [] [Whitespace(" ")],
@@ -98,7 +98,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@60..62 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@60..62 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@62..64 "{" [] [Whitespace(" ")],
@@ -134,7 +134,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@97..99 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@97..99 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@99..101 "{" [] [Whitespace(" ")],
@@ -163,7 +163,7 @@ JsModule {
             semicolon_token: SEMICOLON@116..117 ";" [] [],
         },
     ],
-    eof_token: EOF@117..118 "" [Whitespace("\n")] [],
+    eof_token: EOF@117..118 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..118
@@ -189,7 +189,7 @@ JsModule {
       1: SEMICOLON@13..14 ";" [] []
     1: JS_EXPRESSION_STATEMENT@14..42
       0: JS_PARENTHESIZED_EXPRESSION@14..41
-        0: L_PAREN@14..16 "(" [Whitespace("\n")] []
+        0: L_PAREN@14..16 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@16..40
           0: JS_OBJECT_ASSIGNMENT_PATTERN@16..37
             0: L_CURLY@16..18 "{" [] [Whitespace(" ")]
@@ -209,7 +209,7 @@ JsModule {
       1: SEMICOLON@41..42 ";" [] []
     2: JS_EXPRESSION_STATEMENT@42..60
       0: JS_PARENTHESIZED_EXPRESSION@42..59
-        0: L_PAREN@42..44 "(" [Whitespace("\n")] []
+        0: L_PAREN@42..44 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@44..58
           0: JS_OBJECT_ASSIGNMENT_PATTERN@44..55
             0: L_CURLY@44..46 "{" [] [Whitespace(" ")]
@@ -233,7 +233,7 @@ JsModule {
       1: SEMICOLON@59..60 ";" [] []
     3: JS_EXPRESSION_STATEMENT@60..97
       0: JS_PARENTHESIZED_EXPRESSION@60..96
-        0: L_PAREN@60..62 "(" [Whitespace("\n")] []
+        0: L_PAREN@60..62 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@62..95
           0: JS_OBJECT_ASSIGNMENT_PATTERN@62..92
             0: L_CURLY@62..64 "{" [] [Whitespace(" ")]
@@ -256,7 +256,7 @@ JsModule {
       1: SEMICOLON@96..97 ";" [] []
     4: JS_EXPRESSION_STATEMENT@97..117
       0: JS_PARENTHESIZED_EXPRESSION@97..116
-        0: L_PAREN@97..99 "(" [Whitespace("\n")] []
+        0: L_PAREN@97..99 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@99..115
           0: JS_OBJECT_ASSIGNMENT_PATTERN@99..112
             0: L_CURLY@99..101 "{" [] [Whitespace(" ")]
@@ -273,7 +273,7 @@ JsModule {
               0: IDENT@114..115 "a" [] []
         2: R_PAREN@115..116 ")" [] []
       1: SEMICOLON@116..117 ";" [] []
-  3: EOF@117..118 "" [Whitespace("\n")] []
+  3: EOF@117..118 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected an identifier, or an assignment target but instead found '}'
   ┌─ rest_property_assignment_target_err.js:1:8

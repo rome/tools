@@ -13,7 +13,7 @@ JsModule {
             },
         },
         JsLabeledStatement {
-            label_token: IDENT@9..16 "label1" [Whitespace("\n")] [],
+            label_token: IDENT@9..16 "label1" [Newline("\n")] [],
             colon_token: COLON@16..18 ":" [] [Whitespace(" ")],
             body: JsExpressionStatement {
                 expression: JsNumberLiteralExpression {
@@ -23,7 +23,7 @@ JsModule {
             },
         },
         JsLabeledStatement {
-            label_token: IDENT@19..26 "label2" [Whitespace("\n")] [],
+            label_token: IDENT@19..26 "label2" [Newline("\n")] [],
             colon_token: COLON@26..28 ":" [] [Whitespace(" ")],
             body: JsExpressionStatement {
                 expression: JsNumberLiteralExpression {
@@ -33,7 +33,7 @@ JsModule {
             },
         },
     ],
-    eof_token: EOF@29..30 "" [Whitespace("\n")] [],
+    eof_token: EOF@29..30 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..30
@@ -48,17 +48,17 @@ JsModule {
           0: JS_NUMBER_LITERAL@8..9 "1" [] []
         1: (empty)
     1: JS_LABELED_STATEMENT@9..19
-      0: IDENT@9..16 "label1" [Whitespace("\n")] []
+      0: IDENT@9..16 "label1" [Newline("\n")] []
       1: COLON@16..18 ":" [] [Whitespace(" ")]
       2: JS_EXPRESSION_STATEMENT@18..19
         0: JS_NUMBER_LITERAL_EXPRESSION@18..19
           0: JS_NUMBER_LITERAL@18..19 "1" [] []
         1: (empty)
     2: JS_LABELED_STATEMENT@19..29
-      0: IDENT@19..26 "label2" [Whitespace("\n")] []
+      0: IDENT@19..26 "label2" [Newline("\n")] []
       1: COLON@26..28 ":" [] [Whitespace(" ")]
       2: JS_EXPRESSION_STATEMENT@28..29
         0: JS_NUMBER_LITERAL_EXPRESSION@28..29
           0: JS_NUMBER_LITERAL@28..29 "2" [] []
         1: (empty)
-  3: EOF@29..30 "" [Whitespace("\n")] []
+  3: EOF@29..30 "" [Newline("\n")] []

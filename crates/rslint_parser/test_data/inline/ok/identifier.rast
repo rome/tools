@@ -11,7 +11,7 @@ JsModule {
             semicolon_token: SEMICOLON@3..4 ";" [] [],
         },
     ],
-    eof_token: EOF@4..5 "" [Whitespace("\n")] [],
+    eof_token: EOF@4..5 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..5
@@ -23,4 +23,4 @@ JsModule {
         0: JS_REFERENCE_IDENTIFIER@0..3
           0: IDENT@0..3 "foo" [] []
       1: SEMICOLON@3..4 ";" [] []
-  3: EOF@4..5 "" [Whitespace("\n")] []
+  3: EOF@4..5 "" [Newline("\n")] []

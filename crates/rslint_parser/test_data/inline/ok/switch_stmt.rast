@@ -14,7 +14,7 @@ JsModule {
             l_curly_token: L_CURLY@13..14 "{" [] [],
             cases: JsSwitchCaseList [
                 JsCaseClause {
-                    case_token: CASE_KW@14..21 "case" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")],
+                    case_token: CASE_KW@14..21 "case" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                     test: JsIdentifierExpression {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@21..24 "bar" [] [],
@@ -24,15 +24,15 @@ JsModule {
                     consequent: JsStatementList [],
                 },
                 JsDefaultClause {
-                    default_token: DEFAULT_KW@25..34 "default" [Whitespace("\n"), Whitespace(" ")] [],
+                    default_token: DEFAULT_KW@25..34 "default" [Newline("\n"), Whitespace(" ")] [],
                     colon_token: COLON@34..35 ":" [] [],
                     consequent: JsStatementList [],
                 },
             ],
-            r_curly_token: R_CURLY@35..37 "}" [Whitespace("\n")] [],
+            r_curly_token: R_CURLY@35..37 "}" [Newline("\n")] [],
         },
     ],
-    eof_token: EOF@37..38 "" [Whitespace("\n")] [],
+    eof_token: EOF@37..38 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..38
@@ -49,15 +49,15 @@ JsModule {
       4: L_CURLY@13..14 "{" [] []
       5: JS_SWITCH_CASE_LIST@14..35
         0: JS_CASE_CLAUSE@14..25
-          0: CASE_KW@14..21 "case" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")]
+          0: CASE_KW@14..21 "case" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
           1: JS_IDENTIFIER_EXPRESSION@21..24
             0: JS_REFERENCE_IDENTIFIER@21..24
               0: IDENT@21..24 "bar" [] []
           2: COLON@24..25 ":" [] []
           3: JS_STATEMENT_LIST@25..25
         1: JS_DEFAULT_CLAUSE@25..35
-          0: DEFAULT_KW@25..34 "default" [Whitespace("\n"), Whitespace(" ")] []
+          0: DEFAULT_KW@25..34 "default" [Newline("\n"), Whitespace(" ")] []
           1: COLON@34..35 ":" [] []
           2: JS_STATEMENT_LIST@35..35
-      6: R_CURLY@35..37 "}" [Whitespace("\n")] []
-  3: EOF@37..38 "" [Whitespace("\n")] []
+      6: R_CURLY@35..37 "}" [Newline("\n")] []
+  3: EOF@37..38 "" [Newline("\n")] []

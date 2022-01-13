@@ -25,14 +25,14 @@ JsModule {
             semicolon_token: SEMICOLON@22..23 ";" [] [],
         },
         JsThrowStatement {
-            throw_token: THROW_KW@23..30 "throw" [Whitespace("\n")] [Whitespace(" ")],
+            throw_token: THROW_KW@23..30 "throw" [Newline("\n")] [Whitespace(" ")],
             argument: JsStringLiteralExpression {
                 value_token: JS_STRING_LITERAL@30..35 "\"foo\"" [] [],
             },
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@35..36 "" [Whitespace("\n")] [],
+    eof_token: EOF@35..36 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..36
@@ -55,8 +55,8 @@ JsModule {
           2: R_PAREN@21..22 ")" [] []
       2: SEMICOLON@22..23 ";" [] []
     1: JS_THROW_STATEMENT@23..35
-      0: THROW_KW@23..30 "throw" [Whitespace("\n")] [Whitespace(" ")]
+      0: THROW_KW@23..30 "throw" [Newline("\n")] [Whitespace(" ")]
       1: JS_STRING_LITERAL_EXPRESSION@30..35
         0: JS_STRING_LITERAL@30..35 "\"foo\"" [] []
       2: (empty)
-  3: EOF@35..36 "" [Whitespace("\n")] []
+  3: EOF@35..36 "" [Newline("\n")] []

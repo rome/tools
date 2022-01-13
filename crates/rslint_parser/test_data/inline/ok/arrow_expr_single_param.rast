@@ -7,7 +7,7 @@ JsScript {
                 async_token: missing (optional),
                 type_parameters: missing (optional),
                 parameters: JsIdentifierBinding {
-                    name_token: IDENT@0..14 "foo" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")],
+                    name_token: IDENT@0..14 "foo" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")],
                 },
                 return_type: missing (optional),
                 fat_arrow_token: FAT_ARROW@14..17 "=>" [] [Whitespace(" ")],
@@ -25,7 +25,7 @@ JsScript {
                 async_token: missing (optional),
                 type_parameters: missing (optional),
                 parameters: JsIdentifierBinding {
-                    name_token: IDENT@19..26 "yield" [Whitespace("\n")] [Whitespace(" ")],
+                    name_token: IDENT@19..26 "yield" [Newline("\n")] [Whitespace(" ")],
                 },
                 return_type: missing (optional),
                 fat_arrow_token: FAT_ARROW@26..29 "=>" [] [Whitespace(" ")],
@@ -43,7 +43,7 @@ JsScript {
                 async_token: missing (optional),
                 type_parameters: missing (optional),
                 parameters: JsIdentifierBinding {
-                    name_token: IDENT@31..38 "await" [Whitespace("\n")] [Whitespace(" ")],
+                    name_token: IDENT@31..38 "await" [Newline("\n")] [Whitespace(" ")],
                 },
                 return_type: missing (optional),
                 fat_arrow_token: FAT_ARROW@38..41 "=>" [] [Whitespace(" ")],
@@ -61,12 +61,12 @@ JsScript {
                 async_token: missing (optional),
                 type_parameters: missing (optional),
                 parameters: JsIdentifierBinding {
-                    name_token: IDENT@43..48 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                    name_token: IDENT@43..48 "foo" [Newline("\n")] [Whitespace(" ")],
                 },
                 return_type: missing (optional),
                 fat_arrow_token: FAT_ARROW@48..50 "=>" [] [],
                 body: JsFunctionBody {
-                    l_curly_token: L_CURLY@50..52 "{" [Whitespace("\n")] [],
+                    l_curly_token: L_CURLY@50..52 "{" [Newline("\n")] [],
                     directives: JsDirectiveList [],
                     statements: JsStatementList [],
                     r_curly_token: R_CURLY@52..53 "}" [] [],
@@ -75,7 +75,7 @@ JsScript {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@53..54 "" [Whitespace("\n")] [],
+    eof_token: EOF@53..54 "" [Newline("\n")] [],
 }
 
 0: JS_SCRIPT@0..54
@@ -87,7 +87,7 @@ JsScript {
         0: (empty)
         1: (empty)
         2: JS_IDENTIFIER_BINDING@0..14
-          0: IDENT@0..14 "foo" [Comments("// SCRIPT"), Whitespace("\n")] [Whitespace(" ")]
+          0: IDENT@0..14 "foo" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
         3: (empty)
         4: FAT_ARROW@14..17 "=>" [] [Whitespace(" ")]
         5: JS_FUNCTION_BODY@17..19
@@ -101,7 +101,7 @@ JsScript {
         0: (empty)
         1: (empty)
         2: JS_IDENTIFIER_BINDING@19..26
-          0: IDENT@19..26 "yield" [Whitespace("\n")] [Whitespace(" ")]
+          0: IDENT@19..26 "yield" [Newline("\n")] [Whitespace(" ")]
         3: (empty)
         4: FAT_ARROW@26..29 "=>" [] [Whitespace(" ")]
         5: JS_FUNCTION_BODY@29..31
@@ -115,7 +115,7 @@ JsScript {
         0: (empty)
         1: (empty)
         2: JS_IDENTIFIER_BINDING@31..38
-          0: IDENT@31..38 "await" [Whitespace("\n")] [Whitespace(" ")]
+          0: IDENT@31..38 "await" [Newline("\n")] [Whitespace(" ")]
         3: (empty)
         4: FAT_ARROW@38..41 "=>" [] [Whitespace(" ")]
         5: JS_FUNCTION_BODY@41..43
@@ -129,13 +129,13 @@ JsScript {
         0: (empty)
         1: (empty)
         2: JS_IDENTIFIER_BINDING@43..48
-          0: IDENT@43..48 "foo" [Whitespace("\n")] [Whitespace(" ")]
+          0: IDENT@43..48 "foo" [Newline("\n")] [Whitespace(" ")]
         3: (empty)
         4: FAT_ARROW@48..50 "=>" [] []
         5: JS_FUNCTION_BODY@50..53
-          0: L_CURLY@50..52 "{" [Whitespace("\n")] []
+          0: L_CURLY@50..52 "{" [Newline("\n")] []
           1: JS_DIRECTIVE_LIST@52..52
           2: JS_STATEMENT_LIST@52..52
           3: R_CURLY@52..53 "}" [] []
       1: (empty)
-  3: EOF@53..54 "" [Whitespace("\n")] []
+  3: EOF@53..54 "" [Newline("\n")] []

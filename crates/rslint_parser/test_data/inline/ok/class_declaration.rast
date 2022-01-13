@@ -14,7 +14,7 @@ JsModule {
             r_curly_token: R_CURLY@11..12 "}" [] [],
         },
         JsClassStatement {
-            class_token: CLASS_KW@12..19 "class" [Whitespace("\n")] [Whitespace(" ")],
+            class_token: CLASS_KW@12..19 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@19..23 "foo" [] [Whitespace(" ")],
             },
@@ -32,7 +32,7 @@ JsModule {
             r_curly_token: R_CURLY@36..37 "}" [] [],
         },
         JsClassStatement {
-            class_token: CLASS_KW@37..44 "class" [Whitespace("\n")] [Whitespace(" ")],
+            class_token: CLASS_KW@37..44 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@44..48 "foo" [] [Whitespace(" ")],
             },
@@ -56,7 +56,7 @@ JsModule {
             r_curly_token: R_CURLY@65..66 "}" [] [],
         },
     ],
-    eof_token: EOF@66..67 "" [Whitespace("\n")] [],
+    eof_token: EOF@66..67 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..67
@@ -73,7 +73,7 @@ JsModule {
       5: JS_CLASS_MEMBER_LIST@11..11
       6: R_CURLY@11..12 "}" [] []
     1: JS_CLASS_STATEMENT@12..37
-      0: CLASS_KW@12..19 "class" [Whitespace("\n")] [Whitespace(" ")]
+      0: CLASS_KW@12..19 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@19..23
         0: IDENT@19..23 "foo" [] [Whitespace(" ")]
       2: JS_EXTENDS_CLAUSE@23..35
@@ -86,7 +86,7 @@ JsModule {
       5: JS_CLASS_MEMBER_LIST@36..36
       6: R_CURLY@36..37 "}" [] []
     2: JS_CLASS_STATEMENT@37..66
-      0: CLASS_KW@37..44 "class" [Whitespace("\n")] [Whitespace(" ")]
+      0: CLASS_KW@37..44 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@44..48
         0: IDENT@44..48 "foo" [] [Whitespace(" ")]
       2: JS_EXTENDS_CLAUSE@48..64
@@ -102,4 +102,4 @@ JsModule {
       4: L_CURLY@64..65 "{" [] []
       5: JS_CLASS_MEMBER_LIST@65..65
       6: R_CURLY@65..66 "}" [] []
-  3: EOF@66..67 "" [Whitespace("\n")] []
+  3: EOF@66..67 "" [Newline("\n")] []

@@ -51,7 +51,7 @@ JsModule {
             semicolon_token: SEMICOLON@16..17 ";" [] [],
         },
     ],
-    eof_token: EOF@17..18 "" [Whitespace("\n")] [],
+    eof_token: EOF@17..18 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..18
@@ -82,7 +82,7 @@ JsModule {
           1: JS_CALL_ARGUMENT_LIST@15..15
           2: R_PAREN@15..16 ")" [] []
       1: SEMICOLON@16..17 ";" [] []
-  3: EOF@17..18 "" [Whitespace("\n")] []
+  3: EOF@17..18 "" [Newline("\n")] []
 --
 error: unexpected token `\`
   ┌─ primary_expr_invalid_recovery.js:1:9
