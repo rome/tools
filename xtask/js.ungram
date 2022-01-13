@@ -354,9 +354,7 @@ JsYieldArgument =
 
 JsImportCallExpression =
 	'import'
-	'('
-	argument: JsAnyExpression
-	')'
+	arguments: JsCallArguments
 
 // new target expression
 NewTarget = 'new' '.' 'target'

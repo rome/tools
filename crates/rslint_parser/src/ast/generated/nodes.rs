@@ -1143,14 +1143,8 @@ impl JsImportCallExpression {
 	pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, 0usize)
 	}
-	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, 1usize)
-	}
-	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
-		support::required_node(&self.syntax, 2usize)
-	}
-	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, 3usize)
+	pub fn arguments(&self) -> SyntaxResult<JsCallArguments> {
+		support::required_node(&self.syntax, 1usize)
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -5689,15 +5683,7 @@ impl std::fmt::Debug for JsImportCallExpression {
 				"import_token",
 				&support::DebugSyntaxResult(self.import_token()),
 			)
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("argument", &support::DebugSyntaxResult(self.argument()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
+			.field("arguments", &support::DebugSyntaxResult(self.arguments()))
 			.finish()
 	}
 }
