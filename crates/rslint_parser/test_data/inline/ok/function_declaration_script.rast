@@ -13,8 +13,12 @@ JsScript {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@23..24 "(" [] [],
                 items: JsParameterList [
-                    JsIdentifierBinding {
-                        name_token: IDENT@24..29 "await" [] [],
+                    JsParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@24..29 "await" [] [],
+                        },
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@29..31 ")" [] [Whitespace(" ")],
@@ -45,8 +49,11 @@ JsScript {
       5: JS_PARAMETERS@23..31
         0: L_PAREN@23..24 "(" [] []
         1: JS_PARAMETER_LIST@24..29
-          0: JS_IDENTIFIER_BINDING@24..29
-            0: IDENT@24..29 "await" [] []
+          0: JS_PARAMETER@24..29
+            0: JS_IDENTIFIER_BINDING@24..29
+              0: IDENT@24..29 "await" [] []
+            1: (empty)
+            2: (empty)
         2: R_PAREN@29..31 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@31..33

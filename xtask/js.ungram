@@ -43,7 +43,7 @@ JsUnknownExpression = SyntaxElement*
 JsUnknownMember = SyntaxElement*
 JsUnknownBinding = SyntaxElement*
 JsUnknownAssignment = SyntaxElement*
-JsUnknownModifier = SyntaxElement*
+JsUnknownParameter = SyntaxElement*
 JsUnknownImportAssertionEntry = SyntaxElement*
 JsUnknownNamedImportSpecifier = SyntaxElement*
 
@@ -520,7 +520,7 @@ JsSetterObjectMember =
 	'set'
 	name: JsAnyObjectMemberName
 	'('
-	parameter: JsAnyBindingPattern
+	parameter: JsParameter
 	')'
 	body: JsFunctionBody
 
@@ -624,8 +624,8 @@ JsConstructorParameterList = (JsAnyConstructorParameter (',' JsAnyConstructorPar
 
 JsAnyConstructorParameter =
 	TsConstructorParam
-	| JsAnyBindingPattern
-	| JsBindingPatternWithDefault
+	| JsParameter
+	| JsUnknownParameter
 
 // class Test { a; b = 1; static c; }
 //              ^^ ^^^^^^ ^^^^^^^^^
@@ -677,7 +677,7 @@ JsSetterClassMember =
 	'set'
 	name: JsAnyClassMemberName
 	'('
-	parameter: JsAnyBindingPattern
+	parameter: JsParameter
 	')'
 	body: JsFunctionBody
 
@@ -1316,7 +1316,12 @@ JsParameters =
 
 JsParameterList = (JsAnyParameter (',' JsAnyParameter)* ','?)
 
-JsAnyParameter = JsAnyBindingPattern | JsBindingPatternWithDefault | JsRestParameter
+JsAnyParameter = JsParameter | JsRestParameter | JsUnknownParameter
+
+JsParameter =
+	binding: JsAnyBindingPattern
+	type_annotation: TsTypeAnnotation?
+	initializer: JsInitializerClause?
 
 JsRestParameter =
 	'...'
@@ -1571,7 +1576,9 @@ TsIndexSignature = 'readonly'? '[' pat:JsAnyBinding ':' ty:TsType ']'
 TsConstructorParam =
 	accessibility: ('private' | 'protected' | 'public')?
 	'readonly'?
-	pat:JsAnyBindingPattern
+	binding: JsAnyBindingPattern
+	type_annotation: TsTypeAnnotation?
+	initializer: JsInitializerClause?
 
 TsNonNull = expr:JsAnyExpression '!'
 

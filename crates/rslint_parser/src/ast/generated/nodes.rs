@@ -1536,6 +1536,19 @@ impl JsObjectExpression {
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsParameter {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsParameter {
+	pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
+		support::required_node(&self.syntax, 0usize)
+	}
+	pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
+		support::node(&self.syntax, 1usize)
+	}
+	pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 2usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsParameters {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1747,7 +1760,7 @@ impl JsSetterClassMember {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, 5usize)
 	}
-	pub fn parameter(&self) -> SyntaxResult<JsAnyBindingPattern> {
+	pub fn parameter(&self) -> SyntaxResult<JsParameter> {
 		support::required_node(&self.syntax, 6usize)
 	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -1771,7 +1784,7 @@ impl JsSetterObjectMember {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, 2usize)
 	}
-	pub fn parameter(&self) -> SyntaxResult<JsAnyBindingPattern> {
+	pub fn parameter(&self) -> SyntaxResult<JsParameter> {
 		support::required_node(&self.syntax, 3usize)
 	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -2236,9 +2249,13 @@ pub struct TsConstructorParam {
 impl TsConstructorParam {
 	pub fn accessibility(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
 	pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-	pub fn pat(&self) -> SyntaxResult<JsAnyBindingPattern> {
+	pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
 		support::required_node(&self.syntax, 2usize)
 	}
+	pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
+		support::node(&self.syntax, 3usize)
+	}
+	pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 4usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructorType {
@@ -2905,8 +2922,8 @@ pub enum JsAnyClassMemberName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyConstructorParameter {
-	JsAnyBindingPattern(JsAnyBindingPattern),
-	JsBindingPatternWithDefault(JsBindingPatternWithDefault),
+	JsParameter(JsParameter),
+	JsUnknownParameter(JsUnknownParameter),
 	TsConstructorParam(TsConstructorParam),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -3052,9 +3069,9 @@ pub enum JsAnyObjectMemberName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyParameter {
-	JsAnyBindingPattern(JsAnyBindingPattern),
-	JsBindingPatternWithDefault(JsBindingPatternWithDefault),
+	JsParameter(JsParameter),
 	JsRestParameter(JsRestParameter),
+	JsUnknownParameter(JsUnknownParameter),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyRoot {
@@ -6535,6 +6552,38 @@ impl From<JsObjectExpression> for SyntaxNode {
 impl From<JsObjectExpression> for SyntaxElement {
 	fn from(n: JsObjectExpression) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for JsParameter {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PARAMETER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsParameter {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsParameter")
+			.field("binding", &support::DebugSyntaxResult(self.binding()))
+			.field(
+				"type_annotation",
+				&support::DebugOptionalElement(self.type_annotation()),
+			)
+			.field(
+				"initializer",
+				&support::DebugOptionalElement(self.initializer()),
+			)
+			.finish()
+	}
+}
+impl From<JsParameter> for SyntaxNode {
+	fn from(n: JsParameter) -> SyntaxNode { n.syntax }
+}
+impl From<JsParameter> for SyntaxElement {
+	fn from(n: JsParameter) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for JsParameters {
 	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PARAMETERS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -8120,7 +8169,15 @@ impl std::fmt::Debug for TsConstructorParam {
 				"readonly_token",
 				&support::DebugOptionalElement(self.readonly_token()),
 			)
-			.field("pat", &support::DebugSyntaxResult(self.pat()))
+			.field("binding", &support::DebugSyntaxResult(self.binding()))
+			.field(
+				"type_annotation",
+				&support::DebugOptionalElement(self.type_annotation()),
+			)
+			.field(
+				"initializer",
+				&support::DebugOptionalElement(self.initializer()),
+			)
 			.finish()
 	}
 }
@@ -10575,9 +10632,14 @@ impl From<JsAnyClassMemberName> for SyntaxElement {
 		node.into()
 	}
 }
-impl From<JsBindingPatternWithDefault> for JsAnyConstructorParameter {
-	fn from(node: JsBindingPatternWithDefault) -> JsAnyConstructorParameter {
-		JsAnyConstructorParameter::JsBindingPatternWithDefault(node)
+impl From<JsParameter> for JsAnyConstructorParameter {
+	fn from(node: JsParameter) -> JsAnyConstructorParameter {
+		JsAnyConstructorParameter::JsParameter(node)
+	}
+}
+impl From<JsUnknownParameter> for JsAnyConstructorParameter {
+	fn from(node: JsUnknownParameter) -> JsAnyConstructorParameter {
+		JsAnyConstructorParameter::JsUnknownParameter(node)
 	}
 }
 impl From<TsConstructorParam> for JsAnyConstructorParameter {
@@ -10587,48 +10649,37 @@ impl From<TsConstructorParam> for JsAnyConstructorParameter {
 }
 impl AstNode for JsAnyConstructorParameter {
 	fn can_cast(kind: JsSyntaxKind) -> bool {
-		match kind {
-			JS_BINDING_PATTERN_WITH_DEFAULT | TS_CONSTRUCTOR_PARAM => true,
-			k if JsAnyBindingPattern::can_cast(k) => true,
-			_ => false,
-		}
+		matches!(
+			kind,
+			JS_PARAMETER | JS_UNKNOWN_PARAMETER | TS_CONSTRUCTOR_PARAM
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			JS_BINDING_PATTERN_WITH_DEFAULT => {
-				JsAnyConstructorParameter::JsBindingPatternWithDefault(
-					JsBindingPatternWithDefault { syntax },
-				)
+			JS_PARAMETER => JsAnyConstructorParameter::JsParameter(JsParameter { syntax }),
+			JS_UNKNOWN_PARAMETER => {
+				JsAnyConstructorParameter::JsUnknownParameter(JsUnknownParameter { syntax })
 			}
 			TS_CONSTRUCTOR_PARAM => {
 				JsAnyConstructorParameter::TsConstructorParam(TsConstructorParam { syntax })
 			}
-			_ => {
-				if let Some(js_any_binding_pattern) = JsAnyBindingPattern::cast(syntax) {
-					return Some(JsAnyConstructorParameter::JsAnyBindingPattern(
-						js_any_binding_pattern,
-					));
-				}
-				return None;
-			}
+			_ => return None,
 		};
 		Some(res)
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			JsAnyConstructorParameter::JsBindingPatternWithDefault(it) => &it.syntax,
+			JsAnyConstructorParameter::JsParameter(it) => &it.syntax,
+			JsAnyConstructorParameter::JsUnknownParameter(it) => &it.syntax,
 			JsAnyConstructorParameter::TsConstructorParam(it) => &it.syntax,
-			JsAnyConstructorParameter::JsAnyBindingPattern(it) => it.syntax(),
 		}
 	}
 }
 impl std::fmt::Debug for JsAnyConstructorParameter {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
-			JsAnyConstructorParameter::JsAnyBindingPattern(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyConstructorParameter::JsBindingPatternWithDefault(it) => {
-				std::fmt::Debug::fmt(it, f)
-			}
+			JsAnyConstructorParameter::JsParameter(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyConstructorParameter::JsUnknownParameter(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyConstructorParameter::TsConstructorParam(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
@@ -10636,8 +10687,8 @@ impl std::fmt::Debug for JsAnyConstructorParameter {
 impl From<JsAnyConstructorParameter> for SyntaxNode {
 	fn from(n: JsAnyConstructorParameter) -> SyntaxNode {
 		match n {
-			JsAnyConstructorParameter::JsAnyBindingPattern(it) => it.into(),
-			JsAnyConstructorParameter::JsBindingPatternWithDefault(it) => it.into(),
+			JsAnyConstructorParameter::JsParameter(it) => it.into(),
+			JsAnyConstructorParameter::JsUnknownParameter(it) => it.into(),
 			JsAnyConstructorParameter::TsConstructorParam(it) => it.into(),
 		}
 	}
@@ -12281,60 +12332,56 @@ impl From<JsAnyObjectMemberName> for SyntaxElement {
 		node.into()
 	}
 }
-impl From<JsBindingPatternWithDefault> for JsAnyParameter {
-	fn from(node: JsBindingPatternWithDefault) -> JsAnyParameter {
-		JsAnyParameter::JsBindingPatternWithDefault(node)
-	}
+impl From<JsParameter> for JsAnyParameter {
+	fn from(node: JsParameter) -> JsAnyParameter { JsAnyParameter::JsParameter(node) }
 }
 impl From<JsRestParameter> for JsAnyParameter {
 	fn from(node: JsRestParameter) -> JsAnyParameter { JsAnyParameter::JsRestParameter(node) }
 }
+impl From<JsUnknownParameter> for JsAnyParameter {
+	fn from(node: JsUnknownParameter) -> JsAnyParameter { JsAnyParameter::JsUnknownParameter(node) }
+}
 impl AstNode for JsAnyParameter {
 	fn can_cast(kind: JsSyntaxKind) -> bool {
-		match kind {
-			JS_BINDING_PATTERN_WITH_DEFAULT | JS_REST_PARAMETER => true,
-			k if JsAnyBindingPattern::can_cast(k) => true,
-			_ => false,
-		}
+		matches!(
+			kind,
+			JS_PARAMETER | JS_REST_PARAMETER | JS_UNKNOWN_PARAMETER
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			JS_BINDING_PATTERN_WITH_DEFAULT => {
-				JsAnyParameter::JsBindingPatternWithDefault(JsBindingPatternWithDefault { syntax })
-			}
+			JS_PARAMETER => JsAnyParameter::JsParameter(JsParameter { syntax }),
 			JS_REST_PARAMETER => JsAnyParameter::JsRestParameter(JsRestParameter { syntax }),
-			_ => {
-				if let Some(js_any_binding_pattern) = JsAnyBindingPattern::cast(syntax) {
-					return Some(JsAnyParameter::JsAnyBindingPattern(js_any_binding_pattern));
-				}
-				return None;
+			JS_UNKNOWN_PARAMETER => {
+				JsAnyParameter::JsUnknownParameter(JsUnknownParameter { syntax })
 			}
+			_ => return None,
 		};
 		Some(res)
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			JsAnyParameter::JsBindingPatternWithDefault(it) => &it.syntax,
+			JsAnyParameter::JsParameter(it) => &it.syntax,
 			JsAnyParameter::JsRestParameter(it) => &it.syntax,
-			JsAnyParameter::JsAnyBindingPattern(it) => it.syntax(),
+			JsAnyParameter::JsUnknownParameter(it) => &it.syntax,
 		}
 	}
 }
 impl std::fmt::Debug for JsAnyParameter {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
-			JsAnyParameter::JsAnyBindingPattern(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyParameter::JsBindingPatternWithDefault(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyParameter::JsParameter(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyParameter::JsRestParameter(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyParameter::JsUnknownParameter(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
 impl From<JsAnyParameter> for SyntaxNode {
 	fn from(n: JsAnyParameter) -> SyntaxNode {
 		match n {
-			JsAnyParameter::JsAnyBindingPattern(it) => it.into(),
-			JsAnyParameter::JsBindingPatternWithDefault(it) => it.into(),
+			JsAnyParameter::JsParameter(it) => it.into(),
 			JsAnyParameter::JsRestParameter(it) => it.into(),
+			JsAnyParameter::JsUnknownParameter(it) => it.into(),
 		}
 	}
 }
@@ -13917,6 +13964,11 @@ impl std::fmt::Display for JsObjectExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsParameter {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsParameters {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -14604,37 +14656,6 @@ impl From<JsUnknownMember> for SyntaxElement {
 	fn from(n: JsUnknownMember) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsUnknownModifier {
-	syntax: SyntaxNode,
-}
-impl JsUnknownModifier {
-	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
-}
-impl AstNode for JsUnknownModifier {
-	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_MODIFIER }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsUnknownModifier {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsUnknownModifier")
-			.field("items", &support::DebugSyntaxElementChildren(self.items()))
-			.finish()
-	}
-}
-impl From<JsUnknownModifier> for SyntaxNode {
-	fn from(n: JsUnknownModifier) -> SyntaxNode { n.syntax }
-}
-impl From<JsUnknownModifier> for SyntaxElement {
-	fn from(n: JsUnknownModifier) -> SyntaxElement { n.syntax.into() }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownNamedImportSpecifier {
 	syntax: SyntaxNode,
 }
@@ -14664,6 +14685,37 @@ impl From<JsUnknownNamedImportSpecifier> for SyntaxNode {
 }
 impl From<JsUnknownNamedImportSpecifier> for SyntaxElement {
 	fn from(n: JsUnknownNamedImportSpecifier) -> SyntaxElement { n.syntax.into() }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsUnknownParameter {
+	syntax: SyntaxNode,
+}
+impl JsUnknownParameter {
+	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+impl AstNode for JsUnknownParameter {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_PARAMETER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsUnknownParameter {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsUnknownParameter")
+			.field("items", &support::DebugSyntaxElementChildren(self.items()))
+			.finish()
+	}
+}
+impl From<JsUnknownParameter> for SyntaxNode {
+	fn from(n: JsUnknownParameter) -> SyntaxNode { n.syntax }
+}
+impl From<JsUnknownParameter> for SyntaxElement {
+	fn from(n: JsUnknownParameter) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownStatement {
@@ -15971,6 +16023,7 @@ impl Debug for DebugSyntaxElement {
 				JS_OBJECT_MEMBER_LIST => {
 					std::fmt::Debug::fmt(&JsObjectMemberList::cast(node.clone()).unwrap(), f)
 				}
+				JS_PARAMETER => std::fmt::Debug::fmt(&JsParameter::cast(node.clone()).unwrap(), f),
 				JS_PARAMETER_LIST => {
 					std::fmt::Debug::fmt(&JsParameterList::cast(node.clone()).unwrap(), f)
 				}
@@ -16085,13 +16138,13 @@ impl Debug for DebugSyntaxElement {
 				JS_UNKNOWN_MEMBER => {
 					std::fmt::Debug::fmt(&JsUnknownMember::cast(node.clone()).unwrap(), f)
 				}
-				JS_UNKNOWN_MODIFIER => {
-					std::fmt::Debug::fmt(&JsUnknownModifier::cast(node.clone()).unwrap(), f)
-				}
 				JS_UNKNOWN_NAMED_IMPORT_SPECIFIER => std::fmt::Debug::fmt(
 					&JsUnknownNamedImportSpecifier::cast(node.clone()).unwrap(),
 					f,
 				),
+				JS_UNKNOWN_PARAMETER => {
+					std::fmt::Debug::fmt(&JsUnknownParameter::cast(node.clone()).unwrap(), f)
+				}
 				JS_UNKNOWN_STATEMENT => {
 					std::fmt::Debug::fmt(&JsUnknownStatement::cast(node.clone()).unwrap(), f)
 				}

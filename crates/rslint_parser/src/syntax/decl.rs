@@ -3,18 +3,16 @@
 use super::binding::parse_binding_pattern;
 use super::expr::parse_expr_or_assignment;
 use super::typescript::*;
-#[allow(deprecated)]
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::ParserProgress;
 use crate::state::{AllowObjectExpression, InFunction};
-use crate::syntax::binding::parse_binding_pattern_with_optional_default;
+use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::function::function_body;
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_binding;
 use crate::{JsSyntaxKind::*, *};
 
-#[allow(clippy::unnecessary_unwrap)]
-pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_parameter(p: &mut Parser) -> ParsedSyntax {
 	if p.typescript() {
 		if let Some(modifier) = maybe_eat_incorrect_modifier(p) {
 			let err = p
@@ -25,7 +23,12 @@ pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
 		}
 	}
 
-	parse_binding_pattern_with_optional_default(p)
+	parse_binding_pattern(p).map(|pattern| {
+		let m = pattern.precede(p);
+		maybe_ts_type_annotation(p);
+		parse_initializer_clause(p).ok();
+		m.complete(p, JS_PARAMETER)
+	})
 }
 
 // test parameter_list
@@ -36,7 +39,7 @@ pub(super) fn parse_parameter_list(p: &mut Parser) -> ParsedSyntax {
 		return Absent;
 	}
 	let m = p.start();
-	parse_parameters_list(p, parse_formal_param_pat, JS_PARAMETER_LIST);
+	parse_parameters_list(p, parse_parameter, JS_PARAMETER_LIST);
 	Present(m.complete(p, JS_PARAMETERS))
 }
 
@@ -81,7 +84,7 @@ pub(super) fn parse_parameters_list(
 					p.error(err);
 					let m = p.start();
 					p.bump_any();
-					m.complete(p, JS_UNKNOWN_BINDING);
+					m.complete(p, JS_UNKNOWN_PARAMETER);
 				}
 
 				// type annotation `...foo: number[]`
@@ -137,7 +140,7 @@ pub(super) fn parse_parameters_list(
 				let recovered_result = parse_param(p).or_recover(
 					p,
 					&ParseRecovery::new(
-						JS_UNKNOWN_BINDING,
+						JS_UNKNOWN_PARAMETER,
 						token_set![
 							T![ident],
 							T![await],

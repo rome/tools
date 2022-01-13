@@ -4,7 +4,7 @@ use crate::state::{
 	InGenerator,
 };
 use crate::syntax::binding::parse_binding;
-use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
+use crate::syntax::decl::{parse_parameter, parse_parameter_list, parse_parameters_list};
 use crate::syntax::expr::parse_expr_or_assignment;
 use crate::syntax::function::{
 	function_body, parse_ts_type_annotation_or_error, ts_parameter_types,
@@ -645,8 +645,7 @@ fn parse_class_member_impl(
 				} else {
 					let has_l_paren = p.expect(T!['(']);
 					p.with_state(AllowObjectExpression(has_l_paren), |p| {
-						parse_formal_param_pat(p)
-							.or_add_diagnostic(p, js_parse_error::expected_parameter);
+						parse_parameter(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
 						p.expect(T![')']);
 						function_body(p)
 							.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
@@ -901,11 +900,15 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax {
 			}
 		}
 
-		parse_formal_param_pat(p).or_add_diagnostic(p, expected_parameter);
+		let parameter = parse_parameter(p).or_add_diagnostic(p, expected_parameter);
+
+		if let Some(parameter) = parameter {
+			parameter.undo_completion(p).abandon(p);
+		}
 
 		Present(ts_param.complete(p, TS_CONSTRUCTOR_PARAM))
 	} else {
-		parse_formal_param_pat(p)
+		parse_parameter(p)
 	}
 }
 

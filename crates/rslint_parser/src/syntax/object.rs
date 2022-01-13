@@ -3,7 +3,7 @@ use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
 use crate::state::{AllowObjectExpression, ChangeParserState, InAsync, InFunction, InGenerator};
-use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
+use crate::syntax::decl::{parse_parameter, parse_parameter_list};
 use crate::syntax::expr::{is_at_name, parse_expr_or_assignment, parse_expression};
 use crate::syntax::function::{
 	function_body, parse_ts_parameter_types, parse_ts_type_annotation_or_error,
@@ -253,7 +253,7 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
 	let has_l_paren = p.expect(T!['(']);
 
 	p.with_state(AllowObjectExpression(has_l_paren), |p| {
-		parse_formal_param_pat(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
+		parse_parameter(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
 		p.expect(T![')']);
 
 		function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
