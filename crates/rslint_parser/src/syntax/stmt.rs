@@ -1261,7 +1261,7 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
                     )
                 {
                     let err = p.err_builder("the left hand side of a `for..in` statement cannot be a destructuring pattern")
-							.primary(assignment.range(p), "");
+                            .primary(assignment.range(p), "");
                     p.error(err);
                     assignment.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
                 }
@@ -1588,7 +1588,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
             && ty.is_some()
         {
             let err = p.err_builder("type annotations for catch parameters can only be `unknown` or `any` if specified")
-					.primary(ty.as_ref().unwrap().range(p), "");
+                    .primary(ty.as_ref().unwrap().range(p), "");
 
             p.error(err);
         }

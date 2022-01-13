@@ -28,8 +28,8 @@ let [a, b] = [1, 2];
 #[test]
 fn parser_missing_smoke_test() {
     let src = r#"
-		console.log("Hello world";
-	"#;
+        console.log("Hello world";
+    "#;
 
     let module = parse_module(src, 0);
 
@@ -203,10 +203,10 @@ fn assert_errors_are_absent(errors: &[ParserError], path: &Path, syntax: &Syntax
     }
 
     panic!("There should be no errors in the file {:?} but the following errors where present:\n{}\n\nParsed tree:\n{:#?}",
-		path.display(),
-		std::str::from_utf8(buffer.as_slice()).unwrap(),
-		syntax
-	);
+        path.display(),
+        std::str::from_utf8(buffer.as_slice()).unwrap(),
+        syntax
+    );
 }
 
 #[test]

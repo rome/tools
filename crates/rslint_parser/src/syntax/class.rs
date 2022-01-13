@@ -154,9 +154,9 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
             if p.typescript() && DISALLOWED_TYPE_NAMES.contains(&text) {
                 let err = p
                     .err_builder(&format!(
-							"`{}` cannot be used as a class name because it is already reserved as a type",
-							text
-						))
+                            "`{}` cannot be used as a class name because it is already reserved as a type",
+                            text
+                        ))
                     .primary(id.range(p), "");
 
                 p.error(err);
@@ -959,8 +959,8 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax {
         if let Some(range) = parse_access_modifier(p) {
             if !p.typescript() {
                 let err = p
-					.err_builder("accessibility modifiers for a parameter inside a constructor can only be used in TypeScript files")
-					.primary(range, "");
+                    .err_builder("accessibility modifiers for a parameter inside a constructor can only be used in TypeScript files")
+                    .primary(range, "");
 
                 p.error(err);
             }
@@ -971,8 +971,8 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax {
             // class B { constructor(readonly b) {} }
             if !p.typescript() {
                 let err = p
-					.err_builder("readonly modifiers for a parameter inside a constructor can only be used in TypeScript files")
-					.primary(range, "");
+                    .err_builder("readonly modifiers for a parameter inside a constructor can only be used in TypeScript files")
+                    .primary(range, "");
 
                 p.error(err);
             }

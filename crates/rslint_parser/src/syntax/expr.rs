@@ -778,84 +778,84 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 
     if !is_empty {
         p.with_state(PotentialArrowStart(true), |p| {
-			// stores a potentially started sequence expression
-			let mut sequence: Option<Marker> = None;
+            // stores a potentially started sequence expression
+            let mut sequence: Option<Marker> = None;
 
-			loop {
-				if p.at(T![...]) {
-					let m = p.start();
-					p.bump_any();
-					parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
-					if p.eat(T![:]) {
-						if let Some(mut ty) = ts_type(p) {
-							ty.err_if_not_ts(
-							p,
-							"spread elements can only have type annotations in TypeScript files",
-						);
-						}
-					}
-					let complete = m.complete(p, JS_REST_PARAMETER);
-					spread_range = Some(complete.range(p));
-					if !p.eat(T![')']) {
-						if p.eat(T![=]) {
-							parse_expr_or_assignment(p).or_add_diagnostic(p, expected_expression);
-							p.expect(T![')']);
-						} else {
-							let err = p.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", p.cur_src()))
-							.primary(p.cur_tok().range(), "");
+            loop {
+                if p.at(T![...]) {
+                    let m = p.start();
+                    p.bump_any();
+                    parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
+                    if p.eat(T![:]) {
+                        if let Some(mut ty) = ts_type(p) {
+                            ty.err_if_not_ts(
+                            p,
+                            "spread elements can only have type annotations in TypeScript files",
+                        );
+                        }
+                    }
+                    let complete = m.complete(p, JS_REST_PARAMETER);
+                    spread_range = Some(complete.range(p));
+                    if !p.eat(T![')']) {
+                        if p.eat(T![=]) {
+                            parse_expr_or_assignment(p).or_add_diagnostic(p, expected_expression);
+                            p.expect(T![')']);
+                        } else {
+                            let err = p.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", p.cur_src()))
+                            .primary(p.cur_tok().range(), "");
 
-							#[allow(deprecated)]
-							SingleTokenParseRecovery::with_error(
-								EXPR_RECOVERY_SET,
-								JS_UNKNOWN,
-								err,
-							)
-							.recover(p);
-						}
-					}
-					break;
-				}
-				let expr = parse_expr_or_assignment(p);
-				if expr.is_absent() && p.at(T![:]) {
-					p.rewind(checkpoint);
-					params_marker = Some(parse_arrow_function_parameters(p, SignatureFlags::empty()).unwrap());
-					break;
-				}
+                            #[allow(deprecated)]
+                            SingleTokenParseRecovery::with_error(
+                                EXPR_RECOVERY_SET,
+                                JS_UNKNOWN,
+                                err,
+                            )
+                            .recover(p);
+                        }
+                    }
+                    break;
+                }
+                let expr = parse_expr_or_assignment(p);
+                if expr.is_absent() && p.at(T![:]) {
+                    p.rewind(checkpoint);
+                    params_marker = Some(parse_arrow_function_parameters(p, SignatureFlags::empty()).unwrap());
+                    break;
+                }
 
-				if p.at(T![,]) {
-					if p.at(T![')']) {
-						// case where we are at a `,)` so the `,` is a trailing comma
-						let trailing_marker = p.start();
-						p.bump_any(); // bump ,
-						trailing_comma_marker = Some(trailing_marker.complete(p, JS_UNKNOWN));
-						p.bump_any(); // bump )
-						break;
-					} else {
-						// start a sequence expression that precedes the before parsed expression statement
-						// and bump the ',' into it.
-						sequence = sequence
-							.or_else(|| {
-								Some(expr.precede_or_add_diagnostic(
-									p,
-									js_parse_error::expected_expression,
-								))
-							})
-							.or_else(|| Some(p.start()));
-						p.bump_any(); // bump ; into sequence expression which may or may not miss a lhs
-					}
-				} else {
-					if let Some(sequence) = sequence.take() {
-						sequence.complete(p, JS_SEQUENCE_EXPRESSION);
-					}
-					p.expect(T![')']);
-					break;
-				}
-			}
+                if p.at(T![,]) {
+                    if p.at(T![')']) {
+                        // case where we are at a `,)` so the `,` is a trailing comma
+                        let trailing_marker = p.start();
+                        p.bump_any(); // bump ,
+                        trailing_comma_marker = Some(trailing_marker.complete(p, JS_UNKNOWN));
+                        p.bump_any(); // bump )
+                        break;
+                    } else {
+                        // start a sequence expression that precedes the before parsed expression statement
+                        // and bump the ',' into it.
+                        sequence = sequence
+                            .or_else(|| {
+                                Some(expr.precede_or_add_diagnostic(
+                                    p,
+                                    js_parse_error::expected_expression,
+                                ))
+                            })
+                            .or_else(|| Some(p.start()));
+                        p.bump_any(); // bump ; into sequence expression which may or may not miss a lhs
+                    }
+                } else {
+                    if let Some(sequence) = sequence.take() {
+                        sequence.complete(p, JS_SEQUENCE_EXPRESSION);
+                    }
+                    p.expect(T![')']);
+                    break;
+                }
+            }
 
-			if let Some(sequence) = sequence.take() {
-				sequence.complete(p, JS_SEQUENCE_EXPRESSION);
-			}
-		});
+            if let Some(sequence) = sequence.take() {
+                sequence.complete(p, JS_SEQUENCE_EXPRESSION);
+            }
+        });
     }
 
     let has_ret_type = !p.state.in_condition_expression() && p.at(T![:]);
@@ -1309,15 +1309,15 @@ pub fn parse_template_literal(p: &mut Parser, tag: ParsedSyntax) -> CompletedMar
     while !p.at(EOF) && !p.at(BACKTICK) {
         match p.cur() {
             TEMPLATE_CHUNK => {
-							let m = p.start();
-							p.bump_any();
-							m.complete(p, TEMPLATE_CHUNK_ELEMENT);
-						},
+                            let m = p.start();
+                            p.bump_any();
+                            m.complete(p, TEMPLATE_CHUNK_ELEMENT);
+                        },
             DOLLAR_CURLY => {
                 let e = p.start();
                 p.bump_any();
-								parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
-								p.expect(T!['}']);
+                                parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+                                p.expect(T!['}']);
                 e.complete(p, TEMPLATE_ELEMENT);
             }
             t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),

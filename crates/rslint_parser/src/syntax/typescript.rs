@@ -701,11 +701,11 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
             while !p.at(EOF) && !p.at(BACKTICK) {
                 match p.cur() {
                     TEMPLATE_CHUNK => {
-											let m = p.start();
-											p.bump_any();
-											m.complete(p, TEMPLATE_CHUNK_ELEMENT);
-										},
-										DOLLAR_CURLY => {
+                                            let m = p.start();
+                                            p.bump_any();
+                                            m.complete(p, TEMPLATE_CHUNK_ELEMENT);
+                                        },
+                                        DOLLAR_CURLY => {
                         let e = p.start();
                         p.bump_any();
                         ts_type(p);

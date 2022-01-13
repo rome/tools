@@ -282,24 +282,24 @@ impl<N: AstNode> Iterator for AstSeparatedListElementsIterator<N> {
         let slot = self.slots.next()?;
 
         let node = match slot {
-			// The node for this element is missing if the next child is a token instead of a node.
-			SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
-			// Missing element
-			SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild(
-					self.parent.clone(),
-				)),
-			SyntaxSlot::Node(node) => Ok(node.to::<N>())
-		};
+            // The node for this element is missing if the next child is a token instead of a node.
+            SyntaxSlot::Token(token) => panic!("Malformed list, node expected but found token {:?} instead. You must add missing markers for missing elements.", token),
+            // Missing element
+            SyntaxSlot::Empty => Err(SyntaxError::MissingRequiredChild(
+                    self.parent.clone(),
+                )),
+            SyntaxSlot::Node(node) => Ok(node.to::<N>())
+        };
 
         let separator = match self.slots.next() {
-			Some(SyntaxSlot::Empty) => Err(
-				SyntaxError::MissingRequiredChild(self.parent.clone()),
-			),
-			Some(SyntaxSlot::Token(token)) => Ok(Some(token)),
-			// End of list, no trailing separator
-			None => Ok(None),
-			Some(SyntaxSlot::Node(node)) => panic!("Malformed separated list, separator expected but found node {:?} instead. You must add missing markers for missing separators.", node),
-		};
+            Some(SyntaxSlot::Empty) => Err(
+                SyntaxError::MissingRequiredChild(self.parent.clone()),
+            ),
+            Some(SyntaxSlot::Token(token)) => Ok(Some(token)),
+            // End of list, no trailing separator
+            None => Ok(None),
+            Some(SyntaxSlot::Node(node)) => panic!("Malformed separated list, separator expected but found node {:?} instead. You must add missing markers for missing separators.", node),
+        };
 
         Some(AstSeparatedElement {
             node,

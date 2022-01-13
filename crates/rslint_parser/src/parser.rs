@@ -483,12 +483,12 @@ pub struct Marker {
 impl Marker {
     pub fn new(pos: u32, start: usize) -> Marker {
         Marker {
-			pos,
-			start,
-			old_start: pos,
-			child_idx: None,
-			bomb: DebugDropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."),
-		}
+            pos,
+            start,
+            old_start: pos,
+            child_idx: None,
+            bomb: DebugDropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."),
+        }
     }
 
     pub(crate) fn old_start(mut self, old: u32) -> Self {

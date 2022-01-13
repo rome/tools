@@ -260,12 +260,12 @@ fn validate_rest_pattern(
         p.error(
             p.err_builder("rest element must be the last element")
                 .primary(
-                    rest.range(p),
-                    &format!(
-							"Move the rest element to the end of the pattern, right before the closing {}",
-							end_token.to_string().unwrap(),
-						),
+                rest.range(p),
+                &format!(
+                    "Move the rest element to the end of the pattern, right before the closing {}",
+                    end_token.to_string().unwrap(),
                 ),
+            ),
         );
         rest.change_to_unknown(p);
         rest
