@@ -25,6 +25,9 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Fetch Main Branch
+        run: git fetch --no-tags --prune --no-recurse-submodules --depth=1 origin main
+
       - name: Install toolchain
         run: rustup show
 
@@ -39,7 +42,7 @@ jobs:
         run: cargo run -p xtask --release -- coverage --json > new_results.json
 
       - name: Checkout Main Branch
-        run: git fetch origin main && git checkout main
+        run: git checkout main
 
       - name: Run Test262 suite on main branch
         continue-on-error: true
