@@ -8,14 +8,17 @@ pub fn format_directives(directives: JsDirectiveList, formatter: &Formatter) -> 
     join_elements(
         hard_line_break(),
         directives.iter().map(|directive| {
-            formatter
-                .format_node(directive.clone())
-                .unwrap_or_else(|_| {
+            let snapshot = formatter.snapshot();
+            match formatter.format_node(directive.clone()) {
+                Ok(result) => result,
+                Err(_) => {
+                    formatter.restore(snapshot);
                     formatter
                         .format_raw(directive.syntax())
                         .trim_start()
                         .trim_end()
-                })
+                }
+            }
         }),
     )
 }

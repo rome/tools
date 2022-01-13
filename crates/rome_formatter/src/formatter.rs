@@ -1,3 +1,6 @@
+use std::cell::RefCell;
+use std::collections::HashSet;
+
 use crate::format_element::line_suffix;
 use crate::printer::Printer;
 use crate::{
@@ -7,7 +10,7 @@ use crate::{
 };
 use rome_rowan::api::{SyntaxTrivia, SyntaxTriviaPieceComments};
 use rome_rowan::{Language, SyntaxElement};
-use rslint_parser::{AstNode, AstSeparatedList, SyntaxNode, SyntaxToken};
+use rslint_parser::{AstNode, AstSeparatedList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
 /// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
@@ -15,12 +18,18 @@ use rslint_parser::{AstNode, AstSeparatedList, SyntaxNode, SyntaxToken};
 #[derive(Debug, Default)]
 pub struct Formatter {
     options: FormatOptions,
+    #[cfg(debug_assertions)]
+    printed_tokens: RefCell<HashSet<SyntaxToken>>,
 }
 
 impl Formatter {
     /// Creates a new context that uses the given formatter options
     pub fn new(options: FormatOptions) -> Self {
-        Self { options }
+        Self {
+            options,
+            #[cfg(debug_assertions)]
+            printed_tokens: RefCell::default(),
+        }
     }
 
     /// Returns the [FormatOptions] specifying how to format the current CST
@@ -32,6 +41,19 @@ impl Formatter {
     /// Formats a CST
     pub fn format_root(self, root: &SyntaxNode) -> FormatResult<Formatted> {
         let element = self.format_syntax_node(root)?;
+
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                let printed_tokens = self.printed_tokens.into_inner();
+                for token in root.tokens() {
+                    assert!(
+                        printed_tokens.contains(&token),
+                        "token was not seen by the formatter: {:?}",
+                        token
+                    );
+                }
+            }
+        }
 
         let printer = Printer::new(self.options);
         Ok(printer.print(&element))
@@ -58,15 +80,18 @@ impl Formatter {
         content: impl FnOnce(FormatElement, FormatElement) -> FormatResult<FormatElement>,
         close_token: &SyntaxToken,
     ) -> FormatResult<FormatElement> {
+        debug_assert!(self.printed_tokens.borrow_mut().insert(open_token.clone()));
+        debug_assert!(self.printed_tokens.borrow_mut().insert(close_token.clone()));
+
         Ok(format_elements![
-            self.print_trivia(open_token.leading_trivia()),
+            self.print_leading_trivia(open_token),
             token(open_token.text_trimmed()),
             content(
-                self.print_trivia(open_token.trailing_trivia()),
-                self.print_trivia(close_token.leading_trivia()),
+                self.print_trailing_trivia(open_token),
+                self.print_leading_trivia(close_token),
             )?,
             token(close_token.text_trimmed()),
-            self.print_trivia(close_token.trailing_trivia()),
+            self.print_trailing_trivia(close_token),
         ])
     }
 
@@ -128,10 +153,32 @@ impl Formatter {
     /// assert_eq!(Ok(token("'abc'")), result)
     /// ```
     pub fn format_token(&self, syntax_token: &SyntaxToken) -> FormatResult<FormatElement> {
+        debug_assert!(self
+            .printed_tokens
+            .borrow_mut()
+            .insert(syntax_token.clone()));
+
         Ok(format_elements![
             self.print_leading_trivia(syntax_token),
             token(syntax_token.text_trimmed()),
             self.print_trailing_trivia(syntax_token),
+        ])
+    }
+
+    /// Print out a token from the original source with a different content
+    ///
+    /// This will print the associated trivias from the token as well as mark
+    /// it as having been consumed by the formatter
+    pub fn format_replaced_token(
+        &self,
+        token: &SyntaxToken,
+        content: FormatElement,
+    ) -> FormatResult<FormatElement> {
+        debug_assert!(self.printed_tokens.borrow_mut().insert(token.clone()));
+        Ok(format_elements![
+            self.print_leading_trivia(token),
+            content,
+            self.print_trailing_trivia(token),
         ])
     }
 
@@ -184,16 +231,16 @@ impl Formatter {
         for (index, element) in list.elements().enumerate() {
             let node = self.format_node(element.node()?)?;
             if let Some(separator) = element.trailing_separator()? {
-                if index == list.len() - 1 {
-                    result.push(node);
-                    // Print the trivia for the last trailing separator token
-                    // without printing the token itself since that depends
-                    // on the outer group being broken or not
-                    result.push(self.print_leading_trivia(&separator));
-                    result.push(self.print_trailing_trivia(&separator));
+                let separator = if index == list.len() - 1 {
+                    // Print the last trailing separator token is replaced
+                    // with an empty element since the logic of printing the
+                    // last token depends on the group being borken or not
+                    self.format_replaced_token(&separator, empty_element())?
                 } else {
-                    result.push(format_elements![node, self.format_token(&separator)?]);
-                }
+                    self.format_token(&separator)?
+                };
+
+                result.push(format_elements![node, separator]);
             } else {
                 result.push(node);
             }
@@ -334,7 +381,36 @@ impl Formatter {
                 // need to be tracked for every node.
                 self.format_raw(&child_node)
             }
-            SyntaxElement::Token(syntax_token) => token(syntax_token.text()),
+            SyntaxElement::Token(syntax_token) => {
+                debug_assert!(self
+                    .printed_tokens
+                    .borrow_mut()
+                    .insert(syntax_token.clone()));
+
+                token(syntax_token.text())
+            }
         }))
+    }
+}
+
+pub struct FormatterSnapshot {
+    #[cfg(debug_assertions)]
+    printed_tokens: HashSet<SyntaxToken>,
+}
+
+impl Formatter {
+    pub fn snapshot(&self) -> FormatterSnapshot {
+        FormatterSnapshot {
+            #[cfg(debug_assertions)]
+            printed_tokens: self.printed_tokens.borrow().clone(),
+        }
+    }
+
+    pub fn restore(&self, snapshot: FormatterSnapshot) {
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                *self.printed_tokens.borrow_mut() = snapshot.printed_tokens;
+            }
+        }
     }
 }

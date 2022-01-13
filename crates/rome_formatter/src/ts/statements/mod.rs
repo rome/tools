@@ -29,9 +29,14 @@ pub fn format_statements(stmts: JsStatementList, formatter: &Formatter) -> Forma
     join_elements(
         hard_line_break(),
         stmts.iter().map(|stmt| {
-            formatter
-                .format_node(stmt.clone())
-                .unwrap_or_else(|_| formatter.format_raw(stmt.syntax()).trim_start().trim_end())
+            let snapshot = formatter.snapshot();
+            match formatter.format_node(stmt.clone()) {
+                Ok(result) => result,
+                Err(_) => {
+                    formatter.restore(snapshot);
+                    formatter.format_raw(stmt.syntax()).trim_start().trim_end()
+                }
+            }
         }),
     )
 }
