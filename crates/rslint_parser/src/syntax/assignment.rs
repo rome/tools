@@ -432,7 +432,7 @@ impl RewriteParseEvents for ReparseAssignment {
 
 			if matches!(kind, IDENT)
 				&& (p.cur_src() == "eval" || p.cur_src() == "arguments")
-				&& p.state.strict.is_some()
+				&& p.state.strict().is_some()
 				// If we're inside a member or computed expression then we do not error
 				&& !self.inside_member_or_computed_expression
 			{
