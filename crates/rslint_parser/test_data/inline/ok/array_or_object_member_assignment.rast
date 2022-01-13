@@ -57,8 +57,12 @@ JsModule {
                                                 value: IDENT@94..95 "y" [] [],
                                             },
                                             l_paren_token: L_PAREN@95..96 "(" [] [],
-                                            parameter: JsIdentifierBinding {
-                                                name_token: IDENT@96..99 "val" [] [],
+                                            parameter: JsParameter {
+                                                binding: JsIdentifierBinding {
+                                                    name_token: IDENT@96..99 "val" [] [],
+                                                },
+                                                type_annotation: missing (optional),
+                                                initializer: missing (optional),
                                             },
                                             r_paren_token: R_PAREN@99..101 ")" [] [Whitespace(" ")],
                                             body: JsFunctionBody {
@@ -173,8 +177,12 @@ JsModule {
                                                     value: IDENT@244..245 "y" [] [],
                                                 },
                                                 l_paren_token: L_PAREN@245..246 "(" [] [],
-                                                parameter: JsIdentifierBinding {
-                                                    name_token: IDENT@246..249 "val" [] [],
+                                                parameter: JsParameter {
+                                                    binding: JsIdentifierBinding {
+                                                        name_token: IDENT@246..249 "val" [] [],
+                                                    },
+                                                    type_annotation: missing (optional),
+                                                    initializer: missing (optional),
                                                 },
                                                 r_paren_token: R_PAREN@249..251 ")" [] [Whitespace(" ")],
                                                 body: JsFunctionBody {
@@ -289,8 +297,11 @@ JsModule {
                       1: JS_LITERAL_MEMBER_NAME@94..95
                         0: IDENT@94..95 "y" [] []
                       2: L_PAREN@95..96 "(" [] []
-                      3: JS_IDENTIFIER_BINDING@96..99
-                        0: IDENT@96..99 "val" [] []
+                      3: JS_PARAMETER@96..99
+                        0: JS_IDENTIFIER_BINDING@96..99
+                          0: IDENT@96..99 "val" [] []
+                        1: (empty)
+                        2: (empty)
                       4: R_PAREN@99..101 ")" [] [Whitespace(" ")]
                       5: JS_FUNCTION_BODY@101..126
                         0: L_CURLY@101..102 "{" [] []
@@ -370,8 +381,11 @@ JsModule {
                         1: JS_LITERAL_MEMBER_NAME@244..245
                           0: IDENT@244..245 "y" [] []
                         2: L_PAREN@245..246 "(" [] []
-                        3: JS_IDENTIFIER_BINDING@246..249
-                          0: IDENT@246..249 "val" [] []
+                        3: JS_PARAMETER@246..249
+                          0: JS_IDENTIFIER_BINDING@246..249
+                            0: IDENT@246..249 "val" [] []
+                          1: (empty)
+                          2: (empty)
                         4: R_PAREN@249..251 ")" [] [Whitespace(" ")]
                         5: JS_FUNCTION_BODY@251..276
                           0: L_CURLY@251..252 "{" [] []

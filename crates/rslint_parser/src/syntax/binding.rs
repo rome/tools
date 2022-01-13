@@ -18,13 +18,8 @@ pub(crate) fn parse_binding_pattern(p: &mut Parser) -> ParsedSyntax {
 		T!['{'] if p.state.allow_object_expression() => {
 			ObjectBindingPattern.parse_object_pattern(p)
 		}
-		T![ident] | T![yield] | T![await] => parse_identifier_binding(p),
-		_ => Absent,
+		_ => parse_identifier_binding(p),
 	}
-}
-
-pub(crate) fn parse_binding_pattern_with_optional_default(p: &mut Parser) -> ParsedSyntax {
-	BindingPatternWithDefault.parse_pattern_with_optional_default(p)
 }
 
 fn is_at_identifier_binding(p: &Parser) -> bool {

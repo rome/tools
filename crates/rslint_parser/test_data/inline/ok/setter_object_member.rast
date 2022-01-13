@@ -23,8 +23,12 @@ JsModule {
                                             value: IDENT@15..18 "foo" [] [],
                                         },
                                         l_paren_token: L_PAREN@18..19 "(" [] [],
-                                        parameter: JsIdentifierBinding {
-                                            name_token: IDENT@19..24 "value" [] [],
+                                        parameter: JsParameter {
+                                            binding: JsIdentifierBinding {
+                                                name_token: IDENT@19..24 "value" [] [],
+                                            },
+                                            type_annotation: missing (optional),
+                                            initializer: missing (optional),
                                         },
                                         r_paren_token: R_PAREN@24..26 ")" [] [Whitespace(" ")],
                                         body: JsFunctionBody {
@@ -41,8 +45,12 @@ JsModule {
                                             value: JS_STRING_LITERAL@37..42 "\"bar\"" [] [],
                                         },
                                         l_paren_token: L_PAREN@42..43 "(" [] [],
-                                        parameter: JsIdentifierBinding {
-                                            name_token: IDENT@43..48 "value" [] [],
+                                        parameter: JsParameter {
+                                            binding: JsIdentifierBinding {
+                                                name_token: IDENT@43..48 "value" [] [],
+                                            },
+                                            type_annotation: missing (optional),
+                                            initializer: missing (optional),
                                         },
                                         r_paren_token: R_PAREN@48..50 ")" [] [Whitespace(" ")],
                                         body: JsFunctionBody {
@@ -69,8 +77,12 @@ JsModule {
                                             r_brack_token: R_BRACK@71..72 "]" [] [],
                                         },
                                         l_paren_token: L_PAREN@72..73 "(" [] [],
-                                        parameter: JsIdentifierBinding {
-                                            name_token: IDENT@73..78 "value" [] [],
+                                        parameter: JsParameter {
+                                            binding: JsIdentifierBinding {
+                                                name_token: IDENT@73..78 "value" [] [],
+                                            },
+                                            type_annotation: missing (optional),
+                                            initializer: missing (optional),
                                         },
                                         r_paren_token: R_PAREN@78..80 ")" [] [Whitespace(" ")],
                                         body: JsFunctionBody {
@@ -87,8 +99,12 @@ JsModule {
                                             value: JS_NUMBER_LITERAL@91..92 "5" [] [],
                                         },
                                         l_paren_token: L_PAREN@92..93 "(" [] [],
-                                        parameter: JsIdentifierBinding {
-                                            name_token: IDENT@93..98 "value" [] [],
+                                        parameter: JsParameter {
+                                            binding: JsIdentifierBinding {
+                                                name_token: IDENT@93..98 "value" [] [],
+                                            },
+                                            type_annotation: missing (optional),
+                                            initializer: missing (optional),
                                         },
                                         r_paren_token: R_PAREN@98..100 ")" [] [Whitespace(" ")],
                                         body: JsFunctionBody {
@@ -163,8 +179,11 @@ JsModule {
                     1: JS_LITERAL_MEMBER_NAME@15..18
                       0: IDENT@15..18 "foo" [] []
                     2: L_PAREN@18..19 "(" [] []
-                    3: JS_IDENTIFIER_BINDING@19..24
-                      0: IDENT@19..24 "value" [] []
+                    3: JS_PARAMETER@19..24
+                      0: JS_IDENTIFIER_BINDING@19..24
+                        0: IDENT@19..24 "value" [] []
+                      1: (empty)
+                      2: (empty)
                     4: R_PAREN@24..26 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@26..30
                       0: L_CURLY@26..27 "{" [] []
@@ -177,8 +196,11 @@ JsModule {
                     1: JS_LITERAL_MEMBER_NAME@37..42
                       0: JS_STRING_LITERAL@37..42 "\"bar\"" [] []
                     2: L_PAREN@42..43 "(" [] []
-                    3: JS_IDENTIFIER_BINDING@43..48
-                      0: IDENT@43..48 "value" [] []
+                    3: JS_PARAMETER@43..48
+                      0: JS_IDENTIFIER_BINDING@43..48
+                        0: IDENT@43..48 "value" [] []
+                      1: (empty)
+                      2: (empty)
                     4: R_PAREN@48..50 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@50..54
                       0: L_CURLY@50..51 "{" [] []
@@ -198,8 +220,11 @@ JsModule {
                           0: JS_STRING_LITERAL@68..71 "\"b\"" [] []
                       2: R_BRACK@71..72 "]" [] []
                     2: L_PAREN@72..73 "(" [] []
-                    3: JS_IDENTIFIER_BINDING@73..78
-                      0: IDENT@73..78 "value" [] []
+                    3: JS_PARAMETER@73..78
+                      0: JS_IDENTIFIER_BINDING@73..78
+                        0: IDENT@73..78 "value" [] []
+                      1: (empty)
+                      2: (empty)
                     4: R_PAREN@78..80 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@80..84
                       0: L_CURLY@80..81 "{" [] []
@@ -212,8 +237,11 @@ JsModule {
                     1: JS_LITERAL_MEMBER_NAME@91..92
                       0: JS_NUMBER_LITERAL@91..92 "5" [] []
                     2: L_PAREN@92..93 "(" [] []
-                    3: JS_IDENTIFIER_BINDING@93..98
-                      0: IDENT@93..98 "value" [] []
+                    3: JS_PARAMETER@93..98
+                      0: JS_IDENTIFIER_BINDING@93..98
+                        0: IDENT@93..98 "value" [] []
+                      1: (empty)
+                      2: (empty)
                     4: R_PAREN@98..100 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@100..104
                       0: L_CURLY@100..101 "{" [] []

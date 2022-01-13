@@ -20,8 +20,12 @@ JsModule {
                         value: IDENT@21..24 "foo" [] [],
                     },
                     l_paren_token: L_PAREN@24..25 "(" [] [],
-                    parameter: JsIdentifierBinding {
-                        name_token: IDENT@25..26 "a" [] [],
+                    parameter: JsParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@25..26 "a" [] [],
+                        },
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@26..28 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -40,8 +44,12 @@ JsModule {
                         value: IDENT@36..42 "static" [] [],
                     },
                     l_paren_token: L_PAREN@42..43 "(" [] [],
-                    parameter: JsIdentifierBinding {
-                        name_token: IDENT@43..44 "a" [] [],
+                    parameter: JsParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@43..44 "a" [] [],
+                        },
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@44..46 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -60,8 +68,12 @@ JsModule {
                         value: IDENT@61..64 "bar" [] [],
                     },
                     l_paren_token: L_PAREN@64..65 "(" [] [],
-                    parameter: JsIdentifierBinding {
-                        name_token: IDENT@65..66 "a" [] [],
+                    parameter: JsParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@65..66 "a" [] [],
+                        },
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@66..68 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -80,8 +92,12 @@ JsModule {
                         value: JS_STRING_LITERAL@76..81 "\"baz\"" [] [],
                     },
                     l_paren_token: L_PAREN@81..82 "(" [] [],
-                    parameter: JsIdentifierBinding {
-                        name_token: IDENT@82..83 "a" [] [],
+                    parameter: JsParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@82..83 "a" [] [],
+                        },
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@83..85 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -110,8 +126,12 @@ JsModule {
                         r_brack_token: R_BRACK@103..104 "]" [] [],
                     },
                     l_paren_token: L_PAREN@104..105 "(" [] [],
-                    parameter: JsIdentifierBinding {
-                        name_token: IDENT@105..106 "a" [] [],
+                    parameter: JsParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@105..106 "a" [] [],
+                        },
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@106..108 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -130,8 +150,12 @@ JsModule {
                         value: JS_NUMBER_LITERAL@116..117 "5" [] [],
                     },
                     l_paren_token: L_PAREN@117..118 "(" [] [],
-                    parameter: JsIdentifierBinding {
-                        name_token: IDENT@118..119 "a" [] [],
+                    parameter: JsParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@118..119 "a" [] [],
+                        },
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@119..121 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -151,8 +175,12 @@ JsModule {
                         id_token: IDENT@130..137 "private" [] [],
                     },
                     l_paren_token: L_PAREN@137..138 "(" [] [],
-                    parameter: JsIdentifierBinding {
-                        name_token: IDENT@138..139 "a" [] [],
+                    parameter: JsParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@138..139 "a" [] [],
+                        },
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@139..141 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -187,8 +215,12 @@ JsModule {
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@169..170 "(" [] [],
                         items: JsParameterList [
-                            JsIdentifierBinding {
-                                name_token: IDENT@170..171 "a" [] [],
+                            JsParameter {
+                                binding: JsIdentifierBinding {
+                                    name_token: IDENT@170..171 "a" [] [],
+                                },
+                                type_annotation: missing (optional),
+                                initializer: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@171..173 ")" [] [Whitespace(" ")],
@@ -214,8 +246,12 @@ JsModule {
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@186..187 "(" [] [],
                         items: JsParameterList [
-                            JsIdentifierBinding {
-                                name_token: IDENT@187..188 "a" [] [],
+                            JsParameter {
+                                binding: JsIdentifierBinding {
+                                    name_token: IDENT@187..188 "a" [] [],
+                                },
+                                type_annotation: missing (optional),
+                                initializer: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@188..190 ")" [] [Whitespace(" ")],
@@ -241,8 +277,12 @@ JsModule {
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@204..205 "(" [] [],
                         items: JsParameterList [
-                            JsIdentifierBinding {
-                                name_token: IDENT@205..206 "a" [] [],
+                            JsParameter {
+                                binding: JsIdentifierBinding {
+                                    name_token: IDENT@205..206 "a" [] [],
+                                },
+                                type_annotation: missing (optional),
+                                initializer: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@206..208 ")" [] [Whitespace(" ")],
@@ -282,8 +322,11 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@21..24
             0: IDENT@21..24 "foo" [] []
           5: L_PAREN@24..25 "(" [] []
-          6: JS_IDENTIFIER_BINDING@25..26
-            0: IDENT@25..26 "a" [] []
+          6: JS_PARAMETER@25..26
+            0: JS_IDENTIFIER_BINDING@25..26
+              0: IDENT@25..26 "a" [] []
+            1: (empty)
+            2: (empty)
           7: R_PAREN@26..28 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@28..30
             0: L_CURLY@28..29 "{" [] []
@@ -298,8 +341,11 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@36..42
             0: IDENT@36..42 "static" [] []
           5: L_PAREN@42..43 "(" [] []
-          6: JS_IDENTIFIER_BINDING@43..44
-            0: IDENT@43..44 "a" [] []
+          6: JS_PARAMETER@43..44
+            0: JS_IDENTIFIER_BINDING@43..44
+              0: IDENT@43..44 "a" [] []
+            1: (empty)
+            2: (empty)
           7: R_PAREN@44..46 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@46..48
             0: L_CURLY@46..47 "{" [] []
@@ -314,8 +360,11 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@61..64
             0: IDENT@61..64 "bar" [] []
           5: L_PAREN@64..65 "(" [] []
-          6: JS_IDENTIFIER_BINDING@65..66
-            0: IDENT@65..66 "a" [] []
+          6: JS_PARAMETER@65..66
+            0: JS_IDENTIFIER_BINDING@65..66
+              0: IDENT@65..66 "a" [] []
+            1: (empty)
+            2: (empty)
           7: R_PAREN@66..68 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@68..70
             0: L_CURLY@68..69 "{" [] []
@@ -330,8 +379,11 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@76..81
             0: JS_STRING_LITERAL@76..81 "\"baz\"" [] []
           5: L_PAREN@81..82 "(" [] []
-          6: JS_IDENTIFIER_BINDING@82..83
-            0: IDENT@82..83 "a" [] []
+          6: JS_PARAMETER@82..83
+            0: JS_IDENTIFIER_BINDING@82..83
+              0: IDENT@82..83 "a" [] []
+            1: (empty)
+            2: (empty)
           7: R_PAREN@83..85 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@85..87
             0: L_CURLY@85..86 "{" [] []
@@ -353,8 +405,11 @@ JsModule {
                 0: JS_STRING_LITERAL@100..103 "\"b\"" [] []
             2: R_BRACK@103..104 "]" [] []
           5: L_PAREN@104..105 "(" [] []
-          6: JS_IDENTIFIER_BINDING@105..106
-            0: IDENT@105..106 "a" [] []
+          6: JS_PARAMETER@105..106
+            0: JS_IDENTIFIER_BINDING@105..106
+              0: IDENT@105..106 "a" [] []
+            1: (empty)
+            2: (empty)
           7: R_PAREN@106..108 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@108..110
             0: L_CURLY@108..109 "{" [] []
@@ -369,8 +424,11 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@116..117
             0: JS_NUMBER_LITERAL@116..117 "5" [] []
           5: L_PAREN@117..118 "(" [] []
-          6: JS_IDENTIFIER_BINDING@118..119
-            0: IDENT@118..119 "a" [] []
+          6: JS_PARAMETER@118..119
+            0: JS_IDENTIFIER_BINDING@118..119
+              0: IDENT@118..119 "a" [] []
+            1: (empty)
+            2: (empty)
           7: R_PAREN@119..121 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@121..123
             0: L_CURLY@121..122 "{" [] []
@@ -386,8 +444,11 @@ JsModule {
             0: HASH@129..130 "#" [] []
             1: IDENT@130..137 "private" [] []
           5: L_PAREN@137..138 "(" [] []
-          6: JS_IDENTIFIER_BINDING@138..139
-            0: IDENT@138..139 "a" [] []
+          6: JS_PARAMETER@138..139
+            0: JS_IDENTIFIER_BINDING@138..139
+              0: IDENT@138..139 "a" [] []
+            1: (empty)
+            2: (empty)
           7: R_PAREN@139..141 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@141..143
             0: L_CURLY@141..142 "{" [] []
@@ -415,8 +476,11 @@ JsModule {
           7: JS_PARAMETERS@169..173
             0: L_PAREN@169..170 "(" [] []
             1: JS_PARAMETER_LIST@170..171
-              0: JS_IDENTIFIER_BINDING@170..171
-                0: IDENT@170..171 "a" [] []
+              0: JS_PARAMETER@170..171
+                0: JS_IDENTIFIER_BINDING@170..171
+                  0: IDENT@170..171 "a" [] []
+                1: (empty)
+                2: (empty)
             2: R_PAREN@171..173 ")" [] [Whitespace(" ")]
           8: (empty)
           9: JS_FUNCTION_BODY@173..175
@@ -436,8 +500,11 @@ JsModule {
           7: JS_PARAMETERS@186..190
             0: L_PAREN@186..187 "(" [] []
             1: JS_PARAMETER_LIST@187..188
-              0: JS_IDENTIFIER_BINDING@187..188
-                0: IDENT@187..188 "a" [] []
+              0: JS_PARAMETER@187..188
+                0: JS_IDENTIFIER_BINDING@187..188
+                  0: IDENT@187..188 "a" [] []
+                1: (empty)
+                2: (empty)
             2: R_PAREN@188..190 ")" [] [Whitespace(" ")]
           8: (empty)
           9: JS_FUNCTION_BODY@190..192
@@ -457,8 +524,11 @@ JsModule {
           7: JS_PARAMETERS@204..208
             0: L_PAREN@204..205 "(" [] []
             1: JS_PARAMETER_LIST@205..206
-              0: JS_IDENTIFIER_BINDING@205..206
-                0: IDENT@205..206 "a" [] []
+              0: JS_PARAMETER@205..206
+                0: JS_IDENTIFIER_BINDING@205..206
+                  0: IDENT@205..206 "a" [] []
+                1: (empty)
+                2: (empty)
             2: R_PAREN@206..208 ")" [] [Whitespace(" ")]
           8: (empty)
           9: JS_FUNCTION_BODY@208..210

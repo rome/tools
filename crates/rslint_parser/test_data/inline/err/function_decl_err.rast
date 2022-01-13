@@ -191,10 +191,14 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@169..170 "(" [] [],
                 items: JsParameterList [
-                    JsUnknownBinding {
-                        items: [
-                            IDENT@170..175 "await" [] [],
-                        ],
+                    JsParameter {
+                        binding: JsUnknownBinding {
+                            items: [
+                                IDENT@170..175 "await" [] [],
+                            ],
+                        },
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@175..177 ")" [] [Whitespace(" ")],
@@ -218,10 +222,14 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@192..193 "(" [] [],
                 items: JsParameterList [
-                    JsUnknownBinding {
-                        items: [
-                            IDENT@193..198 "yield" [] [],
-                        ],
+                    JsParameter {
+                        binding: JsUnknownBinding {
+                            items: [
+                                IDENT@193..198 "yield" [] [],
+                            ],
+                        },
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@198..200 ")" [] [Whitespace(" ")],
@@ -387,8 +395,11 @@ JsModule {
       5: JS_PARAMETERS@169..177
         0: L_PAREN@169..170 "(" [] []
         1: JS_PARAMETER_LIST@170..175
-          0: JS_UNKNOWN_BINDING@170..175
-            0: IDENT@170..175 "await" [] []
+          0: JS_PARAMETER@170..175
+            0: JS_UNKNOWN_BINDING@170..175
+              0: IDENT@170..175 "await" [] []
+            1: (empty)
+            2: (empty)
         2: R_PAREN@175..177 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@177..179
@@ -406,8 +417,11 @@ JsModule {
       5: JS_PARAMETERS@192..200
         0: L_PAREN@192..193 "(" [] []
         1: JS_PARAMETER_LIST@193..198
-          0: JS_UNKNOWN_BINDING@193..198
-            0: IDENT@193..198 "yield" [] []
+          0: JS_PARAMETER@193..198
+            0: JS_UNKNOWN_BINDING@193..198
+              0: IDENT@193..198 "yield" [] []
+            1: (empty)
+            2: (empty)
         2: R_PAREN@198..200 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@200..202
