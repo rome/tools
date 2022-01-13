@@ -341,41 +341,41 @@ bitflags! {
 	struct ParsingContextFlags: u16 {
 		/// Whether the parser is in a generator function like `function* a() {}`
 		/// Matches the `Yield` parameter in the ECMA spec
-		const IN_GENERATOR						= 0b0000000000000001;
+		const IN_GENERATOR = 0b0000000000000001;
 		/// Whether the parser is inside a function
-		const IN_FUNCTION						= 0b0000000000000010;
+		const IN_FUNCTION = 0b0000000000000010;
 		/// Whatever the parser is inside a constructor
-		const IN_CONSTRUCTOR					= 0b0000000000000100;
+		const IN_CONSTRUCTOR = 0b0000000000000100;
 
 		/// Is async allowed in this context. Either because it's an async function or top level await is supported.
 		/// Equivalent to the `Async` generator in the ECMA spec
-		const IN_ASYNC							= 0b0000000000001000;
+		const IN_ASYNC = 0b0000000000001000;
 
 		/// Whether the parser is inside a parameter (maybe nested, like parameter with a function expression initializer)
-		const IN_PARAMETERS						= 0b0000000000010000;
+		const IN_PARAMETERS = 0b0000000000010000;
 
 		/// Whether `in` should be counted in a binary expression
 		/// this is for `for...in` statements to prevent ambiguity.
-		const INCLUDE_IN						= 0b0000000000100000;
-		const IN_BINDING_LIST_FOR_SIGNATURE		= 0b0000000001000000;
+		const INCLUDE_IN = 0b0000000000100000;
+		const IN_BINDING_LIST_FOR_SIGNATURE = 0b0000000001000000;
 		/// Whether the parser is in a conditional expr (ternary expr)
-		const IN_CONDITION_EXPRESSION			= 0b0000000010000000;
+		const IN_CONDITION_EXPRESSION = 0b0000000010000000;
 
 		/// Whether the parser is in an iteration or switch statement and
 		/// `break` is allowed.
-		const BREAK_ALLOWED						= 0b0000000100000000;
+		const BREAK_ALLOWED = 0b0000000100000000;
 
 		/// Whether the parser is in an iteration statement and `continue` is allowed.
-		const CONTINUE_ALLOWED					= 0b0000001000000000;
+		const CONTINUE_ALLOWED = 0b0000001000000000;
 
 		/// If false, object expressions are not allowed to be parsed
 		/// inside an expression.
 		///
 		/// Also applies for object patterns
-		const ALLOW_OBJECT_EXPRESSION			= 0b0000010000000000;
+		const ALLOW_OBJECT_EXPRESSION = 0b0000010000000000;
 
 		/// Whether we potentially are in a place to parse an arrow expression
-		const POTENTIAL_ARROW_START				= 0b0000100000000000;
+		const POTENTIAL_ARROW_START = 0b0000100000000000;
 
 		const LOOP = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits;
 
