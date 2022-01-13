@@ -9,14 +9,18 @@ impl ToFormatElement for JsParameters {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let param_tokens = formatter.format_separated(self.items())?;
 
-        Ok(group_elements(format_elements![
-            formatter.format_token(&self.l_paren_token()?)?,
-            soft_indent(format_elements![
-                join_elements(soft_line_break_or_space(), param_tokens),
-                if_group_breaks(token(",")),
-            ]),
-            formatter.format_token(&self.r_paren_token()?)?
-        ]))
+        Ok(group_elements(formatter.format_delimited_group(
+            &self.l_paren_token()?,
+            |leading, trailing| {
+                Ok(soft_indent(format_elements![
+                    leading,
+                    join_elements(soft_line_break_or_space(), param_tokens),
+                    if_group_breaks(token(",")),
+                    trailing,
+                ]))
+            },
+            &self.r_paren_token()?,
+        )?))
     }
 }
 

@@ -47,6 +47,29 @@ impl Formatter {
         ]))
     }
 
+    /// Formats a group delimited by an opening and closing token,
+    /// such as a function body delimited by '{' and '}' tokens
+    ///
+    /// Calling this method is required to correctly handle the comments attached
+    /// to the opening and closing tokens and insert them inside the group block
+    pub(crate) fn format_delimited_group(
+        &self,
+        open_token: &SyntaxToken,
+        content: impl FnOnce(FormatElement, FormatElement) -> FormatResult<FormatElement>,
+        close_token: &SyntaxToken,
+    ) -> FormatResult<FormatElement> {
+        Ok(format_elements![
+            self.print_trivia(open_token.leading_trivia()),
+            token(open_token.text_trimmed()),
+            content(
+                self.print_trivia(open_token.trailing_trivia()),
+                self.print_trivia(close_token.leading_trivia()),
+            )?,
+            token(close_token.text_trimmed()),
+            self.print_trivia(close_token.trailing_trivia()),
+        ])
+    }
+
     /// Recursively formats the ast node and all its children
     ///
     /// Returns `None` if the node couldn't be formatted because of syntax errors in its sub tree.

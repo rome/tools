@@ -59,11 +59,17 @@ impl ToFormatElement for JsCatchClause {
 
 impl ToFormatElement for JsCatchDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(group_elements(format_elements![
-            formatter.format_token(&self.l_paren_token()?)?,
-            soft_indent(formatter.format_node(self.binding()?)?),
-            formatter.format_token(&self.r_paren_token()?)?
-        ]))
+        Ok(group_elements(formatter.format_delimited_group(
+            &self.l_paren_token()?,
+            |leading, trailing| {
+                Ok(soft_indent(format_elements![
+                    leading,
+                    formatter.format_node(self.binding()?)?,
+                    trailing,
+                ]))
+            },
+            &self.r_paren_token()?,
+        )?))
     }
 }
 

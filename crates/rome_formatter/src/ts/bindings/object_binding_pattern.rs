@@ -12,16 +12,22 @@ impl ToFormatElement for JsObjectBindingPattern {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let properties = formatter.format_separated(self.properties())?;
 
-        Ok(group_elements(format_elements![
-            formatter.format_token(&self.l_curly_token()?)?,
-            space_token(),
-            soft_indent(format_elements![
-                join_elements(soft_line_break_or_space(), properties),
-                if_group_breaks(token(",")),
-            ]),
-            space_token(),
-            formatter.format_token(&self.r_curly_token()?)?
-        ]))
+        Ok(group_elements(formatter.format_delimited_group(
+            &self.l_curly_token()?,
+            |leading, trailing| {
+                Ok(format_elements![
+                    space_token(),
+                    leading,
+                    soft_indent(format_elements![
+                        join_elements(soft_line_break_or_space(), properties),
+                        if_group_breaks(token(",")),
+                    ]),
+                    trailing,
+                    space_token(),
+                ])
+            },
+            &self.r_curly_token()?,
+        )?))
     }
 }
 

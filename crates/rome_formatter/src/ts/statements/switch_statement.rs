@@ -1,8 +1,8 @@
 use crate::ts::statements::format_statements;
-use crate::FormatResult;
+use crate::{block_indent, FormatResult};
 use crate::{
-    block_indent, format_element::indent, format_elements, group_elements, hard_line_break,
-    join_elements, soft_indent, space_token, FormatElement, Formatter, ToFormatElement,
+    format_element::indent, format_elements, group_elements, hard_line_break, join_elements,
+    soft_indent, space_token, FormatElement, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{JsAnySwitchClause, JsCaseClause, JsDefaultClause, JsSwitchStatement};
 
@@ -11,20 +11,27 @@ impl ToFormatElement for JsSwitchStatement {
         Ok(format_elements![
             formatter.format_token(&self.switch_token()?)?,
             space_token(),
-            group_elements(format_elements![
-                formatter.format_token(&self.l_paren_token()?)?,
-                soft_indent(formatter.format_node(self.discriminant()?)?),
-                formatter.format_token(&self.r_paren_token()?)?
-            ]),
+            group_elements(formatter.format_delimited_group(
+                &self.l_paren_token()?,
+                |leading, trailing| Ok(soft_indent(format_elements![
+                    leading,
+                    formatter.format_node(self.discriminant()?)?,
+                    trailing,
+                ])),
+                &self.r_paren_token()?,
+            )?),
             space_token(),
-            group_elements(format_elements![
-                formatter.format_token(&self.l_curly_token()?)?,
-                block_indent(join_elements(
-                    hard_line_break(),
-                    formatter.format_nodes(self.cases())?
-                )),
-                formatter.format_token(&self.r_curly_token()?)?
-            ])
+            group_elements(formatter.format_delimited_group(
+                &self.l_curly_token()?,
+                |leading, trailing| {
+                    Ok(block_indent(format_elements![
+                        leading,
+                        join_elements(hard_line_break(), formatter.format_nodes(self.cases())?),
+                        trailing,
+                    ]))
+                },
+                &self.r_curly_token()?
+            )?)
         ])
     }
 }

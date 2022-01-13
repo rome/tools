@@ -8,14 +8,18 @@ impl ToFormatElement for JsArrayBindingPattern {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let elements = formatter.format_separated(self.elements())?;
 
-        Ok(group_elements(format_elements!(
-            formatter.format_token(&self.l_brack_token()?)?,
-            soft_indent(format_elements![
-                join_elements(soft_line_break_or_space(), elements),
-                if_group_breaks(token(",")),
-            ]),
-            formatter.format_token(&self.r_brack_token()?)?,
-        )))
+        Ok(group_elements(formatter.format_delimited_group(
+            &self.l_brack_token()?,
+            |leading, trailing| {
+                Ok(soft_indent(format_elements![
+                    leading,
+                    join_elements(soft_line_break_or_space(), elements),
+                    if_group_breaks(token(",")),
+                    trailing
+                ]))
+            },
+            &self.r_brack_token()?,
+        )?))
     }
 }
 

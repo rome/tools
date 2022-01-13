@@ -16,18 +16,24 @@ impl ToFormatElement for JsObjectExpression {
             if_group_fits_on_single_line(space_token())
         };
 
-        Ok(group_elements(format_elements!(
-            formatter.format_token(&self.l_curly_token()?)?,
-            space.clone(),
-            soft_indent(format_elements![
-                join_elements(
-                    soft_line_break_or_space(),
-                    formatter.format_separated(members)?
-                ),
-                if_group_breaks(token(",")),
-            ]),
-            space,
-            formatter.format_token(&self.r_curly_token()?)?,
-        )))
+        Ok(group_elements(formatter.format_delimited_group(
+            &self.l_curly_token()?,
+            |leading, trailing| {
+                Ok(format_elements!(
+                    space.clone(),
+                    soft_indent(format_elements![
+                        leading,
+                        join_elements(
+                            soft_line_break_or_space(),
+                            formatter.format_separated(members)?
+                        ),
+                        if_group_breaks(token(",")),
+                        trailing
+                    ]),
+                    space,
+                ))
+            },
+            &self.r_curly_token()?,
+        )?))
     }
 }

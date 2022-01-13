@@ -7,10 +7,16 @@ use crate::{
 
 impl ToFormatElement for JsFunctionBody {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(format_elements![
-            formatter.format_token(&self.l_curly_token()?)?,
-            block_indent(format_statements(self.statements(), formatter)),
-            formatter.format_token(&self.r_curly_token()?)?
-        ])
+        formatter.format_delimited_group(
+            &self.l_curly_token()?,
+            |leading, trailing| {
+                Ok(block_indent(format_elements![
+                    leading,
+                    format_statements(self.statements(), formatter),
+                    trailing,
+                ]))
+            },
+            &self.r_curly_token()?,
+        )
     }
 }
