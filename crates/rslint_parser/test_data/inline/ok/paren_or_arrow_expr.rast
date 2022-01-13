@@ -19,7 +19,7 @@ JsModule {
                 async_token: missing (optional),
                 type_parameters: missing (optional),
                 parameters: JsParameters {
-                    l_paren_token: L_PAREN@6..8 "(" [Whitespace("\n")] [],
+                    l_paren_token: L_PAREN@6..8 "(" [Newline("\n")] [],
                     items: JsParameterList [
                         JsParameter {
                             binding: JsIdentifierBinding {
@@ -44,7 +44,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@19..21 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@19..21 "(" [Newline("\n")] [],
                 expression: JsBinaryExpression {
                     left: JsNumberLiteralExpression {
                         value_token: JS_NUMBER_LITERAL@21..23 "5" [] [Whitespace(" ")],
@@ -63,7 +63,7 @@ JsModule {
                 async_token: missing (optional),
                 type_parameters: missing (optional),
                 parameters: JsParameters {
-                    l_paren_token: L_PAREN@28..30 "(" [Whitespace("\n")] [],
+                    l_paren_token: L_PAREN@28..30 "(" [Newline("\n")] [],
                     items: JsParameterList [
                         JsParameter {
                             binding: JsObjectBindingPattern {
@@ -131,7 +131,7 @@ JsModule {
                 async_token: missing (optional),
                 type_parameters: missing (optional),
                 parameters: JsParameters {
-                    l_paren_token: L_PAREN@64..66 "(" [Whitespace("\n")] [],
+                    l_paren_token: L_PAREN@64..66 "(" [Newline("\n")] [],
                     items: JsParameterList [
                         JsParameter {
                             binding: JsIdentifierBinding {
@@ -162,7 +162,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@84..85 "" [Whitespace("\n")] [],
+    eof_token: EOF@84..85 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..85
@@ -182,7 +182,7 @@ JsModule {
         0: (empty)
         1: (empty)
         2: JS_PARAMETERS@6..13
-          0: L_PAREN@6..8 "(" [Whitespace("\n")] []
+          0: L_PAREN@6..8 "(" [Newline("\n")] []
           1: JS_PARAMETER_LIST@8..11
             0: JS_PARAMETER@8..11
               0: JS_IDENTIFIER_BINDING@8..11
@@ -200,7 +200,7 @@ JsModule {
       1: SEMICOLON@18..19 ";" [] []
     2: JS_EXPRESSION_STATEMENT@19..28
       0: JS_PARENTHESIZED_EXPRESSION@19..27
-        0: L_PAREN@19..21 "(" [Whitespace("\n")] []
+        0: L_PAREN@19..21 "(" [Newline("\n")] []
         1: JS_BINARY_EXPRESSION@21..26
           0: JS_NUMBER_LITERAL_EXPRESSION@21..23
             0: JS_NUMBER_LITERAL@21..23 "5" [] [Whitespace(" ")]
@@ -214,7 +214,7 @@ JsModule {
         0: (empty)
         1: (empty)
         2: JS_PARAMETERS@28..58
-          0: L_PAREN@28..30 "(" [Whitespace("\n")] []
+          0: L_PAREN@28..30 "(" [Newline("\n")] []
           1: JS_PARAMETER_LIST@30..56
             0: JS_PARAMETER@30..56
               0: JS_OBJECT_BINDING_PATTERN@30..56
@@ -263,7 +263,7 @@ JsModule {
         0: (empty)
         1: (empty)
         2: JS_PARAMETERS@64..79
-          0: L_PAREN@64..66 "(" [Whitespace("\n")] []
+          0: L_PAREN@64..66 "(" [Newline("\n")] []
           1: JS_PARAMETER_LIST@66..77
             0: JS_PARAMETER@66..69
               0: JS_IDENTIFIER_BINDING@66..69
@@ -284,4 +284,4 @@ JsModule {
           2: JS_STATEMENT_LIST@83..83
           3: R_CURLY@83..84 "}" [] []
       1: (empty)
-  3: EOF@84..85 "" [Whitespace("\n")] []
+  3: EOF@84..85 "" [Newline("\n")] []

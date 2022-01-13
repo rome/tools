@@ -21,7 +21,7 @@ JsModule {
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
                     JsDebuggerStatement {
-                        debugger_token: DEBUGGER_KW@16..27 "debugger" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")],
+                        debugger_token: DEBUGGER_KW@16..27 "debugger" [Newline("\n"), Whitespace("\t")] [Whitespace(" ")],
                         semicolon_token: missing (optional),
                     },
                     JsBlockStatement {
@@ -29,7 +29,7 @@ JsModule {
                         statements: JsStatementList [
                             JsVariableStatement {
                                 declarations: JsVariableDeclarations {
-                                    kind: VAR_KW@28..35 "var" [Whitespace("\n"), Whitespace("\t\t")] [Whitespace(" ")],
+                                    kind: VAR_KW@28..35 "var" [Newline("\n"), Whitespace("\t\t")] [Whitespace(" ")],
                                     items: JsVariableDeclarationList [
                                         JsVariableDeclaration {
                                             id: JsIdentifierBinding {
@@ -49,14 +49,14 @@ JsModule {
                                 semicolon_token: SEMICOLON@54..55 ";" [] [],
                             },
                         ],
-                        r_curly_token: R_CURLY@55..58 "}" [Whitespace("\n"), Whitespace("\t")] [],
+                        r_curly_token: R_CURLY@55..58 "}" [Newline("\n"), Whitespace("\t")] [],
                     },
                 ],
-                r_curly_token: R_CURLY@58..60 "}" [Whitespace("\n")] [],
+                r_curly_token: R_CURLY@58..60 "}" [Newline("\n")] [],
             },
         },
     ],
-    eof_token: EOF@60..61 "" [Whitespace("\n")] [],
+    eof_token: EOF@60..61 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..61
@@ -80,14 +80,14 @@ JsModule {
         1: JS_DIRECTIVE_LIST@16..16
         2: JS_STATEMENT_LIST@16..58
           0: JS_DEBUGGER_STATEMENT@16..27
-            0: DEBUGGER_KW@16..27 "debugger" [Whitespace("\n"), Whitespace("\t")] [Whitespace(" ")]
+            0: DEBUGGER_KW@16..27 "debugger" [Newline("\n"), Whitespace("\t")] [Whitespace(" ")]
             1: (empty)
           1: JS_BLOCK_STATEMENT@27..58
             0: L_CURLY@27..28 "{" [] []
             1: JS_STATEMENT_LIST@28..55
               0: JS_VARIABLE_STATEMENT@28..55
                 0: JS_VARIABLE_DECLARATIONS@28..54
-                  0: VAR_KW@28..35 "var" [Whitespace("\n"), Whitespace("\t\t")] [Whitespace(" ")]
+                  0: VAR_KW@28..35 "var" [Newline("\n"), Whitespace("\t\t")] [Whitespace(" ")]
                   1: JS_VARIABLE_DECLARATION_LIST@35..54
                     0: JS_VARIABLE_DECLARATION@35..54
                       0: JS_IDENTIFIER_BINDING@35..45
@@ -99,9 +99,9 @@ JsModule {
                         1: JS_STRING_LITERAL_EXPRESSION@47..54
                           0: JS_STRING_LITERAL@47..54 "\"lorem\"" [] []
                 1: SEMICOLON@54..55 ";" [] []
-            2: R_CURLY@55..58 "}" [Whitespace("\n"), Whitespace("\t")] []
-        3: R_CURLY@58..60 "}" [Whitespace("\n")] []
-  3: EOF@60..61 "" [Whitespace("\n")] []
+            2: R_CURLY@55..58 "}" [Newline("\n"), Whitespace("\t")] []
+        3: R_CURLY@58..60 "}" [Newline("\n")] []
+  3: EOF@60..61 "" [Newline("\n")] []
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ debugger_stmt.js:2:11

@@ -15,7 +15,7 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     abstract_token: missing (optional),
-                    async_token: ASYNC_KW@11..19 "async" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")],
+                    async_token: ASYNC_KW@11..19 "async" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                     star_token: missing (optional),
                     name: JsLiteralMemberName {
                         value: IDENT@19..22 "foo" [] [],
@@ -38,7 +38,7 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     abstract_token: missing (optional),
-                    async_token: ASYNC_KW@27..35 "async" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")],
+                    async_token: ASYNC_KW@27..35 "async" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                     star_token: STAR@35..36 "*" [] [],
                     name: JsLiteralMemberName {
                         value: IDENT@36..39 "foo" [] [],
@@ -58,10 +58,10 @@ JsModule {
                     },
                 },
             ],
-            r_curly_token: R_CURLY@44..46 "}" [Whitespace("\n")] [],
+            r_curly_token: R_CURLY@44..46 "}" [Newline("\n")] [],
         },
     ],
-    eof_token: EOF@46..47 "" [Whitespace("\n")] [],
+    eof_token: EOF@46..47 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..47
@@ -80,7 +80,7 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: ASYNC_KW@11..19 "async" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")]
+          3: ASYNC_KW@11..19 "async" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
           4: (empty)
           5: JS_LITERAL_MEMBER_NAME@19..22
             0: IDENT@19..22 "foo" [] []
@@ -99,7 +99,7 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: ASYNC_KW@27..35 "async" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")]
+          3: ASYNC_KW@27..35 "async" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
           4: STAR@35..36 "*" [] []
           5: JS_LITERAL_MEMBER_NAME@36..39
             0: IDENT@36..39 "foo" [] []
@@ -114,5 +114,5 @@ JsModule {
             1: JS_DIRECTIVE_LIST@43..43
             2: JS_STATEMENT_LIST@43..43
             3: R_CURLY@43..44 "}" [] []
-      6: R_CURLY@44..46 "}" [Whitespace("\n")] []
-  3: EOF@46..47 "" [Whitespace("\n")] []
+      6: R_CURLY@44..46 "}" [Newline("\n")] []
+  3: EOF@46..47 "" [Newline("\n")] []

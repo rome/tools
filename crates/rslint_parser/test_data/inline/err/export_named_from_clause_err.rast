@@ -34,7 +34,7 @@ JsModule {
         },
         JsUnknownStatement {
             items: [
-                EXPORT_KW@27..35 "export" [Whitespace("\n")] [Whitespace(" ")],
+                EXPORT_KW@27..35 "export" [Newline("\n")] [Whitespace(" ")],
                 JsUnknown {
                     items: [
                         L_CURLY@35..37 "{" [] [Whitespace(" ")],
@@ -68,7 +68,7 @@ JsModule {
             ],
         },
         JsExport {
-            export_token: EXPORT_KW@57..65 "export" [Whitespace("\n")] [Whitespace(" ")],
+            export_token: EXPORT_KW@57..65 "export" [Newline("\n")] [Whitespace(" ")],
             export_clause: JsExportNamedFromClause {
                 l_curly_token: L_CURLY@65..67 "{" [] [Whitespace(" ")],
                 specifiers: JsExportNamedFromSpecifierList [
@@ -107,7 +107,7 @@ JsModule {
         },
         JsUnknownStatement {
             items: [
-                EXPORT_KW@86..94 "export" [Whitespace("\n")] [Whitespace(" ")],
+                EXPORT_KW@86..94 "export" [Newline("\n")] [Whitespace(" ")],
                 JsUnknown {
                     items: [
                         L_CURLY@94..96 "{" [] [Whitespace(" ")],
@@ -133,7 +133,7 @@ JsModule {
             ],
         },
     ],
-    eof_token: EOF@116..117 "" [Whitespace("\n")] [],
+    eof_token: EOF@116..117 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..117
@@ -163,7 +163,7 @@ JsModule {
         5: (empty)
         6: SEMICOLON@26..27 ";" [] []
     1: JS_UNKNOWN_STATEMENT@27..57
-      0: EXPORT_KW@27..35 "export" [Whitespace("\n")] [Whitespace(" ")]
+      0: EXPORT_KW@27..35 "export" [Newline("\n")] [Whitespace(" ")]
       1: JS_UNKNOWN@35..57
         0: L_CURLY@35..37 "{" [] [Whitespace(" ")]
         1: JS_UNKNOWN@37..44
@@ -182,7 +182,7 @@ JsModule {
           0: JS_STRING_LITERAL@51..56 "\"mod\"" [] []
         5: SEMICOLON@56..57 ";" [] []
     2: JS_EXPORT@57..86
-      0: EXPORT_KW@57..65 "export" [Whitespace("\n")] [Whitespace(" ")]
+      0: EXPORT_KW@57..65 "export" [Newline("\n")] [Whitespace(" ")]
       1: JS_EXPORT_NAMED_FROM_CLAUSE@65..86
         0: L_CURLY@65..67 "{" [] [Whitespace(" ")]
         1: JS_EXPORT_NAMED_FROM_SPECIFIER_LIST@67..73
@@ -210,7 +210,7 @@ JsModule {
         5: (empty)
         6: SEMICOLON@85..86 ";" [] []
     3: JS_UNKNOWN_STATEMENT@86..116
-      0: EXPORT_KW@86..94 "export" [Whitespace("\n")] [Whitespace(" ")]
+      0: EXPORT_KW@86..94 "export" [Newline("\n")] [Whitespace(" ")]
       1: JS_UNKNOWN@94..116
         0: L_CURLY@94..96 "{" [] [Whitespace(" ")]
         1: JS_UNKNOWN@96..103
@@ -223,7 +223,7 @@ JsModule {
         4: JS_MODULE_SOURCE@110..115
           0: JS_STRING_LITERAL@110..115 "\"mod\"" [] []
         5: SEMICOLON@115..116 ";" [] []
-  3: EOF@116..117 "" [Whitespace("\n")] []
+  3: EOF@116..117 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected `,` but instead found `b`
   ┌─ export_named_from_clause_err.js:1:13

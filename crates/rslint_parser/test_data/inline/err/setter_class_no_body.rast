@@ -15,7 +15,7 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     abstract_token: missing (optional),
-                    set_token: SET_KW@15..22 "set" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")],
+                    set_token: SET_KW@15..22 "set" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                     name: JsLiteralMemberName {
                         value: IDENT@22..25 "foo" [] [],
                     },
@@ -34,7 +34,7 @@ JsModule {
             r_curly_token: missing (required),
         },
     ],
-    eof_token: EOF@28..29 "" [Whitespace("\n")] [],
+    eof_token: EOF@28..29 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..29
@@ -53,7 +53,7 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: SET_KW@15..22 "set" [Whitespace("\n"), Whitespace("  ")] [Whitespace(" ")]
+          3: SET_KW@15..22 "set" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           4: JS_LITERAL_MEMBER_NAME@22..25
             0: IDENT@22..25 "foo" [] []
           5: L_PAREN@25..26 "(" [] []
@@ -65,7 +65,7 @@ JsModule {
           7: R_PAREN@27..28 ")" [] []
           8: (empty)
       6: (empty)
-  3: EOF@28..29 "" [Whitespace("\n")] []
+  3: EOF@28..29 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected a class method body but instead found ''
   ┌─ setter_class_no_body.js:3:1

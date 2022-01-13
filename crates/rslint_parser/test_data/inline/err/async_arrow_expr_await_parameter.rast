@@ -38,7 +38,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@25..26 "" [Whitespace("\n")] [],
+    eof_token: EOF@25..26 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..26
@@ -69,7 +69,7 @@ JsModule {
                   2: JS_STATEMENT_LIST@24..24
                   3: R_CURLY@24..25 "}" [] []
       1: (empty)
-  3: EOF@25..26 "" [Whitespace("\n")] []
+  3: EOF@25..26 "" [Newline("\n")] []
 --
 error[SyntaxError]: Illegal use of `await` as an identifier in an async context
   ┌─ async_arrow_expr_await_parameter.js:1:15

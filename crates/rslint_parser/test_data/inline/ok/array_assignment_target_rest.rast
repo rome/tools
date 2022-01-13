@@ -31,7 +31,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@18..20 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@18..20 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsArrayAssignmentPattern {
                         l_brack_token: L_BRACK@20..22 "[" [] [Whitespace(" ")],
@@ -62,7 +62,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@39..41 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@39..41 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsArrayAssignmentPattern {
                         l_brack_token: L_BRACK@41..43 "[" [] [Whitespace(" ")],
@@ -97,7 +97,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@60..62 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@60..62 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsArrayAssignmentPattern {
                         l_brack_token: L_BRACK@62..64 "[" [] [Whitespace(" ")],
@@ -144,7 +144,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@84..86 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@84..86 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsArrayAssignmentPattern {
                         l_brack_token: L_BRACK@86..88 "[" [] [Whitespace(" ")],
@@ -194,7 +194,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@117..119 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@117..119 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsArrayAssignmentPattern {
                         l_brack_token: L_BRACK@119..121 "[" [] [Whitespace(" ")],
@@ -231,7 +231,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@138..140 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@138..140 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsArrayAssignmentPattern {
                         l_brack_token: L_BRACK@140..142 "[" [] [Whitespace(" ")],
@@ -266,7 +266,7 @@ JsModule {
             semicolon_token: SEMICOLON@160..161 ";" [] [],
         },
     ],
-    eof_token: EOF@161..162 "" [Whitespace("\n")] [],
+    eof_token: EOF@161..162 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..162
@@ -293,7 +293,7 @@ JsModule {
       1: SEMICOLON@17..18 ";" [] []
     1: JS_EXPRESSION_STATEMENT@18..39
       0: JS_PARENTHESIZED_EXPRESSION@18..38
-        0: L_PAREN@18..20 "(" [Whitespace("\n")] []
+        0: L_PAREN@18..20 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@20..37
           0: JS_ARRAY_ASSIGNMENT_PATTERN@20..34
             0: L_BRACK@20..22 "[" [] [Whitespace(" ")]
@@ -314,7 +314,7 @@ JsModule {
       1: SEMICOLON@38..39 ";" [] []
     2: JS_EXPRESSION_STATEMENT@39..60
       0: JS_PARENTHESIZED_EXPRESSION@39..59
-        0: L_PAREN@39..41 "(" [Whitespace("\n")] []
+        0: L_PAREN@39..41 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@41..58
           0: JS_ARRAY_ASSIGNMENT_PATTERN@41..55
             0: L_BRACK@41..43 "[" [] [Whitespace(" ")]
@@ -337,7 +337,7 @@ JsModule {
       1: SEMICOLON@59..60 ";" [] []
     3: JS_EXPRESSION_STATEMENT@60..84
       0: JS_PARENTHESIZED_EXPRESSION@60..83
-        0: L_PAREN@60..62 "(" [Whitespace("\n")] []
+        0: L_PAREN@60..62 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@62..82
           0: JS_ARRAY_ASSIGNMENT_PATTERN@62..79
             0: L_BRACK@62..64 "[" [] [Whitespace(" ")]
@@ -369,7 +369,7 @@ JsModule {
       1: SEMICOLON@83..84 ";" [] []
     4: JS_EXPRESSION_STATEMENT@84..117
       0: JS_PARENTHESIZED_EXPRESSION@84..116
-        0: L_PAREN@84..86 "(" [Whitespace("\n")] []
+        0: L_PAREN@84..86 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@86..115
           0: JS_ARRAY_ASSIGNMENT_PATTERN@86..112
             0: L_BRACK@86..88 "[" [] [Whitespace(" ")]
@@ -403,7 +403,7 @@ JsModule {
       1: SEMICOLON@116..117 ";" [] []
     5: JS_EXPRESSION_STATEMENT@117..138
       0: JS_PARENTHESIZED_EXPRESSION@117..137
-        0: L_PAREN@117..119 "(" [Whitespace("\n")] []
+        0: L_PAREN@117..119 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@119..136
           0: JS_ARRAY_ASSIGNMENT_PATTERN@119..133
             0: L_BRACK@119..121 "[" [] [Whitespace(" ")]
@@ -428,7 +428,7 @@ JsModule {
       1: SEMICOLON@137..138 ";" [] []
     6: JS_EXPRESSION_STATEMENT@138..161
       0: JS_PARENTHESIZED_EXPRESSION@138..160
-        0: L_PAREN@138..140 "(" [Whitespace("\n")] []
+        0: L_PAREN@138..140 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@140..159
           0: JS_ARRAY_ASSIGNMENT_PATTERN@140..156
             0: L_BRACK@140..142 "[" [] [Whitespace(" ")]
@@ -450,4 +450,4 @@ JsModule {
               0: IDENT@158..159 "c" [] []
         2: R_PAREN@159..160 ")" [] []
       1: SEMICOLON@160..161 ";" [] []
-  3: EOF@161..162 "" [Whitespace("\n")] []
+  3: EOF@161..162 "" [Newline("\n")] []

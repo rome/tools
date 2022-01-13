@@ -21,7 +21,7 @@ JsModule {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
                                         name: JsLiteralMemberName {
-                                            value: IDENT@9..16 "test" [Whitespace("\n"), Whitespace("  ")] [],
+                                            value: IDENT@9..16 "test" [Newline("\n"), Whitespace("  ")] [],
                                         },
                                         type_params: missing (optional),
                                         parameters: JsParameters {
@@ -36,7 +36,7 @@ JsModule {
                                             statements: JsStatementList [
                                                 JsVariableStatement {
                                                     declarations: JsVariableDeclarations {
-                                                        kind: LET_KW@20..29 "let" [Whitespace("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                                        kind: LET_KW@20..29 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                                                         items: JsVariableDeclarationList [
                                                             JsVariableDeclaration {
                                                                 id: JsIdentifierBinding {
@@ -56,11 +56,11 @@ JsModule {
                                                     semicolon_token: SEMICOLON@40..41 ";" [] [],
                                                 },
                                             ],
-                                            r_curly_token: R_CURLY@41..45 "}" [Whitespace("\n"), Whitespace("  ")] [],
+                                            r_curly_token: R_CURLY@41..45 "}" [Newline("\n"), Whitespace("  ")] [],
                                         },
                                     },
                                 ],
-                                r_curly_token: R_CURLY@45..47 "}" [Whitespace("\n")] [],
+                                r_curly_token: R_CURLY@45..47 "}" [Newline("\n")] [],
                             },
                         },
                     },
@@ -69,7 +69,7 @@ JsModule {
             semicolon_token: SEMICOLON@47..48 ";" [] [],
         },
     ],
-    eof_token: EOF@48..49 "" [Whitespace("\n")] [],
+    eof_token: EOF@48..49 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..49
@@ -94,7 +94,7 @@ JsModule {
                     0: (empty)
                     1: (empty)
                     2: JS_LITERAL_MEMBER_NAME@9..16
-                      0: IDENT@9..16 "test" [Whitespace("\n"), Whitespace("  ")] []
+                      0: IDENT@9..16 "test" [Newline("\n"), Whitespace("  ")] []
                     3: (empty)
                     4: JS_PARAMETERS@16..19
                       0: L_PAREN@16..17 "(" [] []
@@ -107,7 +107,7 @@ JsModule {
                       2: JS_STATEMENT_LIST@20..41
                         0: JS_VARIABLE_STATEMENT@20..41
                           0: JS_VARIABLE_DECLARATIONS@20..40
-                            0: LET_KW@20..29 "let" [Whitespace("\n"), Whitespace("    ")] [Whitespace(" ")]
+                            0: LET_KW@20..29 "let" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
                             1: JS_VARIABLE_DECLARATION_LIST@29..40
                               0: JS_VARIABLE_DECLARATION@29..40
                                 0: JS_IDENTIFIER_BINDING@29..31
@@ -119,7 +119,7 @@ JsModule {
                                   1: JS_STRING_LITERAL_EXPRESSION@33..40
                                     0: JS_STRING_LITERAL@33..40 "\"inner\"" [] []
                           1: SEMICOLON@40..41 ";" [] []
-                      3: R_CURLY@41..45 "}" [Whitespace("\n"), Whitespace("  ")] []
-                2: R_CURLY@45..47 "}" [Whitespace("\n")] []
+                      3: R_CURLY@41..45 "}" [Newline("\n"), Whitespace("  ")] []
+                2: R_CURLY@45..47 "}" [Newline("\n")] []
       1: SEMICOLON@47..48 ";" [] []
-  3: EOF@48..49 "" [Whitespace("\n")] []
+  3: EOF@48..49 "" [Newline("\n")] []

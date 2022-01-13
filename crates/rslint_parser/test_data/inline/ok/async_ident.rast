@@ -26,7 +26,7 @@ JsModule {
             semicolon_token: SEMICOLON@13..14 ";" [] [],
         },
     ],
-    eof_token: EOF@14..15 "" [Whitespace("\n")] [],
+    eof_token: EOF@14..15 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..15
@@ -48,4 +48,4 @@ JsModule {
                 0: JS_REFERENCE_IDENTIFIER@8..13
                   0: IDENT@8..13 "async" [] []
       1: SEMICOLON@13..14 ";" [] []
-  3: EOF@14..15 "" [Whitespace("\n")] []
+  3: EOF@14..15 "" [Newline("\n")] []

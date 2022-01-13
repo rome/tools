@@ -11,7 +11,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsStaticMemberExpression {
                 object: JsThisExpression {
-                    this_token: THIS_KW@4..9 "this" [Whitespace("\n")] [],
+                    this_token: THIS_KW@4..9 "this" [Newline("\n")] [],
                 },
                 operator: DOT@9..10 "." [] [],
                 member: JsName {
@@ -21,7 +21,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@13..14 "" [Whitespace("\n")] [],
+    eof_token: EOF@13..14 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..14
@@ -35,9 +35,9 @@ JsModule {
     1: JS_EXPRESSION_STATEMENT@4..13
       0: JS_STATIC_MEMBER_EXPRESSION@4..13
         0: JS_THIS_EXPRESSION@4..9
-          0: THIS_KW@4..9 "this" [Whitespace("\n")] []
+          0: THIS_KW@4..9 "this" [Newline("\n")] []
         1: DOT@9..10 "." [] []
         2: JS_NAME@10..13
           0: IDENT@10..13 "foo" [] []
       1: (empty)
-  3: EOF@13..14 "" [Whitespace("\n")] []
+  3: EOF@13..14 "" [Newline("\n")] []

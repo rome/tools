@@ -6,7 +6,7 @@ JsModule {
             semicolon_token: SEMICOLON@0..1 ";" [] [],
         },
     ],
-    eof_token: EOF@1..2 "" [Whitespace("\n")] [],
+    eof_token: EOF@1..2 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..2
@@ -15,4 +15,4 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..1
     0: JS_EMPTY_STATEMENT@0..1
       0: SEMICOLON@0..1 ";" [] []
-  3: EOF@1..2 "" [Whitespace("\n")] []
+  3: EOF@1..2 "" [Newline("\n")] []

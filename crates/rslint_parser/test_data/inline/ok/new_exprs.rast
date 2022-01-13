@@ -21,7 +21,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsNewExpression {
-                new_token: NEW_KW@9..14 "new" [Whitespace("\n")] [Whitespace(" ")],
+                new_token: NEW_KW@9..14 "new" [Newline("\n")] [Whitespace(" ")],
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@14..17 "foo" [] [],
@@ -34,7 +34,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: NewTarget {
-                new_token: NEW_KW@18..22 "new" [Whitespace("\n")] [],
+                new_token: NEW_KW@18..22 "new" [Newline("\n")] [],
                 dot_token: DOT@22..23 "." [] [],
                 target_token: TARGET_KW@23..29 "target" [] [],
             },
@@ -42,7 +42,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsNewExpression {
-                new_token: NEW_KW@29..34 "new" [Whitespace("\n")] [Whitespace(" ")],
+                new_token: NEW_KW@29..34 "new" [Newline("\n")] [Whitespace(" ")],
                 callee: JsNewExpression {
                     new_token: NEW_KW@34..38 "new" [] [Whitespace(" ")],
                     callee: JsNewExpression {
@@ -74,7 +74,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsNewExpression {
-                new_token: NEW_KW@52..57 "new" [Whitespace("\n")] [Whitespace(" ")],
+                new_token: NEW_KW@52..57 "new" [Newline("\n")] [Whitespace(" ")],
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@57..60 "Foo" [] [],
@@ -170,7 +170,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@112..113 "" [Whitespace("\n")] [],
+    eof_token: EOF@112..113 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..113
@@ -191,7 +191,7 @@ JsModule {
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@9..18
       0: JS_NEW_EXPRESSION@9..17
-        0: NEW_KW@9..14 "new" [Whitespace("\n")] [Whitespace(" ")]
+        0: NEW_KW@9..14 "new" [Newline("\n")] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@14..17
           0: JS_REFERENCE_IDENTIFIER@14..17
             0: IDENT@14..17 "foo" [] []
@@ -200,13 +200,13 @@ JsModule {
       1: SEMICOLON@17..18 ";" [] []
     2: JS_EXPRESSION_STATEMENT@18..29
       0: NEW_TARGET@18..29
-        0: NEW_KW@18..22 "new" [Whitespace("\n")] []
+        0: NEW_KW@18..22 "new" [Newline("\n")] []
         1: DOT@22..23 "." [] []
         2: TARGET_KW@23..29 "target" [] []
       1: (empty)
     3: JS_EXPRESSION_STATEMENT@29..52
       0: JS_NEW_EXPRESSION@29..51
-        0: NEW_KW@29..34 "new" [Whitespace("\n")] [Whitespace(" ")]
+        0: NEW_KW@29..34 "new" [Newline("\n")] [Whitespace(" ")]
         1: JS_NEW_EXPRESSION@34..51
           0: NEW_KW@34..38 "new" [] [Whitespace(" ")]
           1: JS_NEW_EXPRESSION@38..51
@@ -230,7 +230,7 @@ JsModule {
       1: SEMICOLON@51..52 ";" [] []
     4: JS_EXPRESSION_STATEMENT@52..112
       0: JS_NEW_EXPRESSION@52..112
-        0: NEW_KW@52..57 "new" [Whitespace("\n")] [Whitespace(" ")]
+        0: NEW_KW@52..57 "new" [Newline("\n")] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@57..60
           0: JS_REFERENCE_IDENTIFIER@57..60
             0: IDENT@57..60 "Foo" [] []
@@ -295,4 +295,4 @@ JsModule {
                     0: IDENT@108..111 "bar" [] []
           2: R_PAREN@111..112 ")" [] []
       1: (empty)
-  3: EOF@112..113 "" [Whitespace("\n")] []
+  3: EOF@112..113 "" [Newline("\n")] []

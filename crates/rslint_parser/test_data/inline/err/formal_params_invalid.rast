@@ -44,7 +44,7 @@ JsModule {
             },
         },
     ],
-    eof_token: EOF@20..21 "" [Whitespace("\n")] [],
+    eof_token: EOF@20..21 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..21
@@ -81,7 +81,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@19..19
         2: JS_STATEMENT_LIST@19..19
         3: R_CURLY@19..20 "}" [] []
-  3: EOF@20..21 "" [Whitespace("\n")] []
+  3: EOF@20..21 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected a name for the function in a function declaration, but found none
   ┌─ formal_params_invalid.js:1:10

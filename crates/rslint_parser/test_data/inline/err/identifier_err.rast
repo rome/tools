@@ -19,7 +19,7 @@ JsModule {
                 items: [
                     JsUnknown {
                         items: [
-                            IDENT@6..12 "await" [Whitespace("\n")] [],
+                            IDENT@6..12 "await" [Newline("\n")] [],
                         ],
                     },
                 ],
@@ -27,7 +27,7 @@ JsModule {
             semicolon_token: SEMICOLON@12..13 ";" [] [],
         },
         JsFunctionStatement {
-            async_token: ASYNC_KW@13..20 "async" [Whitespace("\n")] [Whitespace(" ")],
+            async_token: ASYNC_KW@13..20 "async" [Newline("\n")] [Whitespace(" ")],
             function_token: FUNCTION_KW@20..29 "function" [] [Whitespace(" ")],
             star_token: missing (optional),
             id: JsIdentifierBinding {
@@ -59,7 +59,7 @@ JsModule {
         },
         JsFunctionStatement {
             async_token: missing (optional),
-            function_token: FUNCTION_KW@43..52 "function" [Whitespace("\n")] [],
+            function_token: FUNCTION_KW@43..52 "function" [Newline("\n")] [],
             star_token: STAR@52..54 "*" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@54..58 "test" [] [],
@@ -93,7 +93,7 @@ JsModule {
                 items: [
                     JsUnknown {
                         items: [
-                            IDENT@68..73 "enum" [Whitespace("\n")] [],
+                            IDENT@68..73 "enum" [Newline("\n")] [],
                         ],
                     },
                 ],
@@ -105,7 +105,7 @@ JsModule {
                 items: [
                     JsUnknown {
                         items: [
-                            IDENT@74..85 "implements" [Whitespace("\n")] [],
+                            IDENT@74..85 "implements" [Newline("\n")] [],
                         ],
                     },
                 ],
@@ -117,7 +117,7 @@ JsModule {
                 items: [
                     JsUnknown {
                         items: [
-                            IDENT@86..96 "interface" [Whitespace("\n")] [],
+                            IDENT@86..96 "interface" [Newline("\n")] [],
                         ],
                     },
                 ],
@@ -125,7 +125,7 @@ JsModule {
             semicolon_token: SEMICOLON@96..97 ";" [] [],
         },
     ],
-    eof_token: EOF@97..98 "" [Whitespace("\n")] [],
+    eof_token: EOF@97..98 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..98
@@ -140,10 +140,10 @@ JsModule {
     1: JS_EXPRESSION_STATEMENT@6..13
       0: JS_UNKNOWN_EXPRESSION@6..12
         0: JS_UNKNOWN@6..12
-          0: IDENT@6..12 "await" [Whitespace("\n")] []
+          0: IDENT@6..12 "await" [Newline("\n")] []
       1: SEMICOLON@12..13 ";" [] []
     2: JS_FUNCTION_STATEMENT@13..43
-      0: ASYNC_KW@13..20 "async" [Whitespace("\n")] [Whitespace(" ")]
+      0: ASYNC_KW@13..20 "async" [Newline("\n")] [Whitespace(" ")]
       1: FUNCTION_KW@20..29 "function" [] [Whitespace(" ")]
       2: (empty)
       3: JS_IDENTIFIER_BINDING@29..33
@@ -166,7 +166,7 @@ JsModule {
         3: R_CURLY@42..43 "}" [] []
     3: JS_FUNCTION_STATEMENT@43..68
       0: (empty)
-      1: FUNCTION_KW@43..52 "function" [Whitespace("\n")] []
+      1: FUNCTION_KW@43..52 "function" [Newline("\n")] []
       2: STAR@52..54 "*" [] [Whitespace(" ")]
       3: JS_IDENTIFIER_BINDING@54..58
         0: IDENT@54..58 "test" [] []
@@ -189,19 +189,19 @@ JsModule {
     4: JS_EXPRESSION_STATEMENT@68..74
       0: JS_UNKNOWN_EXPRESSION@68..73
         0: JS_UNKNOWN@68..73
-          0: IDENT@68..73 "enum" [Whitespace("\n")] []
+          0: IDENT@68..73 "enum" [Newline("\n")] []
       1: SEMICOLON@73..74 ";" [] []
     5: JS_EXPRESSION_STATEMENT@74..86
       0: JS_UNKNOWN_EXPRESSION@74..85
         0: JS_UNKNOWN@74..85
-          0: IDENT@74..85 "implements" [Whitespace("\n")] []
+          0: IDENT@74..85 "implements" [Newline("\n")] []
       1: SEMICOLON@85..86 ";" [] []
     6: JS_EXPRESSION_STATEMENT@86..97
       0: JS_UNKNOWN_EXPRESSION@86..96
         0: JS_UNKNOWN@86..96
-          0: IDENT@86..96 "interface" [Whitespace("\n")] []
+          0: IDENT@86..96 "interface" [Newline("\n")] []
       1: SEMICOLON@96..97 ";" [] []
-  3: EOF@97..98 "" [Whitespace("\n")] []
+  3: EOF@97..98 "" [Newline("\n")] []
 --
 error[SyntaxError]: Illegal use of reserved keyword `yield` as an identifier in strict mode
   ┌─ identifier_err.js:1:1

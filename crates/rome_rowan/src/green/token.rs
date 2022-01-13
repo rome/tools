@@ -19,7 +19,7 @@ use crate::{
 pub enum GreenTokenTrivia {
 	None,
 	Whitespace(u32),
-	Comments(u32),
+	Comment(u32, bool),
 	Many(Box<Vec<TriviaPiece>>),
 }
 
@@ -28,7 +28,7 @@ impl GreenTokenTrivia {
 		match self {
 			GreenTokenTrivia::None => 0.into(),
 			GreenTokenTrivia::Whitespace(len) => (*len as u32).into(),
-			GreenTokenTrivia::Comments(len) => (*len as u32).into(),
+			GreenTokenTrivia::Comment(len, _) => (*len as u32).into(),
 			GreenTokenTrivia::Many(v) => {
 				let r = v.iter().fold(Some(TextSize::of("")), |len, trivia| {
 					len.and_then(|x| x.checked_add(trivia.text_len()))
@@ -43,20 +43,22 @@ impl GreenTokenTrivia {
 	pub(crate) fn get_piece(&self, index: usize) -> Option<TriviaPiece> {
 		match self {
 			GreenTokenTrivia::Whitespace(l) if index == 0 => Some(TriviaPiece::Whitespace(*l)),
-			GreenTokenTrivia::Comments(l) if index == 0 => Some(TriviaPiece::Comments(*l)),
+			GreenTokenTrivia::Comment(l, h) if index == 0 => Some(TriviaPiece::Comments(*l, *h)),
 			GreenTokenTrivia::Many(v) => v.get(index).copied(),
 			_ => None,
 		}
 	}
 }
 
-impl From<Vec<TriviaPiece>> for GreenTokenTrivia {
-	fn from(trivias: Vec<TriviaPiece>) -> Self {
-		match trivias.as_slice() {
+impl From<&[TriviaPiece]> for GreenTokenTrivia {
+	fn from(trivias: &[TriviaPiece]) -> Self {
+		match trivias {
 			[] => GreenTokenTrivia::None,
 			[TriviaPiece::Whitespace(len)] => GreenTokenTrivia::Whitespace(*len),
-			[TriviaPiece::Comments(len)] => GreenTokenTrivia::Comments(*len),
-			_ => GreenTokenTrivia::Many(Box::new(trivias)),
+			[TriviaPiece::Comments(len, has_newline)] => {
+				GreenTokenTrivia::Comment(*len, *has_newline)
+			}
+			_ => GreenTokenTrivia::Many(Box::new(trivias.to_vec())),
 		}
 	}
 }
@@ -298,7 +300,7 @@ mod tests {
 		);
 		assert_eq!(
 			TextSize::from(len),
-			GreenTokenTrivia::Comments(len).text_len()
+			GreenTokenTrivia::Comment(len, false).text_len()
 		);
 	}
 
@@ -306,7 +308,7 @@ mod tests {
 	fn many_text_len_dont_panic() {
 		let trivia = GreenTokenTrivia::Many(Box::new(vec![
 			TriviaPiece::Whitespace(u32::MAX),
-			TriviaPiece::Comments(1),
+			TriviaPiece::Comments(1, false),
 		]));
 		assert_eq!(TextSize::from(u32::MAX), trivia.text_len());
 	}

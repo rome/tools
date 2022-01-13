@@ -7,7 +7,7 @@ JsModule {
             export_clause: missing (required),
         },
     ],
-    eof_token: EOF@6..7 "" [Whitespace("\n")] [],
+    eof_token: EOF@6..7 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..7
@@ -17,7 +17,7 @@ JsModule {
     0: JS_EXPORT@0..6
       0: EXPORT_KW@0..6 "export" [] []
       1: (empty)
-  3: EOF@6..7 "" [Whitespace("\n")] []
+  3: EOF@6..7 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected a class, a function, or a variable declaration but instead found ''
   ┌─ export_err.js:2:1

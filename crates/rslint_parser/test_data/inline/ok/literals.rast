@@ -10,42 +10,42 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsBooleanLiteralExpression {
-                value_token: TRUE_KW@1..6 "true" [Whitespace("\n")] [],
+                value_token: TRUE_KW@1..6 "true" [Newline("\n")] [],
             },
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
             expression: JsBooleanLiteralExpression {
-                value_token: FALSE_KW@6..12 "false" [Whitespace("\n")] [],
+                value_token: FALSE_KW@6..12 "false" [Newline("\n")] [],
             },
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
             expression: JsBigIntLiteralExpression {
-                value_token: JS_BIG_INT_LITERAL@12..15 "5n" [Whitespace("\n")] [],
+                value_token: JS_BIG_INT_LITERAL@12..15 "5n" [Newline("\n")] [],
             },
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
             expression: JsStringLiteralExpression {
-                value_token: JS_STRING_LITERAL@15..21 "\"foo\"" [Whitespace("\n")] [],
+                value_token: JS_STRING_LITERAL@15..21 "\"foo\"" [Newline("\n")] [],
             },
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
             expression: JsStringLiteralExpression {
-                value_token: JS_STRING_LITERAL@21..27 "'bar'" [Whitespace("\n")] [],
+                value_token: JS_STRING_LITERAL@21..27 "'bar'" [Newline("\n")] [],
             },
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
             expression: JsNullLiteralExpression {
-                value_token: NULL_KW@27..32 "null" [Whitespace("\n")] [],
+                value_token: NULL_KW@27..32 "null" [Newline("\n")] [],
             },
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@32..33 "" [Whitespace("\n")] [],
+    eof_token: EOF@32..33 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..33
@@ -58,26 +58,26 @@ JsModule {
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@1..6
       0: JS_BOOLEAN_LITERAL_EXPRESSION@1..6
-        0: TRUE_KW@1..6 "true" [Whitespace("\n")] []
+        0: TRUE_KW@1..6 "true" [Newline("\n")] []
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@6..12
       0: JS_BOOLEAN_LITERAL_EXPRESSION@6..12
-        0: FALSE_KW@6..12 "false" [Whitespace("\n")] []
+        0: FALSE_KW@6..12 "false" [Newline("\n")] []
       1: (empty)
     3: JS_EXPRESSION_STATEMENT@12..15
       0: JS_BIG_INT_LITERAL_EXPRESSION@12..15
-        0: JS_BIG_INT_LITERAL@12..15 "5n" [Whitespace("\n")] []
+        0: JS_BIG_INT_LITERAL@12..15 "5n" [Newline("\n")] []
       1: (empty)
     4: JS_EXPRESSION_STATEMENT@15..21
       0: JS_STRING_LITERAL_EXPRESSION@15..21
-        0: JS_STRING_LITERAL@15..21 "\"foo\"" [Whitespace("\n")] []
+        0: JS_STRING_LITERAL@15..21 "\"foo\"" [Newline("\n")] []
       1: (empty)
     5: JS_EXPRESSION_STATEMENT@21..27
       0: JS_STRING_LITERAL_EXPRESSION@21..27
-        0: JS_STRING_LITERAL@21..27 "'bar'" [Whitespace("\n")] []
+        0: JS_STRING_LITERAL@21..27 "'bar'" [Newline("\n")] []
       1: (empty)
     6: JS_EXPRESSION_STATEMENT@27..32
       0: JS_NULL_LITERAL_EXPRESSION@27..32
-        0: NULL_KW@27..32 "null" [Whitespace("\n")] []
+        0: NULL_KW@27..32 "null" [Newline("\n")] []
       1: (empty)
-  3: EOF@32..33 "" [Whitespace("\n")] []
+  3: EOF@32..33 "" [Newline("\n")] []

@@ -24,7 +24,7 @@ JsModule {
             r_curly_token: R_CURLY@24..25 "}" [] [],
         },
     ],
-    eof_token: EOF@25..26 "" [Whitespace("\n")] [],
+    eof_token: EOF@25..26 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..26
@@ -45,7 +45,7 @@ JsModule {
             0: IDENT@19..22 "foo" [] []
           2: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
       6: R_CURLY@24..25 "}" [] []
-  3: EOF@25..26 "" [Whitespace("\n")] []
+  3: EOF@25..26 "" [Newline("\n")] []
 --
 error[SyntaxError]: `abstract` modifier can only be used in TypeScript files
   ┌─ class_member_modifier.js:1:11

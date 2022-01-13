@@ -15,7 +15,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsImportCallExpression {
-                import_token: IMPORT_KW@8..15 "import" [Whitespace("\n")] [],
+                import_token: IMPORT_KW@8..15 "import" [Newline("\n")] [],
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@15..16 "(" [] [],
                     args: JsCallArgumentList [],
@@ -38,7 +38,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsImportCallExpression {
-                import_token: IMPORT_KW@27..34 "import" [Whitespace("\n")] [],
+                import_token: IMPORT_KW@27..34 "import" [Newline("\n")] [],
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@34..35 "(" [] [],
                     args: JsCallArgumentList [
@@ -84,7 +84,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@78..79 "" [Whitespace("\n")] [],
+    eof_token: EOF@78..79 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..79
@@ -101,7 +101,7 @@ JsModule {
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@8..16
       0: JS_IMPORT_CALL_EXPRESSION@8..16
-        0: IMPORT_KW@8..15 "import" [Whitespace("\n")] []
+        0: IMPORT_KW@8..15 "import" [Newline("\n")] []
         1: JS_CALL_ARGUMENTS@15..16
           0: L_PAREN@15..16 "(" [] []
           1: JS_CALL_ARGUMENT_LIST@16..16
@@ -117,7 +117,7 @@ JsModule {
       1: (empty)
     3: JS_EXPRESSION_STATEMENT@27..78
       0: JS_IMPORT_CALL_EXPRESSION@27..78
-        0: IMPORT_KW@27..34 "import" [Whitespace("\n")] []
+        0: IMPORT_KW@27..34 "import" [Newline("\n")] []
         1: JS_CALL_ARGUMENTS@34..78
           0: L_PAREN@34..35 "(" [] []
           1: JS_CALL_ARGUMENT_LIST@35..77
@@ -147,7 +147,7 @@ JsModule {
               0: JS_STRING_LITERAL@72..77 "\"bar\"" [] []
           2: R_PAREN@77..78 ")" [] []
       1: (empty)
-  3: EOF@78..79 "" [Whitespace("\n")] []
+  3: EOF@78..79 "" [Newline("\n")] []
 --
 error[SyntaxError]: `import()` requires exactly one or two arguments. 
   ┌─ import_invalid_args.js:1:8

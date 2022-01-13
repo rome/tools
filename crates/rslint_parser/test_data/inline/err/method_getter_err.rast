@@ -15,7 +15,7 @@ JsModule {
                     access_modifier: missing (optional),
                     static_token: missing (optional),
                     abstract_token: missing (optional),
-                    get_token: GET_KW@11..17 "get" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")],
+                    get_token: GET_KW@11..17 "get" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                     name: missing (required),
                     l_paren_token: missing (required),
                     r_paren_token: missing (required),
@@ -28,10 +28,10 @@ JsModule {
                     },
                 },
             ],
-            r_curly_token: R_CURLY@19..21 "}" [Whitespace("\n")] [],
+            r_curly_token: R_CURLY@19..21 "}" [Newline("\n")] [],
         },
     ],
-    eof_token: EOF@21..22 "" [Whitespace("\n")] [],
+    eof_token: EOF@21..22 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..22
@@ -50,7 +50,7 @@ JsModule {
           0: (empty)
           1: (empty)
           2: (empty)
-          3: GET_KW@11..17 "get" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")]
+          3: GET_KW@11..17 "get" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
           4: (empty)
           5: (empty)
           6: (empty)
@@ -60,8 +60,8 @@ JsModule {
             1: JS_DIRECTIVE_LIST@18..18
             2: JS_STATEMENT_LIST@18..18
             3: R_CURLY@18..19 "}" [] []
-      6: R_CURLY@19..21 "}" [Whitespace("\n")] []
-  3: EOF@21..22 "" [Whitespace("\n")] []
+      6: R_CURLY@19..21 "}" [Newline("\n")] []
+  3: EOF@21..22 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
   ┌─ method_getter_err.js:2:6

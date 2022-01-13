@@ -19,7 +19,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsUnknownExpression {
                 items: [
-                    IMPORT_KW@10..17 "import" [Whitespace("\n")] [],
+                    IMPORT_KW@10..17 "import" [Newline("\n")] [],
                     DOT@17..18 "." [] [],
                     JsUnknown {
                         items: [
@@ -31,7 +31,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@23..24 "" [Whitespace("\n")] [],
+    eof_token: EOF@23..24 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..24
@@ -47,12 +47,12 @@ JsModule {
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@10..23
       0: JS_UNKNOWN_EXPRESSION@10..23
-        0: IMPORT_KW@10..17 "import" [Whitespace("\n")] []
+        0: IMPORT_KW@10..17 "import" [Newline("\n")] []
         1: DOT@17..18 "." [] []
         2: JS_UNKNOWN@18..23
           0: IDENT@18..23 "metaa" [] []
       1: (empty)
-  3: EOF@23..24 "" [Whitespace("\n")] []
+  3: EOF@23..24 "" [Newline("\n")] []
 --
 error[SyntaxError]: Expected `meta` following an import keyword, but found `foo`
   ┌─ import_no_meta.js:1:8

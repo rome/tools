@@ -20,7 +20,7 @@ JsModule {
             },
         },
         JsIfStatement {
-            if_token: IF_KW@17..21 "if" [Whitespace("\n")] [Whitespace(" ")],
+            if_token: IF_KW@17..21 "if" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@21..22 "(" [] [],
             test: JsBooleanLiteralExpression {
                 value_token: TRUE_KW@22..26 "true" [] [],
@@ -30,7 +30,7 @@ JsModule {
             else_clause: JsElseClause {
                 else_token: ELSE_KW@28..32 "else" [] [],
                 alternate: JsIfStatement {
-                    if_token: IF_KW@32..36 "if" [Whitespace("\n")] [Whitespace(" ")],
+                    if_token: IF_KW@32..36 "if" [Newline("\n")] [Whitespace(" ")],
                     l_paren_token: missing (required),
                     test: missing (required),
                     r_paren_token: missing (required),
@@ -47,7 +47,7 @@ JsModule {
             },
         },
         JsIfStatement {
-            if_token: IF_KW@43..47 "if" [Whitespace("\n")] [Whitespace(" ")],
+            if_token: IF_KW@43..47 "if" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@47..48 "(" [] [],
             test: missing (required),
             r_paren_token: R_PAREN@48..50 ")" [] [Whitespace(" ")],
@@ -66,7 +66,7 @@ JsModule {
             },
         },
         JsIfStatement {
-            if_token: IF_KW@60..64 "if" [Whitespace("\n")] [Whitespace(" ")],
+            if_token: IF_KW@60..64 "if" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@64..65 "(" [] [],
             test: JsBooleanLiteralExpression {
                 value_token: TRUE_KW@65..69 "true" [] [],
@@ -89,7 +89,7 @@ JsModule {
             r_curly_token: R_CURLY@76..77 "}" [] [],
         },
     ],
-    eof_token: EOF@77..78 "" [Whitespace("\n")] [],
+    eof_token: EOF@77..78 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..78
@@ -110,7 +110,7 @@ JsModule {
           1: JS_STATEMENT_LIST@16..16
           2: R_CURLY@16..17 "}" [] []
     1: JS_IF_STATEMENT@17..43
-      0: IF_KW@17..21 "if" [Whitespace("\n")] [Whitespace(" ")]
+      0: IF_KW@17..21 "if" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@21..22 "(" [] []
       2: JS_BOOLEAN_LITERAL_EXPRESSION@22..26
         0: TRUE_KW@22..26 "true" [] []
@@ -119,7 +119,7 @@ JsModule {
       5: JS_ELSE_CLAUSE@28..43
         0: ELSE_KW@28..32 "else" [] []
         1: JS_IF_STATEMENT@32..43
-          0: IF_KW@32..36 "if" [Whitespace("\n")] [Whitespace(" ")]
+          0: IF_KW@32..36 "if" [Newline("\n")] [Whitespace(" ")]
           1: (empty)
           2: (empty)
           3: (empty)
@@ -131,7 +131,7 @@ JsModule {
               1: JS_STATEMENT_LIST@42..42
               2: R_CURLY@42..43 "}" [] []
     2: JS_IF_STATEMENT@43..60
-      0: IF_KW@43..47 "if" [Whitespace("\n")] [Whitespace(" ")]
+      0: IF_KW@43..47 "if" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@47..48 "(" [] []
       2: (empty)
       3: R_PAREN@48..50 ")" [] [Whitespace(" ")]
@@ -146,7 +146,7 @@ JsModule {
           1: JS_STATEMENT_LIST@59..59
           2: R_CURLY@59..60 "}" [] []
     3: JS_IF_STATEMENT@60..70
-      0: IF_KW@60..64 "if" [Whitespace("\n")] [Whitespace(" ")]
+      0: IF_KW@60..64 "if" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@64..65 "(" [] []
       2: JS_BOOLEAN_LITERAL_EXPRESSION@65..69
         0: TRUE_KW@65..69 "true" [] []
@@ -162,7 +162,7 @@ JsModule {
       0: L_CURLY@75..76 "{" [] []
       1: JS_STATEMENT_LIST@76..76
       2: R_CURLY@76..77 "}" [] []
-  3: EOF@77..78 "" [Whitespace("\n")] []
+  3: EOF@77..78 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected a statement but instead found 'else'
   ┌─ if_stmt_err.js:1:11

@@ -19,7 +19,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsImportCallExpression {
-                import_token: IMPORT_KW@13..20 "import" [Whitespace("\n")] [],
+                import_token: IMPORT_KW@13..20 "import" [Newline("\n")] [],
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@20..21 "(" [] [],
                     args: JsCallArgumentList [
@@ -61,7 +61,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@57..58 "" [Whitespace("\n")] [],
+    eof_token: EOF@57..58 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..58
@@ -80,7 +80,7 @@ JsModule {
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@13..57
       0: JS_IMPORT_CALL_EXPRESSION@13..57
-        0: IMPORT_KW@13..20 "import" [Whitespace("\n")] []
+        0: IMPORT_KW@13..20 "import" [Newline("\n")] []
         1: JS_CALL_ARGUMENTS@20..57
           0: L_PAREN@20..21 "(" [] []
           1: JS_CALL_ARGUMENT_LIST@21..56
@@ -107,4 +107,4 @@ JsModule {
               2: R_CURLY@55..56 "}" [] []
           2: R_PAREN@56..57 ")" [] []
       1: (empty)
-  3: EOF@57..58 "" [Whitespace("\n")] []
+  3: EOF@57..58 "" [Newline("\n")] []

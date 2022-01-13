@@ -21,7 +21,7 @@ JsModule {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
                                         name: JsLiteralMemberName {
-                                            value: IDENT@9..14 "foo" [Whitespace("\n"), Whitespace("\t")] [],
+                                            value: IDENT@9..14 "foo" [Newline("\n"), Whitespace("\t")] [],
                                         },
                                         type_params: missing (optional),
                                         parameters: JsParameters {
@@ -42,7 +42,7 @@ JsModule {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
                                         name: JsLiteralMemberName {
-                                            value: JS_STRING_LITERAL@20..27 "\"bar\"" [Whitespace("\n"), Whitespace("\t")] [],
+                                            value: JS_STRING_LITERAL@20..27 "\"bar\"" [Newline("\n"), Whitespace("\t")] [],
                                         },
                                         type_params: missing (optional),
                                         parameters: JsParameters {
@@ -87,7 +87,7 @@ JsModule {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
                                         name: JsComputedMemberName {
-                                            l_brack_token: L_BRACK@40..43 "[" [Whitespace("\n"), Whitespace("\t")] [],
+                                            l_brack_token: L_BRACK@40..43 "[" [Newline("\n"), Whitespace("\t")] [],
                                             expression: JsBinaryExpression {
                                                 left: JsStringLiteralExpression {
                                                     value_token: JS_STRING_LITERAL@43..49 "\"foo\"" [] [Whitespace(" ")],
@@ -126,7 +126,7 @@ JsModule {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
                                         name: JsLiteralMemberName {
-                                            value: JS_NUMBER_LITERAL@64..67 "5" [Whitespace("\n"), Whitespace("\t")] [],
+                                            value: JS_NUMBER_LITERAL@64..67 "5" [Newline("\n"), Whitespace("\t")] [],
                                         },
                                         type_params: missing (optional),
                                         parameters: JsParameters {
@@ -150,7 +150,7 @@ JsModule {
                                         },
                                     },
                                 ],
-                                r_curly_token: R_CURLY@79..81 "}" [Whitespace("\n")] [],
+                                r_curly_token: R_CURLY@79..81 "}" [Newline("\n")] [],
                             },
                         },
                     },
@@ -159,7 +159,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@81..82 "" [Whitespace("\n")] [],
+    eof_token: EOF@81..82 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..82
@@ -184,7 +184,7 @@ JsModule {
                     0: (empty)
                     1: (empty)
                     2: JS_LITERAL_MEMBER_NAME@9..14
-                      0: IDENT@9..14 "foo" [Whitespace("\n"), Whitespace("\t")] []
+                      0: IDENT@9..14 "foo" [Newline("\n"), Whitespace("\t")] []
                     3: (empty)
                     4: JS_PARAMETERS@14..17
                       0: L_PAREN@14..15 "(" [] []
@@ -201,7 +201,7 @@ JsModule {
                     0: (empty)
                     1: (empty)
                     2: JS_LITERAL_MEMBER_NAME@20..27
-                      0: JS_STRING_LITERAL@20..27 "\"bar\"" [Whitespace("\n"), Whitespace("\t")] []
+                      0: JS_STRING_LITERAL@20..27 "\"bar\"" [Newline("\n"), Whitespace("\t")] []
                     3: (empty)
                     4: JS_PARAMETERS@27..37
                       0: L_PAREN@27..28 "(" [] []
@@ -235,7 +235,7 @@ JsModule {
                     0: (empty)
                     1: (empty)
                     2: JS_COMPUTED_MEMBER_NAME@40..57
-                      0: L_BRACK@40..43 "[" [Whitespace("\n"), Whitespace("\t")] []
+                      0: L_BRACK@40..43 "[" [Newline("\n"), Whitespace("\t")] []
                       1: JS_BINARY_EXPRESSION@43..56
                         0: JS_STRING_LITERAL_EXPRESSION@43..49
                           0: JS_STRING_LITERAL@43..49 "\"foo\"" [] [Whitespace(" ")]
@@ -264,7 +264,7 @@ JsModule {
                     0: (empty)
                     1: (empty)
                     2: JS_LITERAL_MEMBER_NAME@64..67
-                      0: JS_NUMBER_LITERAL@64..67 "5" [Whitespace("\n"), Whitespace("\t")] []
+                      0: JS_NUMBER_LITERAL@64..67 "5" [Newline("\n"), Whitespace("\t")] []
                     3: (empty)
                     4: JS_PARAMETERS@67..77
                       0: L_PAREN@67..68 "(" [] []
@@ -280,6 +280,6 @@ JsModule {
                       1: JS_DIRECTIVE_LIST@78..78
                       2: JS_STATEMENT_LIST@78..78
                       3: R_CURLY@78..79 "}" [] []
-                2: R_CURLY@79..81 "}" [Whitespace("\n")] []
+                2: R_CURLY@79..81 "}" [Newline("\n")] []
       1: (empty)
-  3: EOF@81..82 "" [Whitespace("\n")] []
+  3: EOF@81..82 "" [Newline("\n")] []

@@ -50,7 +50,7 @@ JsModule {
             },
         },
         JsForOfStatement {
-            for_token: FOR_KW@31..36 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@31..36 "for" [Newline("\n")] [Whitespace(" ")],
             await_token: missing (optional),
             l_paren_token: L_PAREN@36..37 "(" [] [],
             initializer: JsForVariableDeclaration {
@@ -94,7 +94,7 @@ JsModule {
             },
         },
         JsForInStatement {
-            for_token: FOR_KW@63..68 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@63..68 "for" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@68..69 "(" [] [],
             initializer: JsIdentifierAssignment {
                 name_token: IDENT@69..73 "foo" [] [Whitespace(" ")],
@@ -113,7 +113,7 @@ JsModule {
             },
         },
         JsForStatement {
-            for_token: FOR_KW@82..87 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@82..87 "for" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@87..88 "(" [] [],
             initializer: missing (optional),
             first_semi_token: SEMICOLON@88..89 ";" [] [],
@@ -128,7 +128,7 @@ JsModule {
             },
         },
         JsForOfStatement {
-            for_token: FOR_KW@94..99 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@94..99 "for" [Newline("\n")] [Whitespace(" ")],
             await_token: missing (optional),
             l_paren_token: L_PAREN@99..100 "(" [] [],
             initializer: JsForVariableDeclaration {
@@ -156,7 +156,7 @@ JsModule {
             },
         },
         JsForStatement {
-            for_token: FOR_KW@117..122 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@117..122 "for" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@122..123 "(" [] [],
             initializer: JsVariableDeclarations {
                 kind: LET_KW@123..127 "let" [] [Whitespace(" ")],
@@ -219,7 +219,7 @@ JsModule {
             },
         },
         JsForOfStatement {
-            for_token: FOR_KW@155..160 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@155..160 "for" [Newline("\n")] [Whitespace(" ")],
             await_token: AWAIT_KW@160..166 "await" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@166..167 "(" [] [],
             initializer: JsForVariableDeclaration {
@@ -247,7 +247,7 @@ JsModule {
             },
         },
     ],
-    eof_token: EOF@182..183 "" [Whitespace("\n")] [],
+    eof_token: EOF@182..183 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..183
@@ -288,7 +288,7 @@ JsModule {
         1: JS_STATEMENT_LIST@30..30
         2: R_CURLY@30..31 "}" [] []
     1: JS_FOR_OF_STATEMENT@31..63
-      0: FOR_KW@31..36 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@31..36 "for" [Newline("\n")] [Whitespace(" ")]
       1: (empty)
       2: L_PAREN@36..37 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@37..54
@@ -321,7 +321,7 @@ JsModule {
         1: JS_STATEMENT_LIST@62..62
         2: R_CURLY@62..63 "}" [] []
     2: JS_FOR_IN_STATEMENT@63..82
-      0: FOR_KW@63..68 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@63..68 "for" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@68..69 "(" [] []
       2: JS_IDENTIFIER_ASSIGNMENT@69..73
         0: IDENT@69..73 "foo" [] [Whitespace(" ")]
@@ -336,7 +336,7 @@ JsModule {
         1: JS_STATEMENT_LIST@81..81
         2: R_CURLY@81..82 "}" [] []
     3: JS_FOR_STATEMENT@82..94
-      0: FOR_KW@82..87 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@82..87 "for" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@87..88 "(" [] []
       2: (empty)
       3: SEMICOLON@88..89 ";" [] []
@@ -349,7 +349,7 @@ JsModule {
         1: JS_STATEMENT_LIST@93..93
         2: R_CURLY@93..94 "}" [] []
     4: JS_FOR_OF_STATEMENT@94..117
-      0: FOR_KW@94..99 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@94..99 "for" [Newline("\n")] [Whitespace(" ")]
       1: (empty)
       2: L_PAREN@99..100 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@100..108
@@ -371,7 +371,7 @@ JsModule {
         1: JS_STATEMENT_LIST@116..116
         2: R_CURLY@116..117 "}" [] []
     5: JS_FOR_STATEMENT@117..155
-      0: FOR_KW@117..122 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@117..122 "for" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@122..123 "(" [] []
       2: JS_VARIABLE_DECLARATIONS@123..139
         0: LET_KW@123..127 "let" [] [Whitespace(" ")]
@@ -415,7 +415,7 @@ JsModule {
         1: JS_STATEMENT_LIST@154..154
         2: R_CURLY@154..155 "}" [] []
     6: JS_FOR_OF_STATEMENT@155..182
-      0: FOR_KW@155..160 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@155..160 "for" [Newline("\n")] [Whitespace(" ")]
       1: AWAIT_KW@160..166 "await" [] [Whitespace(" ")]
       2: L_PAREN@166..167 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@167..173
@@ -436,4 +436,4 @@ JsModule {
         0: L_CURLY@180..181 "{" [] []
         1: JS_STATEMENT_LIST@181..181
         2: R_CURLY@181..182 "}" [] []
-  3: EOF@182..183 "" [Whitespace("\n")] []
+  3: EOF@182..183 "" [Newline("\n")] []

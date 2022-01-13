@@ -11,7 +11,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@11..12 "" [Whitespace("\n")] [],
+    eof_token: EOF@11..12 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..12
@@ -24,4 +24,4 @@ JsModule {
         1: DOT@6..7 "." [] []
         2: META_KW@7..11 "meta" [] []
       1: (empty)
-  3: EOF@11..12 "" [Whitespace("\n")] []
+  3: EOF@11..12 "" [Newline("\n")] []

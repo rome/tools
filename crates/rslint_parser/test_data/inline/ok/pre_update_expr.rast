@@ -13,7 +13,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsPreUpdateExpression {
-                operator: MINUS2@5..8 "--" [Whitespace("\n")] [],
+                operator: MINUS2@5..8 "--" [Newline("\n")] [],
                 operand: JsIdentifierAssignment {
                     name_token: IDENT@8..11 "foo" [] [],
                 },
@@ -21,7 +21,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@11..12 "" [Whitespace("\n")] [],
+    eof_token: EOF@11..12 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..12
@@ -36,8 +36,8 @@ JsModule {
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@5..11
       0: JS_PRE_UPDATE_EXPRESSION@5..11
-        0: MINUS2@5..8 "--" [Whitespace("\n")] []
+        0: MINUS2@5..8 "--" [Newline("\n")] []
         1: JS_IDENTIFIER_ASSIGNMENT@8..11
           0: IDENT@8..11 "foo" [] []
       1: (empty)
-  3: EOF@11..12 "" [Whitespace("\n")] []
+  3: EOF@11..12 "" [Newline("\n")] []

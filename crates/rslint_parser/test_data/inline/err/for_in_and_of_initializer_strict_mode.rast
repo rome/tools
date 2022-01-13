@@ -35,7 +35,7 @@ JsModule {
             },
         },
         JsForInStatement {
-            for_token: FOR_KW@24..29 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@24..29 "for" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@29..30 "(" [] [],
             initializer: JsForVariableDeclaration {
                 kind_token: LET_KW@30..34 "let" [] [Whitespace(" ")],
@@ -67,7 +67,7 @@ JsModule {
             },
         },
         JsForInStatement {
-            for_token: FOR_KW@49..54 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@49..54 "for" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@54..55 "(" [] [],
             initializer: JsForVariableDeclaration {
                 kind_token: CONST_KW@55..61 "const" [] [Whitespace(" ")],
@@ -99,7 +99,7 @@ JsModule {
             },
         },
         JsForOfStatement {
-            for_token: FOR_KW@76..81 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@76..81 "for" [Newline("\n")] [Whitespace(" ")],
             await_token: missing (optional),
             l_paren_token: L_PAREN@81..82 "(" [] [],
             initializer: JsForVariableDeclaration {
@@ -132,7 +132,7 @@ JsModule {
             },
         },
         JsForOfStatement {
-            for_token: FOR_KW@101..106 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@101..106 "for" [Newline("\n")] [Whitespace(" ")],
             await_token: missing (optional),
             l_paren_token: L_PAREN@106..107 "(" [] [],
             initializer: JsForVariableDeclaration {
@@ -165,7 +165,7 @@ JsModule {
             },
         },
         JsForOfStatement {
-            for_token: FOR_KW@126..131 "for" [Whitespace("\n")] [Whitespace(" ")],
+            for_token: FOR_KW@126..131 "for" [Newline("\n")] [Whitespace(" ")],
             await_token: missing (optional),
             l_paren_token: L_PAREN@131..132 "(" [] [],
             initializer: JsForVariableDeclaration {
@@ -198,7 +198,7 @@ JsModule {
             },
         },
     ],
-    eof_token: EOF@153..154 "" [Whitespace("\n")] [],
+    eof_token: EOF@153..154 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..154
@@ -230,7 +230,7 @@ JsModule {
         1: JS_STATEMENT_LIST@23..23
         2: R_CURLY@23..24 "}" [] []
     1: JS_FOR_IN_STATEMENT@24..49
-      0: FOR_KW@24..29 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@24..29 "for" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@29..30 "(" [] []
       2: JS_FOR_VARIABLE_DECLARATION@30..40
         0: LET_KW@30..34 "let" [] [Whitespace(" ")]
@@ -254,7 +254,7 @@ JsModule {
         1: JS_STATEMENT_LIST@48..48
         2: R_CURLY@48..49 "}" [] []
     2: JS_FOR_IN_STATEMENT@49..76
-      0: FOR_KW@49..54 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@49..54 "for" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@54..55 "(" [] []
       2: JS_FOR_VARIABLE_DECLARATION@55..67
         0: CONST_KW@55..61 "const" [] [Whitespace(" ")]
@@ -278,7 +278,7 @@ JsModule {
         1: JS_STATEMENT_LIST@75..75
         2: R_CURLY@75..76 "}" [] []
     3: JS_FOR_OF_STATEMENT@76..101
-      0: FOR_KW@76..81 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@76..81 "for" [Newline("\n")] [Whitespace(" ")]
       1: (empty)
       2: L_PAREN@81..82 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@82..92
@@ -303,7 +303,7 @@ JsModule {
         1: JS_STATEMENT_LIST@100..100
         2: R_CURLY@100..101 "}" [] []
     4: JS_FOR_OF_STATEMENT@101..126
-      0: FOR_KW@101..106 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@101..106 "for" [Newline("\n")] [Whitespace(" ")]
       1: (empty)
       2: L_PAREN@106..107 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@107..117
@@ -328,7 +328,7 @@ JsModule {
         1: JS_STATEMENT_LIST@125..125
         2: R_CURLY@125..126 "}" [] []
     5: JS_FOR_OF_STATEMENT@126..153
-      0: FOR_KW@126..131 "for" [Whitespace("\n")] [Whitespace(" ")]
+      0: FOR_KW@126..131 "for" [Newline("\n")] [Whitespace(" ")]
       1: (empty)
       2: L_PAREN@131..132 "(" [] []
       3: JS_FOR_VARIABLE_DECLARATION@132..144
@@ -352,7 +352,7 @@ JsModule {
         0: L_CURLY@151..152 "{" [] []
         1: JS_STATEMENT_LIST@152..152
         2: R_CURLY@152..153 "}" [] []
-  3: EOF@153..154 "" [Whitespace("\n")] []
+  3: EOF@153..154 "" [Newline("\n")] []
 --
 error[SyntaxError]: `for..in` statement declarators cannot have an initializer expression
   ┌─ for_in_and_of_initializer_strict_mode.js:1:12

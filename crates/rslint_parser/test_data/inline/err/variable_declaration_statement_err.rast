@@ -57,7 +57,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: CONST_KW@24..31 "const" [Whitespace("\n")] [Whitespace(" ")],
+                kind: CONST_KW@24..31 "const" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -115,7 +115,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: CONST_KW@55..62 "const" [Whitespace("\n")] [Whitespace(" ")],
+                kind: CONST_KW@55..62 "const" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -131,7 +131,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@64..69 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@64..69 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsArrayBindingPattern {
@@ -153,7 +153,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: CONST_KW@73..80 "const" [Whitespace("\n")] [Whitespace(" ")],
+                kind: CONST_KW@73..80 "const" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsObjectBindingPattern {
@@ -177,7 +177,7 @@ JsModule {
             semicolon_token: SEMICOLON@85..86 ";" [] [],
         },
     ],
-    eof_token: EOF@86..87 "" [Whitespace("\n")] [],
+    eof_token: EOF@86..87 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..87
@@ -221,7 +221,7 @@ JsModule {
       1: (empty)
     1: JS_VARIABLE_STATEMENT@24..55
       0: JS_VARIABLE_DECLARATIONS@24..55
-        0: CONST_KW@24..31 "const" [Whitespace("\n")] [Whitespace(" ")]
+        0: CONST_KW@24..31 "const" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@31..55
           0: JS_VARIABLE_DECLARATION@31..36
             0: JS_IDENTIFIER_BINDING@31..33
@@ -259,7 +259,7 @@ JsModule {
       1: (empty)
     2: JS_VARIABLE_STATEMENT@55..64
       0: JS_VARIABLE_DECLARATIONS@55..63
-        0: CONST_KW@55..62 "const" [Whitespace("\n")] [Whitespace(" ")]
+        0: CONST_KW@55..62 "const" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@62..63
           0: JS_VARIABLE_DECLARATION@62..63
             0: JS_IDENTIFIER_BINDING@62..63
@@ -270,7 +270,7 @@ JsModule {
       1: SEMICOLON@63..64 ";" [] []
     3: JS_VARIABLE_STATEMENT@64..73
       0: JS_VARIABLE_DECLARATIONS@64..72
-        0: LET_KW@64..69 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@64..69 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@69..72
           0: JS_VARIABLE_DECLARATION@69..72
             0: JS_ARRAY_BINDING_PATTERN@69..72
@@ -285,7 +285,7 @@ JsModule {
       1: SEMICOLON@72..73 ";" [] []
     4: JS_VARIABLE_STATEMENT@73..86
       0: JS_VARIABLE_DECLARATIONS@73..85
-        0: CONST_KW@73..80 "const" [Whitespace("\n")] [Whitespace(" ")]
+        0: CONST_KW@73..80 "const" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@80..85
           0: JS_VARIABLE_DECLARATION@80..85
             0: JS_OBJECT_BINDING_PATTERN@80..85
@@ -300,7 +300,7 @@ JsModule {
             2: (empty)
             3: (empty)
       1: SEMICOLON@85..86 ";" [] []
-  3: EOF@86..87 "" [Whitespace("\n")] []
+  3: EOF@86..87 "" [Newline("\n")] []
 --
 error[SyntaxError]: Declarations inside of a `let` declaration may not have duplicates
   ┌─ variable_declaration_statement_err.js:1:10

@@ -15,7 +15,7 @@ JsModule {
             },
         },
     ],
-    eof_token: EOF@17..18 "" [Whitespace("\n")] [],
+    eof_token: EOF@17..18 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..18
@@ -30,4 +30,4 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@15..16
             0: IDENT@15..16 "a" [] []
         2: SEMICOLON@16..17 ";" [] []
-  3: EOF@17..18 "" [Whitespace("\n")] []
+  3: EOF@17..18 "" [Newline("\n")] []

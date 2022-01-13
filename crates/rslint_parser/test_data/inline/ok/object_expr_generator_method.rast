@@ -47,7 +47,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@21..22 "" [Whitespace("\n")] [],
+    eof_token: EOF@21..22 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..22
@@ -86,4 +86,4 @@ JsModule {
                       3: R_CURLY@18..20 "}" [] [Whitespace(" ")]
                 2: R_CURLY@20..21 "}" [] []
       1: (empty)
-  3: EOF@21..22 "" [Whitespace("\n")] []
+  3: EOF@21..22 "" [Newline("\n")] []

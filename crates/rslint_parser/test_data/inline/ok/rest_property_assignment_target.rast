@@ -31,7 +31,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@18..20 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@18..20 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@20..22 "{" [] [Whitespace(" ")],
@@ -62,7 +62,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@39..41 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@39..41 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],
@@ -97,7 +97,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@60..62 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@60..62 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@62..64 "{" [] [Whitespace(" ")],
@@ -144,7 +144,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@84..86 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@84..86 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@86..88 "{" [] [Whitespace(" ")],
@@ -194,7 +194,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsParenthesizedExpression {
-                l_paren_token: L_PAREN@117..119 "(" [Whitespace("\n")] [],
+                l_paren_token: L_PAREN@117..119 "(" [Newline("\n")] [],
                 expression: JsAssignmentExpression {
                     left: JsObjectAssignmentPattern {
                         l_curly_token: L_CURLY@119..121 "{" [] [Whitespace(" ")],
@@ -233,7 +233,7 @@ JsModule {
             semicolon_token: SEMICOLON@139..140 ";" [] [],
         },
     ],
-    eof_token: EOF@140..141 "" [Whitespace("\n")] [],
+    eof_token: EOF@140..141 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..141
@@ -260,7 +260,7 @@ JsModule {
       1: SEMICOLON@17..18 ";" [] []
     1: JS_EXPRESSION_STATEMENT@18..39
       0: JS_PARENTHESIZED_EXPRESSION@18..38
-        0: L_PAREN@18..20 "(" [Whitespace("\n")] []
+        0: L_PAREN@18..20 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@20..37
           0: JS_OBJECT_ASSIGNMENT_PATTERN@20..34
             0: L_CURLY@20..22 "{" [] [Whitespace(" ")]
@@ -281,7 +281,7 @@ JsModule {
       1: SEMICOLON@38..39 ";" [] []
     2: JS_EXPRESSION_STATEMENT@39..60
       0: JS_PARENTHESIZED_EXPRESSION@39..59
-        0: L_PAREN@39..41 "(" [Whitespace("\n")] []
+        0: L_PAREN@39..41 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@41..58
           0: JS_OBJECT_ASSIGNMENT_PATTERN@41..55
             0: L_CURLY@41..43 "{" [] [Whitespace(" ")]
@@ -304,7 +304,7 @@ JsModule {
       1: SEMICOLON@59..60 ";" [] []
     3: JS_EXPRESSION_STATEMENT@60..84
       0: JS_PARENTHESIZED_EXPRESSION@60..83
-        0: L_PAREN@60..62 "(" [Whitespace("\n")] []
+        0: L_PAREN@60..62 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@62..82
           0: JS_OBJECT_ASSIGNMENT_PATTERN@62..79
             0: L_CURLY@62..64 "{" [] [Whitespace(" ")]
@@ -336,7 +336,7 @@ JsModule {
       1: SEMICOLON@83..84 ";" [] []
     4: JS_EXPRESSION_STATEMENT@84..117
       0: JS_PARENTHESIZED_EXPRESSION@84..116
-        0: L_PAREN@84..86 "(" [Whitespace("\n")] []
+        0: L_PAREN@84..86 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@86..115
           0: JS_OBJECT_ASSIGNMENT_PATTERN@86..112
             0: L_CURLY@86..88 "{" [] [Whitespace(" ")]
@@ -370,7 +370,7 @@ JsModule {
       1: SEMICOLON@116..117 ";" [] []
     5: JS_EXPRESSION_STATEMENT@117..140
       0: JS_PARENTHESIZED_EXPRESSION@117..139
-        0: L_PAREN@117..119 "(" [Whitespace("\n")] []
+        0: L_PAREN@117..119 "(" [Newline("\n")] []
         1: JS_ASSIGNMENT_EXPRESSION@119..138
           0: JS_OBJECT_ASSIGNMENT_PATTERN@119..135
             0: L_CURLY@119..121 "{" [] [Whitespace(" ")]
@@ -395,4 +395,4 @@ JsModule {
               0: IDENT@137..138 "c" [] []
         2: R_PAREN@138..139 ")" [] []
       1: SEMICOLON@139..140 ";" [] []
-  3: EOF@140..141 "" [Whitespace("\n")] []
+  3: EOF@140..141 "" [Newline("\n")] []

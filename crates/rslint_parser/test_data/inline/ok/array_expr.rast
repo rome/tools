@@ -24,7 +24,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsArrayExpression {
-                l_brack_token: L_BRACK@11..13 "[" [Whitespace("\n")] [],
+                l_brack_token: L_BRACK@11..13 "[" [Newline("\n")] [],
                 elements: JsArrayElementList [
                     JsIdentifierExpression {
                         name: JsReferenceIdentifier {
@@ -38,7 +38,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsArrayExpression {
-                l_brack_token: L_BRACK@18..20 "[" [Whitespace("\n")] [],
+                l_brack_token: L_BRACK@18..20 "[" [Newline("\n")] [],
                 elements: JsArrayElementList [
                     JsArrayHole,
                     COMMA@20..21 "," [] [],
@@ -54,7 +54,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsArrayExpression {
-                l_brack_token: L_BRACK@26..28 "[" [Whitespace("\n")] [],
+                l_brack_token: L_BRACK@26..28 "[" [Newline("\n")] [],
                 elements: JsArrayElementList [
                     JsIdentifierExpression {
                         name: JsReferenceIdentifier {
@@ -69,7 +69,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsArrayExpression {
-                l_brack_token: L_BRACK@34..36 "[" [Whitespace("\n")] [],
+                l_brack_token: L_BRACK@34..36 "[" [Newline("\n")] [],
                 elements: JsArrayElementList [
                     JsArrayHole,
                     COMMA@36..37 "," [] [],
@@ -100,7 +100,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsArrayExpression {
-                l_brack_token: L_BRACK@50..52 "[" [Whitespace("\n")] [],
+                l_brack_token: L_BRACK@50..52 "[" [Newline("\n")] [],
                 elements: JsArrayElementList [
                     JsSpread {
                         dotdotdot_token: DOT2@52..55 "..." [] [],
@@ -125,7 +125,7 @@ JsModule {
             semicolon_token: SEMICOLON@63..64 ";" [] [],
         },
     ],
-    eof_token: EOF@64..65 "" [Whitespace("\n")] [],
+    eof_token: EOF@64..65 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..65
@@ -147,7 +147,7 @@ JsModule {
       1: SEMICOLON@10..11 ";" [] []
     1: JS_EXPRESSION_STATEMENT@11..18
       0: JS_ARRAY_EXPRESSION@11..17
-        0: L_BRACK@11..13 "[" [Whitespace("\n")] []
+        0: L_BRACK@11..13 "[" [Newline("\n")] []
         1: JS_ARRAY_ELEMENT_LIST@13..16
           0: JS_IDENTIFIER_EXPRESSION@13..16
             0: JS_REFERENCE_IDENTIFIER@13..16
@@ -156,7 +156,7 @@ JsModule {
       1: SEMICOLON@17..18 ";" [] []
     2: JS_EXPRESSION_STATEMENT@18..26
       0: JS_ARRAY_EXPRESSION@18..25
-        0: L_BRACK@18..20 "[" [Whitespace("\n")] []
+        0: L_BRACK@18..20 "[" [Newline("\n")] []
         1: JS_ARRAY_ELEMENT_LIST@20..24
           0: JS_ARRAY_HOLE@20..20
           1: COMMA@20..21 "," [] []
@@ -167,7 +167,7 @@ JsModule {
       1: SEMICOLON@25..26 ";" [] []
     3: JS_EXPRESSION_STATEMENT@26..34
       0: JS_ARRAY_EXPRESSION@26..33
-        0: L_BRACK@26..28 "[" [Whitespace("\n")] []
+        0: L_BRACK@26..28 "[" [Newline("\n")] []
         1: JS_ARRAY_ELEMENT_LIST@28..32
           0: JS_IDENTIFIER_EXPRESSION@28..31
             0: JS_REFERENCE_IDENTIFIER@28..31
@@ -177,7 +177,7 @@ JsModule {
       1: SEMICOLON@33..34 ";" [] []
     4: JS_EXPRESSION_STATEMENT@34..50
       0: JS_ARRAY_EXPRESSION@34..49
-        0: L_BRACK@34..36 "[" [Whitespace("\n")] []
+        0: L_BRACK@34..36 "[" [Newline("\n")] []
         1: JS_ARRAY_ELEMENT_LIST@36..48
           0: JS_ARRAY_HOLE@36..36
           1: COMMA@36..37 "," [] []
@@ -203,7 +203,7 @@ JsModule {
       1: SEMICOLON@49..50 ";" [] []
     5: JS_EXPRESSION_STATEMENT@50..64
       0: JS_ARRAY_EXPRESSION@50..63
-        0: L_BRACK@50..52 "[" [Whitespace("\n")] []
+        0: L_BRACK@50..52 "[" [Newline("\n")] []
         1: JS_ARRAY_ELEMENT_LIST@52..62
           0: JS_SPREAD@52..56
             0: DOT2@52..55 "..." [] []
@@ -218,4 +218,4 @@ JsModule {
                 0: IDENT@61..62 "b" [] []
         2: R_BRACK@62..63 "]" [] []
       1: SEMICOLON@63..64 ";" [] []
-  3: EOF@64..65 "" [Whitespace("\n")] []
+  3: EOF@64..65 "" [Newline("\n")] []

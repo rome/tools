@@ -13,7 +13,7 @@ JsModule {
             members: JsClassMemberList [
                 JsMethodClassMember {
                     access_modifier: missing (optional),
-                    static_token: STATIC_KW@11..20 "static" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")],
+                    static_token: STATIC_KW@11..20 "static" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                     abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
@@ -44,7 +44,7 @@ JsModule {
                 },
                 JsMethodClassMember {
                     access_modifier: missing (optional),
-                    static_token: STATIC_KW@31..40 "static" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")],
+                    static_token: STATIC_KW@31..40 "static" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                     abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: STAR@40..41 "*" [] [],
@@ -67,7 +67,7 @@ JsModule {
                 },
                 JsMethodClassMember {
                     access_modifier: missing (optional),
-                    static_token: STATIC_KW@49..58 "static" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")],
+                    static_token: STATIC_KW@49..58 "static" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                     abstract_token: missing (optional),
                     async_token: ASYNC_KW@58..64 "async" [] [Whitespace(" ")],
                     star_token: missing (optional),
@@ -90,7 +90,7 @@ JsModule {
                 },
                 JsMethodClassMember {
                     access_modifier: missing (optional),
-                    static_token: STATIC_KW@72..81 "static" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")],
+                    static_token: STATIC_KW@72..81 "static" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                     abstract_token: missing (optional),
                     async_token: ASYNC_KW@81..87 "async" [] [Whitespace(" ")],
                     star_token: STAR@87..88 "*" [] [],
@@ -112,10 +112,10 @@ JsModule {
                     },
                 },
             ],
-            r_curly_token: R_CURLY@96..98 "}" [Whitespace("\n")] [],
+            r_curly_token: R_CURLY@96..98 "}" [Newline("\n")] [],
         },
     ],
-    eof_token: EOF@98..99 "" [Whitespace("\n")] [],
+    eof_token: EOF@98..99 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..99
@@ -132,7 +132,7 @@ JsModule {
       5: JS_CLASS_MEMBER_LIST@11..96
         0: JS_METHOD_CLASS_MEMBER@11..31
           0: (empty)
-          1: STATIC_KW@11..20 "static" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")]
+          1: STATIC_KW@11..20 "static" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
           2: (empty)
           3: (empty)
           4: (empty)
@@ -156,7 +156,7 @@ JsModule {
             3: R_CURLY@30..31 "}" [] []
         1: JS_METHOD_CLASS_MEMBER@31..49
           0: (empty)
-          1: STATIC_KW@31..40 "static" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")]
+          1: STATIC_KW@31..40 "static" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
           2: (empty)
           3: (empty)
           4: STAR@40..41 "*" [] []
@@ -175,7 +175,7 @@ JsModule {
             3: R_CURLY@48..49 "}" [] []
         2: JS_METHOD_CLASS_MEMBER@49..72
           0: (empty)
-          1: STATIC_KW@49..58 "static" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")]
+          1: STATIC_KW@49..58 "static" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
           2: (empty)
           3: ASYNC_KW@58..64 "async" [] [Whitespace(" ")]
           4: (empty)
@@ -194,7 +194,7 @@ JsModule {
             3: R_CURLY@71..72 "}" [] []
         3: JS_METHOD_CLASS_MEMBER@72..96
           0: (empty)
-          1: STATIC_KW@72..81 "static" [Whitespace("\n"), Whitespace(" ")] [Whitespace(" ")]
+          1: STATIC_KW@72..81 "static" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
           2: (empty)
           3: ASYNC_KW@81..87 "async" [] [Whitespace(" ")]
           4: STAR@87..88 "*" [] []
@@ -211,5 +211,5 @@ JsModule {
             1: JS_DIRECTIVE_LIST@95..95
             2: JS_STATEMENT_LIST@95..95
             3: R_CURLY@95..96 "}" [] []
-      6: R_CURLY@96..98 "}" [Whitespace("\n")] []
-  3: EOF@98..99 "" [Whitespace("\n")] []
+      6: R_CURLY@96..98 "}" [Newline("\n")] []
+  3: EOF@98..99 "" [Newline("\n")] []

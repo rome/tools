@@ -23,7 +23,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsLogicalExpression {
                 left: JsUnaryExpression {
-                    operator: BANG@11..13 "!" [Whitespace("\n")] [],
+                    operator: BANG@11..13 "!" [Newline("\n")] [],
                     argument: JsIdentifierExpression {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@13..17 "foo" [] [Whitespace(" ")],
@@ -43,7 +43,7 @@ JsModule {
             expression: JsCallExpression {
                 callee: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
-                        value_token: IDENT@24..28 "foo" [Whitespace("\n")] [],
+                        value_token: IDENT@24..28 "foo" [Newline("\n")] [],
                     },
                 },
                 optional_chain_token_token: missing (optional),
@@ -67,7 +67,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@36..37 "" [Whitespace("\n")] [],
+    eof_token: EOF@36..37 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..37
@@ -89,7 +89,7 @@ JsModule {
     1: JS_EXPRESSION_STATEMENT@11..24
       0: JS_LOGICAL_EXPRESSION@11..23
         0: JS_UNARY_EXPRESSION@11..17
-          0: BANG@11..13 "!" [Whitespace("\n")] []
+          0: BANG@11..13 "!" [Newline("\n")] []
           1: JS_IDENTIFIER_EXPRESSION@13..17
             0: JS_REFERENCE_IDENTIFIER@13..17
               0: IDENT@13..17 "foo" [] [Whitespace(" ")]
@@ -102,7 +102,7 @@ JsModule {
       0: JS_CALL_EXPRESSION@24..36
         0: JS_IDENTIFIER_EXPRESSION@24..28
           0: JS_REFERENCE_IDENTIFIER@24..28
-            0: IDENT@24..28 "foo" [Whitespace("\n")] []
+            0: IDENT@24..28 "foo" [Newline("\n")] []
         1: (empty)
         2: (empty)
         3: JS_CALL_ARGUMENTS@28..36
@@ -116,7 +116,7 @@ JsModule {
               2: (empty)
           2: R_PAREN@35..36 ")" [] []
       1: (empty)
-  3: EOF@36..37 "" [Whitespace("\n")] []
+  3: EOF@36..37 "" [Newline("\n")] []
 --
 error[SyntaxError]: Expected an expression for the right hand side of a `??`, but found an operator instead
   ┌─ logical_expressions_err.js:1:8

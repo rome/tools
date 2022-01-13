@@ -8,7 +8,7 @@ JsModule {
             semicolon_token: SEMICOLON@6..7 ";" [] [],
         },
         JsImport {
-            import_token: IMPORT_KW@7..15 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_token: IMPORT_KW@7..15 "import" [Newline("\n")] [Whitespace(" ")],
             import_clause: JsImportNamespaceClause {
                 star_token: STAR@15..16 "*" [] [],
                 as_token: missing (required),
@@ -20,7 +20,7 @@ JsModule {
             semicolon_token: SEMICOLON@16..17 ";" [] [],
         },
         JsImport {
-            import_token: IMPORT_KW@17..25 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_token: IMPORT_KW@17..25 "import" [Newline("\n")] [Whitespace(" ")],
             import_clause: JsImportNamespaceClause {
                 star_token: STAR@25..27 "*" [] [Whitespace(" ")],
                 as_token: AS_KW@27..30 "as" [] [Whitespace(" ")],
@@ -75,7 +75,7 @@ JsModule {
             semicolon_token: SEMICOLON@50..51 ";" [] [],
         },
         JsImport {
-            import_token: IMPORT_KW@51..59 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_token: IMPORT_KW@51..59 "import" [Newline("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
@@ -111,7 +111,7 @@ JsModule {
             semicolon_token: SEMICOLON@80..81 ";" [] [],
         },
         JsImport {
-            import_token: IMPORT_KW@81..89 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_token: IMPORT_KW@81..89 "import" [Newline("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
@@ -142,7 +142,7 @@ JsModule {
             semicolon_token: SEMICOLON@106..107 ";" [] [],
         },
         JsImport {
-            import_token: IMPORT_KW@107..115 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_token: IMPORT_KW@107..115 "import" [Newline("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
@@ -167,7 +167,7 @@ JsModule {
             semicolon_token: SEMICOLON@135..136 ";" [] [],
         },
         JsImport {
-            import_token: IMPORT_KW@136..144 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_token: IMPORT_KW@136..144 "import" [Newline("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
@@ -190,7 +190,7 @@ JsModule {
             semicolon_token: SEMICOLON@160..161 ";" [] [],
         },
         JsImport {
-            import_token: IMPORT_KW@161..169 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_token: IMPORT_KW@161..169 "import" [Newline("\n")] [Whitespace(" ")],
             import_clause: JsImportNamedClause {
                 default_specifier: missing (optional),
                 named_import: JsNamedImportSpecifiers {
@@ -215,7 +215,7 @@ JsModule {
             semicolon_token: SEMICOLON@186..187 ";" [] [],
         },
         JsImport {
-            import_token: IMPORT_KW@187..195 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_token: IMPORT_KW@187..195 "import" [Newline("\n")] [Whitespace(" ")],
             import_clause: missing (required),
             semicolon_token: missing (optional),
         },
@@ -240,7 +240,7 @@ JsModule {
             semicolon_token: SEMICOLON@205..206 ";" [] [],
         },
         JsImport {
-            import_token: IMPORT_KW@206..214 "import" [Whitespace("\n")] [Whitespace(" ")],
+            import_token: IMPORT_KW@206..214 "import" [Newline("\n")] [Whitespace(" ")],
             import_clause: JsImportDefaultClause {
                 local_name: JsIdentifierBinding {
                     name_token: IDENT@214..216 "a" [] [Whitespace(" ")],
@@ -258,7 +258,7 @@ JsModule {
             semicolon_token: SEMICOLON@222..223 ";" [] [],
         },
     ],
-    eof_token: EOF@223..224 "" [Whitespace("\n")] [],
+    eof_token: EOF@223..224 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..224
@@ -270,7 +270,7 @@ JsModule {
       1: (empty)
       2: SEMICOLON@6..7 ";" [] []
     1: JS_IMPORT@7..17
-      0: IMPORT_KW@7..15 "import" [Whitespace("\n")] [Whitespace(" ")]
+      0: IMPORT_KW@7..15 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMESPACE_CLAUSE@15..16
         0: STAR@15..16 "*" [] []
         1: (empty)
@@ -280,7 +280,7 @@ JsModule {
         5: (empty)
       2: SEMICOLON@16..17 ";" [] []
     2: JS_IMPORT@17..31
-      0: IMPORT_KW@17..25 "import" [Whitespace("\n")] [Whitespace(" ")]
+      0: IMPORT_KW@17..25 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMESPACE_CLAUSE@25..31
         0: STAR@25..27 "*" [] [Whitespace(" ")]
         1: AS_KW@27..30 "as" [] [Whitespace(" ")]
@@ -316,7 +316,7 @@ JsModule {
         0: JS_STRING_LITERAL@47..50 "\"c\"" [] []
       1: SEMICOLON@50..51 ";" [] []
     7: JS_IMPORT@51..81
-      0: IMPORT_KW@51..59 "import" [Whitespace("\n")] [Whitespace(" ")]
+      0: IMPORT_KW@51..59 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@59..80
         0: (empty)
         1: JS_NAMED_IMPORT_SPECIFIERS@59..72
@@ -340,7 +340,7 @@ JsModule {
         4: (empty)
       2: SEMICOLON@80..81 ";" [] []
     8: JS_IMPORT@81..107
-      0: IMPORT_KW@81..89 "import" [Whitespace("\n")] [Whitespace(" ")]
+      0: IMPORT_KW@81..89 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@89..106
         0: (empty)
         1: JS_NAMED_IMPORT_SPECIFIERS@89..98
@@ -360,7 +360,7 @@ JsModule {
         4: (empty)
       2: SEMICOLON@106..107 ";" [] []
     9: JS_IMPORT@107..136
-      0: IMPORT_KW@107..115 "import" [Whitespace("\n")] [Whitespace(" ")]
+      0: IMPORT_KW@107..115 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@115..135
         0: (empty)
         1: JS_NAMED_IMPORT_SPECIFIERS@115..127
@@ -376,7 +376,7 @@ JsModule {
         4: (empty)
       2: SEMICOLON@135..136 ";" [] []
     10: JS_IMPORT@136..161
-      0: IMPORT_KW@136..144 "import" [Whitespace("\n")] [Whitespace(" ")]
+      0: IMPORT_KW@136..144 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@144..160
         0: (empty)
         1: JS_NAMED_IMPORT_SPECIFIERS@144..152
@@ -391,7 +391,7 @@ JsModule {
         4: (empty)
       2: SEMICOLON@160..161 ";" [] []
     11: JS_IMPORT@161..187
-      0: IMPORT_KW@161..169 "import" [Whitespace("\n")] [Whitespace(" ")]
+      0: IMPORT_KW@161..169 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_NAMED_CLAUSE@169..186
         0: (empty)
         1: JS_NAMED_IMPORT_SPECIFIERS@169..178
@@ -409,7 +409,7 @@ JsModule {
         4: (empty)
       2: SEMICOLON@186..187 ";" [] []
     12: JS_IMPORT@187..195
-      0: IMPORT_KW@187..195 "import" [Whitespace("\n")] [Whitespace(" ")]
+      0: IMPORT_KW@187..195 "import" [Newline("\n")] [Whitespace(" ")]
       1: (empty)
       2: (empty)
     13: JS_EXPRESSION_STATEMENT@195..197
@@ -426,7 +426,7 @@ JsModule {
         0: JS_STRING_LITERAL@202..205 "\"c\"" [] []
       1: SEMICOLON@205..206 ";" [] []
     16: JS_IMPORT@206..221
-      0: IMPORT_KW@206..214 "import" [Whitespace("\n")] [Whitespace(" ")]
+      0: IMPORT_KW@206..214 "import" [Newline("\n")] [Whitespace(" ")]
       1: JS_IMPORT_DEFAULT_CLAUSE@214..221
         0: JS_IDENTIFIER_BINDING@214..216
           0: IDENT@214..216 "a" [] [Whitespace(" ")]
@@ -438,7 +438,7 @@ JsModule {
       0: JS_NUMBER_LITERAL_EXPRESSION@221..222
         0: JS_NUMBER_LITERAL@221..222 "4" [] []
       1: SEMICOLON@222..223 ";" [] []
-  3: EOF@223..224 "" [Whitespace("\n")] []
+  3: EOF@223..224 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected a default import, a namespace import, or a named import but instead found ';'
   ┌─ import_err.js:1:7

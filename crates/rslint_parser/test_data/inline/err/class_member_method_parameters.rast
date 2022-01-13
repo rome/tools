@@ -57,7 +57,7 @@ JsModule {
             r_curly_token: missing (required),
         },
     ],
-    eof_token: EOF@20..21 "" [Whitespace("\n")] [],
+    eof_token: EOF@20..21 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..21
@@ -104,7 +104,7 @@ JsModule {
           8: (empty)
           9: (empty)
       6: (empty)
-  3: EOF@20..21 "" [Whitespace("\n")] []
+  3: EOF@20..21 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected `,` but instead found `{`
   ┌─ class_member_method_parameters.js:1:17

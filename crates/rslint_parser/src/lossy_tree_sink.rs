@@ -188,7 +188,8 @@ impl<'a> LossyTreeSink<'a> {
 		let range = leading_range.cover(token_range).cover(trailing_range);
 		let text = &self.text[range];
 
-		self.inner.token_with_trivia(kind, text, leading, trailing);
+		self.inner
+			.token_with_trivia(kind, text, &leading, &trailing);
 	}
 
 	fn get_trivia(&mut self, break_on_newline: bool) -> (TextRange, Vec<TriviaPiece>) {
@@ -213,7 +214,8 @@ impl<'a> LossyTreeSink<'a> {
 
 			let current_trivia = match token.kind {
 				JsSyntaxKind::WHITESPACE | JsSyntaxKind::NEWLINE => continue,
-				JsSyntaxKind::COMMENT => TriviaPiece::Comments(token.len),
+				JsSyntaxKind::COMMENT => TriviaPiece::Comments(token.len, false),
+				JsSyntaxKind::MULTILINE_COMMENT => TriviaPiece::Comments(token.len, true),
 				_ => unreachable!("Not Trivia"),
 			};
 

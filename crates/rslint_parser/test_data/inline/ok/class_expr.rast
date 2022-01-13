@@ -31,7 +31,7 @@ JsModule {
         },
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@17..22 "let" [Whitespace("\n")] [Whitespace(" ")],
+                kind: LET_KW@17..22 "let" [Newline("\n")] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
@@ -53,7 +53,7 @@ JsModule {
                                     JsConstructorClassMember {
                                         access_modifier: missing (optional),
                                         name: JsLiteralMemberName {
-                                            value: IDENT@37..50 "constructor" [Whitespace("\n"), Whitespace(" ")] [],
+                                            value: IDENT@37..50 "constructor" [Newline("\n"), Whitespace(" ")] [],
                                         },
                                         type_parameters: missing (optional),
                                         parameters: JsConstructorParameters {
@@ -69,7 +69,7 @@ JsModule {
                                         },
                                     },
                                 ],
-                                r_curly_token: R_CURLY@55..57 "}" [Whitespace("\n")] [],
+                                r_curly_token: R_CURLY@55..57 "}" [Newline("\n")] [],
                             },
                         },
                     },
@@ -81,7 +81,7 @@ JsModule {
             expression: JsComputedMemberExpression {
                 object: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
-                        value_token: IDENT@57..61 "foo" [Whitespace("\n")] [],
+                        value_token: IDENT@57..61 "foo" [Newline("\n")] [],
                     },
                 },
                 optional_chain_token: missing (optional),
@@ -100,7 +100,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@71..72 "" [Whitespace("\n")] [],
+    eof_token: EOF@71..72 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..72
@@ -129,7 +129,7 @@ JsModule {
       1: SEMICOLON@16..17 ";" [] []
     1: JS_VARIABLE_STATEMENT@17..57
       0: JS_VARIABLE_DECLARATIONS@17..57
-        0: LET_KW@17..22 "let" [Whitespace("\n")] [Whitespace(" ")]
+        0: LET_KW@17..22 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@22..57
           0: JS_VARIABLE_DECLARATION@22..57
             0: JS_IDENTIFIER_BINDING@22..24
@@ -149,7 +149,7 @@ JsModule {
                   0: JS_CONSTRUCTOR_CLASS_MEMBER@37..55
                     0: (empty)
                     1: JS_LITERAL_MEMBER_NAME@37..50
-                      0: IDENT@37..50 "constructor" [Whitespace("\n"), Whitespace(" ")] []
+                      0: IDENT@37..50 "constructor" [Newline("\n"), Whitespace(" ")] []
                     2: (empty)
                     3: JS_CONSTRUCTOR_PARAMETERS@50..53
                       0: L_PAREN@50..51 "(" [] []
@@ -160,13 +160,13 @@ JsModule {
                       1: JS_DIRECTIVE_LIST@54..54
                       2: JS_STATEMENT_LIST@54..54
                       3: R_CURLY@54..55 "}" [] []
-                6: R_CURLY@55..57 "}" [Whitespace("\n")] []
+                6: R_CURLY@55..57 "}" [Newline("\n")] []
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@57..71
       0: JS_COMPUTED_MEMBER_EXPRESSION@57..71
         0: JS_IDENTIFIER_EXPRESSION@57..61
           0: JS_REFERENCE_IDENTIFIER@57..61
-            0: IDENT@57..61 "foo" [Whitespace("\n")] []
+            0: IDENT@57..61 "foo" [Newline("\n")] []
         1: (empty)
         2: L_BRACK@61..62 "[" [] []
         3: JS_CLASS_EXPRESSION@62..70
@@ -179,4 +179,4 @@ JsModule {
           6: R_CURLY@69..70 "}" [] []
         4: R_BRACK@70..71 "]" [] []
       1: (empty)
-  3: EOF@71..72 "" [Whitespace("\n")] []
+  3: EOF@71..72 "" [Newline("\n")] []

@@ -24,7 +24,7 @@ JsModule {
             },
         },
         JsIfStatement {
-            if_token: IF_KW@20..24 "if" [Whitespace("\n")] [Whitespace(" ")],
+            if_token: IF_KW@20..24 "if" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@24..25 "(" [] [],
             test: JsBooleanLiteralExpression {
                 value_token: TRUE_KW@25..29 "true" [] [],
@@ -38,7 +38,7 @@ JsModule {
             else_clause: missing (optional),
         },
         JsIfStatement {
-            if_token: IF_KW@33..37 "if" [Whitespace("\n")] [Whitespace(" ")],
+            if_token: IF_KW@33..37 "if" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@37..38 "(" [] [],
             test: JsBooleanLiteralExpression {
                 value_token: TRUE_KW@38..42 "true" [] [],
@@ -53,7 +53,7 @@ JsModule {
             else_clause: missing (optional),
         },
         JsIfStatement {
-            if_token: IF_KW@49..53 "if" [Whitespace("\n")] [Whitespace(" ")],
+            if_token: IF_KW@49..53 "if" [Newline("\n")] [Whitespace(" ")],
             l_paren_token: L_PAREN@53..54 "(" [] [],
             test: JsIdentifierExpression {
                 name: JsReferenceIdentifier {
@@ -92,7 +92,7 @@ JsModule {
             },
         },
     ],
-    eof_token: EOF@87..88 "" [Whitespace("\n")] [],
+    eof_token: EOF@87..88 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..88
@@ -116,7 +116,7 @@ JsModule {
           1: JS_STATEMENT_LIST@19..19
           2: R_CURLY@19..20 "}" [] []
     1: JS_IF_STATEMENT@20..33
-      0: IF_KW@20..24 "if" [Whitespace("\n")] [Whitespace(" ")]
+      0: IF_KW@20..24 "if" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@24..25 "(" [] []
       2: JS_BOOLEAN_LITERAL_EXPRESSION@25..29
         0: TRUE_KW@25..29 "true" [] []
@@ -127,7 +127,7 @@ JsModule {
         2: R_CURLY@32..33 "}" [] []
       5: (empty)
     2: JS_IF_STATEMENT@33..49
-      0: IF_KW@33..37 "if" [Whitespace("\n")] [Whitespace(" ")]
+      0: IF_KW@33..37 "if" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@37..38 "(" [] []
       2: JS_BOOLEAN_LITERAL_EXPRESSION@38..42
         0: TRUE_KW@38..42 "true" [] []
@@ -138,7 +138,7 @@ JsModule {
         1: (empty)
       5: (empty)
     3: JS_IF_STATEMENT@49..87
-      0: IF_KW@49..53 "if" [Whitespace("\n")] [Whitespace(" ")]
+      0: IF_KW@49..53 "if" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@53..54 "(" [] []
       2: JS_IDENTIFIER_EXPRESSION@54..57
         0: JS_REFERENCE_IDENTIFIER@54..57
@@ -166,4 +166,4 @@ JsModule {
               0: L_CURLY@85..86 "{" [] []
               1: JS_STATEMENT_LIST@86..86
               2: R_CURLY@86..87 "}" [] []
-  3: EOF@87..88 "" [Whitespace("\n")] []
+  3: EOF@87..88 "" [Newline("\n")] []
