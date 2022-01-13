@@ -57,7 +57,19 @@ fn test_data_dir() -> PathBuf {
 
 #[test]
 fn test_eval() {
-	println!("{:?}", try_parse("", " ({ eval }) = 0"));
+	println!(
+		"{:?}",
+		try_parse(
+			"",
+			"        function _10_5_7_b_2_fun() {
+            arguments[7] = 12;
+            return arguments[7] === 12;
+        };"
+		)
+	);
+
+	println!("{:?}", try_parse("", "eval = 10"));
+	println!("{:?}", try_parse("", "const { eval } = 10"));
 }
 
 fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {

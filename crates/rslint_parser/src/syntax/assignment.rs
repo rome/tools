@@ -351,6 +351,9 @@ struct ReparseAssignment {
 	result: Option<CompletedMarker>,
 	// Tracks if the visitor is still inside of an assignment
 	inside_assignment: bool,
+	// Tracks if the visitor is inside a member expression or computed expression
+	// for eval/arguments validation
+	inside_member_or_computed_expression: bool,
 }
 
 impl ReparseAssignment {
@@ -359,6 +362,7 @@ impl ReparseAssignment {
 			parents: Vec::default(),
 			result: None,
 			inside_assignment: true,
+			inside_member_or_computed_expression: false,
 		}
 	}
 }
@@ -379,10 +383,12 @@ impl RewriteParseEvents for ReparseAssignment {
 			JS_PARENTHESIZED_EXPRESSION => JS_PARENTHESIZED_ASSIGNMENT,
 			JS_STATIC_MEMBER_EXPRESSION => {
 				self.inside_assignment = false;
+				self.inside_member_or_computed_expression = true;
 				JS_STATIC_MEMBER_ASSIGNMENT
 			}
 			JS_COMPUTED_MEMBER_EXPRESSION => {
 				self.inside_assignment = false;
+				self.inside_member_or_computed_expression = true;
 				JS_COMPUTED_MEMBER_ASSIGNMENT
 			}
 			JS_IDENTIFIER_EXPRESSION => JS_IDENTIFIER_ASSIGNMENT,
@@ -423,7 +429,13 @@ impl RewriteParseEvents for ReparseAssignment {
 			{
 				*parent_kind = JS_UNKNOWN_ASSIGNMENT
 			}
-			if matches!(kind, IDENT) && (p.cur_src() == "eval" || p.cur_src() == "arguments") {
+
+			if matches!(kind, IDENT)
+				&& (p.cur_src() == "eval" || p.cur_src() == "arguments")
+				&& p.state.strict.is_some()
+				// If we're inside a member or computed expression then we do not error
+				&& !self.inside_member_or_computed_expression
+			{
 				p.error(
 					p.err_builder(
 						"`eval` or `arguments` not allowed as assignment targets in strict mode",
