@@ -2,7 +2,6 @@
 
 use std::collections::HashMap;
 
-use anyhow::Result;
 use rslint_parser::{SyntaxNode, SyntaxToken, TextRange};
 
 const ROME_IGNORE: &str = "rome-ignore";
@@ -28,7 +27,7 @@ impl Suppressions {
 	}
 }
 
-pub fn compute(node: SyntaxNode) -> Result<Suppressions> {
+pub fn compute(node: SyntaxNode) -> Suppressions {
 	let mut suppressions: HashMap<String, Vec<TextRange>> = HashMap::new();
 
 	for token in node.descendants_tokens() {
@@ -55,7 +54,7 @@ pub fn compute(node: SyntaxNode) -> Result<Suppressions> {
 			}
 		}
 	}
-	Ok(Suppressions { suppressions })
+	Suppressions { suppressions }
 }
 
 // TODO: Improve this logic

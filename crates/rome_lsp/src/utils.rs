@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use crate::line_index::{LineCol, LineIndex};
 use lspower::lsp::{self, CodeAction, CodeActionKind, Diagnostic, TextEdit, Url, WorkspaceEdit};
-use rome_analyze::{Indel, TextAction};
+use rome_analyze::{DiagnosticExt, Indel, TextAction};
 use tracing::trace;
 
 use rslint_parser::{TextRange, TextSize};
@@ -71,4 +71,17 @@ pub(crate) fn text_action_to_lsp(
 		disabled: None,
 		data: None,
 	}
+}
+
+pub(crate) fn diagnostic_to_lsp(
+	diagnostic: rslint_errors::Diagnostic,
+	line_index: &LineIndex,
+) -> Option<lsp::Diagnostic> {
+	let text_range = diagnostic.primary_text_range()?;
+	let lsp_range = crate::utils::range(line_index, text_range);
+	let message = diagnostic.title;
+	let code = diagnostic.code.map(lspower::lsp::NumberOrString::String);
+	let source = Some("rome".into());
+	let diagnostic = Diagnostic::new(lsp_range, None, code, source, message, None, None);
+	Some(diagnostic)
 }

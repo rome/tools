@@ -10,5 +10,5 @@ pub use analysis_server::{AnalysisServer, FileId};
 pub use analyzers::{Analyzer, AnalyzerContext};
 pub use assists::AssistContext;
 pub use categories::ActionCategory;
-pub use signals::{Action, Analysis, AnalyzerResult, Signal, TextAction};
+pub use signals::{Action, Analysis, DiagnosticExt, Signal, TextAction};
 pub use syntax_edit::{Indel, SyntaxEdit};

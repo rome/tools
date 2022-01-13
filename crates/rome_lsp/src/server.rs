@@ -122,13 +122,14 @@ async fn analyze_file(
 	let mut actions: Vec<TextAction> = vec![];
 	let mut diagnostics: Vec<Diagnostic> = vec![];
 
-	let analysis = analysis_server.analyze(file_id)?;
+	let analysis = analysis_server.analyze(file_id);
 	for signal in analysis.signals {
 		match signal {
 			Signal::Diagnostic(d) => {
-				let range = crate::utils::range(&line_index, d.range);
-				diagnostics.push(Diagnostic::new_simple(range, d.message));
-				actions.extend(d.actions.into_iter().map(TextAction::from));
+				if let Some(diagnostic) = utils::diagnostic_to_lsp(d.diagnostic, &line_index) {
+					diagnostics.push(diagnostic);
+					actions.extend(d.actions.into_iter().map(TextAction::from));
+				}
 			}
 			Signal::Action(a) => actions.push(a.into()),
 		}
@@ -150,7 +151,6 @@ fn compute_actions(
 
 	let code_actions: Vec<CodeAction> = analysis_api
 		.assists(file_id, cursor_range)
-		.unwrap()
 		.into_actions()
 		.map(|a| utils::text_action_to_lsp(&a.into(), &line_index, uri.to_owned(), None))
 		.collect();

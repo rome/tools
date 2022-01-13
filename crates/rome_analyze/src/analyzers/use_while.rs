@@ -1,22 +1,21 @@
-use anyhow::Result;
-use rslint_parser::ast;
+use rslint_parser::{ast, AstNode};
 
-use crate::{ActionCategory, Analysis, Analyzer, AnalyzerContext, Signal};
+use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 
 pub fn create() -> Analyzer {
 	Analyzer {
 		name: "useWhile",
-		action_categories: vec![ActionCategory::Suggestion],
+		action_categories: vec![],
 		analyze,
 	}
 }
 
-fn analyze(ctx: &AnalyzerContext) -> Result<Analysis> {
+fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
 	ctx.query_nodes::<ast::JsForStatement>()
 		.filter(|n| n.initializer().is_none() && n.update().is_none())
 		.map(|node| {
-			let message = "rome: Use a while loop instead of a for loop";
-			Signal::diagnostic(node, message)
+			let message = "Use a while loop instead of a for loop";
+			ctx.error(node.range(), message).into_signal()
 		})
 		.collect()
 }
