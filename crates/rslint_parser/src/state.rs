@@ -31,35 +31,32 @@ pub enum StrictMode {
 
 impl Default for ParserState {
 	fn default() -> Self {
-		Self {
-			parsing_context: ParsingContextFlags::ALLOW_OBJECT_EXPRESSION
-				| ParsingContextFlags::INCLUDE_IN,
-			labels: HashMap::new(),
-			strict: None,
-			default_item: None,
-			name_map: HashMap::with_capacity(3),
-			duplicate_binding_parent: None,
-			no_recovery: false,
-		}
+		ParserState::new(Syntax::default())
 	}
 }
 
 impl ParserState {
 	pub fn new(syntax: Syntax) -> Self {
-		// TODO(RDambrosio016): Does TypeScript imply Module/Strict?
-		let strict = if syntax.file_kind == FileKind::Module {
-			Some(StrictMode::Module)
-		} else {
-			None
+		let mut state = ParserState {
+			parsing_context: ParsingContextFlags::ALLOW_OBJECT_EXPRESSION
+				| ParsingContextFlags::INCLUDE_IN,
+			labels: HashMap::new(),
+			strict: if syntax.file_kind == FileKind::Module {
+				Some(StrictMode::Module)
+			} else {
+				None
+			},
+			default_item: None,
+			name_map: HashMap::with_capacity(3),
+			duplicate_binding_parent: None,
+			no_recovery: false,
 		};
-
-		let mut state = ParserState::default();
 
 		if syntax.top_level_await {
 			state.parsing_context |= ParsingContextFlags::IN_ASYNC
 		}
 
-		Self { strict, ..state }
+		state
 	}
 
 	pub fn in_function(&self) -> bool {
