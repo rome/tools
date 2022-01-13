@@ -19,7 +19,7 @@ use crate::{
 pub enum GreenTokenTrivia {
 	None,
 	Whitespace(u32),
-	Comments(u32, bool),
+	Comment(u32, bool),
 	Many(Box<Vec<TriviaPiece>>),
 }
 
@@ -28,7 +28,7 @@ impl GreenTokenTrivia {
 		match self {
 			GreenTokenTrivia::None => 0.into(),
 			GreenTokenTrivia::Whitespace(len) => (*len as u32).into(),
-			GreenTokenTrivia::Comments(len, _) => (*len as u32).into(),
+			GreenTokenTrivia::Comment(len, _) => (*len as u32).into(),
 			GreenTokenTrivia::Many(v) => {
 				let r = v.iter().fold(Some(TextSize::of("")), |len, trivia| {
 					len.and_then(|x| x.checked_add(trivia.text_len()))
@@ -43,7 +43,7 @@ impl GreenTokenTrivia {
 	pub(crate) fn get_piece(&self, index: usize) -> Option<TriviaPiece> {
 		match self {
 			GreenTokenTrivia::Whitespace(l) if index == 0 => Some(TriviaPiece::Whitespace(*l)),
-			GreenTokenTrivia::Comments(l, h) if index == 0 => Some(TriviaPiece::Comments(*l, *h)),
+			GreenTokenTrivia::Comment(l, h) if index == 0 => Some(TriviaPiece::Comments(*l, *h)),
 			GreenTokenTrivia::Many(v) => v.get(index).copied(),
 			_ => None,
 		}
@@ -56,7 +56,7 @@ impl From<&[TriviaPiece]> for GreenTokenTrivia {
 			[] => GreenTokenTrivia::None,
 			[TriviaPiece::Whitespace(len)] => GreenTokenTrivia::Whitespace(*len),
 			[TriviaPiece::Comments(len, has_newline)] => {
-				GreenTokenTrivia::Comments(*len, *has_newline)
+				GreenTokenTrivia::Comment(*len, *has_newline)
 			}
 			_ => GreenTokenTrivia::Many(Box::new(trivias.to_vec())),
 		}
@@ -300,7 +300,7 @@ mod tests {
 		);
 		assert_eq!(
 			TextSize::from(len),
-			GreenTokenTrivia::Comments(len, false).text_len()
+			GreenTokenTrivia::Comment(len, false).text_len()
 		);
 	}
 
