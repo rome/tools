@@ -23,7 +23,7 @@ use crate::syntax::stmt::{
 use crate::syntax::util::expect_keyword;
 use crate::{
 	Absent, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax, Parser,
-	Present, TokenSet,
+	Present,
 };
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};

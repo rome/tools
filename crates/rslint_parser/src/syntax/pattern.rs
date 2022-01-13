@@ -3,7 +3,6 @@ use crate::parser::ParserProgress;
 use crate::syntax::expr::parse_expr_or_assignment;
 use crate::syntax::js_parse_error;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::TokenSet;
 use crate::{CompletedMarker, ParseRecovery, ParsedSyntax, Parser};
 use rslint_errors::Diagnostic;
 use rslint_syntax::JsSyntaxKind::{EOF, JS_ARRAY_HOLE};

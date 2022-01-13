@@ -1448,6 +1448,7 @@ dependencies = [
 name = "rslint_parser"
 version = "0.3.0"
 dependencies = [
+ "bitflags",
  "drop_bomb",
  "expect-test",
  "lexical",

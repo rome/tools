@@ -187,7 +187,7 @@ impl Syntax {
 
 	pub fn module(mut self) -> Self {
 		self.file_kind = FileKind::Module;
-		self
+		self.top_level_await()
 	}
 
 	pub fn typescript(mut self) -> Self {

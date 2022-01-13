@@ -4,20 +4,20 @@
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
 use super::binding::parse_binding_pattern;
-use super::decl::{parse_arrow_body, parse_parameter_list};
 use super::typescript::*;
 use super::util::*;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::{ParserProgress, RecoveryResult};
-use crate::state::{InAsync, InConditionExpression, PotentialArrowStart};
+use crate::state::{InConditionExpression, PotentialArrowStart, SignatureFlags};
 use crate::syntax::assignment::{
 	expression_to_assignment, expression_to_assignment_pattern, parse_assignment,
 	AssignmentExprPrecedence,
 };
-use crate::syntax::binding::{parse_binding, parse_identifier_binding};
 use crate::syntax::class::parse_class_expression;
-use crate::syntax::function::parse_function_expression;
+use crate::syntax::function::{
+	parse_arrow_body, parse_arrow_function_parameters, parse_function_expression,
+};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
 	expected_binding, expected_expression, expected_identifier, expected_parameter,
@@ -240,7 +240,20 @@ fn yield_expr(p: &mut Parser) -> CompletedMarker {
 		argument.complete(p, JS_YIELD_ARGUMENT);
 	}
 
-	m.complete(p, JS_YIELD_EXPRESSION)
+	let mut yield_expr = m.complete(p, JS_YIELD_EXPRESSION);
+
+	if p.state.in_parameters() {
+		// test_err yield_expr_in_parameter_initializer
+		// function* test(a = yield "test") {}
+		// function test(a = yield "test") {}
+		p.error(
+			p.err_builder("`yield` expressions cannot be used in a parameter initializer")
+				.primary(yield_expr.range(p), ""),
+		);
+		yield_expr.change_to_unknown(p);
+	}
+
+	yield_expr
 }
 
 /// A conditional expression such as `foo ? bar : baz`
@@ -791,7 +804,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 				let expr = parse_expr_or_assignment(p);
 				if expr.is_absent() && p.at(T![:]) {
 					p.rewind(checkpoint);
-					params_marker = Some(parse_parameter_list(p).unwrap());
+					params_marker = Some(parse_arrow_function_parameters(p, SignatureFlags::empty()).unwrap());
 					break;
 				}
 
@@ -848,7 +861,8 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 			if params_marker.is_none() {
 				// Rewind the parser so we can reparse as formal parameters
 				p.rewind(checkpoint);
-				parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);
+				parse_arrow_function_parameters(p, SignatureFlags::empty())
+					.or_add_diagnostic(p, js_parse_error::expected_parameters);
 			}
 
 			if p.at(T![:]) {
@@ -862,7 +876,8 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 			}
 
 			p.bump_any();
-			parse_arrow_body(p).or_add_diagnostic(p, js_parse_error::expected_arrow_body);
+			parse_arrow_body(p, SignatureFlags::empty())
+				.or_add_diagnostic(p, js_parse_error::expected_arrow_body);
 			return Present(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION));
 		}
 	}
@@ -991,29 +1006,23 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 					let m = p.start();
 					p.bump_remap(T![async]);
 
-					p.with_state(InAsync(true), |p| {
-						let parsed_parameters = parse_parameter_list(p);
-						if parsed_parameters.is_absent() {
-							// test_err async_arrow_expr_await_parameter
-							// let a = async await => {}
-							parse_binding(p).or_add_diagnostic(p, expected_parameter);
-						}
+					parse_arrow_function_parameters(p, SignatureFlags::ASYNC)
+						.or_add_diagnostic(p, expected_parameter);
 
-						if p.at(T![:]) {
-							let complete = ts_type_or_type_predicate_ann(p, T![:]);
-							if let Some(mut complete) = complete {
-								complete.err_if_not_ts(
+					if p.at(T![:]) {
+						let complete = ts_type_or_type_predicate_ann(p, T![:]);
+						if let Some(mut complete) = complete {
+							complete.err_if_not_ts(
 								p,
 								"arrow functions can only have return types in TypeScript files",
 							);
-							}
 						}
+					}
 
-						p.expect(T![=>]);
+					p.expect(T![=>]);
 
-						parse_arrow_body(p)
-							.or_add_diagnostic(p, js_parse_error::expected_arrow_body);
-					});
+					parse_arrow_body(p, SignatureFlags::ASYNC)
+						.or_add_diagnostic(p, js_parse_error::expected_arrow_body);
 
 					m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 				} else {
@@ -1046,9 +1055,12 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 				// foo =>
 				// {}
 				let m = p.start();
-				parse_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
+				parse_arrow_function_parameters(p, SignatureFlags::empty())
+					.or_add_diagnostic(p, expected_identifier);
+
 				p.bump(T![=>]);
-				parse_arrow_body(p).or_add_diagnostic(p, js_parse_error::expected_arrow_body);
+				parse_arrow_body(p, SignatureFlags::empty())
+					.or_add_diagnostic(p, js_parse_error::expected_arrow_body);
 				m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 			} else {
 				parse_identifier_expression(p).unwrap()
@@ -1470,8 +1482,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
 	const UNARY_SINGLE: TokenSet =
 		token_set![T![delete], T![void], T![typeof], T![+], T![-], T![~], T![!]];
 
-	// FIXME: this shouldn't allow await in sync functions
-	if (p.state.in_async() || p.syntax.top_level_await) && p.at(T![await]) {
+	if (p.state.in_async()) && p.at(T![await]) {
 		// test await_expression
 		// async function test() {
 		// 	await inner();
@@ -1480,10 +1491,30 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
 		// async function inner() {
 		// 	return 4;
 		// }
+		// await test();
+
+		// test_err no_top_level_await_in_scripts
+		// // SCRIPT
+		// async function test() {}
+		// await test();
 		let m = p.start();
-		p.bump_any();
+		p.bump(T![await]);
 		parse_unary_expr(p).or_add_diagnostic(p, js_parse_error::expected_unary_expression);
-		return Present(m.complete(p, JS_AWAIT_EXPRESSION));
+
+		let mut expr = m.complete(p, JS_AWAIT_EXPRESSION);
+
+		if p.state.in_parameters() {
+			// test_err await_in_parameter_initializer
+			// async function test(a = await b()) {}
+			// function test(a = await b()) {}
+			p.error(
+				p.err_builder("`await` expressions cannot be used in a parameter initializer")
+					.primary(expr.range(p), ""),
+			);
+			expr.change_to_unknown(p);
+		}
+
+		return Present(expr);
 	}
 
 	if p.at(T![<]) {

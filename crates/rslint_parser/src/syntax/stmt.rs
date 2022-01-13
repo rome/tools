@@ -9,8 +9,8 @@ use super::util::check_label_use;
 use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::state::{
-	AllowObjectExpression, BreakAllowed, ChangeParserState, ContinueAllowed, EnableStrictMode,
-	EnableStrictModeSnapshot, IncludeIn, StrictMode as StrictModeState,
+	AllowObjectExpression, BreakAllowed, ChangeParserState, EnableStrictMode,
+	EnableStrictModeSnapshot, EnterLoop, IncludeIn, StrictMode as StrictModeState,
 };
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
@@ -754,11 +754,8 @@ pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 	p.bump_any(); // while
 	parenthesized_expression(p);
 
-	p.with_state(
-		ContinueAllowed(true).and(BreakAllowed(true)),
-		parse_statement,
-	)
-	.or_add_diagnostic(p, expected_statement);
+	p.with_state(EnterLoop, parse_statement)
+		.or_add_diagnostic(p, expected_statement);
 
 	Present(m.complete(p, JS_WHILE_STATEMENT))
 }
@@ -1104,11 +1101,8 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 	let start = p.cur_tok().start();
 	p.bump_any(); // do keyword
 
-	p.with_state(
-		ContinueAllowed(true).and(BreakAllowed(true)),
-		parse_statement,
-	)
-	.or_add_diagnostic(p, expected_statement);
+	p.with_state(EnterLoop, parse_statement)
+		.or_add_diagnostic(p, expected_statement);
 
 	p.expect(T![while]);
 	parenthesized_expression(p);
@@ -1270,11 +1264,8 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 	let kind = parse_for_head(p);
 	p.expect(T![')']);
 
-	p.with_state(
-		ContinueAllowed(true).and(BreakAllowed(true)),
-		parse_statement,
-	)
-	.or_add_diagnostic(p, expected_statement);
+	p.with_state(EnterLoop, parse_statement)
+		.or_add_diagnostic(p, expected_statement);
 
 	let mut completed = m.complete(p, kind);
 

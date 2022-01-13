@@ -1,20 +1,19 @@
 use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
 use crate::state::{
-	AllowObjectExpression, ChangeParserState, EnableStrictMode, InAsync, InConstructor, InFunction,
-	InGenerator,
+	EnableStrictMode, EnterClassPropertyInitializer, EnterParameters, SignatureFlags,
 };
 use crate::syntax::binding::parse_binding;
-use crate::syntax::decl::{parse_parameter, parse_parameter_list, parse_parameters_list};
 use crate::syntax::expr::parse_expr_or_assignment;
 use crate::syntax::function::{
-	function_body, parse_ts_type_annotation_or_error, ts_parameter_types,
+	parse_function_body, parse_parameter, parse_parameter_list, parse_parameters_list,
+	parse_ts_type_annotation_or_error, ts_parameter_types,
 };
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::expected_parameter;
+use crate::syntax::js_parse_error::expected_binding;
 use crate::syntax::object::{
 	is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
 };
-use crate::syntax::stmt::{is_semi, optional_semi, parse_block_impl};
+use crate::syntax::stmt::{is_semi, optional_semi};
 use crate::syntax::typescript::{
 	maybe_ts_type_annotation, ts_heritage_clause, ts_modifier, ts_type_params,
 	DISALLOWED_TYPE_NAMES,
@@ -385,9 +384,11 @@ fn parse_class_member_impl(
 			p.error(err);
 		}
 
-		return p.with_state(InFunction(true).and(InGenerator(true)), |p| {
-			Present(parse_method_class_member(p, member_marker))
-		});
+		return Present(parse_method_class_member(
+			p,
+			member_marker,
+			SignatureFlags::GENERATOR,
+		));
 	};
 
 	// Seems like we're at an async method
@@ -398,7 +399,12 @@ fn parse_class_member_impl(
 	{
 		let async_range = p.cur_tok().range();
 		p.bump_remap(T![async]);
-		let in_generator = p.eat(T![*]);
+
+		let mut flags = SignatureFlags::ASYNC;
+
+		if p.eat(T![*]) {
+			flags |= SignatureFlags::GENERATOR;
+		}
 
 		if p.cur_src() == "constructor" {
 			let err = p
@@ -416,14 +422,7 @@ fn parse_class_member_impl(
 			p.error(err);
 		}
 
-		return Present(
-			p.with_state(
-				InFunction(true)
-					.and(InGenerator(in_generator))
-					.and(InAsync(true)),
-				|p| parse_method_class_member(p, member_marker),
-			),
-		);
+		return Present(parse_method_class_member(p, member_marker, flags));
 	}
 
 	let member_name = p.cur_src();
@@ -512,7 +511,11 @@ fn parse_class_member_impl(
 				p.error(err);
 			}
 
-			Present(parse_method_class_member_body(p, member_marker))
+			Present(parse_method_class_member_body(
+				p,
+				member_marker,
+				SignatureFlags::empty(),
+			))
 		};
 	}
 
@@ -638,18 +641,25 @@ fn parse_class_member_impl(
 					p.expect(T!['(']);
 					p.expect(T![')']);
 					parse_ts_type_annotation_or_error(p).ok();
-					function_body(p)
+					parse_function_body(p, SignatureFlags::empty())
 						.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
 					let has_l_paren = p.expect(T!['(']);
-					p.with_state(AllowObjectExpression(has_l_paren), |p| {
-						parse_parameter(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
-						p.expect(T![')']);
-						function_body(p)
-							.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
-					});
+					p.with_state(
+						EnterParameters {
+							signature_flags: SignatureFlags::empty(),
+							allow_object_expressions: has_l_paren,
+						},
+						|p| {
+							parse_parameter(p)
+								.or_add_diagnostic(p, js_parse_error::expected_parameter);
+						},
+					);
+					p.expect(T![')']);
+					parse_function_body(p, SignatureFlags::empty())
+						.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
 
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
 				};
@@ -721,7 +731,25 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Pa
 	}
 
 	parse_ts_type_annotation_or_error(p).ok();
-	parse_initializer_clause(p).ok();
+
+	// test class_await_property_initializer
+	// // SCRIPT
+	// async function* test() {
+	// 	class A {
+	//  	prop = await;
+	// 	}
+	// }
+
+	// test_err class_yield_property_initializer
+	// // SCRIPT
+	// async function* test() {
+	// 	class A {
+	//  	prop = yield;
+	// 	}
+	// }
+
+	p.with_state(EnterClassPropertyInitializer, parse_initializer_clause)
+		.ok();
 
 	if !optional_semi(p) {
 		// Gets the start of the member
@@ -784,9 +812,9 @@ pub(crate) fn parse_initializer_clause(p: &mut Parser) -> ParsedSyntax {
 	}
 }
 
-fn parse_method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
+fn parse_method_class_member(p: &mut Parser, m: Marker, flags: SignatureFlags) -> CompletedMarker {
 	parse_class_member_name(p).or_add_diagnostic(p, js_parse_error::expected_class_member_name);
-	parse_method_class_member_body(p, m)
+	parse_method_class_member_body(p, m, flags)
 }
 
 // test_err class_member_method_parameters
@@ -796,7 +824,11 @@ fn parse_method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
 // class B { foo(a)
 
 /// Parses the body (everything after the identifier name) of a method class member
-fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
+fn parse_method_class_member_body(
+	p: &mut Parser,
+	m: Marker,
+	flags: SignatureFlags,
+) -> CompletedMarker {
 	let member_kind = if optional_member_token(p).is_ok() {
 		JS_METHOD_CLASS_MEMBER
 	} else {
@@ -804,9 +836,10 @@ fn parse_method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker 
 	};
 
 	ts_parameter_types(p);
-	parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_class_parameters);
+	parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_class_parameters);
 	parse_ts_type_annotation_or_error(p).ok();
-	function_body(p).or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+
+	parse_function_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_class_method_body);
 
 	m.complete(p, member_kind)
 }
@@ -846,10 +879,8 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
 		constructor_is_valid = false;
 	}
 
-	p.with_state(InFunction(true).and(InConstructor(true)), |p| {
-		parse_block_impl(p, JS_FUNCTION_BODY)
-			.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
-	});
+	parse_function_body(p, SignatureFlags::CONSTRUCTOR)
+		.or_add_diagnostic(p, js_parse_error::expected_class_method_body);
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 
@@ -866,6 +897,7 @@ fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	parse_parameters_list(
 		p,
+		SignatureFlags::empty(),
 		parse_constructor_parameter,
 		JS_CONSTRUCTOR_PARAMETER_LIST,
 	);
@@ -900,9 +932,7 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax {
 			}
 		}
 
-		let parameter = parse_parameter(p).or_add_diagnostic(p, expected_parameter);
-
-		if let Some(parameter) = parameter {
+		if let Some(parameter) = parse_parameter(p).or_add_diagnostic(p, expected_binding) {
 			parameter.undo_completion(p).abandon(p);
 		}
 

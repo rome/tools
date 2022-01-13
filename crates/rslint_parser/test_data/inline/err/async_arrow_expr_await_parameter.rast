@@ -37,14 +37,70 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
+        JsExpressionStatement {
+            expression: JsArrowFunctionExpression {
+                async_token: ASYNC_KW@25..31 "async" [Newline("\n")] [],
+                type_parameters: missing (optional),
+                parameters: JsParameters {
+                    l_paren_token: L_PAREN@31..32 "(" [] [],
+                    items: JsParameterList [],
+                    r_paren_token: R_PAREN@32..34 ")" [] [Whitespace(" ")],
+                },
+                return_type: missing (optional),
+                fat_arrow_token: FAT_ARROW@34..37 "=>" [] [Whitespace(" ")],
+                body: JsFunctionBody {
+                    l_curly_token: L_CURLY@37..39 "{" [] [Whitespace(" ")],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [
+                        JsExpressionStatement {
+                            expression: JsArrowFunctionExpression {
+                                async_token: missing (optional),
+                                type_parameters: missing (optional),
+                                parameters: JsParameters {
+                                    l_paren_token: L_PAREN@39..40 "(" [] [],
+                                    items: JsParameterList [
+                                        JsParameter {
+                                            binding: JsIdentifierBinding {
+                                                name_token: IDENT@40..42 "a" [] [Whitespace(" ")],
+                                            },
+                                            type_annotation: missing (optional),
+                                            initializer: JsInitializerClause {
+                                                eq_token: EQ@42..44 "=" [] [Whitespace(" ")],
+                                                expression: JsUnknownExpression {
+                                                    items: [
+                                                        AWAIT_KW@44..49 "await" [] [],
+                                                    ],
+                                                },
+                                            },
+                                        },
+                                    ],
+                                    r_paren_token: R_PAREN@49..51 ")" [] [Whitespace(" ")],
+                                },
+                                return_type: missing (optional),
+                                fat_arrow_token: FAT_ARROW@51..54 "=>" [] [Whitespace(" ")],
+                                body: JsFunctionBody {
+                                    l_curly_token: L_CURLY@54..55 "{" [] [],
+                                    directives: JsDirectiveList [],
+                                    statements: JsStatementList [],
+                                    r_curly_token: R_CURLY@55..57 "}" [] [Whitespace(" ")],
+                                },
+                            },
+                            semicolon_token: missing (optional),
+                        },
+                    ],
+                    r_curly_token: R_CURLY@57..58 "}" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@58..59 ";" [] [],
+        },
     ],
-    eof_token: EOF@25..26 "" [Newline("\n")] [],
+    eof_token: EOF@59..60 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..26
+0: JS_MODULE@0..60
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..25
+  2: JS_MODULE_ITEM_LIST@0..59
     0: JS_VARIABLE_STATEMENT@0..25
       0: JS_VARIABLE_DECLARATIONS@0..25
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -69,7 +125,47 @@ JsModule {
                   2: JS_STATEMENT_LIST@24..24
                   3: R_CURLY@24..25 "}" [] []
       1: (empty)
-  3: EOF@25..26 "" [Newline("\n")] []
+    1: JS_EXPRESSION_STATEMENT@25..59
+      0: JS_ARROW_FUNCTION_EXPRESSION@25..58
+        0: ASYNC_KW@25..31 "async" [Newline("\n")] []
+        1: (empty)
+        2: JS_PARAMETERS@31..34
+          0: L_PAREN@31..32 "(" [] []
+          1: JS_PARAMETER_LIST@32..32
+          2: R_PAREN@32..34 ")" [] [Whitespace(" ")]
+        3: (empty)
+        4: FAT_ARROW@34..37 "=>" [] [Whitespace(" ")]
+        5: JS_FUNCTION_BODY@37..58
+          0: L_CURLY@37..39 "{" [] [Whitespace(" ")]
+          1: JS_DIRECTIVE_LIST@39..39
+          2: JS_STATEMENT_LIST@39..57
+            0: JS_EXPRESSION_STATEMENT@39..57
+              0: JS_ARROW_FUNCTION_EXPRESSION@39..57
+                0: (empty)
+                1: (empty)
+                2: JS_PARAMETERS@39..51
+                  0: L_PAREN@39..40 "(" [] []
+                  1: JS_PARAMETER_LIST@40..49
+                    0: JS_PARAMETER@40..49
+                      0: JS_IDENTIFIER_BINDING@40..42
+                        0: IDENT@40..42 "a" [] [Whitespace(" ")]
+                      1: (empty)
+                      2: JS_INITIALIZER_CLAUSE@42..49
+                        0: EQ@42..44 "=" [] [Whitespace(" ")]
+                        1: JS_UNKNOWN_EXPRESSION@44..49
+                          0: AWAIT_KW@44..49 "await" [] []
+                  2: R_PAREN@49..51 ")" [] [Whitespace(" ")]
+                3: (empty)
+                4: FAT_ARROW@51..54 "=>" [] [Whitespace(" ")]
+                5: JS_FUNCTION_BODY@54..57
+                  0: L_CURLY@54..55 "{" [] []
+                  1: JS_DIRECTIVE_LIST@55..55
+                  2: JS_STATEMENT_LIST@55..55
+                  3: R_CURLY@55..57 "}" [] [Whitespace(" ")]
+              1: (empty)
+          3: R_CURLY@57..58 "}" [] []
+      1: SEMICOLON@58..59 ";" [] []
+  3: EOF@59..60 "" [Newline("\n")] []
 --
 error[SyntaxError]: Illegal use of `await` as an identifier in an async context
   ┌─ async_arrow_expr_await_parameter.js:1:15
@@ -78,4 +174,19 @@ error[SyntaxError]: Illegal use of `await` as an identifier in an async context
   │               ^^^^^
 
 --
+error[SyntaxError]: expected an unary expression but instead found ')'
+  ┌─ async_arrow_expr_await_parameter.js:2:24
+  │
+2 │ async() => { (a = await) => {} };
+  │                        ^ Expected an unary expression here
+
+--
+error[SyntaxError]: `await` expressions cannot be used in a parameter initializer
+  ┌─ async_arrow_expr_await_parameter.js:2:19
+  │
+2 │ async() => { (a = await) => {} };
+  │                   ^^^^^
+
+--
 let a = async await => {}
+async() => { (a = await) => {} };

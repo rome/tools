@@ -34,6 +34,9 @@ const fn mask(kind: JsSyntaxKind) -> [u128; 2] {
 /// Utility macro for making a new token set
 #[macro_export]
 macro_rules! token_set {
-    ($($t:expr),*) => { TokenSet::EMPTY$(.union(TokenSet::singleton($t)))* };
+    ($($t:expr),*) => {{
+			use $crate::TokenSet;
+			TokenSet::EMPTY$(.union(TokenSet::singleton($t)))*
+		}};
     ($($t:expr),* ,) => { token_set!($($t),*) };
 }

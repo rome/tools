@@ -2,14 +2,14 @@
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
-use crate::state::{AllowObjectExpression, ChangeParserState, InAsync, InFunction, InGenerator};
-use crate::syntax::decl::{parse_parameter, parse_parameter_list};
+use crate::state::{EnterParameters, SignatureFlags};
 use crate::syntax::expr::{is_at_name, parse_expr_or_assignment, parse_expression};
 use crate::syntax::function::{
-	function_body, parse_ts_parameter_types, parse_ts_type_annotation_or_error,
+	parse_function_body, parse_parameter, parse_parameter_list, parse_ts_parameter_types,
+	parse_ts_type_annotation_or_error,
 };
 use crate::syntax::js_parse_error;
-use crate::{ParseRecovery, ParseSeparatedList, Parser, TokenSet};
+use crate::{ParseRecovery, ParseSeparatedList, Parser};
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
 
@@ -167,7 +167,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 			// test_err object_expr_method
 			// let b = { foo) }
 			if p.at(T!['(']) || p.at(T![<]) {
-				parse_method_object_member_body(p);
+				parse_method_object_member_body(p, SignatureFlags::empty());
 				Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 			} else if let Some(mut member_name) = member_name {
 				// test object_prop_name
@@ -235,7 +235,8 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 
 	parse_ts_type_annotation_or_error(p).ok();
 
-	function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
+	parse_function_body(p, SignatureFlags::empty())
+		.or_add_diagnostic(p, js_parse_error::expected_function_body);
 
 	Present(m.complete(p, JS_GETTER_OBJECT_MEMBER))
 }
@@ -252,12 +253,19 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
 	parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 	let has_l_paren = p.expect(T!['(']);
 
-	p.with_state(AllowObjectExpression(has_l_paren), |p| {
-		parse_parameter(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
-		p.expect(T![')']);
+	p.with_state(
+		EnterParameters {
+			signature_flags: SignatureFlags::empty(),
+			allow_object_expressions: has_l_paren,
+		},
+		|p| {
+			parse_parameter(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
+			p.expect(T![')']);
+		},
+	);
 
-		function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
-	});
+	parse_function_body(p, SignatureFlags::empty())
+		.or_add_diagnostic(p, js_parse_error::expected_function_body);
 
 	Present(m.complete(p, JS_SETTER_OBJECT_MEMBER))
 }
@@ -335,6 +343,7 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 	}
 
 	let m = p.start();
+	let mut flags = SignatureFlags::empty();
 
 	// test async_method
 	// class foo {
@@ -343,27 +352,26 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 	// }
 	if is_async {
 		p.bump_remap(T![async]);
+		flags |= SignatureFlags::ASYNC;
 	}
 
-	let in_generator = p.eat(T![*]);
+	if p.eat(T![*]) {
+		flags |= SignatureFlags::GENERATOR;
+	}
+
 	parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
-	p.with_state(
-		InGenerator(in_generator).and(InAsync(is_async)),
-		parse_method_object_member_body,
-	);
+	parse_method_object_member_body(p, flags);
 
 	Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 }
 
 /// Parses the body of a method object member starting right after the member name.
-fn parse_method_object_member_body(p: &mut Parser) {
-	let p = &mut *p.with_scoped_state(InFunction(true));
-
+fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
 	parse_ts_parameter_types(p).ok();
-	parse_parameter_list(p).or_add_diagnostic(p, js_parse_error::expected_parameters);
+	parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_parameters);
 	parse_ts_type_annotation_or_error(p).ok();
-	function_body(p).or_add_diagnostic(p, js_parse_error::expected_function_body);
+	parse_function_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_function_body);
 }
 
 fn is_parser_at_async_method_member(p: &Parser) -> bool {
