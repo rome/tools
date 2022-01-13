@@ -855,7 +855,7 @@ fn single_line_comments() {
     ",
         COMMENT:5,
         NEWLINE:1,
-        WHITESPACE:1
+        WHITESPACE:4
     }
 
     assert_lex! {
@@ -869,7 +869,7 @@ fn block_comment() {
     assert_lex! {
         "/*
         */",
-        MULTILINE_COMMENT:7
+        MULTILINE_COMMENT:13
     }
 
     assert_lex! {
