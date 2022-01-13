@@ -11,6 +11,7 @@ use std::panic::catch_unwind;
 use std::path::{Path, PathBuf};
 
 #[test]
+#[ignore]
 fn parser_smoke_test() {
 	let src = r#"
 var asyncFn = async function () {

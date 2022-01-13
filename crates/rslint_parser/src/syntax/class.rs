@@ -13,7 +13,7 @@ use crate::syntax::js_parse_error::expected_binding;
 use crate::syntax::object::{
 	is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
 };
-use crate::syntax::stmt::{is_semi, optional_semi};
+use crate::syntax::stmt::{is_semi, optional_semi, StatementContext};
 use crate::syntax::typescript::{
 	maybe_ts_type_annotation, ts_heritage_clause, ts_modifier, ts_type_params,
 	DISALLOWED_TYPE_NAMES,
@@ -36,7 +36,7 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 	}
 
 	let m = p.start();
-	parse_class(p, m, ClassKind::Expression)
+	Present(parse_class(p, m, ClassKind::Expression))
 }
 
 // test class_declaration
@@ -57,13 +57,25 @@ pub(super) fn parse_class_expression(p: &mut Parser) -> ParsedSyntax {
 ///
 /// A class can be invalid if
 /// * It uses an illegal identifier name
-pub(super) fn parse_class_statement(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_class_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
 	if !p.at(T![class]) {
 		return Absent;
 	}
 
 	let m = p.start();
-	parse_class(p, m, ClassKind::Statement)
+	let mut class = parse_class(p, m, ClassKind::Statement);
+
+	if !class.kind().is_unknown() && context.is_single_statement() {
+		// test_err class_in_single_statement_context
+		// if (true) class A {}
+		p.error(
+			p.err_builder("Classes can only be declared at top level or inside a block")
+				.primary(class.range(p), "wrap the class in a block statement"),
+		);
+		class.change_to_unknown(p)
+	}
+
+	Present(class)
 }
 
 // test export_class_clause
@@ -75,7 +87,7 @@ pub(super) fn parse_export_class_clause(p: &mut Parser) -> ParsedSyntax {
 	}
 
 	let m = p.start();
-	parse_class(p, m, ClassKind::Export)
+	Present(parse_class(p, m, ClassKind::Export))
 }
 
 // test export_default_class_clause
@@ -88,7 +100,7 @@ pub(super) fn parse_export_default_class_case(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	p.bump(T![default]);
 
-	parse_class(p, m, ClassKind::ExportDefault)
+	Present(parse_class(p, m, ClassKind::ExportDefault))
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
@@ -116,7 +128,7 @@ impl From<ClassKind> for JsSyntaxKind {
 	}
 }
 
-fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> ParsedSyntax {
+fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
 	let mut class_is_valid = true;
 	let class_token_range = p.cur_tok().range();
 
@@ -185,7 +197,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> ParsedSyntax {
 		class_marker.change_to_unknown(p);
 	}
 
-	Present(class_marker)
+	class_marker
 }
 
 fn implements_clause(p: &mut Parser) -> ParsedSyntax {

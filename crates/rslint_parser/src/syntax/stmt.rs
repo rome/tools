@@ -18,9 +18,7 @@ use crate::syntax::expr::{
 	is_at_expression, is_at_identifier, is_nth_at_name, parse_expr_or_assignment,
 	parse_expression_or_recover_to_next_statement, parse_identifier,
 };
-use crate::syntax::function::{
-	is_at_async_function, parse_function_declaration, parse_function_statement, LineBreak,
-};
+use crate::syntax::function::{is_at_async_function, parse_function_statement, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement};
 use crate::syntax::module::{parse_export, parse_import};
@@ -108,16 +106,25 @@ pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
 		|| p.has_linebreak_before_n(offset)
 }
 
-pub(crate) fn parse_statement_or_declaration(p: &mut Parser) -> ParsedSyntax {
-	match p.cur() {
-		T![const] => parse_variable_statement(p),
-		T![function] => parse_function_statement(p),
-		T![class] => parse_class_statement(p),
-		T![ident] if is_at_async_function(p, LineBreak::DoCheck) => parse_function_statement(p),
-		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
-			parse_variable_statement(p)
-		}
-		_ => parse_statement(p),
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub(crate) enum StatementContext {
+	If,
+	Label,
+	Do,
+	While,
+	With,
+	For,
+	// Block, Switch consequence, etc.
+	StatementList,
+}
+
+impl StatementContext {
+	pub(crate) fn is_single_statement(&self) -> bool {
+		!matches!(self, StatementContext::StatementList)
+	}
+
+	pub(crate) fn is_statement_list(&self) -> bool {
+		matches!(self, StatementContext::StatementList)
 	}
 }
 
@@ -127,7 +134,7 @@ pub(crate) fn parse_statement_or_declaration(p: &mut Parser) -> ParsedSyntax {
 /// caller has to pass a recovery set.
 ///
 /// If not passed, [STMT_RECOVERY_SET] will be used as recovery set
-pub(crate) fn parse_statement(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
 	match p.cur() {
 		// test_err import_decl_not_top_level
 		// {
@@ -176,7 +183,6 @@ pub(crate) fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 			export
 		}),
 		T![;] => parse_empty_statement(p),
-		T![var] => parse_variable_statement(p),
 		T!['{'] => parse_block_stmt(p),
 		T![if] => parse_if_statement(p),
 		T![with] => parse_with_statement(p),
@@ -188,6 +194,8 @@ pub(crate) fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 			res.err_if_not_ts(p, "enums can only be declared in TypeScript files");
 			Present(res)
 		}
+		T![var] => parse_variable_statement(p, context),
+		T![const] => parse_variable_statement(p, context),
 		T![for] => parse_for_statement(p),
 		T![do] => parse_do_statement(p),
 		T![switch] => parse_switch_statement(p),
@@ -197,17 +205,33 @@ pub(crate) fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 		T![continue] => parse_continue_statement(p),
 		T![throw] => parse_throw_statement(p),
 		T![debugger] => parse_debugger_statement(p),
-
-		// Declarations for which an expression equivalent exist, need to explicilty return Absent here
-		T![function] | T![class] => {
-			// This is a declaration
-			Absent
+		T![function] => parse_function_statement(p, context),
+		T![class] => parse_class_statement(p, context),
+		T![ident] if is_at_async_function(p, LineBreak::DoCheck) => {
+			parse_function_statement(p, context)
 		}
-		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => Absent,
-		T![ident] if is_at_async_function(p, LineBreak::DoCheck) => Absent,
+		// test_err let_newline_in_async_function
+		// async function f() {
+		//   let
+		//   await 0;
+		// }
+		//
+		// test let_asi_rule
+		// // SCRIPT
+		// let // NO ASI
+		// x = 1;
+		// for await (var x of []) let // ASI
+		// x = 1;
+		T![ident]
+			if p.cur_src() == "let"
+				&& FOLLOWS_LET.contains(p.nth(1))
+				&& (context.is_statement_list() || !p.has_linebreak_before_n(1)) =>
+		{
+			parse_variable_statement(p, context)
+		}
 
 		// TODO: handle `<T>() => {};` with less of a hack
-		_ if is_at_identifier(p) && p.nth_at(1, T![:]) => parse_labeled_statement(p),
+		_ if is_at_identifier(p) && p.nth_at(1, T![:]) => parse_labeled_statement(p, context),
 		_ if is_at_expression(p) => parse_expression_statement(p),
 		_ => Absent,
 	}
@@ -217,14 +241,21 @@ pub(crate) fn parse_statement(p: &mut Parser) -> ParsedSyntax {
 // label1: 1
 // label1: 1
 // label2: 2
-
+//
 // test_err double_label
 // label1: {
 // 	label2: {
 // 		label1: {}
 // 	}
 // }
-fn parse_labeled_statement(p: &mut Parser) -> ParsedSyntax {
+//
+// test labelled_function_declaration
+// // SCRIPT
+// label1: function a() {}
+//
+// test_err labelled_function_declaration_strict_mode
+// label1: function a() {}
+fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
 	parse_identifier(p, JS_LABELED_STATEMENT).map(|identifier| {
 		let label = if !identifier.kind().is_unknown() {
 			let range = identifier.range(p);
@@ -256,13 +287,24 @@ fn parse_labeled_statement(p: &mut Parser) -> ParsedSyntax {
 		let labelled_statement = identifier.undo_completion(p);
 		p.bump_any();
 
-		let body = if StrictMode.is_supported(p) {
-			parse_statement(p)
+		let body = if is_at_identifier(p) && p.nth_at(1, T![:]) && StrictMode.is_unsupported(p) {
+			// Re-use the parent context to catch `if (true) label1: label2: function A() {}
+			parse_labeled_statement(p, context)
 		} else {
-			parse_function_declaration(p).or_else(|| parse_statement(p))
-		};
+			parse_statement(p, StatementContext::Label)
+		}.or_add_diagnostic(p, expected_statement);
 
-		body.or_add_diagnostic(p, expected_statement);
+		match body {
+			Some(mut body) if context.is_single_statement() && body.kind() == JS_FUNCTION_STATEMENT => {
+				// test_err labelled_function_decl_in_single_statement_context
+				// if (true) label1: label2: function a() {}
+				p.error(p.err_builder("Labelled function declarations are only allowed at top-level or inside a block").primary(body.range(p), "Wrap the labelled statement in a block statement"));
+				body.change_to_unknown(p);
+			},
+			// test labelled_statement_in_single_statement_context
+			// if (true) label1: var a = 10;
+			_ => {}
+		}
 
 		if let Some(label) = label {
 			p.state.labels.remove(&label);
@@ -665,7 +707,7 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
 			break;
 		}
 
-		if parse_statement_or_declaration(p)
+		if parse_statement(p, StatementContext::StatementList)
 			.or_recover(
 				p,
 				&ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
@@ -714,37 +756,17 @@ fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
 	parenthesized_expression(p);
 
 	// body
-	parse_if_body(p).or_add_diagnostic(p, expected_statement);
+	parse_statement(p, StatementContext::If).or_add_diagnostic(p, expected_statement);
 
 	// else clause
 	if p.at(T![else]) {
 		let else_clause = p.start();
 		p.bump_any(); // bump else
-		parse_if_body(p).or_add_diagnostic(p, expected_statement);
+		parse_statement(p, StatementContext::If).or_add_diagnostic(p, expected_statement);
 		else_clause.complete(p, JS_ELSE_CLAUSE);
 	}
 
 	Present(m.complete(p, JS_IF_STATEMENT))
-}
-
-fn parse_if_body(p: &mut Parser) -> ParsedSyntax {
-	if StrictMode.is_supported(p) {
-		parse_statement(p)
-	} else {
-		// B.3.3 FunctionDeclarations in IfStatement Statement Clauses
-		// test if_stmt_function_declaration_body
-		// if (true) function a() {} else function a() {}
-		// if (true) {} else function a() {}
-		// if (true) function a() {} else {}
-		// if (true) function a() {}
-		//
-		// test_err if_stmt_async_generator_body
-		// if (true) async function t() {}
-		// if (true) function* t() {}
-
-		// TODO IsLabeledFunctionDeclaration. Duplicate handling inside `parse_declaration that isn't erroring
-		parse_function_declaration(p).or_else(|| parse_statement(p))
-	}
 }
 
 // test with_statement
@@ -764,7 +786,7 @@ fn parse_with_statement(p: &mut Parser) -> ParsedSyntax {
 	p.bump_any(); // with
 	parenthesized_expression(p);
 
-	parse_statement(p).or_add_diagnostic(p, expected_statement);
+	parse_statement(p, StatementContext::With).or_add_diagnostic(p, expected_statement);
 
 	let with_stmt = m.complete(p, JS_WITH_STATEMENT);
 
@@ -793,7 +815,7 @@ fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 	p.bump_any(); // while
 	parenthesized_expression(p);
 
-	p.with_state(EnterLoop, parse_statement)
+	p.with_state(EnterLoop, |p| parse_statement(p, StatementContext::While))
 		.or_add_diagnostic(p, expected_statement);
 
 	Present(m.complete(p, JS_WHILE_STATEMENT))
@@ -823,18 +845,40 @@ pub(crate) fn is_at_variable_declarations(p: &Parser) -> bool {
 // const a;
 // let [a];
 // const { b };
-fn parse_variable_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_variable_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
 	// test_err var_decl_err
 	// var a =;
 	// const a = 5 let b = 5;
 	let start = p.cur_tok().start();
+	let is_var = p.at(T![var]);
 
 	parse_variable_declaration_list(p, VariableDeclarationParent::VariableStatement).map(
 		|declaration| {
 			let m = declaration.precede(p);
 			semi(p, start..p.cur_tok().start());
 
-			m.complete(p, JS_VARIABLE_STATEMENT)
+			let mut statement = m.complete(p, JS_VARIABLE_STATEMENT);
+
+			if !is_var && context.is_single_statement() {
+				// test hoisted_declaration_in_single_statement_context
+				// if (true) var a;
+				//
+				// test_err lexical_declaration_in_single_statement_context
+				// if (true) let a;
+				// while (true) const b = 5;
+				p.error(
+					p.err_builder(
+						"Lexical declaration cannot appear in a single-statement context",
+					)
+					.primary(
+						statement.range(p),
+						"Wrap this declaration in a block statement",
+					),
+				);
+				statement.change_to_unknown(p);
+			}
+
+			statement
 		},
 	)
 }
@@ -1138,7 +1182,7 @@ fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 	let start = p.cur_tok().start();
 	p.bump_any(); // do keyword
 
-	p.with_state(EnterLoop, parse_statement)
+	p.with_state(EnterLoop, |p| parse_statement(p, StatementContext::Do))
 		.or_add_diagnostic(p, expected_statement);
 
 	p.expect(T![while]);
@@ -1301,7 +1345,7 @@ fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 	let kind = parse_for_head(p);
 	p.expect(T![')']);
 
-	p.with_state(EnterLoop, parse_statement)
+	p.with_state(EnterLoop, |p| parse_statement(p, StatementContext::For))
 		.or_add_diagnostic(p, expected_statement);
 
 	let mut completed = m.complete(p, kind);
@@ -1327,7 +1371,7 @@ struct SwitchCaseStatementList;
 
 impl ParseNodeList for SwitchCaseStatementList {
 	fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-		parse_statement_or_declaration(p)
+		parse_statement(p, StatementContext::StatementList)
 	}
 
 	fn is_at_list_end(&mut self, p: &mut Parser) -> bool {

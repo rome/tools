@@ -1,0 +1,1 @@
+if (true) class A {}

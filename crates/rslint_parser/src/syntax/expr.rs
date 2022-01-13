@@ -70,7 +70,6 @@ const STARTS_EXPR: TokenSet = token_set![
 	T![...],
 	T![this],
 	T![yield],
-	T![enum],
 	T![await],
 	T![function],
 	T![class],

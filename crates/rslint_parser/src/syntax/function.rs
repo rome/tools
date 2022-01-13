@@ -5,14 +5,15 @@ use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::parse_expr_or_assignment;
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_binding;
-use crate::syntax::stmt::{is_semi, parse_block_impl};
+use crate::syntax::stmt::{is_semi, parse_block_impl, StatementContext};
 use crate::syntax::typescript::{
 	maybe_eat_incorrect_modifier, maybe_ts_type_annotation, ts_type, ts_type_or_type_predicate_ann,
 	ts_type_params,
 };
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{Marker, ParseRecovery, Parser, SyntaxFeature};
+use crate::{CompletedMarker, JsSyntaxFeature, Marker, ParseRecovery, Parser, SyntaxFeature};
+use rome_rowan::SyntaxKind;
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
 
@@ -46,23 +47,41 @@ use rslint_syntax::{JsSyntaxKind, T};
 //
 // test_err function_broken
 // function foo())})}{{{  {}
-pub(super) fn parse_function_statement(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_function_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
 	if !is_at_function(p) {
 		return Absent;
 	}
 
 	let m = p.start();
-	parse_function(p, m, FunctionKind::Statement)
-}
+	let mut function = parse_function(
+		p,
+		m,
+		FunctionKind::Statement {
+			declaration: context.is_single_statement(),
+		},
+	);
 
-/// A function statement but does not allow for async or generator functions. Matches the `FunctionDeclaration` from the ECMA spec
-pub(super) fn parse_function_declaration(p: &mut Parser) -> ParsedSyntax {
-	if !is_at_function(p) {
-		return Absent;
+	if context != StatementContext::StatementList && !function.kind().is_unknown() {
+		if JsSyntaxFeature::StrictMode.is_supported(p) {
+			// test_err function_in_single_statement_context_strict
+			// if (true) function a() {}
+			// label1: function a() {}
+			// while (true) function a() {}
+			p.error(p.err_builder("In strict mode code, functions can only be declared at top level or inside a block").primary(function.range(p), "wrap the function in a block statement"));
+			function.change_to_unknown(p);
+		} else if !matches!(context, StatementContext::If | StatementContext::Label) {
+			// test function_in_if_or_labelled_stmt_loose_mode
+			// // SCRIPT
+			// label1: function a() {}
+			// if (true) function a() {} else function b() {}
+			// if (true) function c() {}
+			// if (true) "test"; else function d() {}
+			p.error(p.err_builder("In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if or labelled statement").primary(function.range(p), "wrap the function in a block statement"));
+			function.change_to_unknown(p);
+		}
 	}
 
-	let m = p.start();
-	parse_function(p, m, FunctionKind::Declaration)
+	Present(function)
 }
 
 pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
@@ -71,7 +90,7 @@ pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
 	}
 
 	let m = p.start();
-	parse_function(p, m, FunctionKind::Expression)
+	Present(parse_function(p, m, FunctionKind::Expression))
 }
 
 // test export_function_clause
@@ -84,7 +103,7 @@ pub(super) fn parse_export_function_clause(p: &mut Parser) -> ParsedSyntax {
 	}
 
 	let m = p.start();
-	parse_function(p, m, FunctionKind::Export)
+	Present(parse_function(p, m, FunctionKind::Export))
 }
 
 // test export_default_function_clause
@@ -96,13 +115,12 @@ pub(super) fn parse_export_default_function_case(p: &mut Parser) -> ParsedSyntax
 
 	let m = p.start();
 	p.bump(T![default]);
-	parse_function(p, m, FunctionKind::ExportDefault)
+	Present(parse_function(p, m, FunctionKind::ExportDefault))
 }
 
 #[derive(PartialEq, Eq, Debug, Copy, Clone)]
 enum FunctionKind {
-	Statement,
-	Declaration,
+	Statement { declaration: bool },
 	Expression,
 	Export,
 	ExportDefault,
@@ -112,12 +130,16 @@ impl FunctionKind {
 	fn is_id_optional(&self) -> bool {
 		matches!(self, FunctionKind::Expression | FunctionKind::ExportDefault)
 	}
+
+	fn is_statement(&self) -> bool {
+		matches!(self, FunctionKind::Statement { .. })
+	}
 }
 
 impl From<FunctionKind> for JsSyntaxKind {
 	fn from(kind: FunctionKind) -> Self {
 		match kind {
-			FunctionKind::Statement | FunctionKind::Declaration => JS_FUNCTION_STATEMENT,
+			FunctionKind::Statement { .. } => JS_FUNCTION_STATEMENT,
 			FunctionKind::Expression => JS_FUNCTION_EXPRESSION,
 			FunctionKind::Export => JS_EXPORT_FUNCTION_CLAUSE,
 			FunctionKind::ExportDefault => JS_EXPORT_DEFAULT_FUNCTION_CLAUSE,
@@ -129,9 +151,9 @@ fn is_at_function(p: &Parser) -> bool {
 	p.at_ts(token_set![T![async], T![function]]) || is_at_async_function(p, LineBreak::DoNotCheck)
 }
 
-fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax {
+fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMarker {
 	let mut uses_invalid_syntax =
-		kind == FunctionKind::Statement && p.eat(T![declare]) && TypeScript.is_unsupported(p);
+		kind.is_statement() && p.eat(T![declare]) && TypeScript.is_unsupported(p);
 	let mut flags = SignatureFlags::empty();
 
 	let in_async = is_at_async_function(p, LineBreak::DoNotCheck);
@@ -142,7 +164,8 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax
 
 	p.expect(T![function]);
 
-	if p.eat(T![*]) {
+	let in_generator = p.eat(T![*]);
+	if in_generator {
 		flags |= SignatureFlags::GENERATOR;
 	}
 
@@ -173,7 +196,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax
 		})
 		.ok();
 
-	if kind == FunctionKind::Statement {
+	if kind.is_statement() {
 		function_body_or_declaration(p, flags);
 	} else {
 		parse_function_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_function_body);
@@ -181,7 +204,10 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax
 
 	let mut function = m.complete(p, kind.into());
 
-	if kind == FunctionKind::Declaration && (in_async || in_generator) {
+	// test_err async_or_generator_in_single_statement_context
+	// if (true) async function t() {}
+	// if (true) function* t() {}
+	if kind == (FunctionKind::Statement { declaration: true }) && (in_async || in_generator) {
 		p.error(p.err_builder("`async` and generator functions can only be declared at top level or inside a block").primary(function.range(p), ""));
 		uses_invalid_syntax = true;
 	}
@@ -190,7 +216,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax
 		function.change_to_unknown(p);
 	}
 
-	Present(function)
+	function
 }
 
 // test_err break_in_nested_function
