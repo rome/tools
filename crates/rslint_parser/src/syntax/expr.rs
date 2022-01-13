@@ -1115,11 +1115,16 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 				let args_list = p.start();
 
 				let mut progress = ParserProgress::default();
+				let mut error_range_start = p.cur_tok().start();
 				let mut args_count = 0;
 
 				while !p.at(EOF) && !p.at(T![')']) {
 					progress.assert_progressing(p);
 					args_count += 1;
+
+					if args_count == 3 {
+						error_range_start = p.cur_tok().start();
+					}
 
 					if p.at(T![...]) {
 						let err = p
@@ -1138,11 +1143,11 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
 					}
 				}
 
-				let completed_args_list = args_list.complete(p, JS_CALL_ARGUMENT_LIST);
+				args_list.complete(p, JS_CALL_ARGUMENT_LIST);
 				if args_count == 0 || args_count > 2 {
 					let err = p
 						.err_builder("`import()` requires exactly one or two arguments. ")
-						.primary(completed_args_list.range(p), "");
+						.primary(error_range_start..p.cur_tok().end(), "");
 					p.error(err);
 				}
 
