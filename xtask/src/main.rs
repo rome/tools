@@ -42,16 +42,18 @@ fn main() -> Result<()> {
             let base_result_path = free.get(0).map(String::as_str);
             let new_result_path = free.get(1).map(String::as_str);
 
-            compare::coverage_compare(base_result_path, new_result_path, markdown);
-            Ok(())
-        }
-        // "docgen" => {
-        //     args.finish()?;
-        //     docgen::run();
-        //     Ok(())
-        // }
-        "coverage" => {
-            let json = args.contains("--json");
+			compare::coverage_compare(base_result_path, new_result_path, markdown);
+			Ok(())
+		}
+		// "docgen" => {
+		//     args.finish()?;
+		//     docgen::run();
+		//     Ok(())
+		// }
+		"coverage" => {
+			let json = args.contains("--json");
+			let show_rast = args.contains("--show-rast");
+			let show_diagnostics = args.contains("--show-diagnostics");
 
             let free = args.free()?;
             let query = free.get(0).map(String::as_str);
@@ -95,7 +97,7 @@ SUBCOMMANDS:
     codegen
     syntax
     docgen
-    coverage [--json]
+    coverage [--json] [--show-diagnostics] [--show-rast]
     coverage-libs
     compare [--markdown]
     unicode
