@@ -47,11 +47,29 @@ use rslint_syntax::{JsSyntaxKind, T};
 // test_err function_broken
 // function foo())})}{{{  {}
 pub(super) fn parse_function_statement(p: &mut Parser) -> ParsedSyntax {
+	if !is_at_function(p) {
+		return Absent;
+	}
+
 	let m = p.start();
 	parse_function(p, m, FunctionKind::Statement)
 }
 
+/// A function statement but does not allow for async or generator functions. Matches the `FunctionDeclaration` from the ECMA spec
+pub(super) fn parse_function_declaration(p: &mut Parser) -> ParsedSyntax {
+	if !is_at_function(p) {
+		return Absent;
+	}
+
+	let m = p.start();
+	parse_function(p, m, FunctionKind::Declaration)
+}
+
 pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
+	if !is_at_function(p) {
+		return Absent;
+	}
+
 	let m = p.start();
 	parse_function(p, m, FunctionKind::Expression)
 }
@@ -61,6 +79,10 @@ pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
 // export function* test(a, b) {}
 // export async function test(a, b, ) {}
 pub(super) fn parse_export_function_clause(p: &mut Parser) -> ParsedSyntax {
+	if !is_at_function(p) {
+		return Absent;
+	}
+
 	let m = p.start();
 	parse_function(p, m, FunctionKind::Export)
 }
@@ -80,6 +102,7 @@ pub(super) fn parse_export_default_function_case(p: &mut Parser) -> ParsedSyntax
 #[derive(PartialEq, Eq, Debug, Copy, Clone)]
 enum FunctionKind {
 	Statement,
+	Declaration,
 	Expression,
 	Export,
 	ExportDefault,
@@ -94,7 +117,7 @@ impl FunctionKind {
 impl From<FunctionKind> for JsSyntaxKind {
 	fn from(kind: FunctionKind) -> Self {
 		match kind {
-			FunctionKind::Statement => JS_FUNCTION_STATEMENT,
+			FunctionKind::Statement | FunctionKind::Declaration => JS_FUNCTION_STATEMENT,
 			FunctionKind::Expression => JS_FUNCTION_EXPRESSION,
 			FunctionKind::Export => JS_EXPORT_FUNCTION_CLAUSE,
 			FunctionKind::ExportDefault => JS_EXPORT_DEFAULT_FUNCTION_CLAUSE,
@@ -102,8 +125,12 @@ impl From<FunctionKind> for JsSyntaxKind {
 	}
 }
 
+fn is_at_function(p: &Parser) -> bool {
+	p.at_ts(token_set![T![async], T![function]]) || is_at_async_function(p, LineBreak::DoNotCheck)
+}
+
 fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax {
-	let uses_invalid_syntax =
+	let mut uses_invalid_syntax =
 		kind == FunctionKind::Statement && p.eat(T![declare]) && TypeScript.is_unsupported(p);
 	let mut flags = SignatureFlags::empty();
 
@@ -153,6 +180,11 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> ParsedSyntax
 	}
 
 	let mut function = m.complete(p, kind.into());
+
+	if kind == FunctionKind::Declaration && (in_async || in_generator) {
+		p.error(p.err_builder("`async` and generator functions can only be declared at top level or inside a block").primary(function.range(p), ""));
+		uses_invalid_syntax = true;
+	}
 
 	if uses_invalid_syntax {
 		function.change_to_unknown(p);
@@ -265,7 +297,7 @@ pub(super) enum LineBreak {
 
 #[inline]
 /// Checks if the parser is inside a "async function"
-pub(super) fn is_at_async_function(p: &mut Parser, should_check_line_break: LineBreak) -> bool {
+pub(super) fn is_at_async_function(p: &Parser, should_check_line_break: LineBreak) -> bool {
 	let async_function_tokens = p.cur_src() == "async" && p.nth_at(1, T![function]);
 	if should_check_line_break == LineBreak::DoCheck {
 		async_function_tokens && !p.has_linebreak_before_n(1)
