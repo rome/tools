@@ -144,7 +144,6 @@ pub fn run(query: Option<&str>, pool: Pool, json: bool, show_rast: bool, show_di
 
 				if detailed && res.fail.is_some() {
 					report_detailed_test(pb, &res);
-					
 				}
 
 				if detailed && show_rast {
@@ -155,8 +154,8 @@ pub fn run(query: Option<&str>, pool: Pool, json: bool, show_rast: bool, show_di
 				if detailed && show_diagnostics {
 					let r = parse_module(&res.code, 0);
 					let file = rslint_errors::file::SimpleFile::new(
-						res.path.display().to_string(), 
-						res.code.clone()
+						res.path.display().to_string(),
+						res.code.clone(),
 					);
 					let mut emitter = rslint_errors::Emitter::new(&file);
 

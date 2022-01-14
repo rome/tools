@@ -88,6 +88,7 @@ fn main() -> Result<()> {
         _ => {
             eprintln!(
                 "\
+>>>>>>> f7d668584 (multiple dianostics on invalid string lietral)
 cargo xtask
 Run custom build command.
 USAGE:

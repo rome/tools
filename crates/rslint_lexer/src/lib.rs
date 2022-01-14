@@ -1459,7 +1459,7 @@ impl<'src> Lexer<'src> {
 				);
 
 				std::char::from_u32(digits).ok_or(diagnostic)
-				// Ok(std::char::from_u32_unchecked(digits))
+			// Ok(std::char::from_u32_unchecked(digits))
 			} else {
 				// Safety: we know this is unreachable because 4 hexdigits cannot make an out of bounds char,
 				// and we make sure that the chars are actually hex digits
@@ -1573,7 +1573,17 @@ impl<'src> Lexer<'src> {
 		while let Some(byte) = self.next_bounded() {
 			match *byte {
 				b'\\' => {
-					diagnostic = self.validate_escape_sequence();
+					let r = self.validate_escape_sequence();
+					diagnostic = match (diagnostic, r) {
+						(None, None) => None,
+						(None, Some(d)) => Some(d),
+						(Some(d), None) => Some(d),
+						(Some(mut old), Some(new)) => {
+							old.children.extend(old.primary.take());
+							old.children.extend(new.primary);
+							Some(old)
+						},
+					}
 				}
 				b if b == quote => {
 					self.next();
@@ -1582,6 +1592,8 @@ impl<'src> Lexer<'src> {
 				_ => {}
 			}
 		}
+
+		dbg!(&diagnostic);
 
 		let unterminated = Diagnostic::error(self.file_id, "", "unterminated string literal")
 			.primary(self.cur..self.cur, "input ends here")
