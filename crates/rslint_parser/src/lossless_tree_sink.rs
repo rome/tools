@@ -1,6 +1,6 @@
 use crate::{
-	JsSyntaxKind::{self, *},
-	ParserError, SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
+    JsSyntaxKind::{self, *},
+    ParserError, SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
 };
 use rome_rowan::TriviaPiece;
 use rslint_lexer::Token;
@@ -10,145 +10,145 @@ use rslint_lexer::Token;
 /// `LosslessTreeSink` also handles attachment of trivia (whitespace) to nodes.
 #[derive(Debug)]
 pub struct LosslessTreeSink<'a> {
-	text: &'a str,
-	tokens: &'a [Token],
-	text_pos: TextSize,
-	token_pos: usize,
-	parents_count: usize,
-	errors: Vec<ParserError>,
-	inner: SyntaxTreeBuilder,
-	/// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
-	needs_eof: bool,
-	trivia: Vec<TriviaPiece>,
+    text: &'a str,
+    tokens: &'a [Token],
+    text_pos: TextSize,
+    token_pos: usize,
+    parents_count: usize,
+    errors: Vec<ParserError>,
+    inner: SyntaxTreeBuilder,
+    /// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
+    needs_eof: bool,
+    trivia: Vec<TriviaPiece>,
 }
 
 impl<'a> TreeSink for LosslessTreeSink<'a> {
-	fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind) {
-		self.do_tokens(kind, amount)
-	}
+    fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind) {
+        self.do_tokens(kind, amount)
+    }
 
-	fn token(&mut self, kind: JsSyntaxKind) {
-		self.do_token(kind);
-	}
+    fn token(&mut self, kind: JsSyntaxKind) {
+        self.do_token(kind);
+    }
 
-	fn start_node(&mut self, kind: JsSyntaxKind) {
-		self.inner.start_node(kind);
-		self.parents_count += 1;
-	}
+    fn start_node(&mut self, kind: JsSyntaxKind) {
+        self.inner.start_node(kind);
+        self.parents_count += 1;
+    }
 
-	fn finish_node(&mut self) {
-		self.parents_count -= 1;
+    fn finish_node(&mut self) {
+        self.parents_count -= 1;
 
-		if self.parents_count == 0 && self.needs_eof {
-			self.do_token(JsSyntaxKind::EOF);
-		}
+        if self.parents_count == 0 && self.needs_eof {
+            self.do_token(JsSyntaxKind::EOF);
+        }
 
-		self.inner.finish_node();
-	}
+        self.inner.finish_node();
+    }
 
-	fn errors(&mut self, errors: Vec<ParserError>) {
-		self.errors = errors;
-	}
+    fn errors(&mut self, errors: Vec<ParserError>) {
+        self.errors = errors;
+    }
 }
 
 impl<'a> LosslessTreeSink<'a> {
-	pub fn new(text: &'a str, tokens: &'a [Token]) -> Self {
-		Self {
-			text,
-			tokens,
-			text_pos: 0.into(),
-			token_pos: 0,
-			parents_count: 0,
-			inner: SyntaxTreeBuilder::default(),
-			errors: vec![],
-			needs_eof: true,
-			trivia: Vec::with_capacity(128),
-		}
-	}
+    pub fn new(text: &'a str, tokens: &'a [Token]) -> Self {
+        Self {
+            text,
+            tokens,
+            text_pos: 0.into(),
+            token_pos: 0,
+            parents_count: 0,
+            inner: SyntaxTreeBuilder::default(),
+            errors: vec![],
+            needs_eof: true,
+            trivia: Vec::with_capacity(128),
+        }
+    }
 
-	/// Finishes the tree and return the root node with possible parser errors.
-	///
-	/// If tree is finished without a [SyntaxKind::EOF], one will be generated and all pending trivia
-	/// will be appended to its leading trivia.
-	pub fn finish(self) -> (SyntaxNode, Vec<ParserError>) {
-		(self.inner.finish(), self.errors)
-	}
+    /// Finishes the tree and return the root node with possible parser errors.
+    ///
+    /// If tree is finished without a [SyntaxKind::EOF], one will be generated and all pending trivia
+    /// will be appended to its leading trivia.
+    pub fn finish(self) -> (SyntaxNode, Vec<ParserError>) {
+        (self.inner.finish(), self.errors)
+    }
 
-	#[inline]
-	fn do_token(&mut self, kind: JsSyntaxKind) {
-		if kind == JsSyntaxKind::EOF {
-			self.needs_eof = false;
-		}
+    #[inline]
+    fn do_token(&mut self, kind: JsSyntaxKind) {
+        if kind == JsSyntaxKind::EOF {
+            self.needs_eof = false;
+        }
 
-		self.do_tokens(kind, 1)
-	}
+        self.do_tokens(kind, 1)
+    }
 
-	fn do_tokens(&mut self, kind: JsSyntaxKind, token_count: u8) {
-		// Every trivia up to the token (including line breaks) will be the leading trivia
-		self.trivia.clear();
-		let (leading_range, leading_end) = self.get_trivia(false);
+    fn do_tokens(&mut self, kind: JsSyntaxKind, token_count: u8) {
+        // Every trivia up to the token (including line breaks) will be the leading trivia
+        self.trivia.clear();
+        let (leading_range, leading_end) = self.get_trivia(false);
 
-		let len = TextSize::from(
-			(if token_count == 1 {
-				self.tokens[self.token_pos].len
-			} else {
-				self.tokens[self.token_pos..self.token_pos + token_count as usize]
-					.iter()
-					.map(|x| x.len)
-					.sum()
-			}) as u32,
-		);
+        let len = TextSize::from(
+            (if token_count == 1 {
+                self.tokens[self.token_pos].len
+            } else {
+                self.tokens[self.token_pos..self.token_pos + token_count as usize]
+                    .iter()
+                    .map(|x| x.len)
+                    .sum()
+            }) as u32,
+        );
 
-		let token_range = TextRange::at(self.text_pos, len);
+        let token_range = TextRange::at(self.text_pos, len);
 
-		self.text_pos += len;
-		self.token_pos += token_count as usize;
+        self.text_pos += len;
+        self.token_pos += token_count as usize;
 
-		// Everything until the next linebreak (but not including it)
-		// will be the trailing trivia...
-		let trailing_start = self.trivia.len();
-		let (trailing_range, _) = self.get_trivia(true);
+        // Everything until the next linebreak (but not including it)
+        // will be the trailing trivia...
+        let trailing_start = self.trivia.len();
+        let (trailing_range, _) = self.get_trivia(true);
 
-		let range = leading_range.cover(token_range).cover(trailing_range);
-		let text = &self.text[range];
+        let range = leading_range.cover(token_range).cover(trailing_range);
+        let text = &self.text[range];
 
-		let leading = &self.trivia[0..leading_end];
-		let trailing = &self.trivia[trailing_start..];
+        let leading = &self.trivia[0..leading_end];
+        let trailing = &self.trivia[trailing_start..];
 
-		self.inner.token_with_trivia(kind, text, leading, trailing);
-	}
+        self.inner.token_with_trivia(kind, text, leading, trailing);
+    }
 
-	fn get_trivia(&mut self, break_on_newline: bool) -> (TextRange, usize) {
-		let start_text_pos = self.text_pos;
-		let mut length = TextSize::from(0);
+    fn get_trivia(&mut self, break_on_newline: bool) -> (TextRange, usize) {
+        let start_text_pos = self.text_pos;
+        let mut length = TextSize::from(0);
 
-		let mut count = 0;
-		for token in &self.tokens[self.token_pos..] {
-			if !token.kind.is_trivia() {
-				break;
-			}
+        let mut count = 0;
+        for token in &self.tokens[self.token_pos..] {
+            if !token.kind.is_trivia() {
+                break;
+            }
 
-			if break_on_newline && token.kind == JsSyntaxKind::NEWLINE {
-				break;
-			}
+            if break_on_newline && token.kind == JsSyntaxKind::NEWLINE {
+                break;
+            }
 
-			self.token_pos += 1;
-			let len = TextSize::from(token.len as u32);
-			self.text_pos += len;
-			length += len;
+            self.token_pos += 1;
+            let len = TextSize::from(token.len as u32);
+            self.text_pos += len;
+            length += len;
 
-			let current_trivia = match token.kind {
-				NEWLINE => TriviaPiece::Newline(token.len),
-				WHITESPACE => TriviaPiece::Whitespace(token.len),
-				COMMENT => TriviaPiece::Comments(token.len, false),
-				MULTILINE_COMMENT => TriviaPiece::Comments(token.len, true),
-				_ => unreachable!("Not Trivia"),
-			};
+            let current_trivia = match token.kind {
+                NEWLINE => TriviaPiece::Newline(token.len),
+                WHITESPACE => TriviaPiece::Whitespace(token.len),
+                COMMENT => TriviaPiece::Comments(token.len, false),
+                MULTILINE_COMMENT => TriviaPiece::Comments(token.len, true),
+                _ => unreachable!("Not Trivia"),
+            };
 
-			self.trivia.push(current_trivia);
-			count += 1;
-		}
+            self.trivia.push(current_trivia);
+            count += 1;
+        }
 
-		(TextRange::at(start_text_pos, length), count)
-	}
+        (TextRange::at(start_text_pos, length), count)
+    }
 }

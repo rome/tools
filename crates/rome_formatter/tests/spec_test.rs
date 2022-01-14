@@ -21,25 +21,25 @@ use std::path::Path;
 /// * `json/null` -> input: `tests/specs/json/null.json`, expected output: `tests/specs/json/null.json.snap`
 /// * `null` -> input: `tests/specs/null.json`, expected output: `tests/specs/null.json.snap`
 pub fn run(spec_input_file: &str, _: &str) {
-	let app = create_app();
-	let file_path = &spec_input_file;
-	let spec_input_file = Path::new(spec_input_file);
+    let app = create_app();
+    let file_path = &spec_input_file;
+    let spec_input_file = Path::new(spec_input_file);
 
-	assert!(
-		spec_input_file.is_file(),
-		"The input '{}' must exist and be a file.",
-		spec_input_file.display()
-	);
+    assert!(
+        spec_input_file.is_file(),
+        "The input '{}' must exist and be a file.",
+        spec_input_file.display()
+    );
 
-	let result = format_file(file_path, FormatOptions::default(), &app);
-	let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
-	let input = fs::read_to_string(file_path).unwrap();
-	let snapshot = format!("# Input\n{}\n---\n# Output\n{}", input, result.code());
+    let result = format_file(file_path, FormatOptions::default(), &app);
+    let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
+    let input = fs::read_to_string(file_path).unwrap();
+    let snapshot = format!("# Input\n{}\n---\n# Output\n{}", input, result.code());
 
-	insta::with_settings!({
-		prepend_module_to_snapshot => false,
-		snapshot_path => spec_input_file.parent().unwrap(),
-	}, {
-		insta::assert_snapshot!(file_name, snapshot, file_name);
-	});
+    insta::with_settings!({
+        prepend_module_to_snapshot => false,
+        snapshot_path => spec_input_file.parent().unwrap(),
+    }, {
+        insta::assert_snapshot!(file_name, snapshot, file_name);
+    });
 }
