@@ -17,7 +17,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsAssignmentExpression {
                 left: JsIdentifierAssignment {
-                    name_token: IDENT@8..14 "eval" [Whitespace("\n")] [Whitespace(" ")],
+                    name_token: IDENT@8..14 "eval" [Newline("\n")] [Whitespace(" ")],
                 },
                 operator_token: QUESTION2EQ@14..18 "??=" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
@@ -29,7 +29,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsAssignmentExpression {
                 left: JsIdentifierAssignment {
-                    name_token: IDENT@19..25 "eval" [Whitespace("\n")] [Whitespace(" ")],
+                    name_token: IDENT@19..25 "eval" [Newline("\n")] [Whitespace(" ")],
                 },
                 operator_token: STAREQ@25..28 "*=" [] [Whitespace(" ")],
                 right: JsNumberLiteralExpression {
@@ -41,7 +41,7 @@ JsModule {
         JsExpressionStatement {
             expression: JsAssignmentExpression {
                 left: JsIdentifierAssignment {
-                    name_token: IDENT@29..40 "arguments" [Whitespace("\n")] [Whitespace(" ")],
+                    name_token: IDENT@29..40 "arguments" [Newline("\n")] [Whitespace(" ")],
                 },
                 operator_token: EQ@40..42 "=" [] [Whitespace(" ")],
                 right: JsStringLiteralExpression {
@@ -53,21 +53,21 @@ JsModule {
         JsExpressionStatement {
             expression: JsAssignmentExpression {
                 left: JsIdentifierAssignment {
-                    name_token: IDENT@47..58 "arguments" [Whitespace("\n")] [Whitespace(" ")],
+                    name_token: IDENT@47..58 "arguments" [Newline("\n")] [Whitespace(" ")],
                 },
                 operator_token: PIPE2EQ@58..62 "||=" [] [Whitespace(" ")],
                 right: JsAssignmentExpression {
                     left: JsUnknownAssignment {
                         items: [
                             JS_STRING_LITERAL@62..67 "\"baz\"" [] [],
-                            L_PAREN@67..69 "(" [Whitespace("\n")] [],
+                            L_PAREN@67..69 "(" [Newline("\n")] [],
                             L_CURLY@69..71 "{" [] [Whitespace(" ")],
                             IDENT@71..76 "eval" [] [Whitespace(" ")],
                             R_CURLY@76..78 "}" [] [Whitespace(" ")],
                             EQ@78..80 "=" [] [Whitespace(" ")],
                             IDENT@80..81 "o" [] [],
                             R_PAREN@81..82 ")" [] [],
-                            L_PAREN@82..84 "(" [Whitespace("\n")] [],
+                            L_PAREN@82..84 "(" [Newline("\n")] [],
                             L_CURLY@84..86 "{" [] [Whitespace(" ")],
                             IDENT@86..89 "foo" [] [],
                             COLON@89..91 ":" [] [Whitespace(" ")],
@@ -89,7 +89,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@105..106 "" [Whitespace("\n")] [],
+    eof_token: EOF@105..106 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..106
@@ -107,7 +107,7 @@ JsModule {
     1: JS_EXPRESSION_STATEMENT@8..19
       0: JS_ASSIGNMENT_EXPRESSION@8..19
         0: JS_IDENTIFIER_ASSIGNMENT@8..14
-          0: IDENT@8..14 "eval" [Whitespace("\n")] [Whitespace(" ")]
+          0: IDENT@8..14 "eval" [Newline("\n")] [Whitespace(" ")]
         1: QUESTION2EQ@14..18 "??=" [] [Whitespace(" ")]
         2: JS_NUMBER_LITERAL_EXPRESSION@18..19
           0: JS_NUMBER_LITERAL@18..19 "2" [] []
@@ -115,7 +115,7 @@ JsModule {
     2: JS_EXPRESSION_STATEMENT@19..29
       0: JS_ASSIGNMENT_EXPRESSION@19..29
         0: JS_IDENTIFIER_ASSIGNMENT@19..25
-          0: IDENT@19..25 "eval" [Whitespace("\n")] [Whitespace(" ")]
+          0: IDENT@19..25 "eval" [Newline("\n")] [Whitespace(" ")]
         1: STAREQ@25..28 "*=" [] [Whitespace(" ")]
         2: JS_NUMBER_LITERAL_EXPRESSION@28..29
           0: JS_NUMBER_LITERAL@28..29 "4" [] []
@@ -123,7 +123,7 @@ JsModule {
     3: JS_EXPRESSION_STATEMENT@29..47
       0: JS_ASSIGNMENT_EXPRESSION@29..47
         0: JS_IDENTIFIER_ASSIGNMENT@29..40
-          0: IDENT@29..40 "arguments" [Whitespace("\n")] [Whitespace(" ")]
+          0: IDENT@29..40 "arguments" [Newline("\n")] [Whitespace(" ")]
         1: EQ@40..42 "=" [] [Whitespace(" ")]
         2: JS_STRING_LITERAL_EXPRESSION@42..47
           0: JS_STRING_LITERAL@42..47 "\"foo\"" [] []
@@ -131,19 +131,19 @@ JsModule {
     4: JS_EXPRESSION_STATEMENT@47..105
       0: JS_ASSIGNMENT_EXPRESSION@47..105
         0: JS_IDENTIFIER_ASSIGNMENT@47..58
-          0: IDENT@47..58 "arguments" [Whitespace("\n")] [Whitespace(" ")]
+          0: IDENT@47..58 "arguments" [Newline("\n")] [Whitespace(" ")]
         1: PIPE2EQ@58..62 "||=" [] [Whitespace(" ")]
         2: JS_ASSIGNMENT_EXPRESSION@62..105
           0: JS_UNKNOWN_ASSIGNMENT@62..102
             0: JS_STRING_LITERAL@62..67 "\"baz\"" [] []
-            1: L_PAREN@67..69 "(" [Whitespace("\n")] []
+            1: L_PAREN@67..69 "(" [Newline("\n")] []
             2: L_CURLY@69..71 "{" [] [Whitespace(" ")]
             3: IDENT@71..76 "eval" [] [Whitespace(" ")]
             4: R_CURLY@76..78 "}" [] [Whitespace(" ")]
             5: EQ@78..80 "=" [] [Whitespace(" ")]
             6: IDENT@80..81 "o" [] []
             7: R_PAREN@81..82 ")" [] []
-            8: L_PAREN@82..84 "(" [Whitespace("\n")] []
+            8: L_PAREN@82..84 "(" [Newline("\n")] []
             9: L_CURLY@84..86 "{" [] [Whitespace(" ")]
             10: IDENT@86..89 "foo" [] []
             11: COLON@89..91 ":" [] [Whitespace(" ")]
@@ -157,7 +157,7 @@ JsModule {
             0: JS_REFERENCE_IDENTIFIER@104..105
               0: IDENT@104..105 "o" [] []
       1: (empty)
-  3: EOF@105..106 "" [Whitespace("\n")] []
+  3: EOF@105..106 "" [Newline("\n")] []
 --
 error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
   ┌─ assign_eval_or_arguments.js:1:1

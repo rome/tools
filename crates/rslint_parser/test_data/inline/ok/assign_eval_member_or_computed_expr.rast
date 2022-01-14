@@ -27,7 +27,7 @@ JsModule {
                 left: JsComputedMemberAssignment {
                     object: JsIdentifierExpression {
                         name: JsReferenceIdentifier {
-                            value_token: IDENT@13..23 "arguments" [Whitespace("\n")] [],
+                            value_token: IDENT@13..23 "arguments" [Newline("\n")] [],
                         },
                     },
                     l_brack_token: L_BRACK@23..24 "[" [] [],
@@ -48,7 +48,7 @@ JsModule {
                 left: JsComputedMemberAssignment {
                     object: JsIdentifierExpression {
                         name: JsReferenceIdentifier {
-                            value_token: IDENT@34..39 "eval" [Whitespace("\n")] [],
+                            value_token: IDENT@34..39 "eval" [Newline("\n")] [],
                         },
                     },
                     l_brack_token: L_BRACK@39..40 "[" [] [],
@@ -65,7 +65,7 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@64..65 "" [Whitespace("\n")] [],
+    eof_token: EOF@64..65 "" [Newline("\n")] [],
 }
 
 0: JS_MODULE@0..65
@@ -90,7 +90,7 @@ JsModule {
         0: JS_COMPUTED_MEMBER_ASSIGNMENT@13..27
           0: JS_IDENTIFIER_EXPRESSION@13..23
             0: JS_REFERENCE_IDENTIFIER@13..23
-              0: IDENT@13..23 "arguments" [Whitespace("\n")] []
+              0: IDENT@13..23 "arguments" [Newline("\n")] []
           1: L_BRACK@23..24 "[" [] []
           2: JS_NUMBER_LITERAL_EXPRESSION@24..25
             0: JS_NUMBER_LITERAL@24..25 "1" [] []
@@ -104,7 +104,7 @@ JsModule {
         0: JS_COMPUTED_MEMBER_ASSIGNMENT@34..43
           0: JS_IDENTIFIER_EXPRESSION@34..39
             0: JS_REFERENCE_IDENTIFIER@34..39
-              0: IDENT@34..39 "eval" [Whitespace("\n")] []
+              0: IDENT@34..39 "eval" [Newline("\n")] []
           1: L_BRACK@39..40 "[" [] []
           2: JS_NUMBER_LITERAL_EXPRESSION@40..41
             0: JS_NUMBER_LITERAL@40..41 "2" [] []
@@ -113,4 +113,4 @@ JsModule {
         2: JS_STRING_LITERAL_EXPRESSION@45..64
           0: JS_STRING_LITERAL@45..64 "\"Chungking Express\"" [] []
       1: (empty)
-  3: EOF@64..65 "" [Whitespace("\n")] []
+  3: EOF@64..65 "" [Newline("\n")] []
