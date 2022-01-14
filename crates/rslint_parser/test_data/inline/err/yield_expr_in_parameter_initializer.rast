@@ -158,7 +158,7 @@ JsModule {
         3: R_CURLY@69..70 "}" [] []
   3: EOF@70..71 "" [Newline("\n")] []
 --
-error[SyntaxError]: `yield` is only allowed within generator functions.
+error[SyntaxError]: `yield` expressions cannot be used in a parameter initializer
   ┌─ yield_expr_in_parameter_initializer.js:1:20
   │
 1 │ function* test(a = yield "test") {}

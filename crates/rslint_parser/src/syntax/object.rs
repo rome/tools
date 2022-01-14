@@ -3,10 +3,7 @@ use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
 use crate::state::{EnterParameters, SignatureFlags};
-use crate::syntax::expr::{
-	is_at_name, is_nth_at_reference_identifier, parse_expr_or_assignment, parse_expression,
-	parse_reference_identifier,
-};
+use crate::syntax::expr::{is_at_name, parse_expr_or_assignment, parse_expression};
 use crate::syntax::function::{
 	parse_function_body, parse_parameter, parse_parameter_list, parse_ts_parameter_types,
 	parse_ts_type_annotation_or_error,
@@ -153,18 +150,9 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 		}
 
 		_ => {
-			let m = p.start();
-
-			if is_nth_at_reference_identifier(p, 0)
-				&& !token_set![T!['('], T![<], T![:]].contains(p.nth(1))
-			{
-				// test object_expr_ident_prop
-				// ({foo})
-				parse_reference_identifier(p).unwrap();
-				return Present(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER));
-			}
-
 			let checkpoint = p.checkpoint();
+			let m = p.start();
+			let identifier_member_name = is_at_name(p);
 			let member_name = parse_object_member_name(p)
 				.or_add_diagnostic(p, js_parse_error::expected_object_member);
 
@@ -181,18 +169,27 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 			if p.at(T!['(']) || p.at(T![<]) {
 				parse_method_object_member_body(p, SignatureFlags::empty());
 				Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
-			} else if member_name.is_some() {
+			} else if let Some(mut member_name) = member_name {
 				// test object_prop_name
 				// let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
 
-				// test object_expr_ident_literal_prop
-				// let b = { a: true }
+				// test object_expr_ident_prop
+				// ({foo})
+				if identifier_member_name
+					&& (matches!(p.cur(), T![,] | T!['}']) || p.has_linebreak_before_n(0))
+				{
+					member_name.change_kind(p, JS_REFERENCE_IDENTIFIER);
+					Present(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER))
+				} else {
+					// test object_expr_ident_literal_prop
+					// let b = { a: true }
 
-				// If the member name was a literal OR we're at a colon
-				p.expect(T![:]);
-				parse_expr_or_assignment(p)
-					.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
-				Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
+					// If the member name was a literal OR we're at a colon
+					p.expect(T![:]);
+					parse_expr_or_assignment(p)
+						.or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
+					Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
+				}
 			} else {
 				// test_err object_expr_error_prop_name
 				// let a = { /: 6, /: /foo/ }
@@ -212,8 +209,8 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 					// It turns out that this isn't a valid member after all. Make sure to throw
 					// away everything that has been parsed so far so that the caller can
 					// do its error recovery
-					p.rewind(checkpoint);
 					m.abandon(p);
+					p.rewind(checkpoint);
 					Absent
 				}
 			}
