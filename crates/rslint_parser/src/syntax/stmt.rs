@@ -5,12 +5,12 @@
 use super::binding::*;
 use super::expr::parse_expression;
 use super::typescript::*;
-use super::util::check_label_use;
 use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::state::{
-    AllowObjectExpression, BreakAllowed, ChangeParserState, EnableStrictMode,
-    EnableStrictModeSnapshot, EnterLoop, IncludeIn, StrictMode as StrictModeState,
+	AllowObjectExpression, BreakableKind, ChangeParserState, EnableStrictMode,
+	EnableStrictModeSnapshot, EnterBreakable, IncludeIn, LabelledItemKind,
+	StrictMode as StrictModeState,
 };
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
@@ -106,7 +106,7 @@ pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
         || p.has_linebreak_before_n(offset)
 }
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub(crate) enum StatementContext {
     If,
     Label,
@@ -210,24 +210,29 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![ident] if is_at_async_function(p, LineBreak::DoCheck) => {
             parse_function_statement(p, context)
         }
+		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
         // test_err let_newline_in_async_function
         // async function f() {
         //   let
         //   await 0;
         // }
-        //
+
         // test let_asi_rule
         // // SCRIPT
         // let // NO ASI
         // x = 1;
         // for await (var x of []) let // ASI
         // x = 1;
-        T![ident]
-            if p.cur_src() == "let"
-                && FOLLOWS_LET.contains(p.nth(1))
-                && (context.is_statement_list() || !p.has_linebreak_before_n(1)) =>
-        {
+
+			// test_err let_array_with_new_line
+			// // SCRIPT
+			// L: let
+			// [a] = 0;
+			if p.nth_at(1, T!['[']) || context.is_statement_list() || !p.has_linebreak_before_n(1) {
             parse_variable_statement(p, context)
+			} else {
+				parse_expression_statement(p)
+			}
         }
 
         // TODO: handle `<T>() => {};` with less of a hack
@@ -257,15 +262,17 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
 // label1: function a() {}
 fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     parse_identifier(p, JS_LABELED_STATEMENT).map(|identifier| {
+		p.bump(T![:]);
+
         let label = if !identifier.kind().is_unknown() {
             let range = identifier.range(p);
             let label = p.source(range);
 
-            if let Some(first_range) = p.state.labels.get(label) {
+			if let Some(label_item) = p.state.label_set.get(label) {
                 let err = p
                     .err_builder("Duplicate statement labels are not allowed")
                     .secondary(
-                        first_range.to_owned(),
+						label_item.range().to_owned(),
                         &format!("`{}` is first used as a label here", label),
                     )
                     .primary(
@@ -277,7 +284,13 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
                 None
             } else {
                 let string = label.to_string();
-                p.state.labels.insert(string.clone(), range.into());
+
+				let label_item = match p.cur() {
+					T![for] | T![do] | T![while] => LabelledItemKind::Iteration(range.as_range()),
+					_ => LabelledItemKind::Other(range.as_range())
+				};
+
+				p.state.label_set.insert(string.clone(), label_item);
                 Some(string)
             }
         } else {
@@ -285,7 +298,6 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
         };
 
         let labelled_statement = identifier.undo_completion(p);
-        p.bump_any();
 
         let body = if is_at_identifier(p) && p.nth_at(1, T![:]) && StrictMode.is_unsupported(p) {
             // Re-use the parent context to catch `if (true) label1: label2: function A() {}
@@ -303,11 +315,12 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
             },
             // test labelled_statement_in_single_statement_context
             // if (true) label1: var a = 10;
+
             _ => {}
         }
 
         if let Some(label) = label {
-            p.state.labels.remove(&label);
+			p.state.label_set.remove(&label);
         }
 
         labelled_statement.complete(p, JS_LABELED_STATEMENT)
@@ -422,24 +435,38 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     let start = p.cur_tok().range();
     p.bump_any(); // break keyword
-    let end = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
-        let label_token = p.cur_tok();
-        p.bump_any();
-        check_label_use(p, label_token);
 
-        label_token.end()
+	let error = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
+        let label_token = p.cur_tok();
+		let label_name = p.token_src(label_token);
+
+		let error = match p.state.label_set.get(label_name) {
+			Some(_) => None,
+			None => Some(
+				p.err_builder(&format!(
+					"Use of undefined statement label `{}`",
+					label_name
+				))
+				.primary(
+					label_token.range(),
+					"This label is used, but it is never defined",
+				),
+			),
+		};
+
+		p.bump_any();
+		error
+	} else if !p.state.break_allowed() {
+		Some(p.err_builder("A `break` statement can only be used within an enclosing iteration or switch statement.")
+			.primary(start.clone(), ""))
     } else {
-        start.end
+		None
     };
 
     semi(p, start.start..p.cur_tok().end());
 
-    if !p.state.break_allowed() && p.state.labels.is_empty() {
-        let err = p
-            .err_builder("Invalid break not inside of a switch, loop, or labelled statement")
-            .primary(start.start..end, "");
-
-        p.error(err);
+	if let Some(error) = error {
+		p.error(error);
         Present(m.complete(p, JS_UNKNOWN_STATEMENT))
     } else {
         Present(m.complete(p, JS_BREAK_STATEMENT))
@@ -447,10 +474,10 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 // test continue_stmt
+// outer: while(true) {
 // while (true) {
 //   continue;
-//   foo: {
-//     continue foo;
+//     continue outer;
 //    }
 //   continue
 // }
@@ -458,6 +485,9 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
 // test_err continue_stmt
 // function foo() { continue; }
 // while (true) {
+//   continue foo;
+// }
+// foo: {
 //   continue foo;
 // }
 /// A continue statement with an optional label such as `continue a;`
@@ -469,24 +499,48 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
     let start = p.cur_tok().range();
     p.bump_any(); // continue keyword
 
-    let end = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
+	let error = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
         let label_token = p.cur_tok();
-        p.bump_any();
-        check_label_use(p, label_token);
+		let label_name = p.token_src(label_token);
 
-        label_token.end()
+		let error = match p.state.label_set.get(label_name) {
+			Some(LabelledItemKind::Iteration(_)) => None,
+			Some(LabelledItemKind::Other(range)) => {
+				Some(p.err_builder("A `continue` statement can only jump to a label of an enclosing iteration statement.")
+					.primary(label_token.range(), "This label")
+					.secondary(range.to_owned(), "points to non-iteration statement"))
+			}
+			None => {
+				Some(p
+					.err_builder(&format!(
+						"Use of undefined statement label `{}`",
+						label_name
+					))
+					.primary(
+						label_token.range(),
+						"This label is used, but it is never defined",
+					))
+			}
+		};
+
+        p.bump_any();
+
+		error
+	} else if !p.state.continue_allowed() {
+		Some(
+			p.err_builder(
+				"A `continue` statement can only be used within an enclosing iteration statement.",
+			)
+			.primary(start.clone(), ""),
+		)
     } else {
-        start.end
+		None
     };
 
     semi(p, start.start..p.cur_tok().end());
 
-    if !p.state.continue_allowed() && p.state.labels.is_empty() {
-        let err = p
-            .err_builder("Invalid continue not inside of a loop")
-            .primary(start.start..end, "");
-
-        p.error(err);
+	if let Some(error) = error {
+		p.error(error);
         Present(m.complete(p, JS_UNKNOWN_STATEMENT))
     } else {
         Present(m.complete(p, JS_CONTINUE_STATEMENT))
@@ -815,7 +869,9 @@ fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
     p.bump_any(); // while
     parenthesized_expression(p);
 
-    p.with_state(EnterLoop, |p| parse_statement(p, StatementContext::While))
+	p.with_state(EnterBreakable(BreakableKind::Iteration), |p| {
+		parse_statement(p, StatementContext::While)
+	})
         .or_add_diagnostic(p, expected_statement);
 
     Present(m.complete(p, JS_WHILE_STATEMENT))
@@ -1183,7 +1239,9 @@ fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
     let start = p.cur_tok().start();
     p.bump_any(); // do keyword
 
-    p.with_state(EnterLoop, |p| parse_statement(p, StatementContext::Do))
+	p.with_state(EnterBreakable(BreakableKind::Iteration), |p| {
+		parse_statement(p, StatementContext::Do)
+	})
         .or_add_diagnostic(p, expected_statement);
 
     p.expect(T![while]);
@@ -1348,7 +1406,9 @@ fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
     let kind = parse_for_head(p);
     p.expect(T![')']);
 
-    p.with_state(EnterLoop, |p| parse_statement(p, StatementContext::For))
+	p.with_state(EnterBreakable(BreakableKind::Iteration), |p| {
+		parse_statement(p, StatementContext::For)
+	})
         .or_add_diagnostic(p, expected_statement);
 
     let mut completed = m.complete(p, kind);
@@ -1539,7 +1599,7 @@ fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
     parenthesized_expression(p);
     p.expect(T!['{']);
 
-    p.with_state(BreakAllowed(true), |p| {
+	p.with_state(EnterBreakable(BreakableKind::Switch), |p| {
         SwitchCasesList::default().parse_list(p)
     });
 

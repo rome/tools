@@ -1,0 +1,80 @@
+JsScript {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    statements: JsStatementList [
+        JsLabeledStatement {
+            label_token: IDENT@0..11 "L" [Comments("// SCRIPT"), Newline("\n")] [],
+            colon_token: COLON@11..13 ":" [] [Whitespace(" ")],
+            body: JsUnknownStatement {
+                items: [
+                    JsVariableDeclarations {
+                        kind: LET_KW@13..16 "let" [] [],
+                        items: JsVariableDeclarationList [
+                            JsVariableDeclaration {
+                                id: JsArrayBindingPattern {
+                                    l_brack_token: L_BRACK@16..18 "[" [Newline("\n")] [],
+                                    elements: JsArrayBindingPatternElementList [
+                                        JsIdentifierBinding {
+                                            name_token: IDENT@18..19 "a" [] [],
+                                        },
+                                    ],
+                                    r_brack_token: R_BRACK@19..21 "]" [] [Whitespace(" ")],
+                                },
+                                excl_token: missing (optional),
+                                type_annotation: missing (optional),
+                                initializer: JsInitializerClause {
+                                    eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
+                                    expression: JsNumberLiteralExpression {
+                                        value_token: JS_NUMBER_LITERAL@23..24 "0" [] [],
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                    SEMICOLON@24..25 ";" [] [],
+                ],
+            },
+        },
+    ],
+    eof_token: EOF@25..26 "" [Newline("\n")] [],
+}
+
+0: JS_SCRIPT@0..26
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_STATEMENT_LIST@0..25
+    0: JS_LABELED_STATEMENT@0..25
+      0: IDENT@0..11 "L" [Comments("// SCRIPT"), Newline("\n")] []
+      1: COLON@11..13 ":" [] [Whitespace(" ")]
+      2: JS_UNKNOWN_STATEMENT@13..25
+        0: JS_VARIABLE_DECLARATIONS@13..24
+          0: LET_KW@13..16 "let" [] []
+          1: JS_VARIABLE_DECLARATION_LIST@16..24
+            0: JS_VARIABLE_DECLARATION@16..24
+              0: JS_ARRAY_BINDING_PATTERN@16..21
+                0: L_BRACK@16..18 "[" [Newline("\n")] []
+                1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@18..19
+                  0: JS_IDENTIFIER_BINDING@18..19
+                    0: IDENT@18..19 "a" [] []
+                2: R_BRACK@19..21 "]" [] [Whitespace(" ")]
+              1: (empty)
+              2: (empty)
+              3: JS_INITIALIZER_CLAUSE@21..24
+                0: EQ@21..23 "=" [] [Whitespace(" ")]
+                1: JS_NUMBER_LITERAL_EXPRESSION@23..24
+                  0: JS_NUMBER_LITERAL@23..24 "0" [] []
+        1: SEMICOLON@24..25 ";" [] []
+  3: EOF@25..26 "" [Newline("\n")] []
+--
+error[SyntaxError]: Lexical declaration cannot appear in a single-statement context
+  ┌─ let_array_with_new_line.js:2:4
+  │  
+2 │   L: let
+  │ ┌────^
+3 │ │ [a] = 0;
+  │ └────────^ Wrap this declaration in a block statement
+
+--
+// SCRIPT
+L: let
+[a] = 0;

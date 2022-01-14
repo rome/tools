@@ -1,7 +1,7 @@
-while (true) {
-  continue;
-  foo: {
-    continue foo;
-   }
+outer: while(true) {
+  while (true) {
+    continue;
+    continue outer;
+	 }
   continue
 }
