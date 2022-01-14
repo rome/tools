@@ -4,7 +4,7 @@ use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
 use crate::state::{EnterParameters, SignatureFlags};
 use crate::syntax::expr::{
-	is_at_name, is_nth_at_reference_identifier, parse_expr_or_assignment, parse_expression,
+	is_nth_at_reference_identifier, parse_expr_or_assignment, parse_expression,
 	parse_reference_identifier,
 };
 use crate::syntax::function::{

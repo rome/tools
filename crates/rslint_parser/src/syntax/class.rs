@@ -10,7 +10,7 @@ use crate::syntax::function::{
 	parse_ts_type_annotation_or_error, ts_parameter_types,
 };
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{expected_binding, expected_function_body};
+use crate::syntax::js_parse_error::expected_binding;
 use crate::syntax::object::{
 	is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
 };
