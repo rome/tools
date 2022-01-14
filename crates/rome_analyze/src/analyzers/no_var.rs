@@ -1,7 +1,6 @@
-use anyhow::Result;
-use rslint_parser::{ast, JsSyntaxKind};
+use rslint_parser::{ast, AstNode};
 
-use crate::{Analysis, Analyzer, AnalyzerContext, Signal};
+use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 
 pub fn create() -> Analyzer {
 	Analyzer {
@@ -11,9 +10,9 @@ pub fn create() -> Analyzer {
 	}
 }
 
-fn analyze(ctx: &AnalyzerContext) -> Result<Analysis> {
+fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
 	ctx.query_nodes::<ast::JsVariableDeclarations>()
-		.filter(|n| n.kind().map(|k| k.kind()) == Ok(JsSyntaxKind::VAR_KW))
-		.map(|n| Signal::diagnostic(n, "rome: do not use var"))
+		.filter(|n| n.is_var())
+		.map(|n| ctx.error(n.range(), "Do not use var").into_signal())
 		.collect()
 }

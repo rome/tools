@@ -1,22 +1,21 @@
-use anyhow::Result;
-use rslint_parser::{ast, AstNodeList};
+use rslint_parser::{ast, AstNode, AstNodeList};
 
-use crate::{ActionCategory, Analysis, Analyzer, AnalyzerContext, Signal};
+use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 
 pub fn create() -> Analyzer {
 	Analyzer {
 		name: "useSingleCaseStatement",
-		action_categories: vec![ActionCategory::Suggestion],
+		action_categories: vec![],
 		analyze,
 	}
 }
 
-fn analyze(ctx: &AnalyzerContext) -> Result<Analysis> {
+fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
 	ctx.query_nodes::<ast::JsCaseClause>()
 		.filter(|n| n.consequent().len() > 1)
 		.map(|node| {
-			let message = "rome: A switch case should only have a single statement.";
-			Signal::diagnostic(node, message)
+			let message = "A switch case should only have a single statement.";
+			ctx.error(node.range(), message).into_signal()
 		})
 		.collect()
 }

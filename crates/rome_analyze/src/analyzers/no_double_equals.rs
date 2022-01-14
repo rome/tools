@@ -1,4 +1,3 @@
-use anyhow::Result;
 use rslint_parser::{
 	ast::{self, JsAnyExpression},
 	AstNode,
@@ -6,17 +5,17 @@ use rslint_parser::{
 	SyntaxResult,
 };
 
-use crate::{ActionCategory, Analysis, Analyzer, AnalyzerContext, Signal};
+use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 
 pub fn create() -> Analyzer {
 	Analyzer {
 		name: "noDoubleEquals",
-		action_categories: vec![ActionCategory::SafeFix],
+		action_categories: vec![],
 		analyze,
 	}
 }
 
-fn analyze(ctx: &AnalyzerContext) -> Result<Analysis> {
+fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
 	ctx.query_nodes::<ast::JsBinaryExpression>()
 		.filter_map(|n| {
 			let op = n.operator().ok()?;
@@ -30,8 +29,8 @@ fn analyze(ctx: &AnalyzerContext) -> Result<Analysis> {
 				return None;
 			}
 
-			let message = format!("rome: do not use the {} operator", op.text_trimmed());
-			let signal = Signal::diagnostic(op, message);
+			let message = format!("Do not use the {} operator", op.text_trimmed());
+			let signal = ctx.error(op, message).into_signal();
 			Some(signal)
 		})
 		.collect()

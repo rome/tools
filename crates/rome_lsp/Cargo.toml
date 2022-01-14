@@ -12,6 +12,7 @@ anyhow = "1.0.52"
 indexmap = "1.8.0"
 rome_formatter = { path = "../rome_formatter" }
 rome_analyze = { path = "../rome_analyze" }
+rslint_errors = { path = "../rslint_errors", version = "0.2.0" }
 rslint_parser = { path = "../rslint_parser" } 
 lspower = "1.5.0"
 tokio = { version = "1.15.0", features = ["full" ] }

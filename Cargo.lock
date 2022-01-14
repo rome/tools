@@ -1296,6 +1296,7 @@ dependencies = [
  "lspower",
  "rome_analyze",
  "rome_formatter",
+ "rslint_errors",
  "rslint_parser",
  "serde",
  "serde_json",

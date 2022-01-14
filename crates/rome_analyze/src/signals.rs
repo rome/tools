@@ -1,54 +1,12 @@
-use anyhow::Result;
-use rslint_parser::{SyntaxElement, TextRange};
+use rslint_errors::{Diagnostic, Span};
+use rslint_parser::TextRange;
 
 use crate::{ActionCategory, Indel, SyntaxEdit};
-
-pub type AnalyzerResult = Result<Analysis>;
 
 #[derive(Debug)]
 pub enum Signal {
 	Diagnostic(AnalyzeDiagnostic),
 	Action(Action),
-}
-
-impl Signal {
-	pub fn diagnostic(target: impl Into<SyntaxElement>, message: impl Into<String>) -> Self {
-		let range = target.into().text_trimmed_range();
-		let diag = AnalyzeDiagnostic {
-			range,
-			message: message.into(),
-			actions: Vec::new(),
-		};
-		diag.into()
-	}
-
-	pub fn diagnostic_with_replacement(
-		target: impl Into<SyntaxElement>,
-		message: impl Into<String>,
-		action_title: impl Into<String>,
-		replacement: impl Into<SyntaxElement>,
-		category: ActionCategory,
-	) -> Self {
-		let target: SyntaxElement = target.into();
-		let range = target.text_trimmed_range();
-		let edit = SyntaxEdit::Replace {
-			target,
-			replacement: replacement.into(),
-			trimmed: true,
-		};
-		let action = Action {
-			title: action_title.into(),
-			range,
-			edits: vec![edit],
-			category,
-		};
-		let diag = AnalyzeDiagnostic {
-			range,
-			message: message.into(),
-			actions: vec![action],
-		};
-		diag.into()
-	}
 }
 
 impl Signal {
@@ -60,28 +18,30 @@ impl Signal {
 		matches!(self, Signal::Action(_))
 	}
 
-	pub fn range(&self) -> TextRange {
+	/// For an [Action], returns the valid range.
+	/// For a [Diagnostic], returns the text range of the primary label.
+	pub fn range(&self) -> Option<TextRange> {
 		match self {
-			Signal::Diagnostic(it) => it.range,
-			Signal::Action(it) => it.range,
+			Signal::Diagnostic(it) => it.range(),
+			Signal::Action(it) => Some(it.range),
 		}
 	}
 }
 
-#[derive(Debug)]
-pub struct DiagnosticWithActions {
-	pub diagnostic: AnalyzeDiagnostic,
-	pub actions: Vec<Action>,
-}
-
-impl From<AnalyzeDiagnostic> for Signal {
-	fn from(d: AnalyzeDiagnostic) -> Self {
-		Self::Diagnostic(d)
+impl From<Diagnostic> for Signal {
+	fn from(d: Diagnostic) -> Self {
+		Self::Diagnostic(d.into())
 	}
 }
 
-impl From<AnalyzeDiagnostic> for Analysis {
-	fn from(d: AnalyzeDiagnostic) -> Self {
+impl From<Diagnostic> for AnalyzeDiagnostic {
+	fn from(d: Diagnostic) -> Self {
+		AnalyzeDiagnostic::new(d)
+	}
+}
+
+impl From<Diagnostic> for Analysis {
+	fn from(d: Diagnostic) -> Self {
 		Analysis {
 			signals: vec![d.into()],
 		}
@@ -102,20 +62,62 @@ impl From<Action> for Analysis {
 	}
 }
 
-impl FromIterator<Signal> for Result<Analysis> {
+impl FromIterator<Signal> for Option<Analysis> {
 	fn from_iter<T: IntoIterator<Item = Signal>>(iter: T) -> Self {
 		let analysis = Analysis {
 			signals: Vec::from_iter(iter),
 		};
-		Ok(analysis)
+		Some(analysis)
+	}
+}
+
+impl FromIterator<Signal> for Analysis {
+	fn from_iter<T: IntoIterator<Item = Signal>>(iter: T) -> Self {
+		Analysis {
+			signals: Vec::from_iter(iter),
+		}
+	}
+}
+
+impl FromIterator<AnalyzeDiagnostic> for Analysis {
+	fn from_iter<T: IntoIterator<Item = AnalyzeDiagnostic>>(iter: T) -> Self {
+		Analysis {
+			signals: iter.into_iter().map(Signal::Diagnostic).collect(),
+		}
 	}
 }
 
 #[derive(Debug, Clone)]
+/// Combines an rslint_errors Diagnostic with [SyntaxEdit] actions.
+///
+/// The suggestions on a [rslint_errors::Diagnostic] are only suitable for text edits.
+/// Perhaps that diagnostic type can be modified so that this type is
+/// unnecessary, but we may not want the core diagnostics format to directly
+/// reference syntax nodes.
 pub struct AnalyzeDiagnostic {
-	pub range: TextRange,
-	pub message: String,
+	pub diagnostic: Diagnostic,
 	pub actions: Vec<Action>,
+}
+
+impl AnalyzeDiagnostic {
+	pub fn new(diagnostic: Diagnostic) -> Self {
+		Self {
+			diagnostic,
+			actions: vec![],
+		}
+	}
+
+	pub fn with_actions(diagnostic: Diagnostic, actions: Vec<Action>) -> Self {
+		Self {
+			diagnostic,
+			actions,
+		}
+	}
+
+	/// Get the [TextRange] corresponding to the primary label of this diagnostic.
+	pub fn range(&self) -> Option<TextRange> {
+		self.diagnostic.primary_text_range()
+	}
 }
 
 #[derive(Debug, Clone)]
@@ -145,6 +147,7 @@ impl From<Action> for TextAction {
 	}
 }
 
+// TODO: Errors produced by analyzers should be collected on Analysis
 #[derive(Default, Debug)]
 pub struct Analysis {
 	pub signals: Vec<Signal>,
@@ -166,5 +169,25 @@ impl Analysis {
 impl From<Vec<Signal>> for Analysis {
 	fn from(signals: Vec<Signal>) -> Self {
 		Self { signals }
+	}
+}
+
+/// An extension trait for [rslint_errors::Diagnostic]
+/// In the future, the Diagnostic format might be modified directly.
+pub trait DiagnosticExt {
+	fn into_signal(self) -> Signal;
+
+	fn primary_text_range(&self) -> Option<TextRange>;
+}
+
+impl DiagnosticExt for Diagnostic {
+	/// Convenience method to wrap a [Diagnostic] in [Signal::Diagnostic]
+	fn into_signal(self) -> Signal {
+		Signal::Diagnostic(self.into())
+	}
+
+	/// Get the [TextRange] of the diagnostic's primary label
+	fn primary_text_range(&self) -> Option<TextRange> {
+		self.primary.as_ref().map(|p| p.span.range.as_text_range())
 	}
 }

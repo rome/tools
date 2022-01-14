@@ -7,7 +7,7 @@ use rslint_parser::parse_text;
 use crate::line_index;
 
 pub fn format(text: &str, file_id: FileId) -> Result<Vec<TextEdit>> {
-	let tree = parse_text(text, file_id.0).syntax();
+	let tree = parse_text(text, file_id).syntax();
 
 	let options = FormatOptions {
 		indent_style: IndentStyle::Tab,
