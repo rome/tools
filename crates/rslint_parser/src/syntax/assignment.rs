@@ -351,6 +351,9 @@ struct ReparseAssignment {
 	result: Option<CompletedMarker>,
 	// Tracks if the visitor is still inside of an assignment
 	inside_assignment: bool,
+	// Tracks if the visitor is inside a member expression or computed expression
+	// for eval/arguments validation
+	inside_member_or_computed_expression: bool,
 }
 
 impl ReparseAssignment {
@@ -359,6 +362,7 @@ impl ReparseAssignment {
 			parents: Vec::default(),
 			result: None,
 			inside_assignment: true,
+			inside_member_or_computed_expression: false,
 		}
 	}
 }
@@ -379,10 +383,12 @@ impl RewriteParseEvents for ReparseAssignment {
 			JS_PARENTHESIZED_EXPRESSION => JS_PARENTHESIZED_ASSIGNMENT,
 			JS_STATIC_MEMBER_EXPRESSION => {
 				self.inside_assignment = false;
+				self.inside_member_or_computed_expression = true;
 				JS_STATIC_MEMBER_ASSIGNMENT
 			}
 			JS_COMPUTED_MEMBER_EXPRESSION => {
 				self.inside_assignment = false;
+				self.inside_member_or_computed_expression = true;
 				JS_COMPUTED_MEMBER_ASSIGNMENT
 			}
 			JS_IDENTIFIER_EXPRESSION => JS_IDENTIFIER_ASSIGNMENT,
@@ -422,6 +428,27 @@ impl RewriteParseEvents for ReparseAssignment {
 			) && kind == T![?.]
 			{
 				*parent_kind = JS_UNKNOWN_ASSIGNMENT
+			}
+
+			let src_str = p.cur_src();
+			if kind == IDENT
+				&& (src_str == "eval" || src_str == "arguments")
+				&& p.state.strict().is_some()
+				// If we're inside a member or computed expression then we do not error
+				&& !self.inside_member_or_computed_expression
+			{
+				// Cloning because cannot keep immutable ref to p
+				// and mutable ref with p.error()
+				let src = src_str.to_string();
+
+				*parent_kind = JS_UNKNOWN;
+				p.error(
+					p.err_builder(&format!(
+						"Illegal use of `{}` as an identifier in strict mode",
+						src
+					))
+					.primary(p.cur_tok().range(), ""),
+				);
 			}
 		}
 
