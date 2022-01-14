@@ -8,12 +8,12 @@ license = "MIT"
 repository = "https://github.com/rslint/rslint"
 
 [dependencies]
-bitflags = "1.2.1"
-once_cell = "1.5.2"
+bitflags = "1.3.2"
+once_cell = "1.9.0"
 rslint_errors = { version = "0.2", path = "../rslint_errors", optional = true }
 
 [dev-dependencies]
-criterion = "0.3"
+criterion = "0.3.5"
 
 [[bench]]
 name = "regex"

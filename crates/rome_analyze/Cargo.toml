@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 rslint_parser = { path = "../rslint_parser" }
-anyhow = "1.0.35"
-once_cell = "1"
-tracing = { version = "0.1", features = ["max_level_trace"] }
+anyhow = "1.0.52"
+once_cell = "1.9.0"
+tracing = { version = "0.1.29", features = ["max_level_trace"] }
 rslint_errors = { path = "../rslint_errors", version = "0.2.0" }

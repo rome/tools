@@ -8,21 +8,19 @@ description = "Library for generic lossless syntax trees"
 edition = "2021"
 
 [dependencies]
-rustc-hash = "1.0.1"
+rustc-hash = "1.1.0"
 hashbrown = { version = "0.11.2", features = [
     "inline-more",
 ], default-features = false }
 text-size = "1.1.0"
-memoffset = "0.6"
-countme = "2.0.0"
+memoffset = "0.6.5"
+countme = "3.0.0"
 
-serde = { version = "1.0.89", optional = true, default-features = false }
+serde = { version = "1.0.133", optional = true, default-features = false }
 
 [dev-dependencies]
-m_lexer = "0.0.4"
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
-serde_json = "1.0.69"
 
 [features]
 serde1 = ["serde", "text-size/serde"]
