@@ -50,7 +50,7 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 							format!("{}{}", good, down)
 						}
 					}
-					std::cmp::Ordering::Equal => format!(""),
+					std::cmp::Ordering::Equal => String::new(),
 					std::cmp::Ordering::Greater => {
 						if i_am_passed_results {
 							format!("{}{}", good, up)
@@ -60,7 +60,7 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 					}
 				}
 			} else {
-				format!("")
+				String::new()
 			};
 
 			format!(
@@ -108,7 +108,7 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 			"| Coverage | {:.2}% | {:.2}% | {} |",
 			base_coverage,
 			new_coverage,
-			format!(
+			format_args!(
 				"{}{}{:.2}%{}",
 				if coverage_diff.abs() > f64::EPSILON {
 					"**"
