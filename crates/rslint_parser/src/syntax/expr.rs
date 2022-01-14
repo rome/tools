@@ -199,12 +199,19 @@ fn parse_assign_expr_base(p: &mut Parser) -> ParsedSyntax {
 // test_err assign_expr_left
 // ( = foo);
 
+// test assign_eval_member_or_computed_expr
+// eval.foo = 10
+// arguments[1] = "baz"
+// eval[2] = "Chungking Express"
+
 // test_err assign_eval_or_arguments
 // eval = 0
 // eval ??= 2
 // eval *= 4
 // arguments = "foo"
 // arguments ||= "baz"
+// ({ eval } = o)
+// ({ foo: { eval }}) = o
 fn parse_assign_expr_recursive(
 	p: &mut Parser,
 	target: CompletedMarker,
