@@ -1,9 +1,7 @@
 use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::{
-    is_at_identifier, parse_conditional_expr, parse_expression, parse_unary_expr,
-};
+use crate::syntax::expr::{is_at_identifier, parse_conditional_expr, parse_unary_expr};
 use crate::syntax::js_parse_error::{
     expected_assignment_target, expected_identifier, expected_object_member_name,
 };
@@ -38,10 +36,6 @@ pub(crate) fn expression_to_assignment_pattern(
     target: CompletedMarker,
     checkpoint: Checkpoint,
 ) -> CompletedMarker {
-    if let Ok(assignment_target) = try_expression_to_assignment(p, target, checkpoint) {
-        return assignment_target;
-    }
-
     match target.kind() {
         JS_OBJECT_EXPRESSION => {
             p.rewind(checkpoint);
