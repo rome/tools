@@ -271,26 +271,6 @@ gen_change_parser_state!(
 	ParsingContextFlags::POTENTIAL_ARROW_START
 );
 
-#[derive(Debug, Clone, Default)]
-pub struct LabelSetSnapshot(LabelSet);
-
-/// Resets the [ParserState] `labels` field to an empty map
-pub struct NewLabelsScope;
-
-impl ChangeParserState for NewLabelsScope {
-	type Snapshot = LabelSetSnapshot;
-
-	#[inline]
-	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-		LabelSetSnapshot(std::mem::take(&mut state.label_set))
-	}
-
-	#[inline]
-	fn restore(state: &mut ParserState, value: Self::Snapshot) {
-		state.label_set = value.0
-	}
-}
-
 #[derive(Default, Debug)]
 pub struct EnableStrictModeSnapshot(Option<StrictMode>);
 
