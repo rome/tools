@@ -14,8 +14,8 @@ atty = { version = "0.2.14", optional = true }
 ansi_term = { version = "0.12.1", optional = true }
 
 [dev-dependencies]
-quickcheck = "0.9"
-quickcheck_macros = "0.9"
+quickcheck = "1.0.3"
+quickcheck_macros = "1.0.0"
 
 [features]
 highlight = ["atty", "ansi_term"]
