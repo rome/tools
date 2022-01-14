@@ -432,10 +432,10 @@ impl RewriteParseEvents for ReparseAssignment {
 
             let src_str = p.cur_src();
             if kind == IDENT
-				&& (src_str == "eval" || src_str == "arguments")
-				&& p.state.strict().is_some()
-				// If we're inside a member or computed expression then we do not error
-				&& !self.inside_member_or_computed_expression
+                && (src_str == "eval" || src_str == "arguments")
+                && p.state.strict().is_some()
+                // If we're inside a member or computed expression then we do not error
+                && !self.inside_member_or_computed_expression
             {
                 // Cloning because cannot keep immutable ref to p
                 // and mutable ref with p.error()

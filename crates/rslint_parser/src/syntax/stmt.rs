@@ -257,61 +257,61 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
 // label1: function a() {}
 fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     parse_identifier(p, JS_LABELED_STATEMENT).map(|identifier| {
-		let label = if !identifier.kind().is_unknown() {
-			let range = identifier.range(p);
-			let label = p.source(range);
+        let label = if !identifier.kind().is_unknown() {
+            let range = identifier.range(p);
+            let label = p.source(range);
 
-			if let Some(first_range) = p.state.labels.get(label) {
-				let err = p
-					.err_builder("Duplicate statement labels are not allowed")
-					.secondary(
-						first_range.to_owned(),
-						&format!("`{}` is first used as a label here", label),
-					)
-					.primary(
-						range,
-						&format!("a second use of `{}` here is not allowed", label),
-					);
+            if let Some(first_range) = p.state.labels.get(label) {
+                let err = p
+                    .err_builder("Duplicate statement labels are not allowed")
+                    .secondary(
+                        first_range.to_owned(),
+                        &format!("`{}` is first used as a label here", label),
+                    )
+                    .primary(
+                        range,
+                        &format!("a second use of `{}` here is not allowed", label),
+                    );
 
-				p.error(err);
-				None
-			} else {
-				let string = label.to_string();
-				p.state.labels.insert(string.clone(), range.into());
-				Some(string)
-			}
-		} else {
-			None
-		};
+                p.error(err);
+                None
+            } else {
+                let string = label.to_string();
+                p.state.labels.insert(string.clone(), range.into());
+                Some(string)
+            }
+        } else {
+            None
+        };
 
-		let labelled_statement = identifier.undo_completion(p);
-		p.bump_any();
+        let labelled_statement = identifier.undo_completion(p);
+        p.bump_any();
 
-		let body = if is_at_identifier(p) && p.nth_at(1, T![:]) && StrictMode.is_unsupported(p) {
-			// Re-use the parent context to catch `if (true) label1: label2: function A() {}
-			parse_labeled_statement(p, context)
-		} else {
-			parse_statement(p, StatementContext::Label)
-		}.or_add_diagnostic(p, expected_statement);
+        let body = if is_at_identifier(p) && p.nth_at(1, T![:]) && StrictMode.is_unsupported(p) {
+            // Re-use the parent context to catch `if (true) label1: label2: function A() {}
+            parse_labeled_statement(p, context)
+        } else {
+            parse_statement(p, StatementContext::Label)
+        }.or_add_diagnostic(p, expected_statement);
 
-		match body {
-			Some(mut body) if context.is_single_statement() && body.kind() == JS_FUNCTION_STATEMENT => {
-				// test_err labelled_function_decl_in_single_statement_context
-				// if (true) label1: label2: function a() {}
-				p.error(p.err_builder("Labelled function declarations are only allowed at top-level or inside a block").primary(body.range(p), "Wrap the labelled statement in a block statement"));
-				body.change_to_unknown(p);
-			},
-			// test labelled_statement_in_single_statement_context
-			// if (true) label1: var a = 10;
-			_ => {}
-		}
+        match body {
+            Some(mut body) if context.is_single_statement() && body.kind() == JS_FUNCTION_STATEMENT => {
+                // test_err labelled_function_decl_in_single_statement_context
+                // if (true) label1: label2: function a() {}
+                p.error(p.err_builder("Labelled function declarations are only allowed at top-level or inside a block").primary(body.range(p), "Wrap the labelled statement in a block statement"));
+                body.change_to_unknown(p);
+            },
+            // test labelled_statement_in_single_statement_context
+            // if (true) label1: var a = 10;
+            _ => {}
+        }
 
-		if let Some(label) = label {
-			p.state.labels.remove(&label);
-		}
+        if let Some(label) = label {
+            p.state.labels.remove(&label);
+        }
 
-		labelled_statement.complete(p, JS_LABELED_STATEMENT)
-	})
+        labelled_statement.complete(p, JS_LABELED_STATEMENT)
+    })
 }
 
 // test ts_keyword_assignments

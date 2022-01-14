@@ -705,7 +705,7 @@ fn is_at_static_initialization_block_class_member(p: &Parser) -> bool {
 // class A {
 //   static a;
 //   static {
-// 		this.a = "test";
+//     this.a = "test";
 //   }
 // }
 //

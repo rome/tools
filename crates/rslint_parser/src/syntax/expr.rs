@@ -1530,9 +1530,9 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
             //   }
             // }
             p.error(
-				p.err_builder("`await` is only allowed within async functions and at the top levels of modules.")
-					.primary(expr.range(p), ""),
-			);
+                p.err_builder("`await` is only allowed within async functions and at the top levels of modules.")
+                    .primary(expr.range(p), ""),
+            );
             expr.change_to_unknown(p);
         }
 
