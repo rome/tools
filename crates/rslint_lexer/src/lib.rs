@@ -1442,12 +1442,13 @@ impl<'src> Lexer<'src> {
 			let digits_str = std::str::from_utf8_unchecked(
 				self.bytes.get_unchecked((self.cur - 3)..(self.cur + 1)),
 			);
+			// println!("Found unicode: {}", digits_str);
 			if let Ok(digits) = u32::from_str_radix(digits_str, 16) {
 				if !advance {
 					self.cur -= 4;
 				}
 
-				let diagnostic = Diagnostic::error(
+				let diagnostic = Diagnostic::warning(
 					self.file_id,
 					"",
 					"invalid digits after unicode escape sequence",
@@ -1458,6 +1459,7 @@ impl<'src> Lexer<'src> {
 				);
 
 				std::char::from_u32(digits).ok_or(diagnostic)
+				// Ok(std::char::from_u32_unchecked(digits))
 			} else {
 				// Safety: we know this is unreachable because 4 hexdigits cannot make an out of bounds char,
 				// and we make sure that the chars are actually hex digits
