@@ -17,12 +17,10 @@ JsModule {
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
                                 members: JsObjectMemberList [
-                                    JsPropertyObjectMember {
-                                        name: JsLiteralMemberName {
-                                            value: IDENT@10..13 "foo" [] [],
+                                    JsShorthandPropertyObjectMember {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@10..13 "foo" [] [],
                                         },
-                                        colon_token: missing (required),
-                                        value: missing (required),
                                     },
                                     missing separator,
                                     JsUnknownMember {
@@ -61,11 +59,9 @@ JsModule {
               1: JS_OBJECT_EXPRESSION@8..16
                 0: L_CURLY@8..10 "{" [] [Whitespace(" ")]
                 1: JS_OBJECT_MEMBER_LIST@10..15
-                  0: JS_PROPERTY_OBJECT_MEMBER@10..13
-                    0: JS_LITERAL_MEMBER_NAME@10..13
+                  0: JS_SHORTHAND_PROPERTY_OBJECT_MEMBER@10..13
+                    0: JS_REFERENCE_IDENTIFIER@10..13
                       0: IDENT@10..13 "foo" [] []
-                    1: (empty)
-                    2: (empty)
                   1: (empty)
                   2: JS_UNKNOWN_MEMBER@13..15
                     0: R_PAREN@13..15 ")" [] [Whitespace(" ")]
@@ -73,7 +69,7 @@ JsModule {
       1: (empty)
   3: EOF@16..17 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `:` but instead found `)`
+error[SyntaxError]: expected `,` but instead found `)`
   ┌─ object_expr_method.js:1:14
   │
 1 │ let b = { foo) }

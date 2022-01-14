@@ -1,6 +1,7 @@
 use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
 use crate::state::{
-	EnableStrictMode, EnterClassPropertyInitializer, EnterParameters, SignatureFlags,
+	EnableStrictMode, EnterClassPropertyInitializer, EnterClassStaticInitializationBlock,
+	EnterParameters, SignatureFlags,
 };
 use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::parse_expr_or_assignment;
@@ -13,7 +14,7 @@ use crate::syntax::js_parse_error::expected_binding;
 use crate::syntax::object::{
 	is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
 };
-use crate::syntax::stmt::{is_semi, optional_semi, StatementContext};
+use crate::syntax::stmt::{is_semi, optional_semi, parse_statements, StatementContext};
 use crate::syntax::typescript::{
 	maybe_ts_type_annotation, ts_heritage_clause, ts_modifier, ts_type_params,
 	DISALLOWED_TYPE_NAMES,
@@ -343,6 +344,10 @@ impl ParseNodeList for ClassMembersList {
 // }
 
 fn parse_class_member(p: &mut Parser) -> ParsedSyntax {
+	if is_at_static_initialization_block_class_member(p) {
+		return parse_static_initialization_block_class_member(p);
+	}
+
 	let member_marker = p.start();
 	// test class_empty_element
 	// class foo { ;;;;;;;;;; get foo() {};;;;}
@@ -690,6 +695,35 @@ fn parse_class_member_impl(
 	p.rewind(checkpoint);
 	member_marker.abandon(p);
 	Absent
+}
+
+fn is_at_static_initialization_block_class_member(p: &Parser) -> bool {
+	p.at(T![ident]) && p.cur_src() == "static" && p.nth_at(1, T!['{'])
+}
+
+// test static_initialization_block_member
+// class A {
+//   static a;
+//   static {
+// 		this.a = "test";
+//   }
+// }
+//
+fn parse_static_initialization_block_class_member(p: &mut Parser) -> ParsedSyntax {
+	if !is_at_static_initialization_block_class_member(p) {
+		return Absent;
+	}
+
+	let m = p.start();
+	p.bump_remap(T![static]);
+
+	p.expect(T!['{']);
+	p.with_state(EnterClassStaticInitializationBlock, |p| {
+		parse_statements(p, true)
+	});
+	p.expect(T!['}']);
+
+	Present(m.complete(p, JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER))
 }
 
 fn property_declaration_class_member_body(

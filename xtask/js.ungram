@@ -592,6 +592,7 @@ JsAnyClassMemberName =
 
 JsAnyClassMember =
 	JsConstructorClassMember
+	| JsStaticInitializationBlockClassMember
 	| JsPropertyClassMember
 	| JsMethodClassMember
 	| JsGetterClassMember
@@ -599,6 +600,12 @@ JsAnyClassMember =
 	| JsEmptyClassMember
 	| TsIndexSignature
 	| JsUnknownMember
+
+JsStaticInitializationBlockClassMember =
+	'static'
+	'{'
+	statements: JsStatementList
+	'}'
 
 // class Test { constructor() {} }
 //              ^^^^^^^^^^^^^^^^
