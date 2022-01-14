@@ -11,7 +11,6 @@ use std::panic::catch_unwind;
 use std::path::{Path, PathBuf};
 
 #[test]
-#[ignore]
 fn parser_smoke_test() {
 	let src = r#"
 let [a, b] = [1, 2];
