@@ -14,10 +14,8 @@ use std::path::{Path, PathBuf};
 #[ignore]
 fn parser_smoke_test() {
 	let src = r#"
-var asyncFn = async function () {
-  var \u0061wait;
-};
-"#;
+let [a, b] = [1, 2];
+    "#;
 
 	let module = parse_module(src, 0);
 
