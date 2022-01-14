@@ -181,7 +181,7 @@ error[SyntaxError]: expected an unary expression but instead found ')'
   │                        ^ Expected an unary expression here
 
 --
-error[SyntaxError]: `await` expressions cannot be used in a parameter initializer
+error[SyntaxError]: `await` is only allowed within async functions and at the top levels of modules.
   ┌─ async_arrow_expr_await_parameter.js:2:19
   │
 2 │ async() => { (a = await) => {} };

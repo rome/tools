@@ -170,7 +170,7 @@ pub(crate) fn parse_expr_or_assignment(p: &mut Parser) -> ParsedSyntax {
 
 fn parse_assign_expr_base(p: &mut Parser) -> ParsedSyntax {
 	if p.state.in_generator() && p.at(T![yield]) {
-		return Present(yield_expr(p));
+		return Present(parse_yield_expression(p));
 	}
 	let potential_arrow_start = p.at(T!['(']) | is_at_identifier(p);
 
@@ -227,7 +227,7 @@ fn parse_assign_expr_recursive(
 //  yield
 //  yield
 // }
-fn yield_expr(p: &mut Parser) -> CompletedMarker {
+fn parse_yield_expression(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T![yield]);
 
@@ -241,12 +241,12 @@ fn yield_expr(p: &mut Parser) -> CompletedMarker {
 
 	let mut yield_expr = m.complete(p, JS_YIELD_EXPRESSION);
 
-	if p.state.in_parameters() {
+	if !p.state.is_top_level() && !p.state.in_function() {
 		// test_err yield_expr_in_parameter_initializer
 		// function* test(a = yield "test") {}
 		// function test(a = yield "test") {}
 		p.error(
-			p.err_builder("`yield` expressions cannot be used in a parameter initializer")
+			p.err_builder("`yield` is only allowed within generator functions.")
 				.primary(yield_expr.range(p), ""),
 		);
 		yield_expr.change_to_unknown(p);
@@ -1502,12 +1502,20 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
 
 		let mut expr = m.complete(p, JS_AWAIT_EXPRESSION);
 
-		if p.state.in_parameters() {
+		if !p.state.is_top_level() && !p.state.in_function() {
 			// test_err await_in_parameter_initializer
 			// async function test(a = await b()) {}
 			// function test(a = await b()) {}
+
+			// test_err await_in_static_initialization_block_member
+			// // SCRIPT
+			// class A {
+			//   static {
+			//     await;
+			//   }
+			// }
 			p.error(
-				p.err_builder("`await` expressions cannot be used in a parameter initializer")
+				p.err_builder("`await` is only allowed within async functions and at the top levels of modules.")
 					.primary(expr.range(p), ""),
 			);
 			expr.change_to_unknown(p);
