@@ -18,6 +18,24 @@ expression(
 );
 
 
+expression( "something" // line comment 
+);
+
+
+expression( "something" /** something **/  );
+
+expression(/** something **/ "something" 
+          );
+
+expression(
+    /** something **/
+    "something" 
+);
+
+const array0 = [/*0*/];
+const array1 = [/*0*/,/*1*/];
+const array2 = [/*0*/,/*1*/,/*2*/];
+
 /* block comment */
 statement();
 

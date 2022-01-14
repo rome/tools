@@ -1,5 +1,5 @@
 use crate::{
-    format_elements, group_elements, join_elements, soft_indent, soft_line_break_or_space,
+    format_elements, group_elements, join_elements, soft_indent, soft_line_break_or_space, token,
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
@@ -9,7 +9,7 @@ use rslint_parser::ast::{
 
 impl ToFormatElement for JsArrayAssignmentPattern {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let elements = formatter.format_separated(self.elements())?;
+        let elements = formatter.format_separated(self.elements(), || token(","))?;
         Ok(group_elements(formatter.format_delimited_group(
             &self.l_brack_token()?,
             |leading, trailing| {

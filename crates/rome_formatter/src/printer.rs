@@ -104,6 +104,10 @@ impl<'a> Printer<'a> {
 
         while let Some(print_element_call) = queue.dequeue() {
             queue.extend(self.print_element(print_element_call.element, print_element_call.args));
+
+            if queue.is_empty() && !self.state.line_suffixes.is_empty() {
+                queue.extend(self.state.line_suffixes.drain(..));
+            }
         }
 
         Formatted::new(self.state.buffer)
@@ -189,7 +193,11 @@ impl<'a> Printer<'a> {
                         .chain(once(PrintElementCall::new(element, args)))
                         .collect()
                 } else {
-                    self.print_str("\n");
+                    // Only print a newline if the current line isn't already empty
+                    if self.state.line_width > 0 {
+                        self.print_str("\n");
+                    }
+
                     self.state.pending_space = false;
                     self.state.pending_indent = args.indent;
                     vec![]
@@ -446,6 +454,11 @@ impl<'a> ElementCallQueue<'a> {
     #[inline]
     pub fn dequeue(&mut self) -> Option<PrintElementCall<'a>> {
         self.0.pop()
+    }
+
+    #[inline]
+    fn is_empty(&self) -> bool {
+        self.0.is_empty()
     }
 }
 

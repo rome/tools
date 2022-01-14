@@ -155,6 +155,17 @@ pub fn token<S: Into<String>>(text: S) -> FormatElement {
     }
 }
 
+/// Push a [FormatElement] to the end of the current line
+///
+/// ## Examples
+///
+/// ```
+/// use rome_formatter::{FormatOptions, token, format_element, line_suffix, format_elements};
+///
+/// let elements = format_elements![token("a"), line_suffix(token("c")), token("b")];
+///
+/// assert_eq!("abc", format_element(&elements, FormatOptions::default()).code());
+/// ```
 #[inline]
 pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
     FormatElement::LineSuffix(Box::new(element.into()))

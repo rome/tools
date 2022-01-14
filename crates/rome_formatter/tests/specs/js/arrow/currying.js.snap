@@ -36,6 +36,5 @@ const mw = (store) => (next) => (action) => {
 };
 const middleware = (options) => (req, res, next) => {
 	// ...
-
 };
 
