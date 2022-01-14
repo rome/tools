@@ -3,18 +3,18 @@ use bitflags::bitflags;
 use std::collections::HashMap;
 use std::ops::{Deref, DerefMut, Range};
 
-type LabelSet = HashMap<String, LabelledItemKind>;
+type LabelSet = HashMap<String, LabelledItem>;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub(crate) enum LabelledItemKind {
+pub(crate) enum LabelledItem {
 	Iteration(Range<usize>),
 	Other(Range<usize>),
 }
 
-impl LabelledItemKind {
+impl LabelledItem {
 	pub(crate) fn range(&self) -> &Range<usize> {
 		match self {
-			LabelledItemKind::Iteration(range) | LabelledItemKind::Other(range) => range,
+			LabelledItem::Iteration(range) | LabelledItem::Other(range) => range,
 		}
 	}
 }

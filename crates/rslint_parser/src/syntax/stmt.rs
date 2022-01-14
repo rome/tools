@@ -9,7 +9,7 @@ use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::state::{
 	AllowObjectExpression, BreakableKind, ChangeParserState, EnableStrictMode,
-	EnableStrictModeSnapshot, EnterBreakable, IncludeIn, LabelledItemKind,
+	EnableStrictModeSnapshot, EnterBreakable, IncludeIn, LabelledItem,
 	StrictMode as StrictModeState,
 };
 use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
@@ -286,8 +286,8 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
                 let string = label.to_string();
 
 				let label_item = match p.cur() {
-					T![for] | T![do] | T![while] => LabelledItemKind::Iteration(range.as_range()),
-					_ => LabelledItemKind::Other(range.as_range())
+					T![for] | T![do] | T![while] => LabelledItem::Iteration(range.as_range()),
+					_ => LabelledItem::Other(range.as_range())
 				};
 
 				p.state.label_set.insert(string.clone(), label_item);
@@ -504,8 +504,8 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
 		let label_name = p.token_src(label_token);
 
 		let error = match p.state.label_set.get(label_name) {
-			Some(LabelledItemKind::Iteration(_)) => None,
-			Some(LabelledItemKind::Other(range)) => {
+			Some(LabelledItem::Iteration(_)) => None,
+			Some(LabelledItem::Other(range)) => {
 				Some(p.err_builder("A `continue` statement can only jump to a label of an enclosing iteration statement.")
 					.primary(label_token.range(), "This label")
 					.secondary(range.to_owned(), "points to non-iteration statement"))
