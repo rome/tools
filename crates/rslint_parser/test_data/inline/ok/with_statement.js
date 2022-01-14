@@ -1,6 +1,6 @@
 // SCRIPT
 function f(x, o) {
-	with (o) {
-		console.log(x);
-	}
+  with (o) {
+    console.log(x);
+  }
 }

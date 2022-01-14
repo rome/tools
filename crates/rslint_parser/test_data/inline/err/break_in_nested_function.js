@@ -1,5 +1,5 @@
 while (true) {
-	function helper() {
- 	 break;
-	}
+  function helper() {
+    break;
+  }
 }
