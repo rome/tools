@@ -27,7 +27,6 @@ fn is_at_identifier_binding(p: &Parser) -> bool {
 }
 
 pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax {
-    dbg!(&p.state, p.cur_src());
     parse_identifier_binding(p)
 }
 
