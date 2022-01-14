@@ -18,7 +18,7 @@ use crate::syntax::js_parse_error::{
 };
 use crate::syntax::stmt::{
 	is_at_variable_declarations, parse_statement, parse_variable_declaration_list, semi,
-	VariableDeclarationParent, STMT_RECOVERY_SET,
+	StatementContext, VariableDeclarationParent, STMT_RECOVERY_SET,
 };
 use crate::syntax::util::expect_keyword;
 use crate::{
@@ -70,7 +70,7 @@ fn parse_module_item(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => parse_import(p),
 		T![export] => parse_export(p),
-		_ => parse_statement(p),
+		_ => parse_statement(p, StatementContext::StatementList),
 	}
 }
 

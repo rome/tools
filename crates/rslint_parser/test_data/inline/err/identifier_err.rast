@@ -83,16 +83,12 @@ JsModule {
                 r_curly_token: R_CURLY@67..68 "}" [] [],
             },
         },
-        JsExpressionStatement {
-            expression: JsUnknownExpression {
-                items: [
-                    JsUnknown {
-                        items: [
-                            IDENT@68..73 "enum" [Newline("\n")] [],
-                        ],
-                    },
-                ],
-            },
+        JsUnknownStatement {
+            items: [
+                ENUM_KW@68..73 "enum" [Newline("\n")] [],
+            ],
+        },
+        JsEmptyStatement {
             semicolon_token: SEMICOLON@73..74 ";" [] [],
         },
         JsExpressionStatement {
@@ -181,17 +177,16 @@ JsModule {
         1: JS_DIRECTIVE_LIST@67..67
         2: JS_STATEMENT_LIST@67..67
         3: R_CURLY@67..68 "}" [] []
-    4: JS_EXPRESSION_STATEMENT@68..74
-      0: JS_UNKNOWN_EXPRESSION@68..73
-        0: JS_UNKNOWN@68..73
-          0: IDENT@68..73 "enum" [Newline("\n")] []
-      1: SEMICOLON@73..74 ";" [] []
-    5: JS_EXPRESSION_STATEMENT@74..86
+    4: JS_UNKNOWN_STATEMENT@68..73
+      0: ENUM_KW@68..73 "enum" [Newline("\n")] []
+    5: JS_EMPTY_STATEMENT@73..74
+      0: SEMICOLON@73..74 ";" [] []
+    6: JS_EXPRESSION_STATEMENT@74..86
       0: JS_UNKNOWN_EXPRESSION@74..85
         0: JS_UNKNOWN@74..85
           0: IDENT@74..85 "implements" [Newline("\n")] []
       1: SEMICOLON@85..86 ";" [] []
-    6: JS_EXPRESSION_STATEMENT@86..97
+    7: JS_EXPRESSION_STATEMENT@86..97
       0: JS_UNKNOWN_EXPRESSION@86..96
         0: JS_UNKNOWN@86..96
           0: IDENT@86..96 "interface" [Newline("\n")] []
@@ -226,11 +221,11 @@ error[SyntaxError]: Illegal use of `yield` as an identifier in generator functio
   │                ^^^^^
 
 --
-error[SyntaxError]: Illegal use of reserved keyword `enum` as an identifier
+error[SyntaxError]: expected a statement but instead found 'enum'
   ┌─ identifier_err.js:5:1
   │
 5 │ enum;
-  │ ^^^^
+  │ ^^^^ Expected a statement here
 
 --
 error[SyntaxError]: Illegal use of reserved keyword `implements` as an identifier in strict mode

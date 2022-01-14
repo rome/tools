@@ -1,0 +1,71 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsIfStatement {
+            if_token: IF_KW@0..3 "if" [] [Whitespace(" ")],
+            l_paren_token: L_PAREN@3..4 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@4..8 "true" [] [],
+            },
+            r_paren_token: R_PAREN@8..10 ")" [] [Whitespace(" ")],
+            consequent: JsLabeledStatement {
+                label_token: IDENT@10..16 "label1" [] [],
+                colon_token: COLON@16..18 ":" [] [Whitespace(" ")],
+                body: JsVariableStatement {
+                    declarations: JsVariableDeclarations {
+                        kind: VAR_KW@18..22 "var" [] [Whitespace(" ")],
+                        items: JsVariableDeclarationList [
+                            JsVariableDeclaration {
+                                id: JsIdentifierBinding {
+                                    name_token: IDENT@22..24 "a" [] [Whitespace(" ")],
+                                },
+                                excl_token: missing (optional),
+                                type_annotation: missing (optional),
+                                initializer: JsInitializerClause {
+                                    eq_token: EQ@24..26 "=" [] [Whitespace(" ")],
+                                    expression: JsNumberLiteralExpression {
+                                        value_token: JS_NUMBER_LITERAL@26..28 "10" [] [],
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                    semicolon_token: SEMICOLON@28..29 ";" [] [],
+                },
+            },
+            else_clause: missing (optional),
+        },
+    ],
+    eof_token: EOF@29..30 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..30
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..29
+    0: JS_IF_STATEMENT@0..29
+      0: IF_KW@0..3 "if" [] [Whitespace(" ")]
+      1: L_PAREN@3..4 "(" [] []
+      2: JS_BOOLEAN_LITERAL_EXPRESSION@4..8
+        0: TRUE_KW@4..8 "true" [] []
+      3: R_PAREN@8..10 ")" [] [Whitespace(" ")]
+      4: JS_LABELED_STATEMENT@10..29
+        0: IDENT@10..16 "label1" [] []
+        1: COLON@16..18 ":" [] [Whitespace(" ")]
+        2: JS_VARIABLE_STATEMENT@18..29
+          0: JS_VARIABLE_DECLARATIONS@18..28
+            0: VAR_KW@18..22 "var" [] [Whitespace(" ")]
+            1: JS_VARIABLE_DECLARATION_LIST@22..28
+              0: JS_VARIABLE_DECLARATION@22..28
+                0: JS_IDENTIFIER_BINDING@22..24
+                  0: IDENT@22..24 "a" [] [Whitespace(" ")]
+                1: (empty)
+                2: (empty)
+                3: JS_INITIALIZER_CLAUSE@24..28
+                  0: EQ@24..26 "=" [] [Whitespace(" ")]
+                  1: JS_NUMBER_LITERAL_EXPRESSION@26..28
+                    0: JS_NUMBER_LITERAL@26..28 "10" [] []
+          1: SEMICOLON@28..29 ";" [] []
+      5: (empty)
+  3: EOF@29..30 "" [Newline("\n")] []
