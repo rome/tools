@@ -33,12 +33,10 @@ impl ToFormatElement for JsVariableDeclarations {
                     } else {
                         formatter.format_token(&separator)?
                     }
+                } else if index == last_index {
+                    empty_element()
                 } else {
-                    if index == last_index {
-                        empty_element()
-                    } else {
-                        token(",")
-                    }
+                    token(",")
                 };
 
                 Ok(format_elements![node, separator])

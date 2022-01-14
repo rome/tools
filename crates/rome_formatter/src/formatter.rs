@@ -254,12 +254,10 @@ impl Formatter {
                 } else {
                     self.format_token(&separator)?
                 }
+            } else if index == last_index {
+                if_group_breaks(separator_factory())
             } else {
-                if index == last_index {
-                    if_group_breaks(separator_factory())
-                } else {
-                    separator_factory()
-                }
+                separator_factory()
             };
 
             result.push(format_elements![node, separator]);

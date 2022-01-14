@@ -31,15 +31,11 @@ impl ToFormatElement for JsArrayExpression {
                             } else {
                                 token(",")
                             }
+                        } else if let Some(separator) = element.trailing_separator()? {
+                            formatter
+                                .format_replaced_token(&separator, if_group_breaks(token(",")))?
                         } else {
-                            if let Some(separator) = element.trailing_separator()? {
-                                formatter.format_replaced_token(
-                                    &separator,
-                                    if_group_breaks(token(",")),
-                                )?
-                            } else {
-                                if_group_breaks(token(","))
-                            }
+                            if_group_breaks(token(","))
                         };
 
                         Ok(format_elements![node, separator])
