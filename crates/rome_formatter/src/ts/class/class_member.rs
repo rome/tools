@@ -18,6 +18,7 @@ impl ToFormatElement for JsAnyClassMember {
 			JsAnyClassMember::JsSetterClassMember(setter) => setter.to_format_element(formatter),
 			JsAnyClassMember::JsUnknownMember(_) => todo!(),
 			JsAnyClassMember::TsIndexSignature(_) => todo!(),
+			JsAnyClassMember::JsStaticInitializationBlockClassMember(_) => todo!(),
 		}
 	}
 }

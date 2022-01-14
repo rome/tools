@@ -1819,6 +1819,22 @@ impl JsSpread {
 	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsStaticInitializationBlockClassMember {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsStaticInitializationBlockClassMember {
+	pub fn static_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 0usize)
+	}
+	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 1usize)
+	}
+	pub fn statements(&self) -> JsStatementList { support::list(&self.syntax, 2usize) }
+	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, 3usize)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsStaticMemberAssignment {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2905,6 +2921,7 @@ pub enum JsAnyClassMember {
 	JsMethodClassMember(JsMethodClassMember),
 	JsPropertyClassMember(JsPropertyClassMember),
 	JsSetterClassMember(JsSetterClassMember),
+	JsStaticInitializationBlockClassMember(JsStaticInitializationBlockClassMember),
 	JsUnknownMember(JsUnknownMember),
 	TsIndexSignature(TsIndexSignature),
 }
@@ -7187,6 +7204,42 @@ impl From<JsSpread> for SyntaxNode {
 impl From<JsSpread> for SyntaxElement {
 	fn from(n: JsSpread) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for JsStaticInitializationBlockClassMember {
+	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsStaticInitializationBlockClassMember {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsStaticInitializationBlockClassMember")
+			.field(
+				"static_token",
+				&support::DebugSyntaxResult(self.static_token()),
+			)
+			.field(
+				"l_curly_token",
+				&support::DebugSyntaxResult(self.l_curly_token()),
+			)
+			.field("statements", &self.statements())
+			.field(
+				"r_curly_token",
+				&support::DebugSyntaxResult(self.r_curly_token()),
+			)
+			.finish()
+	}
+}
+impl From<JsStaticInitializationBlockClassMember> for SyntaxNode {
+	fn from(n: JsStaticInitializationBlockClassMember) -> SyntaxNode { n.syntax }
+}
+impl From<JsStaticInitializationBlockClassMember> for SyntaxElement {
+	fn from(n: JsStaticInitializationBlockClassMember) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for JsStaticMemberAssignment {
 	fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_STATIC_MEMBER_ASSIGNMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -10456,6 +10509,11 @@ impl From<JsSetterClassMember> for JsAnyClassMember {
 		JsAnyClassMember::JsSetterClassMember(node)
 	}
 }
+impl From<JsStaticInitializationBlockClassMember> for JsAnyClassMember {
+	fn from(node: JsStaticInitializationBlockClassMember) -> JsAnyClassMember {
+		JsAnyClassMember::JsStaticInitializationBlockClassMember(node)
+	}
+}
 impl From<JsUnknownMember> for JsAnyClassMember {
 	fn from(node: JsUnknownMember) -> JsAnyClassMember { JsAnyClassMember::JsUnknownMember(node) }
 }
@@ -10472,6 +10530,7 @@ impl AstNode for JsAnyClassMember {
 				| JS_METHOD_CLASS_MEMBER
 				| JS_PROPERTY_CLASS_MEMBER
 				| JS_SETTER_CLASS_MEMBER
+				| JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
 				| JS_UNKNOWN_MEMBER
 				| TS_INDEX_SIGNATURE
 		)
@@ -10496,6 +10555,11 @@ impl AstNode for JsAnyClassMember {
 			JS_SETTER_CLASS_MEMBER => {
 				JsAnyClassMember::JsSetterClassMember(JsSetterClassMember { syntax })
 			}
+			JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER => {
+				JsAnyClassMember::JsStaticInitializationBlockClassMember(
+					JsStaticInitializationBlockClassMember { syntax },
+				)
+			}
 			JS_UNKNOWN_MEMBER => JsAnyClassMember::JsUnknownMember(JsUnknownMember { syntax }),
 			TS_INDEX_SIGNATURE => JsAnyClassMember::TsIndexSignature(TsIndexSignature { syntax }),
 			_ => return None,
@@ -10510,6 +10574,7 @@ impl AstNode for JsAnyClassMember {
 			JsAnyClassMember::JsMethodClassMember(it) => &it.syntax,
 			JsAnyClassMember::JsPropertyClassMember(it) => &it.syntax,
 			JsAnyClassMember::JsSetterClassMember(it) => &it.syntax,
+			JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => &it.syntax,
 			JsAnyClassMember::JsUnknownMember(it) => &it.syntax,
 			JsAnyClassMember::TsIndexSignature(it) => &it.syntax,
 		}
@@ -10524,6 +10589,9 @@ impl std::fmt::Debug for JsAnyClassMember {
 			JsAnyClassMember::JsMethodClassMember(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyClassMember::JsPropertyClassMember(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyClassMember::JsSetterClassMember(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => {
+				std::fmt::Debug::fmt(it, f)
+			}
 			JsAnyClassMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyClassMember::TsIndexSignature(it) => std::fmt::Debug::fmt(it, f),
 		}
@@ -10538,6 +10606,7 @@ impl From<JsAnyClassMember> for SyntaxNode {
 			JsAnyClassMember::JsMethodClassMember(it) => it.into(),
 			JsAnyClassMember::JsPropertyClassMember(it) => it.into(),
 			JsAnyClassMember::JsSetterClassMember(it) => it.into(),
+			JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => it.into(),
 			JsAnyClassMember::JsUnknownMember(it) => it.into(),
 			JsAnyClassMember::TsIndexSignature(it) => it.into(),
 		}
@@ -14055,6 +14124,11 @@ impl std::fmt::Display for JsSpread {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsStaticInitializationBlockClassMember {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsStaticMemberAssignment {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -16074,6 +16148,10 @@ impl Debug for DebugSyntaxElement {
 				JS_STATEMENT_LIST => {
 					std::fmt::Debug::fmt(&JsStatementList::cast(node.clone()).unwrap(), f)
 				}
+				JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER => std::fmt::Debug::fmt(
+					&JsStaticInitializationBlockClassMember::cast(node.clone()).unwrap(),
+					f,
+				),
 				JS_STATIC_MEMBER_ASSIGNMENT => {
 					std::fmt::Debug::fmt(&JsStaticMemberAssignment::cast(node.clone()).unwrap(), f)
 				}

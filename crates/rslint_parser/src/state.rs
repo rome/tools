@@ -39,7 +39,8 @@ impl ParserState {
 	pub fn new(syntax: Syntax) -> Self {
 		let mut state = ParserState {
 			parsing_context: ParsingContextFlags::ALLOW_OBJECT_EXPRESSION
-				| ParsingContextFlags::INCLUDE_IN,
+				| ParsingContextFlags::INCLUDE_IN
+				| ParsingContextFlags::TOP_LEVEL,
 			labels: HashMap::new(),
 			strict: if syntax.file_kind == FileKind::Module {
 				Some(StrictMode::Module)
@@ -78,9 +79,9 @@ impl ParserState {
 			.contains(ParsingContextFlags::IN_CONSTRUCTOR)
 	}
 
-	pub fn in_parameters(&self) -> bool {
+	pub fn is_top_level(&self) -> bool {
 		self.parsing_context
-			.contains(ParsingContextFlags::IN_PARAMETERS)
+			.contains(ParsingContextFlags::TOP_LEVEL)
 	}
 
 	pub fn continue_allowed(&self) -> bool {
@@ -348,8 +349,8 @@ bitflags! {
 		/// Equivalent to the `Async` generator in the ECMA spec
 		const IN_ASYNC = 0b0000000000001000;
 
-		/// Whether the parser is inside a parameter (maybe nested, like parameter with a function expression initializer)
-		const IN_PARAMETERS = 0b0000000000010000;
+		/// Whether the parser is parsing a top-level statement (not inside a class, function, parameter) or not
+		const TOP_LEVEL = 0b0000000000010000;
 
 		/// Whether `in` should be counted in a binary expression
 		/// this is for `for...in` statements to prevent ambiguity.
@@ -377,10 +378,10 @@ bitflags! {
 		const LOOP = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits;
 
 		/// Bitmask of all the flags that must be reset (shouldn't be inherited) when the parser enters a function
-		const FUNCTION_RESET_MASK = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits | Self::IN_CONSTRUCTOR.bits | Self::IN_ASYNC.bits | Self::IN_GENERATOR.bits;
+		const FUNCTION_RESET_MASK = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits | Self::IN_CONSTRUCTOR.bits | Self::IN_ASYNC.bits | Self::IN_GENERATOR.bits | Self::TOP_LEVEL.bits;
 
 		/// Bitmask of all the flags that must be reset (shouldn't be inherited) when entering parameters.
-		const PARAMETER_RESET_MASK = Self::IN_CONSTRUCTOR.bits | Self::IN_FUNCTION.bits | Self::IN_GENERATOR.bits | Self::IN_ASYNC.bits;
+		const PARAMETER_RESET_MASK = Self::IN_CONSTRUCTOR.bits | Self::IN_FUNCTION.bits | Self::TOP_LEVEL.bits | Self::IN_GENERATOR.bits | Self::IN_ASYNC.bits;
 	}
 }
 
@@ -401,7 +402,6 @@ impl ChangeParserState for EnterParameters {
 
 	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
 		let mut flags = (state.parsing_context - ParsingContextFlags::PARAMETER_RESET_MASK)
-			| ParsingContextFlags::IN_PARAMETERS
 			| ParsingContextFlags::from(self.signature_flags);
 
 		if self.allow_object_expressions {
@@ -473,6 +473,7 @@ impl ChangeParserState for EnterClassPropertyInitializer {
 
 	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
 		let flags = state.parsing_context
+			- ParsingContextFlags::TOP_LEVEL
 			- ParsingContextFlags::IN_ASYNC
 			- ParsingContextFlags::IN_GENERATOR;
 		ParsingContextFlagsSnapshot(std::mem::replace(&mut state.parsing_context, flags))
@@ -480,5 +481,33 @@ impl ChangeParserState for EnterClassPropertyInitializer {
 
 	fn restore(state: &mut ParserState, value: Self::Snapshot) {
 		state.parsing_context = value.0;
+	}
+}
+
+#[derive(Default, Debug, Clone)]
+pub(crate) struct EnterClassStaticInitializationBlockSnapshot {
+	labels: HashMap<String, Range<usize>>,
+	flags: ParsingContextFlags,
+}
+
+pub(crate) struct EnterClassStaticInitializationBlock;
+
+impl ChangeParserState for EnterClassStaticInitializationBlock {
+	type Snapshot = EnterClassStaticInitializationBlockSnapshot;
+
+	fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+		let flags = (state.parsing_context
+			- ParsingContextFlags::FUNCTION_RESET_MASK
+			- ParsingContextFlags::IN_FUNCTION)
+			| ParsingContextFlags::IN_ASYNC; // allow async for better error recovery
+		EnterClassStaticInitializationBlockSnapshot {
+			flags: std::mem::replace(&mut state.parsing_context, flags),
+			labels: std::mem::take(&mut state.labels),
+		}
+	}
+
+	fn restore(state: &mut ParserState, value: Self::Snapshot) {
+		state.parsing_context = value.flags;
+		state.labels = value.labels;
 	}
 }
