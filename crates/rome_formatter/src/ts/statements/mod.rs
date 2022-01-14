@@ -26,12 +26,12 @@ mod with_statement;
 
 /// Formats a list of statements
 pub fn format_statements(stmts: JsStatementList, formatter: &Formatter) -> FormatElement {
-	join_elements(
-		hard_line_break(),
-		stmts.iter().map(|stmt| {
-			formatter
-				.format_node(stmt.clone())
-				.unwrap_or_else(|_| formatter.format_raw(stmt.syntax()).trim_start().trim_end())
-		}),
-	)
+    join_elements(
+        hard_line_break(),
+        stmts.iter().map(|stmt| {
+            formatter
+                .format_node(stmt.clone())
+                .unwrap_or_else(|_| formatter.format_raw(stmt.syntax()).trim_start().trim_end())
+        }),
+    )
 }

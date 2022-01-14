@@ -5,8 +5,8 @@ use std::hash::{BuildHasherDefault, Hash, Hasher};
 use crate::api::TriviaPiece;
 use crate::green::Slot;
 use crate::{
-	green::GreenElementRef, GreenNode, GreenNodeData, GreenToken, GreenTokenData, NodeOrToken,
-	RawSyntaxKind,
+    green::GreenElementRef, GreenNode, GreenNodeData, GreenToken, GreenTokenData, NodeOrToken,
+    RawSyntaxKind,
 };
 
 use super::element::GreenElement;
@@ -29,10 +29,10 @@ struct CachedToken(GreenToken);
 /// uses the correct hash.
 #[derive(Debug)]
 struct CachedNode {
-	node: GreenNode,
-	// Store the hash as it's expensive to re-compute
-	// involves re-computing the hash of the whole sub-tree
-	hash: u64,
+    node: GreenNode,
+    // Store the hash as it's expensive to re-compute
+    // involves re-computing the hash of the whole sub-tree
+    hash: u64,
 }
 
 /// Interner for GreenTokens and GreenNodes
@@ -56,136 +56,136 @@ struct CachedNode {
 // we don't accidentally use the wrong hash!
 #[derive(Default, Debug)]
 pub struct NodeCache {
-	nodes: HashMap<CachedNode, ()>,
-	tokens: HashMap<CachedToken, ()>,
+    nodes: HashMap<CachedNode, ()>,
+    tokens: HashMap<CachedToken, ()>,
 }
 
 fn token_hash_of(kind: RawSyntaxKind, text: &str) -> u64 {
-	let mut h = FxHasher::default();
-	kind.hash(&mut h);
-	text.hash(&mut h);
-	h.finish()
+    let mut h = FxHasher::default();
+    kind.hash(&mut h);
+    text.hash(&mut h);
+    h.finish()
 }
 
 fn token_hash(token: &GreenTokenData) -> u64 {
-	token_hash_of(token.kind(), token.text())
+    token_hash_of(token.kind(), token.text())
 }
 
 fn element_id(elem: GreenElementRef<'_>) -> *const () {
-	match elem {
-		NodeOrToken::Node(it) => it as *const GreenNodeData as *const (),
-		NodeOrToken::Token(it) => it as *const GreenTokenData as *const (),
-	}
+    match elem {
+        NodeOrToken::Node(it) => it as *const GreenNodeData as *const (),
+        NodeOrToken::Token(it) => it as *const GreenTokenData as *const (),
+    }
 }
 
 impl NodeCache {
-	/// Hash used for nodes that haven't been cached because it has too many slots or
-	/// one of its children wasn't cached.
-	const UNCACHED_NODE_HASH: u64 = 0;
+    /// Hash used for nodes that haven't been cached because it has too many slots or
+    /// one of its children wasn't cached.
+    const UNCACHED_NODE_HASH: u64 = 0;
 
-	/// Tries to retrieve a node with the given `kind` and `children` from the cache.
-	///
-	/// Returns an entry that allows the caller to:
-	/// * Retrieve the cached node if it is present in the cache
-	/// * Insert a node if it isn't present in the cache
-	pub(crate) fn node(
-		&mut self,
-		kind: RawSyntaxKind,
-		children: &[(u64, GreenElement)],
-	) -> NodeCacheNodeEntryMut {
-		if children.len() > 3 {
-			return NodeCacheNodeEntryMut::NoCache(Self::UNCACHED_NODE_HASH);
-		}
+    /// Tries to retrieve a node with the given `kind` and `children` from the cache.
+    ///
+    /// Returns an entry that allows the caller to:
+    /// * Retrieve the cached node if it is present in the cache
+    /// * Insert a node if it isn't present in the cache
+    pub(crate) fn node(
+        &mut self,
+        kind: RawSyntaxKind,
+        children: &[(u64, GreenElement)],
+    ) -> NodeCacheNodeEntryMut {
+        if children.len() > 3 {
+            return NodeCacheNodeEntryMut::NoCache(Self::UNCACHED_NODE_HASH);
+        }
 
-		let hash = {
-			let mut h = FxHasher::default();
-			kind.hash(&mut h);
-			for &(hash, _) in children {
-				if hash == Self::UNCACHED_NODE_HASH {
-					return NodeCacheNodeEntryMut::NoCache(Self::UNCACHED_NODE_HASH);
-				}
-				hash.hash(&mut h);
-			}
-			h.finish()
-		};
+        let hash = {
+            let mut h = FxHasher::default();
+            kind.hash(&mut h);
+            for &(hash, _) in children {
+                if hash == Self::UNCACHED_NODE_HASH {
+                    return NodeCacheNodeEntryMut::NoCache(Self::UNCACHED_NODE_HASH);
+                }
+                hash.hash(&mut h);
+            }
+            h.finish()
+        };
 
-		// Green nodes are fully immutable, so it's ok to deduplicate them.
-		// This is the same optimization that Roslyn does
-		// https://github.com/KirillOsenkov/Bliki/wiki/Roslyn-Immutable-Trees
-		//
-		// For example, all `#[inline]` in this file share the same green node!
-		// For `libsyntax/parse/parser.rs`, measurements show that deduping saves
-		// 17% of the memory for green nodes!
-		let entry = self.nodes.raw_entry_mut().from_hash(hash, |no_hash| {
-			no_hash.node.kind() == kind && {
-				let lhs = no_hash.node.slots().filter_map(|slot| match slot {
-					// Ignore empty slots. The queried node only has the present children
-					Slot::Empty { .. } => None,
-					Slot::Node { node, .. } => Some(element_id(NodeOrToken::Node(node))),
-					Slot::Token { token, .. } => Some(element_id(NodeOrToken::Token(token))),
-				});
+        // Green nodes are fully immutable, so it's ok to deduplicate them.
+        // This is the same optimization that Roslyn does
+        // https://github.com/KirillOsenkov/Bliki/wiki/Roslyn-Immutable-Trees
+        //
+        // For example, all `#[inline]` in this file share the same green node!
+        // For `libsyntax/parse/parser.rs`, measurements show that deduping saves
+        // 17% of the memory for green nodes!
+        let entry = self.nodes.raw_entry_mut().from_hash(hash, |no_hash| {
+            no_hash.node.kind() == kind && {
+                let lhs = no_hash.node.slots().filter_map(|slot| match slot {
+                    // Ignore empty slots. The queried node only has the present children
+                    Slot::Empty { .. } => None,
+                    Slot::Node { node, .. } => Some(element_id(NodeOrToken::Node(node))),
+                    Slot::Token { token, .. } => Some(element_id(NodeOrToken::Token(token))),
+                });
 
-				let rhs = children
-					.iter()
-					.map(|(_, element)| element_id(element.as_deref()));
+                let rhs = children
+                    .iter()
+                    .map(|(_, element)| element_id(element.as_deref()));
 
-				lhs.eq(rhs)
-			}
-		});
+                lhs.eq(rhs)
+            }
+        });
 
-		match entry {
-			RawEntryMut::Occupied(entry) => NodeCacheNodeEntryMut::Cached(CachedNodeEntry {
-				hash,
-				raw_entry: entry,
-			}),
-			RawEntryMut::Vacant(entry) => NodeCacheNodeEntryMut::Vacant(VacantNodeEntry {
-				raw_entry: entry,
-				original_kind: kind,
-				hash,
-			}),
-		}
-	}
+        match entry {
+            RawEntryMut::Occupied(entry) => NodeCacheNodeEntryMut::Cached(CachedNodeEntry {
+                hash,
+                raw_entry: entry,
+            }),
+            RawEntryMut::Vacant(entry) => NodeCacheNodeEntryMut::Vacant(VacantNodeEntry {
+                raw_entry: entry,
+                original_kind: kind,
+                hash,
+            }),
+        }
+    }
 
-	pub(crate) fn token(&mut self, kind: RawSyntaxKind, text: &str) -> (u64, GreenToken) {
-		self.token_with_trivia(kind, text, &[], &[])
-	}
+    pub(crate) fn token(&mut self, kind: RawSyntaxKind, text: &str) -> (u64, GreenToken) {
+        self.token_with_trivia(kind, text, &[], &[])
+    }
 
-	pub(crate) fn token_with_trivia(
-		&mut self,
-		kind: RawSyntaxKind,
-		text: &str,
-		leading: &[TriviaPiece],
-		trailing: &[TriviaPiece],
-	) -> (u64, GreenToken) {
-		let hash = token_hash_of(kind, text);
+    pub(crate) fn token_with_trivia(
+        &mut self,
+        kind: RawSyntaxKind,
+        text: &str,
+        leading: &[TriviaPiece],
+        trailing: &[TriviaPiece],
+    ) -> (u64, GreenToken) {
+        let hash = token_hash_of(kind, text);
 
-		let entry = self.tokens.raw_entry_mut().from_hash(hash, |token| {
-			token.0.kind() == kind && token.0.text() == text
-		});
+        let entry = self.tokens.raw_entry_mut().from_hash(hash, |token| {
+            token.0.kind() == kind && token.0.text() == text
+        });
 
-		let token = match entry {
-			RawEntryMut::Occupied(entry) => entry.key().0.clone(),
-			RawEntryMut::Vacant(entry) => {
-				let leading = GreenTokenTrivia::from(leading);
-				let trailing = GreenTokenTrivia::from(trailing);
+        let token = match entry {
+            RawEntryMut::Occupied(entry) => entry.key().0.clone(),
+            RawEntryMut::Vacant(entry) => {
+                let leading = GreenTokenTrivia::from(leading);
+                let trailing = GreenTokenTrivia::from(trailing);
 
-				let token = GreenToken::with_trivia(kind, text, leading, trailing);
-				entry
-					.insert_with_hasher(hash, CachedToken(token.clone()), (), |t| token_hash(&t.0));
-				token
-			}
-		};
+                let token = GreenToken::with_trivia(kind, text, leading, trailing);
+                entry
+                    .insert_with_hasher(hash, CachedToken(token.clone()), (), |t| token_hash(&t.0));
+                token
+            }
+        };
 
-		(hash, token)
-	}
+        (hash, token)
+    }
 }
 
 pub(crate) enum NodeCacheNodeEntryMut<'a> {
-	Cached(CachedNodeEntry<'a>),
+    Cached(CachedNodeEntry<'a>),
 
-	/// A node that should not be cached
-	NoCache(u64),
-	Vacant(VacantNodeEntry<'a>),
+    /// A node that should not be cached
+    NoCache(u64),
+    Vacant(VacantNodeEntry<'a>),
 }
 
 /// Represents a vacant entry, a node that hasn't been cached yet.
@@ -194,82 +194,82 @@ pub(crate) enum NodeCacheNodeEntryMut<'a> {
 /// For example, a node may change its kind to unknown or add empty slots. The only importance is
 /// that these changes apply for all nodes that have the same shape as the originally queried node.
 pub(crate) struct VacantNodeEntry<'a> {
-	hash: u64,
-	original_kind: RawSyntaxKind,
-	raw_entry: RawVacantEntryMut<'a, CachedNode, (), BuildHasherDefault<FxHasher>>,
+    hash: u64,
+    original_kind: RawSyntaxKind,
+    raw_entry: RawVacantEntryMut<'a, CachedNode, (), BuildHasherDefault<FxHasher>>,
 }
 
 /// Represents an entry of a cached node.
 pub(crate) struct CachedNodeEntry<'a> {
-	hash: u64,
-	raw_entry: RawOccupiedEntryMut<'a, CachedNode, (), BuildHasherDefault<FxHasher>>,
+    hash: u64,
+    raw_entry: RawOccupiedEntryMut<'a, CachedNode, (), BuildHasherDefault<FxHasher>>,
 }
 
 impl<'a> CachedNodeEntry<'a> {
-	pub fn node(&self) -> &GreenNode {
-		&self.raw_entry.key().node
-	}
+    pub fn node(&self) -> &GreenNode {
+        &self.raw_entry.key().node
+    }
 
-	pub fn hash(&self) -> u64 {
-		self.hash
-	}
+    pub fn hash(&self) -> u64 {
+        self.hash
+    }
 }
 
 impl<'a> VacantNodeEntry<'a> {
-	/// Inserts the `node` into the cache so that future queries for the same kind and children resolve to the passed `node`.
-	///
-	/// Returns the hash of the node.
-	///
-	/// The cache does not cache the `node` if the kind doesn't match the `kind` of the queried node because
-	/// cache lookups wouldn't be successful because the hash collision prevention check compares the kinds of the
-	/// cached and queried node.
-	pub fn cache(self, node: GreenNode) -> u64 {
-		if self.original_kind != node.kind() {
-			// The kind has changed since it has been queried. For example, the node has been converted to an
-			// unknown node. Never cache these nodes because cache lookups will never match.
-			NodeCache::UNCACHED_NODE_HASH
-		} else {
-			self.raw_entry.insert_with_hasher(
-				self.hash,
-				CachedNode {
-					node,
-					hash: self.hash,
-				},
-				(),
-				|n| n.hash,
-			);
-			self.hash
-		}
-	}
+    /// Inserts the `node` into the cache so that future queries for the same kind and children resolve to the passed `node`.
+    ///
+    /// Returns the hash of the node.
+    ///
+    /// The cache does not cache the `node` if the kind doesn't match the `kind` of the queried node because
+    /// cache lookups wouldn't be successful because the hash collision prevention check compares the kinds of the
+    /// cached and queried node.
+    pub fn cache(self, node: GreenNode) -> u64 {
+        if self.original_kind != node.kind() {
+            // The kind has changed since it has been queried. For example, the node has been converted to an
+            // unknown node. Never cache these nodes because cache lookups will never match.
+            NodeCache::UNCACHED_NODE_HASH
+        } else {
+            self.raw_entry.insert_with_hasher(
+                self.hash,
+                CachedNode {
+                    node,
+                    hash: self.hash,
+                },
+                (),
+                |n| n.hash,
+            );
+            self.hash
+        }
+    }
 }
 
 #[test]
 fn green_token_hash() {
-	let kind = RawSyntaxKind(0);
-	let text = " let ";
-	let t1 = GreenToken::with_trivia(
-		kind,
-		text,
-		GreenTokenTrivia::Whitespace(1),
-		GreenTokenTrivia::Whitespace(1),
-	);
-	let t2 = GreenToken::with_trivia(
-		kind,
-		text,
-		GreenTokenTrivia::Whitespace(1),
-		GreenTokenTrivia::Whitespace(1),
-	);
+    let kind = RawSyntaxKind(0);
+    let text = " let ";
+    let t1 = GreenToken::with_trivia(
+        kind,
+        text,
+        GreenTokenTrivia::Whitespace(1),
+        GreenTokenTrivia::Whitespace(1),
+    );
+    let t2 = GreenToken::with_trivia(
+        kind,
+        text,
+        GreenTokenTrivia::Whitespace(1),
+        GreenTokenTrivia::Whitespace(1),
+    );
 
-	assert_eq!(token_hash(&t1), token_hash(&t2));
+    assert_eq!(token_hash(&t1), token_hash(&t2));
 
-	let t3 = GreenToken::new(kind, "let");
-	assert_ne!(token_hash(&t1), token_hash(&t3));
+    let t3 = GreenToken::new(kind, "let");
+    assert_ne!(token_hash(&t1), token_hash(&t3));
 
-	let t4 = GreenToken::with_trivia(
-		kind,
-		"\tlet ",
-		GreenTokenTrivia::Whitespace(1),
-		GreenTokenTrivia::Whitespace(1),
-	);
-	assert_ne!(token_hash(&t1), token_hash(&t4));
+    let t4 = GreenToken::with_trivia(
+        kind,
+        "\tlet ",
+        GreenTokenTrivia::Whitespace(1),
+        GreenTokenTrivia::Whitespace(1),
+    );
+    assert_ne!(token_hash(&t1), token_hash(&t4));
 }

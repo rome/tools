@@ -22,48 +22,48 @@ JsModule {
                 statements: JsStatementList [
                     JsFunctionStatement {
                         async_token: missing (optional),
-                        function_token: FUNCTION_KW@18..29 "function" [Newline("\n"), Whitespace("\t")] [Whitespace(" ")],
+                        function_token: FUNCTION_KW@18..30 "function" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                         star_token: missing (optional),
                         id: JsUnknownBinding {
                             items: [
-                                IDENT@29..34 "yield" [] [],
+                                IDENT@30..35 "yield" [] [],
                             ],
                         },
                         type_parameters: missing (optional),
                         parameters: JsParameters {
-                            l_paren_token: L_PAREN@34..35 "(" [] [],
+                            l_paren_token: L_PAREN@35..36 "(" [] [],
                             items: JsParameterList [
                                 JsParameter {
                                     binding: JsIdentifierBinding {
-                                        name_token: IDENT@35..39 "test" [] [],
+                                        name_token: IDENT@36..40 "test" [] [],
                                     },
                                     type_annotation: missing (optional),
                                     initializer: missing (optional),
                                 },
                             ],
-                            r_paren_token: R_PAREN@39..41 ")" [] [Whitespace(" ")],
+                            r_paren_token: R_PAREN@40..42 ")" [] [Whitespace(" ")],
                         },
                         return_type: missing (optional),
                         body: JsFunctionBody {
-                            l_curly_token: L_CURLY@41..42 "{" [] [],
+                            l_curly_token: L_CURLY@42..43 "{" [] [],
                             directives: JsDirectiveList [],
                             statements: JsStatementList [],
-                            r_curly_token: R_CURLY@42..43 "}" [] [],
+                            r_curly_token: R_CURLY@43..44 "}" [] [],
                         },
                     },
                 ],
-                r_curly_token: R_CURLY@43..45 "}" [Newline("\n")] [],
+                r_curly_token: R_CURLY@44..46 "}" [Newline("\n")] [],
             },
         },
     ],
-    eof_token: EOF@45..46 "" [Newline("\n")] [],
+    eof_token: EOF@46..47 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..46
+0: JS_MODULE@0..47
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..45
-    0: JS_FUNCTION_STATEMENT@0..45
+  2: JS_MODULE_ITEM_LIST@0..46
+    0: JS_FUNCTION_STATEMENT@0..46
       0: (empty)
       1: FUNCTION_KW@0..8 "function" [] []
       2: STAR@8..10 "*" [] [Whitespace(" ")]
@@ -75,42 +75,42 @@ JsModule {
         1: JS_PARAMETER_LIST@15..15
         2: R_PAREN@15..17 ")" [] [Whitespace(" ")]
       6: (empty)
-      7: JS_FUNCTION_BODY@17..45
+      7: JS_FUNCTION_BODY@17..46
         0: L_CURLY@17..18 "{" [] []
         1: JS_DIRECTIVE_LIST@18..18
-        2: JS_STATEMENT_LIST@18..43
-          0: JS_FUNCTION_STATEMENT@18..43
+        2: JS_STATEMENT_LIST@18..44
+          0: JS_FUNCTION_STATEMENT@18..44
             0: (empty)
-            1: FUNCTION_KW@18..29 "function" [Newline("\n"), Whitespace("\t")] [Whitespace(" ")]
+            1: FUNCTION_KW@18..30 "function" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
             2: (empty)
-            3: JS_UNKNOWN_BINDING@29..34
-              0: IDENT@29..34 "yield" [] []
+            3: JS_UNKNOWN_BINDING@30..35
+              0: IDENT@30..35 "yield" [] []
             4: (empty)
-            5: JS_PARAMETERS@34..41
-              0: L_PAREN@34..35 "(" [] []
-              1: JS_PARAMETER_LIST@35..39
-                0: JS_PARAMETER@35..39
-                  0: JS_IDENTIFIER_BINDING@35..39
-                    0: IDENT@35..39 "test" [] []
+            5: JS_PARAMETERS@35..42
+              0: L_PAREN@35..36 "(" [] []
+              1: JS_PARAMETER_LIST@36..40
+                0: JS_PARAMETER@36..40
+                  0: JS_IDENTIFIER_BINDING@36..40
+                    0: IDENT@36..40 "test" [] []
                   1: (empty)
                   2: (empty)
-              2: R_PAREN@39..41 ")" [] [Whitespace(" ")]
+              2: R_PAREN@40..42 ")" [] [Whitespace(" ")]
             6: (empty)
-            7: JS_FUNCTION_BODY@41..43
-              0: L_CURLY@41..42 "{" [] []
-              1: JS_DIRECTIVE_LIST@42..42
-              2: JS_STATEMENT_LIST@42..42
-              3: R_CURLY@42..43 "}" [] []
-        3: R_CURLY@43..45 "}" [Newline("\n")] []
-  3: EOF@45..46 "" [Newline("\n")] []
+            7: JS_FUNCTION_BODY@42..44
+              0: L_CURLY@42..43 "{" [] []
+              1: JS_DIRECTIVE_LIST@43..43
+              2: JS_STATEMENT_LIST@43..43
+              3: R_CURLY@43..44 "}" [] []
+        3: R_CURLY@44..46 "}" [Newline("\n")] []
+  3: EOF@46..47 "" [Newline("\n")] []
 --
 error[SyntaxError]: Illegal use of `yield` as an identifier in generator function
-  ┌─ function_id_err.js:2:11
+  ┌─ function_id_err.js:2:12
   │
-2 │     function yield(test) {}
-  │              ^^^^^
+2 │   function yield(test) {}
+  │            ^^^^^
 
 --
 function* test() {
-	function yield(test) {}
+  function yield(test) {}
 }

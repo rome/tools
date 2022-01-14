@@ -3,22 +3,22 @@ use super::ExtensionHandler;
 pub struct UnknownFileHandler {}
 
 impl ExtensionHandler for UnknownFileHandler {
-	fn capabilities(&self) -> super::Capabilities {
-		super::Capabilities {
-			format: false,
-			lint: false,
-		}
-	}
+    fn capabilities(&self) -> super::Capabilities {
+        super::Capabilities {
+            format: false,
+            lint: false,
+        }
+    }
 
-	fn language(&self) -> super::Language {
-		super::Language::Unknown
-	}
+    fn language(&self) -> super::Language {
+        super::Language::Unknown
+    }
 
-	fn mime(&self) -> super::Mime {
-		super::Mime::Text
-	}
+    fn mime(&self) -> super::Mime {
+        super::Mime::Text
+    }
 
-	fn may_use_tabs(&self) -> bool {
-		true
-	}
+    fn may_use_tabs(&self) -> bool {
+        true
+    }
 }

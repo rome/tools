@@ -21,51 +21,51 @@ const SYNTAX_FACTORY: &str = "crates/rslint_parser/src/ast/generated/syntax_fact
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Mode {
-	Overwrite,
-	Verify,
+    Overwrite,
+    Verify,
 }
 
 /// A helper to update file on disk if it has changed.
 /// With verify = false,
 fn update(path: &Path, contents: &str, mode: Mode) -> Result<()> {
-	match fs2::read_to_string(path) {
-		Ok(old_contents) if old_contents == contents => {
-			return Ok(());
-		}
-		_ => (),
-	}
-	if mode == Mode::Verify {
-		anyhow::bail!("`{}` is not up-to-date", path.display());
-	}
-	eprintln!("updating {}", path.display());
-	fs2::write(path, contents)?;
-	Ok(())
+    match fs2::read_to_string(path) {
+        Ok(old_contents) if old_contents == contents => {
+            return Ok(());
+        }
+        _ => (),
+    }
+    if mode == Mode::Verify {
+        anyhow::bail!("`{}` is not up-to-date", path.display());
+    }
+    eprintln!("updating {}", path.display());
+    fs2::write(path, contents)?;
+    Ok(())
 }
 
 pub fn to_upper_snake_case(s: &str) -> String {
-	let mut buf = String::with_capacity(s.len());
-	let mut prev = false;
-	for c in s.chars() {
-		if c.is_ascii_uppercase() && prev {
-			buf.push('_')
-		}
-		prev = true;
+    let mut buf = String::with_capacity(s.len());
+    let mut prev = false;
+    for c in s.chars() {
+        if c.is_ascii_uppercase() && prev {
+            buf.push('_')
+        }
+        prev = true;
 
-		buf.push(c.to_ascii_uppercase());
-	}
-	buf
+        buf.push(c.to_ascii_uppercase());
+    }
+    buf
 }
 
 pub fn to_lower_snake_case(s: &str) -> String {
-	let mut buf = String::with_capacity(s.len());
-	let mut prev = false;
-	for c in s.chars() {
-		if c.is_ascii_uppercase() && prev {
-			buf.push('_')
-		}
-		prev = true;
+    let mut buf = String::with_capacity(s.len());
+    let mut prev = false;
+    for c in s.chars() {
+        if c.is_ascii_uppercase() && prev {
+            buf.push('_')
+        }
+        prev = true;
 
-		buf.push(c.to_ascii_lowercase());
-	}
-	buf
+        buf.push(c.to_ascii_lowercase());
+    }
+    buf
 }

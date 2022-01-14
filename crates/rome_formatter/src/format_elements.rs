@@ -44,20 +44,20 @@
 #[macro_export]
 macro_rules! format_elements {
 
-	// called for things like format_tokens!["hey"]
-	($element:expr) => {
-		{
-			use $crate::FormatElement;
-			FormatElement::from($element)
-		}
-	};
+    // called for things like format_tokens!["hey"]
+    ($element:expr) => {
+        {
+            use $crate::FormatElement;
+            FormatElement::from($element)
+        }
+    };
 
-	( $( $element:expr ),+ $(,)?) => {{
-		use $crate::{FormatElement, concat_elements};
-		concat_elements([
-			$(
-					 FormatElement::from($element)
-			),+
-		])
-	}};
+    ( $( $element:expr ),+ $(,)?) => {{
+        use $crate::{FormatElement, concat_elements};
+        concat_elements([
+            $(
+                     FormatElement::from($element)
+            ),+
+        ])
+    }};
 }

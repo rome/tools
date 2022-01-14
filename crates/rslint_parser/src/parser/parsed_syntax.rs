@@ -30,190 +30,190 @@ use std::ops::Range;
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[must_use = "this `ParsedSyntax` may be an `Absent` variant, which should be handled"]
 pub enum ParsedSyntax {
-	/// A syntax that isn't present in the source code. Used when a parse rule can't match the current
-	/// token of the parser.
-	Absent,
+    /// A syntax that isn't present in the source code. Used when a parse rule can't match the current
+    /// token of the parser.
+    Absent,
 
-	/// A completed syntax node with all or some of its children.
-	Present(CompletedMarker),
+    /// A completed syntax node with all or some of its children.
+    Present(CompletedMarker),
 }
 
 impl ParsedSyntax {
-	/// Converts from `ParsedSyntax` to `Option<CompletedMarker>`.
-	///
-	/// Converts `self` into an `Option<CompletedMarker>`, consuming `self`
-	pub fn ok(self) -> Option<CompletedMarker> {
-		match self {
-			Absent => None,
-			Present(marker) => Some(marker),
-		}
-	}
+    /// Converts from `ParsedSyntax` to `Option<CompletedMarker>`.
+    ///
+    /// Converts `self` into an `Option<CompletedMarker>`, consuming `self`
+    pub fn ok(self) -> Option<CompletedMarker> {
+        match self {
+            Absent => None,
+            Present(marker) => Some(marker),
+        }
+    }
 
-	/// Calls `op` if the syntax is present and otherwise returns [ParsedSyntax::Absent]
-	pub fn and_then<F>(self, op: F) -> ParsedSyntax
-	where
-		F: FnOnce(CompletedMarker) -> ParsedSyntax,
-	{
-		match self {
-			Absent => Absent,
-			Present(marker) => op(marker),
-		}
-	}
+    /// Calls `op` if the syntax is present and otherwise returns [ParsedSyntax::Absent]
+    pub fn and_then<F>(self, op: F) -> ParsedSyntax
+    where
+        F: FnOnce(CompletedMarker) -> ParsedSyntax,
+    {
+        match self {
+            Absent => Absent,
+            Present(marker) => op(marker),
+        }
+    }
 
-	/// Calls `op` if the syntax is absent ond otherwise returns [ParsedSyntax::Present]
-	pub fn or_else<F>(self, op: F) -> ParsedSyntax
-	where
-		F: FnOnce() -> ParsedSyntax,
-	{
-		match self {
-			Absent => op(),
-			t => t,
-		}
-	}
+    /// Calls `op` if the syntax is absent ond otherwise returns [ParsedSyntax::Present]
+    pub fn or_else<F>(self, op: F) -> ParsedSyntax
+    where
+        F: FnOnce() -> ParsedSyntax,
+    {
+        match self {
+            Absent => op(),
+            t => t,
+        }
+    }
 
-	/// Returns `true` if the parsed syntax is [ParsedSyntax::Present]
-	#[must_use]
-	pub fn is_present(&self) -> bool {
-		matches!(self, Present(_))
-	}
+    /// Returns `true` if the parsed syntax is [ParsedSyntax::Present]
+    #[must_use]
+    pub fn is_present(&self) -> bool {
+        matches!(self, Present(_))
+    }
 
-	/// Returns `true` if the parsed syntax is [ParsedSyntax::Absent]
-	#[must_use]
-	pub fn is_absent(&self) -> bool {
-		matches!(self, Absent)
-	}
+    /// Returns `true` if the parsed syntax is [ParsedSyntax::Absent]
+    #[must_use]
+    pub fn is_absent(&self) -> bool {
+        matches!(self, Absent)
+    }
 
-	/// It returns the contained [ParsedSyntax::Present] value, consuming the `self` value
-	///
-	/// # Panics
-	///
-	///  Panics if the current syntax is [ParsedSyntax::Absent]
-	pub fn unwrap(self) -> CompletedMarker {
-		match self {
-			Absent => {
-				panic!("Called `unwrap` on an `Absent` syntax");
-			}
-			Present(marker) => marker,
-		}
-	}
+    /// It returns the contained [ParsedSyntax::Present] value, consuming the `self` value
+    ///
+    /// # Panics
+    ///
+    ///  Panics if the current syntax is [ParsedSyntax::Absent]
+    pub fn unwrap(self) -> CompletedMarker {
+        match self {
+            Absent => {
+                panic!("Called `unwrap` on an `Absent` syntax");
+            }
+            Present(marker) => marker,
+        }
+    }
 
-	/// Maps a [ParsedSyntax::Present] `ParsedSyntax` by applying a function to a contained [ParsedSyntax::Present] value,
-	/// leaving an [ParsedSyntax::Absent] value untouched.
-	///
-	/// This function can be used to compose the results of two functions.
-	pub fn map<F>(self, mapper: F) -> ParsedSyntax
-	where
-		F: FnOnce(CompletedMarker) -> CompletedMarker,
-	{
-		match self {
-			Absent => Absent,
-			Present(element) => Present(mapper(element)),
-		}
-	}
+    /// Maps a [ParsedSyntax::Present] `ParsedSyntax` by applying a function to a contained [ParsedSyntax::Present] value,
+    /// leaving an [ParsedSyntax::Absent] value untouched.
+    ///
+    /// This function can be used to compose the results of two functions.
+    pub fn map<F>(self, mapper: F) -> ParsedSyntax
+    where
+        F: FnOnce(CompletedMarker) -> CompletedMarker,
+    {
+        match self {
+            Absent => Absent,
+            Present(element) => Present(mapper(element)),
+        }
+    }
 
-	/// Returns the kind of the syntax if it is present or [None] otherwise
-	pub fn kind(&self) -> Option<JsSyntaxKind> {
-		match self {
-			Absent => None,
-			Present(marker) => Some(marker.kind()),
-		}
-	}
+    /// Returns the kind of the syntax if it is present or [None] otherwise
+    pub fn kind(&self) -> Option<JsSyntaxKind> {
+        match self {
+            Absent => None,
+            Present(marker) => Some(marker.kind()),
+        }
+    }
 
-	/// It returns the syntax if present or adds a diagnostic at the current parser position.
-	pub fn or_add_diagnostic<E>(self, p: &mut Parser, error_builder: E) -> Option<CompletedMarker>
-	where
-		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
-	{
-		match self {
-			Present(syntax) => Some(syntax),
-			Absent => {
-				let diagnostic = error_builder(p, p.cur_tok().range());
-				p.error(diagnostic);
-				None
-			}
-		}
-	}
+    /// It returns the syntax if present or adds a diagnostic at the current parser position.
+    pub fn or_add_diagnostic<E>(self, p: &mut Parser, error_builder: E) -> Option<CompletedMarker>
+    where
+        E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
+    {
+        match self {
+            Present(syntax) => Some(syntax),
+            Absent => {
+                let diagnostic = error_builder(p, p.cur_tok().range());
+                p.error(diagnostic);
+                None
+            }
+        }
+    }
 
-	/// It creates and returns a marker preceding this parsed syntax if it is present or starts
-	/// a new marker and adds an error to the current parser position.
-	/// See [CompletedMarker.precede]
-	pub fn precede_or_add_diagnostic<E>(self, p: &mut Parser, error_builder: E) -> Marker
-	where
-		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
-	{
-		match self {
-			Present(completed) => completed.precede(p),
-			Absent => {
-				let diagnostic = error_builder(p, p.cur_tok().range());
-				p.error(diagnostic);
-				p.start()
-			}
-		}
-	}
+    /// It creates and returns a marker preceding this parsed syntax if it is present or starts
+    /// a new marker and adds an error to the current parser position.
+    /// See [CompletedMarker.precede]
+    pub fn precede_or_add_diagnostic<E>(self, p: &mut Parser, error_builder: E) -> Marker
+    where
+        E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
+    {
+        match self {
+            Present(completed) => completed.precede(p),
+            Absent => {
+                let diagnostic = error_builder(p, p.cur_tok().range());
+                p.error(diagnostic);
+                p.start()
+            }
+        }
+    }
 
-	/// Creates a new marker that precedes this syntax or starts a new marker
-	pub fn precede(self, p: &mut Parser) -> Marker {
-		match self {
-			Present(marker) => marker.precede(p),
-			Absent => p.start(),
-		}
-	}
+    /// Creates a new marker that precedes this syntax or starts a new marker
+    pub fn precede(self, p: &mut Parser) -> Marker {
+        match self {
+            Present(marker) => marker.precede(p),
+            Absent => p.start(),
+        }
+    }
 
-	/// Returns this Syntax if it is present in the source text or tries to recover the
-	/// parser if the syntax is absent. The recovery...
-	///
-	/// * eats all unexpected tokens into an `Unknown*` node until the parser reaches one
-	///   of the "safe tokens" configured in the [ParseRecovery].
-	/// * creates an error using the passed in error builder and adds it to the parsing diagnostics.
-	///
-	/// The error recovery can fail if the parser is located at the EOF token or if the parser
-	/// is already at a valid position according to the [ParseRecovery].
-	pub fn or_recover<E>(
-		self,
-		p: &mut Parser,
-		recovery: &ParseRecovery,
-		error_builder: E,
-	) -> RecoveryResult
-	where
-		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
-	{
-		match self {
-			Present(syntax) => Ok(syntax),
-			Absent => match recovery.recover(p) {
-				Ok(recovered) => {
-					let diagnostic = error_builder(p, recovered.range(p).as_range());
-					p.error(diagnostic);
-					Ok(recovered)
-				}
+    /// Returns this Syntax if it is present in the source text or tries to recover the
+    /// parser if the syntax is absent. The recovery...
+    ///
+    /// * eats all unexpected tokens into an `Unknown*` node until the parser reaches one
+    ///   of the "safe tokens" configured in the [ParseRecovery].
+    /// * creates an error using the passed in error builder and adds it to the parsing diagnostics.
+    ///
+    /// The error recovery can fail if the parser is located at the EOF token or if the parser
+    /// is already at a valid position according to the [ParseRecovery].
+    pub fn or_recover<E>(
+        self,
+        p: &mut Parser,
+        recovery: &ParseRecovery,
+        error_builder: E,
+    ) -> RecoveryResult
+    where
+        E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
+    {
+        match self {
+            Present(syntax) => Ok(syntax),
+            Absent => match recovery.recover(p) {
+                Ok(recovered) => {
+                    let diagnostic = error_builder(p, recovered.range(p).as_range());
+                    p.error(diagnostic);
+                    Ok(recovered)
+                }
 
-				Err(recovery_error) => {
-					let diagnostic = error_builder(p, p.cur_tok().range());
-					p.error(diagnostic);
-					Err(recovery_error)
-				}
-			},
-		}
-	}
+                Err(recovery_error) => {
+                    let diagnostic = error_builder(p, p.cur_tok().range());
+                    p.error(diagnostic);
+                    Err(recovery_error)
+                }
+            },
+        }
+    }
 
-	/// Undoes the completion and abandons the marker if the syntax is present.
-	pub fn abandon(self, p: &mut Parser) {
-		if let Present(marker) = self {
-			marker.undo_completion(p).abandon(p)
-		}
-	}
+    /// Undoes the completion and abandons the marker if the syntax is present.
+    pub fn abandon(self, p: &mut Parser) {
+        if let Present(marker) = self {
+            marker.undo_completion(p).abandon(p)
+        }
+    }
 }
 
 impl From<CompletedMarker> for ParsedSyntax {
-	fn from(marker: CompletedMarker) -> Self {
-		Present(marker)
-	}
+    fn from(marker: CompletedMarker) -> Self {
+        Present(marker)
+    }
 }
 
 impl From<Option<CompletedMarker>> for ParsedSyntax {
-	fn from(option: Option<CompletedMarker>) -> Self {
-		match option {
-			Some(completed) => Present(completed),
-			None => Absent,
-		}
-	}
+    fn from(option: Option<CompletedMarker>) -> Self {
+        match option {
+            Some(completed) => Present(completed),
+            None => Absent,
+        }
+    }
 }

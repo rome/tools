@@ -101,13 +101,13 @@ JsModule {
             l_curly_token: L_CURLY@95..96 "{" [] [],
             cases: JsSwitchCaseList [
                 JsDefaultClause {
-                    default_token: DEFAULT_KW@96..105 "default" [Newline("\n"), Whitespace("\t")] [],
-                    colon_token: COLON@105..107 ":" [] [Whitespace(" ")],
+                    default_token: DEFAULT_KW@96..106 "default" [Newline("\n"), Whitespace("  ")] [],
+                    colon_token: COLON@106..108 ":" [] [Whitespace(" ")],
                     consequent: JsStatementList [
                         JsBlockStatement {
-                            l_curly_token: L_CURLY@107..108 "{" [] [],
+                            l_curly_token: L_CURLY@108..109 "{" [] [],
                             statements: JsStatementList [],
-                            r_curly_token: R_CURLY@108..109 "}" [] [],
+                            r_curly_token: R_CURLY@109..110 "}" [] [],
                         },
                     ],
                 },
@@ -115,49 +115,49 @@ JsModule {
                     case_token: missing (required),
                     test: JsUnknownExpression {
                         items: [
-                            DEFAULT_KW@109..118 "default" [Newline("\n"), Whitespace("\t")] [],
+                            DEFAULT_KW@110..120 "default" [Newline("\n"), Whitespace("  ")] [],
                         ],
                     },
-                    colon_token: COLON@118..120 ":" [] [Whitespace(" ")],
+                    colon_token: COLON@120..122 ":" [] [Whitespace(" ")],
                     consequent: JsStatementList [
                         JsBlockStatement {
-                            l_curly_token: L_CURLY@120..121 "{" [] [],
+                            l_curly_token: L_CURLY@122..123 "{" [] [],
                             statements: JsStatementList [],
-                            r_curly_token: R_CURLY@121..122 "}" [] [],
+                            r_curly_token: R_CURLY@123..124 "}" [] [],
                         },
                     ],
                 },
             ],
-            r_curly_token: R_CURLY@122..124 "}" [Newline("\n")] [],
+            r_curly_token: R_CURLY@124..126 "}" [Newline("\n")] [],
         },
         JsSwitchStatement {
-            switch_token: SWITCH_KW@124..132 "switch" [Newline("\n")] [Whitespace(" ")],
-            l_paren_token: L_PAREN@132..133 "(" [] [],
+            switch_token: SWITCH_KW@126..134 "switch" [Newline("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@134..135 "(" [] [],
             discriminant: JsIdentifierExpression {
                 name: JsReferenceIdentifier {
-                    value_token: IDENT@133..136 "foo" [] [],
+                    value_token: IDENT@135..138 "foo" [] [],
                 },
             },
-            r_paren_token: R_PAREN@136..138 ")" [] [Whitespace(" ")],
-            l_curly_token: L_CURLY@138..140 "{" [] [Whitespace(" ")],
+            r_paren_token: R_PAREN@138..140 ")" [] [Whitespace(" ")],
+            l_curly_token: L_CURLY@140..142 "{" [] [Whitespace(" ")],
             cases: JsSwitchCaseList [
                 JsCaseClause {
-                    case_token: CASE_KW@140..145 "case" [] [Whitespace(" ")],
+                    case_token: CASE_KW@142..147 "case" [] [Whitespace(" ")],
                     test: missing (required),
-                    colon_token: COLON@145..147 ":" [] [Whitespace(" ")],
+                    colon_token: COLON@147..149 ":" [] [Whitespace(" ")],
                     consequent: JsStatementList [],
                 },
             ],
-            r_curly_token: R_CURLY@147..148 "}" [] [],
+            r_curly_token: R_CURLY@149..150 "}" [] [],
         },
     ],
-    eof_token: EOF@148..149 "" [Newline("\n")] [],
+    eof_token: EOF@150..151 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..149
+0: JS_MODULE@0..151
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..148
+  2: JS_MODULE_ITEM_LIST@0..150
     0: JS_SWITCH_STATEMENT@0..13
       0: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")]
       1: (empty)
@@ -223,7 +223,7 @@ JsModule {
               1: JS_STATEMENT_LIST@78..78
               2: R_CURLY@78..80 "}" [] [Whitespace(" ")]
       6: R_CURLY@80..81 "}" [] []
-    4: JS_SWITCH_STATEMENT@81..124
+    4: JS_SWITCH_STATEMENT@81..126
       0: SWITCH_KW@81..89 "switch" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@89..90 "(" [] []
       2: JS_IDENTIFIER_EXPRESSION@90..93
@@ -231,42 +231,42 @@ JsModule {
           0: IDENT@90..93 "foo" [] []
       3: R_PAREN@93..95 ")" [] [Whitespace(" ")]
       4: L_CURLY@95..96 "{" [] []
-      5: JS_SWITCH_CASE_LIST@96..122
-        0: JS_DEFAULT_CLAUSE@96..109
-          0: DEFAULT_KW@96..105 "default" [Newline("\n"), Whitespace("\t")] []
-          1: COLON@105..107 ":" [] [Whitespace(" ")]
-          2: JS_STATEMENT_LIST@107..109
-            0: JS_BLOCK_STATEMENT@107..109
-              0: L_CURLY@107..108 "{" [] []
-              1: JS_STATEMENT_LIST@108..108
-              2: R_CURLY@108..109 "}" [] []
-        1: JS_CASE_CLAUSE@109..122
+      5: JS_SWITCH_CASE_LIST@96..124
+        0: JS_DEFAULT_CLAUSE@96..110
+          0: DEFAULT_KW@96..106 "default" [Newline("\n"), Whitespace("  ")] []
+          1: COLON@106..108 ":" [] [Whitespace(" ")]
+          2: JS_STATEMENT_LIST@108..110
+            0: JS_BLOCK_STATEMENT@108..110
+              0: L_CURLY@108..109 "{" [] []
+              1: JS_STATEMENT_LIST@109..109
+              2: R_CURLY@109..110 "}" [] []
+        1: JS_CASE_CLAUSE@110..124
           0: (empty)
-          1: JS_UNKNOWN_EXPRESSION@109..118
-            0: DEFAULT_KW@109..118 "default" [Newline("\n"), Whitespace("\t")] []
-          2: COLON@118..120 ":" [] [Whitespace(" ")]
-          3: JS_STATEMENT_LIST@120..122
-            0: JS_BLOCK_STATEMENT@120..122
-              0: L_CURLY@120..121 "{" [] []
-              1: JS_STATEMENT_LIST@121..121
-              2: R_CURLY@121..122 "}" [] []
-      6: R_CURLY@122..124 "}" [Newline("\n")] []
-    5: JS_SWITCH_STATEMENT@124..148
-      0: SWITCH_KW@124..132 "switch" [Newline("\n")] [Whitespace(" ")]
-      1: L_PAREN@132..133 "(" [] []
-      2: JS_IDENTIFIER_EXPRESSION@133..136
-        0: JS_REFERENCE_IDENTIFIER@133..136
-          0: IDENT@133..136 "foo" [] []
-      3: R_PAREN@136..138 ")" [] [Whitespace(" ")]
-      4: L_CURLY@138..140 "{" [] [Whitespace(" ")]
-      5: JS_SWITCH_CASE_LIST@140..147
-        0: JS_CASE_CLAUSE@140..147
-          0: CASE_KW@140..145 "case" [] [Whitespace(" ")]
+          1: JS_UNKNOWN_EXPRESSION@110..120
+            0: DEFAULT_KW@110..120 "default" [Newline("\n"), Whitespace("  ")] []
+          2: COLON@120..122 ":" [] [Whitespace(" ")]
+          3: JS_STATEMENT_LIST@122..124
+            0: JS_BLOCK_STATEMENT@122..124
+              0: L_CURLY@122..123 "{" [] []
+              1: JS_STATEMENT_LIST@123..123
+              2: R_CURLY@123..124 "}" [] []
+      6: R_CURLY@124..126 "}" [Newline("\n")] []
+    5: JS_SWITCH_STATEMENT@126..150
+      0: SWITCH_KW@126..134 "switch" [Newline("\n")] [Whitespace(" ")]
+      1: L_PAREN@134..135 "(" [] []
+      2: JS_IDENTIFIER_EXPRESSION@135..138
+        0: JS_REFERENCE_IDENTIFIER@135..138
+          0: IDENT@135..138 "foo" [] []
+      3: R_PAREN@138..140 ")" [] [Whitespace(" ")]
+      4: L_CURLY@140..142 "{" [] [Whitespace(" ")]
+      5: JS_SWITCH_CASE_LIST@142..149
+        0: JS_CASE_CLAUSE@142..149
+          0: CASE_KW@142..147 "case" [] [Whitespace(" ")]
           1: (empty)
-          2: COLON@145..147 ":" [] [Whitespace(" ")]
-          3: JS_STATEMENT_LIST@147..147
-      6: R_CURLY@147..148 "}" [] []
-  3: EOF@148..149 "" [Newline("\n")] []
+          2: COLON@147..149 ":" [] [Whitespace(" ")]
+          3: JS_STATEMENT_LIST@149..149
+      6: R_CURLY@149..150 "}" [] []
+  3: EOF@150..151 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected `'('` but instead found `foo`
   ┌─ switch_stmt_err.js:1:8
@@ -318,12 +318,12 @@ error[SyntaxError]: expected a default, or a case but instead found 'var i = 0;'
 
 --
 error[SyntaxError]: Multiple default clauses inside of a switch statement are not allowed
-  ┌─ switch_stmt_err.js:7:2
+  ┌─ switch_stmt_err.js:7:3
   │
-6 │     default: {}
-  │     ----------- the first default clause is defined here
-7 │     default: {}
-  │     ^^^^^^^^^^^ a second clause here is not allowed
+6 │   default: {}
+  │   ----------- the first default clause is defined here
+7 │   default: {}
+  │   ^^^^^^^^^^^ a second clause here is not allowed
 
 --
 error[SyntaxError]: expected an expression but instead found ':'
@@ -338,7 +338,7 @@ switch {}
 switch { var i = 0 }
 switch { var i = 0; case "bar": {} }
 switch (foo) {
-	default: {}
-	default: {}
+  default: {}
+  default: {}
 }
 switch (foo) { case : }

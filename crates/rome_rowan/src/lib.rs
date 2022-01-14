@@ -31,15 +31,15 @@ mod tree_builder;
 pub use text_size::{TextLen, TextRange, TextSize};
 
 pub use crate::{
-	api::{
-		Language, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList, SyntaxNode,
-		SyntaxNodeChildren, SyntaxSlot, SyntaxSlots, SyntaxToken, TriviaPiece,
-	},
-	green::RawSyntaxKind,
-	syntax_factory::*,
-	syntax_text::SyntaxText,
-	tree_builder::{Checkpoint, TreeBuilder},
-	utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},
+    api::{
+        Language, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList, SyntaxNode,
+        SyntaxNodeChildren, SyntaxSlot, SyntaxSlots, SyntaxToken, TriviaPiece,
+    },
+    green::RawSyntaxKind,
+    syntax_factory::*,
+    syntax_text::SyntaxText,
+    tree_builder::{Checkpoint, TreeBuilder},
+    utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},
 };
 
 pub(crate) use crate::green::{GreenNode, GreenNodeData, GreenToken, GreenTokenData};

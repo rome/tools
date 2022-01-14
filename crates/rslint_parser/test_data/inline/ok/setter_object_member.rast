@@ -94,7 +94,7 @@ JsModule {
                                     },
                                     COMMA@84..85 "," [] [],
                                     JsSetterObjectMember {
-                                        set_token: SET_KW@85..91 "set" [Newline("\n"), Whitespace("\t")] [Whitespace(" ")],
+                                        set_token: SET_KW@85..91 "set" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                                         name: JsLiteralMemberName {
                                             value: JS_NUMBER_LITERAL@91..92 "5" [] [],
                                         },
@@ -111,7 +111,7 @@ JsModule {
                                             l_curly_token: L_CURLY@100..101 "{" [] [],
                                             directives: JsDirectiveList [],
                                             statements: JsStatementList [],
-                                            r_curly_token: R_CURLY@101..104 "}" [Newline("\n"), Whitespace("\t")] [],
+                                            r_curly_token: R_CURLY@101..104 "}" [Newline("\n"), Whitespace(" ")] [],
                                         },
                                     },
                                     COMMA@104..105 "," [] [],
@@ -119,7 +119,7 @@ JsModule {
                                         async_token: missing (optional),
                                         star_token: missing (optional),
                                         name: JsLiteralMemberName {
-                                            value: IDENT@105..110 "set" [Newline("\n"), Whitespace("\t")] [],
+                                            value: IDENT@105..110 "set" [Newline("\n"), Whitespace(" ")] [],
                                         },
                                         type_params: missing (optional),
                                         parameters: JsParameters {
@@ -133,14 +133,14 @@ JsModule {
                                             directives: JsDirectiveList [],
                                             statements: JsStatementList [
                                                 JsReturnStatement {
-                                                    return_token: RETURN_KW@114..124 "return" [Newline("\n"), Whitespace("\t ")] [Whitespace(" ")],
+                                                    return_token: RETURN_KW@114..124 "return" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                                                     argument: JsStringLiteralExpression {
                                                         value_token: JS_STRING_LITERAL@124..159 "\"This is a method and not a setter\"" [] [],
                                                     },
                                                     semicolon_token: SEMICOLON@159..160 ";" [] [],
                                                 },
                                             ],
-                                            r_curly_token: R_CURLY@160..163 "}" [Newline("\n"), Whitespace("\t")] [],
+                                            r_curly_token: R_CURLY@160..163 "}" [Newline("\n"), Whitespace(" ")] [],
                                         },
                                     },
                                 ],
@@ -233,7 +233,7 @@ JsModule {
                       3: R_CURLY@81..84 "}" [Newline("\n"), Whitespace(" ")] []
                   5: COMMA@84..85 "," [] []
                   6: JS_SETTER_OBJECT_MEMBER@85..104
-                    0: SET_KW@85..91 "set" [Newline("\n"), Whitespace("\t")] [Whitespace(" ")]
+                    0: SET_KW@85..91 "set" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
                     1: JS_LITERAL_MEMBER_NAME@91..92
                       0: JS_NUMBER_LITERAL@91..92 "5" [] []
                     2: L_PAREN@92..93 "(" [] []
@@ -247,13 +247,13 @@ JsModule {
                       0: L_CURLY@100..101 "{" [] []
                       1: JS_DIRECTIVE_LIST@101..101
                       2: JS_STATEMENT_LIST@101..101
-                      3: R_CURLY@101..104 "}" [Newline("\n"), Whitespace("\t")] []
+                      3: R_CURLY@101..104 "}" [Newline("\n"), Whitespace(" ")] []
                   7: COMMA@104..105 "," [] []
                   8: JS_METHOD_OBJECT_MEMBER@105..163
                     0: (empty)
                     1: (empty)
                     2: JS_LITERAL_MEMBER_NAME@105..110
-                      0: IDENT@105..110 "set" [Newline("\n"), Whitespace("\t")] []
+                      0: IDENT@105..110 "set" [Newline("\n"), Whitespace(" ")] []
                     3: (empty)
                     4: JS_PARAMETERS@110..113
                       0: L_PAREN@110..111 "(" [] []
@@ -265,11 +265,11 @@ JsModule {
                       1: JS_DIRECTIVE_LIST@114..114
                       2: JS_STATEMENT_LIST@114..160
                         0: JS_RETURN_STATEMENT@114..160
-                          0: RETURN_KW@114..124 "return" [Newline("\n"), Whitespace("\t ")] [Whitespace(" ")]
+                          0: RETURN_KW@114..124 "return" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
                           1: JS_STRING_LITERAL_EXPRESSION@124..159
                             0: JS_STRING_LITERAL@124..159 "\"This is a method and not a setter\"" [] []
                           2: SEMICOLON@159..160 ";" [] []
-                      3: R_CURLY@160..163 "}" [Newline("\n"), Whitespace("\t")] []
+                      3: R_CURLY@160..163 "}" [Newline("\n"), Whitespace(" ")] []
                 2: R_CURLY@163..165 "}" [Newline("\n")] []
       1: (empty)
   3: EOF@165..166 "" [Newline("\n")] []

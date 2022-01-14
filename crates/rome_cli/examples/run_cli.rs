@@ -25,5 +25,5 @@ use rome_cli::run_cli;
 /// cargo run --example run_cli format examples/input.js
 /// ```
 fn main() {
-	run_cli();
+    run_cli();
 }

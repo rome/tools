@@ -1,3 +1,3 @@
 function* test() {
-	function yield(test) {}
+  function yield(test) {}
 }

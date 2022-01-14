@@ -77,18 +77,18 @@ pub mod syntax;
 pub mod util;
 
 pub use crate::{
-	ast::{AstNode, AstNodeList, AstSeparatedList, AstToken, SyntaxError, SyntaxResult},
-	event::{process, Event},
-	lossless_tree_sink::LosslessTreeSink,
-	lossy_tree_sink::LossyTreeSink,
-	numbers::BigInt,
-	parse::*,
-	parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser},
-	state::{ParserState, StrictMode},
-	syntax_node::*,
-	token_set::TokenSet,
-	token_source::TokenSource,
-	util::{SyntaxNodeExt, SyntaxTokenExt},
+    ast::{AstNode, AstNodeList, AstSeparatedList, AstToken, SyntaxError, SyntaxResult},
+    event::{process, Event},
+    lossless_tree_sink::LosslessTreeSink,
+    lossy_tree_sink::LossyTreeSink,
+    numbers::BigInt,
+    parse::*,
+    parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser},
+    state::{ParserState, StrictMode},
+    syntax_node::*,
+    token_set::TokenSet,
+    token_source::TokenSource,
+    util::{SyntaxNodeExt, SyntaxTokenExt},
 };
 
 pub use rome_rowan::{SyntaxText, TextRange, TextSize, TokenAtOffset, WalkEvent};
@@ -106,21 +106,21 @@ use std::ops::Range;
 
 /// An abstraction for syntax tree implementations
 pub trait TreeSink {
-	/// Adds new token to the current branch.
-	fn token(&mut self, kind: JsSyntaxKind);
+    /// Adds new token to the current branch.
+    fn token(&mut self, kind: JsSyntaxKind);
 
-	/// Start new branch and make it current.
-	fn start_node(&mut self, kind: JsSyntaxKind);
+    /// Start new branch and make it current.
+    fn start_node(&mut self, kind: JsSyntaxKind);
 
-	/// Finish current branch and restore previous
-	/// branch as current.
-	fn finish_node(&mut self);
+    /// Finish current branch and restore previous
+    /// branch as current.
+    fn finish_node(&mut self);
 
-	/// Emit errors
-	fn errors(&mut self, errors: Vec<ParserError>);
+    /// Emit errors
+    fn errors(&mut self, errors: Vec<ParserError>);
 
-	/// Consume multiple tokens and glue them into one kind
-	fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind);
+    /// Consume multiple tokens and glue them into one kind
+    fn consume_multiple_tokens(&mut self, amount: u8, kind: JsSyntaxKind);
 }
 
 /// Matches a `SyntaxNode` against an `ast` type.
@@ -153,169 +153,169 @@ macro_rules! match_ast {
 /// A structure describing the syntax features the parser will accept.
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Syntax {
-	pub file_kind: FileKind,
-	pub top_level_await: bool,
-	pub global_return: bool,
+    pub file_kind: FileKind,
+    pub top_level_await: bool,
+    pub global_return: bool,
 }
 
 impl Syntax {
-	pub fn new(file_kind: FileKind) -> Self {
-		let mut this = Self {
-			file_kind,
-			..Syntax::default()
-		};
-		if file_kind == FileKind::TypeScript {
-			this = this.typescript();
-		}
-		this
-	}
+    pub fn new(file_kind: FileKind) -> Self {
+        let mut this = Self {
+            file_kind,
+            ..Syntax::default()
+        };
+        if file_kind == FileKind::TypeScript {
+            this = this.typescript();
+        }
+        this
+    }
 
-	pub fn top_level_await(mut self) -> Self {
-		self.top_level_await = true;
-		self
-	}
+    pub fn top_level_await(mut self) -> Self {
+        self.top_level_await = true;
+        self
+    }
 
-	pub fn global_return(mut self) -> Self {
-		self.global_return = true;
-		self
-	}
+    pub fn global_return(mut self) -> Self {
+        self.global_return = true;
+        self
+    }
 
-	pub fn script(mut self) -> Self {
-		self.file_kind = FileKind::Script;
-		self
-	}
+    pub fn script(mut self) -> Self {
+        self.file_kind = FileKind::Script;
+        self
+    }
 
-	pub fn module(mut self) -> Self {
-		self.file_kind = FileKind::Module;
-		self.top_level_await()
-	}
+    pub fn module(mut self) -> Self {
+        self.file_kind = FileKind::Module;
+        self.top_level_await()
+    }
 
-	pub fn typescript(mut self) -> Self {
-		self.file_kind = FileKind::TypeScript;
-		self.top_level_await()
-	}
+    pub fn typescript(mut self) -> Self {
+        self.file_kind = FileKind::TypeScript;
+        self.top_level_await()
+    }
 }
 
 /// The kind of file we are parsing
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum FileKind {
-	Script,
-	Module,
-	TypeScript,
+    Script,
+    Module,
+    TypeScript,
 }
 
 impl Default for FileKind {
-	fn default() -> Self {
-		FileKind::Script
-	}
+    fn default() -> Self {
+        FileKind::Script
+    }
 }
 
 impl From<FileKind> for Syntax {
-	fn from(kind: FileKind) -> Self {
-		Syntax::new(kind)
-	}
+    fn from(kind: FileKind) -> Self {
+        Syntax::new(kind)
+    }
 }
 
 /// A syntax feature that may or may not be supported depending on the file type and parser configuration
 pub trait SyntaxFeature: Sized {
-	/// Returns `true` if the current parsing context supports this syntax feature.
-	fn is_supported(&self, p: &Parser) -> bool;
+    /// Returns `true` if the current parsing context supports this syntax feature.
+    fn is_supported(&self, p: &Parser) -> bool;
 
-	/// Returns `true` if the current parsing context doesn't support this syntax feature.
-	fn is_unsupported(&self, p: &Parser) -> bool {
-		!self.is_supported(p)
-	}
+    /// Returns `true` if the current parsing context doesn't support this syntax feature.
+    fn is_unsupported(&self, p: &Parser) -> bool {
+        !self.is_supported(p)
+    }
 
-	/// Adds a diagnostic and changes the kind of the node to [SyntaxKind::to_unknown] if this feature isn't
-	/// supported.
-	///
-	/// Returns the parsed syntax.
-	fn exclusive_syntax<S, E>(&self, p: &mut Parser, syntax: S, error_builder: E) -> ParsedSyntax
-	where
-		S: Into<ParsedSyntax>,
-		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
-	{
-		syntax.into().map(|mut syntax| {
-			if self.is_unsupported(p) {
-				let error = error_builder(p, &syntax);
-				p.error(error);
-				syntax.change_to_unknown(p);
-				syntax
-			} else {
-				syntax
-			}
-		})
-	}
+    /// Adds a diagnostic and changes the kind of the node to [SyntaxKind::to_unknown] if this feature isn't
+    /// supported.
+    ///
+    /// Returns the parsed syntax.
+    fn exclusive_syntax<S, E>(&self, p: &mut Parser, syntax: S, error_builder: E) -> ParsedSyntax
+    where
+        S: Into<ParsedSyntax>,
+        E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+    {
+        syntax.into().map(|mut syntax| {
+            if self.is_unsupported(p) {
+                let error = error_builder(p, &syntax);
+                p.error(error);
+                syntax.change_to_unknown(p);
+                syntax
+            } else {
+                syntax
+            }
+        })
+    }
 
-	/// Parses a syntax and adds a diagnostic and changes the kind of the node to [SyntaxKind::to_unknown] if this feature isn't
-	/// supported.
-	///
-	/// Returns the parsed syntax.
-	fn parse_exclusive_syntax<P, E>(
-		&self,
-		p: &mut Parser,
-		parse: P,
-		error_builder: E,
-	) -> ParsedSyntax
-	where
-		P: FnOnce(&mut Parser) -> ParsedSyntax,
-		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
-	{
-		if self.is_supported(p) {
-			parse(p)
-		} else {
-			let diagnostics_checkpoint = p.errors.len();
-			let syntax = parse(p);
-			p.errors.truncate(diagnostics_checkpoint);
+    /// Parses a syntax and adds a diagnostic and changes the kind of the node to [SyntaxKind::to_unknown] if this feature isn't
+    /// supported.
+    ///
+    /// Returns the parsed syntax.
+    fn parse_exclusive_syntax<P, E>(
+        &self,
+        p: &mut Parser,
+        parse: P,
+        error_builder: E,
+    ) -> ParsedSyntax
+    where
+        P: FnOnce(&mut Parser) -> ParsedSyntax,
+        E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+    {
+        if self.is_supported(p) {
+            parse(p)
+        } else {
+            let diagnostics_checkpoint = p.errors.len();
+            let syntax = parse(p);
+            p.errors.truncate(diagnostics_checkpoint);
 
-			match syntax {
-				Present(mut syntax) => {
-					let diagnostic = error_builder(p, &syntax);
-					p.error(diagnostic);
-					syntax.change_to_unknown(p);
-					Present(syntax)
-				}
-				_ => Absent,
-			}
-		}
-	}
+            match syntax {
+                Present(mut syntax) => {
+                    let diagnostic = error_builder(p, &syntax);
+                    p.error(diagnostic);
+                    syntax.change_to_unknown(p);
+                    Present(syntax)
+                }
+                _ => Absent,
+            }
+        }
+    }
 
-	/// Adds a diagnostic and changes the kind of the node to [SyntaxKind::to_unknown] if this feature is
-	/// supported.
-	///
-	/// Returns the parsed syntax.
-	fn excluding_syntax<S, E>(&self, p: &mut Parser, syntax: S, error_builder: E) -> ParsedSyntax
-	where
-		S: Into<ParsedSyntax>,
-		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
-	{
-		syntax.into().map(|mut syntax| {
-			if self.is_unsupported(p) {
-				syntax
-			} else {
-				let error = error_builder(p, &syntax);
-				p.error(error);
-				syntax.change_to_unknown(p);
-				syntax
-			}
-		})
-	}
+    /// Adds a diagnostic and changes the kind of the node to [SyntaxKind::to_unknown] if this feature is
+    /// supported.
+    ///
+    /// Returns the parsed syntax.
+    fn excluding_syntax<S, E>(&self, p: &mut Parser, syntax: S, error_builder: E) -> ParsedSyntax
+    where
+        S: Into<ParsedSyntax>,
+        E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+    {
+        syntax.into().map(|mut syntax| {
+            if self.is_unsupported(p) {
+                syntax
+            } else {
+                let error = error_builder(p, &syntax);
+                p.error(error);
+                syntax.change_to_unknown(p);
+                syntax
+            }
+        })
+    }
 }
 
 pub enum JsSyntaxFeature {
-	#[allow(unused)]
-	#[doc(alias = "LooseMode")]
-	SloppyMode,
-	StrictMode,
-	TypeScript,
+    #[allow(unused)]
+    #[doc(alias = "LooseMode")]
+    SloppyMode,
+    StrictMode,
+    TypeScript,
 }
 
 impl SyntaxFeature for JsSyntaxFeature {
-	fn is_supported(&self, p: &Parser) -> bool {
-		match self {
-			JsSyntaxFeature::SloppyMode => p.state.strict().is_none(),
-			JsSyntaxFeature::StrictMode => p.state.strict().is_some(),
-			JsSyntaxFeature::TypeScript => p.syntax.file_kind == FileKind::TypeScript,
-		}
-	}
+    fn is_supported(&self, p: &Parser) -> bool {
+        match self {
+            JsSyntaxFeature::SloppyMode => p.state.strict().is_none(),
+            JsSyntaxFeature::StrictMode => p.state.strict().is_some(),
+            JsSyntaxFeature::TypeScript => p.syntax.file_kind == FileKind::TypeScript,
+        }
+    }
 }

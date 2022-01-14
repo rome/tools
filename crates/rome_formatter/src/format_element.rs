@@ -9,7 +9,7 @@ type Content = Box<FormatElement>;
 /// Can be helpful if you need to return a `FormatElement` (e.g. in an else branch) but don't want
 /// to show any content.
 pub fn empty_element() -> FormatElement {
-	FormatElement::Empty
+    FormatElement::Empty
 }
 
 /// A line break that only gets printed if the enclosing [Group] doesn't fit on a single line.
@@ -53,7 +53,7 @@ pub fn empty_element() -> FormatElement {
 /// ```
 #[inline]
 pub const fn soft_line_break() -> FormatElement {
-	FormatElement::Line(Line::new(LineMode::Soft))
+    FormatElement::Line(Line::new(LineMode::Soft))
 }
 
 /// A forced line break that are always printed. A hard line break forces any enclosing [Group]
@@ -76,7 +76,7 @@ pub const fn soft_line_break() -> FormatElement {
 /// ```
 #[inline]
 pub const fn hard_line_break() -> FormatElement {
-	FormatElement::Line(Line::new(LineMode::Hard))
+    FormatElement::Line(Line::new(LineMode::Hard))
 }
 
 /// A line break if the enclosing [Group] doesn't fit on a single line, a space otherwise.
@@ -115,7 +115,7 @@ pub const fn hard_line_break() -> FormatElement {
 /// ```
 #[inline]
 pub const fn soft_line_break_or_space() -> FormatElement {
-	FormatElement::Line(Line::new(LineMode::SoftOrSpace))
+    FormatElement::Line(Line::new(LineMode::SoftOrSpace))
 }
 
 /// Creates a token that gets written as is to the output. Make sure to properly escape the text if
@@ -147,12 +147,12 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// ```
 #[inline]
 pub fn token<S: Into<String>>(text: S) -> FormatElement {
-	let text = text.into();
-	if text.is_empty() {
-		FormatElement::Empty
-	} else {
-		FormatElement::Token(Token(text))
-	}
+    let text = text.into();
+    if text.is_empty() {
+        FormatElement::Empty
+    } else {
+        FormatElement::Token(Token(text))
+    }
 }
 
 /// Inserts a single space. Allows to separate different tokens.
@@ -169,7 +169,7 @@ pub fn token<S: Into<String>>(text: S) -> FormatElement {
 /// ```
 #[inline]
 pub const fn space_token() -> FormatElement {
-	FormatElement::Space
+    FormatElement::Space
 }
 
 /// Concatenates the content of multiple [FormatToken]s.
@@ -184,32 +184,32 @@ pub const fn space_token() -> FormatElement {
 /// ```
 pub fn concat_elements<I>(elements: I) -> FormatElement
 where
-	I: IntoIterator<Item = FormatElement>,
+    I: IntoIterator<Item = FormatElement>,
 {
-	let elements = elements.into_iter();
+    let elements = elements.into_iter();
 
-	let mut concatenated: Vec<FormatElement> = if let (_, Some(upper_bound)) = elements.size_hint()
-	{
-		Vec::with_capacity(upper_bound)
-	} else {
-		vec![]
-	};
+    let mut concatenated: Vec<FormatElement> = if let (_, Some(upper_bound)) = elements.size_hint()
+    {
+        Vec::with_capacity(upper_bound)
+    } else {
+        vec![]
+    };
 
-	for element in elements {
-		match element {
-			FormatElement::List(list) => concatenated.extend(list.content),
-			FormatElement::Empty => (),
-			_ => concatenated.push(element),
-		}
-	}
+    for element in elements {
+        match element {
+            FormatElement::List(list) => concatenated.extend(list.content),
+            FormatElement::Empty => (),
+            _ => concatenated.push(element),
+        }
+    }
 
-	if concatenated.is_empty() {
-		empty_element()
-	} else if concatenated.len() == 1 {
-		concatenated.pop().unwrap()
-	} else {
-		FormatElement::from(List::new(concatenated))
-	}
+    if concatenated.is_empty() {
+        empty_element()
+    } else if concatenated.len() == 1 {
+        concatenated.pop().unwrap()
+    } else {
+        FormatElement::from(List::new(concatenated))
+    }
 }
 
 /// Joins the elements by placing a given separator between elements.
@@ -229,13 +229,13 @@ where
 #[inline]
 pub fn join_elements<TSep, I>(separator: TSep, elements: I) -> FormatElement
 where
-	TSep: Into<FormatElement>,
-	I: IntoIterator<Item = FormatElement>,
+    TSep: Into<FormatElement>,
+    I: IntoIterator<Item = FormatElement>,
 {
-	concat_elements(Intersperse::new(
-		elements.into_iter().filter(|e| !e.is_empty()),
-		separator.into(),
-	))
+    concat_elements(Intersperse::new(
+        elements.into_iter().filter(|e| !e.is_empty()),
+        separator.into(),
+    ))
 }
 
 /// It adds a level of indentation to the given content
@@ -269,13 +269,13 @@ where
 /// ```
 #[inline]
 pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
-	let content = content.into();
+    let content = content.into();
 
-	if content.is_empty() {
-		content
-	} else {
-		format_elements![Indent::new(format_elements![content])]
-	}
+    if content.is_empty() {
+        content
+    } else {
+        format_elements![Indent::new(format_elements![content])]
+    }
 }
 
 /// Inserts a hard line break before and after the content and increases the indention level for the content by one.
@@ -304,16 +304,16 @@ pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ```
 #[inline]
 pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
-	let content = content.into();
+    let content = content.into();
 
-	if content.is_empty() {
-		content
-	} else {
-		format_elements![
-			Indent::new(format_elements![hard_line_break(), content]),
-			hard_line_break(),
-		]
-	}
+    if content.is_empty() {
+        content
+    } else {
+        format_elements![
+            Indent::new(format_elements![hard_line_break(), content]),
+            hard_line_break(),
+        ]
+    }
 }
 
 /// Indents the content by inserting a line break before and after the content and increasing
@@ -367,16 +367,16 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 #[inline]
 pub fn soft_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
-	let content = content.into();
+    let content = content.into();
 
-	if content.is_empty() {
-		content
-	} else {
-		format_elements![
-			Indent::new(format_elements![soft_line_break(), content]),
-			soft_line_break(),
-		]
-	}
+    if content.is_empty() {
+        content
+    } else {
+        format_elements![
+            Indent::new(format_elements![soft_line_break(), content]),
+            soft_line_break(),
+        ]
+    }
 }
 
 /// Creates a logical [Group] around the content that should either consistently be printed on a single line
@@ -435,13 +435,13 @@ pub fn soft_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ```
 #[inline]
 pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
-	let content = content.into();
+    let content = content.into();
 
-	if content.is_empty() {
-		content
-	} else {
-		FormatElement::from(Group::new(content))
-	}
+    if content.is_empty() {
+        content
+    } else {
+        FormatElement::from(Group::new(content))
+    }
 }
 
 /// Adds a conditional content that is emitted only if it isn't inside an enclosing [Group] that
@@ -498,16 +498,16 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ```
 #[inline]
 pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
-	let content = content.into();
+    let content = content.into();
 
-	if content.is_empty() {
-		content
-	} else {
-		FormatElement::from(ConditionalGroupContent::new(
-			content,
-			GroupPrintMode::Multiline,
-		))
-	}
+    if content.is_empty() {
+        content
+    } else {
+        FormatElement::from(ConditionalGroupContent::new(
+            content,
+            GroupPrintMode::Multiline,
+        ))
+    }
 }
 
 /// Adds a conditional content specific for [Group]s that fit on a single line. The content isn't
@@ -562,18 +562,18 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 #[inline]
 pub fn if_group_fits_on_single_line<TFlat>(flat_content: TFlat) -> FormatElement
 where
-	TFlat: Into<FormatElement>,
+    TFlat: Into<FormatElement>,
 {
-	let flat_content = flat_content.into();
+    let flat_content = flat_content.into();
 
-	if flat_content.is_empty() {
-		flat_content
-	} else {
-		FormatElement::from(ConditionalGroupContent::new(
-			flat_content,
-			GroupPrintMode::Flat,
-		))
-	}
+    if flat_content.is_empty() {
+        flat_content
+    } else {
+        FormatElement::from(ConditionalGroupContent::new(
+            flat_content,
+            GroupPrintMode::Flat,
+        ))
+    }
 }
 
 /// Language agnostic IR for formatting source code.
@@ -581,89 +581,89 @@ where
 /// Use the helper functions like [space], [soft_line_break] etc. defined in this file to create elements.
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub enum FormatElement {
-	Empty,
+    Empty,
 
-	/// A space token, see [space] for documentation.
-	Space,
+    /// A space token, see [space] for documentation.
+    Space,
 
-	/// A new line, see [soft_line_break], [hard_line_break], and [soft_line_break_or_space] for documentation.
-	Line(Line),
+    /// A new line, see [soft_line_break], [hard_line_break], and [soft_line_break_or_space] for documentation.
+    Line(Line),
 
-	/// Indents the content one level deeper, see [indent] for documentation and examples.
-	Indent(Indent),
+    /// Indents the content one level deeper, see [indent] for documentation and examples.
+    Indent(Indent),
 
-	/// Creates a logical group where its content is either consistently printed:
-	/// * on a single line: Omitting [LineMode::Soft] line breaks and printing spaces for [LineMode::SoftOrSpace]
-	/// * on multiple lines: Printing all line breaks
-	///
-	/// See [group] for documentation and examples.
-	Group(Group),
+    /// Creates a logical group where its content is either consistently printed:
+    /// * on a single line: Omitting [LineMode::Soft] line breaks and printing spaces for [LineMode::SoftOrSpace]
+    /// * on multiple lines: Printing all line breaks
+    ///
+    /// See [group] for documentation and examples.
+    Group(Group),
 
-	/// Allows to specify content that gets printed depending on whatever the enclosing group
-	/// is printed on a single line or multiple lines. See [if_group_breaks] for examples.
-	ConditionalGroupContent(ConditionalGroupContent),
+    /// Allows to specify content that gets printed depending on whatever the enclosing group
+    /// is printed on a single line or multiple lines. See [if_group_breaks] for examples.
+    ConditionalGroupContent(ConditionalGroupContent),
 
-	/// Concatenates multiple elements together. See [concat_elements] and [join_elements] for examples.
-	List(List),
+    /// Concatenates multiple elements together. See [concat_elements] and [join_elements] for examples.
+    List(List),
 
-	/// A token that should be printed as is, see [token] for documentation and examples.
-	Token(Token),
+    /// A token that should be printed as is, see [token] for documentation and examples.
+    Token(Token),
 }
 
 /// Inserts a new line
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Line {
-	pub mode: LineMode,
+    pub mode: LineMode,
 }
 
 impl Line {
-	pub const fn new(mode: LineMode) -> Self {
-		Self { mode }
-	}
+    pub const fn new(mode: LineMode) -> Self {
+        Self { mode }
+    }
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub enum LineMode {
-	/// See [soft_line_break_or_space] for documentation.
-	SoftOrSpace,
-	/// See [soft_line_break] for documentation.
-	Soft,
-	/// See [hard_line_break] for documentation.
-	Hard,
+    /// See [soft_line_break_or_space] for documentation.
+    SoftOrSpace,
+    /// See [soft_line_break] for documentation.
+    Soft,
+    /// See [hard_line_break] for documentation.
+    Hard,
 }
 
 /// Increases the indention by one; see [indented_with_soft_break] and [indented_with_hard_break].
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Indent {
-	pub(crate) content: Content,
+    pub(crate) content: Content,
 }
 
 impl Indent {
-	pub fn new(content: FormatElement) -> Self {
-		Self {
-			content: Box::new(content),
-		}
-	}
+    pub fn new(content: FormatElement) -> Self {
+        Self {
+            content: Box::new(content),
+        }
+    }
 }
 
 /// A token used to gather a list of elements; see [concat_elements] and [join_elements].
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct List {
-	content: Vec<FormatElement>,
+    content: Vec<FormatElement>,
 }
 
 impl List {
-	fn new(content: Vec<FormatElement>) -> Self {
-		Self { content }
-	}
+    fn new(content: Vec<FormatElement>) -> Self {
+        Self { content }
+    }
 }
 
 impl Deref for List {
-	type Target = Vec<FormatElement>;
+    type Target = Vec<FormatElement>;
 
-	fn deref(&self) -> &Self::Target {
-		&self.content
-	}
+    fn deref(&self) -> &Self::Target {
+        &self.content
+    }
 }
 
 /// Group is a special token that controls how the child tokens are printed.
@@ -672,40 +672,40 @@ impl Deref for List {
 /// but breaks the array cross multiple lines if it would exceed the specified `line_width`, if a child token is a hard line break or if a string contains a line break.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Group {
-	pub(crate) content: Content,
+    pub(crate) content: Content,
 }
 
 impl Group {
-	pub fn new(content: FormatElement) -> Self {
-		Self {
-			content: Box::new(content),
-		}
-	}
+    pub fn new(content: FormatElement) -> Self {
+        Self {
+            content: Box::new(content),
+        }
+    }
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub enum GroupPrintMode {
-	Flat,
-	Multiline,
+    Flat,
+    Multiline,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct ConditionalGroupContent {
-	pub(crate) content: Content,
+    pub(crate) content: Content,
 
-	/// In what mode the content should be printed.
-	/// * Flat -> Omitted if the enclosing group is a multiline group, printed for groups fitting on a single line
-	/// * Multiline -> Omitted if the enclosing group fits on a single line, printed if the group breaks over multiple lines.
-	pub(crate) mode: GroupPrintMode,
+    /// In what mode the content should be printed.
+    /// * Flat -> Omitted if the enclosing group is a multiline group, printed for groups fitting on a single line
+    /// * Multiline -> Omitted if the enclosing group fits on a single line, printed if the group breaks over multiple lines.
+    pub(crate) mode: GroupPrintMode,
 }
 
 impl ConditionalGroupContent {
-	pub fn new(content: FormatElement, mode: GroupPrintMode) -> Self {
-		Self {
-			content: Box::new(content),
-			mode,
-		}
-	}
+    pub fn new(content: FormatElement, mode: GroupPrintMode) -> Self {
+        Self {
+            content: Box::new(content),
+            mode,
+        }
+    }
 }
 
 /// See [token] for documentation
@@ -713,268 +713,268 @@ impl ConditionalGroupContent {
 pub struct Token(String);
 
 impl Token {
-	pub fn new(content: &str) -> Self {
-		debug_assert!(!content.contains('\r'), "The content '{}' contains a carriage return '\\r' character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", content);
-		Self(String::from(content))
-	}
+    pub fn new(content: &str) -> Self {
+        debug_assert!(!content.contains('\r'), "The content '{}' contains a carriage return '\\r' character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", content);
+        Self(String::from(content))
+    }
 }
 
 impl Deref for Token {
-	type Target = String;
+    type Target = String;
 
-	fn deref(&self) -> &Self::Target {
-		&self.0
-	}
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
 }
 
 impl FormatElement {
-	/// Returns true if the element contains no content.
-	pub fn is_empty(&self) -> bool {
-		self == &FormatElement::Empty
-	}
+    /// Returns true if the element contains no content.
+    pub fn is_empty(&self) -> bool {
+        self == &FormatElement::Empty
+    }
 
-	/// Remove all spaces, line breaks, indents from the start of
-	/// the [FormatElement].
-	/// Including "whitespace" characters of the [FormatElement::Token] variant.
-	pub fn trim_start(&self) -> FormatElement {
-		match self {
-			FormatElement::Empty => FormatElement::Empty,
-			FormatElement::Space => FormatElement::Empty,
-			FormatElement::Line(_) => FormatElement::Empty,
-			FormatElement::Indent(i) => i.content.trim_start(),
-			FormatElement::Group(g) => g.content.trim_start(),
-			FormatElement::ConditionalGroupContent(g) => g.content.trim_start(),
-			FormatElement::List(list) => {
-				let mut content: Vec<_> = list
-					.iter()
-					.skip_while(|e| match e {
-						FormatElement::Empty => true,
-						FormatElement::Space => true,
-						FormatElement::Line(_) => true,
-						FormatElement::Indent(_) => true,
-						FormatElement::Token(t) => {
-							let s = t.trim_start();
-							s.is_empty()
-						}
-						_ => false,
-					})
-					.map(Clone::clone)
-					.collect();
-				if let Some(FormatElement::Token(s)) = content.get_mut(0) {
-					s.0 = s.trim_start().to_string()
-				}
-				FormatElement::List(List::new(content))
-			}
-			FormatElement::Token(s) => token(s.trim_start()),
-		}
-	}
+    /// Remove all spaces, line breaks, indents from the start of
+    /// the [FormatElement].
+    /// Including "whitespace" characters of the [FormatElement::Token] variant.
+    pub fn trim_start(&self) -> FormatElement {
+        match self {
+            FormatElement::Empty => FormatElement::Empty,
+            FormatElement::Space => FormatElement::Empty,
+            FormatElement::Line(_) => FormatElement::Empty,
+            FormatElement::Indent(i) => i.content.trim_start(),
+            FormatElement::Group(g) => g.content.trim_start(),
+            FormatElement::ConditionalGroupContent(g) => g.content.trim_start(),
+            FormatElement::List(list) => {
+                let mut content: Vec<_> = list
+                    .iter()
+                    .skip_while(|e| match e {
+                        FormatElement::Empty => true,
+                        FormatElement::Space => true,
+                        FormatElement::Line(_) => true,
+                        FormatElement::Indent(_) => true,
+                        FormatElement::Token(t) => {
+                            let s = t.trim_start();
+                            s.is_empty()
+                        }
+                        _ => false,
+                    })
+                    .map(Clone::clone)
+                    .collect();
+                if let Some(FormatElement::Token(s)) = content.get_mut(0) {
+                    s.0 = s.trim_start().to_string()
+                }
+                FormatElement::List(List::new(content))
+            }
+            FormatElement::Token(s) => token(s.trim_start()),
+        }
+    }
 
-	/// Remove all spaces, line breaks, indents from the end of
-	/// the [FormatElement].
-	/// Including "whitespace" characters of the [FormatElement::Token] variant.
-	pub fn trim_end(&self) -> FormatElement {
-		match self {
-			FormatElement::Empty => FormatElement::Empty,
-			FormatElement::Space => FormatElement::Empty,
-			FormatElement::Line(_) => FormatElement::Empty,
-			FormatElement::Indent(i) => i.content.trim_end(),
-			FormatElement::Group(g) => g.content.trim_end(),
-			FormatElement::ConditionalGroupContent(g) => g.content.trim_end(),
-			FormatElement::List(list) => {
-				let idx_first_non_empty = list.iter().rev().position(|e| match e {
-					FormatElement::Empty => false,
-					FormatElement::Space => false,
-					FormatElement::Line(_) => false,
-					FormatElement::Indent(_) => false,
-					FormatElement::Token(t) => {
-						let s = t.trim_end();
-						!s.is_empty()
-					}
-					_ => true,
-				});
+    /// Remove all spaces, line breaks, indents from the end of
+    /// the [FormatElement].
+    /// Including "whitespace" characters of the [FormatElement::Token] variant.
+    pub fn trim_end(&self) -> FormatElement {
+        match self {
+            FormatElement::Empty => FormatElement::Empty,
+            FormatElement::Space => FormatElement::Empty,
+            FormatElement::Line(_) => FormatElement::Empty,
+            FormatElement::Indent(i) => i.content.trim_end(),
+            FormatElement::Group(g) => g.content.trim_end(),
+            FormatElement::ConditionalGroupContent(g) => g.content.trim_end(),
+            FormatElement::List(list) => {
+                let idx_first_non_empty = list.iter().rev().position(|e| match e {
+                    FormatElement::Empty => false,
+                    FormatElement::Space => false,
+                    FormatElement::Line(_) => false,
+                    FormatElement::Indent(_) => false,
+                    FormatElement::Token(t) => {
+                        let s = t.trim_end();
+                        !s.is_empty()
+                    }
+                    _ => true,
+                });
 
-				match idx_first_non_empty {
-					Some(idx_first_non_empty) => {
-						let idx_first_non_empty = list.len() - idx_first_non_empty;
-						let mut content: Vec<_> = list
-							.iter()
-							.take(idx_first_non_empty)
-							.map(Clone::clone)
-							.collect();
-						if let Some(FormatElement::Token(s)) = content.last_mut() {
-							s.0 = s.trim_end().to_string()
-						}
-						FormatElement::List(List::new(content))
-					}
-					None => FormatElement::List(List::new(vec![])),
-				}
-			}
-			FormatElement::Token(s) => token(s.trim_end()),
-		}
-	}
+                match idx_first_non_empty {
+                    Some(idx_first_non_empty) => {
+                        let idx_first_non_empty = list.len() - idx_first_non_empty;
+                        let mut content: Vec<_> = list
+                            .iter()
+                            .take(idx_first_non_empty)
+                            .map(Clone::clone)
+                            .collect();
+                        if let Some(FormatElement::Token(s)) = content.last_mut() {
+                            s.0 = s.trim_end().to_string()
+                        }
+                        FormatElement::List(List::new(content))
+                    }
+                    None => FormatElement::List(List::new(vec![])),
+                }
+            }
+            FormatElement::Token(s) => token(s.trim_end()),
+        }
+    }
 }
 
 impl From<Group> for FormatElement {
-	fn from(group: Group) -> Self {
-		FormatElement::Group(group)
-	}
+    fn from(group: Group) -> Self {
+        FormatElement::Group(group)
+    }
 }
 
 impl From<List> for FormatElement {
-	fn from(token: List) -> Self {
-		FormatElement::List(token)
-	}
+    fn from(token: List) -> Self {
+        FormatElement::List(token)
+    }
 }
 
 impl From<ConditionalGroupContent> for FormatElement {
-	fn from(token: ConditionalGroupContent) -> Self {
-		FormatElement::ConditionalGroupContent(token)
-	}
+    fn from(token: ConditionalGroupContent) -> Self {
+        FormatElement::ConditionalGroupContent(token)
+    }
 }
 
 impl From<Line> for FormatElement {
-	fn from(token: Line) -> Self {
-		FormatElement::Line(token)
-	}
+    fn from(token: Line) -> Self {
+        FormatElement::Line(token)
+    }
 }
 
 impl From<Indent> for FormatElement {
-	fn from(token: Indent) -> Self {
-		FormatElement::Indent(token)
-	}
+    fn from(token: Indent) -> Self {
+        FormatElement::Indent(token)
+    }
 }
 
 #[cfg(test)]
 mod tests {
 
-	use crate::format_element::{empty_element, join_elements, List};
-	use crate::{concat_elements, space_token, token, FormatElement};
+    use crate::format_element::{empty_element, join_elements, List};
+    use crate::{concat_elements, space_token, token, FormatElement};
 
-	#[test]
-	fn concat_elements_returns_a_list_token_containing_the_passed_in_elements() {
-		let concatenated = concat_elements(vec![token("a"), space_token(), token("b")]);
+    #[test]
+    fn concat_elements_returns_a_list_token_containing_the_passed_in_elements() {
+        let concatenated = concat_elements(vec![token("a"), space_token(), token("b")]);
 
-		assert_eq!(
-			concatenated,
-			FormatElement::List(List::new(vec![token("a"), space_token(), token("b")]))
-		);
-	}
+        assert_eq!(
+            concatenated,
+            FormatElement::List(List::new(vec![token("a"), space_token(), token("b")]))
+        );
+    }
 
-	#[test]
-	fn concat_elements_returns_the_passed_in_element_if_the_content_is_a_list_with_a_single_element(
-	) {
-		let concatenated = concat_elements(vec![token("a")]);
+    #[test]
+    fn concat_elements_returns_the_passed_in_element_if_the_content_is_a_list_with_a_single_element(
+    ) {
+        let concatenated = concat_elements(vec![token("a")]);
 
-		assert_eq!(concatenated, token("a"));
-	}
+        assert_eq!(concatenated, token("a"));
+    }
 
-	#[test]
-	fn concat_elements_the_empty_element_if_the_passed_vector_is_empty() {
-		let concatenated = concat_elements(vec![]);
+    #[test]
+    fn concat_elements_the_empty_element_if_the_passed_vector_is_empty() {
+        let concatenated = concat_elements(vec![]);
 
-		assert_eq!(concatenated, empty_element());
-	}
+        assert_eq!(concatenated, empty_element());
+    }
 
-	#[test]
-	fn concat_elements_flattens_sub_lists_and_skips_empty_elements() {
-		let concatenated = concat_elements(vec![
-			token("a"),
-			space_token(),
-			empty_element(),
-			concat_elements(vec![token("1"), space_token(), token("2")]),
-			space_token(),
-			token("b"),
-		]);
+    #[test]
+    fn concat_elements_flattens_sub_lists_and_skips_empty_elements() {
+        let concatenated = concat_elements(vec![
+            token("a"),
+            space_token(),
+            empty_element(),
+            concat_elements(vec![token("1"), space_token(), token("2")]),
+            space_token(),
+            token("b"),
+        ]);
 
-		assert_eq!(
-			concatenated,
-			FormatElement::List(List::new(vec![
-				token("a"),
-				space_token(),
-				token("1"),
-				space_token(),
-				token("2"),
-				space_token(),
-				token("b")
-			]))
-		);
-	}
+        assert_eq!(
+            concatenated,
+            FormatElement::List(List::new(vec![
+                token("a"),
+                space_token(),
+                token("1"),
+                space_token(),
+                token("2"),
+                space_token(),
+                token("b")
+            ]))
+        );
+    }
 
-	#[test]
-	fn join_elements_inserts_the_separator_between_elements() {
-		let joined = join_elements(space_token(), vec![token("a"), token("b"), token("c")]);
+    #[test]
+    fn join_elements_inserts_the_separator_between_elements() {
+        let joined = join_elements(space_token(), vec![token("a"), token("b"), token("c")]);
 
-		assert_eq!(
-			joined,
-			concat_elements(vec![
-				token("a"),
-				space_token(),
-				token("b"),
-				space_token(),
-				token("c")
-			])
-		);
-	}
+        assert_eq!(
+            joined,
+            concat_elements(vec![
+                token("a"),
+                space_token(),
+                token("b"),
+                space_token(),
+                token("c")
+            ])
+        );
+    }
 
-	#[test]
-	fn join_returns_the_content_element_if_the_content_contains_a_single_element() {
-		let joined = join_elements(space_token(), vec![token("a")]);
+    #[test]
+    fn join_returns_the_content_element_if_the_content_contains_a_single_element() {
+        let joined = join_elements(space_token(), vec![token("a")]);
 
-		assert_eq!(joined, token("a"));
-	}
+        assert_eq!(joined, token("a"));
+    }
 
-	#[test]
-	fn join_returns_the_empty_element_if_the_passed_vec_is_empty() {
-		let joined = join_elements(space_token(), vec![]);
+    #[test]
+    fn join_returns_the_empty_element_if_the_passed_vec_is_empty() {
+        let joined = join_elements(space_token(), vec![]);
 
-		assert_eq!(joined, empty_element());
-	}
+        assert_eq!(joined, empty_element());
+    }
 
-	#[test]
-	fn join_flattens_sub_lists_and_skips_empty_elements_without_inserting_separators() {
-		let joined = join_elements(
-			space_token(),
-			vec![
-				token("a"),
-				empty_element(),
-				concat_elements(vec![token("1"), token("+"), token("2")]),
-				token("b"),
-			],
-		);
+    #[test]
+    fn join_flattens_sub_lists_and_skips_empty_elements_without_inserting_separators() {
+        let joined = join_elements(
+            space_token(),
+            vec![
+                token("a"),
+                empty_element(),
+                concat_elements(vec![token("1"), token("+"), token("2")]),
+                token("b"),
+            ],
+        );
 
-		assert_eq!(
-			joined,
-			FormatElement::List(List::new(vec![
-				token("a"),
-				space_token(),
-				token("1"),
-				token("+"),
-				token("2"),
-				space_token(),
-				token("b")
-			]))
-		);
-	}
+        assert_eq!(
+            joined,
+            FormatElement::List(List::new(vec![
+                token("a"),
+                space_token(),
+                token("1"),
+                token("+"),
+                token("2"),
+                space_token(),
+                token("b")
+            ]))
+        );
+    }
 
-	#[test]
-	fn format_element_trim() {
-		use crate::format_element::*;
-		let f = concat_elements([
-			FormatElement::Empty,
-			FormatElement::Indent(Indent::new(FormatElement::Empty)),
-			FormatElement::Line(Line::new(LineMode::Hard)),
-			FormatElement::Space,
-			FormatElement::Token(Token::new(" \t \n")),
-			FormatElement::List(List::new(vec![FormatElement::Empty])),
-			FormatElement::Group(Group::new(FormatElement::Empty)),
-			FormatElement::ConditionalGroupContent(ConditionalGroupContent::new(
-				FormatElement::Empty,
-				GroupPrintMode::Flat,
-			)),
-		]);
+    #[test]
+    fn format_element_trim() {
+        use crate::format_element::*;
+        let f = concat_elements([
+            FormatElement::Empty,
+            FormatElement::Indent(Indent::new(FormatElement::Empty)),
+            FormatElement::Line(Line::new(LineMode::Hard)),
+            FormatElement::Space,
+            FormatElement::Token(Token::new(" \t \n")),
+            FormatElement::List(List::new(vec![FormatElement::Empty])),
+            FormatElement::Group(Group::new(FormatElement::Empty)),
+            FormatElement::ConditionalGroupContent(ConditionalGroupContent::new(
+                FormatElement::Empty,
+                GroupPrintMode::Flat,
+            )),
+        ]);
 
-		let f = f.trim_start();
-		matches!(f.trim_start(), FormatElement::Empty);
-		matches!(f.trim_end(), FormatElement::Empty);
-	}
+        let f = f.trim_start();
+        matches!(f.trim_start(), FormatElement::Empty);
+        matches!(f.trim_end(), FormatElement::Empty);
+    }
 }

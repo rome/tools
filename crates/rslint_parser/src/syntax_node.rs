@@ -13,7 +13,7 @@ use rome_rowan::{Language, TreeBuilder};
 pub struct JsLanguage;
 
 impl Language for JsLanguage {
-	type Kind = JsSyntaxKind;
+    type Kind = JsSyntaxKind;
 }
 
 pub type SyntaxNode = rome_rowan::SyntaxNode<JsLanguage>;

@@ -4,22 +4,22 @@ use super::{ExtensionHandler, Mime};
 pub struct JsFileHandler {}
 
 impl ExtensionHandler for JsFileHandler {
-	fn capabilities(&self) -> super::Capabilities {
-		super::Capabilities {
-			format: true,
-			lint: true,
-		}
-	}
+    fn capabilities(&self) -> super::Capabilities {
+        super::Capabilities {
+            format: true,
+            lint: true,
+        }
+    }
 
-	fn language(&self) -> super::Language {
-		super::Language::Js
-	}
+    fn language(&self) -> super::Language {
+        super::Language::Js
+    }
 
-	fn mime(&self) -> super::Mime {
-		Mime::Javascript
-	}
+    fn mime(&self) -> super::Mime {
+        Mime::Javascript
+    }
 
-	fn may_use_tabs(&self) -> bool {
-		true
-	}
+    fn may_use_tabs(&self) -> bool {
+        true
+    }
 }
