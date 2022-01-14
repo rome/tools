@@ -90,7 +90,7 @@ SUBCOMMANDS:
 OPTIONS
     --markdown   Emits supported output into markdown format. Supported by compare subcommand
     --json       Emits supported output into json format. Supported by coverage subcommand
-			"
+            "
             );
             Ok(())
         }

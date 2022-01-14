@@ -68,20 +68,20 @@ pub fn generate_syntax_factory(ast: &AstSrc) -> Result<String> {
     });
 
     let lists = ast.lists().map(|(name, data)| {
-		let element_type = format_ident!("{}", data.element_name);
-		let kind = format_ident!("{}", to_upper_snake_case(name));
-		if let Some(separator) = &data.separator {
-			let allow_trailing = separator.allow_trailing;
-			let separator_kind = token_kind_to_code(&separator.separator_token);
-			quote! {
-				#kind => Self::make_separated_list_syntax(kind, children, #element_type::can_cast, #separator_kind, #allow_trailing)
-			}
-		} else {
-			quote! {
-				#kind => Self::make_node_list_syntax(kind, children, #element_type::can_cast)
-			}
-		}
-	});
+        let element_type = format_ident!("{}", data.element_name);
+        let kind = format_ident!("{}", to_upper_snake_case(name));
+        if let Some(separator) = &data.separator {
+            let allow_trailing = separator.allow_trailing;
+            let separator_kind = token_kind_to_code(&separator.separator_token);
+            quote! {
+                #kind => Self::make_separated_list_syntax(kind, children, #element_type::can_cast, #separator_kind, #allow_trailing)
+            }
+        } else {
+            quote! {
+                #kind => Self::make_node_list_syntax(kind, children, #element_type::can_cast)
+            }
+        }
+    });
 
     let unknown_kinds = ast
         .unknowns
