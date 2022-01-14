@@ -31,7 +31,7 @@ pub struct AnalyzerContext<'a> {
 }
 
 impl<'a> AnalyzerContext<'a> {
-	pub fn new(
+	pub(crate) fn new(
 		analysis_server: &'a AnalysisServer,
 		file_id: FileId,
 		analyzer: &'a Analyzer,
@@ -43,18 +43,24 @@ impl<'a> AnalyzerContext<'a> {
 		}
 	}
 
+	/// Get the root [SyntaxNode] for the file being analyzed
 	pub fn tree(&self) -> SyntaxNode {
 		self.analysis_server.parse(self.file_id)
 	}
 
+	/// Iterate over syntax nodes in this file that can be cast to T
 	pub fn query_nodes<T: AstNode>(&self) -> impl Iterator<Item = T> {
 		self.analysis_server.query_nodes(self.file_id)
 	}
 
+	/// Find the deepest AST node of type T that covers a TextRange
 	pub fn find_node_at_range<T: AstNode>(&self, range: TextRange) -> Option<T> {
 		self.analysis_server.find_node_at_range(self.file_id, range)
 	}
 
+	/// Create an error [Diagnostic] which includes the [FileId] of the file being analyzed
+	/// and the analyzer's name as a "code". The provided [Span] is recorded as the primary
+	/// label for the diagnostic.
 	#[must_use]
 	pub fn error(&self, span: impl Span, message: impl Into<String>) -> Diagnostic {
 		let code = self.analyzer.name;

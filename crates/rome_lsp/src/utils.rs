@@ -73,6 +73,10 @@ pub(crate) fn text_action_to_lsp(
 	}
 }
 
+/// Convert an [rslint_errors::Diagnostic] to a [lsp::Diagnostic], using the span
+/// of the diagnostic's primary label as the diagnostic range.
+/// Requires a [LineIndex] to convert a byte offset range to the line/col range
+/// expected by LSP.
 pub(crate) fn diagnostic_to_lsp(
 	diagnostic: rslint_errors::Diagnostic,
 	line_index: &LineIndex,

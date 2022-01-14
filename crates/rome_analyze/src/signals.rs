@@ -18,6 +18,8 @@ impl Signal {
 		matches!(self, Signal::Action(_))
 	}
 
+	/// For an [Action], returns the valid range.
+	/// For a [Diagnostic], returns the text range of the primary label.
 	pub fn range(&self) -> Option<TextRange> {
 		match self {
 			Signal::Diagnostic(it) => it.range(),
@@ -88,7 +90,7 @@ impl FromIterator<AnalyzeDiagnostic> for Analysis {
 #[derive(Debug, Clone)]
 /// Combines an rslint_errors Diagnostic with [SyntaxEdit] actions.
 ///
-/// The suggestions on a [Diagnostic] are only suitable for text edits.
+/// The suggestions on a [rslint_errors::Diagnostic] are only suitable for text edits.
 /// Perhaps that diagnostic type can be modified so that this type is
 /// unnecessary, but we may not want the core diagnostics format to directly
 /// reference syntax nodes.
@@ -112,6 +114,7 @@ impl AnalyzeDiagnostic {
 		}
 	}
 
+	/// Get the [TextRange] corresponding to the primary label of this diagnostic.
 	pub fn range(&self) -> Option<TextRange> {
 		self.diagnostic.primary_text_range()
 	}
@@ -169,18 +172,21 @@ impl From<Vec<Signal>> for Analysis {
 	}
 }
 
+/// An extension trait for [rslint_errors::Diagnostic]
+/// In the future, the Diagnostic format might be modified directly.
 pub trait DiagnosticExt {
 	fn into_signal(self) -> Signal;
 
-	// This could be added directly to rslint_errors::Diagnostic
 	fn primary_text_range(&self) -> Option<TextRange>;
 }
 
 impl DiagnosticExt for Diagnostic {
+	/// Convenience method to wrap a [Diagnostic] in [Signal::Diagnostic]
 	fn into_signal(self) -> Signal {
 		Signal::Diagnostic(self.into())
 	}
 
+	/// Get the [TextRange] of the diagnostic's primary label
 	fn primary_text_range(&self) -> Option<TextRange> {
 		self.primary.as_ref().map(|p| p.span.range.as_text_range())
 	}

@@ -5,7 +5,7 @@ use rslint_parser::{
 	SyntaxResult,
 };
 
-use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext, Signal};
+use crate::{signals::DiagnosticExt, Analysis, Analyzer, AnalyzerContext};
 
 pub fn create() -> Analyzer {
 	Analyzer {
@@ -30,7 +30,7 @@ fn analyze(ctx: &AnalyzerContext) -> Option<Analysis> {
 			}
 
 			let message = format!("Do not use the {} operator", op.text_trimmed());
-			let signal: Signal = ctx.error(op, message).into_signal();
+			let signal = ctx.error(op, message).into_signal();
 			Some(signal)
 		})
 		.collect()
