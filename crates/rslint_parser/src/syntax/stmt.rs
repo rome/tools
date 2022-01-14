@@ -244,9 +244,9 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
 //
 // test_err double_label
 // label1: {
-// 	label2: {
-// 		label1: {}
-// 	}
+//   label2: {
+//     label1: {}
+//   }
 // }
 //
 // test labelled_function_declaration
@@ -348,9 +348,9 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
 
 // test_err debugger_stmt
 // function foo() {
-// 	debugger {
-// 		var something = "lorem";
-// 	}
+//   debugger {
+//     var something = "lorem";
+//   }
 // }
 
 /// A debugger statement such as `debugger;`
@@ -403,9 +403,9 @@ fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
 // test break_stmt
 // while (true) {
 //   break;
-// 	foo: {
+//   foo: {
 //    break foo;
-// 	}
+//   }
 // }
 
 // test_err break_stmt
@@ -451,7 +451,7 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
 //   continue;
 //   foo: {
 //     continue foo;
-// 	 }
+//    }
 //   continue
 // }
 
@@ -657,36 +657,36 @@ impl ParseNodeList for DirectivesList {
 // let a = 10;
 // "use strict"; // not a directive
 // function test() {
-// 	'use strict';
-// 	let a = 10;
-// 	'use strict'; // not a directive
+//   'use strict';
+//   let a = 10;
+//   'use strict'; // not a directive
 // }
 // (function () {
-// 	"use strict";
-// 	let a = 10;
-// 	"use strict"; // not a directive
+//   "use strict";
+//   let a = 10;
+//   "use strict"; // not a directive
 // });
 // let b = () => {
-// 	"use strict";
-// 	let a = 10;
-// 	"use strict";  // not a directive
+//   "use strict";
+//   let a = 10;
+//   "use strict";  // not a directive
 // }
 // {
-// 	"use strict"; // not a directive
+//   "use strict"; // not a directive
 // }
 //
 // test_err directives_err
 // // SCRIPT
 // function test() {
-// 	"use strict";
-// 	function inner_a() {
-// 		"use strict";
-// 	}
-// 	function inner_b() {
-// 		function inner_inner() {
-// 			"use strict";
-// 		}
-// 	}
+//   "use strict";
+//   function inner_a() {
+//     "use strict";
+//   }
+//   function inner_b() {
+//     function inner_inner() {
+//       "use strict";
+//     }
+//   }
 // }
 #[must_use]
 pub(crate) fn directives(p: &mut Parser) -> Option<EnableStrictModeSnapshot> {
@@ -772,9 +772,9 @@ fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
 // test with_statement
 // // SCRIPT
 // function f(x, o) {
-// 	with (o) {
-// 		console.log(x);
-// 	}
+//   with (o) {
+//     console.log(x);
+//   }
 // }
 /// A with statement such as `with (foo) something()`
 fn parse_with_statement(p: &mut Parser) -> ParsedSyntax {
@@ -1154,12 +1154,12 @@ fn parse_variable_declaration(
 // test do_while_statement
 // do console.log("test"); while(true)
 // do {
-// 	console.log("test")
+//   console.log("test")
 // } while (true);
 // let a = 1;
 // do
 // do {
-// 	a = a + 1
+//   a = a + 1
 // } while(a < 5)
 // while (a < 100)
 //
@@ -1526,8 +1526,8 @@ fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
     // switch { var i = 0 }
     // switch { var i = 0; case "bar": {} }
     // switch (foo) {
-    // 	default: {}
-    // 	default: {}
+    //   default: {}
+    //   default: {}
     // }
     // switch (foo) { case : }
 

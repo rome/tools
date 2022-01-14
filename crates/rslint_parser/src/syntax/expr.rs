@@ -514,21 +514,21 @@ fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax {
 
 // test super_expression
 // class Test extends B {
-// 	constructor() {
-// 		super();
-// 	}
-// 	test() {
-// 		super.test(a, b);
-// 		super[1];
-// 	}
+//   constructor() {
+//     super();
+//   }
+//   test() {
+//     super.test(a, b);
+//     super[1];
+//   }
 // }
 //
 // test_err super_expression_err
 // class Test extends B {
-// 	test() {
-// 		super();
-// 		super?.test();
-// 	}
+//   test() {
+//     super();
+//     super?.test();
+//   }
 // }
 // super();
 fn parse_super_expression(p: &mut Parser) -> ParsedSyntax {
@@ -635,13 +635,13 @@ fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Comple
 // foo?.for
 // foo?.bar
 // class Test {
-// 	#bar
-// 	test(other) {
-// 		this.#bar;
-// 		this?.#bar;
-// 		other.#bar;
-// 		other?.#bar;
-// 	}
+//   #bar
+//   test(other) {
+//     this.#bar;
+//     this?.#bar;
+//     other.#bar;
+//     other?.#bar;
+//   }
 // }
 fn parse_static_member_expression(
     p: &mut Parser,
@@ -1499,11 +1499,11 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
     if (p.state.in_async()) && p.at(T![await]) {
         // test await_expression
         // async function test() {
-        // 	await inner();
-        // 	await (inner()) + await inner();
+        //   await inner();
+        //   await (inner()) + await inner();
         // }
         // async function inner() {
-        // 	return 4;
+        //   return 4;
         // }
         // await test();
 

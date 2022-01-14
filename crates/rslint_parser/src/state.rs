@@ -299,11 +299,11 @@ bitflags! {
     /// Flags describing the context of a function.
     pub(crate) struct SignatureFlags: u8 {
         /// Is the function in an async context
-        const ASYNC 		= 0b00001;
+        const ASYNC         = 0b00001;
         /// Is the function in a generator context
-        const GENERATOR 	= 0b00010;
+        const GENERATOR     = 0b00010;
         /// Is the function a constructor (or constructor context)
-        const CONSTRUCTOR 	= 0b00100;
+        const CONSTRUCTOR   = 0b00100;
     }
 }
 

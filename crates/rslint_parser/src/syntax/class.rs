@@ -456,14 +456,14 @@ fn parse_class_member_impl(
 
         // test constructor_class_member
         // class Foo {
-        // 	constructor(a) {
-        // 		this.a = a;
-        // 	}
+        //   constructor(a) {
+        //     this.a = a;
+        //   }
         // }
         // class Bar {
-        // 	"constructor"(b) {
-        // 		this.b = b;
-        // 	}
+        //   "constructor"(b) {
+        //     this.b = b;
+        //   }
         // }
         return if is_constructor {
             let constructor = parse_constructor_class_member_body(p, member_marker);
@@ -491,34 +491,34 @@ fn parse_class_member_impl(
         } else {
             // test method_class_member
             // class Test {
-            // 	method() {}
-            // 	async asyncMethod() {}
-            // 	async* asyncGeneratorMethod() {}
-            // 	* generatorMethod() {}
-            // 	"foo"() {}
-            // 	["foo" + "bar"]() {}
-            // 	5() {}
-            // 	#private() {}
+            //   method() {}
+            //   async asyncMethod() {}
+            //   async* asyncGeneratorMethod() {}
+            //   * generatorMethod() {}
+            //   "foo"() {}
+            //   ["foo" + "bar"]() {}
+            //   5() {}
+            //   #private() {}
             // }
             // class ContextualKeywords {
             //    // Methods called static
-            // 	  static() {}
-            // 	  async static() {}
-            // 	  * static() {}
-            //    async* static() {}
-            //    declare() {}
-            // 	  get() {} // Method called get
-            // 	  set() {} // Method called set
+            //   static() {}
+            //   async static() {}
+            //   * static() {}
+            //   async* static() {}
+            //   declare() {}
+            //   get() {} // Method called get
+            //   set() {} // Method called set
             // }
             // class Static {
-            // 	  static method() {}
-            // 	  static async asyncMethod() {}
-            // 	  static async* asyncGeneratorMethod() {}
-            // 	  static * generatorMethod() {}
-            //    static static() {}
-            // 	  static async static() {}
-            // 	  static async* static() {}
-            // 	  static * static() {}
+            //   static method() {}
+            //   static async asyncMethod() {}
+            //   static async* asyncGeneratorMethod() {}
+            //   static * generatorMethod() {}
+            //   static static() {}
+            //   static async static() {}
+            //   static async* static() {}
+            //   static * static() {}
             // }
             if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
                 let err = p
@@ -539,18 +539,18 @@ fn parse_class_member_impl(
     if let Some(member_name) = member_name {
         // test property_class_member
         // class foo {
-        // 	property
-        // 	declare;
-        // 	initializedProperty = "a"
-        // 	"a";
-        // 	5
-        // 	["a" + "b"]
-        // 	static staticProperty
-        // 	static staticInitializedProperty = 1
-        // 	#private
-        // 	#privateInitialized = "a"
-        // 	static #staticPrivate
-        // 	static #staticPrivateInitializedProperty = 1
+        //   property
+        //   declare;
+        //   initializedProperty = "a"
+        //   "a";
+        //   5
+        //   ["a" + "b"]
+        //   static staticProperty
+        //   static staticInitializedProperty = 1
+        //   #private
+        //   #privateInitialized = "a"
+        //   static #staticPrivate
+        //   static #staticPrivateInitializedProperty = 1
         // }
         if is_at_property_class_member(p, 0) {
             // test_err class_declare_member
@@ -582,18 +582,18 @@ fn parse_class_member_impl(
 
                 // test getter_class_member
                 // class Getters {
-                // 	get foo() {}
-                // 	get static() {}
-                // 	static get bar() {}
-                // 	get "baz"() {}
-                // 	get ["a" + "b"]() {}
-                // 	get 5() {}
-                // 	get #private() {}
+                //   get foo() {}
+                //   get static() {}
+                //   static get bar() {}
+                //   get "baz"() {}
+                //   get ["a" + "b"]() {}
+                //   get 5() {}
+                //   get #private() {}
                 // }
                 // class NotGetters {
-                // 	get() {}
-                // 	async get() {}
-                // 	static get() {}
+                //   get() {}
+                //   async get() {}
+                //   static get() {}
                 // }
                 //
                 // test_err method_getter_err
@@ -607,18 +607,18 @@ fn parse_class_member_impl(
                 //
                 // test setter_class_member
                 // class Setters {
-                // 	set foo(a) {}
-                // 	set static(a) {}
-                // 	static set bar(a) {}
-                // 	set "baz"(a) {}
-                // 	set ["a" + "b"](a) {}
-                // 	set 5(a) {}
-                // 	set #private(a) {}
+                //   set foo(a) {}
+                //   set static(a) {}
+                //   static set bar(a) {}
+                //   set "baz"(a) {}
+                //   set ["a" + "b"](a) {}
+                //   set 5(a) {}
+                //   set #private(a) {}
                 // }
                 // class NotSetters {
-                // 	set(a) {}
-                // 	async set(a) {}
-                // 	static set(a) {}
+                //   set(a) {}
+                //   async set(a) {}
+                //   static set(a) {}
                 // }
                 //
                 // test_err setter_class_member
@@ -781,17 +781,17 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Pa
     // test class_await_property_initializer
     // // SCRIPT
     // async function* test() {
-    // 	class A {
-    //  	prop = await;
-    // 	}
+    //   class A {
+    //     prop = await;
+    //   }
     // }
 
     // test_err class_yield_property_initializer
     // // SCRIPT
     // async function* test() {
-    // 	class A {
-    //  	prop = yield;
-    // 	}
+    //   class A {
+    //     prop = yield;
+    //   }
     // }
 
     p.with_state(EnterClassPropertyInitializer, parse_initializer_clause)

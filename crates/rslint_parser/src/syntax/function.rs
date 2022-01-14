@@ -221,9 +221,9 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
 
 // test_err break_in_nested_function
 // while (true) {
-// 	function helper() {
-//  	 break;
-// 	}
+//   function helper() {
+//     break;
+//   }
 // }
 pub(super) fn parse_function_body(p: &mut Parser, flags: SignatureFlags) -> ParsedSyntax {
     p.with_state(EnterFunction(flags), |p| {
@@ -261,7 +261,7 @@ fn parse_function_id(p: &mut Parser, kind: FunctionKind, flags: SignatureFlags) 
             //
             // test_err function_id_err
             // function* test() {
-            // 	function yield(test) {}
+            //   function yield(test) {}
             // }
             parse_binding(p)
         }
@@ -366,9 +366,9 @@ pub(super) fn parse_arrow_function_parameters(
 pub(super) fn parse_arrow_body(p: &mut Parser, mut flags: SignatureFlags) -> ParsedSyntax {
     // test arrow_in_constructor
     // class A {
-    // 	constructor() {
-    // 		() => { super() };
-    // 		() => super();
+    //   constructor() {
+    //     () => { super() };
+    //     () => super();
     //  }
     // }
     if p.state.in_constructor() {

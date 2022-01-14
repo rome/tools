@@ -76,21 +76,21 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
     match p.cur() {
         // test getter_object_member
         // let a = {
-        //  get foo() {
-        //    return foo;
-        //  },
-        //  get "bar"() {
-        // 	 return "bar";
-        //  },
-        //  get ["a" + "b"]() {
-        // 	 return "a" + "b"
-        //  },
-        // 	get 5() {
-        // 	 return 5;
-        // 	},
-        // 	get() {
-        // 	 return "This is a method and not a getter";
-        // 	}
+        //   get foo() {
+        //     return foo;
+        //   },
+        //   get "bar"() {
+        //     return "bar";
+        //   },
+        //   get ["a" + "b"]() {
+        //     return "a" + "b"
+        //   },
+        //   get 5() {
+        //     return 5;
+        //   },
+        //   get() {
+        //    return "This is a method and not a getter";
+        //   }
         // }
         T![ident]
             if p.cur_src() == "get"
@@ -108,11 +108,11 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
         //  },
         //  set ["a" + "b"](value) {
         //  },
-        // 	set 5(value) {
-        // 	},
-        // 	set() {
-        // 	 return "This is a method and not a setter";
-        // 	}
+        //  set 5(value) {
+        //  },
+        //  set() {
+        //   return "This is a method and not a setter";
+        //  }
         // }
 
         // test_err object_expr_setter
@@ -170,10 +170,10 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 
             // test object_expr_method
             // let b = {
-            // 	foo() {},
-            // 	"bar"(a, b, c) {},
-            // 	["foo" + "bar"](a) {},
-            // 	5(...rest) {}
+            //   foo() {},
+            //   "bar"(a, b, c) {},
+            //   ["foo" + "bar"](a) {},
+            //   5(...rest) {}
             // }
 
             // test_err object_expr_method
