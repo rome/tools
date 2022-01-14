@@ -10,5 +10,8 @@ indent_size = 2
 
 # YAML doesn't support hard tabs 🙃
 # Templates that will be weird with hard tabs in the website editor
-[{*.yml, .github/**.md}]
+[{*.yml, .github/**.md, *.rs}]
 indent_style = space
+
+[*.rs]
+indent_size = 4
