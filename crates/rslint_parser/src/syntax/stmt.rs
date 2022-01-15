@@ -289,15 +289,15 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
 			},
 			Some(label_item) if is_valid_identifier => {
 				let err = p
-				.err_builder("Duplicate statement labels are not allowed")
-				.secondary(
-				label_item.range().to_owned(),
-				&format!("`{}` is first used as a label here", label),
-				)
-				.primary(
-				identifier_range,
-				&format!("a second use of `{}` here is not allowed", label),
-				);
+					.err_builder("Duplicate statement labels are not allowed")
+					.secondary(
+						label_item.range().to_owned(),
+						&format!("`{}` is first used as a label here", label),
+					)
+					.primary(
+						identifier_range,
+						&format!("a second use of `{}` here is not allowed", label),
+					);
 
 				p.error(err);
 				parse_body(p, context)
