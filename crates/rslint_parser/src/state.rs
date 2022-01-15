@@ -147,6 +147,8 @@ impl ParserState {
     }
 }
 
+/// Stores a checkpoint of the [ParserState].
+/// Allows rewinding the state to its previous state.
 #[derive(Debug, Clone)]
 pub(super) struct ParserStateCheckpoint {
     /// Additional data that we only want to store in debug mode
@@ -155,6 +157,7 @@ pub(super) struct ParserStateCheckpoint {
 }
 
 impl ParserStateCheckpoint {
+    /// Creates a snapshot of the passed in state.
     fn snapshot(state: &ParserState) -> Self {
         Self {
             #[cfg(debug_assertions)]
@@ -162,12 +165,17 @@ impl ParserStateCheckpoint {
         }
     }
 
+    /// Restores the `state values` to the time when this snapshot was created.
     fn rewind(self, state: &mut ParserState) {
         #[cfg(debug_assertions)]
         self.debug_checkpoint.rewind(state);
     }
 }
 
+/// Most of the [ParserState] is scoped state. It should, therefore, not be necessary to rewind
+/// that state because that's already taken care of by `with_state` and `with_scoped_state`.
+/// But, you can never no and better be safe than sorry. That's why we use some heuristics
+/// to verify that non of the scoped state did change and assert for it when rewinding.
 #[derive(Debug, Clone)]
 #[cfg(debug_assertions)]
 pub(super) struct DebugParserStateCheckpoint {
@@ -587,6 +595,8 @@ pub(crate) struct WithLabelSnapshot {
     label_set_len: usize,
 }
 
+/// Adds the labelled item with the given label to the `label_set`.
+/// Removes the label when the change is undone.
 pub(crate) struct WithLabel(pub String, pub LabelledItem);
 
 impl ChangeParserState for WithLabel {
