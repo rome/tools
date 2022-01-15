@@ -24,6 +24,7 @@ use rome_rowan::SyntaxKind as SyntaxKindTrait;
 pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
 pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
+use crate::state::ParserStateCheckpoint;
 use crate::*;
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
@@ -130,7 +131,7 @@ pub struct Parser<'t> {
     pub file_id: usize,
     pub(super) tokens: TokenSource<'t>,
     pub(super) events: Vec<Event>,
-    pub state: ParserState,
+    pub(super) state: ParserState,
     pub syntax: Syntax,
     pub errors: Vec<ParserError>,
 }
@@ -353,10 +354,12 @@ impl<'t> Parser<'t> {
             token_pos,
             event_pos,
             errors_pos,
+            state,
         } = checkpoint;
         self.tokens.rewind(token_pos);
         self.drain_events(self.cur_event_pos() - event_pos);
         self.errors.truncate(errors_pos);
+        self.state.restore(state)
     }
 
     /// Get a checkpoint representing the progress of the parser at this point in time
@@ -366,6 +369,7 @@ impl<'t> Parser<'t> {
             token_pos: self.token_pos(),
             event_pos: self.cur_event_pos(),
             errors_pos: self.errors.len(),
+            state: self.state.checkpoint(),
         }
     }
 
@@ -683,11 +687,12 @@ impl CompletedMarker {
 }
 
 /// A structure signifying the Parser progress at one point in time
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone)]
 pub struct Checkpoint {
-    pub token_pos: usize,
-    pub event_pos: usize,
-    pub errors_pos: usize,
+    token_pos: usize,
+    pub(crate) event_pos: usize,
+    errors_pos: usize,
+    state: ParserStateCheckpoint,
 }
 
 #[cfg(test)]

@@ -4,7 +4,7 @@ use super::expr::{parse_expr_or_assignment, parse_lhs_expr, parse_literal_expres
 use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
-use crate::state::{InBindingListForSignature, SignatureFlags};
+use crate::state::SignatureFlags;
 use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::{is_at_name, parse_any_name};
 use crate::syntax::function::parse_parameter_list;
@@ -259,16 +259,14 @@ pub fn ts_signature_member(p: &mut Parser, construct_sig: bool) -> Option<Comple
         no_recover!(p, ts_type_params(p));
     }
 
-    p.with_state(InBindingListForSignature(true), |p| {
-        parse_parameter_list(
-            p,
-            if construct_sig {
-                SignatureFlags::CONSTRUCTOR
-            } else {
-                SignatureFlags::empty()
-            },
-        )
-    })
+    parse_parameter_list(
+        p,
+        if construct_sig {
+            SignatureFlags::CONSTRUCTOR
+        } else {
+            SignatureFlags::empty()
+        },
+    )
     .ok();
 
     if p.at(T![:]) {

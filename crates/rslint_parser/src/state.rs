@@ -1,9 +1,9 @@
 use crate::{FileKind, Parser, Syntax};
 use bitflags::bitflags;
-use std::collections::HashMap;
+use indexmap::IndexMap;
 use std::ops::{Deref, DerefMut, Range};
 
-type LabelSet = HashMap<String, LabelledItem>;
+type LabelSet = IndexMap<String, LabelledItem>;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub(crate) enum LabelledItem {
@@ -22,7 +22,7 @@ impl LabelledItem {
 /// State kept by the parser while parsing.
 /// It is required for things such as strict mode or async functions
 #[derive(Debug)]
-pub struct ParserState {
+pub(crate) struct ParserState {
     parsing_context: ParsingContextFlags,
     /// A list of labels for labelled statements used to report undefined label errors
     /// for break and continue, as well as duplicate labels.
@@ -35,12 +35,12 @@ pub struct ParserState {
     /// If set, the parser reports bindings with identical names. The option stores the name of the
     /// node that disallows duplicate bindings, for example `let`, `const` or `import`.
     pub duplicate_binding_parent: Option<&'static str>,
-    pub name_map: HashMap<String, Range<usize>>,
+    pub name_map: IndexMap<String, Range<usize>>,
     pub(crate) no_recovery: bool,
 }
 
-#[derive(Debug, PartialEq, Eq)]
-pub enum StrictMode {
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(crate) enum StrictMode {
     Module,
     Explicit(Range<usize>),
     Class(Range<usize>),
@@ -58,14 +58,14 @@ impl ParserState {
             parsing_context: ParsingContextFlags::ALLOW_OBJECT_EXPRESSION
                 | ParsingContextFlags::INCLUDE_IN
                 | ParsingContextFlags::TOP_LEVEL,
-            label_set: HashMap::new(),
+            label_set: IndexMap::new(),
             strict: if syntax.file_kind == FileKind::Module {
                 Some(StrictMode::Module)
             } else {
                 None
             },
             default_item: None,
-            name_map: HashMap::with_capacity(3),
+            name_map: IndexMap::new(),
             duplicate_binding_parent: None,
             no_recovery: false,
         };
@@ -134,16 +134,77 @@ impl ParserState {
         self.strict.as_ref()
     }
 
-    pub fn in_binding_list_for_signature(&self) -> bool {
-        self.parsing_context
-            .contains(ParsingContextFlags::IN_BINDING_LIST_FOR_SIGNATURE)
+    pub(super) fn checkpoint(&self) -> ParserStateCheckpoint {
+        ParserStateCheckpoint::snapshot(self)
+    }
+
+    pub(super) fn restore(&mut self, checkpoint: ParserStateCheckpoint) {
+        checkpoint.rewind(self);
+    }
+}
+
+#[derive(Debug, Clone)]
+pub(super) struct ParserStateCheckpoint {
+    /// Additional data that we only want to store in debug mode
+    #[cfg(debug_assertions)]
+    debug_checkpoint: DebugParserStateCheckpoint,
+}
+
+impl ParserStateCheckpoint {
+    fn snapshot(state: &ParserState) -> Self {
+        Self {
+            #[cfg(debug_assertions)]
+            debug_checkpoint: DebugParserStateCheckpoint::snapshot(state),
+        }
+    }
+
+    fn rewind(self, state: &mut ParserState) {
+        #[cfg(debug_assertions)]
+        self.debug_checkpoint.rewind(state);
+    }
+}
+
+#[derive(Debug, Clone)]
+#[cfg(debug_assertions)]
+pub(super) struct DebugParserStateCheckpoint {
+    parsing_context: ParsingContextFlags,
+    label_set_len: usize,
+    strict: Option<StrictMode>,
+    default_item: Option<Range<usize>>,
+    duplicate_binding_parent: Option<&'static str>,
+    name_map_len: usize,
+}
+
+#[cfg(debug_assertions)]
+impl DebugParserStateCheckpoint {
+    fn snapshot(state: &ParserState) -> Self {
+        Self {
+            parsing_context: state.parsing_context,
+            label_set_len: state.label_set.len(),
+            strict: state.strict.clone(),
+            default_item: state.default_item.clone(),
+            duplicate_binding_parent: state.duplicate_binding_parent.clone(),
+            name_map_len: state.name_map.len(),
+        }
+    }
+
+    fn rewind(self, state: &mut ParserState) {
+        assert_eq!(state.parsing_context, self.parsing_context);
+        assert_eq!(state.label_set.len(), self.label_set_len);
+        assert_eq!(state.strict, self.strict);
+        assert_eq!(state.default_item, self.default_item);
+        assert_eq!(
+            state.duplicate_binding_parent,
+            self.duplicate_binding_parent
+        );
+        assert_eq!(state.name_map.len(), self.name_map_len);
     }
 }
 
 impl<'t> Parser<'t> {
     /// Applies the passed in change to the parser's state and reverts the
     /// changes when the returned [ParserStateGuard] goes out of scope.
-    pub fn with_scoped_state<'p, C: ChangeParserState>(
+    pub(crate) fn with_scoped_state<'p, C: ChangeParserState>(
         &'p mut self,
         change: C,
     ) -> ParserStateGuard<'p, 't, C> {
@@ -154,7 +215,7 @@ impl<'t> Parser<'t> {
     /// Applies the passed in change to the parser state before applying the passed `func` and
     /// restores the state to before the change before returning the result.
     #[inline]
-    pub fn with_state<C, F, R>(&mut self, change: C, func: F) -> R
+    pub(crate) fn with_state<C, F, R>(&mut self, change: C, func: F) -> R
     where
         C: ChangeParserState,
         F: FnOnce(&mut Parser) -> R,
@@ -168,7 +229,7 @@ impl<'t> Parser<'t> {
 
 /// Reverts state changes to their previous value when it goes out of scope.
 /// Can be used like a regular parser.
-pub struct ParserStateGuard<'parser, 't, C>
+pub(crate) struct ParserStateGuard<'parser, 't, C>
 where
     C: ChangeParserState,
 {
@@ -208,7 +269,7 @@ impl<'parser, 't, C: ChangeParserState> DerefMut for ParserStateGuard<'parser, '
 }
 
 /// Implements a specific modification to the parser state that can later be reverted.
-pub trait ChangeParserState {
+pub(crate) trait ChangeParserState {
     type Snapshot: Default;
 
     /// Applies the change to the passed in state and returns snapshot that allows restoring the previous state.
@@ -263,10 +324,6 @@ gen_change_parser_state!(
     ParsingContextFlags::ALLOW_OBJECT_EXPRESSION
 );
 gen_change_parser_state!(
-    InBindingListForSignature,
-    ParsingContextFlags::IN_BINDING_LIST_FOR_SIGNATURE
-);
-gen_change_parser_state!(
     PotentialArrowStart,
     ParsingContextFlags::POTENTIAL_ARROW_START
 );
@@ -275,7 +332,7 @@ gen_change_parser_state!(
 pub struct EnableStrictModeSnapshot(Option<StrictMode>);
 
 /// Enables strict mode
-pub struct EnableStrictMode(pub StrictMode);
+pub(crate) struct EnableStrictMode(pub StrictMode);
 
 impl ChangeParserState for EnableStrictMode {
     type Snapshot = EnableStrictModeSnapshot;
@@ -351,7 +408,6 @@ bitflags! {
         /// Whether `in` should be counted in a binary expression
         /// this is for `for...in` statements to prevent ambiguity.
         const INCLUDE_IN = 0b0000000000100000;
-        const IN_BINDING_LIST_FOR_SIGNATURE = 0b0000000001000000;
         /// Whether the parser is in a conditional expr (ternary expr)
         const IN_CONDITION_EXPRESSION = 0b0000000010000000;
 

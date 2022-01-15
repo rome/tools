@@ -825,7 +825,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
                 }
                 let expr = parse_expr_or_assignment(p);
                 if expr.is_absent() && p.at(T![:]) {
-                    p.rewind(checkpoint);
+                    p.rewind(checkpoint.clone());
                     params_marker = Some(parse_arrow_function_parameters(p, SignatureFlags::empty()).unwrap());
                     break;
                 }
