@@ -149,6 +149,9 @@ impl ParserState {
 
 /// Stores a checkpoint of the [ParserState].
 /// Allows rewinding the state to its previous state.
+///
+/// It's important that creating and rewinding a snapshot is cheap. Consider the performance implications
+/// before adding new unscoped state.
 #[derive(Debug, Clone)]
 pub(super) struct ParserStateCheckpoint {
     /// Additional data that we only want to store in debug mode
