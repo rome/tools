@@ -409,23 +409,23 @@ bitflags! {
         /// this is for `for...in` statements to prevent ambiguity.
         const INCLUDE_IN = 0b0000000000100000;
         /// Whether the parser is in a conditional expr (ternary expr)
-        const IN_CONDITION_EXPRESSION = 0b0000000010000000;
+        const IN_CONDITION_EXPRESSION = 0b0000000001000000;
 
         /// Whether the parser is in an iteration or switch statement and
         /// `break` is allowed.
-        const BREAK_ALLOWED = 0b0000000100000000;
+        const BREAK_ALLOWED = 0b0000000010000000;
 
         /// Whether the parser is in an iteration statement and `continue` is allowed.
-        const CONTINUE_ALLOWED = 0b0000001000000000;
+        const CONTINUE_ALLOWED = 0b0000000100000000;
 
         /// If false, object expressions are not allowed to be parsed
         /// inside an expression.
         ///
         /// Also applies for object patterns
-        const ALLOW_OBJECT_EXPRESSION = 0b0000010000000000;
+        const ALLOW_OBJECT_EXPRESSION = 0b0000001000000000;
 
         /// Whether we potentially are in a place to parse an arrow expression
-        const POTENTIAL_ARROW_START = 0b0000100000000000;
+        const POTENTIAL_ARROW_START = 0b0000010000000000;
 
         const LOOP = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits;
 
