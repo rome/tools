@@ -27,7 +27,7 @@ pub(crate) struct ParserState {
     /// A list of labels for labelled statements used to report undefined label errors
     /// for break and continue, as well as duplicate labels.
     /// Often called label set in the spec.
-    pub(crate) label_set: LabelSet,
+    label_set: LabelSet,
     /// Whether we are in strict mode code
     strict: Option<StrictMode>,
     /// The exported default item, used for checking duplicate defaults
@@ -132,6 +132,10 @@ impl ParserState {
 
     pub fn strict(&self) -> Option<&StrictMode> {
         self.strict.as_ref()
+    }
+
+    pub fn get_labelled_item(&self, label: &str) -> Option<&LabelledItem> {
+        self.label_set.get(label)
     }
 
     pub(super) fn checkpoint(&self) -> ParserStateCheckpoint {
@@ -574,5 +578,34 @@ impl ChangeParserState for EnterClassStaticInitializationBlock {
     fn restore(state: &mut ParserState, value: Self::Snapshot) {
         state.parsing_context = value.flags;
         state.label_set = value.label_set;
+    }
+}
+
+#[derive(Debug, Default)]
+pub(crate) struct WithLabelSnapshot {
+    #[cfg(debug_assertions)]
+    label_set_len: usize,
+}
+
+pub(crate) struct WithLabel(pub String, pub LabelledItem);
+
+impl ChangeParserState for WithLabel {
+    type Snapshot = WithLabelSnapshot;
+
+    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+        let previous_len = state.label_set.len();
+        state.label_set.insert(self.0, self.1);
+        WithLabelSnapshot {
+            // Capturing the len is sufficient because:
+            // * The labels are stored in an index map that uses insertion-order
+            // * Labels are scoped and new labels are always appended to the end of the list
+            #[cfg(debug_assertions)]
+            label_set_len: previous_len,
+        }
+    }
+
+    fn restore(state: &mut ParserState, value: Self::Snapshot) {
+        debug_assert_eq!(state.label_set.len(), value.label_set_len + 1);
+        state.label_set.pop();
     }
 }
