@@ -128,8 +128,8 @@ impl ParserProgress {
 /// ```
 pub struct Parser<'t> {
     pub file_id: usize,
-    tokens: TokenSource<'t>,
-    pub(crate) events: Vec<Event>,
+    pub(super) tokens: TokenSource<'t>,
+    pub(super) events: Vec<Event>,
     pub state: ParserState,
     pub syntax: Syntax,
     pub errors: Vec<ParserError>,
