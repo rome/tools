@@ -161,18 +161,26 @@ pub(super) struct ParserStateCheckpoint {
 
 impl ParserStateCheckpoint {
     /// Creates a snapshot of the passed in state.
+    #[cfg(debug_assertions)]
     fn snapshot(state: &ParserState) -> Self {
         Self {
-            #[cfg(debug_assertions)]
             debug_checkpoint: DebugParserStateCheckpoint::snapshot(state),
         }
     }
 
+    #[cfg(not(debug_assertions))]
+    fn snapshot(_: &ParserState) -> Self {
+        Self {}
+    }
+
     /// Restores the `state values` to the time when this snapshot was created.
+    #[cfg(debug_assertions)]
     fn rewind(self, state: &mut ParserState) {
-        #[cfg(debug_assertions)]
         self.debug_checkpoint.rewind(state);
     }
+
+    #[cfg(not(debug_assertions))]
+    fn rewind(self, _: &ParserState) {}
 }
 
 /// Most of the [ParserState] is scoped state. It should, therefore, not be necessary to rewind
@@ -606,6 +614,7 @@ impl ChangeParserState for WithLabel {
     type Snapshot = WithLabelSnapshot;
 
     fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+        #[cfg(debug_assertions)]
         let previous_len = state.label_set.len();
         state.label_set.insert(self.0, self.1);
         WithLabelSnapshot {
@@ -617,8 +626,14 @@ impl ChangeParserState for WithLabel {
         }
     }
 
+    #[cfg(not(debug_assertions))]
+    fn restore(state: &mut ParserState, _: Self::Snapshot) {
+        state.label_set.pop();
+    }
+
+    #[cfg(debug_assertions)]
     fn restore(state: &mut ParserState, value: Self::Snapshot) {
-        debug_assert_eq!(state.label_set.len(), value.label_set_len + 1);
+        assert_eq!(state.label_set.len(), value.label_set_len + 1);
         state.label_set.pop();
     }
 }
