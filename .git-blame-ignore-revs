@@ -1,0 +1,8 @@
+# This file lists revisions of large-scale formatting/style changes so that
+# they can be excluded from git blame results.
+#
+# To set this file as the default ignore file for git blame, run:
+#   $ git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# chore: switch from tabs to spaces (https://github.com/rome/tools/pull/1941)
+409979ff132efdcb1e9fec3526d641966fd3f2bf
