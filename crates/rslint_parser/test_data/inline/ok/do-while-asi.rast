@@ -1,0 +1,101 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsDoWhileStatement {
+            do_token: DO_KW@0..3 "do" [] [Whitespace(" ")],
+            body: JsDoWhileStatement {
+                do_token: DO_KW@3..6 "do" [] [Whitespace(" ")],
+                body: JsDoWhileStatement {
+                    do_token: DO_KW@6..9 "do" [] [Whitespace(" ")],
+                    body: JsEmptyStatement {
+                        semicolon_token: SEMICOLON@9..11 ";" [] [Whitespace(" ")],
+                    },
+                    while_token: WHILE_KW@11..17 "while" [] [Whitespace(" ")],
+                    l_paren_token: L_PAREN@17..18 "(" [] [],
+                    test: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@18..19 "x" [] [],
+                        },
+                    },
+                    r_paren_token: R_PAREN@19..21 ")" [] [Whitespace(" ")],
+                    semicolon_token: missing (optional),
+                },
+                while_token: WHILE_KW@21..27 "while" [] [Whitespace(" ")],
+                l_paren_token: L_PAREN@27..28 "(" [] [],
+                test: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@28..29 "x" [] [],
+                    },
+                },
+                r_paren_token: R_PAREN@29..31 ")" [] [Whitespace(" ")],
+                semicolon_token: missing (optional),
+            },
+            while_token: WHILE_KW@31..37 "while" [] [Whitespace(" ")],
+            l_paren_token: L_PAREN@37..38 "(" [] [],
+            test: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@38..39 "x" [] [],
+                },
+            },
+            r_paren_token: R_PAREN@39..41 ")" [] [Whitespace(" ")],
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsAssignmentExpression {
+                left: JsIdentifierAssignment {
+                    name_token: IDENT@41..43 "x" [] [Whitespace(" ")],
+                },
+                operator_token: EQ@43..45 "=" [] [Whitespace(" ")],
+                right: JsNumberLiteralExpression {
+                    value_token: JS_NUMBER_LITERAL@45..47 "39" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@47..48 ";" [] [],
+        },
+    ],
+    eof_token: EOF@48..49 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..49
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..48
+    0: JS_DO_WHILE_STATEMENT@0..41
+      0: DO_KW@0..3 "do" [] [Whitespace(" ")]
+      1: JS_DO_WHILE_STATEMENT@3..31
+        0: DO_KW@3..6 "do" [] [Whitespace(" ")]
+        1: JS_DO_WHILE_STATEMENT@6..21
+          0: DO_KW@6..9 "do" [] [Whitespace(" ")]
+          1: JS_EMPTY_STATEMENT@9..11
+            0: SEMICOLON@9..11 ";" [] [Whitespace(" ")]
+          2: WHILE_KW@11..17 "while" [] [Whitespace(" ")]
+          3: L_PAREN@17..18 "(" [] []
+          4: JS_IDENTIFIER_EXPRESSION@18..19
+            0: JS_REFERENCE_IDENTIFIER@18..19
+              0: IDENT@18..19 "x" [] []
+          5: R_PAREN@19..21 ")" [] [Whitespace(" ")]
+          6: (empty)
+        2: WHILE_KW@21..27 "while" [] [Whitespace(" ")]
+        3: L_PAREN@27..28 "(" [] []
+        4: JS_IDENTIFIER_EXPRESSION@28..29
+          0: JS_REFERENCE_IDENTIFIER@28..29
+            0: IDENT@28..29 "x" [] []
+        5: R_PAREN@29..31 ")" [] [Whitespace(" ")]
+        6: (empty)
+      2: WHILE_KW@31..37 "while" [] [Whitespace(" ")]
+      3: L_PAREN@37..38 "(" [] []
+      4: JS_IDENTIFIER_EXPRESSION@38..39
+        0: JS_REFERENCE_IDENTIFIER@38..39
+          0: IDENT@38..39 "x" [] []
+      5: R_PAREN@39..41 ")" [] [Whitespace(" ")]
+      6: (empty)
+    1: JS_EXPRESSION_STATEMENT@41..48
+      0: JS_ASSIGNMENT_EXPRESSION@41..47
+        0: JS_IDENTIFIER_ASSIGNMENT@41..43
+          0: IDENT@41..43 "x" [] [Whitespace(" ")]
+        1: EQ@43..45 "=" [] [Whitespace(" ")]
+        2: JS_NUMBER_LITERAL_EXPRESSION@45..47
+          0: JS_NUMBER_LITERAL@45..47 "39" [] []
+      1: SEMICOLON@47..48 ";" [] []
+  3: EOF@48..49 "" [Newline("\n")] []
