@@ -106,9 +106,6 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax {
         });
     });
 
-    // p.state.binding_context = None;
-    // p.state.name_map.clear();
-
     let end = p.cur_tok().start();
 
     semi(p, start..end);

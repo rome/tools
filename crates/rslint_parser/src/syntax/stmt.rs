@@ -1013,13 +1013,6 @@ fn parse_variable_declarations(
         parse_declarations.parse_list(p)
     });
 
-    // debug_assert!(p.state.name_map.is_empty());
-    // let list = p.with_state(EnterScope(binding_context), |p| {
-    // let list = parse_declarations.parse_list(p);
-    // });
-    // let list = parse_declarations.parse_list(p);
-
-    // p.state.name_map.clear();
     Some((list, parse_declarations.remaining_declaration_range))
 }
 

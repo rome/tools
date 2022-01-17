@@ -39,7 +39,6 @@ pub struct ParserState {
 
     pub binding_variable: Option<NameType>,
 
-    pub name_map: HashMap<String, Range<usize>>,
     pub(crate) no_recovery: bool,
 
     /// If set, the parser reports bindings with identical names. The option stores the name of the
@@ -147,7 +146,6 @@ impl ParserState {
                 None
             },
             default_item: None,
-            name_map: HashMap::with_capacity(3),
             binding_variable: None,
             binding_context: Some(BindingContext::default()),
             no_recovery: false,
