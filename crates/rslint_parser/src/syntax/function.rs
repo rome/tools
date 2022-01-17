@@ -437,6 +437,7 @@ pub(super) fn parse_parameters_list(
     parse_parameter: impl Fn(&mut Parser) -> ParsedSyntax,
     list_kind: JsSyntaxKind,
 ) {
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Function));
     let mut first = true;
     let has_l_paren = p.expect(T!['(']);
 

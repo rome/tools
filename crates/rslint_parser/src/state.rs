@@ -54,14 +54,12 @@ pub enum BindingContext {
     Hoisted,
     // functions `function f()`
     Function,
-    // var a; let b = a;
-    Assignment,
     // import
     Module,
     // { }
     Block,
     // functions arguments, for statement
-    Lexical,
+    LoopStatements,
 }
 
 impl Default for BindingContext {
@@ -242,41 +240,45 @@ impl ParserState {
 
     /// It registers the name of a binding based in its name type (lexical or hoisted) and its current binding context
     pub fn register_name(&mut self, identifier_name: String, range: Range<usize>) {
-        if let Some(binding_variable) = self.binding_variable() {
-            if let Some(binding_context) = self.binding_context() {
-                match binding_context {
-                    BindingContext::Hoisted => self.register_lexical_type(identifier_name, range),
-                    BindingContext::Module => {
-                        self.hoisted_names.insert(identifier_name, range);
-                    }
-                    BindingContext::Block => {
-                        match binding_variable {
-                            NameType::Hoisted => {
-                                // inside a block scope, hoisted variables needs to be tracked
-                                // inside a lexical environment too;
-                                // For example `ar a; { var b; let b; }` should throw an error for  redeclaration of `b`
-                                // but `var a; var b; { let b; }` should not
-                                self.hoisted_names
-                                    .insert(identifier_name.clone(), range.clone());
-                                self.lexical_names.insert(identifier_name, range);
-                            }
-                            NameType::Lexical(_) => {
-                                self.lexical_names.insert(identifier_name, range);
-                            }
-                            NameType::Module => {
-                                self.lexical_names.insert(identifier_name, range);
+        if let Some(binding_context) = self.binding_context() {
+            match binding_context {
+                BindingContext::Hoisted => self.register_lexical_type(identifier_name, range),
+                BindingContext::Module => {
+                    self.hoisted_names.insert(identifier_name, range);
+                }
+                BindingContext::Block => {
+                    match self.binding_variable() {
+                        Some(binding_variable) => {
+                            match binding_variable {
+                                NameType::Hoisted => {
+                                    // inside a block scope, hoisted variables needs to be tracked
+                                    // inside a lexical environment too;
+                                    // For example `ar a; { var b; let b; }` should throw an error for  redeclaration of `b`
+                                    // but `var a; var b; { let b; }` should not
+                                    self.hoisted_names
+                                        .insert(identifier_name.clone(), range.clone());
+                                    self.lexical_names.insert(identifier_name, range);
+                                }
+                                NameType::Lexical(_) => {
+                                    self.lexical_names.insert(identifier_name, range);
+                                }
+                                NameType::Module => {
+                                    self.lexical_names.insert(identifier_name, range);
+                                }
                             }
                         }
+                        None => {
+                            self.lexical_names.insert(identifier_name, range);
+                        }
                     }
-                    BindingContext::Function => {
-                        self.lexical_names.insert(identifier_name, range);
-                    }
-                    _ => {}
+                }
+                BindingContext::Function => {
+                    self.lexical_names.insert(identifier_name, range);
+                }
+                BindingContext::LoopStatements => {
+                    self.hoisted_names.insert(identifier_name, range);
                 }
             }
-        } else {
-            // this covers cases like `a = 6`;
-            self.hoisted_names.insert(identifier_name, range);
         }
     }
 
@@ -722,6 +724,8 @@ impl ChangeParserState for EnterLexicalScope {
     type Snapshot = EnterLexicalScopeSnapshot;
 
     fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+        dbg!("entered lexical scope");
+        dbg!(&self.0);
         EnterLexicalScopeSnapshot {
             lexical_names: std::mem::take(&mut state.lexical_names),
             binding_context: std::mem::replace(&mut state.binding_context, Some(self.0)),
@@ -729,6 +733,7 @@ impl ChangeParserState for EnterLexicalScope {
     }
 
     fn restore(state: &mut ParserState, value: Self::Snapshot) {
+        dbg!("exit lexical scope");
         state.lexical_names = value.lexical_names;
         state.binding_context = value.binding_context;
     }

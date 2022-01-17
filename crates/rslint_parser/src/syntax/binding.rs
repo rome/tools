@@ -1,5 +1,5 @@
 use crate::parser::{expected_any, ToDiagnostic};
-use crate::state::{BindingContext, NameType};
+use crate::state::NameType;
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{is_at_identifier, parse_identifier};
 use crate::syntax::js_parse_error::{
@@ -111,34 +111,17 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
             }
         }
 
-        let err = if let Some(binding_context) = binding_context {
-            match binding_context {
-                BindingContext::Hoisted => {
-                    p.state
-                        .clashes_with_defined_binding(&id)
-                        .map(|other_range| {
-                            p.err_builder(&format!(
-                                "The binding \"{}\" has been already declared",
-                                identifier.text(p)
-                            ))
-                            .primary(other_range, "First declaration here")
-                            .secondary(identifier.range(p).as_range(), "Second declaration here")
-                        })
-                }
-                BindingContext::Block => {
-                    p.state
-                        .clashes_with_defined_binding(&id)
-                        .map(|other_range| {
-                            p.err_builder(&format!(
-                                "The binding \"{}\" has been already declared",
-                                identifier.text(p)
-                            ))
-                            .primary(other_range, "First declaration here")
-                            .secondary(identifier.range(p).as_range(), "Second declaration here")
-                        })
-                }
-                _ => None,
-            }
+        let err = if let Some(_) = binding_context {
+            p.state
+                .clashes_with_defined_binding(&id)
+                .map(|other_range| {
+                    p.err_builder(&format!(
+                        "The binding \"{}\" has been already declared",
+                        identifier.text(p)
+                    ))
+                    .primary(other_range, "First declaration here")
+                    .secondary(identifier.range(p).as_range(), "Second declaration here")
+                })
         } else {
             None
         };

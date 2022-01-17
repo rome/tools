@@ -1114,9 +1114,7 @@ fn parse_variable_declaration(
 
         let type_annotation = maybe_ts_type_annotation(p);
 
-        let initializer = p.with_state(EnterLexicalScope(BindingContext::Assignment), |p| {
-            parse_initializer_clause(p).ok()
-        });
+        let initializer = parse_initializer_clause(p).ok();
 
         // Heuristic to determine if we're in a for of or for in loop. This may be off if
         // the user uses a for of/in with multiple declarations but this isn't allowed anyway.
@@ -1257,7 +1255,7 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
         return JS_FOR_STATEMENT;
     }
 
-    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Lexical));
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::LoopStatements));
 
     // `for (let...` | `for (const...` | `for (var...`
 
@@ -1643,7 +1641,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
     let declaration_marker = p.start();
 
     p.bump_any(); // bump (
-
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Block));
     let pattern_marker = parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
     let pattern_kind = pattern_marker.map(|x| x.kind());
 

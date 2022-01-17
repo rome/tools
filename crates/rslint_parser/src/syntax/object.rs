@@ -2,7 +2,7 @@
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
-use crate::state::{EnterParameters, IncludeIn, SignatureFlags};
+use crate::state::{BindingContext, EnterHoistedScope, EnterParameters, IncludeIn, SignatureFlags};
 use crate::syntax::expr::{
     is_nth_at_reference_identifier, parse_expr_or_assignment, parse_expression,
     parse_reference_identifier,
@@ -280,7 +280,9 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
             allow_object_expressions: has_l_paren,
         },
         |p| {
-            parse_parameter(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
+            p.with_state(EnterHoistedScope(BindingContext::Function), |p| {
+                parse_parameter(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
+            });
             p.expect(T![')']);
         },
     );

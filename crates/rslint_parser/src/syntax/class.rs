@@ -1,7 +1,8 @@
 use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
 use crate::state::{
-    EnableStrictMode, EnterClassPropertyInitializer, EnterClassStaticInitializationBlock,
-    EnterParameters, SignatureFlags,
+    BindingContext, EnableStrictMode, EnterClassPropertyInitializer,
+    EnterClassStaticInitializationBlock, EnterHoistedScope, EnterLexicalScope, EnterParameters,
+    SignatureFlags,
 };
 use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::parse_expr_or_assignment;
@@ -135,7 +136,6 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     p.expect(T![class]);
 
     let p = &mut *p.with_scoped_state(EnableStrictMode(StrictMode::Class(p.cur_tok().range())));
-
     // test_err class_decl_no_id
     // class {}
     // class implements B {}
@@ -188,6 +188,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     }
 
     p.expect(T!['{']);
+    let p = &mut *p.with_scoped_state(EnterLexicalScope(BindingContext::Block));
     ClassMembersList.parse_list(p);
     p.expect(T!['}']);
 
@@ -622,14 +623,17 @@ fn parse_class_member_impl(
                         member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
                     } else {
                         let has_l_paren = p.expect(T!['(']);
+
                         p.with_state(
                             EnterParameters {
                                 signature_flags: SignatureFlags::empty(),
                                 allow_object_expressions: has_l_paren,
                             },
                             |p| {
-                                parse_parameter(p)
-                                    .or_add_diagnostic(p, js_parse_error::expected_parameter);
+                                p.with_state(EnterHoistedScope(BindingContext::Function), |p| {
+                                    parse_parameter(p)
+                                        .or_add_diagnostic(p, js_parse_error::expected_parameter);
+                                })
                             },
                         );
                         p.expect(T![')']);
