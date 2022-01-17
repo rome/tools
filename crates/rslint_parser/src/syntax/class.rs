@@ -718,8 +718,10 @@ fn parse_static_initialization_block_class_member(p: &mut Parser) -> ParsedSynta
     p.bump_remap(T![static]);
 
     p.expect(T!['{']);
-    p.with_state(EnterClassStaticInitializationBlock, |p| {
-        parse_statements(p, true)
+    p.with_state(EnterHoistedScope(BindingContext::Block), |p| {
+        p.with_state(EnterClassStaticInitializationBlock, |p| {
+            parse_statements(p, true)
+        })
     });
     p.expect(T!['}']);
 
