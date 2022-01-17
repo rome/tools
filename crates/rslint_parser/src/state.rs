@@ -206,7 +206,7 @@ impl DebugParserStateCheckpoint {
             label_set_len: state.label_set.len(),
             strict: state.strict.clone(),
             default_item: state.default_item.clone(),
-            duplicate_binding_parent: state.duplicate_binding_parent.clone(),
+            duplicate_binding_parent: state.duplicate_binding_parent,
             name_map_len: state.name_map.len(),
         }
     }

@@ -689,8 +689,8 @@ impl CompletedMarker {
 /// A structure signifying the Parser progress at one point in time
 #[derive(Debug, Clone)]
 pub struct Checkpoint {
-    token_pos: usize,
-    pub(crate) event_pos: usize,
+    pub(super) token_pos: usize,
+    pub(super) event_pos: usize,
     errors_pos: usize,
     state: ParserStateCheckpoint,
 }
