@@ -13,22 +13,7 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-var arrow;
-
-var counter = 0;
-
-for ({ arrow = () => {} } of [{}]) {
-  verifyProperty(arrow, 'name', {
-    enumerable: false,
-    writable: false,
-    configurable: true,
-    value: 'arrow'
-  });
-  counter += 1;
-}
-
-assert.sameValue(counter, 1);
-
+let [a, b] = [1, 2];
     "#;
 
     let module = parse_module(src, 0);
