@@ -14,7 +14,7 @@ use crate::syntax::js_parse_error::expected_binding;
 use crate::syntax::object::{
     is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
 };
-use crate::syntax::stmt::{is_semi, optional_semi, parse_statements, StatementContext};
+use crate::syntax::stmt::{optional_semi, parse_statements, StatementContext};
 use crate::syntax::typescript::{
     maybe_ts_type_annotation, ts_heritage_clause, ts_modifier, ts_type_params,
     DISALLOWED_TYPE_NAMES,
@@ -22,8 +22,7 @@ use crate::syntax::typescript::{
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-    CompletedMarker, Event, Marker, ParseNodeList, ParseRecovery, Parser, StrictMode,
-    SyntaxFeature, TokenSet,
+    CompletedMarker, Event, Marker, ParseNodeList, ParseRecovery, Parser, StrictMode, SyntaxFeature,
 };
 use rome_rowan::SyntaxKind;
 use rslint_syntax::JsSyntaxKind::*;
@@ -377,8 +376,8 @@ fn parse_class_member_impl(
     member_marker: Marker,
     modifiers: ClassMemberModifiers,
 ) -> ParsedSyntax {
+    let start_token_pos = p.token_pos();
     let generator_range = p.cur_tok().range();
-    let checkpoint = p.checkpoint();
 
     // Seems like we're at a generator method
     if p.at(T![*]) {
@@ -536,23 +535,135 @@ fn parse_class_member_impl(
         };
     }
 
-    if let Some(member_name) = member_name {
-        // test property_class_member
-        // class foo {
-        //   property
-        //   declare;
-        //   initializedProperty = "a"
-        //   "a";
-        //   5
-        //   ["a" + "b"]
-        //   static staticProperty
-        //   static staticInitializedProperty = 1
-        //   #private
-        //   #privateInitialized = "a"
-        //   static #staticPrivate
-        //   static #staticPrivateInitializedProperty = 1
-        // }
-        if is_at_property_class_member(p, 0) {
+    match member_name {
+        Some(member_name) => {
+            if member_name.kind() == JS_LITERAL_MEMBER_NAME {
+                let is_at_line_break_or_generator = p.has_linebreak_before_n(0) && p.at(T![*]);
+                let member_name_text = member_name.text(p);
+                if matches!(member_name_text, "get" | "set") && !is_at_line_break_or_generator {
+                    let is_getter = member_name_text == "get";
+
+                    // test getter_class_member
+                    // class Getters {
+                    //   get foo() {}
+                    //   get static() {}
+                    //   static get bar() {}
+                    //   get "baz"() {}
+                    //   get ["a" + "b"]() {}
+                    //   get 5() {}
+                    //   get #private() {}
+                    // }
+                    // class NotGetters {
+                    //   get() {}
+                    //   async get() {}
+                    //   static get() {}
+                    // }
+                    //
+                    // test_err method_getter_err
+                    // class foo {
+                    //  get {}
+                    // }
+                    //
+                    // test_err getter_class_no_body
+                    // class Setters {
+                    //   get foo()
+                    //
+                    // test setter_class_member
+                    // class Setters {
+                    //   set foo(a) {}
+                    //   set static(a) {}
+                    //   static set bar(a) {}
+                    //   set "baz"(a) {}
+                    //   set ["a" + "b"](a) {}
+                    //   set 5(a) {}
+                    //   set #private(a) {}
+                    // }
+                    // class NotSetters {
+                    //   set(a) {}
+                    //   async set(a) {}
+                    //   static set(a) {}
+                    // }
+                    //
+                    // test_err setter_class_member
+                    // class Setters {
+                    //   set foo() {}
+                    // }
+                    //
+                    // test_err setter_class_no_body
+                    // class Setters {
+                    //   set foo(a)
+
+                    // The tree currently holds a STATIC_MEMBER_NAME node that wraps a ident token but we now found
+                    // out that the 'get' or 'set' isn't a member name in this context but instead are the
+                    // 'get'/'set' keywords for getters/setters. That's why we need to undo the member name node,
+                    // extract the 'get'/'set' ident token and change its kind to 'get'/'set'
+                    match p.events[(member_name.start_pos as usize) + 1] {
+                        Event::Token { ref mut kind, .. } => {
+                            *kind = if is_getter { T![get] } else { T![set] }
+                        }
+                        _ => unreachable!(),
+                    };
+                    member_name.undo_completion(p).abandon(p);
+
+                    if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
+                        let err = p
+                            .err_builder("getters and setters cannot be readonly")
+                            .primary(range, "");
+
+                        p.error(err);
+                    }
+
+                    // So we've seen a get that now must be followed by a getter/setter name
+                    parse_class_member_name(p)
+                        .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
+
+                    let completed = if is_getter {
+                        p.expect(T!['(']);
+                        p.expect(T![')']);
+                        parse_ts_type_annotation_or_error(p).ok();
+                        parse_function_body(p, SignatureFlags::empty())
+                            .or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+
+                        member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
+                    } else {
+                        let has_l_paren = p.expect(T!['(']);
+                        p.with_state(
+                            EnterParameters {
+                                signature_flags: SignatureFlags::empty(),
+                                allow_object_expressions: has_l_paren,
+                            },
+                            |p| {
+                                parse_parameter(p)
+                                    .or_add_diagnostic(p, js_parse_error::expected_parameter);
+                            },
+                        );
+                        p.expect(T![')']);
+                        parse_function_body(p, SignatureFlags::empty())
+                            .or_add_diagnostic(p, js_parse_error::expected_class_method_body);
+
+                        member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
+                    };
+
+                    return Present(completed);
+                }
+            };
+
+            // test property_class_member
+            // class foo {
+            //   property
+            //   declare;
+            //   initializedProperty = "a"
+            //   "a";
+            //   5
+            //   ["a" + "b"]
+            //   static staticProperty
+            //   static staticInitializedProperty = 1
+            //   #private
+            //   #privateInitialized = "a"
+            //   static #staticPrivate
+            //   static #staticPrivateInitializedProperty = 1
+            // }
+            //
             // test_err class_declare_member
             // class B { declare foo }
             let property = if modifiers.get_range(ModifierKind::Declare).is_some() {
@@ -561,7 +672,7 @@ fn parse_class_member_impl(
                 parse_property_class_member_body(p, member_marker)
             };
 
-            return property.map(|mut property| {
+            property.map(|mut property| {
                 if !property.kind().is_unknown() && is_constructor {
                     let err = p
                         .err_builder("class properties may not be called `constructor`")
@@ -571,130 +682,20 @@ fn parse_class_member_impl(
                     property.change_to_unknown(p);
                 }
                 property
-            });
+            })
         }
-
-        if member_name.kind() == JS_LITERAL_MEMBER_NAME {
-            let is_at_line_break_or_generator = p.has_linebreak_before_n(0) && p.at(T![*]);
-            let member_name_text = member_name.text(p);
-            if matches!(member_name_text, "get" | "set") && !is_at_line_break_or_generator {
-                let is_getter = member_name_text == "get";
-
-                // test getter_class_member
-                // class Getters {
-                //   get foo() {}
-                //   get static() {}
-                //   static get bar() {}
-                //   get "baz"() {}
-                //   get ["a" + "b"]() {}
-                //   get 5() {}
-                //   get #private() {}
-                // }
-                // class NotGetters {
-                //   get() {}
-                //   async get() {}
-                //   static get() {}
-                // }
-                //
-                // test_err method_getter_err
-                // class foo {
-                //  get {}
-                // }
-                //
-                // test_err getter_class_no_body
-                // class Setters {
-                //   get foo()
-                //
-                // test setter_class_member
-                // class Setters {
-                //   set foo(a) {}
-                //   set static(a) {}
-                //   static set bar(a) {}
-                //   set "baz"(a) {}
-                //   set ["a" + "b"](a) {}
-                //   set 5(a) {}
-                //   set #private(a) {}
-                // }
-                // class NotSetters {
-                //   set(a) {}
-                //   async set(a) {}
-                //   static set(a) {}
-                // }
-                //
-                // test_err setter_class_member
-                // class Setters {
-                //   set foo() {}
-                // }
-                //
-                // test_err setter_class_no_body
-                // class Setters {
-                //   set foo(a)
-
-                // The tree currently holds a STATIC_MEMBER_NAME node that wraps a ident token but we now found
-                // out that the 'get' or 'set' isn't a member name in this context but instead are the
-                // 'get'/'set' keywords for getters/setters. That's why we need to undo the member name node,
-                // extract the 'get'/'set' ident token and change its kind to 'get'/'set'
-                match p.events[(member_name.start_pos as usize) + 1] {
-                    Event::Token { ref mut kind, .. } => {
-                        *kind = if is_getter { T![get] } else { T![set] }
-                    }
-                    _ => unreachable!(),
-                };
-                member_name.undo_completion(p).abandon(p);
-
-                if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
-                    let err = p
-                        .err_builder("getters and setters cannot be readonly")
-                        .primary(range, "");
-
-                    p.error(err);
-                }
-
-                // So we've seen a get that now must be followed by a getter/setter name
-                parse_class_member_name(p)
-                    .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
-
-                let completed = if is_getter {
-                    p.expect(T!['(']);
-                    p.expect(T![')']);
-                    parse_ts_type_annotation_or_error(p).ok();
-                    parse_function_body(p, SignatureFlags::empty())
-                        .or_add_diagnostic(p, js_parse_error::expected_class_method_body);
-
-                    member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
-                } else {
-                    let has_l_paren = p.expect(T!['(']);
-                    p.with_state(
-                        EnterParameters {
-                            signature_flags: SignatureFlags::empty(),
-                            allow_object_expressions: has_l_paren,
-                        },
-                        |p| {
-                            parse_parameter(p)
-                                .or_add_diagnostic(p, js_parse_error::expected_parameter);
-                        },
-                    );
-                    p.expect(T![')']);
-                    parse_function_body(p, SignatureFlags::empty())
-                        .or_add_diagnostic(p, js_parse_error::expected_class_method_body);
-
-                    member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
-                };
-
-                return Present(completed);
-            }
+        None => {
+            // test_err block_stmt_in_class
+            // class S{{}}
+            debug_assert_eq!(
+                p.token_pos(),
+                start_token_pos,
+                "Parser shouldn't be progressing when returning Absent"
+            );
+            member_marker.abandon(p);
+            Absent
         }
     }
-
-    // if we're arrived here it means that the parser has advanced but we have no clue what kind of member
-    // this is supposed to be. Let's rewind the parser so that the error recovery in the members loop
-    // kicks in and any potential `missing` slots get removed.
-
-    // test_err block_stmt_in_class
-    // class S{{}}
-    p.rewind(checkpoint);
-    member_marker.abandon(p);
-    Absent
 }
 
 fn is_at_static_initialization_block_class_member(p: &Parser) -> bool {
@@ -1006,9 +1007,24 @@ pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
     let m = p.start();
+    let hash_end = p.cur_tok().range().end;
+
     p.expect(T![#]);
-    p.expect(T![ident]);
-    Present(m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME))
+
+    if p.at(T![ident]) && hash_end != p.cur_tok().start() {
+        // test_err private_member_name_with_space
+        // class A {
+        // 	# test;
+        // }
+        p.error(
+            p.err_builder("Unexpected space between # and identifier")
+                .primary(hash_end..p.cur_tok().start(), "remove the space here"),
+        );
+        Present(m.complete(p, JS_UNKNOWN))
+    } else {
+        p.expect(T![ident]);
+        Present(m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME))
+    }
 }
 
 fn parse_access_modifier(p: &mut Parser) -> Option<Range<usize>> {
@@ -1022,18 +1038,6 @@ fn parse_access_modifier(p: &mut Parser) -> Option<Range<usize>> {
     let range = p.cur_tok().range();
     p.bump_remap(kind);
     Some(range)
-}
-
-const PROPERTY_START_SET: TokenSet = token_set![T![!], T![:], T![=], T!['}'], T![;]];
-
-/// Tests if the parser is currently (considering the offset) at the body of a property member.
-/// The method assumes that the identifier has already been consumed.
-fn is_at_property_class_member(p: &Parser, mut offset: usize) -> bool {
-    if p.nth_at(offset, T![?]) {
-        offset += 1;
-    }
-
-    PROPERTY_START_SET.contains(p.nth(offset)) || is_semi(p, offset)
 }
 
 fn is_at_method_class_member(p: &Parser, mut offset: usize) -> bool {

@@ -47,11 +47,11 @@ JsModule {
       0: R_CURLY@10..11 "}" [] []
   3: EOF@11..12 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a property , a method, a getter, or a setter but instead found '{'
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
   ┌─ block_stmt_in_class.js:1:9
   │
 1 │ class S{{}}
-  │         ^ Expected a property , a method, a getter, or a setter here
+  │         ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
 --
 error[SyntaxError]: expected a statement but instead found '}'
