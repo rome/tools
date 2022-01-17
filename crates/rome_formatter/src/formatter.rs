@@ -75,7 +75,7 @@ impl Formatter {
     ///
     /// Calling this method is required to correctly handle the comments attached
     /// to the opening and closing tokens and insert them inside the group block
-    pub(crate) fn format_delimited_group(
+    pub(crate) fn format_delimited(
         &self,
         open_token: &SyntaxToken,
         content: impl FnOnce(FormatElement, FormatElement) -> FormatResult<FormatElement>,
@@ -153,24 +153,18 @@ impl Formatter {
     ///
     /// assert_eq!(Ok(token("'abc'")), result)
     /// ```
-    pub fn format_token(&self, syntax_token: &SyntaxToken) -> FormatResult<FormatElement> {
-        debug_assert!(self
-            .printed_tokens
-            .borrow_mut()
-            .insert(syntax_token.clone()));
-
-        Ok(format_elements![
-            self.print_leading_trivia(syntax_token),
-            token(syntax_token.text_trimmed()),
-            self.print_trailing_trivia(syntax_token),
-        ])
+    pub fn format_token<T>(&self, syntax_token: &T) -> FormatResult<T::Output>
+    where
+        T: token::FormattableToken,
+    {
+        syntax_token.format(self)
     }
 
     /// Print out a token from the original source with a different content
     ///
     /// This will print the associated trivias from the token as well as mark
     /// it as having been consumed by the formatter
-    pub fn format_replaced_token(
+    pub fn format_replaced(
         &self,
         token: &SyntaxToken,
         content: FormatElement,
@@ -181,20 +175,6 @@ impl Formatter {
             content,
             self.print_trailing_trivia(token),
         ])
-    }
-
-    /// Format an existing optional token, or calls the factory function to
-    /// create a new one if didn't exist in the input
-    pub fn format_or_create_token(
-        &self,
-        token: Option<SyntaxToken>,
-        token_factory: impl FnOnce() -> FormatElement,
-    ) -> FormatResult<FormatElement> {
-        if let Some(token) = token {
-            self.format_token(&token)
-        } else {
-            Ok(token_factory())
-        }
     }
 
     /// Formats each child and returns the result as a list.
@@ -244,10 +224,10 @@ impl Formatter {
             // input source. Only print the last trailing token if the outer group breaks
             let separator = if let Some(separator) = element.trailing_separator()? {
                 if index == last_index {
-                    // Use format_replaced_token instead of wrapping the result of format_token
+                    // Use format_replaced instead of wrapping the result of format_token
                     // in order to remove only the token itself when the group doesn't break
                     // but still print its associated trivias unconditionally
-                    self.format_replaced_token(
+                    self.format_replaced(
                         &separator,
                         if_group_breaks(token(separator.text_trimmed())),
                     )?
@@ -295,9 +275,7 @@ impl Formatter {
                 elements.push(format_elements![comment, line_break]);
 
                 line_count = 0;
-            }
-
-            if piece.as_newline().is_some() {
+            } else if piece.as_newline().is_some() {
                 line_count += 1;
             }
         }
@@ -344,9 +322,7 @@ impl Formatter {
                 });
 
                 line_count = 0;
-            }
-
-            if piece.as_newline().is_some() {
+            } else if piece.as_newline().is_some() {
                 line_count += 1;
             }
         }
@@ -409,6 +385,45 @@ impl Formatter {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 *self.printed_tokens.borrow_mut() = snapshot.printed_tokens;
+            }
+        }
+    }
+}
+
+// FormattableToken needs to be public as its used in the signature of format_token,
+// part of the public API, but it should not be exposed for implementation so
+// declare it in a private module inaccessible for external consumers
+mod token {
+    use rslint_parser::SyntaxToken;
+
+    use crate::{format_elements, token, FormatElement, FormatResult, Formatter};
+
+    pub trait FormattableToken {
+        type Output;
+        fn format(&self, formatter: &Formatter) -> FormatResult<Self::Output>;
+    }
+
+    impl FormattableToken for SyntaxToken {
+        type Output = FormatElement;
+
+        fn format(&self, formatter: &Formatter) -> FormatResult<Self::Output> {
+            debug_assert!(formatter.printed_tokens.borrow_mut().insert(self.clone()));
+
+            Ok(format_elements![
+                formatter.print_leading_trivia(self),
+                token(self.text_trimmed()),
+                formatter.print_trailing_trivia(self),
+            ])
+        }
+    }
+
+    impl FormattableToken for Option<SyntaxToken> {
+        type Output = Option<FormatElement>;
+
+        fn format(&self, formatter: &Formatter) -> FormatResult<Self::Output> {
+            match self {
+                Some(token) => Ok(Some(token.format(formatter)?)),
+                None => Ok(None),
             }
         }
     }

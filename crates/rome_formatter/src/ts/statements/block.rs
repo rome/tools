@@ -18,7 +18,7 @@ impl ToFormatElement for JsBlockStatement {
                 formatter.format_token(&self.r_curly_token()?)?
             ])
         } else {
-            formatter.format_delimited_group(
+            formatter.format_delimited(
                 &self.l_curly_token()?,
                 |leading, trailing| Ok(block_indent(format_elements![leading, stmts, trailing])),
                 &self.r_curly_token()?,

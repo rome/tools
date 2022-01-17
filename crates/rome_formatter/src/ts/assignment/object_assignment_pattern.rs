@@ -12,7 +12,7 @@ use rslint_parser::ast::{
 impl ToFormatElement for JsObjectAssignmentPattern {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let properties = formatter.format_separated(self.properties(), || token(","))?;
-        Ok(group_elements(formatter.format_delimited_group(
+        Ok(group_elements(formatter.format_delimited(
             &self.l_curly_token()?,
             |leading, trailing| {
                 Ok(format_elements![

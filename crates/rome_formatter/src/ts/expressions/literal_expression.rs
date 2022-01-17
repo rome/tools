@@ -18,7 +18,7 @@ impl ToFormatElement for JsStringLiteralExpression {
             token(quoted)
         };
 
-        formatter.format_replaced_token(&value_token, content)
+        formatter.format_replaced(&value_token, content)
     }
 }
 

@@ -864,6 +864,12 @@ impl From<Indent> for FormatElement {
     }
 }
 
+impl From<Option<FormatElement>> for FormatElement {
+    fn from(element: Option<FormatElement>) -> Self {
+        element.unwrap_or_else(empty_element)
+    }
+}
+
 #[cfg(test)]
 mod tests {
 

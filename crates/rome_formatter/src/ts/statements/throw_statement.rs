@@ -8,7 +8,9 @@ impl ToFormatElement for JsThrowStatement {
         let throw_token = formatter.format_token(&self.throw_token()?)?;
         let exception = formatter.format_node(self.argument()?)?;
 
-        let semicolon = formatter.format_or_create_token(self.semicolon_token(), || token(';'))?;
+        let semicolon = formatter
+            .format_token(&self.semicolon_token())?
+            .unwrap_or_else(|| token(';'));
 
         Ok(format_elements![
             throw_token,

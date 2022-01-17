@@ -12,7 +12,9 @@ impl ToFormatElement for JsVariableStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
             formatter.format_node(self.declarations()?)?,
-            formatter.format_or_create_token(self.semicolon_token(), || token(';'))?,
+            formatter
+                .format_token(&self.semicolon_token())?
+                .unwrap_or_else(|| token(';')),
         ])
     }
 }
@@ -29,7 +31,7 @@ impl ToFormatElement for JsVariableDeclarations {
                 let node = formatter.format_node(element.node()?)?;
                 let separator = if let Some(separator) = element.trailing_separator()? {
                     if index == last_index {
-                        formatter.format_replaced_token(&separator, empty_element())?
+                        formatter.format_replaced(&separator, empty_element())?
                     } else {
                         formatter.format_token(&separator)?
                     }

@@ -21,7 +21,7 @@ impl ToFormatElement for JsConstructorParameters {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let params = formatter.format_separated(self.parameters(), || token(","))?;
 
-        Ok(group_elements(formatter.format_delimited_group(
+        Ok(group_elements(formatter.format_delimited(
             &self.l_paren_token()?,
             |leading, trailing| {
                 Ok(soft_indent(format_elements![

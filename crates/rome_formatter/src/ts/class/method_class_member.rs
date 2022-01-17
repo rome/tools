@@ -11,7 +11,7 @@ impl ToFormatElement for JsMethodClassMember {
         } else {
             empty_element()
         };
-        let star_token = formatter.format_or_create_token(self.star_token(), empty_element)?;
+        let star_token = formatter.format_token(&self.star_token())?;
         let name = formatter.format_node(self.name()?)?;
         let params = formatter.format_node(self.parameters()?)?;
         let body = formatter.format_node(self.body()?)?;

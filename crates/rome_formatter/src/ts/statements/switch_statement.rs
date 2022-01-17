@@ -11,7 +11,7 @@ impl ToFormatElement for JsSwitchStatement {
         Ok(format_elements![
             formatter.format_token(&self.switch_token()?)?,
             space_token(),
-            group_elements(formatter.format_delimited_group(
+            group_elements(formatter.format_delimited(
                 &self.l_paren_token()?,
                 |leading, trailing| Ok(soft_indent(format_elements![
                     leading,
@@ -21,7 +21,7 @@ impl ToFormatElement for JsSwitchStatement {
                 &self.r_paren_token()?,
             )?),
             space_token(),
-            group_elements(formatter.format_delimited_group(
+            group_elements(formatter.format_delimited(
                 &self.l_curly_token()?,
                 |leading, trailing| {
                     Ok(block_indent(format_elements![

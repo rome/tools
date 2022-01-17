@@ -7,7 +7,7 @@ use crate::{
 
 impl ToFormatElement for JsFunctionBody {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        formatter.format_delimited_group(
+        formatter.format_delimited(
             &self.l_curly_token()?,
             |leading, trailing| {
                 Ok(block_indent(format_elements![

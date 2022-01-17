@@ -3,7 +3,7 @@ use crate::{
     soft_line_break_or_space, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::{
-    ast::{JsArrayExpression, JsArrayHole},
+    ast::{JsAnyArrayElement, JsArrayExpression, JsArrayHole},
     AstSeparatedList,
 };
 
@@ -11,7 +11,7 @@ impl ToFormatElement for JsArrayExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let elements = self.elements();
 
-        Ok(group_elements(formatter.format_delimited_group(
+        Ok(group_elements(formatter.format_delimited(
             &self.l_brack_token()?,
             |leading, trailing| {
                 // Specifically do not use format_separated as array expressions need
@@ -22,9 +22,11 @@ impl ToFormatElement for JsArrayExpression {
                     .elements()
                     .enumerate()
                     .map(|(index, element)| {
-                        let node = formatter.format_node(element.node()?)?;
+                        let node = element.node()?;
+                        let is_hole = matches!(node, JsAnyArrayElement::JsArrayHole(_));
 
-                        let separator = if node.is_empty() || index != last_index {
+                        let node = formatter.format_node(node)?;
+                        let separator = if is_hole || index != last_index {
                             // If the previous element was empty or this is not the last element, always print a separator
                             if let Some(separator) = element.trailing_separator()? {
                                 formatter.format_token(&separator)?
@@ -32,8 +34,7 @@ impl ToFormatElement for JsArrayExpression {
                                 token(",")
                             }
                         } else if let Some(separator) = element.trailing_separator()? {
-                            formatter
-                                .format_replaced_token(&separator, if_group_breaks(token(",")))?
+                            formatter.format_replaced(&separator, if_group_breaks(token(",")))?
                         } else {
                             if_group_breaks(token(","))
                         };

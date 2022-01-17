@@ -9,7 +9,7 @@ impl ToFormatElement for JsWhileStatement {
         Ok(format_elements![
             formatter.format_token(&self.while_token()?)?,
             space_token(),
-            group_elements(formatter.format_delimited_group(
+            group_elements(formatter.format_delimited(
                 &self.l_paren_token()?,
                 |leading, trailing| Ok(soft_indent(format_elements![
                     leading,

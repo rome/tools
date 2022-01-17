@@ -12,7 +12,9 @@ impl ToFormatElement for JsContinueStatement {
             empty_element()
         };
 
-        let semicolon = formatter.format_or_create_token(self.semicolon_token(), || token(';'))?;
+        let semicolon = formatter
+            .format_token(&self.semicolon_token())?
+            .unwrap_or_else(|| token(';'));
 
         Ok(format_elements![
             formatter.format_token(&self.continue_token()?)?,
