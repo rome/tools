@@ -383,7 +383,6 @@ fn parse_class_member_impl(
     if p.at(T![*]) {
         p.bump_any(); // bump * token
 
-        let is_constructor = p.cur_src() == "constructor";
         if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
             let err = p
                 .err_builder("class methods cannot be readonly")
@@ -392,7 +391,7 @@ fn parse_class_member_impl(
             p.error(err);
         }
 
-        if is_constructor {
+        if is_at_constructor(p, &modifiers) {
             let err = p
                 .err_builder("constructors can't be generators")
                 .primary(generator_range, "");
@@ -422,7 +421,7 @@ fn parse_class_member_impl(
             flags |= SignatureFlags::GENERATOR;
         }
 
-        if p.cur_src() == "constructor" {
+        if is_at_constructor(p, &modifiers) {
             let err = p
                 .err_builder("constructors cannot be async")
                 .primary(async_range, "");
@@ -441,11 +440,7 @@ fn parse_class_member_impl(
         return Present(parse_method_class_member(p, member_marker, flags));
     }
 
-    let member_name = p.cur_src();
-    let is_constructor = matches!(
-        member_name,
-        "constructor" | "\"constructor\"" | "'constructor'"
-    ) && modifiers.get_range(ModifierKind::Static).is_none();
+    let is_constructor = is_at_constructor(p, &modifiers);
     let member_name =
         parse_class_member_name(p).or_add_diagnostic(p, js_parse_error::expected_class_member_name);
 
@@ -666,7 +661,7 @@ fn parse_class_member_impl(
             //
             // test_err class_declare_member
             // class B { declare foo }
-            let property = if modifiers.get_range(ModifierKind::Declare).is_some() {
+            let property = if modifiers.has(ModifierKind::Declare) {
                 property_declaration_class_member_body(p, member_marker, member_name.kind())
             } else {
                 parse_property_class_member_body(p, member_marker)
@@ -1058,6 +1053,19 @@ fn is_at_modifier(p: &Parser, offset: usize) -> bool {
     ) || is_at_class_member_name(p, offset)
 }
 
+// test static_generator_constructor_method
+// class A {
+// 	static async * constructor() {}
+// 	static * constructor() {}
+// }
+fn is_at_constructor(p: &Parser, modifiers: &ClassMemberModifiers) -> bool {
+    !modifiers.has(ModifierKind::Static)
+        && matches!(
+            p.cur_src(),
+            "constructor" | "\"constructor\"" | "'constructor'"
+        )
+}
+
 // test_err class_invalid_modifiers
 // class A { public foo() {} }
 // class B { static static foo() {} }
@@ -1226,5 +1234,9 @@ impl ClassMemberModifiers {
     /// Sets the range of a parsed modifier
     fn set_range(&mut self, modifier: Modifier) {
         self.modifiers[modifier.kind as usize] = Some(modifier.range);
+    }
+
+    fn has(&self, kind: ModifierKind) -> bool {
+        self.modifiers[kind as usize].is_some()
     }
 }
