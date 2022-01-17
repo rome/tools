@@ -1017,8 +1017,11 @@ pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax {
         // 	# test;
         // }
         p.error(
-            p.err_builder("Unexpected space between # and identifier")
-                .primary(hash_end..p.cur_tok().start(), "remove the space here"),
+            p.err_builder("Unexpected space or comment between `#` and identifier")
+                .primary(
+                    hash_end..p.cur_tok().start(),
+                    "remove the space or comment here",
+                ),
         );
         Present(m.complete(p, JS_UNKNOWN))
     } else {

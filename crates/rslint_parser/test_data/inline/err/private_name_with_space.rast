@@ -73,11 +73,11 @@ JsModule {
       6: R_CURLY@18..20 "}" [Newline("\n")] []
   3: EOF@20..21 "" [Newline("\n")] []
 --
-error[SyntaxError]: Unexpected space between # and identifier
+error[SyntaxError]: Unexpected space or comment between `#` and identifier
   ┌─ private_name_with_space.js:2:3
   │
 2 │     # test;
-  │      ^ remove the space here
+  │      ^ remove the space or comment here
 
 --
 error[SyntaxError]: expected a semicolon for a class property, but found none
