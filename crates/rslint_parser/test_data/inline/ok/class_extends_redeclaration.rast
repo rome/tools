@@ -1,0 +1,44 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsClassStatement {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..8 "x" [] [Whitespace(" ")],
+            },
+            extends_clause: JsExtendsClause {
+                extends_token: EXTENDS_KW@8..16 "extends" [] [Whitespace(" ")],
+                super_class: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@16..18 "x" [] [Whitespace(" ")],
+                    },
+                },
+            },
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@18..19 "{" [] [],
+            members: JsClassMemberList [],
+            r_curly_token: R_CURLY@19..20 "}" [] [],
+        },
+    ],
+    eof_token: EOF@20..21 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..21
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..20
+    0: JS_CLASS_STATEMENT@0..20
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..8
+        0: IDENT@6..8 "x" [] [Whitespace(" ")]
+      2: JS_EXTENDS_CLAUSE@8..18
+        0: EXTENDS_KW@8..16 "extends" [] [Whitespace(" ")]
+        1: JS_IDENTIFIER_EXPRESSION@16..18
+          0: JS_REFERENCE_IDENTIFIER@16..18
+            0: IDENT@16..18 "x" [] [Whitespace(" ")]
+      3: (empty)
+      4: L_CURLY@18..19 "{" [] []
+      5: JS_CLASS_MEMBER_LIST@19..19
+      6: R_CURLY@19..20 "}" [] []
+  3: EOF@20..21 "" [Newline("\n")] []

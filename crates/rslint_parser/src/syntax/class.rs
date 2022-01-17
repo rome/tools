@@ -181,7 +181,14 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
         }
     }
 
-    extends_clause(p).ok();
+    // NOTE: this is a small workaround bind the "extends" variable by itself, without
+    // conflicting with other bindings inside the same file
+    //
+    // test class_extends_redeclaration
+    // class x extends x {}
+    p.with_state(EnterLexicalScope(BindingContext::Block), |p| {
+        extends_clause(p).ok();
+    });
 
     if implements_clause(p).is_present() && TypeScript.is_unsupported(p) {
         class_is_valid = false;
