@@ -777,13 +777,14 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
 }
 
 /// An expression wrapped in parentheses such as `()`
-fn parenthesized_expression(p: &mut Parser) {
+/// Returns `true` if the closing parentheses is present
+fn parenthesized_expression(p: &mut Parser) -> bool {
     let has_l_paren = p.expect(T!['(']);
 
     p.with_state(AllowObjectExpression(has_l_paren), parse_expression)
         .or_add_diagnostic(p, js_parse_error::expected_expression);
 
-    p.expect(T![')']);
+    p.expect(T![')'])
 }
 
 /// An if statement such as `if (foo) { bar(); }`
@@ -1245,9 +1246,13 @@ fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
     .or_add_diagnostic(p, expected_statement);
 
     p.expect(T![while]);
-    parenthesized_expression(p);
-    let end_range = p.cur_tok().end();
-    semi(p, start..end_range);
+
+    // test do-while-asi
+    // do do do ; while (x) while (x) while (x) x = 39;
+    if !parenthesized_expression(p) {
+        let end_range = p.cur_tok().end();
+        semi(p, start..end_range);
+    }
     Present(m.complete(p, JS_DO_WHILE_STATEMENT))
 }
 
