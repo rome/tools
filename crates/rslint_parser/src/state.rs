@@ -3,14 +3,31 @@ use bitflags::bitflags;
 use std::collections::HashMap;
 use std::ops::{Deref, DerefMut, Range};
 
+type LabelSet = HashMap<String, LabelledItem>;
+
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub(crate) enum LabelledItem {
+    Iteration(Range<usize>),
+    Other(Range<usize>),
+}
+
+impl LabelledItem {
+    pub(crate) fn range(&self) -> &Range<usize> {
+        match self {
+            LabelledItem::Iteration(range) | LabelledItem::Other(range) => range,
+        }
+    }
+}
+
 /// State kept by the parser while parsing.
 /// It is required for things such as strict mode or async functions
-#[derive(Debug, PartialEq)]
+#[derive(Debug)]
 pub struct ParserState {
     parsing_context: ParsingContextFlags,
     /// A list of labels for labelled statements used to report undefined label errors
-    /// for break and continue, as well as duplicate labels
-    pub labels: HashMap<String, Range<usize>>,
+    /// for break and continue, as well as duplicate labels.
+    /// Often called label set in the spec.
+    pub(crate) label_set: LabelSet,
     /// Whether we are in strict mode code
     strict: Option<StrictMode>,
     /// The exported default item, used for checking duplicate defaults
@@ -41,7 +58,7 @@ impl ParserState {
             parsing_context: ParsingContextFlags::ALLOW_OBJECT_EXPRESSION
                 | ParsingContextFlags::INCLUDE_IN
                 | ParsingContextFlags::TOP_LEVEL,
-            labels: HashMap::new(),
+            label_set: HashMap::new(),
             strict: if syntax.file_kind == FileKind::Module {
                 Some(StrictMode::Module)
             } else {
@@ -236,7 +253,6 @@ macro_rules! gen_change_parser_state {
     };
 }
 
-gen_change_parser_state!(BreakAllowed, ParsingContextFlags::BREAK_ALLOWED);
 gen_change_parser_state!(IncludeIn, ParsingContextFlags::INCLUDE_IN);
 gen_change_parser_state!(
     InConditionExpression,
@@ -254,26 +270,6 @@ gen_change_parser_state!(
     PotentialArrowStart,
     ParsingContextFlags::POTENTIAL_ARROW_START
 );
-
-#[derive(Debug, Clone, Default)]
-pub struct SeenLabelsSnapshot(HashMap<String, Range<usize>>);
-
-/// Resets the [ParserState] `labels` field to an empty map
-pub struct NewLabelsScope;
-
-impl ChangeParserState for NewLabelsScope {
-    type Snapshot = SeenLabelsSnapshot;
-
-    #[inline]
-    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-        SeenLabelsSnapshot(std::mem::take(&mut state.labels))
-    }
-
-    #[inline]
-    fn restore(state: &mut ParserState, value: Self::Snapshot) {
-        state.labels = value.0
-    }
-}
 
 #[derive(Default, Debug)]
 pub struct EnableStrictModeSnapshot(Option<StrictMode>);
@@ -299,11 +295,11 @@ bitflags! {
     /// Flags describing the context of a function.
     pub(crate) struct SignatureFlags: u8 {
         /// Is the function in an async context
-        const ASYNC         = 0b00001;
+        const ASYNC 		= 0b00001;
         /// Is the function in a generator context
-        const GENERATOR     = 0b00010;
+        const GENERATOR 	= 0b00010;
         /// Is the function a constructor (or constructor context)
-        const CONSTRUCTOR   = 0b00100;
+        const CONSTRUCTOR 	= 0b00100;
     }
 }
 
@@ -418,14 +414,27 @@ impl ChangeParserState for EnterParameters {
     }
 }
 
-/// Enters a loop. Allows the use of break and continue statements.
-pub(crate) struct EnterLoop;
+#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+pub(crate) enum BreakableKind {
+    // Iteration statement like Do, While, For
+    Iteration,
 
-impl ChangeParserState for EnterLoop {
+    // Switch statement
+    Switch,
+}
+
+pub(crate) struct EnterBreakable(pub(crate) BreakableKind);
+
+impl ChangeParserState for EnterBreakable {
     type Snapshot = ParsingContextFlagsSnapshot;
 
     fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-        let flags = state.parsing_context | ParsingContextFlags::LOOP;
+        let mut flags = state.parsing_context | ParsingContextFlags::BREAK_ALLOWED;
+
+        if self.0 == BreakableKind::Iteration {
+            flags |= ParsingContextFlags::CONTINUE_ALLOWED;
+        }
+
         ParsingContextFlagsSnapshot(std::mem::replace(&mut state.parsing_context, flags))
     }
 
@@ -437,7 +446,7 @@ impl ChangeParserState for EnterLoop {
 #[derive(Debug, Clone, Default)]
 pub struct EnterFunctionSnapshot {
     parsing_context: ParsingContextFlags,
-    labels: HashMap<String, Range<usize>>,
+    label_set: LabelSet,
 }
 
 /// Enters the parsing of a function/method. Resets the relevant parser state and sets the state
@@ -455,14 +464,14 @@ impl ChangeParserState for EnterFunction {
 
         EnterFunctionSnapshot {
             parsing_context: std::mem::replace(&mut state.parsing_context, new_flags),
-            labels: std::mem::take(&mut state.labels),
+            label_set: std::mem::take(&mut state.label_set),
         }
     }
 
     #[inline]
     fn restore(state: &mut ParserState, value: Self::Snapshot) {
         state.parsing_context = value.parsing_context;
-        state.labels = value.labels;
+        state.label_set = value.label_set;
     }
 }
 
@@ -486,7 +495,7 @@ impl ChangeParserState for EnterClassPropertyInitializer {
 
 #[derive(Default, Debug, Clone)]
 pub(crate) struct EnterClassStaticInitializationBlockSnapshot {
-    labels: HashMap<String, Range<usize>>,
+    label_set: LabelSet,
     flags: ParsingContextFlags,
 }
 
@@ -502,12 +511,12 @@ impl ChangeParserState for EnterClassStaticInitializationBlock {
             | ParsingContextFlags::IN_ASYNC; // allow async for better error recovery
         EnterClassStaticInitializationBlockSnapshot {
             flags: std::mem::replace(&mut state.parsing_context, flags),
-            labels: std::mem::take(&mut state.labels),
+            label_set: std::mem::take(&mut state.label_set),
         }
     }
 
     fn restore(state: &mut ParserState, value: Self::Snapshot) {
         state.parsing_context = value.flags;
-        state.labels = value.labels;
+        state.label_set = value.label_set;
     }
 }

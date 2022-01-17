@@ -147,7 +147,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │        ...Which is required to end this statement
 
 --
-error[SyntaxError]: Invalid break not inside of a switch, loop, or labelled statement
+error[SyntaxError]: A `break` statement can only be used within an enclosing iteration or switch statement.
   ┌─ do_while_no_continue_break.js:1:8
   │
 1 │ do { } break (continue)
@@ -171,7 +171,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │               ...Which is required to end this statement
 
 --
-error[SyntaxError]: Invalid continue not inside of a loop
+error[SyntaxError]: A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
   ┌─ do_while_no_continue_break.js:1:15
   │
 1 │ do { } break (continue)
@@ -202,7 +202,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │        ...Which is required to end this statement
 
 --
-error[SyntaxError]: Invalid continue not inside of a loop
+error[SyntaxError]: A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
   ┌─ do_while_no_continue_break.js:2:8
   │
 2 │ do { } continue (break)
@@ -226,7 +226,7 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │                  ...Which is required to end this statement
 
 --
-error[SyntaxError]: Invalid break not inside of a switch, loop, or labelled statement
+error[SyntaxError]: A `break` statement can only be used within an enclosing iteration or switch statement.
   ┌─ do_while_no_continue_break.js:2:18
   │
 2 │ do { } continue (break)

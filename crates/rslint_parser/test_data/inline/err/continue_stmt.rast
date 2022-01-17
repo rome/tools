@@ -40,23 +40,42 @@ JsModule {
             body: JsBlockStatement {
                 l_curly_token: L_CURLY@42..43 "{" [] [],
                 statements: JsStatementList [
-                    JsContinueStatement {
-                        continue_token: CONTINUE_KW@43..55 "continue" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
-                        label_token: IDENT@55..58 "foo" [] [],
-                        semicolon_token: SEMICOLON@58..59 ";" [] [],
+                    JsUnknownStatement {
+                        items: [
+                            CONTINUE_KW@43..55 "continue" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
+                            IDENT@55..58 "foo" [] [],
+                            SEMICOLON@58..59 ";" [] [],
+                        ],
                     },
                 ],
                 r_curly_token: R_CURLY@59..61 "}" [Newline("\n")] [],
             },
         },
+        JsLabeledStatement {
+            label_token: IDENT@61..65 "foo" [Newline("\n")] [],
+            colon_token: COLON@65..67 ":" [] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@67..68 "{" [] [],
+                statements: JsStatementList [
+                    JsUnknownStatement {
+                        items: [
+                            CONTINUE_KW@68..80 "continue" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
+                            IDENT@80..83 "foo" [] [],
+                            SEMICOLON@83..84 ";" [] [],
+                        ],
+                    },
+                ],
+                r_curly_token: R_CURLY@84..86 "}" [Newline("\n")] [],
+            },
+        },
     ],
-    eof_token: EOF@61..62 "" [Newline("\n")] [],
+    eof_token: EOF@86..87 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..62
+0: JS_MODULE@0..87
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..61
+  2: JS_MODULE_ITEM_LIST@0..86
     0: JS_FUNCTION_STATEMENT@0..28
       0: (empty)
       1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
@@ -86,14 +105,25 @@ JsModule {
       4: JS_BLOCK_STATEMENT@42..61
         0: L_CURLY@42..43 "{" [] []
         1: JS_STATEMENT_LIST@43..59
-          0: JS_CONTINUE_STATEMENT@43..59
+          0: JS_UNKNOWN_STATEMENT@43..59
             0: CONTINUE_KW@43..55 "continue" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
             1: IDENT@55..58 "foo" [] []
             2: SEMICOLON@58..59 ";" [] []
         2: R_CURLY@59..61 "}" [Newline("\n")] []
-  3: EOF@61..62 "" [Newline("\n")] []
+    2: JS_LABELED_STATEMENT@61..86
+      0: IDENT@61..65 "foo" [Newline("\n")] []
+      1: COLON@65..67 ":" [] [Whitespace(" ")]
+      2: JS_BLOCK_STATEMENT@67..86
+        0: L_CURLY@67..68 "{" [] []
+        1: JS_STATEMENT_LIST@68..84
+          0: JS_UNKNOWN_STATEMENT@68..84
+            0: CONTINUE_KW@68..80 "continue" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
+            1: IDENT@80..83 "foo" [] []
+            2: SEMICOLON@83..84 ";" [] []
+        2: R_CURLY@84..86 "}" [Newline("\n")] []
+  3: EOF@86..87 "" [Newline("\n")] []
 --
-error[SyntaxError]: Invalid continue not inside of a loop
+error[SyntaxError]: A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
   ┌─ continue_stmt.js:1:18
   │
 1 │ function foo() { continue; }
@@ -107,7 +137,19 @@ error[SyntaxError]: Use of undefined statement label `foo`
   │            ^^^ This label is used, but it is never defined
 
 --
+error[SyntaxError]: A `continue` statement can only jump to a label of an enclosing `for`, `while` or `do while` statement.
+  ┌─ continue_stmt.js:6:12
+  │
+5 │ foo: {
+  │ --- points to non-iteration statement
+6 │   continue foo;
+  │            ^^^ This label
+
+--
 function foo() { continue; }
 while (true) {
+  continue foo;
+}
+foo: {
   continue foo;
 }
