@@ -656,9 +656,23 @@ fn parse_private_name(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
+    let hash_end = p.cur_tok().range().end;
     p.expect(T![#]);
-    p.expect(T![ident]);
-    Present(m.complete(p, JS_PRIVATE_NAME))
+
+    if p.at(T![ident]) && hash_end != p.cur_tok().start() {
+        // test_err private_name_with_space
+        // class A {
+        // 	# test;
+        // }
+        p.error(
+            p.err_builder("Unexpected space or comment between `#` and identifier")
+                .primary(hash_end..p.cur_tok().start(), "remove the space here"),
+        );
+        Present(m.complete(p, JS_UNKNOWN))
+    } else {
+        p.expect(T![ident]);
+        Present(m.complete(p, JS_PRIVATE_NAME))
+    }
 }
 
 pub(super) fn parse_any_name(p: &mut Parser) -> ParsedSyntax {
