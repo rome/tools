@@ -9,7 +9,7 @@ use super::util::*;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::{ParserProgress, RecoveryResult};
-use crate::state::{InConditionExpression, PotentialArrowStart, SignatureFlags};
+use crate::state::SignatureFlags;
 use crate::syntax::assignment::{
     expression_to_assignment, expression_to_assignment_pattern, parse_assignment,
     AssignmentExprPrecedence,
@@ -28,6 +28,7 @@ use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{JsSyntaxKind::*, *};
+use bitflags::bitflags;
 use rome_rowan::SyntaxKind;
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -85,10 +86,75 @@ const STARTS_EXPR: TokenSet = token_set![
     JS_REGEX_LITERAL
 ];
 
+bitflags! {
+    pub(crate) struct ExpressionContext: u8 {
+        /// Whether `in` should be counted in a binary expression
+        /// this is for `for...in` statements to prevent ambiguity.
+        const INCLUDE_IN = 0b00000001;
+
+        /// Whether the parser is in the consequent of a conditional expr (ternary expr)
+        const IN_CONDITION_EXPRESSION = 0b00000010;
+
+        /// If false, object expressions are not allowed to be parsed
+        /// inside an expression.
+        ///
+        /// Also applies for object patterns
+        const ALLOW_OBJECT_EXPRESSION = 0b00000100;
+
+        /// Whether we potentially are in a place to parse an arrow expression
+        const POTENTIAL_ARROW_START = 0b00001000;
+    }
+}
+
+impl ExpressionContext {
+    pub(crate) fn with_include_in(self, include: bool) -> Self {
+        self.with(ExpressionContext::INCLUDE_IN, include)
+    }
+
+    pub(crate) fn with_object_expression_allowed(self, allowed: bool) -> Self {
+        self.with(ExpressionContext::ALLOW_OBJECT_EXPRESSION, allowed)
+    }
+
+    pub(crate) fn with_potential_arrow_start(self, value: bool) -> Self {
+        self.with(ExpressionContext::POTENTIAL_ARROW_START, value)
+    }
+
+    pub(crate) fn is_object_expression_allowed(self) -> bool {
+        self.contains(ExpressionContext::ALLOW_OBJECT_EXPRESSION)
+    }
+
+    pub(crate) fn is_potential_arrow_start(self) -> bool {
+        self.contains(ExpressionContext::POTENTIAL_ARROW_START)
+    }
+
+    pub(crate) fn is_in_condition_consequent(self) -> bool {
+        self.contains(ExpressionContext::IN_CONDITION_EXPRESSION)
+    }
+
+    pub(crate) fn is_in_included(self) -> bool {
+        self.contains(ExpressionContext::INCLUDE_IN)
+    }
+
+    pub(crate) fn with(self, flag: ExpressionContext, set: bool) -> Self {
+        if set {
+            self | flag
+        } else {
+            self - flag
+        }
+    }
+}
+
+impl Default for ExpressionContext {
+    fn default() -> Self {
+        ExpressionContext::INCLUDE_IN | ExpressionContext::ALLOW_OBJECT_EXPRESSION
+    }
+}
+
 /// Parses an expression or recovers to the point of where the next statement starts
-pub fn parse_expression_or_recover_to_next_statement(
+pub(crate) fn parse_expression_or_recover_to_next_statement(
     p: &mut Parser,
     assign: bool,
+    context: ExpressionContext,
 ) -> RecoveryResult {
     let func = if assign {
         syntax::expr::parse_expr_or_assignment
@@ -96,7 +162,7 @@ pub fn parse_expression_or_recover_to_next_statement(
         syntax::expr::parse_expression
     };
 
-    func(p).or_recover(
+    func(p, context).or_recover(
         p,
         &ParseRecovery::new(
             JsSyntaxKind::JS_UNKNOWN_EXPRESSION,
@@ -163,7 +229,7 @@ pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// Parses an expression that might turn out to be an assignment target if an assignment operator is found
-pub(crate) fn parse_expr_or_assignment(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_expr_or_assignment(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     if p.at(T![<]) && is_nth_at_name(p, 1) {
         let res = try_parse_ts(p, |p| {
             let m = p.start();
@@ -172,7 +238,7 @@ pub(crate) fn parse_expr_or_assignment(p: &mut Parser) -> ParsedSyntax {
                 return None;
             }
 
-            let res = parse_assign_expr_base(p);
+            let res = parse_assign_expr_base(p, context);
             if res.kind() == Some(JS_ARROW_FUNCTION_EXPRESSION) {
                 m.abandon(p);
                 return None;
@@ -185,21 +251,19 @@ pub(crate) fn parse_expr_or_assignment(p: &mut Parser) -> ParsedSyntax {
             return Present(res);
         }
     }
-    parse_assign_expr_base(p)
+    parse_assign_expr_base(p, context)
 }
 
-fn parse_assign_expr_base(p: &mut Parser) -> ParsedSyntax {
+fn parse_assign_expr_base(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     if p.state.in_generator() && p.at(T![yield]) {
-        return Present(parse_yield_expression(p));
+        return Present(parse_yield_expression(p, context));
     }
-    let potential_arrow_start = p.at(T!['(']) | is_at_identifier(p);
+    let potential_arrow_start = p.at(T!['(']) || is_at_identifier(p);
+    let context = context.with_potential_arrow_start(potential_arrow_start);
 
-    p.with_state(PotentialArrowStart(potential_arrow_start), |p| {
-        let checkpoint = p.checkpoint();
-
-        parse_conditional_expr(p)
-            .and_then(|target| parse_assign_expr_recursive(p, target, checkpoint))
-    })
+    let checkpoint = p.checkpoint();
+    parse_conditional_expr(p, context)
+        .and_then(|target| parse_assign_expr_recursive(p, target, checkpoint, context))
 }
 
 // test assign_expr
@@ -235,12 +299,13 @@ fn parse_assign_expr_recursive(
     p: &mut Parser,
     target: CompletedMarker,
     checkpoint: Checkpoint,
+    context: ExpressionContext,
 ) -> ParsedSyntax {
     if p.at_ts(ASSIGN_TOKENS) {
         let target = expression_to_assignment_pattern(p, target, checkpoint);
         let m = target.precede(p);
         p.bump_any(); // operator
-        parse_expr_or_assignment(p)
+        parse_expr_or_assignment(p, context.with_object_expression_allowed(true))
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
         Present(m.complete(p, JS_ASSIGNMENT_EXPRESSION))
     } else {
@@ -256,14 +321,14 @@ fn parse_assign_expr_recursive(
 //  yield
 //  yield
 // }
-fn parse_yield_expression(p: &mut Parser) -> CompletedMarker {
+fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> CompletedMarker {
     let m = p.start();
     p.expect(T![yield]);
 
     if !is_semi(p, 0) && (p.at(T![*]) || p.at_ts(STARTS_EXPR)) {
         let argument = p.start();
         p.eat(T![*]);
-        parse_expr_or_assignment(p).ok();
+        parse_expr_or_assignment(p, context.with_object_expression_allowed(true)).ok();
 
         argument.complete(p, JS_YIELD_ARGUMENT);
     }
@@ -288,23 +353,29 @@ fn parse_yield_expression(p: &mut Parser) -> CompletedMarker {
 // test conditional_expr
 // foo ? bar : baz
 // foo ? bar : baz ? bar : baz
-pub(super) fn parse_conditional_expr(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_conditional_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     // test_err conditional_expr_err
     // foo ? bar baz
     // foo ? bar baz ? foo : bar
     // foo ? bar :
-    let lhs = parse_binary_or_logical_expression(p);
+    let lhs = parse_binary_or_logical_expression(p, context);
 
     if p.at(T![?]) {
         return lhs.map(|marker| {
             let m = marker.precede(p);
             p.bump_any();
 
-            p.with_state(InConditionExpression(true), parse_expr_or_assignment)
-                .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
+            parse_expr_or_assignment(
+                p,
+                context
+                    | ExpressionContext::IN_CONDITION_EXPRESSION
+                    | ExpressionContext::INCLUDE_IN,
+            )
+            .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
             p.expect(T![:]);
-            parse_expr_or_assignment(p)
+
+            parse_expr_or_assignment(p, context)
                 .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
             m.complete(p, JS_CONDITIONAL_EXPRESSION)
         });
@@ -313,7 +384,7 @@ pub(super) fn parse_conditional_expr(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// A binary expression such as `2 + 2` or `foo * bar + 2` or a logical expression 'a || b'
-fn parse_binary_or_logical_expression(p: &mut Parser) -> ParsedSyntax {
+fn parse_binary_or_logical_expression(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     // test private_name_presence_check
     // class A {
     // 	#prop;
@@ -321,9 +392,9 @@ fn parse_binary_or_logical_expression(p: &mut Parser) -> ParsedSyntax {
     //    #prop in this
     //  }
     // }
-    let left = parse_unary_expr(p).or_else(|| parse_private_name(p));
+    let left = parse_unary_expr(p, context).or_else(|| parse_private_name(p));
 
-    parse_binary_or_logical_expression_recursive(p, left, 0)
+    parse_binary_or_logical_expression_recursive(p, left, 0, context)
 }
 
 // test binary_expressions
@@ -348,6 +419,7 @@ fn parse_binary_or_logical_expression_recursive(
     p: &mut Parser,
     left: ParsedSyntax,
     min_prec: u8,
+    context: ExpressionContext,
 ) -> ParsedSyntax {
     if 7 > min_prec && !p.has_linebreak_before_n(0) && p.cur_src() == "as" {
         let m = left.precede(p);
@@ -359,7 +431,7 @@ fn parse_binary_or_logical_expression_recursive(
             m.complete(p, TS_ASSERTION)
         };
         res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
-        return parse_binary_or_logical_expression_recursive(p, Present(res), min_prec);
+        return parse_binary_or_logical_expression_recursive(p, Present(res), min_prec, context);
     }
     let kind = match p.cur() {
         T![>] if p.nth_at(1, T![>]) && p.nth_at(2, T![>]) => T![>>>],
@@ -368,7 +440,7 @@ fn parse_binary_or_logical_expression_recursive(
     };
 
     let precedence = match kind {
-        T![in] if p.state.include_in() => 7,
+        T![in] if context.is_in_included() => 7,
         T![instanceof] => 7,
         _ => {
             if let Some(prec) = get_precedence(kind) {
@@ -420,7 +492,7 @@ fn parse_binary_or_logical_expression_recursive(
 
         p.error(err);
 
-        parse_binary_or_logical_expression_recursive(p, Absent, 0)
+        parse_binary_or_logical_expression_recursive(p, Absent, 0, context)
     } else if p.at(T![#]) {
         // test_err private_name_presence_check_recursive
         // class A {
@@ -437,7 +509,7 @@ fn parse_binary_or_logical_expression_recursive(
         );
         Present(private_name)
     } else {
-        parse_unary_expr(p)
+        parse_unary_expr(p, context)
     };
 
     parse_binary_or_logical_expression_recursive(
@@ -449,11 +521,12 @@ fn parse_binary_or_logical_expression_recursive(
         } else {
             precedence
         },
+        context,
     )
     .or_add_diagnostic(p, expected_expression);
 
     let complete = m.complete(p, expression_kind);
-    parse_binary_or_logical_expression_recursive(p, Present(complete), min_prec)
+    parse_binary_or_logical_expression_recursive(p, Present(complete), min_prec, context)
 
     // FIXME(RDambrosio016): We should check for nullish-coalescing and logical expr being used together,
     // however, i can't figure out a way to do this efficiently without using parse_marker which is way too
@@ -470,7 +543,11 @@ fn parse_binary_or_logical_expression_recursive(
 
 // test_err new_exprs
 // new;
-fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax {
+fn parse_member_or_new_expr(
+    p: &mut Parser,
+    new_expr: bool,
+    context: ExpressionContext,
+) -> ParsedSyntax {
     if p.at(T![new]) {
         // We must start the marker here and not outside or else we make
         // a needless node if the node ends up just being a primary expr
@@ -482,10 +559,10 @@ fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax {
             p.bump_any();
             p.bump_remap(T![target]);
             let complete = m.complete(p, NEW_TARGET);
-            return Present(subscripts(p, complete, true));
+            return Present(subscripts(p, complete, true, context));
         }
 
-        let complete = parse_member_or_new_expr(p, new_expr);
+        let complete = parse_member_or_new_expr(p, new_expr, context);
         if complete.kind() == Some(JS_ARROW_FUNCTION_EXPRESSION) {
             m.abandon(p);
             return complete;
@@ -511,9 +588,9 @@ fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax {
         if !new_expr || p.at(T!['(']) {
             // it's safe to unwrap to because we check beforehand the existence of '('
             // which is mandatory for `parse_arguments`
-            parse_arguments(p).unwrap();
+            parse_arguments(p, context).unwrap();
             let complete = m.complete(p, JS_NEW_EXPRESSION);
-            return Present(subscripts(p, complete, true));
+            return Present(subscripts(p, complete, true, context));
         }
         return Present(m.complete(p, JS_NEW_EXPRESSION));
     }
@@ -543,11 +620,11 @@ fn parse_member_or_new_expr(p: &mut Parser, new_expr: bool) -> ParsedSyntax {
                 _ => unreachable!(),
             };
 
-            return lhs.map(|lhs| subscripts(p, lhs, true));
+            return lhs.map(|lhs| subscripts(p, lhs, true, context));
         }
     }
 
-    parse_primary_expression(p).map(|lhs| subscripts(p, lhs, true))
+    parse_primary_expression(p, context).map(|lhs| subscripts(p, lhs, true, context))
 }
 
 // test super_expression
@@ -582,7 +659,12 @@ fn parse_super_expression(p: &mut Parser) -> ParsedSyntax {
 // test subscripts
 // foo`bar`
 // foo(bar)(baz)(baz)[bar]
-fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> CompletedMarker {
+fn subscripts(
+    p: &mut Parser,
+    mut lhs: CompletedMarker,
+    no_call: bool,
+    context: ExpressionContext,
+) -> CompletedMarker {
     // test_err subscripts_err
     // foo()?.baz[].
     // BAR`b
@@ -598,7 +680,7 @@ fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Comple
                     p.bump_any();
                     // it's safe to unwrap to because we check beforehand the existence of '('
                     // which is mandatory for `parse_arguments`
-                    parse_arguments(p).unwrap();
+                    parse_arguments(p, context).unwrap();
                     m.complete(p, JS_CALL_EXPRESSION)
                 }
             }
@@ -607,7 +689,7 @@ fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Comple
                     let m = lhs.precede(p);
                     // it's safe to unwrap to because we check beforehand the existence of '('
                     // which is mandatory for `parse_arguments`
-                    parse_arguments(p).unwrap();
+                    parse_arguments(p, context).unwrap();
                     m.complete(p, JS_CALL_EXPRESSION)
                 }
             }
@@ -644,7 +726,7 @@ fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Comple
 
                     if !no_call && p.at(T!['(']) {
                         // we already to the check on '(', so it's safe to unwrap
-                        parse_arguments(p).unwrap();
+                        parse_arguments(p, context).unwrap();
                         Some(m.complete(p, JS_CALL_EXPRESSION))
                     } else if p.at(BACKTICK) {
                         m.abandon(p);
@@ -748,7 +830,11 @@ pub fn parse_computed_member_expression(
     }
 
     p.expect(T!['[']);
-    parse_expression(p).or_add_diagnostic(p, expected_expression);
+    // test computed_member_in
+    // for ({}["x" in {}];;) {}
+    parse_expression(p, ExpressionContext::default().with_include_in(true))
+        .or_add_diagnostic(p, expected_expression);
+
     p.expect(T![']']);
 
     Present(m.complete(p, JS_COMPUTED_MEMBER_EXPRESSION))
@@ -773,10 +859,15 @@ pub(super) fn parse_name(p: &mut Parser) -> ParsedSyntax {
 // foo(a,b;
 // foo(a,b var
 // foo (,,b)
-fn parse_arguments(p: &mut Parser) -> ParsedSyntax {
+fn parse_arguments(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     if !p.at(T!['(']) {
         return Absent;
     }
+
+    // test in_expr_in_arguments
+    // function foo() {}
+    // for (foo("call" in foo);;) {}
+
     let m = p.start();
     p.bump(T!['(']);
     let args_list = p.start();
@@ -787,9 +878,9 @@ fn parse_arguments(p: &mut Parser) -> ParsedSyntax {
 
         if p.at(T![...]) {
             // already do a check on "..." so it's safe to unwrap
-            parse_spread_element(p).unwrap();
+            parse_spread_element(p, context.with_include_in(true)).unwrap();
         } else {
-            parse_expr_or_assignment(p)
+            parse_expr_or_assignment(p, context.with_include_in(true))
                 .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
         }
 
@@ -816,12 +907,12 @@ fn parse_arguments(p: &mut Parser) -> ParsedSyntax {
 // (5 + 5) => {}
 // (a, ,b) => {}
 // (a, b) =>
-fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax {
+fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     let m = p.start();
     let checkpoint = p.checkpoint();
     let start = p.cur_tok().start();
 
-    p.expect(T!['(']);
+    let l_paren = p.expect(T!['(']);
     let mut spread_range = None;
     let mut trailing_comma_marker = None;
     let mut params_marker = None;
@@ -829,63 +920,64 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
     let is_empty = p.eat(T![')']);
 
     if !is_empty {
-        p.with_state(PotentialArrowStart(true), |p| {
-            // stores a potentially started sequence expression
-            let mut sequence: Option<Marker> = None;
+        let context = context
+            .with_potential_arrow_start(true)
+            .with_object_expression_allowed(l_paren);
+        // stores a potentially started sequence expression
+        let mut sequence: Option<Marker> = None;
 
-            loop {
-                if p.at(T![...]) {
-                    let m = p.start();
-                    p.bump_any();
-                    parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
-                    if p.eat(T![:]) {
-                        if let Some(mut ty) = ts_type(p) {
-                            ty.err_if_not_ts(
+        loop {
+            if p.at(T![...]) {
+                let m = p.start();
+                p.bump_any();
+                parse_binding_pattern(p, context).or_add_diagnostic(p, expected_binding);
+                if p.eat(T![:]) {
+                    if let Some(mut ty) = ts_type(p) {
+                        ty.err_if_not_ts(
                             p,
                             "spread elements can only have type annotations in TypeScript files",
                         );
-                        }
                     }
-                    let complete = m.complete(p, JS_REST_PARAMETER);
-                    spread_range = Some(complete.range(p));
-                    if !p.eat(T![')']) {
-                        if p.eat(T![=]) {
-                            parse_expr_or_assignment(p).or_add_diagnostic(p, expected_expression);
-                            p.expect(T![')']);
-                        } else {
-                            let err = p.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", p.cur_src()))
+                }
+                let complete = m.complete(p, JS_REST_PARAMETER);
+                spread_range = Some(complete.range(p));
+                if !p.eat(T![')']) {
+                    if p.eat(T![=]) {
+                        parse_expr_or_assignment(p, context.with_include_in(true))
+                            .or_add_diagnostic(p, expected_expression);
+                        p.expect(T![')']);
+                    } else {
+                        let err = p.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", p.cur_src()))
                             .primary(p.cur_tok().range(), "");
 
-                            #[allow(deprecated)]
-                            SingleTokenParseRecovery::with_error(
-                                EXPR_RECOVERY_SET,
-                                JS_UNKNOWN,
-                                err,
-                            )
+                        #[allow(deprecated)]
+                        SingleTokenParseRecovery::with_error(EXPR_RECOVERY_SET, JS_UNKNOWN, err)
                             .recover(p);
-                        }
                     }
-                    break;
                 }
-                let expr = parse_expr_or_assignment(p);
-                if expr.is_absent() && p.at(T![:]) {
-                    p.rewind(checkpoint.clone());
-                    params_marker = Some(parse_arrow_function_parameters(p, SignatureFlags::empty()).unwrap());
-                    break;
-                }
+                break;
+            }
+            let expr = parse_expr_or_assignment(p, context);
+            if expr.is_absent() && p.at(T![:]) {
+                p.rewind(checkpoint.clone());
+                params_marker =
+                    Some(parse_arrow_function_parameters(p, SignatureFlags::empty()).unwrap());
+                break;
+            }
 
-                if p.at(T![,]) {
-                    if p.at(T![')']) {
-                        // case where we are at a `,)` so the `,` is a trailing comma
-                        let trailing_marker = p.start();
-                        p.bump_any(); // bump ,
-                        trailing_comma_marker = Some(trailing_marker.complete(p, JS_UNKNOWN));
-                        p.bump_any(); // bump )
-                        break;
-                    } else {
-                        // start a sequence expression that precedes the before parsed expression statement
-                        // and bump the ',' into it.
-                        sequence = sequence
+            if p.at(T![,]) {
+                if p.at(T![')']) {
+                    // case where we are at a `,)` so the `,` is a trailing comma
+                    let trailing_marker = p.start();
+                    p.bump_any(); // bump ,
+                    trailing_comma_marker = Some(trailing_marker.complete(p, JS_UNKNOWN));
+                    p.bump_any(); // bump )
+                    break;
+                } else {
+                    // start a sequence expression that precedes the before parsed expression statement
+                    // and bump the ',' into it.
+                    sequence =
+                        sequence
                             .or_else(|| {
                                 Some(expr.precede_or_add_diagnostic(
                                     p,
@@ -893,30 +985,29 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
                                 ))
                             })
                             .or_else(|| Some(p.start()));
-                        p.bump_any(); // bump ; into sequence expression which may or may not miss a lhs
-                    }
-                } else {
-                    if let Some(sequence) = sequence.take() {
-                        sequence.complete(p, JS_SEQUENCE_EXPRESSION);
-                    }
-                    p.expect(T![')']);
-                    break;
+                    p.bump_any(); // bump ; into sequence expression which may or may not miss a lhs
                 }
+            } else {
+                if let Some(sequence) = sequence.take() {
+                    sequence.complete(p, JS_SEQUENCE_EXPRESSION);
+                }
+                p.expect(T![')']);
+                break;
             }
+        }
 
-            if let Some(sequence) = sequence.take() {
-                sequence.complete(p, JS_SEQUENCE_EXPRESSION);
-            }
-        });
+        if let Some(sequence) = sequence.take() {
+            sequence.complete(p, JS_SEQUENCE_EXPRESSION);
+        }
     }
 
-    let has_ret_type = !p.state.in_condition_expression() && p.at(T![:]);
+    let has_ret_type = !context.is_in_condition_consequent() && p.at(T![:]);
 
     // This is an arrow expr, so we rewind the parser and reparse as parameters
     // This is kind of inefficient but in the grand scheme of things it does not matter
     // FIXME: verify that this logic is correct
     if (p.at(T![=>]) && !p.has_linebreak_before_n(0)) || has_ret_type || params_marker.is_some() {
-        if !can_be_arrow && !p.at(T![:]) {
+        if !context.is_potential_arrow_start() && !p.at(T![:]) {
             let err = p.err_builder("Unexpected token `=>`").primary(
                 p.cur_tok().range(),
                 "an arrow expression is not allowed here",
@@ -990,7 +1081,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 
 pub fn parse_expression_snipped(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
-    parse_expression(p).or_add_diagnostic(p, expected_expression);
+    parse_expression(p, ExpressionContext::default()).or_add_diagnostic(p, expected_expression);
     m.complete(p, JS_EXPRESSION_SNIPPED).into()
 }
 
@@ -1000,15 +1091,15 @@ pub fn parse_expression_snipped(p: &mut Parser) -> ParsedSyntax {
 
 // test_err sequence_expr
 // 1, 2, , 4
-pub(crate) fn parse_expression(p: &mut Parser) -> ParsedSyntax {
-    let first = parse_expr_or_assignment(p);
+pub(crate) fn parse_expression(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+    let first = parse_expr_or_assignment(p, context);
 
     first.map(|first_marker| {
         if p.at(T![,]) {
             let sequence_expr_marker = first_marker.precede(p);
 
             p.bump_any();
-            parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+            parse_expression(p, context).or_add_diagnostic(p, js_parse_error::expected_expression);
 
             sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION)
         } else {
@@ -1029,7 +1120,7 @@ pub(crate) fn is_nth_at_expression(p: &Parser, n: usize) -> bool {
 }
 
 /// A primary expression such as a literal, an object, an array, or `this`.
-fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
+fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     let parsed_literal_expression = parse_literal_expression(p);
     if parsed_literal_expression.is_present() {
         return parsed_literal_expression;
@@ -1063,7 +1154,7 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
                 parse_function_expression(p).unwrap()
             } else {
                 // `async a => {}` and `async (a) => {}`
-                if p.state.potential_arrow_start()
+                if context.is_potential_arrow_start()
                     && ((is_nth_at_name(p, 1) && p.nth_at(2, T![=>])) || p.nth(1) == T!['('])
                 {
                     // test async_arrow_expr
@@ -1110,7 +1201,7 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
             // foo;
             // yield;
             // await;
-            if p.state.potential_arrow_start()
+            if context.is_potential_arrow_start()
                 && p.nth_at(1, T![=>])
                 && !p.has_linebreak_before_n(1)
             {
@@ -1136,9 +1227,9 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
         // test grouping_expr
         // ((foo))
         // (foo)
-        T!['('] => parse_paren_or_arrow_expr(p, p.state.potential_arrow_start()).unwrap(),
+        T!['('] => parse_paren_or_arrow_expr(p, context).unwrap(),
         T!['['] => parse_array_expr(p).unwrap(),
-        T!['{'] if p.state.allow_object_expression() => parse_object_expression(p).unwrap(),
+        T!['{'] if context.is_object_expression_allowed() => parse_object_expression(p).unwrap(),
         T![import] => {
             let m = p.start();
             p.bump_any();
@@ -1202,8 +1293,13 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
                             .primary(p.cur_tok().range(), "");
                         p.error(err);
                     } else {
-                        parse_expr_or_assignment(p)
-                            .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
+                        parse_expr_or_assignment(
+                            p,
+                            context
+                                .with_include_in(true)
+                                .with_object_expression_allowed(true),
+                        )
+                        .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
                     }
 
                     if p.at(T![,]) {
@@ -1369,8 +1465,8 @@ pub fn parse_template_literal(p: &mut Parser, tag: ParsedSyntax) -> CompletedMar
             DOLLAR_CURLY => {
                 let e = p.start();
                 p.bump_any();
-                                parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
-                                p.expect(T!['}']);
+				parse_expression(p, ExpressionContext::default()).or_add_diagnostic(p, js_parse_error::expected_expression);
+				p.expect(T!['}']);
                 e.complete(p, TEMPLATE_ELEMENT);
             }
             t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
@@ -1392,9 +1488,9 @@ struct ArrayElementsList;
 impl ParseSeparatedList for ArrayElementsList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
         match p.cur() {
-            T![...] => parse_spread_element(p),
+            T![...] => parse_spread_element(p, ExpressionContext::default()),
             T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
-            _ => parse_expr_or_assignment(p),
+            _ => parse_expr_or_assignment(p, ExpressionContext::default()),
         }
     }
 
@@ -1437,7 +1533,11 @@ fn parse_array_expr(p: &mut Parser) -> ParsedSyntax {
     }
     let m = p.start();
     p.bump(T!['[']);
+
+    // test array_element_in_expr
+    // for(["a" in {}];;) {}
     ArrayElementsList.parse_list(p);
+
     p.expect(T![']']);
     Present(m.complete(p, JS_ARRAY_EXPRESSION))
 }
@@ -1445,19 +1545,19 @@ fn parse_array_expr(p: &mut Parser) -> ParsedSyntax {
 // test_err spread
 // [...]
 /// A spread element consisting of three dots and an assignment expression such as `...foo`
-fn parse_spread_element(p: &mut Parser) -> ParsedSyntax {
+fn parse_spread_element(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     if !p.at(T![...]) {
         return Absent;
     }
     let m = p.start();
     p.bump(T![...]);
-    parse_expr_or_assignment(p)
+    parse_expr_or_assignment(p, context)
         .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
     Present(m.complete(p, JS_SPREAD))
 }
 
 /// A left hand side expression, either a member expression or a call expression such as `foo()`.
-pub(super) fn parse_lhs_expr(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_lhs_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     let lhs = if p.at(T![super]) && p.nth_at(1, T!['(']) {
         let super_syntax = parse_super_expression(p);
         if let Present(mut super_marker) = super_syntax {
@@ -1474,7 +1574,7 @@ pub(super) fn parse_lhs_expr(p: &mut Parser) -> ParsedSyntax {
 
         super_syntax
     } else {
-        parse_member_or_new_expr(p, true)
+        parse_member_or_new_expr(p, true, context)
     };
 
     if lhs.kind() == Some(JS_ARROW_FUNCTION_EXPRESSION) {
@@ -1501,9 +1601,9 @@ pub(super) fn parse_lhs_expr(p: &mut Parser) -> ParsedSyntax {
 
         if p.at(T!['(']) || type_args.is_some() {
             // it's safe to unwrap
-            parse_arguments(p).unwrap();
+            parse_arguments(p, context).unwrap();
             let lhs = m.complete(p, JS_CALL_EXPRESSION);
-            return subscripts(p, lhs, false);
+            return subscripts(p, lhs, false, context);
         }
 
         m.abandon(p);
@@ -1515,9 +1615,9 @@ pub(super) fn parse_lhs_expr(p: &mut Parser) -> ParsedSyntax {
 // test postfix_expr
 // foo++
 // foo--
-fn parse_postfix_expr(p: &mut Parser) -> ParsedSyntax {
+fn parse_postfix_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     let checkpoint = p.checkpoint();
-    let lhs = parse_lhs_expr(p);
+    let lhs = parse_lhs_expr(p, context);
     lhs.map(|marker| {
         if !p.has_linebreak_before_n(0) {
             // test post_update_expr
@@ -1545,7 +1645,7 @@ fn parse_postfix_expr(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// A unary expression such as `!foo` or `++bar`
-pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     const UNARY_SINGLE: TokenSet =
         token_set![T![delete], T![void], T![typeof], T![+], T![-], T![~], T![!]];
 
@@ -1566,7 +1666,8 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
         // await test();
         let m = p.start();
         p.bump(T![await]);
-        parse_unary_expr(p).or_add_diagnostic(p, js_parse_error::expected_unary_expression);
+        parse_unary_expr(p, context)
+            .or_add_diagnostic(p, js_parse_error::expected_unary_expression);
 
         let mut expr = m.complete(p, JS_AWAIT_EXPRESSION);
 
@@ -1597,14 +1698,16 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
         p.bump_any();
         return if p.eat(T![const]) {
             p.expect(T![>]);
-            parse_unary_expr(p).or_add_diagnostic(p, js_parse_error::expected_unary_expression);
+            parse_unary_expr(p, context)
+                .or_add_diagnostic(p, js_parse_error::expected_unary_expression);
             let mut res = m.complete(p, TS_CONST_ASSERTION);
             res.err_if_not_ts(p, "const assertions can only be used in TypeScript files");
             Present(res)
         } else {
             ts_type(p);
             p.expect(T![>]);
-            parse_unary_expr(p).or_add_diagnostic(p, js_parse_error::expected_unary_expression);
+            parse_unary_expr(p, context)
+                .or_add_diagnostic(p, js_parse_error::expected_unary_expression);
             let mut res = m.complete(p, TS_ASSERTION);
             res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
             Present(res)
@@ -1617,7 +1720,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
     if p.at(T![++]) {
         let m = p.start();
         p.bump(T![++]);
-        parse_assignment(p, AssignmentExprPrecedence::Unary)
+        parse_assignment(p, AssignmentExprPrecedence::Unary, context)
             .or_add_diagnostic(p, expected_simple_assignment_target);
         let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
         return Present(complete);
@@ -1625,7 +1728,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
     if p.at(T![--]) {
         let m = p.start();
         p.bump(T![--]);
-        parse_assignment(p, AssignmentExprPrecedence::Unary)
+        parse_assignment(p, AssignmentExprPrecedence::Unary, context)
             .or_add_diagnostic(p, expected_simple_assignment_target);
         let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
         return Present(complete);
@@ -1651,7 +1754,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
         let op = p.cur();
         p.bump_any();
 
-        let res = parse_unary_expr(p).ok();
+        let res = parse_unary_expr(p, context).ok();
 
         if op == T![delete] && p.typescript() {
             if let Some(res) = res {
@@ -1672,7 +1775,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
         return Present(m.complete(p, JS_UNARY_EXPRESSION));
     }
 
-    parse_postfix_expr(p)
+    parse_postfix_expr(p, context)
 }
 
 pub(super) fn is_at_name(p: &Parser) -> bool {

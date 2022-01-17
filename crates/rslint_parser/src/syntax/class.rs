@@ -4,7 +4,7 @@ use crate::state::{
     EnterParameters, SignatureFlags,
 };
 use crate::syntax::binding::parse_binding;
-use crate::syntax::expr::parse_expr_or_assignment;
+use crate::syntax::expr::{parse_expr_or_assignment, ExpressionContext};
 use crate::syntax::function::{
     parse_function_body, parse_parameter, parse_parameter_list, parse_parameters_list,
     parse_ts_type_annotation_or_error, ts_parameter_types,
@@ -622,16 +622,14 @@ fn parse_class_member_impl(
                         member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
                     } else {
                         let has_l_paren = p.expect(T!['(']);
-                        p.with_state(
-                            EnterParameters {
-                                signature_flags: SignatureFlags::empty(),
-                                allow_object_expressions: has_l_paren,
-                            },
-                            |p| {
-                                parse_parameter(p)
-                                    .or_add_diagnostic(p, js_parse_error::expected_parameter);
-                            },
-                        );
+                        p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
+                            parse_parameter(
+                                p,
+                                ExpressionContext::default()
+                                    .with_object_expression_allowed(has_l_paren),
+                            )
+                        })
+                        .or_add_diagnostic(p, js_parse_error::expected_parameter);
                         p.expect(T![')']);
                         parse_function_body(p, SignatureFlags::empty())
                             .or_add_diagnostic(p, js_parse_error::expected_class_method_body);
@@ -790,8 +788,10 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Pa
     //   }
     // }
 
-    p.with_state(EnterClassPropertyInitializer, parse_initializer_clause)
-        .ok();
+    p.with_state(EnterClassPropertyInitializer, |p| {
+        parse_initializer_clause(p, ExpressionContext::default())
+    })
+    .ok();
 
     if !optional_semi(p) {
         // Gets the start of the member
@@ -840,12 +840,12 @@ fn optional_member_token(p: &mut Parser) -> Result<Option<Range<usize>>, ()> {
 
 // test_err class_property_initializer
 // class B { lorem = ; }
-pub(crate) fn parse_initializer_clause(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_initializer_clause(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     if p.at(T![=]) {
         let m = p.start();
         p.bump(T![=]);
 
-        parse_expr_or_assignment(p)
+        parse_expr_or_assignment(p, context)
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
         Present(m.complete(p, JS_INITIALIZER_CLAUSE))
@@ -974,13 +974,15 @@ fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax {
             }
         }
 
-        if let Some(parameter) = parse_parameter(p).or_add_diagnostic(p, expected_binding) {
+        if let Some(parameter) =
+            parse_parameter(p, ExpressionContext::default()).or_add_diagnostic(p, expected_binding)
+        {
             parameter.undo_completion(p).abandon(p);
         }
 
         Present(ts_param.complete(p, TS_CONSTRUCTOR_PARAM))
     } else {
-        parse_parameter(p)
+        parse_parameter(p, ExpressionContext::default())
     }
 }
 

@@ -1,7 +1,9 @@
 use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::{is_at_identifier, parse_conditional_expr, parse_unary_expr};
+use crate::syntax::expr::{
+    is_at_identifier, parse_conditional_expr, parse_unary_expr, ExpressionContext,
+};
 use crate::syntax::js_parse_error::{
     expected_assignment_target, expected_identifier, expected_object_member_name,
 };
@@ -66,12 +68,9 @@ pub(crate) fn expression_to_assignment_pattern(
 //     setValue = val;
 //   }
 // }.y = 42 } = { x: 23 });
-pub(crate) fn parse_assignment_pattern(
-    p: &mut Parser,
-    expression_kind: AssignmentExprPrecedence,
-) -> ParsedSyntax {
+pub(crate) fn parse_assignment_pattern(p: &mut Parser) -> ParsedSyntax {
     let checkpoint = p.checkpoint();
-    let assignment_expression = expression_kind.parse_expression(p);
+    let assignment_expression = parse_conditional_expr(p, ExpressionContext::default());
 
     assignment_expression
         .map(|expression| expression_to_assignment_pattern(p, expression, checkpoint))
@@ -99,10 +98,10 @@ pub(crate) enum AssignmentExprPrecedence {
 }
 
 impl AssignmentExprPrecedence {
-    fn parse_expression(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_expression(&self, p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
         match self {
-            AssignmentExprPrecedence::Unary => parse_unary_expr(p),
-            AssignmentExprPrecedence::Conditional => parse_conditional_expr(p),
+            AssignmentExprPrecedence::Unary => parse_unary_expr(p, context),
+            AssignmentExprPrecedence::Conditional => parse_conditional_expr(p, context),
         }
     }
 }
@@ -110,9 +109,10 @@ impl AssignmentExprPrecedence {
 pub(crate) fn parse_assignment(
     p: &mut Parser,
     expr_kind: AssignmentExprPrecedence,
+    context: ExpressionContext,
 ) -> ParsedSyntax {
     let checkpoint = p.checkpoint();
-    let assignment_expression = expr_kind.parse_expression(p);
+    let assignment_expression = expr_kind.parse_expression(p, context);
 
     assignment_expression.map(|expr| expression_to_assignment(p, expr, checkpoint))
 }
@@ -132,7 +132,7 @@ impl ParseWithDefaultPattern for AssignmentPatternWithDefault {
 
     #[inline]
     fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
-        parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
+        parse_assignment_pattern(p)
     }
 }
 
@@ -240,21 +240,24 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
         let m = p.start();
 
         let kind = if (is_at_identifier(p) || p.at(T![=])) && !p.nth_at(1, T![:]) {
-            parse_assignment(p, AssignmentExprPrecedence::Conditional)
-                .or_add_diagnostic(p, expected_identifier);
+            parse_assignment(
+                p,
+                AssignmentExprPrecedence::Conditional,
+                ExpressionContext::default(),
+            )
+            .or_add_diagnostic(p, expected_identifier);
             JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY
         } else if is_at_object_member_name(p) || p.at(T![:]) || p.nth_at(1, T![:]) {
             parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
             p.expect(T![:]);
-            parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
-                .or_add_diagnostic(p, expected_assignment_target);
+            parse_assignment_pattern(p).or_add_diagnostic(p, expected_assignment_target);
             JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
         } else {
             m.abandon(p);
             return Absent;
         };
 
-        parse_initializer_clause(p).ok();
+        parse_initializer_clause(p, ExpressionContext::default()).ok();
 
         Present(m.complete(p, kind))
     }
@@ -281,8 +284,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
         let m = p.start();
         p.bump(T![...]);
 
-        let target = parse_assignment_pattern(p, AssignmentExprPrecedence::Conditional)
-            .or_add_diagnostic(p, expected_assignment_target);
+        let target = parse_assignment_pattern(p).or_add_diagnostic(p, expected_assignment_target);
 
         if let Some(mut target) = target {
             if matches!(

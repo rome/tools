@@ -55,9 +55,7 @@ impl Default for ParserState {
 impl ParserState {
     pub fn new(syntax: Syntax) -> Self {
         let mut state = ParserState {
-            parsing_context: ParsingContextFlags::ALLOW_OBJECT_EXPRESSION
-                | ParsingContextFlags::INCLUDE_IN
-                | ParsingContextFlags::TOP_LEVEL,
+            parsing_context: ParsingContextFlags::TOP_LEVEL,
             label_set: IndexMap::new(),
             strict: if syntax.file_kind == FileKind::Module {
                 Some(StrictMode::Module)
@@ -108,26 +106,6 @@ impl ParserState {
     pub fn break_allowed(&self) -> bool {
         self.parsing_context
             .contains(ParsingContextFlags::BREAK_ALLOWED)
-    }
-
-    pub fn include_in(&self) -> bool {
-        self.parsing_context
-            .contains(ParsingContextFlags::INCLUDE_IN)
-    }
-
-    pub fn in_condition_expression(&self) -> bool {
-        self.parsing_context
-            .contains(ParsingContextFlags::IN_CONDITION_EXPRESSION)
-    }
-
-    pub fn potential_arrow_start(&self) -> bool {
-        self.parsing_context
-            .contains(ParsingContextFlags::POTENTIAL_ARROW_START)
-    }
-
-    pub fn allow_object_expression(&self) -> bool {
-        self.parsing_context
-            .contains(ParsingContextFlags::ALLOW_OBJECT_EXPRESSION)
     }
 
     pub fn strict(&self) -> Option<&StrictMode> {
@@ -302,55 +280,6 @@ pub(crate) trait ChangeParserState {
     fn restore(state: &mut ParserState, value: Self::Snapshot);
 }
 
-/// Macro for creating a [ChangeParserState] that changes the value of a single [ParserState] field.
-/// * `$name`: The name of the [ChangeParserState] implementation
-/// * `$field`: The [ParserState] field's name that the implementation *changes*
-/// * `$type`: The [ParserState] field's type
-/// * `snapshot`: The name of the snapshot struct
-macro_rules! gen_change_parser_state {
-    ($name:ident, $flag:expr) => {
-        /// Changes the [ParserState] `$field` field
-        #[derive(Debug)]
-        pub(crate) struct $name(pub(crate) bool);
-
-        impl ChangeParserState for $name {
-            type Snapshot = ParsingContextFlagsSnapshot;
-
-            #[inline]
-            fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-                let new_flags = if self.0 {
-                    state.parsing_context | $flag
-                } else {
-                    state.parsing_context - $flag
-                };
-                ParsingContextFlagsSnapshot(std::mem::replace(
-                    &mut state.parsing_context,
-                    new_flags,
-                ))
-            }
-
-            #[inline]
-            fn restore(state: &mut ParserState, value: Self::Snapshot) {
-                state.parsing_context = value.0
-            }
-        }
-    };
-}
-
-gen_change_parser_state!(IncludeIn, ParsingContextFlags::INCLUDE_IN);
-gen_change_parser_state!(
-    InConditionExpression,
-    ParsingContextFlags::IN_CONDITION_EXPRESSION
-);
-gen_change_parser_state!(
-    AllowObjectExpression,
-    ParsingContextFlags::ALLOW_OBJECT_EXPRESSION
-);
-gen_change_parser_state!(
-    PotentialArrowStart,
-    ParsingContextFlags::POTENTIAL_ARROW_START
-);
-
 #[derive(Default, Debug)]
 pub struct EnableStrictModeSnapshot(Option<StrictMode>);
 
@@ -428,27 +357,12 @@ bitflags! {
         /// Whether the parser is parsing a top-level statement (not inside a class, function, parameter) or not
         const TOP_LEVEL = 1 << 5;
 
-        /// Whether `in` should be counted in a binary expression
-        /// this is for `for...in` statements to prevent ambiguity.
-        const INCLUDE_IN = 1 << 6;
-        /// Whether the parser is in a conditional expr (ternary expr)
-        const IN_CONDITION_EXPRESSION = 1 << 7;
-
         /// Whether the parser is in an iteration or switch statement and
         /// `break` is allowed.
-        const BREAK_ALLOWED = 1 << 8;
+        const BREAK_ALLOWED = 1 << 6;
 
         /// Whether the parser is in an iteration statement and `continue` is allowed.
-        const CONTINUE_ALLOWED = 1 << 9;
-
-        /// If false, object expressions are not allowed to be parsed
-        /// inside an expression.
-        ///
-        /// Also applies for object patterns
-        const ALLOW_OBJECT_EXPRESSION = 1 << 10;
-
-        /// Whether we potentially are in a place to parse an arrow expression
-        const POTENTIAL_ARROW_START = 1 << 11;
+        const CONTINUE_ALLOWED = 1 << 7;
 
         const LOOP = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits;
 
@@ -464,26 +378,17 @@ bitflags! {
 pub(crate) struct ParsingContextFlagsSnapshot(ParsingContextFlags);
 
 /// Enters the parsing of function/method parameters
-pub(crate) struct EnterParameters {
+pub(crate) struct EnterParameters(
     /// Whether async and yield are reserved keywords
-    pub(crate) signature_flags: SignatureFlags,
-
-    /// Whether an object expression is valid
-    pub(crate) allow_object_expressions: bool,
-}
+    pub(crate) SignatureFlags,
+);
 
 impl ChangeParserState for EnterParameters {
     type Snapshot = ParsingContextFlagsSnapshot;
 
     fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-        let mut flags = (state.parsing_context - ParsingContextFlags::PARAMETER_RESET_MASK)
-            | ParsingContextFlags::from(self.signature_flags);
-
-        if self.allow_object_expressions {
-            flags |= ParsingContextFlags::ALLOW_OBJECT_EXPRESSION
-        } else {
-            flags -= ParsingContextFlags::ALLOW_OBJECT_EXPRESSION;
-        }
+        let flags = (state.parsing_context - ParsingContextFlags::PARAMETER_RESET_MASK)
+            | ParsingContextFlags::from(self.0);
 
         ParsingContextFlagsSnapshot(std::mem::replace(&mut state.parsing_context, flags))
     }

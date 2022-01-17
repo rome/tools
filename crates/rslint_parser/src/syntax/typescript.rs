@@ -6,7 +6,7 @@ use crate::parser::ParserProgress;
 use crate::parser::SingleTokenParseRecovery;
 use crate::state::SignatureFlags;
 use crate::syntax::binding::parse_binding;
-use crate::syntax::expr::{is_at_name, parse_any_name};
+use crate::syntax::expr::{is_at_name, parse_any_name, ExpressionContext};
 use crate::syntax::function::parse_parameter_list;
 use crate::syntax::js_parse_error;
 use crate::{JsSyntaxKind::*, *};
@@ -109,7 +109,8 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
     let mut elems = Vec::with_capacity(1);
     let m = p.start();
     if exprs {
-        parse_lhs_expr(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+        parse_lhs_expr(p, ExpressionContext::default())
+            .or_add_diagnostic(p, js_parse_error::expected_expression);
     } else {
         ts_entity_name(p, None, false);
     }
@@ -128,7 +129,8 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
         progress.assert_progressing(p);
         let m = p.start();
         if exprs {
-            parse_lhs_expr(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+            parse_lhs_expr(p, ExpressionContext::default())
+                .or_add_diagnostic(p, js_parse_error::expected_expression);
         } else {
             ts_entity_name(p, None, false);
         }
@@ -166,7 +168,7 @@ pub fn ts_type_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Option<CompletedMarker> {
     if p.eat(T!['[']) {
-        parse_expr_or_assignment(p)
+        parse_expr_or_assignment(p, ExpressionContext::default())
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
         p.expect_no_recover(T![']'])?;
     } else {
@@ -337,7 +339,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
         };
 
         if p.eat(T![=]) {
-            parse_expr_or_assignment(p)
+            parse_expr_or_assignment(p, ExpressionContext::default())
                 .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
             member.complete(p, TS_ENUM_MEMBER);
         } else if err_occured {

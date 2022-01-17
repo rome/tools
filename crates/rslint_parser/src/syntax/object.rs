@@ -2,10 +2,10 @@
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
-use crate::state::{EnterParameters, IncludeIn, SignatureFlags};
+use crate::state::{EnterParameters, SignatureFlags};
 use crate::syntax::expr::{
     is_nth_at_reference_identifier, parse_expr_or_assignment, parse_expression,
-    parse_reference_identifier,
+    parse_reference_identifier, ExpressionContext,
 };
 use crate::syntax::function::{
     parse_function_body, parse_parameter, parse_parameter_list, parse_ts_parameter_types,
@@ -141,7 +141,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
         T![...] => {
             let m = p.start();
             p.bump_any();
-            parse_expr_or_assignment(p)
+            parse_expr_or_assignment(p, ExpressionContext::default())
                 .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
             Present(m.complete(p, JS_SPREAD))
         }
@@ -175,7 +175,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
                     p.error(p.err_builder("Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.")
 						.primary(p.cur_tok().range(), ""));
                     p.bump(T![=]);
-                    p.with_state(IncludeIn(true), parse_expr_or_assignment).ok();
+                    parse_expr_or_assignment(p, ExpressionContext::default()).ok();
                     return Present(m.complete(p, JS_UNKNOWN_MEMBER));
                 }
 
@@ -208,7 +208,10 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 
                 // If the member name was a literal OR we're at a colon
                 p.expect(T![:]);
-                parse_expr_or_assignment(p)
+
+                // test object_prop_in_rhs
+                // for ({ a: "x" in {} };;) {}
+                parse_expr_or_assignment(p, ExpressionContext::default())
                     .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
                 Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
             } else {
@@ -223,7 +226,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
                 SingleTokenParseRecovery::new(token_set![T![:], T![,]], JS_UNKNOWN).recover(p);
 
                 if p.eat(T![:]) {
-                    parse_expr_or_assignment(p)
+                    parse_expr_or_assignment(p, ExpressionContext::default())
                         .or_add_diagnostic(p, js_parse_error::expected_object_member);
                     Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
                 } else {
@@ -274,16 +277,14 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
     parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
     let has_l_paren = p.expect(T!['(']);
 
-    p.with_state(
-        EnterParameters {
-            signature_flags: SignatureFlags::empty(),
-            allow_object_expressions: has_l_paren,
-        },
-        |p| {
-            parse_parameter(p).or_add_diagnostic(p, js_parse_error::expected_parameter);
-            p.expect(T![')']);
-        },
-    );
+    p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
+        parse_parameter(
+            p,
+            ExpressionContext::default().with_object_expression_allowed(has_l_paren),
+        )
+        .or_add_diagnostic(p, js_parse_error::expected_parameter);
+        p.expect(T![')']);
+    });
 
     parse_function_body(p, SignatureFlags::empty())
         .or_add_diagnostic(p, js_parse_error::expected_function_body);
@@ -327,7 +328,12 @@ pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     p.expect(T!['[']);
-    parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+
+    // test computed_member_name_in
+    // for ({["x" in {}]: 3} ;;) {}
+    parse_expression(p, ExpressionContext::default())
+        .or_add_diagnostic(p, js_parse_error::expected_expression);
+
     p.expect(T![']']);
     Present(m.complete(p, JS_COMPUTED_MEMBER_NAME))
 }
