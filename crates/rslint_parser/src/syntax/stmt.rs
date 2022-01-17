@@ -1398,8 +1398,12 @@ fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
         p.bump_any();
     }
 
-    p.expect(T!['(']);
-    let kind = parse_for_head(p);
+    let kind = if p.expect(T!['(']) {
+        p.with_state(AllowObjectExpression(true), parse_for_head)
+    } else {
+        parse_for_head(p)
+    };
+
     p.expect(T![')']);
 
     p.with_state(EnterBreakable(BreakableKind::Iteration), |p| {

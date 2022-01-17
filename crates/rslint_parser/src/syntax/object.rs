@@ -2,7 +2,7 @@
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
-use crate::state::{EnterParameters, SignatureFlags};
+use crate::state::{EnterParameters, IncludeIn, SignatureFlags};
 use crate::syntax::expr::{
     is_nth_at_reference_identifier, parse_expr_or_assignment, parse_expression,
     parse_reference_identifier,
@@ -161,6 +161,24 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
                 // test object_expr_ident_prop
                 // ({foo})
                 parse_reference_identifier(p).unwrap();
+
+                // There are multiple places where it's first needed to parse an expression to determine if
+                // it is an assignment target or not. This requires that parse expression is valid for any
+                // assignment expression. Thus, it's needed that the parser silently parses over a "{ arrow = test }"
+                // property
+                if p.at(T![=]) {
+                    // test assignment_shorthand_prop_with_initializer
+                    // for ({ arrow = () => {} } of [{}]) {}
+                    //
+                    // test_err object_shorthand_with_initializer
+                    // ({ arrow = () => {} })
+                    p.error(p.err_builder("Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.")
+						.primary(p.cur_tok().range(), ""));
+                    p.bump(T![=]);
+                    p.with_state(IncludeIn(true), parse_expr_or_assignment).ok();
+                    return Present(m.complete(p, JS_UNKNOWN_MEMBER));
+                }
+
                 return Present(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER));
             }
 
