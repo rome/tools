@@ -9,8 +9,9 @@ use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::state::{
     AllowObjectExpression, BindingContext, BreakableKind, ChangeParserState, EnableStrictMode,
-    EnableStrictModeSnapshot, EnterBreakable, EnterScope, EnterVariableDeclaration, IncludeIn,
-    LabelledItem, LexicalType, NameType, StrictMode as StrictModeState,
+    EnableStrictModeSnapshot, EnterBreakable, EnterHoistedScope, EnterLexicalScope,
+    EnterVariableDeclaration, IncludeIn, LabelledItem, LexicalType, NameType,
+    StrictMode as StrictModeState,
 };
 use crate::syntax::assignment::expression_to_assignment_pattern;
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
@@ -602,9 +603,7 @@ fn parse_empty_statement(p: &mut Parser) -> ParsedSyntax {
 // let a; { let a; }
 /// A block statement consisting of statements wrapped in curly brackets.
 pub(crate) fn parse_block_stmt(p: &mut Parser) -> ParsedSyntax {
-    p.with_state(EnterScope(BindingContext::Block), |p| {
-        parse_block_impl(p, JS_BLOCK_STATEMENT)
-    })
+    parse_block_impl(p, JS_BLOCK_STATEMENT)
 }
 
 /// A block wrapped in curly brackets. Can either be a function body or a block statement.
@@ -613,6 +612,7 @@ pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> Pars
         return Absent;
     }
 
+    let p = &mut *p.with_scoped_state(EnterLexicalScope(BindingContext::Block));
     let m = p.start();
     p.bump(T!['{']);
 
@@ -1114,7 +1114,7 @@ fn parse_variable_declaration(
 
         let type_annotation = maybe_ts_type_annotation(p);
 
-        let initializer = p.with_state(EnterScope(BindingContext::Assignment), |p| {
+        let initializer = p.with_state(EnterLexicalScope(BindingContext::Assignment), |p| {
             parse_initializer_clause(p).ok()
         });
 
@@ -1257,7 +1257,7 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
         return JS_FOR_STATEMENT;
     }
 
-    let p = &mut *p.with_scoped_state(EnterScope(BindingContext::Lexical));
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Lexical));
 
     // `for (let...` | `for (const...` | `for (var...`
 
@@ -1465,7 +1465,7 @@ fn parse_switch_clause(
     first_default: &mut Option<CompletedMarker>,
 ) -> ParsedSyntax {
     let m = p.start();
-    let p = &mut *p.with_scoped_state(EnterScope(BindingContext::Block));
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Block));
     match p.cur() {
         T![default] => {
             // in case we have two `default` expression, we mark the second one

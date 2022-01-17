@@ -1,0 +1,77 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsImport {
+            import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
+            import_clause: JsImportDefaultClause {
+                local_name: JsIdentifierBinding {
+                    name_token: IDENT@7..9 "a" [] [Whitespace(" ")],
+                },
+                from_token: FROM_KW@9..14 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@14..17 "\"a\"" [] [],
+                },
+                assertion: missing (optional),
+            },
+            semicolon_token: SEMICOLON@17..19 ";" [] [Whitespace(" ")],
+        },
+        JsVariableStatement {
+            declarations: JsVariableDeclarations {
+                kind: VAR_KW@19..23 "var" [] [Whitespace(" ")],
+                items: JsVariableDeclarationList [
+                    JsVariableDeclaration {
+                        id: JsUnknownBinding {
+                            items: [
+                                IDENT@23..24 "a" [] [],
+                            ],
+                        },
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@24..25 ";" [] [],
+        },
+    ],
+    eof_token: EOF@25..26 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..26
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..25
+    0: JS_IMPORT@0..19
+      0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
+      1: JS_IMPORT_DEFAULT_CLAUSE@7..17
+        0: JS_IDENTIFIER_BINDING@7..9
+          0: IDENT@7..9 "a" [] [Whitespace(" ")]
+        1: FROM_KW@9..14 "from" [] [Whitespace(" ")]
+        2: JS_MODULE_SOURCE@14..17
+          0: JS_STRING_LITERAL@14..17 "\"a\"" [] []
+        3: (empty)
+      2: SEMICOLON@17..19 ";" [] [Whitespace(" ")]
+    1: JS_VARIABLE_STATEMENT@19..25
+      0: JS_VARIABLE_DECLARATIONS@19..24
+        0: VAR_KW@19..23 "var" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION_LIST@23..24
+          0: JS_VARIABLE_DECLARATION@23..24
+            0: JS_UNKNOWN_BINDING@23..24
+              0: IDENT@23..24 "a" [] []
+            1: (empty)
+            2: (empty)
+            3: (empty)
+      1: SEMICOLON@24..25 ";" [] []
+  3: EOF@25..26 "" [Newline("\n")] []
+--
+error[SyntaxError]: The binding "a" has been already declared
+  ┌─ import_redeclaration.js:1:8
+  │
+1 │ import a from "a"; var a;
+  │        ^               - Second declaration here
+  │        │                
+  │        First declaration here
+
+--
+import a from "a"; var a;

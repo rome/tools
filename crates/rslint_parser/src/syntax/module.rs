@@ -1,5 +1,5 @@
 use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
-use crate::state::{BindingContext, EnterScope};
+use crate::state::{EnterVariableDeclaration, NameType};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::class::{parse_export_class_clause, parse_export_default_class_case};
 use crate::syntax::expr::{
@@ -86,6 +86,9 @@ fn parse_module_item(p: &mut Parser) -> ParsedSyntax {
 // import { as x } from "c";
 // import 4 from "c";
 // import y from 4;
+//
+// test_err import_redeclaration
+// import a from "a"; var a;
 pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![import]) {
         return Absent;
@@ -95,8 +98,7 @@ pub(crate) fn parse_import(p: &mut Parser) -> ParsedSyntax {
     let import = p.start();
     p.bump_any();
 
-    // p.state.binding_context = Some("import");
-    p.with_state(EnterScope(BindingContext::Module), |p| {
+    p.with_state(EnterVariableDeclaration(NameType::Module), |p| {
         parse_import_clause(p).or_add_diagnostic(p, |p, range| {
             expected_any(
                 &["default import", "namespace import", "named import"],
