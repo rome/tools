@@ -157,16 +157,19 @@ pub trait RewriteParseEvents {
     }
 }
 
-/// Allows to rewrite the parse events by visiting each event emitted after the checkpoint.
+/// Allows rewriting a super grammar to a sub grammar by visiting each event emitted after the checkpoint.
 /// Useful if a node turned out to be of a different kind its subtree must be re-shaped
-/// (adding new nodes, dropping sub nodes, etc).
+/// (adding new nodes, dropping sub nodes, etc.).
 pub fn rewrite_events<T: RewriteParseEvents>(
     rewriter: &mut T,
     checkpoint: Checkpoint,
     p: &mut Parser,
 ) {
+    // Only rewind the events and token position but do not reset the parser errors nor parser state.
+    // The current parsed grammar is a super-set of the grammar that gets re-parsed. Thus, any
+    // error that applied to the old grammar also applies to the sub-grammar.
     let events: Vec<_> = p.events.split_off(checkpoint.event_pos + 1);
-    p.rewind(checkpoint);
+    p.tokens.rewind(checkpoint.token_pos);
 
     let mut sink = RewriteParseEventsTreeSink {
         parser: p,

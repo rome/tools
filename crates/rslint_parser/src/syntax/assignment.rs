@@ -1,9 +1,7 @@
 use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::{
-    is_at_identifier, parse_conditional_expr, parse_expression, parse_unary_expr,
-};
+use crate::syntax::expr::{is_at_identifier, parse_conditional_expr, parse_unary_expr};
 use crate::syntax::js_parse_error::{
     expected_assignment_target, expected_identifier, expected_object_member_name,
 };
@@ -37,18 +35,17 @@ pub(crate) fn expression_to_assignment_pattern(
     p: &mut Parser,
     target: CompletedMarker,
     checkpoint: Checkpoint,
-    expr_kind: AssignmentExprPrecedence,
 ) -> CompletedMarker {
-    if let Ok(assignment_target) = try_expression_to_assignment(p, target, checkpoint) {
-        return assignment_target;
-    }
-
-    let expression_end = p.token_pos();
-    p.rewind(checkpoint);
-
-    match parse_assignment_pattern(p, expr_kind) {
-        Present(target) => target,
-        Absent => wrap_expression_in_invalid_assignment(p, expression_end),
+    match target.kind() {
+        JS_OBJECT_EXPRESSION => {
+            p.rewind(checkpoint);
+            ObjectAssignmentPattern.parse_object_pattern(p).unwrap()
+        }
+        JS_ARRAY_EXPRESSION => {
+            p.rewind(checkpoint);
+            ArrayAssignmentPattern.parse_array_pattern(p).unwrap()
+        }
+        _ => expression_to_assignment(p, target, checkpoint),
     }
 }
 
@@ -76,17 +73,8 @@ pub(crate) fn parse_assignment_pattern(
     let checkpoint = p.checkpoint();
     let assignment_expression = expression_kind.parse_expression(p);
 
-    assignment_expression.and_then(|expr| match expr.kind() {
-        JS_OBJECT_EXPRESSION => {
-            p.rewind(checkpoint);
-            ObjectAssignmentPattern.parse_object_pattern(p)
-        }
-        JS_ARRAY_EXPRESSION => {
-            p.rewind(checkpoint);
-            ArrayAssignmentPattern.parse_array_pattern(p)
-        }
-        _ => Present(expression_to_assignment(p, expr, checkpoint)),
-    })
+    assignment_expression
+        .map(|expression| expression_to_assignment_pattern(p, expression, checkpoint))
 }
 
 /// Re-parses an expression as an assignment.
@@ -108,7 +96,6 @@ pub(crate) fn expression_to_assignment(
 pub(crate) enum AssignmentExprPrecedence {
     Unary,
     Conditional,
-    Any,
 }
 
 impl AssignmentExprPrecedence {
@@ -116,7 +103,6 @@ impl AssignmentExprPrecedence {
         match self {
             AssignmentExprPrecedence::Unary => parse_unary_expr(p),
             AssignmentExprPrecedence::Conditional => parse_conditional_expr(p),
-            AssignmentExprPrecedence::Any => parse_expression(p),
         }
     }
 }

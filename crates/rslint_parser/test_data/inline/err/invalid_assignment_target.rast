@@ -261,6 +261,13 @@ error[SyntaxError]: Invalid assignment to `a?.["b"]`
   │ ^^^^^^^^ This expression cannot be assigned to
 
 --
+error[SyntaxError]: expected an expression but instead found ')'
+  ┌─ invalid_assignment_target.js:6:5
+  │
+6 │ (a +) = b;
+  │     ^ Expected an expression here
+
+--
 error[SyntaxError]: Invalid assignment to `a +`
   ┌─ invalid_assignment_target.js:6:2
   │

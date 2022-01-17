@@ -217,13 +217,7 @@ fn parse_assign_expr_recursive(
     checkpoint: Checkpoint,
 ) -> ParsedSyntax {
     if p.at_ts(ASSIGN_TOKENS) {
-        let target = expression_to_assignment_pattern(
-            p,
-            target,
-            checkpoint,
-            AssignmentExprPrecedence::Conditional,
-        );
-
+        let target = expression_to_assignment_pattern(p, target, checkpoint);
         let m = target.precede(p);
         p.bump_any(); // operator
         parse_expr_or_assignment(p)

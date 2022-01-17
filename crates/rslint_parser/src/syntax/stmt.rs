@@ -12,7 +12,7 @@ use crate::state::{
     EnableStrictModeSnapshot, EnterBreakable, IncludeIn, LabelledItem,
     StrictMode as StrictModeState,
 };
-use crate::syntax::assignment::{expression_to_assignment_pattern, AssignmentExprPrecedence};
+use crate::syntax::assignment::expression_to_assignment_pattern;
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
 use crate::syntax::expr::{
     is_at_expression, is_at_identifier, is_nth_at_name, parse_expr_or_assignment,
@@ -1304,12 +1304,8 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
         if p.at(T![in]) || p.cur_src() == "of" {
             // for (assignment_pattern in ...
             if let Present(assignment_expr) = init_expr {
-                let mut assignment = expression_to_assignment_pattern(
-                    p,
-                    assignment_expr,
-                    checkpoint,
-                    AssignmentExprPrecedence::Any,
-                );
+                let mut assignment =
+                    expression_to_assignment_pattern(p, assignment_expr, checkpoint);
 
                 if p.typescript()
                     && p.at(T![in])

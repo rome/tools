@@ -327,6 +327,13 @@ error[SyntaxError]: expected an identifier, or an assignment target but instead 
   │        ^ Expected an identifier, or an assignment target here
 
 --
+error[SyntaxError]: expected `,` but instead found `b`
+  ┌─ array_assignment_target_err.js:4:5
+  │
+4 │ [[a b] [c]]= test;
+  │     ^ unexpected
+
+--
 error[SyntaxError]: expected `,` but instead found `:`
   ┌─ array_assignment_target_err.js:5:3
   │
