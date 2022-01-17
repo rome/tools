@@ -78,7 +78,7 @@ impl ParserProgress {
 /// };
 /// use rslint_parser::ast::JsExpressionSnipped;
 ///
-/// let source = "(delete b)";
+/// let source = "(void b)";
 ///
 /// // File id is used for the labels inside parser errors to report them, the file id
 /// // is used to look up a file's source code and path inside of a codespan `Files` implementation.
@@ -120,7 +120,7 @@ impl ParserProgress {
 ///
 /// match expression {
 ///   JsAnyExpression::JsParenthesizedExpression(parenthesized) => { ///
-///     assert_eq!(parenthesized.expression().unwrap().syntax().text(), "delete b");
+///     assert_eq!(parenthesized.expression().unwrap().syntax().text(), "void b");
 ///   },
 ///   _ => panic!("Expected parenthesized expression")
 /// }
