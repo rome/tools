@@ -23,14 +23,17 @@ impl ToFormatElement for JsAnyClass {
             id,
             extends,
             space_token(),
-            group_elements(format_elements![
-                formatter.format_token(&self.l_curly_token()?)?,
-                block_indent(join_elements(
-                    hard_line_break(),
-                    formatter.format_nodes(self.members())?
-                )),
-                formatter.format_token(&self.r_curly_token()?)?
-            ])
+            group_elements(formatter.format_delimited(
+                &self.l_curly_token()?,
+                |leading, trailing| {
+                    Ok(block_indent(format_elements![
+                        leading,
+                        join_elements(hard_line_break(), formatter.format_nodes(self.members())?),
+                        trailing,
+                    ]))
+                },
+                &self.r_curly_token()?
+            )?)
         ])
     }
 }

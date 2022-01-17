@@ -18,11 +18,11 @@ const foo = class extends (Bar ?? Baz) {}
 
 ---
 # Output
-(foo++)();
+(foo++)?.();
 async () => {
-	(await foo)();
+	(await foo)?.();
 };
-(+foo)();
+(+foo)?.();
 +(+foo);
 class Foo extends (+Bar) {}
 class Foo extends (Bar ?? Baz) {}

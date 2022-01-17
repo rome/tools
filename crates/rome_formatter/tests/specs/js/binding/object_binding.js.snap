@@ -19,5 +19,5 @@ let {
 	bbbbbbbbbbbbbbbbbbbb = cccccccccccccccccccc,
 	dddddddddddddddddddd: eeeeeeeeeeeeeeeeeeee = ffffffffffffffffffff,
 	...gggggggggggggggggggg,
- } = h;
+} = h;
 

@@ -53,7 +53,7 @@ a[b] = c[d];
 [
 	fooooooooooooooooooooooooooooooooooooooooooooooooo,
 	barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr,
-	bazzzzzzzzzzzzzzzzzzzzzzzzzz
+	bazzzzzzzzzzzzzzzzzzzzzzzzzz,
 ] = d;
 ({ a, b = c, d: e, f: g = h, ...j } = x);
 ({
@@ -61,6 +61,6 @@ a[b] = c[d];
 	bbbbbbbbbb = cccccccccc,
 	dddddddddd: eeeeeeeeee,
 	ffffffffff: gggggggggg = hhhhhhhhhh,
-	...jjjjjjjjjj
- } = x);
+	...jjjjjjjjjj,
+} = x);
 

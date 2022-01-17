@@ -23,6 +23,8 @@ impl ToFormatElement for JsScript {
 
         elements.push(format_statements(self.statements(), formatter));
 
+        elements.push(formatter.format_token(&self.eof_token()?)?);
+
         Ok(format_elements![
             concat_elements(elements),
             hard_line_break()

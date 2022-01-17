@@ -1,3 +1,5 @@
+use std::iter::once;
+
 use crate::format_element::{ConditionalGroupContent, Group, GroupPrintMode, LineMode};
 use crate::{FormatElement, FormatOptions, Formatted, IndentStyle};
 
@@ -81,12 +83,12 @@ struct LineBreakRequiredError;
 
 /// Prints the format elements into a string
 #[derive(Debug, Clone, Default)]
-pub struct Printer {
+pub struct Printer<'a> {
     options: PrinterOptions,
-    state: PrinterState,
+    state: PrinterState<'a>,
 }
 
-impl Printer {
+impl<'a> Printer<'a> {
     pub fn new<T: Into<PrinterOptions>>(options: T) -> Self {
         Self {
             options: options.into(),
@@ -95,27 +97,33 @@ impl Printer {
     }
 
     /// Prints the passed in element as well as all its content
-    pub fn print(mut self, element: &FormatElement) -> Formatted {
+    pub fn print(mut self, element: &'a FormatElement) -> Formatted {
         let mut queue = ElementCallQueue::new();
 
         queue.enqueue(PrintElementCall::new(element, PrintElementArgs::default()));
 
         while let Some(print_element_call) = queue.dequeue() {
             queue.extend(self.print_element(print_element_call.element, print_element_call.args));
+
+            if queue.is_empty() && !self.state.line_suffixes.is_empty() {
+                queue.extend(self.state.line_suffixes.drain(..));
+            }
         }
 
-        Formatted::new(self.state.buffer.as_str())
+        Formatted::new(self.state.buffer)
     }
 
     /// Prints a single element and returns the elements to queue (that should be printed next).
-    fn print_element<'a>(
+    fn print_element(
         &mut self,
         element: &'a FormatElement,
         args: PrintElementArgs,
     ) -> Vec<PrintElementCall<'a>> {
         match element {
             FormatElement::Space => {
-                self.state.pending_spaces += 1;
+                if self.state.line_width > 0 {
+                    self.state.pending_space = true;
+                }
                 vec![]
             }
             FormatElement::Empty => vec![],
@@ -132,9 +140,9 @@ impl Printer {
                 }
 
                 // Print pending spaces
-                if self.state.pending_spaces > 0 {
-                    self.print_str(" ".repeat(self.state.pending_spaces as usize).as_str());
-                    self.state.pending_spaces = 0;
+                if self.state.pending_space {
+                    self.print_str(" ");
+                    self.state.pending_space = false;
                 }
 
                 self.print_str(token);
@@ -178,9 +186,28 @@ impl Printer {
             }
 
             FormatElement::Line { .. } => {
-                self.print_str("\n");
-                self.state.pending_spaces = 0;
-                self.state.pending_indent = args.indent;
+                if !self.state.line_suffixes.is_empty() {
+                    self.state
+                        .line_suffixes
+                        .drain(..)
+                        .chain(once(PrintElementCall::new(element, args)))
+                        .collect()
+                } else {
+                    // Only print a newline if the current line isn't already empty
+                    if self.state.line_width > 0 {
+                        self.print_str("\n");
+                    }
+
+                    self.state.pending_space = false;
+                    self.state.pending_indent = args.indent;
+                    vec![]
+                }
+            }
+
+            FormatElement::LineSuffix(suffix) => {
+                self.state
+                    .line_suffixes
+                    .push(PrintElementCall::new(&**suffix, args));
                 vec![]
             }
         }
@@ -191,7 +218,7 @@ impl Printer {
     /// or printing the group exceeds the configured maximal print width.
     fn try_print_flat(
         &mut self,
-        element: &FormatElement,
+        element: &'a FormatElement,
         args: PrintElementArgs,
     ) -> Result<(), LineBreakRequiredError> {
         let snapshot = self.state.snapshot();
@@ -212,7 +239,7 @@ impl Printer {
         Ok(())
     }
 
-    fn try_print_flat_element<'a>(
+    fn try_print_flat_element(
         &mut self,
         element: &'a FormatElement,
         args: PrintElementArgs,
@@ -239,7 +266,9 @@ impl Printer {
             FormatElement::Line(line) => {
                 match line.mode {
                     LineMode::SoftOrSpace => {
-                        self.state.pending_spaces += 1;
+                        if self.state.line_width > 0 {
+                            self.state.pending_space = true;
+                        }
                         vec![]
                     }
                     // We want a flat structure, so omit soft line wraps
@@ -263,6 +292,8 @@ impl Printer {
                 ..
             }) => vec![],
 
+            FormatElement::LineSuffix { .. } => return Err(LineBreakRequiredError),
+
             FormatElement::Empty
             | FormatElement::Space
             | FormatElement::Indent { .. }
@@ -278,7 +309,6 @@ impl Printer {
         for char in content.chars() {
             if char == '\n' {
                 for char in self.options.line_ending.as_str().chars() {
-                    self.state.generated_index += 1;
                     self.state.buffer.push(char);
                 }
 
@@ -287,7 +317,6 @@ impl Printer {
                 self.state.line_width = 0;
             } else {
                 self.state.buffer.push(char);
-                self.state.generated_index += 1;
                 self.state.generated_column += 1;
 
                 let char_width = if char == '\t' {
@@ -306,28 +335,23 @@ impl Printer {
 /// Stores the result of the print operation (buffer and mappings) and at what
 /// position the printer currently is.
 #[derive(Default, Debug, Clone)]
-struct PrinterState {
+struct PrinterState<'a> {
     buffer: String,
     pending_indent: u16,
-    pending_spaces: u16,
-    generated_index: usize,
+    pending_space: bool,
     generated_line: usize,
     generated_column: usize,
     line_width: usize,
     // mappings: Mapping[];
-    // We'll need to clone the line suffixes elements into the state.
-    // I guess that's fine. They're only used for comments and should, therefore, be very limited
-    // in size.
-    // lineSuffixes: [FormatElement, PrintElementArgs][];
+    line_suffixes: Vec<PrintElementCall<'a>>,
 }
 
-impl PrinterState {
+impl<'a> PrinterState<'a> {
     /// Allows creating a snapshot of the state that can be restored using [restore]
     pub fn snapshot(&self) -> PrinterStateSnapshot {
         PrinterStateSnapshot {
-            pending_spaces: self.pending_spaces,
+            pending_space: self.pending_space,
             pending_indents: self.pending_indent,
-            generated_index: self.generated_index,
             generated_line: self.generated_line,
             generated_column: self.generated_column,
             line_width: self.line_width,
@@ -337,9 +361,8 @@ impl PrinterState {
 
     /// Restores the printer state to the state stored in the snapshot.
     pub fn restore(&mut self, snapshot: PrinterStateSnapshot) {
-        self.pending_spaces = snapshot.pending_spaces;
+        self.pending_space = snapshot.pending_space;
         self.pending_indent = snapshot.pending_indents;
-        self.generated_index = snapshot.generated_index;
         self.generated_column = snapshot.generated_column;
         self.generated_line = snapshot.generated_line;
         self.line_width = snapshot.line_width;
@@ -350,8 +373,7 @@ impl PrinterState {
 /// Snapshot of a printer state.
 struct PrinterStateSnapshot {
     pending_indents: u16,
-    pending_spaces: u16,
-    generated_index: usize,
+    pending_space: bool,
     generated_column: usize,
     generated_line: usize,
     line_width: usize,
@@ -414,13 +436,14 @@ impl<'a> ElementCallQueue<'a> {
     }
 
     #[inline]
-    fn extend(&mut self, calls: Vec<PrintElementCall<'a>>) {
-        let mut calls = calls;
+    fn extend<T>(&mut self, calls: T)
+    where
+        T: IntoIterator<Item = PrintElementCall<'a>>,
+        T::IntoIter: DoubleEndedIterator,
+    {
         // Reverse the calls because elements are removed from the back of the vec
         // in reversed insertion order
-        calls.reverse();
-
-        self.0.extend(calls);
+        self.0.extend(calls.into_iter().rev());
     }
 
     #[inline]
@@ -431,6 +454,11 @@ impl<'a> ElementCallQueue<'a> {
     #[inline]
     pub fn dequeue(&mut self) -> Option<PrintElementCall<'a>> {
         self.0.pop()
+    }
+
+    #[inline]
+    fn is_empty(&self) -> bool {
+        self.0.is_empty()
     }
 }
 

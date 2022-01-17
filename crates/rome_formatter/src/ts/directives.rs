@@ -8,29 +8,28 @@ pub fn format_directives(directives: JsDirectiveList, formatter: &Formatter) -> 
     join_elements(
         hard_line_break(),
         directives.iter().map(|directive| {
-            formatter
-                .format_node(directive.clone())
-                .unwrap_or_else(|_| {
+            let snapshot = formatter.snapshot();
+            match formatter.format_node(directive.clone()) {
+                Ok(result) => result,
+                Err(_) => {
+                    formatter.restore(snapshot);
                     formatter
                         .format_raw(directive.syntax())
                         .trim_start()
                         .trim_end()
-                })
+                }
+            }
         }),
     )
 }
 
 impl ToFormatElement for JsDirective {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let semicolon = if let Some(token) = self.semicolon_token() {
-            formatter.format_token(&token)?
-        } else {
-            token(';')
-        };
-
         Ok(format_elements![
             formatter.format_token(&self.value_token()?)?,
-            semicolon,
+            formatter
+                .format_token(&self.semicolon_token())?
+                .unwrap_or_else(|| token(';')),
         ])
     }
 }

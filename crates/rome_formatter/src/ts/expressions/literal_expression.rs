@@ -5,18 +5,20 @@ use rslint_parser::ast::{
 };
 
 impl ToFormatElement for JsStringLiteralExpression {
-    fn to_format_element(&self, _: &Formatter) -> FormatResult<FormatElement> {
+    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let value_token = self.value_token()?;
         let quoted = value_token.text_trimmed();
 
         // uses single quotes
-        if quoted.starts_with('\'') {
+        let content = if quoted.starts_with('\'') {
             let s = &quoted[1..quoted.len() - 1];
             let s = format!("\"{}\"", s);
-            Ok(token(s))
+            token(s)
         } else {
-            Ok(token(quoted))
-        }
+            token(quoted)
+        };
+
+        formatter.format_replaced(&value_token, content)
     }
 }
 

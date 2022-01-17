@@ -155,6 +155,22 @@ pub fn token<S: Into<String>>(text: S) -> FormatElement {
     }
 }
 
+/// Push a [FormatElement] to the end of the current line
+///
+/// ## Examples
+///
+/// ```
+/// use rome_formatter::{FormatOptions, token, format_element, line_suffix, format_elements};
+///
+/// let elements = format_elements![token("a"), line_suffix(token("c")), token("b")];
+///
+/// assert_eq!("abc", format_element(&elements, FormatOptions::default()).code());
+/// ```
+#[inline]
+pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
+    FormatElement::LineSuffix(Box::new(element.into()))
+}
+
 /// Inserts a single space. Allows to separate different tokens.
 ///
 /// ## Examples
@@ -608,6 +624,8 @@ pub enum FormatElement {
 
     /// A token that should be printed as is, see [token] for documentation and examples.
     Token(Token),
+
+    LineSuffix(Box<FormatElement>),
 }
 
 /// Inserts a new line
@@ -766,6 +784,7 @@ impl FormatElement {
                 FormatElement::List(List::new(content))
             }
             FormatElement::Token(s) => token(s.trim_start()),
+            FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_start())),
         }
     }
 
@@ -810,6 +829,7 @@ impl FormatElement {
                 }
             }
             FormatElement::Token(s) => token(s.trim_end()),
+            FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_end())),
         }
     }
 }
@@ -841,6 +861,12 @@ impl From<Line> for FormatElement {
 impl From<Indent> for FormatElement {
     fn from(token: Indent) -> Self {
         FormatElement::Indent(token)
+    }
+}
+
+impl From<Option<FormatElement>> for FormatElement {
+    fn from(element: Option<FormatElement>) -> Self {
+        element.unwrap_or_else(empty_element)
     }
 }
 

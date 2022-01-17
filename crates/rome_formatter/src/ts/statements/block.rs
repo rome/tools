@@ -11,17 +11,19 @@ impl ToFormatElement for JsBlockStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let stmts = format_statements(self.statements(), formatter);
 
-        let body = if is_non_collapsable_empty_block(self) {
-            hard_line_break()
+        if is_non_collapsable_empty_block(self) {
+            Ok(format_elements![
+                formatter.format_token(&self.l_curly_token()?)?,
+                hard_line_break(),
+                formatter.format_token(&self.r_curly_token()?)?
+            ])
         } else {
-            block_indent(stmts)
-        };
-
-        Ok(format_elements![
-            formatter.format_token(&self.l_curly_token()?)?,
-            body,
-            formatter.format_token(&self.r_curly_token()?)?
-        ])
+            formatter.format_delimited(
+                &self.l_curly_token()?,
+                |leading, trailing| Ok(block_indent(format_elements![leading, stmts, trailing])),
+                &self.r_curly_token()?,
+            )
+        }
     }
 }
 

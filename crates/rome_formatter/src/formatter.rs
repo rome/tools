@@ -1,10 +1,15 @@
+use std::cell::RefCell;
+use std::collections::HashSet;
+
 use crate::printer::Printer;
 use crate::{
-    concat_elements, format_elements, token, FormatElement, FormatOptions, FormatResult, Formatted,
-    ToFormatElement,
+    concat_elements, empty_element, format_elements, hard_line_break, if_group_breaks,
+    if_group_fits_on_single_line, line_suffix, space_token, token, FormatElement, FormatOptions,
+    FormatResult, Formatted, ToFormatElement,
 };
-use rome_rowan::SyntaxElement;
-use rslint_parser::{AstNode, AstSeparatedList, SyntaxNode, SyntaxToken};
+use rome_rowan::api::SyntaxTriviaPieceComments;
+use rome_rowan::{Language, SyntaxElement};
+use rslint_parser::{AstNode, AstSeparatedList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
 /// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
@@ -12,12 +17,20 @@ use rslint_parser::{AstNode, AstSeparatedList, SyntaxNode, SyntaxToken};
 #[derive(Debug, Default)]
 pub struct Formatter {
     options: FormatOptions,
+    // This is using a RefCell as it only exists in debug mode,
+    // the Formatter is still completely immutable in release builds
+    #[cfg(debug_assertions)]
+    printed_tokens: RefCell<HashSet<SyntaxToken>>,
 }
 
 impl Formatter {
     /// Creates a new context that uses the given formatter options
     pub fn new(options: FormatOptions) -> Self {
-        Self { options }
+        Self {
+            options,
+            #[cfg(debug_assertions)]
+            printed_tokens: RefCell::default(),
+        }
     }
 
     /// Returns the [FormatOptions] specifying how to format the current CST
@@ -29,6 +42,19 @@ impl Formatter {
     /// Formats a CST
     pub fn format_root(self, root: &SyntaxNode) -> FormatResult<Formatted> {
         let element = self.format_syntax_node(root)?;
+
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                let printed_tokens = self.printed_tokens.into_inner();
+                for token in root.tokens() {
+                    assert!(
+                        printed_tokens.contains(&token),
+                        "token was not seen by the formatter: {:?}",
+                        token
+                    );
+                }
+            }
+        }
 
         let printer = Printer::new(self.options);
         Ok(printer.print(&element))
@@ -44,6 +70,32 @@ impl Formatter {
         ]))
     }
 
+    /// Formats a group delimited by an opening and closing token,
+    /// such as a function body delimited by '{' and '}' tokens
+    ///
+    /// Calling this method is required to correctly handle the comments attached
+    /// to the opening and closing tokens and insert them inside the group block
+    pub(crate) fn format_delimited(
+        &self,
+        open_token: &SyntaxToken,
+        content: impl FnOnce(FormatElement, FormatElement) -> FormatResult<FormatElement>,
+        close_token: &SyntaxToken,
+    ) -> FormatResult<FormatElement> {
+        debug_assert!(self.printed_tokens.borrow_mut().insert(open_token.clone()));
+        debug_assert!(self.printed_tokens.borrow_mut().insert(close_token.clone()));
+
+        Ok(format_elements![
+            self.print_leading_trivia(open_token),
+            token(open_token.text_trimmed()),
+            content(
+                self.print_trailing_trivia(open_token),
+                self.print_leading_trivia(close_token),
+            )?,
+            token(close_token.text_trimmed()),
+            self.print_trailing_trivia(close_token),
+        ])
+    }
+
     /// Recursively formats the ast node and all its children
     ///
     /// Returns `None` if the node couldn't be formatted because of syntax errors in its sub tree.
@@ -52,25 +104,27 @@ impl Formatter {
         &self,
         node: T,
     ) -> FormatResult<FormatElement> {
-        Ok(concat_elements(vec![
-            self.format_node_start(node.syntax()),
+        let leading = self.format_node_start(node.syntax());
+        let trailing = self.format_node_end(node.syntax());
+        Ok(format_elements![
+            leading,
             node.to_format_element(self)?,
-            self.format_node_end(node.syntax()),
-        ]))
+            trailing,
+        ])
     }
 
     /// Helper function that returns what should be printed before the node that work on
     /// the non-generic [SyntaxNode] to avoid unrolling the logic for every [AstNode] type.
     fn format_node_start(&self, _node: &SyntaxNode) -> FormatElement {
-        // TODO: Set the marker for the start source map location, add leading comments, ...
-        concat_elements(vec![])
+        // TODO: Set the marker for the start source map location, ...
+        empty_element()
     }
 
     /// Helper function that returns what should be printed after the node that work on
     /// the non-generic [SyntaxNode] to avoid unrolling the logic for every [AstNode] type.
     fn format_node_end(&self, _node: &SyntaxNode) -> FormatElement {
-        // TODO: Sets the marker for the end source map location, add trailing comments, ...
-        concat_elements(vec![])
+        // TODO: Sets the marker for the end source map location, ...
+        empty_element()
     }
 
     /// Formats the passed in token.
@@ -99,8 +153,28 @@ impl Formatter {
     ///
     /// assert_eq!(Ok(token("'abc'")), result)
     /// ```
-    pub fn format_token(&self, syntax_token: &SyntaxToken) -> FormatResult<FormatElement> {
-        Ok(token(syntax_token.text_trimmed()))
+    pub fn format_token<T>(&self, syntax_token: &T) -> FormatResult<T::Output>
+    where
+        T: token::FormattableToken,
+    {
+        syntax_token.format(self)
+    }
+
+    /// Print out a token from the original source with a different content
+    ///
+    /// This will print the associated trivias from the token as well as mark
+    /// it as having been consumed by the formatter
+    pub fn format_replaced(
+        &self,
+        token: &SyntaxToken,
+        content: FormatElement,
+    ) -> FormatResult<FormatElement> {
+        debug_assert!(self.printed_tokens.borrow_mut().insert(token.clone()));
+        Ok(format_elements![
+            self.print_leading_trivia(token),
+            content,
+            self.print_trailing_trivia(token),
+        ])
     }
 
     /// Formats each child and returns the result as a list.
@@ -124,27 +198,140 @@ impl Formatter {
         Ok(result.into_iter())
     }
 
-    pub fn format_separated<T: AstNode + ToFormatElement + Clone, L: AstSeparatedList<T>>(
+    /// Prints a separated list of nodes
+    ///
+    /// Trailing separators will be reused from the original list or
+    /// created by calling the `separator_factory` function.
+    /// The last trailing separator in the list will only be printed
+    /// if the outer group breaks.
+    pub fn format_separated<T, L, F>(
         &self,
         list: L,
-    ) -> FormatResult<impl Iterator<Item = FormatElement>> {
+        separator_factory: F,
+    ) -> FormatResult<impl Iterator<Item = FormatElement>>
+    where
+        T: AstNode + ToFormatElement + Clone,
+        L: AstSeparatedList<T>,
+        F: Fn() -> FormatElement,
+    {
         let mut result = Vec::with_capacity(list.len());
+        let last_index = list.len().saturating_sub(1);
 
         for (index, element) in list.elements().enumerate() {
             let node = self.format_node(element.node()?)?;
-            if let Some(separator) = element.trailing_separator()? {
-                let formatted_separator = self.format_token(&separator)?;
-                if index == list.len() - 1 {
-                    result.push(node)
+
+            // Reuse the existing trailing separator or create it if it wasn't in the
+            // input source. Only print the last trailing token if the outer group breaks
+            let separator = if let Some(separator) = element.trailing_separator()? {
+                if index == last_index {
+                    // Use format_replaced instead of wrapping the result of format_token
+                    // in order to remove only the token itself when the group doesn't break
+                    // but still print its associated trivias unconditionally
+                    self.format_replaced(
+                        &separator,
+                        if_group_breaks(token(separator.text_trimmed())),
+                    )?
                 } else {
-                    result.push(format_elements![node, formatted_separator]);
+                    self.format_token(&separator)?
                 }
+            } else if index == last_index {
+                if_group_breaks(separator_factory())
             } else {
-                result.push(node);
-            }
+                separator_factory()
+            };
+
+            result.push(format_elements![node, separator]);
         }
 
         Ok(result.into_iter())
+    }
+
+    fn print_leading_trivia(&self, token: &SyntaxToken) -> FormatElement {
+        // False positive: the trivias need to be collected in a vector as they
+        // are iterated on in reverse order later, but SyntaxTriviaPiecesIterator
+        // doesn't implement DoubleEndedIterator (rust-lang/rust-clippy#8132)
+        #[allow(clippy::needless_collect)]
+        let pieces: Vec<_> = token.leading_trivia().pieces().collect();
+
+        let mut line_count = 0;
+        let mut elements = Vec::new();
+
+        for piece in pieces.into_iter().rev() {
+            if let Some(comment) = piece.as_comments() {
+                let is_single_line = comment.text().trim_start().starts_with("//");
+
+                let comment = self.format_comment(comment);
+
+                let line_break = if is_single_line {
+                    hard_line_break()
+                } else {
+                    match line_count {
+                        0 => space_token(),
+                        1 => hard_line_break(),
+                        _ => format_elements![hard_line_break(), hard_line_break()],
+                    }
+                };
+
+                elements.push(format_elements![comment, line_break]);
+
+                line_count = 0;
+            } else if piece.as_newline().is_some() {
+                line_count += 1;
+            }
+        }
+
+        concat_elements(elements.into_iter().rev())
+    }
+
+    fn print_trailing_trivia(&self, token: &SyntaxToken) -> FormatElement {
+        let mut line_count = 0;
+        let mut elements = Vec::new();
+
+        for piece in token.trailing_trivia().pieces() {
+            if let Some(comment) = piece.as_comments() {
+                let is_single_line = comment.text().trim_start().starts_with("//");
+
+                let comment = self.format_comment(comment);
+
+                elements.push(if line_count >= 1 {
+                    line_suffix(format_elements![
+                        if line_count > 1 {
+                            hard_line_break()
+                        } else {
+                            space_token()
+                        },
+                        hard_line_break(),
+                        comment,
+                        space_token(),
+                    ])
+                } else if !is_single_line {
+                    format_elements![
+                        if_group_breaks(line_suffix(format_elements![
+                            space_token(),
+                            comment.clone(),
+                            space_token(),
+                        ])),
+                        if_group_fits_on_single_line(format_elements![
+                            space_token(),
+                            comment,
+                            space_token(),
+                        ]),
+                    ]
+                } else {
+                    line_suffix(format_elements![space_token(), comment, space_token()])
+                });
+
+                line_count = 0;
+            } else if piece.as_newline().is_some() {
+                line_count += 1;
+            }
+        }
+
+        concat_elements(elements)
+    }
+
+    fn format_comment<L: Language>(&self, trivia: SyntaxTriviaPieceComments<L>) -> FormatElement {
+        token(trivia.text().trim())
     }
 
     /// "Formats" a node according to its original formatting in the source text. Being able to format
@@ -161,7 +348,83 @@ impl Formatter {
                 // need to be tracked for every node.
                 self.format_raw(&child_node)
             }
-            SyntaxElement::Token(syntax_token) => token(syntax_token.text()),
+            SyntaxElement::Token(syntax_token) => {
+                debug_assert!(self
+                    .printed_tokens
+                    .borrow_mut()
+                    .insert(syntax_token.clone()));
+
+                token(syntax_token.text())
+            }
         }))
+    }
+}
+
+/// Snapshot of the formatter state  used to handle backtracking if
+/// errors are encountered in the formatting process and the formatter
+/// has to fallback to printing raw tokens
+///
+/// In practice this only saves the set of printed tokens in debug
+/// mode and compiled to nothing in release mode
+pub struct FormatterSnapshot {
+    #[cfg(debug_assertions)]
+    printed_tokens: HashSet<SyntaxToken>,
+}
+
+impl Formatter {
+    /// Take a snapshot of the state of the formatter
+    pub fn snapshot(&self) -> FormatterSnapshot {
+        FormatterSnapshot {
+            #[cfg(debug_assertions)]
+            printed_tokens: self.printed_tokens.borrow().clone(),
+        }
+    }
+
+    /// Restore the state of the formatter to a previous snapshot
+    pub fn restore(&self, snapshot: FormatterSnapshot) {
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                *self.printed_tokens.borrow_mut() = snapshot.printed_tokens;
+            }
+        }
+    }
+}
+
+// FormattableToken needs to be public as its used in the signature of format_token,
+// part of the public API, but it should not be exposed for implementation so
+// declare it in a private module inaccessible for external consumers
+mod token {
+    use rslint_parser::SyntaxToken;
+
+    use crate::{format_elements, token, FormatElement, FormatResult, Formatter};
+
+    pub trait FormattableToken {
+        type Output;
+        fn format(&self, formatter: &Formatter) -> FormatResult<Self::Output>;
+    }
+
+    impl FormattableToken for SyntaxToken {
+        type Output = FormatElement;
+
+        fn format(&self, formatter: &Formatter) -> FormatResult<Self::Output> {
+            debug_assert!(formatter.printed_tokens.borrow_mut().insert(self.clone()));
+
+            Ok(format_elements![
+                formatter.print_leading_trivia(self),
+                token(self.text_trimmed()),
+                formatter.print_trailing_trivia(self),
+            ])
+        }
+    }
+
+    impl FormattableToken for Option<SyntaxToken> {
+        type Output = Option<FormatElement>;
+
+        fn format(&self, formatter: &Formatter) -> FormatResult<Self::Output> {
+            match self {
+                Some(token) => Ok(Some(token.format(formatter)?)),
+                None => Ok(None),
+            }
+        }
     }
 }

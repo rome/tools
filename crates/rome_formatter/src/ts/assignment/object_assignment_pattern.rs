@@ -1,6 +1,7 @@
 use crate::{
     empty_element, format_elements, group_elements, join_elements, soft_indent,
-    soft_line_break_or_space, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    soft_line_break_or_space, space_token, token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 use rslint_parser::ast::{
     JsAnyObjectAssignmentPatternMember, JsObjectAssignmentPattern,
@@ -10,14 +11,22 @@ use rslint_parser::ast::{
 
 impl ToFormatElement for JsObjectAssignmentPattern {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let properties = formatter.format_separated(self.properties())?;
-        Ok(group_elements(format_elements![
-            formatter.format_token(&self.l_curly_token()?)?,
-            space_token(),
-            soft_indent(join_elements(soft_line_break_or_space(), properties)),
-            space_token(),
-            formatter.format_token(&self.r_curly_token()?)?,
-        ]))
+        let properties = formatter.format_separated(self.properties(), || token(","))?;
+        Ok(group_elements(formatter.format_delimited(
+            &self.l_curly_token()?,
+            |leading, trailing| {
+                Ok(format_elements![
+                    space_token(),
+                    soft_indent(format_elements![
+                        leading,
+                        join_elements(soft_line_break_or_space(), properties),
+                        trailing
+                    ]),
+                    space_token(),
+                ])
+            },
+            &self.r_curly_token()?,
+        )?))
     }
 }
 
