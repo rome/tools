@@ -724,8 +724,6 @@ impl ChangeParserState for EnterLexicalScope {
     type Snapshot = EnterLexicalScopeSnapshot;
 
     fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-        dbg!("entered lexical scope");
-        dbg!(&self.0);
         EnterLexicalScopeSnapshot {
             lexical_names: std::mem::take(&mut state.lexical_names),
             binding_context: std::mem::replace(&mut state.binding_context, Some(self.0)),
@@ -733,7 +731,6 @@ impl ChangeParserState for EnterLexicalScope {
     }
 
     fn restore(state: &mut ParserState, value: Self::Snapshot) {
-        dbg!("exit lexical scope");
         state.lexical_names = value.lexical_names;
         state.binding_context = value.binding_context;
     }

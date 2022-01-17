@@ -111,7 +111,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
             }
         }
 
-        let err = if let Some(_) = binding_context {
+        let err = if binding_context.is_some() {
             p.state
                 .clashes_with_defined_binding(&id)
                 .map(|other_range| {

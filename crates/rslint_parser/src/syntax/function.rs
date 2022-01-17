@@ -369,13 +369,15 @@ pub(super) fn parse_arrow_function_parameters(
         // test_err async_arrow_expr_await_parameter
         // let a = async await => {}
         // async() => { (a = await) => {} };
-        p.with_state(
-            EnterParameters {
-                signature_flags: flags,
-                allow_object_expressions: false,
-            },
-            parse_binding,
-        )
+        p.with_state(EnterHoistedScope(BindingContext::Function), |p| {
+            p.with_state(
+                EnterParameters {
+                    signature_flags: flags,
+                    allow_object_expressions: false,
+                },
+                parse_binding,
+            )
+        })
     }
 }
 
