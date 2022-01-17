@@ -506,7 +506,7 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
         let error = match p.state.label_set.get(label_name) {
 			Some(LabelledItem::Iteration(_)) => None,
 			Some(LabelledItem::Other(range)) => {
-				Some(p.err_builder("A `continue` statement can only jump to a label of an enclosing iteration statement.")
+				Some(p.err_builder("A `continue` statement can only jump to a label of an enclosing `for`, `while` or `do while` statement.")
 					.primary(label_token.range(), "This label")
 					.secondary(range.to_owned(), "points to non-iteration statement"))
 			}
@@ -529,7 +529,7 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
     } else if !p.state.continue_allowed() {
         Some(
             p.err_builder(
-                "A `continue` statement can only be used within an enclosing iteration statement.",
+                "A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.",
             )
             .primary(start.clone(), ""),
         )
