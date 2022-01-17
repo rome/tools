@@ -72,6 +72,7 @@ impl Default for BindingContext {
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum NameType {
+    // module bindings are hoisted but can't be redeclared like hoisted variables
     Module,
     Hoisted,
     Lexical(LexicalType),
@@ -263,8 +264,7 @@ impl ParserState {
                                 self.lexical_names.insert(identifier_name, range);
                             }
                             NameType::Module => {
-                                self.lexical_names
-                                    .insert(identifier_name.clone(), range.clone());
+                                self.lexical_names.insert(identifier_name, range);
                             }
                         }
                     }

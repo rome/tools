@@ -1,0 +1,119 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsVariableStatement {
+            declarations: JsVariableDeclarations {
+                kind: VAR_KW@0..4 "var" [] [Whitespace(" ")],
+                items: JsVariableDeclarationList [
+                    JsVariableDeclaration {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@4..5 "a" [] [],
+                        },
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@5..7 ";" [] [Whitespace(" ")],
+        },
+        JsFunctionStatement {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@7..16 "function" [] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@16..17 "f" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@17..18 "(" [] [],
+                items: JsParameterList [
+                    JsParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@18..19 "a" [] [],
+                        },
+                        type_annotation: missing (optional),
+                        initializer: missing (optional),
+                    },
+                ],
+                r_paren_token: R_PAREN@19..21 ")" [] [Whitespace(" ")],
+            },
+            return_type: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@21..23 "{" [] [Whitespace(" ")],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [
+                    JsVariableStatement {
+                        declarations: JsVariableDeclarations {
+                            kind: LET_KW@23..27 "let" [] [Whitespace(" ")],
+                            items: JsVariableDeclarationList [
+                                JsVariableDeclaration {
+                                    id: JsIdentifierBinding {
+                                        name_token: IDENT@27..28 "a" [] [],
+                                    },
+                                    excl_token: missing (optional),
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            ],
+                        },
+                        semicolon_token: SEMICOLON@28..30 ";" [] [Whitespace(" ")],
+                    },
+                ],
+                r_curly_token: R_CURLY@30..31 "}" [] [],
+            },
+        },
+    ],
+    eof_token: EOF@31..32 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..32
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..31
+    0: JS_VARIABLE_STATEMENT@0..7
+      0: JS_VARIABLE_DECLARATIONS@0..5
+        0: VAR_KW@0..4 "var" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION_LIST@4..5
+          0: JS_VARIABLE_DECLARATION@4..5
+            0: JS_IDENTIFIER_BINDING@4..5
+              0: IDENT@4..5 "a" [] []
+            1: (empty)
+            2: (empty)
+            3: (empty)
+      1: SEMICOLON@5..7 ";" [] [Whitespace(" ")]
+    1: JS_FUNCTION_STATEMENT@7..31
+      0: (empty)
+      1: FUNCTION_KW@7..16 "function" [] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@16..17
+        0: IDENT@16..17 "f" [] []
+      4: (empty)
+      5: JS_PARAMETERS@17..21
+        0: L_PAREN@17..18 "(" [] []
+        1: JS_PARAMETER_LIST@18..19
+          0: JS_PARAMETER@18..19
+            0: JS_IDENTIFIER_BINDING@18..19
+              0: IDENT@18..19 "a" [] []
+            1: (empty)
+            2: (empty)
+        2: R_PAREN@19..21 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@21..31
+        0: L_CURLY@21..23 "{" [] [Whitespace(" ")]
+        1: JS_DIRECTIVE_LIST@23..23
+        2: JS_STATEMENT_LIST@23..30
+          0: JS_VARIABLE_STATEMENT@23..30
+            0: JS_VARIABLE_DECLARATIONS@23..28
+              0: LET_KW@23..27 "let" [] [Whitespace(" ")]
+              1: JS_VARIABLE_DECLARATION_LIST@27..28
+                0: JS_VARIABLE_DECLARATION@27..28
+                  0: JS_IDENTIFIER_BINDING@27..28
+                    0: IDENT@27..28 "a" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
+            1: SEMICOLON@28..30 ";" [] [Whitespace(" ")]
+        3: R_CURLY@30..31 "}" [] []
+  3: EOF@31..32 "" [Newline("\n")] []

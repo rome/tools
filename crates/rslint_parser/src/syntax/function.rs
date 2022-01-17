@@ -164,6 +164,8 @@ fn is_at_function(p: &Parser) -> bool {
     p.at_ts(token_set![T![async], T![function]]) || is_at_async_function(p, LineBreak::DoNotCheck)
 }
 
+// test function_parameters_redeclaration
+// var a; function f(a) { let a; }
 fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMarker {
     let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Function));
     let mut uses_invalid_syntax =
