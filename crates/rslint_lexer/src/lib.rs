@@ -629,7 +629,6 @@ impl<'src> Lexer<'src> {
 
     #[inline]
     fn read_zero(&mut self) -> Option<Box<Diagnostic>> {
-        // TODO: Octal literals
         match self.bytes.get(self.cur + 1) {
             Some(b'x') | Some(b'X') => {
                 if self.special_number_start(|c| c.is_ascii_hexdigit()) {
@@ -680,16 +679,17 @@ impl<'src> Lexer<'src> {
                             None
                         }
                     }
-                    Some(b'0'..=b'9') => self.read_exponent(),
+                    Some(b'0'..=b'9') => {
+                        self.next();
+                        self.read_exponent()
+                    }
                     _ => {
                         self.next();
                         None
                     }
                 }
             }
-            // FIXME: many engines actually allow things like `09`, but by the spec, this is not allowed
-            // maybe we should not allow it if we want to go fully by the spec
-            _ => self.read_number(),
+            _ => self.read_number(true),
         }
     }
 
@@ -745,17 +745,34 @@ impl<'src> Lexer<'src> {
         None
     }
 
-    // Read a number which does not start with 0, since that can be more things and is handled
-    // by another function
     #[inline]
-    fn read_number(&mut self) -> Option<Box<Diagnostic>> {
+    fn read_number(&mut self, leading_zero: bool) -> Option<Box<Diagnostic>> {
+        let start = self.cur;
         let mut diag = None;
         unwind_loop! {
             match self.next_bounded() {
-                Some(b'_') => diag = diag.or(self.handle_numeric_separator(10)),
+                Some(b'_') => {
+                    if leading_zero {
+                        diag = Some(Box::new(
+                            Diagnostic::error(
+                                self.file_id,
+                                "",
+                                "numeric separator can not be used after leading 0",
+                            )
+                            .primary(self.cur..self.cur, ""),
+                        ));
+                    }
+                    diag = diag.or(self.handle_numeric_separator(10))
+                },
                 Some(b'0'..=b'9') => {},
                 Some(b'.') => {
-                    return self.read_float();
+                    if leading_zero {
+                        diag = Some(Box::new(
+                                Diagnostic::error(self.file_id, "", "unexpected number")
+                                .primary(start..self.cur + 1, ""),
+                        ));
+                    }
+                    return diag.or(self.read_float());
                 },
                 // TODO: merge this, and read_float's implementation into one so we dont duplicate exponent code
                 Some(b'e') | Some(b'E') => {
@@ -774,6 +791,12 @@ impl<'src> Lexer<'src> {
                     }
                 },
                 Some(b'n') => {
+                    if leading_zero {
+                        diag = Some(Box::new(
+                                Diagnostic::error(self.file_id, "", "invalid big int literal.")
+                                .primary(start..self.cur + 1, ""),
+                        ));
+                    }
                     self.next();
                     return diag;
                 }
@@ -788,7 +811,7 @@ impl<'src> Lexer<'src> {
 
         unwind_loop! {
             match self.next_bounded() {
-                Some(b'_') => diag = diag.or(self.handle_numeric_separator(16)),
+                Some(b'_') => diag = diag.or(self.handle_numeric_separator(10)),
                 // LLVM has a hard time optimizing inclusive patterns, perhaps we should check if it makes llvm sad,
                 // and optimize this into a lookup table
                 Some(b'0'..=b'9') => {},
@@ -1372,7 +1395,7 @@ impl<'src> Lexer<'src> {
             }
             IDT => self.resolve_identifier((byte as char, start)),
             DIG => {
-                let diag = self.read_number();
+                let diag = self.read_number(false);
                 let (token, err) = self.verify_number_end(start);
                 (token, err.or(diag))
             }
