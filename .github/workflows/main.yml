@@ -39,6 +39,11 @@ jobs:
         run: rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v1
+      - name: Run cargo check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+          args: --workspace --all-targets --release
       - name: Run clippy
         uses: actions-rs/cargo@v1
         with:
