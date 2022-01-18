@@ -57,72 +57,72 @@ JsModule {
             function_token: FUNCTION_KW@43..52 "function" [Newline("\n")] [],
             star_token: STAR@52..54 "*" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
-                name_token: IDENT@54..58 "test" [] [],
+                name_token: IDENT@54..59 "test2" [] [],
             },
             type_parameters: missing (optional),
             parameters: JsParameters {
-                l_paren_token: L_PAREN@58..59 "(" [] [],
+                l_paren_token: L_PAREN@59..60 "(" [] [],
                 items: JsParameterList [
                     JsParameter {
                         binding: JsUnknownBinding {
                             items: [
-                                IDENT@59..64 "yield" [] [],
+                                IDENT@60..65 "yield" [] [],
                             ],
                         },
                         type_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                 ],
-                r_paren_token: R_PAREN@64..66 ")" [] [Whitespace(" ")],
+                r_paren_token: R_PAREN@65..67 ")" [] [Whitespace(" ")],
             },
             return_type: missing (optional),
             body: JsFunctionBody {
-                l_curly_token: L_CURLY@66..67 "{" [] [],
+                l_curly_token: L_CURLY@67..68 "{" [] [],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [],
-                r_curly_token: R_CURLY@67..68 "}" [] [],
+                r_curly_token: R_CURLY@68..69 "}" [] [],
             },
         },
         JsUnknownStatement {
             items: [
-                ENUM_KW@68..73 "enum" [Newline("\n")] [],
+                ENUM_KW@69..74 "enum" [Newline("\n")] [],
             ],
         },
         JsEmptyStatement {
-            semicolon_token: SEMICOLON@73..74 ";" [] [],
+            semicolon_token: SEMICOLON@74..75 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsUnknownExpression {
                 items: [
                     JsUnknown {
                         items: [
-                            IDENT@74..85 "implements" [Newline("\n")] [],
+                            IDENT@75..86 "implements" [Newline("\n")] [],
                         ],
                     },
                 ],
             },
-            semicolon_token: SEMICOLON@85..86 ";" [] [],
+            semicolon_token: SEMICOLON@86..87 ";" [] [],
         },
         JsExpressionStatement {
             expression: JsUnknownExpression {
                 items: [
                     JsUnknown {
                         items: [
-                            IDENT@86..96 "interface" [Newline("\n")] [],
+                            IDENT@87..97 "interface" [Newline("\n")] [],
                         ],
                     },
                 ],
             },
-            semicolon_token: SEMICOLON@96..97 ";" [] [],
+            semicolon_token: SEMICOLON@97..98 ";" [] [],
         },
     ],
-    eof_token: EOF@97..98 "" [Newline("\n")] [],
+    eof_token: EOF@98..99 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..98
+0: JS_MODULE@0..99
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..97
+  2: JS_MODULE_ITEM_LIST@0..98
     0: JS_EXPRESSION_STATEMENT@0..6
       0: JS_UNKNOWN_EXPRESSION@0..5
         0: JS_UNKNOWN@0..5
@@ -155,43 +155,43 @@ JsModule {
         1: JS_DIRECTIVE_LIST@42..42
         2: JS_STATEMENT_LIST@42..42
         3: R_CURLY@42..43 "}" [] []
-    3: JS_FUNCTION_STATEMENT@43..68
+    3: JS_FUNCTION_STATEMENT@43..69
       0: (empty)
       1: FUNCTION_KW@43..52 "function" [Newline("\n")] []
       2: STAR@52..54 "*" [] [Whitespace(" ")]
-      3: JS_IDENTIFIER_BINDING@54..58
-        0: IDENT@54..58 "test" [] []
+      3: JS_IDENTIFIER_BINDING@54..59
+        0: IDENT@54..59 "test2" [] []
       4: (empty)
-      5: JS_PARAMETERS@58..66
-        0: L_PAREN@58..59 "(" [] []
-        1: JS_PARAMETER_LIST@59..64
-          0: JS_PARAMETER@59..64
-            0: JS_UNKNOWN_BINDING@59..64
-              0: IDENT@59..64 "yield" [] []
+      5: JS_PARAMETERS@59..67
+        0: L_PAREN@59..60 "(" [] []
+        1: JS_PARAMETER_LIST@60..65
+          0: JS_PARAMETER@60..65
+            0: JS_UNKNOWN_BINDING@60..65
+              0: IDENT@60..65 "yield" [] []
             1: (empty)
             2: (empty)
-        2: R_PAREN@64..66 ")" [] [Whitespace(" ")]
+        2: R_PAREN@65..67 ")" [] [Whitespace(" ")]
       6: (empty)
-      7: JS_FUNCTION_BODY@66..68
-        0: L_CURLY@66..67 "{" [] []
-        1: JS_DIRECTIVE_LIST@67..67
-        2: JS_STATEMENT_LIST@67..67
-        3: R_CURLY@67..68 "}" [] []
-    4: JS_UNKNOWN_STATEMENT@68..73
-      0: ENUM_KW@68..73 "enum" [Newline("\n")] []
-    5: JS_EMPTY_STATEMENT@73..74
-      0: SEMICOLON@73..74 ";" [] []
-    6: JS_EXPRESSION_STATEMENT@74..86
-      0: JS_UNKNOWN_EXPRESSION@74..85
-        0: JS_UNKNOWN@74..85
-          0: IDENT@74..85 "implements" [Newline("\n")] []
-      1: SEMICOLON@85..86 ";" [] []
-    7: JS_EXPRESSION_STATEMENT@86..97
-      0: JS_UNKNOWN_EXPRESSION@86..96
-        0: JS_UNKNOWN@86..96
-          0: IDENT@86..96 "interface" [Newline("\n")] []
-      1: SEMICOLON@96..97 ";" [] []
-  3: EOF@97..98 "" [Newline("\n")] []
+      7: JS_FUNCTION_BODY@67..69
+        0: L_CURLY@67..68 "{" [] []
+        1: JS_DIRECTIVE_LIST@68..68
+        2: JS_STATEMENT_LIST@68..68
+        3: R_CURLY@68..69 "}" [] []
+    4: JS_UNKNOWN_STATEMENT@69..74
+      0: ENUM_KW@69..74 "enum" [Newline("\n")] []
+    5: JS_EMPTY_STATEMENT@74..75
+      0: SEMICOLON@74..75 ";" [] []
+    6: JS_EXPRESSION_STATEMENT@75..87
+      0: JS_UNKNOWN_EXPRESSION@75..86
+        0: JS_UNKNOWN@75..86
+          0: IDENT@75..86 "implements" [Newline("\n")] []
+      1: SEMICOLON@86..87 ";" [] []
+    7: JS_EXPRESSION_STATEMENT@87..98
+      0: JS_UNKNOWN_EXPRESSION@87..97
+        0: JS_UNKNOWN@87..97
+          0: IDENT@87..97 "interface" [Newline("\n")] []
+      1: SEMICOLON@97..98 ";" [] []
+  3: EOF@98..99 "" [Newline("\n")] []
 --
 error[SyntaxError]: Illegal use of reserved keyword `yield` as an identifier in strict mode
   ┌─ identifier_err.js:1:1
@@ -215,10 +215,10 @@ error[SyntaxError]: Illegal use of `await` as an identifier in an async context
 
 --
 error[SyntaxError]: Illegal use of `yield` as an identifier in generator function
-  ┌─ identifier_err.js:4:16
+  ┌─ identifier_err.js:4:17
   │
-4 │ function* test(yield) {}
-  │                ^^^^^
+4 │ function* test2(yield) {}
+  │                 ^^^^^
 
 --
 error[SyntaxError]: expected a statement but instead found 'enum'
@@ -245,7 +245,7 @@ error[SyntaxError]: Illegal use of reserved keyword `interface` as an identifier
 yield;
 await;
 async function test(await) {}
-function* test(yield) {}
+function* test2(yield) {}
 enum;
 implements;
 interface;

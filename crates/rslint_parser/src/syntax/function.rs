@@ -1,6 +1,7 @@
 use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::state::{
-    BindingContext, EnterFunction, EnterHoistedScope, EnterParameters, SignatureFlags,
+    BindingContext, EnterFunction, EnterFunctionDeclaration, EnterHoistedScope, EnterParameters,
+    SignatureFlags,
 };
 use crate::syntax::binding::{parse_binding, parse_binding_pattern};
 use crate::syntax::class::parse_initializer_clause;
@@ -41,11 +42,11 @@ use rslint_syntax::{JsSyntaxKind, T};
 // function *() {}
 // async function() {}
 // async function *() {}
-// function *foo() {}
-// yield foo;
-// function test(): number {}
-// function foo(await) {}
-// function foo(yield) {}
+// function *foo2() {}
+// yield foo3;
+// function test2(): number {}
+// function foo4(await) {}
+// function foo5(yield) {}
 //
 // test_err function_broken
 // function foo())})}{{{  {}
@@ -60,6 +61,11 @@ use rslint_syntax::{JsSyntaxKind, T};
 // test function_redeclaration_block_script
 // // SCRIPT
 // { function a() {} function a() {} }
+//
+// test_err function_redeclaration
+// function f() {}; var f;
+// function ff() {}; let ff;
+// var x; function x() {}
 pub(super) fn parse_function_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     if !is_at_function(p) {
         return Absent;
@@ -78,15 +84,15 @@ pub(super) fn parse_function_statement(p: &mut Parser, context: StatementContext
         if JsSyntaxFeature::StrictMode.is_supported(p) {
             // test_err function_in_single_statement_context_strict
             // if (true) function a() {}
-            // label1: function a() {}
-            // while (true) function a() {}
+            // label1: function b() {}
+            // while (true) function c() {}
             p.error(p.err_builder("In strict mode code, functions can only be declared at top level or inside a block").primary(function.range(p), "wrap the function in a block statement"));
             function.change_to_unknown(p);
         } else if !matches!(context, StatementContext::If | StatementContext::Label) {
             // test function_in_if_or_labelled_stmt_loose_mode
             // // SCRIPT
             // label1: function a() {}
-            // if (true) function a() {} else function b() {}
+            // if (true) function aa() {} else function b() {}
             // if (true) function c() {}
             // if (true) "test"; else function d() {}
             p.error(p.err_builder("In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if or labelled statement").primary(function.range(p), "wrap the function in a block statement"));
@@ -167,7 +173,7 @@ fn is_at_function(p: &Parser) -> bool {
 // test function_parameters_redeclaration
 // var a; function f(a) { let a; }
 fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMarker {
-    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Function));
+    // let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Function));
     let mut uses_invalid_syntax =
         kind.is_statement() && p.eat(T![declare]) && TypeScript.is_unsupported(p);
     let mut flags = SignatureFlags::empty();
@@ -185,7 +191,9 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         flags |= SignatureFlags::GENERATOR;
     }
 
-    let id = parse_function_id(p, kind, flags);
+    let id = p.with_state(EnterFunctionDeclaration, |p| {
+        parse_function_id(p, kind, flags)
+    });
 
     if !kind.is_id_optional() {
         id.or_add_diagnostic(p, |p, range| {
@@ -222,7 +230,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
 
     // test_err async_or_generator_in_single_statement_context
     // if (true) async function t() {}
-    // if (true) function* t() {}
+    // if (true) function* tt() {}
     if kind == (FunctionKind::Statement { declaration: true }) && (in_async || in_generator) {
         p.error(p.err_builder("`async` and generator functions can only be declared at top level or inside a block").primary(function.range(p), ""));
         uses_invalid_syntax = true;
@@ -369,7 +377,7 @@ pub(super) fn parse_arrow_function_parameters(
         // test_err async_arrow_expr_await_parameter
         // let a = async await => {}
         // async() => { (a = await) => {} };
-        p.with_state(EnterHoistedScope(BindingContext::Function), |p| {
+        p.with_state(EnterHoistedScope(BindingContext::Arguments), |p| {
             p.with_state(
                 EnterParameters {
                     signature_flags: flags,
@@ -439,7 +447,7 @@ pub(super) fn parse_parameters_list(
     parse_parameter: impl Fn(&mut Parser) -> ParsedSyntax,
     list_kind: JsSyntaxKind,
 ) {
-    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Function));
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
     let mut first = true;
     let has_l_paren = p.expect(T!['(']);
 

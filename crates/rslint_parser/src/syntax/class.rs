@@ -637,7 +637,7 @@ fn parse_class_member_impl(
                                 allow_object_expressions: has_l_paren,
                             },
                             |p| {
-                                p.with_state(EnterHoistedScope(BindingContext::Function), |p| {
+                                p.with_state(EnterHoistedScope(BindingContext::Arguments), |p| {
                                     parse_parameter(p)
                                         .or_add_diagnostic(p, js_parse_error::expected_parameter);
                                 })
