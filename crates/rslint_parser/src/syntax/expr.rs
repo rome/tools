@@ -606,7 +606,7 @@ fn parse_member_or_new_expr(
         if let Present(mut super_marker) = super_completed {
             let lhs = match p.cur() {
                 T![.] => parse_static_member_expression(p, super_marker, T![.]),
-                T!['['] => parse_computed_member_expression(p, super_marker, false),
+                T!['['] => parse_computed_member_expression(p, super_marker, false, context),
                 T![?.] => {
                     super_marker.change_kind(p, JS_UNKNOWN_EXPRESSION);
                     p.error(
@@ -694,9 +694,9 @@ fn subscripts(
                 }
             }
             T![?.] if p.nth_at(1, T!['[']) => {
-                lhs = parse_computed_member_expression(p, lhs, true).unwrap()
+                lhs = parse_computed_member_expression(p, lhs, true, context).unwrap()
             }
-            T!['['] => lhs = parse_computed_member_expression(p, lhs, false).unwrap(),
+            T!['['] => lhs = parse_computed_member_expression(p, lhs, false, context).unwrap(),
             T![?.] => lhs = parse_static_member_expression(p, lhs, T![?.]).unwrap(),
             T![.] => lhs = parse_static_member_expression(p, lhs, T![.]).unwrap(),
             T![!] if !p.has_linebreak_before_n(0) => {
@@ -815,10 +815,11 @@ pub(super) fn parse_any_name(p: &mut Parser) -> ParsedSyntax {
 // foo["bar"]
 // foo[bar][baz]
 // foo?.[bar]
-pub fn parse_computed_member_expression(
+fn parse_computed_member_expression(
     p: &mut Parser,
     lhs: CompletedMarker,
     optional_chain: bool,
+    context: ExpressionContext,
 ) -> ParsedSyntax {
     // test_err bracket_expr_err
     // foo[]
@@ -832,7 +833,7 @@ pub fn parse_computed_member_expression(
     p.expect(T!['[']);
     // test computed_member_in
     // for ({}["x" in {}];;) {}
-    parse_expression(p, ExpressionContext::default().with_include_in(true))
+    parse_expression(p, context | ExpressionContext::INCLUDE_IN)
         .or_add_diagnostic(p, expected_expression);
 
     p.expect(T![']']);

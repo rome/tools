@@ -29,7 +29,8 @@ pub(crate) trait ParseWithDefaultPattern {
             let with_default = pattern.precede_or_add_diagnostic(p, Self::expected_pattern_error);
             p.bump_any(); // eat the = token
 
-            // Find test cases
+            // test pattern_with_default_in_keyword
+            // for ([a = "a" in {}] in []) {}
             parse_expr_or_assignment(p, ExpressionContext::default())
                 .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
