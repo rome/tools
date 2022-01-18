@@ -214,11 +214,17 @@ impl ParserState {
                 // hoisted variables can be redeclared without problems
                 // which means that we only need to check the variables the lexical environment
                 BindingContext::Block => {
-                    if let Some(NameType::Function) = self.binding_variable() {
-                        self.strict()
-                            .and_then(|_| self.lexical_names.get(identifier_name))
+                    if let Some(binding_variable) = self.binding_variable() {
+                        match binding_variable {
+                            // function bindings and hoisted bindings can't override
+                            // lexical names only in strict mode
+                            NameType::Function | NameType::Hoisted => self
+                                .strict()
+                                .and_then(|_| self.lexical_names.get(identifier_name)),
+                            _ => self.lexical_names.get(identifier_name),
+                        }
                     } else {
-                        self.lexical_names.get(identifier_name)
+                        None
                     }
                 }
                 BindingContext::Arguments => self
@@ -226,20 +232,13 @@ impl ParserState {
                     .and_then(|_| self.hoisted_names.get(identifier_name)),
                 BindingContext::Hoisted => match self.binding_variable() {
                     Some(name_type) => match name_type {
-                        NameType::Hoisted | NameType::Module => {
-                            self.lexical_names.get(identifier_name)
-                        }
+                        NameType::Hoisted | NameType::Module | NameType::Function => self
+                            .strict()
+                            .and_then(|_| self.lexical_names.get(identifier_name)),
                         NameType::Lexical(_) => self
                             .hoisted_names
                             .get(identifier_name)
                             .or_else(|| self.lexical_names.get(identifier_name)),
-                        NameType::Function => {
-                            if self.strict().is_some() {
-                                self.lexical_names.get(identifier_name)
-                            } else {
-                                None
-                            }
-                        }
                     },
                     _ => None,
                 },
@@ -249,11 +248,13 @@ impl ParserState {
                         .or_else(|| self.lexical_names.get(identifier_name))
                 }),
                 _ => match self.binding_variable() {
-                    None => self.hoisted_names.get(identifier_name),
+                    None => self
+                        .strict()
+                        .and_then(|_| self.lexical_names.get(identifier_name)),
                     Some(binding_variable) => match binding_variable {
-                        NameType::Hoisted | NameType::Module | NameType::Function => {
-                            self.lexical_names.get(identifier_name)
-                        }
+                        NameType::Hoisted | NameType::Module | NameType::Function => self
+                            .strict()
+                            .and_then(|_| self.lexical_names.get(identifier_name)),
                         NameType::Lexical(_) => self
                             .hoisted_names
                             .get(identifier_name)
