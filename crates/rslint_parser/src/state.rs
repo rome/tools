@@ -215,15 +215,15 @@ impl ParserState {
                 // which means that we only need to check the variables the lexical environment
                 BindingContext::Block => {
                     if let Some(NameType::Function) = self.binding_variable() {
-                        if self.strict().is_some() {
-                            self.lexical_names.get(identifier_name)
-                        } else {
-                            None
-                        }
+                        self.strict()
+                            .and_then(|_| self.lexical_names.get(identifier_name))
                     } else {
                         self.lexical_names.get(identifier_name)
                     }
                 }
+                BindingContext::Arguments => self
+                    .strict()
+                    .and_then(|_| self.hoisted_names.get(identifier_name)),
                 BindingContext::Hoisted => match self.binding_variable() {
                     Some(name_type) => match name_type {
                         NameType::Hoisted | NameType::Module => {
@@ -243,15 +243,11 @@ impl ParserState {
                     },
                     _ => None,
                 },
-                BindingContext::Function => {
-                    if self.strict().is_some() {
-                        self.hoisted_names
-                            .get(identifier_name)
-                            .or_else(|| self.lexical_names.get(identifier_name))
-                    } else {
-                        None
-                    }
-                }
+                BindingContext::Function => self.strict().and_then(|_| {
+                    self.hoisted_names
+                        .get(identifier_name)
+                        .or_else(|| self.lexical_names.get(identifier_name))
+                }),
                 _ => match self.binding_variable() {
                     None => self.hoisted_names.get(identifier_name),
                     Some(binding_variable) => match binding_variable {
