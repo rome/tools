@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-clap = "3.0.0-beta.4"
 rome_formatter = { path = "../rome_formatter" }
 rome_core = { path = "../rome_core", version = "0.0.0" }
 rome_path = { path = "../rome_path", version = "0.0.0" }
+clap = {version = "3.0.9", features = ["cargo"]}
