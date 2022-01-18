@@ -6,7 +6,7 @@ use std::{path::PathBuf, str::FromStr};
 
 /// Main function to run Rome CLI
 pub fn run_cli() {
-    let matches = App::new("rome")
+    let cli_app = App::new("rome")
         .about("The official Rome CLI")
         .version(crate_version!())
         .setting(AppSettings::SubcommandRequiredElseHelp)
@@ -16,7 +16,7 @@ pub fn run_cli() {
                 .arg(
                     Arg::new("indent_style")
                         .long("indent-style")
-                        .about("The style of indentation")
+                        .help("The style of indentation")
                         .value_name("tab|space")
                         .default_value("tab")
                         .validator(|value| IndentStyle::from_str(value).map(|_| ())),
@@ -24,7 +24,7 @@ pub fn run_cli() {
                 .arg(
                     Arg::new("indent_size")
                         .long("indent-size")
-                        .about("The size of the indent.")
+                        .help("The size of the indent.")
                         .value_name("NUMBER")
                         .default_value("2")
                         .validator(|value| {
@@ -35,7 +35,7 @@ pub fn run_cli() {
                 )
                 .arg(
                     Arg::new("input")
-                        .about("File to format")
+                        .help("File to format")
                         .required(true)
                         .validator(|value| {
                             let path = PathBuf::from(&value);
@@ -45,17 +45,12 @@ pub fn run_cli() {
                             Ok(())
                         }),
                 ),
-        )
-        .try_get_matches();
-    let subcommand_matches = match &matches {
-        Ok(r) => r.subcommand(),
-        Err(err) => err.exit(),
-    };
+        );
 
-    let app = create_app();
+    let rome_app = create_app();
 
-    match subcommand_matches {
-        Some(("format", matches)) => {
+    match cli_app.get_matches().subcommand().unwrap() {
+        ("format", matches) => {
             let size = matches.value_of("indent_size");
             let style = matches.value_of("indent_style");
             let input = matches.value_of("input").unwrap();
@@ -70,14 +65,9 @@ pub fn run_cli() {
                 })
                 .unwrap_or_default();
 
-            let mut file = RomePath::new(input).deduce_handler(&app);
+            let mut file = RomePath::new(input).deduce_handler(&rome_app);
             format_file_and_save(&mut file, FormatOptions::new(options));
         }
-        // Thanks to the settings AppSettings::SubcommandRequiredElseHelp we should not be there
-        _ => clap::Error::with_description(
-            "Sub command not found".to_string(),
-            clap::ErrorKind::InvalidSubcommand,
-        )
-        .exit(),
+        _ => unreachable!("clap should ensure we don't get here"),
     }
 }
