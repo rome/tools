@@ -49,8 +49,10 @@ JsModule {
                             kind: LET_KW@23..27 "let" [] [Whitespace(" ")],
                             items: JsVariableDeclarationList [
                                 JsVariableDeclaration {
-                                    id: JsIdentifierBinding {
-                                        name_token: IDENT@27..28 "a" [] [],
+                                    id: JsUnknownBinding {
+                                        items: [
+                                            IDENT@27..28 "a" [] [],
+                                        ],
                                     },
                                     excl_token: missing (optional),
                                     type_annotation: missing (optional),
@@ -109,7 +111,7 @@ JsModule {
               0: LET_KW@23..27 "let" [] [Whitespace(" ")]
               1: JS_VARIABLE_DECLARATION_LIST@27..28
                 0: JS_VARIABLE_DECLARATION@27..28
-                  0: JS_IDENTIFIER_BINDING@27..28
+                  0: JS_UNKNOWN_BINDING@27..28
                     0: IDENT@27..28 "a" [] []
                   1: (empty)
                   2: (empty)
@@ -117,3 +119,14 @@ JsModule {
             1: SEMICOLON@28..30 ";" [] [Whitespace(" ")]
         3: R_CURLY@30..31 "}" [] []
   3: EOF@31..32 "" [Newline("\n")] []
+--
+error[SyntaxError]: The binding "a" has been already declared
+  ┌─ function_parameters_redeclaration.js:1:19
+  │
+1 │ var a; function f(a) { let a; }
+  │                   ^        - Second declaration here
+  │                   │         
+  │                   First declaration here
+
+--
+var a; function f(a) { let a; }

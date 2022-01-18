@@ -66,14 +66,130 @@ JsModule {
                 r_curly_token: R_CURLY@37..38 "}" [] [],
             },
         },
+        JsFunctionStatement {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@38..48 "function" [Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@48..49 "f" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@49..50 "(" [] [],
+                items: JsParameterList [],
+                r_paren_token: R_PAREN@50..52 ")" [] [Whitespace(" ")],
+            },
+            return_type: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@52..54 "{" [] [Whitespace(" ")],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [
+                    JsVariableStatement {
+                        declarations: JsVariableDeclarations {
+                            kind: VAR_KW@54..58 "var" [] [Whitespace(" ")],
+                            items: JsVariableDeclarationList [
+                                JsVariableDeclaration {
+                                    id: JsIdentifierBinding {
+                                        name_token: IDENT@58..59 "a" [] [],
+                                    },
+                                    excl_token: missing (optional),
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            ],
+                        },
+                        semicolon_token: SEMICOLON@59..61 ";" [] [Whitespace(" ")],
+                    },
+                    JsVariableStatement {
+                        declarations: JsVariableDeclarations {
+                            kind: VAR_KW@61..65 "var" [] [Whitespace(" ")],
+                            items: JsVariableDeclarationList [
+                                JsVariableDeclaration {
+                                    id: JsIdentifierBinding {
+                                        name_token: IDENT@65..66 "a" [] [],
+                                    },
+                                    excl_token: missing (optional),
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            ],
+                        },
+                        semicolon_token: SEMICOLON@66..68 ";" [] [Whitespace(" ")],
+                    },
+                ],
+                r_curly_token: R_CURLY@68..69 "}" [] [],
+            },
+        },
+        JsFunctionStatement {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@69..79 "function" [Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@79..80 "f" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@80..81 "(" [] [],
+                items: JsParameterList [],
+                r_paren_token: R_PAREN@81..83 ")" [] [Whitespace(" ")],
+            },
+            return_type: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@83..85 "{" [] [Whitespace(" ")],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [
+                    JsFunctionStatement {
+                        async_token: missing (optional),
+                        function_token: FUNCTION_KW@85..94 "function" [] [Whitespace(" ")],
+                        star_token: missing (optional),
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@94..95 "a" [] [],
+                        },
+                        type_parameters: missing (optional),
+                        parameters: JsParameters {
+                            l_paren_token: L_PAREN@95..96 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@96..98 ")" [] [Whitespace(" ")],
+                        },
+                        return_type: missing (optional),
+                        body: JsFunctionBody {
+                            l_curly_token: L_CURLY@98..99 "{" [] [],
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [],
+                            r_curly_token: R_CURLY@99..100 "}" [] [],
+                        },
+                    },
+                    JsEmptyStatement {
+                        semicolon_token: SEMICOLON@100..102 ";" [] [Whitespace(" ")],
+                    },
+                    JsVariableStatement {
+                        declarations: JsVariableDeclarations {
+                            kind: VAR_KW@102..106 "var" [] [Whitespace(" ")],
+                            items: JsVariableDeclarationList [
+                                JsVariableDeclaration {
+                                    id: JsIdentifierBinding {
+                                        name_token: IDENT@106..107 "a" [] [],
+                                    },
+                                    excl_token: missing (optional),
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            ],
+                        },
+                        semicolon_token: SEMICOLON@107..109 ";" [] [Whitespace(" ")],
+                    },
+                ],
+                r_curly_token: R_CURLY@109..110 "}" [] [],
+            },
+        },
     ],
-    eof_token: EOF@38..39 "" [Newline("\n")] [],
+    eof_token: EOF@110..111 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..39
+0: JS_MODULE@0..111
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..38
+  2: JS_MODULE_ITEM_LIST@0..110
     0: JS_VARIABLE_STATEMENT@0..11
       0: JS_VARIABLE_DECLARATIONS@0..9
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -119,4 +235,90 @@ JsModule {
                       0: JS_NUMBER_LITERAL@34..35 "7" [] []
             1: SEMICOLON@35..37 ";" [] [Whitespace(" ")]
         3: R_CURLY@37..38 "}" [] []
-  3: EOF@38..39 "" [Newline("\n")] []
+    2: JS_FUNCTION_STATEMENT@38..69
+      0: (empty)
+      1: FUNCTION_KW@38..48 "function" [Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@48..49
+        0: IDENT@48..49 "f" [] []
+      4: (empty)
+      5: JS_PARAMETERS@49..52
+        0: L_PAREN@49..50 "(" [] []
+        1: JS_PARAMETER_LIST@50..50
+        2: R_PAREN@50..52 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@52..69
+        0: L_CURLY@52..54 "{" [] [Whitespace(" ")]
+        1: JS_DIRECTIVE_LIST@54..54
+        2: JS_STATEMENT_LIST@54..68
+          0: JS_VARIABLE_STATEMENT@54..61
+            0: JS_VARIABLE_DECLARATIONS@54..59
+              0: VAR_KW@54..58 "var" [] [Whitespace(" ")]
+              1: JS_VARIABLE_DECLARATION_LIST@58..59
+                0: JS_VARIABLE_DECLARATION@58..59
+                  0: JS_IDENTIFIER_BINDING@58..59
+                    0: IDENT@58..59 "a" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
+            1: SEMICOLON@59..61 ";" [] [Whitespace(" ")]
+          1: JS_VARIABLE_STATEMENT@61..68
+            0: JS_VARIABLE_DECLARATIONS@61..66
+              0: VAR_KW@61..65 "var" [] [Whitespace(" ")]
+              1: JS_VARIABLE_DECLARATION_LIST@65..66
+                0: JS_VARIABLE_DECLARATION@65..66
+                  0: JS_IDENTIFIER_BINDING@65..66
+                    0: IDENT@65..66 "a" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
+            1: SEMICOLON@66..68 ";" [] [Whitespace(" ")]
+        3: R_CURLY@68..69 "}" [] []
+    3: JS_FUNCTION_STATEMENT@69..110
+      0: (empty)
+      1: FUNCTION_KW@69..79 "function" [Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@79..80
+        0: IDENT@79..80 "f" [] []
+      4: (empty)
+      5: JS_PARAMETERS@80..83
+        0: L_PAREN@80..81 "(" [] []
+        1: JS_PARAMETER_LIST@81..81
+        2: R_PAREN@81..83 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@83..110
+        0: L_CURLY@83..85 "{" [] [Whitespace(" ")]
+        1: JS_DIRECTIVE_LIST@85..85
+        2: JS_STATEMENT_LIST@85..109
+          0: JS_FUNCTION_STATEMENT@85..100
+            0: (empty)
+            1: FUNCTION_KW@85..94 "function" [] [Whitespace(" ")]
+            2: (empty)
+            3: JS_IDENTIFIER_BINDING@94..95
+              0: IDENT@94..95 "a" [] []
+            4: (empty)
+            5: JS_PARAMETERS@95..98
+              0: L_PAREN@95..96 "(" [] []
+              1: JS_PARAMETER_LIST@96..96
+              2: R_PAREN@96..98 ")" [] [Whitespace(" ")]
+            6: (empty)
+            7: JS_FUNCTION_BODY@98..100
+              0: L_CURLY@98..99 "{" [] []
+              1: JS_DIRECTIVE_LIST@99..99
+              2: JS_STATEMENT_LIST@99..99
+              3: R_CURLY@99..100 "}" [] []
+          1: JS_EMPTY_STATEMENT@100..102
+            0: SEMICOLON@100..102 ";" [] [Whitespace(" ")]
+          2: JS_VARIABLE_STATEMENT@102..109
+            0: JS_VARIABLE_DECLARATIONS@102..107
+              0: VAR_KW@102..106 "var" [] [Whitespace(" ")]
+              1: JS_VARIABLE_DECLARATION_LIST@106..107
+                0: JS_VARIABLE_DECLARATION@106..107
+                  0: JS_IDENTIFIER_BINDING@106..107
+                    0: IDENT@106..107 "a" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
+            1: SEMICOLON@107..109 ";" [] [Whitespace(" ")]
+        3: R_CURLY@109..110 "}" [] []
+  3: EOF@110..111 "" [Newline("\n")] []

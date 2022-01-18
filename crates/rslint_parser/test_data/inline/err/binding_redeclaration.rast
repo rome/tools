@@ -146,10 +146,8 @@ JsModule {
                         kind: LET_KW@73..77 "let" [] [Whitespace(" ")],
                         items: JsVariableDeclarationList [
                             JsVariableDeclaration {
-                                id: JsUnknownBinding {
-                                    items: [
-                                        IDENT@77..80 "baz" [] [],
-                                    ],
+                                id: JsIdentifierBinding {
+                                    name_token: IDENT@77..80 "baz" [] [],
                                 },
                                 excl_token: missing (optional),
                                 type_annotation: missing (optional),
@@ -406,7 +404,7 @@ JsModule {
             0: LET_KW@73..77 "let" [] [Whitespace(" ")]
             1: JS_VARIABLE_DECLARATION_LIST@77..80
               0: JS_VARIABLE_DECLARATION@77..80
-                0: JS_UNKNOWN_BINDING@77..80
+                0: JS_IDENTIFIER_BINDING@77..80
                   0: IDENT@77..80 "baz" [] []
                 1: (empty)
                 2: (empty)
@@ -513,15 +511,6 @@ error[SyntaxError]: The binding "a" has been already declared
   │     ^          - Second declaration here
   │     │           
   │     First declaration here
-
---
-error[SyntaxError]: The binding "baz" has been already declared
-  ┌─ binding_redeclaration.js:3:18
-  │
-3 │ var ipsum; { var baz; let baz; }
-  │                  ^^^      --- Second declaration here
-  │                  │         
-  │                  First declaration here
 
 --
 error[SyntaxError]: The binding "lorem" has been already declared

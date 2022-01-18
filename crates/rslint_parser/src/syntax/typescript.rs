@@ -4,7 +4,7 @@ use super::expr::{parse_expr_or_assignment, parse_lhs_expr, parse_literal_expres
 use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
-use crate::state::{InBindingListForSignature, SignatureFlags};
+use crate::state::{BindingContext, EnterHoistedScope, InBindingListForSignature, SignatureFlags};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::{is_at_name, parse_any_name};
 use crate::syntax::function::parse_parameter_list;
@@ -193,6 +193,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
         if p.at(T![<]) {
             no_recover!(p, ts_type_params(p));
         }
+        let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
         parse_parameter_list(p, SignatureFlags::empty())
             .or_add_diagnostic(p, js_parse_error::expected_parameters);
         if p.at(T![:]) {
@@ -259,6 +260,7 @@ pub fn ts_signature_member(p: &mut Parser, construct_sig: bool) -> Option<Comple
         no_recover!(p, ts_type_params(p));
     }
 
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
     p.with_state(InBindingListForSignature(true), |p| {
         parse_parameter_list(
             p,
@@ -406,6 +408,7 @@ pub fn ts_fn_or_constructor_type(p: &mut Parser, fn_type: bool) -> Option<Comple
     if p.at(T![<]) {
         ts_type_params(p);
     }
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
     parse_parameter_list(p, SignatureFlags::empty())
         .or_add_diagnostic(p, js_parse_error::expected_parameters);
     if ts_type_or_type_predicate_ann(p, T![=>]).is_none() && p.state.no_recovery {

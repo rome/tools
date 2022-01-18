@@ -31,10 +31,8 @@ JsModule {
                 kind: VAR_KW@17..21 "var" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
-                        id: JsUnknownBinding {
-                            items: [
-                                IDENT@21..22 "f" [] [],
-                            ],
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@21..22 "f" [] [],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -123,14 +121,73 @@ JsModule {
                 r_curly_token: R_CURLY@71..72 "}" [] [],
             },
         },
+        JsFunctionStatement {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@72..82 "function" [Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@82..83 "f" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@83..84 "(" [] [],
+                items: JsParameterList [],
+                r_paren_token: R_PAREN@84..86 ")" [] [Whitespace(" ")],
+            },
+            return_type: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@86..88 "{" [] [Whitespace(" ")],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [
+                    JsVariableStatement {
+                        declarations: JsVariableDeclarations {
+                            kind: VAR_KW@88..92 "var" [] [Whitespace(" ")],
+                            items: JsVariableDeclarationList [
+                                JsVariableDeclaration {
+                                    id: JsIdentifierBinding {
+                                        name_token: IDENT@92..93 "a" [] [],
+                                    },
+                                    excl_token: missing (optional),
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            ],
+                        },
+                        semicolon_token: SEMICOLON@93..95 ";" [] [Whitespace(" ")],
+                    },
+                    JsFunctionStatement {
+                        async_token: missing (optional),
+                        function_token: FUNCTION_KW@95..104 "function" [] [Whitespace(" ")],
+                        star_token: missing (optional),
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@104..105 "a" [] [],
+                        },
+                        type_parameters: missing (optional),
+                        parameters: JsParameters {
+                            l_paren_token: L_PAREN@105..106 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@106..108 ")" [] [Whitespace(" ")],
+                        },
+                        return_type: missing (optional),
+                        body: JsFunctionBody {
+                            l_curly_token: L_CURLY@108..109 "{" [] [],
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [],
+                            r_curly_token: R_CURLY@109..111 "}" [] [Whitespace(" ")],
+                        },
+                    },
+                ],
+                r_curly_token: R_CURLY@111..112 "}" [] [],
+            },
+        },
     ],
-    eof_token: EOF@72..73 "" [Newline("\n")] [],
+    eof_token: EOF@112..113 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..73
+0: JS_MODULE@0..113
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..72
+  2: JS_MODULE_ITEM_LIST@0..112
     0: JS_FUNCTION_STATEMENT@0..15
       0: (empty)
       1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
@@ -155,7 +212,7 @@ JsModule {
         0: VAR_KW@17..21 "var" [] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATION_LIST@21..22
           0: JS_VARIABLE_DECLARATION@21..22
-            0: JS_UNKNOWN_BINDING@21..22
+            0: JS_IDENTIFIER_BINDING@21..22
               0: IDENT@21..22 "f" [] []
             1: (empty)
             2: (empty)
@@ -219,16 +276,52 @@ JsModule {
         1: JS_DIRECTIVE_LIST@71..71
         2: JS_STATEMENT_LIST@71..71
         3: R_CURLY@71..72 "}" [] []
-  3: EOF@72..73 "" [Newline("\n")] []
---
-error[SyntaxError]: The binding "f" has been already declared
-  ┌─ function_redeclaration.js:1:10
-  │
-1 │ function f() {}; var f;
-  │          ^           - Second declaration here
-  │          │            
-  │          First declaration here
-
+    8: JS_FUNCTION_STATEMENT@72..112
+      0: (empty)
+      1: FUNCTION_KW@72..82 "function" [Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@82..83
+        0: IDENT@82..83 "f" [] []
+      4: (empty)
+      5: JS_PARAMETERS@83..86
+        0: L_PAREN@83..84 "(" [] []
+        1: JS_PARAMETER_LIST@84..84
+        2: R_PAREN@84..86 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@86..112
+        0: L_CURLY@86..88 "{" [] [Whitespace(" ")]
+        1: JS_DIRECTIVE_LIST@88..88
+        2: JS_STATEMENT_LIST@88..111
+          0: JS_VARIABLE_STATEMENT@88..95
+            0: JS_VARIABLE_DECLARATIONS@88..93
+              0: VAR_KW@88..92 "var" [] [Whitespace(" ")]
+              1: JS_VARIABLE_DECLARATION_LIST@92..93
+                0: JS_VARIABLE_DECLARATION@92..93
+                  0: JS_IDENTIFIER_BINDING@92..93
+                    0: IDENT@92..93 "a" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
+            1: SEMICOLON@93..95 ";" [] [Whitespace(" ")]
+          1: JS_FUNCTION_STATEMENT@95..111
+            0: (empty)
+            1: FUNCTION_KW@95..104 "function" [] [Whitespace(" ")]
+            2: (empty)
+            3: JS_IDENTIFIER_BINDING@104..105
+              0: IDENT@104..105 "a" [] []
+            4: (empty)
+            5: JS_PARAMETERS@105..108
+              0: L_PAREN@105..106 "(" [] []
+              1: JS_PARAMETER_LIST@106..106
+              2: R_PAREN@106..108 ")" [] [Whitespace(" ")]
+            6: (empty)
+            7: JS_FUNCTION_BODY@108..111
+              0: L_CURLY@108..109 "{" [] []
+              1: JS_DIRECTIVE_LIST@109..109
+              2: JS_STATEMENT_LIST@109..109
+              3: R_CURLY@109..111 "}" [] [Whitespace(" ")]
+        3: R_CURLY@111..112 "}" [] []
+  3: EOF@112..113 "" [Newline("\n")] []
 --
 error[SyntaxError]: The binding "ff" has been already declared
   ┌─ function_redeclaration.js:2:10
@@ -242,3 +335,4 @@ error[SyntaxError]: The binding "ff" has been already declared
 function f() {}; var f;
 function ff() {}; let ff;
 var x; function x() {}
+function f() { var a; function a() {} }

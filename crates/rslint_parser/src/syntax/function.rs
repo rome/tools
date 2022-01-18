@@ -1,7 +1,7 @@
 use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::state::{
-    BindingContext, EnterFunction, EnterFunctionDeclaration, EnterHoistedScope, EnterParameters,
-    SignatureFlags,
+    BindingContext, EnterFunction, EnterFunctionDeclaration, EnterHoistedScope, EnterLexicalScope,
+    EnterParameters, SignatureFlags,
 };
 use crate::syntax::binding::{parse_binding, parse_binding_pattern};
 use crate::syntax::class::parse_initializer_clause;
@@ -53,6 +53,8 @@ use rslint_syntax::{JsSyntaxKind, T};
 //
 // test function_block_declaration
 // let a = 2; function f() { let a = 7; }
+// function f() { var a; var a; }
+// function f() { function a() {}; var a; }
 //
 // test function_redeclaration_script
 // // SCRIPT
@@ -66,6 +68,8 @@ use rslint_syntax::{JsSyntaxKind, T};
 // function f() {}; var f;
 // function ff() {}; let ff;
 // var x; function x() {}
+// function f() { var a; function a() {} }
+
 pub(super) fn parse_function_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     if !is_at_function(p) {
         return Absent;
@@ -170,10 +174,9 @@ fn is_at_function(p: &Parser) -> bool {
     p.at_ts(token_set![T![async], T![function]]) || is_at_async_function(p, LineBreak::DoNotCheck)
 }
 
-// test function_parameters_redeclaration
+// test_err function_parameters_redeclaration
 // var a; function f(a) { let a; }
 fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMarker {
-    // let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Function));
     let mut uses_invalid_syntax =
         kind.is_statement() && p.eat(T![declare]) && TypeScript.is_unsupported(p);
     let mut flags = SignatureFlags::empty();
@@ -211,6 +214,8 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         })
         .ok();
 
+    // hoisted scope should be the same of the function of the body
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
     parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_parameters);
 
     TypeScript
@@ -251,7 +256,9 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
 // }
 pub(super) fn parse_function_body(p: &mut Parser, flags: SignatureFlags) -> ParsedSyntax {
     p.with_state(EnterFunction(flags), |p| {
-        parse_block_impl(p, JS_FUNCTION_BODY)
+        p.with_state(EnterLexicalScope(BindingContext::FunctionBlock), |p| {
+            parse_block_impl(p, JS_FUNCTION_BODY)
+        })
     })
 }
 
@@ -372,6 +379,7 @@ pub(super) fn parse_arrow_function_parameters(
     }
 
     if p.at(T!['(']) {
+        let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
         parse_parameter_list(p, flags)
     } else {
         // test_err async_arrow_expr_await_parameter
@@ -447,7 +455,6 @@ pub(super) fn parse_parameters_list(
     parse_parameter: impl Fn(&mut Parser) -> ParsedSyntax,
     list_kind: JsSyntaxKind,
 ) {
-    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
     let mut first = true;
     let has_l_paren = p.expect(T!['(']);
 

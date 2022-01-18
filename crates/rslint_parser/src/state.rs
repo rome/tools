@@ -59,6 +59,8 @@ pub enum BindingContext {
     Module,
     /// For generic blocks  { }
     Block,
+    /// A block of a function, which applies different rules compared to [BindingContext::Block]
+    FunctionBlock,
     /// Track statements that involve a loop such as `for` loops
     LoopStatements,
     /// Function arguments
@@ -216,11 +218,16 @@ impl ParserState {
                 BindingContext::Block => {
                     if let Some(binding_variable) = self.binding_variable() {
                         match binding_variable {
-                            // function bindings and hoisted bindings can't override
-                            // lexical names only in strict mode
-                            NameType::Function | NameType::Hoisted => self
+                            NameType::Hoisted => self
                                 .strict()
                                 .and_then(|_| self.lexical_names.get(identifier_name)),
+
+                            NameType::Function => self
+                                .strict()
+                                .and_then(|_| self.lexical_names.get(identifier_name))
+                                .or_else(|| self.hoisted_names.get(identifier_name)),
+
+                            NameType::Lexical(_) => self.lexical_names.get(identifier_name),
                             _ => self.lexical_names.get(identifier_name),
                         }
                     } else {
@@ -242,6 +249,26 @@ impl ParserState {
                     },
                     _ => None,
                 },
+                BindingContext::FunctionBlock => {
+                    if let Some(binding_variable) = self.binding_variable() {
+                        match binding_variable {
+                            // At the top level of a function, or script, function declarations are treated
+                            // like var declarations rather than like lexical declarations.
+                            //
+                            // https://tc39.es/ecma262/multipage/syntax-directed-operations.html#sec-static-semantics-toplevellexicallydeclarednames
+                            NameType::Hoisted | NameType::Function => {
+                                self.lexical_names.get(identifier_name)
+                            }
+
+                            NameType::Lexical(_) | NameType::Module => self
+                                .lexical_names
+                                .get(identifier_name)
+                                .or_else(|| self.hoisted_names.get(identifier_name)),
+                        }
+                    } else {
+                        None
+                    }
+                }
                 BindingContext::Function => self.strict().and_then(|_| {
                     self.hoisted_names
                         .get(identifier_name)
@@ -271,31 +298,45 @@ impl ParserState {
     pub fn register_name(&mut self, identifier_name: String, range: Range<usize>) {
         if let Some(binding_context) = self.binding_context() {
             match binding_context {
-                BindingContext::Hoisted => self.register_lexical_type(identifier_name, range),
+                BindingContext::Hoisted => {
+                    match self.binding_variable() {
+                        Some(binding_variable) => match binding_variable {
+                            NameType::Hoisted => {
+                                self.hoisted_names.insert(identifier_name, range);
+                            }
+                            NameType::Lexical(_) => {
+                                self.lexical_names.insert(identifier_name, range);
+                            }
+                            NameType::Module => {
+                                self.lexical_names.insert(identifier_name, range);
+                            }
+                            NameType::Function => {
+                                self.hoisted_names.insert(identifier_name, range);
+                            }
+                        },
+                        // cases where variables don't have a binding variable "var", they are
+                        // assigned to the hoisted environment
+                        None => {
+                            self.hoisted_names.insert(identifier_name, range);
+                        }
+                    }
+                }
                 BindingContext::Block => {
                     match self.binding_variable() {
-                        Some(binding_variable) => {
-                            match binding_variable {
-                                NameType::Hoisted => {
-                                    // inside a block scope, hoisted variables needs to be tracked
-                                    // inside a lexical environment too;
-                                    // For example `ar a; { var b; let b; }` should throw an error for  redeclaration of `b`
-                                    // but `var a; var b; { let b; }` should not
-                                    self.hoisted_names
-                                        .insert(identifier_name.clone(), range.clone());
-                                    self.lexical_names.insert(identifier_name, range);
-                                }
-                                NameType::Lexical(_) => {
-                                    self.lexical_names.insert(identifier_name, range);
-                                }
-                                NameType::Module => {
-                                    self.lexical_names.insert(identifier_name, range);
-                                }
-                                NameType::Function => {
-                                    self.lexical_names.insert(identifier_name, range);
-                                }
+                        Some(binding_variable) => match binding_variable {
+                            NameType::Hoisted => {
+                                self.hoisted_names.insert(identifier_name, range);
                             }
-                        }
+                            NameType::Lexical(_) => {
+                                self.lexical_names.insert(identifier_name, range);
+                            }
+                            NameType::Module => {
+                                self.lexical_names.insert(identifier_name, range);
+                            }
+                            NameType::Function => {
+                                self.lexical_names.insert(identifier_name, range);
+                            }
+                        },
                         // cases where variables don't have a binding variable "var", they are
                         // assigned to the lexical environment
                         None => {
@@ -306,29 +347,38 @@ impl ParserState {
                 BindingContext::Function => {
                     self.lexical_names.insert(identifier_name, range);
                 }
+                BindingContext::FunctionBlock => {
+                    match self.binding_variable() {
+                        Some(binding_variable) => match binding_variable {
+                            NameType::Hoisted => {
+                                self.hoisted_names.insert(identifier_name, range);
+                            }
+                            NameType::Lexical(_) => {
+                                self.lexical_names.insert(identifier_name, range);
+                            }
+                            NameType::Module => {
+                                self.lexical_names.insert(identifier_name, range);
+                            }
+                            // At the top level of a function, or script, function declarations are treated
+                            // like var declarations rather than like lexical declarations.
+                            //
+                            // https://tc39.es/ecma262/multipage/syntax-directed-operations.html#sec-static-semantics-toplevellexicallydeclarednames
+                            NameType::Function => {
+                                self.hoisted_names.insert(identifier_name, range);
+                            }
+                        },
+                        // cases where variables don't have a binding variable "var", they are
+                        // assigned to the lexical environment
+                        None => {
+                            self.lexical_names.insert(identifier_name, range);
+                        }
+                    }
+                }
                 BindingContext::LoopStatements
                 | BindingContext::Arguments
                 | BindingContext::Module => {
                     self.hoisted_names.insert(identifier_name, range);
                 }
-            }
-        }
-    }
-
-    /// register a function based on its binding variables:
-    /// `var a, b;` vs `let d, c;`
-    fn register_lexical_type(&mut self, identifier_name: String, range: Range<usize>) {
-        match self.binding_variable() {
-            Some(name_type) => match name_type {
-                NameType::Hoisted => {
-                    self.hoisted_names.insert(identifier_name, range);
-                }
-                NameType::Function | NameType::Lexical(_) | NameType::Module => {
-                    self.lexical_names.insert(identifier_name, range);
-                }
-            },
-            None => {
-                self.hoisted_names.insert(identifier_name, range);
             }
         }
     }

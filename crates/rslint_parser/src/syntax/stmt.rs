@@ -184,7 +184,9 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
             export
         }),
         T![;] => parse_empty_statement(p),
-        T!['{'] => parse_block_stmt(p),
+        T!['{'] => p.with_state(EnterLexicalScope(BindingContext::Block), |p| {
+            parse_block_stmt(p)
+        }),
         T![if] => parse_if_statement(p),
         T![with] => parse_with_statement(p),
         T![while] => parse_while_statement(p),
@@ -601,6 +603,10 @@ fn parse_empty_statement(p: &mut Parser) -> ParsedSyntax {
 // {{{{}}}}
 // { foo = bar; }
 // let a; { let a; }
+//
+// test_err block_redeclaration
+// { var a; { var b; }; function b() {} }
+
 /// A block statement consisting of statements wrapped in curly brackets.
 pub(crate) fn parse_block_stmt(p: &mut Parser) -> ParsedSyntax {
     parse_block_impl(p, JS_BLOCK_STATEMENT)
@@ -612,7 +618,6 @@ pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> Pars
         return Absent;
     }
 
-    let p = &mut *p.with_scoped_state(EnterLexicalScope(BindingContext::Block));
     let m = p.start();
     p.bump(T!['{']);
 
@@ -1628,7 +1633,9 @@ fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax {
     p.bump_any(); // bump catch
 
     parse_catch_declaration(p).ok();
-    parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
+    p.with_state(EnterLexicalScope(BindingContext::Block), |p| {
+        parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement)
+    });
 
     Present(m.complete(p, JS_CATCH_CLAUSE))
 }
@@ -1716,7 +1723,9 @@ pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.bump_any(); // eat try
 
-    parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
+    p.with_state(EnterLexicalScope(BindingContext::Block), |p| {
+        parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement)
+    });
 
     let catch = parse_catch_clause(p);
 
@@ -1725,7 +1734,9 @@ pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
 
         let finalizer = p.start();
         p.bump_any();
-        parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement);
+        p.with_state(EnterLexicalScope(BindingContext::Block), |p| {
+            parse_block_stmt(p).or_add_diagnostic(p, js_parse_error::expected_block_statement)
+        });
         finalizer.complete(p, JS_FINALLY_CLAUSE);
         Present(m.complete(p, JS_TRY_FINALLY_STATEMENT))
     } else {
