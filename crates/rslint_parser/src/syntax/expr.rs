@@ -75,6 +75,7 @@ const STARTS_EXPR: TokenSet = token_set![
     T![class],
     T![import],
     T![super],
+    T![#],
     BACKTICK,
     TRUE_KW,
     FALSE_KW,
@@ -294,7 +295,14 @@ pub(super) fn parse_conditional_expr(p: &mut Parser) -> ParsedSyntax {
 
 /// A binary expression such as `2 + 2` or `foo * bar + 2` or a logical expression 'a || b'
 fn parse_binary_or_logical_expression(p: &mut Parser) -> ParsedSyntax {
-    let left = parse_unary_expr(p);
+    // test private_name_presence_check
+    // class A {
+    // 	#prop;
+    // 	test() {
+    //    #prop in this
+    //  }
+    // }
+    let left = parse_unary_expr(p).or_else(|| parse_private_name(p));
 
     parse_binary_or_logical_expression_recursive(p, left, 0)
 }
@@ -380,6 +388,8 @@ fn parse_binary_or_logical_expression_recursive(
     // foo(foo ||)
     let expression_kind = match op {
         T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
+        T![instanceof] => JS_INSTANCEOF_EXPRESSION,
+        T![in] => JS_IN_EXPRESSION,
         _ => JS_BINARY_EXPRESSION,
     };
 
@@ -392,6 +402,15 @@ fn parse_binary_or_logical_expression_recursive(
         p.error(err);
 
         parse_binary_or_logical_expression_recursive(p, Absent, 0)
+    } else if p.at(T![#]) {
+        // test private_name_presence_check_recursive
+        // class A {
+        // 	#prop;
+        // 	test() {
+        //    #prop in #prop in this
+        //  }
+        // }
+        parse_binary_or_logical_expression(p)
     } else {
         parse_unary_expr(p)
     };

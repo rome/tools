@@ -281,6 +281,8 @@ JsAnyExpression =
 	| JsFunctionExpression
 	| JsIdentifierExpression
 	| JsImportCallExpression
+	| JsInExpression
+	| JsInstanceofExpression
 	| JsLogicalExpression
 	| JsNewExpression
 	| JsObjectExpression
@@ -449,9 +451,23 @@ JsBinaryExpression =
     operator: (
     	'<' | '>' | '<=' | '>=' | '==' | '===' | '!=' | '!=='
     	| '+' | '-' | '*' | '/' | '%' | '**' | '<<' | '>>' | '>>>'
-    	| '&' | '|' | '^' | 'in' | 'instanceof'
+    	| '&' | '|' | '^'
 		)
     right: JsAnyExpression
+
+JsInstanceofExpression =
+	left: JsAnyExpression
+	'instanceof'
+	right: JsAnyExpression
+
+JsInExpression =
+	property: JsAnyInProperty
+	'in'
+	object: JsAnyExpression
+
+JsAnyInProperty =
+	JsPrivateName
+	| JsAnyExpression
 
 JsLogicalExpression =
 	left: JsAnyExpression
