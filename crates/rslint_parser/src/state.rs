@@ -375,11 +375,11 @@ bitflags! {
     /// Flags describing the context of a function.
     pub(crate) struct SignatureFlags: u8 {
         /// Is the function in an async context
-        const ASYNC 		= 0b00001;
+        const ASYNC 		= 1 << 0;
         /// Is the function in a generator context
-        const GENERATOR 	= 0b00010;
+        const GENERATOR 	= 1 << 1;
         /// Is the function a constructor (or constructor context)
-        const CONSTRUCTOR 	= 0b00100;
+        const CONSTRUCTOR 	= 1 << 2;
     }
 }
 
@@ -415,40 +415,40 @@ bitflags! {
     struct ParsingContextFlags: u16 {
         /// Whether the parser is in a generator function like `function* a() {}`
         /// Matches the `Yield` parameter in the ECMA spec
-        const IN_GENERATOR = 0b0000000000000001;
+        const IN_GENERATOR = 1 << 0;
         /// Whether the parser is inside a function
-        const IN_FUNCTION = 0b0000000000000010;
+        const IN_FUNCTION = 1 << 2;
         /// Whatever the parser is inside a constructor
-        const IN_CONSTRUCTOR = 0b0000000000000100;
+        const IN_CONSTRUCTOR = 1 << 3;
 
         /// Is async allowed in this context. Either because it's an async function or top level await is supported.
         /// Equivalent to the `Async` generator in the ECMA spec
-        const IN_ASYNC = 0b0000000000001000;
+        const IN_ASYNC = 1 << 4;
 
         /// Whether the parser is parsing a top-level statement (not inside a class, function, parameter) or not
-        const TOP_LEVEL = 0b0000000000010000;
+        const TOP_LEVEL = 1 << 5;
 
         /// Whether `in` should be counted in a binary expression
         /// this is for `for...in` statements to prevent ambiguity.
-        const INCLUDE_IN = 0b0000000000100000;
+        const INCLUDE_IN = 1 << 6;
         /// Whether the parser is in a conditional expr (ternary expr)
-        const IN_CONDITION_EXPRESSION = 0b0000000001000000;
+        const IN_CONDITION_EXPRESSION = 1 << 7;
 
         /// Whether the parser is in an iteration or switch statement and
         /// `break` is allowed.
-        const BREAK_ALLOWED = 0b0000000010000000;
+        const BREAK_ALLOWED = 1 << 8;
 
         /// Whether the parser is in an iteration statement and `continue` is allowed.
-        const CONTINUE_ALLOWED = 0b0000000100000000;
+        const CONTINUE_ALLOWED = 1 << 9;
 
         /// If false, object expressions are not allowed to be parsed
         /// inside an expression.
         ///
         /// Also applies for object patterns
-        const ALLOW_OBJECT_EXPRESSION = 0b0000001000000000;
+        const ALLOW_OBJECT_EXPRESSION = 1 << 10;
 
         /// Whether we potentially are in a place to parse an arrow expression
-        const POTENTIAL_ARROW_START = 0b0000010000000000;
+        const POTENTIAL_ARROW_START = 1 << 11;
 
         const LOOP = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits;
 
