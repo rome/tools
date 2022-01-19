@@ -44,14 +44,32 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
+        JsExpressionStatement {
+            expression: JsNumberLiteralExpression {
+                value_token: JS_NUMBER_LITERAL@32..34 "0" [Newline("\n")] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsNumberLiteralExpression {
+                value_token: JS_NUMBER_LITERAL@34..38 "0.0" [Newline("\n")] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsBigIntLiteralExpression {
+                value_token: JS_BIG_INT_LITERAL@38..41 "0n" [Newline("\n")] [],
+            },
+            semicolon_token: missing (optional),
+        },
     ],
-    eof_token: EOF@32..33 "" [Newline("\n")] [],
+    eof_token: EOF@41..42 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..33
+0: JS_MODULE@0..42
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..32
+  2: JS_MODULE_ITEM_LIST@0..41
     0: JS_EXPRESSION_STATEMENT@0..1
       0: JS_NUMBER_LITERAL_EXPRESSION@0..1
         0: JS_NUMBER_LITERAL@0..1 "5" [] []
@@ -80,4 +98,16 @@ JsModule {
       0: JS_NULL_LITERAL_EXPRESSION@27..32
         0: NULL_KW@27..32 "null" [Newline("\n")] []
       1: (empty)
-  3: EOF@32..33 "" [Newline("\n")] []
+    7: JS_EXPRESSION_STATEMENT@32..34
+      0: JS_NUMBER_LITERAL_EXPRESSION@32..34
+        0: JS_NUMBER_LITERAL@32..34 "0" [Newline("\n")] []
+      1: (empty)
+    8: JS_EXPRESSION_STATEMENT@34..38
+      0: JS_NUMBER_LITERAL_EXPRESSION@34..38
+        0: JS_NUMBER_LITERAL@34..38 "0.0" [Newline("\n")] []
+      1: (empty)
+    9: JS_EXPRESSION_STATEMENT@38..41
+      0: JS_BIG_INT_LITERAL_EXPRESSION@38..41
+        0: JS_BIG_INT_LITERAL@38..41 "0n" [Newline("\n")] []
+      1: (empty)
+  3: EOF@41..42 "" [Newline("\n")] []

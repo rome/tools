@@ -5,3 +5,6 @@ false
 "foo"
 'bar'
 null
+0
+0.0
+0n
