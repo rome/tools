@@ -640,17 +640,16 @@ fn parse_class_member_impl(
                         member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
                     } else {
                         let has_l_paren = p.expect(T!['(']);
-
+                        let p =
+                            &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
                         p.with_state(
                             EnterParameters {
                                 signature_flags: SignatureFlags::empty(),
                                 allow_object_expressions: has_l_paren,
                             },
                             |p| {
-                                p.with_state(EnterHoistedScope(BindingContext::Arguments), |p| {
-                                    parse_parameter(p)
-                                        .or_add_diagnostic(p, js_parse_error::expected_parameter);
-                                })
+                                parse_parameter(p)
+                                    .or_add_diagnostic(p, js_parse_error::expected_parameter);
                             },
                         );
                         p.expect(T![')']);

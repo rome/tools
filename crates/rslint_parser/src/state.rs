@@ -216,7 +216,7 @@ impl ParserState {
     }
 
     /// Checks if a binding has been already registered
-    pub fn clashes_with_defined_binding(&self, identifier_name: &str) -> Option<&Range<usize>> {
+    pub fn clashes_with_defined_name(&self, identifier_name: &str) -> Option<&Range<usize>> {
         if let Some(binding_context) = self.binding_context() {
             match binding_context {
                 // hoisted variables can be redeclared without problems
