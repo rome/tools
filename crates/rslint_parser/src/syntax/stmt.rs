@@ -1305,19 +1305,6 @@ fn parse_for_head(p: &mut Parser, is_for_await: bool) -> JsSyntaxKind {
         let checkpoint = p.checkpoint();
 
         let starts_with_async_of = p.cur_src() == "async" && p.nth_src(1) == "of";
-
-        //  for ( [lookahead ∉ { let, async of }] LeftHandSideExpression[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
-        // [+Await] for await ( [lookahead ≠ let] LeftHandSideExpression[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
-
-        // test for_await_async_identifier
-        // let async;
-        // async function fn() {
-        //   for await (async of [7]);
-        // }
-
-        // test_err for_of_async_identifier
-        // let async;
-        // for (async of [1]) ;
         let init_expr = p.with_state(IncludeIn(false), parse_expression);
 
         if p.at(T![in]) || p.cur_src() == "of" {
@@ -1338,6 +1325,18 @@ fn parse_for_head(p: &mut Parser, is_for_await: bool) -> JsSyntaxKind {
                     p.error(err);
                     assignment.change_to_unknown(p);
                 } else if p.cur_src() == "of" && !is_for_await && starts_with_async_of {
+                    //  for ( [lookahead ∉ { let, async of }] LeftHandSideExpression[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
+                    // [+Await] for await ( [lookahead ≠ let] LeftHandSideExpression[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
+
+                    // test for_await_async_identifier
+                    // let async;
+                    // async function fn() {
+                    //   for await (async of [7]);
+                    // }
+
+                    // test_err for_of_async_identifier
+                    // let async;
+                    // for (async of [1]) ;
                     p.error(
                         p.err_builder(
                             "The left-hand side of a `for...of` statement may not be `async`",
