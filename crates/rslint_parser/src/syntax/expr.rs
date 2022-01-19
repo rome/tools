@@ -1514,16 +1514,21 @@ pub fn parse_template_literal(p: &mut Parser, tag: ParsedSyntax) -> CompletedMar
     while !p.at(EOF) && !p.at(BACKTICK) {
         match p.cur() {
             TEMPLATE_CHUNK => {
-                            let m = p.start();
-                            p.bump_any();
-                            m.complete(p, TEMPLATE_CHUNK_ELEMENT);
-                        },
+                let m = p.start();
+                p.bump_any();
+                m.complete(p, TEMPLATE_CHUNK_ELEMENT);
+            },
             DOLLAR_CURLY => {
                 let e = p.start();
                 p.bump_any();
 				parse_expression(p, ExpressionContext::default()).or_add_diagnostic(p, js_parse_error::expected_expression);
 				p.expect(T!['}']);
                 e.complete(p, TEMPLATE_ELEMENT);
+            }
+            ERROR_TOKEN => {
+                let err = p.err_builder("Invalid template literal")
+                .primary(p.cur_tok().range(), "");
+                p.err_and_bump(err, JsSyntaxKind::JS_UNKNOWN_EXPRESSION);
             }
             t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
         }

@@ -2578,10 +2578,16 @@ impl<'src> Lexer<'src> {
                     return tok!(BACKTICK, 1);
                 }
                 '`' => {
-                    return (
-                        Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
-                        diagnostic,
-                    );
+                    return match diagnostic {
+                        Some(diagnostic) => (
+                            Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
+                            Some(diagnostic),
+                        ),
+                        None => (
+                            Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
+                            None,
+                        ),
+                    };
                 }
                 '\\' => {
                     if let Some(err) = self.validate_escape_sequence() {
@@ -2594,10 +2600,16 @@ impl<'src> Lexer<'src> {
                     return (Token::new(JsSyntaxKind::DOLLAR_CURLY, 2), diagnostic);
                 }
                 '$' if self.bytes.get(self.cur + 1) == Some(&b'{') => {
-                    return (
-                        Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
-                        diagnostic,
-                    )
+                    return match diagnostic {
+                        Some(diagnostic) => (
+                            Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
+                            Some(diagnostic),
+                        ),
+                        None => (
+                            Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
+                            None,
+                        ),
+                    };
                 }
                 _ => {
                     let _ = self.next();
@@ -2609,7 +2621,7 @@ impl<'src> Lexer<'src> {
             .primary(self.cur..self.cur + 1, "");
 
         (
-            Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
+            Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
             Some(Box::new(err)),
         )
     }
