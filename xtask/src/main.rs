@@ -69,7 +69,8 @@ fn main() -> Result<()> {
                 .opt_value_from_str("--criterion")
                 .unwrap()
                 .unwrap_or(true);
-            xtask::libs::run(filter, criterion);
+            let baseline: Option<String> = args.opt_value_from_str("--save-baseline").unwrap();
+            xtask::libs::run(filter, criterion, baseline);
             Ok(())
         }
         _ => {
