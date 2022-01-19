@@ -23,7 +23,6 @@ mod tables;
 mod errors;
 mod tests;
 
-use errors::*;
 pub use token::Token;
 
 #[cfg(feature = "highlight")]
@@ -80,14 +79,6 @@ fn is_id_start(c: char) -> bool {
 
 fn is_id_continue(c: char) -> bool {
     c == '$' || c == '\u{200d}' || c == '\u{200c}' || ID_Continue(c)
-}
-
-fn cannot_be_escaped(kind: JsSyntaxKind) -> bool {
-    let cannot_be_escaped = [
-        JsSyntaxKind::AWAIT_KW,
-        JsSyntaxKind::DEFAULT_KW,
-    ];
-    cannot_be_escaped.contains(&kind)
 }
 
 /// An extremely fast, lookup table based, lossless ECMAScript lexer
@@ -290,19 +281,28 @@ impl<'src> Lexer<'src> {
     fn read_unicode_escape(&mut self, advance: bool) -> Result<char, Box<Diagnostic>> {
         debug_assert_eq!(self.bytes[self.cur], b'u');
 
-        let err = invalid_digits_after_unicode_escape_sequence(self.file_id, self.cur - 1, self.cur + 1);
         for idx in 0..4 {
             match self.next_bounded() {
                 None => {
                     if !advance {
                         self.cur -= idx + 1;
                     }
+                    let err = invalid_digits_after_unicode_escape_sequence(
+                        self.file_id,
+                        self.cur - 1,
+                        self.cur + 1,
+                    );
                     return Err(err);
                 }
                 Some(b) if !b.is_ascii_hexdigit() => {
                     if !advance {
                         self.cur -= idx + 1;
                     }
+                    let err = invalid_digits_after_unicode_escape_sequence(
+                        self.file_id,
+                        self.cur - 1,
+                        self.cur + 1,
+                    );
                     return Err(err);
                 }
                 _ => {}
@@ -319,7 +319,11 @@ impl<'src> Lexer<'src> {
                     self.cur -= 4;
                 }
                 std::char::from_u32(digits).ok_or_else(|| {
-                    invalid_digits_after_unicode_escape_sequence(self.file_id, self.cur - 5, self.cur + 1)
+                    invalid_digits_after_unicode_escape_sequence(
+                        self.file_id,
+                        self.cur - 5,
+                        self.cur + 1,
+                    )
                 })
             } else {
                 // Safety: we know this is unreachable because 4 hexdigits cannot make an out of bounds char,
@@ -563,7 +567,7 @@ impl<'src> Lexer<'src> {
         let mut buf = [0u8; 16];
         let (len, start) = (first.0.encode_utf8(&mut buf).len(), first.1);
 
-        let (count, escaped) = self.consume_and_get_ident(&mut buf[len..]);
+        let (count, _) = self.consume_and_get_ident(&mut buf[len..]);
 
         let kind = match &buf[..count + len] {
             b"await" => Some(AWAIT_KW),
@@ -606,7 +610,7 @@ impl<'src> Lexer<'src> {
             b"yield" => Some(YIELD_KW),
             _ => None,
         };
-       
+
         if let Some(kind) = kind {
             (Token::new(kind, self.cur - start), None)
         } else {
