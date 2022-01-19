@@ -115,9 +115,10 @@ impl Default for ParserState {
 impl ParserState {
     pub fn new(syntax: Syntax) -> Self {
         let mut state = ParserState {
-            parsing_context: ParsingContextFlags::ALLOW_OBJECT_EXPRESSION
+            parsing_context: (ParsingContextFlags::ALLOW_OBJECT_EXPRESSION
                 | ParsingContextFlags::INCLUDE_IN
-                | ParsingContextFlags::TOP_LEVEL,
+                | ParsingContextFlags::TOP_LEVEL)
+                - ParsingContextFlags::IN_FUNCTION_BLOCK,
             label_set: HashMap::new(),
             strict: if syntax.file_kind == FileKind::Module {
                 Some(StrictMode::Module)
@@ -209,6 +210,11 @@ impl ParserState {
             .contains(ParsingContextFlags::IN_BINDING_LIST_FOR_SIGNATURE)
     }
 
+    pub fn in_function_block(&self) -> bool {
+        self.parsing_context
+            .contains(ParsingContextFlags::IN_FUNCTION_BLOCK)
+    }
+
     /// Checks if a binding has been already registered
     pub fn clashes_with_defined_binding(&self, identifier_name: &str) -> Option<&Range<usize>> {
         if let Some(binding_context) = self.binding_context() {
@@ -222,10 +228,19 @@ impl ParserState {
                                 .strict()
                                 .and_then(|_| self.lexical_names.get(identifier_name)),
 
-                            NameType::Function => self
-                                .strict()
-                                .and_then(|_| self.lexical_names.get(identifier_name))
-                                .or_else(|| self.hoisted_names.get(identifier_name)),
+                            NameType::Function => {
+                                // At the top level of a function or script, inner function declarations are treated like var declarations.
+                                //
+                                // https://tc39.es/ecma262/multipage/syntax-directed-operations.html#sec-static-semantics-toplevelvardeclarednames
+                                if self.in_function_block() {
+                                    self.strict()
+                                        .and_then(|_| self.lexical_names.get(identifier_name))
+                                } else {
+                                    self.strict()
+                                        .and_then(|_| self.lexical_names.get(identifier_name))
+                                        .or_else(|| self.hoisted_names.get(identifier_name))
+                                }
+                            }
 
                             NameType::Lexical(_) => self.lexical_names.get(identifier_name),
                             _ => self.lexical_names.get(identifier_name),
@@ -297,6 +312,9 @@ impl ParserState {
     /// It registers the name of a binding based in its name type (lexical or hoisted) and its current binding context
     pub fn register_name(&mut self, identifier_name: String, range: Range<usize>) {
         if let Some(binding_context) = self.binding_context() {
+            // if self.in_function_block() && &self.binding_variable() == Some(&NameType::Function) {
+            // }
+
             match binding_context {
                 BindingContext::Hoisted => {
                     match self.binding_variable() {
@@ -334,7 +352,14 @@ impl ParserState {
                                 self.lexical_names.insert(identifier_name, range);
                             }
                             NameType::Function => {
-                                self.lexical_names.insert(identifier_name, range);
+                                // At the top level of a function or script, inner function declarations are treated like var declarations.
+                                //
+                                // https://tc39.es/ecma262/multipage/syntax-directed-operations.html#sec-static-semantics-toplevelvardeclarednames
+                                if self.in_function_block() {
+                                    self.hoisted_names.insert(identifier_name, range);
+                                } else {
+                                    self.lexical_names.insert(identifier_name, range);
+                                }
                             }
                         },
                         // cases where variables don't have a binding variable "var", they are
@@ -606,6 +631,9 @@ bitflags! {
         /// Whether the parser is in an iteration statement and `continue` is allowed.
         const CONTINUE_ALLOWED = 0b0000001000000000;
 
+        /// Whether the parser is inside a function body
+        const IN_FUNCTION_BLOCK = 0b0000010000000000;
+
         /// If false, object expressions are not allowed to be parsed
         /// inside an expression.
         ///
@@ -798,6 +826,7 @@ impl ChangeParserState for EnterHoistedScope {
 pub struct EnterLexicalScopeSnapshot {
     lexical_names: LexicalNames,
     binding_context: Option<BindingContext>,
+    flags: ParsingContextFlags,
 }
 
 /// Use this action to track when the parser enters inside a new lexical scope
@@ -807,7 +836,13 @@ impl ChangeParserState for EnterLexicalScope {
     type Snapshot = EnterLexicalScopeSnapshot;
 
     fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+        let flags = if self.0 == BindingContext::FunctionBlock {
+            state.parsing_context | ParsingContextFlags::IN_FUNCTION_BLOCK
+        } else {
+            state.parsing_context
+        };
         EnterLexicalScopeSnapshot {
+            flags: std::mem::replace(&mut state.parsing_context, flags),
             lexical_names: std::mem::take(&mut state.lexical_names),
             binding_context: std::mem::replace(&mut state.binding_context, Some(self.0)),
         }
@@ -816,6 +851,7 @@ impl ChangeParserState for EnterLexicalScope {
     fn restore(state: &mut ParserState, value: Self::Snapshot) {
         state.lexical_names = value.lexical_names;
         state.binding_context = value.binding_context;
+        state.parsing_context = value.flags;
     }
 }
 
