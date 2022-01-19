@@ -94,7 +94,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
             return identifier;
         }
         let id = String::from(identifier_name);
-        let binding_variable = p.state.binding_variable();
+        let binding_variable = p.state.binding_type();
         let binding_context = p.state.binding_context();
 
         if let Some(NameType::Lexical(lexical_type)) = binding_variable {

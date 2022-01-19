@@ -37,7 +37,7 @@ pub struct ParserState {
     pub default_item: Option<Range<usize>>,
     pub(crate) no_recovery: bool,
     /// Tracks the binding variable inside a declaration list: "var a, b, c;"
-    binding_variable: Option<NameType>,
+    binding_type: Option<NameType>,
     /// If set, the parser reports bindings with identical names. The option stores the name of the
     /// node that disallows duplicate bindings, for example `let`, `const` or `import`.
     binding_context: Option<BindingContext>,
@@ -51,7 +51,7 @@ pub struct ParserState {
 /// Depending of the kind of binding, the variables will tracked in a different environment
 #[derive(Debug, Clone, PartialEq)]
 pub enum BindingContext {
-    /// The default context of the script/module
+    /// The default context of a JavaScript file
     Hoisted,
     /// Used to track function bindings `function f() {}`
     Function,
@@ -126,7 +126,7 @@ impl ParserState {
                 None
             },
             default_item: None,
-            binding_variable: None,
+            binding_type: None,
             binding_context: Some(BindingContext::default()),
             no_recovery: false,
             lexical_names: HashMap::default(),
@@ -197,8 +197,8 @@ impl ParserState {
         self.strict.as_ref()
     }
 
-    pub fn binding_variable(&self) -> Option<&NameType> {
-        self.binding_variable.as_ref()
+    pub fn binding_type(&self) -> Option<&NameType> {
+        self.binding_type.as_ref()
     }
 
     pub fn binding_context(&self) -> Option<&BindingContext> {
@@ -222,8 +222,8 @@ impl ParserState {
                 // hoisted variables can be redeclared without problems
                 // which means that we only need to check the variables the lexical environment
                 BindingContext::Block => {
-                    if let Some(binding_variable) = self.binding_variable() {
-                        match binding_variable {
+                    if let Some(binding_type) = self.binding_type() {
+                        match binding_type {
                             NameType::Hoisted => self
                                 .strict()
                                 .and_then(|_| self.lexical_names.get(identifier_name)),
@@ -252,7 +252,7 @@ impl ParserState {
                 BindingContext::Arguments => self
                     .strict()
                     .and_then(|_| self.hoisted_names.get(identifier_name)),
-                BindingContext::Hoisted => match self.binding_variable() {
+                BindingContext::Hoisted => match self.binding_type() {
                     Some(name_type) => match name_type {
                         NameType::Hoisted | NameType::Module | NameType::Function => self
                             .strict()
@@ -265,8 +265,8 @@ impl ParserState {
                     _ => None,
                 },
                 BindingContext::FunctionBlock => {
-                    if let Some(binding_variable) = self.binding_variable() {
-                        match binding_variable {
+                    if let Some(binding_type) = self.binding_type() {
+                        match binding_type {
                             // At the top level of a function, or script, function declarations are treated
                             // like var declarations rather than like lexical declarations.
                             //
@@ -289,11 +289,11 @@ impl ParserState {
                         .get(identifier_name)
                         .or_else(|| self.lexical_names.get(identifier_name))
                 }),
-                _ => match self.binding_variable() {
+                _ => match self.binding_type() {
                     None => self
                         .strict()
                         .and_then(|_| self.lexical_names.get(identifier_name)),
-                    Some(binding_variable) => match binding_variable {
+                    Some(binding_type) => match binding_type {
                         NameType::Hoisted | NameType::Module | NameType::Function => self
                             .strict()
                             .and_then(|_| self.lexical_names.get(identifier_name)),
@@ -314,8 +314,8 @@ impl ParserState {
         if let Some(binding_context) = self.binding_context() {
             match binding_context {
                 BindingContext::Hoisted => {
-                    match self.binding_variable() {
-                        Some(binding_variable) => match binding_variable {
+                    match self.binding_type() {
+                        Some(binding_type) => match binding_type {
                             NameType::Hoisted => {
                                 self.hoisted_names.insert(identifier_name, range);
                             }
@@ -337,8 +337,8 @@ impl ParserState {
                     }
                 }
                 BindingContext::Block => {
-                    match self.binding_variable() {
-                        Some(binding_variable) => match binding_variable {
+                    match self.binding_type() {
+                        Some(binding_type) => match binding_type {
                             NameType::Hoisted => {
                                 self.hoisted_names.insert(identifier_name, range);
                             }
@@ -370,8 +370,8 @@ impl ParserState {
                     self.lexical_names.insert(identifier_name, range);
                 }
                 BindingContext::FunctionBlock => {
-                    match self.binding_variable() {
-                        Some(binding_variable) => match binding_variable {
+                    match self.binding_type() {
+                        Some(binding_type) => match binding_type {
                             NameType::Hoisted => {
                                 self.hoisted_names.insert(identifier_name, range);
                             }
@@ -854,7 +854,7 @@ impl ChangeParserState for EnterLexicalScope {
 
 #[derive(Default, Debug, Clone)]
 pub struct EnterVariableDeclarationSnapshot {
-    binding_variable: Option<NameType>,
+    binding_type: Option<NameType>,
 }
 
 /// Use this action to track the type of variable declaration
@@ -865,18 +865,18 @@ impl ChangeParserState for EnterVariableDeclaration {
 
     fn apply(self, state: &mut ParserState) -> Self::Snapshot {
         EnterVariableDeclarationSnapshot {
-            binding_variable: std::mem::replace(&mut state.binding_variable, Some(self.0)),
+            binding_type: std::mem::replace(&mut state.binding_type, Some(self.0)),
         }
     }
 
     fn restore(state: &mut ParserState, value: Self::Snapshot) {
-        state.binding_variable = value.binding_variable;
+        state.binding_type = value.binding_type;
     }
 }
 
 #[derive(Default, Debug, Clone)]
 pub struct EnterFunctionDeclarationSnapshot {
-    binding_variable: Option<NameType>,
+    binding_type: Option<NameType>,
 }
 
 /// Use this action to track the type of variable declaration
@@ -887,14 +887,11 @@ impl ChangeParserState for EnterFunctionDeclaration {
 
     fn apply(self, state: &mut ParserState) -> Self::Snapshot {
         EnterFunctionDeclarationSnapshot {
-            binding_variable: std::mem::replace(
-                &mut state.binding_variable,
-                Some(NameType::Function),
-            ),
+            binding_type: std::mem::replace(&mut state.binding_type, Some(NameType::Function)),
         }
     }
 
     fn restore(state: &mut ParserState, value: Self::Snapshot) {
-        state.binding_variable = value.binding_variable;
+        state.binding_type = value.binding_type;
     }
 }
