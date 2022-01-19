@@ -3,7 +3,7 @@ use xtask::{
     codegen::{self, Mode},
     compare, coverage,
     glue::pushd,
-    project_root, run_rustfmt, Result,
+    project_root, run_rustfmt, unicode, Result,
 };
 
 #[cfg(feature = "dhat-on")]
@@ -72,6 +72,10 @@ fn main() -> Result<()> {
             xtask::libs::run(filter, criterion);
             Ok(())
         }
+        "unicode" => {
+            args.finish()?;
+            unicode::generate_tables()
+        }
         _ => {
             eprintln!(
                 "\
@@ -87,6 +91,7 @@ SUBCOMMANDS:
     coverage [--json]
     coverage-libs
     compare [--markdown]
+    unicode
 OPTIONS
     --markdown   Emits supported output into markdown format. Supported by compare subcommand
     --json       Emits supported output into json format. Supported by coverage subcommand
