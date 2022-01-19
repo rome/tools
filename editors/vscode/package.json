@@ -18,15 +18,18 @@
 		"url": "https://github.com/rome/tools/issues"
 	},
 	"engines": {
-		"vscode": "^1.52.0"
+		"vscode": "^1.61.0"
 	},
 	"contributes": {
 		"configuration": {
 			"title": "Rome Dev",
 			"properties": {
 				"rome.lspBin": {
-					"type": "string",
-					"default": "rome_lsp",
+					"type": [
+						"string",
+						"null"
+					],
+					"default": null,
 					"description": "The rome lsp server executable."
 				}
 			}
