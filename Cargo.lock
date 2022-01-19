@@ -1340,8 +1340,10 @@ name = "rslint_parser"
 version = "0.3.0"
 dependencies = [
  "bitflags",
+ "cfg-if",
  "drop_bomb",
  "expect-test",
+ "indexmap",
  "lexical",
  "num-bigint",
  "rome_rowan",

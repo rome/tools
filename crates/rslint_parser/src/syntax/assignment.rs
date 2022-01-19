@@ -83,7 +83,7 @@ pub(crate) fn expression_to_assignment(
     target: CompletedMarker,
     checkpoint: Checkpoint,
 ) -> CompletedMarker {
-    if let Ok(assignment) = try_expression_to_assignment(p, target, checkpoint) {
+    if let Ok(assignment) = try_expression_to_assignment(p, target, checkpoint.clone()) {
         assignment
     } else {
         // Doesn't seem to be a valid assignment target. Recover and create an error.
