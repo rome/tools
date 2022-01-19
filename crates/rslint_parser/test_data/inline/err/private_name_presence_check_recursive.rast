@@ -49,20 +49,22 @@ JsModule {
                         statements: JsStatementList [
                             JsExpressionStatement {
                                 expression: JsInExpression {
-                                    property: JsPrivateName {
-                                        hash_token: HASH@27..32 "#" [Newline("\n"), Whitespace("   ")] [],
-                                        value_token: IDENT@32..37 "prop" [] [Whitespace(" ")],
-                                    },
-                                    in_token: IN_KW@37..40 "in" [] [Whitespace(" ")],
-                                    object: JsInExpression {
+                                    property: JsInExpression {
                                         property: JsPrivateName {
-                                            hash_token: HASH@40..41 "#" [] [],
-                                            value_token: IDENT@41..46 "prop" [] [Whitespace(" ")],
+                                            hash_token: HASH@27..32 "#" [Newline("\n"), Whitespace("   ")] [],
+                                            value_token: IDENT@32..37 "prop" [] [Whitespace(" ")],
                                         },
-                                        in_token: IN_KW@46..49 "in" [] [Whitespace(" ")],
-                                        object: JsThisExpression {
-                                            this_token: THIS_KW@49..53 "this" [] [],
+                                        in_token: IN_KW@37..40 "in" [] [Whitespace(" ")],
+                                        object: JsUnknownExpression {
+                                            items: [
+                                                HASH@40..41 "#" [] [],
+                                                IDENT@41..46 "prop" [] [Whitespace(" ")],
+                                            ],
                                         },
+                                    },
+                                    in_token: IN_KW@46..49 "in" [] [Whitespace(" ")],
+                                    object: JsThisExpression {
+                                        this_token: THIS_KW@49..53 "this" [] [],
                                     },
                                 },
                                 semicolon_token: missing (optional),
@@ -124,18 +126,32 @@ JsModule {
             2: JS_STATEMENT_LIST@27..53
               0: JS_EXPRESSION_STATEMENT@27..53
                 0: JS_IN_EXPRESSION@27..53
-                  0: JS_PRIVATE_NAME@27..37
-                    0: HASH@27..32 "#" [Newline("\n"), Whitespace("   ")] []
-                    1: IDENT@32..37 "prop" [] [Whitespace(" ")]
-                  1: IN_KW@37..40 "in" [] [Whitespace(" ")]
-                  2: JS_IN_EXPRESSION@40..53
-                    0: JS_PRIVATE_NAME@40..46
+                  0: JS_IN_EXPRESSION@27..46
+                    0: JS_PRIVATE_NAME@27..37
+                      0: HASH@27..32 "#" [Newline("\n"), Whitespace("   ")] []
+                      1: IDENT@32..37 "prop" [] [Whitespace(" ")]
+                    1: IN_KW@37..40 "in" [] [Whitespace(" ")]
+                    2: JS_UNKNOWN_EXPRESSION@40..46
                       0: HASH@40..41 "#" [] []
                       1: IDENT@41..46 "prop" [] [Whitespace(" ")]
-                    1: IN_KW@46..49 "in" [] [Whitespace(" ")]
-                    2: JS_THIS_EXPRESSION@49..53
-                      0: THIS_KW@49..53 "this" [] []
+                  1: IN_KW@46..49 "in" [] [Whitespace(" ")]
+                  2: JS_THIS_EXPRESSION@49..53
+                    0: THIS_KW@49..53 "this" [] []
                 1: (empty)
             3: R_CURLY@53..56 "}" [Newline("\n"), Whitespace(" ")] []
       6: R_CURLY@56..58 "}" [Newline("\n")] []
   3: EOF@58..59 "" [Newline("\n")] []
+--
+error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+  ┌─ private_name_presence_check_recursive.js:4:13
+  │
+4 │    #prop in #prop in this
+  │             ^^^^^
+
+--
+class A {
+	#prop;
+	test() {
+   #prop in #prop in this
+ }
+}

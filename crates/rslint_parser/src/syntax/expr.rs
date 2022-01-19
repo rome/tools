@@ -403,14 +403,20 @@ fn parse_binary_or_logical_expression_recursive(
 
         parse_binary_or_logical_expression_recursive(p, Absent, 0)
     } else if p.at(T![#]) {
-        // test private_name_presence_check_recursive
+        // test_err private_name_presence_check_recursive
         // class A {
         // 	#prop;
         // 	test() {
         //    #prop in #prop in this
         //  }
         // }
-        parse_binary_or_logical_expression(p)
+        let mut private_name = parse_private_name(p).unwrap();
+        private_name.change_kind(p, JS_UNKNOWN_EXPRESSION);
+        p.error(
+            p.err_builder("Private names are only allowed on the left side of a binary expression")
+                .primary(private_name.range(p), ""),
+        );
+        Present(private_name)
     } else {
         parse_unary_expr(p)
     };
