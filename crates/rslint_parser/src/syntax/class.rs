@@ -142,20 +142,18 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
 
     let id = if p.cur_src() == "implements" {
         Absent
-    } else {
-        if kind == ClassKind::Expression {
-            // NOTE: this is a small workaround to isolate the binding of class expression, it won't clash
-            // with other bindings inside the same scope.
-            //
-            // test class_expression_same_binding
-            // var a;
-            // var a = class a {};
-            p.with_state(EnterLexicalScope(BindingContext::Block), |p| {
-                parse_binding(p)
-            })
-        } else {
+    } else if kind == ClassKind::Expression {
+        // NOTE: this is a small workaround to isolate the binding of class expression, it won't clash
+        // with other bindings inside the same scope.
+        //
+        // test class_expression_same_binding
+        // var a;
+        // var a = class a {};
+        p.with_state(EnterLexicalScope(BindingContext::Block), |p| {
             parse_binding(p)
-        }
+        })
+    } else {
+        parse_binding(p)
     };
 
     // parse class id

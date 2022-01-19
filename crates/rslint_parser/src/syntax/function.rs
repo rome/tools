@@ -83,6 +83,7 @@ pub(super) fn parse_function_statement(p: &mut Parser, context: StatementContext
         FunctionKind::Statement {
             declaration: context.is_single_statement(),
         },
+        Some(context),
     );
 
     if context != StatementContext::StatementList && !function.kind().is_unknown() {
@@ -114,7 +115,7 @@ pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    Present(parse_function(p, m, FunctionKind::Expression))
+    Present(parse_function(p, m, FunctionKind::Expression, None))
 }
 
 // test export_function_clause
@@ -127,7 +128,7 @@ pub(super) fn parse_export_function_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    Present(parse_function(p, m, FunctionKind::Export))
+    Present(parse_function(p, m, FunctionKind::Export, None))
 }
 
 // test export_default_function_clause
@@ -139,7 +140,7 @@ pub(super) fn parse_export_default_function_case(p: &mut Parser) -> ParsedSyntax
 
     let m = p.start();
     p.bump(T![default]);
-    Present(parse_function(p, m, FunctionKind::ExportDefault))
+    Present(parse_function(p, m, FunctionKind::ExportDefault, None))
 }
 
 #[derive(PartialEq, Eq, Debug, Copy, Clone)]
@@ -177,7 +178,12 @@ fn is_at_function(p: &Parser) -> bool {
 
 // test_err function_parameters_redeclaration
 // var a; function f(a) { let a; }
-fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMarker {
+fn parse_function(
+    p: &mut Parser,
+    m: Marker,
+    kind: FunctionKind,
+    statement_context: Option<StatementContext>,
+) -> CompletedMarker {
     let mut uses_invalid_syntax =
         kind.is_statement() && p.eat(T![declare]) && TypeScript.is_unsupported(p);
     let mut flags = SignatureFlags::empty();
@@ -196,7 +202,26 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
     }
 
     let id = p.with_state(EnterFunctionDeclaration, |p| {
-        parse_function_id(p, kind, flags)
+        // This production only applies when parsing non-strict code.
+        // Source text matched by this production is processed as if each matching occurrence of
+        // FunctionDeclaration[?Yield, ?Await, ~Default] was the sole StatementListItem of a
+        // BlockStatement occupying that position in the source text.
+        //
+        // https://tc39.es/ecma262/multipage/additional-ecmascript-features-for-web-browsers.html#sec-functiondeclarations-in-ifstatement-statement-clauses
+        //
+        // test if_else_function_statement_script
+        // // SCRIPT
+        // function f() { let a; if (true) function a() {} }
+        // function b() { let x; if (false) ; else function x() {} }
+        if !JsSyntaxFeature::StrictMode.is_supported(p)
+            && matches!(statement_context, Some(StatementContext::If))
+        {
+            p.with_state(EnterLexicalScope(BindingContext::Block), |p| {
+                parse_function_id(p, kind, flags)
+            })
+        } else {
+            parse_function_id(p, kind, flags)
+        }
     });
 
     if !kind.is_id_optional() {

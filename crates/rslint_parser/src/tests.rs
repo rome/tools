@@ -13,13 +13,19 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-let A = /* before */class /* a */ A /* b */ { /* c */ }/* after */;
-let B = /* before */class /* a */ B /* b */ extends /* c */ A /* d */ { /* e */ }/* after */;
-let C = /* before */class /* a */ C /* b */ extends /* c */ B /* d */ { /* e */ m /* f */ ( /* g */ ) /* h */ { /* i */ } /* j */ }/* after */;
+var init, after;
 
+(function() {
+  let f = 123;
+  init = f;
+
+  if (false) ; else function f() {  }
+
+  after = f;
+}());
     "#;
 
-    let module = parse_module(src, 0);
+    let module = parse_text(src, 0);
 
     assert_errors_are_absent(
         module.errors(),
