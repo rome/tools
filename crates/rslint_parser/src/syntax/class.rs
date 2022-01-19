@@ -891,6 +891,7 @@ fn parse_method_class_member_body(
     };
 
     ts_parameter_types(p);
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
     parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_class_parameters);
     parse_ts_type_annotation_or_error(p).ok();
 
@@ -962,7 +963,7 @@ fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax {
 fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax {
     // test_err class_constructor_parameter
     // class B { constructor(protected b) {} }
-
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
     if matches!(p.cur_src(), "public" | "protected" | "private" | "readonly") {
         let ts_param = p.start();
         if let Some(range) = parse_access_modifier(p) {

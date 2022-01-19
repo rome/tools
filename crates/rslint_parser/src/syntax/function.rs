@@ -59,6 +59,7 @@ use rslint_syntax::{JsSyntaxKind, T};
 // test function_redeclaration_script
 // // SCRIPT
 // function f() {} function f() {}
+// var g = 123; { function g() {} }
 //
 // test function_redeclaration_block_script
 // // SCRIPT

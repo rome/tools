@@ -232,7 +232,7 @@ impl ParserState {
                                 // At the top level of a function or script, inner function declarations are treated like var declarations.
                                 //
                                 // https://tc39.es/ecma262/multipage/syntax-directed-operations.html#sec-static-semantics-toplevelvardeclarednames
-                                if self.in_function_block() {
+                                if self.in_function_block() || self.strict().is_none() {
                                     self.strict()
                                         .and_then(|_| self.lexical_names.get(identifier_name))
                                 } else {
@@ -312,9 +312,6 @@ impl ParserState {
     /// It registers the name of a binding based in its name type (lexical or hoisted) and its current binding context
     pub fn register_name(&mut self, identifier_name: String, range: Range<usize>) {
         if let Some(binding_context) = self.binding_context() {
-            // if self.in_function_block() && &self.binding_variable() == Some(&NameType::Function) {
-            // }
-
             match binding_context {
                 BindingContext::Hoisted => {
                     match self.binding_variable() {
@@ -355,7 +352,7 @@ impl ParserState {
                                 // At the top level of a function or script, inner function declarations are treated like var declarations.
                                 //
                                 // https://tc39.es/ecma262/multipage/syntax-directed-operations.html#sec-static-semantics-toplevelvardeclarednames
-                                if self.in_function_block() {
+                                if self.in_function_block() || self.strict().is_none() {
                                     self.hoisted_names.insert(identifier_name, range);
                                 } else {
                                     self.lexical_names.insert(identifier_name, range);
