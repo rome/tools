@@ -43,11 +43,11 @@ JsModule {
         3: (empty)
   3: EOF@15..16 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a string literal, or an identifier but instead found 'as'
+error[SyntaxError]: expected a valid string literal, or a valid identifier but instead found 'as'
   ┌─ export_as_identifier_err.js:1:10
   │
 1 │ export { as c }
-  │          ^^ Expected a string literal, or an identifier here
+  │          ^^ Expected a valid string literal, or a valid identifier here
 
 --
 export { as c }

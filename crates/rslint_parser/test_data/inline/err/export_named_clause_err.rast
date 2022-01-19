@@ -220,18 +220,18 @@ error[SyntaxError]: expected an export name but instead found '"a" as b'
   │          ^^^^^^^^ Expected an export name here
 
 --
-error[SyntaxError]: expected a string literal, or an identifier but instead found 'as'
+error[SyntaxError]: expected a valid string literal, or a valid identifier but instead found 'as'
   ┌─ export_named_clause_err.js:3:10
   │
 3 │ export { as b };
-  │          ^^ Expected a string literal, or an identifier here
+  │          ^^ Expected a valid string literal, or a valid identifier here
 
 --
-error[SyntaxError]: expected a string literal, or an identifier but instead found '5'
+error[SyntaxError]: expected a valid string literal, or a valid identifier but instead found '5'
   ┌─ export_named_clause_err.js:4:15
   │
 4 │ export { a as 5 };
-  │               ^ Expected a string literal, or an identifier here
+  │               ^ Expected a valid string literal, or a valid identifier here
 
 --
 error[SyntaxError]: expected `,` but instead found `b`

@@ -42,24 +42,30 @@ fn main() -> Result<()> {
             let base_result_path = free.get(0).map(String::as_str);
             let new_result_path = free.get(1).map(String::as_str);
 
-			compare::coverage_compare(base_result_path, new_result_path, markdown);
-			Ok(())
-		}
-		// "docgen" => {
-		//     args.finish()?;
-		//     docgen::run();
-		//     Ok(())
-		// }
-		"coverage" => {
-			let json = args.contains("--json");
-			let show_rast = args.contains("--show-rast");
-			let show_diagnostics = args.contains("--show-diagnostics");
+            compare::coverage_compare(base_result_path, new_result_path, markdown);
+            Ok(())
+        }
+        // "docgen" => {
+        //     args.finish()?;
+        //     docgen::run();
+        //     Ok(())
+        // }
+        "coverage" => {
+            let json = args.contains("--json");
+            let show_rast = args.contains("--show-rast");
+            let show_diagnostics = args.contains("--show-diagnostics");
 
             let free = args.free()?;
             let query = free.get(0).map(String::as_str);
 
             let pool = yastl::ThreadConfig::new().stack_size(8 << 30);
-            coverage::run(query, yastl::Pool::with_config(num_cpus::get(), pool), json);
+            coverage::run(
+                query,
+                yastl::Pool::with_config(num_cpus::get(), pool),
+                json,
+                show_rast,
+                show_diagnostics,
+            );
             Ok(())
         }
         "coverage-libs" => {
@@ -81,6 +87,7 @@ fn main() -> Result<()> {
             xtask::libs::run(filter, criterion, baseline);
             Ok(())
         }
+<<<<<<< HEAD
         "unicode" => {
             args.finish()?;
             unicode::generate_tables()
@@ -89,6 +96,12 @@ fn main() -> Result<()> {
             eprintln!(
                 "\
 >>>>>>> f7d668584 (multiple dianostics on invalid string lietral)
+=======
+        _ => {
+            eprintln!(
+                "\
+>>>>>>> 36359a9ad (validate unicode escape on string literals)
+>>>>>>> af5c25965 (removing validation of escaped identifiers)
 cargo xtask
 Run custom build command.
 USAGE:
