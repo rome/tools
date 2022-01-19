@@ -631,9 +631,6 @@ bitflags! {
         /// Whether the parser is in an iteration statement and `continue` is allowed.
         const CONTINUE_ALLOWED = 0b0000001000000000;
 
-        /// Whether the parser is inside a function body
-        const IN_FUNCTION_BLOCK = 0b0000010000000000;
-
         /// If false, object expressions are not allowed to be parsed
         /// inside an expression.
         ///
@@ -642,6 +639,9 @@ bitflags! {
 
         /// Whether we potentially are in a place to parse an arrow expression
         const POTENTIAL_ARROW_START = 0b0000100000000000;
+
+        /// Whether the parser is inside a function body
+        const IN_FUNCTION_BLOCK = 0b0001000000000000;
 
         const LOOP = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits;
 
