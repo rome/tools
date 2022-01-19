@@ -1,4 +1,6 @@
+#[cfg(debug_assertions)]
 use std::cell::RefCell;
+#[cfg(debug_assertions)]
 use std::collections::HashSet;
 
 use crate::printer::Printer;
@@ -9,7 +11,9 @@ use crate::{
 };
 use rome_rowan::api::SyntaxTriviaPieceComments;
 use rome_rowan::{Language, SyntaxElement};
-use rslint_parser::{AstNode, AstSeparatedList, SyntaxNode, SyntaxNodeExt, SyntaxToken};
+#[cfg(debug_assertions)]
+use rslint_parser::SyntaxNodeExt;
+use rslint_parser::{AstNode, AstSeparatedList, SyntaxNode, SyntaxToken};
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
 /// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
@@ -81,8 +85,14 @@ impl Formatter {
         content: impl FnOnce(FormatElement, FormatElement) -> FormatResult<FormatElement>,
         close_token: &SyntaxToken,
     ) -> FormatResult<FormatElement> {
-        debug_assert!(self.printed_tokens.borrow_mut().insert(open_token.clone()));
-        debug_assert!(self.printed_tokens.borrow_mut().insert(close_token.clone()));
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                let mut printed_tokens = self.printed_tokens.borrow_mut();
+                assert!(printed_tokens.insert(open_token.clone()));
+                assert!(printed_tokens.insert(close_token.clone()));
+                drop(printed_tokens);
+            }
+        }
 
         Ok(format_elements![
             self.print_leading_trivia(open_token),
@@ -169,7 +179,12 @@ impl Formatter {
         token: &SyntaxToken,
         content: FormatElement,
     ) -> FormatResult<FormatElement> {
-        debug_assert!(self.printed_tokens.borrow_mut().insert(token.clone()));
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                assert!(self.printed_tokens.borrow_mut().insert(token.clone()));
+            }
+        }
+
         Ok(format_elements![
             self.print_leading_trivia(token),
             content,
@@ -349,10 +364,11 @@ impl Formatter {
                 self.format_raw(&child_node)
             }
             SyntaxElement::Token(syntax_token) => {
-                debug_assert!(self
-                    .printed_tokens
-                    .borrow_mut()
-                    .insert(syntax_token.clone()));
+                cfg_if::cfg_if! {
+                    if #[cfg(debug_assertions)] {
+                        assert!(self.printed_tokens.borrow_mut().insert(syntax_token.clone()));
+                    }
+                }
 
                 token(syntax_token.text())
             }
@@ -380,14 +396,15 @@ impl Formatter {
         }
     }
 
+    #[cfg(debug_assertions)]
     /// Restore the state of the formatter to a previous snapshot
     pub fn restore(&self, snapshot: FormatterSnapshot) {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                *self.printed_tokens.borrow_mut() = snapshot.printed_tokens;
-            }
-        }
+        *self.printed_tokens.borrow_mut() = snapshot.printed_tokens;
     }
+
+    #[cfg(not(debug_assertions))]
+    /// Restore the state of the formatter to a previous snapshot
+    pub fn restore(&self, _: FormatterSnapshot) {}
 }
 
 // FormattableToken needs to be public as its used in the signature of format_token,
@@ -407,7 +424,11 @@ mod token {
         type Output = FormatElement;
 
         fn format(&self, formatter: &Formatter) -> FormatResult<Self::Output> {
-            debug_assert!(formatter.printed_tokens.borrow_mut().insert(self.clone()));
+            cfg_if::cfg_if! {
+                if #[cfg(debug_assertions)] {
+                    assert!(formatter.printed_tokens.borrow_mut().insert(self.clone()));
+                }
+            }
 
             Ok(format_elements![
                 formatter.print_leading_trivia(self),

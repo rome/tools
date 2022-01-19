@@ -11,7 +11,7 @@ use crate::state::{
     AllowObjectExpression, BindingContext, BreakableKind, ChangeParserState, EnableStrictMode,
     EnableStrictModeSnapshot, EnterBreakable, EnterHoistedScope, EnterLexicalScope,
     EnterVariableDeclaration, IncludeIn, LabelledItem, LexicalType, NameType,
-    StrictMode as StrictModeState,
+    StrictMode as StrictModeState, WithLabel,
 };
 use crate::syntax::assignment::expression_to_assignment_pattern;
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
@@ -265,51 +265,53 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
 // label1: function a() {}
 fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     parse_identifier(p, JS_LABELED_STATEMENT).map(|identifier| {
+		fn parse_body(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
+			if is_at_identifier(p) && p.nth_at(1, T![:]) && StrictMode.is_unsupported(p) {
+				// Re-use the parent context to catch `if (true) label1: label2: function A() {}
+				parse_labeled_statement(p, context)
+			} else {
+				parse_statement(p, StatementContext::Label)
+			}
+		}
+
 		p.bump(T![:]);
 
-        let label = if !identifier.kind().is_unknown() {
-            let range = identifier.range(p);
-            let label = p.source(range);
+		let identifier_range = identifier.range(p);
+		let is_valid_identifier = !identifier.kind().is_unknown();
+		let labelled_statement = identifier.undo_completion(p);
+		let label = p.source(identifier_range);
 
-			if let Some(label_item) = p.state.label_set.get(label) {
-                let err = p
-                    .err_builder("Duplicate statement labels are not allowed")
-                    .secondary(
-						label_item.range().to_owned(),
-                        &format!("`{}` is first used as a label here", label),
-                    )
-                    .primary(
-                        range,
-                        &format!("a second use of `{}` here is not allowed", label),
-                    );
-
-                p.error(err);
-                None
-            } else {
-                let string = label.to_string();
-
-				let label_item = match p.cur() {
-					T![for] | T![do] | T![while] => LabelledItem::Iteration(range.as_range()),
-					_ => LabelledItem::Other(range.as_range())
+		let body = match p.state.get_labelled_item(label) {
+			None => {
+				let labelled_item = match p.cur() {
+					T![for] | T![do] | T![while] => LabelledItem::Iteration(identifier_range.as_range()),
+					_ => LabelledItem::Other(identifier_range.as_range())
 				};
+				let change = WithLabel(String::from(label), labelled_item);
+				p.with_state(change, |p| parse_body(p, context))
+			},
+			Some(label_item) if is_valid_identifier => {
+				let err = p
+					.err_builder("Duplicate statement labels are not allowed")
+					.secondary(
+						label_item.range().to_owned(),
+						&format!("`{}` is first used as a label here", label),
+					)
+					.primary(
+						identifier_range,
+						&format!("a second use of `{}` here is not allowed", label),
+					);
 
-				p.state.label_set.insert(string.clone(), label_item);
-                Some(string)
-            }
-        } else {
-            None
-        };
+				p.error(err);
+				parse_body(p, context)
+			},
+			Some(_) => {
+				// Don't add another error, the identifier is already invalid
+				parse_body(p, context)
+			}
+		};
 
-        let labelled_statement = identifier.undo_completion(p);
-
-        let body = if is_at_identifier(p) && p.nth_at(1, T![:]) && StrictMode.is_unsupported(p) {
-            // Re-use the parent context to catch `if (true) label1: label2: function A() {}
-            parse_labeled_statement(p, context)
-        } else {
-            parse_statement(p, StatementContext::Label)
-        }.or_add_diagnostic(p, expected_statement);
-
-        match body {
+        match body.or_add_diagnostic(p, expected_statement) {
             Some(mut body) if context.is_single_statement() && body.kind() == JS_FUNCTION_STATEMENT => {
                 // test_err labelled_function_decl_in_single_statement_context
                 // if (true) label1: label2: function a() {}
@@ -318,12 +320,7 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
             },
             // test labelled_statement_in_single_statement_context
             // if (true) label1: var a = 10;
-
             _ => {}
-        }
-
-        if let Some(label) = label {
-			p.state.label_set.remove(&label);
         }
 
         labelled_statement.complete(p, JS_LABELED_STATEMENT)
@@ -443,7 +440,7 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
         let label_token = p.cur_tok();
         let label_name = p.token_src(label_token);
 
-        let error = match p.state.label_set.get(label_name) {
+        let error = match p.state.get_labelled_item(label_name) {
             Some(_) => None,
             None => Some(
                 p.err_builder(&format!(
@@ -506,7 +503,7 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
         let label_token = p.cur_tok();
         let label_name = p.token_src(label_token);
 
-        let error = match p.state.label_set.get(label_name) {
+        let error = match p.state.get_labelled_item(label_name) {
 			Some(LabelledItem::Iteration(_)) => None,
 			Some(LabelledItem::Other(range)) => {
 				Some(p.err_builder("A `continue` statement can only jump to a label of an enclosing `for`, `while` or `do while` statement.")
