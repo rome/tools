@@ -13,13 +13,13 @@ use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind as SyntaxKindTrait;
 use rslint_errors::Span;
 
-pub(crate) fn parse_binding_pattern(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_binding_pattern(p: &mut Parser, name_type: NameType) -> ParsedSyntax {
     match p.cur() {
         T!['['] => ArrayBindingPattern.parse_array_pattern(p),
         T!['{'] if p.state.allow_object_expression() => {
             ObjectBindingPattern.parse_object_pattern(p)
         }
-        _ => parse_identifier_binding(p),
+        _ => parse_identifier_binding(p, Some(name_type)),
     }
 }
 
@@ -27,8 +27,8 @@ fn is_at_identifier_binding(p: &Parser) -> bool {
     is_at_identifier(p)
 }
 
-pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax {
-    parse_identifier_binding(p)
+pub(crate) fn parse_binding(p: &mut Parser, name_type: Option<NameType>) -> ParsedSyntax {
+    parse_identifier_binding(p, name_type)
 }
 
 // test_err binding_identifier_invalid
@@ -71,7 +71,10 @@ pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax {
 /// * the same identifier is bound multiple times inside of a `let` or const` declaration
 /// * it is named "yield" inside of a generator function or in strict mode
 /// * it is named "await" inside of an async function
-pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_identifier_binding(
+    p: &mut Parser,
+    name_type: Option<NameType>,
+) -> ParsedSyntax {
     let parsed = parse_identifier(p, JS_IDENTIFIER_BINDING);
 
     parsed.map(|mut identifier| {
@@ -94,10 +97,9 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
             return identifier;
         }
         let id = String::from(identifier_name);
-        let binding_variable = p.state.binding_type();
         let binding_context = p.state.binding_context();
 
-        if let Some(NameType::Lexical(lexical_type)) = binding_variable {
+        if let Some(NameType::Lexical(lexical_type)) = &name_type {
             if identifier_name == "let" || identifier_name == "const" {
                 let err = p
                     .err_builder(&format!(
@@ -112,14 +114,16 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
         }
 
         let err = if binding_context.is_some() {
-            p.state.clashes_with_defined_name(&id).map(|other_range| {
-                p.err_builder(&format!(
-                    "The binding \"{}\" has been already declared",
-                    identifier.text(p)
-                ))
-                .primary(other_range, "First declaration here")
-                .secondary(identifier.range(p).as_range(), "Second declaration here")
-            })
+            p.state
+                .clashes_with_defined_name(&id, &name_type)
+                .map(|other_range| {
+                    p.err_builder(&format!(
+                        "The binding \"{}\" has been already declared",
+                        identifier.text(p)
+                    ))
+                    .primary(other_range, "First declaration here")
+                    .secondary(identifier.range(p).as_range(), "Second declaration here")
+                })
         } else {
             None
         };
@@ -129,7 +133,8 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
             p.error(err);
             identifier.change_to_unknown(p);
         } else {
-            p.state.register_name(id, identifier.range(p).as_range());
+            p.state
+                .register_name(id, identifier.range(p).as_range(), name_type);
         }
         identifier
     })
@@ -150,7 +155,7 @@ impl ParseWithDefaultPattern for BindingPatternWithDefault {
 
     #[inline]
     fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
-        parse_binding_pattern(p)
+        parse_binding_pattern(p, NameType::Hoisted)
     }
 }
 
@@ -271,12 +276,12 @@ impl ParseObjectPattern for ObjectBindingPattern {
         let m = p.start();
 
         let kind = if p.at(T![=]) || (is_at_identifier_binding(p) && !p.nth_at(1, T![:])) {
-            parse_binding(p).or_add_diagnostic(p, expected_identifier);
+            parse_binding(p, Some(NameType::Hoisted)).or_add_diagnostic(p, expected_identifier);
             JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
         } else {
             parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
             if p.expect(T![:]) {
-                parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
+                parse_binding_pattern(p, NameType::Hoisted).or_add_diagnostic(p, expected_binding);
             }
             JS_OBJECT_BINDING_PATTERN_PROPERTY
         };
@@ -304,7 +309,8 @@ impl ParseObjectPattern for ObjectBindingPattern {
             let m = p.start();
             p.bump(T![...]);
 
-            let inner = parse_binding_pattern(p).or_add_diagnostic(p, expected_identifier);
+            let inner = parse_binding_pattern(p, NameType::Hoisted)
+                .or_add_diagnostic(p, expected_identifier);
 
             if let Some(mut inner) = inner {
                 if inner.kind() != JS_IDENTIFIER_BINDING {

@@ -2,7 +2,7 @@ use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
 use crate::state::{
     BindingContext, EnableStrictMode, EnterClassPropertyInitializer,
     EnterClassStaticInitializationBlock, EnterHoistedScope, EnterLexicalScope, EnterParameters,
-    SignatureFlags,
+    NameType, SignatureFlags,
 };
 use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::parse_expr_or_assignment;
@@ -150,10 +150,10 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
         // var a;
         // var a = class a {};
         p.with_state(EnterLexicalScope(BindingContext::Block), |p| {
-            parse_binding(p)
+            parse_binding(p, Some(NameType::Hoisted))
         })
     } else {
-        parse_binding(p)
+        parse_binding(p, Some(NameType::Hoisted))
     };
 
     // parse class id

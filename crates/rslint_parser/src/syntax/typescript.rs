@@ -4,8 +4,8 @@ use super::expr::{parse_expr_or_assignment, parse_lhs_expr, parse_literal_expres
 use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
-use crate::state::SignatureFlags;
-use crate::state::{BindingContext, EnterHoistedScope, InBindingListForSignature, SignatureFlags};
+use crate::state::{BindingContext, EnterHoistedScope};
+use crate::state::{NameType, SignatureFlags};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::{is_at_name, parse_any_name};
 use crate::syntax::function::parse_parameter_list;
@@ -227,7 +227,9 @@ pub(crate) fn try_parse_index_signature(
         return Err(m);
     }
 
-    let pat_m = parse_binding(p).unwrap().undo_completion(p);
+    let pat_m = parse_binding(p, Some(NameType::Hoisted))
+        .unwrap()
+        .undo_completion(p);
 
     if p.expect_no_recover(T![:]).is_none() {
         return Err(m);

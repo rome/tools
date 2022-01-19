@@ -1,7 +1,7 @@
 use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::state::{
-    BindingContext, EnterFunction, EnterFunctionDeclaration, EnterHoistedScope, EnterLexicalScope,
-    EnterParameters, SignatureFlags,
+    BindingContext, EnterFunction, EnterHoistedScope, EnterLexicalScope, EnterParameters, NameType,
+    SignatureFlags,
 };
 use crate::syntax::binding::{parse_binding, parse_binding_pattern};
 use crate::syntax::class::parse_initializer_clause;
@@ -201,7 +201,7 @@ fn parse_function(
         flags |= SignatureFlags::GENERATOR;
     }
 
-    let id = p.with_state(EnterFunctionDeclaration, |p| {
+    let id =
         // This production only applies when parsing non-strict code.
         // Source text matched by this production is processed as if each matching occurrence of
         // FunctionDeclaration[?Yield, ?Await, ~Default] was the sole StatementListItem of a
@@ -221,8 +221,7 @@ fn parse_function(
             })
         } else {
             parse_function_id(p, kind, flags)
-        }
-    });
+        };
 
     if !kind.is_id_optional() {
         id.or_add_diagnostic(p, |p, range| {
@@ -303,7 +302,9 @@ fn parse_function_id(p: &mut Parser, kind: FunctionKind, flags: SignatureFlags) 
             // (async function await() {});
             // (function* yield() {});
             // function* test() { function yield() {} }
-            p.with_state(EnterFunction(flags), parse_binding)
+            p.with_state(EnterFunction(flags), |p| {
+                parse_binding(p, Some(NameType::Function))
+            })
         }
         // Inherits the async and generator from the parent
         _ => {
@@ -320,7 +321,7 @@ fn parse_function_id(p: &mut Parser, kind: FunctionKind, flags: SignatureFlags) 
             // function* test() {
             //   function yield(test) {}
             // }
-            parse_binding(p)
+            parse_binding(p, Some(NameType::Function))
         }
     }
 }
@@ -417,7 +418,7 @@ pub(super) fn parse_arrow_function_parameters(
                     signature_flags: flags,
                     allow_object_expressions: false,
                 },
-                parse_binding,
+                |p| parse_binding(p, Some(NameType::Hoisted)),
             )
         })
     }
@@ -453,7 +454,7 @@ pub(super) fn parse_parameter(p: &mut Parser) -> ParsedSyntax {
         }
     }
 
-    parse_binding_pattern(p).map(|binding| {
+    parse_binding_pattern(p, NameType::Hoisted).map(|binding| {
         let m = binding.precede(p);
         maybe_ts_type_annotation(p);
         parse_initializer_clause(p).ok();
@@ -509,7 +510,8 @@ pub(super) fn parse_parameters_list(
                 if p.at(T![...]) {
                     let m = p.start();
                     p.bump_any();
-                    parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
+                    parse_binding_pattern(p, NameType::Hoisted)
+                        .or_add_diagnostic(p, expected_binding);
 
                     // TODO #1725 Review error handling and recovery
                     // rest patterns cannot be optional: `...foo?: number[]`

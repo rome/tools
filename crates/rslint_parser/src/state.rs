@@ -5,8 +5,8 @@ use std::fmt::Formatter;
 use std::ops::{Deref, DerefMut, Range};
 
 type LabelSet = IndexMap<String, LabelledItem>;
-type HoistedNames = HashMap<String, Range<usize>>;
-type LexicalNames = HashMap<String, Range<usize>>;
+type HoistedNames = IndexMap<String, Range<usize>>;
+type LexicalNames = IndexMap<String, Range<usize>>;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub(crate) enum LabelledItem {
@@ -36,13 +36,8 @@ pub(crate) struct ParserState {
     /// The exported default item, used for checking duplicate defaults
     pub default_item: Option<Range<usize>>,
     pub(crate) no_recovery: bool,
-    /// Tracks the binding variable inside a declaration list: "var a, b, c;"
-    binding_type: Option<NameType>,
     /// If set, the parser reports bindings with identical names. The option stores the name of the
     /// node that disallows duplicate bindings, for example `let`, `const` or `import`.
-    pub duplicate_binding_parent: Option<&'static str>,
-    pub name_map: IndexMap<String, Range<usize>>,
-    pub(crate) no_recovery: bool,
     binding_context: Option<BindingContext>,
     /// Tracks variables defined as lexical (let, const)
     lexical_names: LexicalNames,
@@ -56,10 +51,6 @@ pub(crate) struct ParserState {
 pub enum BindingContext {
     /// The default context of a JavaScript file
     Hoisted,
-    /// Used to track function bindings `function f() {}`
-    Function,
-    /// import modules bindings `import/from`
-    Module,
     /// For generic blocks  { }
     Block,
     /// A block of a function, which applies different rules compared to [BindingContext::Block]
@@ -79,7 +70,6 @@ impl Default for BindingContext {
 /// Identifies the types of bindings encountered
 #[derive(Debug, Clone, PartialEq)]
 pub enum NameType {
-    // module bindings are hoisted but can't be redeclared like hoisted variables
     Module,
     /// Bindings for functions
     Function,
@@ -87,10 +77,30 @@ pub enum NameType {
     Lexical(LexicalType),
 }
 
+impl From<&NameType> for NameType {
+    fn from(n: &NameType) -> Self {
+        match n {
+            NameType::Module => NameType::Module,
+            NameType::Function => NameType::Function,
+            NameType::Hoisted => NameType::Hoisted,
+            NameType::Lexical(l) => NameType::Lexical(l.into()),
+        }
+    }
+}
+
 #[derive(Debug, Clone, PartialEq)]
 pub enum LexicalType {
     Let,
     Const,
+}
+
+impl From<&LexicalType> for LexicalType {
+    fn from(l: &LexicalType) -> Self {
+        match l {
+            LexicalType::Let => LexicalType::Let,
+            LexicalType::Const => LexicalType::Const,
+        }
+    }
 }
 
 impl std::fmt::Display for LexicalType {
@@ -118,10 +128,9 @@ impl Default for ParserState {
 impl ParserState {
     pub fn new(syntax: Syntax) -> Self {
         let mut state = ParserState {
-            parsing_context: (ParsingContextFlags::ALLOW_OBJECT_EXPRESSION
+            parsing_context: ParsingContextFlags::ALLOW_OBJECT_EXPRESSION
                 | ParsingContextFlags::INCLUDE_IN
-                | ParsingContextFlags::TOP_LEVEL)
-                - ParsingContextFlags::IN_FUNCTION_BLOCK,
+                | ParsingContextFlags::TOP_LEVEL,
             label_set: IndexMap::new(),
             strict: if syntax.file_kind == FileKind::Module {
                 Some(StrictMode::Module)
@@ -129,13 +138,10 @@ impl ParserState {
                 None
             },
             default_item: None,
-            name_map: IndexMap::new(),
-            duplicate_binding_parent: None,
-            binding_type: None,
             binding_context: Some(BindingContext::default()),
             no_recovery: false,
-            lexical_names: HashMap::default(),
-            hoisted_names: HashMap::default(),
+            lexical_names: IndexMap::new(),
+            hoisted_names: IndexMap::new(),
         };
 
         if syntax.top_level_await {
@@ -202,10 +208,6 @@ impl ParserState {
         self.strict.as_ref()
     }
 
-    pub fn binding_type(&self) -> Option<&NameType> {
-        self.binding_type.as_ref()
-    }
-
     pub fn binding_context(&self) -> Option<&BindingContext> {
         self.binding_context.as_ref()
     }
@@ -221,83 +223,6 @@ impl ParserState {
     pub(super) fn restore(&mut self, checkpoint: ParserStateCheckpoint) {
         checkpoint.rewind(self);
     }
-}
-
-/// Stores a checkpoint of the [ParserState].
-/// Allows rewinding the state to its previous state.
-///
-/// It's important that creating and rewinding a snapshot is cheap. Consider the performance implications
-/// before adding new unscoped state.
-#[derive(Debug, Clone)]
-pub(super) struct ParserStateCheckpoint {
-    /// Additional data that we only want to store in debug mode
-    #[cfg(debug_assertions)]
-    debug_checkpoint: DebugParserStateCheckpoint,
-}
-
-impl ParserStateCheckpoint {
-    /// Creates a snapshot of the passed in state.
-    #[cfg(debug_assertions)]
-    fn snapshot(state: &ParserState) -> Self {
-        Self {
-            debug_checkpoint: DebugParserStateCheckpoint::snapshot(state),
-        }
-    }
-
-    #[cfg(not(debug_assertions))]
-    fn snapshot(_: &ParserState) -> Self {
-        Self {}
-    }
-
-    /// Restores the `state values` to the time when this snapshot was created.
-    #[cfg(debug_assertions)]
-    fn rewind(self, state: &mut ParserState) {
-        self.debug_checkpoint.rewind(state);
-    }
-
-    #[cfg(not(debug_assertions))]
-    fn rewind(self, _: &ParserState) {}
-}
-
-/// Most of the [ParserState] is scoped state. It should, therefore, not be necessary to rewind
-/// that state because that's already taken care of by `with_state` and `with_scoped_state`.
-/// But, you can never no and better be safe than sorry. That's why we use some heuristics
-/// to verify that non of the scoped state did change and assert for it when rewinding.
-#[derive(Debug, Clone)]
-#[cfg(debug_assertions)]
-pub(super) struct DebugParserStateCheckpoint {
-    parsing_context: ParsingContextFlags,
-    label_set_len: usize,
-    strict: Option<StrictMode>,
-    default_item: Option<Range<usize>>,
-    duplicate_binding_parent: Option<&'static str>,
-    name_map_len: usize,
-}
-
-#[cfg(debug_assertions)]
-impl DebugParserStateCheckpoint {
-    fn snapshot(state: &ParserState) -> Self {
-        Self {
-            parsing_context: state.parsing_context,
-            label_set_len: state.label_set.len(),
-            strict: state.strict.clone(),
-            default_item: state.default_item.clone(),
-            duplicate_binding_parent: state.duplicate_binding_parent,
-            name_map_len: state.name_map.len(),
-        }
-    }
-
-    fn rewind(self, state: &mut ParserState) {
-        assert_eq!(state.parsing_context, self.parsing_context);
-        assert_eq!(state.label_set.len(), self.label_set_len);
-        assert_eq!(state.strict, self.strict);
-        assert_eq!(state.default_item, self.default_item);
-        assert_eq!(
-            state.duplicate_binding_parent,
-            self.duplicate_binding_parent
-        );
-        assert_eq!(state.name_map.len(), self.name_map_len);
-    }
 
     pub fn in_function_block(&self) -> bool {
         self.parsing_context
@@ -305,14 +230,20 @@ impl DebugParserStateCheckpoint {
     }
 
     /// Checks if a binding has been already registered
-    pub fn clashes_with_defined_name(&self, identifier_name: &str) -> Option<&Range<usize>> {
+    pub fn clashes_with_defined_name(
+        &self,
+        identifier_name: &str,
+        name_type: &Option<NameType>,
+    ) -> Option<&Range<usize>> {
         if let Some(binding_context) = self.binding_context() {
             match binding_context {
                 // hoisted variables can be redeclared without problems
                 // which means that we only need to check the variables the lexical environment
                 BindingContext::Block => {
-                    if let Some(binding_type) = self.binding_type() {
-                        match binding_type {
+                    if let Some(name_type) = name_type {
+                        match name_type {
+                            // Here we want to cover this particular case:
+                            // Example:
                             NameType::Hoisted => self
                                 .strict()
                                 .and_then(|_| self.lexical_names.get(identifier_name)),
@@ -341,7 +272,7 @@ impl DebugParserStateCheckpoint {
                 BindingContext::Arguments => self
                     .strict()
                     .and_then(|_| self.hoisted_names.get(identifier_name)),
-                BindingContext::Hoisted => match self.binding_type() {
+                BindingContext::Hoisted => match name_type {
                     Some(name_type) => match name_type {
                         NameType::Hoisted | NameType::Module | NameType::Function => self
                             .strict()
@@ -354,7 +285,7 @@ impl DebugParserStateCheckpoint {
                     _ => None,
                 },
                 BindingContext::FunctionBlock => {
-                    if let Some(binding_type) = self.binding_type() {
+                    if let Some(binding_type) = name_type {
                         match binding_type {
                             // At the top level of a function, or script, function declarations are treated
                             // like var declarations rather than like lexical declarations.
@@ -373,12 +304,8 @@ impl DebugParserStateCheckpoint {
                         None
                     }
                 }
-                BindingContext::Function => self.strict().and_then(|_| {
-                    self.hoisted_names
-                        .get(identifier_name)
-                        .or_else(|| self.lexical_names.get(identifier_name))
-                }),
-                _ => match self.binding_type() {
+
+                _ => match name_type {
                     None => self
                         .strict()
                         .and_then(|_| self.lexical_names.get(identifier_name)),
@@ -399,12 +326,17 @@ impl DebugParserStateCheckpoint {
     }
 
     /// It registers the name of a binding based in its name type (lexical or hoisted) and its current binding context
-    pub fn register_name(&mut self, identifier_name: String, range: Range<usize>) {
+    pub fn register_name(
+        &mut self,
+        identifier_name: String,
+        range: Range<usize>,
+        name_type: Option<NameType>,
+    ) {
         if let Some(binding_context) = self.binding_context() {
             match binding_context {
                 BindingContext::Hoisted => {
-                    match self.binding_type() {
-                        Some(binding_type) => match binding_type {
+                    match name_type {
+                        Some(name_type) => match name_type {
                             NameType::Hoisted => {
                                 self.hoisted_names.insert(identifier_name, range);
                             }
@@ -426,7 +358,7 @@ impl DebugParserStateCheckpoint {
                     }
                 }
                 BindingContext::Block => {
-                    match self.binding_type() {
+                    match name_type {
                         Some(binding_type) => match binding_type {
                             NameType::Hoisted => {
                                 self.hoisted_names.insert(identifier_name, range);
@@ -455,11 +387,8 @@ impl DebugParserStateCheckpoint {
                         }
                     }
                 }
-                BindingContext::Function => {
-                    self.lexical_names.insert(identifier_name, range);
-                }
                 BindingContext::FunctionBlock => {
-                    match self.binding_type() {
+                    match name_type {
                         Some(binding_type) => match binding_type {
                             NameType::Hoisted => {
                                 self.hoisted_names.insert(identifier_name, range);
@@ -485,13 +414,94 @@ impl DebugParserStateCheckpoint {
                         }
                     }
                 }
-                BindingContext::LoopStatements
-                | BindingContext::Arguments
-                | BindingContext::Module => {
+                BindingContext::LoopStatements | BindingContext::Arguments => {
                     self.hoisted_names.insert(identifier_name, range);
                 }
             }
         }
+    }
+}
+
+/// Stores a checkpoint of the [ParserState].
+/// Allows rewinding the state to its previous state.
+///
+/// It's important that creating and rewinding a snapshot is cheap. Consider the performance implications
+/// before adding new unscoped state.
+#[derive(Debug, Clone)]
+pub(super) struct ParserStateCheckpoint {
+    /// Additional data that we only want to store in debug mode
+    #[cfg(debug_assertions)]
+    debug_checkpoint: DebugParserStateCheckpoint,
+    lexical_names_len: usize,
+    hoisted_names_len: usize,
+}
+
+impl ParserStateCheckpoint {
+    /// Creates a snapshot of the passed in state.
+    #[cfg(debug_assertions)]
+    fn snapshot(state: &ParserState) -> Self {
+        Self {
+            lexical_names_len: state.lexical_names.len(),
+            hoisted_names_len: state.hoisted_names.len(),
+            debug_checkpoint: DebugParserStateCheckpoint::snapshot(state),
+        }
+    }
+
+    #[cfg(not(debug_assertions))]
+    fn snapshot(state: &ParserState) -> Self {
+        Self {
+            lexical_names_len: state.lexical_names.len(),
+            hoisted_names_len: state.hoisted_names.len(),
+        }
+    }
+
+    /// Restores the `state values` to the time when this snapshot was created.
+    #[cfg(debug_assertions)]
+    fn rewind(self, state: &mut ParserState) {
+        self.rewind_impl(state);
+        self.debug_checkpoint.rewind(state);
+    }
+
+    #[cfg(not(debug_assertions))]
+    fn rewind(self, state: &mut ParserState) {
+        self.rewind_impl(state);
+    }
+
+    fn rewind_impl(&self, state: &mut ParserState) {
+        state.lexical_names.truncate(self.lexical_names_len);
+        state.hoisted_names.truncate(self.hoisted_names_len);
+    }
+}
+
+/// Most of the [ParserState] is scoped state. It should, therefore, not be necessary to rewind
+/// that state because that's already taken care of by `with_state` and `with_scoped_state`.
+/// But, you can never no and better be safe than sorry. That's why we use some heuristics
+/// to verify that non of the scoped state did change and assert for it when rewinding.
+#[derive(Debug, Clone)]
+#[cfg(debug_assertions)]
+pub(super) struct DebugParserStateCheckpoint {
+    parsing_context: ParsingContextFlags,
+    label_set_len: usize,
+    strict: Option<StrictMode>,
+    default_item: Option<Range<usize>>,
+}
+
+#[cfg(debug_assertions)]
+impl DebugParserStateCheckpoint {
+    fn snapshot(state: &ParserState) -> Self {
+        Self {
+            parsing_context: state.parsing_context,
+            label_set_len: state.label_set.len(),
+            strict: state.strict.clone(),
+            default_item: state.default_item.clone(),
+        }
+    }
+
+    fn rewind(self, state: &mut ParserState) {
+        assert_eq!(state.parsing_context, self.parsing_context);
+        assert_eq!(state.label_set.len(), self.label_set_len);
+        assert_eq!(state.strict, self.strict);
+        assert_eq!(state.default_item, self.default_item);
     }
 }
 
@@ -722,7 +732,7 @@ bitflags! {
         const POTENTIAL_ARROW_START = 1 << 11;
 
         /// Whether the parser is inside a function body
-        const IN_FUNCTION_BLOCK = 0b0001000000000000;
+        const IN_FUNCTION_BLOCK = 1 << 12;
 
         const LOOP = Self::BREAK_ALLOWED.bits | Self::CONTINUE_ALLOWED.bits;
 
@@ -971,49 +981,5 @@ impl ChangeParserState for EnterLexicalScope {
         state.lexical_names = value.lexical_names;
         state.binding_context = value.binding_context;
         state.parsing_context = value.flags;
-    }
-}
-
-#[derive(Default, Debug, Clone)]
-pub struct EnterVariableDeclarationSnapshot {
-    binding_type: Option<NameType>,
-}
-
-/// Use this action to track the type of variable declaration
-pub(crate) struct EnterVariableDeclaration(pub(crate) NameType);
-
-impl ChangeParserState for EnterVariableDeclaration {
-    type Snapshot = EnterVariableDeclarationSnapshot;
-
-    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-        EnterVariableDeclarationSnapshot {
-            binding_type: std::mem::replace(&mut state.binding_type, Some(self.0)),
-        }
-    }
-
-    fn restore(state: &mut ParserState, value: Self::Snapshot) {
-        state.binding_type = value.binding_type;
-    }
-}
-
-#[derive(Default, Debug, Clone)]
-pub struct EnterFunctionDeclarationSnapshot {
-    binding_type: Option<NameType>,
-}
-
-/// Use this action to track the type of variable declaration
-pub(crate) struct EnterFunctionDeclaration;
-
-impl ChangeParserState for EnterFunctionDeclaration {
-    type Snapshot = EnterFunctionDeclarationSnapshot;
-
-    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
-        EnterFunctionDeclarationSnapshot {
-            binding_type: std::mem::replace(&mut state.binding_type, Some(NameType::Function)),
-        }
-    }
-
-    fn restore(state: &mut ParserState, value: Self::Snapshot) {
-        state.binding_type = value.binding_type;
     }
 }

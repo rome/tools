@@ -9,7 +9,7 @@ use super::util::*;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::{ParserProgress, RecoveryResult};
-use crate::state::{InConditionExpression, PotentialArrowStart, SignatureFlags};
+use crate::state::{InConditionExpression, NameType, PotentialArrowStart, SignatureFlags};
 use crate::syntax::assignment::{
     expression_to_assignment, expression_to_assignment_pattern, parse_assignment,
     AssignmentExprPrecedence,
@@ -772,6 +772,8 @@ fn parse_arguments(p: &mut Parser) -> ParsedSyntax {
 // (5 + 5) => {}
 // (a, ,b) => {}
 // (a, b) =>
+// a = 3; let a;
+
 fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax {
     let m = p.start();
     let checkpoint = p.checkpoint();
@@ -793,7 +795,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
                 if p.at(T![...]) {
                     let m = p.start();
                     p.bump_any();
-                    parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
+                    parse_binding_pattern(p, NameType::Hoisted).or_add_diagnostic(p, expected_binding);
                     if p.eat(T![:]) {
                         if let Some(mut ty) = ts_type(p) {
                             ty.err_if_not_ts(

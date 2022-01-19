@@ -9,9 +9,8 @@ use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::state::{
     AllowObjectExpression, BindingContext, BreakableKind, ChangeParserState, EnableStrictMode,
-    EnableStrictModeSnapshot, EnterBreakable, EnterHoistedScope, EnterLexicalScope,
-    EnterVariableDeclaration, IncludeIn, LabelledItem, LexicalType, NameType,
-    StrictMode as StrictModeState, WithLabel,
+    EnableStrictModeSnapshot, EnterBreakable, EnterHoistedScope, EnterLexicalScope, IncludeIn,
+    LabelledItem, LexicalType, NameType, StrictMode as StrictModeState, WithLabel,
 };
 use crate::syntax::assignment::expression_to_assignment_pattern;
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
@@ -1009,11 +1008,10 @@ fn parse_variable_declarations(
     let mut parse_declarations = ParseVariableDeclarations {
         declaration_context: context,
         remaining_declaration_range: None,
+        name_type,
     };
 
-    let list = p.with_state(EnterVariableDeclaration(name_type), |p| {
-        parse_declarations.parse_list(p)
-    });
+    let list = parse_declarations.parse_list(p);
 
     Some((list, parse_declarations.remaining_declaration_range))
 }
@@ -1023,20 +1021,23 @@ struct ParseVariableDeclarations {
     // Range of the declarations succeeding the first declaration
     // None until this hits the second declaration
     remaining_declaration_range: Option<Range<usize>>,
+    name_type: NameType,
 }
 
 impl ParseSeparatedList for ParseVariableDeclarations {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        parse_variable_declaration(p, &self.declaration_context).map(|declaration| {
-            if self.declaration_context.is_first {
-                self.declaration_context.is_first = false;
-            } else if let Some(range) = self.remaining_declaration_range.as_mut() {
-                range.end = declaration.range(p).as_range().end;
-            } else {
-                self.remaining_declaration_range = Some(declaration.range(p).as_range());
-            }
-            declaration
-        })
+        parse_variable_declaration(p, &self.declaration_context, &self.name_type).map(
+            |declaration| {
+                if self.declaration_context.is_first {
+                    self.declaration_context.is_first = false;
+                } else if let Some(range) = self.remaining_declaration_range.as_mut() {
+                    range.end = declaration.range(p).as_range().end;
+                } else {
+                    self.remaining_declaration_range = Some(declaration.range(p).as_range());
+                }
+                declaration
+            },
+        )
     }
 
     fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
@@ -1098,8 +1099,9 @@ impl VariableDeclarationContext {
 fn parse_variable_declaration(
     p: &mut Parser,
     context: &VariableDeclarationContext,
+    name_type: &NameType,
 ) -> ParsedSyntax {
-    let id = parse_binding_pattern(p);
+    let id = parse_binding_pattern(p, name_type.into());
 
     id.map(|id| {
         let m = id.precede(p);
@@ -1646,7 +1648,8 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 
     p.bump_any(); // bump (
     let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Block));
-    let pattern_marker = parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
+    let pattern_marker =
+        parse_binding_pattern(p, NameType::Hoisted).or_add_diagnostic(p, expected_binding);
     let pattern_kind = pattern_marker.map(|x| x.kind());
 
     if p.at(T![:]) {
