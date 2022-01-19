@@ -3,46 +3,51 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: Template {
-                tag: JsStaticMemberExpression {
-                    object: JsComputedMemberExpression {
-                        object: JsStaticMemberExpression {
-                            object: JsCallExpression {
-                                callee: JsIdentifierExpression {
-                                    name: JsReferenceIdentifier {
-                                        value_token: IDENT@0..3 "foo" [] [],
+            expression: JsUnknownExpression {
+                items: [
+                    JsStaticMemberExpression {
+                        object: JsComputedMemberExpression {
+                            object: JsStaticMemberExpression {
+                                object: JsCallExpression {
+                                    callee: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@0..3 "foo" [] [],
+                                        },
+                                    },
+                                    optional_chain_token_token: missing (optional),
+                                    type_args: missing (optional),
+                                    arguments: JsCallArguments {
+                                        l_paren_token: L_PAREN@3..4 "(" [] [],
+                                        args: JsCallArgumentList [],
+                                        r_paren_token: R_PAREN@4..5 ")" [] [],
                                     },
                                 },
-                                optional_chain_token_token: missing (optional),
-                                type_args: missing (optional),
-                                arguments: JsCallArguments {
-                                    l_paren_token: L_PAREN@3..4 "(" [] [],
-                                    args: JsCallArgumentList [],
-                                    r_paren_token: R_PAREN@4..5 ")" [] [],
+                                operator: QUESTIONDOT@5..7 "?." [] [],
+                                member: JsName {
+                                    value_token: IDENT@7..10 "baz" [] [],
                                 },
                             },
-                            operator: QUESTIONDOT@5..7 "?." [] [],
-                            member: JsName {
-                                value_token: IDENT@7..10 "baz" [] [],
-                            },
+                            optional_chain_token: missing (optional),
+                            l_brack_token: L_BRACK@10..11 "[" [] [],
+                            member: missing (required),
+                            r_brack_token: R_BRACK@11..12 "]" [] [],
                         },
-                        optional_chain_token: missing (optional),
-                        l_brack_token: L_BRACK@10..11 "[" [] [],
-                        member: missing (required),
-                        r_brack_token: R_BRACK@11..12 "]" [] [],
+                        operator: DOT@12..13 "." [] [],
+                        member: JsName {
+                            value_token: IDENT@13..17 "BAR" [Newline("\n")] [],
+                        },
                     },
-                    operator: DOT@12..13 "." [] [],
-                    member: JsName {
-                        value_token: IDENT@13..17 "BAR" [Newline("\n")] [],
-                    },
-                },
-                l_tick_token: BACKTICK@17..18 "`" [] [],
-                elements: TemplateElementList [
-                    TemplateChunkElement {
-                        template_chunk_token: TEMPLATE_CHUNK@18..20 "b\n" [] [],
+                    BACKTICK@17..18 "`" [] [],
+                    JsUnknown {
+                        items: [
+                            JsUnknownExpression {
+                                items: [
+                                    ERROR_TOKEN@18..20 "b\n" [] [],
+                                ],
+                            },
+                        ],
                     },
                 ],
-                r_tick_token: missing (required),
             },
             semicolon_token: missing (optional),
         },
@@ -55,7 +60,7 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..20
     0: JS_EXPRESSION_STATEMENT@0..20
-      0: TEMPLATE@0..20
+      0: JS_UNKNOWN_EXPRESSION@0..20
         0: JS_STATIC_MEMBER_EXPRESSION@0..17
           0: JS_COMPUTED_MEMBER_EXPRESSION@0..12
             0: JS_STATIC_MEMBER_EXPRESSION@0..10
@@ -80,10 +85,9 @@ JsModule {
           2: JS_NAME@13..17
             0: IDENT@13..17 "BAR" [Newline("\n")] []
         1: BACKTICK@17..18 "`" [] []
-        2: TEMPLATE_ELEMENT_LIST@18..20
-          0: TEMPLATE_CHUNK_ELEMENT@18..20
-            0: TEMPLATE_CHUNK@18..20 "b\n" [] []
-        3: (empty)
+        2: JS_UNKNOWN@18..20
+          0: JS_UNKNOWN_EXPRESSION@18..20
+            0: ERROR_TOKEN@18..20 "b\n" [] []
       1: (empty)
   3: EOF@20..20 "" [] []
 --
@@ -99,6 +103,15 @@ error[SyntaxError]: expected an expression but instead found ']'
   │
 1 │ foo()?.baz[].
   │            ^ Expected an expression here
+
+--
+error[SyntaxError]: Invalid template literal
+  ┌─ subscripts_err.js:2:5
+  │  
+2 │   BAR`b
+  │ ┌─────^
+3 │ │ 
+  │ └^
 
 --
 foo()?.baz[].

@@ -87,7 +87,6 @@ fn main() -> Result<()> {
             xtask::libs::run(filter, criterion, baseline);
             Ok(())
         }
-<<<<<<< HEAD
         "unicode" => {
             args.finish()?;
             unicode::generate_tables()
@@ -95,13 +94,6 @@ fn main() -> Result<()> {
         _ => {
             eprintln!(
                 "\
->>>>>>> f7d668584 (multiple dianostics on invalid string lietral)
-=======
-        _ => {
-            eprintln!(
-                "\
->>>>>>> 36359a9ad (validate unicode escape on string literals)
->>>>>>> af5c25965 (removing validation of escaped identifiers)
 cargo xtask
 Run custom build command.
 USAGE:

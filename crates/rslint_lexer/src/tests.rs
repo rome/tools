@@ -197,7 +197,7 @@ fn template_literals() {
         BACKTICK:1,
         WHITESPACE:1,
         BACKTICK:1,
-        TEMPLATE_CHUNK:3,
+        ERROR_TOKEN:3,
     }
 
     assert_lex! {
