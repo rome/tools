@@ -61,6 +61,12 @@ fn main() -> Result<()> {
             Ok(())
         }
         "coverage-libs" => {
+            // on pr branch, run
+            // git checkout main
+            // cargo run -p xtask --release -- coverage-libs --save-baseline main
+            // git checkout -
+            // cargo run -p xtask --release -- coverage-libs --save-baseline pr
+            // critcmp main pr # (cargo install critcmp)
             let filter: String = args
                 .opt_value_from_str("--filter")
                 .unwrap()
