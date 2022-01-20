@@ -94,7 +94,7 @@ Here are some other scripts that you might find useful.
 If you are a core contributor, and you have access to create new branches
 from the main repository (not a fork), use these comments to run specific workflows:
 
-- `!bench` will run a performance job of the parser and the github-bot will write a comment at the end
+- `!bench` benchmarks the parser's runtime performance and writes a comment with the results
 
 #### Naming patterns
 
