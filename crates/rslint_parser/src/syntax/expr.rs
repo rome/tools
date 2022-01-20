@@ -1723,7 +1723,6 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         let m = p.start();
         p.bump(T![await]);
 
-        parse_unary_expr(p).or_add_diagnostic(p, js_parse_error::expected_unary_expression);
         parse_unary_expr(p, context)
             .or_add_diagnostic(p, js_parse_error::expected_unary_expression);
 
