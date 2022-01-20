@@ -1476,7 +1476,7 @@ impl<'src> Lexer<'src> {
         let mut diagnostic = None;
 
         loop {
-            match self.bytes.get(self.cur).map(|b| *b as char)  {
+            match self.bytes.get(self.cur).map(|b| *b as char) {
                 Some('`') if self.cur == start => {
                     self.next();
                     return tok!(BACKTICK, 1);

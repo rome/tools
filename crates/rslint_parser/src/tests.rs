@@ -6,7 +6,6 @@ use rslint_errors::file::SimpleFile;
 use rslint_errors::termcolor::Buffer;
 use rslint_errors::{file::SimpleFiles, Emitter};
 use rslint_syntax::JsSyntaxKind;
-use std::fs;
 use std::panic::catch_unwind;
 use std::path::{Path, PathBuf};
 
@@ -98,7 +97,7 @@ fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<JsAnyRoot>, Stri
 fn run_and_expect_no_errors(path: &str, _: &str) {
     let path = PathBuf::from(path);
     let text = std::fs::read_to_string(&path).unwrap();
-    
+
     let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text);
     let errors = parse.errors();
     assert_errors_are_absent(errors, &path, &parse.syntax());
@@ -113,7 +112,7 @@ fn run_and_expect_no_errors(path: &str, _: &str) {
 fn run_and_expect_errors(path: &str, _: &str) {
     let path = PathBuf::from(path);
     let text = std::fs::read_to_string(&path).unwrap();
-    
+
     let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text);
     let errors = parse.errors();
     assert_errors_are_present(errors, &path, &parse.syntax());
