@@ -240,7 +240,7 @@ fn parse_function(
         .ok();
 
     // hoisted scope should be the same of the function of the body
-    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Parameters));
     parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_parameters);
 
     TypeScript
@@ -405,22 +405,20 @@ pub(super) fn parse_arrow_function_parameters(
         flags |= SignatureFlags::ASYNC;
     }
 
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Parameters));
     if p.at(T!['(']) {
-        let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
         parse_parameter_list(p, flags)
     } else {
         // test_err async_arrow_expr_await_parameter
         // let a = async await => {}
         // async() => { (a = await) => {} };
-        p.with_state(EnterHoistedScope(BindingContext::Arguments), |p| {
-            p.with_state(
-                EnterParameters {
-                    signature_flags: flags,
-                    allow_object_expressions: false,
-                },
-                |p| parse_binding(p, Some(NameType::Hoisted)),
-            )
-        })
+        p.with_state(
+            EnterParameters {
+                signature_flags: flags,
+                allow_object_expressions: false,
+            },
+            |p| parse_binding(p, Some(NameType::Hoisted)),
+        )
     }
 }
 

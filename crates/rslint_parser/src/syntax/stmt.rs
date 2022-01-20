@@ -1259,7 +1259,7 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
         return JS_FOR_STATEMENT;
     }
 
-    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::LoopStatements));
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::IterationStatement));
 
     // `for (let...` | `for (const...` | `for (var...`
 

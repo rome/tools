@@ -273,7 +273,7 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
 
     parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
     let has_l_paren = p.expect(T!['(']);
-    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Parameters));
     p.with_state(
         EnterParameters {
             signature_flags: SignatureFlags::empty(),
@@ -390,7 +390,7 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 /// Parses the body of a method object member starting right after the member name.
 fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
     parse_ts_parameter_types(p).ok();
-    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Parameters));
     parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_parameters);
     parse_ts_type_annotation_or_error(p).ok();
     parse_function_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_function_body);

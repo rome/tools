@@ -96,8 +96,6 @@ pub(crate) fn parse_identifier_binding(
             identifier.change_to_unknown(p);
             return identifier;
         }
-        let id = String::from(identifier_name);
-        let binding_context = p.state.binding_context();
 
         if let Some(NameType::Lexical(lexical_type)) = &name_type {
             if identifier_name == "let" || identifier_name == "const" {
@@ -112,30 +110,25 @@ pub(crate) fn parse_identifier_binding(
                 return identifier;
             }
         }
-
-        let err = if binding_context.is_some() {
-            p.state
-                .clashes_with_defined_name(&id, &name_type)
-                .map(|other_range| {
-                    p.err_builder(&format!(
-                        "The binding \"{}\" has been already declared",
-                        identifier.text(p)
-                    ))
-                    .primary(other_range, "First declaration here")
-                    .secondary(identifier.range(p).as_range(), "Second declaration here")
-                })
-        } else {
-            None
-        };
-
         let id = String::from(identifier_name);
+
+        let err = p
+            .state
+            .clashes_with_defined_name(&id, &name_type)
+            .map(|other_range| {
+                p.err_builder(&format!(
+                    "The binding \"{}\" has been already declared",
+                    identifier.text(p)
+                ))
+                .primary(other_range, "First declaration here")
+                .secondary(identifier.range(p).as_range(), "Second declaration here")
+            });
         if let Some(err) = err {
             p.error(err);
             identifier.change_to_unknown(p);
-        } else {
-            p.state
-                .register_name(id, identifier.range(p).as_range(), name_type);
         }
+        p.state
+            .register_name(id, identifier.range(p).as_range(), name_type);
         identifier
     })
 }

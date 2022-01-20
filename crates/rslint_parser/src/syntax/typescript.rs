@@ -194,7 +194,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
         if p.at(T![<]) {
             no_recover!(p, ts_type_params(p));
         }
-        let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
+        let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Parameters));
         parse_parameter_list(p, SignatureFlags::empty())
             .or_add_diagnostic(p, js_parse_error::expected_parameters);
         if p.at(T![:]) {
@@ -263,7 +263,7 @@ pub fn ts_signature_member(p: &mut Parser, construct_sig: bool) -> Option<Comple
         no_recover!(p, ts_type_params(p));
     }
 
-    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Parameters));
     parse_parameter_list(
         p,
         if construct_sig {
@@ -409,7 +409,7 @@ pub fn ts_fn_or_constructor_type(p: &mut Parser, fn_type: bool) -> Option<Comple
     if p.at(T![<]) {
         ts_type_params(p);
     }
-    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Parameters));
     parse_parameter_list(p, SignatureFlags::empty())
         .or_add_diagnostic(p, js_parse_error::expected_parameters);
     if ts_type_or_type_predicate_ann(p, T![=>]).is_none() && p.state.no_recovery {

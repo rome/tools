@@ -13,19 +13,13 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-var init, after;
-
-(function() {
-  let f = 123;
-  init = f;
-
-  if (false) ; else function f() {  }
-
-  after = f;
-}());
+let a = 3
+class b {
+  a = 2
+}
     "#;
 
-    let module = parse_text(src, 0);
+    let module = parse_module(src, 0);
 
     assert_errors_are_absent(
         module.errors(),

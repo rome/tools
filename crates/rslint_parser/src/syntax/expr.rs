@@ -788,6 +788,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
 
     if !is_empty {
         p.with_state(PotentialArrowStart(true), |p| {
+
             // stores a potentially started sequence expression
             let mut sequence: Option<Marker> = None;
 

@@ -1,5 +1,5 @@
 use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
-use crate::state::NameType;
+use crate::state::{LexicalType, NameType};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::class::{parse_export_class_clause, parse_export_default_class_case};
 use crate::syntax::expr::{
@@ -120,7 +120,7 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
         JS_STRING_LITERAL => parse_import_bare_clause(p),
         T![*] => parse_import_namespace_clause(p),
         T!['{'] => parse_import_named_clause(p),
-        _ => match parse_binding(p, Some(NameType::Module)) {
+        _ => match parse_binding(p, Some(NameType::Lexical(LexicalType::Import))) {
             Absent => Absent,
             Present(binding) => {
                 let m = binding.precede(p);
@@ -171,7 +171,8 @@ fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax {
 
     p.bump_any();
     expect_keyword(p, "as", T![as]);
-    parse_binding(p, Some(NameType::Module)).or_add_diagnostic(p, expected_binding);
+    parse_binding(p, Some(NameType::Lexical(LexicalType::Import)))
+        .or_add_diagnostic(p, expected_binding);
     expect_keyword(p, "from", T![from]);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     parse_import_assertion(p).ok();
@@ -202,7 +203,7 @@ fn parse_import_named_clause(p: &mut Parser) -> ParsedSyntax {
 }
 
 fn parse_default_import_specifier(p: &mut Parser) -> ParsedSyntax {
-    parse_binding(p, Some(NameType::Module)).map(|binding| {
+    parse_binding(p, Some(NameType::Lexical(LexicalType::Import))).map(|binding| {
         let m = binding.precede(p);
         p.expect(T![,]);
         m.complete(p, JS_DEFAULT_IMPORT_SPECIFIER)
@@ -224,7 +225,8 @@ fn parse_namespace_import_specifier(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.bump_any();
     expect_keyword(p, "as", T![as]);
-    parse_binding(p, Some(NameType::Module)).or_add_diagnostic(p, expected_binding);
+    parse_binding(p, Some(NameType::Lexical(LexicalType::Import)))
+        .or_add_diagnostic(p, expected_binding);
 
     Present(m.complete(p, JS_NAMESPACE_IMPORT_SPECIFIER))
 }
@@ -299,7 +301,8 @@ fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
     }
 
     expect_keyword(p, "as", T![as]);
-    parse_binding(p, Some(NameType::Module)).or_add_diagnostic(p, expected_binding);
+    parse_binding(p, Some(NameType::Lexical(LexicalType::Import)))
+        .or_add_diagnostic(p, expected_binding);
 
     Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIER))
 }
@@ -318,7 +321,7 @@ fn parse_shorthand_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
         return Present(shorthand.complete(p, JS_SHORTHAND_NAMED_IMPORT_SPECIFIER));
     }
 
-    parse_binding(p, Some(NameType::Module)).map(|binding| {
+    parse_binding(p, Some(NameType::Lexical(LexicalType::Import))).map(|binding| {
         binding
             .precede(p)
             .complete(p, JS_SHORTHAND_NAMED_IMPORT_SPECIFIER)
@@ -508,7 +511,7 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
 // test_err export_variable_clause_error
 // export let a = ;
 // export const b;
-// export let a, a;
+// export let b, c;
 fn parse_export_variable_clause(p: &mut Parser) -> ParsedSyntax {
     if !is_at_variable_declarations(p) {
         return Absent;

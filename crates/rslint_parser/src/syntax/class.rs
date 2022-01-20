@@ -205,7 +205,6 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     }
 
     p.expect(T!['{']);
-    let p = &mut *p.with_scoped_state(EnterLexicalScope(BindingContext::Block));
     ClassMembersList.parse_list(p);
     p.expect(T!['}']);
 
@@ -640,8 +639,8 @@ fn parse_class_member_impl(
                         member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
                     } else {
                         let has_l_paren = p.expect(T!['(']);
-                        let p =
-                            &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
+                        let p = &mut *p
+                            .with_scoped_state(EnterHoistedScope(BindingContext::Parameters));
                         p.with_state(
                             EnterParameters {
                                 signature_flags: SignatureFlags::empty(),
@@ -734,10 +733,8 @@ fn parse_static_initialization_block_class_member(p: &mut Parser) -> ParsedSynta
     p.bump_remap(T![static]);
 
     p.expect(T!['{']);
-    p.with_state(EnterHoistedScope(BindingContext::Block), |p| {
-        p.with_state(EnterClassStaticInitializationBlock, |p| {
-            parse_statements(p, true)
-        })
+    p.with_state(EnterClassStaticInitializationBlock, |p| {
+        parse_statements(p, true)
     });
     p.expect(T!['}']);
 
@@ -900,7 +897,7 @@ fn parse_method_class_member_body(
     };
 
     ts_parameter_types(p);
-    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Parameters));
     parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_class_parameters);
     parse_ts_type_annotation_or_error(p).ok();
 
@@ -910,6 +907,8 @@ fn parse_method_class_member_body(
 }
 
 fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> ParsedSyntax {
+    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Parameters));
+
     if let Ok(Some(range)) = optional_member_token(p) {
         let err = p
             .err_builder("constructors cannot be optional")
@@ -972,7 +971,6 @@ fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax {
 fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax {
     // test_err class_constructor_parameter
     // class B { constructor(protected b) {} }
-    let p = &mut *p.with_scoped_state(EnterHoistedScope(BindingContext::Arguments));
     if matches!(p.cur_src(), "public" | "protected" | "private" | "readonly") {
         let ts_param = p.start();
         if let Some(range) = parse_access_modifier(p) {
