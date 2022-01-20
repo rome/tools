@@ -100,6 +100,8 @@ impl Arguments {
                 test_expected_fullpath,
             } = Arguments::get_variables(&file).ok_or("Cannot generate variables for this file")?;
 
+            let test_name = test_name.replace("-", "_");
+
             let span = self.pattern.lit.span();
             let test_name = syn::Ident::new(&test_name, span);
             let f = &self.called_function;

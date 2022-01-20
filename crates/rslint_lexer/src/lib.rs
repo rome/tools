@@ -1475,13 +1475,13 @@ impl<'src> Lexer<'src> {
         let start = self.cur;
         let mut diagnostic = None;
 
-        while let Some(b) = self.bytes.get(self.cur) {
-            match *b as char {
-                '`' if self.cur == start => {
+        loop {
+            match self.bytes.get(self.cur).map(|b| *b as char)  {
+                Some('`') if self.cur == start => {
                     self.next();
                     return tok!(BACKTICK, 1);
                 }
-                '`' => {
+                Some('`') => {
                     return match diagnostic {
                         Some(diagnostic) => (
                             Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
@@ -1493,17 +1493,17 @@ impl<'src> Lexer<'src> {
                         ),
                     };
                 }
-                '\\' => {
+                Some('\\') => {
                     if let Some(err) = self.validate_escape_sequence() {
                         diagnostic = Some(err);
                     }
                     self.next_bounded();
                 }
-                '$' if self.bytes.get(self.cur + 1) == Some(&b'{') && self.cur == start => {
+                Some('$') if self.bytes.get(self.cur + 1) == Some(&b'{') && self.cur == start => {
                     self.advance(2);
                     return (Token::new(JsSyntaxKind::DOLLAR_CURLY, 2), diagnostic);
                 }
-                '$' if self.bytes.get(self.cur + 1) == Some(&b'{') => {
+                Some('$') if self.bytes.get(self.cur + 1) == Some(&b'{') => {
                     return match diagnostic {
                         Some(diagnostic) => (
                             Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
@@ -1515,15 +1515,17 @@ impl<'src> Lexer<'src> {
                         ),
                     };
                 }
-                _ => {
+                Some(_) => {
                     let _ = self.next();
+                }
+                None => {
+                    break;
                 }
             }
         }
 
         let err = Diagnostic::error(self.file_id, "", "unterminated template literal")
             .primary(self.cur..self.cur + 1, "");
-
         (
             Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
             Some(Box::new(err)),

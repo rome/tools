@@ -19,4 +19,5 @@ indexmap = "1.8.0"
 cfg-if = "1.0.0"
 
 [dev-dependencies]
+tests_macros = { path = "../tests_macros" }
 expect-test = "1.2.2"
