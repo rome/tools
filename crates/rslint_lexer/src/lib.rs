@@ -468,7 +468,7 @@ impl<'src> Lexer<'src> {
     /// Returns `Some(x)` if the current position is an identifier, with the character at
     /// the position.
     ///
-    /// Boolean states if there escaped chars.
+    /// Boolean states if there are escaped characters.
     ///
     /// The character may be a char that was generated from a unicode escape sequence,
     /// e.g. `t` is returned, the actual source code is `\u{74}`
