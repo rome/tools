@@ -492,16 +492,11 @@ error[SyntaxError]: expected an identifier but instead found '"a"'
   │          ^^^ Expected an identifier here
 
 --
-error[SyntaxError]: expected a valid string literal, or a valid identifier but instead found 'as'
+error[SyntaxError]: expected a string literal, or an identifier but instead found 'as'
   ┌─ import_err.js:8:10
   │
-<<<<<<< HEAD
 8 │ import { as x } from "c";
   │          ^^ Expected a string literal, or an identifier here
-=======
-8 │ import { as b } from "c";
-  │          ^^ Expected a valid string literal, or a valid identifier here
->>>>>>> 23889ef57 (removing validation of escaped identifiers)
 
 --
 error[SyntaxError]: expected a default import, a namespace import, or a named import but instead found '4'
