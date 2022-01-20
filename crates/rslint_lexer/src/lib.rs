@@ -758,8 +758,6 @@ impl<'src> Lexer<'src> {
         None
     }
 
-    // Read a number which does not start with 0, since that can be more things and is handled
-    // by another function
     #[inline]
     fn read_number(&mut self, leading_zero: bool) -> Option<Box<Diagnostic>> {
         let start = self.cur;
