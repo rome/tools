@@ -117,15 +117,11 @@ pub fn parse_expression_or_recover_to_next_statement(
 // "foo"
 // 'bar'
 // null
-// 0
-// 0.0
-// 0n
+// 0, 0.0, 0n, 0e00
 
 // test_err literals
-// 00
-// 012
-// 08
-// 091
+// 00, 012, 08, 091, 0789 // parser errors
+// 01n, 0_0, 01.2 // lexer errors
 pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
     let literal_kind = match p.cur_tok().kind {
         JsSyntaxKind::JS_NUMBER_LITERAL => {
