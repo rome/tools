@@ -341,7 +341,7 @@ bitflags! {
     ///   snapshots each individual boolean field to allow restoring the previous state. With bitflags, all that
     ///   is needed is to copy away the flags field and restore it after.
     #[derive(Default)]
-    struct ParsingContextFlags: u16 {
+    struct ParsingContextFlags: u8 {
         /// Whether the parser is in a generator function like `function* a() {}`
         /// Matches the `Yield` parameter in the ECMA spec
         const IN_GENERATOR = 1 << 0;
