@@ -152,7 +152,7 @@ impl ExpressionContext {
         self.0.contains(ExpressionContextFlags::INCLUDE_IN)
     }
 
-    /// Adds the `flat` if `set` is `true`, otherwise removes the `flag`
+    /// Adds the `flag` if `set` is `true`, otherwise removes the `flag`
     fn and(self, flag: ExpressionContextFlags, set: bool) -> Self {
         ExpressionContext(if set { self.0 | flag } else { self.0 - flag })
     }
