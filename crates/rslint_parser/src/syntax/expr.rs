@@ -1063,7 +1063,8 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
                 parse_function_expression(p).unwrap()
             } else {
                 // `async a => {}` and `async (a) => {}`
-                if p.state.potential_arrow_start() && (is_nth_at_name(p, 1) || p.nth(1) == T!['('])
+                if p.state.potential_arrow_start()
+                    && ((is_nth_at_name(p, 1) && p.nth_at(2, T![=>])) || p.nth(1) == T!['('])
                 {
                     // test async_arrow_expr
                     // let a = async foo => {}

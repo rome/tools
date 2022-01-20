@@ -1254,7 +1254,7 @@ fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// Parses the header of a for statement into the current node and returns whatever it is a for in/of or "regular" for statement
-fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
+fn parse_for_head(p: &mut Parser, is_for_await: bool) -> JsSyntaxKind {
     // for (;...
     if p.at(T![;]) {
         parse_normal_for_head(p);
@@ -1301,6 +1301,7 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
         // for (some_expression`
         let checkpoint = p.checkpoint();
 
+        let starts_with_async_of = p.cur_src() == "async" && p.nth_src(1) == "of";
         let init_expr = p.with_state(IncludeIn(false), parse_expression);
 
         if p.at(T![in]) || p.cur_src() == "of" {
@@ -1317,9 +1318,29 @@ fn parse_for_head(p: &mut Parser) -> JsSyntaxKind {
                     )
                 {
                     let err = p.err_builder("the left hand side of a `for..in` statement cannot be a destructuring pattern")
-                            .primary(assignment.range(p), "");
+						.primary(assignment.range(p), "");
                     p.error(err);
-                    assignment.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
+                    assignment.change_to_unknown(p);
+                } else if p.cur_src() == "of" && !is_for_await && starts_with_async_of {
+                    //  for ( [lookahead ∉ { let, async of }] LeftHandSideExpression[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
+                    // [+Await] for await ( [lookahead ≠ let] LeftHandSideExpression[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
+
+                    // test for_await_async_identifier
+                    // let async;
+                    // async function fn() {
+                    //   for await (async of [7]);
+                    // }
+
+                    // test_err for_of_async_identifier
+                    // let async;
+                    // for (async of [1]) ;
+                    p.error(
+                        p.err_builder(
+                            "The left-hand side of a `for...of` statement may not be `async`",
+                        )
+                        .primary(assignment.range(p), ""),
+                    );
+                    assignment.change_to_unknown(p);
                 }
             }
 
@@ -1401,9 +1422,11 @@ fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
     }
 
     let kind = if p.expect(T!['(']) {
-        p.with_state(AllowObjectExpression(true), parse_for_head)
+        p.with_state(AllowObjectExpression(true), |p| {
+            parse_for_head(p, await_range.is_some())
+        })
     } else {
-        parse_for_head(p)
+        parse_for_head(p, await_range.is_some())
     };
 
     p.expect(T![')']);
