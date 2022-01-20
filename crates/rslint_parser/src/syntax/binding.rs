@@ -1,6 +1,6 @@
 use crate::parser::{expected_any, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::{is_at_identifier, parse_identifier};
+use crate::syntax::expr::{is_at_identifier, parse_identifier, ExpressionContext};
 use crate::syntax::js_parse_error::{
     expected_binding, expected_identifier, expected_object_member_name,
 };
@@ -12,10 +12,10 @@ use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind as SyntaxKindTrait;
 use rslint_errors::Span;
 
-pub(crate) fn parse_binding_pattern(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_binding_pattern(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     match p.cur() {
         T!['['] => ArrayBindingPattern.parse_array_pattern(p),
-        T!['{'] if p.state.allow_object_expression() => {
+        T!['{'] if context.is_object_expression_allowed() => {
             ObjectBindingPattern.parse_object_pattern(p)
         }
         _ => parse_identifier_binding(p),
@@ -135,7 +135,7 @@ impl ParseWithDefaultPattern for BindingPatternWithDefault {
 
     #[inline]
     fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
-        parse_binding_pattern(p)
+        parse_binding_pattern(p, ExpressionContext::default())
     }
 }
 
@@ -261,12 +261,13 @@ impl ParseObjectPattern for ObjectBindingPattern {
         } else {
             parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
             if p.expect(T![:]) {
-                parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
+                parse_binding_pattern(p, ExpressionContext::default())
+                    .or_add_diagnostic(p, expected_binding);
             }
             JS_OBJECT_BINDING_PATTERN_PROPERTY
         };
 
-        parse_initializer_clause(p).ok();
+        parse_initializer_clause(p, ExpressionContext::default()).ok();
 
         Present(m.complete(p, kind))
     }
@@ -289,7 +290,8 @@ impl ParseObjectPattern for ObjectBindingPattern {
             let m = p.start();
             p.bump(T![...]);
 
-            let inner = parse_binding_pattern(p).or_add_diagnostic(p, expected_identifier);
+            let inner = parse_binding_pattern(p, ExpressionContext::default())
+                .or_add_diagnostic(p, expected_identifier);
 
             if let Some(mut inner) = inner {
                 if inner.kind() != JS_IDENTIFIER_BINDING {

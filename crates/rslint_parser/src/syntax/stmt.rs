@@ -8,15 +8,14 @@ use super::typescript::*;
 use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::state::{
-    AllowObjectExpression, BreakableKind, ChangeParserState, EnableStrictMode,
-    EnableStrictModeSnapshot, EnterBreakable, IncludeIn, LabelledItem,
-    StrictMode as StrictModeState, WithLabel,
+    BreakableKind, ChangeParserState, EnableStrictMode, EnableStrictModeSnapshot, EnterBreakable,
+    LabelledItem, StrictMode as StrictModeState, WithLabel,
 };
 use crate::syntax::assignment::expression_to_assignment_pattern;
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
 use crate::syntax::expr::{
     is_at_expression, is_at_identifier, is_nth_at_name, parse_expr_or_assignment,
-    parse_expression_or_recover_to_next_statement, parse_identifier,
+    parse_expression_or_recover_to_next_statement, parse_identifier, ExpressionContext,
 };
 use crate::syntax::function::{is_at_async_function, parse_function_statement, LineBreak};
 use crate::syntax::js_parse_error;
@@ -342,7 +341,8 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
 fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
     let start = p.cur_tok().start();
 
-    let expr = parse_expression_or_recover_to_next_statement(p, false);
+    let expr =
+        parse_expression_or_recover_to_next_statement(p, false, ExpressionContext::default());
 
     if let Ok(expr) = expr {
         let m = expr.precede(p);
@@ -403,7 +403,7 @@ fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
 
         p.error(err);
     } else {
-        parse_expression_or_recover_to_next_statement(p, false).ok();
+        parse_expression_or_recover_to_next_statement(p, false, ExpressionContext::default()).ok();
     }
 
     semi(p, start..p.cur_tok().end());
@@ -562,7 +562,7 @@ fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
     let start = p.cur_tok().start();
     p.bump_any(); // return keyword
     if !p.has_linebreak_before_n(0) {
-        parse_expression(p).ok();
+        parse_expression(p, ExpressionContext::default()).ok();
     }
 
     semi(p, start..p.cur_tok().end());
@@ -778,8 +778,11 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool) {
 fn parenthesized_expression(p: &mut Parser) -> bool {
     let has_l_paren = p.expect(T!['(']);
 
-    p.with_state(AllowObjectExpression(has_l_paren), parse_expression)
-        .or_add_diagnostic(p, js_parse_error::expected_expression);
+    parse_expression(
+        p,
+        ExpressionContext::default().and_object_expression_allowed(has_l_paren),
+    )
+    .or_add_diagnostic(p, js_parse_error::expected_expression);
 
     p.expect(T![')'])
 }
@@ -1096,7 +1099,7 @@ fn parse_variable_declaration(
     context: &VariableDeclarationContext,
 ) -> ParsedSyntax {
     p.state.duplicate_binding_parent = context.duplicate_binding_parent_name();
-    let id = parse_binding_pattern(p);
+    let id = parse_binding_pattern(p, ExpressionContext::default());
     p.state.duplicate_binding_parent = None;
 
     id.map(|id| {
@@ -1117,7 +1120,12 @@ fn parse_variable_declaration(
         let last_name_map = std::mem::take(&mut p.state.name_map);
         let duplicate_binding_parent = p.state.duplicate_binding_parent.take();
 
-        let initializer = parse_initializer_clause(p).ok();
+        let initializer = parse_initializer_clause(
+            p,
+            ExpressionContext::default()
+                .and_include_in(context.parent != VariableDeclarationParent::For),
+        )
+        .ok();
 
         p.state.name_map = last_name_map;
         p.state.duplicate_binding_parent = duplicate_binding_parent;
@@ -1254,7 +1262,7 @@ fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// Parses the header of a for statement into the current node and returns whatever it is a for in/of or "regular" for statement
-fn parse_for_head(p: &mut Parser, is_for_await: bool) -> JsSyntaxKind {
+fn parse_for_head(p: &mut Parser, has_l_paren: bool, is_for_await: bool) -> JsSyntaxKind {
     // for (;...
     if p.at(T![;]) {
         parse_normal_for_head(p);
@@ -1267,9 +1275,8 @@ fn parse_for_head(p: &mut Parser, is_for_await: bool) -> JsSyntaxKind {
     {
         let m = p.start();
 
-        let (declarations, additional_declarations) = p.with_state(IncludeIn(false), |p| {
-            parse_variable_declarations(p, VariableDeclarationParent::For).unwrap()
-        });
+        let (declarations, additional_declarations) =
+            parse_variable_declarations(p, VariableDeclarationParent::For).unwrap();
 
         let is_in = p.at(T![in]);
         let is_of = p.cur_src() == "of";
@@ -1302,7 +1309,12 @@ fn parse_for_head(p: &mut Parser, is_for_await: bool) -> JsSyntaxKind {
         let checkpoint = p.checkpoint();
 
         let starts_with_async_of = p.cur_src() == "async" && p.nth_src(1) == "of";
-        let init_expr = p.with_state(IncludeIn(false), parse_expression);
+        let init_expr = parse_expression(
+            p,
+            ExpressionContext::default()
+                .and_include_in(false)
+                .and_object_expression_allowed(has_l_paren),
+        );
 
         if p.at(T![in]) || p.cur_src() == "of" {
             // for (assignment_pattern in ...
@@ -1360,13 +1372,15 @@ fn parse_normal_for_head(p: &mut Parser) {
     p.expect(T![;]);
 
     if !p.at(T![;]) {
-        parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+        parse_expression(p, ExpressionContext::default())
+            .or_add_diagnostic(p, js_parse_error::expected_expression);
     }
 
     p.expect(T![;]);
 
     if !p.at(T![')']) {
-        parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+        parse_expression(p, ExpressionContext::default())
+            .or_add_diagnostic(p, js_parse_error::expected_expression);
     }
 }
 
@@ -1376,13 +1390,14 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> JsSyntaxKind {
 
     if is_in {
         p.bump_any();
-        parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+        parse_expression(p, ExpressionContext::default())
+            .or_add_diagnostic(p, js_parse_error::expected_expression);
 
         JS_FOR_IN_STATEMENT
     } else {
         p.bump_remap(T![of]);
 
-        parse_expr_or_assignment(p)
+        parse_expr_or_assignment(p, ExpressionContext::default())
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
         JS_FOR_OF_STATEMENT
@@ -1421,14 +1436,8 @@ fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
         p.bump_any();
     }
 
-    let kind = if p.expect(T!['(']) {
-        p.with_state(AllowObjectExpression(true), |p| {
-            parse_for_head(p, await_range.is_some())
-        })
-    } else {
-        parse_for_head(p, await_range.is_some())
-    };
-
+    let has_l_paren = p.expect(T!['(']);
+    let kind = parse_for_head(p, has_l_paren, await_range.is_some());
     p.expect(T![')']);
 
     p.with_state(EnterBreakable(BreakableKind::Iteration), |p| {
@@ -1520,7 +1529,8 @@ fn parse_switch_clause(
         }
         T![case] => {
             p.bump_any();
-            parse_expression(p).or_add_diagnostic(p, js_parse_error::expected_expression);
+            parse_expression(p, ExpressionContext::default())
+                .or_add_diagnostic(p, js_parse_error::expected_expression);
             p.expect(T![:]);
 
             SwitchCaseStatementList.parse_list(p);
@@ -1655,7 +1665,8 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 
     p.bump_any(); // bump (
 
-    let pattern_marker = parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
+    let pattern_marker = parse_binding_pattern(p, ExpressionContext::default())
+        .or_add_diagnostic(p, expected_binding);
     let pattern_kind = pattern_marker.map(|x| x.kind());
 
     if p.at(T![:]) {

@@ -2,7 +2,7 @@ use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::state::{EnterFunction, EnterParameters, SignatureFlags};
 use crate::syntax::binding::{parse_binding, parse_binding_pattern};
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::parse_expr_or_assignment;
+use crate::syntax::expr::{parse_expr_or_assignment, ExpressionContext};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_binding;
 use crate::syntax::stmt::{is_semi, parse_block_impl, StatementContext};
@@ -353,13 +353,7 @@ pub(super) fn parse_arrow_function_parameters(
         // test_err async_arrow_expr_await_parameter
         // let a = async await => {}
         // async() => { (a = await) => {} };
-        p.with_state(
-            EnterParameters {
-                signature_flags: flags,
-                allow_object_expressions: false,
-            },
-            parse_binding,
-        )
+        p.with_state(EnterParameters(flags), parse_binding)
     }
 }
 
@@ -378,11 +372,13 @@ pub(super) fn parse_arrow_body(p: &mut Parser, mut flags: SignatureFlags) -> Par
     if p.at(T!['{']) {
         parse_function_body(p, flags)
     } else {
-        p.with_state(EnterFunction(flags), parse_expr_or_assignment)
+        p.with_state(EnterFunction(flags), |p| {
+            parse_expr_or_assignment(p, ExpressionContext::default())
+        })
     }
 }
 
-pub(super) fn parse_parameter(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_parameter(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     if p.typescript() {
         if let Some(modifier) = maybe_eat_incorrect_modifier(p) {
             let err = p
@@ -393,10 +389,10 @@ pub(super) fn parse_parameter(p: &mut Parser) -> ParsedSyntax {
         }
     }
 
-    parse_binding_pattern(p).map(|binding| {
+    parse_binding_pattern(p, context).map(|binding| {
         let m = binding.precede(p);
         maybe_ts_type_annotation(p);
-        parse_initializer_clause(p).ok();
+        parse_initializer_clause(p, context).ok();
         m.complete(p, JS_PARAMETER)
     })
 }
@@ -409,7 +405,12 @@ pub(super) fn parse_parameter_list(p: &mut Parser, flags: SignatureFlags) -> Par
         return Absent;
     }
     let m = p.start();
-    parse_parameters_list(p, flags, parse_parameter, JS_PARAMETER_LIST);
+    parse_parameters_list(
+        p,
+        flags,
+        |p| parse_parameter(p, ExpressionContext::default()),
+        JS_PARAMETER_LIST,
+    );
 
     Present(m.complete(p, JS_PARAMETERS))
 }
@@ -424,123 +425,124 @@ pub(super) fn parse_parameters_list(
     let mut first = true;
     let has_l_paren = p.expect(T!['(']);
 
-    p.with_state(
-        EnterParameters {
-            signature_flags: flags,
-            allow_object_expressions: has_l_paren,
-        },
-        |p| {
-            let parameters_list = p.start();
-            let mut progress = ParserProgress::default();
+    p.with_state(EnterParameters(flags), |p| {
+        let parameters_list = p.start();
+        let mut progress = ParserProgress::default();
 
-            while !p.at(EOF) && !p.at(T![')']) {
-                progress.assert_progressing(p);
+        while !p.at(EOF) && !p.at(T![')']) {
+            progress.assert_progressing(p);
 
-                if first {
-                    first = false;
-                } else {
-                    p.expect(T![,]);
-                }
-
-                if p.at(T![')']) {
-                    break;
-                }
-
-                if p.at(T![...]) {
-                    let m = p.start();
-                    p.bump_any();
-                    parse_binding_pattern(p).or_add_diagnostic(p, expected_binding);
-
-                    // TODO #1725 Review error handling and recovery
-                    // rest patterns cannot be optional: `...foo?: number[]`
-                    if p.at(T![?]) {
-                        let err = p
-                            .err_builder("rest patterns cannot be optional")
-                            .primary(p.cur_tok().range(), "");
-
-                        p.error(err);
-                        let m = p.start();
-                        p.bump_any();
-                        m.complete(p, JS_UNKNOWN_PARAMETER);
-                    }
-
-                    // type annotation `...foo: number[]`
-                    if p.eat(T![:]) {
-                        let complete = ts_type(p);
-                        if let Some(mut res) = complete {
-                            res.err_if_not_ts(
-                                p,
-                                "type annotations can only be used in TypeScript files",
-                            );
-                        }
-                    }
-
-                    if p.at(T![=]) {
-                        let start = p.cur_tok().start();
-                        let m = p.start();
-                        p.bump_any();
-
-                        let end = parse_expr_or_assignment(&mut *p)
-                            .ok()
-                            .map(|marker| usize::from(marker.range(p).end()))
-                            .unwrap_or_else(|| p.cur_tok().start());
-
-                        let err = p
-                            .err_builder("rest elements may not have default initializers")
-                            .primary(start..end, "");
-
-                        p.error(err);
-                        m.complete(p, JS_UNKNOWN);
-                    }
-
-                    m.complete(p, JS_REST_PARAMETER);
-
-                    // FIXME: this should be handled better, we should keep trying to parse params but issue an error for each one
-                    // which would allow for better recovery from `foo, ...bar, foo`
-                    if p.at(T![,]) {
-                        let m = p.start();
-                        let range = p.cur_tok().range();
-                        p.bump_any();
-                        m.complete(p, JS_UNKNOWN);
-                        let err = p
-                            .err_builder("rest elements may not have trailing commas")
-                            .primary(range, "");
-
-                        p.error(err);
-                    }
-                } else {
-                    // test_err formal_params_no_binding_element
-                    // function foo(true) {}
-
-                    // test_err formal_params_invalid
-                    // function (a++, c) {}
-                    let recovered_result = parse_parameter(p).or_recover(
-                        p,
-                        &ParseRecovery::new(
-                            JS_UNKNOWN_PARAMETER,
-                            token_set![
-                                T![ident],
-                                T![await],
-                                T![yield],
-                                T![,],
-                                T!['['],
-                                T![...],
-                                T![')'],
-                            ],
-                        )
-                        .enable_recovery_on_line_break(),
-                        js_parse_error::expected_parameter,
-                    );
-
-                    if recovered_result.is_err() {
-                        break;
-                    }
-                }
+            if first {
+                first = false;
+            } else {
+                p.expect(T![,]);
             }
 
-            parameters_list.complete(p, list_kind);
-        },
-    );
+            if p.at(T![')']) {
+                break;
+            }
+
+            if p.at(T![...]) {
+                let m = p.start();
+                p.bump_any();
+                parse_binding_pattern(
+                    p,
+                    ExpressionContext::default()
+                        .and_object_expression_allowed(!first || has_l_paren),
+                )
+                .or_add_diagnostic(p, expected_binding);
+
+                // TODO #1966 Review error handling and recovery
+                // rest patterns cannot be optional: `...foo?: number[]`
+                if p.at(T![?]) {
+                    let err = p
+                        .err_builder("rest patterns cannot be optional")
+                        .primary(p.cur_tok().range(), "");
+
+                    p.error(err);
+                    let m = p.start();
+                    p.bump_any();
+                    m.complete(p, JS_UNKNOWN_PARAMETER);
+                }
+
+                // type annotation `...foo: number[]`
+                if p.eat(T![:]) {
+                    let complete = ts_type(p);
+                    if let Some(mut res) = complete {
+                        res.err_if_not_ts(
+                            p,
+                            "type annotations can only be used in TypeScript files",
+                        );
+                    }
+                }
+
+                if p.at(T![=]) {
+                    let start = p.cur_tok().start();
+                    let m = p.start();
+                    p.bump_any();
+
+                    // test_err arrow_rest_in_expr_in_initializer
+                    // for ((...a = "b" in {}) => {};;) {}
+                    let end = parse_expr_or_assignment(p, ExpressionContext::default())
+                        .ok()
+                        .map(|marker| usize::from(marker.range(p).end()))
+                        .unwrap_or_else(|| p.cur_tok().start());
+
+                    let err = p
+                        .err_builder("rest elements may not have default initializers")
+                        .primary(start..end, "");
+
+                    p.error(err);
+                    m.complete(p, JS_UNKNOWN);
+                }
+
+                m.complete(p, JS_REST_PARAMETER);
+
+                // FIXME: this should be handled better, we should keep trying to parse params but issue an error for each one
+                // which would allow for better recovery from `foo, ...bar, foo`
+                if p.at(T![,]) {
+                    let m = p.start();
+                    let range = p.cur_tok().range();
+                    p.bump_any();
+                    m.complete(p, JS_UNKNOWN);
+                    let err = p
+                        .err_builder("rest elements may not have trailing commas")
+                        .primary(range, "");
+
+                    p.error(err);
+                }
+            } else {
+                // test_err formal_params_no_binding_element
+                // function foo(true) {}
+
+                // test_err formal_params_invalid
+                // function (a++, c) {}
+                let recovered_result = parse_parameter(p).or_recover(
+                    p,
+                    &ParseRecovery::new(
+                        JS_UNKNOWN_PARAMETER,
+                        token_set![
+                            T![ident],
+                            T![await],
+                            T![yield],
+                            T![,],
+                            T!['['],
+                            T![...],
+                            T![')'],
+                        ],
+                    )
+                    .enable_recovery_on_line_break(),
+                    js_parse_error::expected_parameter,
+                );
+
+                if recovered_result.is_err() {
+                    break;
+                }
+            }
+        }
+
+        parameters_list.complete(p, list_kind);
+    });
 
     p.expect(T![')']);
 }

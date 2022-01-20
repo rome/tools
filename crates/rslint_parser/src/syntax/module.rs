@@ -3,7 +3,7 @@ use crate::syntax::binding::parse_binding;
 use crate::syntax::class::{parse_export_class_clause, parse_export_default_class_case};
 use crate::syntax::expr::{
     is_nth_at_expression, is_nth_at_reference_identifier, parse_expr_or_assignment,
-    parse_reference_identifier,
+    parse_reference_identifier, ExpressionContext,
 };
 use crate::syntax::function::{
     is_at_async_function, parse_export_default_function_case, parse_export_function_clause,
@@ -791,7 +791,8 @@ fn parse_export_default_expression_clause(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.expect(T![default]);
 
-    parse_expr_or_assignment(p).or_add_diagnostic(p, expected_expression);
+    parse_expr_or_assignment(p, ExpressionContext::default())
+        .or_add_diagnostic(p, expected_expression);
 
     semi(p, start..p.cur_tok().range().start);
     Present(m.complete(p, JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE))
