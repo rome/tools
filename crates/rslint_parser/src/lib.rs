@@ -84,12 +84,13 @@ pub use crate::{
     numbers::BigInt,
     parse::*,
     parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser},
-    state::{ParserState, StrictMode},
     syntax_node::*,
     token_set::TokenSet,
     token_source::TokenSource,
     util::{SyntaxNodeExt, SyntaxTokenExt},
 };
+
+pub(crate) use state::{ParserState, StrictMode};
 
 pub use rome_rowan::{SyntaxText, TextRange, TextSize, TokenAtOffset, WalkEvent};
 

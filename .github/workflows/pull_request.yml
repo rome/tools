@@ -71,3 +71,89 @@ jobs:
           command: test
           args: --workspace --verbose
 
+  bench:
+    name: bench
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+       os: [ubuntu-latest]
+
+    steps:
+      - name: Checkout PR Branch
+        uses: actions/checkout@v2
+
+      - name: Fetch Main Branch
+        run: git fetch --no-tags --prune --no-recurse-submodules --depth=1 origin main
+
+      - name: Install toolchain
+        run: rustup show
+
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
+
+      - name: Install critcmp
+        run: cargo install critcmp
+
+      - name: Compile
+        run: cargo build --release --locked -p xtask
+
+      - name: Run Bench on PR Branch
+        run: cargo run -p xtask --release -- coverage-libs --save-baseline pr
+
+      - name: Checkout Main Branch
+        run: git checkout main
+
+      - name: Run Bench on Main Branch
+        run: cargo run -p xtask --release -- coverage-libs --save-baseline main
+
+      - name: Compare Bench Results on ${{ matrix.os }}
+        if: github.event_name == 'pull_request'
+        id: bench_comparison
+        shell: bash
+        run: |
+          echo "### Bench results on ${{ matrix.os }}\n\`\`\`" > output
+          critcmp main pr >> output
+          echo "\`\`\`" >> output
+          cat output
+          comment="$(cat output)"
+          comment="${comment//'%'/'%25'}"
+          comment="${comment//$'\n'/'%0A'}"
+          comment="${comment//$'\r'/'%0D'}"
+          echo "::set-output name=comment::$comment"
+
+      - name: Get the PR number
+        if: github.event_name == 'pull_request'
+        id: pr-number
+        uses: kkak10/pr-number-action@v1.3
+
+      - name: Find Previous Comment
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/find-comment@v1.3.0
+        id: previous-comment
+        with:
+          issue-number: ${{ steps.pr-number.outputs.pr }}
+          body-includes: Bench results on ${{ matrix.os }}
+
+      - name: Update existing comment
+        if: github.event_name == 'pull_request' && steps.previous-comment.outputs.comment-id
+        uses: peter-evans/create-or-update-comment@v1.4.5
+        continue-on-error: true
+        with:
+          comment-id: ${{ steps.previous-comment.outputs.comment-id }}
+          body: |
+            ${{ steps.bench_comparison.outputs.comment }}
+          edit-mode: replace
+
+      - name: Write a new comment
+        if: github.event_name == 'pull_request' && !steps.previous-comment.outputs.comment-id
+        uses: peter-evans/create-or-update-comment@v1.4.5
+        continue-on-error: true
+        with:
+          issue-number: ${{ steps.pr-number.outputs.pr }}
+          body: |
+            ${{ steps.bench_comparison.outputs.comment }}
+
+      - name: Remove Criterion Artifact
+        run: rm -rf ./target/criterion

@@ -118,14 +118,33 @@ pub fn parse_expression_or_recover_to_next_statement(
 // "foo"
 // 'bar'
 // null
+// 0, 0.0, 0n, 0e00
+
+// test_err literals
+// 00, 012, 08, 091, 0789 // parser errors
+// 01n, 0_0, 01.2 // lexer errors
 pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
     let literal_kind = match p.cur_tok().kind {
         JsSyntaxKind::JS_NUMBER_LITERAL => {
-            if p.cur_src().ends_with('n') {
+            let cur_src = p.cur_src();
+            if cur_src.ends_with('n') {
                 let m = p.start();
                 p.bump_remap(JsSyntaxKind::JS_BIG_INT_LITERAL);
                 return Present(m.complete(p, JS_BIG_INT_LITERAL_EXPRESSION));
             };
+
+            // Forbid legacy octal number in strict mode
+            if p.state.strict().is_some()
+                && cur_src.starts_with('0')
+                && cur_src.chars().nth(1).filter(|c| c.is_digit(10)).is_some()
+            {
+                let err_msg = if cur_src.contains(['8', '9']) {
+                    "Decimals with leading zeros are not allowed in strict mode."
+                } else {
+                    "\"0\"-prefixed octal literals are deprecated; use the \"0o\" prefix instead."
+                };
+                p.error(p.err_builder(err_msg).primary(p.cur_tok().range(), ""));
+            }
 
             JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION
         }
@@ -850,7 +869,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
                 }
                 let expr = parse_expr_or_assignment(p);
                 if expr.is_absent() && p.at(T![:]) {
-                    p.rewind(checkpoint);
+                    p.rewind(checkpoint.clone());
                     params_marker = Some(parse_arrow_function_parameters(p, SignatureFlags::empty()).unwrap());
                     break;
                 }

@@ -84,7 +84,7 @@ pub fn get_code(lib: &str) -> Result<(String, String), String> {
     }
 }
 
-pub fn run(filter: String, criterion: bool) {
+pub fn run(filter: String, criterion: bool, baseline: Option<String>) {
     let regex = regex::Regex::new(filter.as_str()).unwrap();
     let libs = include_str!("libs.txt").lines();
 
@@ -103,12 +103,20 @@ pub fn run(filter: String, criterion: bool) {
 
                 // Do all steps with criterion now
                 if criterion {
-                    let mut criterion = criterion::Criterion::default().without_plots();
-                    criterion.bench_function(lib, |b| {
+                    let mut criterion = criterion::Criterion::default()
+                        .without_plots()
+                        .measurement_time(Duration::new(10, 0));
+                    if let Some(ref baseline) = baseline {
+                        criterion = criterion.save_baseline(baseline.to_string());
+                    }
+                    let mut group = criterion.benchmark_group("parser");
+                    group.throughput(criterion::Throughput::Bytes(code.len() as u64));
+                    group.bench_function(&id, |b| {
                         b.iter(|| {
                             let _ = criterion::black_box(rslint_parser::parse_text(code, 0));
                         })
                     });
+                    group.finish();
                 } else {
                     //warmup
                     rslint_parser::parse_text(code, 0);
