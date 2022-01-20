@@ -756,7 +756,7 @@ fn number_leading_zero_err() {
 
     assert_lex! {
         r#"01n"#,
-        JS_NUMBER_LITERAL:3 // error: invalid big int literal
+        JS_NUMBER_LITERAL:3 // error: Octal literals are not allowed for BigInts.
     }
 }
 

@@ -793,7 +793,11 @@ impl<'src> Lexer<'src> {
                 Some(b'n') => {
                     if leading_zero {
                         diag = Some(Box::new(
-                                Diagnostic::error(self.file_id, "", "invalid big int literal.")
+                                Diagnostic::error(
+                                    self.file_id,
+                                    "",
+                                    "Octal literals are not allowed for BigInts.",
+                                )
                                 .primary(start..self.cur + 1, ""),
                         ));
                     }
