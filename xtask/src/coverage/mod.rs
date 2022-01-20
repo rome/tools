@@ -129,8 +129,8 @@ pub fn run_test_file(file: TestFile) -> TestResult {
             code,
             outcome,
         }
-    } else if meta.flags.contains(&TestFlag::NoStrict) || meta.flags.contains(&TestFlag::Raw) {
-        let (code, res) = exec_test(code, false, false);
+    } else if meta.flags.contains(&TestFlag::Module) {
+        let (code, res) = exec_test(code, false, true);
         let fail = passed(res, meta);
         let outcome = extract_outcome(&fail);
         TestResult {
@@ -139,8 +139,8 @@ pub fn run_test_file(file: TestFile) -> TestResult {
             code,
             outcome,
         }
-    } else if meta.flags.contains(&TestFlag::Module) {
-        let (code, res) = exec_test(code, false, true);
+    } else if meta.flags.contains(&TestFlag::NoStrict) || meta.flags.contains(&TestFlag::Raw) {
+        let (code, res) = exec_test(code, false, false);
         let fail = passed(res, meta);
         let outcome = extract_outcome(&fail);
         TestResult {
@@ -263,8 +263,8 @@ enum ExecRes {
     ParserPanic(Box<dyn Any + Send + 'static>),
 }
 
-fn exec_test(mut code: String, strict: bool, module: bool) -> (String, ExecRes) {
-    if strict {
+fn exec_test(mut code: String, append_use_strict: bool, module: bool) -> (String, ExecRes) {
+    if append_use_strict {
         code.insert_str(0, "\"use strict\";\n");
     }
 
