@@ -1205,6 +1205,21 @@ impl JsImportNamespaceClause {
     pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 5usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsInExpression {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsInExpression {
+    pub fn property(&self) -> SyntaxResult<JsAnyInProperty> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn in_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
+        support::required_node(&self.syntax, 2usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsInitializerClause {
     pub(crate) syntax: SyntaxNode,
 }
@@ -1214,6 +1229,21 @@ impl JsInitializerClause {
     }
     pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsInstanceofExpression {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsInstanceofExpression {
+    pub fn left(&self) -> SyntaxResult<JsAnyExpression> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn instanceof_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
+        support::required_node(&self.syntax, 2usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2970,6 +3000,8 @@ pub enum JsAnyExpression {
     JsFunctionExpression(JsFunctionExpression),
     JsIdentifierExpression(JsIdentifierExpression),
     JsImportCallExpression(JsImportCallExpression),
+    JsInExpression(JsInExpression),
+    JsInstanceofExpression(JsInstanceofExpression),
     JsLogicalExpression(JsLogicalExpression),
     JsNewExpression(JsNewExpression),
     JsObjectExpression(JsObjectExpression),
@@ -3016,6 +3048,11 @@ pub enum JsAnyFunctionBody {
 pub enum JsAnyImportAssertionEntry {
     JsImportAssertionEntry(JsImportAssertionEntry),
     JsUnknownImportAssertionEntry(JsUnknownImportAssertionEntry),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyInProperty {
+    JsAnyExpression(JsAnyExpression),
+    JsPrivateName(JsPrivateName),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyLiteralExpression {
@@ -5809,6 +5846,32 @@ impl From<JsImportNamespaceClause> for SyntaxNode {
 impl From<JsImportNamespaceClause> for SyntaxElement {
     fn from(n: JsImportNamespaceClause) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for JsInExpression {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IN_EXPRESSION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsInExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsInExpression")
+            .field("property", &support::DebugSyntaxResult(self.property()))
+            .field("in_token", &support::DebugSyntaxResult(self.in_token()))
+            .field("object", &support::DebugSyntaxResult(self.object()))
+            .finish()
+    }
+}
+impl From<JsInExpression> for SyntaxNode {
+    fn from(n: JsInExpression) -> SyntaxNode { n.syntax }
+}
+impl From<JsInExpression> for SyntaxElement {
+    fn from(n: JsInExpression) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for JsInitializerClause {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_INITIALIZER_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5833,6 +5896,35 @@ impl From<JsInitializerClause> for SyntaxNode {
 }
 impl From<JsInitializerClause> for SyntaxElement {
     fn from(n: JsInitializerClause) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsInstanceofExpression {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_INSTANCEOF_EXPRESSION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsInstanceofExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsInstanceofExpression")
+            .field("left", &support::DebugSyntaxResult(self.left()))
+            .field(
+                "instanceof_token",
+                &support::DebugSyntaxResult(self.instanceof_token()),
+            )
+            .field("right", &support::DebugSyntaxResult(self.right()))
+            .finish()
+    }
+}
+impl From<JsInstanceofExpression> for SyntaxNode {
+    fn from(n: JsInstanceofExpression) -> SyntaxNode { n.syntax }
+}
+impl From<JsInstanceofExpression> for SyntaxElement {
+    fn from(n: JsInstanceofExpression) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for JsLabeledStatement {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_LABELED_STATEMENT }
@@ -11018,6 +11110,14 @@ impl From<JsImportCallExpression> for JsAnyExpression {
         JsAnyExpression::JsImportCallExpression(node)
     }
 }
+impl From<JsInExpression> for JsAnyExpression {
+    fn from(node: JsInExpression) -> JsAnyExpression { JsAnyExpression::JsInExpression(node) }
+}
+impl From<JsInstanceofExpression> for JsAnyExpression {
+    fn from(node: JsInstanceofExpression) -> JsAnyExpression {
+        JsAnyExpression::JsInstanceofExpression(node)
+    }
+}
 impl From<JsLogicalExpression> for JsAnyExpression {
     fn from(node: JsLogicalExpression) -> JsAnyExpression {
         JsAnyExpression::JsLogicalExpression(node)
@@ -11104,6 +11204,8 @@ impl AstNode for JsAnyExpression {
             | JS_FUNCTION_EXPRESSION
             | JS_IDENTIFIER_EXPRESSION
             | JS_IMPORT_CALL_EXPRESSION
+            | JS_IN_EXPRESSION
+            | JS_INSTANCEOF_EXPRESSION
             | JS_LOGICAL_EXPRESSION
             | JS_NEW_EXPRESSION
             | JS_OBJECT_EXPRESSION
@@ -11156,6 +11258,10 @@ impl AstNode for JsAnyExpression {
             }
             JS_IMPORT_CALL_EXPRESSION => {
                 JsAnyExpression::JsImportCallExpression(JsImportCallExpression { syntax })
+            }
+            JS_IN_EXPRESSION => JsAnyExpression::JsInExpression(JsInExpression { syntax }),
+            JS_INSTANCEOF_EXPRESSION => {
+                JsAnyExpression::JsInstanceofExpression(JsInstanceofExpression { syntax })
             }
             JS_LOGICAL_EXPRESSION => {
                 JsAnyExpression::JsLogicalExpression(JsLogicalExpression { syntax })
@@ -11217,6 +11323,8 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsFunctionExpression(it) => &it.syntax,
             JsAnyExpression::JsIdentifierExpression(it) => &it.syntax,
             JsAnyExpression::JsImportCallExpression(it) => &it.syntax,
+            JsAnyExpression::JsInExpression(it) => &it.syntax,
+            JsAnyExpression::JsInstanceofExpression(it) => &it.syntax,
             JsAnyExpression::JsLogicalExpression(it) => &it.syntax,
             JsAnyExpression::JsNewExpression(it) => &it.syntax,
             JsAnyExpression::JsObjectExpression(it) => &it.syntax,
@@ -11256,6 +11364,8 @@ impl std::fmt::Debug for JsAnyExpression {
             JsAnyExpression::JsFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsIdentifierExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsImportCallExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExpression::JsInExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExpression::JsInstanceofExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsLogicalExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsNewExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsObjectExpression(it) => std::fmt::Debug::fmt(it, f),
@@ -11294,6 +11404,8 @@ impl From<JsAnyExpression> for SyntaxNode {
             JsAnyExpression::JsFunctionExpression(it) => it.into(),
             JsAnyExpression::JsIdentifierExpression(it) => it.into(),
             JsAnyExpression::JsImportCallExpression(it) => it.into(),
+            JsAnyExpression::JsInExpression(it) => it.into(),
+            JsAnyExpression::JsInstanceofExpression(it) => it.into(),
             JsAnyExpression::JsLogicalExpression(it) => it.into(),
             JsAnyExpression::JsNewExpression(it) => it.into(),
             JsAnyExpression::JsObjectExpression(it) => it.into(),
@@ -11642,6 +11754,58 @@ impl From<JsAnyImportAssertionEntry> for SyntaxNode {
 }
 impl From<JsAnyImportAssertionEntry> for SyntaxElement {
     fn from(n: JsAnyImportAssertionEntry) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<JsPrivateName> for JsAnyInProperty {
+    fn from(node: JsPrivateName) -> JsAnyInProperty { JsAnyInProperty::JsPrivateName(node) }
+}
+impl AstNode for JsAnyInProperty {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        match kind {
+            JS_PRIVATE_NAME => true,
+            k if JsAnyExpression::can_cast(k) => true,
+            _ => false,
+        }
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_PRIVATE_NAME => JsAnyInProperty::JsPrivateName(JsPrivateName { syntax }),
+            _ => {
+                if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
+                    return Some(JsAnyInProperty::JsAnyExpression(js_any_expression));
+                }
+                return None;
+            }
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsAnyInProperty::JsPrivateName(it) => &it.syntax,
+            JsAnyInProperty::JsAnyExpression(it) => it.syntax(),
+        }
+    }
+}
+impl std::fmt::Debug for JsAnyInProperty {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsAnyInProperty::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyInProperty::JsPrivateName(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsAnyInProperty> for SyntaxNode {
+    fn from(n: JsAnyInProperty) -> SyntaxNode {
+        match n {
+            JsAnyInProperty::JsAnyExpression(it) => it.into(),
+            JsAnyInProperty::JsPrivateName(it) => it.into(),
+        }
+    }
+}
+impl From<JsAnyInProperty> for SyntaxElement {
+    fn from(n: JsAnyInProperty) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
@@ -13423,6 +13587,11 @@ impl std::fmt::Display for JsAnyImportAssertionEntry {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsAnyInProperty {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for JsAnyLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -13908,7 +14077,17 @@ impl std::fmt::Display for JsImportNamespaceClause {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsInExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for JsInitializerClause {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsInstanceofExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -16001,8 +16180,14 @@ impl Debug for DebugSyntaxElement {
                 JS_IMPORT_NAMESPACE_CLAUSE => {
                     std::fmt::Debug::fmt(&JsImportNamespaceClause::cast(node.clone()).unwrap(), f)
                 }
+                JS_IN_EXPRESSION => {
+                    std::fmt::Debug::fmt(&JsInExpression::cast(node.clone()).unwrap(), f)
+                }
                 JS_INITIALIZER_CLAUSE => {
                     std::fmt::Debug::fmt(&JsInitializerClause::cast(node.clone()).unwrap(), f)
+                }
+                JS_INSTANCEOF_EXPRESSION => {
+                    std::fmt::Debug::fmt(&JsInstanceofExpression::cast(node.clone()).unwrap(), f)
                 }
                 JS_LABELED_STATEMENT => {
                     std::fmt::Debug::fmt(&JsLabeledStatement::cast(node.clone()).unwrap(), f)
