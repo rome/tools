@@ -1040,7 +1040,7 @@ struct Metrics {
 fn is_overlapping(range0: &Range<usize>, range1: &Range<usize>) -> bool {
     let start = std::cmp::max(range0.start, range1.start);
     let end = std::cmp::min(range0.end, range1.end);
-    start < end
+    start <= end
 }
 
 /// For prioritizing primary labels over secondary labels when rendering carets.
