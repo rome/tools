@@ -1,11 +1,9 @@
 use super::kinds_src::AstSrc;
-use crate::codegen::generate_nodes::token_kind_to_code;
-use crate::codegen::kinds_src::TokenKind;
-use crate::{
-    codegen::{kinds_src::Field, to_upper_snake_case},
-    Result,
-};
+use crate::generate_nodes::token_kind_to_code;
+use crate::kinds_src::TokenKind;
+use crate::{kinds_src::Field, to_upper_snake_case};
 use quote::{format_ident, quote};
+use xtask::Result;
 
 pub fn generate_syntax_factory(ast: &AstSrc) -> Result<String> {
     let normal_node_arms = ast.nodes.iter().map(|node| {
@@ -121,6 +119,6 @@ pub fn generate_syntax_factory(ast: &AstSrc) -> Result<String> {
         }
     };
 
-    let pretty = crate::reformat(output)?;
+    let pretty = xtask::reformat(output)?;
     Ok(pretty)
 }

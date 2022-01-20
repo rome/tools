@@ -47,16 +47,16 @@ jobs:
         run: cargo install critcmp
 
       - name: Compile
-        run: cargo build --release --locked -p xtask
+        run: cargo build --release --locked -p xtask_bench
 
       - name: Run Bench on PR Branch
-        run: cargo run -p xtask --release -- coverage-libs --save-baseline pr
+        run: cargo benchmark --save-baseline pr
 
       - name: Checkout Main Branch
         run: git checkout main
 
       - name: Run Bench on Main Branch
-        run: cargo run -p xtask --release -- coverage-libs --save-baseline main
+        run: cargo benchmark --save-baseline main
 
       - name: Compare Bench Results on ${{ matrix.os }}
         id: bench_comparison

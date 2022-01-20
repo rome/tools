@@ -8,7 +8,7 @@ use std::path::PathBuf;
 use walkdir::WalkDir;
 use yastl::Pool;
 
-const BASE_PATH: &str = "xtask/src/coverage/test262/test";
+const BASE_PATH: &str = "xtask/coverage/test262/test";
 
 #[derive(Debug, Clone)]
 pub struct TestFile {

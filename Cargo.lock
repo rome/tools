@@ -239,12 +239,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "convert_case"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fb4a24b1aaf0fd0ce8b45161144d6f42cd91677fd5940fd431183eb023b3a2b8"
-
-[[package]]
 name = "countme"
 version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -396,12 +390,6 @@ name = "drop_bomb"
 version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9bda8e21c04aca2ae33ffc2fd8c23134f3cac46db123ba97bd9d3f3b8a4a85e1"
-
-[[package]]
-name = "dyn-clone"
-version = "1.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ee2626afccd7561a06cf1367e2950c4718ea04565e20fb5029b6c7d8ad09abcf"
 
 [[package]]
 name = "either"
@@ -1396,30 +1384,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "schemars"
-version = "0.8.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c6b5a3c80cea1ab61f4260238409510e814e38b4b563c06044edf91e7dc070e3"
-dependencies = [
- "dyn-clone",
- "schemars_derive",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "schemars_derive"
-version = "0.8.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "41ae4dce13e8614c46ac3c38ef1c0d668b101df6ac39817aebdaa26642ddae9b"
-dependencies = [
- "proc-macro2",
- "quote",
- "serde_derive_internals",
- "syn",
-]
-
-[[package]]
 name = "scopeguard"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1465,17 +1429,6 @@ name = "serde_derive"
 version = "1.0.133"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ed201699328568d8d08208fdd080e3ff594e6c422e438b6705905da01005d537"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
-name = "serde_derive_internals"
-version = "0.25.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1dbab34ca63057a1f15280bdf3c39f2b1eb1b54c17e98360e511637aef7418c6"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1881,12 +1834,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8ccb82d61f80a663efe1f787a51b16b5a51e3314d6ac365b08639f52387b33f3"
 
 [[package]]
-name = "unindent"
-version = "0.1.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f14ee04d9415b52b3aeab06258a3f07093182b88ba0f9b8d203f211a7a7d41c7"
-
-[[package]]
 name = "untrusted"
 version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2069,35 +2016,60 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
 name = "xtask"
 version = "0.0.0"
 dependencies = [
- "ansi_rgb",
  "anyhow",
- "ascii_table",
- "colored",
- "convert_case",
+]
+
+[[package]]
+name = "xtask_bench"
+version = "0.0.0"
+dependencies = [
+ "ansi_rgb",
  "criterion",
  "dhat",
  "humansize",
- "indicatif",
  "itertools",
- "num_cpus",
- "once_cell",
  "pico-args",
- "proc-macro2",
- "quote",
  "regex",
  "rslint_errors",
  "rslint_parser",
- "schemars",
+ "timing",
+ "ureq",
+ "url",
+ "xtask",
+]
+
+[[package]]
+name = "xtask_codegen"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "pico-args",
+ "proc-macro2",
+ "quote",
+ "ungrammar",
+ "ureq",
+ "walkdir",
+ "xtask",
+]
+
+[[package]]
+name = "xtask_coverage"
+version = "0.0.0"
+dependencies = [
+ "ascii_table",
+ "colored",
+ "indicatif",
+ "num_cpus",
+ "once_cell",
+ "pico-args",
+ "regex",
+ "rslint_errors",
+ "rslint_parser",
  "serde",
  "serde_json",
  "serde_yaml",
- "syn",
- "timing",
- "ungrammar",
- "unindent",
- "ureq",
- "url",
  "walkdir",
+ "xtask",
  "yastl",
 ]
 

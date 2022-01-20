@@ -7,23 +7,19 @@ mod generate_syntax_factory;
 mod generate_syntax_kinds;
 mod kinds_src;
 mod parser_tests;
+mod unicode;
 
 use std::path::Path;
 
-use crate::{glue::fs2, Result};
+use xtask::{glue::fs2, Mode, Result};
 
 pub use self::ast::generate_ast;
 pub use self::parser_tests::generate_parser_tests;
+pub use self::unicode::generate_tables;
 
 const SYNTAX_KINDS: &str = "crates/rslint_syntax/src/generated.rs";
 const AST_NODES: &str = "crates/rslint_parser/src/ast/generated/nodes.rs";
 const SYNTAX_FACTORY: &str = "crates/rslint_parser/src/ast/generated/syntax_factory.rs";
-
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
-pub enum Mode {
-    Overwrite,
-    Verify,
-}
 
 /// A helper to update file on disk if it has changed.
 /// With verify = false,
