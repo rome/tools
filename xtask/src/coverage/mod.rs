@@ -120,7 +120,7 @@ pub fn run_test_file(file: TestFile) -> TestResult {
     let TestFile { code, meta, path } = file;
 
     if meta.flags.contains(&TestFlag::OnlyStrict) {
-        let (code, res) = exec_test(code, !meta.flags.contains(&TestFlag::Raw), false);
+        let (code, res) = exec_test(code, true, false);
         let fail = passed(res, meta);
         let outcome = extract_outcome(&fail);
         TestResult {
