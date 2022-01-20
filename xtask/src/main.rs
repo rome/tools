@@ -104,7 +104,7 @@ SUBCOMMANDS:
     syntax
     docgen
     coverage [--json] [--show-diagnostics] [--show-rast]
-    coverage-libs
+    coverage-libs [--criterion=true/false] [--filter=<FILEPATH>]
     compare [--markdown]
     unicode
 OPTIONS
