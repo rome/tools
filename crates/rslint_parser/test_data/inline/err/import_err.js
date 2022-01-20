@@ -1,10 +1,10 @@
 import;
 import *;
-import * as b, { a, b } from "c";
-import { a + b, d } from "c";
-import { a, a } from "c";
+import * as c, { a, b } from "c";
+import { aa + bb, dd } from "c";
+import { ab, ac } from "c";
 import { default } from "c";
 import { "a" } from "c";
-import { as b } from "c";
+import { as x } from "c";
 import 4 from "c";
-import a from 4;
+import y from 4;

@@ -143,17 +143,17 @@ struct ArrayBindingPattern;
 
 // test array_binding
 // let a = "b";
-// let [a, b] = [1, 2];
-// let [a, ...abcd] = [1];
-// let [a = "default", b] = []
-// let [, a, ...rest] = []
-// let [[...rest], { a }] = []
+// let [c, b] = [1, 2];
+// let [d, ...abcd] = [1];
+// let [e = "default", x] = []
+// let [, f, ...rest] = []
+// let [[...rest2], { g }] = []
 //
 // test_err array_binding_err
 // let [a b] = [1, 2];
 // let [="default"] = [1, 2];
 // let ["default"] = [1, 2];
-// let [[a ] = [];
+// let [[c ] = [];
 //
 // test array_binding_rest
 // let [ ...abcd ] = a;
@@ -233,21 +233,21 @@ impl ParseObjectPattern for ObjectBindingPattern {
 
     // test object_property_binding
     // let { foo: bar  } = {}
-    // let { foo: bar = baz } = {}
+    // let { foo: bar_bar = baz } = {}
     //
     // test_err object_property_binding_err
     // let { foo: , bar } = {}
-    // let { : bar = "test" } = {}
-    // let { , foo: bar } = {}
+    // let { : lorem = "test" } = {}
+    // let { , ipsum: bazz } = {}
     //
     // test object_shorthand_property
     // let { a, b } = c
-    // let { a = "default", b = call() } = c
+    // let { d = "default", e = call() } = c
     //
     // test_err object_shorthand_property_err
     // let { a b } = c
     // let { = "test" } = c
-    // let { , a } = c
+    // let { , d } = c
     fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
         if !is_at_object_member_name(p) && !p.at_ts(token_set![T![:], T![=]]) {
             return Absent;
@@ -280,7 +280,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
     // let { ...c = "default" } = a;
     // let { ...{a} } = b;
     // let { ...rest, other_assignment } = a;
-    // let { ...rest, } = a;
+    // let { ...rest2, } = a;
     // async function test() {
     //   let { ...await } = a;
     // }

@@ -107,62 +107,62 @@ JsModule {
             import_token: IMPORT_KW@178..186 "import" [Newline("\n")] [Whitespace(" ")],
             import_clause: JsImportDefaultClause {
                 local_name: JsIdentifierBinding {
-                    name_token: IDENT@186..190 "foo" [] [Whitespace(" ")],
+                    name_token: IDENT@186..195 "foo_json" [] [Whitespace(" ")],
                 },
-                from_token: FROM_KW@190..195 "from" [] [Whitespace(" ")],
+                from_token: FROM_KW@195..200 "from" [] [Whitespace(" ")],
                 source: JsModuleSource {
-                    value_token: JS_STRING_LITERAL@195..206 "\"foo.json\"" [] [Whitespace(" ")],
+                    value_token: JS_STRING_LITERAL@200..211 "\"foo.json\"" [] [Whitespace(" ")],
                 },
                 assertion: JsImportAssertion {
-                    assert_token: ASSERT_KW@206..213 "assert" [] [Whitespace(" ")],
-                    l_curly_token: L_CURLY@213..215 "{" [] [Whitespace(" ")],
+                    assert_token: ASSERT_KW@211..218 "assert" [] [Whitespace(" ")],
+                    l_curly_token: L_CURLY@218..220 "{" [] [Whitespace(" ")],
                     assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
-                            key: IDENT@215..219 "type" [] [],
-                            colon_token: COLON@219..221 ":" [] [Whitespace(" ")],
-                            value_token: JS_STRING_LITERAL@221..227 "\"json\"" [] [],
+                            key: IDENT@220..224 "type" [] [],
+                            colon_token: COLON@224..226 ":" [] [Whitespace(" ")],
+                            value_token: JS_STRING_LITERAL@226..232 "\"json\"" [] [],
                         },
-                        COMMA@227..229 "," [] [Whitespace(" ")],
+                        COMMA@232..234 "," [] [Whitespace(" ")],
                         JsImportAssertionEntry {
-                            key: IDENT@229..243 "hasOwnProperty" [] [],
-                            colon_token: COLON@243..245 ":" [] [Whitespace(" ")],
-                            value_token: JS_STRING_LITERAL@245..252 "\"true\"" [] [Whitespace(" ")],
+                            key: IDENT@234..248 "hasOwnProperty" [] [],
+                            colon_token: COLON@248..250 ":" [] [Whitespace(" ")],
+                            value_token: JS_STRING_LITERAL@250..257 "\"true\"" [] [Whitespace(" ")],
                         },
                     ],
-                    r_curly_token: R_CURLY@252..253 "}" [] [],
+                    r_curly_token: R_CURLY@257..258 "}" [] [],
                 },
             },
-            semicolon_token: SEMICOLON@253..254 ";" [] [],
+            semicolon_token: SEMICOLON@258..259 ";" [] [],
         },
         JsImport {
-            import_token: IMPORT_KW@254..262 "import" [Newline("\n")] [Whitespace(" ")],
+            import_token: IMPORT_KW@259..267 "import" [Newline("\n")] [Whitespace(" ")],
             import_clause: JsImportBareClause {
                 source: JsModuleSource {
-                    value_token: JS_STRING_LITERAL@262..266 "\"x\"" [] [Whitespace(" ")],
+                    value_token: JS_STRING_LITERAL@267..271 "\"x\"" [] [Whitespace(" ")],
                 },
                 assertion: JsImportAssertion {
-                    assert_token: ASSERT_KW@266..272 "assert" [] [],
-                    l_curly_token: L_CURLY@272..275 "{" [Newline("\n")] [Whitespace(" ")],
+                    assert_token: ASSERT_KW@271..277 "assert" [] [],
+                    l_curly_token: L_CURLY@277..280 "{" [Newline("\n")] [Whitespace(" ")],
                     assertions: JsImportAssertionEntryList [
                         JsImportAssertionEntry {
-                            key: IDENT@275..279 "type" [] [],
-                            colon_token: COLON@279..281 ":" [] [Whitespace(" ")],
-                            value_token: JS_STRING_LITERAL@281..288 "\"json\"" [] [Whitespace(" ")],
+                            key: IDENT@280..284 "type" [] [],
+                            colon_token: COLON@284..286 ":" [] [Whitespace(" ")],
+                            value_token: JS_STRING_LITERAL@286..293 "\"json\"" [] [Whitespace(" ")],
                         },
                     ],
-                    r_curly_token: R_CURLY@288..289 "}" [] [],
+                    r_curly_token: R_CURLY@293..294 "}" [] [],
                 },
             },
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@289..290 "" [Newline("\n")] [],
+    eof_token: EOF@294..295 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..290
+0: JS_MODULE@0..295
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..289
+  2: JS_MODULE_ITEM_LIST@0..294
     0: JS_IMPORT@0..34
       0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
       1: JS_IMPORT_BARE_CLAUSE@7..34
@@ -235,42 +235,42 @@ JsModule {
               2: JS_STRING_LITERAL@171..177 "\"for\"" [] [Whitespace(" ")]
           3: R_CURLY@177..178 "}" [] []
       2: (empty)
-    4: JS_IMPORT@178..254
+    4: JS_IMPORT@178..259
       0: IMPORT_KW@178..186 "import" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IMPORT_DEFAULT_CLAUSE@186..253
-        0: JS_IDENTIFIER_BINDING@186..190
-          0: IDENT@186..190 "foo" [] [Whitespace(" ")]
-        1: FROM_KW@190..195 "from" [] [Whitespace(" ")]
-        2: JS_MODULE_SOURCE@195..206
-          0: JS_STRING_LITERAL@195..206 "\"foo.json\"" [] [Whitespace(" ")]
-        3: JS_IMPORT_ASSERTION@206..253
-          0: ASSERT_KW@206..213 "assert" [] [Whitespace(" ")]
-          1: L_CURLY@213..215 "{" [] [Whitespace(" ")]
-          2: JS_IMPORT_ASSERTION_ENTRY_LIST@215..252
-            0: JS_IMPORT_ASSERTION_ENTRY@215..227
-              0: IDENT@215..219 "type" [] []
-              1: COLON@219..221 ":" [] [Whitespace(" ")]
-              2: JS_STRING_LITERAL@221..227 "\"json\"" [] []
-            1: COMMA@227..229 "," [] [Whitespace(" ")]
-            2: JS_IMPORT_ASSERTION_ENTRY@229..252
-              0: IDENT@229..243 "hasOwnProperty" [] []
-              1: COLON@243..245 ":" [] [Whitespace(" ")]
-              2: JS_STRING_LITERAL@245..252 "\"true\"" [] [Whitespace(" ")]
-          3: R_CURLY@252..253 "}" [] []
-      2: SEMICOLON@253..254 ";" [] []
-    5: JS_IMPORT@254..289
-      0: IMPORT_KW@254..262 "import" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IMPORT_BARE_CLAUSE@262..289
-        0: JS_MODULE_SOURCE@262..266
-          0: JS_STRING_LITERAL@262..266 "\"x\"" [] [Whitespace(" ")]
-        1: JS_IMPORT_ASSERTION@266..289
-          0: ASSERT_KW@266..272 "assert" [] []
-          1: L_CURLY@272..275 "{" [Newline("\n")] [Whitespace(" ")]
-          2: JS_IMPORT_ASSERTION_ENTRY_LIST@275..288
-            0: JS_IMPORT_ASSERTION_ENTRY@275..288
-              0: IDENT@275..279 "type" [] []
-              1: COLON@279..281 ":" [] [Whitespace(" ")]
-              2: JS_STRING_LITERAL@281..288 "\"json\"" [] [Whitespace(" ")]
-          3: R_CURLY@288..289 "}" [] []
+      1: JS_IMPORT_DEFAULT_CLAUSE@186..258
+        0: JS_IDENTIFIER_BINDING@186..195
+          0: IDENT@186..195 "foo_json" [] [Whitespace(" ")]
+        1: FROM_KW@195..200 "from" [] [Whitespace(" ")]
+        2: JS_MODULE_SOURCE@200..211
+          0: JS_STRING_LITERAL@200..211 "\"foo.json\"" [] [Whitespace(" ")]
+        3: JS_IMPORT_ASSERTION@211..258
+          0: ASSERT_KW@211..218 "assert" [] [Whitespace(" ")]
+          1: L_CURLY@218..220 "{" [] [Whitespace(" ")]
+          2: JS_IMPORT_ASSERTION_ENTRY_LIST@220..257
+            0: JS_IMPORT_ASSERTION_ENTRY@220..232
+              0: IDENT@220..224 "type" [] []
+              1: COLON@224..226 ":" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL@226..232 "\"json\"" [] []
+            1: COMMA@232..234 "," [] [Whitespace(" ")]
+            2: JS_IMPORT_ASSERTION_ENTRY@234..257
+              0: IDENT@234..248 "hasOwnProperty" [] []
+              1: COLON@248..250 ":" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL@250..257 "\"true\"" [] [Whitespace(" ")]
+          3: R_CURLY@257..258 "}" [] []
+      2: SEMICOLON@258..259 ";" [] []
+    5: JS_IMPORT@259..294
+      0: IMPORT_KW@259..267 "import" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IMPORT_BARE_CLAUSE@267..294
+        0: JS_MODULE_SOURCE@267..271
+          0: JS_STRING_LITERAL@267..271 "\"x\"" [] [Whitespace(" ")]
+        1: JS_IMPORT_ASSERTION@271..294
+          0: ASSERT_KW@271..277 "assert" [] []
+          1: L_CURLY@277..280 "{" [Newline("\n")] [Whitespace(" ")]
+          2: JS_IMPORT_ASSERTION_ENTRY_LIST@280..293
+            0: JS_IMPORT_ASSERTION_ENTRY@280..293
+              0: IDENT@280..284 "type" [] []
+              1: COLON@284..286 ":" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL@286..293 "\"json\"" [] [Whitespace(" ")]
+          3: R_CURLY@293..294 "}" [] []
       2: (empty)
-  3: EOF@289..290 "" [Newline("\n")] []
+  3: EOF@294..295 "" [Newline("\n")] []

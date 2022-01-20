@@ -37,7 +37,7 @@ JsModule {
                 items: [
                     FUNCTION_KW@34..43 "function" [] [Whitespace(" ")],
                     JsIdentifierBinding {
-                        name_token: IDENT@43..44 "a" [] [],
+                        name_token: IDENT@43..44 "b" [] [],
                     },
                     JsParameters {
                         l_paren_token: L_PAREN@44..45 "(" [] [],
@@ -64,7 +64,7 @@ JsModule {
                 items: [
                     FUNCTION_KW@63..72 "function" [] [Whitespace(" ")],
                     JsIdentifierBinding {
-                        name_token: IDENT@72..73 "a" [] [],
+                        name_token: IDENT@72..73 "c" [] [],
                     },
                     JsParameters {
                         l_paren_token: L_PAREN@73..74 "(" [] [],
@@ -114,7 +114,7 @@ JsModule {
       2: JS_UNKNOWN_STATEMENT@34..49
         0: FUNCTION_KW@34..43 "function" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_BINDING@43..44
-          0: IDENT@43..44 "a" [] []
+          0: IDENT@43..44 "b" [] []
         2: JS_PARAMETERS@44..47
           0: L_PAREN@44..45 "(" [] []
           1: JS_PARAMETER_LIST@45..45
@@ -133,7 +133,7 @@ JsModule {
       4: JS_UNKNOWN_STATEMENT@63..78
         0: FUNCTION_KW@63..72 "function" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_BINDING@72..73
-          0: IDENT@72..73 "a" [] []
+          0: IDENT@72..73 "c" [] []
         2: JS_PARAMETERS@73..76
           0: L_PAREN@73..74 "(" [] []
           1: JS_PARAMETER_LIST@74..74
@@ -155,17 +155,17 @@ error[SyntaxError]: In strict mode code, functions can only be declared at top l
 error[SyntaxError]: In strict mode code, functions can only be declared at top level or inside a block
   ┌─ function_in_single_statement_context_strict.js:2:9
   │
-2 │ label1: function a() {}
+2 │ label1: function b() {}
   │         ^^^^^^^^^^^^^^^ wrap the function in a block statement
 
 --
 error[SyntaxError]: In strict mode code, functions can only be declared at top level or inside a block
   ┌─ function_in_single_statement_context_strict.js:3:14
   │
-3 │ while (true) function a() {}
+3 │ while (true) function c() {}
   │              ^^^^^^^^^^^^^^^ wrap the function in a block statement
 
 --
 if (true) function a() {}
-label1: function a() {}
-while (true) function a() {}
+label1: function b() {}
+while (true) function c() {}

@@ -51,7 +51,7 @@ JsModule {
                             properties: JsObjectBindingPatternPropertyList [
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsIdentifierBinding {
-                                        name_token: IDENT@23..25 "a" [] [Whitespace(" ")],
+                                        name_token: IDENT@23..25 "d" [] [Whitespace(" ")],
                                     },
                                     init: JsInitializerClause {
                                         eq_token: EQ@25..27 "=" [] [Whitespace(" ")],
@@ -63,7 +63,7 @@ JsModule {
                                 COMMA@36..38 "," [] [Whitespace(" ")],
                                 JsObjectBindingPatternShorthandProperty {
                                     identifier: JsIdentifierBinding {
-                                        name_token: IDENT@38..40 "b" [] [Whitespace(" ")],
+                                        name_token: IDENT@38..40 "e" [] [Whitespace(" ")],
                                     },
                                     init: JsInitializerClause {
                                         eq_token: EQ@40..42 "=" [] [Whitespace(" ")],
@@ -145,7 +145,7 @@ JsModule {
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@23..49
                 0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@23..36
                   0: JS_IDENTIFIER_BINDING@23..25
-                    0: IDENT@23..25 "a" [] [Whitespace(" ")]
+                    0: IDENT@23..25 "d" [] [Whitespace(" ")]
                   1: JS_INITIALIZER_CLAUSE@25..36
                     0: EQ@25..27 "=" [] [Whitespace(" ")]
                     1: JS_STRING_LITERAL_EXPRESSION@27..36
@@ -153,7 +153,7 @@ JsModule {
                 1: COMMA@36..38 "," [] [Whitespace(" ")]
                 2: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@38..49
                   0: JS_IDENTIFIER_BINDING@38..40
-                    0: IDENT@38..40 "b" [] [Whitespace(" ")]
+                    0: IDENT@38..40 "e" [] [Whitespace(" ")]
                   1: JS_INITIALIZER_CLAUSE@40..49
                     0: EQ@40..42 "=" [] [Whitespace(" ")]
                     1: JS_CALL_EXPRESSION@42..49

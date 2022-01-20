@@ -32,7 +32,7 @@ JsModule {
                             l_brack_token: L_BRACK@17..18 "[" [] [],
                             elements: JsArrayBindingPatternElementList [
                                 JsIdentifierBinding {
-                                    name_token: IDENT@18..19 "a" [] [],
+                                    name_token: IDENT@18..19 "c" [] [],
                                 },
                                 COMMA@19..21 "," [] [Whitespace(" ")],
                                 JsIdentifierBinding {
@@ -73,7 +73,7 @@ JsModule {
                             l_brack_token: L_BRACK@38..39 "[" [] [],
                             elements: JsArrayBindingPatternElementList [
                                 JsIdentifierBinding {
-                                    name_token: IDENT@39..40 "a" [] [],
+                                    name_token: IDENT@39..40 "d" [] [],
                                 },
                                 COMMA@40..42 "," [] [Whitespace(" ")],
                                 JsArrayBindingPatternRestElement {
@@ -114,7 +114,7 @@ JsModule {
                             elements: JsArrayBindingPatternElementList [
                                 JsBindingPatternWithDefault {
                                     pattern: JsIdentifierBinding {
-                                        name_token: IDENT@63..65 "a" [] [Whitespace(" ")],
+                                        name_token: IDENT@63..65 "e" [] [Whitespace(" ")],
                                     },
                                     eq_token: EQ@65..67 "=" [] [Whitespace(" ")],
                                     default: JsStringLiteralExpression {
@@ -123,7 +123,7 @@ JsModule {
                                 },
                                 COMMA@76..78 "," [] [Whitespace(" ")],
                                 JsIdentifierBinding {
-                                    name_token: IDENT@78..79 "b" [] [],
+                                    name_token: IDENT@78..79 "x" [] [],
                                 },
                             ],
                             r_brack_token: R_BRACK@79..81 "]" [] [Whitespace(" ")],
@@ -154,7 +154,7 @@ JsModule {
                                 JsArrayHole,
                                 COMMA@91..93 "," [] [Whitespace(" ")],
                                 JsIdentifierBinding {
-                                    name_token: IDENT@93..94 "a" [] [],
+                                    name_token: IDENT@93..94 "f" [] [],
                                 },
                                 COMMA@94..96 "," [] [Whitespace(" ")],
                                 JsArrayBindingPatternRestElement {
@@ -195,36 +195,36 @@ JsModule {
                                         JsArrayBindingPatternRestElement {
                                             dotdotdot_token: DOT2@116..119 "..." [] [],
                                             pattern: JsIdentifierBinding {
-                                                name_token: IDENT@119..123 "rest" [] [],
+                                                name_token: IDENT@119..124 "rest2" [] [],
                                             },
                                         },
                                     ],
-                                    r_brack_token: R_BRACK@123..124 "]" [] [],
+                                    r_brack_token: R_BRACK@124..125 "]" [] [],
                                 },
-                                COMMA@124..126 "," [] [Whitespace(" ")],
+                                COMMA@125..127 "," [] [Whitespace(" ")],
                                 JsObjectBindingPattern {
-                                    l_curly_token: L_CURLY@126..128 "{" [] [Whitespace(" ")],
+                                    l_curly_token: L_CURLY@127..129 "{" [] [Whitespace(" ")],
                                     properties: JsObjectBindingPatternPropertyList [
                                         JsObjectBindingPatternShorthandProperty {
                                             identifier: JsIdentifierBinding {
-                                                name_token: IDENT@128..130 "a" [] [Whitespace(" ")],
+                                                name_token: IDENT@129..131 "g" [] [Whitespace(" ")],
                                             },
                                             init: missing (optional),
                                         },
                                     ],
-                                    r_curly_token: R_CURLY@130..131 "}" [] [],
+                                    r_curly_token: R_CURLY@131..132 "}" [] [],
                                 },
                             ],
-                            r_brack_token: R_BRACK@131..133 "]" [] [Whitespace(" ")],
+                            r_brack_token: R_BRACK@132..134 "]" [] [Whitespace(" ")],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
                         initializer: JsInitializerClause {
-                            eq_token: EQ@133..135 "=" [] [Whitespace(" ")],
+                            eq_token: EQ@134..136 "=" [] [Whitespace(" ")],
                             expression: JsArrayExpression {
-                                l_brack_token: L_BRACK@135..136 "[" [] [],
+                                l_brack_token: L_BRACK@136..137 "[" [] [],
                                 elements: JsArrayElementList [],
-                                r_brack_token: R_BRACK@136..137 "]" [] [],
+                                r_brack_token: R_BRACK@137..138 "]" [] [],
                             },
                         },
                     },
@@ -233,13 +233,13 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@137..138 "" [Newline("\n")] [],
+    eof_token: EOF@138..139 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..138
+0: JS_MODULE@0..139
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..137
+  2: JS_MODULE_ITEM_LIST@0..138
     0: JS_VARIABLE_STATEMENT@0..12
       0: JS_VARIABLE_DECLARATIONS@0..11
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -263,7 +263,7 @@ JsModule {
               0: L_BRACK@17..18 "[" [] []
               1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@18..22
                 0: JS_IDENTIFIER_BINDING@18..19
-                  0: IDENT@18..19 "a" [] []
+                  0: IDENT@18..19 "c" [] []
                 1: COMMA@19..21 "," [] [Whitespace(" ")]
                 2: JS_IDENTIFIER_BINDING@21..22
                   0: IDENT@21..22 "b" [] []
@@ -291,7 +291,7 @@ JsModule {
               0: L_BRACK@38..39 "[" [] []
               1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@39..49
                 0: JS_IDENTIFIER_BINDING@39..40
-                  0: IDENT@39..40 "a" [] []
+                  0: IDENT@39..40 "d" [] []
                 1: COMMA@40..42 "," [] [Whitespace(" ")]
                 2: JS_ARRAY_BINDING_PATTERN_REST_ELEMENT@42..49
                   0: DOT2@42..45 "..." [] []
@@ -319,13 +319,13 @@ JsModule {
               1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@63..79
                 0: JS_BINDING_PATTERN_WITH_DEFAULT@63..76
                   0: JS_IDENTIFIER_BINDING@63..65
-                    0: IDENT@63..65 "a" [] [Whitespace(" ")]
+                    0: IDENT@63..65 "e" [] [Whitespace(" ")]
                   1: EQ@65..67 "=" [] [Whitespace(" ")]
                   2: JS_STRING_LITERAL_EXPRESSION@67..76
                     0: JS_STRING_LITERAL@67..76 "\"default\"" [] []
                 1: COMMA@76..78 "," [] [Whitespace(" ")]
                 2: JS_IDENTIFIER_BINDING@78..79
-                  0: IDENT@78..79 "b" [] []
+                  0: IDENT@78..79 "x" [] []
               2: R_BRACK@79..81 "]" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
@@ -347,7 +347,7 @@ JsModule {
                 0: JS_ARRAY_HOLE@91..91
                 1: COMMA@91..93 "," [] [Whitespace(" ")]
                 2: JS_IDENTIFIER_BINDING@93..94
-                  0: IDENT@93..94 "a" [] []
+                  0: IDENT@93..94 "f" [] []
                 3: COMMA@94..96 "," [] [Whitespace(" ")]
                 4: JS_ARRAY_BINDING_PATTERN_REST_ELEMENT@96..103
                   0: DOT2@96..99 "..." [] []
@@ -363,39 +363,39 @@ JsModule {
                 1: JS_ARRAY_ELEMENT_LIST@108..108
                 2: R_BRACK@108..109 "]" [] []
       1: (empty)
-    5: JS_VARIABLE_STATEMENT@109..137
-      0: JS_VARIABLE_DECLARATIONS@109..137
+    5: JS_VARIABLE_STATEMENT@109..138
+      0: JS_VARIABLE_DECLARATIONS@109..138
         0: LET_KW@109..114 "let" [Newline("\n")] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@114..137
-          0: JS_VARIABLE_DECLARATION@114..137
-            0: JS_ARRAY_BINDING_PATTERN@114..133
+        1: JS_VARIABLE_DECLARATION_LIST@114..138
+          0: JS_VARIABLE_DECLARATION@114..138
+            0: JS_ARRAY_BINDING_PATTERN@114..134
               0: L_BRACK@114..115 "[" [] []
-              1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@115..131
-                0: JS_ARRAY_BINDING_PATTERN@115..124
+              1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@115..132
+                0: JS_ARRAY_BINDING_PATTERN@115..125
                   0: L_BRACK@115..116 "[" [] []
-                  1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@116..123
-                    0: JS_ARRAY_BINDING_PATTERN_REST_ELEMENT@116..123
+                  1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@116..124
+                    0: JS_ARRAY_BINDING_PATTERN_REST_ELEMENT@116..124
                       0: DOT2@116..119 "..." [] []
-                      1: JS_IDENTIFIER_BINDING@119..123
-                        0: IDENT@119..123 "rest" [] []
-                  2: R_BRACK@123..124 "]" [] []
-                1: COMMA@124..126 "," [] [Whitespace(" ")]
-                2: JS_OBJECT_BINDING_PATTERN@126..131
-                  0: L_CURLY@126..128 "{" [] [Whitespace(" ")]
-                  1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@128..130
-                    0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@128..130
-                      0: JS_IDENTIFIER_BINDING@128..130
-                        0: IDENT@128..130 "a" [] [Whitespace(" ")]
+                      1: JS_IDENTIFIER_BINDING@119..124
+                        0: IDENT@119..124 "rest2" [] []
+                  2: R_BRACK@124..125 "]" [] []
+                1: COMMA@125..127 "," [] [Whitespace(" ")]
+                2: JS_OBJECT_BINDING_PATTERN@127..132
+                  0: L_CURLY@127..129 "{" [] [Whitespace(" ")]
+                  1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@129..131
+                    0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@129..131
+                      0: JS_IDENTIFIER_BINDING@129..131
+                        0: IDENT@129..131 "g" [] [Whitespace(" ")]
                       1: (empty)
-                  2: R_CURLY@130..131 "}" [] []
-              2: R_BRACK@131..133 "]" [] [Whitespace(" ")]
+                  2: R_CURLY@131..132 "}" [] []
+              2: R_BRACK@132..134 "]" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
-            3: JS_INITIALIZER_CLAUSE@133..137
-              0: EQ@133..135 "=" [] [Whitespace(" ")]
-              1: JS_ARRAY_EXPRESSION@135..137
-                0: L_BRACK@135..136 "[" [] []
-                1: JS_ARRAY_ELEMENT_LIST@136..136
-                2: R_BRACK@136..137 "]" [] []
+            3: JS_INITIALIZER_CLAUSE@134..138
+              0: EQ@134..136 "=" [] [Whitespace(" ")]
+              1: JS_ARRAY_EXPRESSION@136..138
+                0: L_BRACK@136..137 "[" [] []
+                1: JS_ARRAY_ELEMENT_LIST@137..137
+                2: R_BRACK@137..138 "]" [] []
       1: (empty)
-  3: EOF@137..138 "" [Newline("\n")] []
+  3: EOF@138..139 "" [Newline("\n")] []

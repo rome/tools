@@ -27,7 +27,7 @@ JsModule {
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
-                            name_token: IDENT@15..17 "a" [] [Whitespace(" ")],
+                            name_token: IDENT@15..17 "b" [] [Whitespace(" ")],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -48,7 +48,7 @@ JsModule {
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
-                            name_token: IDENT@25..27 "b" [] [Whitespace(" ")],
+                            name_token: IDENT@25..27 "c" [] [Whitespace(" ")],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -90,7 +90,7 @@ JsModule {
         1: JS_VARIABLE_DECLARATION_LIST@15..21
           0: JS_VARIABLE_DECLARATION@15..21
             0: JS_IDENTIFIER_BINDING@15..17
-              0: IDENT@15..17 "a" [] [Whitespace(" ")]
+              0: IDENT@15..17 "b" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
             3: JS_INITIALIZER_CLAUSE@17..21
@@ -104,7 +104,7 @@ JsModule {
         1: JS_VARIABLE_DECLARATION_LIST@25..30
           0: JS_VARIABLE_DECLARATION@25..30
             0: JS_IDENTIFIER_BINDING@25..27
-              0: IDENT@25..27 "b" [] [Whitespace(" ")]
+              0: IDENT@25..27 "c" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
             3: JS_INITIALIZER_CLAUSE@27..30
@@ -124,11 +124,11 @@ error[SyntaxError]: expected an expression, or an assignment but instead found '
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ var_decl_err.js:2:13
   │
-2 │ const a = 5 let b = 5;
+2 │ const b = 5 let c = 5;
   │ ------------^^^ An explicit or implicit semicolon is expected here...
   │ │            
   │ ...Which is required to end this statement
 
 --
 var a =;
-const a = 5 let b = 5;
+const b = 5 let c = 5;

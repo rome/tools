@@ -39,7 +39,7 @@ JsScript {
                 function_token: FUNCTION_KW@44..53 "function" [] [Whitespace(" ")],
                 star_token: missing (optional),
                 id: JsIdentifierBinding {
-                    name_token: IDENT@53..54 "a" [] [],
+                    name_token: IDENT@53..54 "b" [] [],
                 },
                 type_parameters: missing (optional),
                 parameters: JsParameters {
@@ -62,7 +62,7 @@ JsScript {
                     function_token: FUNCTION_KW@65..74 "function" [] [Whitespace(" ")],
                     star_token: missing (optional),
                     id: JsIdentifierBinding {
-                        name_token: IDENT@74..75 "b" [] [],
+                        name_token: IDENT@74..75 "c" [] [],
                     },
                     type_parameters: missing (optional),
                     parameters: JsParameters {
@@ -92,7 +92,7 @@ JsScript {
                 function_token: FUNCTION_KW@91..100 "function" [] [Whitespace(" ")],
                 star_token: missing (optional),
                 id: JsIdentifierBinding {
-                    name_token: IDENT@100..101 "c" [] [],
+                    name_token: IDENT@100..101 "d" [] [],
                 },
                 type_parameters: missing (optional),
                 parameters: JsParameters {
@@ -130,7 +130,7 @@ JsScript {
                     function_token: FUNCTION_KW@130..139 "function" [] [Whitespace(" ")],
                     star_token: missing (optional),
                     id: JsIdentifierBinding {
-                        name_token: IDENT@139..140 "d" [] [],
+                        name_token: IDENT@139..140 "e" [] [],
                     },
                     type_parameters: missing (optional),
                     parameters: JsParameters {
@@ -187,7 +187,7 @@ JsScript {
         1: FUNCTION_KW@44..53 "function" [] [Whitespace(" ")]
         2: (empty)
         3: JS_IDENTIFIER_BINDING@53..54
-          0: IDENT@53..54 "a" [] []
+          0: IDENT@53..54 "b" [] []
         4: (empty)
         5: JS_PARAMETERS@54..57
           0: L_PAREN@54..55 "(" [] []
@@ -206,7 +206,7 @@ JsScript {
           1: FUNCTION_KW@65..74 "function" [] [Whitespace(" ")]
           2: (empty)
           3: JS_IDENTIFIER_BINDING@74..75
-            0: IDENT@74..75 "b" [] []
+            0: IDENT@74..75 "c" [] []
           4: (empty)
           5: JS_PARAMETERS@75..78
             0: L_PAREN@75..76 "(" [] []
@@ -229,7 +229,7 @@ JsScript {
         1: FUNCTION_KW@91..100 "function" [] [Whitespace(" ")]
         2: (empty)
         3: JS_IDENTIFIER_BINDING@100..101
-          0: IDENT@100..101 "c" [] []
+          0: IDENT@100..101 "d" [] []
         4: (empty)
         5: JS_PARAMETERS@101..104
           0: L_PAREN@101..102 "(" [] []
@@ -259,7 +259,7 @@ JsScript {
           1: FUNCTION_KW@130..139 "function" [] [Whitespace(" ")]
           2: (empty)
           3: JS_IDENTIFIER_BINDING@139..140
-            0: IDENT@139..140 "d" [] []
+            0: IDENT@139..140 "e" [] []
           4: (empty)
           5: JS_PARAMETERS@140..143
             0: L_PAREN@140..141 "(" [] []

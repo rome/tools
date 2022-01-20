@@ -1,2 +1,2 @@
 let { foo: bar  } = {}
-let { foo: bar = baz } = {}
+let { foo: bar_bar = baz } = {}

@@ -45,7 +45,7 @@ JsModule {
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
-                            name_token: IDENT@26..28 "a" [] [Whitespace(" ")],
+                            name_token: IDENT@26..28 "b" [] [Whitespace(" ")],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -69,7 +69,7 @@ JsModule {
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
-                            name_token: IDENT@38..40 "a" [] [Whitespace(" ")],
+                            name_token: IDENT@38..40 "c" [] [Whitespace(" ")],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -103,7 +103,7 @@ JsModule {
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
-                            name_token: IDENT@56..58 "a" [] [Whitespace(" ")],
+                            name_token: IDENT@56..58 "d" [] [Whitespace(" ")],
                         },
                         excl_token: missing (optional),
                         type_annotation: missing (optional),
@@ -164,7 +164,7 @@ JsModule {
         1: JS_VARIABLE_DECLARATION_LIST@26..32
           0: JS_VARIABLE_DECLARATION@26..32
             0: JS_IDENTIFIER_BINDING@26..28
-              0: IDENT@26..28 "a" [] [Whitespace(" ")]
+              0: IDENT@26..28 "b" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
             3: JS_INITIALIZER_CLAUSE@28..32
@@ -181,7 +181,7 @@ JsModule {
         1: JS_VARIABLE_DECLARATION_LIST@38..50
           0: JS_VARIABLE_DECLARATION@38..50
             0: JS_IDENTIFIER_BINDING@38..40
-              0: IDENT@38..40 "a" [] [Whitespace(" ")]
+              0: IDENT@38..40 "c" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
             3: JS_INITIALIZER_CLAUSE@40..50
@@ -204,7 +204,7 @@ JsModule {
         1: JS_VARIABLE_DECLARATION_LIST@56..65
           0: JS_VARIABLE_DECLARATION@56..65
             0: JS_IDENTIFIER_BINDING@56..58
-              0: IDENT@56..58 "a" [] [Whitespace(" ")]
+              0: IDENT@56..58 "d" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
             3: JS_INITIALIZER_CLAUSE@58..65

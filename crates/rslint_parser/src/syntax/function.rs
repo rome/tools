@@ -20,11 +20,11 @@ use rslint_syntax::{JsSyntaxKind, T};
 /// A function declaration, this could be async and or a generator. This takes a marker
 /// because you need to first advance over async or start a marker and feed it in.
 // test function_decl
-// function foo() {}
-// function *foo() {}
-// async function *foo() {}
-// async function foo() {}
-// function *foo() {
+// function foo1() {}
+// function *foo2() {}
+// async function *foo3() {}
+// async function foo4() {}
+// function *foo5() {
 //   yield foo;
 // }
 //
@@ -39,11 +39,11 @@ use rslint_syntax::{JsSyntaxKind, T};
 // function *() {}
 // async function() {}
 // async function *() {}
-// function *foo() {}
-// yield foo;
-// function test(): number {}
-// function foo(await) {}
-// function foo(yield) {}
+// function *foo2() {}
+// yield foo3;
+// function test2(): number {}
+// function foo4(await) {}
+// function foo5(yield) {}
 //
 // test_err function_broken
 // function foo())})}{{{  {}
@@ -65,17 +65,17 @@ pub(super) fn parse_function_statement(p: &mut Parser, context: StatementContext
         if JsSyntaxFeature::StrictMode.is_supported(p) {
             // test_err function_in_single_statement_context_strict
             // if (true) function a() {}
-            // label1: function a() {}
-            // while (true) function a() {}
+            // label1: function b() {}
+            // while (true) function c() {}
             p.error(p.err_builder("In strict mode code, functions can only be declared at top level or inside a block").primary(function.range(p), "wrap the function in a block statement"));
             function.change_to_unknown(p);
         } else if !matches!(context, StatementContext::If | StatementContext::Label) {
             // test function_in_if_or_labelled_stmt_loose_mode
             // // SCRIPT
             // label1: function a() {}
-            // if (true) function a() {} else function b() {}
-            // if (true) function c() {}
-            // if (true) "test"; else function d() {}
+            // if (true) function b() {} else function c() {}
+            // if (true) function d() {}
+            // if (true) "test"; else function e() {}
             p.error(p.err_builder("In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if or labelled statement").primary(function.range(p), "wrap the function in a block statement"));
             function.change_to_unknown(p);
         }
@@ -95,8 +95,8 @@ pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
 
 // test export_function_clause
 // export function test(a, b) {}
-// export function* test(a, b) {}
-// export async function test(a, b, ) {}
+// export function* test2(a, b) {}
+// export async function test3(a, b, ) {}
 pub(super) fn parse_export_function_clause(p: &mut Parser) -> ParsedSyntax {
     if !is_at_function(p) {
         return Absent;
