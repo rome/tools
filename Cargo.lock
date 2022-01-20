@@ -1320,6 +1320,7 @@ dependencies = [
  "rslint_errors",
  "rslint_lexer",
  "rslint_syntax",
+ "tests_macros",
 ]
 
 [[package]]

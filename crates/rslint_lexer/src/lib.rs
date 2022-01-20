@@ -18,11 +18,10 @@
 #[macro_use]
 mod token;
 mod state;
-mod tests;
-
-
 #[rustfmt::skip]
 mod tables;
+mod errors;
+mod tests;
 
 pub use token::Token;
 
@@ -225,7 +224,7 @@ impl<'src> Lexer<'src> {
     }
 
     // Read a `\u{000...}` escape sequence, this expects the cur char to be the `{`
-    fn read_codepoint_escape(&mut self) -> Result<char, Diagnostic> {
+    fn read_codepoint_escape(&mut self) -> Result<char, Box<Diagnostic>> {
         let start = self.cur + 1;
         self.read_hexnumber();
 
@@ -235,9 +234,8 @@ impl<'src> Lexer<'src> {
             let invalid = self.get_unicode_char();
             let err = Diagnostic::error(self.file_id, "", "expected hex digits for a unicode code point escape, but encountered an invalid character")
                 .primary(self.cur .. invalid.len_utf8(), "");
-
             self.cur -= 1;
-            return Err(err);
+            return Err(Box::new(err));
         }
 
         // Safety: We know for a fact this is in bounds because we must be on the possible char after the } at this point
@@ -261,8 +259,7 @@ impl<'src> Lexer<'src> {
                     let err =
                         Diagnostic::error(self.file_id, "", "invalid codepoint for unicode escape")
                             .primary(start..self.cur, "");
-
-                    Err(err)
+                    Err(Box::new(err))
                 }
             }
 
@@ -274,26 +271,15 @@ impl<'src> Lexer<'src> {
                 )
                 .primary(start..self.cur, "")
                 .footer_note("Codepoints range from 0 to 0x10FFFF (1114111)");
-
-                Err(err)
+                Err(Box::new(err))
             }
         }
     }
 
     // Read a `\u0000` escape sequence, this expects the current char to be the `u`, it also does not skip over the escape sequence
     // The pos after this method is the last hex digit
-    fn read_unicode_escape(&mut self, advance: bool) -> Result<char, Diagnostic> {
+    fn read_unicode_escape(&mut self, advance: bool) -> Result<char, Box<Diagnostic>> {
         debug_assert_eq!(self.bytes[self.cur], b'u');
-
-        let diagnostic = Diagnostic::error(
-            self.file_id,
-            "",
-            "invalid digits after unicode escape sequence",
-        )
-        .primary(
-            self.cur - 1..self.cur + 1,
-            "expected 4 hex digits following this",
-        );
 
         for idx in 0..4 {
             match self.next_bounded() {
@@ -301,13 +287,23 @@ impl<'src> Lexer<'src> {
                     if !advance {
                         self.cur -= idx + 1;
                     }
-                    return Err(diagnostic);
+                    let err = invalid_digits_after_unicode_escape_sequence(
+                        self.file_id,
+                        self.cur - 1,
+                        self.cur + 1,
+                    );
+                    return Err(err);
                 }
                 Some(b) if !b.is_ascii_hexdigit() => {
+                    let err = invalid_digits_after_unicode_escape_sequence(
+                        self.file_id,
+                        self.cur - 1,
+                        self.cur + 1,
+                    );
                     if !advance {
                         self.cur -= idx + 1;
                     }
-                    return Err(diagnostic);
+                    return Err(err);
                 }
                 _ => {}
             }
@@ -322,8 +318,13 @@ impl<'src> Lexer<'src> {
                 if !advance {
                     self.cur -= 4;
                 }
-                // Safety: we make sure the 4 chars are hex digits beforehand, and 4 hex digits cannot make an invalid char
-                Ok(std::char::from_u32_unchecked(digits))
+                std::char::from_u32(digits).ok_or_else(|| {
+                    invalid_digits_after_unicode_escape_sequence(
+                        self.file_id,
+                        self.cur - 5,
+                        self.cur + 1,
+                    )
+                })
             } else {
                 // Safety: we know this is unreachable because 4 hexdigits cannot make an out of bounds char,
                 // and we make sure that the chars are actually hex digits
@@ -361,11 +362,11 @@ impl<'src> Lexer<'src> {
             match escape {
                 b'u' if self.bytes.get(self.cur + 2) == Some(&b'{') => {
                     self.advance(2);
-                    self.read_codepoint_escape().err().map(Box::new)
+                    self.read_codepoint_escape().err()
                 }
                 b'u' => {
                     self.next();
-                    self.read_unicode_escape(true).err().map(Box::new)
+                    self.read_unicode_escape(true).err()
                 }
                 b'x' => {
                     self.next();
@@ -403,25 +404,26 @@ impl<'src> Lexer<'src> {
     /// Consumes the identifier at the current position, and fills the given buf with the UTF-8
     /// encoded identifier that got consumed.
     ///
-    /// Returns the number of bytes written into the buffer.
+    /// Returns the number of bytes written into the buffer, and if any char was escaped.
     /// This method will stop writing into the buffer if the buffer is too small to
     /// fit the whole identifier.
     #[inline]
-    fn consume_and_get_ident(&mut self, buf: &mut [u8]) -> usize {
+    fn consume_and_get_ident(&mut self, buf: &mut [u8]) -> (usize, bool) {
         let mut idx = 0;
-
+        let mut any_escaped = false;
         unwind_loop! {
             if self.next_bounded().is_some() {
-                if let Some(c) = self.cur_ident_part() {
+                if let Some((c, escaped)) = self.cur_ident_part() {
                     if let Some(buf) = buf.get_mut(idx..idx + 4) {
                         let res = c.encode_utf8(buf);
                         idx += res.len();
+                        any_escaped |= escaped;
                     }
                 } else {
-                    return idx;
+                    return (idx, any_escaped);
                 }
             } else {
-                return idx;
+                return (idx, any_escaped);
             }
         }
     }
@@ -437,7 +439,16 @@ impl<'src> Lexer<'src> {
         while let Some(byte) = self.next_bounded() {
             match *byte {
                 b'\\' => {
-                    diagnostic = self.validate_escape_sequence();
+                    let r = self.validate_escape_sequence();
+                    diagnostic = match (diagnostic, r) {
+                        (None, new) => new,
+                        (old, None) => old,
+                        (Some(mut old), Some(new)) => {
+                            old.children.extend(old.primary.take());
+                            old.children.extend(new.primary);
+                            Some(old)
+                        }
+                    }
                 }
                 b if b == quote => {
                     self.next();
@@ -457,24 +468,26 @@ impl<'src> Lexer<'src> {
     /// Returns `Some(x)` if the current position is an identifier, with the character at
     /// the position.
     ///
+    /// Boolean states if there are escaped characters.
+    ///
     /// The character may be a char that was generated from a unicode escape sequence,
     /// e.g. `t` is returned, the actual source code is `\u{74}`
     #[inline]
-    fn cur_ident_part(&mut self) -> Option<char> {
+    fn cur_ident_part(&mut self) -> Option<(char, bool)> {
         debug_assert!(self.cur < self.bytes.len());
 
         // Safety: we always call this method on a char
         let b = unsafe { self.bytes.get_unchecked(self.cur) };
 
         match Self::lookup(*b) {
-            IDT | DIG | ZER => Some(*b as char),
+            IDT | DIG | ZER => Some((*b as char, false)),
             // FIXME: This should use ID_Continue, not XID_Continue
             UNI => {
                 let chr = self.get_unicode_char();
                 let res = is_id_continue(chr);
                 if res {
                     self.cur += chr.len_utf8() - 1;
-                    Some(chr)
+                    Some((chr, false))
                 } else {
                     None
                 }
@@ -491,7 +504,7 @@ impl<'src> Lexer<'src> {
 
                 if let Ok(c) = res {
                     if is_id_continue(c) {
-                        Some(c)
+                        Some((c, true))
                     } else {
                         self.cur -= 1;
                         None
@@ -554,7 +567,7 @@ impl<'src> Lexer<'src> {
         let mut buf = [0u8; 16];
         let (len, start) = (first.0.encode_utf8(&mut buf).len(), first.1);
 
-        let count = self.consume_and_get_ident(&mut buf[len..]);
+        let (count, _) = self.consume_and_get_ident(&mut buf[len..]);
 
         let kind = match &buf[..count + len] {
             b"await" => Some(AWAIT_KW),
@@ -1359,7 +1372,6 @@ impl<'src> Lexer<'src> {
                             } else {
                                 let err = Diagnostic::error(self.file_id, "", "unexpected unicode escape")
                                     .primary(start..self.cur, "this escape is unexpected, as it does not designate the start of an identifier");
-
                                 self.next();
                                 (
                                     Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
@@ -1369,7 +1381,7 @@ impl<'src> Lexer<'src> {
                         }
                         Err(err) => (
                             Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-                            Some(Box::new(err)),
+                            Some(err),
                         ),
                     }
                 } else {
@@ -1380,7 +1392,6 @@ impl<'src> Lexer<'src> {
                     )
                     .primary(start..self.cur + 1, "");
                     self.next();
-
                     (
                         Token::new(JsSyntaxKind::ERROR_TOKEN, 1),
                         Some(Box::new(err)),
@@ -1464,45 +1475,59 @@ impl<'src> Lexer<'src> {
         let start = self.cur;
         let mut diagnostic = None;
 
-        while let Some(b) = self.bytes.get(self.cur) {
-            match *b as char {
-                '`' if self.cur == start => {
+        loop {
+            match self.bytes.get(self.cur).map(|b| *b as char) {
+                Some('`') if self.cur == start => {
                     self.next();
                     return tok!(BACKTICK, 1);
                 }
-                '`' => {
-                    return (
-                        Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
-                        diagnostic,
-                    );
+                Some('`') => {
+                    return match diagnostic {
+                        Some(diagnostic) => (
+                            Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
+                            Some(diagnostic),
+                        ),
+                        None => (
+                            Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
+                            None,
+                        ),
+                    };
                 }
-                '\\' => {
+                Some('\\') => {
                     if let Some(err) = self.validate_escape_sequence() {
                         diagnostic = Some(err);
                     }
                     self.next_bounded();
                 }
-                '$' if self.bytes.get(self.cur + 1) == Some(&b'{') && self.cur == start => {
+                Some('$') if self.bytes.get(self.cur + 1) == Some(&b'{') && self.cur == start => {
                     self.advance(2);
                     return (Token::new(JsSyntaxKind::DOLLAR_CURLY, 2), diagnostic);
                 }
-                '$' if self.bytes.get(self.cur + 1) == Some(&b'{') => {
-                    return (
-                        Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
-                        diagnostic,
-                    )
+                Some('$') if self.bytes.get(self.cur + 1) == Some(&b'{') => {
+                    return match diagnostic {
+                        Some(diagnostic) => (
+                            Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
+                            Some(diagnostic),
+                        ),
+                        None => (
+                            Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
+                            None,
+                        ),
+                    };
                 }
-                _ => {
+                Some(_) => {
                     let _ = self.next();
+                }
+                None => {
+                    break;
                 }
             }
         }
 
         let err = Diagnostic::error(self.file_id, "", "unterminated template literal")
             .primary(self.cur..self.cur + 1, "");
-
         (
-            Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
+            Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
             Some(Box::new(err)),
         )
     }
@@ -1600,6 +1625,8 @@ enum Dispatch {
     UNI,
 }
 use Dispatch::*;
+
+use crate::errors::invalid_digits_after_unicode_escape_sequence;
 
 // A lookup table mapping any incoming byte to a handler function
 // This is taken from the ratel project lexer and modified

@@ -52,12 +52,20 @@ fn main() -> Result<()> {
         // }
         "coverage" => {
             let json = args.contains("--json");
+            let show_rast = args.contains("--show-rast");
+            let show_diagnostics = args.contains("--show-diagnostics");
 
             let free = args.free()?;
             let query = free.get(0).map(String::as_str);
 
             let pool = yastl::ThreadConfig::new().stack_size(8 << 30);
-            coverage::run(query, yastl::Pool::with_config(num_cpus::get(), pool), json);
+            coverage::run(
+                query,
+                yastl::Pool::with_config(num_cpus::get(), pool),
+                json,
+                show_rast,
+                show_diagnostics,
+            );
             Ok(())
         }
         "coverage-libs" => {
@@ -95,8 +103,8 @@ SUBCOMMANDS:
     codegen
     syntax
     docgen
-    coverage [--json]
-    coverage-libs
+    coverage [--json] [--show-diagnostics] [--show-rast]
+    coverage-libs [--criterion=true/false] [--filter=<FILEPATH>]
     compare [--markdown]
     unicode
 OPTIONS

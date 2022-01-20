@@ -10,15 +10,16 @@ use yastl::Pool;
 
 pub const TEST_JSON_PATH: &str = "xtask/src/base_results.json";
 
-pub fn run(query: Option<&str>, pool: Pool, json: bool) {
+pub fn run(query: Option<&str>, pool: Pool, json: bool, show_rast: bool, show_diagnostics: bool) {
     let files = get_test_files(query, &pool, json);
     let num_ran = files.len();
 
     let detailed = num_ran < 10;
 
     let pb = indicatif::ProgressBar::new(num_ran as u64);
+    let msg = format!("{} tests", "Running".bold().cyan());
     pb.set_position(1);
-    pb.set_message(format!("{} tests", "Running".bold().cyan()));
+    pb.set_message(msg);
     pb.set_style(default_bar_style());
 
     std::panic::set_hook(Box::new(|_| {}));
@@ -38,6 +39,27 @@ pub fn run(query: Option<&str>, pool: Pool, json: bool) {
 
                 if detailed && res.fail.is_some() {
                     report_detailed_test(pb, &res);
+                }
+
+                if detailed && show_rast {
+                    let r = parse_module(&res.code, 0);
+                    println!("{:#?}", r.syntax());
+                }
+
+                if detailed && show_diagnostics {
+                    let r = parse_module(&res.code, 0);
+                    let file = rslint_errors::file::SimpleFile::new(
+                        res.path.display().to_string(),
+                        res.code.clone(),
+                    );
+                    let mut emitter = rslint_errors::Emitter::new(&file);
+
+                    for diagnostic in r.errors() {
+                        emitter.emit_stdout(diagnostic, true).unwrap();
+                    }
+                }
+
+                if detailed && res.fail.is_some() {
                     tx.send(res).unwrap();
                     return;
                 }
@@ -209,7 +231,7 @@ fn report_detailed_test(pb: &indicatif::ProgressBar, res: &TestResult) {
             format!("{}\n{}", header, errors)
         }
     };
-    pb.println(format!("{}{}", header, msg));
+    pb.println(format!("{}{}", header, msg))
 }
 
 fn default_bar_style() -> indicatif::ProgressStyle {
