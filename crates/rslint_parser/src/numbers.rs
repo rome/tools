@@ -1,6 +1,6 @@
 //! JS Number parsing.
 
-use lexical::parse_radix;
+use std::str::FromStr;
 
 pub use num_bigint::BigInt;
 
@@ -15,16 +15,18 @@ fn split_into_radix_and_number(num: &str) -> (u32, String) {
 
 /// Parse a js number as a string into a number.
 pub fn parse_js_number(num: &str) -> Option<f64> {
-    let (radix, raw) = split_into_radix_and_number(num);
+    let (mut radix, raw) = split_into_radix_and_number(num);
 
-    if radix == 10 && raw.starts_with('0') {
-        // account for legacy octal literals
-        if let Ok(parsed) = parse_radix::<f64, _>(raw.as_bytes(), 8) {
-            return Some(parsed);
-        }
+    // account for legacy octal literals
+    if raw.starts_with('0') && !raw.contains(&['8', '9']) {
+        radix = 8
     }
 
-    parse_radix::<f64, _>(raw.as_bytes(), radix as u8).ok()
+    if radix == 10 {
+        f64::from_str(&raw).ok()
+    } else {
+        i64::from_str_radix(&raw, radix).map(|num| num as f64).ok()
+    }
 }
 
 /// Parse a big int number as a string into a number.
