@@ -3,7 +3,7 @@ use xtask::{
     codegen::{self, Mode},
     compare, coverage,
     glue::pushd,
-    project_root, run_rustfmt, Result,
+    project_root, run_rustfmt, unicode, Result,
 };
 
 #[cfg(feature = "dhat-on")]
@@ -61,6 +61,12 @@ fn main() -> Result<()> {
             Ok(())
         }
         "coverage-libs" => {
+            // on pr branch, run
+            // git checkout main
+            // cargo run -p xtask --release -- coverage-libs --save-baseline main
+            // git checkout -
+            // cargo run -p xtask --release -- coverage-libs --save-baseline pr
+            // critcmp main pr # (cargo install critcmp)
             let filter: String = args
                 .opt_value_from_str("--filter")
                 .unwrap()
@@ -69,8 +75,13 @@ fn main() -> Result<()> {
                 .opt_value_from_str("--criterion")
                 .unwrap()
                 .unwrap_or(true);
-            xtask::libs::run(filter, criterion);
+            let baseline: Option<String> = args.opt_value_from_str("--save-baseline").unwrap();
+            xtask::libs::run(filter, criterion, baseline);
             Ok(())
+        }
+        "unicode" => {
+            args.finish()?;
+            unicode::generate_tables()
         }
         _ => {
             eprintln!(
@@ -87,6 +98,7 @@ SUBCOMMANDS:
     coverage [--json]
     coverage-libs
     compare [--markdown]
+    unicode
 OPTIONS
     --markdown   Emits supported output into markdown format. Supported by compare subcommand
     --json       Emits supported output into json format. Supported by coverage subcommand

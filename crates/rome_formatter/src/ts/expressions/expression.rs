@@ -3,10 +3,10 @@ use crate::{
     ToFormatElement,
 };
 use rslint_parser::ast::{
-    JsAnyExpression, JsAssignmentExpression, JsAwaitExpression, JsBinaryExpression,
-    JsComputedMemberExpression, JsConditionalExpression, JsLogicalExpression, JsNewExpression,
-    JsParenthesizedExpression, JsThisExpression, JsUnaryExpression, JsYieldArgument,
-    JsYieldExpression, NewTarget,
+    JsAnyExpression, JsAnyInProperty, JsAssignmentExpression, JsAwaitExpression,
+    JsBinaryExpression, JsComputedMemberExpression, JsConditionalExpression, JsInExpression,
+    JsInstanceofExpression, JsLogicalExpression, JsNewExpression, JsParenthesizedExpression,
+    JsThisExpression, JsUnaryExpression, JsYieldArgument, JsYieldExpression, NewTarget,
 };
 use rslint_parser::{token_set, T};
 
@@ -87,6 +87,10 @@ impl ToFormatElement for JsAnyExpression {
                 logical_expression.to_format_element(formatter)
             }
             JsAnyExpression::JsSuperExpression(expr) => expr.to_format_element(formatter),
+            JsAnyExpression::JsInExpression(expression) => expression.to_format_element(formatter),
+            JsAnyExpression::JsInstanceofExpression(expression) => {
+                expression.to_format_element(formatter)
+            }
         }
     }
 }
@@ -260,5 +264,38 @@ impl ToFormatElement for JsLogicalExpression {
             space_token(),
             formatter.format_node(self.right()?)?,
         ])
+    }
+}
+
+impl ToFormatElement for JsInstanceofExpression {
+    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        Ok(format_elements![
+            formatter.format_node(self.left()?)?,
+            space_token(),
+            formatter.format_token(&self.instanceof_token()?)?,
+            space_token(),
+            formatter.format_node(self.right()?)?,
+        ])
+    }
+}
+
+impl ToFormatElement for JsInExpression {
+    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        Ok(format_elements![
+            formatter.format_node(self.property()?)?,
+            space_token(),
+            formatter.format_token(&self.in_token()?)?,
+            space_token(),
+            formatter.format_node(self.object()?)?,
+        ])
+    }
+}
+
+impl ToFormatElement for JsAnyInProperty {
+    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        match self {
+            JsAnyInProperty::JsAnyExpression(expression) => expression.to_format_element(formatter),
+            JsAnyInProperty::JsPrivateName(name) => name.to_format_element(formatter),
+        }
     }
 }

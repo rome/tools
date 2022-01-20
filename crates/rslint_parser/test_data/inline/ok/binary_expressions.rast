@@ -88,12 +88,12 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: JsBinaryExpression {
-                left: JsNumberLiteralExpression {
+            expression: JsInExpression {
+                property: JsNumberLiteralExpression {
                     value_token: JS_NUMBER_LITERAL@45..49 "74" [Newline("\n")] [Whitespace(" ")],
                 },
-                operator: IN_KW@49..52 "in" [] [Whitespace(" ")],
-                right: JsIdentifierExpression {
+                in_token: IN_KW@49..52 "in" [] [Whitespace(" ")],
+                object: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@52..55 "foo" [] [],
                     },
@@ -102,13 +102,13 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: JsBinaryExpression {
+            expression: JsInstanceofExpression {
                 left: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@55..60 "foo" [Newline("\n")] [Whitespace(" ")],
                     },
                 },
-                operator: INSTANCEOF_KW@60..71 "instanceof" [] [Whitespace(" ")],
+                instanceof_token: INSTANCEOF_KW@60..71 "instanceof" [] [Whitespace(" ")],
                 right: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@71..76 "Array" [] [],
@@ -291,7 +291,7 @@ JsModule {
           0: JS_NUMBER_LITERAL@44..45 "2" [] []
       1: (empty)
     4: JS_EXPRESSION_STATEMENT@45..55
-      0: JS_BINARY_EXPRESSION@45..55
+      0: JS_IN_EXPRESSION@45..55
         0: JS_NUMBER_LITERAL_EXPRESSION@45..49
           0: JS_NUMBER_LITERAL@45..49 "74" [Newline("\n")] [Whitespace(" ")]
         1: IN_KW@49..52 "in" [] [Whitespace(" ")]
@@ -300,7 +300,7 @@ JsModule {
             0: IDENT@52..55 "foo" [] []
       1: (empty)
     5: JS_EXPRESSION_STATEMENT@55..76
-      0: JS_BINARY_EXPRESSION@55..76
+      0: JS_INSTANCEOF_EXPRESSION@55..76
         0: JS_IDENTIFIER_EXPRESSION@55..60
           0: JS_REFERENCE_IDENTIFIER@55..60
             0: IDENT@55..60 "foo" [Newline("\n")] [Whitespace(" ")]

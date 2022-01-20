@@ -730,6 +730,34 @@ fn number_basic_err() {
         r#".32\u0046abde"#,
         ERROR_TOKEN:13
     }
+
+    assert_lex! {
+        r#".0_e1"#, // numeric separator error
+        JS_NUMBER_LITERAL:5,
+    }
+
+    assert_lex! {
+        r#"10e_1"#, // numeric separator error
+        ERROR_TOKEN:5
+    }
+}
+
+#[test]
+fn number_leading_zero_err() {
+    assert_lex! {
+        r#"0_0"#,
+        JS_NUMBER_LITERAL:3 // error: numeric separator can not be used after leading 0
+    }
+
+    assert_lex! {
+        r#"01.1"#,
+        JS_NUMBER_LITERAL:4, // error: unexpected number
+    }
+
+    assert_lex! {
+        r#"01n"#,
+        JS_NUMBER_LITERAL:3 // error: Octal literals are not allowed for BigInts.
+    }
 }
 
 #[test]
@@ -749,6 +777,11 @@ fn number_complex() {
     assert_lex! {
         ".0e34",
         JS_NUMBER_LITERAL:5
+    }
+
+    assert_lex! {
+        "0e00",
+        JS_NUMBER_LITERAL:4
     }
 }
 

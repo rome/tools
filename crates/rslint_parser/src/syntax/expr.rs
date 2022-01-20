@@ -75,6 +75,7 @@ const STARTS_EXPR: TokenSet = token_set![
     T![class],
     T![import],
     T![super],
+    T![#],
     BACKTICK,
     TRUE_KW,
     FALSE_KW,
@@ -117,14 +118,33 @@ pub fn parse_expression_or_recover_to_next_statement(
 // "foo"
 // 'bar'
 // null
+// 0, 0.0, 0n, 0e00
+
+// test_err literals
+// 00, 012, 08, 091, 0789 // parser errors
+// 01n, 0_0, 01.2 // lexer errors
 pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
     let literal_kind = match p.cur_tok().kind {
         JsSyntaxKind::JS_NUMBER_LITERAL => {
-            if p.cur_src().ends_with('n') {
+            let cur_src = p.cur_src();
+            if cur_src.ends_with('n') {
                 let m = p.start();
                 p.bump_remap(JsSyntaxKind::JS_BIG_INT_LITERAL);
                 return Present(m.complete(p, JS_BIG_INT_LITERAL_EXPRESSION));
             };
+
+            // Forbid legacy octal number in strict mode
+            if p.state.strict().is_some()
+                && cur_src.starts_with('0')
+                && cur_src.chars().nth(1).filter(|c| c.is_digit(10)).is_some()
+            {
+                let err_msg = if cur_src.contains(['8', '9']) {
+                    "Decimals with leading zeros are not allowed in strict mode."
+                } else {
+                    "\"0\"-prefixed octal literals are deprecated; use the \"0o\" prefix instead."
+                };
+                p.error(p.err_builder(err_msg).primary(p.cur_tok().range(), ""));
+            }
 
             JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION
         }
@@ -294,7 +314,14 @@ pub(super) fn parse_conditional_expr(p: &mut Parser) -> ParsedSyntax {
 
 /// A binary expression such as `2 + 2` or `foo * bar + 2` or a logical expression 'a || b'
 fn parse_binary_or_logical_expression(p: &mut Parser) -> ParsedSyntax {
-    let left = parse_unary_expr(p);
+    // test private_name_presence_check
+    // class A {
+    // 	#prop;
+    // 	test() {
+    //    #prop in this
+    //  }
+    // }
+    let left = parse_unary_expr(p).or_else(|| parse_private_name(p));
 
     parse_binary_or_logical_expression_recursive(p, left, 0)
 }
@@ -380,6 +407,8 @@ fn parse_binary_or_logical_expression_recursive(
     // foo(foo ||)
     let expression_kind = match op {
         T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
+        T![instanceof] => JS_INSTANCEOF_EXPRESSION,
+        T![in] => JS_IN_EXPRESSION,
         _ => JS_BINARY_EXPRESSION,
     };
 
@@ -392,6 +421,21 @@ fn parse_binary_or_logical_expression_recursive(
         p.error(err);
 
         parse_binary_or_logical_expression_recursive(p, Absent, 0)
+    } else if p.at(T![#]) {
+        // test_err private_name_presence_check_recursive
+        // class A {
+        // 	#prop;
+        // 	test() {
+        //    #prop in #prop in this
+        //  }
+        // }
+        let mut private_name = parse_private_name(p).unwrap();
+        private_name.change_kind(p, JS_UNKNOWN_EXPRESSION);
+        p.error(
+            p.err_builder("Private names are only allowed on the left side of a binary expression")
+                .primary(private_name.range(p), ""),
+        );
+        Present(private_name)
     } else {
         parse_unary_expr(p)
     };
