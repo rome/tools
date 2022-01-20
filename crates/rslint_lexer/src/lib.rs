@@ -1312,67 +1312,67 @@ impl<'src> Lexer<'src> {
         }
     }
 
-	/// Lex the next token
-	fn lex_token(&mut self) -> LexerReturn {
-		// Safety: we always call lex_token when we are at a valid char
-		let byte = unsafe { *self.bytes.get_unchecked(self.cur) };
-		let start = self.cur;
+    /// Lex the next token
+    fn lex_token(&mut self) -> LexerReturn {
+        // Safety: we always call lex_token when we are at a valid char
+        let byte = unsafe { *self.bytes.get_unchecked(self.cur) };
+        let start = self.cur;
 
-		// A lookup table of `byte -> fn(l: &mut Lexer) -> Token` is exponentially slower than this approach
-		// The speed difference comes from the difference in table size, a 2kb table is easily fit into cpu cache
-		// While a 16kb table will be ejected from cache very often leading to slowdowns, this also allows LLVM
-		// to do more aggressive optimizations on the match regarding how to map it to instructions
-		let dispatched = Self::lookup(byte);
+        // A lookup table of `byte -> fn(l: &mut Lexer) -> Token` is exponentially slower than this approach
+        // The speed difference comes from the difference in table size, a 2kb table is easily fit into cpu cache
+        // While a 16kb table will be ejected from cache very often leading to slowdowns, this also allows LLVM
+        // to do more aggressive optimizations on the match regarding how to map it to instructions
+        let dispatched = Self::lookup(byte);
 
-		match dispatched {
-			WHS => self.consume_newline_or_whitespace(),
-			EXL => self.resolve_bang(),
-			HAS => self.read_shebang(),
-			PRC => self.bin_or_assign(T![%], T![%=]),
-			AMP => self.resolve_amp(),
-			PNO => self.eat(tok!(L_PAREN, 1)),
-			PNC => self.eat(tok!(R_PAREN, 1)),
-			MUL => self.resolve_star(),
-			PLS => self.resolve_plus(),
-			COM => self.eat(tok![,]),
-			MIN => self.resolve_minus(),
-			SLH => self.read_slash(),
-			// This simply changes state on the start
-			TPL => self.eat(tok!(BACKTICK, 1)),
-			ZER => {
-				let diag = self.read_zero();
-				let (token, err) = self.verify_number_end(start);
-				(token, err.or(diag))
-			}
-			PRD => {
-				if let Some(b"..") = self.bytes.get(self.cur + 1..self.cur + 3) {
-					self.cur += 3;
-					return tok!(DOT2, 3);
-				}
-				if let Some(b'0'..=b'9') = self.bytes.get(self.cur + 1) {
-					let diag = self.read_float();
-					let (token, err) = self.verify_number_end(start);
-					(token, err.or(diag))
-				} else {
-					self.eat(tok![.])
-				}
-			}
-			BSL => {
-				if self.bytes.get(self.cur + 1) == Some(&b'u') {
-					self.next();
-					let res = if self.bytes.get(self.cur + 1).copied() == Some(b'{') {
-						self.next();
-						self.read_codepoint_escape()
-					} else {
-						self.read_unicode_escape(true)
-					};
+        match dispatched {
+            WHS => self.consume_newline_or_whitespace(),
+            EXL => self.resolve_bang(),
+            HAS => self.read_shebang(),
+            PRC => self.bin_or_assign(T![%], T![%=]),
+            AMP => self.resolve_amp(),
+            PNO => self.eat(tok!(L_PAREN, 1)),
+            PNC => self.eat(tok!(R_PAREN, 1)),
+            MUL => self.resolve_star(),
+            PLS => self.resolve_plus(),
+            COM => self.eat(tok![,]),
+            MIN => self.resolve_minus(),
+            SLH => self.read_slash(),
+            // This simply changes state on the start
+            TPL => self.eat(tok!(BACKTICK, 1)),
+            ZER => {
+                let diag = self.read_zero();
+                let (token, err) = self.verify_number_end(start);
+                (token, err.or(diag))
+            }
+            PRD => {
+                if let Some(b"..") = self.bytes.get(self.cur + 1..self.cur + 3) {
+                    self.cur += 3;
+                    return tok!(DOT2, 3);
+                }
+                if let Some(b'0'..=b'9') = self.bytes.get(self.cur + 1) {
+                    let diag = self.read_float();
+                    let (token, err) = self.verify_number_end(start);
+                    (token, err.or(diag))
+                } else {
+                    self.eat(tok![.])
+                }
+            }
+            BSL => {
+                if self.bytes.get(self.cur + 1) == Some(&b'u') {
+                    self.next();
+                    let res = if self.bytes.get(self.cur + 1).copied() == Some(b'{') {
+                        self.next();
+                        self.read_codepoint_escape()
+                    } else {
+                        self.read_unicode_escape(true)
+                    };
 
-					match res {
-						Ok(chr) => {
-							if is_id_start(chr) {
-								self.resolve_identifier((chr, start))
-							} else {
-								let err = Diagnostic::error(self.file_id, "", "unexpected unicode escape")
+                    match res {
+                        Ok(chr) => {
+                            if is_id_start(chr) {
+                                self.resolve_identifier((chr, start))
+                            } else {
+                                let err = Diagnostic::error(self.file_id, "", "unexpected unicode escape")
                                     .primary(start..self.cur, "this escape is unexpected, as it does not designate the start of an identifier");
                                 self.next();
                                 (
