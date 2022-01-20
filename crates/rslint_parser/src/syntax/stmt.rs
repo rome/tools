@@ -59,11 +59,11 @@ const FOLLOWS_LET: TokenSet =
 /// or add an error to the parser if there was none and it could not be inserted
 // test semicolons
 // let foo = bar;
-// let foo = b;
-// let foo;
-// let foo
-// let foo
-// function foo() { return true }
+// let foo2 = b;
+// let foo3;
+// let foo4
+// let foo5
+// function foo6() { return true }
 pub fn semi(p: &mut Parser, err_range: Range<usize>) -> bool {
     // test_err semicolons_err
     // let foo = bar throw foo
@@ -709,17 +709,17 @@ impl ParseNodeList for DirectivesList {
 // "use strict"; // not a directive
 // function test() {
 //   'use strict';
-//   let a = 10;
+//   let b = 10;
 //   'use strict'; // not a directive
 // }
 // (function () {
 //   "use strict";
-//   let a = 10;
+//   let c = 10;
 //   "use strict"; // not a directive
 // });
 // let b = () => {
 //   "use strict";
-//   let a = 10;
+//   let e = 10;
 //   "use strict";  // not a directive
 // }
 // {
@@ -887,22 +887,22 @@ pub(crate) fn is_at_variable_declarations(p: &Parser) -> bool {
 // test var_decl
 // var a = 5;
 // let { foo, bar } = 5;
-// let bar, foo;
-// const a = 5;
-// const { foo: [bar], baz } = {};
-// let foo = "lorem", bar = "ipsum", third = "value", fourth = 6;
-// var a, a, a, a, a;
+// let bar2, foo2;
+// const b = 5;
+// const { foo5: [bar11], baz6 } = {};
+// let foo6 = "lorem", bar7 = "ipsum", third8 = "value", fourth = 6;
+// var q, w, e, r, t;
 //
 // test_err variable_declaration_statement_err
-// let a, { a } = { a: 10 }
-// const a = 1, { a } = { a: 10 }
-// const a;
-// let [a];
-// const { b };
+// let a, { b } = { a: 10 }
+// const c = 1, { d } = { a: 10 }
+// const e;
+// let [f];
+// const { g };
 fn parse_variable_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     // test_err var_decl_err
     // var a =;
-    // const a = 5 let b = 5;
+    // const b = 5 let c = 5;
     let start = p.cur_tok().start();
     let is_var = p.at(T![var]);
 

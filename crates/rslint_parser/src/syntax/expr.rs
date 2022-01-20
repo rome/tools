@@ -273,7 +273,7 @@ fn parse_yield_expression(p: &mut Parser) -> CompletedMarker {
     if !p.state.is_top_level() && !p.state.in_function() {
         // test_err yield_expr_in_parameter_initializer
         // function* test(a = yield "test") {}
-        // function test(a = yield "test") {}
+        // function test2(a = yield "test") {}
         p.error(
             p.err_builder("`yield` is only allowed within generator functions.")
                 .primary(yield_expr.range(p), ""),
@@ -1047,7 +1047,7 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
         T![class] => {
             // test class_expr
             // let a = class {};
-            // let a = class foo {
+            // let b = class foo {
             //  constructor() {}
             // }
             // foo[class {}]
@@ -1118,7 +1118,7 @@ fn parse_primary_expression(p: &mut Parser) -> ParsedSyntax {
                 // foo => {}
                 // yield => {}
                 // await => {}
-                // foo =>
+                // baz =>
                 // {}
                 let m = p.start();
                 parse_arrow_function_parameters(p, SignatureFlags::empty())
@@ -1346,9 +1346,9 @@ pub(crate) fn is_nth_at_identifier(p: &Parser, n: usize) -> bool {
 /// A template literal such as "`abcd ${efg}`"
 // test template_literal
 // let a = `foo ${bar}`;
-// let a = ``;
-// let a = `${foo}`;
-// let a = `foo`;
+// let b = ``;
+// let c = `${foo}`;
+// let d = `foo`;
 
 // test_err template_literal
 // let a = `foo ${}`
@@ -1572,7 +1572,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
         if !p.state.is_top_level() && !p.state.in_function() {
             // test_err await_in_parameter_initializer
             // async function test(a = await b()) {}
-            // function test(a = await b()) {}
+            // function test2(a = await b()) {}
 
             // test_err await_in_static_initialization_block_member
             // // SCRIPT

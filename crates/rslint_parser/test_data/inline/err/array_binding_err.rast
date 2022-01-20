@@ -136,7 +136,7 @@ JsModule {
                                         l_brack_token: L_BRACK@78..79 "[" [] [],
                                         elements: JsArrayBindingPatternElementList [
                                             JsIdentifierBinding {
-                                                name_token: IDENT@79..81 "a" [] [Whitespace(" ")],
+                                                name_token: IDENT@79..81 "c" [] [Whitespace(" ")],
                                             },
                                         ],
                                         r_brack_token: R_BRACK@81..83 "]" [] [Whitespace(" ")],
@@ -261,7 +261,7 @@ JsModule {
                     0: L_BRACK@78..79 "[" [] []
                     1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@79..81
                       0: JS_IDENTIFIER_BINDING@79..81
-                        0: IDENT@79..81 "a" [] [Whitespace(" ")]
+                        0: IDENT@79..81 "c" [] [Whitespace(" ")]
                     2: R_BRACK@81..83 "]" [] [Whitespace(" ")]
                   1: EQ@83..85 "=" [] [Whitespace(" ")]
                   2: JS_ARRAY_EXPRESSION@85..87
@@ -299,18 +299,18 @@ error[SyntaxError]: expected an identifier, an object pattern, an array pattern,
 error[SyntaxError]: expected `,` but instead found `;`
   ┌─ array_binding_err.js:4:15
   │
-4 │ let [[a ] = [];
+4 │ let [[c ] = [];
   │               ^ unexpected
 
 --
 error[SyntaxError]: Object and Array patterns require initializers
   ┌─ array_binding_err.js:4:5
   │
-4 │ let [[a ] = [];
+4 │ let [[c ] = [];
   │     ^^^^^^^^^^ this pattern is declared, but it is not given an initialized value
 
 --
 let [a b] = [1, 2];
 let [="default"] = [1, 2];
 let ["default"] = [1, 2];
-let [[a ] = [];
+let [[c ] = [];

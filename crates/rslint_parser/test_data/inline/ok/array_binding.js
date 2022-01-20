@@ -1,6 +1,6 @@
 let a = "b";
-let [a, b] = [1, 2];
-let [a, ...abcd] = [1];
-let [a = "default", b] = []
-let [, a, ...rest] = []
-let [[...rest], { a }] = []
+let [c, b] = [1, 2];
+let [d, ...abcd] = [1];
+let [e = "default", x] = []
+let [, f, ...rest] = []
+let [[...rest2], { g }] = []

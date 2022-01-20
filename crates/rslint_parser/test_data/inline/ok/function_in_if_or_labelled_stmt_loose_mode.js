@@ -1,5 +1,5 @@
 // SCRIPT
 label1: function a() {}
-if (true) function a() {} else function b() {}
-if (true) function c() {}
-if (true) "test"; else function d() {}
+if (true) function b() {} else function c() {}
+if (true) function d() {}
+if (true) "test"; else function e() {}

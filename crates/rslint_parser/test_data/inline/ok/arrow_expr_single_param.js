@@ -2,5 +2,5 @@
 foo => {}
 yield => {}
 await => {}
-foo =>
+baz =>
 {}

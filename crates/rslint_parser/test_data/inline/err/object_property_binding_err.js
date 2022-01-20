@@ -1,3 +1,3 @@
 let { foo: , bar } = {}
-let { : bar = "test" } = {}
-let { , foo: bar } = {}
+let { : lorem = "test" } = {}
+let { , ipsum: bazz } = {}

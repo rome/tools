@@ -1,17 +1,18 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 43
 expression: binding_pattern.js
 
 ---
 # Input
 let [a,b]=c;
-let [a,...b]=c;
+let [d,...e]=c;
 let [aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,...cccccccccccccccccccccccccccccc]=f;
 
 ---
 # Output
 let [a, b] = c;
-let [a, ...b] = c;
+let [d, ...e] = c;
 let [
 	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
 	bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
