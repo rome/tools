@@ -448,11 +448,11 @@ pub(super) fn parse_parameters_list(
                 parse_binding_pattern(
                     p,
                     ExpressionContext::default()
-                        .with_object_expression_allowed(!first || has_l_paren),
+                        .and_object_expression_allowed(!first || has_l_paren),
                 )
                 .or_add_diagnostic(p, expected_binding);
 
-                // TODO #1725 Review error handling and recovery
+                // TODO #1966 Review error handling and recovery
                 // rest patterns cannot be optional: `...foo?: number[]`
                 if p.at(T![?]) {
                     let err = p

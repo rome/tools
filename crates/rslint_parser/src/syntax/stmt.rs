@@ -780,7 +780,7 @@ fn parenthesized_expression(p: &mut Parser) -> bool {
 
     parse_expression(
         p,
-        ExpressionContext::default().with_object_expression_allowed(has_l_paren),
+        ExpressionContext::default().and_object_expression_allowed(has_l_paren),
     )
     .or_add_diagnostic(p, js_parse_error::expected_expression);
 
@@ -1123,7 +1123,7 @@ fn parse_variable_declaration(
         let initializer = parse_initializer_clause(
             p,
             ExpressionContext::default()
-                .with_include_in(context.parent != VariableDeclarationParent::For),
+                .and_include_in(context.parent != VariableDeclarationParent::For),
         )
         .ok();
 
@@ -1312,8 +1312,8 @@ fn parse_for_head(p: &mut Parser, has_l_paren: bool, is_for_await: bool) -> JsSy
         let init_expr = parse_expression(
             p,
             ExpressionContext::default()
-                .with_include_in(false)
-                .with_object_expression_allowed(has_l_paren),
+                .and_include_in(false)
+                .and_object_expression_allowed(has_l_paren),
         );
 
         if p.at(T![in]) || p.cur_src() == "of" {

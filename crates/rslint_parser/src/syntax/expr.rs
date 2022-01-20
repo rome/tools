@@ -86,67 +86,83 @@ const STARTS_EXPR: TokenSet = token_set![
     JS_REGEX_LITERAL
 ];
 
+#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+pub(crate) struct ExpressionContext(ExpressionContextFlags);
+
 bitflags! {
-    pub(crate) struct ExpressionContext: u8 {
-        /// Whether `in` should be counted in a binary expression
-        /// this is for `for...in` statements to prevent ambiguity.
-        const INCLUDE_IN = 0b00000001;
+    struct ExpressionContextFlags: u8 {
+        /// Whether `in` should be counted in a binary expression.
+        /// This is for `for...in` statements to prevent ambiguity.
+        /// Corresponds to `[+In]` in the EcmaScript spec if true
+        const INCLUDE_IN = 1 << 0;
 
         /// Whether the parser is in the consequent of a conditional expr (ternary expr)
-        const IN_CONDITION_EXPRESSION = 0b00000010;
+        const IN_CONDITION_EXPRESSION = 1 << 1;
 
         /// If false, object expressions are not allowed to be parsed
         /// inside an expression.
         ///
         /// Also applies for object patterns
-        const ALLOW_OBJECT_EXPRESSION = 0b00000100;
+        const ALLOW_OBJECT_EXPRESSION = 1 << 2;
 
         /// Whether we potentially are in a place to parse an arrow expression
-        const POTENTIAL_ARROW_START = 0b00001000;
+        const POTENTIAL_ARROW_START = 1 << 3;
     }
 }
 
 impl ExpressionContext {
-    pub(crate) fn with_include_in(self, include: bool) -> Self {
-        self.with(ExpressionContext::INCLUDE_IN, include)
+    pub(crate) fn and_include_in(self, include: bool) -> Self {
+        self.and(ExpressionContextFlags::INCLUDE_IN, include)
     }
 
-    pub(crate) fn with_object_expression_allowed(self, allowed: bool) -> Self {
-        self.with(ExpressionContext::ALLOW_OBJECT_EXPRESSION, allowed)
+    pub(crate) fn and_object_expression_allowed(self, allowed: bool) -> Self {
+        self.and(ExpressionContextFlags::ALLOW_OBJECT_EXPRESSION, allowed)
     }
 
-    pub(crate) fn with_potential_arrow_start(self, value: bool) -> Self {
-        self.with(ExpressionContext::POTENTIAL_ARROW_START, value)
+    pub(crate) fn and_potential_arrow_start(self, value: bool) -> Self {
+        self.and(ExpressionContextFlags::POTENTIAL_ARROW_START, value)
     }
 
-    pub(crate) fn is_object_expression_allowed(self) -> bool {
-        self.contains(ExpressionContext::ALLOW_OBJECT_EXPRESSION)
+    pub(crate) fn and_in_condition_consequent(self, value: bool) -> Self {
+        self.and(ExpressionContextFlags::IN_CONDITION_EXPRESSION, value)
     }
 
-    pub(crate) fn is_potential_arrow_start(self) -> bool {
-        self.contains(ExpressionContext::POTENTIAL_ARROW_START)
+    /// Returns true if object expressions or object patterns are valid in this context
+    pub(crate) fn is_object_expression_allowed(&self) -> bool {
+        self.0
+            .contains(ExpressionContextFlags::ALLOW_OBJECT_EXPRESSION)
     }
 
-    pub(crate) fn is_in_condition_consequent(self) -> bool {
-        self.contains(ExpressionContext::IN_CONDITION_EXPRESSION)
+    /// Returns `true` if the expression is potentially at the start of an arrow function expression.
+    pub(crate) fn is_potential_arrow_start(&self) -> bool {
+        self.0
+            .contains(ExpressionContextFlags::POTENTIAL_ARROW_START)
     }
 
-    pub(crate) fn is_in_included(self) -> bool {
-        self.contains(ExpressionContext::INCLUDE_IN)
+    /// Returns true if the expression parsing is inside the consequent of a conditional expression.
+    pub(crate) fn is_in_condition_consequent(&self) -> bool {
+        self.0
+            .contains(ExpressionContextFlags::IN_CONDITION_EXPRESSION)
     }
 
-    pub(crate) fn with(self, flag: ExpressionContext, set: bool) -> Self {
-        if set {
-            self | flag
-        } else {
-            self - flag
-        }
+    /// Returns `true` if the expression parsing includes binary in expressions.
+    pub(crate) fn is_in_included(&self) -> bool {
+        self.0.contains(ExpressionContextFlags::INCLUDE_IN)
+    }
+
+    /// Adds the `flat` if `set` is `true`, otherwise removes the `flag`
+    fn and(self, flag: ExpressionContextFlags, set: bool) -> Self {
+        ExpressionContext(if set { self.0 | flag } else { self.0 - flag })
     }
 }
 
+/// Sets the default flags for a context that parses a new root expression (for example, the condition of an if statement)
+/// or sub-expression of another expression (the alternate branch of a condition expression).
 impl Default for ExpressionContext {
     fn default() -> Self {
-        ExpressionContext::INCLUDE_IN | ExpressionContext::ALLOW_OBJECT_EXPRESSION
+        ExpressionContext(
+            ExpressionContextFlags::INCLUDE_IN | ExpressionContextFlags::ALLOW_OBJECT_EXPRESSION,
+        )
     }
 }
 
@@ -259,7 +275,7 @@ fn parse_assign_expr_base(p: &mut Parser, context: ExpressionContext) -> ParsedS
         return Present(parse_yield_expression(p, context));
     }
     let potential_arrow_start = p.at(T!['(']) || is_at_identifier(p);
-    let context = context.with_potential_arrow_start(potential_arrow_start);
+    let context = context.and_potential_arrow_start(potential_arrow_start);
 
     let checkpoint = p.checkpoint();
     parse_conditional_expr(p, context)
@@ -305,7 +321,7 @@ fn parse_assign_expr_recursive(
         let target = expression_to_assignment_pattern(p, target, checkpoint);
         let m = target.precede(p);
         p.bump_any(); // operator
-        parse_expr_or_assignment(p, context.with_object_expression_allowed(true))
+        parse_expr_or_assignment(p, context.and_object_expression_allowed(true))
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
         Present(m.complete(p, JS_ASSIGNMENT_EXPRESSION))
     } else {
@@ -328,7 +344,7 @@ fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> Complet
     if !is_semi(p, 0) && (p.at(T![*]) || p.at_ts(STARTS_EXPR)) {
         let argument = p.start();
         p.eat(T![*]);
-        parse_expr_or_assignment(p, context.with_object_expression_allowed(true)).ok();
+        parse_expr_or_assignment(p, context.and_object_expression_allowed(true)).ok();
 
         argument.complete(p, JS_YIELD_ARGUMENT);
     }
@@ -368,8 +384,8 @@ pub(super) fn parse_conditional_expr(p: &mut Parser, context: ExpressionContext)
             parse_expr_or_assignment(
                 p,
                 context
-                    | ExpressionContext::IN_CONDITION_EXPRESSION
-                    | ExpressionContext::INCLUDE_IN,
+                    .and_include_in(true)
+                    .and_in_condition_consequent(true),
             )
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
@@ -833,8 +849,7 @@ fn parse_computed_member_expression(
     p.expect(T!['[']);
     // test computed_member_in
     // for ({}["x" in {}];;) {}
-    parse_expression(p, context | ExpressionContext::INCLUDE_IN)
-        .or_add_diagnostic(p, expected_expression);
+    parse_expression(p, context.and_include_in(true)).or_add_diagnostic(p, expected_expression);
 
     p.expect(T![']']);
 
@@ -879,9 +894,9 @@ fn parse_arguments(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
 
         if p.at(T![...]) {
             // already do a check on "..." so it's safe to unwrap
-            parse_spread_element(p, context.with_include_in(true)).unwrap();
+            parse_spread_element(p, context.and_include_in(true)).unwrap();
         } else {
-            parse_expr_or_assignment(p, context.with_include_in(true))
+            parse_expr_or_assignment(p, context.and_include_in(true))
                 .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
         }
 
@@ -922,8 +937,8 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> Pars
 
     if !is_empty {
         let context = context
-            .with_potential_arrow_start(true)
-            .with_object_expression_allowed(l_paren);
+            .and_potential_arrow_start(true)
+            .and_object_expression_allowed(l_paren);
         // stores a potentially started sequence expression
         let mut sequence: Option<Marker> = None;
 
@@ -944,7 +959,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> Pars
                 spread_range = Some(complete.range(p));
                 if !p.eat(T![')']) {
                     if p.eat(T![=]) {
-                        parse_expr_or_assignment(p, context.with_include_in(true))
+                        parse_expr_or_assignment(p, context.and_include_in(true))
                             .or_add_diagnostic(p, expected_expression);
                         p.expect(T![')']);
                     } else {
@@ -1297,8 +1312,8 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                         parse_expr_or_assignment(
                             p,
                             context
-                                .with_include_in(true)
-                                .with_object_expression_allowed(true),
+                                .and_include_in(true)
+                                .and_object_expression_allowed(true),
                         )
                         .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
                     }

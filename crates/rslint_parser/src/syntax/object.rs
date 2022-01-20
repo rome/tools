@@ -280,7 +280,7 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
     p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
         parse_parameter(
             p,
-            ExpressionContext::default().with_object_expression_allowed(has_l_paren),
+            ExpressionContext::default().and_object_expression_allowed(has_l_paren),
         )
         .or_add_diagnostic(p, js_parse_error::expected_parameter);
         p.expect(T![')']);

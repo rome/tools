@@ -13,12 +13,12 @@ JsModule {
                             name_token: IDENT@6..8 "a" [] [Whitespace(" ")],
                         },
                         eq_token: EQ@8..10 "=" [] [Whitespace(" ")],
-                        default: JsBinaryExpression {
-                            left: JsStringLiteralExpression {
+                        default: JsInExpression {
+                            property: JsStringLiteralExpression {
                                 value_token: JS_STRING_LITERAL@10..14 "\"a\"" [] [Whitespace(" ")],
                             },
-                            operator: IN_KW@14..17 "in" [] [Whitespace(" ")],
-                            right: JsObjectExpression {
+                            in_token: IN_KW@14..17 "in" [] [Whitespace(" ")],
+                            object: JsObjectExpression {
                                 l_curly_token: L_CURLY@17..18 "{" [] [],
                                 members: JsObjectMemberList [],
                                 r_curly_token: R_CURLY@18..19 "}" [] [],
@@ -59,7 +59,7 @@ JsModule {
             0: JS_IDENTIFIER_ASSIGNMENT@6..8
               0: IDENT@6..8 "a" [] [Whitespace(" ")]
             1: EQ@8..10 "=" [] [Whitespace(" ")]
-            2: JS_BINARY_EXPRESSION@10..19
+            2: JS_IN_EXPRESSION@10..19
               0: JS_STRING_LITERAL_EXPRESSION@10..14
                 0: JS_STRING_LITERAL@10..14 "\"a\"" [] [Whitespace(" ")]
               1: IN_KW@14..17 "in" [] [Whitespace(" ")]
