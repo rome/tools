@@ -1,0 +1,159 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsSequenceExpression {
+                left: JsNumberLiteralExpression {
+                    value_token: JS_NUMBER_LITERAL@0..2 "00" [] [],
+                },
+                comma_token: COMMA@2..4 "," [] [Whitespace(" ")],
+                right: JsSequenceExpression {
+                    left: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@4..7 "012" [] [],
+                    },
+                    comma_token: COMMA@7..9 "," [] [Whitespace(" ")],
+                    right: JsSequenceExpression {
+                        left: JsNumberLiteralExpression {
+                            value_token: JS_NUMBER_LITERAL@9..11 "08" [] [],
+                        },
+                        comma_token: COMMA@11..13 "," [] [Whitespace(" ")],
+                        right: JsSequenceExpression {
+                            left: JsNumberLiteralExpression {
+                                value_token: JS_NUMBER_LITERAL@13..16 "091" [] [],
+                            },
+                            comma_token: COMMA@16..18 "," [] [Whitespace(" ")],
+                            right: JsNumberLiteralExpression {
+                                value_token: JS_NUMBER_LITERAL@18..39 "0789" [] [Whitespace(" "), Comments("// parser errors")],
+                            },
+                        },
+                    },
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsSequenceExpression {
+                left: JsBigIntLiteralExpression {
+                    value_token: JS_BIG_INT_LITERAL@39..43 "01n" [Newline("\n")] [],
+                },
+                comma_token: COMMA@43..45 "," [] [Whitespace(" ")],
+                right: JsSequenceExpression {
+                    left: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@45..48 "0_0" [] [],
+                    },
+                    comma_token: COMMA@48..50 "," [] [Whitespace(" ")],
+                    right: JsNumberLiteralExpression {
+                        value_token: JS_NUMBER_LITERAL@50..70 "01.2" [] [Whitespace(" "), Comments("// lexer errors")],
+                    },
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@70..71 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..71
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..70
+    0: JS_EXPRESSION_STATEMENT@0..39
+      0: JS_SEQUENCE_EXPRESSION@0..39
+        0: JS_NUMBER_LITERAL_EXPRESSION@0..2
+          0: JS_NUMBER_LITERAL@0..2 "00" [] []
+        1: COMMA@2..4 "," [] [Whitespace(" ")]
+        2: JS_SEQUENCE_EXPRESSION@4..39
+          0: JS_NUMBER_LITERAL_EXPRESSION@4..7
+            0: JS_NUMBER_LITERAL@4..7 "012" [] []
+          1: COMMA@7..9 "," [] [Whitespace(" ")]
+          2: JS_SEQUENCE_EXPRESSION@9..39
+            0: JS_NUMBER_LITERAL_EXPRESSION@9..11
+              0: JS_NUMBER_LITERAL@9..11 "08" [] []
+            1: COMMA@11..13 "," [] [Whitespace(" ")]
+            2: JS_SEQUENCE_EXPRESSION@13..39
+              0: JS_NUMBER_LITERAL_EXPRESSION@13..16
+                0: JS_NUMBER_LITERAL@13..16 "091" [] []
+              1: COMMA@16..18 "," [] [Whitespace(" ")]
+              2: JS_NUMBER_LITERAL_EXPRESSION@18..39
+                0: JS_NUMBER_LITERAL@18..39 "0789" [] [Whitespace(" "), Comments("// parser errors")]
+      1: (empty)
+    1: JS_EXPRESSION_STATEMENT@39..70
+      0: JS_SEQUENCE_EXPRESSION@39..70
+        0: JS_BIG_INT_LITERAL_EXPRESSION@39..43
+          0: JS_BIG_INT_LITERAL@39..43 "01n" [Newline("\n")] []
+        1: COMMA@43..45 "," [] [Whitespace(" ")]
+        2: JS_SEQUENCE_EXPRESSION@45..70
+          0: JS_NUMBER_LITERAL_EXPRESSION@45..48
+            0: JS_NUMBER_LITERAL@45..48 "0_0" [] []
+          1: COMMA@48..50 "," [] [Whitespace(" ")]
+          2: JS_NUMBER_LITERAL_EXPRESSION@50..70
+            0: JS_NUMBER_LITERAL@50..70 "01.2" [] [Whitespace(" "), Comments("// lexer errors")]
+      1: (empty)
+  3: EOF@70..71 "" [Newline("\n")] []
+--
+error: Octal literals are not allowed for BigInts.
+  ┌─ literals.js:2:1
+  │
+2 │ 01n, 0_0, 01.2 // lexer errors
+  │ ^^^
+
+--
+error: numeric separator can not be used after leading 0
+  ┌─ literals.js:2:7
+  │
+2 │ 01n, 0_0, 01.2 // lexer errors
+  │       ^
+
+--
+error: unexpected number
+  ┌─ literals.js:2:11
+  │
+2 │ 01n, 0_0, 01.2 // lexer errors
+  │           ^^^
+
+--
+error[SyntaxError]: "0"-prefixed octal literals are deprecated; use the "0o" prefix instead.
+  ┌─ literals.js:1:1
+  │
+1 │ 00, 012, 08, 091, 0789 // parser errors
+  │ ^^
+
+--
+error[SyntaxError]: "0"-prefixed octal literals are deprecated; use the "0o" prefix instead.
+  ┌─ literals.js:1:5
+  │
+1 │ 00, 012, 08, 091, 0789 // parser errors
+  │     ^^^
+
+--
+error[SyntaxError]: Decimals with leading zeros are not allowed in strict mode.
+  ┌─ literals.js:1:10
+  │
+1 │ 00, 012, 08, 091, 0789 // parser errors
+  │          ^^
+
+--
+error[SyntaxError]: Decimals with leading zeros are not allowed in strict mode.
+  ┌─ literals.js:1:14
+  │
+1 │ 00, 012, 08, 091, 0789 // parser errors
+  │              ^^^
+
+--
+error[SyntaxError]: Decimals with leading zeros are not allowed in strict mode.
+  ┌─ literals.js:1:19
+  │
+1 │ 00, 012, 08, 091, 0789 // parser errors
+  │                   ^^^^
+
+--
+error[SyntaxError]: "0"-prefixed octal literals are deprecated; use the "0o" prefix instead.
+  ┌─ literals.js:2:11
+  │
+2 │ 01n, 0_0, 01.2 // lexer errors
+  │           ^^^^
+
+--
+00, 012, 08, 091, 0789 // parser errors
+01n, 0_0, 01.2 // lexer errors
