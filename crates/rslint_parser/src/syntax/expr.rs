@@ -6,6 +6,8 @@
 use super::binding::parse_binding_pattern;
 use super::typescript::*;
 use super::util::*;
+use crate::event::rewrite_events;
+use crate::event::RewriteParseEvents;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::{ParserProgress, RecoveryResult};
@@ -386,6 +388,39 @@ fn parse_binary_or_logical_expression_recursive(
     let op = kind;
     let op_tok = p.cur_tok();
 
+    let mut is_unknown = false;
+    if let Present(left) = &left {
+        // test exponent_unary_parenthesized
+        // (delete a.b) ** 2;
+        // (void ident) ** 2;
+        // (typeof ident) ** 2;
+        // (-3) ** 2;
+        // (+3) ** 2;
+        // (~3) ** 2;
+        // (!true) ** 2;
+
+        // test_err exponent_unary_unparenthesized
+        // delete a.b ** 2;
+        // void ident ** 2;
+        // typeof ident ** 2;
+        // -3 ** 2;
+        // +3 ** 2;
+        // ~3 ** 2;
+        // !true ** 2;
+
+        if op == T![**] && left.kind() == JS_UNARY_EXPRESSION {
+            let err = p
+                .err_builder(
+                    "unparenthesized unary expression can't appear on the left-hand side of '**'",
+                )
+                .secondary(op_tok.range(), "")
+                .primary(left.range(p), "");
+
+            p.error(err);
+            is_unknown = true;
+        }
+    }
+
     let m = left.precede(p);
 
     if op == T![>>] {
@@ -405,11 +440,15 @@ fn parse_binary_or_logical_expression_recursive(
     // foo ?? * 2;
     // !foo && bar;
     // foo(foo ||)
-    let expression_kind = match op {
-        T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
-        T![instanceof] => JS_INSTANCEOF_EXPRESSION,
-        T![in] => JS_IN_EXPRESSION,
-        _ => JS_BINARY_EXPRESSION,
+    let expression_kind = if is_unknown {
+        JS_UNKNOWN_EXPRESSION
+    } else {
+        match op {
+            T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
+            T![instanceof] => JS_INSTANCEOF_EXPRESSION,
+            T![in] => JS_IN_EXPRESSION,
+            _ => JS_BINARY_EXPRESSION,
+        }
     };
 
     // This is a hack to allow us to effectively recover from `foo + / bar`
@@ -944,6 +983,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> ParsedSyntax
             p.bump_any();
             parse_arrow_body(p, SignatureFlags::empty())
                 .or_add_diagnostic(p, js_parse_error::expected_arrow_body);
+
             return Present(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION));
         }
     }
@@ -1566,6 +1606,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
         // await test();
         let m = p.start();
         p.bump(T![await]);
+
         parse_unary_expr(p).or_add_diagnostic(p, js_parse_error::expected_unary_expression);
 
         let mut expr = m.complete(p, JS_AWAIT_EXPRESSION);
@@ -1651,28 +1692,160 @@ pub(super) fn parse_unary_expr(p: &mut Parser) -> ParsedSyntax {
         let op = p.cur();
         p.bump_any();
 
-        let res = parse_unary_expr(p).ok();
+        // test unary_delete
+        // delete obj.key;
+        // delete (obj).key;
+        // delete obj.#member.key;
+        // delete (obj.#member).key;
+        // delete func().#member.key;
+        // delete (func().#member).key;
+        // delete obj?.#member.key;
+        // delete (obj?.#member).key;
+        // delete obj?.inner.#member.key;
+        // delete (obj?.inner.#member).key;
+        // delete obj[key];
+        // delete (obj)[key];
+        // delete obj.#member[key];
+        // delete (obj.#member)[key];
+        // delete func().#member[key];
+        // delete (func().#member)[key];
+        // delete obj?.#member[key];
+        // delete (obj?.#member)[key];
+        // delete obj?.inner.#member[key];
+        // delete (obj?.inner.#member)[key];
+        // delete (obj.#key, obj.key);
+        // delete (#key in obj);
 
-        if op == T![delete] && p.typescript() {
+        // test unary_delete_nested
+        // class TestClass { #member = true; method() { delete func(this.#member) } }
+        // class TestClass { #member = true; method() { delete [this.#member] } }
+        // class TestClass { #member = true; method() { delete { key: this.#member } } }
+        // class TestClass { #member = true; method() { delete (() => { this.#member; }) } }
+        // class TestClass { #member = true; method() { delete (param => { this.#member; }) } }
+        // class TestClass { #member = true; method() { delete (async () => { this.#member; }) } }
+
+        // test_err unary_delete
+        // delete ident;
+        // delete obj.#member;
+        // delete func().#member;
+        // delete obj?.#member;
+        // delete obj?.inner.#member;
+
+        // test_err unary_delete_parenthesized
+        // delete (ident);
+        // delete ((ident));
+        // delete (obj.key, ident);
+        // delete (obj.#member);
+        // delete (func().#member);
+        // delete (obj?.#member);
+        // delete (obj?.inner.#member);
+        // delete (obj.key, obj.#key);
+
+        let is_delete = op == T![delete];
+        let mut kind = JS_UNARY_EXPRESSION;
+
+        let res = if is_delete {
+            let checkpoint = p.checkpoint();
+            parse_unary_expr(p).ok();
+
+            let mut rewriter = DeleteExpressionRewriter::default();
+            rewrite_events(&mut rewriter, checkpoint, p);
+
+            rewriter.result.take().map(|res| {
+                if StrictMode.is_supported(p) {
+                    if let Some(range) = rewriter.exited_ident_expr {
+                        kind = JS_UNKNOWN_EXPRESSION;
+                        p.error(
+                            p.err_builder(
+                                "the target for a delete operator cannot be a single identifier",
+                            )
+                            .primary(range, ""),
+                        );
+                    }
+                }
+
+                if let Some(range) = rewriter.exited_private_member_expr {
+                    kind = JS_UNKNOWN_EXPRESSION;
+                    p.error(
+                        p.err_builder(
+                            "the target for a delete operator cannot be a private member",
+                        )
+                        .primary(range, ""),
+                    );
+                }
+
+                res
+            })
+        } else {
+            parse_unary_expr(p).ok()
+        };
+
+        if is_delete && kind != JS_UNKNOWN_EXPRESSION && p.typescript() {
             if let Some(res) = res {
                 match res.kind() {
                     JS_STATIC_MEMBER_EXPRESSION | JS_COMPUTED_MEMBER_EXPRESSION => {}
                     _ => {
-                        let err = p
-                            .err_builder(
+                        kind = JS_UNKNOWN_EXPRESSION;
+                        p.error(
+                            p.err_builder(
                                 "the target for a delete operator must be a property access",
                             )
-                            .primary(res.range(p), "");
-
-                        p.error(err);
+                            .primary(res.range(p), ""),
+                        );
                     }
                 }
             }
         }
-        return Present(m.complete(p, JS_UNARY_EXPRESSION));
+
+        return Present(m.complete(p, kind));
     }
 
     parse_postfix_expr(p)
+}
+
+#[derive(Default)]
+struct DeleteExpressionRewriter {
+    stack: Vec<(Marker, JsSyntaxKind)>,
+    result: Option<CompletedMarker>,
+    /// Set to true immediately after the rewriter exits an identifier expression
+    exited_ident_expr: Option<TextRange>,
+    /// Set to true immediately after the rewriter exits a private name
+    exited_private_name: bool,
+    /// Set to true immediately after the rewriter exits a member expresison with a private name
+    exited_private_member_expr: Option<TextRange>,
+}
+
+impl RewriteParseEvents for DeleteExpressionRewriter {
+    fn start_node(&mut self, kind: JsSyntaxKind, p: &mut Parser) {
+        self.stack.push((p.start(), kind));
+        self.exited_ident_expr.take();
+        self.exited_private_name = false;
+        self.exited_private_member_expr.take();
+    }
+
+    fn finish_node(&mut self, p: &mut Parser) {
+        let (m, kind) = self.stack.pop().expect("stack depth mismatch");
+        let node = m.complete(p, kind);
+
+        if kind != JS_PARENTHESIZED_EXPRESSION && kind != JS_SEQUENCE_EXPRESSION {
+            self.exited_private_member_expr =
+                if self.exited_private_name && kind == JS_STATIC_MEMBER_EXPRESSION {
+                    Some(node.range(p))
+                } else {
+                    None
+                };
+
+            self.exited_ident_expr = if kind == JS_IDENTIFIER_EXPRESSION {
+                Some(node.range(p))
+            } else {
+                None
+            };
+
+            self.exited_private_name = kind == JS_PRIVATE_NAME;
+        }
+
+        self.result = Some(node);
+    }
 }
 
 pub(super) fn is_at_name(p: &Parser) -> bool {
