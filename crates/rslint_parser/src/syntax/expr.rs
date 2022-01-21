@@ -1025,7 +1025,6 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> Pars
     let checkpoint = p.checkpoint();
 
     let l_paren = p.expect(T!['(']);
-    let is_empty = p.at(T![')']);
 
     // test parenthesized_sequence_expression
     // (a, b);
@@ -1038,11 +1037,18 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> Pars
     // (a,;
     // (a, b, c;
 
-    // First assume that the syntax is a parenthesized expression, potentially with an inner sequence expression
+    // First assume that the syntax is a parenthesized expression, potentially with an inner sequence expression.
     // Set this flag to true if any of the expression turns out to be a parameter (e.g., has a type annotation)
     let mut is_parameters = false;
 
-    if !is_empty {
+    if p.at(T![')']) {
+        // test_err empty_parenthesized_expression
+        // ();
+        p.error(
+            p.err_builder("Parenthesized expression didnt contain anything")
+                .primary(p.cur_tok().range(), "Expected an expression here"),
+        );
+    } else {
         let context = context
             .and_potential_arrow_start(false)
             .and_object_expression_allowed(l_paren);
@@ -1077,12 +1083,6 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> Pars
                 is_parameters = true;
             }
         }
-    }
-
-    // test_err empty_parenthesized_expression
-    // ();
-    if is_empty {
-        p.error(js_parse_error::expected_expression(p, p.cur_tok().range()));
     }
 
     p.expect(T![')']);
