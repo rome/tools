@@ -51,7 +51,6 @@ jobs:
         run: cargo run -p xtask --release -- coverage-libs --save-baseline main
 
       - name: Compare Bench Results on ${{ matrix.os }}
-        if: github.event_name == 'pull_request'
         id: bench_comparison
         shell: bash
         run: |
@@ -67,12 +66,10 @@ jobs:
           echo "::set-output name=comment::$comment"
 
       - name: Get the PR number
-        if: github.event_name == 'pull_request'
         id: pr-number
         uses: kkak10/pr-number-action@v1.3
 
       - name: Write a new comment
-        if: github.event_name == 'pull_request'
         uses: peter-evans/create-or-update-comment@v1.4.5
         continue-on-error: true
         with:
