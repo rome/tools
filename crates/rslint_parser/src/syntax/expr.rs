@@ -3,13 +3,10 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
-use super::binding::parse_binding_pattern;
 use super::typescript::*;
 use super::util::*;
 use crate::event::rewrite_events;
 use crate::event::RewriteParseEvents;
-#[allow(deprecated)]
-use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::{ParserProgress, RecoveryResult};
 use crate::state::SignatureFlags;
 use crate::syntax::assignment::{
@@ -22,8 +19,7 @@ use crate::syntax::function::{
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
-    expected_binding, expected_expression, expected_identifier, expected_parameter,
-    expected_simple_assignment_target,
+    expected_expression, expected_identifier, expected_parameter, expected_simple_assignment_target,
 };
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
@@ -175,7 +171,7 @@ pub(crate) fn parse_expression_or_recover_to_next_statement(
     context: ExpressionContext,
 ) -> RecoveryResult {
     let func = if assign {
-        syntax::expr::parse_expr_or_assignment
+        syntax::expr::parse_assignment_expression_or_higher
     } else {
         syntax::expr::parse_expression
     };
@@ -246,8 +242,12 @@ pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, literal_kind))
 }
 
-/// Parses an expression that might turn out to be an assignment target if an assignment operator is found
-pub(crate) fn parse_expr_or_assignment(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+/// Parses an assignment expression or any higher expression
+/// https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#prod-AssignmentExpression
+pub(crate) fn parse_assignment_expression_or_higher(
+    p: &mut Parser,
+    context: ExpressionContext,
+) -> ParsedSyntax {
     if p.at(T![<]) && is_nth_at_name(p, 1) {
         let res = try_parse_ts(p, |p| {
             let m = p.start();
@@ -256,7 +256,7 @@ pub(crate) fn parse_expr_or_assignment(p: &mut Parser, context: ExpressionContex
                 return None;
             }
 
-            let res = parse_assign_expr_base(p, context);
+            let res = parse_assignment_expression_or_higher_base(p, context);
             if res.kind() == Some(JS_ARROW_FUNCTION_EXPRESSION) {
                 m.abandon(p);
                 return None;
@@ -269,10 +269,13 @@ pub(crate) fn parse_expr_or_assignment(p: &mut Parser, context: ExpressionContex
             return Present(res);
         }
     }
-    parse_assign_expr_base(p, context)
+    parse_assignment_expression_or_higher_base(p, context)
 }
 
-fn parse_assign_expr_base(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+fn parse_assignment_expression_or_higher_base(
+    p: &mut Parser,
+    context: ExpressionContext,
+) -> ParsedSyntax {
     if p.state.in_generator() && p.at(T![yield]) {
         return Present(parse_yield_expression(p, context));
     }
@@ -323,7 +326,7 @@ fn parse_assign_expr_recursive(
         let target = expression_to_assignment_pattern(p, target, checkpoint);
         let m = target.precede(p);
         p.bump_any(); // operator
-        parse_expr_or_assignment(p, context.and_object_expression_allowed(true))
+        parse_assignment_expression_or_higher(p, context.and_object_expression_allowed(true))
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
         Present(m.complete(p, JS_ASSIGNMENT_EXPRESSION))
     } else {
@@ -346,7 +349,7 @@ fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> Complet
     if !is_semi(p, 0) && (p.at(T![*]) || p.at_ts(STARTS_EXPR)) {
         let argument = p.start();
         p.eat(T![*]);
-        parse_expr_or_assignment(p, context.and_object_expression_allowed(true)).ok();
+        parse_assignment_expression_or_higher(p, context.and_object_expression_allowed(true)).ok();
 
         argument.complete(p, JS_YIELD_ARGUMENT);
     }
@@ -383,7 +386,7 @@ pub(super) fn parse_conditional_expr(p: &mut Parser, context: ExpressionContext)
             let m = marker.precede(p);
             p.bump_any();
 
-            parse_expr_or_assignment(
+            parse_assignment_expression_or_higher(
                 p,
                 context
                     .and_include_in(true)
@@ -393,7 +396,7 @@ pub(super) fn parse_conditional_expr(p: &mut Parser, context: ExpressionContext)
 
             p.expect(T![:]);
 
-            parse_expr_or_assignment(p, context)
+            parse_assignment_expression_or_higher(p, context)
                 .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
             m.complete(p, JS_CONDITIONAL_EXPRESSION)
         });
@@ -912,7 +915,7 @@ pub(super) fn parse_name(p: &mut Parser) -> ParsedSyntax {
 
 // test_err invalid_arg_list
 // foo(a,b;
-// foo(a,b var
+// foo(a,b var;
 // foo (,,b)
 fn parse_arguments(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     if !p.at(T!['(']) {
@@ -926,22 +929,47 @@ fn parse_arguments(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     let m = p.start();
     p.bump(T!['(']);
     let args_list = p.start();
+    let mut first = true;
     let mut progress = ParserProgress::default();
 
     while !p.at(EOF) && !p.at(T![')']) {
-        progress.assert_progressing(p);
-
-        if p.at(T![...]) {
-            // already do a check on "..." so it's safe to unwrap
-            parse_spread_element(p, context.and_include_in(true)).unwrap();
+        if first {
+            first = false;
         } else {
-            parse_expr_or_assignment(p, context.and_include_in(true))
-                .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
+            p.expect(T![,]);
         }
 
-        if p.at(T![,]) {
-            p.bump_any();
+        if p.at(T![')']) {
+            break;
+        }
+
+        progress.assert_progressing(p);
+
+        let argument = if p.at(T![...]) {
+            // already do a check on "..." so it's safe to unwrap
+            parse_spread_element(p, context.and_include_in(true))
         } else {
+            parse_assignment_expression_or_higher(p, context.and_include_in(true))
+        };
+
+        if argument.is_absent() && p.at(T![,]) {
+            argument.or_add_diagnostic(p, js_parse_error::expected_expression);
+            // missing element
+            continue;
+        }
+
+        if argument
+            .or_recover(
+                p,
+                &ParseRecovery::new(
+                    JS_UNKNOWN_EXPRESSION,
+                    EXPR_RECOVERY_SET.union(token_set!(T![')'], T![;])),
+                )
+                .enable_recovery_on_line_break(),
+                js_parse_error::expected_expression,
+            )
+            .is_err()
+        {
             break;
         }
     }
@@ -961,177 +989,143 @@ fn parse_arguments(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
 // test_err paren_or_arrow_expr_invalid_params
 // (5 + 5) => {}
 // (a, ,b) => {}
-// (a, b) =>
+// (a, b) =>;
+// (a: string;
+// (a, b)
+//  => {}
+
+/// Tries to parse a parenthesized expression (potentially containing a sequence expression) or
+/// an arrow function expression
 fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
-    let m = p.start();
-    let checkpoint = p.checkpoint();
-    let start = p.cur_tok().start();
+    if !context.is_potential_arrow_start() {
+        let m = p.start();
 
-    let l_paren = p.expect(T!['(']);
-    let mut spread_range = None;
-    let mut trailing_comma_marker = None;
-    let mut params_marker = None;
+        let l_paren = p.expect(T!['(']);
+        let first = parse_assignment_expression_or_higher(
+            p,
+            context.and_object_expression_allowed(l_paren),
+        );
 
-    let is_empty = p.eat(T![')']);
-
-    if !is_empty {
-        let context = context
-            .and_potential_arrow_start(true)
-            .and_object_expression_allowed(l_paren);
-        // stores a potentially started sequence expression
-        let mut sequence: Option<Marker> = None;
-
-        loop {
-            if p.at(T![...]) {
-                let m = p.start();
-                p.bump_any();
-                parse_binding_pattern(p, context).or_add_diagnostic(p, expected_binding);
-                if p.eat(T![:]) {
-                    if let Some(mut ty) = ts_type(p) {
-                        ty.err_if_not_ts(
-                            p,
-                            "spread elements can only have type annotations in TypeScript files",
-                        );
-                    }
-                }
-                let complete = m.complete(p, JS_REST_PARAMETER);
-                spread_range = Some(complete.range(p));
-                if !p.eat(T![')']) {
-                    if p.eat(T![=]) {
-                        parse_expr_or_assignment(p, context.and_include_in(true))
-                            .or_add_diagnostic(p, expected_expression);
-                        p.expect(T![')']);
-                    } else {
-                        let err = p.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", p.cur_src()))
-                            .primary(p.cur_tok().range(), "");
-
-                        #[allow(deprecated)]
-                        SingleTokenParseRecovery::with_error(EXPR_RECOVERY_SET, JS_UNKNOWN, err)
-                            .recover(p);
-                    }
-                }
-                break;
-            }
-            let expr = parse_expr_or_assignment(p, context);
-            if expr.is_absent() && p.at(T![:]) {
-                p.rewind(checkpoint.clone());
-                params_marker =
-                    Some(parse_arrow_function_parameters(p, SignatureFlags::empty()).unwrap());
-                break;
-            }
-
-            if p.at(T![,]) {
-                if p.at(T![')']) {
-                    // case where we are at a `,)` so the `,` is a trailing comma
-                    let trailing_marker = p.start();
-                    p.bump_any(); // bump ,
-                    trailing_comma_marker = Some(trailing_marker.complete(p, JS_UNKNOWN));
-                    p.bump_any(); // bump )
-                    break;
-                } else {
-                    // start a sequence expression that precedes the before parsed expression statement
-                    // and bump the ',' into it.
-                    sequence =
-                        sequence
-                            .or_else(|| {
-                                Some(expr.precede_or_add_diagnostic(
-                                    p,
-                                    js_parse_error::expected_expression,
-                                ))
-                            })
-                            .or_else(|| Some(p.start()));
-                    p.bump_any(); // bump ; into sequence expression which may or may not miss a lhs
-                }
-            } else {
-                if let Some(sequence) = sequence.take() {
-                    sequence.complete(p, JS_SEQUENCE_EXPRESSION);
-                }
-                p.expect(T![')']);
-                break;
-            }
+        if p.at(T![,]) {
+            parse_sequence_expression_recursive(p, first, context)
+                .or_add_diagnostic(p, expected_expression);
         }
 
-        if let Some(sequence) = sequence.take() {
-            sequence.complete(p, JS_SEQUENCE_EXPRESSION);
-        }
-    }
-
-    let has_ret_type = !context.is_in_condition_consequent() && p.at(T![:]);
-
-    // This is an arrow expr, so we rewind the parser and reparse as parameters
-    // This is kind of inefficient but in the grand scheme of things it does not matter
-    // FIXME: verify that this logic is correct
-    if (p.at(T![=>]) && !p.has_linebreak_before_n(0)) || has_ret_type || params_marker.is_some() {
-        if !context.is_potential_arrow_start() && !p.at(T![:]) {
-            let err = p.err_builder("Unexpected token `=>`").primary(
-                p.cur_tok().range(),
-                "an arrow expression is not allowed here",
-            );
-
-            p.error(err);
-        } else {
-            if params_marker.is_none() {
-                // Rewind the parser so we can reparse as formal parameters
-                p.rewind(checkpoint);
-                parse_arrow_function_parameters(p, SignatureFlags::empty())
-                    .or_add_diagnostic(p, js_parse_error::expected_parameters);
-            }
-
-            if p.at(T![:]) {
-                let complete = ts_type_or_type_predicate_ann(p, T![:]);
-                if let Some(mut complete) = complete {
-                    complete.err_if_not_ts(
-                        p,
-                        "arrow functions can only have return types in TypeScript files",
-                    );
-                }
-            }
-
-            p.bump_any();
-            parse_arrow_body(p, SignatureFlags::empty())
-                .or_add_diagnostic(p, js_parse_error::expected_arrow_body);
-
-            return Present(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION));
-        }
-    }
-
-    if let Some(params) = params_marker {
-        let err = p
-            .err_builder("grouping expressions cannot contain parameters")
-            .primary(params.range(p), "");
-
-        p.error(err);
-        return Present(m.complete(p, JS_UNKNOWN_EXPRESSION));
-    }
-
-    if is_empty {
-        let err = p
-            .err_builder("grouping expressions cannot be empty")
-            .primary(start..p.cur_tok().start(), "");
-
-        p.error(err);
+        p.expect(T![')']);
         return Present(m.complete(p, JS_PARENTHESIZED_EXPRESSION));
     }
 
-    if let Some(range) = spread_range {
-        let err = p
-            .err_builder("Illegal spread element inside grouping expression")
-            .primary(range, "");
+    fn parse_item(p: &mut Parser, context: ExpressionContext) -> Result<ParsedSyntax, ()> {
+        if p.at(T![...]) {
+            // Parser's at a rest pattern, not valid in a sequence expression, bail out
+            return Err(());
+        }
 
-        p.error(err);
+        let expr = parse_assignment_expression_or_higher(p, context);
+
+        if p.at(T![:]) {
+            // Parser's at a type annotation, only valid in a parameter -> bail out
+            return Err(());
+        }
+
+        Ok(expr)
     }
 
-    if let Some(complete) = trailing_comma_marker {
-        let err = p
-            .err_builder("Illegal trailing comma in grouping expression")
-            .primary(complete.range(p), "");
+    let m = p.start();
+    let checkpoint = p.checkpoint();
 
-        p.error(err);
+    let l_paren = p.expect(T!['(']);
+
+    // test parenthesized_sequence_expression
+    // (a, b);
+    // (a, b, c);
+    // (a, b, c, d, e, f);
+    // (a, b, c, d, e, f)
+    // (a, b, c)
+
+    // test_err incomplete_parenthesized_sequence_expression
+    // (a,;
+    // (a, b, c;
+
+    // First assume that the syntax is a parenthesized expression, potentially with an inner sequence expression.
+    // Set this flag to true if any of the expression turns out to be a parameter (e.g., has a type annotation)
+    let mut is_parameters = false;
+
+    if p.at(T![')']) {
+        // test_err empty_parenthesized_expression
+        // ();
+        p.error(
+            p.err_builder("Parenthesized expression didnt contain anything")
+                .primary(p.cur_tok().range(), "Expected an expression here"),
+        );
+    } else {
+        let context = context
+            .and_potential_arrow_start(false)
+            .and_object_expression_allowed(l_paren);
+
+        let first = parse_item(p, context);
+
+        match first {
+            Ok(first) => {
+                let mut left = first;
+
+                // Parse as sequence expression, left-recursive
+                while p.at(T![,]) {
+                    let sequence_expr_marker =
+                        left.precede_or_add_diagnostic(p, js_parse_error::expected_expression);
+                    p.bump(T![,]);
+                    match parse_item(p, context) {
+                        Ok(expr) => {
+                            expr.or_add_diagnostic(p, js_parse_error::expected_expression);
+                            left =
+                                Present(sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION));
+                        }
+                        Err(_) => {
+                            // OK, because it rewinds the checkpoint when `is_parameters` is true
+                            sequence_expr_marker.abandon(p);
+                            is_parameters = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            Err(_) => {
+                is_parameters = true;
+            }
+        }
+    }
+
+    p.expect(T![')']);
+
+    let has_return_type_annotation = !context.is_in_condition_consequent() && p.at(T![:]);
+
+    if is_parameters || has_return_type_annotation || (p.at(T![=>]) && !p.has_linebreak_before_n(0))
+    {
+        p.rewind(checkpoint);
+        parse_arrow_function_parameters(p, SignatureFlags::empty()).unwrap();
+
+        if p.at(T![:]) {
+            let complete = ts_type_or_type_predicate_ann(p, T![:]);
+            if let Some(mut complete) = complete {
+                complete.err_if_not_ts(
+                    p,
+                    "arrow functions can only have return types in TypeScript files",
+                );
+            }
+        }
+
+        p.expect(T![=>]);
+
+        parse_arrow_body(p, SignatureFlags::empty())
+            .or_add_diagnostic(p, js_parse_error::expected_arrow_body);
+
+        return Present(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION));
     }
 
     // test js_parenthesized_expression
     // ((foo))
     // (foo)
+
     Present(m.complete(p, JS_PARENTHESIZED_EXPRESSION))
 }
 
@@ -1142,26 +1136,42 @@ pub fn parse_expression_snipped(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// A general expression.
+pub(crate) fn parse_expression(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+    let first = parse_assignment_expression_or_higher(p, context);
+
+    if p.at(T![,]) {
+        parse_sequence_expression_recursive(p, first, context)
+    } else {
+        first
+    }
+}
+
 // test sequence_expr
 // 1, 2, 3, 4, 5
 
 // test_err sequence_expr
 // 1, 2, , 4
-pub(crate) fn parse_expression(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
-    let first = parse_expr_or_assignment(p, context);
+fn parse_sequence_expression_recursive(
+    p: &mut Parser,
+    left: ParsedSyntax,
+    context: ExpressionContext,
+) -> ParsedSyntax {
+    if !p.at(T![,]) {
+        return left;
+    }
 
-    first.map(|first_marker| {
-        if p.at(T![,]) {
-            let sequence_expr_marker = first_marker.precede(p);
+    let mut left = left;
 
-            p.bump_any();
-            parse_expression(p, context).or_add_diagnostic(p, js_parse_error::expected_expression);
+    while p.at(T![,]) {
+        let sequence_expr_marker =
+            left.precede_or_add_diagnostic(p, js_parse_error::expected_expression);
+        p.bump(T![,]);
+        parse_assignment_expression_or_higher(p, context).or_add_diagnostic(p, expected_expression);
 
-            sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION)
-        } else {
-            first_marker
-        }
-    })
+        left = Present(sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION))
+    }
+
+    left
 }
 
 #[inline]
@@ -1211,7 +1221,10 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
             } else {
                 // `async a => {}` and `async (a) => {}`
                 if context.is_potential_arrow_start()
-                    && ((is_nth_at_name(p, 1) && p.nth_at(2, T![=>])) || p.nth(1) == T!['('])
+                    && ((is_nth_at_name(p, 1)
+                        && p.nth_at(2, T![=>])
+                        && !p.has_linebreak_before_n(2))
+                        || p.nth(1) == T!['('])
                 {
                     // test async_arrow_expr
                     // let a = async foo => {}
@@ -1349,7 +1362,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                             .primary(p.cur_tok().range(), "");
                         p.error(err);
                     } else {
-                        parse_expr_or_assignment(
+                        parse_assignment_expression_or_higher(
                             p,
                             context
                                 .and_include_in(true)
@@ -1551,7 +1564,7 @@ impl ParseSeparatedList for ArrayElementsList {
         match p.cur() {
             T![...] => parse_spread_element(p, ExpressionContext::default()),
             T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
-            _ => parse_expr_or_assignment(p, ExpressionContext::default()),
+            _ => parse_assignment_expression_or_higher(p, ExpressionContext::default()),
         }
     }
 
@@ -1562,7 +1575,10 @@ impl ParseSeparatedList for ArrayElementsList {
     fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
-            &ParseRecovery::new(JS_UNKNOWN_EXPRESSION, EXPR_RECOVERY_SET),
+            &ParseRecovery::new(
+                JS_UNKNOWN_EXPRESSION,
+                EXPR_RECOVERY_SET.union(token_set!(T![']'])),
+            ),
             js_parse_error::expected_array_element,
         )
     }
@@ -1612,7 +1628,7 @@ fn parse_spread_element(p: &mut Parser, context: ExpressionContext) -> ParsedSyn
     }
     let m = p.start();
     p.bump(T![...]);
-    parse_expr_or_assignment(p, context)
+    parse_assignment_expression_or_higher(p, context)
         .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
     Present(m.complete(p, JS_SPREAD))
 }

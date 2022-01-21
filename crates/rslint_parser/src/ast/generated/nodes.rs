@@ -2696,7 +2696,9 @@ pub struct TsString {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsString {
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
+    pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsSymbol {
@@ -9284,7 +9286,10 @@ impl AstNode for TsString {
 impl std::fmt::Debug for TsString {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsString")
-            .field("ident", &support::DebugSyntaxResult(self.ident()))
+            .field(
+                "ident_token",
+                &support::DebugSyntaxResult(self.ident_token()),
+            )
             .finish()
     }
 }

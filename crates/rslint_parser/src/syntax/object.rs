@@ -4,7 +4,7 @@ use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
 use crate::state::{EnterParameters, SignatureFlags};
 use crate::syntax::expr::{
-    is_nth_at_reference_identifier, parse_expr_or_assignment, parse_expression,
+    is_nth_at_reference_identifier, parse_assignment_expression_or_higher, parse_expression,
     parse_reference_identifier, ExpressionContext,
 };
 use crate::syntax::function::{
@@ -141,7 +141,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
         T![...] => {
             let m = p.start();
             p.bump_any();
-            parse_expr_or_assignment(p, ExpressionContext::default())
+            parse_assignment_expression_or_higher(p, ExpressionContext::default())
                 .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
             Present(m.complete(p, JS_SPREAD))
         }
@@ -175,7 +175,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
                     p.error(p.err_builder("Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.")
 						.primary(p.cur_tok().range(), ""));
                     p.bump(T![=]);
-                    parse_expr_or_assignment(p, ExpressionContext::default()).ok();
+                    parse_assignment_expression_or_higher(p, ExpressionContext::default()).ok();
                     return Present(m.complete(p, JS_UNKNOWN_MEMBER));
                 }
 
@@ -211,7 +211,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 
                 // test object_prop_in_rhs
                 // for ({ a: "x" in {} };;) {}
-                parse_expr_or_assignment(p, ExpressionContext::default())
+                parse_assignment_expression_or_higher(p, ExpressionContext::default())
                     .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
                 Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
             } else {
@@ -226,7 +226,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
                 SingleTokenParseRecovery::new(token_set![T![:], T![,]], JS_UNKNOWN).recover(p);
 
                 if p.eat(T![:]) {
-                    parse_expr_or_assignment(p, ExpressionContext::default())
+                    parse_assignment_expression_or_higher(p, ExpressionContext::default())
                         .or_add_diagnostic(p, js_parse_error::expected_object_member);
                     Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
                 } else {

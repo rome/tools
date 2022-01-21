@@ -82,14 +82,12 @@ pub(crate) fn expression_to_assignment(
     target: CompletedMarker,
     checkpoint: Checkpoint,
 ) -> CompletedMarker {
-    if let Ok(assignment) = try_expression_to_assignment(p, target, checkpoint.clone()) {
-        assignment
-    } else {
+    try_expression_to_assignment(p, target, checkpoint).unwrap_or_else(|checkpoint| {
         // Doesn't seem to be a valid assignment target. Recover and create an error.
         let expression_end = p.token_pos();
         p.rewind(checkpoint);
         wrap_expression_in_invalid_assignment(p, expression_end)
-    }
+    })
 }
 
 pub(crate) enum AssignmentExprPrecedence {
@@ -309,7 +307,7 @@ fn try_expression_to_assignment(
     p: &mut Parser,
     target: CompletedMarker,
     checkpoint: Checkpoint,
-) -> Result<CompletedMarker, ()> {
+) -> Result<CompletedMarker, Checkpoint> {
     if !matches!(
         target.kind(),
         JS_PARENTHESIZED_EXPRESSION
@@ -317,7 +315,7 @@ fn try_expression_to_assignment(
             | JS_COMPUTED_MEMBER_EXPRESSION
             | JS_IDENTIFIER_EXPRESSION
     ) {
-        return Err(());
+        return Err(checkpoint);
     }
 
     // At this point it's guaranteed that the root node can be mapped to a assignment

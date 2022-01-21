@@ -18,7 +18,7 @@ JsModule {
                                             JsIdentifierBinding {
                                                 name_token: IDENT@9..11 "a" [] [Whitespace(" ")],
                                             },
-                                            JsUnknown {
+                                            JsUnknownParameter {
                                                 items: [
                                                     EQ@11..13 "=" [] [Whitespace(" ")],
                                                     JsInExpression {
@@ -80,7 +80,7 @@ JsModule {
               0: DOT2@6..9 "..." [] []
               1: JS_IDENTIFIER_BINDING@9..11
                 0: IDENT@9..11 "a" [] [Whitespace(" ")]
-              2: JS_UNKNOWN@11..22
+              2: JS_UNKNOWN_PARAMETER@11..22
                 0: EQ@11..13 "=" [] [Whitespace(" ")]
                 1: JS_IN_EXPRESSION@13..22
                   0: JS_STRING_LITERAL_EXPRESSION@13..17

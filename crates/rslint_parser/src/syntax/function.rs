@@ -2,9 +2,9 @@ use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::state::{EnterFunction, EnterParameters, SignatureFlags};
 use crate::syntax::binding::{parse_binding, parse_binding_pattern};
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::{parse_expr_or_assignment, ExpressionContext};
+use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::expected_binding;
+use crate::syntax::js_parse_error::{expected_binding, expected_parameter};
 use crate::syntax::stmt::{is_semi, parse_block_impl, StatementContext};
 use crate::syntax::typescript::{
     maybe_eat_incorrect_modifier, maybe_ts_type_annotation, ts_type, ts_type_or_type_predicate_ann,
@@ -373,7 +373,7 @@ pub(super) fn parse_arrow_body(p: &mut Parser, mut flags: SignatureFlags) -> Par
         parse_function_body(p, flags)
     } else {
         p.with_state(EnterFunction(flags), |p| {
-            parse_expr_or_assignment(p, ExpressionContext::default())
+            parse_assignment_expression_or_higher(p, ExpressionContext::default())
         })
     }
 }
@@ -430,8 +430,6 @@ pub(super) fn parse_parameters_list(
         let mut progress = ParserProgress::default();
 
         while !p.at(EOF) && !p.at(T![')']) {
-            progress.assert_progressing(p);
-
             if first {
                 first = false;
             } else {
@@ -441,6 +439,8 @@ pub(super) fn parse_parameters_list(
             if p.at(T![')']) {
                 break;
             }
+
+            progress.assert_progressing(p);
 
             if p.at(T![...]) {
                 let m = p.start();
@@ -483,17 +483,18 @@ pub(super) fn parse_parameters_list(
 
                     // test_err arrow_rest_in_expr_in_initializer
                     // for ((...a = "b" in {}) => {};;) {}
-                    let end = parse_expr_or_assignment(p, ExpressionContext::default())
-                        .ok()
-                        .map(|marker| usize::from(marker.range(p).end()))
-                        .unwrap_or_else(|| p.cur_tok().start());
+                    let end =
+                        parse_assignment_expression_or_higher(p, ExpressionContext::default())
+                            .ok()
+                            .map(|marker| usize::from(marker.range(p).end()))
+                            .unwrap_or_else(|| p.cur_tok().start());
 
                     let err = p
                         .err_builder("rest elements may not have default initializers")
                         .primary(start..end, "");
 
                     p.error(err);
-                    m.complete(p, JS_UNKNOWN);
+                    m.complete(p, JS_UNKNOWN_PARAMETER);
                 }
 
                 m.complete(p, JS_REST_PARAMETER);
@@ -504,7 +505,7 @@ pub(super) fn parse_parameters_list(
                     let m = p.start();
                     let range = p.cur_tok().range();
                     p.bump_any();
-                    m.complete(p, JS_UNKNOWN);
+                    m.complete(p, JS_UNKNOWN_PARAMETER);
                     let err = p
                         .err_builder("rest elements may not have trailing commas")
                         .primary(range, "");
@@ -512,12 +513,20 @@ pub(super) fn parse_parameters_list(
                     p.error(err);
                 }
             } else {
+                let parameter = parse_parameter(p);
+
+                if parameter.is_absent() && p.at(T![,]) {
+                    // a missing parameter,
+                    parameter.or_add_diagnostic(p, expected_parameter);
+                    continue;
+                }
+
                 // test_err formal_params_no_binding_element
                 // function foo(true) {}
 
                 // test_err formal_params_invalid
                 // function (a++, c) {}
-                let recovered_result = parse_parameter(p).or_recover(
+                let recovered_result = parameter.or_recover(
                     p,
                     &ParseRecovery::new(
                         JS_UNKNOWN_PARAMETER,
@@ -528,7 +537,9 @@ pub(super) fn parse_parameters_list(
                             T![,],
                             T!['['],
                             T![...],
+                            T!['{'],
                             T![')'],
+                            T![;],
                         ],
                     )
                     .enable_recovery_on_line_break(),

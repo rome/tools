@@ -1,6 +1,6 @@
 ///! Provides traits for parsing pattern like nodes
 use crate::parser::ParserProgress;
-use crate::syntax::expr::{parse_expr_or_assignment, ExpressionContext};
+use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::js_parse_error;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, ParseRecovery, ParsedSyntax, Parser};
@@ -31,7 +31,7 @@ pub(crate) trait ParseWithDefaultPattern {
 
             // test pattern_with_default_in_keyword
             // for ([a = "a" in {}] in []) {}
-            parse_expr_or_assignment(p, ExpressionContext::default())
+            parse_assignment_expression_or_higher(p, ExpressionContext::default())
                 .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
             Present(with_default.complete(p, Self::pattern_with_default_kind()))

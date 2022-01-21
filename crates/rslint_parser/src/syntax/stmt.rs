@@ -14,7 +14,7 @@ use crate::state::{
 use crate::syntax::assignment::expression_to_assignment_pattern;
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
 use crate::syntax::expr::{
-    is_at_expression, is_at_identifier, is_nth_at_name, parse_expr_or_assignment,
+    is_at_expression, is_at_identifier, is_nth_at_name, parse_assignment_expression_or_higher,
     parse_expression_or_recover_to_next_statement, parse_identifier, ExpressionContext,
 };
 use crate::syntax::function::{is_at_async_function, parse_function_statement, LineBreak};
@@ -1400,7 +1400,7 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> JsSyntaxKind {
     } else {
         p.bump_remap(T![of]);
 
-        parse_expr_or_assignment(p, ExpressionContext::default())
+        parse_assignment_expression_or_higher(p, ExpressionContext::default())
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
         JS_FOR_OF_STATEMENT

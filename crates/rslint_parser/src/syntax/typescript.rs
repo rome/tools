@@ -1,6 +1,8 @@
 //! TypeScript specific functions.
 
-use super::expr::{parse_expr_or_assignment, parse_lhs_expr, parse_literal_expression, parse_name};
+use super::expr::{
+    parse_assignment_expression_or_higher, parse_lhs_expr, parse_literal_expression, parse_name,
+};
 use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
@@ -168,7 +170,7 @@ pub fn ts_type_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Option<CompletedMarker> {
     if p.eat(T!['[']) {
-        parse_expr_or_assignment(p, ExpressionContext::default())
+        parse_assignment_expression_or_higher(p, ExpressionContext::default())
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
         p.expect_no_recover(T![']'])?;
     } else {
@@ -339,7 +341,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
         };
 
         if p.eat(T![=]) {
-            parse_expr_or_assignment(p, ExpressionContext::default())
+            parse_assignment_expression_or_higher(p, ExpressionContext::default())
                 .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
             member.complete(p, TS_ENUM_MEMBER);
         } else if err_occured {
