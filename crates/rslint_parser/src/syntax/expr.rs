@@ -1005,10 +1005,6 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> Pars
         return Present(m.complete(p, JS_PARENTHESIZED_EXPRESSION));
     }
 
-    // Overall idea: Parse as sequence expression and at the end verify if we're either at a
-    // type annotation or => token.
-    // Err if context.allow_paren is false because it means we encountered an arrow in another context.
-
     fn parse_item(p: &mut Parser, context: ExpressionContext) -> Result<ParsedSyntax, ()> {
         if p.at(T![...]) {
             // Parser's at a rest pattern, not valid in a sequence expression, bail out

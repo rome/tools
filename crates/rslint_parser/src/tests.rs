@@ -12,10 +12,7 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-$DONOTEVALUATE();
-var af = ()
-=> {};
-
+let [a, b] = [1, 2];
     "#;
 
     let module = parse_module(src, 0);
