@@ -1,6 +1,5 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::JsAnyAssignment;
-use rslint_parser::AstNode;
 
 impl ToFormatElement for JsAnyAssignment {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -18,7 +17,7 @@ impl ToFormatElement for JsAnyAssignment {
                 parenthesized_assignment.to_format_element(formatter)
             }
             JsAnyAssignment::JsUnknownAssignment(unknown_assignment) => {
-                Ok(formatter.format_verbatim(unknown_assignment.syntax()))
+                unknown_assignment.to_format_element(formatter)
             }
         }
     }

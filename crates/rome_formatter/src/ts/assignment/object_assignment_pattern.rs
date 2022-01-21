@@ -8,7 +8,6 @@ use rslint_parser::ast::{
     JsObjectAssignmentPatternProperty, JsObjectAssignmentPatternRest,
     JsObjectAssignmentPatternShorthandProperty,
 };
-use rslint_parser::AstNode;
 
 impl ToFormatElement for JsObjectAssignmentPattern {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -44,7 +43,7 @@ impl ToFormatElement for JsAnyObjectAssignmentPatternMember {
                 object_assignment_pattern_rest,
             ) => object_assignment_pattern_rest.to_format_element(formatter),
             JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(unknown_assignment) => {
-                Ok(formatter.format_verbatim(unknown_assignment.syntax()))
+                unknown_assignment.to_format_element(formatter)
             }
         }
     }

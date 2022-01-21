@@ -1,6 +1,5 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::JsAnyClassMember;
-use rslint_parser::AstNode;
 
 impl ToFormatElement for JsAnyClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -18,7 +17,7 @@ impl ToFormatElement for JsAnyClassMember {
             JsAnyClassMember::JsGetterClassMember(getter) => getter.to_format_element(formatter),
             JsAnyClassMember::JsSetterClassMember(setter) => setter.to_format_element(formatter),
             JsAnyClassMember::JsUnknownMember(unknown_member) => {
-                Ok(formatter.format_verbatim(unknown_member.syntax()))
+                unknown_member.to_format_element(formatter)
             }
             JsAnyClassMember::TsIndexSignature(_) => todo!(),
             JsAnyClassMember::JsStaticInitializationBlockClassMember(_) => todo!(),
