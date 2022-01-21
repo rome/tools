@@ -724,15 +724,17 @@ fn subscripts(
     context: ExpressionContext,
 ) -> CompletedMarker {
     // test_err subscripts_err
-    // foo()?.baz[].
+    // foo()?.baz[].;
     // BAR`b
     let mut should_try_parsing_ts = true;
     let mut progress = ParserProgress::default();
+    let mut is_optional_chain = false;
     while !p.at(EOF) {
         progress.assert_progressing(p);
 
         match p.cur() {
             T![?.] if p.nth_at(1, T!['(']) => {
+                is_optional_chain = true;
                 lhs = {
                     let m = lhs.precede(p);
                     p.bump_any();
@@ -752,10 +754,14 @@ fn subscripts(
                 }
             }
             T![?.] if p.nth_at(1, T!['[']) => {
+                is_optional_chain = true;
                 lhs = parse_computed_member_expression(p, lhs, true, context).unwrap()
             }
             T!['['] => lhs = parse_computed_member_expression(p, lhs, false, context).unwrap(),
-            T![?.] => lhs = parse_static_member_expression(p, lhs, T![?.]).unwrap(),
+            T![?.] => {
+                is_optional_chain = true;
+                lhs = parse_static_member_expression(p, lhs, T![?.]).unwrap()
+            }
             T![.] => lhs = parse_static_member_expression(p, lhs, T![.]).unwrap(),
             T![!] if !p.has_linebreak_before_n(0) => {
                 lhs = {
@@ -797,7 +803,22 @@ fn subscripts(
                     should_try_parsing_ts = false;
                 }
             }
-            BACKTICK => lhs = parse_template_literal(p, Present(lhs)),
+            BACKTICK => {
+                lhs = parse_template_literal(p, Present(lhs));
+                // test_err template_after_optional_chain
+                // obj.val?.prop`template`
+                // obj.val?.[expr]`template`
+                // obj.func?.(args)`template`
+                if is_optional_chain {
+                    p.error(
+                        p.err_builder(
+                            "Tagged template expressions are not permitted in an optional chain.",
+                        )
+                        .primary(lhs.range(p), ""),
+                    );
+                    lhs.change_kind(p, JS_UNKNOWN_EXPRESSION);
+                }
+            }
             _ => return lhs,
         }
     }
