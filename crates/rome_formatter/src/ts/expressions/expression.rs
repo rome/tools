@@ -201,7 +201,7 @@ impl ToFormatElement for JsAssignmentExpression {
             formatter.format_node(&self.left()?)?,
             space_token(),
             formatter.format_token(&self.operator_token()?)?,
-            soft_indent_or_space(formatter.format_node(&self.right()?)?),
+            group_elements(soft_indent_or_space(formatter.format_node(&self.right()?)?)),
         ]))
     }
 }
