@@ -46,24 +46,24 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsSequenceExpression {
-                left: JsNumberLiteralExpression {
-                    value_token: JS_NUMBER_LITERAL@32..34 "0" [Newline("\n")] [],
-                },
-                comma_token: COMMA@34..36 "," [] [Whitespace(" ")],
-                right: JsSequenceExpression {
-                    left: JsNumberLiteralExpression {
-                        value_token: JS_NUMBER_LITERAL@36..39 "0.0" [] [],
+                left: JsSequenceExpression {
+                    left: JsSequenceExpression {
+                        left: JsNumberLiteralExpression {
+                            value_token: JS_NUMBER_LITERAL@32..34 "0" [Newline("\n")] [],
+                        },
+                        comma_token: COMMA@34..36 "," [] [Whitespace(" ")],
+                        right: JsNumberLiteralExpression {
+                            value_token: JS_NUMBER_LITERAL@36..39 "0.0" [] [],
+                        },
                     },
                     comma_token: COMMA@39..41 "," [] [Whitespace(" ")],
-                    right: JsSequenceExpression {
-                        left: JsBigIntLiteralExpression {
-                            value_token: JS_BIG_INT_LITERAL@41..43 "0n" [] [],
-                        },
-                        comma_token: COMMA@43..45 "," [] [Whitespace(" ")],
-                        right: JsNumberLiteralExpression {
-                            value_token: JS_NUMBER_LITERAL@45..49 "0e00" [] [],
-                        },
+                    right: JsBigIntLiteralExpression {
+                        value_token: JS_BIG_INT_LITERAL@41..43 "0n" [] [],
                     },
+                },
+                comma_token: COMMA@43..45 "," [] [Whitespace(" ")],
+                right: JsNumberLiteralExpression {
+                    value_token: JS_NUMBER_LITERAL@45..49 "0e00" [] [],
                 },
             },
             semicolon_token: missing (optional),
@@ -106,18 +106,18 @@ JsModule {
       1: (empty)
     7: JS_EXPRESSION_STATEMENT@32..49
       0: JS_SEQUENCE_EXPRESSION@32..49
-        0: JS_NUMBER_LITERAL_EXPRESSION@32..34
-          0: JS_NUMBER_LITERAL@32..34 "0" [Newline("\n")] []
-        1: COMMA@34..36 "," [] [Whitespace(" ")]
-        2: JS_SEQUENCE_EXPRESSION@36..49
-          0: JS_NUMBER_LITERAL_EXPRESSION@36..39
-            0: JS_NUMBER_LITERAL@36..39 "0.0" [] []
+        0: JS_SEQUENCE_EXPRESSION@32..43
+          0: JS_SEQUENCE_EXPRESSION@32..39
+            0: JS_NUMBER_LITERAL_EXPRESSION@32..34
+              0: JS_NUMBER_LITERAL@32..34 "0" [Newline("\n")] []
+            1: COMMA@34..36 "," [] [Whitespace(" ")]
+            2: JS_NUMBER_LITERAL_EXPRESSION@36..39
+              0: JS_NUMBER_LITERAL@36..39 "0.0" [] []
           1: COMMA@39..41 "," [] [Whitespace(" ")]
-          2: JS_SEQUENCE_EXPRESSION@41..49
-            0: JS_BIG_INT_LITERAL_EXPRESSION@41..43
-              0: JS_BIG_INT_LITERAL@41..43 "0n" [] []
-            1: COMMA@43..45 "," [] [Whitespace(" ")]
-            2: JS_NUMBER_LITERAL_EXPRESSION@45..49
-              0: JS_NUMBER_LITERAL@45..49 "0e00" [] []
+          2: JS_BIG_INT_LITERAL_EXPRESSION@41..43
+            0: JS_BIG_INT_LITERAL@41..43 "0n" [] []
+        1: COMMA@43..45 "," [] [Whitespace(" ")]
+        2: JS_NUMBER_LITERAL_EXPRESSION@45..49
+          0: JS_NUMBER_LITERAL@45..49 "0e00" [] []
       1: (empty)
   3: EOF@49..50 "" [Newline("\n")] []

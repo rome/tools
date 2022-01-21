@@ -93,7 +93,9 @@ impl JsArrayExpression {
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn elements(&self) -> JsArrayElementList { support::list(&self.syntax, 1usize) }
+    pub fn elements(&self) -> JsArrayElementList {
+        support::list(&self.syntax, 1usize)
+    }
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -108,12 +110,18 @@ pub struct JsArrowFunctionExpression {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsArrowFunctionExpression {
-    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax, 1usize) }
+    pub fn async_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
+    pub fn type_parameters(&self) -> Option<TsTypeParams> {
+        support::node(&self.syntax, 1usize)
+    }
     pub fn parameters(&self) -> SyntaxResult<JsAnyArrowFunctionParameters> {
         support::required_node(&self.syntax, 2usize)
     }
-    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 3usize) }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 3usize)
+    }
     pub fn fat_arrow_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
     }
@@ -210,7 +218,9 @@ impl JsBlockStatement {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn statements(&self) -> JsStatementList { support::list(&self.syntax, 1usize) }
+    pub fn statements(&self) -> JsStatementList {
+        support::list(&self.syntax, 1usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -232,8 +242,12 @@ impl JsBreakStatement {
     pub fn break_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn label_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsCallArguments {
@@ -243,7 +257,9 @@ impl JsCallArguments {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn args(&self) -> JsCallArgumentList { support::list(&self.syntax, 1usize) }
+    pub fn args(&self) -> JsCallArgumentList {
+        support::list(&self.syntax, 1usize)
+    }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -259,7 +275,9 @@ impl JsCallExpression {
     pub fn optional_chain_token_token(&self) -> Option<SyntaxToken> {
         support::token(&self.syntax, 1usize)
     }
-    pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax, 2usize) }
+    pub fn type_args(&self) -> Option<TsTypeArgs> {
+        support::node(&self.syntax, 2usize)
+    }
     pub fn arguments(&self) -> SyntaxResult<JsCallArguments> {
         support::required_node(&self.syntax, 3usize)
     }
@@ -278,7 +296,9 @@ impl JsCaseClause {
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn consequent(&self) -> JsStatementList { support::list(&self.syntax, 3usize) }
+    pub fn consequent(&self) -> JsStatementList {
+        support::list(&self.syntax, 3usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsCatchClause {
@@ -288,7 +308,9 @@ impl JsCatchClause {
     pub fn catch_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn declaration(&self) -> Option<JsCatchDeclaration> { support::node(&self.syntax, 1usize) }
+    pub fn declaration(&self) -> Option<JsCatchDeclaration> {
+        support::node(&self.syntax, 1usize)
+    }
     pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
         support::required_node(&self.syntax, 2usize)
     }
@@ -316,15 +338,21 @@ impl JsClassExpression {
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 1usize) }
-    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 2usize) }
+    pub fn id(&self) -> Option<JsAnyBinding> {
+        support::node(&self.syntax, 1usize)
+    }
+    pub fn extends_clause(&self) -> Option<JsExtendsClause> {
+        support::node(&self.syntax, 2usize)
+    }
     pub fn implements_clause(&self) -> Option<TsImplementsClause> {
         support::node(&self.syntax, 3usize)
     }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
     }
-    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 5usize) }
+    pub fn members(&self) -> JsClassMemberList {
+        support::list(&self.syntax, 5usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 6usize)
     }
@@ -337,15 +365,21 @@ impl JsClassStatement {
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 1usize) }
-    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 2usize) }
+    pub fn id(&self) -> SyntaxResult<JsAnyBinding> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn extends_clause(&self) -> Option<JsExtendsClause> {
+        support::node(&self.syntax, 2usize)
+    }
     pub fn implements_clause(&self) -> Option<TsImplementsClause> {
         support::node(&self.syntax, 3usize)
     }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
     }
-    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 5usize) }
+    pub fn members(&self) -> JsClassMemberList {
+        support::list(&self.syntax, 5usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 6usize)
     }
@@ -430,11 +464,15 @@ pub struct JsConstructorClassMember {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsConstructorClassMember {
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn access_modifier(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
     pub fn name(&self) -> SyntaxResult<JsLiteralMemberName> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax, 2usize) }
+    pub fn type_parameters(&self) -> Option<TsTypeParams> {
+        support::node(&self.syntax, 2usize)
+    }
     pub fn parameters(&self) -> SyntaxResult<JsConstructorParameters> {
         support::required_node(&self.syntax, 3usize)
     }
@@ -450,7 +488,9 @@ impl JsConstructorParameters {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn parameters(&self) -> JsConstructorParameterList { support::list(&self.syntax, 1usize) }
+    pub fn parameters(&self) -> JsConstructorParameterList {
+        support::list(&self.syntax, 1usize)
+    }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -463,8 +503,12 @@ impl JsContinueStatement {
     pub fn continue_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn label_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsDebuggerStatement {
@@ -474,7 +518,9 @@ impl JsDebuggerStatement {
     pub fn debugger_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsDefaultClause {
@@ -487,7 +533,9 @@ impl JsDefaultClause {
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn consequent(&self) -> JsStatementList { support::list(&self.syntax, 2usize) }
+    pub fn consequent(&self) -> JsStatementList {
+        support::list(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsDefaultImportSpecifier {
@@ -509,7 +557,9 @@ impl JsDirective {
     pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsDoWhileStatement {
@@ -534,7 +584,9 @@ impl JsDoWhileStatement {
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 5usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 6usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsElseClause {
@@ -598,15 +650,21 @@ impl JsExportClassClause {
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 1usize) }
-    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 2usize) }
+    pub fn id(&self) -> SyntaxResult<JsAnyBinding> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn extends_clause(&self) -> Option<JsExtendsClause> {
+        support::node(&self.syntax, 2usize)
+    }
     pub fn implements_clause(&self) -> Option<TsImplementsClause> {
         support::node(&self.syntax, 3usize)
     }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
     }
-    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 5usize) }
+    pub fn members(&self) -> JsClassMemberList {
+        support::list(&self.syntax, 5usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 6usize)
     }
@@ -622,15 +680,21 @@ impl JsExportDefaultClassClause {
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 2usize) }
-    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 3usize) }
+    pub fn id(&self) -> Option<JsAnyBinding> {
+        support::node(&self.syntax, 2usize)
+    }
+    pub fn extends_clause(&self) -> Option<JsExtendsClause> {
+        support::node(&self.syntax, 3usize)
+    }
     pub fn implements_clause(&self) -> Option<TsImplementsClause> {
         support::node(&self.syntax, 4usize)
     }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 5usize)
     }
-    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 6usize) }
+    pub fn members(&self) -> JsClassMemberList {
+        support::list(&self.syntax, 6usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 7usize)
     }
@@ -646,7 +710,9 @@ impl JsExportDefaultExpressionClause {
     pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportDefaultFunctionClause {
@@ -656,17 +722,27 @@ impl JsExportDefaultFunctionClause {
     pub fn default_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn async_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
     pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
-    pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 4usize) }
-    pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax, 5usize) }
+    pub fn star_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 3usize)
+    }
+    pub fn id(&self) -> Option<JsAnyBinding> {
+        support::node(&self.syntax, 4usize)
+    }
+    pub fn type_parameters(&self) -> Option<TsTypeParams> {
+        support::node(&self.syntax, 5usize)
+    }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 6usize)
     }
-    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 7usize) }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 7usize)
+    }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
         support::required_node(&self.syntax, 8usize)
     }
@@ -679,32 +755,48 @@ impl JsExportFromClause {
     pub fn star_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn export_as(&self) -> Option<JsExportAsClause> { support::node(&self.syntax, 1usize) }
+    pub fn export_as(&self) -> Option<JsExportAsClause> {
+        support::node(&self.syntax, 1usize)
+    }
     pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
     pub fn source(&self) -> SyntaxResult<JsModuleSource> {
         support::required_node(&self.syntax, 3usize)
     }
-    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 4usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+    pub fn assertion(&self) -> Option<JsImportAssertion> {
+        support::node(&self.syntax, 4usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 5usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportFunctionClause {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsExportFunctionClause {
-    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn async_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
     pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 3usize) }
-    pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax, 4usize) }
+    pub fn star_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
+    pub fn id(&self) -> SyntaxResult<JsAnyBinding> {
+        support::required_node(&self.syntax, 3usize)
+    }
+    pub fn type_parameters(&self) -> Option<TsTypeParams> {
+        support::node(&self.syntax, 4usize)
+    }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 5usize)
     }
-    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 6usize) }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 6usize)
+    }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
         support::required_node(&self.syntax, 7usize)
     }
@@ -717,11 +809,15 @@ impl JsExportNamedClause {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn specifiers(&self) -> JsExportNamedSpecifierList { support::list(&self.syntax, 1usize) }
+    pub fn specifiers(&self) -> JsExportNamedSpecifierList {
+        support::list(&self.syntax, 1usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 3usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportNamedFromClause {
@@ -743,26 +839,36 @@ impl JsExportNamedFromClause {
     pub fn source(&self) -> SyntaxResult<JsModuleSource> {
         support::required_node(&self.syntax, 4usize)
     }
-    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 5usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
+    pub fn assertion(&self) -> Option<JsImportAssertion> {
+        support::node(&self.syntax, 5usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 6usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportNamedFromSpecifier {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsExportNamedFromSpecifier {
-    pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn type_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
     pub fn source_name(&self) -> SyntaxResult<JsLiteralExportName> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn export_as(&self) -> Option<JsExportAsClause> { support::node(&self.syntax, 2usize) }
+    pub fn export_as(&self) -> Option<JsExportAsClause> {
+        support::node(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportNamedShorthandSpecifier {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsExportNamedShorthandSpecifier {
-    pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn type_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
     pub fn name(&self) -> SyntaxResult<JsReferenceIdentifier> {
         support::required_node(&self.syntax, 1usize)
     }
@@ -772,7 +878,9 @@ pub struct JsExportNamedSpecifier {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsExportNamedSpecifier {
-    pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn type_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
     pub fn local_name(&self) -> SyntaxResult<JsReferenceIdentifier> {
         support::required_node(&self.syntax, 1usize)
     }
@@ -791,7 +899,9 @@ impl JsExportVariableClause {
     pub fn declarations(&self) -> SyntaxResult<JsVariableDeclarations> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExpressionSnipped {
@@ -813,7 +923,9 @@ impl JsExpressionStatement {
     pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExtendsClause {
@@ -874,7 +986,9 @@ impl JsForOfStatement {
     pub fn for_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn await_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn await_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -905,15 +1019,21 @@ impl JsForStatement {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn initializer(&self) -> Option<JsAnyForInitializer> { support::node(&self.syntax, 2usize) }
+    pub fn initializer(&self) -> Option<JsAnyForInitializer> {
+        support::node(&self.syntax, 2usize)
+    }
     pub fn first_semi_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn test(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 4usize) }
+    pub fn test(&self) -> Option<JsAnyExpression> {
+        support::node(&self.syntax, 4usize)
+    }
     pub fn second_semi_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 5usize)
     }
-    pub fn update(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 6usize) }
+    pub fn update(&self) -> Option<JsAnyExpression> {
+        support::node(&self.syntax, 6usize)
+    }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 7usize)
     }
@@ -941,8 +1061,12 @@ impl JsFunctionBody {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn directives(&self) -> JsDirectiveList { support::list(&self.syntax, 1usize) }
-    pub fn statements(&self) -> JsStatementList { support::list(&self.syntax, 2usize) }
+    pub fn directives(&self) -> JsDirectiveList {
+        support::list(&self.syntax, 1usize)
+    }
+    pub fn statements(&self) -> JsStatementList {
+        support::list(&self.syntax, 2usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -952,17 +1076,27 @@ pub struct JsFunctionExpression {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsFunctionExpression {
-    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn async_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
     pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 3usize) }
-    pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax, 4usize) }
+    pub fn star_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
+    pub fn id(&self) -> Option<JsAnyBinding> {
+        support::node(&self.syntax, 3usize)
+    }
+    pub fn type_parameters(&self) -> Option<TsTypeParams> {
+        support::node(&self.syntax, 4usize)
+    }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 5usize)
     }
-    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 6usize) }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 6usize)
+    }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
         support::required_node(&self.syntax, 7usize)
     }
@@ -972,17 +1106,27 @@ pub struct JsFunctionStatement {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsFunctionStatement {
-    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn async_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
     pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 3usize) }
-    pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax, 4usize) }
+    pub fn star_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
+    pub fn id(&self) -> SyntaxResult<JsAnyBinding> {
+        support::required_node(&self.syntax, 3usize)
+    }
+    pub fn type_parameters(&self) -> Option<TsTypeParams> {
+        support::node(&self.syntax, 4usize)
+    }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 5usize)
     }
-    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 6usize) }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 6usize)
+    }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
         support::required_node(&self.syntax, 7usize)
     }
@@ -992,9 +1136,15 @@ pub struct JsGetterClassMember {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsGetterClassMember {
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn access_modifier(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
+    pub fn static_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
+    pub fn abstract_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
     pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -1007,7 +1157,9 @@ impl JsGetterClassMember {
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 6usize)
     }
-    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 7usize) }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 7usize)
+    }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
         support::required_node(&self.syntax, 8usize)
     }
@@ -1029,7 +1181,9 @@ impl JsGetterObjectMember {
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 4usize) }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 4usize)
+    }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
         support::required_node(&self.syntax, 5usize)
     }
@@ -1081,7 +1235,9 @@ impl JsIfStatement {
     pub fn consequent(&self) -> SyntaxResult<JsAnyStatement> {
         support::required_node(&self.syntax, 4usize)
     }
-    pub fn else_clause(&self) -> Option<JsElseClause> { support::node(&self.syntax, 5usize) }
+    pub fn else_clause(&self) -> Option<JsElseClause> {
+        support::node(&self.syntax, 5usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImport {
@@ -1094,7 +1250,9 @@ impl JsImport {
     pub fn import_clause(&self) -> SyntaxResult<AnyJsImportClause> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportAssertion {
@@ -1107,7 +1265,9 @@ impl JsImportAssertion {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn assertions(&self) -> JsImportAssertionEntryList { support::list(&self.syntax, 2usize) }
+    pub fn assertions(&self) -> JsImportAssertionEntryList {
+        support::list(&self.syntax, 2usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -1117,7 +1277,9 @@ pub struct JsImportAssertionEntry {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsImportAssertionEntry {
-    pub fn key(&self) -> SyntaxResult<SyntaxToken> { support::required_token(&self.syntax, 0usize) }
+    pub fn key(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
@@ -1133,7 +1295,9 @@ impl JsImportBareClause {
     pub fn source(&self) -> SyntaxResult<JsModuleSource> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 1usize) }
+    pub fn assertion(&self) -> Option<JsImportAssertion> {
+        support::node(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportCallExpression {
@@ -1161,7 +1325,9 @@ impl JsImportDefaultClause {
     pub fn source(&self) -> SyntaxResult<JsModuleSource> {
         support::required_node(&self.syntax, 2usize)
     }
-    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 3usize) }
+    pub fn assertion(&self) -> Option<JsImportAssertion> {
+        support::node(&self.syntax, 3usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportNamedClause {
@@ -1180,7 +1346,9 @@ impl JsImportNamedClause {
     pub fn source(&self) -> SyntaxResult<JsModuleSource> {
         support::required_node(&self.syntax, 3usize)
     }
-    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 4usize) }
+    pub fn assertion(&self) -> Option<JsImportAssertion> {
+        support::node(&self.syntax, 4usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportNamespaceClause {
@@ -1202,7 +1370,9 @@ impl JsImportNamespaceClause {
     pub fn source(&self) -> SyntaxResult<JsModuleSource> {
         support::required_node(&self.syntax, 4usize)
     }
-    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 5usize) }
+    pub fn assertion(&self) -> Option<JsImportAssertion> {
+        support::node(&self.syntax, 5usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsInExpression {
@@ -1299,19 +1469,33 @@ pub struct JsMethodClassMember {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsMethodClassMember {
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
-    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+    pub fn access_modifier(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
+    pub fn static_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
+    pub fn abstract_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
+    pub fn async_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 3usize)
+    }
+    pub fn star_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 4usize)
+    }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
         support::required_node(&self.syntax, 5usize)
     }
-    pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax, 6usize) }
+    pub fn type_parameters(&self) -> Option<TsTypeParams> {
+        support::node(&self.syntax, 6usize)
+    }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 7usize)
     }
-    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 8usize) }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 8usize)
+    }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
         support::required_node(&self.syntax, 9usize)
     }
@@ -1321,16 +1505,24 @@ pub struct JsMethodObjectMember {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsMethodObjectMember {
-    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn async_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
+    pub fn star_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
     pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
         support::required_node(&self.syntax, 2usize)
     }
-    pub fn type_params(&self) -> Option<TsTypeParams> { support::node(&self.syntax, 3usize) }
+    pub fn type_params(&self) -> Option<TsTypeParams> {
+        support::node(&self.syntax, 3usize)
+    }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 4usize)
     }
-    pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 5usize) }
+    pub fn return_type(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 5usize)
+    }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
         support::required_node(&self.syntax, 6usize)
     }
@@ -1340,9 +1532,15 @@ pub struct JsModule {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsModule {
-    pub fn interpreter_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn directives(&self) -> JsDirectiveList { support::list(&self.syntax, 1usize) }
-    pub fn items(&self) -> JsModuleItemList { support::list(&self.syntax, 2usize) }
+    pub fn interpreter_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
+    pub fn directives(&self) -> JsDirectiveList {
+        support::list(&self.syntax, 1usize)
+    }
+    pub fn items(&self) -> JsModuleItemList {
+        support::list(&self.syntax, 2usize)
+    }
     pub fn eof_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -1388,7 +1586,9 @@ impl JsNamedImportSpecifiers {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn specifiers(&self) -> JsNamedImportSpecifierList { support::list(&self.syntax, 1usize) }
+    pub fn specifiers(&self) -> JsNamedImportSpecifierList {
+        support::list(&self.syntax, 1usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -1419,8 +1619,12 @@ impl JsNewExpression {
     pub fn callee(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax, 2usize) }
-    pub fn arguments(&self) -> Option<JsCallArguments> { support::node(&self.syntax, 3usize) }
+    pub fn type_args(&self) -> Option<TsTypeArgs> {
+        support::node(&self.syntax, 2usize)
+    }
+    pub fn arguments(&self) -> Option<JsCallArguments> {
+        support::node(&self.syntax, 3usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsNullLiteralExpression {
@@ -1469,7 +1673,9 @@ impl JsObjectAssignmentPatternProperty {
     pub fn pattern(&self) -> SyntaxResult<JsAnyAssignmentPattern> {
         support::required_node(&self.syntax, 2usize)
     }
-    pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
+    pub fn init(&self) -> Option<JsInitializerClause> {
+        support::node(&self.syntax, 3usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectAssignmentPatternRest {
@@ -1491,7 +1697,9 @@ impl JsObjectAssignmentPatternShorthandProperty {
     pub fn identifier(&self) -> SyntaxResult<JsAnyAssignment> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
+    pub fn init(&self) -> Option<JsInitializerClause> {
+        support::node(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectBindingPattern {
@@ -1522,7 +1730,9 @@ impl JsObjectBindingPatternProperty {
     pub fn pattern(&self) -> SyntaxResult<JsAnyBindingPattern> {
         support::required_node(&self.syntax, 2usize)
     }
-    pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
+    pub fn init(&self) -> Option<JsInitializerClause> {
+        support::node(&self.syntax, 3usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectBindingPatternRest {
@@ -1544,7 +1754,9 @@ impl JsObjectBindingPatternShorthandProperty {
     pub fn identifier(&self) -> SyntaxResult<JsAnyBinding> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
+    pub fn init(&self) -> Option<JsInitializerClause> {
+        support::node(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectExpression {
@@ -1554,7 +1766,9 @@ impl JsObjectExpression {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn members(&self) -> JsObjectMemberList { support::list(&self.syntax, 1usize) }
+    pub fn members(&self) -> JsObjectMemberList {
+        support::list(&self.syntax, 1usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -1570,7 +1784,9 @@ impl JsParameter {
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
         support::node(&self.syntax, 1usize)
     }
-    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 2usize) }
+    pub fn initializer(&self) -> Option<JsInitializerClause> {
+        support::node(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsParameters {
@@ -1580,7 +1796,9 @@ impl JsParameters {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn items(&self) -> JsParameterList { support::list(&self.syntax, 1usize) }
+    pub fn items(&self) -> JsParameterList {
+        support::list(&self.syntax, 1usize)
+    }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -1668,21 +1886,39 @@ pub struct JsPropertyClassMember {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsPropertyClassMember {
-    pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+    pub fn declare_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
+    pub fn access_modifier(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
+    pub fn static_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
+    pub fn readonly_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 3usize)
+    }
+    pub fn abstract_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 4usize)
+    }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
         support::required_node(&self.syntax, 5usize)
     }
     pub fn question_mark_token(&self) -> Option<SyntaxToken> {
         support::token(&self.syntax, 6usize)
     }
-    pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
-    pub fn ty(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 8usize) }
-    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 9usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 10usize) }
+    pub fn excl_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 7usize)
+    }
+    pub fn ty(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 8usize)
+    }
+    pub fn value(&self) -> Option<JsInitializerClause> {
+        support::node(&self.syntax, 9usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 10usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsPropertyObjectMember {
@@ -1737,17 +1973,27 @@ impl JsReturnStatement {
     pub fn return_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn argument(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 1usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn argument(&self) -> Option<JsAnyExpression> {
+        support::node(&self.syntax, 1usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsScript {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsScript {
-    pub fn interpreter_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn directives(&self) -> JsDirectiveList { support::list(&self.syntax, 1usize) }
-    pub fn statements(&self) -> JsStatementList { support::list(&self.syntax, 2usize) }
+    pub fn interpreter_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
+    pub fn directives(&self) -> JsDirectiveList {
+        support::list(&self.syntax, 1usize)
+    }
+    pub fn statements(&self) -> JsStatementList {
+        support::list(&self.syntax, 2usize)
+    }
     pub fn eof_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -1772,9 +2018,15 @@ pub struct JsSetterClassMember {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsSetterClassMember {
-    pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn access_modifier(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
+    pub fn static_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
+    pub fn abstract_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
     pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -1859,7 +2111,9 @@ impl JsStaticInitializationBlockClassMember {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn statements(&self) -> JsStatementList { support::list(&self.syntax, 2usize) }
+    pub fn statements(&self) -> JsStatementList {
+        support::list(&self.syntax, 2usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -1875,7 +2129,9 @@ impl JsStaticMemberAssignment {
     pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn member(&self) -> SyntaxResult<JsAnyName> { support::required_node(&self.syntax, 2usize) }
+    pub fn member(&self) -> SyntaxResult<JsAnyName> {
+        support::required_node(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsStaticMemberExpression {
@@ -1888,7 +2144,9 @@ impl JsStaticMemberExpression {
     pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn member(&self) -> SyntaxResult<JsAnyName> { support::required_node(&self.syntax, 2usize) }
+    pub fn member(&self) -> SyntaxResult<JsAnyName> {
+        support::required_node(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsStringLiteralExpression {
@@ -1928,7 +2186,9 @@ impl JsSwitchStatement {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
     }
-    pub fn cases(&self) -> JsSwitchCaseList { support::list(&self.syntax, 5usize) }
+    pub fn cases(&self) -> JsSwitchCaseList {
+        support::list(&self.syntax, 5usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 6usize)
     }
@@ -1953,7 +2213,9 @@ impl JsThrowStatement {
     pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsTryFinallyStatement {
@@ -1966,7 +2228,9 @@ impl JsTryFinallyStatement {
     pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn catch_clause(&self) -> Option<JsCatchClause> { support::node(&self.syntax, 2usize) }
+    pub fn catch_clause(&self) -> Option<JsCatchClause> {
+        support::node(&self.syntax, 2usize)
+    }
     pub fn finally_clause(&self) -> SyntaxResult<JsFinallyClause> {
         support::required_node(&self.syntax, 3usize)
     }
@@ -2006,11 +2270,15 @@ impl JsVariableDeclaration {
     pub fn id(&self) -> SyntaxResult<JsAnyBindingPattern> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn excl_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
         support::node(&self.syntax, 2usize)
     }
-    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
+    pub fn initializer(&self) -> Option<JsInitializerClause> {
+        support::node(&self.syntax, 3usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclarations {
@@ -2020,7 +2288,9 @@ impl JsVariableDeclarations {
     pub fn kind(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn items(&self) -> JsVariableDeclarationList { support::list(&self.syntax, 1usize) }
+    pub fn items(&self) -> JsVariableDeclarationList {
+        support::list(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableStatement {
@@ -2030,7 +2300,9 @@ impl JsVariableStatement {
     pub fn declarations(&self) -> SyntaxResult<JsVariableDeclarations> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsWhileStatement {
@@ -2079,7 +2351,9 @@ pub struct JsYieldArgument {
     pub(crate) syntax: SyntaxNode,
 }
 impl JsYieldArgument {
-    pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn star_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
     pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
     }
@@ -2092,7 +2366,9 @@ impl JsYieldExpression {
     pub fn yield_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn argument(&self) -> Option<JsYieldArgument> { support::node(&self.syntax, 1usize) }
+    pub fn argument(&self) -> Option<JsYieldArgument> {
+        support::node(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct NewTarget {
@@ -2114,11 +2390,15 @@ pub struct Template {
     pub(crate) syntax: SyntaxNode,
 }
 impl Template {
-    pub fn tag(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 0usize) }
+    pub fn tag(&self) -> Option<JsAnyExpression> {
+        support::node(&self.syntax, 0usize)
+    }
     pub fn l_tick_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn elements(&self) -> TemplateElementList { support::list(&self.syntax, 2usize) }
+    pub fn elements(&self) -> TemplateElementList {
+        support::list(&self.syntax, 2usize)
+    }
     pub fn r_tick_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -2164,7 +2444,9 @@ impl TsArray {
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 1usize)
+    }
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -2177,11 +2459,15 @@ impl TsAssertion {
     pub fn expr(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 1usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 1usize)
+    }
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 3usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 3usize)
+    }
     pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
     }
@@ -2191,14 +2477,18 @@ pub struct TsBigint {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsBigint {
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 0usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsBoolean {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsBoolean {
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 0usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsCallSignatureDecl {
@@ -2223,7 +2513,9 @@ pub struct TsConditionalType {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsConditionalType {
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 0usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 0usize)
+    }
     pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
@@ -2242,7 +2534,9 @@ impl TsConstAssertion {
     pub fn expr(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 1usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 1usize)
+    }
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -2261,7 +2555,9 @@ impl TsConstraint {
     pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructSignatureDecl {
@@ -2277,7 +2573,9 @@ impl TsConstructSignatureDecl {
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 2usize)
     }
-    pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
+    pub fn colon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 3usize)
+    }
     pub fn return_type(&self) -> SyntaxResult<TsType> {
         support::required_node(&self.syntax, 4usize)
     }
@@ -2287,15 +2585,21 @@ pub struct TsConstructorParam {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsConstructorParam {
-    pub fn accessibility(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
+    pub fn accessibility(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
+    pub fn readonly_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
     pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
         support::node(&self.syntax, 3usize)
     }
-    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 4usize) }
+    pub fn initializer(&self) -> Option<JsInitializerClause> {
+        support::node(&self.syntax, 4usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructorType {
@@ -2311,7 +2615,9 @@ impl TsConstructorType {
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax, 3usize) }
+    pub fn return_type(&self) -> Option<TsType> {
+        support::node(&self.syntax, 3usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsDefault {
@@ -2321,22 +2627,30 @@ impl TsDefault {
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsEnum {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsEnum {
-    pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn const_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
     pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 2usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 2usize)
+    }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn members(&self) -> TsEnumMemberList { support::list(&self.syntax, 4usize) }
+    pub fn members(&self) -> TsEnumMemberList {
+        support::list(&self.syntax, 4usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 5usize)
     }
@@ -2346,7 +2660,9 @@ pub struct TsEnumMember {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsEnumMember {
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 0usize)
+    }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
@@ -2362,7 +2678,9 @@ impl TsExprWithTypeArgs {
     pub fn item(&self) -> SyntaxResult<TsEntityName> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn type_params(&self) -> Option<TsTypeArgs> { support::node(&self.syntax, 1usize) }
+    pub fn type_params(&self) -> Option<TsTypeArgs> {
+        support::node(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExtends {
@@ -2372,7 +2690,9 @@ impl TsExtends {
     pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExternalModuleRef {
@@ -2403,7 +2723,9 @@ impl TsFnType {
     pub fn fat_arrow_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax, 2usize) }
+    pub fn return_type(&self) -> Option<TsType> {
+        support::node(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsImplementsClause {
@@ -2413,7 +2735,9 @@ impl TsImplementsClause {
     pub fn implements_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn interfaces(&self) -> TsTypeList { support::list(&self.syntax, 1usize) }
+    pub fn interfaces(&self) -> TsTypeList {
+        support::list(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsImport {
@@ -2426,7 +2750,9 @@ impl TsImport {
     pub fn type_args(&self) -> SyntaxResult<TsTypeArgs> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn dot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn dot_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -2448,29 +2774,39 @@ impl TsImportEqualsDecl {
     pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 2usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 2usize)
+    }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
     pub fn module(&self) -> SyntaxResult<TsModuleRef> {
         support::required_node(&self.syntax, 4usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 5usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexSignature {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsIndexSignature {
-    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn readonly_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn pat(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 2usize) }
+    pub fn pat(&self) -> SyntaxResult<JsAnyBinding> {
+        support::required_node(&self.syntax, 2usize)
+    }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 4usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 4usize)
+    }
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 5usize)
     }
@@ -2483,7 +2819,9 @@ impl TsIndexedArray {
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 1usize)
+    }
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -2496,21 +2834,27 @@ impl TsInfer {
     pub fn infer_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 1usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIntersection {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsIntersection {
-    pub fn types(&self) -> TsTypeList { support::list(&self.syntax, 0usize) }
+    pub fn types(&self) -> TsTypeList {
+        support::list(&self.syntax, 0usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsLiteral {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsLiteral {
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 0usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsMappedType {
@@ -2523,8 +2867,12 @@ impl TsMappedType {
     pub fn readonly_modifier(&self) -> Option<TsMappedTypeReadonly> {
         support::node(&self.syntax, 1usize)
     }
-    pub fn minus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn plus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
+    pub fn minus_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
+    pub fn plus_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 3usize)
+    }
     pub fn question_mark_token(&self) -> Option<SyntaxToken> {
         support::token(&self.syntax, 4usize)
     }
@@ -2534,38 +2882,60 @@ impl TsMappedType {
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 6usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 7usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 7usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 8usize)
     }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 9usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 9usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsMappedTypeParam {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsMappedTypeParam {
-    pub fn l_brack_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn name(&self) -> Option<TsTypeName> { support::node(&self.syntax, 1usize) }
-    pub fn r_brack_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn ident(&self) -> Option<Ident> { support::node(&self.syntax, 3usize) }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 4usize) }
+    pub fn l_brack_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
+    pub fn name(&self) -> Option<TsTypeName> {
+        support::node(&self.syntax, 1usize)
+    }
+    pub fn r_brack_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
+    pub fn ident(&self) -> Option<Ident> {
+        support::node(&self.syntax, 3usize)
+    }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 4usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsMappedTypeReadonly {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsMappedTypeReadonly {
-    pub fn minus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn plus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn minus_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
+    pub fn plus_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
+    pub fn readonly_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsMethodSignature {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsMethodSignature {
-    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn readonly_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
     pub fn key(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
     }
@@ -2620,14 +2990,18 @@ pub struct TsNumber {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsNumber {
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 0usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsObject {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsObject {
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 0usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsObjectType {
@@ -2637,7 +3011,9 @@ impl TsObjectType {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn members(&self) -> TsObjectMemberList { support::list(&self.syntax, 1usize) }
+    pub fn members(&self) -> TsObjectMemberList {
+        support::list(&self.syntax, 1usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -2650,7 +3026,9 @@ impl TsParen {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 1usize)
+    }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -2660,15 +3038,21 @@ pub struct TsPredicate {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsPredicate {
-    pub fn lhs(&self) -> SyntaxResult<TsThisOrMore> { support::required_node(&self.syntax, 0usize) }
-    pub fn rhs(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn lhs(&self) -> SyntaxResult<TsThisOrMore> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn rhs(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsPropertySignature {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsPropertySignature {
-    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn readonly_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
     pub fn prop(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
     }
@@ -2678,32 +3062,42 @@ impl TsPropertySignature {
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 4usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 4usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsQualifiedPath {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsQualifiedPath {
-    pub fn lhs(&self) -> SyntaxResult<TsEntityName> { support::required_node(&self.syntax, 0usize) }
+    pub fn lhs(&self) -> SyntaxResult<TsEntityName> {
+        support::required_node(&self.syntax, 0usize)
+    }
     pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn rhs(&self) -> SyntaxResult<TsTypeName> { support::required_node(&self.syntax, 2usize) }
+    pub fn rhs(&self) -> SyntaxResult<TsTypeName> {
+        support::required_node(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsString {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsString {
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
+    pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsSymbol {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsSymbol {
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 0usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTemplate {
@@ -2719,7 +3113,9 @@ pub struct TsTemplateElement {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsTemplateElement {
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 0usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 0usize)
+    }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
@@ -2753,15 +3149,21 @@ pub struct TsTupleElement {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsTupleElement {
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 0usize)
+    }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn dotdotdot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 4usize) }
+    pub fn dotdotdot_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 3usize)
+    }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 4usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeAnnotation {
@@ -2771,7 +3173,9 @@ impl TsTypeAnnotation {
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 1usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeArgs {
@@ -2781,7 +3185,9 @@ impl TsTypeArgs {
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ts_type_arg_list(&self) -> TsTypeArgList { support::list(&self.syntax, 1usize) }
+    pub fn ts_type_arg_list(&self) -> TsTypeArgList {
+        support::list(&self.syntax, 1usize)
+    }
     pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -2800,14 +3206,18 @@ pub struct TsTypeOperator {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsTypeOperator {
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 0usize) }
+    pub fn ty(&self) -> SyntaxResult<TsType> {
+        support::required_node(&self.syntax, 0usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeParam {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsTypeParam {
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
+    pub fn ident(&self) -> SyntaxResult<Ident> {
+        support::required_node(&self.syntax, 0usize)
+    }
     pub fn constraint(&self) -> SyntaxResult<TsConstraint> {
         support::required_node(&self.syntax, 1usize)
     }
@@ -2820,11 +3230,15 @@ pub struct TsTypeParams {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsTypeParams {
-    pub fn l_angle_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn l_angle_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 0usize)
+    }
     pub fn params(&self) -> SyntaxResult<TsTypeParam> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn r_angle_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
+    pub fn r_angle_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeRef {
@@ -2852,7 +3266,9 @@ pub struct TsUnion {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsUnion {
-    pub fn types(&self) -> TsTypeList { support::list(&self.syntax, 0usize) }
+    pub fn types(&self) -> TsTypeList {
+        support::list(&self.syntax, 0usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsUnknown {
@@ -3217,7 +3633,9 @@ pub enum TsTypeElement {
     TsPropertySignature(TsPropertySignature),
 }
 impl AstNode for Ident {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == IDENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == IDENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3225,7 +3643,9 @@ impl AstNode for Ident {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for Ident {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3238,13 +3658,19 @@ impl std::fmt::Debug for Ident {
     }
 }
 impl From<Ident> for SyntaxNode {
-    fn from(n: Ident) -> SyntaxNode { n.syntax }
+    fn from(n: Ident) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<Ident> for SyntaxElement {
-    fn from(n: Ident) -> SyntaxElement { n.syntax.into() }
+    fn from(n: Ident) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for ImportMeta {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == IMPORT_META }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == IMPORT_META
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3252,7 +3678,9 @@ impl AstNode for ImportMeta {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for ImportMeta {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3267,13 +3695,19 @@ impl std::fmt::Debug for ImportMeta {
     }
 }
 impl From<ImportMeta> for SyntaxNode {
-    fn from(n: ImportMeta) -> SyntaxNode { n.syntax }
+    fn from(n: ImportMeta) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<ImportMeta> for SyntaxElement {
-    fn from(n: ImportMeta) -> SyntaxElement { n.syntax.into() }
+    fn from(n: ImportMeta) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsArrayAssignmentPattern {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_PATTERN }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_ARRAY_ASSIGNMENT_PATTERN
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3281,7 +3715,9 @@ impl AstNode for JsArrayAssignmentPattern {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsArrayAssignmentPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3299,13 +3735,19 @@ impl std::fmt::Debug for JsArrayAssignmentPattern {
     }
 }
 impl From<JsArrayAssignmentPattern> for SyntaxNode {
-    fn from(n: JsArrayAssignmentPattern) -> SyntaxNode { n.syntax }
+    fn from(n: JsArrayAssignmentPattern) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsArrayAssignmentPattern> for SyntaxElement {
-    fn from(n: JsArrayAssignmentPattern) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsArrayAssignmentPattern) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsArrayAssignmentPatternRestElement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3313,7 +3755,9 @@ impl AstNode for JsArrayAssignmentPatternRestElement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsArrayAssignmentPatternRestElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3327,13 +3771,19 @@ impl std::fmt::Debug for JsArrayAssignmentPatternRestElement {
     }
 }
 impl From<JsArrayAssignmentPatternRestElement> for SyntaxNode {
-    fn from(n: JsArrayAssignmentPatternRestElement) -> SyntaxNode { n.syntax }
+    fn from(n: JsArrayAssignmentPatternRestElement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsArrayAssignmentPatternRestElement> for SyntaxElement {
-    fn from(n: JsArrayAssignmentPatternRestElement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsArrayAssignmentPatternRestElement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsArrayBindingPattern {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_BINDING_PATTERN }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_ARRAY_BINDING_PATTERN
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3341,7 +3791,9 @@ impl AstNode for JsArrayBindingPattern {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsArrayBindingPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3359,13 +3811,19 @@ impl std::fmt::Debug for JsArrayBindingPattern {
     }
 }
 impl From<JsArrayBindingPattern> for SyntaxNode {
-    fn from(n: JsArrayBindingPattern) -> SyntaxNode { n.syntax }
+    fn from(n: JsArrayBindingPattern) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsArrayBindingPattern> for SyntaxElement {
-    fn from(n: JsArrayBindingPattern) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsArrayBindingPattern) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsArrayBindingPatternRestElement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_BINDING_PATTERN_REST_ELEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_ARRAY_BINDING_PATTERN_REST_ELEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3373,7 +3831,9 @@ impl AstNode for JsArrayBindingPatternRestElement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsArrayBindingPatternRestElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3387,13 +3847,19 @@ impl std::fmt::Debug for JsArrayBindingPatternRestElement {
     }
 }
 impl From<JsArrayBindingPatternRestElement> for SyntaxNode {
-    fn from(n: JsArrayBindingPatternRestElement) -> SyntaxNode { n.syntax }
+    fn from(n: JsArrayBindingPatternRestElement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsArrayBindingPatternRestElement> for SyntaxElement {
-    fn from(n: JsArrayBindingPatternRestElement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsArrayBindingPatternRestElement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsArrayExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_ARRAY_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3401,7 +3867,9 @@ impl AstNode for JsArrayExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsArrayExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3419,13 +3887,19 @@ impl std::fmt::Debug for JsArrayExpression {
     }
 }
 impl From<JsArrayExpression> for SyntaxNode {
-    fn from(n: JsArrayExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsArrayExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsArrayExpression> for SyntaxElement {
-    fn from(n: JsArrayExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsArrayExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsArrayHole {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_HOLE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_ARRAY_HOLE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3433,7 +3907,9 @@ impl AstNode for JsArrayHole {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsArrayHole {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3441,13 +3917,19 @@ impl std::fmt::Debug for JsArrayHole {
     }
 }
 impl From<JsArrayHole> for SyntaxNode {
-    fn from(n: JsArrayHole) -> SyntaxNode { n.syntax }
+    fn from(n: JsArrayHole) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsArrayHole> for SyntaxElement {
-    fn from(n: JsArrayHole) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsArrayHole) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsArrowFunctionExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARROW_FUNCTION_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_ARROW_FUNCTION_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3455,7 +3937,9 @@ impl AstNode for JsArrowFunctionExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsArrowFunctionExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3482,13 +3966,19 @@ impl std::fmt::Debug for JsArrowFunctionExpression {
     }
 }
 impl From<JsArrowFunctionExpression> for SyntaxNode {
-    fn from(n: JsArrowFunctionExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsArrowFunctionExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsArrowFunctionExpression> for SyntaxElement {
-    fn from(n: JsArrowFunctionExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsArrowFunctionExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsAssignmentExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ASSIGNMENT_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_ASSIGNMENT_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3496,7 +3986,9 @@ impl AstNode for JsAssignmentExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsAssignmentExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3511,13 +4003,19 @@ impl std::fmt::Debug for JsAssignmentExpression {
     }
 }
 impl From<JsAssignmentExpression> for SyntaxNode {
-    fn from(n: JsAssignmentExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsAssignmentExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsAssignmentExpression> for SyntaxElement {
-    fn from(n: JsAssignmentExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsAssignmentExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsAssignmentWithDefault {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ASSIGNMENT_WITH_DEFAULT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_ASSIGNMENT_WITH_DEFAULT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3525,7 +4023,9 @@ impl AstNode for JsAssignmentWithDefault {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsAssignmentWithDefault {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3537,13 +4037,19 @@ impl std::fmt::Debug for JsAssignmentWithDefault {
     }
 }
 impl From<JsAssignmentWithDefault> for SyntaxNode {
-    fn from(n: JsAssignmentWithDefault) -> SyntaxNode { n.syntax }
+    fn from(n: JsAssignmentWithDefault) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsAssignmentWithDefault> for SyntaxElement {
-    fn from(n: JsAssignmentWithDefault) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsAssignmentWithDefault) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsAwaitExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_AWAIT_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_AWAIT_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3551,7 +4057,9 @@ impl AstNode for JsAwaitExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsAwaitExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3565,13 +4073,19 @@ impl std::fmt::Debug for JsAwaitExpression {
     }
 }
 impl From<JsAwaitExpression> for SyntaxNode {
-    fn from(n: JsAwaitExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsAwaitExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsAwaitExpression> for SyntaxElement {
-    fn from(n: JsAwaitExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsAwaitExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsBigIntLiteralExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_BIG_INT_LITERAL_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_BIG_INT_LITERAL_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3579,7 +4093,9 @@ impl AstNode for JsBigIntLiteralExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsBigIntLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3592,13 +4108,19 @@ impl std::fmt::Debug for JsBigIntLiteralExpression {
     }
 }
 impl From<JsBigIntLiteralExpression> for SyntaxNode {
-    fn from(n: JsBigIntLiteralExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsBigIntLiteralExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsBigIntLiteralExpression> for SyntaxElement {
-    fn from(n: JsBigIntLiteralExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsBigIntLiteralExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsBinaryExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_BINARY_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_BINARY_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3606,7 +4128,9 @@ impl AstNode for JsBinaryExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsBinaryExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3618,13 +4142,19 @@ impl std::fmt::Debug for JsBinaryExpression {
     }
 }
 impl From<JsBinaryExpression> for SyntaxNode {
-    fn from(n: JsBinaryExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsBinaryExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsBinaryExpression> for SyntaxElement {
-    fn from(n: JsBinaryExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsBinaryExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsBindingPatternWithDefault {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_BINDING_PATTERN_WITH_DEFAULT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_BINDING_PATTERN_WITH_DEFAULT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3632,7 +4162,9 @@ impl AstNode for JsBindingPatternWithDefault {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsBindingPatternWithDefault {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3644,13 +4176,19 @@ impl std::fmt::Debug for JsBindingPatternWithDefault {
     }
 }
 impl From<JsBindingPatternWithDefault> for SyntaxNode {
-    fn from(n: JsBindingPatternWithDefault) -> SyntaxNode { n.syntax }
+    fn from(n: JsBindingPatternWithDefault) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsBindingPatternWithDefault> for SyntaxElement {
-    fn from(n: JsBindingPatternWithDefault) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsBindingPatternWithDefault) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsBlockStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_BLOCK_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_BLOCK_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3658,7 +4196,9 @@ impl AstNode for JsBlockStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsBlockStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3676,13 +4216,19 @@ impl std::fmt::Debug for JsBlockStatement {
     }
 }
 impl From<JsBlockStatement> for SyntaxNode {
-    fn from(n: JsBlockStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsBlockStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsBlockStatement> for SyntaxElement {
-    fn from(n: JsBlockStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsBlockStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsBooleanLiteralExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_BOOLEAN_LITERAL_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_BOOLEAN_LITERAL_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3690,7 +4236,9 @@ impl AstNode for JsBooleanLiteralExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsBooleanLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3703,13 +4251,19 @@ impl std::fmt::Debug for JsBooleanLiteralExpression {
     }
 }
 impl From<JsBooleanLiteralExpression> for SyntaxNode {
-    fn from(n: JsBooleanLiteralExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsBooleanLiteralExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsBooleanLiteralExpression> for SyntaxElement {
-    fn from(n: JsBooleanLiteralExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsBooleanLiteralExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsBreakStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_BREAK_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_BREAK_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3717,7 +4271,9 @@ impl AstNode for JsBreakStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsBreakStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3738,13 +4294,19 @@ impl std::fmt::Debug for JsBreakStatement {
     }
 }
 impl From<JsBreakStatement> for SyntaxNode {
-    fn from(n: JsBreakStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsBreakStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsBreakStatement> for SyntaxElement {
-    fn from(n: JsBreakStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsBreakStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsCallArguments {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CALL_ARGUMENTS }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CALL_ARGUMENTS
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3752,7 +4314,9 @@ impl AstNode for JsCallArguments {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsCallArguments {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3770,13 +4334,19 @@ impl std::fmt::Debug for JsCallArguments {
     }
 }
 impl From<JsCallArguments> for SyntaxNode {
-    fn from(n: JsCallArguments) -> SyntaxNode { n.syntax }
+    fn from(n: JsCallArguments) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsCallArguments> for SyntaxElement {
-    fn from(n: JsCallArguments) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsCallArguments) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsCallExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CALL_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CALL_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3784,7 +4354,9 @@ impl AstNode for JsCallExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsCallExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3803,13 +4375,19 @@ impl std::fmt::Debug for JsCallExpression {
     }
 }
 impl From<JsCallExpression> for SyntaxNode {
-    fn from(n: JsCallExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsCallExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsCallExpression> for SyntaxElement {
-    fn from(n: JsCallExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsCallExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsCaseClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CASE_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CASE_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3817,7 +4395,9 @@ impl AstNode for JsCaseClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsCaseClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3833,13 +4413,19 @@ impl std::fmt::Debug for JsCaseClause {
     }
 }
 impl From<JsCaseClause> for SyntaxNode {
-    fn from(n: JsCaseClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsCaseClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsCaseClause> for SyntaxElement {
-    fn from(n: JsCaseClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsCaseClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsCatchClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CATCH_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CATCH_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3847,7 +4433,9 @@ impl AstNode for JsCatchClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsCatchClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3865,13 +4453,19 @@ impl std::fmt::Debug for JsCatchClause {
     }
 }
 impl From<JsCatchClause> for SyntaxNode {
-    fn from(n: JsCatchClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsCatchClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsCatchClause> for SyntaxElement {
-    fn from(n: JsCatchClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsCatchClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsCatchDeclaration {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CATCH_DECLARATION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CATCH_DECLARATION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3879,7 +4473,9 @@ impl AstNode for JsCatchDeclaration {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsCatchDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3897,13 +4493,19 @@ impl std::fmt::Debug for JsCatchDeclaration {
     }
 }
 impl From<JsCatchDeclaration> for SyntaxNode {
-    fn from(n: JsCatchDeclaration) -> SyntaxNode { n.syntax }
+    fn from(n: JsCatchDeclaration) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsCatchDeclaration> for SyntaxElement {
-    fn from(n: JsCatchDeclaration) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsCatchDeclaration) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsClassExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CLASS_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CLASS_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3911,7 +4513,9 @@ impl AstNode for JsClassExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsClassExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3942,13 +4546,19 @@ impl std::fmt::Debug for JsClassExpression {
     }
 }
 impl From<JsClassExpression> for SyntaxNode {
-    fn from(n: JsClassExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsClassExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsClassExpression> for SyntaxElement {
-    fn from(n: JsClassExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsClassExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsClassStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CLASS_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CLASS_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -3956,7 +4566,9 @@ impl AstNode for JsClassStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsClassStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -3987,13 +4599,19 @@ impl std::fmt::Debug for JsClassStatement {
     }
 }
 impl From<JsClassStatement> for SyntaxNode {
-    fn from(n: JsClassStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsClassStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsClassStatement> for SyntaxElement {
-    fn from(n: JsClassStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsClassStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsComputedMemberAssignment {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_ASSIGNMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_COMPUTED_MEMBER_ASSIGNMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4001,7 +4619,9 @@ impl AstNode for JsComputedMemberAssignment {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsComputedMemberAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4020,13 +4640,19 @@ impl std::fmt::Debug for JsComputedMemberAssignment {
     }
 }
 impl From<JsComputedMemberAssignment> for SyntaxNode {
-    fn from(n: JsComputedMemberAssignment) -> SyntaxNode { n.syntax }
+    fn from(n: JsComputedMemberAssignment) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsComputedMemberAssignment> for SyntaxElement {
-    fn from(n: JsComputedMemberAssignment) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsComputedMemberAssignment) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsComputedMemberExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_COMPUTED_MEMBER_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4034,7 +4660,9 @@ impl AstNode for JsComputedMemberExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsComputedMemberExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4057,13 +4685,19 @@ impl std::fmt::Debug for JsComputedMemberExpression {
     }
 }
 impl From<JsComputedMemberExpression> for SyntaxNode {
-    fn from(n: JsComputedMemberExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsComputedMemberExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsComputedMemberExpression> for SyntaxElement {
-    fn from(n: JsComputedMemberExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsComputedMemberExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsComputedMemberName {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_NAME }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_COMPUTED_MEMBER_NAME
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4071,7 +4705,9 @@ impl AstNode for JsComputedMemberName {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsComputedMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4089,13 +4725,19 @@ impl std::fmt::Debug for JsComputedMemberName {
     }
 }
 impl From<JsComputedMemberName> for SyntaxNode {
-    fn from(n: JsComputedMemberName) -> SyntaxNode { n.syntax }
+    fn from(n: JsComputedMemberName) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsComputedMemberName> for SyntaxElement {
-    fn from(n: JsComputedMemberName) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsComputedMemberName) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsConditionalExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CONDITIONAL_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CONDITIONAL_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4103,7 +4745,9 @@ impl AstNode for JsConditionalExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsConditionalExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4123,13 +4767,19 @@ impl std::fmt::Debug for JsConditionalExpression {
     }
 }
 impl From<JsConditionalExpression> for SyntaxNode {
-    fn from(n: JsConditionalExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsConditionalExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsConditionalExpression> for SyntaxElement {
-    fn from(n: JsConditionalExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsConditionalExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsConstructorClassMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CONSTRUCTOR_CLASS_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CONSTRUCTOR_CLASS_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4137,7 +4787,9 @@ impl AstNode for JsConstructorClassMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsConstructorClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4157,13 +4809,19 @@ impl std::fmt::Debug for JsConstructorClassMember {
     }
 }
 impl From<JsConstructorClassMember> for SyntaxNode {
-    fn from(n: JsConstructorClassMember) -> SyntaxNode { n.syntax }
+    fn from(n: JsConstructorClassMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsConstructorClassMember> for SyntaxElement {
-    fn from(n: JsConstructorClassMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsConstructorClassMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsConstructorParameters {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CONSTRUCTOR_PARAMETERS }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CONSTRUCTOR_PARAMETERS
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4171,7 +4829,9 @@ impl AstNode for JsConstructorParameters {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsConstructorParameters {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4189,13 +4849,19 @@ impl std::fmt::Debug for JsConstructorParameters {
     }
 }
 impl From<JsConstructorParameters> for SyntaxNode {
-    fn from(n: JsConstructorParameters) -> SyntaxNode { n.syntax }
+    fn from(n: JsConstructorParameters) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsConstructorParameters> for SyntaxElement {
-    fn from(n: JsConstructorParameters) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsConstructorParameters) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsContinueStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CONTINUE_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CONTINUE_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4203,7 +4869,9 @@ impl AstNode for JsContinueStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsContinueStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4224,13 +4892,19 @@ impl std::fmt::Debug for JsContinueStatement {
     }
 }
 impl From<JsContinueStatement> for SyntaxNode {
-    fn from(n: JsContinueStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsContinueStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsContinueStatement> for SyntaxElement {
-    fn from(n: JsContinueStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsContinueStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsDebuggerStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_DEBUGGER_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_DEBUGGER_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4238,7 +4912,9 @@ impl AstNode for JsDebuggerStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsDebuggerStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4255,13 +4931,19 @@ impl std::fmt::Debug for JsDebuggerStatement {
     }
 }
 impl From<JsDebuggerStatement> for SyntaxNode {
-    fn from(n: JsDebuggerStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsDebuggerStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsDebuggerStatement> for SyntaxElement {
-    fn from(n: JsDebuggerStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsDebuggerStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsDefaultClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_DEFAULT_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_DEFAULT_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4269,7 +4951,9 @@ impl AstNode for JsDefaultClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsDefaultClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4287,13 +4971,19 @@ impl std::fmt::Debug for JsDefaultClause {
     }
 }
 impl From<JsDefaultClause> for SyntaxNode {
-    fn from(n: JsDefaultClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsDefaultClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsDefaultClause> for SyntaxElement {
-    fn from(n: JsDefaultClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsDefaultClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsDefaultImportSpecifier {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_DEFAULT_IMPORT_SPECIFIER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_DEFAULT_IMPORT_SPECIFIER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4301,7 +4991,9 @@ impl AstNode for JsDefaultImportSpecifier {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsDefaultImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4315,13 +5007,19 @@ impl std::fmt::Debug for JsDefaultImportSpecifier {
     }
 }
 impl From<JsDefaultImportSpecifier> for SyntaxNode {
-    fn from(n: JsDefaultImportSpecifier) -> SyntaxNode { n.syntax }
+    fn from(n: JsDefaultImportSpecifier) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsDefaultImportSpecifier> for SyntaxElement {
-    fn from(n: JsDefaultImportSpecifier) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsDefaultImportSpecifier) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsDirective {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_DIRECTIVE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_DIRECTIVE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4329,7 +5027,9 @@ impl AstNode for JsDirective {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsDirective {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4346,13 +5046,19 @@ impl std::fmt::Debug for JsDirective {
     }
 }
 impl From<JsDirective> for SyntaxNode {
-    fn from(n: JsDirective) -> SyntaxNode { n.syntax }
+    fn from(n: JsDirective) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsDirective> for SyntaxElement {
-    fn from(n: JsDirective) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsDirective) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsDoWhileStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_DO_WHILE_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_DO_WHILE_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4360,7 +5066,9 @@ impl AstNode for JsDoWhileStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsDoWhileStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4388,13 +5096,19 @@ impl std::fmt::Debug for JsDoWhileStatement {
     }
 }
 impl From<JsDoWhileStatement> for SyntaxNode {
-    fn from(n: JsDoWhileStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsDoWhileStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsDoWhileStatement> for SyntaxElement {
-    fn from(n: JsDoWhileStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsDoWhileStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsElseClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ELSE_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_ELSE_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4402,7 +5116,9 @@ impl AstNode for JsElseClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsElseClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4413,13 +5129,19 @@ impl std::fmt::Debug for JsElseClause {
     }
 }
 impl From<JsElseClause> for SyntaxNode {
-    fn from(n: JsElseClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsElseClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsElseClause> for SyntaxElement {
-    fn from(n: JsElseClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsElseClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsEmptyClassMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EMPTY_CLASS_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EMPTY_CLASS_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4427,7 +5149,9 @@ impl AstNode for JsEmptyClassMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsEmptyClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4440,13 +5164,19 @@ impl std::fmt::Debug for JsEmptyClassMember {
     }
 }
 impl From<JsEmptyClassMember> for SyntaxNode {
-    fn from(n: JsEmptyClassMember) -> SyntaxNode { n.syntax }
+    fn from(n: JsEmptyClassMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsEmptyClassMember> for SyntaxElement {
-    fn from(n: JsEmptyClassMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsEmptyClassMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsEmptyStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EMPTY_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EMPTY_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4454,7 +5184,9 @@ impl AstNode for JsEmptyStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsEmptyStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4467,13 +5199,19 @@ impl std::fmt::Debug for JsEmptyStatement {
     }
 }
 impl From<JsEmptyStatement> for SyntaxNode {
-    fn from(n: JsEmptyStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsEmptyStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsEmptyStatement> for SyntaxElement {
-    fn from(n: JsEmptyStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsEmptyStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExport {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4481,7 +5219,9 @@ impl AstNode for JsExport {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExport {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4498,13 +5238,19 @@ impl std::fmt::Debug for JsExport {
     }
 }
 impl From<JsExport> for SyntaxNode {
-    fn from(n: JsExport) -> SyntaxNode { n.syntax }
+    fn from(n: JsExport) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExport> for SyntaxElement {
-    fn from(n: JsExport) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExport) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExportAsClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_AS_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_AS_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4512,7 +5258,9 @@ impl AstNode for JsExportAsClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExportAsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4526,13 +5274,19 @@ impl std::fmt::Debug for JsExportAsClause {
     }
 }
 impl From<JsExportAsClause> for SyntaxNode {
-    fn from(n: JsExportAsClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsExportAsClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExportAsClause> for SyntaxElement {
-    fn from(n: JsExportAsClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExportAsClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExportClassClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_CLASS_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_CLASS_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4540,7 +5294,9 @@ impl AstNode for JsExportClassClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExportClassClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4571,13 +5327,19 @@ impl std::fmt::Debug for JsExportClassClause {
     }
 }
 impl From<JsExportClassClause> for SyntaxNode {
-    fn from(n: JsExportClassClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsExportClassClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExportClassClause> for SyntaxElement {
-    fn from(n: JsExportClassClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExportClassClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExportDefaultClassClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_DEFAULT_CLASS_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_DEFAULT_CLASS_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4585,7 +5347,9 @@ impl AstNode for JsExportDefaultClassClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExportDefaultClassClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4620,13 +5384,19 @@ impl std::fmt::Debug for JsExportDefaultClassClause {
     }
 }
 impl From<JsExportDefaultClassClause> for SyntaxNode {
-    fn from(n: JsExportDefaultClassClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsExportDefaultClassClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExportDefaultClassClause> for SyntaxElement {
-    fn from(n: JsExportDefaultClassClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExportDefaultClassClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExportDefaultExpressionClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4634,7 +5404,9 @@ impl AstNode for JsExportDefaultExpressionClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExportDefaultExpressionClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4652,13 +5424,19 @@ impl std::fmt::Debug for JsExportDefaultExpressionClause {
     }
 }
 impl From<JsExportDefaultExpressionClause> for SyntaxNode {
-    fn from(n: JsExportDefaultExpressionClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsExportDefaultExpressionClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExportDefaultExpressionClause> for SyntaxElement {
-    fn from(n: JsExportDefaultExpressionClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExportDefaultExpressionClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExportDefaultFunctionClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_DEFAULT_FUNCTION_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_DEFAULT_FUNCTION_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4666,7 +5444,9 @@ impl AstNode for JsExportDefaultFunctionClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExportDefaultFunctionClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4702,13 +5482,19 @@ impl std::fmt::Debug for JsExportDefaultFunctionClause {
     }
 }
 impl From<JsExportDefaultFunctionClause> for SyntaxNode {
-    fn from(n: JsExportDefaultFunctionClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsExportDefaultFunctionClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExportDefaultFunctionClause> for SyntaxElement {
-    fn from(n: JsExportDefaultFunctionClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExportDefaultFunctionClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExportFromClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_FROM_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_FROM_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4716,7 +5502,9 @@ impl AstNode for JsExportFromClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExportFromClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4740,13 +5528,19 @@ impl std::fmt::Debug for JsExportFromClause {
     }
 }
 impl From<JsExportFromClause> for SyntaxNode {
-    fn from(n: JsExportFromClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsExportFromClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExportFromClause> for SyntaxElement {
-    fn from(n: JsExportFromClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExportFromClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExportFunctionClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_FUNCTION_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_FUNCTION_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4754,7 +5548,9 @@ impl AstNode for JsExportFunctionClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExportFunctionClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4786,13 +5582,19 @@ impl std::fmt::Debug for JsExportFunctionClause {
     }
 }
 impl From<JsExportFunctionClause> for SyntaxNode {
-    fn from(n: JsExportFunctionClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsExportFunctionClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExportFunctionClause> for SyntaxElement {
-    fn from(n: JsExportFunctionClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExportFunctionClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExportNamedClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_NAMED_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4800,7 +5602,9 @@ impl AstNode for JsExportNamedClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExportNamedClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4822,13 +5626,19 @@ impl std::fmt::Debug for JsExportNamedClause {
     }
 }
 impl From<JsExportNamedClause> for SyntaxNode {
-    fn from(n: JsExportNamedClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsExportNamedClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExportNamedClause> for SyntaxElement {
-    fn from(n: JsExportNamedClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExportNamedClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExportNamedFromClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_FROM_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_NAMED_FROM_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4836,7 +5646,9 @@ impl AstNode for JsExportNamedFromClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExportNamedFromClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4864,13 +5676,19 @@ impl std::fmt::Debug for JsExportNamedFromClause {
     }
 }
 impl From<JsExportNamedFromClause> for SyntaxNode {
-    fn from(n: JsExportNamedFromClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsExportNamedFromClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExportNamedFromClause> for SyntaxElement {
-    fn from(n: JsExportNamedFromClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExportNamedFromClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExportNamedFromSpecifier {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_FROM_SPECIFIER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_NAMED_FROM_SPECIFIER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4878,7 +5696,9 @@ impl AstNode for JsExportNamedFromSpecifier {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExportNamedFromSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4899,13 +5719,19 @@ impl std::fmt::Debug for JsExportNamedFromSpecifier {
     }
 }
 impl From<JsExportNamedFromSpecifier> for SyntaxNode {
-    fn from(n: JsExportNamedFromSpecifier) -> SyntaxNode { n.syntax }
+    fn from(n: JsExportNamedFromSpecifier) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExportNamedFromSpecifier> for SyntaxElement {
-    fn from(n: JsExportNamedFromSpecifier) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExportNamedFromSpecifier) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExportNamedShorthandSpecifier {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_SHORTHAND_SPECIFIER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_NAMED_SHORTHAND_SPECIFIER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4913,7 +5739,9 @@ impl AstNode for JsExportNamedShorthandSpecifier {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExportNamedShorthandSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4927,13 +5755,19 @@ impl std::fmt::Debug for JsExportNamedShorthandSpecifier {
     }
 }
 impl From<JsExportNamedShorthandSpecifier> for SyntaxNode {
-    fn from(n: JsExportNamedShorthandSpecifier) -> SyntaxNode { n.syntax }
+    fn from(n: JsExportNamedShorthandSpecifier) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExportNamedShorthandSpecifier> for SyntaxElement {
-    fn from(n: JsExportNamedShorthandSpecifier) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExportNamedShorthandSpecifier) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExportNamedSpecifier {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_SPECIFIER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_NAMED_SPECIFIER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4941,7 +5775,9 @@ impl AstNode for JsExportNamedSpecifier {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExportNamedSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4960,13 +5796,19 @@ impl std::fmt::Debug for JsExportNamedSpecifier {
     }
 }
 impl From<JsExportNamedSpecifier> for SyntaxNode {
-    fn from(n: JsExportNamedSpecifier) -> SyntaxNode { n.syntax }
+    fn from(n: JsExportNamedSpecifier) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExportNamedSpecifier> for SyntaxElement {
-    fn from(n: JsExportNamedSpecifier) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExportNamedSpecifier) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExportVariableClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_VARIABLE_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_VARIABLE_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4974,7 +5816,9 @@ impl AstNode for JsExportVariableClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExportVariableClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -4991,13 +5835,19 @@ impl std::fmt::Debug for JsExportVariableClause {
     }
 }
 impl From<JsExportVariableClause> for SyntaxNode {
-    fn from(n: JsExportVariableClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsExportVariableClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExportVariableClause> for SyntaxElement {
-    fn from(n: JsExportVariableClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExportVariableClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExpressionSnipped {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPRESSION_SNIPPED }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPRESSION_SNIPPED
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5005,7 +5855,9 @@ impl AstNode for JsExpressionSnipped {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExpressionSnipped {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5016,13 +5868,19 @@ impl std::fmt::Debug for JsExpressionSnipped {
     }
 }
 impl From<JsExpressionSnipped> for SyntaxNode {
-    fn from(n: JsExpressionSnipped) -> SyntaxNode { n.syntax }
+    fn from(n: JsExpressionSnipped) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExpressionSnipped> for SyntaxElement {
-    fn from(n: JsExpressionSnipped) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExpressionSnipped) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExpressionStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPRESSION_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPRESSION_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5030,7 +5888,9 @@ impl AstNode for JsExpressionStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExpressionStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5044,13 +5904,19 @@ impl std::fmt::Debug for JsExpressionStatement {
     }
 }
 impl From<JsExpressionStatement> for SyntaxNode {
-    fn from(n: JsExpressionStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsExpressionStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExpressionStatement> for SyntaxElement {
-    fn from(n: JsExpressionStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExpressionStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsExtendsClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXTENDS_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXTENDS_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5058,7 +5924,9 @@ impl AstNode for JsExtendsClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsExtendsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5075,13 +5943,19 @@ impl std::fmt::Debug for JsExtendsClause {
     }
 }
 impl From<JsExtendsClause> for SyntaxNode {
-    fn from(n: JsExtendsClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsExtendsClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsExtendsClause> for SyntaxElement {
-    fn from(n: JsExtendsClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsExtendsClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsFinallyClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FINALLY_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_FINALLY_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5089,7 +5963,9 @@ impl AstNode for JsFinallyClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsFinallyClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5103,13 +5979,19 @@ impl std::fmt::Debug for JsFinallyClause {
     }
 }
 impl From<JsFinallyClause> for SyntaxNode {
-    fn from(n: JsFinallyClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsFinallyClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsFinallyClause> for SyntaxElement {
-    fn from(n: JsFinallyClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsFinallyClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsForInStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FOR_IN_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_FOR_IN_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5117,7 +5999,9 @@ impl AstNode for JsForInStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsForInStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5142,13 +6026,19 @@ impl std::fmt::Debug for JsForInStatement {
     }
 }
 impl From<JsForInStatement> for SyntaxNode {
-    fn from(n: JsForInStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsForInStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsForInStatement> for SyntaxElement {
-    fn from(n: JsForInStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsForInStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsForOfStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FOR_OF_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_FOR_OF_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5156,7 +6046,9 @@ impl AstNode for JsForOfStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsForOfStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5185,13 +6077,19 @@ impl std::fmt::Debug for JsForOfStatement {
     }
 }
 impl From<JsForOfStatement> for SyntaxNode {
-    fn from(n: JsForOfStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsForOfStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsForOfStatement> for SyntaxElement {
-    fn from(n: JsForOfStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsForOfStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsForStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FOR_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_FOR_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5199,7 +6097,9 @@ impl AstNode for JsForStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsForStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5232,13 +6132,19 @@ impl std::fmt::Debug for JsForStatement {
     }
 }
 impl From<JsForStatement> for SyntaxNode {
-    fn from(n: JsForStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsForStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsForStatement> for SyntaxElement {
-    fn from(n: JsForStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsForStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsForVariableDeclaration {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FOR_VARIABLE_DECLARATION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_FOR_VARIABLE_DECLARATION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5246,7 +6152,9 @@ impl AstNode for JsForVariableDeclaration {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsForVariableDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5260,13 +6168,19 @@ impl std::fmt::Debug for JsForVariableDeclaration {
     }
 }
 impl From<JsForVariableDeclaration> for SyntaxNode {
-    fn from(n: JsForVariableDeclaration) -> SyntaxNode { n.syntax }
+    fn from(n: JsForVariableDeclaration) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsForVariableDeclaration> for SyntaxElement {
-    fn from(n: JsForVariableDeclaration) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsForVariableDeclaration) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsFunctionBody {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FUNCTION_BODY }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_FUNCTION_BODY
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5274,7 +6188,9 @@ impl AstNode for JsFunctionBody {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsFunctionBody {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5293,13 +6209,19 @@ impl std::fmt::Debug for JsFunctionBody {
     }
 }
 impl From<JsFunctionBody> for SyntaxNode {
-    fn from(n: JsFunctionBody) -> SyntaxNode { n.syntax }
+    fn from(n: JsFunctionBody) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsFunctionBody> for SyntaxElement {
-    fn from(n: JsFunctionBody) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsFunctionBody) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsFunctionExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FUNCTION_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_FUNCTION_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5307,7 +6229,9 @@ impl AstNode for JsFunctionExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsFunctionExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5339,13 +6263,19 @@ impl std::fmt::Debug for JsFunctionExpression {
     }
 }
 impl From<JsFunctionExpression> for SyntaxNode {
-    fn from(n: JsFunctionExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsFunctionExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsFunctionExpression> for SyntaxElement {
-    fn from(n: JsFunctionExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsFunctionExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsFunctionStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FUNCTION_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_FUNCTION_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5353,7 +6283,9 @@ impl AstNode for JsFunctionStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsFunctionStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5385,13 +6317,19 @@ impl std::fmt::Debug for JsFunctionStatement {
     }
 }
 impl From<JsFunctionStatement> for SyntaxNode {
-    fn from(n: JsFunctionStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsFunctionStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsFunctionStatement> for SyntaxElement {
-    fn from(n: JsFunctionStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsFunctionStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsGetterClassMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_GETTER_CLASS_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_GETTER_CLASS_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5399,7 +6337,9 @@ impl AstNode for JsGetterClassMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsGetterClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5435,13 +6375,19 @@ impl std::fmt::Debug for JsGetterClassMember {
     }
 }
 impl From<JsGetterClassMember> for SyntaxNode {
-    fn from(n: JsGetterClassMember) -> SyntaxNode { n.syntax }
+    fn from(n: JsGetterClassMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsGetterClassMember> for SyntaxElement {
-    fn from(n: JsGetterClassMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsGetterClassMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsGetterObjectMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_GETTER_OBJECT_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_GETTER_OBJECT_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5449,7 +6395,9 @@ impl AstNode for JsGetterObjectMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsGetterObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5473,13 +6421,19 @@ impl std::fmt::Debug for JsGetterObjectMember {
     }
 }
 impl From<JsGetterObjectMember> for SyntaxNode {
-    fn from(n: JsGetterObjectMember) -> SyntaxNode { n.syntax }
+    fn from(n: JsGetterObjectMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsGetterObjectMember> for SyntaxElement {
-    fn from(n: JsGetterObjectMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsGetterObjectMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsIdentifierAssignment {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IDENTIFIER_ASSIGNMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IDENTIFIER_ASSIGNMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5487,7 +6441,9 @@ impl AstNode for JsIdentifierAssignment {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsIdentifierAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5497,13 +6453,19 @@ impl std::fmt::Debug for JsIdentifierAssignment {
     }
 }
 impl From<JsIdentifierAssignment> for SyntaxNode {
-    fn from(n: JsIdentifierAssignment) -> SyntaxNode { n.syntax }
+    fn from(n: JsIdentifierAssignment) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsIdentifierAssignment> for SyntaxElement {
-    fn from(n: JsIdentifierAssignment) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsIdentifierAssignment) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsIdentifierBinding {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IDENTIFIER_BINDING }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IDENTIFIER_BINDING
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5511,7 +6473,9 @@ impl AstNode for JsIdentifierBinding {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsIdentifierBinding {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5521,13 +6485,19 @@ impl std::fmt::Debug for JsIdentifierBinding {
     }
 }
 impl From<JsIdentifierBinding> for SyntaxNode {
-    fn from(n: JsIdentifierBinding) -> SyntaxNode { n.syntax }
+    fn from(n: JsIdentifierBinding) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsIdentifierBinding> for SyntaxElement {
-    fn from(n: JsIdentifierBinding) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsIdentifierBinding) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsIdentifierExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IDENTIFIER_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IDENTIFIER_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5535,7 +6505,9 @@ impl AstNode for JsIdentifierExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsIdentifierExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5545,13 +6517,19 @@ impl std::fmt::Debug for JsIdentifierExpression {
     }
 }
 impl From<JsIdentifierExpression> for SyntaxNode {
-    fn from(n: JsIdentifierExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsIdentifierExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsIdentifierExpression> for SyntaxElement {
-    fn from(n: JsIdentifierExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsIdentifierExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsIfStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IF_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IF_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5559,7 +6537,9 @@ impl AstNode for JsIfStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsIfStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5583,13 +6563,19 @@ impl std::fmt::Debug for JsIfStatement {
     }
 }
 impl From<JsIfStatement> for SyntaxNode {
-    fn from(n: JsIfStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsIfStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsIfStatement> for SyntaxElement {
-    fn from(n: JsIfStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsIfStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsImport {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IMPORT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5597,7 +6583,9 @@ impl AstNode for JsImport {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsImport {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5618,13 +6606,19 @@ impl std::fmt::Debug for JsImport {
     }
 }
 impl From<JsImport> for SyntaxNode {
-    fn from(n: JsImport) -> SyntaxNode { n.syntax }
+    fn from(n: JsImport) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsImport> for SyntaxElement {
-    fn from(n: JsImport) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsImport) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsImportAssertion {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_ASSERTION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IMPORT_ASSERTION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5632,7 +6626,9 @@ impl AstNode for JsImportAssertion {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsImportAssertion {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5654,13 +6650,19 @@ impl std::fmt::Debug for JsImportAssertion {
     }
 }
 impl From<JsImportAssertion> for SyntaxNode {
-    fn from(n: JsImportAssertion) -> SyntaxNode { n.syntax }
+    fn from(n: JsImportAssertion) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsImportAssertion> for SyntaxElement {
-    fn from(n: JsImportAssertion) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsImportAssertion) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsImportAssertionEntry {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_ASSERTION_ENTRY }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IMPORT_ASSERTION_ENTRY
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5668,7 +6670,9 @@ impl AstNode for JsImportAssertionEntry {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsImportAssertionEntry {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5686,13 +6690,19 @@ impl std::fmt::Debug for JsImportAssertionEntry {
     }
 }
 impl From<JsImportAssertionEntry> for SyntaxNode {
-    fn from(n: JsImportAssertionEntry) -> SyntaxNode { n.syntax }
+    fn from(n: JsImportAssertionEntry) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsImportAssertionEntry> for SyntaxElement {
-    fn from(n: JsImportAssertionEntry) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsImportAssertionEntry) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsImportBareClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_BARE_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IMPORT_BARE_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5700,7 +6710,9 @@ impl AstNode for JsImportBareClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsImportBareClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5714,13 +6726,19 @@ impl std::fmt::Debug for JsImportBareClause {
     }
 }
 impl From<JsImportBareClause> for SyntaxNode {
-    fn from(n: JsImportBareClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsImportBareClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsImportBareClause> for SyntaxElement {
-    fn from(n: JsImportBareClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsImportBareClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsImportCallExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_CALL_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IMPORT_CALL_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5728,7 +6746,9 @@ impl AstNode for JsImportCallExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsImportCallExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5742,13 +6762,19 @@ impl std::fmt::Debug for JsImportCallExpression {
     }
 }
 impl From<JsImportCallExpression> for SyntaxNode {
-    fn from(n: JsImportCallExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsImportCallExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsImportCallExpression> for SyntaxElement {
-    fn from(n: JsImportCallExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsImportCallExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsImportDefaultClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_DEFAULT_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IMPORT_DEFAULT_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5756,7 +6782,9 @@ impl AstNode for JsImportDefaultClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsImportDefaultClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5772,13 +6800,19 @@ impl std::fmt::Debug for JsImportDefaultClause {
     }
 }
 impl From<JsImportDefaultClause> for SyntaxNode {
-    fn from(n: JsImportDefaultClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsImportDefaultClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsImportDefaultClause> for SyntaxElement {
-    fn from(n: JsImportDefaultClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsImportDefaultClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsImportNamedClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_NAMED_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IMPORT_NAMED_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5786,7 +6820,9 @@ impl AstNode for JsImportNamedClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsImportNamedClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5809,13 +6845,19 @@ impl std::fmt::Debug for JsImportNamedClause {
     }
 }
 impl From<JsImportNamedClause> for SyntaxNode {
-    fn from(n: JsImportNamedClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsImportNamedClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsImportNamedClause> for SyntaxElement {
-    fn from(n: JsImportNamedClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsImportNamedClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsImportNamespaceClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_NAMESPACE_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IMPORT_NAMESPACE_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5823,7 +6865,9 @@ impl AstNode for JsImportNamespaceClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsImportNamespaceClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5841,13 +6885,19 @@ impl std::fmt::Debug for JsImportNamespaceClause {
     }
 }
 impl From<JsImportNamespaceClause> for SyntaxNode {
-    fn from(n: JsImportNamespaceClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsImportNamespaceClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsImportNamespaceClause> for SyntaxElement {
-    fn from(n: JsImportNamespaceClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsImportNamespaceClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsInExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IN_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IN_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5855,7 +6905,9 @@ impl AstNode for JsInExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsInExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5867,13 +6919,19 @@ impl std::fmt::Debug for JsInExpression {
     }
 }
 impl From<JsInExpression> for SyntaxNode {
-    fn from(n: JsInExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsInExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsInExpression> for SyntaxElement {
-    fn from(n: JsInExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsInExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsInitializerClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_INITIALIZER_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_INITIALIZER_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5881,7 +6939,9 @@ impl AstNode for JsInitializerClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsInitializerClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5892,13 +6952,19 @@ impl std::fmt::Debug for JsInitializerClause {
     }
 }
 impl From<JsInitializerClause> for SyntaxNode {
-    fn from(n: JsInitializerClause) -> SyntaxNode { n.syntax }
+    fn from(n: JsInitializerClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsInitializerClause> for SyntaxElement {
-    fn from(n: JsInitializerClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsInitializerClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsInstanceofExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_INSTANCEOF_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_INSTANCEOF_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5906,7 +6972,9 @@ impl AstNode for JsInstanceofExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsInstanceofExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5921,13 +6989,19 @@ impl std::fmt::Debug for JsInstanceofExpression {
     }
 }
 impl From<JsInstanceofExpression> for SyntaxNode {
-    fn from(n: JsInstanceofExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsInstanceofExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsInstanceofExpression> for SyntaxElement {
-    fn from(n: JsInstanceofExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsInstanceofExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsLabeledStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_LABELED_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_LABELED_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5935,7 +7009,9 @@ impl AstNode for JsLabeledStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsLabeledStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5953,13 +7029,19 @@ impl std::fmt::Debug for JsLabeledStatement {
     }
 }
 impl From<JsLabeledStatement> for SyntaxNode {
-    fn from(n: JsLabeledStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsLabeledStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsLabeledStatement> for SyntaxElement {
-    fn from(n: JsLabeledStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsLabeledStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsLiteralExportName {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_LITERAL_EXPORT_NAME }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_LITERAL_EXPORT_NAME
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5967,7 +7049,9 @@ impl AstNode for JsLiteralExportName {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsLiteralExportName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -5977,13 +7061,19 @@ impl std::fmt::Debug for JsLiteralExportName {
     }
 }
 impl From<JsLiteralExportName> for SyntaxNode {
-    fn from(n: JsLiteralExportName) -> SyntaxNode { n.syntax }
+    fn from(n: JsLiteralExportName) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsLiteralExportName> for SyntaxElement {
-    fn from(n: JsLiteralExportName) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsLiteralExportName) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsLiteralMemberName {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_LITERAL_MEMBER_NAME }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_LITERAL_MEMBER_NAME
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -5991,7 +7081,9 @@ impl AstNode for JsLiteralMemberName {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsLiteralMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6001,13 +7093,19 @@ impl std::fmt::Debug for JsLiteralMemberName {
     }
 }
 impl From<JsLiteralMemberName> for SyntaxNode {
-    fn from(n: JsLiteralMemberName) -> SyntaxNode { n.syntax }
+    fn from(n: JsLiteralMemberName) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsLiteralMemberName> for SyntaxElement {
-    fn from(n: JsLiteralMemberName) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsLiteralMemberName) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsLogicalExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_LOGICAL_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_LOGICAL_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6015,7 +7113,9 @@ impl AstNode for JsLogicalExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsLogicalExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6027,13 +7127,19 @@ impl std::fmt::Debug for JsLogicalExpression {
     }
 }
 impl From<JsLogicalExpression> for SyntaxNode {
-    fn from(n: JsLogicalExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsLogicalExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsLogicalExpression> for SyntaxElement {
-    fn from(n: JsLogicalExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsLogicalExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsMethodClassMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_METHOD_CLASS_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_METHOD_CLASS_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6041,7 +7147,9 @@ impl AstNode for JsMethodClassMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsMethodClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6081,13 +7189,19 @@ impl std::fmt::Debug for JsMethodClassMember {
     }
 }
 impl From<JsMethodClassMember> for SyntaxNode {
-    fn from(n: JsMethodClassMember) -> SyntaxNode { n.syntax }
+    fn from(n: JsMethodClassMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsMethodClassMember> for SyntaxElement {
-    fn from(n: JsMethodClassMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsMethodClassMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsMethodObjectMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_METHOD_OBJECT_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_METHOD_OBJECT_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6095,7 +7209,9 @@ impl AstNode for JsMethodObjectMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsMethodObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6123,13 +7239,19 @@ impl std::fmt::Debug for JsMethodObjectMember {
     }
 }
 impl From<JsMethodObjectMember> for SyntaxNode {
-    fn from(n: JsMethodObjectMember) -> SyntaxNode { n.syntax }
+    fn from(n: JsMethodObjectMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsMethodObjectMember> for SyntaxElement {
-    fn from(n: JsMethodObjectMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsMethodObjectMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsModule {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_MODULE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_MODULE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6137,7 +7259,9 @@ impl AstNode for JsModule {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsModule {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6153,13 +7277,19 @@ impl std::fmt::Debug for JsModule {
     }
 }
 impl From<JsModule> for SyntaxNode {
-    fn from(n: JsModule) -> SyntaxNode { n.syntax }
+    fn from(n: JsModule) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsModule> for SyntaxElement {
-    fn from(n: JsModule) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsModule) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsModuleSource {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_MODULE_SOURCE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_MODULE_SOURCE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6167,7 +7297,9 @@ impl AstNode for JsModuleSource {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsModuleSource {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6180,13 +7312,19 @@ impl std::fmt::Debug for JsModuleSource {
     }
 }
 impl From<JsModuleSource> for SyntaxNode {
-    fn from(n: JsModuleSource) -> SyntaxNode { n.syntax }
+    fn from(n: JsModuleSource) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsModuleSource> for SyntaxElement {
-    fn from(n: JsModuleSource) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsModuleSource) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsName {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NAME }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_NAME
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6194,7 +7332,9 @@ impl AstNode for JsName {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6207,13 +7347,19 @@ impl std::fmt::Debug for JsName {
     }
 }
 impl From<JsName> for SyntaxNode {
-    fn from(n: JsName) -> SyntaxNode { n.syntax }
+    fn from(n: JsName) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsName> for SyntaxElement {
-    fn from(n: JsName) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsName) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsNamedImportSpecifier {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NAMED_IMPORT_SPECIFIER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_NAMED_IMPORT_SPECIFIER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6221,7 +7367,9 @@ impl AstNode for JsNamedImportSpecifier {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsNamedImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6233,13 +7381,19 @@ impl std::fmt::Debug for JsNamedImportSpecifier {
     }
 }
 impl From<JsNamedImportSpecifier> for SyntaxNode {
-    fn from(n: JsNamedImportSpecifier) -> SyntaxNode { n.syntax }
+    fn from(n: JsNamedImportSpecifier) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsNamedImportSpecifier> for SyntaxElement {
-    fn from(n: JsNamedImportSpecifier) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsNamedImportSpecifier) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsNamedImportSpecifiers {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NAMED_IMPORT_SPECIFIERS }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_NAMED_IMPORT_SPECIFIERS
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6247,7 +7401,9 @@ impl AstNode for JsNamedImportSpecifiers {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsNamedImportSpecifiers {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6265,13 +7421,19 @@ impl std::fmt::Debug for JsNamedImportSpecifiers {
     }
 }
 impl From<JsNamedImportSpecifiers> for SyntaxNode {
-    fn from(n: JsNamedImportSpecifiers) -> SyntaxNode { n.syntax }
+    fn from(n: JsNamedImportSpecifiers) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsNamedImportSpecifiers> for SyntaxElement {
-    fn from(n: JsNamedImportSpecifiers) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsNamedImportSpecifiers) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsNamespaceImportSpecifier {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NAMESPACE_IMPORT_SPECIFIER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_NAMESPACE_IMPORT_SPECIFIER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6279,7 +7441,9 @@ impl AstNode for JsNamespaceImportSpecifier {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsNamespaceImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6291,13 +7455,19 @@ impl std::fmt::Debug for JsNamespaceImportSpecifier {
     }
 }
 impl From<JsNamespaceImportSpecifier> for SyntaxNode {
-    fn from(n: JsNamespaceImportSpecifier) -> SyntaxNode { n.syntax }
+    fn from(n: JsNamespaceImportSpecifier) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsNamespaceImportSpecifier> for SyntaxElement {
-    fn from(n: JsNamespaceImportSpecifier) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsNamespaceImportSpecifier) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsNewExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NEW_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_NEW_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6305,7 +7475,9 @@ impl AstNode for JsNewExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsNewExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6324,13 +7496,19 @@ impl std::fmt::Debug for JsNewExpression {
     }
 }
 impl From<JsNewExpression> for SyntaxNode {
-    fn from(n: JsNewExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsNewExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsNewExpression> for SyntaxElement {
-    fn from(n: JsNewExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsNewExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsNullLiteralExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NULL_LITERAL_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_NULL_LITERAL_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6338,7 +7516,9 @@ impl AstNode for JsNullLiteralExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsNullLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6351,13 +7531,19 @@ impl std::fmt::Debug for JsNullLiteralExpression {
     }
 }
 impl From<JsNullLiteralExpression> for SyntaxNode {
-    fn from(n: JsNullLiteralExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsNullLiteralExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsNullLiteralExpression> for SyntaxElement {
-    fn from(n: JsNullLiteralExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsNullLiteralExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsNumberLiteralExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NUMBER_LITERAL_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_NUMBER_LITERAL_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6365,7 +7551,9 @@ impl AstNode for JsNumberLiteralExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsNumberLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6378,13 +7566,19 @@ impl std::fmt::Debug for JsNumberLiteralExpression {
     }
 }
 impl From<JsNumberLiteralExpression> for SyntaxNode {
-    fn from(n: JsNumberLiteralExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsNumberLiteralExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsNumberLiteralExpression> for SyntaxElement {
-    fn from(n: JsNumberLiteralExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsNumberLiteralExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsObjectAssignmentPattern {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_OBJECT_ASSIGNMENT_PATTERN
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6392,7 +7586,9 @@ impl AstNode for JsObjectAssignmentPattern {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsObjectAssignmentPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6410,13 +7606,19 @@ impl std::fmt::Debug for JsObjectAssignmentPattern {
     }
 }
 impl From<JsObjectAssignmentPattern> for SyntaxNode {
-    fn from(n: JsObjectAssignmentPattern) -> SyntaxNode { n.syntax }
+    fn from(n: JsObjectAssignmentPattern) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsObjectAssignmentPattern> for SyntaxElement {
-    fn from(n: JsObjectAssignmentPattern) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsObjectAssignmentPattern) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsObjectAssignmentPatternProperty {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6424,7 +7626,9 @@ impl AstNode for JsObjectAssignmentPatternProperty {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsObjectAssignmentPatternProperty {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6440,13 +7644,19 @@ impl std::fmt::Debug for JsObjectAssignmentPatternProperty {
     }
 }
 impl From<JsObjectAssignmentPatternProperty> for SyntaxNode {
-    fn from(n: JsObjectAssignmentPatternProperty) -> SyntaxNode { n.syntax }
+    fn from(n: JsObjectAssignmentPatternProperty) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsObjectAssignmentPatternProperty> for SyntaxElement {
-    fn from(n: JsObjectAssignmentPatternProperty) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsObjectAssignmentPatternProperty) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsObjectAssignmentPatternRest {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN_REST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_OBJECT_ASSIGNMENT_PATTERN_REST
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6454,7 +7664,9 @@ impl AstNode for JsObjectAssignmentPatternRest {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsObjectAssignmentPatternRest {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6468,10 +7680,14 @@ impl std::fmt::Debug for JsObjectAssignmentPatternRest {
     }
 }
 impl From<JsObjectAssignmentPatternRest> for SyntaxNode {
-    fn from(n: JsObjectAssignmentPatternRest) -> SyntaxNode { n.syntax }
+    fn from(n: JsObjectAssignmentPatternRest) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsObjectAssignmentPatternRest> for SyntaxElement {
-    fn from(n: JsObjectAssignmentPatternRest) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsObjectAssignmentPatternRest) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsObjectAssignmentPatternShorthandProperty {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -6484,7 +7700,9 @@ impl AstNode for JsObjectAssignmentPatternShorthandProperty {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsObjectAssignmentPatternShorthandProperty {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6495,13 +7713,19 @@ impl std::fmt::Debug for JsObjectAssignmentPatternShorthandProperty {
     }
 }
 impl From<JsObjectAssignmentPatternShorthandProperty> for SyntaxNode {
-    fn from(n: JsObjectAssignmentPatternShorthandProperty) -> SyntaxNode { n.syntax }
+    fn from(n: JsObjectAssignmentPatternShorthandProperty) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsObjectAssignmentPatternShorthandProperty> for SyntaxElement {
-    fn from(n: JsObjectAssignmentPatternShorthandProperty) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsObjectAssignmentPatternShorthandProperty) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsObjectBindingPattern {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_OBJECT_BINDING_PATTERN
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6509,7 +7733,9 @@ impl AstNode for JsObjectBindingPattern {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsObjectBindingPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6527,13 +7753,19 @@ impl std::fmt::Debug for JsObjectBindingPattern {
     }
 }
 impl From<JsObjectBindingPattern> for SyntaxNode {
-    fn from(n: JsObjectBindingPattern) -> SyntaxNode { n.syntax }
+    fn from(n: JsObjectBindingPattern) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsObjectBindingPattern> for SyntaxElement {
-    fn from(n: JsObjectBindingPattern) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsObjectBindingPattern) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsObjectBindingPatternProperty {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_PROPERTY }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_OBJECT_BINDING_PATTERN_PROPERTY
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6541,7 +7773,9 @@ impl AstNode for JsObjectBindingPatternProperty {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsObjectBindingPatternProperty {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6557,13 +7791,19 @@ impl std::fmt::Debug for JsObjectBindingPatternProperty {
     }
 }
 impl From<JsObjectBindingPatternProperty> for SyntaxNode {
-    fn from(n: JsObjectBindingPatternProperty) -> SyntaxNode { n.syntax }
+    fn from(n: JsObjectBindingPatternProperty) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsObjectBindingPatternProperty> for SyntaxElement {
-    fn from(n: JsObjectBindingPatternProperty) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsObjectBindingPatternProperty) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsObjectBindingPatternRest {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_REST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_OBJECT_BINDING_PATTERN_REST
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6571,7 +7811,9 @@ impl AstNode for JsObjectBindingPatternRest {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsObjectBindingPatternRest {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6585,13 +7827,19 @@ impl std::fmt::Debug for JsObjectBindingPatternRest {
     }
 }
 impl From<JsObjectBindingPatternRest> for SyntaxNode {
-    fn from(n: JsObjectBindingPatternRest) -> SyntaxNode { n.syntax }
+    fn from(n: JsObjectBindingPatternRest) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsObjectBindingPatternRest> for SyntaxElement {
-    fn from(n: JsObjectBindingPatternRest) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsObjectBindingPatternRest) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsObjectBindingPatternShorthandProperty {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6599,7 +7847,9 @@ impl AstNode for JsObjectBindingPatternShorthandProperty {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsObjectBindingPatternShorthandProperty {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6610,13 +7860,19 @@ impl std::fmt::Debug for JsObjectBindingPatternShorthandProperty {
     }
 }
 impl From<JsObjectBindingPatternShorthandProperty> for SyntaxNode {
-    fn from(n: JsObjectBindingPatternShorthandProperty) -> SyntaxNode { n.syntax }
+    fn from(n: JsObjectBindingPatternShorthandProperty) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsObjectBindingPatternShorthandProperty> for SyntaxElement {
-    fn from(n: JsObjectBindingPatternShorthandProperty) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsObjectBindingPatternShorthandProperty) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsObjectExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_OBJECT_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6624,7 +7880,9 @@ impl AstNode for JsObjectExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsObjectExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6642,13 +7900,19 @@ impl std::fmt::Debug for JsObjectExpression {
     }
 }
 impl From<JsObjectExpression> for SyntaxNode {
-    fn from(n: JsObjectExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsObjectExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsObjectExpression> for SyntaxElement {
-    fn from(n: JsObjectExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsObjectExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsParameter {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PARAMETER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_PARAMETER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6656,7 +7920,9 @@ impl AstNode for JsParameter {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6674,13 +7940,19 @@ impl std::fmt::Debug for JsParameter {
     }
 }
 impl From<JsParameter> for SyntaxNode {
-    fn from(n: JsParameter) -> SyntaxNode { n.syntax }
+    fn from(n: JsParameter) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsParameter> for SyntaxElement {
-    fn from(n: JsParameter) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsParameter) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsParameters {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PARAMETERS }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_PARAMETERS
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6688,7 +7960,9 @@ impl AstNode for JsParameters {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsParameters {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6706,13 +7980,19 @@ impl std::fmt::Debug for JsParameters {
     }
 }
 impl From<JsParameters> for SyntaxNode {
-    fn from(n: JsParameters) -> SyntaxNode { n.syntax }
+    fn from(n: JsParameters) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsParameters> for SyntaxElement {
-    fn from(n: JsParameters) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsParameters) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsParenthesizedAssignment {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PARENTHESIZED_ASSIGNMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_PARENTHESIZED_ASSIGNMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6720,7 +8000,9 @@ impl AstNode for JsParenthesizedAssignment {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsParenthesizedAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6738,13 +8020,19 @@ impl std::fmt::Debug for JsParenthesizedAssignment {
     }
 }
 impl From<JsParenthesizedAssignment> for SyntaxNode {
-    fn from(n: JsParenthesizedAssignment) -> SyntaxNode { n.syntax }
+    fn from(n: JsParenthesizedAssignment) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsParenthesizedAssignment> for SyntaxElement {
-    fn from(n: JsParenthesizedAssignment) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsParenthesizedAssignment) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsParenthesizedExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PARENTHESIZED_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_PARENTHESIZED_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6752,7 +8040,9 @@ impl AstNode for JsParenthesizedExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsParenthesizedExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6770,13 +8060,19 @@ impl std::fmt::Debug for JsParenthesizedExpression {
     }
 }
 impl From<JsParenthesizedExpression> for SyntaxNode {
-    fn from(n: JsParenthesizedExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsParenthesizedExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsParenthesizedExpression> for SyntaxElement {
-    fn from(n: JsParenthesizedExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsParenthesizedExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsPostUpdateExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_POST_UPDATE_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_POST_UPDATE_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6784,7 +8080,9 @@ impl AstNode for JsPostUpdateExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsPostUpdateExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6795,13 +8093,19 @@ impl std::fmt::Debug for JsPostUpdateExpression {
     }
 }
 impl From<JsPostUpdateExpression> for SyntaxNode {
-    fn from(n: JsPostUpdateExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsPostUpdateExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsPostUpdateExpression> for SyntaxElement {
-    fn from(n: JsPostUpdateExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsPostUpdateExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsPreUpdateExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PRE_UPDATE_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_PRE_UPDATE_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6809,7 +8113,9 @@ impl AstNode for JsPreUpdateExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsPreUpdateExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6820,13 +8126,19 @@ impl std::fmt::Debug for JsPreUpdateExpression {
     }
 }
 impl From<JsPreUpdateExpression> for SyntaxNode {
-    fn from(n: JsPreUpdateExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsPreUpdateExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsPreUpdateExpression> for SyntaxElement {
-    fn from(n: JsPreUpdateExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsPreUpdateExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsPrivateClassMemberName {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PRIVATE_CLASS_MEMBER_NAME }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_PRIVATE_CLASS_MEMBER_NAME
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6834,7 +8146,9 @@ impl AstNode for JsPrivateClassMemberName {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsPrivateClassMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6845,13 +8159,19 @@ impl std::fmt::Debug for JsPrivateClassMemberName {
     }
 }
 impl From<JsPrivateClassMemberName> for SyntaxNode {
-    fn from(n: JsPrivateClassMemberName) -> SyntaxNode { n.syntax }
+    fn from(n: JsPrivateClassMemberName) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsPrivateClassMemberName> for SyntaxElement {
-    fn from(n: JsPrivateClassMemberName) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsPrivateClassMemberName) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsPrivateName {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PRIVATE_NAME }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_PRIVATE_NAME
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6859,7 +8179,9 @@ impl AstNode for JsPrivateName {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsPrivateName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6873,13 +8195,19 @@ impl std::fmt::Debug for JsPrivateName {
     }
 }
 impl From<JsPrivateName> for SyntaxNode {
-    fn from(n: JsPrivateName) -> SyntaxNode { n.syntax }
+    fn from(n: JsPrivateName) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsPrivateName> for SyntaxElement {
-    fn from(n: JsPrivateName) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsPrivateName) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsPropertyClassMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PROPERTY_CLASS_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_PROPERTY_CLASS_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6887,7 +8215,9 @@ impl AstNode for JsPropertyClassMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsPropertyClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6931,13 +8261,19 @@ impl std::fmt::Debug for JsPropertyClassMember {
     }
 }
 impl From<JsPropertyClassMember> for SyntaxNode {
-    fn from(n: JsPropertyClassMember) -> SyntaxNode { n.syntax }
+    fn from(n: JsPropertyClassMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsPropertyClassMember> for SyntaxElement {
-    fn from(n: JsPropertyClassMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsPropertyClassMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsPropertyObjectMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PROPERTY_OBJECT_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_PROPERTY_OBJECT_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6945,7 +8281,9 @@ impl AstNode for JsPropertyObjectMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsPropertyObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6960,13 +8298,19 @@ impl std::fmt::Debug for JsPropertyObjectMember {
     }
 }
 impl From<JsPropertyObjectMember> for SyntaxNode {
-    fn from(n: JsPropertyObjectMember) -> SyntaxNode { n.syntax }
+    fn from(n: JsPropertyObjectMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsPropertyObjectMember> for SyntaxElement {
-    fn from(n: JsPropertyObjectMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsPropertyObjectMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsReferenceIdentifier {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_REFERENCE_IDENTIFIER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_REFERENCE_IDENTIFIER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -6974,7 +8318,9 @@ impl AstNode for JsReferenceIdentifier {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsReferenceIdentifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -6987,13 +8333,19 @@ impl std::fmt::Debug for JsReferenceIdentifier {
     }
 }
 impl From<JsReferenceIdentifier> for SyntaxNode {
-    fn from(n: JsReferenceIdentifier) -> SyntaxNode { n.syntax }
+    fn from(n: JsReferenceIdentifier) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsReferenceIdentifier> for SyntaxElement {
-    fn from(n: JsReferenceIdentifier) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsReferenceIdentifier) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsRegexLiteralExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_REGEX_LITERAL_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_REGEX_LITERAL_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7001,7 +8353,9 @@ impl AstNode for JsRegexLiteralExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsRegexLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7014,13 +8368,19 @@ impl std::fmt::Debug for JsRegexLiteralExpression {
     }
 }
 impl From<JsRegexLiteralExpression> for SyntaxNode {
-    fn from(n: JsRegexLiteralExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsRegexLiteralExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsRegexLiteralExpression> for SyntaxElement {
-    fn from(n: JsRegexLiteralExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsRegexLiteralExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsRestParameter {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_REST_PARAMETER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_REST_PARAMETER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7028,7 +8388,9 @@ impl AstNode for JsRestParameter {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsRestParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7042,13 +8404,19 @@ impl std::fmt::Debug for JsRestParameter {
     }
 }
 impl From<JsRestParameter> for SyntaxNode {
-    fn from(n: JsRestParameter) -> SyntaxNode { n.syntax }
+    fn from(n: JsRestParameter) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsRestParameter> for SyntaxElement {
-    fn from(n: JsRestParameter) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsRestParameter) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsReturnStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_RETURN_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_RETURN_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7056,7 +8424,9 @@ impl AstNode for JsReturnStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsReturnStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7074,13 +8444,19 @@ impl std::fmt::Debug for JsReturnStatement {
     }
 }
 impl From<JsReturnStatement> for SyntaxNode {
-    fn from(n: JsReturnStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsReturnStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsReturnStatement> for SyntaxElement {
-    fn from(n: JsReturnStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsReturnStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsScript {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SCRIPT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_SCRIPT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7088,7 +8464,9 @@ impl AstNode for JsScript {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsScript {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7104,13 +8482,19 @@ impl std::fmt::Debug for JsScript {
     }
 }
 impl From<JsScript> for SyntaxNode {
-    fn from(n: JsScript) -> SyntaxNode { n.syntax }
+    fn from(n: JsScript) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsScript> for SyntaxElement {
-    fn from(n: JsScript) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsScript) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsSequenceExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SEQUENCE_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_SEQUENCE_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7118,7 +8502,9 @@ impl AstNode for JsSequenceExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsSequenceExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7133,13 +8519,19 @@ impl std::fmt::Debug for JsSequenceExpression {
     }
 }
 impl From<JsSequenceExpression> for SyntaxNode {
-    fn from(n: JsSequenceExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsSequenceExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsSequenceExpression> for SyntaxElement {
-    fn from(n: JsSequenceExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsSequenceExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsSetterClassMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SETTER_CLASS_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_SETTER_CLASS_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7147,7 +8539,9 @@ impl AstNode for JsSetterClassMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsSetterClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7180,13 +8574,19 @@ impl std::fmt::Debug for JsSetterClassMember {
     }
 }
 impl From<JsSetterClassMember> for SyntaxNode {
-    fn from(n: JsSetterClassMember) -> SyntaxNode { n.syntax }
+    fn from(n: JsSetterClassMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsSetterClassMember> for SyntaxElement {
-    fn from(n: JsSetterClassMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsSetterClassMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsSetterObjectMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SETTER_OBJECT_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_SETTER_OBJECT_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7194,7 +8594,9 @@ impl AstNode for JsSetterObjectMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsSetterObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7215,13 +8617,19 @@ impl std::fmt::Debug for JsSetterObjectMember {
     }
 }
 impl From<JsSetterObjectMember> for SyntaxNode {
-    fn from(n: JsSetterObjectMember) -> SyntaxNode { n.syntax }
+    fn from(n: JsSetterObjectMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsSetterObjectMember> for SyntaxElement {
-    fn from(n: JsSetterObjectMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsSetterObjectMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsShorthandNamedImportSpecifier {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SHORTHAND_NAMED_IMPORT_SPECIFIER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_SHORTHAND_NAMED_IMPORT_SPECIFIER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7229,7 +8637,9 @@ impl AstNode for JsShorthandNamedImportSpecifier {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsShorthandNamedImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7239,13 +8649,19 @@ impl std::fmt::Debug for JsShorthandNamedImportSpecifier {
     }
 }
 impl From<JsShorthandNamedImportSpecifier> for SyntaxNode {
-    fn from(n: JsShorthandNamedImportSpecifier) -> SyntaxNode { n.syntax }
+    fn from(n: JsShorthandNamedImportSpecifier) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsShorthandNamedImportSpecifier> for SyntaxElement {
-    fn from(n: JsShorthandNamedImportSpecifier) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsShorthandNamedImportSpecifier) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsShorthandPropertyObjectMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SHORTHAND_PROPERTY_OBJECT_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_SHORTHAND_PROPERTY_OBJECT_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7253,7 +8669,9 @@ impl AstNode for JsShorthandPropertyObjectMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsShorthandPropertyObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7263,13 +8681,19 @@ impl std::fmt::Debug for JsShorthandPropertyObjectMember {
     }
 }
 impl From<JsShorthandPropertyObjectMember> for SyntaxNode {
-    fn from(n: JsShorthandPropertyObjectMember) -> SyntaxNode { n.syntax }
+    fn from(n: JsShorthandPropertyObjectMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsShorthandPropertyObjectMember> for SyntaxElement {
-    fn from(n: JsShorthandPropertyObjectMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsShorthandPropertyObjectMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsSpread {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SPREAD }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_SPREAD
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7277,7 +8701,9 @@ impl AstNode for JsSpread {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsSpread {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7291,13 +8717,19 @@ impl std::fmt::Debug for JsSpread {
     }
 }
 impl From<JsSpread> for SyntaxNode {
-    fn from(n: JsSpread) -> SyntaxNode { n.syntax }
+    fn from(n: JsSpread) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsSpread> for SyntaxElement {
-    fn from(n: JsSpread) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsSpread) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsStaticInitializationBlockClassMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7305,7 +8737,9 @@ impl AstNode for JsStaticInitializationBlockClassMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsStaticInitializationBlockClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7327,13 +8761,19 @@ impl std::fmt::Debug for JsStaticInitializationBlockClassMember {
     }
 }
 impl From<JsStaticInitializationBlockClassMember> for SyntaxNode {
-    fn from(n: JsStaticInitializationBlockClassMember) -> SyntaxNode { n.syntax }
+    fn from(n: JsStaticInitializationBlockClassMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsStaticInitializationBlockClassMember> for SyntaxElement {
-    fn from(n: JsStaticInitializationBlockClassMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsStaticInitializationBlockClassMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsStaticMemberAssignment {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_STATIC_MEMBER_ASSIGNMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_STATIC_MEMBER_ASSIGNMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7341,7 +8781,9 @@ impl AstNode for JsStaticMemberAssignment {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsStaticMemberAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7353,13 +8795,19 @@ impl std::fmt::Debug for JsStaticMemberAssignment {
     }
 }
 impl From<JsStaticMemberAssignment> for SyntaxNode {
-    fn from(n: JsStaticMemberAssignment) -> SyntaxNode { n.syntax }
+    fn from(n: JsStaticMemberAssignment) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsStaticMemberAssignment> for SyntaxElement {
-    fn from(n: JsStaticMemberAssignment) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsStaticMemberAssignment) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsStaticMemberExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_STATIC_MEMBER_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_STATIC_MEMBER_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7367,7 +8815,9 @@ impl AstNode for JsStaticMemberExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsStaticMemberExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7379,13 +8829,19 @@ impl std::fmt::Debug for JsStaticMemberExpression {
     }
 }
 impl From<JsStaticMemberExpression> for SyntaxNode {
-    fn from(n: JsStaticMemberExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsStaticMemberExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsStaticMemberExpression> for SyntaxElement {
-    fn from(n: JsStaticMemberExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsStaticMemberExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsStringLiteralExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_STRING_LITERAL_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_STRING_LITERAL_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7393,7 +8849,9 @@ impl AstNode for JsStringLiteralExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsStringLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7406,13 +8864,19 @@ impl std::fmt::Debug for JsStringLiteralExpression {
     }
 }
 impl From<JsStringLiteralExpression> for SyntaxNode {
-    fn from(n: JsStringLiteralExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsStringLiteralExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsStringLiteralExpression> for SyntaxElement {
-    fn from(n: JsStringLiteralExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsStringLiteralExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsSuperExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SUPER_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_SUPER_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7420,7 +8884,9 @@ impl AstNode for JsSuperExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsSuperExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7433,13 +8899,19 @@ impl std::fmt::Debug for JsSuperExpression {
     }
 }
 impl From<JsSuperExpression> for SyntaxNode {
-    fn from(n: JsSuperExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsSuperExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsSuperExpression> for SyntaxElement {
-    fn from(n: JsSuperExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsSuperExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsSwitchStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SWITCH_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_SWITCH_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7447,7 +8919,9 @@ impl AstNode for JsSwitchStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsSwitchStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7481,13 +8955,19 @@ impl std::fmt::Debug for JsSwitchStatement {
     }
 }
 impl From<JsSwitchStatement> for SyntaxNode {
-    fn from(n: JsSwitchStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsSwitchStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsSwitchStatement> for SyntaxElement {
-    fn from(n: JsSwitchStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsSwitchStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsThisExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_THIS_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_THIS_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7495,7 +8975,9 @@ impl AstNode for JsThisExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsThisExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7505,13 +8987,19 @@ impl std::fmt::Debug for JsThisExpression {
     }
 }
 impl From<JsThisExpression> for SyntaxNode {
-    fn from(n: JsThisExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsThisExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsThisExpression> for SyntaxElement {
-    fn from(n: JsThisExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsThisExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsThrowStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_THROW_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_THROW_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7519,7 +9007,9 @@ impl AstNode for JsThrowStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsThrowStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7537,13 +9027,19 @@ impl std::fmt::Debug for JsThrowStatement {
     }
 }
 impl From<JsThrowStatement> for SyntaxNode {
-    fn from(n: JsThrowStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsThrowStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsThrowStatement> for SyntaxElement {
-    fn from(n: JsThrowStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsThrowStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsTryFinallyStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_TRY_FINALLY_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_TRY_FINALLY_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7551,7 +9047,9 @@ impl AstNode for JsTryFinallyStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsTryFinallyStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7570,13 +9068,19 @@ impl std::fmt::Debug for JsTryFinallyStatement {
     }
 }
 impl From<JsTryFinallyStatement> for SyntaxNode {
-    fn from(n: JsTryFinallyStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsTryFinallyStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsTryFinallyStatement> for SyntaxElement {
-    fn from(n: JsTryFinallyStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsTryFinallyStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsTryStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_TRY_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_TRY_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7584,7 +9088,9 @@ impl AstNode for JsTryStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsTryStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7599,13 +9105,19 @@ impl std::fmt::Debug for JsTryStatement {
     }
 }
 impl From<JsTryStatement> for SyntaxNode {
-    fn from(n: JsTryStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsTryStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsTryStatement> for SyntaxElement {
-    fn from(n: JsTryStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsTryStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsUnaryExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNARY_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_UNARY_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7613,7 +9125,9 @@ impl AstNode for JsUnaryExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsUnaryExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7624,13 +9138,19 @@ impl std::fmt::Debug for JsUnaryExpression {
     }
 }
 impl From<JsUnaryExpression> for SyntaxNode {
-    fn from(n: JsUnaryExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsUnaryExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsUnaryExpression> for SyntaxElement {
-    fn from(n: JsUnaryExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsUnaryExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsVariableDeclaration {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_VARIABLE_DECLARATION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7638,7 +9158,9 @@ impl AstNode for JsVariableDeclaration {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsVariableDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7660,13 +9182,19 @@ impl std::fmt::Debug for JsVariableDeclaration {
     }
 }
 impl From<JsVariableDeclaration> for SyntaxNode {
-    fn from(n: JsVariableDeclaration) -> SyntaxNode { n.syntax }
+    fn from(n: JsVariableDeclaration) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsVariableDeclaration> for SyntaxElement {
-    fn from(n: JsVariableDeclaration) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsVariableDeclaration) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsVariableDeclarations {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATIONS }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_VARIABLE_DECLARATIONS
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7674,7 +9202,9 @@ impl AstNode for JsVariableDeclarations {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsVariableDeclarations {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7685,13 +9215,19 @@ impl std::fmt::Debug for JsVariableDeclarations {
     }
 }
 impl From<JsVariableDeclarations> for SyntaxNode {
-    fn from(n: JsVariableDeclarations) -> SyntaxNode { n.syntax }
+    fn from(n: JsVariableDeclarations) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsVariableDeclarations> for SyntaxElement {
-    fn from(n: JsVariableDeclarations) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsVariableDeclarations) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsVariableStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_VARIABLE_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_VARIABLE_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7699,7 +9235,9 @@ impl AstNode for JsVariableStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsVariableStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7716,13 +9254,19 @@ impl std::fmt::Debug for JsVariableStatement {
     }
 }
 impl From<JsVariableStatement> for SyntaxNode {
-    fn from(n: JsVariableStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsVariableStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsVariableStatement> for SyntaxElement {
-    fn from(n: JsVariableStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsVariableStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsWhileStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_WHILE_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_WHILE_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7730,7 +9274,9 @@ impl AstNode for JsWhileStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsWhileStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7753,13 +9299,19 @@ impl std::fmt::Debug for JsWhileStatement {
     }
 }
 impl From<JsWhileStatement> for SyntaxNode {
-    fn from(n: JsWhileStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsWhileStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsWhileStatement> for SyntaxElement {
-    fn from(n: JsWhileStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsWhileStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsWithStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_WITH_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_WITH_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7767,7 +9319,9 @@ impl AstNode for JsWithStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsWithStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7787,13 +9341,19 @@ impl std::fmt::Debug for JsWithStatement {
     }
 }
 impl From<JsWithStatement> for SyntaxNode {
-    fn from(n: JsWithStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsWithStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsWithStatement> for SyntaxElement {
-    fn from(n: JsWithStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsWithStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsYieldArgument {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_YIELD_ARGUMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_YIELD_ARGUMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7801,7 +9361,9 @@ impl AstNode for JsYieldArgument {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsYieldArgument {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7815,13 +9377,19 @@ impl std::fmt::Debug for JsYieldArgument {
     }
 }
 impl From<JsYieldArgument> for SyntaxNode {
-    fn from(n: JsYieldArgument) -> SyntaxNode { n.syntax }
+    fn from(n: JsYieldArgument) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsYieldArgument> for SyntaxElement {
-    fn from(n: JsYieldArgument) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsYieldArgument) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for JsYieldExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_YIELD_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_YIELD_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7829,7 +9397,9 @@ impl AstNode for JsYieldExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsYieldExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7843,13 +9413,19 @@ impl std::fmt::Debug for JsYieldExpression {
     }
 }
 impl From<JsYieldExpression> for SyntaxNode {
-    fn from(n: JsYieldExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsYieldExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsYieldExpression> for SyntaxElement {
-    fn from(n: JsYieldExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsYieldExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for NewTarget {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == NEW_TARGET }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == NEW_TARGET
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7857,7 +9433,9 @@ impl AstNode for NewTarget {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for NewTarget {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7872,13 +9450,19 @@ impl std::fmt::Debug for NewTarget {
     }
 }
 impl From<NewTarget> for SyntaxNode {
-    fn from(n: NewTarget) -> SyntaxNode { n.syntax }
+    fn from(n: NewTarget) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<NewTarget> for SyntaxElement {
-    fn from(n: NewTarget) -> SyntaxElement { n.syntax.into() }
+    fn from(n: NewTarget) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for Template {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TEMPLATE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TEMPLATE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7886,7 +9470,9 @@ impl AstNode for Template {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for Template {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7905,13 +9491,19 @@ impl std::fmt::Debug for Template {
     }
 }
 impl From<Template> for SyntaxNode {
-    fn from(n: Template) -> SyntaxNode { n.syntax }
+    fn from(n: Template) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<Template> for SyntaxElement {
-    fn from(n: Template) -> SyntaxElement { n.syntax.into() }
+    fn from(n: Template) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TemplateChunkElement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TEMPLATE_CHUNK_ELEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TEMPLATE_CHUNK_ELEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7919,7 +9511,9 @@ impl AstNode for TemplateChunkElement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TemplateChunkElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7932,13 +9526,19 @@ impl std::fmt::Debug for TemplateChunkElement {
     }
 }
 impl From<TemplateChunkElement> for SyntaxNode {
-    fn from(n: TemplateChunkElement) -> SyntaxNode { n.syntax }
+    fn from(n: TemplateChunkElement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TemplateChunkElement> for SyntaxElement {
-    fn from(n: TemplateChunkElement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TemplateChunkElement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TemplateElement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TEMPLATE_ELEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TEMPLATE_ELEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7946,7 +9546,9 @@ impl AstNode for TemplateElement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TemplateElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7964,13 +9566,19 @@ impl std::fmt::Debug for TemplateElement {
     }
 }
 impl From<TemplateElement> for SyntaxNode {
-    fn from(n: TemplateElement) -> SyntaxNode { n.syntax }
+    fn from(n: TemplateElement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TemplateElement> for SyntaxElement {
-    fn from(n: TemplateElement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TemplateElement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsAny {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ANY }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_ANY
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -7978,7 +9586,9 @@ impl AstNode for TsAny {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsAny {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -7988,13 +9598,19 @@ impl std::fmt::Debug for TsAny {
     }
 }
 impl From<TsAny> for SyntaxNode {
-    fn from(n: TsAny) -> SyntaxNode { n.syntax }
+    fn from(n: TsAny) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsAny> for SyntaxElement {
-    fn from(n: TsAny) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsAny) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsArray {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ARRAY }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_ARRAY
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8002,7 +9618,9 @@ impl AstNode for TsArray {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsArray {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8020,13 +9638,19 @@ impl std::fmt::Debug for TsArray {
     }
 }
 impl From<TsArray> for SyntaxNode {
-    fn from(n: TsArray) -> SyntaxNode { n.syntax }
+    fn from(n: TsArray) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsArray> for SyntaxElement {
-    fn from(n: TsArray) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsArray) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsAssertion {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ASSERTION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_ASSERTION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8034,7 +9658,9 @@ impl AstNode for TsAssertion {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsAssertion {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8054,13 +9680,19 @@ impl std::fmt::Debug for TsAssertion {
     }
 }
 impl From<TsAssertion> for SyntaxNode {
-    fn from(n: TsAssertion) -> SyntaxNode { n.syntax }
+    fn from(n: TsAssertion) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsAssertion> for SyntaxElement {
-    fn from(n: TsAssertion) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsAssertion) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsBigint {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_BIGINT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_BIGINT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8068,7 +9700,9 @@ impl AstNode for TsBigint {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsBigint {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8078,13 +9712,19 @@ impl std::fmt::Debug for TsBigint {
     }
 }
 impl From<TsBigint> for SyntaxNode {
-    fn from(n: TsBigint) -> SyntaxNode { n.syntax }
+    fn from(n: TsBigint) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsBigint> for SyntaxElement {
-    fn from(n: TsBigint) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsBigint) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsBoolean {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_BOOLEAN }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_BOOLEAN
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8092,7 +9732,9 @@ impl AstNode for TsBoolean {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsBoolean {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8102,13 +9744,19 @@ impl std::fmt::Debug for TsBoolean {
     }
 }
 impl From<TsBoolean> for SyntaxNode {
-    fn from(n: TsBoolean) -> SyntaxNode { n.syntax }
+    fn from(n: TsBoolean) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsBoolean> for SyntaxElement {
-    fn from(n: TsBoolean) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsBoolean) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsCallSignatureDecl {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CALL_SIGNATURE_DECL }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_CALL_SIGNATURE_DECL
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8116,7 +9764,9 @@ impl AstNode for TsCallSignatureDecl {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsCallSignatureDecl {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8138,13 +9788,19 @@ impl std::fmt::Debug for TsCallSignatureDecl {
     }
 }
 impl From<TsCallSignatureDecl> for SyntaxNode {
-    fn from(n: TsCallSignatureDecl) -> SyntaxNode { n.syntax }
+    fn from(n: TsCallSignatureDecl) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsCallSignatureDecl> for SyntaxElement {
-    fn from(n: TsCallSignatureDecl) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsCallSignatureDecl) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsConditionalType {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONDITIONAL_TYPE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_CONDITIONAL_TYPE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8152,7 +9808,9 @@ impl AstNode for TsConditionalType {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsConditionalType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8171,13 +9829,19 @@ impl std::fmt::Debug for TsConditionalType {
     }
 }
 impl From<TsConditionalType> for SyntaxNode {
-    fn from(n: TsConditionalType) -> SyntaxNode { n.syntax }
+    fn from(n: TsConditionalType) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsConditionalType> for SyntaxElement {
-    fn from(n: TsConditionalType) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsConditionalType) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsConstAssertion {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONST_ASSERTION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_CONST_ASSERTION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8185,7 +9849,9 @@ impl AstNode for TsConstAssertion {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsConstAssertion {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8208,13 +9874,19 @@ impl std::fmt::Debug for TsConstAssertion {
     }
 }
 impl From<TsConstAssertion> for SyntaxNode {
-    fn from(n: TsConstAssertion) -> SyntaxNode { n.syntax }
+    fn from(n: TsConstAssertion) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsConstAssertion> for SyntaxElement {
-    fn from(n: TsConstAssertion) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsConstAssertion) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsConstraint {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRAINT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_CONSTRAINT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8222,7 +9894,9 @@ impl AstNode for TsConstraint {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsConstraint {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8236,13 +9910,19 @@ impl std::fmt::Debug for TsConstraint {
     }
 }
 impl From<TsConstraint> for SyntaxNode {
-    fn from(n: TsConstraint) -> SyntaxNode { n.syntax }
+    fn from(n: TsConstraint) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsConstraint> for SyntaxElement {
-    fn from(n: TsConstraint) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsConstraint) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsConstructSignatureDecl {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCT_SIGNATURE_DECL }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_CONSTRUCT_SIGNATURE_DECL
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8250,7 +9930,9 @@ impl AstNode for TsConstructSignatureDecl {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsConstructSignatureDecl {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8273,13 +9955,19 @@ impl std::fmt::Debug for TsConstructSignatureDecl {
     }
 }
 impl From<TsConstructSignatureDecl> for SyntaxNode {
-    fn from(n: TsConstructSignatureDecl) -> SyntaxNode { n.syntax }
+    fn from(n: TsConstructSignatureDecl) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsConstructSignatureDecl> for SyntaxElement {
-    fn from(n: TsConstructSignatureDecl) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsConstructSignatureDecl) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsConstructorParam {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCTOR_PARAM }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_CONSTRUCTOR_PARAM
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8287,7 +9975,9 @@ impl AstNode for TsConstructorParam {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsConstructorParam {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8313,13 +10003,19 @@ impl std::fmt::Debug for TsConstructorParam {
     }
 }
 impl From<TsConstructorParam> for SyntaxNode {
-    fn from(n: TsConstructorParam) -> SyntaxNode { n.syntax }
+    fn from(n: TsConstructorParam) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsConstructorParam> for SyntaxElement {
-    fn from(n: TsConstructorParam) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsConstructorParam) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsConstructorType {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCTOR_TYPE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_CONSTRUCTOR_TYPE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8327,7 +10023,9 @@ impl AstNode for TsConstructorType {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsConstructorType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8346,13 +10044,19 @@ impl std::fmt::Debug for TsConstructorType {
     }
 }
 impl From<TsConstructorType> for SyntaxNode {
-    fn from(n: TsConstructorType) -> SyntaxNode { n.syntax }
+    fn from(n: TsConstructorType) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsConstructorType> for SyntaxElement {
-    fn from(n: TsConstructorType) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsConstructorType) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsDefault {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_DEFAULT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_DEFAULT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8360,7 +10064,9 @@ impl AstNode for TsDefault {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsDefault {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8371,13 +10077,19 @@ impl std::fmt::Debug for TsDefault {
     }
 }
 impl From<TsDefault> for SyntaxNode {
-    fn from(n: TsDefault) -> SyntaxNode { n.syntax }
+    fn from(n: TsDefault) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsDefault> for SyntaxElement {
-    fn from(n: TsDefault) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsDefault) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsEnum {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ENUM }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_ENUM
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8385,7 +10097,9 @@ impl AstNode for TsEnum {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsEnum {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8409,13 +10123,19 @@ impl std::fmt::Debug for TsEnum {
     }
 }
 impl From<TsEnum> for SyntaxNode {
-    fn from(n: TsEnum) -> SyntaxNode { n.syntax }
+    fn from(n: TsEnum) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsEnum> for SyntaxElement {
-    fn from(n: TsEnum) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsEnum) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsEnumMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ENUM_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_ENUM_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8423,7 +10143,9 @@ impl AstNode for TsEnumMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsEnumMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8435,13 +10157,19 @@ impl std::fmt::Debug for TsEnumMember {
     }
 }
 impl From<TsEnumMember> for SyntaxNode {
-    fn from(n: TsEnumMember) -> SyntaxNode { n.syntax }
+    fn from(n: TsEnumMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsEnumMember> for SyntaxElement {
-    fn from(n: TsEnumMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsEnumMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsExprWithTypeArgs {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXPR_WITH_TYPE_ARGS }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_EXPR_WITH_TYPE_ARGS
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8449,7 +10177,9 @@ impl AstNode for TsExprWithTypeArgs {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsExprWithTypeArgs {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8463,13 +10193,19 @@ impl std::fmt::Debug for TsExprWithTypeArgs {
     }
 }
 impl From<TsExprWithTypeArgs> for SyntaxNode {
-    fn from(n: TsExprWithTypeArgs) -> SyntaxNode { n.syntax }
+    fn from(n: TsExprWithTypeArgs) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsExprWithTypeArgs> for SyntaxElement {
-    fn from(n: TsExprWithTypeArgs) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsExprWithTypeArgs) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsExtends {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXTENDS }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_EXTENDS
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8477,7 +10213,9 @@ impl AstNode for TsExtends {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsExtends {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8491,13 +10229,19 @@ impl std::fmt::Debug for TsExtends {
     }
 }
 impl From<TsExtends> for SyntaxNode {
-    fn from(n: TsExtends) -> SyntaxNode { n.syntax }
+    fn from(n: TsExtends) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsExtends> for SyntaxElement {
-    fn from(n: TsExtends) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsExtends) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsExternalModuleRef {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXTERNAL_MODULE_REF }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_EXTERNAL_MODULE_REF
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8505,7 +10249,9 @@ impl AstNode for TsExternalModuleRef {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsExternalModuleRef {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8530,13 +10276,19 @@ impl std::fmt::Debug for TsExternalModuleRef {
     }
 }
 impl From<TsExternalModuleRef> for SyntaxNode {
-    fn from(n: TsExternalModuleRef) -> SyntaxNode { n.syntax }
+    fn from(n: TsExternalModuleRef) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsExternalModuleRef> for SyntaxElement {
-    fn from(n: TsExternalModuleRef) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsExternalModuleRef) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsFnType {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_FN_TYPE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_FN_TYPE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8544,7 +10296,9 @@ impl AstNode for TsFnType {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsFnType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8562,13 +10316,19 @@ impl std::fmt::Debug for TsFnType {
     }
 }
 impl From<TsFnType> for SyntaxNode {
-    fn from(n: TsFnType) -> SyntaxNode { n.syntax }
+    fn from(n: TsFnType) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsFnType> for SyntaxElement {
-    fn from(n: TsFnType) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsFnType) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsImplementsClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_IMPLEMENTS_CLAUSE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_IMPLEMENTS_CLAUSE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8576,7 +10336,9 @@ impl AstNode for TsImplementsClause {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsImplementsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8590,13 +10352,19 @@ impl std::fmt::Debug for TsImplementsClause {
     }
 }
 impl From<TsImplementsClause> for SyntaxNode {
-    fn from(n: TsImplementsClause) -> SyntaxNode { n.syntax }
+    fn from(n: TsImplementsClause) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsImplementsClause> for SyntaxElement {
-    fn from(n: TsImplementsClause) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsImplementsClause) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsImport {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_IMPORT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_IMPORT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8604,7 +10372,9 @@ impl AstNode for TsImport {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsImport {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8631,13 +10401,19 @@ impl std::fmt::Debug for TsImport {
     }
 }
 impl From<TsImport> for SyntaxNode {
-    fn from(n: TsImport) -> SyntaxNode { n.syntax }
+    fn from(n: TsImport) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsImport> for SyntaxElement {
-    fn from(n: TsImport) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsImport) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsImportEqualsDecl {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_IMPORT_EQUALS_DECL }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_IMPORT_EQUALS_DECL
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8645,7 +10421,9 @@ impl AstNode for TsImportEqualsDecl {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsImportEqualsDecl {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8669,13 +10447,19 @@ impl std::fmt::Debug for TsImportEqualsDecl {
     }
 }
 impl From<TsImportEqualsDecl> for SyntaxNode {
-    fn from(n: TsImportEqualsDecl) -> SyntaxNode { n.syntax }
+    fn from(n: TsImportEqualsDecl) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsImportEqualsDecl> for SyntaxElement {
-    fn from(n: TsImportEqualsDecl) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsImportEqualsDecl) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsIndexSignature {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_INDEX_SIGNATURE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8683,7 +10467,9 @@ impl AstNode for TsIndexSignature {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsIndexSignature {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8710,13 +10496,19 @@ impl std::fmt::Debug for TsIndexSignature {
     }
 }
 impl From<TsIndexSignature> for SyntaxNode {
-    fn from(n: TsIndexSignature) -> SyntaxNode { n.syntax }
+    fn from(n: TsIndexSignature) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsIndexSignature> for SyntaxElement {
-    fn from(n: TsIndexSignature) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsIndexSignature) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsIndexedArray {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INDEXED_ARRAY }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_INDEXED_ARRAY
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8724,7 +10516,9 @@ impl AstNode for TsIndexedArray {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsIndexedArray {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8742,13 +10536,19 @@ impl std::fmt::Debug for TsIndexedArray {
     }
 }
 impl From<TsIndexedArray> for SyntaxNode {
-    fn from(n: TsIndexedArray) -> SyntaxNode { n.syntax }
+    fn from(n: TsIndexedArray) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsIndexedArray> for SyntaxElement {
-    fn from(n: TsIndexedArray) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsIndexedArray) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsInfer {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INFER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_INFER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8756,7 +10556,9 @@ impl AstNode for TsInfer {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsInfer {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8770,13 +10572,19 @@ impl std::fmt::Debug for TsInfer {
     }
 }
 impl From<TsInfer> for SyntaxNode {
-    fn from(n: TsInfer) -> SyntaxNode { n.syntax }
+    fn from(n: TsInfer) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsInfer> for SyntaxElement {
-    fn from(n: TsInfer) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsInfer) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsIntersection {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INTERSECTION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_INTERSECTION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8784,7 +10592,9 @@ impl AstNode for TsIntersection {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsIntersection {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8794,13 +10604,19 @@ impl std::fmt::Debug for TsIntersection {
     }
 }
 impl From<TsIntersection> for SyntaxNode {
-    fn from(n: TsIntersection) -> SyntaxNode { n.syntax }
+    fn from(n: TsIntersection) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsIntersection> for SyntaxElement {
-    fn from(n: TsIntersection) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsIntersection) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsLiteral {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_LITERAL }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_LITERAL
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8808,7 +10624,9 @@ impl AstNode for TsLiteral {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsLiteral {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8818,13 +10636,19 @@ impl std::fmt::Debug for TsLiteral {
     }
 }
 impl From<TsLiteral> for SyntaxNode {
-    fn from(n: TsLiteral) -> SyntaxNode { n.syntax }
+    fn from(n: TsLiteral) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsLiteral> for SyntaxElement {
-    fn from(n: TsLiteral) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsLiteral) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsMappedType {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_MAPPED_TYPE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_MAPPED_TYPE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8832,7 +10656,9 @@ impl AstNode for TsMappedType {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsMappedType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8875,13 +10701,19 @@ impl std::fmt::Debug for TsMappedType {
     }
 }
 impl From<TsMappedType> for SyntaxNode {
-    fn from(n: TsMappedType) -> SyntaxNode { n.syntax }
+    fn from(n: TsMappedType) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsMappedType> for SyntaxElement {
-    fn from(n: TsMappedType) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsMappedType) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsMappedTypeParam {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_MAPPED_TYPE_PARAM }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_MAPPED_TYPE_PARAM
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8889,7 +10721,9 @@ impl AstNode for TsMappedTypeParam {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsMappedTypeParam {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8909,13 +10743,19 @@ impl std::fmt::Debug for TsMappedTypeParam {
     }
 }
 impl From<TsMappedTypeParam> for SyntaxNode {
-    fn from(n: TsMappedTypeParam) -> SyntaxNode { n.syntax }
+    fn from(n: TsMappedTypeParam) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsMappedTypeParam> for SyntaxElement {
-    fn from(n: TsMappedTypeParam) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsMappedTypeParam) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsMappedTypeReadonly {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_MAPPED_TYPE_READONLY }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_MAPPED_TYPE_READONLY
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8923,7 +10763,9 @@ impl AstNode for TsMappedTypeReadonly {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsMappedTypeReadonly {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8944,13 +10786,19 @@ impl std::fmt::Debug for TsMappedTypeReadonly {
     }
 }
 impl From<TsMappedTypeReadonly> for SyntaxNode {
-    fn from(n: TsMappedTypeReadonly) -> SyntaxNode { n.syntax }
+    fn from(n: TsMappedTypeReadonly) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsMappedTypeReadonly> for SyntaxElement {
-    fn from(n: TsMappedTypeReadonly) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsMappedTypeReadonly) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsMethodSignature {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_METHOD_SIGNATURE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_METHOD_SIGNATURE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8958,7 +10806,9 @@ impl AstNode for TsMethodSignature {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsMethodSignature {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8989,13 +10839,19 @@ impl std::fmt::Debug for TsMethodSignature {
     }
 }
 impl From<TsMethodSignature> for SyntaxNode {
-    fn from(n: TsMethodSignature) -> SyntaxNode { n.syntax }
+    fn from(n: TsMethodSignature) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsMethodSignature> for SyntaxElement {
-    fn from(n: TsMethodSignature) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsMethodSignature) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsNever {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NEVER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_NEVER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9003,7 +10859,9 @@ impl AstNode for TsNever {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsNever {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9016,13 +10874,19 @@ impl std::fmt::Debug for TsNever {
     }
 }
 impl From<TsNever> for SyntaxNode {
-    fn from(n: TsNever) -> SyntaxNode { n.syntax }
+    fn from(n: TsNever) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsNever> for SyntaxElement {
-    fn from(n: TsNever) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsNever) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsNonNull {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NON_NULL }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_NON_NULL
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9030,7 +10894,9 @@ impl AstNode for TsNonNull {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsNonNull {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9041,13 +10907,19 @@ impl std::fmt::Debug for TsNonNull {
     }
 }
 impl From<TsNonNull> for SyntaxNode {
-    fn from(n: TsNonNull) -> SyntaxNode { n.syntax }
+    fn from(n: TsNonNull) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsNonNull> for SyntaxElement {
-    fn from(n: TsNonNull) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsNonNull) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsNull {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NULL }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_NULL
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9055,7 +10927,9 @@ impl AstNode for TsNull {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsNull {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9065,13 +10939,19 @@ impl std::fmt::Debug for TsNull {
     }
 }
 impl From<TsNull> for SyntaxNode {
-    fn from(n: TsNull) -> SyntaxNode { n.syntax }
+    fn from(n: TsNull) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsNull> for SyntaxElement {
-    fn from(n: TsNull) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsNull) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsNumber {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NUMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_NUMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9079,7 +10959,9 @@ impl AstNode for TsNumber {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsNumber {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9089,13 +10971,19 @@ impl std::fmt::Debug for TsNumber {
     }
 }
 impl From<TsNumber> for SyntaxNode {
-    fn from(n: TsNumber) -> SyntaxNode { n.syntax }
+    fn from(n: TsNumber) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsNumber> for SyntaxElement {
-    fn from(n: TsNumber) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsNumber) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsObject {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_OBJECT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_OBJECT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9103,7 +10991,9 @@ impl AstNode for TsObject {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsObject {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9113,13 +11003,19 @@ impl std::fmt::Debug for TsObject {
     }
 }
 impl From<TsObject> for SyntaxNode {
-    fn from(n: TsObject) -> SyntaxNode { n.syntax }
+    fn from(n: TsObject) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsObject> for SyntaxElement {
-    fn from(n: TsObject) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsObject) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsObjectType {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_OBJECT_TYPE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_OBJECT_TYPE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9127,7 +11023,9 @@ impl AstNode for TsObjectType {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsObjectType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9145,13 +11043,19 @@ impl std::fmt::Debug for TsObjectType {
     }
 }
 impl From<TsObjectType> for SyntaxNode {
-    fn from(n: TsObjectType) -> SyntaxNode { n.syntax }
+    fn from(n: TsObjectType) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsObjectType> for SyntaxElement {
-    fn from(n: TsObjectType) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsObjectType) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsParen {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PAREN }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_PAREN
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9159,7 +11063,9 @@ impl AstNode for TsParen {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsParen {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9177,13 +11083,19 @@ impl std::fmt::Debug for TsParen {
     }
 }
 impl From<TsParen> for SyntaxNode {
-    fn from(n: TsParen) -> SyntaxNode { n.syntax }
+    fn from(n: TsParen) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsParen> for SyntaxElement {
-    fn from(n: TsParen) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsParen) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsPredicate {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PREDICATE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_PREDICATE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9191,7 +11103,9 @@ impl AstNode for TsPredicate {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsPredicate {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9202,13 +11116,19 @@ impl std::fmt::Debug for TsPredicate {
     }
 }
 impl From<TsPredicate> for SyntaxNode {
-    fn from(n: TsPredicate) -> SyntaxNode { n.syntax }
+    fn from(n: TsPredicate) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsPredicate> for SyntaxElement {
-    fn from(n: TsPredicate) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsPredicate) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsPropertySignature {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PROPERTY_SIGNATURE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_PROPERTY_SIGNATURE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9216,7 +11136,9 @@ impl AstNode for TsPropertySignature {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsPropertySignature {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9239,13 +11161,19 @@ impl std::fmt::Debug for TsPropertySignature {
     }
 }
 impl From<TsPropertySignature> for SyntaxNode {
-    fn from(n: TsPropertySignature) -> SyntaxNode { n.syntax }
+    fn from(n: TsPropertySignature) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsPropertySignature> for SyntaxElement {
-    fn from(n: TsPropertySignature) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsPropertySignature) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsQualifiedPath {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_QUALIFIED_PATH }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_QUALIFIED_PATH
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9253,7 +11181,9 @@ impl AstNode for TsQualifiedPath {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsQualifiedPath {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9265,13 +11195,19 @@ impl std::fmt::Debug for TsQualifiedPath {
     }
 }
 impl From<TsQualifiedPath> for SyntaxNode {
-    fn from(n: TsQualifiedPath) -> SyntaxNode { n.syntax }
+    fn from(n: TsQualifiedPath) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsQualifiedPath> for SyntaxElement {
-    fn from(n: TsQualifiedPath) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsQualifiedPath) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsString {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_STRING }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_STRING
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9279,23 +11215,34 @@ impl AstNode for TsString {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsString {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsString")
-            .field("ident", &support::DebugSyntaxResult(self.ident()))
+            .field(
+                "ident_token",
+                &support::DebugSyntaxResult(self.ident_token()),
+            )
             .finish()
     }
 }
 impl From<TsString> for SyntaxNode {
-    fn from(n: TsString) -> SyntaxNode { n.syntax }
+    fn from(n: TsString) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsString> for SyntaxElement {
-    fn from(n: TsString) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsString) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsSymbol {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_SYMBOL }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_SYMBOL
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9303,7 +11250,9 @@ impl AstNode for TsSymbol {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsSymbol {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9313,13 +11262,19 @@ impl std::fmt::Debug for TsSymbol {
     }
 }
 impl From<TsSymbol> for SyntaxNode {
-    fn from(n: TsSymbol) -> SyntaxNode { n.syntax }
+    fn from(n: TsSymbol) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsSymbol> for SyntaxElement {
-    fn from(n: TsSymbol) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsSymbol) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsTemplate {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TEMPLATE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TEMPLATE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9327,7 +11282,9 @@ impl AstNode for TsTemplate {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsTemplate {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9337,13 +11294,19 @@ impl std::fmt::Debug for TsTemplate {
     }
 }
 impl From<TsTemplate> for SyntaxNode {
-    fn from(n: TsTemplate) -> SyntaxNode { n.syntax }
+    fn from(n: TsTemplate) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsTemplate> for SyntaxElement {
-    fn from(n: TsTemplate) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsTemplate) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsTemplateElement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TEMPLATE_ELEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TEMPLATE_ELEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9351,7 +11314,9 @@ impl AstNode for TsTemplateElement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsTemplateElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9365,13 +11330,19 @@ impl std::fmt::Debug for TsTemplateElement {
     }
 }
 impl From<TsTemplateElement> for SyntaxNode {
-    fn from(n: TsTemplateElement) -> SyntaxNode { n.syntax }
+    fn from(n: TsTemplateElement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsTemplateElement> for SyntaxElement {
-    fn from(n: TsTemplateElement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsTemplateElement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsThis {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_THIS }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_THIS
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9379,7 +11350,9 @@ impl AstNode for TsThis {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsThis {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9389,13 +11362,19 @@ impl std::fmt::Debug for TsThis {
     }
 }
 impl From<TsThis> for SyntaxNode {
-    fn from(n: TsThis) -> SyntaxNode { n.syntax }
+    fn from(n: TsThis) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsThis> for SyntaxElement {
-    fn from(n: TsThis) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsThis) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsTuple {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TUPLE }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TUPLE
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9403,7 +11382,9 @@ impl AstNode for TsTuple {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsTuple {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9421,13 +11402,19 @@ impl std::fmt::Debug for TsTuple {
     }
 }
 impl From<TsTuple> for SyntaxNode {
-    fn from(n: TsTuple) -> SyntaxNode { n.syntax }
+    fn from(n: TsTuple) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsTuple> for SyntaxElement {
-    fn from(n: TsTuple) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsTuple) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsTupleElement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TUPLE_ELEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TUPLE_ELEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9435,7 +11422,9 @@ impl AstNode for TsTupleElement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsTupleElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9458,13 +11447,19 @@ impl std::fmt::Debug for TsTupleElement {
     }
 }
 impl From<TsTupleElement> for SyntaxNode {
-    fn from(n: TsTupleElement) -> SyntaxNode { n.syntax }
+    fn from(n: TsTupleElement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsTupleElement> for SyntaxElement {
-    fn from(n: TsTupleElement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsTupleElement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsTypeAnnotation {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ANNOTATION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TYPE_ANNOTATION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9472,7 +11467,9 @@ impl AstNode for TsTypeAnnotation {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsTypeAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9486,13 +11483,19 @@ impl std::fmt::Debug for TsTypeAnnotation {
     }
 }
 impl From<TsTypeAnnotation> for SyntaxNode {
-    fn from(n: TsTypeAnnotation) -> SyntaxNode { n.syntax }
+    fn from(n: TsTypeAnnotation) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsTypeAnnotation> for SyntaxElement {
-    fn from(n: TsTypeAnnotation) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsTypeAnnotation) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsTypeArgs {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ARGS }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TYPE_ARGS
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9500,7 +11503,9 @@ impl AstNode for TsTypeArgs {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsTypeArgs {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9518,13 +11523,19 @@ impl std::fmt::Debug for TsTypeArgs {
     }
 }
 impl From<TsTypeArgs> for SyntaxNode {
-    fn from(n: TsTypeArgs) -> SyntaxNode { n.syntax }
+    fn from(n: TsTypeArgs) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsTypeArgs> for SyntaxElement {
-    fn from(n: TsTypeArgs) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsTypeArgs) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsTypeName {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_NAME }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TYPE_NAME
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9532,7 +11543,9 @@ impl AstNode for TsTypeName {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsTypeName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9545,13 +11558,19 @@ impl std::fmt::Debug for TsTypeName {
     }
 }
 impl From<TsTypeName> for SyntaxNode {
-    fn from(n: TsTypeName) -> SyntaxNode { n.syntax }
+    fn from(n: TsTypeName) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsTypeName> for SyntaxElement {
-    fn from(n: TsTypeName) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsTypeName) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsTypeOperator {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_OPERATOR }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TYPE_OPERATOR
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9559,7 +11578,9 @@ impl AstNode for TsTypeOperator {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsTypeOperator {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9569,13 +11590,19 @@ impl std::fmt::Debug for TsTypeOperator {
     }
 }
 impl From<TsTypeOperator> for SyntaxNode {
-    fn from(n: TsTypeOperator) -> SyntaxNode { n.syntax }
+    fn from(n: TsTypeOperator) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsTypeOperator> for SyntaxElement {
-    fn from(n: TsTypeOperator) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsTypeOperator) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsTypeParam {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_PARAM }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TYPE_PARAM
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9583,7 +11610,9 @@ impl AstNode for TsTypeParam {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsTypeParam {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9595,13 +11624,19 @@ impl std::fmt::Debug for TsTypeParam {
     }
 }
 impl From<TsTypeParam> for SyntaxNode {
-    fn from(n: TsTypeParam) -> SyntaxNode { n.syntax }
+    fn from(n: TsTypeParam) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsTypeParam> for SyntaxElement {
-    fn from(n: TsTypeParam) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsTypeParam) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsTypeParams {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_PARAMS }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TYPE_PARAMS
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9609,7 +11644,9 @@ impl AstNode for TsTypeParams {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsTypeParams {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9627,13 +11664,19 @@ impl std::fmt::Debug for TsTypeParams {
     }
 }
 impl From<TsTypeParams> for SyntaxNode {
-    fn from(n: TsTypeParams) -> SyntaxNode { n.syntax }
+    fn from(n: TsTypeParams) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsTypeParams> for SyntaxElement {
-    fn from(n: TsTypeParams) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsTypeParams) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsTypeRef {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_REF }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TYPE_REF
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9641,7 +11684,9 @@ impl AstNode for TsTypeRef {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsTypeRef {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9652,13 +11697,19 @@ impl std::fmt::Debug for TsTypeRef {
     }
 }
 impl From<TsTypeRef> for SyntaxNode {
-    fn from(n: TsTypeRef) -> SyntaxNode { n.syntax }
+    fn from(n: TsTypeRef) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsTypeRef> for SyntaxElement {
-    fn from(n: TsTypeRef) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsTypeRef) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsUndefined {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_UNDEFINED }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_UNDEFINED
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9666,7 +11717,9 @@ impl AstNode for TsUndefined {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsUndefined {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9679,13 +11732,19 @@ impl std::fmt::Debug for TsUndefined {
     }
 }
 impl From<TsUndefined> for SyntaxNode {
-    fn from(n: TsUndefined) -> SyntaxNode { n.syntax }
+    fn from(n: TsUndefined) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsUndefined> for SyntaxElement {
-    fn from(n: TsUndefined) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsUndefined) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsUnion {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_UNION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_UNION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9693,7 +11752,9 @@ impl AstNode for TsUnion {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsUnion {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9703,13 +11764,19 @@ impl std::fmt::Debug for TsUnion {
     }
 }
 impl From<TsUnion> for SyntaxNode {
-    fn from(n: TsUnion) -> SyntaxNode { n.syntax }
+    fn from(n: TsUnion) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsUnion> for SyntaxElement {
-    fn from(n: TsUnion) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsUnion) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsUnknown {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_UNKNOWN }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_UNKNOWN
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9717,7 +11784,9 @@ impl AstNode for TsUnknown {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsUnknown {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9730,13 +11799,19 @@ impl std::fmt::Debug for TsUnknown {
     }
 }
 impl From<TsUnknown> for SyntaxNode {
-    fn from(n: TsUnknown) -> SyntaxNode { n.syntax }
+    fn from(n: TsUnknown) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsUnknown> for SyntaxElement {
-    fn from(n: TsUnknown) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsUnknown) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl AstNode for TsVoid {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_VOID }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_VOID
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9744,7 +11819,9 @@ impl AstNode for TsVoid {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for TsVoid {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -9754,10 +11831,14 @@ impl std::fmt::Debug for TsVoid {
     }
 }
 impl From<TsVoid> for SyntaxNode {
-    fn from(n: TsVoid) -> SyntaxNode { n.syntax }
+    fn from(n: TsVoid) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<TsVoid> for SyntaxElement {
-    fn from(n: TsVoid) -> SyntaxElement { n.syntax.into() }
+    fn from(n: TsVoid) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 impl From<JsImportBareClause> for AnyJsImportClause {
     fn from(node: JsImportBareClause) -> AnyJsImportClause {
@@ -9780,7 +11861,9 @@ impl From<JsImportNamespaceClause> for AnyJsImportClause {
     }
 }
 impl From<JsName> for AnyJsImportClause {
-    fn from(node: JsName) -> AnyJsImportClause { AnyJsImportClause::JsName(node) }
+    fn from(node: JsName) -> AnyJsImportClause {
+        AnyJsImportClause::JsName(node)
+    }
 }
 impl AstNode for AnyJsImportClause {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -10104,10 +12187,14 @@ impl From<JsAnyArrayBindingPatternElement> for SyntaxElement {
     }
 }
 impl From<JsArrayHole> for JsAnyArrayElement {
-    fn from(node: JsArrayHole) -> JsAnyArrayElement { JsAnyArrayElement::JsArrayHole(node) }
+    fn from(node: JsArrayHole) -> JsAnyArrayElement {
+        JsAnyArrayElement::JsArrayHole(node)
+    }
 }
 impl From<JsSpread> for JsAnyArrayElement {
-    fn from(node: JsSpread) -> JsAnyArrayElement { JsAnyArrayElement::JsSpread(node) }
+    fn from(node: JsSpread) -> JsAnyArrayElement {
+        JsAnyArrayElement::JsSpread(node)
+    }
 }
 impl AstNode for JsAnyArrayElement {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -10383,10 +12470,14 @@ impl From<JsAnyAssignmentPattern> for SyntaxElement {
     }
 }
 impl From<JsIdentifierBinding> for JsAnyBinding {
-    fn from(node: JsIdentifierBinding) -> JsAnyBinding { JsAnyBinding::JsIdentifierBinding(node) }
+    fn from(node: JsIdentifierBinding) -> JsAnyBinding {
+        JsAnyBinding::JsIdentifierBinding(node)
+    }
 }
 impl From<JsUnknownBinding> for JsAnyBinding {
-    fn from(node: JsUnknownBinding) -> JsAnyBinding { JsAnyBinding::JsUnknownBinding(node) }
+    fn from(node: JsUnknownBinding) -> JsAnyBinding {
+        JsAnyBinding::JsUnknownBinding(node)
+    }
 }
 impl AstNode for JsAnyBinding {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -10499,13 +12590,19 @@ impl From<JsAnyBindingPattern> for SyntaxElement {
     }
 }
 impl From<JsClassExpression> for JsAnyClass {
-    fn from(node: JsClassExpression) -> JsAnyClass { JsAnyClass::JsClassExpression(node) }
+    fn from(node: JsClassExpression) -> JsAnyClass {
+        JsAnyClass::JsClassExpression(node)
+    }
 }
 impl From<JsClassStatement> for JsAnyClass {
-    fn from(node: JsClassStatement) -> JsAnyClass { JsAnyClass::JsClassStatement(node) }
+    fn from(node: JsClassStatement) -> JsAnyClass {
+        JsAnyClass::JsClassStatement(node)
+    }
 }
 impl From<JsExportClassClause> for JsAnyClass {
-    fn from(node: JsExportClassClause) -> JsAnyClass { JsAnyClass::JsExportClassClause(node) }
+    fn from(node: JsExportClassClause) -> JsAnyClass {
+        JsAnyClass::JsExportClassClause(node)
+    }
 }
 impl From<JsExportDefaultClassClause> for JsAnyClass {
     fn from(node: JsExportDefaultClassClause) -> JsAnyClass {
@@ -10607,10 +12704,14 @@ impl From<JsStaticInitializationBlockClassMember> for JsAnyClassMember {
     }
 }
 impl From<JsUnknownMember> for JsAnyClassMember {
-    fn from(node: JsUnknownMember) -> JsAnyClassMember { JsAnyClassMember::JsUnknownMember(node) }
+    fn from(node: JsUnknownMember) -> JsAnyClassMember {
+        JsAnyClassMember::JsUnknownMember(node)
+    }
 }
 impl From<TsIndexSignature> for JsAnyClassMember {
-    fn from(node: TsIndexSignature) -> JsAnyClassMember { JsAnyClassMember::TsIndexSignature(node) }
+    fn from(node: TsIndexSignature) -> JsAnyClassMember {
+        JsAnyClassMember::TsIndexSignature(node)
+    }
 }
 impl AstNode for JsAnyClassMember {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -11056,10 +13157,14 @@ impl From<JsAnyExportNamedSpecifier> for SyntaxElement {
     }
 }
 impl From<ImportMeta> for JsAnyExpression {
-    fn from(node: ImportMeta) -> JsAnyExpression { JsAnyExpression::ImportMeta(node) }
+    fn from(node: ImportMeta) -> JsAnyExpression {
+        JsAnyExpression::ImportMeta(node)
+    }
 }
 impl From<JsArrayExpression> for JsAnyExpression {
-    fn from(node: JsArrayExpression) -> JsAnyExpression { JsAnyExpression::JsArrayExpression(node) }
+    fn from(node: JsArrayExpression) -> JsAnyExpression {
+        JsAnyExpression::JsArrayExpression(node)
+    }
 }
 impl From<JsArrowFunctionExpression> for JsAnyExpression {
     fn from(node: JsArrowFunctionExpression) -> JsAnyExpression {
@@ -11072,7 +13177,9 @@ impl From<JsAssignmentExpression> for JsAnyExpression {
     }
 }
 impl From<JsAwaitExpression> for JsAnyExpression {
-    fn from(node: JsAwaitExpression) -> JsAnyExpression { JsAnyExpression::JsAwaitExpression(node) }
+    fn from(node: JsAwaitExpression) -> JsAnyExpression {
+        JsAnyExpression::JsAwaitExpression(node)
+    }
 }
 impl From<JsBinaryExpression> for JsAnyExpression {
     fn from(node: JsBinaryExpression) -> JsAnyExpression {
@@ -11080,10 +13187,14 @@ impl From<JsBinaryExpression> for JsAnyExpression {
     }
 }
 impl From<JsCallExpression> for JsAnyExpression {
-    fn from(node: JsCallExpression) -> JsAnyExpression { JsAnyExpression::JsCallExpression(node) }
+    fn from(node: JsCallExpression) -> JsAnyExpression {
+        JsAnyExpression::JsCallExpression(node)
+    }
 }
 impl From<JsClassExpression> for JsAnyExpression {
-    fn from(node: JsClassExpression) -> JsAnyExpression { JsAnyExpression::JsClassExpression(node) }
+    fn from(node: JsClassExpression) -> JsAnyExpression {
+        JsAnyExpression::JsClassExpression(node)
+    }
 }
 impl From<JsComputedMemberExpression> for JsAnyExpression {
     fn from(node: JsComputedMemberExpression) -> JsAnyExpression {
@@ -11111,7 +13222,9 @@ impl From<JsImportCallExpression> for JsAnyExpression {
     }
 }
 impl From<JsInExpression> for JsAnyExpression {
-    fn from(node: JsInExpression) -> JsAnyExpression { JsAnyExpression::JsInExpression(node) }
+    fn from(node: JsInExpression) -> JsAnyExpression {
+        JsAnyExpression::JsInExpression(node)
+    }
 }
 impl From<JsInstanceofExpression> for JsAnyExpression {
     fn from(node: JsInstanceofExpression) -> JsAnyExpression {
@@ -11124,7 +13237,9 @@ impl From<JsLogicalExpression> for JsAnyExpression {
     }
 }
 impl From<JsNewExpression> for JsAnyExpression {
-    fn from(node: JsNewExpression) -> JsAnyExpression { JsAnyExpression::JsNewExpression(node) }
+    fn from(node: JsNewExpression) -> JsAnyExpression {
+        JsAnyExpression::JsNewExpression(node)
+    }
 }
 impl From<JsObjectExpression> for JsAnyExpression {
     fn from(node: JsObjectExpression) -> JsAnyExpression {
@@ -11157,13 +13272,19 @@ impl From<JsStaticMemberExpression> for JsAnyExpression {
     }
 }
 impl From<JsSuperExpression> for JsAnyExpression {
-    fn from(node: JsSuperExpression) -> JsAnyExpression { JsAnyExpression::JsSuperExpression(node) }
+    fn from(node: JsSuperExpression) -> JsAnyExpression {
+        JsAnyExpression::JsSuperExpression(node)
+    }
 }
 impl From<JsThisExpression> for JsAnyExpression {
-    fn from(node: JsThisExpression) -> JsAnyExpression { JsAnyExpression::JsThisExpression(node) }
+    fn from(node: JsThisExpression) -> JsAnyExpression {
+        JsAnyExpression::JsThisExpression(node)
+    }
 }
 impl From<JsUnaryExpression> for JsAnyExpression {
-    fn from(node: JsUnaryExpression) -> JsAnyExpression { JsAnyExpression::JsUnaryExpression(node) }
+    fn from(node: JsUnaryExpression) -> JsAnyExpression {
+        JsAnyExpression::JsUnaryExpression(node)
+    }
 }
 impl From<JsUnknownExpression> for JsAnyExpression {
     fn from(node: JsUnknownExpression) -> JsAnyExpression {
@@ -11171,22 +13292,34 @@ impl From<JsUnknownExpression> for JsAnyExpression {
     }
 }
 impl From<JsYieldExpression> for JsAnyExpression {
-    fn from(node: JsYieldExpression) -> JsAnyExpression { JsAnyExpression::JsYieldExpression(node) }
+    fn from(node: JsYieldExpression) -> JsAnyExpression {
+        JsAnyExpression::JsYieldExpression(node)
+    }
 }
 impl From<NewTarget> for JsAnyExpression {
-    fn from(node: NewTarget) -> JsAnyExpression { JsAnyExpression::NewTarget(node) }
+    fn from(node: NewTarget) -> JsAnyExpression {
+        JsAnyExpression::NewTarget(node)
+    }
 }
 impl From<Template> for JsAnyExpression {
-    fn from(node: Template) -> JsAnyExpression { JsAnyExpression::Template(node) }
+    fn from(node: Template) -> JsAnyExpression {
+        JsAnyExpression::Template(node)
+    }
 }
 impl From<TsAssertion> for JsAnyExpression {
-    fn from(node: TsAssertion) -> JsAnyExpression { JsAnyExpression::TsAssertion(node) }
+    fn from(node: TsAssertion) -> JsAnyExpression {
+        JsAnyExpression::TsAssertion(node)
+    }
 }
 impl From<TsConstAssertion> for JsAnyExpression {
-    fn from(node: TsConstAssertion) -> JsAnyExpression { JsAnyExpression::TsConstAssertion(node) }
+    fn from(node: TsConstAssertion) -> JsAnyExpression {
+        JsAnyExpression::TsConstAssertion(node)
+    }
 }
 impl From<TsNonNull> for JsAnyExpression {
-    fn from(node: TsNonNull) -> JsAnyExpression { JsAnyExpression::TsNonNull(node) }
+    fn from(node: TsNonNull) -> JsAnyExpression {
+        JsAnyExpression::TsNonNull(node)
+    }
 }
 impl AstNode for JsAnyExpression {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -11570,7 +13703,9 @@ impl From<JsFunctionExpression> for JsAnyFunction {
     }
 }
 impl From<JsFunctionStatement> for JsAnyFunction {
-    fn from(node: JsFunctionStatement) -> JsAnyFunction { JsAnyFunction::JsFunctionStatement(node) }
+    fn from(node: JsFunctionStatement) -> JsAnyFunction {
+        JsAnyFunction::JsFunctionStatement(node)
+    }
 }
 impl AstNode for JsAnyFunction {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -11645,7 +13780,9 @@ impl From<JsAnyFunction> for SyntaxElement {
     }
 }
 impl From<JsFunctionBody> for JsAnyFunctionBody {
-    fn from(node: JsFunctionBody) -> JsAnyFunctionBody { JsAnyFunctionBody::JsFunctionBody(node) }
+    fn from(node: JsFunctionBody) -> JsAnyFunctionBody {
+        JsAnyFunctionBody::JsFunctionBody(node)
+    }
 }
 impl AstNode for JsAnyFunctionBody {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -11759,7 +13896,9 @@ impl From<JsAnyImportAssertionEntry> for SyntaxElement {
     }
 }
 impl From<JsPrivateName> for JsAnyInProperty {
-    fn from(node: JsPrivateName) -> JsAnyInProperty { JsAnyInProperty::JsPrivateName(node) }
+    fn from(node: JsPrivateName) -> JsAnyInProperty {
+        JsAnyInProperty::JsPrivateName(node)
+    }
 }
 impl AstNode for JsAnyInProperty {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -11928,10 +14067,14 @@ impl From<JsAnyLiteralExpression> for SyntaxElement {
     }
 }
 impl From<JsExport> for JsAnyModuleItem {
-    fn from(node: JsExport) -> JsAnyModuleItem { JsAnyModuleItem::JsExport(node) }
+    fn from(node: JsExport) -> JsAnyModuleItem {
+        JsAnyModuleItem::JsExport(node)
+    }
 }
 impl From<JsImport> for JsAnyModuleItem {
-    fn from(node: JsImport) -> JsAnyModuleItem { JsAnyModuleItem::JsImport(node) }
+    fn from(node: JsImport) -> JsAnyModuleItem {
+        JsAnyModuleItem::JsImport(node)
+    }
 }
 impl AstNode for JsAnyModuleItem {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -11987,13 +14130,19 @@ impl From<JsAnyModuleItem> for SyntaxElement {
     }
 }
 impl From<JsName> for JsAnyName {
-    fn from(node: JsName) -> JsAnyName { JsAnyName::JsName(node) }
+    fn from(node: JsName) -> JsAnyName {
+        JsAnyName::JsName(node)
+    }
 }
 impl From<JsPrivateName> for JsAnyName {
-    fn from(node: JsPrivateName) -> JsAnyName { JsAnyName::JsPrivateName(node) }
+    fn from(node: JsPrivateName) -> JsAnyName {
+        JsAnyName::JsPrivateName(node)
+    }
 }
 impl AstNode for JsAnyName {
-    fn can_cast(kind: JsSyntaxKind) -> bool { matches!(kind, JS_NAME | JS_PRIVATE_NAME) }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, JS_NAME | JS_PRIVATE_NAME)
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_NAME => JsAnyName::JsName(JsName { syntax }),
@@ -12410,10 +14559,14 @@ impl From<JsShorthandPropertyObjectMember> for JsAnyObjectMember {
     }
 }
 impl From<JsSpread> for JsAnyObjectMember {
-    fn from(node: JsSpread) -> JsAnyObjectMember { JsAnyObjectMember::JsSpread(node) }
+    fn from(node: JsSpread) -> JsAnyObjectMember {
+        JsAnyObjectMember::JsSpread(node)
+    }
 }
 impl From<JsUnknownMember> for JsAnyObjectMember {
-    fn from(node: JsUnknownMember) -> JsAnyObjectMember { JsAnyObjectMember::JsUnknownMember(node) }
+    fn from(node: JsUnknownMember) -> JsAnyObjectMember {
+        JsAnyObjectMember::JsUnknownMember(node)
+    }
 }
 impl AstNode for JsAnyObjectMember {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -12553,13 +14706,19 @@ impl From<JsAnyObjectMemberName> for SyntaxElement {
     }
 }
 impl From<JsParameter> for JsAnyParameter {
-    fn from(node: JsParameter) -> JsAnyParameter { JsAnyParameter::JsParameter(node) }
+    fn from(node: JsParameter) -> JsAnyParameter {
+        JsAnyParameter::JsParameter(node)
+    }
 }
 impl From<JsRestParameter> for JsAnyParameter {
-    fn from(node: JsRestParameter) -> JsAnyParameter { JsAnyParameter::JsRestParameter(node) }
+    fn from(node: JsRestParameter) -> JsAnyParameter {
+        JsAnyParameter::JsRestParameter(node)
+    }
 }
 impl From<JsUnknownParameter> for JsAnyParameter {
-    fn from(node: JsUnknownParameter) -> JsAnyParameter { JsAnyParameter::JsUnknownParameter(node) }
+    fn from(node: JsUnknownParameter) -> JsAnyParameter {
+        JsAnyParameter::JsUnknownParameter(node)
+    }
 }
 impl AstNode for JsAnyParameter {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -12612,13 +14771,19 @@ impl From<JsAnyParameter> for SyntaxElement {
     }
 }
 impl From<JsExpressionSnipped> for JsAnyRoot {
-    fn from(node: JsExpressionSnipped) -> JsAnyRoot { JsAnyRoot::JsExpressionSnipped(node) }
+    fn from(node: JsExpressionSnipped) -> JsAnyRoot {
+        JsAnyRoot::JsExpressionSnipped(node)
+    }
 }
 impl From<JsModule> for JsAnyRoot {
-    fn from(node: JsModule) -> JsAnyRoot { JsAnyRoot::JsModule(node) }
+    fn from(node: JsModule) -> JsAnyRoot {
+        JsAnyRoot::JsModule(node)
+    }
 }
 impl From<JsScript> for JsAnyRoot {
-    fn from(node: JsScript) -> JsAnyRoot { JsAnyRoot::JsScript(node) }
+    fn from(node: JsScript) -> JsAnyRoot {
+        JsAnyRoot::JsScript(node)
+    }
 }
 impl AstNode for JsAnyRoot {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -12666,13 +14831,19 @@ impl From<JsAnyRoot> for SyntaxElement {
     }
 }
 impl From<JsBlockStatement> for JsAnyStatement {
-    fn from(node: JsBlockStatement) -> JsAnyStatement { JsAnyStatement::JsBlockStatement(node) }
+    fn from(node: JsBlockStatement) -> JsAnyStatement {
+        JsAnyStatement::JsBlockStatement(node)
+    }
 }
 impl From<JsBreakStatement> for JsAnyStatement {
-    fn from(node: JsBreakStatement) -> JsAnyStatement { JsAnyStatement::JsBreakStatement(node) }
+    fn from(node: JsBreakStatement) -> JsAnyStatement {
+        JsAnyStatement::JsBreakStatement(node)
+    }
 }
 impl From<JsClassStatement> for JsAnyStatement {
-    fn from(node: JsClassStatement) -> JsAnyStatement { JsAnyStatement::JsClassStatement(node) }
+    fn from(node: JsClassStatement) -> JsAnyStatement {
+        JsAnyStatement::JsClassStatement(node)
+    }
 }
 impl From<JsContinueStatement> for JsAnyStatement {
     fn from(node: JsContinueStatement) -> JsAnyStatement {
@@ -12685,10 +14856,14 @@ impl From<JsDebuggerStatement> for JsAnyStatement {
     }
 }
 impl From<JsDoWhileStatement> for JsAnyStatement {
-    fn from(node: JsDoWhileStatement) -> JsAnyStatement { JsAnyStatement::JsDoWhileStatement(node) }
+    fn from(node: JsDoWhileStatement) -> JsAnyStatement {
+        JsAnyStatement::JsDoWhileStatement(node)
+    }
 }
 impl From<JsEmptyStatement> for JsAnyStatement {
-    fn from(node: JsEmptyStatement) -> JsAnyStatement { JsAnyStatement::JsEmptyStatement(node) }
+    fn from(node: JsEmptyStatement) -> JsAnyStatement {
+        JsAnyStatement::JsEmptyStatement(node)
+    }
 }
 impl From<JsExpressionStatement> for JsAnyStatement {
     fn from(node: JsExpressionStatement) -> JsAnyStatement {
@@ -12696,13 +14871,19 @@ impl From<JsExpressionStatement> for JsAnyStatement {
     }
 }
 impl From<JsForInStatement> for JsAnyStatement {
-    fn from(node: JsForInStatement) -> JsAnyStatement { JsAnyStatement::JsForInStatement(node) }
+    fn from(node: JsForInStatement) -> JsAnyStatement {
+        JsAnyStatement::JsForInStatement(node)
+    }
 }
 impl From<JsForOfStatement> for JsAnyStatement {
-    fn from(node: JsForOfStatement) -> JsAnyStatement { JsAnyStatement::JsForOfStatement(node) }
+    fn from(node: JsForOfStatement) -> JsAnyStatement {
+        JsAnyStatement::JsForOfStatement(node)
+    }
 }
 impl From<JsForStatement> for JsAnyStatement {
-    fn from(node: JsForStatement) -> JsAnyStatement { JsAnyStatement::JsForStatement(node) }
+    fn from(node: JsForStatement) -> JsAnyStatement {
+        JsAnyStatement::JsForStatement(node)
+    }
 }
 impl From<JsFunctionStatement> for JsAnyStatement {
     fn from(node: JsFunctionStatement) -> JsAnyStatement {
@@ -12710,19 +14891,29 @@ impl From<JsFunctionStatement> for JsAnyStatement {
     }
 }
 impl From<JsIfStatement> for JsAnyStatement {
-    fn from(node: JsIfStatement) -> JsAnyStatement { JsAnyStatement::JsIfStatement(node) }
+    fn from(node: JsIfStatement) -> JsAnyStatement {
+        JsAnyStatement::JsIfStatement(node)
+    }
 }
 impl From<JsLabeledStatement> for JsAnyStatement {
-    fn from(node: JsLabeledStatement) -> JsAnyStatement { JsAnyStatement::JsLabeledStatement(node) }
+    fn from(node: JsLabeledStatement) -> JsAnyStatement {
+        JsAnyStatement::JsLabeledStatement(node)
+    }
 }
 impl From<JsReturnStatement> for JsAnyStatement {
-    fn from(node: JsReturnStatement) -> JsAnyStatement { JsAnyStatement::JsReturnStatement(node) }
+    fn from(node: JsReturnStatement) -> JsAnyStatement {
+        JsAnyStatement::JsReturnStatement(node)
+    }
 }
 impl From<JsSwitchStatement> for JsAnyStatement {
-    fn from(node: JsSwitchStatement) -> JsAnyStatement { JsAnyStatement::JsSwitchStatement(node) }
+    fn from(node: JsSwitchStatement) -> JsAnyStatement {
+        JsAnyStatement::JsSwitchStatement(node)
+    }
 }
 impl From<JsThrowStatement> for JsAnyStatement {
-    fn from(node: JsThrowStatement) -> JsAnyStatement { JsAnyStatement::JsThrowStatement(node) }
+    fn from(node: JsThrowStatement) -> JsAnyStatement {
+        JsAnyStatement::JsThrowStatement(node)
+    }
 }
 impl From<JsTryFinallyStatement> for JsAnyStatement {
     fn from(node: JsTryFinallyStatement) -> JsAnyStatement {
@@ -12730,10 +14921,14 @@ impl From<JsTryFinallyStatement> for JsAnyStatement {
     }
 }
 impl From<JsTryStatement> for JsAnyStatement {
-    fn from(node: JsTryStatement) -> JsAnyStatement { JsAnyStatement::JsTryStatement(node) }
+    fn from(node: JsTryStatement) -> JsAnyStatement {
+        JsAnyStatement::JsTryStatement(node)
+    }
 }
 impl From<JsUnknownStatement> for JsAnyStatement {
-    fn from(node: JsUnknownStatement) -> JsAnyStatement { JsAnyStatement::JsUnknownStatement(node) }
+    fn from(node: JsUnknownStatement) -> JsAnyStatement {
+        JsAnyStatement::JsUnknownStatement(node)
+    }
 }
 impl From<JsVariableStatement> for JsAnyStatement {
     fn from(node: JsVariableStatement) -> JsAnyStatement {
@@ -12741,13 +14936,19 @@ impl From<JsVariableStatement> for JsAnyStatement {
     }
 }
 impl From<JsWhileStatement> for JsAnyStatement {
-    fn from(node: JsWhileStatement) -> JsAnyStatement { JsAnyStatement::JsWhileStatement(node) }
+    fn from(node: JsWhileStatement) -> JsAnyStatement {
+        JsAnyStatement::JsWhileStatement(node)
+    }
 }
 impl From<JsWithStatement> for JsAnyStatement {
-    fn from(node: JsWithStatement) -> JsAnyStatement { JsAnyStatement::JsWithStatement(node) }
+    fn from(node: JsWithStatement) -> JsAnyStatement {
+        JsAnyStatement::JsWithStatement(node)
+    }
 }
 impl From<TsEnum> for JsAnyStatement {
-    fn from(node: TsEnum) -> JsAnyStatement { JsAnyStatement::TsEnum(node) }
+    fn from(node: TsEnum) -> JsAnyStatement {
+        JsAnyStatement::TsEnum(node)
+    }
 }
 impl AstNode for JsAnyStatement {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -12923,13 +15124,19 @@ impl From<JsAnyStatement> for SyntaxElement {
     }
 }
 impl From<JsCaseClause> for JsAnySwitchClause {
-    fn from(node: JsCaseClause) -> JsAnySwitchClause { JsAnySwitchClause::JsCaseClause(node) }
+    fn from(node: JsCaseClause) -> JsAnySwitchClause {
+        JsAnySwitchClause::JsCaseClause(node)
+    }
 }
 impl From<JsDefaultClause> for JsAnySwitchClause {
-    fn from(node: JsDefaultClause) -> JsAnySwitchClause { JsAnySwitchClause::JsDefaultClause(node) }
+    fn from(node: JsDefaultClause) -> JsAnySwitchClause {
+        JsAnySwitchClause::JsDefaultClause(node)
+    }
 }
 impl AstNode for JsAnySwitchClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { matches!(kind, JS_CASE_CLAUSE | JS_DEFAULT_CLAUSE) }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, JS_CASE_CLAUSE | JS_DEFAULT_CLAUSE)
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_CASE_CLAUSE => JsAnySwitchClause::JsCaseClause(JsCaseClause { syntax }),
@@ -12968,13 +15175,19 @@ impl From<JsAnySwitchClause> for SyntaxElement {
     }
 }
 impl From<TsQualifiedPath> for TsEntityName {
-    fn from(node: TsQualifiedPath) -> TsEntityName { TsEntityName::TsQualifiedPath(node) }
+    fn from(node: TsQualifiedPath) -> TsEntityName {
+        TsEntityName::TsQualifiedPath(node)
+    }
 }
 impl From<TsTypeName> for TsEntityName {
-    fn from(node: TsTypeName) -> TsEntityName { TsEntityName::TsTypeName(node) }
+    fn from(node: TsTypeName) -> TsEntityName {
+        TsEntityName::TsTypeName(node)
+    }
 }
 impl AstNode for TsEntityName {
-    fn can_cast(kind: JsSyntaxKind) -> bool { matches!(kind, TS_QUALIFIED_PATH | TS_TYPE_NAME) }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, TS_QUALIFIED_PATH | TS_TYPE_NAME)
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             TS_QUALIFIED_PATH => TsEntityName::TsQualifiedPath(TsQualifiedPath { syntax }),
@@ -13013,7 +15226,9 @@ impl From<TsEntityName> for SyntaxElement {
     }
 }
 impl From<TsExternalModuleRef> for TsModuleRef {
-    fn from(node: TsExternalModuleRef) -> TsModuleRef { TsModuleRef::TsExternalModuleRef(node) }
+    fn from(node: TsExternalModuleRef) -> TsModuleRef {
+        TsModuleRef::TsExternalModuleRef(node)
+    }
 }
 impl AstNode for TsModuleRef {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -13067,13 +15282,19 @@ impl From<TsModuleRef> for SyntaxElement {
     }
 }
 impl From<TsThis> for TsThisOrMore {
-    fn from(node: TsThis) -> TsThisOrMore { TsThisOrMore::TsThis(node) }
+    fn from(node: TsThis) -> TsThisOrMore {
+        TsThisOrMore::TsThis(node)
+    }
 }
 impl From<TsTypeName> for TsThisOrMore {
-    fn from(node: TsTypeName) -> TsThisOrMore { TsThisOrMore::TsTypeName(node) }
+    fn from(node: TsTypeName) -> TsThisOrMore {
+        TsThisOrMore::TsTypeName(node)
+    }
 }
 impl AstNode for TsThisOrMore {
-    fn can_cast(kind: JsSyntaxKind) -> bool { matches!(kind, TS_THIS | TS_TYPE_NAME) }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, TS_THIS | TS_TYPE_NAME)
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             TS_THIS => TsThisOrMore::TsThis(TsThis { syntax }),
@@ -13112,97 +15333,159 @@ impl From<TsThisOrMore> for SyntaxElement {
     }
 }
 impl From<TsAny> for TsType {
-    fn from(node: TsAny) -> TsType { TsType::TsAny(node) }
+    fn from(node: TsAny) -> TsType {
+        TsType::TsAny(node)
+    }
 }
 impl From<TsArray> for TsType {
-    fn from(node: TsArray) -> TsType { TsType::TsArray(node) }
+    fn from(node: TsArray) -> TsType {
+        TsType::TsArray(node)
+    }
 }
 impl From<TsBigint> for TsType {
-    fn from(node: TsBigint) -> TsType { TsType::TsBigint(node) }
+    fn from(node: TsBigint) -> TsType {
+        TsType::TsBigint(node)
+    }
 }
 impl From<TsBoolean> for TsType {
-    fn from(node: TsBoolean) -> TsType { TsType::TsBoolean(node) }
+    fn from(node: TsBoolean) -> TsType {
+        TsType::TsBoolean(node)
+    }
 }
 impl From<TsConditionalType> for TsType {
-    fn from(node: TsConditionalType) -> TsType { TsType::TsConditionalType(node) }
+    fn from(node: TsConditionalType) -> TsType {
+        TsType::TsConditionalType(node)
+    }
 }
 impl From<TsConstructorType> for TsType {
-    fn from(node: TsConstructorType) -> TsType { TsType::TsConstructorType(node) }
+    fn from(node: TsConstructorType) -> TsType {
+        TsType::TsConstructorType(node)
+    }
 }
 impl From<TsFnType> for TsType {
-    fn from(node: TsFnType) -> TsType { TsType::TsFnType(node) }
+    fn from(node: TsFnType) -> TsType {
+        TsType::TsFnType(node)
+    }
 }
 impl From<TsImport> for TsType {
-    fn from(node: TsImport) -> TsType { TsType::TsImport(node) }
+    fn from(node: TsImport) -> TsType {
+        TsType::TsImport(node)
+    }
 }
 impl From<TsIndexedArray> for TsType {
-    fn from(node: TsIndexedArray) -> TsType { TsType::TsIndexedArray(node) }
+    fn from(node: TsIndexedArray) -> TsType {
+        TsType::TsIndexedArray(node)
+    }
 }
 impl From<TsInfer> for TsType {
-    fn from(node: TsInfer) -> TsType { TsType::TsInfer(node) }
+    fn from(node: TsInfer) -> TsType {
+        TsType::TsInfer(node)
+    }
 }
 impl From<TsIntersection> for TsType {
-    fn from(node: TsIntersection) -> TsType { TsType::TsIntersection(node) }
+    fn from(node: TsIntersection) -> TsType {
+        TsType::TsIntersection(node)
+    }
 }
 impl From<TsLiteral> for TsType {
-    fn from(node: TsLiteral) -> TsType { TsType::TsLiteral(node) }
+    fn from(node: TsLiteral) -> TsType {
+        TsType::TsLiteral(node)
+    }
 }
 impl From<TsMappedType> for TsType {
-    fn from(node: TsMappedType) -> TsType { TsType::TsMappedType(node) }
+    fn from(node: TsMappedType) -> TsType {
+        TsType::TsMappedType(node)
+    }
 }
 impl From<TsNever> for TsType {
-    fn from(node: TsNever) -> TsType { TsType::TsNever(node) }
+    fn from(node: TsNever) -> TsType {
+        TsType::TsNever(node)
+    }
 }
 impl From<TsNull> for TsType {
-    fn from(node: TsNull) -> TsType { TsType::TsNull(node) }
+    fn from(node: TsNull) -> TsType {
+        TsType::TsNull(node)
+    }
 }
 impl From<TsNumber> for TsType {
-    fn from(node: TsNumber) -> TsType { TsType::TsNumber(node) }
+    fn from(node: TsNumber) -> TsType {
+        TsType::TsNumber(node)
+    }
 }
 impl From<TsObject> for TsType {
-    fn from(node: TsObject) -> TsType { TsType::TsObject(node) }
+    fn from(node: TsObject) -> TsType {
+        TsType::TsObject(node)
+    }
 }
 impl From<TsObjectType> for TsType {
-    fn from(node: TsObjectType) -> TsType { TsType::TsObjectType(node) }
+    fn from(node: TsObjectType) -> TsType {
+        TsType::TsObjectType(node)
+    }
 }
 impl From<TsParen> for TsType {
-    fn from(node: TsParen) -> TsType { TsType::TsParen(node) }
+    fn from(node: TsParen) -> TsType {
+        TsType::TsParen(node)
+    }
 }
 impl From<TsPredicate> for TsType {
-    fn from(node: TsPredicate) -> TsType { TsType::TsPredicate(node) }
+    fn from(node: TsPredicate) -> TsType {
+        TsType::TsPredicate(node)
+    }
 }
 impl From<TsString> for TsType {
-    fn from(node: TsString) -> TsType { TsType::TsString(node) }
+    fn from(node: TsString) -> TsType {
+        TsType::TsString(node)
+    }
 }
 impl From<TsSymbol> for TsType {
-    fn from(node: TsSymbol) -> TsType { TsType::TsSymbol(node) }
+    fn from(node: TsSymbol) -> TsType {
+        TsType::TsSymbol(node)
+    }
 }
 impl From<TsTemplate> for TsType {
-    fn from(node: TsTemplate) -> TsType { TsType::TsTemplate(node) }
+    fn from(node: TsTemplate) -> TsType {
+        TsType::TsTemplate(node)
+    }
 }
 impl From<TsThis> for TsType {
-    fn from(node: TsThis) -> TsType { TsType::TsThis(node) }
+    fn from(node: TsThis) -> TsType {
+        TsType::TsThis(node)
+    }
 }
 impl From<TsTuple> for TsType {
-    fn from(node: TsTuple) -> TsType { TsType::TsTuple(node) }
+    fn from(node: TsTuple) -> TsType {
+        TsType::TsTuple(node)
+    }
 }
 impl From<TsTypeOperator> for TsType {
-    fn from(node: TsTypeOperator) -> TsType { TsType::TsTypeOperator(node) }
+    fn from(node: TsTypeOperator) -> TsType {
+        TsType::TsTypeOperator(node)
+    }
 }
 impl From<TsTypeRef> for TsType {
-    fn from(node: TsTypeRef) -> TsType { TsType::TsTypeRef(node) }
+    fn from(node: TsTypeRef) -> TsType {
+        TsType::TsTypeRef(node)
+    }
 }
 impl From<TsUndefined> for TsType {
-    fn from(node: TsUndefined) -> TsType { TsType::TsUndefined(node) }
+    fn from(node: TsUndefined) -> TsType {
+        TsType::TsUndefined(node)
+    }
 }
 impl From<TsUnion> for TsType {
-    fn from(node: TsUnion) -> TsType { TsType::TsUnion(node) }
+    fn from(node: TsUnion) -> TsType {
+        TsType::TsUnion(node)
+    }
 }
 impl From<TsUnknown> for TsType {
-    fn from(node: TsUnknown) -> TsType { TsType::TsUnknown(node) }
+    fn from(node: TsUnknown) -> TsType {
+        TsType::TsUnknown(node)
+    }
 }
 impl From<TsVoid> for TsType {
-    fn from(node: TsVoid) -> TsType { TsType::TsVoid(node) }
+    fn from(node: TsVoid) -> TsType {
+        TsType::TsVoid(node)
+    }
 }
 impl AstNode for TsType {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -13395,7 +15678,9 @@ impl From<TsType> for SyntaxElement {
     }
 }
 impl From<TsCallSignatureDecl> for TsTypeElement {
-    fn from(node: TsCallSignatureDecl) -> TsTypeElement { TsTypeElement::TsCallSignatureDecl(node) }
+    fn from(node: TsCallSignatureDecl) -> TsTypeElement {
+        TsTypeElement::TsCallSignatureDecl(node)
+    }
 }
 impl From<TsConstructSignatureDecl> for TsTypeElement {
     fn from(node: TsConstructSignatureDecl) -> TsTypeElement {
@@ -13403,13 +15688,19 @@ impl From<TsConstructSignatureDecl> for TsTypeElement {
     }
 }
 impl From<TsIndexSignature> for TsTypeElement {
-    fn from(node: TsIndexSignature) -> TsTypeElement { TsTypeElement::TsIndexSignature(node) }
+    fn from(node: TsIndexSignature) -> TsTypeElement {
+        TsTypeElement::TsIndexSignature(node)
+    }
 }
 impl From<TsMethodSignature> for TsTypeElement {
-    fn from(node: TsMethodSignature) -> TsTypeElement { TsTypeElement::TsMethodSignature(node) }
+    fn from(node: TsMethodSignature) -> TsTypeElement {
+        TsTypeElement::TsMethodSignature(node)
+    }
 }
 impl From<TsPropertySignature> for TsTypeElement {
-    fn from(node: TsPropertySignature) -> TsTypeElement { TsTypeElement::TsPropertySignature(node) }
+    fn from(node: TsPropertySignature) -> TsTypeElement {
+        TsTypeElement::TsPropertySignature(node)
+    }
 }
 impl AstNode for TsTypeElement {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -14727,10 +17018,14 @@ pub struct JsUnknown {
     syntax: SyntaxNode,
 }
 impl JsUnknown {
-    pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+    pub fn items(&self) -> SyntaxElementChildren {
+        support::elements(&self.syntax)
+    }
 }
 impl AstNode for JsUnknown {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_UNKNOWN
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -14738,7 +17033,9 @@ impl AstNode for JsUnknown {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsUnknown {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14748,20 +17045,28 @@ impl std::fmt::Debug for JsUnknown {
     }
 }
 impl From<JsUnknown> for SyntaxNode {
-    fn from(n: JsUnknown) -> SyntaxNode { n.syntax }
+    fn from(n: JsUnknown) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsUnknown> for SyntaxElement {
-    fn from(n: JsUnknown) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsUnknown) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownAssignment {
     syntax: SyntaxNode,
 }
 impl JsUnknownAssignment {
-    pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+    pub fn items(&self) -> SyntaxElementChildren {
+        support::elements(&self.syntax)
+    }
 }
 impl AstNode for JsUnknownAssignment {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_ASSIGNMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_UNKNOWN_ASSIGNMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -14769,7 +17074,9 @@ impl AstNode for JsUnknownAssignment {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsUnknownAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14779,20 +17086,28 @@ impl std::fmt::Debug for JsUnknownAssignment {
     }
 }
 impl From<JsUnknownAssignment> for SyntaxNode {
-    fn from(n: JsUnknownAssignment) -> SyntaxNode { n.syntax }
+    fn from(n: JsUnknownAssignment) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsUnknownAssignment> for SyntaxElement {
-    fn from(n: JsUnknownAssignment) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsUnknownAssignment) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownBinding {
     syntax: SyntaxNode,
 }
 impl JsUnknownBinding {
-    pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+    pub fn items(&self) -> SyntaxElementChildren {
+        support::elements(&self.syntax)
+    }
 }
 impl AstNode for JsUnknownBinding {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_BINDING }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_UNKNOWN_BINDING
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -14800,7 +17115,9 @@ impl AstNode for JsUnknownBinding {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsUnknownBinding {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14810,20 +17127,28 @@ impl std::fmt::Debug for JsUnknownBinding {
     }
 }
 impl From<JsUnknownBinding> for SyntaxNode {
-    fn from(n: JsUnknownBinding) -> SyntaxNode { n.syntax }
+    fn from(n: JsUnknownBinding) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsUnknownBinding> for SyntaxElement {
-    fn from(n: JsUnknownBinding) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsUnknownBinding) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownExpression {
     syntax: SyntaxNode,
 }
 impl JsUnknownExpression {
-    pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+    pub fn items(&self) -> SyntaxElementChildren {
+        support::elements(&self.syntax)
+    }
 }
 impl AstNode for JsUnknownExpression {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_EXPRESSION }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_UNKNOWN_EXPRESSION
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -14831,7 +17156,9 @@ impl AstNode for JsUnknownExpression {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsUnknownExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14841,20 +17168,28 @@ impl std::fmt::Debug for JsUnknownExpression {
     }
 }
 impl From<JsUnknownExpression> for SyntaxNode {
-    fn from(n: JsUnknownExpression) -> SyntaxNode { n.syntax }
+    fn from(n: JsUnknownExpression) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsUnknownExpression> for SyntaxElement {
-    fn from(n: JsUnknownExpression) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsUnknownExpression) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownImportAssertionEntry {
     syntax: SyntaxNode,
 }
 impl JsUnknownImportAssertionEntry {
-    pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+    pub fn items(&self) -> SyntaxElementChildren {
+        support::elements(&self.syntax)
+    }
 }
 impl AstNode for JsUnknownImportAssertionEntry {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_IMPORT_ASSERTION_ENTRY }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_UNKNOWN_IMPORT_ASSERTION_ENTRY
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -14862,7 +17197,9 @@ impl AstNode for JsUnknownImportAssertionEntry {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsUnknownImportAssertionEntry {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14872,20 +17209,28 @@ impl std::fmt::Debug for JsUnknownImportAssertionEntry {
     }
 }
 impl From<JsUnknownImportAssertionEntry> for SyntaxNode {
-    fn from(n: JsUnknownImportAssertionEntry) -> SyntaxNode { n.syntax }
+    fn from(n: JsUnknownImportAssertionEntry) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsUnknownImportAssertionEntry> for SyntaxElement {
-    fn from(n: JsUnknownImportAssertionEntry) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsUnknownImportAssertionEntry) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownMember {
     syntax: SyntaxNode,
 }
 impl JsUnknownMember {
-    pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+    pub fn items(&self) -> SyntaxElementChildren {
+        support::elements(&self.syntax)
+    }
 }
 impl AstNode for JsUnknownMember {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_MEMBER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_UNKNOWN_MEMBER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -14893,7 +17238,9 @@ impl AstNode for JsUnknownMember {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsUnknownMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14903,20 +17250,28 @@ impl std::fmt::Debug for JsUnknownMember {
     }
 }
 impl From<JsUnknownMember> for SyntaxNode {
-    fn from(n: JsUnknownMember) -> SyntaxNode { n.syntax }
+    fn from(n: JsUnknownMember) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsUnknownMember> for SyntaxElement {
-    fn from(n: JsUnknownMember) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsUnknownMember) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownNamedImportSpecifier {
     syntax: SyntaxNode,
 }
 impl JsUnknownNamedImportSpecifier {
-    pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+    pub fn items(&self) -> SyntaxElementChildren {
+        support::elements(&self.syntax)
+    }
 }
 impl AstNode for JsUnknownNamedImportSpecifier {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_NAMED_IMPORT_SPECIFIER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_UNKNOWN_NAMED_IMPORT_SPECIFIER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -14924,7 +17279,9 @@ impl AstNode for JsUnknownNamedImportSpecifier {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsUnknownNamedImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14934,20 +17291,28 @@ impl std::fmt::Debug for JsUnknownNamedImportSpecifier {
     }
 }
 impl From<JsUnknownNamedImportSpecifier> for SyntaxNode {
-    fn from(n: JsUnknownNamedImportSpecifier) -> SyntaxNode { n.syntax }
+    fn from(n: JsUnknownNamedImportSpecifier) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsUnknownNamedImportSpecifier> for SyntaxElement {
-    fn from(n: JsUnknownNamedImportSpecifier) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsUnknownNamedImportSpecifier) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownParameter {
     syntax: SyntaxNode,
 }
 impl JsUnknownParameter {
-    pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+    pub fn items(&self) -> SyntaxElementChildren {
+        support::elements(&self.syntax)
+    }
 }
 impl AstNode for JsUnknownParameter {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_PARAMETER }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_UNKNOWN_PARAMETER
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -14955,7 +17320,9 @@ impl AstNode for JsUnknownParameter {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsUnknownParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14965,20 +17332,28 @@ impl std::fmt::Debug for JsUnknownParameter {
     }
 }
 impl From<JsUnknownParameter> for SyntaxNode {
-    fn from(n: JsUnknownParameter) -> SyntaxNode { n.syntax }
+    fn from(n: JsUnknownParameter) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsUnknownParameter> for SyntaxElement {
-    fn from(n: JsUnknownParameter) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsUnknownParameter) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownStatement {
     syntax: SyntaxNode,
 }
 impl JsUnknownStatement {
-    pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+    pub fn items(&self) -> SyntaxElementChildren {
+        support::elements(&self.syntax)
+    }
 }
 impl AstNode for JsUnknownStatement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_UNKNOWN_STATEMENT }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_UNKNOWN_STATEMENT
+    }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -14986,7 +17361,9 @@ impl AstNode for JsUnknownStatement {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn syntax(&self) -> &SyntaxNode {
+        &self.syntax
+    }
 }
 impl std::fmt::Debug for JsUnknownStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14996,17 +17373,23 @@ impl std::fmt::Debug for JsUnknownStatement {
     }
 }
 impl From<JsUnknownStatement> for SyntaxNode {
-    fn from(n: JsUnknownStatement) -> SyntaxNode { n.syntax }
+    fn from(n: JsUnknownStatement) -> SyntaxNode {
+        n.syntax
+    }
 }
 impl From<JsUnknownStatement> for SyntaxElement {
-    fn from(n: JsUnknownStatement) -> SyntaxElement { n.syntax.into() }
+    fn from(n: JsUnknownStatement) -> SyntaxElement {
+        n.syntax.into()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsArrayAssignmentPatternElementList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsArrayAssignmentPatternElementList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsArrayAssignmentPatternElementList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsArrayAssignmentPatternElementList {
@@ -15016,10 +17399,14 @@ impl AstNode for JsArrayAssignmentPatternElementList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsAnyArrayAssignmentPatternElement> for JsArrayAssignmentPatternElementList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsArrayAssignmentPatternElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15030,19 +17417,25 @@ impl Debug for JsArrayAssignmentPatternElementList {
 impl IntoIterator for JsArrayAssignmentPatternElementList {
     type Item = SyntaxResult<JsAnyArrayAssignmentPatternElement>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyArrayAssignmentPatternElement>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsArrayAssignmentPatternElementList {
     type Item = SyntaxResult<JsAnyArrayAssignmentPatternElement>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyArrayAssignmentPatternElement>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsArrayBindingPatternElementList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsArrayBindingPatternElementList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsArrayBindingPatternElementList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsArrayBindingPatternElementList {
@@ -15052,10 +17445,14 @@ impl AstNode for JsArrayBindingPatternElementList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsAnyArrayBindingPatternElement> for JsArrayBindingPatternElementList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsArrayBindingPatternElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15066,19 +17463,25 @@ impl Debug for JsArrayBindingPatternElementList {
 impl IntoIterator for JsArrayBindingPatternElementList {
     type Item = SyntaxResult<JsAnyArrayBindingPatternElement>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyArrayBindingPatternElement>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsArrayBindingPatternElementList {
     type Item = SyntaxResult<JsAnyArrayBindingPatternElement>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyArrayBindingPatternElement>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsArrayElementList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsArrayElementList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_ARRAY_ELEMENT_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_ARRAY_ELEMENT_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsArrayElementList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsArrayElementList {
@@ -15088,10 +17491,14 @@ impl AstNode for JsArrayElementList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsAnyArrayElement> for JsArrayElementList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsArrayElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15102,19 +17509,25 @@ impl Debug for JsArrayElementList {
 impl IntoIterator for JsArrayElementList {
     type Item = SyntaxResult<JsAnyArrayElement>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyArrayElement>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsArrayElementList {
     type Item = SyntaxResult<JsAnyArrayElement>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyArrayElement>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsCallArgumentList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsCallArgumentList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CALL_ARGUMENT_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CALL_ARGUMENT_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsCallArgumentList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsCallArgumentList {
@@ -15124,10 +17537,14 @@ impl AstNode for JsCallArgumentList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsAnyExpression> for JsCallArgumentList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsCallArgumentList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15138,19 +17555,25 @@ impl Debug for JsCallArgumentList {
 impl IntoIterator for JsCallArgumentList {
     type Item = SyntaxResult<JsAnyExpression>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyExpression>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsCallArgumentList {
     type Item = SyntaxResult<JsAnyExpression>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyExpression>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsClassMemberList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsClassMemberList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CLASS_MEMBER_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CLASS_MEMBER_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsClassMemberList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsClassMemberList {
@@ -15160,10 +17583,14 @@ impl AstNode for JsClassMemberList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstNodeList<JsAnyClassMember> for JsClassMemberList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsClassMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15174,19 +17601,25 @@ impl Debug for JsClassMemberList {
 impl IntoIterator for &JsClassMemberList {
     type Item = JsAnyClassMember;
     type IntoIter = AstNodeListIterator<JsAnyClassMember>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for JsClassMemberList {
     type Item = JsAnyClassMember;
     type IntoIter = AstNodeListIterator<JsAnyClassMember>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsConstructorParameterList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsConstructorParameterList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_CONSTRUCTOR_PARAMETER_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_CONSTRUCTOR_PARAMETER_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsConstructorParameterList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsConstructorParameterList {
@@ -15196,10 +17629,14 @@ impl AstNode for JsConstructorParameterList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsAnyConstructorParameter> for JsConstructorParameterList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsConstructorParameterList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15210,19 +17647,25 @@ impl Debug for JsConstructorParameterList {
 impl IntoIterator for JsConstructorParameterList {
     type Item = SyntaxResult<JsAnyConstructorParameter>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyConstructorParameter>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsConstructorParameterList {
     type Item = SyntaxResult<JsAnyConstructorParameter>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyConstructorParameter>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsDirectiveList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsDirectiveList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_DIRECTIVE_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_DIRECTIVE_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsDirectiveList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsDirectiveList {
@@ -15232,10 +17675,14 @@ impl AstNode for JsDirectiveList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstNodeList<JsDirective> for JsDirectiveList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsDirectiveList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15246,19 +17693,25 @@ impl Debug for JsDirectiveList {
 impl IntoIterator for &JsDirectiveList {
     type Item = JsDirective;
     type IntoIter = AstNodeListIterator<JsDirective>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for JsDirectiveList {
     type Item = JsDirective;
     type IntoIter = AstNodeListIterator<JsDirective>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsExportNamedFromSpecifierList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsExportNamedFromSpecifierList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_FROM_SPECIFIER_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_NAMED_FROM_SPECIFIER_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsExportNamedFromSpecifierList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsExportNamedFromSpecifierList {
@@ -15268,10 +17721,14 @@ impl AstNode for JsExportNamedFromSpecifierList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsExportNamedFromSpecifier> for JsExportNamedFromSpecifierList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsExportNamedFromSpecifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15282,19 +17739,25 @@ impl Debug for JsExportNamedFromSpecifierList {
 impl IntoIterator for JsExportNamedFromSpecifierList {
     type Item = SyntaxResult<JsExportNamedFromSpecifier>;
     type IntoIter = AstSeparatedListNodesIterator<JsExportNamedFromSpecifier>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsExportNamedFromSpecifierList {
     type Item = SyntaxResult<JsExportNamedFromSpecifier>;
     type IntoIter = AstSeparatedListNodesIterator<JsExportNamedFromSpecifier>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsExportNamedSpecifierList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsExportNamedSpecifierList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_EXPORT_NAMED_SPECIFIER_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_EXPORT_NAMED_SPECIFIER_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsExportNamedSpecifierList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsExportNamedSpecifierList {
@@ -15304,10 +17767,14 @@ impl AstNode for JsExportNamedSpecifierList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsAnyExportNamedSpecifier> for JsExportNamedSpecifierList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsExportNamedSpecifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15318,19 +17785,25 @@ impl Debug for JsExportNamedSpecifierList {
 impl IntoIterator for JsExportNamedSpecifierList {
     type Item = SyntaxResult<JsAnyExportNamedSpecifier>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyExportNamedSpecifier>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsExportNamedSpecifierList {
     type Item = SyntaxResult<JsAnyExportNamedSpecifier>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyExportNamedSpecifier>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsImportAssertionEntryList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsImportAssertionEntryList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_IMPORT_ASSERTION_ENTRY_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_IMPORT_ASSERTION_ENTRY_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsImportAssertionEntryList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsImportAssertionEntryList {
@@ -15340,10 +17813,14 @@ impl AstNode for JsImportAssertionEntryList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsAnyImportAssertionEntry> for JsImportAssertionEntryList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsImportAssertionEntryList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15354,19 +17831,25 @@ impl Debug for JsImportAssertionEntryList {
 impl IntoIterator for JsImportAssertionEntryList {
     type Item = SyntaxResult<JsAnyImportAssertionEntry>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyImportAssertionEntry>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsImportAssertionEntryList {
     type Item = SyntaxResult<JsAnyImportAssertionEntry>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyImportAssertionEntry>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsModuleItemList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsModuleItemList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_MODULE_ITEM_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_MODULE_ITEM_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsModuleItemList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsModuleItemList {
@@ -15376,10 +17859,14 @@ impl AstNode for JsModuleItemList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstNodeList<JsAnyModuleItem> for JsModuleItemList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsModuleItemList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15390,19 +17877,25 @@ impl Debug for JsModuleItemList {
 impl IntoIterator for &JsModuleItemList {
     type Item = JsAnyModuleItem;
     type IntoIter = AstNodeListIterator<JsAnyModuleItem>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for JsModuleItemList {
     type Item = JsAnyModuleItem;
     type IntoIter = AstNodeListIterator<JsAnyModuleItem>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsNamedImportSpecifierList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsNamedImportSpecifierList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_NAMED_IMPORT_SPECIFIER_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_NAMED_IMPORT_SPECIFIER_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsNamedImportSpecifierList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsNamedImportSpecifierList {
@@ -15412,10 +17905,14 @@ impl AstNode for JsNamedImportSpecifierList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsAnyNamedImportSpecifier> for JsNamedImportSpecifierList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsNamedImportSpecifierList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15426,19 +17923,25 @@ impl Debug for JsNamedImportSpecifierList {
 impl IntoIterator for JsNamedImportSpecifierList {
     type Item = SyntaxResult<JsAnyNamedImportSpecifier>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyNamedImportSpecifier>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsNamedImportSpecifierList {
     type Item = SyntaxResult<JsAnyNamedImportSpecifier>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyNamedImportSpecifier>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsObjectAssignmentPatternPropertyList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsObjectAssignmentPatternPropertyList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsObjectAssignmentPatternPropertyList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsObjectAssignmentPatternPropertyList {
@@ -15448,12 +17951,16 @@ impl AstNode for JsObjectAssignmentPatternPropertyList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsAnyObjectAssignmentPatternMember>
     for JsObjectAssignmentPatternPropertyList
 {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsObjectAssignmentPatternPropertyList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15464,19 +17971,25 @@ impl Debug for JsObjectAssignmentPatternPropertyList {
 impl IntoIterator for JsObjectAssignmentPatternPropertyList {
     type Item = SyntaxResult<JsAnyObjectAssignmentPatternMember>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyObjectAssignmentPatternMember>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsObjectAssignmentPatternPropertyList {
     type Item = SyntaxResult<JsAnyObjectAssignmentPatternMember>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyObjectAssignmentPatternMember>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsObjectBindingPatternPropertyList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsObjectBindingPatternPropertyList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsObjectBindingPatternPropertyList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsObjectBindingPatternPropertyList {
@@ -15486,10 +17999,14 @@ impl AstNode for JsObjectBindingPatternPropertyList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsAnyObjectBindingPatternMember> for JsObjectBindingPatternPropertyList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsObjectBindingPatternPropertyList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15500,19 +18017,25 @@ impl Debug for JsObjectBindingPatternPropertyList {
 impl IntoIterator for JsObjectBindingPatternPropertyList {
     type Item = SyntaxResult<JsAnyObjectBindingPatternMember>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyObjectBindingPatternMember>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsObjectBindingPatternPropertyList {
     type Item = SyntaxResult<JsAnyObjectBindingPatternMember>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyObjectBindingPatternMember>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsObjectMemberList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsObjectMemberList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_OBJECT_MEMBER_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_OBJECT_MEMBER_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsObjectMemberList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsObjectMemberList {
@@ -15522,10 +18045,14 @@ impl AstNode for JsObjectMemberList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsAnyObjectMember> for JsObjectMemberList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsObjectMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15536,19 +18063,25 @@ impl Debug for JsObjectMemberList {
 impl IntoIterator for JsObjectMemberList {
     type Item = SyntaxResult<JsAnyObjectMember>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyObjectMember>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsObjectMemberList {
     type Item = SyntaxResult<JsAnyObjectMember>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyObjectMember>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsParameterList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsParameterList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PARAMETER_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_PARAMETER_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsParameterList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsParameterList {
@@ -15558,10 +18091,14 @@ impl AstNode for JsParameterList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsAnyParameter> for JsParameterList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsParameterList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15572,19 +18109,25 @@ impl Debug for JsParameterList {
 impl IntoIterator for JsParameterList {
     type Item = SyntaxResult<JsAnyParameter>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyParameter>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsParameterList {
     type Item = SyntaxResult<JsAnyParameter>;
     type IntoIter = AstSeparatedListNodesIterator<JsAnyParameter>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsStatementList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsStatementList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_STATEMENT_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_STATEMENT_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsStatementList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsStatementList {
@@ -15594,10 +18137,14 @@ impl AstNode for JsStatementList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstNodeList<JsAnyStatement> for JsStatementList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsStatementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15608,19 +18155,25 @@ impl Debug for JsStatementList {
 impl IntoIterator for &JsStatementList {
     type Item = JsAnyStatement;
     type IntoIter = AstNodeListIterator<JsAnyStatement>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for JsStatementList {
     type Item = JsAnyStatement;
     type IntoIter = AstNodeListIterator<JsAnyStatement>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsSwitchCaseList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsSwitchCaseList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_SWITCH_CASE_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_SWITCH_CASE_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsSwitchCaseList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsSwitchCaseList {
@@ -15630,10 +18183,14 @@ impl AstNode for JsSwitchCaseList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstNodeList<JsAnySwitchClause> for JsSwitchCaseList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsSwitchCaseList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15644,19 +18201,25 @@ impl Debug for JsSwitchCaseList {
 impl IntoIterator for &JsSwitchCaseList {
     type Item = JsAnySwitchClause;
     type IntoIter = AstNodeListIterator<JsAnySwitchClause>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for JsSwitchCaseList {
     type Item = JsAnySwitchClause;
     type IntoIter = AstNodeListIterator<JsAnySwitchClause>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsVariableDeclarationList {
     syntax_list: SyntaxList,
 }
 impl AstNode for JsVariableDeclarationList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == JS_VARIABLE_DECLARATION_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<JsVariableDeclarationList> {
         if Self::can_cast(syntax.kind()) {
             Some(JsVariableDeclarationList {
@@ -15666,10 +18229,14 @@ impl AstNode for JsVariableDeclarationList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<JsVariableDeclaration> for JsVariableDeclarationList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for JsVariableDeclarationList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15680,19 +18247,25 @@ impl Debug for JsVariableDeclarationList {
 impl IntoIterator for JsVariableDeclarationList {
     type Item = SyntaxResult<JsVariableDeclaration>;
     type IntoIter = AstSeparatedListNodesIterator<JsVariableDeclaration>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &JsVariableDeclarationList {
     type Item = SyntaxResult<JsVariableDeclaration>;
     type IntoIter = AstSeparatedListNodesIterator<JsVariableDeclaration>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TemplateElementList {
     syntax_list: SyntaxList,
 }
 impl AstNode for TemplateElementList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TEMPLATE_ELEMENT_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TEMPLATE_ELEMENT_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<TemplateElementList> {
         if Self::can_cast(syntax.kind()) {
             Some(TemplateElementList {
@@ -15702,10 +18275,14 @@ impl AstNode for TemplateElementList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstNodeList<AnyTemplateElement> for TemplateElementList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for TemplateElementList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15716,19 +18293,25 @@ impl Debug for TemplateElementList {
 impl IntoIterator for &TemplateElementList {
     type Item = AnyTemplateElement;
     type IntoIter = AstNodeListIterator<AnyTemplateElement>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for TemplateElementList {
     type Item = AnyTemplateElement;
     type IntoIter = AstNodeListIterator<AnyTemplateElement>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsEnumMemberList {
     syntax_list: SyntaxList,
 }
 impl AstNode for TsEnumMemberList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ENUM_MEMBER_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_ENUM_MEMBER_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<TsEnumMemberList> {
         if Self::can_cast(syntax.kind()) {
             Some(TsEnumMemberList {
@@ -15738,10 +18321,14 @@ impl AstNode for TsEnumMemberList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstNodeList<TsEnumMember> for TsEnumMemberList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for TsEnumMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15752,19 +18339,25 @@ impl Debug for TsEnumMemberList {
 impl IntoIterator for &TsEnumMemberList {
     type Item = TsEnumMember;
     type IntoIter = AstNodeListIterator<TsEnumMember>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for TsEnumMemberList {
     type Item = TsEnumMember;
     type IntoIter = AstNodeListIterator<TsEnumMember>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsObjectMemberList {
     syntax_list: SyntaxList,
 }
 impl AstNode for TsObjectMemberList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_OBJECT_MEMBER_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_OBJECT_MEMBER_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<TsObjectMemberList> {
         if Self::can_cast(syntax.kind()) {
             Some(TsObjectMemberList {
@@ -15774,10 +18367,14 @@ impl AstNode for TsObjectMemberList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstNodeList<TsTypeElement> for TsObjectMemberList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for TsObjectMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15788,19 +18385,25 @@ impl Debug for TsObjectMemberList {
 impl IntoIterator for &TsObjectMemberList {
     type Item = TsTypeElement;
     type IntoIter = AstNodeListIterator<TsTypeElement>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for TsObjectMemberList {
     type Item = TsTypeElement;
     type IntoIter = AstNodeListIterator<TsTypeElement>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsTypeArgList {
     syntax_list: SyntaxList,
 }
 impl AstNode for TsTypeArgList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ARG_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TYPE_ARG_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<TsTypeArgList> {
         if Self::can_cast(syntax.kind()) {
             Some(TsTypeArgList {
@@ -15810,10 +18413,14 @@ impl AstNode for TsTypeArgList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<TsType> for TsTypeArgList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for TsTypeArgList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15824,19 +18431,25 @@ impl Debug for TsTypeArgList {
 impl IntoIterator for TsTypeArgList {
     type Item = SyntaxResult<TsType>;
     type IntoIter = AstSeparatedListNodesIterator<TsType>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &TsTypeArgList {
     type Item = SyntaxResult<TsType>;
     type IntoIter = AstSeparatedListNodesIterator<TsType>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsTypeList {
     syntax_list: SyntaxList,
 }
 impl AstNode for TsTypeList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TYPE_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<TsTypeList> {
         if Self::can_cast(syntax.kind()) {
             Some(TsTypeList {
@@ -15846,10 +18459,14 @@ impl AstNode for TsTypeList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<TsExprWithTypeArgs> for TsTypeList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for TsTypeList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15860,19 +18477,25 @@ impl Debug for TsTypeList {
 impl IntoIterator for TsTypeList {
     type Item = SyntaxResult<TsExprWithTypeArgs>;
     type IntoIter = AstSeparatedListNodesIterator<TsExprWithTypeArgs>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &TsTypeList {
     type Item = SyntaxResult<TsExprWithTypeArgs>;
     type IntoIter = AstSeparatedListNodesIterator<TsExprWithTypeArgs>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct TsTypeParamList {
     syntax_list: SyntaxList,
 }
 impl AstNode for TsTypeParamList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_PARAM_LIST }
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        kind == TS_TYPE_PARAM_LIST
+    }
     fn cast(syntax: SyntaxNode) -> Option<TsTypeParamList> {
         if Self::can_cast(syntax.kind()) {
             Some(TsTypeParamList {
@@ -15882,10 +18505,14 @@ impl AstNode for TsTypeParamList {
             None
         }
     }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+    fn syntax(&self) -> &SyntaxNode {
+        self.syntax_list.node()
+    }
 }
 impl AstSeparatedList<TsTypeParam> for TsTypeParamList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+    fn syntax_list(&self) -> &SyntaxList {
+        &self.syntax_list
+    }
 }
 impl Debug for TsTypeParamList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -15896,12 +18523,16 @@ impl Debug for TsTypeParamList {
 impl IntoIterator for TsTypeParamList {
     type Item = SyntaxResult<TsTypeParam>;
     type IntoIter = AstSeparatedListNodesIterator<TsTypeParam>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 impl IntoIterator for &TsTypeParamList {
     type Item = SyntaxResult<TsTypeParam>;
     type IntoIter = AstSeparatedListNodesIterator<TsTypeParam>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
 }
 pub struct DebugSyntaxElement(pub(crate) SyntaxElement);
 impl Debug for DebugSyntaxElement {

@@ -130,7 +130,7 @@ impl ParserState {
 ///
 /// It's important that creating and rewinding a snapshot is cheap. Consider the performance implications
 /// before adding new unscoped state.
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub(super) struct ParserStateCheckpoint {
     /// Additional data that we only want to store in debug mode
     #[cfg(debug_assertions)]
