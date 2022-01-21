@@ -931,6 +931,34 @@ fn regex() {
 }
 
 #[test]
+fn regex_after_fn() {
+    assert_lex! {
+        "function fn() {}/1/;",
+        FUNCTION_KW:8,
+        WHITESPACE:1,
+        IDENT:2,
+        L_PAREN:1,
+        R_PAREN:1,
+        WHITESPACE:1,
+        L_CURLY:1,
+        R_CURLY:1,
+        JS_REGEX_LITERAL:3,
+        SEMICOLON:1
+    };
+}
+
+#[test]
+fn regex_await() {
+    assert_lex! {
+        "await /x.y/g;",
+        AWAIT_KW:5,
+        WHITESPACE:1,
+        JS_REGEX_LITERAL:6,
+        SEMICOLON:1,
+    }
+}
+
+#[test]
 fn division() {
     assert_lex! {
         "var a = 5 / 6",

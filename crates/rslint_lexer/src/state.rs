@@ -59,8 +59,9 @@ impl LexerState {
             }
 
             T![function] => {
+                // Needed to lex function fn() {}/1/;
                 if self.expr_allowed
-                    && ctx_is_brace_block(
+                    && !ctx_is_brace_block(
                         &self.ctx,
                         self.prev,
                         self.had_linebreak,
