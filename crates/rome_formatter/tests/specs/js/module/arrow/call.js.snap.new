@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 43
+assertion_line: 57
 expression: call.js
 
 ---
@@ -53,8 +53,7 @@ romise.then(result => result.veryLongVariable.veryLongPropertyName > someOtherVa
 ---
 # Output
 const testResults = results.testResults.map(
-	(testResult) =>
-		formatResult(testResult, formatter, reporter),
+	(testResult) => formatResult(testResult, formatter, reporter),
 );
 
 it(
@@ -62,7 +61,9 @@ it(
 	() => {
 		expect(
 			// () => moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/)),
-		).not.toThrow();
+		)
+			.not
+			.toThrow();
 	},
 );
 
@@ -71,25 +72,25 @@ expect(() => asyncRequest({ url: "/test-endpoint" }));
 expect(() => asyncRequest({ url: "/test-endpoint-but-with-a-long-url" }));
 // .toThrowError(/Required parameter/);
 expect(
-	() =>
-		asyncRequest({ url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url" }),
+	() => asyncRequest({ url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url" }),
 );
 // .toThrowError(/Required parameter/);
-expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" })).not.toThrowError();
+expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" }))
+	.not
+	.toThrowError();
 
 expect(
-	() =>
-		asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
-).not.toThrowError();
+	() => asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
+)
+	.not
+	.toThrowError();
 
 const a = Observable.fromPromise(axiosInstance.post("/carts/mine")).map(
-	(response) =>
-		response.data,
+	(response) => response.data,
 );
 
 const b = Observable.fromPromise(axiosInstance.get(url)).map(
-	(response) =>
-		response.data,
+	(response) => response.data,
 );
 
 func(
@@ -102,6 +103,7 @@ const composition = (ViewComponent, ContainerComponent) =>
 	class extends React.Component {
 		static propTypes = {};
 	};
+
 romise.then(
 	(result) =>
 		result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",

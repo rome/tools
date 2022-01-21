@@ -1,8 +1,11 @@
+use crate::format_element::soft_indent_or_space;
 use crate::{
     concat_elements, empty_element, format_elements, space_token, token, FormatElement,
     FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{JsAnyArrowFunctionParameters, JsAnyFunction, JsAnyFunctionBody};
+use rslint_parser::ast::{
+    JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,
+};
 
 impl ToFormatElement for JsAnyFunction {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -43,7 +46,17 @@ impl ToFormatElement for JsAnyFunction {
             tokens.push(space_token());
         }
 
-        tokens.push(formatter.format_node(&self.body()?)?);
+        if matches!(
+            self.body()?,
+            JsAnyFunctionBody::JsFunctionBody(_)
+                | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsArrayExpression(_))
+                | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsArrowFunctionExpression(_))
+                | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsObjectExpression(_))
+        ) {
+            tokens.push(formatter.format_node(&self.body()?)?);
+        } else {
+            tokens.push(soft_indent_or_space(formatter.format_node(&self.body()?)?));
+        }
 
         Ok(concat_elements(tokens))
     }

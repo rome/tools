@@ -500,6 +500,67 @@ pub fn soft_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
     }
 }
 
+/// A line break and indent if the enclosing [Group] doesn't fit on a single, line, a space
+/// otherwise. Does not insert a new line at the end, as this messes up semicolon placement
+///
+/// ## Examples
+///
+/// Indents the content by one level and puts in new lines if the enclosing [Group] doesn't
+/// fit on a single line. Otherwise, just inserts a space.
+///
+/// ```
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_indent};
+///
+/// let elements = group_elements(format_elements![
+///   token("name"),
+///   token("="),
+///   soft_indent_or_space(format_elements![
+///     token("firstName"),
+///     token("+"),
+///     token("lastName"),
+///   ]),
+/// ]);
+///
+/// let options = FormatOptions {
+///  line_width: 10,
+///  ..FormatOptions::default()
+/// };
+///
+/// assert_eq!("name =\n  firstName + lastName", format_element(&elements, options).code());
+/// ```
+///
+/// Only adds a space if the enclosing [Group] fits on a single line
+/// ```
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_indent};
+///
+/// let elements = group_elements(format_elements![
+///   token("a"),
+///   token("="),
+///   soft_indent_or_space(format_elements![
+///      token("10")
+///   ]),
+/// ]);
+///
+/// assert_eq!(
+///   "a = 10",
+///   format_element(&elements, FormatOptions::default()).code()
+/// );
+/// ```
+///
+#[inline]
+pub fn soft_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatElement {
+    let content = content.into();
+
+    if content.is_empty() {
+        content
+    } else {
+        format_elements![Indent::new(format_elements![
+            soft_line_break_or_space(),
+            content
+        ]),]
+    }
+}
+
 /// Creates a logical [Group] around the content that should either consistently be printed on a single line
 /// or broken across multiple lines.
 ///
