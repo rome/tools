@@ -2,7 +2,7 @@ use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::state::{EnterFunction, EnterParameters, SignatureFlags};
 use crate::syntax::binding::{parse_binding, parse_binding_pattern};
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::{parse_expr_or_assignment, ExpressionContext};
+use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_parameter};
 use crate::syntax::stmt::{is_semi, parse_block_impl, StatementContext};
@@ -373,7 +373,7 @@ pub(super) fn parse_arrow_body(p: &mut Parser, mut flags: SignatureFlags) -> Par
         parse_function_body(p, flags)
     } else {
         p.with_state(EnterFunction(flags), |p| {
-            parse_expr_or_assignment(p, ExpressionContext::default())
+            parse_assignment_expression_or_higher(p, ExpressionContext::default())
         })
     }
 }
@@ -483,10 +483,11 @@ pub(super) fn parse_parameters_list(
 
                     // test_err arrow_rest_in_expr_in_initializer
                     // for ((...a = "b" in {}) => {};;) {}
-                    let end = parse_expr_or_assignment(p, ExpressionContext::default())
-                        .ok()
-                        .map(|marker| usize::from(marker.range(p).end()))
-                        .unwrap_or_else(|| p.cur_tok().start());
+                    let end =
+                        parse_assignment_expression_or_higher(p, ExpressionContext::default())
+                            .ok()
+                            .map(|marker| usize::from(marker.range(p).end()))
+                            .unwrap_or_else(|| p.cur_tok().start());
 
                     let err = p
                         .err_builder("rest elements may not have default initializers")

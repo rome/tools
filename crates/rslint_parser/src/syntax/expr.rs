@@ -171,7 +171,7 @@ pub(crate) fn parse_expression_or_recover_to_next_statement(
     context: ExpressionContext,
 ) -> RecoveryResult {
     let func = if assign {
-        syntax::expr::parse_expr_or_assignment
+        syntax::expr::parse_assignment_expression_or_higher
     } else {
         syntax::expr::parse_expression
     };
@@ -242,8 +242,11 @@ pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, literal_kind))
 }
 
-/// Parses an expression that might turn out to be an assignment target if an assignment operator is found
-pub(crate) fn parse_expr_or_assignment(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+/// Parses an assignment expression or any higher expression
+pub(crate) fn parse_assignment_expression_or_higher(
+    p: &mut Parser,
+    context: ExpressionContext,
+) -> ParsedSyntax {
     if p.at(T![<]) && is_nth_at_name(p, 1) {
         let res = try_parse_ts(p, |p| {
             let m = p.start();
@@ -252,7 +255,7 @@ pub(crate) fn parse_expr_or_assignment(p: &mut Parser, context: ExpressionContex
                 return None;
             }
 
-            let res = parse_assign_expr_base(p, context);
+            let res = parse_assignment_expression_or_higher_base(p, context);
             if res.kind() == Some(JS_ARROW_FUNCTION_EXPRESSION) {
                 m.abandon(p);
                 return None;
@@ -265,10 +268,13 @@ pub(crate) fn parse_expr_or_assignment(p: &mut Parser, context: ExpressionContex
             return Present(res);
         }
     }
-    parse_assign_expr_base(p, context)
+    parse_assignment_expression_or_higher_base(p, context)
 }
 
-fn parse_assign_expr_base(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+fn parse_assignment_expression_or_higher_base(
+    p: &mut Parser,
+    context: ExpressionContext,
+) -> ParsedSyntax {
     if p.state.in_generator() && p.at(T![yield]) {
         return Present(parse_yield_expression(p, context));
     }
@@ -319,7 +325,7 @@ fn parse_assign_expr_recursive(
         let target = expression_to_assignment_pattern(p, target, checkpoint);
         let m = target.precede(p);
         p.bump_any(); // operator
-        parse_expr_or_assignment(p, context.and_object_expression_allowed(true))
+        parse_assignment_expression_or_higher(p, context.and_object_expression_allowed(true))
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
         Present(m.complete(p, JS_ASSIGNMENT_EXPRESSION))
     } else {
@@ -342,7 +348,7 @@ fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> Complet
     if !is_semi(p, 0) && (p.at(T![*]) || p.at_ts(STARTS_EXPR)) {
         let argument = p.start();
         p.eat(T![*]);
-        parse_expr_or_assignment(p, context.and_object_expression_allowed(true)).ok();
+        parse_assignment_expression_or_higher(p, context.and_object_expression_allowed(true)).ok();
 
         argument.complete(p, JS_YIELD_ARGUMENT);
     }
@@ -379,7 +385,7 @@ pub(super) fn parse_conditional_expr(p: &mut Parser, context: ExpressionContext)
             let m = marker.precede(p);
             p.bump_any();
 
-            parse_expr_or_assignment(
+            parse_assignment_expression_or_higher(
                 p,
                 context
                     .and_include_in(true)
@@ -389,7 +395,7 @@ pub(super) fn parse_conditional_expr(p: &mut Parser, context: ExpressionContext)
 
             p.expect(T![:]);
 
-            parse_expr_or_assignment(p, context)
+            parse_assignment_expression_or_higher(p, context)
                 .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
             m.complete(p, JS_CONDITIONAL_EXPRESSION)
         });
@@ -942,7 +948,7 @@ fn parse_arguments(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
             // already do a check on "..." so it's safe to unwrap
             parse_spread_element(p, context.and_include_in(true))
         } else {
-            parse_expr_or_assignment(p, context.and_include_in(true))
+            parse_assignment_expression_or_higher(p, context.and_include_in(true))
         };
 
         if argument.is_absent() && p.at(T![,]) {
@@ -994,7 +1000,10 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> Pars
         let m = p.start();
 
         let l_paren = p.expect(T!['(']);
-        let first = parse_expr_or_assignment(p, context.and_object_expression_allowed(l_paren));
+        let first = parse_assignment_expression_or_higher(
+            p,
+            context.and_object_expression_allowed(l_paren),
+        );
 
         if p.at(T![,]) {
             parse_sequence_expression_recursive(p, first, context)
@@ -1011,7 +1020,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> Pars
             return Err(());
         }
 
-        let expr = parse_expr_or_assignment(p, context);
+        let expr = parse_assignment_expression_or_higher(p, context);
 
         if p.at(T![:]) {
             // Parser's at a type annotation, only valid in a parameter -> bail out
@@ -1127,7 +1136,7 @@ pub fn parse_expression_snipped(p: &mut Parser) -> ParsedSyntax {
 
 /// A general expression.
 pub(crate) fn parse_expression(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
-    let first = parse_expr_or_assignment(p, context);
+    let first = parse_assignment_expression_or_higher(p, context);
 
     if p.at(T![,]) {
         parse_sequence_expression_recursive(p, first, context)
@@ -1156,7 +1165,7 @@ fn parse_sequence_expression_recursive(
         let sequence_expr_marker =
             left.precede_or_add_diagnostic(p, js_parse_error::expected_expression);
         p.bump(T![,]);
-        parse_expr_or_assignment(p, context).or_add_diagnostic(p, expected_expression);
+        parse_assignment_expression_or_higher(p, context).or_add_diagnostic(p, expected_expression);
 
         left = Present(sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION))
     }
@@ -1352,7 +1361,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                             .primary(p.cur_tok().range(), "");
                         p.error(err);
                     } else {
-                        parse_expr_or_assignment(
+                        parse_assignment_expression_or_higher(
                             p,
                             context
                                 .and_include_in(true)
@@ -1554,7 +1563,7 @@ impl ParseSeparatedList for ArrayElementsList {
         match p.cur() {
             T![...] => parse_spread_element(p, ExpressionContext::default()),
             T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
-            _ => parse_expr_or_assignment(p, ExpressionContext::default()),
+            _ => parse_assignment_expression_or_higher(p, ExpressionContext::default()),
         }
     }
 
@@ -1618,7 +1627,7 @@ fn parse_spread_element(p: &mut Parser, context: ExpressionContext) -> ParsedSyn
     }
     let m = p.start();
     p.bump(T![...]);
-    parse_expr_or_assignment(p, context)
+    parse_assignment_expression_or_higher(p, context)
         .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
     Present(m.complete(p, JS_SPREAD))
 }

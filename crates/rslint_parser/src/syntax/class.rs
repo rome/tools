@@ -4,7 +4,7 @@ use crate::state::{
     EnterParameters, SignatureFlags,
 };
 use crate::syntax::binding::parse_binding;
-use crate::syntax::expr::{parse_expr_or_assignment, ExpressionContext};
+use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::function::{
     parse_function_body, parse_parameter, parse_parameter_list, parse_parameters_list,
     parse_ts_type_annotation_or_error, ts_parameter_types,
@@ -845,7 +845,7 @@ pub(crate) fn parse_initializer_clause(p: &mut Parser, context: ExpressionContex
         let m = p.start();
         p.bump(T![=]);
 
-        parse_expr_or_assignment(p, context)
+        parse_assignment_expression_or_higher(p, context)
             .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
 
         Present(m.complete(p, JS_INITIALIZER_CLAUSE))
