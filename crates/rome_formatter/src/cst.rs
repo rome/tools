@@ -1,4 +1,5 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
+use rslint_parser::ast::JsAnyNamedImportSpecifier::JsNamedImportSpecifier;
 use rslint_parser::ast::{
     ImportMeta, JsArrayBindingPattern, JsArrayExpression, JsArrowFunctionExpression,
     JsBlockStatement, JsBooleanLiteralExpression, JsCallArguments, JsCallExpression, JsCaseClause,
