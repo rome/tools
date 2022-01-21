@@ -1,0 +1,3 @@
+console.log(import.meta);
+import.meta.field = obj.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
+import.meta.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
