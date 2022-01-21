@@ -84,7 +84,7 @@ pub fn run_ts(
                 if is_detailed && show_rast {
                     println!("{:#?}", r.syntax());
                 }
-    
+
                 if is_detailed && show_diagnostics {
                     let file = rslint_errors::file::SimpleFile::new(
                         path.display().to_string(),
@@ -96,7 +96,7 @@ pub fn run_ts(
                         emitter.emit_stdout(diagnostic, true).unwrap();
                     }
                 }
-                
+
                 r.ok().map(drop)
             });
 
@@ -130,14 +130,9 @@ pub fn run_ts(
                 let reason = match result.outcome {
                     Outcome::Failed => "incorrectly threw an error",
                     Outcome::Panicked => "panicked while parsing",
-                    _ => unreachable!()
+                    _ => unreachable!(),
                 };
-                let msg = format!(
-                    "{} '{}' {}",
-                    "Test".bold().red(),
-                    filename,
-                    reason.bold()
-                );
+                let msg = format!("{} '{}' {}", "Test".bold().red(), filename, reason.bold());
                 pb.println(msg);
             }
 

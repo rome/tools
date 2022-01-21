@@ -1,7 +1,7 @@
 use colored::Colorize;
 use indicatif::ProgressBar;
 use regex::Regex;
-use serde::{Deserialize};
+use serde::Deserialize;
 use std::fs::read_to_string;
 use std::io;
 use std::path::PathBuf;

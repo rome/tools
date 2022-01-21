@@ -67,7 +67,13 @@ fn main() -> Result<()> {
                     .to_string()
             });
 
-            coverage::run(language.as_str(), query.as_deref(), json, show_rast, show_diagnostics);
+            coverage::run(
+                language.as_str(),
+                query.as_deref(),
+                json,
+                show_rast,
+                show_diagnostics,
+            );
 
             Ok(())
         }
