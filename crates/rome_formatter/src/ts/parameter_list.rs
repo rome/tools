@@ -4,6 +4,7 @@ use crate::{
     ToFormatElement,
 };
 use rslint_parser::ast::{JsAnyParameter, JsParameter, JsParameters, JsRestParameter};
+use rslint_parser::AstNode;
 
 impl ToFormatElement for JsParameters {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -27,7 +28,9 @@ impl ToFormatElement for JsAnyParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
             JsAnyParameter::JsParameter(parameter) => parameter.to_format_element(formatter),
-            JsAnyParameter::JsUnknownParameter(_) => todo!(),
+            JsAnyParameter::JsUnknownParameter(unknown_parameter) => {
+                Ok(formatter.format_verbatim(unknown_parameter.syntax()))
+            }
             JsAnyParameter::JsRestParameter(binding) => binding.to_format_element(formatter),
         }
     }

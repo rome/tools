@@ -7,6 +7,7 @@ use rslint_parser::ast::{
     JsAnyObjectBindingPatternMember, JsObjectBindingPattern, JsObjectBindingPatternProperty,
     JsObjectBindingPatternRest, JsObjectBindingPatternShorthandProperty,
 };
+use rslint_parser::AstNode;
 
 impl ToFormatElement for JsObjectBindingPattern {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -45,7 +46,9 @@ impl ToFormatElement for JsAnyObjectBindingPatternMember {
             JsAnyObjectBindingPatternMember::JsIdentifierBinding(identifier_binding) => {
                 identifier_binding.to_format_element(formatter)
             }
-            JsAnyObjectBindingPatternMember::JsUnknownBinding(_) => todo!(),
+            JsAnyObjectBindingPatternMember::JsUnknownBinding(unknown_binding) => {
+                Ok(formatter.format_verbatim(unknown_binding.syntax()))
+            }
         }
     }
 }

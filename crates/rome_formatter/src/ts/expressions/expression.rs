@@ -8,7 +8,7 @@ use rslint_parser::ast::{
     JsInstanceofExpression, JsLogicalExpression, JsNewExpression, JsParenthesizedExpression,
     JsThisExpression, JsUnaryExpression, JsYieldArgument, JsYieldExpression, NewTarget,
 };
-use rslint_parser::{token_set, T};
+use rslint_parser::{token_set, AstNode, T};
 
 impl ToFormatElement for JsAnyExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -82,7 +82,9 @@ impl ToFormatElement for JsAnyExpression {
             JsAnyExpression::JsPostUpdateExpression(post_update_expression) => {
                 post_update_expression.to_format_element(formatter)
             }
-            JsAnyExpression::JsUnknownExpression(_) => todo!(),
+            JsAnyExpression::JsUnknownExpression(unknown_expression) => {
+                Ok(formatter.format_verbatim(unknown_expression.syntax()))
+            }
             JsAnyExpression::JsLogicalExpression(logical_expression) => {
                 logical_expression.to_format_element(formatter)
             }

@@ -1,5 +1,6 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::JsAnyObjectMember;
+use rslint_parser::AstNode;
 
 impl ToFormatElement for JsAnyObjectMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -16,7 +17,9 @@ impl ToFormatElement for JsAnyObjectMember {
             JsAnyObjectMember::JsMethodObjectMember(method_object_member) => {
                 method_object_member.to_format_element(formatter)
             }
-            JsAnyObjectMember::JsUnknownMember(_) => todo!(),
+            JsAnyObjectMember::JsUnknownMember(unknown_member) => {
+                Ok(formatter.format_verbatim(unknown_member.syntax()))
+            }
         }
     }
 }

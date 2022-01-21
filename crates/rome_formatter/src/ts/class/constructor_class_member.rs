@@ -5,6 +5,7 @@ use crate::{
 use rslint_parser::ast::{
     JsAnyConstructorParameter, JsConstructorClassMember, JsConstructorParameters,
 };
+use rslint_parser::AstNode;
 
 impl ToFormatElement for JsConstructorClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -42,7 +43,9 @@ impl ToFormatElement for JsAnyConstructorParameter {
             JsAnyConstructorParameter::JsParameter(parameter) => {
                 parameter.to_format_element(formatter)
             }
-            JsAnyConstructorParameter::JsUnknownParameter(_) => todo!(),
+            JsAnyConstructorParameter::JsUnknownParameter(unknown_parameter) => {
+                Ok(formatter.format_verbatim(unknown_parameter.syntax()))
+            }
         }
     }
 }

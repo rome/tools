@@ -109,7 +109,7 @@ impl Formatter {
     /// Recursively formats the ast node and all its children
     ///
     /// Returns `None` if the node couldn't be formatted because of syntax errors in its sub tree.
-    /// The parent may use `format_raw` to insert the node content as is.
+    /// The parent may use [Self::format_verbatim] to insert the node content as is.
     pub fn format_node<T: AstNode + ToFormatElement>(
         &self,
         node: T,
@@ -356,12 +356,12 @@ impl Formatter {
     ///
     /// You may be inclined to call `node.text` directly. However, using `text` doesn't track the nodes
     ///nor its children source mapping information, resulting in incorrect source maps for this subtree.
-    pub fn format_raw(&self, node: &SyntaxNode) -> FormatElement {
+    pub fn format_verbatim(&self, node: &SyntaxNode) -> FormatElement {
         concat_elements(node.children_with_tokens().map(|child| match child {
             SyntaxElement::Node(child_node) => {
                 // TODO: Add source map markers before/after node as well as any additional elements that
                 // need to be tracked for every node.
-                self.format_raw(&child_node)
+                self.format_verbatim(&child_node)
             }
             SyntaxElement::Token(syntax_token) => {
                 cfg_if::cfg_if! {

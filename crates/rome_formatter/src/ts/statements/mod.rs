@@ -34,7 +34,10 @@ pub fn format_statements(stmts: JsStatementList, formatter: &Formatter) -> Forma
                 Ok(result) => result,
                 Err(_) => {
                     formatter.restore(snapshot);
-                    formatter.format_raw(stmt.syntax()).trim_start().trim_end()
+                    formatter
+                        .format_verbatim(stmt.syntax())
+                        .trim_start()
+                        .trim_end()
                 }
             }
         }),

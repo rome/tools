@@ -14,7 +14,7 @@ pub fn format_directives(directives: JsDirectiveList, formatter: &Formatter) -> 
                 Err(_) => {
                     formatter.restore(snapshot);
                     formatter
-                        .format_raw(directive.syntax())
+                        .format_verbatim(directive.syntax())
                         .trim_start()
                         .trim_end()
                 }
