@@ -412,7 +412,7 @@ fn parse_binary_or_logical_expression(p: &mut Parser, context: ExpressionContext
     // }
     let left = parse_unary_expr(p, context).or_else(|| parse_private_name(p));
 
-    parse_binary_or_logical_expression_recursive(p, left, 0, context)
+    parse_binary_or_logical_expression_recursive(p, left, 0, context, 0)
 }
 
 // test binary_expressions
@@ -438,7 +438,12 @@ fn parse_binary_or_logical_expression_recursive(
     left: ParsedSyntax,
     min_prec: u8,
     context: ExpressionContext,
+    recursion_count: usize,
 ) -> ParsedSyntax {
+    // There is no logic behind 128 here. We need to fine tune this.
+    if recursion_count >= 128 {
+        panic!("Too much recursion at parse_binary_or_logical_expression_recursive");
+    }
     if 7 > min_prec && !p.has_linebreak_before_n(0) && p.cur_src() == "as" {
         let m = left.precede(p);
         p.bump_any();
@@ -449,7 +454,7 @@ fn parse_binary_or_logical_expression_recursive(
             m.complete(p, TS_ASSERTION)
         };
         res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
-        return parse_binary_or_logical_expression_recursive(p, Present(res), min_prec, context);
+        return parse_binary_or_logical_expression_recursive(p, Present(res), min_prec, context, recursion_count + 1);
     }
     let kind = match p.cur() {
         T![>] if p.nth_at(1, T![>]) && p.nth_at(2, T![>]) => T![>>>],
@@ -547,7 +552,7 @@ fn parse_binary_or_logical_expression_recursive(
 
         p.error(err);
 
-        parse_binary_or_logical_expression_recursive(p, Absent, 0, context)
+        parse_binary_or_logical_expression_recursive(p, Absent, 0, context, recursion_count + 1)
     } else if p.at(T![#]) {
         // test_err private_name_presence_check_recursive
         // class A {
@@ -577,11 +582,12 @@ fn parse_binary_or_logical_expression_recursive(
             precedence
         },
         context,
+        recursion_count + 1
     )
     .or_add_diagnostic(p, expected_expression);
 
     let complete = m.complete(p, expression_kind);
-    parse_binary_or_logical_expression_recursive(p, Present(complete), min_prec, context)
+    parse_binary_or_logical_expression_recursive(p, Present(complete), min_prec, context, recursion_count + 1)
 
     // FIXME(RDambrosio016): We should check for nullish-coalescing and logical expr being used together,
     // however, i can't figure out a way to do this efficiently without using parse_marker which is way too

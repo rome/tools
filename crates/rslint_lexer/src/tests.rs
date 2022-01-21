@@ -173,6 +173,10 @@ fn all_whitespace() {
         NEWLINE:2
         WHITESPACE:2
     }
+    assert_lex! {
+        "\n\n",
+        NEWLINE:2
+    }
 }
 
 #[test]

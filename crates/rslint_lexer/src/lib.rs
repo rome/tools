@@ -689,6 +689,7 @@ impl<'src> Lexer<'src> {
                             self.next();
                             self.read_exponent()
                         } else {
+                            self.next();
                             None
                         }
                     }
