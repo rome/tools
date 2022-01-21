@@ -449,9 +449,11 @@ impl JsSyntaxKind {
         match self {
             BANG | L_PAREN | L_BRACK | L_CURLY | SEMICOLON | COMMA | COLON | QUESTION | PLUS2
             | MINUS2 | TILDE | CASE_KW | DEFAULT_KW | DO_KW | ELSE_KW | RETURN_KW | THROW_KW
-            | NEW_KW | EXTENDS_KW | YIELD_KW | IN_KW | TYPEOF_KW | VOID_KW | DELETE_KW | PLUSEQ
-            | MINUSEQ | PIPEEQ | AMPEQ | CARETEQ | SLASHEQ | STAREQ | PERCENTEQ | AMP2 | PIPE2
-            | SHLEQ | SHREQ | USHREQ | EQ | FAT_ARROW | MINUS | PLUS => true,
+            | NEW_KW | EXTENDS_KW | YIELD_KW | AWAIT_KW | IN_KW | TYPEOF_KW | VOID_KW
+            | DELETE_KW | PLUSEQ | MINUSEQ | PIPEEQ | AMPEQ | CARETEQ | SLASHEQ | STAREQ
+            | PERCENTEQ | AMP2 | PIPE2 | SHLEQ | SHREQ | USHREQ | EQ | FAT_ARROW | MINUS | PLUS => {
+                true
+            }
             _ => false,
         }
     }
