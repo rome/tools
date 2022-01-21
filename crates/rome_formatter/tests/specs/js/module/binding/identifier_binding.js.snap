@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 43
 expression: identifier_binding.js
 
 ---
@@ -11,6 +12,7 @@ let abcde = "very long value that will cause a line break", fghij = "this should
 ---
 # Output
 let x = y;
+
 let abcde = "very long value that will cause a line break",
 	fghij = "this should end up on the next line";
 

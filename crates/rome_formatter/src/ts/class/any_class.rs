@@ -1,5 +1,5 @@
 use crate::{
-    block_indent, empty_element, format_elements, group_elements, hard_line_break, join_elements,
+    block_indent, empty_element, format_elements, group_elements, join_elements_hard_line,
     space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::JsAnyClass;
@@ -28,7 +28,11 @@ impl ToFormatElement for JsAnyClass {
                 |leading, trailing| {
                     Ok(block_indent(format_elements![
                         leading,
-                        join_elements(hard_line_break(), formatter.format_nodes(self.members())?),
+                        join_elements_hard_line(
+                            self.members()
+                                .into_iter()
+                                .zip(formatter.format_nodes(self.members())?)
+                        ),
                         trailing,
                     ]))
                 },

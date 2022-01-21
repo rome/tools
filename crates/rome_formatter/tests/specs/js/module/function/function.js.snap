@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 43
 expression: function.js
 
 ---
@@ -54,11 +55,13 @@ function* Foo() {
 }
 function foo() {
 	let [ref, setRef] = useState();
+
 	useEffect(
 		() => {
 			setRef();
 		},
 	);
+
 	return ref;
 }
 

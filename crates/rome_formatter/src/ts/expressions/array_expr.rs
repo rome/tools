@@ -1,6 +1,6 @@
 use crate::{
-    empty_element, format_elements, group_elements, if_group_breaks, join_elements, soft_indent,
-    soft_line_break_or_space, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    empty_element, format_element::join_elements_soft_line, format_elements, group_elements,
+    if_group_breaks, soft_indent, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::{
     ast::{JsAnyArrayElement, JsArrayExpression, JsArrayHole},
@@ -25,7 +25,7 @@ impl ToFormatElement for JsArrayExpression {
                         let node = element.node()?;
                         let is_hole = matches!(node, JsAnyArrayElement::JsArrayHole(_));
 
-                        let node = formatter.format_node(node)?;
+                        let elem = formatter.format_node(node.clone())?;
                         let separator = if is_hole || index != last_index {
                             // If the previous element was empty or this is not the last element, always print a separator
                             if let Some(separator) = element.trailing_separator()? {
@@ -39,13 +39,13 @@ impl ToFormatElement for JsArrayExpression {
                             if_group_breaks(token(","))
                         };
 
-                        Ok(format_elements![node, separator])
+                        Ok((node, format_elements![elem, separator]))
                     })
                     .collect::<FormatResult<Vec<_>>>()?;
 
                 Ok(soft_indent(format_elements![
                     leading,
-                    join_elements(soft_line_break_or_space(), results),
+                    join_elements_soft_line(results),
                     trailing,
                 ]))
             },

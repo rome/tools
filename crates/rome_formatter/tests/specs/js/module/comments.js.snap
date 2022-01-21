@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 66
+assertion_line: 63
 expression: comments.js
 
 ---

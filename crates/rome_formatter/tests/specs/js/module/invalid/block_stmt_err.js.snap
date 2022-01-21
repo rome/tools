@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 43
 expression: block_stmt_err.js
 
 ---
@@ -20,9 +21,11 @@ let recovered     = "no"
 {
 	let x = 10;
 	let y = 100;
+
 	if (test) {
 		let z = 110;
 	} else
 }
+
 let recovered = "no";
 

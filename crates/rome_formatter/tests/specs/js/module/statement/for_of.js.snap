@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 43
 expression: for_of.js
 
 ---
@@ -14,7 +15,9 @@ for (const aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforc
 ---
 # Output
 for (a of b) {}
+
 for (let a of b) {}
+
 for (
 	const aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks
 	of

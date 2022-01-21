@@ -5,7 +5,7 @@ use std::collections::HashSet;
 
 use crate::printer::Printer;
 use crate::{
-    concat_elements, empty_element, format_elements, hard_line_break, if_group_breaks,
+    concat_elements, empty_element, empty_line, format_elements, hard_line_break, if_group_breaks,
     if_group_fits_on_single_line, line_suffix, space_token, token, FormatElement, FormatOptions,
     FormatResult, Formatted, ToFormatElement,
 };
@@ -283,15 +283,15 @@ impl Formatter {
                     match line_count {
                         0 => space_token(),
                         1 => hard_line_break(),
-                        _ => format_elements![hard_line_break(), hard_line_break()],
+                        _ => empty_line(),
                     }
                 };
 
                 elements.push(format_elements![comment, line_break]);
 
                 line_count = 0;
-            } else if piece.as_newline().is_some() {
-                line_count += 1;
+            } else if let Some(newline) = piece.as_newline() {
+                line_count += newline.text().matches('\n').count();
             }
         }
 
@@ -299,7 +299,6 @@ impl Formatter {
     }
 
     fn print_trailing_trivia(&self, token: &SyntaxToken) -> FormatElement {
-        let mut line_count = 0;
         let mut elements = Vec::new();
 
         for piece in token.trailing_trivia().pieces() {
@@ -308,18 +307,7 @@ impl Formatter {
 
                 let comment = self.format_comment(comment);
 
-                elements.push(if line_count >= 1 {
-                    line_suffix(format_elements![
-                        if line_count > 1 {
-                            hard_line_break()
-                        } else {
-                            space_token()
-                        },
-                        hard_line_break(),
-                        comment,
-                        space_token(),
-                    ])
-                } else if !is_single_line {
+                elements.push(if !is_single_line {
                     format_elements![
                         if_group_breaks(line_suffix(format_elements![
                             space_token(),
@@ -335,10 +323,6 @@ impl Formatter {
                 } else {
                     line_suffix(format_elements![space_token(), comment, space_token()])
                 });
-
-                line_count = 0;
-            } else if piece.as_newline().is_some() {
-                line_count += 1;
             }
         }
 

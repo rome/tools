@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 43
 expression: switch.js
 
 ---
@@ -20,6 +21,7 @@ switch (key) {
 switch (key) {
 	case value:
 		break;
+
 	default:
 		break;
 }

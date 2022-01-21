@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 43
 expression: empty_lines.js
 
 ---
@@ -19,5 +20,12 @@ let a = [
 
 ---
 # Output
-let a = [1, 2, 3, 4];
+let a = [
+	1,
+	2,
+
+	3,
+
+	4,
+];
 
