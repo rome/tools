@@ -1,14 +1,18 @@
-use ascii_table::{AsciiTable, Column};
-use colored::Colorize;
 use super::{files::*, *};
-use rslint_parser::{parse_module, parse_text, ParserError};
-use std::any::Any;
+use colored::Colorize;
+use rslint_parser::{parse_module, parse_text};
 use std::path::PathBuf;
 use yastl::Pool;
 
 pub const TEST_JSON_PATH: &str = "xtask/src/base_results.json";
 
-pub fn run_js(query: Option<&str>, pool: Pool, json: bool, show_rast: bool, show_diagnostics: bool) {
+pub fn run_js(
+    query: Option<&str>,
+    pool: Pool,
+    json: bool,
+    show_rast: bool,
+    show_diagnostics: bool,
+) {
     let files = get_test_files(query, &pool, json);
     let num_ran = files.len();
 
@@ -103,7 +107,7 @@ pub fn run_js(query: Option<&str>, pool: Pool, json: bool, show_rast: bool, show
         );
 
         super::draw_table(&test_results);
-        
+
         if test_results.summary.passed > 0 {
             std::process::exit(1);
         } else {
@@ -208,7 +212,6 @@ fn report_detailed_test(pb: &indicatif::ProgressBar, res: &TestResult) {
     pb.println(format!("{}{}", header, msg))
 }
 
-
 fn merge_tests(code: String, l: ExecRes, r: ExecRes, meta: MetaData, path: PathBuf) -> TestResult {
     let fail = passed(l, meta.clone()).or_else(|| passed(r, meta));
     // outcome lowers down the reason of failing, being able to use serde over it
@@ -247,8 +250,6 @@ fn extract_outcome(fail: &Option<FailReason>) -> Outcome {
         Outcome::Passed
     }
 }
-
-
 
 fn exec_test(mut code: String, append_use_strict: bool, module: bool) -> (String, ExecRes) {
     if append_use_strict {

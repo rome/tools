@@ -454,7 +454,13 @@ fn parse_binary_or_logical_expression_recursive(
             m.complete(p, TS_ASSERTION)
         };
         res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
-        return parse_binary_or_logical_expression_recursive(p, Present(res), min_prec, context, recursion_count + 1);
+        return parse_binary_or_logical_expression_recursive(
+            p,
+            Present(res),
+            min_prec,
+            context,
+            recursion_count + 1,
+        );
     }
     let kind = match p.cur() {
         T![>] if p.nth_at(1, T![>]) && p.nth_at(2, T![>]) => T![>>>],
@@ -582,12 +588,18 @@ fn parse_binary_or_logical_expression_recursive(
             precedence
         },
         context,
-        recursion_count + 1
+        recursion_count + 1,
     )
     .or_add_diagnostic(p, expected_expression);
 
     let complete = m.complete(p, expression_kind);
-    parse_binary_or_logical_expression_recursive(p, Present(complete), min_prec, context, recursion_count + 1)
+    parse_binary_or_logical_expression_recursive(
+        p,
+        Present(complete),
+        min_prec,
+        context,
+        recursion_count + 1,
+    )
 
     // FIXME(RDambrosio016): We should check for nullish-coalescing and logical expr being used together,
     // however, i can't figure out a way to do this efficiently without using parse_marker which is way too

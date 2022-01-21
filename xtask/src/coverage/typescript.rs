@@ -1,14 +1,13 @@
+use super::*;
+use crate::coverage::{FailReason, Outcome, TestResult};
 use colored::Colorize;
 use rslint_parser::parse_text;
-use walkdir::{WalkDir, DirEntry};
+use walkdir::{DirEntry, WalkDir};
 use yastl::Pool;
-use crate::coverage::{ExecRes, TestResult, FailReason, Outcome};
-use super::*;
 
 const BASE_PATH: &str = "xtask/src/coverage/Typescript/tests";
 
-pub fn load_ts_files(query: Option<&str>) -> Vec<DirEntry>
-{
+pub fn load_ts_files(query: Option<&str>) -> Vec<DirEntry> {
     WalkDir::new(BASE_PATH)
         .into_iter()
         .filter_map(Result::ok)
@@ -39,18 +38,23 @@ pub fn load_ts_files(query: Option<&str>) -> Vec<DirEntry>
 pub fn check_file_encoding(path: &std::path::Path) -> Option<String> {
     let buffer = std::fs::read(path).unwrap();
     let bom = buffer.get(0..3);
-    if let Some(&[0xfe, 0xff, _]) = bom {
-        //Utf16Be;
-        None
-    } else if let Some(&[0xff, 0xfe, _]) = bom {
-        // Utf16Le
+    //Utf16Be or // Utf16Le
+    if let Some(&[0xfe, 0xff, _] | &[0xff, 0xfe, _]) = bom {
         None
     } else {
-        std::str::from_utf8(buffer.as_slice()).ok().map(str::to_string)
+        std::str::from_utf8(buffer.as_slice())
+            .ok()
+            .map(str::to_string)
     }
 }
 
-pub fn run_ts(query: Option<&str>, pool: Pool, json: bool, show_rast: bool, show_diagnostics: bool) {
+pub fn run_ts(
+    query: Option<&str>,
+    pool: Pool,
+    _json: bool,
+    show_rast: bool,
+    show_diagnostics: bool,
+) {
     let files = load_ts_files(query);
 
     let pb = indicatif::ProgressBar::new(files.len() as u64);
@@ -58,13 +62,15 @@ pub fn run_ts(query: Option<&str>, pool: Pool, json: bool, show_rast: bool, show
     pb.set_position(1);
     pb.set_message(msg);
     pb.set_style(super::default_bar_style());
-    
+
     std::panic::set_hook(Box::new(|_| {}));
     let (tx, rx) = std::sync::mpsc::channel();
 
-    pool.scoped(|scope| {
+    pool.scoped(|_| {
         let pb = &pb;
-        
+
+        let is_detailed = files.len() < 10;
+
         for file in files {
             let path = file.path();
             let code = check_file_encoding(path);
@@ -73,7 +79,25 @@ pub fn run_ts(query: Option<&str>, pool: Pool, json: bool, show_rast: bool, show
             }
             let code = code.unwrap();
             let result = std::panic::catch_unwind(|| {
-                parse_text(&code, 0).ok().map(drop)
+                let r = parse_text(&code, 0);
+
+                if is_detailed && show_rast {
+                    println!("{:#?}", r.syntax());
+                }
+    
+                if is_detailed && show_diagnostics {
+                    let file = rslint_errors::file::SimpleFile::new(
+                        path.display().to_string(),
+                        code.clone(),
+                    );
+                    let mut emitter = rslint_errors::Emitter::new(&file);
+
+                    for diagnostic in r.errors() {
+                        emitter.emit_stdout(diagnostic, true).unwrap();
+                    }
+                }
+                
+                r.ok().map(drop)
             });
 
             let result = result
@@ -83,27 +107,41 @@ pub fn run_ts(query: Option<&str>, pool: Pool, json: bool, show_rast: bool, show
                             fail: Some(FailReason::IncorrectlyErrored(errors)),
                             code: code.clone(),
                             outcome: Outcome::Failed,
-                            path: path.to_path_buf()
+                            path: path.to_path_buf(),
                         }
                     } else {
                         TestResult {
                             fail: None,
                             code: code.clone(),
                             outcome: Outcome::Passed,
-                            path: path.to_path_buf()
+                            path: path.to_path_buf(),
                         }
                     }
                 })
-                .unwrap_or_else(|err| {
-                    TestResult {
-                        fail: Some(FailReason::ParserPanic(err)),
-                        code: code.clone(),
-                        outcome: Outcome::Panicked,
-                        path: path.to_path_buf()
-                    }
+                .unwrap_or_else(|err| TestResult {
+                    fail: Some(FailReason::ParserPanic(err)),
+                    code: code.clone(),
+                    outcome: Outcome::Panicked,
+                    path: path.to_path_buf(),
                 });
 
-            tx.send(result);
+            if result.outcome != Outcome::Passed {
+                let filename = path.to_str().unwrap();
+                let reason = match result.outcome {
+                    Outcome::Failed => "incorrectly threw an error",
+                    Outcome::Panicked => "panicked while parsing",
+                    _ => unreachable!()
+                };
+                let msg = format!(
+                    "{} '{}' {}",
+                    "Test".bold().red(),
+                    filename,
+                    reason.bold()
+                );
+                pb.println(msg);
+            }
+
+            let _ = tx.send(result);
             pb.inc(1);
         }
     });
@@ -114,7 +152,7 @@ pub fn run_ts(query: Option<&str>, pool: Pool, json: bool, show_rast: bool, show
     test_results.store_results(rx.into_iter().collect::<Vec<_>>());
 
     draw_table(&test_results);
-    
+
     if test_results.summary.passed > 0 {
         std::process::exit(1);
     } else {

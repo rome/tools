@@ -60,21 +60,15 @@ fn main() -> Result<()> {
                 .unwrap_or_else(|| "js".to_string());
 
             let free = args.free()?;
-            let query = free.get(0).map(String::as_str)
-                .map(|query| query
+            let query = free.get(0).map(String::as_str).map(|query| {
+                query
                     .replace("\\", "/")
                     .trim_start_matches("./")
                     .to_string()
-            );
-            let query = query.as_ref().map(|x| x.as_str());
-            
-            coverage::run(language.as_str(),
-                query,
-                json,
-                show_rast,
-                show_diagnostics,
-            );
-            
+            });
+
+            coverage::run(language.as_str(), query.as_deref(), json, show_rast, show_diagnostics);
+
             Ok(())
         }
         "coverage-libs" => {

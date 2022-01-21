@@ -4,24 +4,16 @@ pub mod typescript;
 
 use ascii_table::{AsciiTable, Column};
 use colored::Colorize;
-use files::*;
-use rslint_parser::{parse_module, parse_text, ParserError};
+use rslint_parser::ParserError;
+use serde::{Deserialize, Serialize};
 use std::any::Any;
 use std::path::PathBuf;
-use yastl::Pool;
-use indicatif::ProgressBar;
-use regex::Regex;
-use serde::{Deserialize, Serialize};
-use std::fs::read_to_string;
-use std::io;
-use walkdir::WalkDir;
 
 enum ExecRes {
     Errors(Vec<ParserError>),
     ParseCorrectly,
     ParserPanic(Box<dyn Any + Send + 'static>),
 }
-
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TestResult {
@@ -34,7 +26,6 @@ pub struct TestResult {
     #[serde(skip)]
     pub code: String,
 }
-
 
 #[derive(Debug)]
 pub enum FailReason {
@@ -136,8 +127,6 @@ impl TestResults {
     }
 }
 
-
-
 fn default_bar_style() -> indicatif::ProgressStyle {
     indicatif::ProgressStyle::default_bar()
         .template("{msg} [{bar:40}]")
@@ -175,11 +164,13 @@ fn draw_table(test_results: &TestResults) {
     table.print(vec![numbers]);
 }
 
-pub fn run(language: &str,
-        query: Option<&str>, 
-        json: bool, 
-        show_rast: bool, 
-        show_diagnostics: bool) {
+pub fn run(
+    language: &str,
+    query: Option<&str>,
+    json: bool,
+    show_rast: bool,
+    show_diagnostics: bool,
+) {
     let pool = yastl::ThreadConfig::new().stack_size(8 << 30);
 
     let language = language.to_lowercase();
@@ -202,7 +193,6 @@ pub fn run(language: &str,
                 show_diagnostics,
             );
         }
-        x @ _ => panic!("Unkown language: {}", x)
+        other => panic!("Unkown language: {}", other),
     }
-    
 }

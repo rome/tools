@@ -1,9 +1,7 @@
 use colored::Colorize;
 use indicatif::ProgressBar;
 use regex::Regex;
-use rslint_parser::ParserError;
-use serde::{Deserialize, Serialize};
-use std::any::Any;
+use serde::{Deserialize};
 use std::fs::read_to_string;
 use std::io;
 use std::path::PathBuf;
@@ -158,4 +156,3 @@ pub fn get_test_files(query: Option<&str>, pool: &Pool, json: bool) -> Vec<TestF
 
     files
 }
-
