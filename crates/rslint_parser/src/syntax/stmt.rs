@@ -1254,7 +1254,10 @@ fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 
     // test do-while-asi
     // do do do ; while (x) while (x) while (x) x = 39;
-    if !parenthesized_expression(p) {
+    // do do ; while (x); while (x) x = 39
+    if parenthesized_expression(p) {
+        optional_semi(p);
+    } else {
         let end_range = p.cur_tok().end();
         semi(p, start..end_range);
     }
