@@ -82,7 +82,9 @@ impl ToFormatElement for JsAnyExpression {
             JsAnyExpression::JsPostUpdateExpression(post_update_expression) => {
                 post_update_expression.to_format_element(formatter)
             }
-            JsAnyExpression::JsUnknownExpression(_) => todo!(),
+            JsAnyExpression::JsUnknownExpression(unknown_expression) => {
+                unknown_expression.to_format_element(formatter)
+            }
             JsAnyExpression::JsLogicalExpression(logical_expression) => {
                 logical_expression.to_format_element(formatter)
             }

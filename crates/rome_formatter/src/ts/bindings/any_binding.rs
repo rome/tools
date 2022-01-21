@@ -5,7 +5,9 @@ impl ToFormatElement for JsAnyBinding {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
             JsAnyBinding::JsIdentifierBinding(single) => single.to_format_element(formatter),
-            JsAnyBinding::JsUnknownBinding(_) => todo!(),
+            JsAnyBinding::JsUnknownBinding(unknown_binding) => {
+                unknown_binding.to_format_element(formatter)
+            }
         }
     }
 }

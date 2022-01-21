@@ -42,7 +42,9 @@ impl ToFormatElement for JsAnyObjectAssignmentPatternMember {
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(
                 object_assignment_pattern_rest,
             ) => object_assignment_pattern_rest.to_format_element(formatter),
-            JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(_) => todo!(),
+            JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(unknown_assignment) => {
+                unknown_assignment.to_format_element(formatter)
+            }
         }
     }
 }

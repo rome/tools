@@ -9,7 +9,9 @@ use rslint_parser::ast::{
     JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression, JsParameters,
     JsPropertyClassMember, JsPropertyObjectMember, JsReturnStatement, JsScript,
     JsSequenceExpression, JsSetterClassMember, JsShorthandPropertyObjectMember, JsSpread,
-    JsStringLiteralExpression, JsSwitchStatement, JsTryStatement, JsVariableDeclaration,
+    JsStringLiteralExpression, JsSwitchStatement, JsTryStatement, JsUnknownAssignment,
+    JsUnknownBinding, JsUnknownExpression, JsUnknownImportAssertionEntry, JsUnknownMember,
+    JsUnknownNamedImportSpecifier, JsUnknownParameter, JsUnknownStatement, JsVariableDeclaration,
     JsVariableStatement, JsWhileStatement, JsWithStatement,
 };
 use rslint_parser::{AstNode, JsSyntaxKind, SyntaxNode};
@@ -162,6 +164,35 @@ impl ToFormatElement for SyntaxNode {
             JsSyntaxKind::JS_PROPERTY_CLASS_MEMBER => JsPropertyClassMember::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
+            JsSyntaxKind::JS_UNKNOWN_BINDING => JsUnknownBinding::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_UNKNOWN_MEMBER => JsUnknownMember::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_UNKNOWN_STATEMENT => JsUnknownStatement::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_UNKNOWN_EXPRESSION => JsUnknownExpression::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_UNKNOWN_ASSIGNMENT => JsUnknownAssignment::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_UNKNOWN_PARAMETER => JsUnknownParameter::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+
+            JsSyntaxKind::JS_UNKNOWN_IMPORT_ASSERTION_ENTRY => {
+                JsUnknownImportAssertionEntry::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+            JsSyntaxKind::JS_UNKNOWN_NAMED_IMPORT_SPECIFIER => {
+                JsUnknownNamedImportSpecifier::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
 
             _ => todo!(
                 "Implement formatting for the {:?} syntax kind.",

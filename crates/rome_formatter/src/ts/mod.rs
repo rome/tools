@@ -13,6 +13,7 @@ mod parameter_list;
 mod script;
 mod statements;
 mod template;
+mod unknown;
 
 #[cfg(test)]
 mod test {

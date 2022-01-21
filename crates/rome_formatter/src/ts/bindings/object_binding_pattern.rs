@@ -45,7 +45,9 @@ impl ToFormatElement for JsAnyObjectBindingPatternMember {
             JsAnyObjectBindingPatternMember::JsIdentifierBinding(identifier_binding) => {
                 identifier_binding.to_format_element(formatter)
             }
-            JsAnyObjectBindingPatternMember::JsUnknownBinding(_) => todo!(),
+            JsAnyObjectBindingPatternMember::JsUnknownBinding(unknown_binding) => {
+                unknown_binding.to_format_element(formatter)
+            }
         }
     }
 }

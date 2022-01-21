@@ -16,7 +16,9 @@ impl ToFormatElement for JsAnyAssignment {
             JsAnyAssignment::JsParenthesizedAssignment(parenthesized_assignment) => {
                 parenthesized_assignment.to_format_element(formatter)
             }
-            JsAnyAssignment::JsUnknownAssignment(_) => todo!(),
+            JsAnyAssignment::JsUnknownAssignment(unknown_assignment) => {
+                unknown_assignment.to_format_element(formatter)
+            }
         }
     }
 }

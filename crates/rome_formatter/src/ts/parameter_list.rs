@@ -27,7 +27,9 @@ impl ToFormatElement for JsAnyParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
             JsAnyParameter::JsParameter(parameter) => parameter.to_format_element(formatter),
-            JsAnyParameter::JsUnknownParameter(_) => todo!(),
+            JsAnyParameter::JsUnknownParameter(unknown_parameter) => {
+                unknown_parameter.to_format_element(formatter)
+            }
             JsAnyParameter::JsRestParameter(binding) => binding.to_format_element(formatter),
         }
     }

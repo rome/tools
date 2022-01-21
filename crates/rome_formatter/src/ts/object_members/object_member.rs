@@ -16,7 +16,9 @@ impl ToFormatElement for JsAnyObjectMember {
             JsAnyObjectMember::JsMethodObjectMember(method_object_member) => {
                 method_object_member.to_format_element(formatter)
             }
-            JsAnyObjectMember::JsUnknownMember(_) => todo!(),
+            JsAnyObjectMember::JsUnknownMember(unknown_member) => {
+                unknown_member.to_format_element(formatter)
+            }
         }
     }
 }
