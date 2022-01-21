@@ -243,6 +243,7 @@ pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// Parses an assignment expression or any higher expression
+/// https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#prod-AssignmentExpression
 pub(crate) fn parse_assignment_expression_or_higher(
     p: &mut Parser,
     context: ExpressionContext,
