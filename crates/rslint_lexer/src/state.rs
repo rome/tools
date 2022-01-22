@@ -22,7 +22,7 @@ impl LexerState {
     }
 
     pub(crate) fn is_in_template(&self) -> bool {
-        self.ctx.last() == Some(&Context::Template)
+        matches!(self.ctx.last(), Some(&Context::Template { .. }))
     }
 
     pub(crate) fn update(&mut self, next: JsSyntaxKind) {
@@ -51,11 +51,11 @@ impl LexerState {
                     return false;
                 }
 
-                if closed == Context::TplInternal {
+                if closed.is_tpl_internal() {
                     return !self.is_in_template();
                 }
 
-                !ctx_is_expr(closed)
+                !closed.is_expr()
             }
 
             T![function] => {
@@ -74,10 +74,15 @@ impl LexerState {
             }
 
             JsSyntaxKind::BACKTICK => {
-                if let Some(Context::Template) = self.ctx.last() {
+                if let Some(Context::Template { .. }) = self.ctx.last() {
                     self.ctx.pop();
                 } else {
-                    self.ctx.push(Context::Template);
+                    self.ctx.push(Context::Template {
+                        tagged: self
+                            .prev
+                            .map(|kind| !kind.is_before_expr())
+                            .unwrap_or(false),
+                    });
                 }
                 false
             }
@@ -132,19 +137,29 @@ pub(crate) enum Context {
     TplInternal,
     ParenStmt { for_loop: bool },
     ParenExpr,
-    Template,
+    Template { tagged: bool },
     FnExpr,
 }
 
-fn ctx_is_expr(ctx: Context) -> bool {
-    matches!(
-        ctx,
-        Context::BraceExpr
-            | Context::TplInternal
-            | Context::ParenExpr
-            | Context::Template
-            | Context::FnExpr
-    )
+impl Context {
+    fn is_tpl_internal(&self) -> bool {
+        matches!(self, Context::TplInternal)
+    }
+
+    fn is_template(&self) -> bool {
+        matches!(self, Context::Template { .. })
+    }
+
+    fn is_expr(&self) -> bool {
+        matches!(
+            self,
+            Context::BraceExpr
+                | Context::TplInternal { .. }
+                | Context::ParenExpr
+                | Context::Template { .. }
+                | Context::FnExpr
+        )
+    }
 }
 
 fn ctx_is_brace_block(

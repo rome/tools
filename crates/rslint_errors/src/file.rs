@@ -82,7 +82,17 @@ where
     T: Into<usize>,
 {
     fn as_range(&self) -> Range<usize> {
-        self.start.clone().into()..self.end.clone().into()
+        let start = self.start.clone().into();
+        let end = self.end.clone().into();
+
+        debug_assert!(
+            start <= end,
+            "slice index starts at {} but ends at {}",
+            start,
+            end
+        );
+
+        start..end
     }
 }
 

@@ -234,7 +234,7 @@ impl<'src> Lexer<'src> {
             // but it may cause a panic for other crates which just consume the diagnostics
             let invalid = self.get_unicode_char();
             let err = Diagnostic::error(self.file_id, "", "expected hex digits for a unicode code point escape, but encountered an invalid character")
-                .primary(self.cur .. invalid.len_utf8(), "");
+                .primary(self.cur .. self.cur + invalid.len_utf8(), "");
             self.cur -= 1;
             return Err(Box::new(err));
         }
@@ -358,21 +358,23 @@ impl<'src> Lexer<'src> {
 
     // Validate a `\..` escape sequence and advance the lexer based on it
     fn validate_escape_sequence(&mut self) -> Option<Box<Diagnostic>> {
+        debug_assert_eq!(self.current().unwrap(), &b'\\');
         let cur = self.cur;
-        if let Some(escape) = self.bytes.get(self.cur + 1) {
+        self.next(); // eat over the \
+        if let Some(escape) = self.bytes.get(self.cur) {
             match escape {
-                b'u' if self.bytes.get(self.cur + 2) == Some(&b'{') => {
-                    self.advance(2);
+                // Single escape character
+                b'\\' | b'n' | b'r' | b't' | b'b' | b'v' | b'f' | b'\'' | b'"' => {
+                    self.next();
+                    None
+                }
+                b'u' if self.bytes.get(self.cur + 1) == Some(&b'{') => {
+                    self.next(); // jump over '{'
                     self.read_codepoint_escape().err()
                 }
-                b'u' => {
-                    self.next();
-                    self.read_unicode_escape(true).err()
-                }
-                b'x' => {
-                    self.next();
-                    self.validate_hex_escape()
-                }
+                b'u' => self.read_unicode_escape(true).err(),
+                // hexadecimal escape sequence
+                b'x' => self.validate_hex_escape(),
                 _ => {
                     // We use get_unicode_char to account for escaped source characters which are unicode
                     let chr = self.get_unicode_char();
@@ -437,8 +439,10 @@ impl<'src> Lexer<'src> {
         let start = self.cur;
         let mut diagnostic = None;
 
-        while let Some(byte) = self.next_bounded() {
-            match *byte {
+        self.next(); // skip quote;
+
+        while let Some(byte) = self.current().copied() {
+            match byte {
                 b'\\' => {
                     let r = self.validate_escape_sequence();
                     diagnostic = match (diagnostic, r) {
@@ -455,7 +459,9 @@ impl<'src> Lexer<'src> {
                     self.next();
                     return diagnostic;
                 }
-                _ => {}
+                _ => {
+                    self.next();
+                }
             }
         }
 
@@ -1360,7 +1366,7 @@ impl<'src> Lexer<'src> {
             BSL => {
                 if self.bytes.get(self.cur + 1) == Some(&b'u') {
                     self.next();
-                    let res = if self.bytes.get(self.cur + 1).copied() == Some(b'{') {
+                    let res = if self.bytes.get(self.cur + 1) == Some(&b'{') {
                         self.next();
                         self.read_codepoint_escape()
                     } else {
@@ -1473,49 +1479,38 @@ impl<'src> Lexer<'src> {
         }
     }
 
-    fn lex_template(&mut self) -> LexerReturn {
+    fn lex_template(&mut self, tagged: bool) -> LexerReturn {
         let start = self.cur;
-        let mut diagnostic = None;
+        let mut diagnostic: Option<Box<Diagnostic>> = None;
+        let mut token: Option<Token> = None;
 
         loop {
-            match self.bytes.get(self.cur).map(|b| *b as char) {
-                Some('`') if self.cur == start => {
+            match self.bytes.get(self.cur).copied() {
+                Some(b'`') if self.cur == start => {
                     self.next();
-                    return tok!(BACKTICK, 1);
+                    token = Some(Token::new(BACKTICK, 1));
+                    break;
                 }
-                Some('`') => {
-                    return match diagnostic {
-                        Some(diagnostic) => (
-                            Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-                            Some(diagnostic),
-                        ),
-                        None => (
-                            Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
-                            None,
-                        ),
+                Some(b'`') => {
+                    token = Some(Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start));
+                    break;
+                }
+                Some(b'\\') => {
+                    let diag = self.validate_escape_sequence();
+                    if let Some(diag) = diag {
+                        if !tagged {
+                            diagnostic = Some(diag);
+                        }
                     };
                 }
-                Some('\\') => {
-                    if let Some(err) = self.validate_escape_sequence() {
-                        diagnostic = Some(err);
-                    }
-                    self.next_bounded();
-                }
-                Some('$') if self.bytes.get(self.cur + 1) == Some(&b'{') && self.cur == start => {
+                Some(b'$') if self.bytes.get(self.cur + 1) == Some(&b'{') && self.cur == start => {
                     self.advance(2);
-                    return (Token::new(JsSyntaxKind::DOLLAR_CURLY, 2), diagnostic);
+                    token = Some(Token::new(JsSyntaxKind::DOLLAR_CURLY, 2));
+                    break;
                 }
-                Some('$') if self.bytes.get(self.cur + 1) == Some(&b'{') => {
-                    return match diagnostic {
-                        Some(diagnostic) => (
-                            Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-                            Some(diagnostic),
-                        ),
-                        None => (
-                            Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start),
-                            None,
-                        ),
-                    };
+                Some(b'$') if self.bytes.get(self.cur + 1) == Some(&b'{') => {
+                    token = Some(Token::new(JsSyntaxKind::TEMPLATE_CHUNK, self.cur - start));
+                    break;
                 }
                 Some(_) => {
                     let _ = self.next();
@@ -1526,12 +1521,23 @@ impl<'src> Lexer<'src> {
             }
         }
 
-        let err = Diagnostic::error(self.file_id, "", "unterminated template literal")
-            .primary(self.cur..self.cur + 1, "");
-        (
-            Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
-            Some(Box::new(err)),
-        )
+        match token {
+            None => {
+                let err = Diagnostic::error(self.file_id, "", "unterminated template literal")
+                    .primary(self.cur..self.cur + 1, "");
+                (
+                    Token::new(JsSyntaxKind::ERROR_TOKEN, self.cur - start),
+                    Some(Box::new(err)),
+                )
+            }
+            Some(token) => match diagnostic {
+                None => (token, None),
+                Some(diagnostic) => (
+                    Token::new(JsSyntaxKind::ERROR_TOKEN, token.len as usize),
+                    Some(diagnostic),
+                ),
+            },
+        }
     }
 }
 
@@ -1555,8 +1561,9 @@ impl Iterator for Lexer<'_> {
             return None;
         }
 
-        let mut token = if self.state.is_in_template() {
-            self.lex_template()
+        let mut token = if let Some(Context::Template { tagged }) = self.state.ctx.last() {
+            let tagged = *tagged;
+            self.lex_template(tagged)
         } else {
             self.lex_token()
         };
@@ -1626,9 +1633,11 @@ enum Dispatch {
     TLD,
     UNI,
 }
+use rslint_syntax::JsSyntaxKind::BACKTICK;
 use Dispatch::*;
 
 use crate::errors::invalid_digits_after_unicode_escape_sequence;
+use crate::state::Context;
 
 // A lookup table mapping any incoming byte to a handler function
 // This is taken from the ratel project lexer and modified

@@ -46,8 +46,19 @@ macro_rules! assert_lex {
             idx += 1;
         )*
 
+		if idx < tokens.len() {
+			dbg!(&tokens);
+			panic!(
+				"expected {} tokens but lexer returned {}, first unexpected token is '{:?}'",
+				idx,
+				tokens.len(),
+				tokens[idx].0.kind
+			);
+		} else {
+			assert_eq!(idx, tokens.len());
+		}
+
         assert_eq!($src, new_str, "Failed to reconstruct input");
-        assert_eq!(idx, tokens.len());
     }};
 }
 
@@ -1009,6 +1020,25 @@ fn template_escape() {
         TEMPLATE_CHUNK:10,
         BACKTICK:1
     }
+}
+
+#[test]
+fn template_invalid_escape() {
+    assert_lex! {
+        r"a`\xg`",
+        IDENT:1,
+        BACKTICK:1,
+        TEMPLATE_CHUNK:3,
+        BACKTICK:1,
+    };
+
+    assert_lex! {
+        r#"a`\u0`"#,
+        IDENT:1,
+        BACKTICK:1,
+        TEMPLATE_CHUNK:3,
+        BACKTICK:1,
+    };
 }
 
 #[test]
