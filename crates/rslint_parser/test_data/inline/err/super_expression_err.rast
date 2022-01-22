@@ -102,14 +102,28 @@ JsModule {
             },
             semicolon_token: SEMICOLON@79..80 ";" [] [],
         },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsUnknownExpression {
+                    items: [
+                        SUPER_KW@80..86 "super" [Newline("\n")] [],
+                    ],
+                },
+                operator: DOT@86..87 "." [] [],
+                member: JsName {
+                    value_token: IDENT@87..95 "property" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@95..96 ";" [] [],
+        },
     ],
-    eof_token: EOF@80..81 "" [Newline("\n")] [],
+    eof_token: EOF@96..97 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..81
+0: JS_MODULE@0..97
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..80
+  2: JS_MODULE_ITEM_LIST@0..96
     0: JS_CLASS_STATEMENT@0..71
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..11
@@ -179,7 +193,15 @@ JsModule {
           1: JS_CALL_ARGUMENT_LIST@78..78
           2: R_PAREN@78..79 ")" [] []
       1: SEMICOLON@79..80 ";" [] []
-  3: EOF@80..81 "" [Newline("\n")] []
+    2: JS_EXPRESSION_STATEMENT@80..96
+      0: JS_STATIC_MEMBER_EXPRESSION@80..95
+        0: JS_UNKNOWN_EXPRESSION@80..86
+          0: SUPER_KW@80..86 "super" [Newline("\n")] []
+        1: DOT@86..87 "." [] []
+        2: JS_NAME@87..95
+          0: IDENT@87..95 "property" [] []
+      1: SEMICOLON@95..96 ";" [] []
+  3: EOF@96..97 "" [Newline("\n")] []
 --
 error[SyntaxError]: `super` is only valid inside of a class constructor of a subclass.
   ┌─ super_expression_err.js:3:5
@@ -202,6 +224,13 @@ error[SyntaxError]: `super` is only valid inside of a class constructor of a sub
   │ ^^^^^
 
 --
+error[SyntaxError]: `super` is only valid inside of a class constructor of a subclass.
+  ┌─ super_expression_err.js:8:1
+  │
+8 │ super.property;
+  │ ^^^^^
+
+--
 class Test extends B {
   test() {
     super();
@@ -209,3 +238,4 @@ class Test extends B {
   }
 }
 super();
+super.property;

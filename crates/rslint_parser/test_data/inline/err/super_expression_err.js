@@ -5,3 +5,4 @@ class Test extends B {
   }
 }
 super();
+super.property;

@@ -704,13 +704,22 @@ fn parse_member_or_new_expr(
 //   }
 // }
 // super();
+// super.property;
 fn parse_super_expression(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![super]) {
         return Absent;
     }
     let super_marker = p.start();
     p.expect(T![super]);
-    Present(super_marker.complete(p, JS_SUPER_EXPRESSION))
+    let mut completed = super_marker.complete(p, JS_SUPER_EXPRESSION);
+    if p.state.is_top_level() {
+        p.error(
+            p.err_builder("`super` is only valid inside of a class constructor of a subclass.")
+                .primary(completed.range(p), ""),
+        );
+        completed.change_kind(p, JS_UNKNOWN_EXPRESSION);
+    }
+    Present(completed)
 }
 
 /// Dot, Array, or Call expr subscripts. Including optional chaining.
