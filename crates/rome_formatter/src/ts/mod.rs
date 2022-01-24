@@ -10,7 +10,7 @@ mod ident;
 mod import;
 mod object_members;
 mod parameter_list;
-mod script;
+mod root;
 mod statements;
 mod template;
 mod unknown;
