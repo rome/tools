@@ -175,6 +175,12 @@ fn all_whitespace() {
     }
     assert_lex! {
         "\n\n",
+        NEWLINE:1
+        NEWLINE:1
+    }
+    assert_lex! {
+        "\r\n\r\n",
+        NEWLINE:2
         NEWLINE:2
     }
 }
