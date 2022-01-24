@@ -57,12 +57,9 @@ pub fn run(spec_input_file: &str, _: &str, file_type: &str) {
     };
     let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
     let input = fs::read_to_string(file_path).unwrap();
+    let result = formatted_result.unwrap();
     // we ignore the error for now
-    let snapshot = format!(
-        "# Input\n{}\n---\n# Output\n{}",
-        input,
-        formatted_result.unwrap().code()
-    );
+    let snapshot = format!("# Input\n{}\n---\n# Output\n{}", input, result.code());
 
     insta::with_settings!({
         prepend_module_to_snapshot => false,
