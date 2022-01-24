@@ -1,0 +1,51 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsUnknownExpression {
+                items: [
+                    JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@0..3 "foo" [] [],
+                        },
+                    },
+                    DOT@3..4 "." [] [],
+                    JsUnknownExpression {
+                        items: [
+                            HASH@4..5 "#" [] [],
+                            IDENT@5..6 "x" [] [],
+                        ],
+                    },
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@6..7 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..7
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..6
+    0: JS_EXPRESSION_STATEMENT@0..6
+      0: JS_UNKNOWN_EXPRESSION@0..6
+        0: JS_IDENTIFIER_EXPRESSION@0..3
+          0: JS_REFERENCE_IDENTIFIER@0..3
+            0: IDENT@0..3 "foo" [] []
+        1: DOT@3..4 "." [] []
+        2: JS_UNKNOWN_EXPRESSION@4..6
+          0: HASH@4..5 "#" [] []
+          1: IDENT@5..6 "x" [] []
+      1: (empty)
+  3: EOF@6..7 "" [Newline("\n")] []
+--
+error[SyntaxError]: Private field must be declared in an enclosing class
+  ┌─ private_name_top_level.js:1:5
+  │
+1 │ foo.#x
+  │     ^^
+
+--
+foo.#x

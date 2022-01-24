@@ -1,22 +1,25 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 43
 expression: static_member_expression.js
 
 ---
 # Input
 a.b
 a?.b
-a.#b
-a?.#b
-a?.b.#c
-a?.#b.c().d
+class Foo {
+	bar() {
+		a.#b
+	}
+}
 
 ---
 # Output
 a.b;
 a?.b;
-a.#b;
-a?.#b;
-a?.b.#c;
-a?.#b.c().d;
+class Foo {
+	bar() {
+		a.#b;
+	}
+}
 

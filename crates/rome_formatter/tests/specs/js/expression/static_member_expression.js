@@ -1,6 +1,7 @@
 a.b
 a?.b
-a.#b
-a?.#b
-a?.b.#c
-a?.#b.c().d
+class Foo {
+	bar() {
+		a.#b
+	}
+}

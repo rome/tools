@@ -2,1105 +2,1187 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@0..7 "delete" [] [Whitespace(" ")],
-                argument: JsStaticMemberExpression {
-                    object: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@7..10 "obj" [] [],
-                        },
-                    },
-                    operator: DOT@10..11 "." [] [],
-                    member: JsName {
-                        value_token: IDENT@11..14 "key" [] [],
-                    },
-                },
+        JsClassStatement {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..16 "TestClass" [] [Whitespace(" ")],
             },
-            semicolon_token: SEMICOLON@14..15 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@15..23 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsStaticMemberExpression {
-                    object: JsParenthesizedExpression {
-                        l_paren_token: L_PAREN@23..24 "(" [] [],
-                        expression: JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@24..27 "obj" [] [],
-                            },
-                        },
-                        r_paren_token: R_PAREN@27..28 ")" [] [],
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@16..17 "{" [] [],
+            members: JsClassMemberList [
+                JsPropertyClassMember {
+                    declare_token: missing (optional),
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
+                    name: JsPrivateClassMemberName {
+                        hash_token: HASH@17..21 "#" [Newline("\n"), Whitespace("  ")] [],
+                        id_token: IDENT@21..27 "member" [] [],
                     },
-                    operator: DOT@28..29 "." [] [],
-                    member: JsName {
-                        value_token: IDENT@29..32 "key" [] [],
-                    },
+                    question_mark_token: missing (optional),
+                    excl_token: missing (optional),
+                    ty: missing (optional),
+                    value: missing (optional),
+                    semicolon_token: SEMICOLON@27..28 ";" [] [],
                 },
-            },
-            semicolon_token: SEMICOLON@32..33 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@33..41 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsStaticMemberExpression {
-                    object: JsStaticMemberExpression {
-                        object: JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@41..44 "obj" [] [],
-                            },
-                        },
-                        operator: DOT@44..45 "." [] [],
-                        member: JsPrivateName {
-                            hash_token: HASH@45..46 "#" [] [],
-                            value_token: IDENT@46..52 "member" [] [],
-                        },
+                JsPropertyClassMember {
+                    declare_token: missing (optional),
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    readonly_token: missing (optional),
+                    abstract_token: missing (optional),
+                    name: JsPrivateClassMemberName {
+                        hash_token: HASH@28..32 "#" [Newline("\n"), Whitespace("  ")] [],
+                        id_token: IDENT@32..35 "key" [] [],
                     },
-                    operator: DOT@52..53 "." [] [],
-                    member: JsName {
-                        value_token: IDENT@53..56 "key" [] [],
-                    },
+                    question_mark_token: missing (optional),
+                    excl_token: missing (optional),
+                    ty: missing (optional),
+                    value: missing (optional),
+                    semicolon_token: SEMICOLON@35..36 ";" [] [],
                 },
-            },
-            semicolon_token: SEMICOLON@56..57 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@57..65 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsStaticMemberExpression {
-                    object: JsParenthesizedExpression {
-                        l_paren_token: L_PAREN@65..66 "(" [] [],
-                        expression: JsStaticMemberExpression {
-                            object: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@66..69 "obj" [] [],
-                                },
-                            },
-                            operator: DOT@69..70 "." [] [],
-                            member: JsPrivateName {
-                                hash_token: HASH@70..71 "#" [] [],
-                                value_token: IDENT@71..77 "member" [] [],
-                            },
-                        },
-                        r_paren_token: R_PAREN@77..78 ")" [] [],
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@36..43 "test" [Newline("\n"), Whitespace("  ")] [],
                     },
-                    operator: DOT@78..79 "." [] [],
-                    member: JsName {
-                        value_token: IDENT@79..82 "key" [] [],
+                    type_parameters: missing (optional),
+                    parameters: JsParameters {
+                        l_paren_token: L_PAREN@43..44 "(" [] [],
+                        items: JsParameterList [],
+                        r_paren_token: R_PAREN@44..46 ")" [] [Whitespace(" ")],
                     },
-                },
-            },
-            semicolon_token: SEMICOLON@82..83 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@83..91 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsStaticMemberExpression {
-                    object: JsStaticMemberExpression {
-                        object: JsCallExpression {
-                            callee: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@91..95 "func" [] [],
-                                },
-                            },
-                            optional_chain_token_token: missing (optional),
-                            type_args: missing (optional),
-                            arguments: JsCallArguments {
-                                l_paren_token: L_PAREN@95..96 "(" [] [],
-                                args: JsCallArgumentList [],
-                                r_paren_token: R_PAREN@96..97 ")" [] [],
-                            },
-                        },
-                        operator: DOT@97..98 "." [] [],
-                        member: JsPrivateName {
-                            hash_token: HASH@98..99 "#" [] [],
-                            value_token: IDENT@99..105 "member" [] [],
-                        },
-                    },
-                    operator: DOT@105..106 "." [] [],
-                    member: JsName {
-                        value_token: IDENT@106..109 "key" [] [],
-                    },
-                },
-            },
-            semicolon_token: SEMICOLON@109..110 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@110..118 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsStaticMemberExpression {
-                    object: JsParenthesizedExpression {
-                        l_paren_token: L_PAREN@118..119 "(" [] [],
-                        expression: JsStaticMemberExpression {
-                            object: JsCallExpression {
-                                callee: JsIdentifierExpression {
-                                    name: JsReferenceIdentifier {
-                                        value_token: IDENT@119..123 "func" [] [],
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@46..47 "{" [] [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@47..59 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsStaticMemberExpression {
+                                        object: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@59..62 "obj" [] [],
+                                            },
+                                        },
+                                        operator: DOT@62..63 "." [] [],
+                                        member: JsName {
+                                            value_token: IDENT@63..66 "key" [] [],
+                                        },
                                     },
                                 },
-                                optional_chain_token_token: missing (optional),
-                                type_args: missing (optional),
-                                arguments: JsCallArguments {
-                                    l_paren_token: L_PAREN@123..124 "(" [] [],
-                                    args: JsCallArgumentList [],
-                                    r_paren_token: R_PAREN@124..125 ")" [] [],
-                                },
+                                semicolon_token: SEMICOLON@66..67 ";" [] [],
                             },
-                            operator: DOT@125..126 "." [] [],
-                            member: JsPrivateName {
-                                hash_token: HASH@126..127 "#" [] [],
-                                value_token: IDENT@127..133 "member" [] [],
-                            },
-                        },
-                        r_paren_token: R_PAREN@133..134 ")" [] [],
-                    },
-                    operator: DOT@134..135 "." [] [],
-                    member: JsName {
-                        value_token: IDENT@135..138 "key" [] [],
-                    },
-                },
-            },
-            semicolon_token: SEMICOLON@138..139 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@139..147 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsStaticMemberExpression {
-                    object: JsStaticMemberExpression {
-                        object: JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@147..150 "obj" [] [],
-                            },
-                        },
-                        operator: QUESTIONDOT@150..152 "?." [] [],
-                        member: JsPrivateName {
-                            hash_token: HASH@152..153 "#" [] [],
-                            value_token: IDENT@153..159 "member" [] [],
-                        },
-                    },
-                    operator: DOT@159..160 "." [] [],
-                    member: JsName {
-                        value_token: IDENT@160..163 "key" [] [],
-                    },
-                },
-            },
-            semicolon_token: SEMICOLON@163..164 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@164..172 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsStaticMemberExpression {
-                    object: JsParenthesizedExpression {
-                        l_paren_token: L_PAREN@172..173 "(" [] [],
-                        expression: JsStaticMemberExpression {
-                            object: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@173..176 "obj" [] [],
-                                },
-                            },
-                            operator: QUESTIONDOT@176..178 "?." [] [],
-                            member: JsPrivateName {
-                                hash_token: HASH@178..179 "#" [] [],
-                                value_token: IDENT@179..185 "member" [] [],
-                            },
-                        },
-                        r_paren_token: R_PAREN@185..186 ")" [] [],
-                    },
-                    operator: DOT@186..187 "." [] [],
-                    member: JsName {
-                        value_token: IDENT@187..190 "key" [] [],
-                    },
-                },
-            },
-            semicolon_token: SEMICOLON@190..191 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@191..199 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsStaticMemberExpression {
-                    object: JsStaticMemberExpression {
-                        object: JsStaticMemberExpression {
-                            object: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@199..202 "obj" [] [],
-                                },
-                            },
-                            operator: QUESTIONDOT@202..204 "?." [] [],
-                            member: JsName {
-                                value_token: IDENT@204..209 "inner" [] [],
-                            },
-                        },
-                        operator: DOT@209..210 "." [] [],
-                        member: JsPrivateName {
-                            hash_token: HASH@210..211 "#" [] [],
-                            value_token: IDENT@211..217 "member" [] [],
-                        },
-                    },
-                    operator: DOT@217..218 "." [] [],
-                    member: JsName {
-                        value_token: IDENT@218..221 "key" [] [],
-                    },
-                },
-            },
-            semicolon_token: SEMICOLON@221..222 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@222..230 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsStaticMemberExpression {
-                    object: JsParenthesizedExpression {
-                        l_paren_token: L_PAREN@230..231 "(" [] [],
-                        expression: JsStaticMemberExpression {
-                            object: JsStaticMemberExpression {
-                                object: JsIdentifierExpression {
-                                    name: JsReferenceIdentifier {
-                                        value_token: IDENT@231..234 "obj" [] [],
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@67..79 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsStaticMemberExpression {
+                                        object: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@79..82 "obj" [] [],
+                                            },
+                                        },
+                                        operator: DOT@82..83 "." [] [],
+                                        member: JsName {
+                                            value_token: IDENT@83..86 "key" [] [],
+                                        },
                                     },
                                 },
-                                operator: QUESTIONDOT@234..236 "?." [] [],
-                                member: JsName {
-                                    value_token: IDENT@236..241 "inner" [] [],
-                                },
+                                semicolon_token: SEMICOLON@86..87 ";" [] [],
                             },
-                            operator: DOT@241..242 "." [] [],
-                            member: JsPrivateName {
-                                hash_token: HASH@242..243 "#" [] [],
-                                value_token: IDENT@243..249 "member" [] [],
-                            },
-                        },
-                        r_paren_token: R_PAREN@249..250 ")" [] [],
-                    },
-                    operator: DOT@250..251 "." [] [],
-                    member: JsName {
-                        value_token: IDENT@251..254 "key" [] [],
-                    },
-                },
-            },
-            semicolon_token: SEMICOLON@254..255 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@255..263 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsComputedMemberExpression {
-                    object: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@263..266 "obj" [] [],
-                        },
-                    },
-                    optional_chain_token: missing (optional),
-                    l_brack_token: L_BRACK@266..267 "[" [] [],
-                    member: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@267..270 "key" [] [],
-                        },
-                    },
-                    r_brack_token: R_BRACK@270..271 "]" [] [],
-                },
-            },
-            semicolon_token: SEMICOLON@271..272 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@272..280 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsComputedMemberExpression {
-                    object: JsParenthesizedExpression {
-                        l_paren_token: L_PAREN@280..281 "(" [] [],
-                        expression: JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@281..284 "obj" [] [],
-                            },
-                        },
-                        r_paren_token: R_PAREN@284..285 ")" [] [],
-                    },
-                    optional_chain_token: missing (optional),
-                    l_brack_token: L_BRACK@285..286 "[" [] [],
-                    member: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@286..289 "key" [] [],
-                        },
-                    },
-                    r_brack_token: R_BRACK@289..290 "]" [] [],
-                },
-            },
-            semicolon_token: SEMICOLON@290..291 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@291..299 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsComputedMemberExpression {
-                    object: JsStaticMemberExpression {
-                        object: JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@299..302 "obj" [] [],
-                            },
-                        },
-                        operator: DOT@302..303 "." [] [],
-                        member: JsPrivateName {
-                            hash_token: HASH@303..304 "#" [] [],
-                            value_token: IDENT@304..310 "member" [] [],
-                        },
-                    },
-                    optional_chain_token: missing (optional),
-                    l_brack_token: L_BRACK@310..311 "[" [] [],
-                    member: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@311..314 "key" [] [],
-                        },
-                    },
-                    r_brack_token: R_BRACK@314..315 "]" [] [],
-                },
-            },
-            semicolon_token: SEMICOLON@315..316 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@316..324 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsComputedMemberExpression {
-                    object: JsParenthesizedExpression {
-                        l_paren_token: L_PAREN@324..325 "(" [] [],
-                        expression: JsStaticMemberExpression {
-                            object: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@325..328 "obj" [] [],
-                                },
-                            },
-                            operator: DOT@328..329 "." [] [],
-                            member: JsPrivateName {
-                                hash_token: HASH@329..330 "#" [] [],
-                                value_token: IDENT@330..336 "member" [] [],
-                            },
-                        },
-                        r_paren_token: R_PAREN@336..337 ")" [] [],
-                    },
-                    optional_chain_token: missing (optional),
-                    l_brack_token: L_BRACK@337..338 "[" [] [],
-                    member: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@338..341 "key" [] [],
-                        },
-                    },
-                    r_brack_token: R_BRACK@341..342 "]" [] [],
-                },
-            },
-            semicolon_token: SEMICOLON@342..343 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@343..351 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsComputedMemberExpression {
-                    object: JsStaticMemberExpression {
-                        object: JsCallExpression {
-                            callee: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@351..355 "func" [] [],
-                                },
-                            },
-                            optional_chain_token_token: missing (optional),
-                            type_args: missing (optional),
-                            arguments: JsCallArguments {
-                                l_paren_token: L_PAREN@355..356 "(" [] [],
-                                args: JsCallArgumentList [],
-                                r_paren_token: R_PAREN@356..357 ")" [] [],
-                            },
-                        },
-                        operator: DOT@357..358 "." [] [],
-                        member: JsPrivateName {
-                            hash_token: HASH@358..359 "#" [] [],
-                            value_token: IDENT@359..365 "member" [] [],
-                        },
-                    },
-                    optional_chain_token: missing (optional),
-                    l_brack_token: L_BRACK@365..366 "[" [] [],
-                    member: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@366..369 "key" [] [],
-                        },
-                    },
-                    r_brack_token: R_BRACK@369..370 "]" [] [],
-                },
-            },
-            semicolon_token: SEMICOLON@370..371 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@371..379 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsComputedMemberExpression {
-                    object: JsParenthesizedExpression {
-                        l_paren_token: L_PAREN@379..380 "(" [] [],
-                        expression: JsStaticMemberExpression {
-                            object: JsCallExpression {
-                                callee: JsIdentifierExpression {
-                                    name: JsReferenceIdentifier {
-                                        value_token: IDENT@380..384 "func" [] [],
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@87..99 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsStaticMemberExpression {
+                                        object: JsStaticMemberExpression {
+                                            object: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@99..102 "obj" [] [],
+                                                },
+                                            },
+                                            operator: DOT@102..103 "." [] [],
+                                            member: JsPrivateName {
+                                                hash_token: HASH@103..104 "#" [] [],
+                                                value_token: IDENT@104..110 "member" [] [],
+                                            },
+                                        },
+                                        operator: DOT@110..111 "." [] [],
+                                        member: JsName {
+                                            value_token: IDENT@111..114 "key" [] [],
+                                        },
                                     },
                                 },
-                                optional_chain_token_token: missing (optional),
-                                type_args: missing (optional),
-                                arguments: JsCallArguments {
-                                    l_paren_token: L_PAREN@384..385 "(" [] [],
-                                    args: JsCallArgumentList [],
-                                    r_paren_token: R_PAREN@385..386 ")" [] [],
-                                },
+                                semicolon_token: SEMICOLON@114..115 ";" [] [],
                             },
-                            operator: DOT@386..387 "." [] [],
-                            member: JsPrivateName {
-                                hash_token: HASH@387..388 "#" [] [],
-                                value_token: IDENT@388..394 "member" [] [],
-                            },
-                        },
-                        r_paren_token: R_PAREN@394..395 ")" [] [],
-                    },
-                    optional_chain_token: missing (optional),
-                    l_brack_token: L_BRACK@395..396 "[" [] [],
-                    member: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@396..399 "key" [] [],
-                        },
-                    },
-                    r_brack_token: R_BRACK@399..400 "]" [] [],
-                },
-            },
-            semicolon_token: SEMICOLON@400..401 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@401..409 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsComputedMemberExpression {
-                    object: JsStaticMemberExpression {
-                        object: JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@409..412 "obj" [] [],
-                            },
-                        },
-                        operator: QUESTIONDOT@412..414 "?." [] [],
-                        member: JsPrivateName {
-                            hash_token: HASH@414..415 "#" [] [],
-                            value_token: IDENT@415..421 "member" [] [],
-                        },
-                    },
-                    optional_chain_token: missing (optional),
-                    l_brack_token: L_BRACK@421..422 "[" [] [],
-                    member: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@422..425 "key" [] [],
-                        },
-                    },
-                    r_brack_token: R_BRACK@425..426 "]" [] [],
-                },
-            },
-            semicolon_token: SEMICOLON@426..427 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@427..435 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsComputedMemberExpression {
-                    object: JsParenthesizedExpression {
-                        l_paren_token: L_PAREN@435..436 "(" [] [],
-                        expression: JsStaticMemberExpression {
-                            object: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@436..439 "obj" [] [],
-                                },
-                            },
-                            operator: QUESTIONDOT@439..441 "?." [] [],
-                            member: JsPrivateName {
-                                hash_token: HASH@441..442 "#" [] [],
-                                value_token: IDENT@442..448 "member" [] [],
-                            },
-                        },
-                        r_paren_token: R_PAREN@448..449 ")" [] [],
-                    },
-                    optional_chain_token: missing (optional),
-                    l_brack_token: L_BRACK@449..450 "[" [] [],
-                    member: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@450..453 "key" [] [],
-                        },
-                    },
-                    r_brack_token: R_BRACK@453..454 "]" [] [],
-                },
-            },
-            semicolon_token: SEMICOLON@454..455 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@455..463 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsComputedMemberExpression {
-                    object: JsStaticMemberExpression {
-                        object: JsStaticMemberExpression {
-                            object: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@463..466 "obj" [] [],
-                                },
-                            },
-                            operator: QUESTIONDOT@466..468 "?." [] [],
-                            member: JsName {
-                                value_token: IDENT@468..473 "inner" [] [],
-                            },
-                        },
-                        operator: DOT@473..474 "." [] [],
-                        member: JsPrivateName {
-                            hash_token: HASH@474..475 "#" [] [],
-                            value_token: IDENT@475..481 "member" [] [],
-                        },
-                    },
-                    optional_chain_token: missing (optional),
-                    l_brack_token: L_BRACK@481..482 "[" [] [],
-                    member: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@482..485 "key" [] [],
-                        },
-                    },
-                    r_brack_token: R_BRACK@485..486 "]" [] [],
-                },
-            },
-            semicolon_token: SEMICOLON@486..487 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@487..495 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsComputedMemberExpression {
-                    object: JsParenthesizedExpression {
-                        l_paren_token: L_PAREN@495..496 "(" [] [],
-                        expression: JsStaticMemberExpression {
-                            object: JsStaticMemberExpression {
-                                object: JsIdentifierExpression {
-                                    name: JsReferenceIdentifier {
-                                        value_token: IDENT@496..499 "obj" [] [],
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@115..127 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsStaticMemberExpression {
+                                        object: JsStaticMemberExpression {
+                                            object: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@127..130 "obj" [] [],
+                                                },
+                                            },
+                                            operator: DOT@130..131 "." [] [],
+                                            member: JsPrivateName {
+                                                hash_token: HASH@131..132 "#" [] [],
+                                                value_token: IDENT@132..138 "member" [] [],
+                                            },
+                                        },
+                                        operator: DOT@138..139 "." [] [],
+                                        member: JsName {
+                                            value_token: IDENT@139..142 "key" [] [],
+                                        },
                                     },
                                 },
-                                operator: QUESTIONDOT@499..501 "?." [] [],
-                                member: JsName {
-                                    value_token: IDENT@501..506 "inner" [] [],
+                                semicolon_token: SEMICOLON@142..143 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@143..155 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsStaticMemberExpression {
+                                        object: JsStaticMemberExpression {
+                                            object: JsCallExpression {
+                                                callee: JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@155..159 "func" [] [],
+                                                    },
+                                                },
+                                                optional_chain_token_token: missing (optional),
+                                                type_args: missing (optional),
+                                                arguments: JsCallArguments {
+                                                    l_paren_token: L_PAREN@159..160 "(" [] [],
+                                                    args: JsCallArgumentList [],
+                                                    r_paren_token: R_PAREN@160..161 ")" [] [],
+                                                },
+                                            },
+                                            operator: DOT@161..162 "." [] [],
+                                            member: JsPrivateName {
+                                                hash_token: HASH@162..163 "#" [] [],
+                                                value_token: IDENT@163..169 "member" [] [],
+                                            },
+                                        },
+                                        operator: DOT@169..170 "." [] [],
+                                        member: JsName {
+                                            value_token: IDENT@170..173 "key" [] [],
+                                        },
+                                    },
                                 },
+                                semicolon_token: SEMICOLON@173..174 ";" [] [],
                             },
-                            operator: DOT@506..507 "." [] [],
-                            member: JsPrivateName {
-                                hash_token: HASH@507..508 "#" [] [],
-                                value_token: IDENT@508..514 "member" [] [],
-                            },
-                        },
-                        r_paren_token: R_PAREN@514..515 ")" [] [],
-                    },
-                    optional_chain_token: missing (optional),
-                    l_brack_token: L_BRACK@515..516 "[" [] [],
-                    member: JsIdentifierExpression {
-                        name: JsReferenceIdentifier {
-                            value_token: IDENT@516..519 "key" [] [],
-                        },
-                    },
-                    r_brack_token: R_BRACK@519..520 "]" [] [],
-                },
-            },
-            semicolon_token: SEMICOLON@520..521 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@521..529 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsParenthesizedExpression {
-                    l_paren_token: L_PAREN@529..530 "(" [] [],
-                    expression: JsSequenceExpression {
-                        left: JsStaticMemberExpression {
-                            object: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@530..533 "obj" [] [],
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@174..186 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsStaticMemberExpression {
+                                        object: JsStaticMemberExpression {
+                                            object: JsCallExpression {
+                                                callee: JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@186..190 "func" [] [],
+                                                    },
+                                                },
+                                                optional_chain_token_token: missing (optional),
+                                                type_args: missing (optional),
+                                                arguments: JsCallArguments {
+                                                    l_paren_token: L_PAREN@190..191 "(" [] [],
+                                                    args: JsCallArgumentList [],
+                                                    r_paren_token: R_PAREN@191..192 ")" [] [],
+                                                },
+                                            },
+                                            operator: DOT@192..193 "." [] [],
+                                            member: JsPrivateName {
+                                                hash_token: HASH@193..194 "#" [] [],
+                                                value_token: IDENT@194..200 "member" [] [],
+                                            },
+                                        },
+                                        operator: DOT@200..201 "." [] [],
+                                        member: JsName {
+                                            value_token: IDENT@201..204 "key" [] [],
+                                        },
+                                    },
                                 },
+                                semicolon_token: SEMICOLON@204..205 ";" [] [],
                             },
-                            operator: DOT@533..534 "." [] [],
-                            member: JsPrivateName {
-                                hash_token: HASH@534..535 "#" [] [],
-                                value_token: IDENT@535..538 "key" [] [],
-                            },
-                        },
-                        comma_token: COMMA@538..540 "," [] [Whitespace(" ")],
-                        right: JsStaticMemberExpression {
-                            object: JsIdentifierExpression {
-                                name: JsReferenceIdentifier {
-                                    value_token: IDENT@540..543 "obj" [] [],
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@205..217 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsStaticMemberExpression {
+                                        object: JsStaticMemberExpression {
+                                            object: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@217..220 "obj" [] [],
+                                                },
+                                            },
+                                            operator: QUESTIONDOT@220..222 "?." [] [],
+                                            member: JsPrivateName {
+                                                hash_token: HASH@222..223 "#" [] [],
+                                                value_token: IDENT@223..229 "member" [] [],
+                                            },
+                                        },
+                                        operator: DOT@229..230 "." [] [],
+                                        member: JsName {
+                                            value_token: IDENT@230..233 "key" [] [],
+                                        },
+                                    },
                                 },
+                                semicolon_token: SEMICOLON@233..234 ";" [] [],
                             },
-                            operator: DOT@543..544 "." [] [],
-                            member: JsName {
-                                value_token: IDENT@544..547 "key" [] [],
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@234..246 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsStaticMemberExpression {
+                                        object: JsParenthesizedExpression {
+                                            l_paren_token: L_PAREN@246..247 "(" [] [],
+                                            expression: JsStaticMemberExpression {
+                                                object: JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@247..250 "obj" [] [],
+                                                    },
+                                                },
+                                                operator: QUESTIONDOT@250..252 "?." [] [],
+                                                member: JsPrivateName {
+                                                    hash_token: HASH@252..253 "#" [] [],
+                                                    value_token: IDENT@253..259 "member" [] [],
+                                                },
+                                            },
+                                            r_paren_token: R_PAREN@259..260 ")" [] [],
+                                        },
+                                        operator: DOT@260..261 "." [] [],
+                                        member: JsName {
+                                            value_token: IDENT@261..264 "key" [] [],
+                                        },
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@264..265 ";" [] [],
                             },
-                        },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@265..277 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsStaticMemberExpression {
+                                        object: JsStaticMemberExpression {
+                                            object: JsStaticMemberExpression {
+                                                object: JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@277..280 "obj" [] [],
+                                                    },
+                                                },
+                                                operator: QUESTIONDOT@280..282 "?." [] [],
+                                                member: JsName {
+                                                    value_token: IDENT@282..287 "inner" [] [],
+                                                },
+                                            },
+                                            operator: DOT@287..288 "." [] [],
+                                            member: JsPrivateName {
+                                                hash_token: HASH@288..289 "#" [] [],
+                                                value_token: IDENT@289..295 "member" [] [],
+                                            },
+                                        },
+                                        operator: DOT@295..296 "." [] [],
+                                        member: JsName {
+                                            value_token: IDENT@296..299 "key" [] [],
+                                        },
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@299..300 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@300..312 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsStaticMemberExpression {
+                                        object: JsParenthesizedExpression {
+                                            l_paren_token: L_PAREN@312..313 "(" [] [],
+                                            expression: JsStaticMemberExpression {
+                                                object: JsStaticMemberExpression {
+                                                    object: JsIdentifierExpression {
+                                                        name: JsReferenceIdentifier {
+                                                            value_token: IDENT@313..316 "obj" [] [],
+                                                        },
+                                                    },
+                                                    operator: QUESTIONDOT@316..318 "?." [] [],
+                                                    member: JsName {
+                                                        value_token: IDENT@318..323 "inner" [] [],
+                                                    },
+                                                },
+                                                operator: DOT@323..324 "." [] [],
+                                                member: JsPrivateName {
+                                                    hash_token: HASH@324..325 "#" [] [],
+                                                    value_token: IDENT@325..331 "member" [] [],
+                                                },
+                                            },
+                                            r_paren_token: R_PAREN@331..332 ")" [] [],
+                                        },
+                                        operator: DOT@332..333 "." [] [],
+                                        member: JsName {
+                                            value_token: IDENT@333..336 "key" [] [],
+                                        },
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@336..337 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@337..349 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsComputedMemberExpression {
+                                        object: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@349..352 "obj" [] [],
+                                            },
+                                        },
+                                        optional_chain_token: missing (optional),
+                                        l_brack_token: L_BRACK@352..353 "[" [] [],
+                                        member: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@353..356 "key" [] [],
+                                            },
+                                        },
+                                        r_brack_token: R_BRACK@356..357 "]" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@357..358 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@358..370 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsComputedMemberExpression {
+                                        object: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@370..373 "obj" [] [],
+                                            },
+                                        },
+                                        optional_chain_token: missing (optional),
+                                        l_brack_token: L_BRACK@373..374 "[" [] [],
+                                        member: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@374..377 "key" [] [],
+                                            },
+                                        },
+                                        r_brack_token: R_BRACK@377..378 "]" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@378..379 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@379..391 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsComputedMemberExpression {
+                                        object: JsStaticMemberExpression {
+                                            object: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@391..394 "obj" [] [],
+                                                },
+                                            },
+                                            operator: DOT@394..395 "." [] [],
+                                            member: JsPrivateName {
+                                                hash_token: HASH@395..396 "#" [] [],
+                                                value_token: IDENT@396..402 "member" [] [],
+                                            },
+                                        },
+                                        optional_chain_token: missing (optional),
+                                        l_brack_token: L_BRACK@402..403 "[" [] [],
+                                        member: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@403..406 "key" [] [],
+                                            },
+                                        },
+                                        r_brack_token: R_BRACK@406..407 "]" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@407..408 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@408..420 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsComputedMemberExpression {
+                                        object: JsStaticMemberExpression {
+                                            object: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@420..423 "obj" [] [],
+                                                },
+                                            },
+                                            operator: DOT@423..424 "." [] [],
+                                            member: JsPrivateName {
+                                                hash_token: HASH@424..425 "#" [] [],
+                                                value_token: IDENT@425..431 "member" [] [],
+                                            },
+                                        },
+                                        optional_chain_token: missing (optional),
+                                        l_brack_token: L_BRACK@431..432 "[" [] [],
+                                        member: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@432..435 "key" [] [],
+                                            },
+                                        },
+                                        r_brack_token: R_BRACK@435..436 "]" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@436..437 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@437..449 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsComputedMemberExpression {
+                                        object: JsStaticMemberExpression {
+                                            object: JsCallExpression {
+                                                callee: JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@449..453 "func" [] [],
+                                                    },
+                                                },
+                                                optional_chain_token_token: missing (optional),
+                                                type_args: missing (optional),
+                                                arguments: JsCallArguments {
+                                                    l_paren_token: L_PAREN@453..454 "(" [] [],
+                                                    args: JsCallArgumentList [],
+                                                    r_paren_token: R_PAREN@454..455 ")" [] [],
+                                                },
+                                            },
+                                            operator: DOT@455..456 "." [] [],
+                                            member: JsPrivateName {
+                                                hash_token: HASH@456..457 "#" [] [],
+                                                value_token: IDENT@457..463 "member" [] [],
+                                            },
+                                        },
+                                        optional_chain_token: missing (optional),
+                                        l_brack_token: L_BRACK@463..464 "[" [] [],
+                                        member: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@464..467 "key" [] [],
+                                            },
+                                        },
+                                        r_brack_token: R_BRACK@467..468 "]" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@468..469 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@469..481 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsComputedMemberExpression {
+                                        object: JsStaticMemberExpression {
+                                            object: JsCallExpression {
+                                                callee: JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@481..485 "func" [] [],
+                                                    },
+                                                },
+                                                optional_chain_token_token: missing (optional),
+                                                type_args: missing (optional),
+                                                arguments: JsCallArguments {
+                                                    l_paren_token: L_PAREN@485..486 "(" [] [],
+                                                    args: JsCallArgumentList [],
+                                                    r_paren_token: R_PAREN@486..487 ")" [] [],
+                                                },
+                                            },
+                                            operator: DOT@487..488 "." [] [],
+                                            member: JsPrivateName {
+                                                hash_token: HASH@488..489 "#" [] [],
+                                                value_token: IDENT@489..495 "member" [] [],
+                                            },
+                                        },
+                                        optional_chain_token: missing (optional),
+                                        l_brack_token: L_BRACK@495..496 "[" [] [],
+                                        member: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@496..499 "key" [] [],
+                                            },
+                                        },
+                                        r_brack_token: R_BRACK@499..500 "]" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@500..501 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@501..513 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsComputedMemberExpression {
+                                        object: JsStaticMemberExpression {
+                                            object: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@513..516 "obj" [] [],
+                                                },
+                                            },
+                                            operator: QUESTIONDOT@516..518 "?." [] [],
+                                            member: JsPrivateName {
+                                                hash_token: HASH@518..519 "#" [] [],
+                                                value_token: IDENT@519..525 "member" [] [],
+                                            },
+                                        },
+                                        optional_chain_token: missing (optional),
+                                        l_brack_token: L_BRACK@525..526 "[" [] [],
+                                        member: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@526..529 "key" [] [],
+                                            },
+                                        },
+                                        r_brack_token: R_BRACK@529..530 "]" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@530..531 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@531..543 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsComputedMemberExpression {
+                                        object: JsParenthesizedExpression {
+                                            l_paren_token: L_PAREN@543..544 "(" [] [],
+                                            expression: JsStaticMemberExpression {
+                                                object: JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@544..547 "obj" [] [],
+                                                    },
+                                                },
+                                                operator: QUESTIONDOT@547..549 "?." [] [],
+                                                member: JsPrivateName {
+                                                    hash_token: HASH@549..550 "#" [] [],
+                                                    value_token: IDENT@550..556 "member" [] [],
+                                                },
+                                            },
+                                            r_paren_token: R_PAREN@556..557 ")" [] [],
+                                        },
+                                        optional_chain_token: missing (optional),
+                                        l_brack_token: L_BRACK@557..558 "[" [] [],
+                                        member: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@558..561 "key" [] [],
+                                            },
+                                        },
+                                        r_brack_token: R_BRACK@561..562 "]" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@562..563 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@563..575 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsComputedMemberExpression {
+                                        object: JsStaticMemberExpression {
+                                            object: JsStaticMemberExpression {
+                                                object: JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@575..578 "obj" [] [],
+                                                    },
+                                                },
+                                                operator: QUESTIONDOT@578..580 "?." [] [],
+                                                member: JsName {
+                                                    value_token: IDENT@580..585 "inner" [] [],
+                                                },
+                                            },
+                                            operator: DOT@585..586 "." [] [],
+                                            member: JsPrivateName {
+                                                hash_token: HASH@586..587 "#" [] [],
+                                                value_token: IDENT@587..593 "member" [] [],
+                                            },
+                                        },
+                                        optional_chain_token: missing (optional),
+                                        l_brack_token: L_BRACK@593..594 "[" [] [],
+                                        member: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@594..597 "key" [] [],
+                                            },
+                                        },
+                                        r_brack_token: R_BRACK@597..598 "]" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@598..599 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@599..611 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsComputedMemberExpression {
+                                        object: JsParenthesizedExpression {
+                                            l_paren_token: L_PAREN@611..612 "(" [] [],
+                                            expression: JsStaticMemberExpression {
+                                                object: JsStaticMemberExpression {
+                                                    object: JsIdentifierExpression {
+                                                        name: JsReferenceIdentifier {
+                                                            value_token: IDENT@612..615 "obj" [] [],
+                                                        },
+                                                    },
+                                                    operator: QUESTIONDOT@615..617 "?." [] [],
+                                                    member: JsName {
+                                                        value_token: IDENT@617..622 "inner" [] [],
+                                                    },
+                                                },
+                                                operator: DOT@622..623 "." [] [],
+                                                member: JsPrivateName {
+                                                    hash_token: HASH@623..624 "#" [] [],
+                                                    value_token: IDENT@624..630 "member" [] [],
+                                                },
+                                            },
+                                            r_paren_token: R_PAREN@630..631 ")" [] [],
+                                        },
+                                        optional_chain_token: missing (optional),
+                                        l_brack_token: L_BRACK@631..632 "[" [] [],
+                                        member: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@632..635 "key" [] [],
+                                            },
+                                        },
+                                        r_brack_token: R_BRACK@635..636 "]" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@636..637 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@637..649 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsParenthesizedExpression {
+                                        l_paren_token: L_PAREN@649..650 "(" [] [],
+                                        expression: JsSequenceExpression {
+                                            left: JsStaticMemberExpression {
+                                                object: JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@650..653 "obj" [] [],
+                                                    },
+                                                },
+                                                operator: DOT@653..654 "." [] [],
+                                                member: JsPrivateName {
+                                                    hash_token: HASH@654..655 "#" [] [],
+                                                    value_token: IDENT@655..658 "key" [] [],
+                                                },
+                                            },
+                                            comma_token: COMMA@658..660 "," [] [Whitespace(" ")],
+                                            right: JsStaticMemberExpression {
+                                                object: JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@660..663 "obj" [] [],
+                                                    },
+                                                },
+                                                operator: DOT@663..664 "." [] [],
+                                                member: JsName {
+                                                    value_token: IDENT@664..667 "key" [] [],
+                                                },
+                                            },
+                                        },
+                                        r_paren_token: R_PAREN@667..668 ")" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@668..669 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsUnaryExpression {
+                                    operator: DELETE_KW@669..681 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                    argument: JsParenthesizedExpression {
+                                        l_paren_token: L_PAREN@681..682 "(" [] [],
+                                        expression: JsInExpression {
+                                            property: JsPrivateName {
+                                                hash_token: HASH@682..683 "#" [] [],
+                                                value_token: IDENT@683..687 "key" [] [Whitespace(" ")],
+                                            },
+                                            in_token: IN_KW@687..690 "in" [] [Whitespace(" ")],
+                                            object: JsIdentifierExpression {
+                                                name: JsReferenceIdentifier {
+                                                    value_token: IDENT@690..693 "obj" [] [],
+                                                },
+                                            },
+                                        },
+                                        r_paren_token: R_PAREN@693..694 ")" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@694..695 ";" [] [],
+                            },
+                        ],
+                        r_curly_token: R_CURLY@695..699 "}" [Newline("\n"), Whitespace("  ")] [],
                     },
-                    r_paren_token: R_PAREN@547..548 ")" [] [],
                 },
-            },
-            semicolon_token: SEMICOLON@548..549 ";" [] [],
-        },
-        JsExpressionStatement {
-            expression: JsUnaryExpression {
-                operator: DELETE_KW@549..557 "delete" [Newline("\n")] [Whitespace(" ")],
-                argument: JsParenthesizedExpression {
-                    l_paren_token: L_PAREN@557..558 "(" [] [],
-                    expression: JsInExpression {
-                        property: JsPrivateName {
-                            hash_token: HASH@558..559 "#" [] [],
-                            value_token: IDENT@559..563 "key" [] [Whitespace(" ")],
-                        },
-                        in_token: IN_KW@563..566 "in" [] [Whitespace(" ")],
-                        object: JsIdentifierExpression {
-                            name: JsReferenceIdentifier {
-                                value_token: IDENT@566..569 "obj" [] [],
-                            },
-                        },
-                    },
-                    r_paren_token: R_PAREN@569..570 ")" [] [],
-                },
-            },
-            semicolon_token: SEMICOLON@570..571 ";" [] [],
+            ],
+            r_curly_token: R_CURLY@699..701 "}" [Newline("\n")] [],
         },
     ],
-    eof_token: EOF@571..572 "" [Newline("\n")] [],
+    eof_token: EOF@701..702 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..572
+0: JS_MODULE@0..702
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..571
-    0: JS_EXPRESSION_STATEMENT@0..15
-      0: JS_UNARY_EXPRESSION@0..14
-        0: DELETE_KW@0..7 "delete" [] [Whitespace(" ")]
-        1: JS_STATIC_MEMBER_EXPRESSION@7..14
-          0: JS_IDENTIFIER_EXPRESSION@7..10
-            0: JS_REFERENCE_IDENTIFIER@7..10
-              0: IDENT@7..10 "obj" [] []
-          1: DOT@10..11 "." [] []
-          2: JS_NAME@11..14
-            0: IDENT@11..14 "key" [] []
-      1: SEMICOLON@14..15 ";" [] []
-    1: JS_EXPRESSION_STATEMENT@15..33
-      0: JS_UNARY_EXPRESSION@15..32
-        0: DELETE_KW@15..23 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_STATIC_MEMBER_EXPRESSION@23..32
-          0: JS_PARENTHESIZED_EXPRESSION@23..28
-            0: L_PAREN@23..24 "(" [] []
-            1: JS_IDENTIFIER_EXPRESSION@24..27
-              0: JS_REFERENCE_IDENTIFIER@24..27
-                0: IDENT@24..27 "obj" [] []
-            2: R_PAREN@27..28 ")" [] []
-          1: DOT@28..29 "." [] []
-          2: JS_NAME@29..32
-            0: IDENT@29..32 "key" [] []
-      1: SEMICOLON@32..33 ";" [] []
-    2: JS_EXPRESSION_STATEMENT@33..57
-      0: JS_UNARY_EXPRESSION@33..56
-        0: DELETE_KW@33..41 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_STATIC_MEMBER_EXPRESSION@41..56
-          0: JS_STATIC_MEMBER_EXPRESSION@41..52
-            0: JS_IDENTIFIER_EXPRESSION@41..44
-              0: JS_REFERENCE_IDENTIFIER@41..44
-                0: IDENT@41..44 "obj" [] []
-            1: DOT@44..45 "." [] []
-            2: JS_PRIVATE_NAME@45..52
-              0: HASH@45..46 "#" [] []
-              1: IDENT@46..52 "member" [] []
-          1: DOT@52..53 "." [] []
-          2: JS_NAME@53..56
-            0: IDENT@53..56 "key" [] []
-      1: SEMICOLON@56..57 ";" [] []
-    3: JS_EXPRESSION_STATEMENT@57..83
-      0: JS_UNARY_EXPRESSION@57..82
-        0: DELETE_KW@57..65 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_STATIC_MEMBER_EXPRESSION@65..82
-          0: JS_PARENTHESIZED_EXPRESSION@65..78
-            0: L_PAREN@65..66 "(" [] []
-            1: JS_STATIC_MEMBER_EXPRESSION@66..77
-              0: JS_IDENTIFIER_EXPRESSION@66..69
-                0: JS_REFERENCE_IDENTIFIER@66..69
-                  0: IDENT@66..69 "obj" [] []
-              1: DOT@69..70 "." [] []
-              2: JS_PRIVATE_NAME@70..77
-                0: HASH@70..71 "#" [] []
-                1: IDENT@71..77 "member" [] []
-            2: R_PAREN@77..78 ")" [] []
-          1: DOT@78..79 "." [] []
-          2: JS_NAME@79..82
-            0: IDENT@79..82 "key" [] []
-      1: SEMICOLON@82..83 ";" [] []
-    4: JS_EXPRESSION_STATEMENT@83..110
-      0: JS_UNARY_EXPRESSION@83..109
-        0: DELETE_KW@83..91 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_STATIC_MEMBER_EXPRESSION@91..109
-          0: JS_STATIC_MEMBER_EXPRESSION@91..105
-            0: JS_CALL_EXPRESSION@91..97
-              0: JS_IDENTIFIER_EXPRESSION@91..95
-                0: JS_REFERENCE_IDENTIFIER@91..95
-                  0: IDENT@91..95 "func" [] []
-              1: (empty)
-              2: (empty)
-              3: JS_CALL_ARGUMENTS@95..97
-                0: L_PAREN@95..96 "(" [] []
-                1: JS_CALL_ARGUMENT_LIST@96..96
-                2: R_PAREN@96..97 ")" [] []
-            1: DOT@97..98 "." [] []
-            2: JS_PRIVATE_NAME@98..105
-              0: HASH@98..99 "#" [] []
-              1: IDENT@99..105 "member" [] []
-          1: DOT@105..106 "." [] []
-          2: JS_NAME@106..109
-            0: IDENT@106..109 "key" [] []
-      1: SEMICOLON@109..110 ";" [] []
-    5: JS_EXPRESSION_STATEMENT@110..139
-      0: JS_UNARY_EXPRESSION@110..138
-        0: DELETE_KW@110..118 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_STATIC_MEMBER_EXPRESSION@118..138
-          0: JS_PARENTHESIZED_EXPRESSION@118..134
-            0: L_PAREN@118..119 "(" [] []
-            1: JS_STATIC_MEMBER_EXPRESSION@119..133
-              0: JS_CALL_EXPRESSION@119..125
-                0: JS_IDENTIFIER_EXPRESSION@119..123
-                  0: JS_REFERENCE_IDENTIFIER@119..123
-                    0: IDENT@119..123 "func" [] []
-                1: (empty)
-                2: (empty)
-                3: JS_CALL_ARGUMENTS@123..125
-                  0: L_PAREN@123..124 "(" [] []
-                  1: JS_CALL_ARGUMENT_LIST@124..124
-                  2: R_PAREN@124..125 ")" [] []
-              1: DOT@125..126 "." [] []
-              2: JS_PRIVATE_NAME@126..133
-                0: HASH@126..127 "#" [] []
-                1: IDENT@127..133 "member" [] []
-            2: R_PAREN@133..134 ")" [] []
-          1: DOT@134..135 "." [] []
-          2: JS_NAME@135..138
-            0: IDENT@135..138 "key" [] []
-      1: SEMICOLON@138..139 ";" [] []
-    6: JS_EXPRESSION_STATEMENT@139..164
-      0: JS_UNARY_EXPRESSION@139..163
-        0: DELETE_KW@139..147 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_STATIC_MEMBER_EXPRESSION@147..163
-          0: JS_STATIC_MEMBER_EXPRESSION@147..159
-            0: JS_IDENTIFIER_EXPRESSION@147..150
-              0: JS_REFERENCE_IDENTIFIER@147..150
-                0: IDENT@147..150 "obj" [] []
-            1: QUESTIONDOT@150..152 "?." [] []
-            2: JS_PRIVATE_NAME@152..159
-              0: HASH@152..153 "#" [] []
-              1: IDENT@153..159 "member" [] []
-          1: DOT@159..160 "." [] []
-          2: JS_NAME@160..163
-            0: IDENT@160..163 "key" [] []
-      1: SEMICOLON@163..164 ";" [] []
-    7: JS_EXPRESSION_STATEMENT@164..191
-      0: JS_UNARY_EXPRESSION@164..190
-        0: DELETE_KW@164..172 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_STATIC_MEMBER_EXPRESSION@172..190
-          0: JS_PARENTHESIZED_EXPRESSION@172..186
-            0: L_PAREN@172..173 "(" [] []
-            1: JS_STATIC_MEMBER_EXPRESSION@173..185
-              0: JS_IDENTIFIER_EXPRESSION@173..176
-                0: JS_REFERENCE_IDENTIFIER@173..176
-                  0: IDENT@173..176 "obj" [] []
-              1: QUESTIONDOT@176..178 "?." [] []
-              2: JS_PRIVATE_NAME@178..185
-                0: HASH@178..179 "#" [] []
-                1: IDENT@179..185 "member" [] []
-            2: R_PAREN@185..186 ")" [] []
-          1: DOT@186..187 "." [] []
-          2: JS_NAME@187..190
-            0: IDENT@187..190 "key" [] []
-      1: SEMICOLON@190..191 ";" [] []
-    8: JS_EXPRESSION_STATEMENT@191..222
-      0: JS_UNARY_EXPRESSION@191..221
-        0: DELETE_KW@191..199 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_STATIC_MEMBER_EXPRESSION@199..221
-          0: JS_STATIC_MEMBER_EXPRESSION@199..217
-            0: JS_STATIC_MEMBER_EXPRESSION@199..209
-              0: JS_IDENTIFIER_EXPRESSION@199..202
-                0: JS_REFERENCE_IDENTIFIER@199..202
-                  0: IDENT@199..202 "obj" [] []
-              1: QUESTIONDOT@202..204 "?." [] []
-              2: JS_NAME@204..209
-                0: IDENT@204..209 "inner" [] []
-            1: DOT@209..210 "." [] []
-            2: JS_PRIVATE_NAME@210..217
-              0: HASH@210..211 "#" [] []
-              1: IDENT@211..217 "member" [] []
-          1: DOT@217..218 "." [] []
-          2: JS_NAME@218..221
-            0: IDENT@218..221 "key" [] []
-      1: SEMICOLON@221..222 ";" [] []
-    9: JS_EXPRESSION_STATEMENT@222..255
-      0: JS_UNARY_EXPRESSION@222..254
-        0: DELETE_KW@222..230 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_STATIC_MEMBER_EXPRESSION@230..254
-          0: JS_PARENTHESIZED_EXPRESSION@230..250
-            0: L_PAREN@230..231 "(" [] []
-            1: JS_STATIC_MEMBER_EXPRESSION@231..249
-              0: JS_STATIC_MEMBER_EXPRESSION@231..241
-                0: JS_IDENTIFIER_EXPRESSION@231..234
-                  0: JS_REFERENCE_IDENTIFIER@231..234
-                    0: IDENT@231..234 "obj" [] []
-                1: QUESTIONDOT@234..236 "?." [] []
-                2: JS_NAME@236..241
-                  0: IDENT@236..241 "inner" [] []
-              1: DOT@241..242 "." [] []
-              2: JS_PRIVATE_NAME@242..249
-                0: HASH@242..243 "#" [] []
-                1: IDENT@243..249 "member" [] []
-            2: R_PAREN@249..250 ")" [] []
-          1: DOT@250..251 "." [] []
-          2: JS_NAME@251..254
-            0: IDENT@251..254 "key" [] []
-      1: SEMICOLON@254..255 ";" [] []
-    10: JS_EXPRESSION_STATEMENT@255..272
-      0: JS_UNARY_EXPRESSION@255..271
-        0: DELETE_KW@255..263 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_COMPUTED_MEMBER_EXPRESSION@263..271
-          0: JS_IDENTIFIER_EXPRESSION@263..266
-            0: JS_REFERENCE_IDENTIFIER@263..266
-              0: IDENT@263..266 "obj" [] []
+  2: JS_MODULE_ITEM_LIST@0..701
+    0: JS_CLASS_STATEMENT@0..701
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..16
+        0: IDENT@6..16 "TestClass" [] [Whitespace(" ")]
+      2: (empty)
+      3: (empty)
+      4: L_CURLY@16..17 "{" [] []
+      5: JS_CLASS_MEMBER_LIST@17..699
+        0: JS_PROPERTY_CLASS_MEMBER@17..28
+          0: (empty)
           1: (empty)
-          2: L_BRACK@266..267 "[" [] []
-          3: JS_IDENTIFIER_EXPRESSION@267..270
-            0: JS_REFERENCE_IDENTIFIER@267..270
-              0: IDENT@267..270 "key" [] []
-          4: R_BRACK@270..271 "]" [] []
-      1: SEMICOLON@271..272 ";" [] []
-    11: JS_EXPRESSION_STATEMENT@272..291
-      0: JS_UNARY_EXPRESSION@272..290
-        0: DELETE_KW@272..280 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_COMPUTED_MEMBER_EXPRESSION@280..290
-          0: JS_PARENTHESIZED_EXPRESSION@280..285
-            0: L_PAREN@280..281 "(" [] []
-            1: JS_IDENTIFIER_EXPRESSION@281..284
-              0: JS_REFERENCE_IDENTIFIER@281..284
-                0: IDENT@281..284 "obj" [] []
-            2: R_PAREN@284..285 ")" [] []
+          2: (empty)
+          3: (empty)
+          4: (empty)
+          5: JS_PRIVATE_CLASS_MEMBER_NAME@17..27
+            0: HASH@17..21 "#" [Newline("\n"), Whitespace("  ")] []
+            1: IDENT@21..27 "member" [] []
+          6: (empty)
+          7: (empty)
+          8: (empty)
+          9: (empty)
+          10: SEMICOLON@27..28 ";" [] []
+        1: JS_PROPERTY_CLASS_MEMBER@28..36
+          0: (empty)
           1: (empty)
-          2: L_BRACK@285..286 "[" [] []
-          3: JS_IDENTIFIER_EXPRESSION@286..289
-            0: JS_REFERENCE_IDENTIFIER@286..289
-              0: IDENT@286..289 "key" [] []
-          4: R_BRACK@289..290 "]" [] []
-      1: SEMICOLON@290..291 ";" [] []
-    12: JS_EXPRESSION_STATEMENT@291..316
-      0: JS_UNARY_EXPRESSION@291..315
-        0: DELETE_KW@291..299 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_COMPUTED_MEMBER_EXPRESSION@299..315
-          0: JS_STATIC_MEMBER_EXPRESSION@299..310
-            0: JS_IDENTIFIER_EXPRESSION@299..302
-              0: JS_REFERENCE_IDENTIFIER@299..302
-                0: IDENT@299..302 "obj" [] []
-            1: DOT@302..303 "." [] []
-            2: JS_PRIVATE_NAME@303..310
-              0: HASH@303..304 "#" [] []
-              1: IDENT@304..310 "member" [] []
+          2: (empty)
+          3: (empty)
+          4: (empty)
+          5: JS_PRIVATE_CLASS_MEMBER_NAME@28..35
+            0: HASH@28..32 "#" [Newline("\n"), Whitespace("  ")] []
+            1: IDENT@32..35 "key" [] []
+          6: (empty)
+          7: (empty)
+          8: (empty)
+          9: (empty)
+          10: SEMICOLON@35..36 ";" [] []
+        2: JS_METHOD_CLASS_MEMBER@36..699
+          0: (empty)
           1: (empty)
-          2: L_BRACK@310..311 "[" [] []
-          3: JS_IDENTIFIER_EXPRESSION@311..314
-            0: JS_REFERENCE_IDENTIFIER@311..314
-              0: IDENT@311..314 "key" [] []
-          4: R_BRACK@314..315 "]" [] []
-      1: SEMICOLON@315..316 ";" [] []
-    13: JS_EXPRESSION_STATEMENT@316..343
-      0: JS_UNARY_EXPRESSION@316..342
-        0: DELETE_KW@316..324 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_COMPUTED_MEMBER_EXPRESSION@324..342
-          0: JS_PARENTHESIZED_EXPRESSION@324..337
-            0: L_PAREN@324..325 "(" [] []
-            1: JS_STATIC_MEMBER_EXPRESSION@325..336
-              0: JS_IDENTIFIER_EXPRESSION@325..328
-                0: JS_REFERENCE_IDENTIFIER@325..328
-                  0: IDENT@325..328 "obj" [] []
-              1: DOT@328..329 "." [] []
-              2: JS_PRIVATE_NAME@329..336
-                0: HASH@329..330 "#" [] []
-                1: IDENT@330..336 "member" [] []
-            2: R_PAREN@336..337 ")" [] []
-          1: (empty)
-          2: L_BRACK@337..338 "[" [] []
-          3: JS_IDENTIFIER_EXPRESSION@338..341
-            0: JS_REFERENCE_IDENTIFIER@338..341
-              0: IDENT@338..341 "key" [] []
-          4: R_BRACK@341..342 "]" [] []
-      1: SEMICOLON@342..343 ";" [] []
-    14: JS_EXPRESSION_STATEMENT@343..371
-      0: JS_UNARY_EXPRESSION@343..370
-        0: DELETE_KW@343..351 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_COMPUTED_MEMBER_EXPRESSION@351..370
-          0: JS_STATIC_MEMBER_EXPRESSION@351..365
-            0: JS_CALL_EXPRESSION@351..357
-              0: JS_IDENTIFIER_EXPRESSION@351..355
-                0: JS_REFERENCE_IDENTIFIER@351..355
-                  0: IDENT@351..355 "func" [] []
-              1: (empty)
-              2: (empty)
-              3: JS_CALL_ARGUMENTS@355..357
-                0: L_PAREN@355..356 "(" [] []
-                1: JS_CALL_ARGUMENT_LIST@356..356
-                2: R_PAREN@356..357 ")" [] []
-            1: DOT@357..358 "." [] []
-            2: JS_PRIVATE_NAME@358..365
-              0: HASH@358..359 "#" [] []
-              1: IDENT@359..365 "member" [] []
-          1: (empty)
-          2: L_BRACK@365..366 "[" [] []
-          3: JS_IDENTIFIER_EXPRESSION@366..369
-            0: JS_REFERENCE_IDENTIFIER@366..369
-              0: IDENT@366..369 "key" [] []
-          4: R_BRACK@369..370 "]" [] []
-      1: SEMICOLON@370..371 ";" [] []
-    15: JS_EXPRESSION_STATEMENT@371..401
-      0: JS_UNARY_EXPRESSION@371..400
-        0: DELETE_KW@371..379 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_COMPUTED_MEMBER_EXPRESSION@379..400
-          0: JS_PARENTHESIZED_EXPRESSION@379..395
-            0: L_PAREN@379..380 "(" [] []
-            1: JS_STATIC_MEMBER_EXPRESSION@380..394
-              0: JS_CALL_EXPRESSION@380..386
-                0: JS_IDENTIFIER_EXPRESSION@380..384
-                  0: JS_REFERENCE_IDENTIFIER@380..384
-                    0: IDENT@380..384 "func" [] []
-                1: (empty)
-                2: (empty)
-                3: JS_CALL_ARGUMENTS@384..386
-                  0: L_PAREN@384..385 "(" [] []
-                  1: JS_CALL_ARGUMENT_LIST@385..385
-                  2: R_PAREN@385..386 ")" [] []
-              1: DOT@386..387 "." [] []
-              2: JS_PRIVATE_NAME@387..394
-                0: HASH@387..388 "#" [] []
-                1: IDENT@388..394 "member" [] []
-            2: R_PAREN@394..395 ")" [] []
-          1: (empty)
-          2: L_BRACK@395..396 "[" [] []
-          3: JS_IDENTIFIER_EXPRESSION@396..399
-            0: JS_REFERENCE_IDENTIFIER@396..399
-              0: IDENT@396..399 "key" [] []
-          4: R_BRACK@399..400 "]" [] []
-      1: SEMICOLON@400..401 ";" [] []
-    16: JS_EXPRESSION_STATEMENT@401..427
-      0: JS_UNARY_EXPRESSION@401..426
-        0: DELETE_KW@401..409 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_COMPUTED_MEMBER_EXPRESSION@409..426
-          0: JS_STATIC_MEMBER_EXPRESSION@409..421
-            0: JS_IDENTIFIER_EXPRESSION@409..412
-              0: JS_REFERENCE_IDENTIFIER@409..412
-                0: IDENT@409..412 "obj" [] []
-            1: QUESTIONDOT@412..414 "?." [] []
-            2: JS_PRIVATE_NAME@414..421
-              0: HASH@414..415 "#" [] []
-              1: IDENT@415..421 "member" [] []
-          1: (empty)
-          2: L_BRACK@421..422 "[" [] []
-          3: JS_IDENTIFIER_EXPRESSION@422..425
-            0: JS_REFERENCE_IDENTIFIER@422..425
-              0: IDENT@422..425 "key" [] []
-          4: R_BRACK@425..426 "]" [] []
-      1: SEMICOLON@426..427 ";" [] []
-    17: JS_EXPRESSION_STATEMENT@427..455
-      0: JS_UNARY_EXPRESSION@427..454
-        0: DELETE_KW@427..435 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_COMPUTED_MEMBER_EXPRESSION@435..454
-          0: JS_PARENTHESIZED_EXPRESSION@435..449
-            0: L_PAREN@435..436 "(" [] []
-            1: JS_STATIC_MEMBER_EXPRESSION@436..448
-              0: JS_IDENTIFIER_EXPRESSION@436..439
-                0: JS_REFERENCE_IDENTIFIER@436..439
-                  0: IDENT@436..439 "obj" [] []
-              1: QUESTIONDOT@439..441 "?." [] []
-              2: JS_PRIVATE_NAME@441..448
-                0: HASH@441..442 "#" [] []
-                1: IDENT@442..448 "member" [] []
-            2: R_PAREN@448..449 ")" [] []
-          1: (empty)
-          2: L_BRACK@449..450 "[" [] []
-          3: JS_IDENTIFIER_EXPRESSION@450..453
-            0: JS_REFERENCE_IDENTIFIER@450..453
-              0: IDENT@450..453 "key" [] []
-          4: R_BRACK@453..454 "]" [] []
-      1: SEMICOLON@454..455 ";" [] []
-    18: JS_EXPRESSION_STATEMENT@455..487
-      0: JS_UNARY_EXPRESSION@455..486
-        0: DELETE_KW@455..463 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_COMPUTED_MEMBER_EXPRESSION@463..486
-          0: JS_STATIC_MEMBER_EXPRESSION@463..481
-            0: JS_STATIC_MEMBER_EXPRESSION@463..473
-              0: JS_IDENTIFIER_EXPRESSION@463..466
-                0: JS_REFERENCE_IDENTIFIER@463..466
-                  0: IDENT@463..466 "obj" [] []
-              1: QUESTIONDOT@466..468 "?." [] []
-              2: JS_NAME@468..473
-                0: IDENT@468..473 "inner" [] []
-            1: DOT@473..474 "." [] []
-            2: JS_PRIVATE_NAME@474..481
-              0: HASH@474..475 "#" [] []
-              1: IDENT@475..481 "member" [] []
-          1: (empty)
-          2: L_BRACK@481..482 "[" [] []
-          3: JS_IDENTIFIER_EXPRESSION@482..485
-            0: JS_REFERENCE_IDENTIFIER@482..485
-              0: IDENT@482..485 "key" [] []
-          4: R_BRACK@485..486 "]" [] []
-      1: SEMICOLON@486..487 ";" [] []
-    19: JS_EXPRESSION_STATEMENT@487..521
-      0: JS_UNARY_EXPRESSION@487..520
-        0: DELETE_KW@487..495 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_COMPUTED_MEMBER_EXPRESSION@495..520
-          0: JS_PARENTHESIZED_EXPRESSION@495..515
-            0: L_PAREN@495..496 "(" [] []
-            1: JS_STATIC_MEMBER_EXPRESSION@496..514
-              0: JS_STATIC_MEMBER_EXPRESSION@496..506
-                0: JS_IDENTIFIER_EXPRESSION@496..499
-                  0: JS_REFERENCE_IDENTIFIER@496..499
-                    0: IDENT@496..499 "obj" [] []
-                1: QUESTIONDOT@499..501 "?." [] []
-                2: JS_NAME@501..506
-                  0: IDENT@501..506 "inner" [] []
-              1: DOT@506..507 "." [] []
-              2: JS_PRIVATE_NAME@507..514
-                0: HASH@507..508 "#" [] []
-                1: IDENT@508..514 "member" [] []
-            2: R_PAREN@514..515 ")" [] []
-          1: (empty)
-          2: L_BRACK@515..516 "[" [] []
-          3: JS_IDENTIFIER_EXPRESSION@516..519
-            0: JS_REFERENCE_IDENTIFIER@516..519
-              0: IDENT@516..519 "key" [] []
-          4: R_BRACK@519..520 "]" [] []
-      1: SEMICOLON@520..521 ";" [] []
-    20: JS_EXPRESSION_STATEMENT@521..549
-      0: JS_UNARY_EXPRESSION@521..548
-        0: DELETE_KW@521..529 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_PARENTHESIZED_EXPRESSION@529..548
-          0: L_PAREN@529..530 "(" [] []
-          1: JS_SEQUENCE_EXPRESSION@530..547
-            0: JS_STATIC_MEMBER_EXPRESSION@530..538
-              0: JS_IDENTIFIER_EXPRESSION@530..533
-                0: JS_REFERENCE_IDENTIFIER@530..533
-                  0: IDENT@530..533 "obj" [] []
-              1: DOT@533..534 "." [] []
-              2: JS_PRIVATE_NAME@534..538
-                0: HASH@534..535 "#" [] []
-                1: IDENT@535..538 "key" [] []
-            1: COMMA@538..540 "," [] [Whitespace(" ")]
-            2: JS_STATIC_MEMBER_EXPRESSION@540..547
-              0: JS_IDENTIFIER_EXPRESSION@540..543
-                0: JS_REFERENCE_IDENTIFIER@540..543
-                  0: IDENT@540..543 "obj" [] []
-              1: DOT@543..544 "." [] []
-              2: JS_NAME@544..547
-                0: IDENT@544..547 "key" [] []
-          2: R_PAREN@547..548 ")" [] []
-      1: SEMICOLON@548..549 ";" [] []
-    21: JS_EXPRESSION_STATEMENT@549..571
-      0: JS_UNARY_EXPRESSION@549..570
-        0: DELETE_KW@549..557 "delete" [Newline("\n")] [Whitespace(" ")]
-        1: JS_PARENTHESIZED_EXPRESSION@557..570
-          0: L_PAREN@557..558 "(" [] []
-          1: JS_IN_EXPRESSION@558..569
-            0: JS_PRIVATE_NAME@558..563
-              0: HASH@558..559 "#" [] []
-              1: IDENT@559..563 "key" [] [Whitespace(" ")]
-            1: IN_KW@563..566 "in" [] [Whitespace(" ")]
-            2: JS_IDENTIFIER_EXPRESSION@566..569
-              0: JS_REFERENCE_IDENTIFIER@566..569
-                0: IDENT@566..569 "obj" [] []
-          2: R_PAREN@569..570 ")" [] []
-      1: SEMICOLON@570..571 ";" [] []
-  3: EOF@571..572 "" [Newline("\n")] []
+          2: (empty)
+          3: (empty)
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@36..43
+            0: IDENT@36..43 "test" [Newline("\n"), Whitespace("  ")] []
+          6: (empty)
+          7: JS_PARAMETERS@43..46
+            0: L_PAREN@43..44 "(" [] []
+            1: JS_PARAMETER_LIST@44..44
+            2: R_PAREN@44..46 ")" [] [Whitespace(" ")]
+          8: (empty)
+          9: JS_FUNCTION_BODY@46..699
+            0: L_CURLY@46..47 "{" [] []
+            1: JS_DIRECTIVE_LIST@47..47
+            2: JS_STATEMENT_LIST@47..695
+              0: JS_EXPRESSION_STATEMENT@47..67
+                0: JS_UNARY_EXPRESSION@47..66
+                  0: DELETE_KW@47..59 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_STATIC_MEMBER_EXPRESSION@59..66
+                    0: JS_IDENTIFIER_EXPRESSION@59..62
+                      0: JS_REFERENCE_IDENTIFIER@59..62
+                        0: IDENT@59..62 "obj" [] []
+                    1: DOT@62..63 "." [] []
+                    2: JS_NAME@63..66
+                      0: IDENT@63..66 "key" [] []
+                1: SEMICOLON@66..67 ";" [] []
+              1: JS_EXPRESSION_STATEMENT@67..87
+                0: JS_UNARY_EXPRESSION@67..86
+                  0: DELETE_KW@67..79 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_STATIC_MEMBER_EXPRESSION@79..86
+                    0: JS_IDENTIFIER_EXPRESSION@79..82
+                      0: JS_REFERENCE_IDENTIFIER@79..82
+                        0: IDENT@79..82 "obj" [] []
+                    1: DOT@82..83 "." [] []
+                    2: JS_NAME@83..86
+                      0: IDENT@83..86 "key" [] []
+                1: SEMICOLON@86..87 ";" [] []
+              2: JS_EXPRESSION_STATEMENT@87..115
+                0: JS_UNARY_EXPRESSION@87..114
+                  0: DELETE_KW@87..99 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_STATIC_MEMBER_EXPRESSION@99..114
+                    0: JS_STATIC_MEMBER_EXPRESSION@99..110
+                      0: JS_IDENTIFIER_EXPRESSION@99..102
+                        0: JS_REFERENCE_IDENTIFIER@99..102
+                          0: IDENT@99..102 "obj" [] []
+                      1: DOT@102..103 "." [] []
+                      2: JS_PRIVATE_NAME@103..110
+                        0: HASH@103..104 "#" [] []
+                        1: IDENT@104..110 "member" [] []
+                    1: DOT@110..111 "." [] []
+                    2: JS_NAME@111..114
+                      0: IDENT@111..114 "key" [] []
+                1: SEMICOLON@114..115 ";" [] []
+              3: JS_EXPRESSION_STATEMENT@115..143
+                0: JS_UNARY_EXPRESSION@115..142
+                  0: DELETE_KW@115..127 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_STATIC_MEMBER_EXPRESSION@127..142
+                    0: JS_STATIC_MEMBER_EXPRESSION@127..138
+                      0: JS_IDENTIFIER_EXPRESSION@127..130
+                        0: JS_REFERENCE_IDENTIFIER@127..130
+                          0: IDENT@127..130 "obj" [] []
+                      1: DOT@130..131 "." [] []
+                      2: JS_PRIVATE_NAME@131..138
+                        0: HASH@131..132 "#" [] []
+                        1: IDENT@132..138 "member" [] []
+                    1: DOT@138..139 "." [] []
+                    2: JS_NAME@139..142
+                      0: IDENT@139..142 "key" [] []
+                1: SEMICOLON@142..143 ";" [] []
+              4: JS_EXPRESSION_STATEMENT@143..174
+                0: JS_UNARY_EXPRESSION@143..173
+                  0: DELETE_KW@143..155 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_STATIC_MEMBER_EXPRESSION@155..173
+                    0: JS_STATIC_MEMBER_EXPRESSION@155..169
+                      0: JS_CALL_EXPRESSION@155..161
+                        0: JS_IDENTIFIER_EXPRESSION@155..159
+                          0: JS_REFERENCE_IDENTIFIER@155..159
+                            0: IDENT@155..159 "func" [] []
+                        1: (empty)
+                        2: (empty)
+                        3: JS_CALL_ARGUMENTS@159..161
+                          0: L_PAREN@159..160 "(" [] []
+                          1: JS_CALL_ARGUMENT_LIST@160..160
+                          2: R_PAREN@160..161 ")" [] []
+                      1: DOT@161..162 "." [] []
+                      2: JS_PRIVATE_NAME@162..169
+                        0: HASH@162..163 "#" [] []
+                        1: IDENT@163..169 "member" [] []
+                    1: DOT@169..170 "." [] []
+                    2: JS_NAME@170..173
+                      0: IDENT@170..173 "key" [] []
+                1: SEMICOLON@173..174 ";" [] []
+              5: JS_EXPRESSION_STATEMENT@174..205
+                0: JS_UNARY_EXPRESSION@174..204
+                  0: DELETE_KW@174..186 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_STATIC_MEMBER_EXPRESSION@186..204
+                    0: JS_STATIC_MEMBER_EXPRESSION@186..200
+                      0: JS_CALL_EXPRESSION@186..192
+                        0: JS_IDENTIFIER_EXPRESSION@186..190
+                          0: JS_REFERENCE_IDENTIFIER@186..190
+                            0: IDENT@186..190 "func" [] []
+                        1: (empty)
+                        2: (empty)
+                        3: JS_CALL_ARGUMENTS@190..192
+                          0: L_PAREN@190..191 "(" [] []
+                          1: JS_CALL_ARGUMENT_LIST@191..191
+                          2: R_PAREN@191..192 ")" [] []
+                      1: DOT@192..193 "." [] []
+                      2: JS_PRIVATE_NAME@193..200
+                        0: HASH@193..194 "#" [] []
+                        1: IDENT@194..200 "member" [] []
+                    1: DOT@200..201 "." [] []
+                    2: JS_NAME@201..204
+                      0: IDENT@201..204 "key" [] []
+                1: SEMICOLON@204..205 ";" [] []
+              6: JS_EXPRESSION_STATEMENT@205..234
+                0: JS_UNARY_EXPRESSION@205..233
+                  0: DELETE_KW@205..217 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_STATIC_MEMBER_EXPRESSION@217..233
+                    0: JS_STATIC_MEMBER_EXPRESSION@217..229
+                      0: JS_IDENTIFIER_EXPRESSION@217..220
+                        0: JS_REFERENCE_IDENTIFIER@217..220
+                          0: IDENT@217..220 "obj" [] []
+                      1: QUESTIONDOT@220..222 "?." [] []
+                      2: JS_PRIVATE_NAME@222..229
+                        0: HASH@222..223 "#" [] []
+                        1: IDENT@223..229 "member" [] []
+                    1: DOT@229..230 "." [] []
+                    2: JS_NAME@230..233
+                      0: IDENT@230..233 "key" [] []
+                1: SEMICOLON@233..234 ";" [] []
+              7: JS_EXPRESSION_STATEMENT@234..265
+                0: JS_UNARY_EXPRESSION@234..264
+                  0: DELETE_KW@234..246 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_STATIC_MEMBER_EXPRESSION@246..264
+                    0: JS_PARENTHESIZED_EXPRESSION@246..260
+                      0: L_PAREN@246..247 "(" [] []
+                      1: JS_STATIC_MEMBER_EXPRESSION@247..259
+                        0: JS_IDENTIFIER_EXPRESSION@247..250
+                          0: JS_REFERENCE_IDENTIFIER@247..250
+                            0: IDENT@247..250 "obj" [] []
+                        1: QUESTIONDOT@250..252 "?." [] []
+                        2: JS_PRIVATE_NAME@252..259
+                          0: HASH@252..253 "#" [] []
+                          1: IDENT@253..259 "member" [] []
+                      2: R_PAREN@259..260 ")" [] []
+                    1: DOT@260..261 "." [] []
+                    2: JS_NAME@261..264
+                      0: IDENT@261..264 "key" [] []
+                1: SEMICOLON@264..265 ";" [] []
+              8: JS_EXPRESSION_STATEMENT@265..300
+                0: JS_UNARY_EXPRESSION@265..299
+                  0: DELETE_KW@265..277 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_STATIC_MEMBER_EXPRESSION@277..299
+                    0: JS_STATIC_MEMBER_EXPRESSION@277..295
+                      0: JS_STATIC_MEMBER_EXPRESSION@277..287
+                        0: JS_IDENTIFIER_EXPRESSION@277..280
+                          0: JS_REFERENCE_IDENTIFIER@277..280
+                            0: IDENT@277..280 "obj" [] []
+                        1: QUESTIONDOT@280..282 "?." [] []
+                        2: JS_NAME@282..287
+                          0: IDENT@282..287 "inner" [] []
+                      1: DOT@287..288 "." [] []
+                      2: JS_PRIVATE_NAME@288..295
+                        0: HASH@288..289 "#" [] []
+                        1: IDENT@289..295 "member" [] []
+                    1: DOT@295..296 "." [] []
+                    2: JS_NAME@296..299
+                      0: IDENT@296..299 "key" [] []
+                1: SEMICOLON@299..300 ";" [] []
+              9: JS_EXPRESSION_STATEMENT@300..337
+                0: JS_UNARY_EXPRESSION@300..336
+                  0: DELETE_KW@300..312 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_STATIC_MEMBER_EXPRESSION@312..336
+                    0: JS_PARENTHESIZED_EXPRESSION@312..332
+                      0: L_PAREN@312..313 "(" [] []
+                      1: JS_STATIC_MEMBER_EXPRESSION@313..331
+                        0: JS_STATIC_MEMBER_EXPRESSION@313..323
+                          0: JS_IDENTIFIER_EXPRESSION@313..316
+                            0: JS_REFERENCE_IDENTIFIER@313..316
+                              0: IDENT@313..316 "obj" [] []
+                          1: QUESTIONDOT@316..318 "?." [] []
+                          2: JS_NAME@318..323
+                            0: IDENT@318..323 "inner" [] []
+                        1: DOT@323..324 "." [] []
+                        2: JS_PRIVATE_NAME@324..331
+                          0: HASH@324..325 "#" [] []
+                          1: IDENT@325..331 "member" [] []
+                      2: R_PAREN@331..332 ")" [] []
+                    1: DOT@332..333 "." [] []
+                    2: JS_NAME@333..336
+                      0: IDENT@333..336 "key" [] []
+                1: SEMICOLON@336..337 ";" [] []
+              10: JS_EXPRESSION_STATEMENT@337..358
+                0: JS_UNARY_EXPRESSION@337..357
+                  0: DELETE_KW@337..349 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_COMPUTED_MEMBER_EXPRESSION@349..357
+                    0: JS_IDENTIFIER_EXPRESSION@349..352
+                      0: JS_REFERENCE_IDENTIFIER@349..352
+                        0: IDENT@349..352 "obj" [] []
+                    1: (empty)
+                    2: L_BRACK@352..353 "[" [] []
+                    3: JS_IDENTIFIER_EXPRESSION@353..356
+                      0: JS_REFERENCE_IDENTIFIER@353..356
+                        0: IDENT@353..356 "key" [] []
+                    4: R_BRACK@356..357 "]" [] []
+                1: SEMICOLON@357..358 ";" [] []
+              11: JS_EXPRESSION_STATEMENT@358..379
+                0: JS_UNARY_EXPRESSION@358..378
+                  0: DELETE_KW@358..370 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_COMPUTED_MEMBER_EXPRESSION@370..378
+                    0: JS_IDENTIFIER_EXPRESSION@370..373
+                      0: JS_REFERENCE_IDENTIFIER@370..373
+                        0: IDENT@370..373 "obj" [] []
+                    1: (empty)
+                    2: L_BRACK@373..374 "[" [] []
+                    3: JS_IDENTIFIER_EXPRESSION@374..377
+                      0: JS_REFERENCE_IDENTIFIER@374..377
+                        0: IDENT@374..377 "key" [] []
+                    4: R_BRACK@377..378 "]" [] []
+                1: SEMICOLON@378..379 ";" [] []
+              12: JS_EXPRESSION_STATEMENT@379..408
+                0: JS_UNARY_EXPRESSION@379..407
+                  0: DELETE_KW@379..391 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_COMPUTED_MEMBER_EXPRESSION@391..407
+                    0: JS_STATIC_MEMBER_EXPRESSION@391..402
+                      0: JS_IDENTIFIER_EXPRESSION@391..394
+                        0: JS_REFERENCE_IDENTIFIER@391..394
+                          0: IDENT@391..394 "obj" [] []
+                      1: DOT@394..395 "." [] []
+                      2: JS_PRIVATE_NAME@395..402
+                        0: HASH@395..396 "#" [] []
+                        1: IDENT@396..402 "member" [] []
+                    1: (empty)
+                    2: L_BRACK@402..403 "[" [] []
+                    3: JS_IDENTIFIER_EXPRESSION@403..406
+                      0: JS_REFERENCE_IDENTIFIER@403..406
+                        0: IDENT@403..406 "key" [] []
+                    4: R_BRACK@406..407 "]" [] []
+                1: SEMICOLON@407..408 ";" [] []
+              13: JS_EXPRESSION_STATEMENT@408..437
+                0: JS_UNARY_EXPRESSION@408..436
+                  0: DELETE_KW@408..420 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_COMPUTED_MEMBER_EXPRESSION@420..436
+                    0: JS_STATIC_MEMBER_EXPRESSION@420..431
+                      0: JS_IDENTIFIER_EXPRESSION@420..423
+                        0: JS_REFERENCE_IDENTIFIER@420..423
+                          0: IDENT@420..423 "obj" [] []
+                      1: DOT@423..424 "." [] []
+                      2: JS_PRIVATE_NAME@424..431
+                        0: HASH@424..425 "#" [] []
+                        1: IDENT@425..431 "member" [] []
+                    1: (empty)
+                    2: L_BRACK@431..432 "[" [] []
+                    3: JS_IDENTIFIER_EXPRESSION@432..435
+                      0: JS_REFERENCE_IDENTIFIER@432..435
+                        0: IDENT@432..435 "key" [] []
+                    4: R_BRACK@435..436 "]" [] []
+                1: SEMICOLON@436..437 ";" [] []
+              14: JS_EXPRESSION_STATEMENT@437..469
+                0: JS_UNARY_EXPRESSION@437..468
+                  0: DELETE_KW@437..449 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_COMPUTED_MEMBER_EXPRESSION@449..468
+                    0: JS_STATIC_MEMBER_EXPRESSION@449..463
+                      0: JS_CALL_EXPRESSION@449..455
+                        0: JS_IDENTIFIER_EXPRESSION@449..453
+                          0: JS_REFERENCE_IDENTIFIER@449..453
+                            0: IDENT@449..453 "func" [] []
+                        1: (empty)
+                        2: (empty)
+                        3: JS_CALL_ARGUMENTS@453..455
+                          0: L_PAREN@453..454 "(" [] []
+                          1: JS_CALL_ARGUMENT_LIST@454..454
+                          2: R_PAREN@454..455 ")" [] []
+                      1: DOT@455..456 "." [] []
+                      2: JS_PRIVATE_NAME@456..463
+                        0: HASH@456..457 "#" [] []
+                        1: IDENT@457..463 "member" [] []
+                    1: (empty)
+                    2: L_BRACK@463..464 "[" [] []
+                    3: JS_IDENTIFIER_EXPRESSION@464..467
+                      0: JS_REFERENCE_IDENTIFIER@464..467
+                        0: IDENT@464..467 "key" [] []
+                    4: R_BRACK@467..468 "]" [] []
+                1: SEMICOLON@468..469 ";" [] []
+              15: JS_EXPRESSION_STATEMENT@469..501
+                0: JS_UNARY_EXPRESSION@469..500
+                  0: DELETE_KW@469..481 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_COMPUTED_MEMBER_EXPRESSION@481..500
+                    0: JS_STATIC_MEMBER_EXPRESSION@481..495
+                      0: JS_CALL_EXPRESSION@481..487
+                        0: JS_IDENTIFIER_EXPRESSION@481..485
+                          0: JS_REFERENCE_IDENTIFIER@481..485
+                            0: IDENT@481..485 "func" [] []
+                        1: (empty)
+                        2: (empty)
+                        3: JS_CALL_ARGUMENTS@485..487
+                          0: L_PAREN@485..486 "(" [] []
+                          1: JS_CALL_ARGUMENT_LIST@486..486
+                          2: R_PAREN@486..487 ")" [] []
+                      1: DOT@487..488 "." [] []
+                      2: JS_PRIVATE_NAME@488..495
+                        0: HASH@488..489 "#" [] []
+                        1: IDENT@489..495 "member" [] []
+                    1: (empty)
+                    2: L_BRACK@495..496 "[" [] []
+                    3: JS_IDENTIFIER_EXPRESSION@496..499
+                      0: JS_REFERENCE_IDENTIFIER@496..499
+                        0: IDENT@496..499 "key" [] []
+                    4: R_BRACK@499..500 "]" [] []
+                1: SEMICOLON@500..501 ";" [] []
+              16: JS_EXPRESSION_STATEMENT@501..531
+                0: JS_UNARY_EXPRESSION@501..530
+                  0: DELETE_KW@501..513 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_COMPUTED_MEMBER_EXPRESSION@513..530
+                    0: JS_STATIC_MEMBER_EXPRESSION@513..525
+                      0: JS_IDENTIFIER_EXPRESSION@513..516
+                        0: JS_REFERENCE_IDENTIFIER@513..516
+                          0: IDENT@513..516 "obj" [] []
+                      1: QUESTIONDOT@516..518 "?." [] []
+                      2: JS_PRIVATE_NAME@518..525
+                        0: HASH@518..519 "#" [] []
+                        1: IDENT@519..525 "member" [] []
+                    1: (empty)
+                    2: L_BRACK@525..526 "[" [] []
+                    3: JS_IDENTIFIER_EXPRESSION@526..529
+                      0: JS_REFERENCE_IDENTIFIER@526..529
+                        0: IDENT@526..529 "key" [] []
+                    4: R_BRACK@529..530 "]" [] []
+                1: SEMICOLON@530..531 ";" [] []
+              17: JS_EXPRESSION_STATEMENT@531..563
+                0: JS_UNARY_EXPRESSION@531..562
+                  0: DELETE_KW@531..543 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_COMPUTED_MEMBER_EXPRESSION@543..562
+                    0: JS_PARENTHESIZED_EXPRESSION@543..557
+                      0: L_PAREN@543..544 "(" [] []
+                      1: JS_STATIC_MEMBER_EXPRESSION@544..556
+                        0: JS_IDENTIFIER_EXPRESSION@544..547
+                          0: JS_REFERENCE_IDENTIFIER@544..547
+                            0: IDENT@544..547 "obj" [] []
+                        1: QUESTIONDOT@547..549 "?." [] []
+                        2: JS_PRIVATE_NAME@549..556
+                          0: HASH@549..550 "#" [] []
+                          1: IDENT@550..556 "member" [] []
+                      2: R_PAREN@556..557 ")" [] []
+                    1: (empty)
+                    2: L_BRACK@557..558 "[" [] []
+                    3: JS_IDENTIFIER_EXPRESSION@558..561
+                      0: JS_REFERENCE_IDENTIFIER@558..561
+                        0: IDENT@558..561 "key" [] []
+                    4: R_BRACK@561..562 "]" [] []
+                1: SEMICOLON@562..563 ";" [] []
+              18: JS_EXPRESSION_STATEMENT@563..599
+                0: JS_UNARY_EXPRESSION@563..598
+                  0: DELETE_KW@563..575 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_COMPUTED_MEMBER_EXPRESSION@575..598
+                    0: JS_STATIC_MEMBER_EXPRESSION@575..593
+                      0: JS_STATIC_MEMBER_EXPRESSION@575..585
+                        0: JS_IDENTIFIER_EXPRESSION@575..578
+                          0: JS_REFERENCE_IDENTIFIER@575..578
+                            0: IDENT@575..578 "obj" [] []
+                        1: QUESTIONDOT@578..580 "?." [] []
+                        2: JS_NAME@580..585
+                          0: IDENT@580..585 "inner" [] []
+                      1: DOT@585..586 "." [] []
+                      2: JS_PRIVATE_NAME@586..593
+                        0: HASH@586..587 "#" [] []
+                        1: IDENT@587..593 "member" [] []
+                    1: (empty)
+                    2: L_BRACK@593..594 "[" [] []
+                    3: JS_IDENTIFIER_EXPRESSION@594..597
+                      0: JS_REFERENCE_IDENTIFIER@594..597
+                        0: IDENT@594..597 "key" [] []
+                    4: R_BRACK@597..598 "]" [] []
+                1: SEMICOLON@598..599 ";" [] []
+              19: JS_EXPRESSION_STATEMENT@599..637
+                0: JS_UNARY_EXPRESSION@599..636
+                  0: DELETE_KW@599..611 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_COMPUTED_MEMBER_EXPRESSION@611..636
+                    0: JS_PARENTHESIZED_EXPRESSION@611..631
+                      0: L_PAREN@611..612 "(" [] []
+                      1: JS_STATIC_MEMBER_EXPRESSION@612..630
+                        0: JS_STATIC_MEMBER_EXPRESSION@612..622
+                          0: JS_IDENTIFIER_EXPRESSION@612..615
+                            0: JS_REFERENCE_IDENTIFIER@612..615
+                              0: IDENT@612..615 "obj" [] []
+                          1: QUESTIONDOT@615..617 "?." [] []
+                          2: JS_NAME@617..622
+                            0: IDENT@617..622 "inner" [] []
+                        1: DOT@622..623 "." [] []
+                        2: JS_PRIVATE_NAME@623..630
+                          0: HASH@623..624 "#" [] []
+                          1: IDENT@624..630 "member" [] []
+                      2: R_PAREN@630..631 ")" [] []
+                    1: (empty)
+                    2: L_BRACK@631..632 "[" [] []
+                    3: JS_IDENTIFIER_EXPRESSION@632..635
+                      0: JS_REFERENCE_IDENTIFIER@632..635
+                        0: IDENT@632..635 "key" [] []
+                    4: R_BRACK@635..636 "]" [] []
+                1: SEMICOLON@636..637 ";" [] []
+              20: JS_EXPRESSION_STATEMENT@637..669
+                0: JS_UNARY_EXPRESSION@637..668
+                  0: DELETE_KW@637..649 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_PARENTHESIZED_EXPRESSION@649..668
+                    0: L_PAREN@649..650 "(" [] []
+                    1: JS_SEQUENCE_EXPRESSION@650..667
+                      0: JS_STATIC_MEMBER_EXPRESSION@650..658
+                        0: JS_IDENTIFIER_EXPRESSION@650..653
+                          0: JS_REFERENCE_IDENTIFIER@650..653
+                            0: IDENT@650..653 "obj" [] []
+                        1: DOT@653..654 "." [] []
+                        2: JS_PRIVATE_NAME@654..658
+                          0: HASH@654..655 "#" [] []
+                          1: IDENT@655..658 "key" [] []
+                      1: COMMA@658..660 "," [] [Whitespace(" ")]
+                      2: JS_STATIC_MEMBER_EXPRESSION@660..667
+                        0: JS_IDENTIFIER_EXPRESSION@660..663
+                          0: JS_REFERENCE_IDENTIFIER@660..663
+                            0: IDENT@660..663 "obj" [] []
+                        1: DOT@663..664 "." [] []
+                        2: JS_NAME@664..667
+                          0: IDENT@664..667 "key" [] []
+                    2: R_PAREN@667..668 ")" [] []
+                1: SEMICOLON@668..669 ";" [] []
+              21: JS_EXPRESSION_STATEMENT@669..695
+                0: JS_UNARY_EXPRESSION@669..694
+                  0: DELETE_KW@669..681 "delete" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+                  1: JS_PARENTHESIZED_EXPRESSION@681..694
+                    0: L_PAREN@681..682 "(" [] []
+                    1: JS_IN_EXPRESSION@682..693
+                      0: JS_PRIVATE_NAME@682..687
+                        0: HASH@682..683 "#" [] []
+                        1: IDENT@683..687 "key" [] [Whitespace(" ")]
+                      1: IN_KW@687..690 "in" [] [Whitespace(" ")]
+                      2: JS_IDENTIFIER_EXPRESSION@690..693
+                        0: JS_REFERENCE_IDENTIFIER@690..693
+                          0: IDENT@690..693 "obj" [] []
+                    2: R_PAREN@693..694 ")" [] []
+                1: SEMICOLON@694..695 ";" [] []
+            3: R_CURLY@695..699 "}" [Newline("\n"), Whitespace("  ")] []
+      6: R_CURLY@699..701 "}" [Newline("\n")] []
+  3: EOF@701..702 "" [Newline("\n")] []

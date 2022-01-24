@@ -852,11 +852,21 @@ fn parse_private_name(p: &mut Parser) -> ParsedSyntax {
             p.err_builder("Unexpected space or comment between `#` and identifier")
                 .primary(hash_end..p.cur_tok().start(), "remove the space here"),
         );
-        Present(m.complete(p, JS_UNKNOWN))
-    } else {
-        p.expect(T![ident]);
-        Present(m.complete(p, JS_PRIVATE_NAME))
+        return Present(m.complete(p, JS_UNKNOWN));
     }
+
+    p.expect(T![ident]);
+    let mut completed = m.complete(p, JS_PRIVATE_NAME);
+    if p.state.is_top_level() {
+        // test_err private_name_top_level
+        // foo.#x
+        p.error(
+            p.err_builder("Private field must be declared in an enclosing class")
+                .primary(completed.range(p), ""),
+        );
+        completed.change_kind(p, JS_UNKNOWN_EXPRESSION);
+    }
+    Present(completed)
 }
 
 pub(super) fn parse_any_name(p: &mut Parser) -> ParsedSyntax {
@@ -1833,28 +1843,34 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         p.bump_any();
 
         // test unary_delete
-        // delete obj.key;
-        // delete (obj).key;
-        // delete obj.#member.key;
-        // delete (obj.#member).key;
-        // delete func().#member.key;
-        // delete (func().#member).key;
-        // delete obj?.#member.key;
-        // delete (obj?.#member).key;
-        // delete obj?.inner.#member.key;
-        // delete (obj?.inner.#member).key;
-        // delete obj[key];
-        // delete (obj)[key];
-        // delete obj.#member[key];
-        // delete (obj.#member)[key];
-        // delete func().#member[key];
-        // delete (func().#member)[key];
-        // delete obj?.#member[key];
-        // delete (obj?.#member)[key];
-        // delete obj?.inner.#member[key];
-        // delete (obj?.inner.#member)[key];
-        // delete (obj.#key, obj.key);
-        // delete (#key in obj);
+        // class TestClass {
+        //   #member;
+        //   #key;
+        //   test() {
+        //     delete obj.key;
+        //     delete obj.key;
+        //     delete obj.#member.key;
+        //     delete obj.#member.key;
+        //     delete func().#member.key;
+        //     delete func().#member.key;
+        //     delete obj?.#member.key;
+        //     delete (obj?.#member).key;
+        //     delete obj?.inner.#member.key;
+        //     delete (obj?.inner.#member).key;
+        //     delete obj[key];
+        //     delete obj[key];
+        //     delete obj.#member[key];
+        //     delete obj.#member[key];
+        //     delete func().#member[key];
+        //     delete func().#member[key];
+        //     delete obj?.#member[key];
+        //     delete (obj?.#member)[key];
+        //     delete obj?.inner.#member[key];
+        //     delete (obj?.inner.#member)[key];
+        //     delete (obj.#key, obj.key);
+        //     delete (#key in obj);
+        //   }
+        // }
 
         // test unary_delete_nested
         // class TestClass { #member = true; method() { delete func(this.#member) } }
@@ -1866,20 +1882,31 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
 
         // test_err unary_delete
         // delete ident;
-        // delete obj.#member;
-        // delete func().#member;
-        // delete obj?.#member;
-        // delete obj?.inner.#member;
+        // class TestClass {
+        //   #member;
+        //   test() {
+        //     delete obj.#member;
+        //     delete func().#member;
+        //     delete obj?.#member;
+        //     delete obj?.inner.#member;
+        //   }
+        // }
 
         // test_err unary_delete_parenthesized
         // delete (ident);
         // delete ((ident));
         // delete (obj.key, ident);
-        // delete (obj.#member);
-        // delete (func().#member);
-        // delete (obj?.#member);
-        // delete (obj?.inner.#member);
-        // delete (obj.key, obj.#key);
+        // class TestClass {
+        //   #member;
+        //   #key;
+        //   test() {
+        //     delete (obj.#member);
+        //     delete (func().#member);
+        //     delete (obj?.#member);
+        //     delete (obj?.inner.#member);
+        //     delete (obj.key, obj.#key);
+        //   }
+        // }
 
         let is_delete = op == T![delete];
         let mut kind = JS_UNARY_EXPRESSION;
