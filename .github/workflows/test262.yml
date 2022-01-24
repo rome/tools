@@ -23,6 +23,14 @@ jobs:
       - name: Checkout PR Branch
         uses: actions/checkout@v2
         with:
+          submodules: false
+
+      - name: Support longpaths
+        run: git config core.longpaths true
+
+      - name: Checkout PR Branch
+        uses: actions/checkout@v2
+        with:
           submodules: recursive
 
       - name: Fetch Main Branch

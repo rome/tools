@@ -31,6 +31,12 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout PR Branch
+        uses: actions/checkout@v2
+        with:
+          submodules: false
+      - name: Support longpaths
+        run: git config core.longpaths true
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Install toolchain
