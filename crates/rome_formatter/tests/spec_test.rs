@@ -1,3 +1,4 @@
+use rome_core::file_handlers::javascript::JsFileFeatures;
 use rome_core::file_handlers::Language;
 use rome_core::App;
 use rome_formatter::{format_js_file, format_json_file, FormatError, FormatOptions};
@@ -37,9 +38,13 @@ pub fn run(spec_input_file: &str, _: &str, file_type: &str) {
     let language = app.get_language(path.extension().unwrap());
     let formatted_result = match language {
         Language::Js | Language::Ts => {
-            let module = file_type == "module";
+            let features = if file_type == "module" {
+                JsFileFeatures::default().module()
+            } else {
+                JsFileFeatures::default().script()
+            };
 
-            app.store_js_file(file_path, module);
+            app.store_js_file(file_path, features);
 
             format_js_file(&mut path, FormatOptions::default(), &app)
         }

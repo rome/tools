@@ -41,14 +41,9 @@ impl App {
         Default::default()
     }
 
-    pub fn store_js_file(&mut self, path_to_file: &str, module: bool) {
+    pub fn store_js_file(&mut self, path_to_file: &str, file_features: JsFileFeatures) {
         let path = RomePath::new(path_to_file);
-        let features = if module {
-            JsFileFeatures::module()
-        } else {
-            JsFileFeatures::script()
-        };
-        self.js_files.insert(path, features);
+        self.js_files.insert(path, file_features);
     }
 
     pub fn get_js_file(&self, path: &RomePath) -> Option<&JsFileFeatures> {

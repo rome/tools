@@ -7,9 +7,13 @@ pub mod unknown;
 /// Supported languages by Rome
 #[derive(Debug, PartialEq)]
 pub enum Language {
+    /// JavaScript
     Js,
+    /// JSON
     Json,
+    /// TypeScript
     Ts,
+    /// Any language that is not supported
     Unknown,
 }
 
