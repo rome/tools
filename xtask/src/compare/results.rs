@@ -1,4 +1,4 @@
-use crate::coverage::files::{Outcome, TestResult, TestResults};
+use crate::coverage::{Outcome, TestResult, TestResults};
 use ascii_table::{AsciiTable, Column};
 use colored::Colorize;
 use std::char::decode_utf16;

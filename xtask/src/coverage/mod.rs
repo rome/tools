@@ -1,237 +1,130 @@
 pub mod files;
+pub mod test262;
+pub mod typescript;
 
 use ascii_table::{AsciiTable, Column};
 use colored::Colorize;
-use files::*;
-use rslint_parser::{parse_module, parse_text, ParserError};
+use rslint_parser::ParserError;
+use serde::{Deserialize, Serialize};
 use std::any::Any;
 use std::path::PathBuf;
-use yastl::Pool;
 
-pub const TEST_JSON_PATH: &str = "xtask/src/base_results.json";
+enum ExecRes {
+    Errors(Vec<ParserError>),
+    ParseCorrectly,
+    ParserPanic(Box<dyn Any + Send + 'static>),
+}
 
-pub fn run(query: Option<&str>, pool: Pool, json: bool, show_rast: bool, show_diagnostics: bool) {
-    let files = get_test_files(query, &pool, json);
-    let num_ran = files.len();
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TestResult {
+    #[serde(skip)]
+    pub fail: Option<FailReason>,
+    #[serde(rename = "o")]
+    pub outcome: Outcome,
+    #[serde(rename = "h")]
+    pub path: PathBuf,
+    #[serde(skip)]
+    pub code: String,
+}
 
-    let detailed = num_ran < 10;
+#[derive(Debug)]
+pub enum FailReason {
+    IncorrectlyPassed,
+    IncorrectlyErrored(Vec<ParserError>),
+    ParserPanic(Box<dyn Any + Send + 'static>),
+}
 
-    let pb = indicatif::ProgressBar::new(num_ran as u64);
-    let msg = format!("{} tests", "Running".bold().cyan());
-    pb.set_position(1);
-    pb.set_message(msg);
-    pb.set_style(default_bar_style());
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+pub enum Outcome {
+    Passed,
+    Failed,
+    Panicked,
+}
 
-    std::panic::set_hook(Box::new(|_| {}));
-    let start_tests = std::time::Instant::now();
-    let mut test_results = TestResults::new();
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TestResults {
+    #[serde(rename = "s")]
+    pub summary: Summary,
+    #[serde(rename = "p")]
+    pub details: Vec<TestResult>,
+}
 
-    let (tx, rx) = std::sync::mpsc::channel();
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Summary {
+    #[serde(rename = "a")]
+    pub tests_ran: u32,
+    #[serde(rename = "pa")]
+    pub passed: u32,
+    #[serde(rename = "f")]
+    pub failed: u32,
+    #[serde(rename = "pc")]
+    pub panics: u32,
+    #[serde(rename = "c")]
+    pub coverage: f64,
+}
 
-    pool.scoped(|scope| {
-        let pb = &pb;
-        for file in files {
-            let tx = tx.clone();
-
-            scope.execute(move || {
-                let res = run_test_file(file);
-                pb.inc(1);
-
-                if detailed && res.fail.is_some() {
-                    report_detailed_test(pb, &res);
-                }
-
-                if detailed && show_rast {
-                    let r = parse_module(&res.code, 0);
-                    println!("{:#?}", r.syntax());
-                }
-
-                if detailed && show_diagnostics {
-                    let r = parse_module(&res.code, 0);
-                    let file = rslint_errors::file::SimpleFile::new(
-                        res.path.display().to_string(),
-                        res.code.clone(),
-                    );
-                    let mut emitter = rslint_errors::Emitter::new(&file);
-
-                    for diagnostic in r.errors() {
-                        emitter.emit_stdout(diagnostic, true).unwrap();
-                    }
-                }
-
-                if detailed && res.fail.is_some() {
-                    tx.send(res).unwrap();
-                    return;
-                }
-
-                if let Some(ref fail) = res.fail {
-                    let reason = match fail {
-                        FailReason::IncorrectlyPassed => "incorrectly passed parsing",
-                        FailReason::IncorrectlyErrored(_) => "incorrectly threw an error",
-                        FailReason::ParserPanic(_) => "panicked while parsing",
-                    };
-                    let msg = format!(
-                        "{} '{}' {}",
-                        "Test".bold().red(),
-                        res.path
-                            .strip_prefix("xtask/src/coverage/test262/test/")
-                            .unwrap_or(&res.path)
-                            .display(),
-                        reason.bold()
-                    );
-                    pb.println(msg);
-                }
-
-                tx.send(res).unwrap();
-            });
+impl Default for TestResults {
+    fn default() -> Self {
+        Self {
+            summary: Summary {
+                tests_ran: 0,
+                passed: 0,
+                failed: 0,
+                panics: 0,
+                coverage: 0.0,
+            },
+            details: vec![],
         }
-    });
-    drop(tx);
+    }
+}
 
-    test_results.store_results(rx.into_iter().collect::<Vec<_>>());
+impl TestResults {
+    pub fn new() -> Self {
+        Self::default()
+    }
 
-    let _ = std::panic::take_hook();
-
-    pb.finish_and_clear();
-
-    if json {
-        test_results.dump_to_json();
-    } else {
-        println!(
-            "\n{} {} tests in {:.2}s\n",
-            "Ran".bold().bright_green(),
-            num_ran,
-            start_tests.elapsed().as_secs_f32()
-        );
-
-        let panicked = test_results.summary.panics;
-        let errored = test_results.summary.failed;
-        let passed = test_results.summary.passed;
-        let coverage = format!("{:.2}", test_results.summary.coverage);
-
-        let mut table = AsciiTable::default();
-
-        let mut counter = 0usize;
-        let mut create_column = |name: colored::ColoredString| {
-            let column = Column {
-                header: name.to_string(),
-                align: ascii_table::Align::Center,
-                ..Column::default()
-            };
-            table.columns.insert(counter, column);
-            counter += 1;
+    pub fn store_results(&mut self, results: Vec<TestResult>) {
+        self.details = results;
+        let passed = self.passed_tests() as u32;
+        let tests_ran = self.details.len();
+        let coverage = (passed as f64 / tests_ran as f64) * 100.0;
+        self.summary = Summary {
+            tests_ran: self.details.len() as u32,
+            passed,
+            failed: self.errored_tests() as u32,
+            panics: self.panicked_tests() as u32,
+            coverage,
         };
-        create_column("Tests ran".into());
-        create_column("Passed".green());
-        create_column("Failed".red());
-        create_column("Panics".red());
-        create_column("Coverage".cyan());
-        let numbers: Vec<&dyn std::fmt::Display> =
-            vec![&num_ran, &passed, &errored, &panicked, &coverage];
-
-        table.print(vec![numbers]);
-        if passed > 0 {
-            std::process::exit(1);
-        } else {
-            std::process::exit(0);
-        }
     }
-}
 
-pub fn run_test_file(file: TestFile) -> TestResult {
-    let TestFile { code, meta, path } = file;
-
-    if meta.flags.contains(&TestFlag::OnlyStrict) {
-        let (code, res) = exec_test(code, true, false);
-        let fail = passed(res, meta);
-        let outcome = extract_outcome(&fail);
-        TestResult {
-            fail,
-            path,
-            code,
-            outcome,
-        }
-    } else if meta.flags.contains(&TestFlag::Module) {
-        let (code, res) = exec_test(code, false, true);
-        let fail = passed(res, meta);
-        let outcome = extract_outcome(&fail);
-        TestResult {
-            fail,
-            path,
-            code,
-            outcome,
-        }
-    } else if meta.flags.contains(&TestFlag::NoStrict) || meta.flags.contains(&TestFlag::Raw) {
-        let (code, res) = exec_test(code, false, false);
-        let fail = passed(res, meta);
-        let outcome = extract_outcome(&fail);
-        TestResult {
-            fail,
-            path,
-            code,
-            outcome,
-        }
-    } else {
-        let (_, l) = exec_test(code.clone(), false, false);
-        let (code, r) = exec_test(code, true, false);
-        merge_tests(code, l, r, meta, path)
+    pub fn panicked_tests(&self) -> usize {
+        self.details
+            .iter()
+            .filter(|res| matches!(res.fail, Some(FailReason::ParserPanic(_))))
+            .count()
     }
-}
 
-fn report_detailed_test(pb: &indicatif::ProgressBar, res: &TestResult) {
-    let path = res
-        .path
-        .strip_prefix("xtask/src/coverage/test262/test/")
-        .unwrap_or(&res.path)
-        .display();
-
-    let header = format!("\n{} '{}' {}\n", "Test".bold(), path, "failed".bold())
-        .red()
-        .underline()
-        .to_string();
-
-    let msg = match res.fail.as_ref().unwrap() {
-        FailReason::IncorrectlyPassed => {
-            "    Expected this test to fail, but instead it passed without errors.".into()
-        }
-        FailReason::ParserPanic(panic) => {
-            let msg = panic.as_ref().downcast_ref::<String>();
-
-            let header = format!(
-                "    This test caused a{} panic inside the parser{}",
-                if msg.is_none() { "n unknown" } else { "" },
-                if msg.is_none() { "" } else { ":\n" }
-            )
-            .bold();
-
-            if let Some(msg) = msg {
-                format!(
-                    "{}    {}\n\n    For more information about the panic run the file manually",
-                    header, msg
+    pub fn errored_tests(&self) -> usize {
+        self.details
+            .iter()
+            .filter(|res| {
+                matches!(
+                    res.fail,
+                    Some(FailReason::IncorrectlyErrored(_)) | Some(FailReason::IncorrectlyPassed)
                 )
-            } else {
-                header.to_string()
-            }
-        }
-        FailReason::IncorrectlyErrored(errors) => {
-            use rslint_errors::{file::SimpleFile, Emitter};
+            })
+            .count()
+    }
 
-            let header =
-                "    This test threw errors but expected to pass parsing without errors:\n"
-                    .to_string();
-            let file = SimpleFile::new(path.to_string(), res.code.clone());
-            let mut emitter = Emitter::new(&file);
-            let mut buf = rslint_errors::termcolor::Buffer::ansi();
-            for error in errors.iter() {
-                emitter
-                    .emit_with_writer(error, &mut buf)
-                    .expect("failed to emit error");
-            }
-            let errors = String::from_utf8(buf.into_inner()).expect("errors are not utf-8");
-            format!("{}\n{}", header, errors)
-        }
-    };
-    pb.println(format!("{}{}", header, msg))
+    pub fn passed_tests(&self) -> usize {
+        self.details.iter().filter(|res| res.fail.is_none()).count()
+    }
+
+    /// Prints results of the coverage to STDOUT in JSON format
+    pub fn dump_to_json(&self) {
+        let json = serde_json::to_string(&self).unwrap();
+        println!("{}", json);
+    }
 }
 
 fn default_bar_style() -> indicatif::ProgressStyle {
@@ -240,73 +133,66 @@ fn default_bar_style() -> indicatif::ProgressStyle {
         .progress_chars("=> ")
 }
 
-fn merge_tests(code: String, l: ExecRes, r: ExecRes, meta: MetaData, path: PathBuf) -> TestResult {
-    let fail = passed(l, meta.clone()).or_else(|| passed(r, meta));
-    // outcome lowers down the reason of failing, being able to use serde over it
-    let outcome = extract_outcome(&fail);
-    TestResult {
-        fail,
-        path,
-        code,
-        outcome,
-    }
+fn draw_table(test_results: &TestResults) {
+    let panicked = test_results.summary.panics;
+    let errored = test_results.summary.failed;
+    let passed = test_results.summary.passed;
+    let coverage = format!("{:.2}", test_results.summary.coverage);
+
+    let total = panicked + errored + passed;
+
+    let mut table = AsciiTable::default();
+
+    let mut counter = 0usize;
+    let mut create_column = |name: colored::ColoredString| {
+        let column = Column {
+            header: name.to_string(),
+            align: ascii_table::Align::Center,
+            ..Column::default()
+        };
+        table.columns.insert(counter, column);
+        counter += 1;
+    };
+    create_column("Tests ran".into());
+    create_column("Passed".green());
+    create_column("Failed".red());
+    create_column("Panics".red());
+    create_column("Coverage".cyan());
+    let numbers: Vec<&dyn std::fmt::Display> =
+        vec![&total, &passed, &errored, &panicked, &coverage];
+
+    table.print(vec![numbers]);
 }
 
-fn passed(res: ExecRes, meta: MetaData) -> Option<FailReason> {
-    let should_fail = meta
-        .negative
-        .filter(|neg| neg.phase == Phase::Parse)
-        .is_some();
+pub fn run(
+    language: &str,
+    query: Option<&str>,
+    json: bool,
+    show_rast: bool,
+    show_diagnostics: bool,
+) {
+    let pool = yastl::ThreadConfig::new().stack_size(8 << 30);
 
-    match res {
-        ExecRes::ParserPanic(msg) => Some(FailReason::ParserPanic(msg)),
-        ExecRes::ParseCorrectly if !should_fail => None,
-        ExecRes::Errors(_) if should_fail => None,
-        ExecRes::ParseCorrectly if should_fail => Some(FailReason::IncorrectlyPassed),
-        ExecRes::Errors(err) if !should_fail => Some(FailReason::IncorrectlyErrored(err)),
-        _ => unreachable!(),
-    }
-}
-
-fn extract_outcome(fail: &Option<FailReason>) -> Outcome {
-    if let Some(fail) = fail {
-        match fail {
-            FailReason::IncorrectlyPassed | FailReason::IncorrectlyErrored(_) => Outcome::Failed,
-            FailReason::ParserPanic(_) => Outcome::Panicked,
+    let language = language.to_lowercase();
+    match language.as_str() {
+        "javascript" | "js" => {
+            test262::run_js(
+                query,
+                yastl::Pool::with_config(num_cpus::get(), pool),
+                json,
+                show_rast,
+                show_diagnostics,
+            );
         }
-    } else {
-        Outcome::Passed
-    }
-}
-
-enum ExecRes {
-    Errors(Vec<ParserError>),
-    ParseCorrectly,
-    ParserPanic(Box<dyn Any + Send + 'static>),
-}
-
-fn exec_test(mut code: String, append_use_strict: bool, module: bool) -> (String, ExecRes) {
-    if append_use_strict {
-        code.insert_str(0, "\"use strict\";\n");
-    }
-
-    let result = std::panic::catch_unwind(|| {
-        if module {
-            parse_module(&code, 0).ok().map(drop)
-        } else {
-            parse_text(&code, 0).ok().map(drop)
+        "typescript" | "ts" => {
+            typescript::run_ts(
+                query,
+                yastl::Pool::with_config(num_cpus::get(), pool),
+                json,
+                show_rast,
+                show_diagnostics,
+            );
         }
-    });
-
-    let result = result
-        .map(|res| {
-            if let Err(errors) = res {
-                ExecRes::Errors(errors)
-            } else {
-                ExecRes::ParseCorrectly
-            }
-        })
-        .unwrap_or_else(ExecRes::ParserPanic);
-
-    (code, result)
+        other => panic!("Unkown language: {}", other),
+    }
 }
