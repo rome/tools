@@ -1,5 +1,5 @@
 use crate::{
-    concat_elements, format_elements, group_elements, soft_indent, soft_line_break_or_space,
+    concat_elements, format_elements, group_elements, soft_block_indent, soft_line_break_or_space,
     space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{JsAnyForInitializer, JsForStatement};
@@ -40,7 +40,7 @@ impl ToFormatElement for JsForStatement {
             space_token(),
             formatter.format_delimited(
                 &self.l_paren_token()?,
-                |open_token_trailing, close_token_leading| Ok(group_elements(soft_indent(
+                |open_token_trailing, close_token_leading| Ok(group_elements(soft_block_indent(
                     format_elements![open_token_trailing, inner, close_token_leading]
                 ))),
                 &self.r_paren_token()?,

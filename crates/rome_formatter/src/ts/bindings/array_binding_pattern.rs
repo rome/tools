@@ -1,6 +1,6 @@
 use crate::{
-    format_elements, group_elements, join_elements, soft_indent, soft_line_break_or_space, token,
-    FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, group_elements, join_elements, soft_block_indent, soft_line_break_or_space,
+    token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{JsAnyArrayBindingPatternElement, JsArrayBindingPattern};
 
@@ -11,7 +11,7 @@ impl ToFormatElement for JsArrayBindingPattern {
         Ok(group_elements(formatter.format_delimited(
             &self.l_brack_token()?,
             |open_token_trailing, close_token_leading| {
-                Ok(soft_indent(format_elements![
+                Ok(soft_block_indent(format_elements![
                     open_token_trailing,
                     join_elements(soft_line_break_or_space(), elements),
                     close_token_leading

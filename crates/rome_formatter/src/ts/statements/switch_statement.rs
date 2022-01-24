@@ -1,7 +1,8 @@
 use crate::{block_indent, FormatResult};
 use crate::{
     format_element::indent, format_elements, group_elements, hard_line_break,
-    join_elements_hard_line, soft_indent, space_token, FormatElement, Formatter, ToFormatElement,
+    join_elements_hard_line, soft_block_indent, space_token, FormatElement, Formatter,
+    ToFormatElement,
 };
 use rslint_parser::ast::{JsAnySwitchClause, JsCaseClause, JsDefaultClause, JsSwitchStatement};
 
@@ -12,7 +13,7 @@ impl ToFormatElement for JsSwitchStatement {
             space_token(),
             group_elements(formatter.format_delimited(
                 &self.l_paren_token()?,
-                |open_token_trailing, close_token_leading| Ok(soft_indent(format_elements![
+                |open_token_trailing, close_token_leading| Ok(soft_block_indent(format_elements![
                     open_token_trailing,
                     formatter.format_node(&self.discriminant()?)?,
                     close_token_leading,
