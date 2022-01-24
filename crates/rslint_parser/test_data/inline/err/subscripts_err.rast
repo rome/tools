@@ -3,46 +3,52 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsUnknownExpression {
-                items: [
-                    JsStaticMemberExpression {
-                        object: JsComputedMemberExpression {
-                            object: JsStaticMemberExpression {
-                                object: JsCallExpression {
-                                    callee: JsIdentifierExpression {
-                                        name: JsReferenceIdentifier {
-                                            value_token: IDENT@0..3 "foo" [] [],
-                                        },
-                                    },
-                                    optional_chain_token_token: missing (optional),
-                                    type_args: missing (optional),
-                                    arguments: JsCallArguments {
-                                        l_paren_token: L_PAREN@3..4 "(" [] [],
-                                        args: JsCallArgumentList [],
-                                        r_paren_token: R_PAREN@4..5 ")" [] [],
-                                    },
-                                },
-                                operator: QUESTIONDOT@5..7 "?." [] [],
-                                member: JsName {
-                                    value_token: IDENT@7..10 "baz" [] [],
+            expression: JsStaticMemberExpression {
+                object: JsComputedMemberExpression {
+                    object: JsStaticMemberExpression {
+                        object: JsCallExpression {
+                            callee: JsIdentifierExpression {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@0..3 "foo" [] [],
                                 },
                             },
-                            optional_chain_token: missing (optional),
-                            l_brack_token: L_BRACK@10..11 "[" [] [],
-                            member: missing (required),
-                            r_brack_token: R_BRACK@11..12 "]" [] [],
+                            optional_chain_token_token: missing (optional),
+                            type_args: missing (optional),
+                            arguments: JsCallArguments {
+                                l_paren_token: L_PAREN@3..4 "(" [] [],
+                                args: JsCallArgumentList [],
+                                r_paren_token: R_PAREN@4..5 ")" [] [],
+                            },
                         },
-                        operator: DOT@12..13 "." [] [],
+                        operator: QUESTIONDOT@5..7 "?." [] [],
                         member: JsName {
-                            value_token: IDENT@13..17 "BAR" [Newline("\n")] [],
+                            value_token: IDENT@7..10 "baz" [] [],
                         },
                     },
-                    BACKTICK@17..18 "`" [] [],
+                    optional_chain_token: missing (optional),
+                    l_brack_token: L_BRACK@10..11 "[" [] [],
+                    member: missing (required),
+                    r_brack_token: R_BRACK@11..12 "]" [] [],
+                },
+                operator: DOT@12..13 "." [] [],
+                member: missing (required),
+            },
+            semicolon_token: SEMICOLON@13..14 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsUnknownExpression {
+                items: [
+                    JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@14..18 "BAR" [Newline("\n")] [],
+                        },
+                    },
+                    BACKTICK@18..19 "`" [] [],
                     JsUnknown {
                         items: [
                             JsUnknownExpression {
                                 items: [
-                                    ERROR_TOKEN@18..20 "b\n" [] [],
+                                    ERROR_TOKEN@19..21 "b\n" [] [],
                                 ],
                             },
                         ],
@@ -52,44 +58,48 @@ JsModule {
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@20..20 "" [] [],
+    eof_token: EOF@21..21 "" [] [],
 }
 
-0: JS_MODULE@0..20
+0: JS_MODULE@0..21
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..20
-    0: JS_EXPRESSION_STATEMENT@0..20
-      0: JS_UNKNOWN_EXPRESSION@0..20
-        0: JS_STATIC_MEMBER_EXPRESSION@0..17
-          0: JS_COMPUTED_MEMBER_EXPRESSION@0..12
-            0: JS_STATIC_MEMBER_EXPRESSION@0..10
-              0: JS_CALL_EXPRESSION@0..5
-                0: JS_IDENTIFIER_EXPRESSION@0..3
-                  0: JS_REFERENCE_IDENTIFIER@0..3
-                    0: IDENT@0..3 "foo" [] []
-                1: (empty)
-                2: (empty)
-                3: JS_CALL_ARGUMENTS@3..5
-                  0: L_PAREN@3..4 "(" [] []
-                  1: JS_CALL_ARGUMENT_LIST@4..4
-                  2: R_PAREN@4..5 ")" [] []
-              1: QUESTIONDOT@5..7 "?." [] []
-              2: JS_NAME@7..10
-                0: IDENT@7..10 "baz" [] []
-            1: (empty)
-            2: L_BRACK@10..11 "[" [] []
-            3: (empty)
-            4: R_BRACK@11..12 "]" [] []
-          1: DOT@12..13 "." [] []
-          2: JS_NAME@13..17
-            0: IDENT@13..17 "BAR" [Newline("\n")] []
-        1: BACKTICK@17..18 "`" [] []
-        2: JS_UNKNOWN@18..20
-          0: JS_UNKNOWN_EXPRESSION@18..20
-            0: ERROR_TOKEN@18..20 "b\n" [] []
+  2: JS_MODULE_ITEM_LIST@0..21
+    0: JS_EXPRESSION_STATEMENT@0..14
+      0: JS_STATIC_MEMBER_EXPRESSION@0..13
+        0: JS_COMPUTED_MEMBER_EXPRESSION@0..12
+          0: JS_STATIC_MEMBER_EXPRESSION@0..10
+            0: JS_CALL_EXPRESSION@0..5
+              0: JS_IDENTIFIER_EXPRESSION@0..3
+                0: JS_REFERENCE_IDENTIFIER@0..3
+                  0: IDENT@0..3 "foo" [] []
+              1: (empty)
+              2: (empty)
+              3: JS_CALL_ARGUMENTS@3..5
+                0: L_PAREN@3..4 "(" [] []
+                1: JS_CALL_ARGUMENT_LIST@4..4
+                2: R_PAREN@4..5 ")" [] []
+            1: QUESTIONDOT@5..7 "?." [] []
+            2: JS_NAME@7..10
+              0: IDENT@7..10 "baz" [] []
+          1: (empty)
+          2: L_BRACK@10..11 "[" [] []
+          3: (empty)
+          4: R_BRACK@11..12 "]" [] []
+        1: DOT@12..13 "." [] []
+        2: (empty)
+      1: SEMICOLON@13..14 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@14..21
+      0: JS_UNKNOWN_EXPRESSION@14..21
+        0: JS_IDENTIFIER_EXPRESSION@14..18
+          0: JS_REFERENCE_IDENTIFIER@14..18
+            0: IDENT@14..18 "BAR" [Newline("\n")] []
+        1: BACKTICK@18..19 "`" [] []
+        2: JS_UNKNOWN@19..21
+          0: JS_UNKNOWN_EXPRESSION@19..21
+            0: ERROR_TOKEN@19..21 "b\n" [] []
       1: (empty)
-  3: EOF@20..20 "" [] []
+  3: EOF@21..21 "" [] []
 --
 error: unterminated template literal
   ┌─ subscripts_err.js:3:1
@@ -101,8 +111,15 @@ error: unterminated template literal
 error[SyntaxError]: expected an expression but instead found ']'
   ┌─ subscripts_err.js:1:12
   │
-1 │ foo()?.baz[].
+1 │ foo()?.baz[].;
   │            ^ Expected an expression here
+
+--
+error[SyntaxError]: expected an identifier but instead found ';'
+  ┌─ subscripts_err.js:1:14
+  │
+1 │ foo()?.baz[].;
+  │              ^ Expected an identifier here
 
 --
 error[SyntaxError]: Invalid template literal
@@ -114,5 +131,5 @@ error[SyntaxError]: Invalid template literal
   │ └^
 
 --
-foo()?.baz[].
+foo()?.baz[].;
 BAR`b
