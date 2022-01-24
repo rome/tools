@@ -1,5 +1,5 @@
 use super::ExtensionHandler;
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Default, PartialEq, Eq)]
 pub struct UnknownFileHandler {}
 
 impl ExtensionHandler for UnknownFileHandler {
@@ -20,10 +20,5 @@ impl ExtensionHandler for UnknownFileHandler {
 
     fn may_use_tabs(&self) -> bool {
         true
-    }
-}
-impl Default for UnknownFileHandler {
-    fn default() -> Self {
-        Self {}
     }
 }

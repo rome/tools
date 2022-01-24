@@ -68,7 +68,9 @@ pub use format_element::{
 };
 pub use printer::Printer;
 pub use printer::PrinterOptions;
-use rome_core::file_handlers::ExtensionHandler;
+use rome_core::file_handlers::javascript::JsFileFeatures;
+use rome_core::file_handlers::json::JsonFileFeatures;
+use rome_core::file_handlers::{ExtensionHandler, Language};
 use rome_core::App;
 use rome_path::RomePath;
 use rslint_parser::parse_text;
@@ -179,6 +181,7 @@ pub fn format_json_file(
     path: &mut RomePath,
     options: FormatOptions,
     app: &App,
+    _features: JsonFileFeatures,
 ) -> FormatResult<Formatted> {
     let handler = app.get_json_features();
     if handler.capabilities().format {
@@ -197,20 +200,19 @@ pub fn format_js_file(
     path: &mut RomePath,
     options: FormatOptions,
     app: &App,
+    features: JsFileFeatures,
 ) -> FormatResult<Formatted> {
     let handler = app.get_js_features();
 
     if handler.capabilities().format {
         let buffer = path.get_buffer_from_file();
-        let features = app.get_js_file(path).expect("No file found");
         let parsed_result = if features.module {
             parse_module(buffer.as_str(), 0).syntax()
         } else {
             parse_text(buffer.as_str(), 0).syntax()
         };
 
-        let element = Formatter::new(options).format_root(&parsed_result);
-        element
+        Formatter::new(options).format_root(&parsed_result)
     } else {
         Err(FormatError::CapabilityDisabled)
     }
@@ -219,4 +221,27 @@ pub fn format_js_file(
 pub fn format_element(element: &FormatElement, options: FormatOptions) -> Formatted {
     let printer = Printer::new(options);
     printer.print(element)
+}
+
+pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions, app: &App) {
+    let language = app.get_language(rome_path.extension().expect("Could not read the file"));
+
+    let result = match language {
+        Language::Js | Language::Ts => {
+            let features = JsFileFeatures::default().module();
+            Some(format_js_file(rome_path, options, app, features))
+        }
+        Language::Json => Some(format_json_file(
+            rome_path,
+            options,
+            app,
+            JsonFileFeatures::default(),
+        )),
+        Language::Unknown => None,
+    };
+    if let Some(Ok(result)) = result {
+        rome_path
+            .save(result.code())
+            .expect("Could not write the formatted code on file");
+    }
 }

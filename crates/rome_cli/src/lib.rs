@@ -1,6 +1,7 @@
 use clap::{crate_version, App as ClapApp, AppSettings, Arg};
 use rome_core::App;
-use rome_formatter::IndentStyle;
+use rome_formatter::{format_file_and_save, FormatOptions, IndentStyle};
+use rome_path::RomePath;
 use std::{path::PathBuf, str::FromStr};
 
 /// Main function to run Rome CLI
@@ -64,7 +65,9 @@ pub fn run_cli() {
                 })
                 .unwrap_or_default();
 
-            //format_file_and_save(&mut file, FormatOptions::new(options), &rome_app);
+            let mut file = RomePath::new(input);
+
+            format_file_and_save(&mut file, FormatOptions::new(options), &rome_app);
         }
         _ => unreachable!("clap should ensure we don't get here"),
     }

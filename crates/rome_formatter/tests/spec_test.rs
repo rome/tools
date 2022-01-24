@@ -1,4 +1,5 @@
 use rome_core::file_handlers::javascript::JsFileFeatures;
+use rome_core::file_handlers::json::JsonFileFeatures;
 use rome_core::file_handlers::Language;
 use rome_core::App;
 use rome_formatter::{format_js_file, format_json_file, FormatError, FormatOptions};
@@ -24,7 +25,7 @@ use std::path::Path;
 /// * `json/null` -> input: `tests/specs/json/null.json`, expected output: `tests/specs/json/null.json.snap`
 /// * `null` -> input: `tests/specs/null.json`, expected output: `tests/specs/null.json.snap`
 pub fn run(spec_input_file: &str, _: &str, file_type: &str) {
-    let mut app = App::new();
+    let app = App::new();
     let file_path = &spec_input_file;
     let spec_input_file = Path::new(spec_input_file);
 
@@ -44,15 +45,14 @@ pub fn run(spec_input_file: &str, _: &str, file_type: &str) {
                 JsFileFeatures::default().script()
             };
 
-            app.store_js_file(file_path, features);
-
-            format_js_file(&mut path, FormatOptions::default(), &app)
+            format_js_file(&mut path, FormatOptions::default(), &app, features)
         }
-        Language::Json => {
-            app.store_json_file(file_path);
-
-            format_json_file(&mut path, FormatOptions::default(), &app)
-        }
+        Language::Json => format_json_file(
+            &mut path,
+            FormatOptions::default(),
+            &app,
+            JsonFileFeatures::default(),
+        ),
         Language::Unknown => Err(FormatError::UnsupportedLanguage),
     };
     let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();

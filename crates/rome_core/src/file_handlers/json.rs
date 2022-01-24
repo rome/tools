@@ -1,7 +1,8 @@
 use super::{ExtensionHandler, Mime};
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Default, PartialEq, Eq)]
 pub struct JsonFileHandler;
 
+#[derive(Default)]
 pub struct JsonFileFeatures {}
 
 impl ExtensionHandler for JsonFileHandler {
@@ -22,11 +23,5 @@ impl ExtensionHandler for JsonFileHandler {
 
     fn may_use_tabs(&self) -> bool {
         true
-    }
-}
-
-impl Default for JsonFileFeatures {
-    fn default() -> Self {
-        Self {}
     }
 }
