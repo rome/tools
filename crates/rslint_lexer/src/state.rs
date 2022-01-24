@@ -146,10 +146,6 @@ impl Context {
         matches!(self, Context::TplInternal)
     }
 
-    fn is_template(&self) -> bool {
-        matches!(self, Context::Template { .. })
-    }
-
     fn is_expr(&self) -> bool {
         matches!(
             self,
