@@ -65,7 +65,6 @@ pub use format_element::{
 pub use printer::Printer;
 pub use printer::PrinterOptions;
 use rome_core::file_handlers::javascript::JsFileFeatures;
-use rome_core::file_handlers::{ExtensionHandler, Language};
 use rome_core::App;
 use rome_path::RomePath;
 use rslint_parser::parse_text;
@@ -173,7 +172,7 @@ impl Formatted {
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
 pub fn format(options: FormatOptions, syntax: &SyntaxNode) -> FormatResult<Formatted> {
-    Formatter::new(options).format_root(&syntax)
+    Formatter::new(options).format_root(syntax)
 }
 
 pub fn format_element(element: &FormatElement, options: FormatOptions) -> Formatted {
