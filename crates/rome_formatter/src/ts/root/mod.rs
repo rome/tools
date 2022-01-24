@@ -7,7 +7,7 @@ mod any_module_item;
 mod module;
 mod script;
 
-pub fn format_module_list(list: JsModuleItemList, formatter: &Formatter) -> FormatElement {
+pub fn format_module_item_list(list: JsModuleItemList, formatter: &Formatter) -> FormatElement {
     join_elements(
         hard_line_break(),
         list.iter().map(|module_item| {

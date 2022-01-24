@@ -1,5 +1,5 @@
 use crate::ts::directives::format_directives;
-use crate::ts::root::format_module_list;
+use crate::ts::root::format_module_item_list;
 use crate::{
     format_elements, hard_line_break, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
@@ -21,7 +21,7 @@ impl ToFormatElement for JsModule {
             elements.push(hard_line_break());
         }
 
-        elements.push(format_module_list(self.items(), formatter));
+        elements.push(format_module_item_list(self.items(), formatter));
 
         elements.push(formatter.format_token(&self.eof_token()?)?);
 
