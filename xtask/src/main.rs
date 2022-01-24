@@ -54,18 +54,27 @@ fn main() -> Result<()> {
             let json = args.contains("--json");
             let show_rast = args.contains("--show-rast");
             let show_diagnostics = args.contains("--show-diagnostics");
+            let language: String = args
+                .opt_value_from_str("--language")
+                .unwrap()
+                .unwrap_or_else(|| "js".to_string());
 
             let free = args.free()?;
-            let query = free.get(0).map(String::as_str);
+            let query = free.get(0).map(String::as_str).map(|query| {
+                query
+                    .replace("\\", "/")
+                    .trim_start_matches("./")
+                    .to_string()
+            });
 
-            let pool = yastl::ThreadConfig::new().stack_size(8 << 30);
             coverage::run(
-                query,
-                yastl::Pool::with_config(num_cpus::get(), pool),
+                language.as_str(),
+                query.as_deref(),
                 json,
                 show_rast,
                 show_diagnostics,
             );
+
             Ok(())
         }
         "coverage-libs" => {
