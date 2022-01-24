@@ -5,7 +5,7 @@ use rslint_parser::ast::{
     JsClassStatement, JsConstructorParameters, JsContinueStatement, JsDebuggerStatement,
     JsDefaultClause, JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause,
     JsForInStatement, JsForStatement, JsFunctionStatement, JsGetterClassMember,
-    JsIdentifierBinding, JsIdentifierExpression, JsIfStatement, JsLabeledStatement,
+    JsIdentifierBinding, JsIdentifierExpression, JsIfStatement, JsLabeledStatement, JsModule,
     JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression, JsParameters,
     JsPropertyClassMember, JsPropertyObjectMember, JsReturnStatement, JsScript,
     JsSequenceExpression, JsSetterClassMember, JsShorthandPropertyObjectMember, JsSpread,
@@ -55,6 +55,9 @@ impl ToFormatElement for SyntaxNode {
                 .unwrap()
                 .to_format_element(formatter),
             JsSyntaxKind::JS_SCRIPT => JsScript::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_MODULE => JsModule::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
             JsSyntaxKind::JS_SPREAD => JsSpread::cast(self.clone())
