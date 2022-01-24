@@ -1,6 +1,6 @@
-import {
-    func, // trailing comma removal
-} from 'module';
+// import {
+//     func, // trailing comma removal
+// } from 'module';
 
 
 expression(/* block comment */);

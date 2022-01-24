@@ -22,3 +22,8 @@ impl ExtensionHandler for UnknownFileHandler {
         true
     }
 }
+impl Default for UnknownFileHandler {
+    fn default() -> Self {
+        Self {}
+    }
+}

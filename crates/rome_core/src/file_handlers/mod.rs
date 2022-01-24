@@ -1,12 +1,38 @@
+use std::ffi::OsStr;
+
 pub mod javascript;
 pub mod json;
 pub mod unknown;
 
+/// Supported languages by Rome
+#[derive(Debug, PartialEq)]
 pub enum Language {
     Js,
     Json,
     Ts,
     Unknown,
+}
+
+impl From<&str> for Language {
+    fn from(s: &str) -> Self {
+        match s.to_lowercase().as_str() {
+            "js" => Language::Js,
+            "ts" => Language::Ts,
+            "json" => Language::Json,
+            _ => Language::Unknown,
+        }
+    }
+}
+
+impl From<&OsStr> for Language {
+    fn from(s: &OsStr) -> Self {
+        match s.to_str().unwrap() {
+            "js" => Language::Js,
+            "ts" => Language::Ts,
+            "json" => Language::Json,
+            _ => Language::Unknown,
+        }
+    }
 }
 
 pub enum Mime {

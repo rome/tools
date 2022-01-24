@@ -59,7 +59,7 @@ mod ts;
 use crate::format_json::tokenize_json;
 
 pub use formatter::Formatter;
-use rslint_parser::SyntaxError;
+use rslint_parser::{parse_module, SyntaxError};
 
 pub use format_element::{
     block_indent, concat_elements, empty_element, group_elements, hard_line_break, if_group_breaks,
@@ -68,12 +68,10 @@ pub use format_element::{
 };
 pub use printer::Printer;
 pub use printer::PrinterOptions;
-use rome_core::file_handlers::Language;
+use rome_core::file_handlers::ExtensionHandler;
 use rome_core::App;
 use rome_path::RomePath;
 use rslint_parser::parse_text;
-
-use std::io::Read;
 use std::str::FromStr;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
@@ -174,52 +172,48 @@ impl Formatted {
     }
 }
 
-// TODO: implement me + handle errors
-/// Main function
-pub fn format(rome_path: &mut RomePath, options: FormatOptions) -> FormatResult<Formatted> {
-    // we assume that file exists
-    let mut file = rome_path.open();
-    let mut buffer = String::new();
-    // we assume we have permissions
-    file.read_to_string(&mut buffer)
-        .expect("cannot read the file to format");
-
-    if let Some(handler) = rome_path.get_handler() {
-        if handler.capabilities().format {
-            let result = match handler.language() {
-                Language::Js => {
-                    let parsed_result = parse_text(buffer.as_str(), 0);
-                    Formatter::new(options).format_root(&parsed_result.syntax())
-                }
-                Language::Json => {
-                    let element = tokenize_json(buffer.as_str());
-                    Ok(format_element(&element, options))
-                }
-                Language::Ts | Language::Unknown => Err(FormatError::UnsupportedLanguage),
-            };
-
-            result
-        } else {
-            Err(FormatError::CapabilityDisabled)
-        }
+/// Formats a JSON file based on its features.
+///
+/// It returns a [Formatted] result, which the user can use to override a file.
+pub fn format_json_file(
+    path: &mut RomePath,
+    options: FormatOptions,
+    app: &App,
+) -> FormatResult<Formatted> {
+    let handler = app.get_json_features();
+    if handler.capabilities().format {
+        let buffer = path.get_buffer_from_file();
+        let element = tokenize_json(buffer.as_str());
+        Ok(format_element(&element, options))
     } else {
-        Err(FormatError::UnsupportedLanguage)
+        Err(FormatError::CapabilityDisabled)
     }
 }
 
-pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions) {
-    let result = format(rome_path, options);
-    if let Ok(result) = result {
-        rome_path
-            .save(result.code())
-            .expect("Could not write the formatted code on file");
-    }
-}
+/// Formats a JavaScript (and its super languages) file based on its features.
+///
+/// It returns a [Formatted] result, which the user can use to override a file.
+pub fn format_js_file(
+    path: &mut RomePath,
+    options: FormatOptions,
+    app: &App,
+) -> FormatResult<Formatted> {
+    let handler = app.get_js_features();
 
-pub fn format_file(path_to_file: &str, options: FormatOptions, app: &App) -> Formatted {
-    let mut rome_path = RomePath::new(path_to_file).deduce_handler(app);
-    let element = format(&mut rome_path, options);
-    element.unwrap()
+    if handler.capabilities().format {
+        let buffer = path.get_buffer_from_file();
+        let features = app.get_js_file(path).expect("No file found");
+        let parsed_result = if features.module {
+            parse_module(buffer.as_str(), 0).syntax()
+        } else {
+            parse_text(buffer.as_str(), 0).syntax()
+        };
+
+        let element = Formatter::new(options).format_root(&parsed_result);
+        element
+    } else {
+        Err(FormatError::CapabilityDisabled)
+    }
 }
 
 pub fn format_element(element: &FormatElement, options: FormatOptions) -> Formatted {

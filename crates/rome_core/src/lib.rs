@@ -1,26 +1,37 @@
-use crate::file_handlers::{javascript::JsFileHandler, unknown::UnknownFileHandler};
-use file_handlers::{json::JsonFileHandler, ExtensionHandler};
+use crate::file_handlers::javascript::JsFileFeatures;
+use crate::file_handlers::json::JsonFileFeatures;
+use crate::file_handlers::unknown::UnknownFileHandler;
+use crate::file_handlers::{javascript::JsFileHandler, ExtensionHandler, Language};
+use file_handlers::json::JsonFileHandler;
+use rome_path::RomePath;
 use std::collections::HashMap;
 
 pub mod file_handlers;
 
-// these strings will live for the whole App, so it makes sense to have them as static
-pub type Handlers = HashMap<&'static str, Box<dyn ExtensionHandler>>;
+struct SupportedLanguages {
+    js: JsFileHandler,
+    ts: JsFileHandler,
+    json: JsonFileHandler,
+    unknown: UnknownFileHandler,
+}
 
 pub struct App {
-    handlers: Handlers,
-    unknown_handler: Box<dyn ExtensionHandler>,
+    supported_languages: SupportedLanguages,
+    js_files: HashMap<RomePath, JsFileFeatures>,
+    json_files: HashMap<RomePath, JsonFileFeatures>,
 }
 
 impl Default for App {
     fn default() -> Self {
-        let mut map: Handlers = HashMap::new();
-        map.insert("js", Box::new(JsFileHandler {}));
-        map.insert("ts", Box::new(JsFileHandler {}));
-        map.insert("json", Box::new(JsonFileHandler {}));
         Self {
-            handlers: map,
-            unknown_handler: Box::new(UnknownFileHandler {}),
+            supported_languages: SupportedLanguages {
+                js: JsFileHandler {},
+                ts: JsFileHandler {},
+                json: JsonFileHandler {},
+                unknown: UnknownFileHandler::default(),
+            },
+            js_files: HashMap::new(),
+            json_files: HashMap::new(),
         }
     }
 }
@@ -30,16 +41,51 @@ impl App {
         Default::default()
     }
 
-    pub fn get_handler<'a>(&self, file_extension: &'a str) -> Option<&dyn ExtensionHandler> {
-        let handler = if self.handlers.contains_key(file_extension) {
-            self.handlers.get(file_extension)
+    pub fn store_js_file(&mut self, path_to_file: &str, module: bool) {
+        let path = RomePath::new(path_to_file);
+        let features = if module {
+            JsFileFeatures::module()
         } else {
-            Some(&self.unknown_handler)
+            JsFileFeatures::script()
         };
-        handler.map(|handler| handler.as_ref())
+        self.js_files.insert(path, features);
     }
-}
 
-pub fn create_app() -> App {
-    App::new()
+    pub fn get_js_file(&self, path: &RomePath) -> Option<&JsFileFeatures> {
+        self.js_files.get(path)
+    }
+
+    pub fn store_json_file(&mut self, path_to_file: &str) {
+        let path = RomePath::new(path_to_file);
+        let features = JsonFileFeatures::default();
+        self.json_files.insert(path, features);
+    }
+
+    pub fn get_json_file(&self, path: &RomePath) -> Option<&JsonFileFeatures> {
+        self.json_files.get(path)
+    }
+
+    pub fn get_language<L: Into<Language>>(&self, file_extension: L) -> Language {
+        file_extension.into()
+    }
+
+    pub fn is_language_supported<L: Into<Language>>(&self, file_extension: L) -> bool {
+        Language::Unknown != file_extension.into()
+    }
+
+    pub fn get_js_features(&self) -> &JsFileHandler {
+        &self.supported_languages.js
+    }
+
+    pub fn get_ts_features(&self) -> &JsFileHandler {
+        &self.supported_languages.ts
+    }
+
+    pub fn get_json_features(&self) -> &JsonFileHandler {
+        &self.supported_languages.json
+    }
+
+    pub fn get_unknown_features(&self) -> &UnknownFileHandler {
+        &self.supported_languages.unknown
+    }
 }

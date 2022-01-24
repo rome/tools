@@ -3,15 +3,15 @@
 //! give additional information around the the file that holds:
 //! - the [FileHandlers] for the specific file
 //! - shortcuts to open/write to the file
-use rome_core::{file_handlers::ExtensionHandler, App};
+use std::io::Read;
 use std::{fs::File, io::Write, ops::Deref, path::PathBuf};
 
-pub struct RomePath<'handler> {
+#[derive(Debug, Eq, Hash, PartialEq)]
+pub struct RomePath {
     file: PathBuf,
-    handler: Option<&'handler dyn ExtensionHandler>,
 }
 
-impl<'handler> Deref for RomePath<'handler> {
+impl Deref for RomePath {
     type Target = PathBuf;
 
     fn deref(&self) -> &Self::Target {
@@ -19,53 +19,11 @@ impl<'handler> Deref for RomePath<'handler> {
     }
 }
 
-impl<'handler> RomePath<'handler> {
+impl RomePath {
     pub fn new(path_to_file: &str) -> Self {
         Self {
             file: PathBuf::from(path_to_file),
-            handler: None,
         }
-    }
-
-    /// Deduce the file handler based on the extension of the file.
-    ///
-    /// Any error will default to the base file handler for now.
-    ///
-    ///
-    /// ```rust
-    /// use rome_path::RomePath;
-    /// use rome_core::{
-    ///   create_app,
-    ///   file_handlers::{javascript::JsFileHandler, ExtensionHandler},
-    /// };
-    ///
-    /// let app = create_app();
-    /// let file = RomePath::new("file.js").deduce_handler(&app);
-    /// let handler = file.get_handler();
-    /// let expected = JsFileHandler {};
-    /// assert_eq!(
-    ///   handler.unwrap().capabilities().format,
-    ///   expected.capabilities().format
-    /// );
-    /// assert_eq!(
-    ///  handler.unwrap().capabilities().lint,
-    ///  expected.capabilities().lint
-    /// )
-    /// ```
-    pub fn deduce_handler(mut self, app: &'handler App) -> Self {
-        if self.extension().is_none() {
-            return self;
-        }
-        let extension = self.extension().unwrap().to_str().unwrap();
-
-        if let Some(handler) = app.get_handler(extension) {
-            self.handler = Some(handler);
-        } else {
-            // we know that unknown is hardcoded
-            self.handler = Some(app.get_handler("unknown").unwrap());
-        }
-
-        self
     }
 
     // TODO: handle error with diagnostic?
@@ -81,36 +39,14 @@ impl<'handler> RomePath<'handler> {
         file_to_write.write_all(content.as_bytes())
     }
 
-    /// Returns the current handler associated to the file.
-    ///
-    /// You need to call [deduce_handler] first in order to receive one. If not, [None] is always returned.
-    // TODO: move handler deduction inside the path crate
-    pub fn get_handler(&self) -> Option<&dyn ExtensionHandler> {
-        self.handler
-    }
-}
+    /// Returns the contents of a file, if it exists
+    pub fn get_buffer_from_file(&mut self) -> String {
+        let mut file = self.open();
+        let mut buffer = String::new();
+        // we assume we have permissions
+        file.read_to_string(&mut buffer)
+            .expect("cannot read the file to format");
 
-#[cfg(test)]
-mod test {
-    use crate::RomePath;
-    use rome_core::{
-        create_app,
-        file_handlers::{javascript::JsFileHandler, ExtensionHandler},
-    };
-
-    #[test]
-    fn deduce_handler() {
-        let app = create_app();
-        let file = RomePath::new("file.js").deduce_handler(&app);
-        let handler = file.get_handler();
-        let expected = JsFileHandler {};
-        assert_eq!(
-            handler.unwrap().capabilities().format,
-            expected.capabilities().format
-        );
-        assert_eq!(
-            handler.unwrap().capabilities().lint,
-            expected.capabilities().lint
-        )
+        buffer
     }
 }

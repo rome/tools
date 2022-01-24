@@ -60,6 +60,10 @@ impl ToFormatElement for SyntaxNode {
             JsSyntaxKind::JS_MODULE => JsModule::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
+
+            JsSyntaxKind::JS_MODULE => JsModule::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
             JsSyntaxKind::JS_SPREAD => JsSpread::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),

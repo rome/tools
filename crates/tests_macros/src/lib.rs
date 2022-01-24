@@ -9,6 +9,7 @@ use syn::parse::ParseStream;
 struct Arguments {
     pattern: syn::ExprLit,
     called_function: syn::Path,
+    file_type: syn::ExprLit,
 }
 
 struct Variables {
@@ -105,12 +106,14 @@ impl Arguments {
             let span = self.pattern.lit.span();
             let test_name = syn::Ident::new(&test_name, span);
             let f = &self.called_function;
+            let file_type = &self.file_type;
             q.extend(quote! {
                 #[test]
                 pub fn #test_name () {
                     let test_file = #test_full_path;
                     let test_expected_file = #test_expected_fullpath;
-                    #f(test_file, test_expected_file);
+                    let file_type = #file_type;
+                    #f(test_file, test_expected_file, file_type);
                 }
             });
         }
@@ -124,9 +127,12 @@ impl syn::parse::Parse for Arguments {
         let path: syn::ExprLit = input.parse()?;
         let _: syn::Token!(,) = input.parse()?;
         let call: syn::Path = input.parse()?;
+        let _: syn::Token!(,) = input.parse()?;
+        let file_type: syn::ExprLit = input.parse()?;
         Ok(Arguments {
             pattern: path,
             called_function: call,
+            file_type,
         })
     }
 }
