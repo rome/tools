@@ -6,14 +6,14 @@ use std::collections::HashSet;
 use crate::printer::Printer;
 use crate::{
     concat_elements, empty_element, format_elements, hard_line_break, if_group_breaks,
-    if_group_fits_on_single_line, line_suffix, space_token, token, FormatElement, FormatOptions,
-    FormatResult, Formatted, ToFormatElement,
+    if_group_fits_on_single_line, join_elements, line_suffix, space_token, token, FormatElement,
+    FormatOptions, FormatResult, Formatted, ToFormatElement,
 };
 use rome_rowan::api::SyntaxTriviaPieceComments;
 use rome_rowan::{Language, SyntaxElement};
 #[cfg(debug_assertions)]
 use rslint_parser::SyntaxNodeExt;
-use rslint_parser::{AstNode, AstSeparatedList, SyntaxNode, SyntaxToken};
+use rslint_parser::{AstNode, AstNodeList, AstSeparatedList, SyntaxNode, SyntaxToken};
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
 /// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
@@ -259,6 +259,31 @@ impl Formatter {
         }
 
         Ok(result.into_iter())
+    }
+
+    /// It formats a list of nodes that are not separated.
+    pub fn format_list<List, Node: Clone + AstNode + ToFormatElement>(
+        &self,
+        list: List,
+    ) -> FormatElement
+    where
+        List: AstNodeList<Node>,
+    {
+        join_elements(
+            hard_line_break(),
+            list.iter().map(|module_item| {
+                let snapshot = self.snapshot();
+                match self.format_node(module_item.clone()) {
+                    Ok(result) => result,
+                    Err(_) => {
+                        self.restore(snapshot);
+                        self.format_verbatim(module_item.syntax())
+                            .trim_start()
+                            .trim_end()
+                    }
+                }
+            }),
+        )
     }
 
     fn print_leading_trivia(&self, token: &SyntaxToken) -> FormatElement {

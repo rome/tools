@@ -1,4 +1,3 @@
-use crate::ts::statements::format_statements;
 use crate::{block_indent, FormatResult};
 use crate::{
     format_element::indent, format_elements, group_elements, hard_line_break, join_elements,
@@ -53,7 +52,7 @@ impl ToFormatElement for JsDefaultClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let default = formatter.format_token(&self.default_token()?)?;
         let colon = formatter.format_token(&self.colon_token()?)?;
-        let statements = format_statements(self.consequent(), formatter);
+        let statements = formatter.format_list(self.consequent());
 
         Ok(format_elements![
             default,
@@ -72,7 +71,7 @@ impl ToFormatElement for JsCaseClause {
 
         let test = formatter.format_node(self.test()?)?;
 
-        let cons = format_statements(self.consequent(), formatter);
+        let cons = formatter.format_list(self.consequent());
 
         Ok(format_elements![
             case_word,

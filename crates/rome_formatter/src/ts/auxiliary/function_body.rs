@@ -1,9 +1,7 @@
-use rslint_parser::ast::JsFunctionBody;
-
-use crate::ts::statements::format_statements;
 use crate::{
     block_indent, format_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
+use rslint_parser::ast::JsFunctionBody;
 
 impl ToFormatElement for JsFunctionBody {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -12,7 +10,7 @@ impl ToFormatElement for JsFunctionBody {
             |leading, trailing| {
                 Ok(block_indent(format_elements![
                     leading,
-                    format_statements(self.statements(), formatter),
+                    formatter.format_list(self.statements()),
                     trailing,
                 ]))
             },

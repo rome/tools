@@ -1,7 +1,3 @@
-use crate::{hard_line_break, join_elements, FormatElement, Formatter};
-use rslint_parser::ast::{AstNodeList, JsStatementList};
-use rslint_parser::AstNode;
-
 mod block;
 mod break_statement;
 mod continue_statement;
@@ -23,23 +19,3 @@ mod try_statement;
 mod variable_declaration_statement;
 mod while_statement;
 mod with_statement;
-
-/// Formats a list of statements
-pub fn format_statements(stmts: JsStatementList, formatter: &Formatter) -> FormatElement {
-    join_elements(
-        hard_line_break(),
-        stmts.iter().map(|stmt| {
-            let snapshot = formatter.snapshot();
-            match formatter.format_node(stmt.clone()) {
-                Ok(result) => result,
-                Err(_) => {
-                    formatter.restore(snapshot);
-                    formatter
-                        .format_verbatim(stmt.syntax())
-                        .trim_start()
-                        .trim_end()
-                }
-            }
-        }),
-    )
-}
