@@ -1,6 +1,7 @@
 use crate::file_handlers::unknown::UnknownFileHandler;
-use crate::file_handlers::{javascript::JsFileHandler, Language};
+use crate::file_handlers::{javascript::JsFileHandler, ExtensionHandler, Language};
 use file_handlers::json::JsonFileHandler;
+use rome_path::RomePath;
 
 pub mod file_handlers;
 
@@ -56,5 +57,27 @@ impl App {
     /// Features available to a language that is not supported
     pub fn get_unknown_features(&self) -> &UnknownFileHandler {
         &self.features.unknown
+    }
+
+    /// Checks if the current file can be formatted
+    pub fn can_format(&self, rome_path: &RomePath) -> bool {
+        let language = self.get_language(rome_path.extension().expect("Could not read the file"));
+
+        match language {
+            Language::Js => self.features.js.capabilities().format,
+            Language::Json => self.features.json.capabilities().format,
+            Language::Unknown => self.features.unknown.capabilities().format,
+        }
+    }
+
+    /// Checks if the current file can be analyzed for linting rules
+    pub fn can_lint(&self, rome_path: &RomePath) -> bool {
+        let language = self.get_language(rome_path.extension().expect("Could not read the file"));
+
+        match language {
+            Language::Js => self.features.js.capabilities().lint,
+            Language::Json => self.features.json.capabilities().lint,
+            Language::Unknown => self.features.unknown.capabilities().lint,
+        }
     }
 }

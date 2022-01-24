@@ -8,7 +8,7 @@ pub struct JsonFileFeatures {}
 impl ExtensionHandler for JsonFileHandler {
     fn capabilities(&self) -> super::Capabilities {
         super::Capabilities {
-            format: true,
+            format: false,
             lint: false,
         }
     }

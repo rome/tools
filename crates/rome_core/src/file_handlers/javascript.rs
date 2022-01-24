@@ -4,7 +4,7 @@ use std::fmt::Debug;
 #[derive(Debug, PartialEq, Eq)]
 pub struct JsFileHandler;
 
-/// Features that belong to the language
+/// Features that belong to a single file
 #[derive(Debug)]
 pub struct JsFileFeatures {
     /// Whether the file is executed as a script

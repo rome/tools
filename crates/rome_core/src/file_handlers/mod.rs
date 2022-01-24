@@ -7,12 +7,10 @@ pub mod unknown;
 /// Supported languages by Rome
 #[derive(Debug, PartialEq)]
 pub enum Language {
-    /// JavaScript
+    /// JavaScript, TypeScript, JSX, TSX
     Js,
     /// JSON
     Json,
-    /// TypeScript
-    Ts,
     /// Any language that is not supported
     Unknown,
 }
@@ -20,8 +18,7 @@ pub enum Language {
 impl From<&str> for Language {
     fn from(s: &str) -> Self {
         match s.to_lowercase().as_str() {
-            "js" => Language::Js,
-            "ts" => Language::Ts,
+            "js" | "ts" | "jsx" | "tsx" => Language::Js,
             "json" => Language::Json,
             _ => Language::Unknown,
         }
@@ -31,8 +28,7 @@ impl From<&str> for Language {
 impl From<&OsStr> for Language {
     fn from(s: &OsStr) -> Self {
         match s.to_str().unwrap() {
-            "js" => Language::Js,
-            "ts" => Language::Ts,
+            "js" | "ts" | "jsx" | "tsx" => Language::Js,
             "json" => Language::Json,
             _ => Language::Unknown,
         }
