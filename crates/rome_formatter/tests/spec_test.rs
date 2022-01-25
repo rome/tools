@@ -1,5 +1,8 @@
-use rome_core::create_app;
-use rome_formatter::{format_file, FormatOptions};
+use rome_core::file_handlers::javascript::JsFileFeatures;
+use rome_core::App;
+use rome_formatter::{format, FormatOptions};
+use rome_path::RomePath;
+use rslint_parser::{parse_module, parse_text};
 use std::fs;
 use std::path::Path;
 
@@ -20,8 +23,8 @@ use std::path::Path;
 ///
 /// * `json/null` -> input: `tests/specs/json/null.json`, expected output: `tests/specs/json/null.json.snap`
 /// * `null` -> input: `tests/specs/null.json`, expected output: `tests/specs/null.json.snap`
-pub fn run(spec_input_file: &str, _: &str) {
-    let app = create_app();
+pub fn run(spec_input_file: &str, _: &str, file_type: &str) {
+    let app = App::new();
     let file_path = &spec_input_file;
     let spec_input_file = Path::new(spec_input_file);
 
@@ -31,15 +34,33 @@ pub fn run(spec_input_file: &str, _: &str) {
         spec_input_file.display()
     );
 
-    let result = format_file(file_path, FormatOptions::default(), &app);
-    let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
-    let input = fs::read_to_string(file_path).unwrap();
-    let snapshot = format!("# Input\n{}\n---\n# Output\n{}", input, result.code());
+    let mut rome_path = RomePath::new(file_path);
+    if app.can_format(&rome_path) {
+        let buffer = rome_path.get_buffer_from_file();
+        let features = if file_type == "module" {
+            JsFileFeatures::default().module()
+        } else {
+            JsFileFeatures::default().script()
+        };
 
-    insta::with_settings!({
-        prepend_module_to_snapshot => false,
-        snapshot_path => spec_input_file.parent().unwrap(),
-    }, {
-        insta::assert_snapshot!(file_name, snapshot, file_name);
-    });
+        let parsed_result = if features.module {
+            parse_module(buffer.as_str(), 0).syntax()
+        } else {
+            parse_text(buffer.as_str(), 0).syntax()
+        };
+
+        let formatted_result = format(FormatOptions::default(), &parsed_result);
+        let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
+        let input = fs::read_to_string(file_path).unwrap();
+        let result = formatted_result.unwrap();
+        // we ignore the error for now
+        let snapshot = format!("# Input\n{}\n---\n# Output\n{}", input, result.code());
+
+        insta::with_settings!({
+            prepend_module_to_snapshot => false,
+            snapshot_path => spec_input_file.parent().unwrap(),
+        }, {
+            insta::assert_snapshot!(file_name, snapshot, file_name);
+        });
+    }
 }

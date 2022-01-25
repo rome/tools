@@ -94,7 +94,7 @@ fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<JsAnyRoot>, Stri
 }
 
 #[cfg(test)]
-fn run_and_expect_no_errors(path: &str, _: &str) {
+fn run_and_expect_no_errors(path: &str, _: &str, _: &str) {
     let path = PathBuf::from(path);
     let text = std::fs::read_to_string(&path).unwrap();
 
@@ -109,7 +109,7 @@ fn run_and_expect_no_errors(path: &str, _: &str) {
 }
 
 #[cfg(test)]
-fn run_and_expect_errors(path: &str, _: &str) {
+fn run_and_expect_errors(path: &str, _: &str, _: &str) {
     let path = PathBuf::from(path);
     let text = std::fs::read_to_string(&path).unwrap();
 
@@ -142,10 +142,10 @@ fn run_and_expect_errors(path: &str, _: &str) {
 
 mod parser {
     mod ok {
-        tests_macros::gen_tests! {"test_data/inline/ok/**/*.js", crate::tests::run_and_expect_no_errors}
+        tests_macros::gen_tests! {"test_data/inline/ok/**/*.js", crate::tests::run_and_expect_no_errors, ""}
     }
     mod err {
-        tests_macros::gen_tests! {"test_data/inline/err/**/*.js", crate::tests::run_and_expect_errors}
+        tests_macros::gen_tests! {"test_data/inline/err/**/*.js", crate::tests::run_and_expect_errors, ""}
     }
 }
 

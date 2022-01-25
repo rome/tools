@@ -1,12 +1,21 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-expression: number.json
+assertion_line: 68
+expression: with.js
 
 ---
 # Input
-0
+with (   b)
+
+{
+	5
+}
 
 ---
 # Output
-0
+with (   b)
+
+{
+	5
+}
 

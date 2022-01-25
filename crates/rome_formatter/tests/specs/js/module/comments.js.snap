@@ -1,12 +1,13 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 66
 expression: comments.js
 
 ---
 # Input
-import {
-    func, // trailing comma removal
-} from 'module';
+// import {
+//     func, // trailing comma removal
+// } from 'module';
 
 
 expression(/* block comment */);
@@ -53,9 +54,9 @@ statement();
 statement(); // inline
 ---
 # Output
-import {
-    func, // trailing comma removal
-} from 'module';
+// import {
+//     func, // trailing comma removal
+// } from 'module';
 expression( /* block comment */ );
 expression(
 	/* block comment */

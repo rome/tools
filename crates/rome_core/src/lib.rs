@@ -1,26 +1,30 @@
-use crate::file_handlers::{javascript::JsFileHandler, unknown::UnknownFileHandler};
-use file_handlers::{json::JsonFileHandler, ExtensionHandler};
-use std::collections::HashMap;
+use crate::file_handlers::unknown::UnknownFileHandler;
+use crate::file_handlers::{javascript::JsFileHandler, ExtensionHandler, Language};
+use file_handlers::json::JsonFileHandler;
+use rome_path::RomePath;
 
 pub mod file_handlers;
 
-// these strings will live for the whole App, so it makes sense to have them as static
-pub type Handlers = HashMap<&'static str, Box<dyn ExtensionHandler>>;
+/// Features available for each language
+struct Features {
+    js: JsFileHandler,
+    json: JsonFileHandler,
+    unknown: UnknownFileHandler,
+}
 
 pub struct App {
-    handlers: Handlers,
-    unknown_handler: Box<dyn ExtensionHandler>,
+    /// features available throughout the application
+    features: Features,
 }
 
 impl Default for App {
     fn default() -> Self {
-        let mut map: Handlers = HashMap::new();
-        map.insert("js", Box::new(JsFileHandler {}));
-        map.insert("ts", Box::new(JsFileHandler {}));
-        map.insert("json", Box::new(JsonFileHandler {}));
         Self {
-            handlers: map,
-            unknown_handler: Box::new(UnknownFileHandler {}),
+            features: Features {
+                js: JsFileHandler {},
+                json: JsonFileHandler {},
+                unknown: UnknownFileHandler::default(),
+            },
         }
     }
 }
@@ -30,16 +34,50 @@ impl App {
         Default::default()
     }
 
-    pub fn get_handler<'a>(&self, file_extension: &'a str) -> Option<&dyn ExtensionHandler> {
-        let handler = if self.handlers.contains_key(file_extension) {
-            self.handlers.get(file_extension)
-        } else {
-            Some(&self.unknown_handler)
-        };
-        handler.map(|handler| handler.as_ref())
+    /// Return a [Language] from a string
+    pub fn get_language<L: Into<Language>>(&self, file_extension: L) -> Language {
+        file_extension.into()
     }
-}
 
-pub fn create_app() -> App {
-    App::new()
+    /// Check if the current language is supported
+    pub fn is_language_supported<L: Into<Language>>(&self, file_extension: L) -> bool {
+        Language::Unknown != file_extension.into()
+    }
+
+    /// Return the features that are available for JavaScript
+    pub fn get_js_features(&self) -> &JsFileHandler {
+        &self.features.js
+    }
+
+    /// Return the features that are available for JSON
+    pub fn get_json_features(&self) -> &JsonFileHandler {
+        &self.features.json
+    }
+
+    /// Features available to a language that is not supported
+    pub fn get_unknown_features(&self) -> &UnknownFileHandler {
+        &self.features.unknown
+    }
+
+    /// Checks if the current file can be formatted
+    pub fn can_format(&self, rome_path: &RomePath) -> bool {
+        let language = self.get_language(rome_path.extension().expect("Could not read the file"));
+
+        match language {
+            Language::Js => self.features.js.capabilities().format,
+            Language::Json => self.features.json.capabilities().format,
+            Language::Unknown => self.features.unknown.capabilities().format,
+        }
+    }
+
+    /// Checks if the current file can be analyzed for linting rules
+    pub fn can_lint(&self, rome_path: &RomePath) -> bool {
+        let language = self.get_language(rome_path.extension().expect("Could not read the file"));
+
+        match language {
+            Language::Js => self.features.js.capabilities().lint,
+            Language::Json => self.features.json.capabilities().lint,
+            Language::Unknown => self.features.unknown.capabilities().lint,
+        }
+    }
 }

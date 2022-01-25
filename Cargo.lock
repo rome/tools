@@ -1227,6 +1227,9 @@ dependencies = [
 [[package]]
 name = "rome_core"
 version = "0.0.0"
+dependencies = [
+ "rome_path",
+]
 
 [[package]]
 name = "rome_formatter"
@@ -1263,9 +1266,6 @@ dependencies = [
 [[package]]
 name = "rome_path"
 version = "0.0.0"
-dependencies = [
- "rome_core",
-]
 
 [[package]]
 name = "rome_rowan"
