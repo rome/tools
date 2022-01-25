@@ -1,2 +1,3 @@
 * text=auto
 crates/rslint_parser/test_data/**/*.js text eol=lf
+xtask/js.ungram text eol=lf

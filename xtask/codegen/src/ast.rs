@@ -10,6 +10,7 @@ use super::{
 use crate::generate_syntax_factory::generate_syntax_factory;
 use crate::kinds_src::{AstListSeparatorConfiguration, AstListSrc, TokenKind};
 use crate::{
+    generate_macros::generate_macros,
     generate_nodes::generate_nodes,
     generate_syntax_kinds::generate_syntax_kinds,
     kinds_src::{AstEnumSrc, AstNodeSrc, KINDS_SRC},
@@ -39,6 +40,10 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
     let syntax_factory_file = project_root().join(crate::SYNTAX_FACTORY);
     let contents = generate_syntax_factory(&ast)?;
     update(syntax_factory_file.as_path(), &contents, mode)?;
+
+    let ast_macros_file = project_root().join(crate::AST_MACROS);
+    let contents = generate_macros(&ast)?;
+    update(ast_macros_file.as_path(), &contents, mode)?;
 
     Ok(())
 }

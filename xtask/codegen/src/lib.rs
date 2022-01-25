@@ -2,6 +2,7 @@
 //!
 //!
 mod ast;
+mod generate_macros;
 mod generate_nodes;
 mod generate_syntax_factory;
 mod generate_syntax_kinds;
@@ -20,6 +21,7 @@ pub use self::unicode::generate_tables;
 const SYNTAX_KINDS: &str = "crates/rslint_syntax/src/generated.rs";
 const AST_NODES: &str = "crates/rslint_parser/src/ast/generated/nodes.rs";
 const SYNTAX_FACTORY: &str = "crates/rslint_parser/src/ast/generated/syntax_factory.rs";
+const AST_MACROS: &str = "crates/rslint_parser/src/ast/generated/macros.rs";
 
 /// A helper to update file on disk if it has changed.
 /// With verify = false,
