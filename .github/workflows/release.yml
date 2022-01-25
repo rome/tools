@@ -1,10 +1,52 @@
 name: Release
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+  # schedule:
+  #   - cron: '0 0 * * 2-6'
+  push:
+    branches:
+      - main
+    paths:
+      - editors/vscode/package.json
 
 jobs:
-  package:
+  check:
+    name: Check version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ env.version }}
+      prerelease: ${{ env.prerelease }}
+      nightly: ${{ env.nightly }}
+      version_changed: ${{ steps.version.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check nightly status
+        id: nightly
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: echo "nightly=true" >> $GITHUB_ENV
+
+      - name: Check version changes
+        uses: EndBug/version-check@v1
+        if: env.nightly != 'true'
+        id: version
+        with:
+          diff-search: true
+          file-name: editors/vscode/package.json
+
+      - name: Set version name
+        run: echo "version=${{ steps.version.outputs.version }}" >> $GITHUB_ENV
+
+      - name: Check prerelease status
+        id: prerelease
+        if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
+        run: echo "prerelease=true" >> $GITHUB_ENV
+
+      - name: Check version status
+        if: steps.version.outputs.changed == 'true'
+        run: 'echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"'
+  
+  build:
     strategy:
       matrix:
         include:
@@ -30,6 +72,12 @@ jobs:
     name: Package ${{ matrix.code-target }}
     runs-on: ${{ matrix.os }}
 
+    needs: check
+    if: needs.check.outputs.version_changed == 'true' || needs.check.outputs.nightly == 'true'
+    outputs:
+      version: ${{ env.version }}
+      prerelease: ${{ env.prerelease }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -37,23 +85,13 @@ jobs:
           fetch-depth: 1
 
       - name: Install Rust toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: '1.58.0'
-          target: ${{ matrix.target }}
-          profile: minimal
-          override: true
+        run: rustup target add ${{ matrix.target }}
 
       - name: Install arm64 toolchain
         if: matrix.code-target == 'linux-arm64'
         run: |
           sudo apt-get update
           sudo apt-get install -y gcc-aarch64-linux-gnu
-
-      - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
 
       - name: Audit crates.io dependencies
         if: matrix.code-target == 'linux-x64'
@@ -76,6 +114,11 @@ jobs:
           mkdir editors/vscode/server
           cp target/${{ matrix.target }}/release/rome_lsp editors/vscode/server/rome_lsp
 
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
       - name: Package extension
         run: |
           npm ci
@@ -89,24 +132,43 @@ jobs:
         with:
           name: vscode_packages
           path: ./dist/rome_lsp-${{ matrix.code-target }}.vsix
+          if-no-files-found: error
+
+      - name: Set release infos
+        run: |
+          echo "version=${{ needs.check.outputs.version }}" >> $GITHUB_ENV
+          echo "prerelease=${{ needs.check.outputs.prerelease }}" >> $GITHUB_ENV
 
   publish:
     name: Publish
     runs-on: ubuntu-latest
-    needs: package
-    if: success() && github.event_name == 'release'
+    needs: build
+    environment: marketplace
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
           name: vscode_packages
+
       - name: Publish extension (pre-release)
-        run: npx vsce publish --pre-release --packagePath $(find . -iname "rome_lsp-*.vsix")
-        if: ${{ github.event.release.prerelease }}
+        run: npx vsce publish --pre-release --packagePath rome_lsp-*.vsix
+        if: needs.build.outputs.prerelease == 'true'
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
       - name: Publish extension
-        run: npx vsce publish --packagePath $(find . -iname "rome_lsp-*.vsix")
-        if: ${{ !github.event.release.prerelease }}
+        run: npx vsce publish --packagePath rome_lsp-*.vsix
+        if: needs.build.outputs.prerelease != 'true'
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Create GitHub release and tag
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: v${{ needs.build.outputs.version }}
+          tag_name: v${{ needs.build.outputs.version }}
+          draft: false
+          prerelease: ${{ needs.build.outputs.prerelease == 'true' }}
+          files: rome_lsp-*.vsix
+          fail_on_unmatched_files: true

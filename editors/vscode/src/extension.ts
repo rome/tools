@@ -86,7 +86,11 @@ async function fileExists(path: Uri) {
 		await workspace.fs.stat(path);
 		return true;
 	} catch (err) {
-		throw err;
+		if(err.code === 'ENOENT') {
+			return false;
+		} else {
+			throw err;
+		}
 	}
 }
 
