@@ -6,16 +6,18 @@ use rslint_parser::ast::{
     JsDefaultClause, JsDefaultImportSpecifier, JsDoWhileStatement, JsEmptyStatement,
     JsExpressionStatement, JsFinallyClause, JsForInStatement, JsForStatement, JsFunctionStatement,
     JsGetterClassMember, JsIdentifierBinding, JsIdentifierExpression, JsIfStatement,
-    JsImportAssertion, JsImportBareClause, JsImportNamedClause, JsLabeledStatement, JsModule,
-    JsModuleSource, JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression,
-    JsParameters, JsPropertyClassMember, JsPropertyObjectMember, JsReturnStatement, JsScript,
-    JsSequenceExpression, JsSetterClassMember, JsShorthandPropertyObjectMember, JsSpread,
-    JsStatementList, JsStaticInitializationBlockClassMember, JsStringLiteralExpression,
-    JsSwitchStatement, JsTemplate, JsTemplateChunkElement, JsTemplateElement, JsTryStatement,
-    JsUnknownAssignment, JsUnknownBinding, JsUnknownExpression, JsUnknownImportAssertionEntry,
-    JsUnknownMember, JsUnknownNamedImportSpecifier, JsUnknownParameter, JsUnknownStatement,
-    JsVariableDeclaration, JsVariableDeclarations, JsVariableStatement, JsWhileStatement,
-    JsWithStatement,
+    JsImportAssertion, JsImportAssertionEntry, JsImportBareClause, JsImportCallExpression,
+    JsImportDefaultClause, JsImportNamedClause, JsImportNamespaceClause, JsLabeledStatement,
+    JsLiteralExportName, JsModule, JsModuleSource, JsNamedImportSpecifier, JsNamedImportSpecifiers,
+    JsNamespaceImportSpecifier, JsNullLiteralExpression, JsNumberLiteralExpression,
+    JsObjectExpression, JsParameters, JsPropertyClassMember, JsPropertyObjectMember,
+    JsReturnStatement, JsScript, JsSequenceExpression, JsSetterClassMember,
+    JsShorthandNamedImportSpecifier, JsShorthandPropertyObjectMember, JsSpread, JsStatementList,
+    JsStaticInitializationBlockClassMember, JsStringLiteralExpression, JsSwitchStatement,
+    JsTemplate, JsTemplateChunkElement, JsTemplateElement, JsTryStatement, JsUnknownAssignment,
+    JsUnknownBinding, JsUnknownExpression, JsUnknownImportAssertionEntry, JsUnknownMember,
+    JsUnknownNamedImportSpecifier, JsUnknownParameter, JsUnknownStatement, JsVariableDeclaration,
+    JsVariableDeclarations, JsVariableStatement, JsWhileStatement, JsWithStatement,
 };
 use rslint_parser::{AstNode, JsSyntaxKind, SyntaxNode};
 
@@ -245,6 +247,38 @@ impl ToFormatElement for SyntaxNode {
             JsSyntaxKind::JS_VARIABLE_DECLARATIONS => JsVariableDeclarations::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
+            JsSyntaxKind::JS_IMPORT_ASSERTION_ENTRY => JsImportAssertionEntry::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+
+            JsSyntaxKind::JS_IMPORT_CALL_EXPRESSION => JsImportCallExpression::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_IMPORT_DEFAULT_CLAUSE => JsImportDefaultClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_LITERAL_EXPORT_NAME => JsLiteralExportName::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_IMPORT_NAMESPACE_CLAUSE => JsImportNamespaceClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_NAMESPACE_IMPORT_SPECIFIER => {
+                JsNamespaceImportSpecifier::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+            JsSyntaxKind::JS_NAMED_IMPORT_SPECIFIER => JsNamedImportSpecifier::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_NAMED_IMPORT_SPECIFIERS => JsNamedImportSpecifiers::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_SHORTHAND_NAMED_IMPORT_SPECIFIER => {
+                JsShorthandNamedImportSpecifier::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
 
             _ => todo!(
                 "Implement formatting for the {:?} syntax kind.",
