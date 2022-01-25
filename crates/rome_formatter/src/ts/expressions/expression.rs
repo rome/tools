@@ -1,5 +1,5 @@
 use crate::{
-    empty_element, format_elements, group_elements, soft_line_indent, space_token, token,
+    empty_element, format_elements, group_elements, soft_line_indent_or_space, space_token, token,
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
@@ -200,7 +200,9 @@ impl ToFormatElement for JsAssignmentExpression {
             formatter.format_node(&self.left()?)?,
             space_token(),
             formatter.format_token(&self.operator_token()?)?,
-            group_elements(soft_line_indent(formatter.format_node(&self.right()?)?)),
+            group_elements(soft_line_indent_or_space(
+                formatter.format_node(&self.right()?)?
+            )),
         ]))
     }
 }

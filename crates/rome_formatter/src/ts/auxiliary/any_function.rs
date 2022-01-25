@@ -1,4 +1,4 @@
-use crate::format_element::soft_line_indent;
+use crate::format_element::soft_line_indent_or_space;
 use crate::{
     concat_elements, empty_element, format_elements, space_token, token, FormatElement,
     FormatResult, Formatter, ToFormatElement,
@@ -59,7 +59,9 @@ impl ToFormatElement for JsAnyFunction {
         if body_has_soft_line_break {
             tokens.push(formatter.format_node(&self.body()?)?);
         } else {
-            tokens.push(soft_line_indent(formatter.format_node(&self.body()?)?));
+            tokens.push(soft_line_indent_or_space(
+                formatter.format_node(&self.body()?)?,
+            ));
         }
 
         Ok(concat_elements(tokens))

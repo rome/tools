@@ -515,13 +515,13 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// fit on a single line. Otherwise, just inserts a space.
 ///
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_indent, FormatOptions, soft_block_indent, space_token};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("name"),
 ///   space_token(),
 ///   token("="),
-///   soft_line_indent(format_elements![
+///   soft_line_indent_or_space(format_elements![
 ///     token("firstName"),
 ///     space_token(),
 ///     token("+"),
@@ -540,13 +540,13 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// Only adds a space if the enclosing [Group] fits on a single line
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_indent, FormatOptions, soft_block_indent, space_token};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_indent_or_space, FormatOptions, soft_block_indent, space_token};
 ///
 /// let elements = group_elements(format_elements![
 ///   token("a"),
 ///   space_token(),
 ///   token("="),
-///   soft_line_indent(format_elements![
+///   soft_line_indent_or_space(format_elements![
 ///      token("10")
 ///   ]),
 /// ]);
@@ -558,7 +558,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ```
 ///
 #[inline]
-pub fn soft_line_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
+pub fn soft_line_indent_or_space<T: Into<FormatElement>>(content: T) -> FormatElement {
     let content = content.into();
 
     if content.is_empty() {
