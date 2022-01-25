@@ -1,30 +1,12 @@
 use crate::{
-    empty_element, format_elements, hard_line_break, join_elements_hard_line, token, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    empty_element, format_elements, hard_line_break, token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
-use rslint_parser::ast::{AstNode, AstNodeList, JsDirective, JsDirectiveList};
-
-fn format_directives(directives: JsDirectiveList, formatter: &Formatter) -> FormatElement {
-    join_elements_hard_line(directives.iter().map(|directive| {
-        let snapshot = formatter.snapshot();
-        let elem = match formatter.format_node(&directive) {
-            Ok(result) => result,
-            Err(_) => {
-                formatter.restore(snapshot);
-                formatter
-                    .format_verbatim(directive.syntax())
-                    .trim_start()
-                    .trim_end()
-            }
-        };
-
-        (directive, elem)
-    }))
-}
+use rslint_parser::ast::{AstNodeList, JsDirective, JsDirectiveList};
 
 pub fn format_directives_list(directives: JsDirectiveList, formatter: &Formatter) -> FormatElement {
     if directives.len() > 0 {
-        format_elements![format_directives(directives, formatter), hard_line_break()]
+        format_elements![formatter.format_list(directives), hard_line_break()]
     } else {
         empty_element()
     }

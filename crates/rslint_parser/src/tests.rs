@@ -21,6 +21,7 @@ function e() {
     "#;
 
     let module = parse(src, 0, Syntax::default().typescript());
+
     assert_errors_are_absent(&module, Path::new("parser_smoke_test"));
 }
 
