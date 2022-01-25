@@ -113,13 +113,13 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>) {
                     group.throughput(criterion::Throughput::Bytes(code.len() as u64));
                     group.bench_function(&id, |b| {
                         b.iter(|| {
-                            let _ = criterion::black_box(rslint_parser::parse_text(code, 0));
+                            let _ = criterion::black_box(rslint_parser::parse_module(code, 0));
                         })
                     });
                     group.finish();
                 } else {
                     //warmup
-                    rslint_parser::parse_text(code, 0);
+                    rslint_parser::parse_module(code, 0);
                 }
 
                 let result = benchmark_lib(&id, code);

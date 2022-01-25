@@ -49,10 +49,10 @@ pub trait SyntaxNodeExt {
     /// # Examples
     ///
     /// ```
-    /// use rslint_parser::{SyntaxNodeExt, parse_expr};
+    /// use rslint_parser::{SyntaxNodeExt, parse_expression};
     ///
-    /// let left = parse_expr("foo. bar", 0).syntax();
-    /// let right = parse_expr("foo.bar", 0).syntax();
+    /// let left = parse_expression("foo. bar", 0).syntax();
+    /// let right = parse_expression("foo.bar", 0).syntax();
     ///
     /// assert!(left.lexical_eq(&right));
     ///

@@ -1,7 +1,7 @@
 use super::*;
 use crate::coverage::{FailReason, Outcome, TestResult};
 use colored::Colorize;
-use rslint_parser::parse_text;
+use rslint_parser::{parse, Syntax};
 use walkdir::{DirEntry, WalkDir};
 use yastl::Pool;
 
@@ -79,7 +79,7 @@ pub fn run_ts(
             }
             let code = code.unwrap();
             let result = std::panic::catch_unwind(|| {
-                let r = parse_text(&code, 0);
+                let r = parse(&code, 0, Syntax::default().typescript());
 
                 if is_detailed && show_rast {
                     println!("{:#?}", r.syntax());

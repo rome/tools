@@ -1,6 +1,6 @@
 use super::{files::*, *};
 use colored::Colorize;
-use rslint_parser::{parse_module, parse_text};
+use rslint_parser::{parse, parse_module, Syntax};
 use std::path::PathBuf;
 use yastl::Pool;
 
@@ -120,7 +120,7 @@ pub fn run_test_file(file: TestFile) -> TestResult {
     let TestFile { code, meta, path } = file;
 
     if meta.flags.contains(&TestFlag::OnlyStrict) {
-        let (code, res) = exec_test(code, true, false);
+        let (code, res) = exec_test(code, true, Syntax::default());
         let fail = passed(res, meta);
         let outcome = extract_outcome(&fail);
         TestResult {
@@ -130,7 +130,7 @@ pub fn run_test_file(file: TestFile) -> TestResult {
             outcome,
         }
     } else if meta.flags.contains(&TestFlag::Module) {
-        let (code, res) = exec_test(code, false, true);
+        let (code, res) = exec_test(code, false, Syntax::default().module());
         let fail = passed(res, meta);
         let outcome = extract_outcome(&fail);
         TestResult {
@@ -140,7 +140,7 @@ pub fn run_test_file(file: TestFile) -> TestResult {
             outcome,
         }
     } else if meta.flags.contains(&TestFlag::NoStrict) || meta.flags.contains(&TestFlag::Raw) {
-        let (code, res) = exec_test(code, false, false);
+        let (code, res) = exec_test(code, false, Syntax::default());
         let fail = passed(res, meta);
         let outcome = extract_outcome(&fail);
         TestResult {
@@ -150,8 +150,8 @@ pub fn run_test_file(file: TestFile) -> TestResult {
             outcome,
         }
     } else {
-        let (_, l) = exec_test(code.clone(), false, false);
-        let (code, r) = exec_test(code, true, false);
+        let (_, l) = exec_test(code.clone(), false, Syntax::default());
+        let (code, r) = exec_test(code, true, Syntax::default());
         merge_tests(code, l, r, meta, path)
     }
 }
@@ -251,19 +251,12 @@ fn extract_outcome(fail: &Option<FailReason>) -> Outcome {
     }
 }
 
-fn exec_test(mut code: String, append_use_strict: bool, module: bool) -> (String, ExecRes) {
+fn exec_test(mut code: String, append_use_strict: bool, syntax: Syntax) -> (String, ExecRes) {
     if append_use_strict {
         code.insert_str(0, "\"use strict\";\n");
     }
 
-    let result = std::panic::catch_unwind(|| {
-        if module {
-            parse_module(&code, 0).ok().map(drop)
-        } else {
-            parse_text(&code, 0).ok().map(drop)
-        }
-    });
-
+    let result = std::panic::catch_unwind(|| parse(&code, 0, syntax).ok().map(drop));
     let result = result
         .map(|res| {
             if let Err(errors) = res {

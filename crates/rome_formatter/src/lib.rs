@@ -55,7 +55,7 @@ mod intersperse;
 mod printer;
 mod ts;
 pub use formatter::Formatter;
-use rslint_parser::{parse_module, SyntaxError, SyntaxNode};
+use rslint_parser::{parse, Syntax, SyntaxError, SyntaxNode};
 
 pub use format_element::{
     block_indent, concat_elements, empty_element, empty_line, group_elements, hard_line_break,
@@ -65,10 +65,8 @@ pub use format_element::{
 };
 pub use printer::Printer;
 pub use printer::PrinterOptions;
-use rome_core::file_handlers::javascript::JsFileFeatures;
 use rome_core::App;
 use rome_path::RomePath;
-use rslint_parser::parse_text;
 use std::str::FromStr;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
@@ -184,13 +182,9 @@ pub fn format_element(element: &FormatElement, options: FormatOptions) -> Format
 pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions, app: &App) {
     let result = if app.can_format(rome_path) {
         let buffer = rome_path.get_buffer_from_file();
-        let features = JsFileFeatures::default().module();
-        let parsed_result = if features.module {
-            parse_module(buffer.as_str(), 0).syntax()
-        } else {
-            parse_text(buffer.as_str(), 0).syntax()
-        };
-        Some(format(options, &parsed_result))
+        let syntax = Syntax::default().module();
+        let root = parse(buffer.as_str(), 0, syntax).syntax();
+        Some(format(options, &root))
     } else {
         None
     };

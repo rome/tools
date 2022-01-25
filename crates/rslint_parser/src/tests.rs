@@ -1,5 +1,5 @@
 use crate::ast::{JsAnyRoot, JsCallArguments};
-use crate::{parse_module, parse_text, AstNode, Parse, ParserError, SyntaxNode, SyntaxToken};
+use crate::{parse, parse_module, AstNode, Parse, ParserError, Syntax, SyntaxNode, SyntaxToken};
 use expect_test::expect_file;
 use rome_rowan::TextSize;
 use rslint_errors::file::SimpleFile;
@@ -54,11 +54,15 @@ fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
     let res = catch_unwind(|| {
         // Files containing a // SCRIPT comment are parsed as script and not as module
         // This is needed to test features that are restricted in strict mode.
-        let parse = if text.contains("// SCRIPT") {
-            parse_text(text, 0).cast::<JsAnyRoot>().unwrap()
+        let syntax = if text.contains("// SCRIPT") {
+            Syntax::default()
+        } else if text.contains("// TYPESCRIPT") {
+            Syntax::default().typescript()
         } else {
-            parse_module(text, 0).cast::<JsAnyRoot>().unwrap()
+            Syntax::default().module()
         };
+
+        let parse = parse(text, 0, syntax);
 
         assert_eq!(
             parse.syntax().to_string(),

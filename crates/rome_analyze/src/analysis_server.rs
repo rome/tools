@@ -1,6 +1,6 @@
 use std::{collections::HashMap, sync::Arc};
 
-use rslint_parser::{parse_text, AstNode, SyntaxNode, TextRange};
+use rslint_parser::{parse_script, AstNode, SyntaxNode, TextRange};
 use tracing::trace;
 
 use crate::{
@@ -35,7 +35,7 @@ impl AnalysisServer {
         let text = self
             .get_file_text(file_id)
             .expect("File contents missing while parsing");
-        parse_text(&text, file_id).syntax()
+        parse_script(&text, file_id).syntax()
     }
 
     pub fn suppressions(&self, file_id: FileId) -> Suppressions {
