@@ -25,7 +25,7 @@ impl ToFormatElement for JsNamedImportSpecifiers {
                             soft_line_break_or_space(),
                             formatter.format_separated(specifiers, || token(","))?
                         ),
-                        trailing
+                        trailing,
                     ]),
                     space,
                 ))
