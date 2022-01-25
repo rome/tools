@@ -13,6 +13,7 @@ mod module_source;
 mod named_clause;
 mod named_import_specifier;
 mod named_import_specifiers;
+mod namespace_clause;
 mod shorthand_named_import_specifier;
 
 use crate::{
