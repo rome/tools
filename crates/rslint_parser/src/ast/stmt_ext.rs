@@ -43,7 +43,7 @@ mod tests {
 
     #[test]
     fn var_decl_let_token() {
-        let parsed = parse_text("/* */let a = 5;", 0).tree();
+        let parsed = parse_script("/* */let a = 5;", 0).tree();
         let var_decl = parsed
             .statements()
             .iter()
@@ -54,7 +54,7 @@ mod tests {
 
     #[test]
     fn is_var_check() {
-        let root = parse_text("var a = 5;", 0).syntax();
+        let root = parse_script("var a = 5;", 0).syntax();
         let var_decl = root
             .descendants()
             .find_map(ast::JsVariableDeclarations::cast);

@@ -1,8 +1,7 @@
-use rome_core::file_handlers::javascript::JsFileFeatures;
 use rome_core::App;
 use rome_formatter::{format, FormatOptions};
 use rome_path::RomePath;
-use rslint_parser::{parse_module, parse_text};
+use rslint_parser::{parse, Syntax};
 use std::fs;
 use std::path::Path;
 
@@ -37,19 +36,14 @@ pub fn run(spec_input_file: &str, _: &str, file_type: &str) {
     let mut rome_path = RomePath::new(file_path);
     if app.can_format(&rome_path) {
         let buffer = rome_path.get_buffer_from_file();
-        let features = if file_type == "module" {
-            JsFileFeatures::default().module()
+        let syntax = if file_type == "module" {
+            Syntax::default().module()
         } else {
-            JsFileFeatures::default().script()
+            Syntax::default()
         };
 
-        let parsed_result = if features.module {
-            parse_module(buffer.as_str(), 0).syntax()
-        } else {
-            parse_text(buffer.as_str(), 0).syntax()
-        };
-
-        let formatted_result = format(FormatOptions::default(), &parsed_result);
+        let root = parse(buffer.as_str(), 0, syntax).syntax();
+        let formatted_result = format(FormatOptions::default(), &root);
         let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
         let input = fs::read_to_string(file_path).unwrap();
         let result = formatted_result.unwrap();

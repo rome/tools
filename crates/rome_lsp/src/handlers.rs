@@ -2,12 +2,12 @@ use anyhow::Result;
 use lspower::lsp::*;
 use rome_analyze::FileId;
 use rome_formatter::{FormatOptions, Formatter, IndentStyle};
-use rslint_parser::parse_text;
+use rslint_parser::parse_script;
 
 use crate::line_index;
 
 pub fn format(text: &str, file_id: FileId) -> Result<Vec<TextEdit>> {
-    let tree = parse_text(text, file_id).syntax();
+    let tree = parse_script(text, file_id).syntax();
 
     let options = FormatOptions {
         indent_style: IndentStyle::Tab,
