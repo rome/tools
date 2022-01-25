@@ -52,6 +52,8 @@ fn parser_missing_smoke_test() {
 
 fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
     let res = catch_unwind(|| {
+        // Files containing a // SCRIPT comment are parsed as script and not as module
+        // This is needed to test features that are restricted in strict mode.
         let syntax = if text.contains("// SCRIPT") {
             Syntax::default()
         } else if text.contains("// TYPESCRIPT") {
@@ -59,9 +61,6 @@ fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
         } else {
             Syntax::default().module()
         };
-
-        // Files containing a // SCRIPT comment are parsed as script and not as module
-        // This is needed to test features that are restricted in strict mode.
 
         let parse = parse(text, 0, syntax);
 
