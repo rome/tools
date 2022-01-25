@@ -365,7 +365,7 @@ where
 /// the line breaks have to be manually added.
 ///
 /// This helper should be used only in rare cases, instead you should rely more on
-/// [indent_block] and [soft_indent]
+/// [indent_block] and [soft_block_indent]
 ///
 /// ## Examples
 ///
@@ -400,6 +400,9 @@ pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 }
 
 /// Inserts a hard line break before and after the content and increases the indention level for the content by one.
+///
+/// Block indents indent a block of code, such as in a function body, and therefore insert a line
+/// break before and after the content.
 ///
 /// Doesn't create an indention if the passed in content is [FormatElement.is_empty].
 ///
@@ -502,6 +505,9 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 
 /// If the enclosing [Group] doesn't fit on a single line, inserts a line break and indent.
 /// Otherwise, just inserts a space.
+///
+/// Line indents are used to break a single line of code, and therefore only insert a line
+/// break before the content and not after the content.
 ///
 /// ## Examples
 ///
