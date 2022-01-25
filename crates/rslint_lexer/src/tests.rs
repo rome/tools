@@ -183,6 +183,21 @@ fn all_whitespace() {
         NEWLINE:2
         NEWLINE:2
     }
+    assert_lex! {
+        "\r\r\r\r",
+        NEWLINE:1
+        NEWLINE:1
+        NEWLINE:1
+        NEWLINE:1
+    }
+    assert_lex! {
+        "\r\r\n\n\u{2028}\u{2029}",
+        NEWLINE:1
+        NEWLINE:2
+        NEWLINE:1
+        NEWLINE:3
+        NEWLINE:3
+    }
 }
 
 #[test]

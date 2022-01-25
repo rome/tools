@@ -130,7 +130,10 @@ impl<'src> Lexer<'src> {
             if is_linebreak(chr) {
                 self.state.had_linebreak = true;
                 self.cur += chr.len_utf8();
-                if chr != '\r' {
+                let next_chr = self.current();
+                if chr == '\r' && next_chr == Some(&('\n' as u8)) {
+                    continue;
+                } else {
                     break;
                 }
             } else {
