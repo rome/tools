@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 43
 expression: object.js
 
 ---
@@ -30,15 +31,21 @@ let a = {
 # Output
 let a = {
 	...spread,
+
 	foo() {},
+
 	*foo() {},
+
 	async *foo(
 		aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
 		bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
 		cccccccccccccccccccccccccccccc,
 	) {},
+
 	[fooooooooooooooooooooooooooooooooooooooooooooooooo()]: () => {},
+
 	[foo()]: {},
+
 	...spread,
 };
 

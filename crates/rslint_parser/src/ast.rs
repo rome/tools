@@ -133,6 +133,10 @@ impl<N: AstNode> Iterator for AstNodeListIterator<N> {
         Some(Self::slot_to_node(&self.inner.next()?))
     }
 
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        (self.inner.len(), Some(self.inner.len()))
+    }
+
     fn last(self) -> Option<Self::Item>
     where
         Self: Sized,
@@ -145,11 +149,7 @@ impl<N: AstNode> Iterator for AstNodeListIterator<N> {
     }
 }
 
-impl<N: AstNode> ExactSizeIterator for AstNodeListIterator<N> {
-    fn len(&self) -> usize {
-        self.inner.len()
-    }
-}
+impl<N: AstNode> ExactSizeIterator for AstNodeListIterator<N> {}
 
 impl<N: AstNode> FusedIterator for AstNodeListIterator<N> {}
 

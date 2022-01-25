@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 43
 expression: private_method.js
 
 ---
@@ -25,16 +26,20 @@ class Foo {
 # Output
 class Foo {
 	a = 1;
+
 	*#a() {
 		yield bar();
 	}
+
 	#b = 2;
+
 	get b() {
 		return 9999;
 	}
 	set #c(x) {
 		return x;
 	}
+
 	static #d() {
 		return Math.random();
 	}

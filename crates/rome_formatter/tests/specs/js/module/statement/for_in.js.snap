@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 43
 expression: for_in.js
 
 ---
@@ -12,6 +13,7 @@ for (aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineB
 ---
 # Output
 for (a in b) {}
+
 for (
 	aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks
 	in

@@ -185,7 +185,7 @@ impl<'a> Printer<'a> {
                 vec![]
             }
 
-            FormatElement::Line { .. } => {
+            FormatElement::Line(line) => {
                 if !self.state.line_suffixes.is_empty() {
                     self.state
                         .line_suffixes
@@ -195,6 +195,11 @@ impl<'a> Printer<'a> {
                 } else {
                     // Only print a newline if the current line isn't already empty
                     if self.state.line_width > 0 {
+                        self.print_str("\n");
+                    }
+
+                    // Print a second line break if this is an empty line
+                    if line.mode == LineMode::Empty {
                         self.print_str("\n");
                     }
 
@@ -273,7 +278,7 @@ impl<'a> Printer<'a> {
                     }
                     // We want a flat structure, so omit soft line wraps
                     LineMode::Soft => vec![],
-                    LineMode::Hard => return Err(LineBreakRequiredError),
+                    LineMode::Hard | LineMode::Empty => return Err(LineBreakRequiredError),
                 }
             }
 
