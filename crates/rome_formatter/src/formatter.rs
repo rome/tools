@@ -6,9 +6,9 @@ use std::collections::HashSet;
 use crate::{
     concat_elements, empty_element, empty_line,
     format_element::{normalize_newlines, Token},
-    format_elements, hard_line_break, if_group_breaks, if_group_fits_on_single_line, join_elements,
-    line_suffix, soft_line_break_or_space, space_token, FormatElement, FormatOptions, FormatResult,
-    ToFormatElement,
+    format_elements, hard_line_break, if_group_breaks, if_group_fits_on_single_line,
+    join_elements_hard_line, line_suffix, soft_line_break_or_space, space_token, FormatElement,
+    FormatOptions, FormatResult, ToFormatElement,
 };
 use rome_rowan::SyntaxElement;
 #[cfg(debug_assertions)]
@@ -274,21 +274,20 @@ impl Formatter {
     where
         List: AstNodeList<Node>,
     {
-        join_elements(
-            hard_line_break(),
-            list.iter().map(|module_item| {
-                let snapshot = self.snapshot();
-                match self.format_node(module_item.clone()) {
-                    Ok(result) => result,
-                    Err(_) => {
-                        self.restore(snapshot);
-                        self.format_verbatim(module_item.syntax())
-                            .trim_start()
-                            .trim_end()
-                    }
+        join_elements_hard_line(list.iter().map(|module_item| {
+            let snapshot = self.snapshot();
+            let elem = match self.format_node(module_item.clone()) {
+                Ok(result) => result,
+                Err(_) => {
+                    self.restore(snapshot);
+                    self.format_verbatim(module_item.syntax())
+                        .trim_start()
+                        .trim_end()
                 }
-            }),
-        )
+            };
+
+            (module_item, elem)
+        }))
     }
 
     fn print_leading_trivia(&self, token: &SyntaxToken) -> FormatElement {

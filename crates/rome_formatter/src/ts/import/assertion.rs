@@ -9,7 +9,6 @@ use rslint_parser::AstSeparatedList;
 impl ToFormatElement for JsImportAssertion {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let assert_token = formatter.format_token(&self.assert_token()?)?;
-        // let separated_assertions = formatter.format_separated(self.assertions(), || token(","))?;
         let assertions = self.assertions();
 
         let space = if assertions.len() == 0 {

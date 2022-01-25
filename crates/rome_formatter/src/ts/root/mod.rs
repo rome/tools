@@ -1,26 +1,20 @@
-use crate::{join_elements_hard_line, FormatElement, Formatter};
-use rslint_parser::ast::JsModuleItemList;
-use rslint_parser::AstNode;
-use rslint_parser::AstNodeList;
+use crate::{
+    empty_element, format_elements, hard_line_break, FormatElement, FormatResult, Formatter,
+};
+use rslint_parser::SyntaxToken;
 
 mod any_module_item;
 mod module;
 mod script;
 
-pub fn format_module_item_list(list: JsModuleItemList, formatter: &Formatter) -> FormatElement {
-    join_elements_hard_line(list.iter().map(|module_item| {
-        let snapshot = formatter.snapshot();
-        let elem = match formatter.format_node(&module_item) {
-            Ok(result) => result,
-            Err(_) => {
-                formatter.restore(snapshot);
-                formatter
-                    .format_verbatim(module_item.syntax())
-                    .trim_start()
-                    .trim_end()
-            }
-        };
-
-        (module_item, elem)
-    }))
+pub fn format_interpreter(
+    interpreter: Option<SyntaxToken>,
+    formatter: &Formatter,
+) -> FormatResult<FormatElement> {
+    let result = if let Some(interpreter) = interpreter {
+        format_elements![formatter.format_token(&interpreter)?, hard_line_break()]
+    } else {
+        empty_element()
+    };
+    Ok(result)
 }

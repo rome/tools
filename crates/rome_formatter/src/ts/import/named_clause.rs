@@ -8,7 +8,7 @@ impl ToFormatElement for JsImportNamedClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let source = formatter.format_node(self.source()?)?;
         let default = if let Some(default) = self.default_specifier() {
-            formatter.format_node(default)?
+            format_elements![formatter.format_node(default)?, space_token()]
         } else {
             empty_element()
         };

@@ -14,6 +14,7 @@ mod named_clause;
 mod named_import_specifier;
 mod named_import_specifiers;
 mod namespace_clause;
+mod namespace_import_specifier;
 mod shorthand_named_import_specifier;
 
 use crate::{

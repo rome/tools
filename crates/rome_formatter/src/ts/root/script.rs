@@ -1,4 +1,5 @@
-use crate::ts::root::{format_directives_list, format_interpreter};
+use crate::ts::directives::format_directives_list;
+use crate::ts::root::format_interpreter;
 use crate::{
     format_elements, hard_line_break, FormatElement, FormatResult, Formatter, ToFormatElement,
 };

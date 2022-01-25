@@ -5,7 +5,7 @@ impl ToFormatElement for JsAnyNamedImport {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
             JsAnyNamedImport::JsNamedImportSpecifiers(e) => e.to_format_element(formatter),
-            JsAnyNamedImport::JsNamespaceImportSpecifier(_) => todo!(),
+            JsAnyNamedImport::JsNamespaceImportSpecifier(e) => e.to_format_element(formatter),
         }
     }
 }

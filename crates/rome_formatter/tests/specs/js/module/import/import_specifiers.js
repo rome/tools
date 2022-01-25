@@ -12,3 +12,4 @@ import {
 } from "test";
 
 import {loooooooooooooooooooong3,loooooooooooooooooooong5,loooooooooooooooooooong6 } from "boo"
+import { f as x, default as w, "a-b-c" as y } from "b";

@@ -32,10 +32,12 @@ import "very_long_import_very_long_import_very_long_import_very_long_import_very
 	type: "json",
 };
 import "short" assert { type: "json" };
+
 import "very_long_import_very_long_import_very" assert {
 	// something good is here
 	"type": "json", /****/
 };
+
 import "very_long_import_very_long_import_very" assert {
 	// something good is here
 	"type": "json", /****/
