@@ -137,10 +137,15 @@ pub struct FileSpan {
 
 impl FileSpan {
     pub fn new(file: FileId, span: impl Span) -> Self {
-        Self {
-            file,
-            range: span.as_range(),
-        }
+        let range = span.as_range();
+        debug_assert!(
+            range.start <= range.end,
+            "slice index starts at {} but ends at {}",
+            range.start,
+            range.end
+        );
+
+        Self { file, range }
     }
 }
 
