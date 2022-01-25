@@ -290,16 +290,7 @@ where
     I: IntoIterator<Item = (N, FormatElement)>,
     N: AstNode,
 {
-    concat_elements(IntersperseFn::new(
-        elements.into_iter().filter(|(_, e)| !e.is_empty()),
-        |prev_node, next_node| {
-            if get_lines_between(prev_node.syntax(), next_node.syntax()) > 1 {
-                empty_line()
-            } else {
-                soft_line_break_or_space()
-            }
-        },
-    ))
+    join_elements_with(elements, soft_line_break_or_space)
 }
 
 /// Specialized version of [join_elements] for joining SyntaxNodes separated by one or more
@@ -314,50 +305,57 @@ where
     I: IntoIterator<Item = (N, FormatElement)>,
     N: AstNode,
 {
+    join_elements_with(elements, hard_line_break)
+}
+
+#[inline]
+pub fn join_elements_with<I, N>(elements: I, separator: fn() -> FormatElement) -> FormatElement
+where
+    I: IntoIterator<Item = (N, FormatElement)>,
+    N: AstNode,
+{
+    /// Get the number of line breaks between two consecutive SyntaxNodes in the tree
+    fn get_lines_between_nodes(prev_node: &SyntaxNode, next_node: &SyntaxNode) -> usize {
+        // Ensure the two nodes are actually siblings on debug
+        debug_assert_eq!(prev_node.next_sibling().as_ref(), Some(next_node));
+        debug_assert_eq!(next_node.prev_sibling().as_ref(), Some(prev_node));
+
+        // Count the lines separating the two statements,
+        // starting with the trailing trivia of the previous node
+        let mut line_count = prev_node
+            .last_trailing_trivia()
+            .and_then(|prev_token| {
+                // Newline pieces can only come last in trailing trivias, skip to it directly
+                prev_token.pieces().last()?.as_newline()
+            })
+            .is_some() as usize;
+
+        // Then add the newlines in the leading trivia of the next node
+        if let Some(leading_trivia) = next_node.first_leading_trivia() {
+            for piece in leading_trivia.pieces() {
+                if piece.as_newline().is_some() {
+                    line_count += 1;
+                } else if piece.as_comments().is_some() {
+                    // Stop at the first comment piece, the comment printer
+                    // will handle newlines between the comment and the node
+                    break;
+                }
+            }
+        }
+
+        line_count
+    }
+
     concat_elements(IntersperseFn::new(
         elements.into_iter().filter(|(_, e)| !e.is_empty()),
         |prev_node, next_node| {
-            if get_lines_between(prev_node.syntax(), next_node.syntax()) > 1 {
+            if get_lines_between_nodes(prev_node.syntax(), next_node.syntax()) > 1 {
                 empty_line()
             } else {
-                hard_line_break()
+                separator()
             }
         },
     ))
-}
-
-/// Get the number of line breaks between two consecutive SyntaxNodes in the tree
-fn get_lines_between(prev_node: &SyntaxNode, next_node: &SyntaxNode) -> usize {
-    // Ensure the two nodes are actually siblings on debug
-    debug_assert_eq!(prev_node.next_sibling().as_ref(), Some(next_node));
-    debug_assert_eq!(next_node.prev_sibling().as_ref(), Some(prev_node));
-
-    // Count the lines separating the two statements,
-    // starting with the trailing trivia of the previous node
-    let mut line_count = prev_node
-        .last_trailing_trivia()
-        .and_then(|prev_token| {
-            // Newline pieces can only come last in trailing trivias, skip to it directly
-            let last_trivia = prev_token.pieces().last()?;
-            let prev_newline = last_trivia.as_newline()?;
-            Some(prev_newline.text().matches('\n').count())
-        })
-        .unwrap_or(0);
-
-    // Then add the newlines in the leading trivia of the next statement
-    if let Some(leading_trivia) = next_node.first_leading_trivia() {
-        for piece in leading_trivia.pieces() {
-            if let Some(newline) = piece.as_newline() {
-                line_count += newline.text().matches('\n').count();
-            } else if piece.as_comments().is_some() {
-                // Stop at the first comment piece, the comment printer
-                // will handle newlines between the comment and the node
-                break;
-            }
-        }
-    }
-
-    line_count
 }
 
 /// It adds a level of indentation to the given content

@@ -290,8 +290,8 @@ impl Formatter {
                 elements.push(format_elements![comment, line_break]);
 
                 line_count = 0;
-            } else if let Some(newline) = piece.as_newline() {
-                line_count += newline.text().matches('\n').count();
+            } else if piece.as_newline().is_some() {
+                line_count += 1;
             }
         }
 
