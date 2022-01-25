@@ -1,7 +1,7 @@
 use crate::format_element::soft_line_indent_or_space;
 use crate::{
-    concat_elements, empty_element, format_elements, space_token, token, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    concat_elements, empty_element, format_elements, group_elements, space_token, token,
+    FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunction, JsAnyFunctionBody,
@@ -64,7 +64,7 @@ impl ToFormatElement for JsAnyFunction {
             ));
         }
 
-        Ok(concat_elements(tokens))
+        Ok(group_elements(concat_elements(tokens)))
     }
 }
 

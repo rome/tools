@@ -330,8 +330,7 @@ foo(
 ---
 # Output
 fooooooooooooooooooooooooooooooooooooooooooooooooooo(
-	(action) => (next) =>
-		dispatch(action),
+	(action) => (next) => dispatch(action),
 );
 
 foo(({ a, b }) => {});
