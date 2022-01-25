@@ -21,9 +21,36 @@ pub(crate) fn get_precedence(tok: JsSyntaxKind) -> Option<u8> {
     })
 }
 
-pub(crate) fn expect_keyword(p: &mut Parser, keyword_name: &str, kind: JsSyntaxKind) {
-    if p.at(T![ident]) && p.cur_src() == keyword_name {
+#[inline]
+pub(crate) fn is_at_contextual_keyword(p: &Parser, name: &str) -> bool {
+    is_nth_at_contextual_keyword(p, 0, name)
+}
+
+#[inline]
+pub(crate) fn is_nth_at_contextual_keyword(p: &Parser, n: usize, name: &str) -> bool {
+    p.nth_at(n, T![ident]) && p.nth_src(n) == name
+}
+
+pub(crate) fn eat_contextual_keyword(
+    p: &mut Parser,
+    keyword_name: &str,
+    kind: JsSyntaxKind,
+) -> bool {
+    if is_at_contextual_keyword(p, keyword_name) {
         p.bump_remap(kind);
+        true
+    } else {
+        false
+    }
+}
+
+pub(crate) fn expect_contextual_keyword(
+    p: &mut Parser,
+    keyword_name: &str,
+    kind: JsSyntaxKind,
+) -> bool {
+    if eat_contextual_keyword(p, keyword_name, kind) {
+        true
     } else {
         let err = if p.cur() == JsSyntaxKind::EOF {
             p.err_builder(&format!(
@@ -41,5 +68,6 @@ pub(crate) fn expect_keyword(p: &mut Parser, keyword_name: &str, kind: JsSyntaxK
         };
 
         p.error(err);
+        false
     }
 }

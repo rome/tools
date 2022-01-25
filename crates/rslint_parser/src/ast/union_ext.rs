@@ -1,6 +1,7 @@
 use crate::ast::{
     JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyClass, JsAnyFunction, JsAnyFunctionBody,
-    JsClassMemberList, JsExtendsClause, TsImplementsClause, TsTypeAnnotation, TsTypeParams,
+    JsClassMemberList, JsExtendsClause, TsImplementsClause, TsReturnTypeAnnotation,
+    TsTypeParameters,
 };
 use crate::{SyntaxResult, SyntaxToken};
 
@@ -120,7 +121,7 @@ impl JsAnyFunction {
         }
     }
 
-    pub fn type_parameters(&self) -> Option<TsTypeParams> {
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         match self {
             JsAnyFunction::JsArrowFunctionExpression(expr) => expr.type_parameters(),
             JsAnyFunction::JsFunctionExpression(expr) => expr.type_parameters(),
@@ -148,7 +149,7 @@ impl JsAnyFunction {
         }
     }
 
-    pub fn return_type(&self) -> Option<TsTypeAnnotation> {
+    pub fn return_type(&self) -> Option<TsReturnTypeAnnotation> {
         match self {
             JsAnyFunction::JsArrowFunctionExpression(expr) => expr.return_type(),
             JsAnyFunction::JsFunctionExpression(expr) => expr.return_type(),

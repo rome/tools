@@ -8,7 +8,6 @@
 mod expr_ext;
 mod generated;
 mod stmt_ext;
-mod ts_ext;
 mod union_ext;
 
 use crate::{syntax_node::*, util::SyntaxNodeExt, JsSyntaxKind, SyntaxList, TextRange};
@@ -17,7 +16,7 @@ use std::iter::FusedIterator;
 use std::marker::PhantomData;
 use thiserror::Error;
 
-pub use self::{expr_ext::*, generated::nodes::*, stmt_ext::*, ts_ext::*};
+pub use self::{expr_ext::*, generated::nodes::*, stmt_ext::*};
 
 pub(crate) use self::generated::syntax_factory::JsSyntaxFactory;
 

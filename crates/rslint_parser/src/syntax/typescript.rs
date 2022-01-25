@@ -3,25 +3,31 @@
 use super::expr::{
     parse_assignment_expression_or_higher, parse_lhs_expr, parse_literal_expression, parse_name,
 };
-use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
-use crate::state::SignatureFlags;
-use crate::syntax::binding::parse_binding;
-use crate::syntax::expr::{is_at_name, parse_any_name, ExpressionContext};
-use crate::syntax::function::parse_parameter_list;
+use crate::parser::{ParserProgress, RecoveryResult};
+use crate::state::{EnterType, SignatureFlags};
+use crate::syntax::binding::parse_identifier_binding;
+use crate::syntax::expr::{
+    is_at_identifier, is_nth_at_identifier, is_nth_at_identifier_or_keyword,
+    parse_big_int_literal_expression, parse_identifier, parse_number_literal_expression,
+    parse_reference_identifier, ExpressionContext,
+};
+use crate::syntax::function::{parse_parameter, parse_parameter_list, skip_parameter_start};
 use crate::syntax::js_parse_error;
+use crate::syntax::js_parse_error::{
+    expected_identifier, expected_object_member_name, expected_parameter, expected_parameters,
+    expected_property_or_signature, expected_ts_type, expected_ts_type_parameter,
+};
+use crate::syntax::object::{
+    is_at_object_member_name, is_nth_at_object_member_name, parse_object_member_name,
+};
+use crate::syntax::stmt::semi;
+use crate::syntax::util::{
+    eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
+    is_nth_at_contextual_keyword,
+};
 use crate::{JsSyntaxKind::*, *};
-
-pub const BASE_TS_RECOVERY_SET: TokenSet = token_set![
-    T![void],
-    T![ident],
-    T![ident],
-    T![await],
-    T![null],
-    T![break],
-    T!['['],
-];
 
 #[rustfmt::skip]
 pub const DISALLOWED_TYPE_NAMES: &[&str] = &[
@@ -38,23 +44,1187 @@ pub const DISALLOWED_TYPE_NAMES: &[&str] = &[
     "never",
 ];
 
-// ambiguity is fun!
-macro_rules! no_recover {
-    ($p:expr, $res:expr) => {
-        if $res.is_none() && $p.state.no_recovery {
-            return None;
-        }
-    };
-    ($p:expr, $m:expr, $t:expr, $res:expr) => {
-        if $res.is_none() && $p.state.no_recovery {
-            $m.abandon($p);
-            $p.rewind($t);
-            return None;
-        }
-    };
+pub(super) fn parse_ts_type_annotation(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![:]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T![:]);
+    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    Present(m.complete(p, TS_TYPE_ANNOTATION))
 }
 
-pub fn ts_modifier(p: &mut Parser, modifiers: &[&'static str]) -> Option<Range<usize>> {
+// test ts_return_type_annotation
+// // TYPESCRIPT
+// type A = (a) => a is string;
+// type B = { test(a): a is string }
+// type C = { (a): a is string }
+// const a = { test(x): x is string { return typeof x === "string" } }
+// class D { test(x): x is string { return typeof x === "string"; } }
+pub(super) fn parse_ts_return_type_annotation(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![:]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T![:]);
+    parse_ts_return_type(p).or_add_diagnostic(p, expected_ts_type);
+    Present(m.complete(p, TS_RETURN_TYPE_ANNOTATION))
+}
+
+pub(super) fn parse_ts_type_alias(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![ident]) || p.cur_src() != "type" {
+        return Absent;
+    }
+
+    let start = p.cur_tok().range().start;
+    let m = p.start();
+    p.bump_remap(T![type]);
+    parse_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
+    parse_ts_type_parameters(p).ok();
+    p.expect(T![=]);
+    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+
+    semi(p, start..p.cur_tok().range().end);
+
+    Present(m.complete(p, TS_TYPE_ALIAS))
+}
+
+pub(super) fn parse_ts_type(p: &mut Parser) -> ParsedSyntax {
+    p.with_state(EnterType, |p| {
+        if is_at_constructor_type(p) {
+            return parse_ts_constructor_type(p);
+        }
+
+        if is_at_function_type(p) {
+            return parse_ts_function_type(p);
+        }
+
+        parse_ts_union_type_or_higher(p).map(|left| {
+            // test ts_conditional_type
+            // // TYPESCRIPT
+            // type A = number;
+            // type B = string extends number ? string : number;
+            // type C = A extends (B extends A ? number : string) ? void : number;
+            if !p.has_linebreak_before_n(0) && p.at(T![extends]) {
+                let m = left.precede(p);
+                p.bump(T![extends]);
+                parse_ts_union_type_or_higher(p).or_add_diagnostic(p, expected_ts_type);
+                p.expect(T![?]);
+                parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+                p.expect(T![:]);
+                parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+                m.complete(p, TS_CONDITIONAL_TYPE)
+            } else {
+                left
+            }
+        })
+    })
+}
+
+// test ts_union_type
+// // TYPESCRIPT
+// type A = string | number;
+// type B = | A | void | null;
+// type C = A & C | C;
+fn parse_ts_union_type_or_higher(p: &mut Parser) -> ParsedSyntax {
+    parse_ts_union_or_intersection_type(p, IntersectionOrUnionType::Union)
+}
+
+// test ts_intersection_type
+// // TYPESCRIPT
+// type A = string & number;
+// type B = & A & void & null;
+fn parse_ts_intersection_type_or_higher(p: &mut Parser) -> ParsedSyntax {
+    parse_ts_union_or_intersection_type(p, IntersectionOrUnionType::Intersection)
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+enum IntersectionOrUnionType {
+    Intersection,
+    Union,
+}
+
+impl IntersectionOrUnionType {
+    #[inline]
+    fn operator(&self) -> JsSyntaxKind {
+        match self {
+            IntersectionOrUnionType::Union => T![|],
+            IntersectionOrUnionType::Intersection => T![&],
+        }
+    }
+
+    #[inline]
+    fn list_kind(&self) -> JsSyntaxKind {
+        match self {
+            IntersectionOrUnionType::Union => TS_UNION_TYPE_VARIANT_LIST,
+            IntersectionOrUnionType::Intersection => TS_INTERSECTION_TYPE_ELEMENT_LIST,
+        }
+    }
+
+    #[inline]
+    fn kind(&self) -> JsSyntaxKind {
+        match self {
+            IntersectionOrUnionType::Union => TS_UNION_TYPE,
+            IntersectionOrUnionType::Intersection => TS_INTERSECTION_TYPE,
+        }
+    }
+
+    #[inline]
+    fn parse_element(&self, p: &mut Parser) -> ParsedSyntax {
+        match self {
+            IntersectionOrUnionType::Union => parse_ts_intersection_type_or_higher(p),
+            IntersectionOrUnionType::Intersection => parse_ts_type_operator_or_higher(p),
+        }
+    }
+}
+
+#[inline]
+fn parse_ts_union_or_intersection_type(
+    p: &mut Parser,
+    ty_kind: IntersectionOrUnionType,
+) -> ParsedSyntax {
+    let m = p.start();
+
+    let has_leading = p.at(ty_kind.operator());
+    if has_leading {
+        p.bump(ty_kind.operator());
+    };
+
+    let list = p.start();
+    let first = ty_kind.parse_element(p);
+
+    if has_leading || p.at(ty_kind.operator()) {
+        first.or_add_diagnostic(p, expected_ts_type);
+
+        while p.at(ty_kind.operator()) {
+            p.bump(ty_kind.operator());
+
+            ty_kind
+                .parse_element(p)
+                .or_add_diagnostic(p, expected_ts_type);
+        }
+
+        list.complete(p, ty_kind.list_kind());
+
+        Present(m.complete(p, ty_kind.kind()))
+    } else {
+        list.abandon(p);
+        m.abandon(p);
+        first
+    }
+}
+
+fn parse_ts_type_operator_or_higher(p: &mut Parser) -> ParsedSyntax {
+    if p.at(T![ident]) {
+        // test ts_inferred_type
+        // // TYPESCRIPT
+        // type A = infer B;
+        // type B = { a: infer U; b: infer U};
+        if p.cur_src() == "infer" {
+            let m = p.start();
+            p.bump_remap(T![infer]);
+            parse_ts_type_parameter_name(p).or_add_diagnostic(p, expected_identifier);
+            return Present(m.complete(p, TS_INFERRED_TYPE));
+        }
+
+        // test ts_type_operator
+        // // TYPESCRIPT
+        // type A = { x: string, y: number };
+        // type B = keyof A;
+        // type C = readonly string[];
+        // const d: unique symbol = Symbol();
+        let type_operator_kind = match p.cur_src() {
+            "unique" => Some(UNIQUE_KW),
+            "keyof" => Some(KEYOF_KW),
+            "readonly" => Some(READONLY_KW),
+            _ => None,
+        };
+
+        if let Some(type_operator_kind) = type_operator_kind {
+            let m = p.start();
+            p.bump_remap(type_operator_kind);
+            parse_ts_type_operator_or_higher(p).or_add_diagnostic(p, expected_ts_type);
+            return Present(m.complete(p, TS_TYPE_OPERATOR_TYPE));
+        }
+    }
+
+    parse_postfix_type_or_higher(p)
+}
+
+fn parse_postfix_type_or_higher(p: &mut Parser) -> ParsedSyntax {
+    parse_ts_non_array_type(p).map(|primary_type| {
+        let mut left = primary_type;
+
+        while p.at(T!['[']) && !p.has_linebreak_before_n(0) {
+            let m = left.precede(p);
+            p.bump(T!['[']);
+
+            left = if parse_ts_type(p).is_present() {
+                // test ts_indexed_access_type
+                // // TYPESCRIPT
+                // type A = string[number];
+                // type B = string[number][number][number][];
+                p.expect(T![']']);
+                m.complete(p, TS_INDEXED_ACCESS_TYPE)
+            } else {
+                // test ts_array_type
+                // // TYPESCRIPT
+                // type A = string[];
+                // type B = { a: number } [];
+                p.expect(T![']']);
+                m.complete(p, TS_ARRAY_TYPE)
+            }
+        }
+
+        left
+    })
+}
+
+fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
+    // test ts_predefined_type
+    // // TYPESCRIPT
+    // type A = any
+    // type B = number;
+    // type C = object;
+    // type D = boolean;
+    // type E = bigint;
+    // type F = string;
+    // type G = symbol;
+    // type H = void;
+    // type I = undefined;
+    // type J = null;
+    // type K = never
+    match p.cur() {
+        T!['('] => parse_ts_parenthesized_type(p),
+        T!['{'] => {
+            if is_at_start_of_mapped_type(p) {
+                parse_ts_mapped_type(p)
+            } else {
+                parse_ts_object_type(p)
+            }
+        }
+        T!['['] => parse_ts_tuple_type(p),
+        T![void] => {
+            let m = p.start();
+            p.bump(T![void]);
+            Present(m.complete(p, TS_VOID_TYPE))
+        }
+        JS_NUMBER_LITERAL | JS_STRING_LITERAL | TRUE_KW | FALSE_KW | T![null] => {
+            parse_ts_literal_type(p)
+        }
+        BACKTICK => parse_ts_template_literal_type(p),
+        T![-] if p.nth_at(1, JS_NUMBER_LITERAL) => parse_ts_literal_type(p),
+        T![this] => parse_ts_this_type(p),
+        T![typeof] => {
+            if p.nth_at(1, T![import]) {
+                parse_ts_import_type(p)
+            } else {
+                parse_ts_typeof_type(p)
+            }
+        }
+        T![import] => parse_ts_import_type(p),
+        T![ident] if !p.nth_at(1, T![.]) => {
+            let (token_kind, node_kind) = match p.cur_src() {
+                "any" => (T![any], TS_ANY_TYPE),
+                "unknown" => (T![unknown], TS_UNKNOWN_TYPE),
+                "number" => (T![number], TS_NUMBER_TYPE),
+                "object" => (T![object], TS_NON_PRIMITIVE_TYPE),
+                "boolean" => (T![boolean], TS_BOOLEAN_TYPE),
+                "bigint" => (T![bigint], TS_BIGINT_TYPE),
+                "string" => (T![string], TS_STRING_TYPE),
+                "symbol" => (T![symbol], TS_SYMBOL_TYPE),
+                "undefined" => (T![undefined], TS_UNDEFINED_TYPE),
+                "never" => (T![never], TS_NEVER_TYPE),
+                _ => {
+                    return parse_ts_type_reference(p);
+                }
+            };
+
+            let m = p.start();
+            p.bump_remap(token_kind);
+            Present(m.complete(p, node_kind))
+        }
+        T![ident] => parse_ts_type_reference(p),
+        _ => parse_ts_type_reference(p),
+    }
+}
+
+// test ts_type_reference
+// // TYPESCRIPT
+// type A = object;
+// type B = string;
+// type C = A;
+// type D = B.a;
+// type E = D.c.b.a;
+fn parse_ts_type_reference(p: &mut Parser) -> ParsedSyntax {
+    parse_ts_name(p).map(|name| {
+        let m = name.precede(p);
+
+        if !p.has_linebreak_before_n(0) && p.at(T![<]) {
+            ts_type_args(p);
+        }
+
+        m.complete(p, TS_TYPE_REFERENCE)
+    })
+}
+
+pub(super) fn parse_ts_name(p: &mut Parser) -> ParsedSyntax {
+    let mut left = if p.cur().is_keyword() {
+        let m = p.start();
+        p.bump_remap(T![ident]);
+        Present(m.complete(p, JS_REFERENCE_IDENTIFIER))
+    } else {
+        parse_reference_identifier(p)
+    };
+
+    while p.at(T![.]) {
+        let m = left.precede_or_add_diagnostic(p, expected_identifier);
+        p.bump(T![.]);
+        parse_name(p).or_add_diagnostic(p, expected_identifier);
+        left = Present(m.complete(p, TS_QUALIFIED_NAME));
+    }
+
+    left
+}
+
+// test ts_typeof_type
+// // TYPESCRIPT
+// let a = "test";
+// type B = typeof a;
+fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![typeof]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T![typeof]);
+    parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
+
+    Present(m.complete(p, TS_TYPEOF_TYPE))
+}
+
+// test ts_this_type
+// // TYPESCRIPT
+// class A {
+//     method() {
+//         type A = this;
+//     }
+//     predicate(): this is string {
+//         return typeof this === "string"
+//     }
+// }
+fn parse_ts_this_type(p: &mut Parser) -> ParsedSyntax {
+    let m = p.start();
+    p.bump(T![this]);
+    Present(m.complete(p, TS_THIS_TYPE))
+}
+
+// test ts_parenthesized_type
+// // TYPESCRIPT
+// type A = (string)
+fn parse_ts_parenthesized_type(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T!['(']) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T!['(']);
+    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    p.expect(T![')']);
+    Present(m.complete(p, TS_PARENTHESIZED_TYPE))
+}
+
+fn is_at_start_of_mapped_type(p: &Parser) -> bool {
+    if !p.at(T!['{']) {
+        return false;
+    }
+
+    if p.nth_at(1, T![+]) || p.nth_at(1, T![-]) {
+        return is_nth_at_contextual_keyword(p, 2, "readonly");
+    }
+
+    let mut offset = 1;
+
+    if is_nth_at_contextual_keyword(p, offset, "readonly") {
+        offset += 1;
+    }
+
+    p.nth_at(offset, T!['['])
+        && (is_nth_at_identifier(p, offset + 1) || p.nth(offset + 1).is_keyword())
+        && p.nth_at(offset + 2, T![in])
+}
+
+// test ts_mapped_type
+// // TYPESCRIPT
+// type OptionsFlags<Type> = {
+//   [Property in keyof Type]: boolean;
+// };
+// type CreateMutable<Type> = {
+// 	-readonly [Property in keyof Type]: Type[Property];
+// };
+// type Concrete<Type> = {
+//   [Property in keyof Type]-?: Type[Property]
+// };
+// type Getters<Type> = {
+//     [Property in keyof Type as `get${Capitalize<string & Property>}`]: () => Type[Property]
+// };
+fn parse_ts_mapped_type(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T!['{']) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T!['{']);
+    parse_ts_mapped_type_readonly_modifier_clause(p).ok();
+    p.expect(T!['[']);
+    parse_ts_type_parameter_name(p).or_add_diagnostic(p, expected_ts_type_parameter);
+    p.expect(T![in]);
+    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    parse_ts_mapped_type_as_clause(p).ok();
+    p.expect(T![']']);
+    parse_ts_mapped_type_optional_modifier_clause(p).ok();
+    p.expect(T![:]);
+    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    p.eat(T![;]);
+    p.expect(T!['}']);
+
+    Present(m.complete(p, TS_MAPPED_TYPE))
+}
+
+fn parse_ts_mapped_type_as_clause(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_contextual_keyword(p, "as") {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump_remap(T![as]);
+    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    Present(m.complete(p, TS_MAPPED_TYPE_AS_CLAUSE))
+}
+
+fn parse_ts_mapped_type_readonly_modifier_clause(p: &mut Parser) -> ParsedSyntax {
+    if is_at_contextual_keyword(p, "readonly") {
+        let m = p.start();
+        p.bump_remap(T![readonly]);
+        Present(m.complete(p, TS_MAPPED_TYPE_READONLY_MODIFIER_CLAUSE))
+    } else if p.at(T![+]) || p.at(T![-]) {
+        let m = p.start();
+        p.bump_any();
+        expect_contextual_keyword(p, "readonly", T![readonly]);
+        Present(m.complete(p, TS_MAPPED_TYPE_READONLY_MODIFIER_CLAUSE))
+    } else {
+        Absent
+    }
+}
+
+fn parse_ts_mapped_type_optional_modifier_clause(p: &mut Parser) -> ParsedSyntax {
+    match p.cur() {
+        T![?] => {
+            let m = p.start();
+            p.bump(T![?]);
+            Present(m.complete(p, TS_MAPPED_TYPE_OPTIONAL_MODIFIER_CLAUSE))
+        }
+        T![-] | T![+] => {
+            let m = p.start();
+            p.bump_any();
+            p.expect(T![?]);
+            Present(m.complete(p, TS_MAPPED_TYPE_OPTIONAL_MODIFIER_CLAUSE))
+        }
+        _ => Absent,
+    }
+}
+
+// test ts_import_type
+// // TYPESCRIPT
+// type A = typeof import("test");
+// type B = import("test");
+// type C = typeof import("test").a.b.c.d.e.f;
+fn parse_ts_import_type(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![typeof]) && !p.at(T![import]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.eat(T![typeof]);
+    p.expect(T![import]);
+    p.expect(T!['(']);
+    p.expect(JS_STRING_LITERAL);
+    p.expect(T![')']);
+
+    if p.at(T![.]) {
+        let qualifier = p.start();
+        p.bump(T![.]);
+        parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
+        qualifier.complete(p, TS_IMPORT_TYPE_QUALIFIER);
+    }
+
+    Present(m.complete(p, TS_IMPORT_TYPE))
+}
+
+// test ts_object_type
+// // TYPESCRIPT
+// type A = { a: string, b: number };
+// type B = { a: string; b: number };
+// type C = { a: string, b: number; c: string };
+fn parse_ts_object_type(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T!['{']) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T!['{']);
+
+    let mut progress = ParserProgress::default();
+    let mut first = true;
+    let list = p.start();
+
+    while !p.at(T!['}']) && !p.at(EOF) {
+        if first {
+            first = false;
+        } else if !p.eat(T![,]) {
+            // , and ; are valid separators...
+            p.expect(T![;]);
+        }
+
+        if p.at(T!['}']) {
+            break;
+        }
+
+        progress.assert_progressing(p);
+
+        let member = parse_ts_object_type_member(p);
+
+        if member.is_absent() && (p.at(T![,]) || p.at(T![;])) {
+            // missing element
+            continue;
+        } else if member
+            .or_recover(
+                p,
+                &ParseRecovery::new(JS_UNKNOWN, token_set![T!['}'], T![,], T![,]])
+                    .enable_recovery_on_line_break(),
+                expected_property_or_signature,
+            )
+            .is_err()
+        {
+            break;
+        }
+    }
+    list.complete(p, TS_OBJECT_TYPE_MEMBER_LIST);
+
+    p.expect(T!['}']);
+    Present(m.complete(p, TS_OBJECT_TYPE))
+}
+
+fn parse_ts_object_type_member(p: &mut Parser) -> ParsedSyntax {
+    if is_at_ts_index_signature_object_type_member(p) {
+        return parse_ts_index_signature_object_type_member(p);
+    }
+
+    match p.cur() {
+        T!['('] | T![<] => parse_ts_call_signature_object_type_member(p),
+        T![new] if is_at_ts_construct_signature_object_type_member(p) => {
+            parse_ts_construct_signature_object_type_member(p)
+        }
+        T![ident] if p.cur_src() == "get" && is_nth_at_object_member_name(p, 1) => {
+            parse_ts_getter_signature_object_type_member(p)
+        }
+        T![ident] if p.cur_src() == "set" && is_nth_at_object_member_name(p, 1) => {
+            parse_ts_setter_signature_object_type_member(p)
+        }
+        _ => parse_ts_property_or_method_signature_object_type_member(p),
+    }
+}
+
+// test ts_property_or_method_signature_member
+// // TYPESCRIPT
+// type A = { a?: string; b?(): number }
+// type B = { a: string, b(): number }
+// type C = { m(a: string, b: number, c: string): any }
+// type D = { readonly: string, readonly a: number }
+// type E = { m<A, B>(a: A, b: B): never }
+fn parse_ts_property_or_method_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_object_member_name(p) {
+        return Absent;
+    }
+
+    let m = p.start();
+    let readonly_range =
+        if p.at(T![ident]) && p.cur_src() == "readonly" && is_nth_at_object_member_name(p, 1) {
+            let range = p.cur_tok().range();
+            p.bump_remap(T![readonly]);
+            Some(range)
+        } else {
+            None
+        };
+
+    parse_object_member_name(p).unwrap();
+
+    p.eat(T![?]);
+
+    if p.at(T!['(']) || p.at(T![<]) {
+        parse_ts_call_signature(p);
+        let method = m.complete(p, TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER);
+
+        if let Some(readonly_range) = readonly_range {
+            p.error(
+                p.err_builder(
+                    "readonly modifier can only appear on a property or signature declaration",
+                )
+                .primary(readonly_range, ""),
+            );
+        }
+
+        Present(method)
+    } else {
+        parse_ts_type_annotation(p).ok();
+        Present(m.complete(p, TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER))
+    }
+}
+
+// test ts_call_signature_member
+// // TYPESCRIPT
+// type A = { (): string; }
+// type B = { (a, b, c): number }
+// type C = { <A, B>(a: A, b: B): number }
+fn parse_ts_call_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
+    if !(p.at(T!['(']) || p.at(T![<])) {
+        return Absent;
+    }
+
+    let m = p.start();
+    parse_ts_call_signature(p);
+    Present(m.complete(p, TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER))
+}
+
+// test ts_construct_signature_member
+// // TYPESCRIPT
+// type A = { new (): string; }
+// type B = { new (a: string, b: number) }
+// type C = { new <A, B>(a: A, b: B): string }
+fn parse_ts_construct_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_ts_construct_signature_object_type_member(p) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T![new]);
+    parse_ts_type_parameters(p).ok();
+    parse_parameter_list(p, SignatureFlags::empty()).or_add_diagnostic(p, expected_parameters);
+    parse_ts_type_annotation(p).ok();
+
+    Present(m.complete(p, TS_CONSTRUCT_SIGNATURE_OBJECT_TYPE_MEMBER))
+}
+
+// test ts_getter_signature_member
+// // TYPESCRIPT
+// type A = { get a(): number }
+// type B = { get a() }
+// // members that look like getters but aren't getters
+// type C = { get(): number }
+// type D = { get: number }
+// type E = { get }
+fn parse_ts_getter_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
+    if !(p.at(T![ident]) && p.cur_src() == "get") {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump_remap(T![get]);
+    parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
+    p.expect(T!['(']);
+    p.expect(T![')']);
+    parse_ts_type_annotation(p).ok();
+    Present(m.complete(p, TS_GETTER_SIGNATURE_OBJECT_TYPE_MEMBER))
+}
+
+// test ts_setter_signature_member
+// // TYPESCRIPT
+// type A = { set a(b: number) }
+// type B = { set a(b) }
+// // members that look like setters but aren't setters
+// type C = { set(a) }
+// type D = { set: number }
+// type E = { set }
+fn parse_ts_setter_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
+    if !(p.at(T![ident]) && p.cur_src() == "set") {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump_remap(T![set]);
+    parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
+    p.expect(T!['(']);
+    parse_parameter(p, ExpressionContext::default()).or_add_diagnostic(p, expected_parameter);
+    p.expect(T![')']);
+    Present(m.complete(p, TS_SETTER_SIGNATURE_OBJECT_TYPE_MEMBER))
+}
+
+/// Must be at `[ident:]` or `readonly [ident:]`
+fn is_at_ts_index_signature_object_type_member(p: &Parser) -> bool {
+    let mut offset = 0;
+
+    if p.at(T![ident]) && p.cur_src() == "readonly" {
+        offset = 1;
+    }
+
+    if !p.nth_at(offset, T!['[']) {
+        return false;
+    }
+
+    if !is_nth_at_identifier(p, offset + 1) {
+        return false;
+    }
+
+    p.nth_at(offset + 2, T![:])
+}
+
+// test ts_index_signature_member
+// // TYPESCRIPT
+// type A = { [a: number]: string }
+// type B = { readonly [a: number]: string }
+// // not an index signature
+// type C = { [a]: string }
+// type D = { readonly [a]: string }
+fn parse_ts_index_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_ts_index_signature_object_type_member(p) {
+        return Absent;
+    }
+
+    let m = p.start();
+
+    if p.at(T![ident]) && p.cur_src() == "readonly" {
+        p.bump_remap(T![readonly]);
+    }
+
+    p.bump(T!['[']);
+
+    let parameter = p.start();
+    parse_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
+    parse_ts_type_annotation(p).unwrap(); // It's a computed member name if the type annotation is missing
+    parameter.complete(p, TS_INDEX_SIGNATURE_PARAMETER);
+
+    p.expect(T![']']);
+
+    parse_ts_type_annotation(p).or_add_diagnostic(p, |p, range| {
+        p.err_builder("An index signature must have a type annotation")
+            .primary(range, "")
+    });
+
+    Present(m.complete(p, TS_INDEX_SIGNATURE_OBJECT_TYPE_MEMBER))
+}
+
+// test ts_tuple_type
+// // TYPESCRIPT
+// type A = [string, number, any]
+// type B = [a: string, b: number, c: any]
+// type C = [a: string, b: number, ...c: any[]]
+// type D = [a?: string]
+// type E = [...string[]]
+// type F = [string?]
+fn parse_ts_tuple_type(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T!['[']) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T!['[']);
+    TsTupleTypeElementList.parse_list(p);
+    p.expect(T![']']);
+
+    Present(m.complete(p, TS_TUPLE_TYPE))
+}
+
+struct TsTupleTypeElementList;
+
+impl ParseSeparatedList for TsTupleTypeElementList {
+    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+        if is_at_named_tuple_type_element(p) {
+            let m = p.start();
+            p.eat(T![...]);
+            parse_name(p).or_add_diagnostic(p, expected_identifier);
+            p.eat(T![?]);
+            p.bump(T![:]);
+            parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+            return Present(m.complete(p, TS_NAMED_TUPLE_TYPE_ELEMENT));
+        }
+
+        if p.at(T![...]) {
+            let m = p.start();
+            p.bump(T![...]);
+            parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+            return Present(m.complete(p, TS_REST_TUPLE_TYPE_ELEMENT));
+        }
+
+        let ty = parse_ts_type(p);
+
+        if p.at(T![?]) {
+            let m = ty.precede_or_add_diagnostic(p, expected_ts_type);
+            p.bump(T![?]);
+            return Present(m.complete(p, TS_OPTIONAL_TUPLE_TYPE_ELEMENT));
+        }
+
+        ty
+    }
+
+    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+        p.at(T![']'])
+    }
+
+    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+        parsed_element.or_recover(
+            p,
+            &ParseRecovery::new(
+                JS_UNKNOWN,
+                token_set![
+                    T![']'],
+                    T![...],
+                    T![ident],
+                    T!['['],
+                    T!['{'],
+                    T![void],
+                    T![null]
+                ],
+            ),
+            expected_ts_type,
+        )
+    }
+
+    fn list_kind() -> JsSyntaxKind {
+        TS_TUPLE_TYPE_ELEMENT_LIST
+    }
+
+    fn separating_element_kind(&mut self) -> JsSyntaxKind {
+        T![,]
+    }
+}
+
+fn is_at_named_tuple_type_element(p: &Parser) -> bool {
+    let offset = if p.at(T![...]) { 1 } else { 0 };
+
+    // a:
+    let is_colon = p.nth_at(offset + 1, T![:]);
+    // a?:
+    let is_question_colon = p.nth_at(offset + 1, T![?]) && p.nth_at(offset + 2, T![:]);
+
+    is_nth_at_identifier_or_keyword(p, offset) && (is_colon || is_question_colon)
+}
+
+// test ts_literal_type
+// // TYPESCRIPT
+// type A = 5;
+// type B = -5;
+// type C = 5n;
+// type D = -5n;
+// type E = "abvcd";
+// type F = true;
+// type G = false;
+// type H = null;
+fn parse_ts_literal_type(p: &mut Parser) -> ParsedSyntax {
+    if p.cur() == JS_REGEX_LITERAL {
+        return Absent;
+    }
+
+    if p.at(T![-]) && p.nth_at(1, JS_NUMBER_LITERAL) {
+        let m = p.start();
+        p.bump(T![-]);
+
+        let number_expr = parse_number_literal_expression(p)
+            .or_else(|| parse_big_int_literal_expression(p))
+            .unwrap();
+
+        // Inline the number or big int literal into the number/big int literal type
+        number_expr.undo_completion(p).abandon(p);
+
+        let type_kind = match number_expr.kind() {
+            JS_NUMBER_LITERAL_EXPRESSION => TS_NUMBER_LITERAL_TYPE,
+            JS_BIG_INT_LITERAL_EXPRESSION => TS_BIG_INT_LITERAL_TYPE,
+            _ => unreachable!(),
+        };
+
+        return Present(m.complete(p, type_kind));
+    }
+
+    parse_literal_expression(p).map(|mut expression| {
+        let type_kind = match expression.kind() {
+            JS_NUMBER_LITERAL_EXPRESSION => TS_NUMBER_LITERAL_TYPE,
+            JS_BIG_INT_LITERAL_EXPRESSION => TS_BIG_INT_LITERAL_TYPE,
+            JS_NULL_LITERAL_EXPRESSION => TS_NULL_LITERAL_TYPE,
+            JS_BOOLEAN_LITERAL_EXPRESSION => TS_BOOLEAN_LITERAL_TYPE,
+            JS_STRING_LITERAL_EXPRESSION => TS_STRING_LITERAL_TYPE,
+            kind => unreachable!("Not a valid kind {:?}", kind),
+        };
+
+        expression.change_kind(p, type_kind);
+        expression
+    })
+}
+
+// test ts_template_literal_type
+// // TYPESCRIPT
+// type A = `abcd`
+// type B = `a${A}`
+// type C<X extends string> = `c${X}`
+fn parse_ts_template_literal_type(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(BACKTICK) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(BACKTICK);
+
+    let elements = p.start();
+    while !p.at(EOF) && !p.at(BACKTICK) {
+        match p.cur() {
+            TEMPLATE_CHUNK => {
+                let m = p.start();
+                p.bump_any();
+                m.complete(p, TS_TEMPLATE_CHUNK_ELEMENT);
+            }
+            DOLLAR_CURLY => {
+                let m = p.start();
+                p.bump_any();
+                parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+                p.expect(T!['}']);
+                m.complete(p, TS_TEMPLATE_ELEMENT);
+            }
+            ERROR_TOKEN => {
+                let err = p
+                    .err_builder("Invalid template literal")
+                    .primary(p.cur_tok().range(), "");
+                p.err_and_bump(err, JS_UNKNOWN);
+            },
+			t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
+        }
+    }
+    elements.complete(p, TS_TEMPLATE_ELEMENT_LIST);
+    p.expect(BACKTICK);
+    Present(m.complete(p, TS_TEMPLATE_LITERAL_TYPE))
+}
+
+fn is_at_ts_construct_signature_object_type_member(p: &Parser) -> bool {
+    p.at(T![new]) && (p.nth_at(1, T!['(']) || is_nth_at_ts_type_parameters(p, 1))
+}
+
+// test ts_constructor_type
+// // TYPESCRIPT
+// type A = new(a: string, b: number) => string;
+// type B = abstract new(a: string, b: number) => string;
+// type C = new<A, B>(a: A, b: B) => string;
+// type D = abstract new<A, B>(a: A, b: B) => string;
+fn parse_ts_constructor_type(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_constructor_type(p) {
+        return Absent;
+    }
+
+    let m = p.start();
+    eat_contextual_keyword(p, "abstract", T![abstract]);
+    p.expect(T![new]);
+
+    parse_ts_type_parameters(p).ok();
+    parse_parameter_list(p, SignatureFlags::empty()).or_add_diagnostic(p, expected_parameters);
+    p.expect(T![=>]);
+    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    Present(m.complete(p, TS_CONSTRUCTOR_TYPE))
+}
+
+fn is_at_constructor_type(p: &mut Parser) -> bool {
+    p.at(T![new]) || (is_at_contextual_keyword(p, "abstract") && p.nth_at(1, T![new]))
+}
+
+/// Determines if the parser's currently located at a function type. Performs a lookahead of at most a single character.
+fn is_at_function_type(p: &mut Parser) -> bool {
+    if p.at(T![<]) {
+        // <
+        return true;
+    }
+
+    if !p.at(T!['(']) {
+        return false;
+    }
+
+    p.lookahead(|p| {
+        p.bump(T!['(']);
+
+        if p.at(T![')']) || p.at(T![...]) {
+            // () not a valid parenthesized type
+            // (... rest parameters are only valid in function types
+            return true;
+        }
+
+        if skip_parameter_start(p) {
+            // We're passed the start of the parameter. Now we can verify if anything indicates that
+            // this is a parameter
+
+            if p.at_ts(token_set![T![:], T![=], T![,], T![?]]) {
+                return true;
+            }
+
+            return p.at(T![')']) && p.nth_at(1, T![=>]);
+        }
+
+        false
+    })
+}
+
+// test ts_function_type
+// // TYPESCRIPT
+// type A = () => string;
+// type B = (a: string) => string;
+// type C = (b = "test") => string;
+// type D = (c, d) => string
+// type E = ([a]) => string
+// type F = ({a}) => string
+// type G = <A, B>(a: A, b: B) => string
+// type H = (a: any) => a is string;
+fn parse_ts_function_type(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![<]) && !p.at(T!['(']) {
+        return Absent;
+    }
+
+    let m = p.start();
+    parse_ts_type_parameters(p).ok();
+    parse_parameter_list(p, SignatureFlags::empty()).or_add_diagnostic(p, expected_parameters);
+    p.expect(T![=>]);
+    parse_ts_return_type(p).or_add_diagnostic(p, expected_ts_type);
+
+    Present(m.complete(p, TS_FUNCTION_TYPE))
+}
+
+fn parse_ts_return_type(p: &mut Parser) -> ParsedSyntax {
+    let is_asserts_predicate = is_at_contextual_keyword(p, "asserts")
+        && (is_nth_at_identifier(p, 1) || p.nth_at(1, T![this]));
+    let is_is_predicate =
+        (is_at_identifier(p) || p.at(T![this])) && is_nth_at_contextual_keyword(p, 1, "is");
+
+    if is_asserts_predicate || is_is_predicate {
+        parse_ts_type_predicate(p)
+    } else {
+        parse_ts_type(p)
+    }
+}
+
+// test ts_type_predicate
+// // TYPESCRIPT
+// type A = (a) => a is string;
+// type B = (a) => asserts a is string;
+// type asserts = string;
+// type C = () => asserts;
+fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
+    let m = p.start();
+    eat_contextual_keyword(p, "asserts", T![asserts]);
+    parse_reference_identifier(p)
+        .or_else(|| parse_ts_this_type(p))
+        .unwrap();
+    eat_contextual_keyword(p, "is", T![is]);
+    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    Present(m.complete(p, TS_TYPE_PREDICATE))
+}
+
+fn parse_ts_call_signature(p: &mut Parser) {
+    parse_ts_type_parameters(p).ok();
+    parse_parameter_list(p, SignatureFlags::empty()).or_add_diagnostic(p, expected_parameters);
+    parse_ts_return_type_annotation(p).ok();
+}
+
+fn parse_ts_type_parameter_name(p: &mut Parser) -> ParsedSyntax {
+    parse_identifier(p, TS_TYPE_PARAMETER_NAME)
+}
+
+// test ts_type_parameters
+// // TYPESCRIPT
+// type A<X extends string, Y = number, Z extends string | number = number> = { x: X, y: Y, z: Z }
+pub(super) fn parse_ts_type_parameters(p: &mut Parser) -> ParsedSyntax {
+    if !is_nth_at_ts_type_parameters(p, 0) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T![<]);
+    TsTypeParameterList.parse_list(p);
+    p.expect(T![>]);
+
+    Present(m.complete(p, TS_TYPE_PARAMETERS))
+}
+
+struct TsTypeParameterList;
+
+impl ParseSeparatedList for TsTypeParameterList {
+    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+        parse_ts_type_parameter(p)
+    }
+
+    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+        p.at(T![>])
+    }
+
+    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+        parsed_element.or_recover(
+            p,
+            &ParseRecovery::new(
+                JS_UNKNOWN,
+                token_set![T![>], T![,], T![ident], T![yield], T![await]],
+            )
+            .enable_recovery_on_line_break(),
+            expected_ts_type_parameter,
+        )
+    }
+
+    fn list_kind() -> JsSyntaxKind {
+        TS_TYPE_PARAMETER_LIST
+    }
+
+    fn separating_element_kind(&mut self) -> JsSyntaxKind {
+        T![,]
+    }
+}
+
+fn parse_ts_type_parameter(p: &mut Parser) -> ParsedSyntax {
+    parse_ts_type_parameter_name(p).map(|name| {
+        let m = name.precede(p);
+        parse_ts_type_constraint_clause(p).ok();
+        parse_ts_default_type_clause(p).ok();
+        m.complete(p, TS_TYPE_PARAMETER)
+    })
+}
+
+// test ts_type_constraint_clause
+// // TYPESCRIPT
+// type A<X extends number> = X;
+// type B<X extends number | string> = { a: X }
+fn parse_ts_type_constraint_clause(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![extends]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T![extends]);
+
+    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    Present(m.complete(p, TS_TYPE_CONSTRAINT_CLAUSE))
+}
+
+// test ts_default_type_clause
+// // TYPESCRIPT
+// type A<X=string> = X;
+// type B<X extends number | string = string> = { a: X }
+fn parse_ts_default_type_clause(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![=]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T![=]);
+    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    Present(m.complete(p, TS_DEFAULT_TYPE_CLAUSE))
+}
+
+fn is_nth_at_ts_type_parameters(p: &Parser, n: usize) -> bool {
+    p.nth_at(n, T![<])
+}
+
+pub(crate) fn ts_modifier(p: &mut Parser, modifiers: &[&'static str]) -> Option<Range<usize>> {
     if !modifiers.contains(&p.cur_src()) {
         return None;
     }
@@ -77,34 +1247,6 @@ pub fn ts_modifier(p: &mut Parser, modifiers: &[&'static str]) -> Option<Range<u
     Some(range)
 }
 
-pub(crate) fn maybe_ts_type_annotation(p: &mut Parser) -> Option<Range<usize>> {
-    if p.at(T![:]) {
-        let m = p.start();
-
-        let start = p.cur_tok().start();
-        p.bump_any();
-        let compl = ts_type(p);
-
-        let end = compl
-            .map(|x| usize::from(x.range(p).end()))
-            .unwrap_or_else(|| p.cur_tok().start());
-
-        if !p.typescript() {
-            let err = p
-                .err_builder("type annotations can only be used in TypeScript files")
-                .primary(start..end, "");
-
-            p.error(err);
-            m.complete(p, JS_UNKNOWN);
-        } else {
-            m.complete(p, TS_TYPE_ANNOTATION);
-        }
-        Some(start..end)
-    } else {
-        None
-    }
-}
-
 // FIXME: ts allows trailing commas but this doesnt, we need to figure out a way
 // to peek at the next token and see if its the end of the heritage clause
 pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMarker> {
@@ -114,7 +1256,7 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
         parse_lhs_expr(p, ExpressionContext::default())
             .or_add_diagnostic(p, js_parse_error::expected_expression);
     } else {
-        ts_entity_name(p, None, false);
+        parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
     }
 
     if p.at(T![<]) {
@@ -134,7 +1276,7 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
             parse_lhs_expr(p, ExpressionContext::default())
                 .or_add_diagnostic(p, js_parse_error::expected_expression);
         } else {
-            ts_entity_name(p, None, false);
+            parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
         }
         if p.at(T![<]) {
             ts_type_args(p);
@@ -145,157 +1287,7 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
     elems
 }
 
-pub fn ts_type_member(p: &mut Parser) -> Option<CompletedMarker> {
-    if p.at(T!['(']) || p.at(T![<]) {
-        return ts_signature_member(p, false);
-    }
-
-    if p.at(T![new]) && token_set!(T![<], T!['(']).contains(p.nth(1)) {
-        return ts_signature_member(p, true);
-    }
-
-    let (m, readonly) = if p.cur_src() == "readonly" {
-        let m = p.start();
-        p.bump_remap(T![readonly]);
-        (m, true)
-    } else {
-        (p.start(), false)
-    };
-
-    match try_parse_index_signature(p, m) {
-        Ok(idx) => Some(idx),
-        Err(m) => ts_property_or_method_sig(p, m, readonly),
-    }
-}
-
-fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Option<CompletedMarker> {
-    if p.eat(T!['[']) {
-        parse_assignment_expression_or_higher(p, ExpressionContext::default())
-            .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
-        p.expect_no_recover(T![']'])?;
-    } else {
-        match p.cur() {
-            JS_STRING_LITERAL | JS_NUMBER_LITERAL => {
-                parse_literal_expression(p).ok();
-            }
-            _ => {
-                let mut complete = parse_any_name(p).ok()?;
-                if complete.kind() == JS_PRIVATE_CLASS_MEMBER_NAME {
-                    let err = p
-                        .err_builder("private names are not allowed outside of class bodies")
-                        .primary(complete.range(p), "");
-
-                    p.error(err);
-                    complete.change_kind(p, JS_UNKNOWN);
-                }
-            }
-        }
-    };
-
-    p.eat(T![?]);
-    Some(if !readonly && p.at_ts(token_set![T!['('], T![<]]) {
-        if p.at(T![<]) {
-            no_recover!(p, ts_type_params(p));
-        }
-        parse_parameter_list(p, SignatureFlags::empty())
-            .or_add_diagnostic(p, js_parse_error::expected_parameters);
-        if p.at(T![:]) {
-            ts_type_or_type_predicate_ann(p, T![:]);
-        }
-        type_member_semi(p);
-        m.complete(p, TS_METHOD_SIGNATURE)
-    } else {
-        if p.eat(T![:]) {
-            ts_type(p);
-        }
-        type_member_semi(p);
-        m.complete(p, TS_PROPERTY_SIGNATURE)
-    })
-}
-
-pub(crate) fn try_parse_index_signature(
-    p: &mut Parser,
-    m: Marker,
-) -> Result<CompletedMarker, Marker> {
-    if !p.at(T!['['])
-        || !(token_set![T![ident], T![await], T![yield]].contains(p.nth(1))
-            || p.nth(1).is_keyword())
-        || !token_set![T![:], T![,]].contains(p.nth(2))
-    {
-        return Err(m);
-    }
-
-    if p.expect_no_recover(T!['[']).is_none() {
-        return Err(m);
-    }
-
-    let pat_m = parse_binding(p).unwrap().undo_completion(p);
-
-    if p.expect_no_recover(T![:]).is_none() {
-        return Err(m);
-    }
-
-    if ts_type(p).is_none() && p.state.no_recovery {
-        return Err(m);
-    }
-
-    pat_m.complete(p, JS_IDENTIFIER_BINDING);
-
-    if p.expect_no_recover(T![']']).is_none() {
-        return Err(m);
-    }
-
-    if p.eat(T![:]) && ts_type(p).is_none() && p.state.no_recovery {
-        return Err(m);
-    }
-
-    type_member_semi(p);
-    Ok(m.complete(p, TS_INDEX_SIGNATURE))
-}
-
-pub fn ts_signature_member(p: &mut Parser, construct_sig: bool) -> Option<CompletedMarker> {
-    let m = p.start();
-    if construct_sig {
-        p.expect(T![new]);
-    }
-
-    if p.at(T![<]) {
-        no_recover!(p, ts_type_params(p));
-    }
-
-    parse_parameter_list(
-        p,
-        if construct_sig {
-            SignatureFlags::CONSTRUCTOR
-        } else {
-            SignatureFlags::empty()
-        },
-    )
-    .ok();
-
-    if p.at(T![:]) {
-        no_recover!(p, ts_type_or_type_predicate_ann(p, T![:]));
-    }
-    type_member_semi(p);
-
-    Some(m.complete(
-        p,
-        if construct_sig {
-            TS_CONSTRUCT_SIGNATURE_DECL
-        } else {
-            TS_CALL_SIGNATURE_DECL
-        },
-    ))
-}
-
-// TODO(RDambrosio016): is this logic correct?
-fn type_member_semi(p: &mut Parser) {
-    if p.at_ts(token_set![T![,], T![;]]) {
-        p.bump_any();
-    }
-}
-
-pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
+pub(super) fn ts_enum(p: &mut Parser) -> CompletedMarker {
     let m = p.start();
     p.eat(T![const]);
     p.expect(T![enum]);
@@ -378,441 +1370,7 @@ pub fn try_parse_ts(
     res
 }
 
-pub fn ts_type(p: &mut Parser) -> Option<CompletedMarker> {
-    let ty = ts_non_conditional_type(p);
-    if p.has_linebreak_before_n(0) || !p.at(T![extends]) {
-        return ty;
-    }
-
-    let m = ty.map(|x| x.precede(p)).unwrap_or_else(|| p.start());
-    if p.at(T![extends]) {
-        let m = p.start();
-        p.bump_any();
-        no_recover!(p, ts_non_conditional_type(p));
-        m.complete(p, TS_EXTENDS);
-    }
-    p.expect_no_recover(T![?])?;
-    no_recover!(p, ts_type(p));
-    p.expect_no_recover(T![:])?;
-    no_recover!(p, ts_type(p));
-    Some(m.complete(p, TS_CONDITIONAL_TYPE))
-}
-
-pub fn ts_fn_or_constructor_type(p: &mut Parser, fn_type: bool) -> Option<CompletedMarker> {
-    let m = p.start();
-    if !fn_type && p.expect_no_recover(T![new]).is_none() {
-        m.abandon(p);
-        return None;
-    }
-
-    if p.at(T![<]) {
-        ts_type_params(p);
-    }
-    parse_parameter_list(p, SignatureFlags::empty())
-        .or_add_diagnostic(p, js_parse_error::expected_parameters);
-    if ts_type_or_type_predicate_ann(p, T![=>]).is_none() && p.state.no_recovery {
-        m.abandon(p);
-        return None;
-    }
-
-    Some(m.complete(
-        p,
-        if fn_type {
-            TS_FN_TYPE
-        } else {
-            TS_CONSTRUCTOR_TYPE
-        },
-    ))
-}
-
-pub(crate) fn ts_type_or_type_predicate_ann(
-    p: &mut Parser,
-    return_token: JsSyntaxKind,
-) -> Option<CompletedMarker> {
-    let ident_ref_set = token_set![T![await], T![yield], T![ident]];
-    p.expect_no_recover(return_token)?;
-
-    let type_pred = (p.cur_src() == "asserts" && ident_ref_set.contains(p.nth(1)))
-        || (p.at_ts(ident_ref_set) && p.nth_src(1) == "is" && !p.has_linebreak_before_n(1));
-
-    if type_pred {
-        ts_predicate(p)
-    } else {
-        ts_type(p)
-    }
-}
-
-pub fn ts_non_conditional_type(p: &mut Parser) -> Option<CompletedMarker> {
-    if is_start_of_fn_type(p) {
-        return ts_fn_or_constructor_type(p, true);
-    }
-
-    if p.at(T![new]) {
-        return ts_fn_or_constructor_type(p, false);
-    }
-
-    intersection_or_union(p, false, ts_intersection_type_or_higher, T![|])
-}
-
-fn ts_intersection_type_or_higher(p: &mut Parser) -> Option<CompletedMarker> {
-    intersection_or_union(p, true, ts_type_operator_or_higher, T![&])
-}
-
-fn look_ahead(p: &mut Parser, func: impl FnOnce(&mut Parser) -> bool) -> bool {
-    let checkpoint = p.checkpoint();
-    let res = func(p);
-    p.rewind(checkpoint);
-    res
-}
-
-fn is_start_of_fn_type(p: &mut Parser) -> bool {
-    p.at(T![<]) || (p.at(T!['(']) && look_ahead(p, is_unambiguously_start_of_fn_type))
-}
-
-fn is_unambiguously_start_of_fn_type(p: &mut Parser) -> bool {
-    p.eat(T!['(']);
-    if p.at(T![')']) || p.at(T![...]) {
-        return true;
-    }
-
-    if skip_parameter_start(p) {
-        if p.at_ts(token_set![T![:], T![,], T![?], T![=]]) {
-            return true;
-        }
-        if p.at(T![')']) && p.nth_at(1, T![=>]) {
-            return true;
-        }
-    }
-    false
-}
-
-fn skip_parameter_start(p: &mut Parser) -> bool {
-    maybe_eat_incorrect_modifier(p);
-    if p.at_ts(token_set![T![this], T![yield], T![ident], T![await]]) {
-        p.bump_any();
-        return true;
-    }
-
-    if p.eat(T!['{']) {
-        let mut counter = 1;
-
-        while counter > 0 {
-            if p.eat(T!['{']) {
-                counter += 1;
-            } else if p.eat(T!['}']) {
-                counter -= 1;
-            } else {
-                p.bump_any();
-            }
-        }
-        return true;
-    }
-
-    if p.eat(T!['[']) {
-        let mut counter = 1;
-
-        while counter > 0 {
-            if p.eat(T!['[']) {
-                counter += 1;
-            } else if p.eat(T![']']) {
-                counter -= 1;
-            } else {
-                p.bump_any();
-            }
-        }
-        return true;
-    }
-    false
-}
-
-fn intersection_or_union(
-    p: &mut Parser,
-    intersection: bool,
-    mut constituent: impl FnMut(&mut Parser) -> Option<CompletedMarker>,
-    op: JsSyntaxKind,
-) -> Option<CompletedMarker> {
-    let kind = if intersection {
-        TS_INTERSECTION
-    } else {
-        TS_UNION
-    };
-    let m = p.start();
-    let types_list = p.start();
-    let saw_op = p.eat(op);
-    let ty = constituent(p);
-    if p.at(op) {
-        while p.eat(op) {
-            constituent(p);
-        }
-
-        types_list.complete(p, TS_TYPE_LIST);
-        Some(m.complete(p, kind))
-    } else if !saw_op && ty.is_none() {
-        types_list.abandon(p);
-        m.abandon(p);
-        None
-    } else if !saw_op {
-        types_list.abandon(p);
-        m.abandon(p);
-        ty
-    } else {
-        types_list.complete(p, TS_TYPE_LIST);
-        Some(m.complete(p, kind))
-    }
-}
-
-pub fn ts_type_operator_or_higher(p: &mut Parser) -> Option<CompletedMarker> {
-    if matches!(p.cur_src(), "keyof" | "unique" | "readonly") {
-        let m = p.start();
-        let kind = match p.cur_src() {
-            "keyof" => KEYOF_KW,
-            "unique" => UNIQUE_KW,
-            "readonly" => READONLY_KW,
-            _ => unreachable!(),
-        };
-        p.bump_remap(kind);
-        no_recover!(p, ts_type_operator_or_higher(p));
-        Some(m.complete(p, TS_TYPE_OPERATOR))
-    } else if p.cur_src() == "infer" {
-        let m = p.start();
-        p.bump_remap(T![infer]);
-        parse_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
-        Some(m.complete(p, TS_INFER))
-    } else {
-        // FIXME: readonly should apparently be handled here?
-        // but the previous matches should have accounted for it 🤔
-        ts_array_type_or_higher(p)
-    }
-}
-
-pub fn ts_array_type_or_higher(p: &mut Parser) -> Option<CompletedMarker> {
-    let t = p.checkpoint();
-
-    let mut ty = ts_non_array_type(p);
-    let mut progress = ParserProgress::default();
-
-    while !p.has_linebreak_before_n(0) && p.at(T!['[']) {
-        progress.assert_progressing(p);
-        let m = ty.map(|x| x.precede(p)).unwrap_or_else(|| p.start());
-        p.bump_any();
-        if p.eat(T![']']) {
-            ty = Some(m.complete(p, TS_ARRAY));
-        } else {
-            no_recover!(p, m, t, ts_type(p));
-            if p.expect_no_recover(T![']']).is_none() {
-                m.abandon(p);
-                p.rewind(t);
-                return None;
-            }
-            ty = Some(m.complete(p, TS_INDEXED_ARRAY));
-        }
-    }
-    ty
-}
-
-pub fn ts_tuple(p: &mut Parser) -> Option<CompletedMarker> {
-    let m = p.start();
-    p.expect_no_recover(T!['['])?;
-    let mut progress = ParserProgress::default();
-    while !p.at(EOF) && !p.at(T![']']) {
-        progress.assert_progressing(p);
-        let m = p.start();
-        let rest_range = p.cur_tok().range();
-        let rest = p.eat(T![...]);
-        let name = if is_at_name(p)
-            && !DISALLOWED_TYPE_NAMES.contains(&p.cur_src())
-            && (p.nth_at(1, T![:]) || (p.nth_at(1, T![?]) && p.nth_at(2, T![:])))
-        {
-            parse_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
-            true
-        } else {
-            false
-        };
-
-        let opt_range = p.cur_tok().range();
-        let is_opt = name && p.eat(T![?]);
-        if name {
-            p.expect(T![:]);
-        }
-        no_recover!(p, ts_type(p));
-        if !name && p.at(T![?]) {
-            p.eat(T![?]);
-        }
-        m.complete(p, TS_TUPLE_ELEMENT);
-        if is_opt && rest {
-            let err = p
-                .err_builder("a tuple element cannot be both rest and optional")
-                .secondary(rest_range, "")
-                .primary(opt_range, "");
-
-            p.error(err);
-        }
-        p.eat(T![,]);
-    }
-
-    p.expect_no_recover(T![']'])?;
-    Some(m.complete(p, TS_TUPLE))
-}
-
-pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
-    match p.cur() {
-        T![ident] | T![void] | T![yield] | T![null] | T![await] | T![break] => {
-            if p.cur_src() == "asserts" && p.nth_at(1, T![this]) {
-                p.bump_any();
-                return ts_predicate(p);
-            }
-
-            let kind = match p.cur_src() {
-                "void" => TS_VOID,
-                "null" => TS_NULL,
-                "any" => TS_ANY,
-                "boolean" => TS_BOOLEAN,
-                "bigint" => TS_BIGINT,
-                "never" => TS_NEVER,
-                "number" => TS_NUMBER,
-                "object" => TS_OBJECT,
-                "string" => TS_STRING,
-                "symbol" => TS_SYMBOL,
-                "unknown" => TS_UNKNOWN,
-                "undefined" => TS_UNDEFINED,
-                _ =>
-                /* dummy value */
-                {
-                    JS_UNKNOWN
-                }
-            };
-
-            if kind != JS_UNKNOWN && !p.nth_at(1, T![.]) {
-                let m = p.start();
-                p.bump_any();
-                Some(m.complete(p, kind))
-            } else {
-                ts_type_ref(p, None)
-            }
-        }
-        JS_NUMBER_LITERAL | JS_STRING_LITERAL | TRUE_KW | FALSE_KW | JS_REGEX_LITERAL => Some(
-            parse_literal_expression(p)
-                .precede(p)
-                .complete(p, TS_LITERAL),
-        ),
-        BACKTICK => {
-            let m = p.start();
-            p.bump_any();
-
-            let elements_list = p.start();
-            while !p.at(EOF) && !p.at(BACKTICK) {
-                match p.cur() {
-                    TEMPLATE_CHUNK => {
-                                            let m = p.start();
-                                            p.bump_any();
-                                            m.complete(p, TEMPLATE_CHUNK_ELEMENT);
-                                        },
-                                        DOLLAR_CURLY => {
-                        let e = p.start();
-                        p.bump_any();
-                        ts_type(p);
-                        p.expect(T!['}']);
-                        e.complete(p, TS_TEMPLATE_ELEMENT);
-                    },
-                    t => unreachable!("Anything not template chunk or dollar_curly should have been eaten by the lexer, but {:?} was found", t),
-                }
-            }
-
-            elements_list.complete(p, TEMPLATE_ELEMENT_LIST);
-            p.eat(BACKTICK);
-            Some(m.complete(p, TS_TEMPLATE))
-        }
-        T![-] => {
-            let t = p.checkpoint();
-            let m = p.start();
-            p.bump_any();
-            if p.at(JS_NUMBER_LITERAL) {
-                let _m = p.start();
-                p.bump_any();
-                _m.complete(p, JS_NUMBER_LITERAL_EXPRESSION);
-            } else if p.expect_no_recover(JS_NUMBER_LITERAL).is_none() {
-                m.abandon(p);
-                p.rewind(t);
-                return None;
-            }
-            Some(m.complete(p, TS_LITERAL))
-        }
-        T![import] => ts_import(p),
-        T![this] => {
-            if p.nth_src(1) == "is" {
-                ts_predicate(p)
-            } else {
-                let m = p.start();
-                p.bump_any();
-                Some(m.complete(p, TS_THIS))
-            }
-        }
-        T![typeof] => ts_type_query(p),
-        T!['{'] => {
-            if is_mapped_type_start(p) {
-                ts_mapped_type(p)
-            } else {
-                let m = p.start();
-                p.bump_any();
-                let members_list = p.start();
-                let mut progress = ParserProgress::default();
-                while !p.at(EOF) && !p.at(T!['}']) {
-                    progress.assert_progressing(p);
-                    ts_type_member(p);
-                    type_member_semi(p);
-                }
-                members_list.complete(p, TS_OBJECT_MEMBER_LIST);
-                p.expect(T!['}']);
-                Some(m.complete(p, TS_OBJECT_TYPE))
-            }
-        }
-        T!['['] => ts_tuple(p),
-        T!['('] => {
-            let t = p.checkpoint();
-            let m = p.start();
-            p.bump_any();
-            no_recover!(p, m, t, ts_type(p));
-            if p.expect_no_recover(T![')']).is_none() {
-                m.abandon(p);
-                p.rewind(t);
-                return None;
-            };
-            Some(m.complete(p, TS_PAREN))
-        }
-        _ => {
-            let err = p
-                .err_builder("expected a type")
-                .primary(p.cur_tok().range(), "");
-
-            #[allow(deprecated)]
-            SingleTokenParseRecovery::with_error(
-                BASE_TS_RECOVERY_SET.union(token_set![
-                    T![typeof],
-                    T!['{'],
-                    T!['['],
-                    T!['('],
-                    T![this],
-                    T![import],
-                    T![-],
-                    JS_NUMBER_LITERAL,
-                    JS_STRING_LITERAL,
-                    TRUE_KW,
-                    FALSE_KW,
-                    JS_REGEX_LITERAL,
-                    BACKTICK,
-                    T![&],
-                    T![|]
-                ]),
-                JS_UNKNOWN,
-                err,
-            )
-            .recover(p);
-            None
-        }
-    }
-}
-
-pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
+pub(crate) fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
     let m = p.start();
     if p.expect_no_recover(T![<]).is_none() {
         m.abandon(p);
@@ -844,7 +1402,7 @@ pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
             return None;
         }
 
-        if ts_type(p).is_none() && p.state.no_recovery {
+        if parse_ts_type(p).is_absent() && p.state.no_recovery {
             args_list.abandon(p);
             m.abandon(p);
             return None;
@@ -860,234 +1418,6 @@ pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
     }
 }
 
-// FIXME: `<T() => {}` causes infinite recursion if the parser isnt being run with `no_recovery`
-pub fn ts_type_params(p: &mut Parser) -> Option<CompletedMarker> {
-    let m = p.start();
-    if p.expect_no_recover(T![<]).is_none() {
-        m.abandon(p);
-        return None;
-    }
-
-    let mut first = true;
-
-    let params_list = p.start();
-    let mut progress = ParserProgress::default();
-    while !p.at(EOF) && !p.at(T![>]) {
-        progress.assert_progressing(p);
-        if first {
-            first = false;
-        } else {
-            if p.at(T![,]) && p.nth_at(1, T![>]) {
-                p.bump_any();
-                break;
-            }
-            if p.expect_no_recover(T![,]).is_none() {
-                break;
-            }
-        }
-
-        no_recover!(p, type_param(p));
-    }
-    params_list.complete(p, TS_TYPE_PARAM_LIST);
-
-    p.expect(T![>]);
-    Some(m.complete(p, TS_TYPE_PARAMS))
-}
-
-fn type_param(p: &mut Parser) -> Option<CompletedMarker> {
-    let m = p.start();
-    let mut should_complete =
-        if p.at_ts(token_set![T![ident], T![await], T![yield]]) || p.cur().is_keyword() {
-            p.bump_remap(T![ident]);
-            true
-        } else {
-            false
-        };
-    if p.cur_src() == "extends" {
-        should_complete = true;
-        let _m = p.start();
-        p.bump_remap(T![extends]);
-        no_recover!(p, ts_type(p));
-        _m.complete(p, TS_CONSTRAINT);
-    }
-    if p.at(T![=]) {
-        should_complete = true;
-        let _m = p.start();
-        p.bump_any();
-        no_recover!(p, ts_type(p));
-        _m.complete(p, TS_DEFAULT);
-    }
-    if should_complete {
-        Some(m.complete(p, TS_TYPE_PARAM))
-    } else {
-        m.abandon(p);
-        let err = p
-            .err_builder("expected a type parameter, but found none")
-            .primary(p.cur_tok().range(), "");
-
-        #[allow(deprecated)]
-        SingleTokenParseRecovery::with_error(
-            token_set![T![ident], T![yield], T![await], T![>], T![=]],
-            JS_UNKNOWN,
-            err,
-        )
-        .recover(p);
-        None
-    }
-}
-
-pub fn ts_import(p: &mut Parser) -> Option<CompletedMarker> {
-    let m = p.start();
-    p.expect_no_recover(T![import])?;
-    p.expect_no_recover(T!['('])?;
-    p.expect_no_recover(JS_STRING_LITERAL)?;
-    p.expect_no_recover(T![')'])?;
-    if p.eat(T![.]) {
-        ts_entity_name(p, None, false);
-    }
-    if p.at(T![<]) && !p.has_linebreak_before_n(0) {
-        ts_type_args(p);
-    }
-
-    Some(m.complete(p, TS_IMPORT))
-}
-
-pub fn ts_type_query(p: &mut Parser) -> Option<CompletedMarker> {
-    let m = p.start();
-    p.expect_no_recover(T![typeof])?;
-
-    if p.at(T![import]) {
-        no_recover!(p, ts_import(p));
-    } else {
-        no_recover!(p, ts_entity_name(p, None, true));
-    }
-    Some(m.complete(p, TS_TYPE_QUERY))
-}
-
-pub fn ts_mapped_type(p: &mut Parser) -> Option<CompletedMarker> {
-    let m = p.start();
-    p.expect_no_recover(T!['{'])?;
-    let tok = p.cur_tok().range();
-    let _m = p.start();
-    if p.eat(T![+]) || p.eat(T![-]) {
-        if p.cur_src() != "readonly" {
-            let err = p
-                .err_builder("`+` and `-` modifiers in mapped types must be followed by `readonly`")
-                .primary(tok, "");
-
-            p.error(err);
-        } else {
-            p.bump_remap(T![readonly]);
-        }
-        _m.complete(p, TS_MAPPED_TYPE_READONLY);
-    } else if p.cur_src() == "readonly" {
-        p.bump_remap(T![readonly]);
-        _m.complete(p, TS_MAPPED_TYPE_READONLY);
-    } else {
-        _m.abandon(p);
-    }
-
-    let param = p.start();
-    p.expect_no_recover(T!['['])?;
-    // This is basically to unwrap the marker from a node to a single token
-    if let Present(marker) = parse_name(p) {
-        marker.undo_completion(p).abandon(p)
-    }
-    if p.cur_src() != "in" {
-        let err = p
-            .err_builder("expected `in` after a mapped type parameter name")
-            .primary(p.cur_tok().range(), "");
-
-        p.error(err);
-    } else {
-        p.bump_any();
-    }
-    no_recover!(p, ts_type(p));
-    if p.cur_src() == "as" {
-        p.bump_any();
-        ts_type(p);
-    }
-    p.expect_no_recover(T![']'])?;
-    param.complete(p, TS_MAPPED_TYPE_PARAM);
-    let tok = p.cur_tok().range();
-    if p.eat(T![+]) || p.eat(T![-]) {
-        if !p.at(T![?]) {
-            // TODO: Im not sure of the proper terminology for this, someone should clarify this error
-            let err = p
-                .err_builder("`+` and `-` modifiers in mapped types must be followed by `?`")
-                .primary(tok, "");
-
-            p.error(err);
-        } else {
-            p.bump_any();
-        }
-    } else if p.at(T![?]) {
-        p.bump_any();
-    }
-
-    p.expect_no_recover(T![:])?;
-    no_recover!(p, ts_type(p));
-    // FIXME: This should issue an error for no semi and no ASI, but the fact that a `}` is expected
-    // after should make this case kind of rare
-    p.eat(T![;]);
-    p.expect_no_recover(T!['}'])?;
-    Some(m.complete(p, TS_MAPPED_TYPE))
-}
-
-fn is_mapped_type_start(p: &Parser) -> bool {
-    if (p.nth_at(1, T![+]) || p.nth_at(1, T![-])) && p.nth_src(2) == "readonly" {
-        return true;
-    }
-    let mut cur = 1;
-    if p.cur_src() == "readonly" {
-        cur += 1;
-    }
-    if !p.nth_at(cur, T!['[']) {
-        return false;
-    }
-    cur += 1;
-    if !matches!(p.nth(cur), T![yield] | T![await] | T![ident]) {
-        return false;
-    }
-    cur += 1;
-    p.nth_at(cur, T![in])
-}
-
-pub fn ts_predicate(p: &mut Parser) -> Option<CompletedMarker> {
-    let m = p.start();
-    let mut advanced = false;
-
-    if p.cur_src() == "asserts" {
-        p.bump_any();
-        advanced = true;
-    }
-
-    if p.at(T![this]) {
-        let _m = p.start();
-        p.bump_any();
-        _m.complete(p, TS_THIS);
-        advanced = true;
-    } else if p.at_ts(token_set![T![await], T![yield], T![ident]]) {
-        let _m = p.start();
-        p.bump_any();
-        _m.complete(p, TS_TYPE_NAME);
-        advanced = true;
-    }
-
-    if p.cur_src() == "is" {
-        p.bump_any();
-        no_recover!(p, ts_type(p));
-        advanced = true;
-    }
-
-    if !advanced {
-        m.abandon(p);
-        None
-    } else {
-        Some(m.complete(p, TS_PREDICATE))
-    }
-}
-
 pub(crate) fn maybe_eat_incorrect_modifier(p: &mut Parser) -> Option<CompletedMarker> {
     let maybe_err = p.start();
     if matches!(p.cur_src(), "public" | "private" | "protected") {
@@ -1100,81 +1430,4 @@ pub(crate) fn maybe_eat_incorrect_modifier(p: &mut Parser) -> Option<CompletedMa
         maybe_err.abandon(p);
         None
     }
-}
-
-pub fn ts_type_ref(
-    p: &mut Parser,
-    recovery_set: impl Into<Option<TokenSet>> + Clone,
-) -> Option<CompletedMarker> {
-    let t = p.checkpoint();
-
-    let m = p.start();
-    if let Some(err_m) = maybe_eat_incorrect_modifier(p) {
-        let err = p
-            .err_builder("a parameter property is only allowed in a constructor implementation")
-            .primary(err_m.range(p), "");
-
-        p.error(err);
-    }
-
-    if ts_entity_name(p, recovery_set, true).is_none() {
-        m.abandon(p);
-        p.rewind(t);
-        return None;
-    }
-
-    if !p.has_linebreak_before_n(0) && p.at(T![<]) {
-        no_recover!(p, m, t, ts_type_args(p));
-    }
-
-    Some(m.complete(p, TS_TYPE_REF))
-}
-
-pub fn ts_entity_name(
-    p: &mut Parser,
-    recovery_set: impl Into<Option<TokenSet>> + Clone,
-    allow_reserved: bool,
-) -> Option<CompletedMarker> {
-    let init = ts_type_name(p, recovery_set.clone(), false)?;
-    // TODO: maybe we should recover if no init at this point?
-
-    let mut lhs = init;
-    let set = recovery_set
-        .into()
-        .unwrap_or(BASE_TS_RECOVERY_SET)
-        .union(token_set![T![.]]);
-
-    while p.at(T![.]) {
-        let m = lhs.precede(p);
-        p.bump_any();
-        // TODO: we should maybe move recovery out of ts_type_name since we dont need recovery here
-        no_recover!(p, ts_type_name(p, set, allow_reserved));
-        lhs = m.complete(p, TS_QUALIFIED_PATH);
-    }
-    Some(lhs)
-}
-
-pub fn ts_type_name(
-    p: &mut Parser,
-    recovery_set: impl Into<Option<TokenSet>>,
-    allow_reserved: bool,
-) -> Option<CompletedMarker> {
-    if p.at(T![ident]) || (p.cur().is_keyword() && allow_reserved) {
-        let m = p.start();
-        p.bump_remap(T![ident]);
-        return Some(m.complete(p, TS_TYPE_NAME));
-    }
-
-    // FIXME: move the recovery job out of this method
-    let set = recovery_set.into().unwrap_or(BASE_TS_RECOVERY_SET);
-    let err = p
-        .err_builder(&format!(
-            "expected a TypeScript type name, but instead found `{}`",
-            p.cur_src()
-        ))
-        .primary(p.cur_tok().range(), "");
-
-    #[allow(deprecated)]
-    SingleTokenParseRecovery::with_error(set, JS_UNKNOWN, err).recover(p);
-    None
 }

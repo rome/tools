@@ -1,0 +1,163 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        TsTypeAlias {
+            type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            binding_identifier: JsIdentifierBinding {
+                name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
+            ty: TsUnionType {
+                leading_separator_token_token: missing (optional),
+                types: TsUnionTypeVariantList [
+                    TsStringType {
+                        string_token: STRING_KW@23..30 "string" [] [Whitespace(" ")],
+                    },
+                    PIPE@30..32 "|" [] [Whitespace(" ")],
+                    TsNumberType {
+                        number_token: NUMBER_KW@32..38 "number" [] [],
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@38..39 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@39..45 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: JsIdentifierBinding {
+                name_token: IDENT@45..47 "B" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@47..49 "=" [] [Whitespace(" ")],
+            ty: TsUnionType {
+                leading_separator_token_token: PIPE@49..51 "|" [] [Whitespace(" ")],
+                types: TsUnionTypeVariantList [
+                    TsTypeReference {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@51..53 "A" [] [Whitespace(" ")],
+                        },
+                        type_arguments: missing (optional),
+                    },
+                    PIPE@53..55 "|" [] [Whitespace(" ")],
+                    TsVoidType {
+                        void_token: VOID_KW@55..60 "void" [] [Whitespace(" ")],
+                    },
+                    PIPE@60..62 "|" [] [Whitespace(" ")],
+                    TsNullLiteralType {
+                        literal_token: NULL_KW@62..66 "null" [] [],
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@66..67 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@67..73 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: JsIdentifierBinding {
+                name_token: IDENT@73..75 "C" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@75..77 "=" [] [Whitespace(" ")],
+            ty: TsUnionType {
+                leading_separator_token_token: missing (optional),
+                types: TsUnionTypeVariantList [
+                    TsIntersectionType {
+                        leading_separator_token_token: missing (optional),
+                        types: TsIntersectionTypeElementList [
+                            TsTypeReference {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@77..79 "A" [] [Whitespace(" ")],
+                                },
+                                type_arguments: missing (optional),
+                            },
+                            AMP@79..81 "&" [] [Whitespace(" ")],
+                            TsTypeReference {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@81..83 "C" [] [Whitespace(" ")],
+                                },
+                                type_arguments: missing (optional),
+                            },
+                        ],
+                    },
+                    PIPE@83..85 "|" [] [Whitespace(" ")],
+                    TsTypeReference {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@85..86 "C" [] [],
+                        },
+                        type_arguments: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@86..87 ";" [] [],
+        },
+    ],
+    eof_token: EOF@87..88 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..88
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..87
+    0: TS_TYPE_ALIAS@0..39
+      0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@19..21
+        0: IDENT@19..21 "A" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@21..23 "=" [] [Whitespace(" ")]
+      4: TS_UNION_TYPE@23..38
+        0: (empty)
+        1: TS_UNION_TYPE_VARIANT_LIST@23..38
+          0: TS_STRING_TYPE@23..30
+            0: STRING_KW@23..30 "string" [] [Whitespace(" ")]
+          1: PIPE@30..32 "|" [] [Whitespace(" ")]
+          2: TS_NUMBER_TYPE@32..38
+            0: NUMBER_KW@32..38 "number" [] []
+      5: SEMICOLON@38..39 ";" [] []
+    1: TS_TYPE_ALIAS@39..67
+      0: TYPE_KW@39..45 "type" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@45..47
+        0: IDENT@45..47 "B" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@47..49 "=" [] [Whitespace(" ")]
+      4: TS_UNION_TYPE@49..66
+        0: PIPE@49..51 "|" [] [Whitespace(" ")]
+        1: TS_UNION_TYPE_VARIANT_LIST@51..66
+          0: TS_TYPE_REFERENCE@51..53
+            0: JS_REFERENCE_IDENTIFIER@51..53
+              0: IDENT@51..53 "A" [] [Whitespace(" ")]
+            1: (empty)
+          1: PIPE@53..55 "|" [] [Whitespace(" ")]
+          2: TS_VOID_TYPE@55..60
+            0: VOID_KW@55..60 "void" [] [Whitespace(" ")]
+          3: PIPE@60..62 "|" [] [Whitespace(" ")]
+          4: TS_NULL_LITERAL_TYPE@62..66
+            0: NULL_KW@62..66 "null" [] []
+      5: SEMICOLON@66..67 ";" [] []
+    2: TS_TYPE_ALIAS@67..87
+      0: TYPE_KW@67..73 "type" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@73..75
+        0: IDENT@73..75 "C" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@75..77 "=" [] [Whitespace(" ")]
+      4: TS_UNION_TYPE@77..86
+        0: (empty)
+        1: TS_UNION_TYPE_VARIANT_LIST@77..86
+          0: TS_INTERSECTION_TYPE@77..83
+            0: (empty)
+            1: TS_INTERSECTION_TYPE_ELEMENT_LIST@77..83
+              0: TS_TYPE_REFERENCE@77..79
+                0: JS_REFERENCE_IDENTIFIER@77..79
+                  0: IDENT@77..79 "A" [] [Whitespace(" ")]
+                1: (empty)
+              1: AMP@79..81 "&" [] [Whitespace(" ")]
+              2: TS_TYPE_REFERENCE@81..83
+                0: JS_REFERENCE_IDENTIFIER@81..83
+                  0: IDENT@81..83 "C" [] [Whitespace(" ")]
+                1: (empty)
+          1: PIPE@83..85 "|" [] [Whitespace(" ")]
+          2: TS_TYPE_REFERENCE@85..86
+            0: JS_REFERENCE_IDENTIFIER@85..86
+              0: IDENT@85..86 "C" [] []
+            1: (empty)
+      5: SEMICOLON@86..87 ";" [] []
+  3: EOF@87..88 "" [Newline("\n")] []

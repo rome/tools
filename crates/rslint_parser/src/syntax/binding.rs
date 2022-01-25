@@ -1,6 +1,6 @@
 use crate::parser::{expected_any, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::{is_at_identifier, parse_identifier, ExpressionContext};
+use crate::syntax::expr::{is_nth_at_identifier, parse_identifier, ExpressionContext};
 use crate::syntax::js_parse_error::{
     expected_binding, expected_identifier, expected_object_member_name,
 };
@@ -22,8 +22,12 @@ pub(crate) fn parse_binding_pattern(p: &mut Parser, context: ExpressionContext) 
     }
 }
 
-fn is_at_identifier_binding(p: &Parser) -> bool {
-    is_at_identifier(p)
+pub(crate) fn is_at_identifier_binding(p: &Parser) -> bool {
+    is_nth_at_identifier_binding(p, 0)
+}
+
+pub(crate) fn is_nth_at_identifier_binding(p: &Parser, n: usize) -> bool {
+    is_nth_at_identifier(p, n)
 }
 
 pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax {

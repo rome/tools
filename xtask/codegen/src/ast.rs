@@ -8,7 +8,9 @@ use super::{
     to_lower_snake_case, Mode,
 };
 use crate::generate_syntax_factory::generate_syntax_factory;
-use crate::kinds_src::{AstListSeparatorConfiguration, AstListSrc, TokenKind};
+use crate::kinds_src::{
+    AstListSeparatorConfiguration, AstListSeparatorToken, AstListSrc, TokenKind,
+};
 use crate::{
     generate_nodes::generate_nodes,
     generate_syntax_kinds::generate_syntax_kinds,
@@ -147,7 +149,7 @@ fn classify_node_rule(grammar: &Grammar, rule: &Rule) -> NodeRuleClassification 
                 NodeRuleClassification::List {
                     separator: Some(AstListSeparatorConfiguration {
                         allow_trailing: comma_list.trailing_separator,
-                        separator_token: comma_list.separator_name.to_string(),
+                        separator_token: comma_list.separator_token,
                     }),
                     element_name: comma_list.node_name.to_string(),
                 }
@@ -214,7 +216,7 @@ fn handle_rule(
         }
 
         Rule::Rep(_) => {
-            panic!("Create a list node for *many* children {:?}", label);
+            panic!("Create a list node for *many* children {:?}", rule);
         }
         Rule::Opt(rule) => {
             handle_rule(fields, grammar, rule, label, true);
@@ -235,7 +237,7 @@ fn handle_rule(
 
 struct CommaList<'a> {
     node_name: &'a str,
-    separator_name: &'a str,
+    separator_token: AstListSeparatorToken,
     trailing_separator: bool,
 }
 
@@ -258,32 +260,40 @@ fn handle_comma_list<'a>(grammar: &'a Grammar, rules: &[Rule]) -> Option<CommaLi
     };
 
     // Does the repeat match (token node))
-    let comma = match repeat.as_slice() {
-        [comma, Rule::Node(n)] => {
-            let separator_matches_trailing = if let Some(trailing) = trailing_separator {
-                &**trailing == comma
-            } else {
-                true
+    let separator_rule = match repeat.as_slice() {
+        [separator, Rule::Node(n)] => {
+            let separator_matches_trailing = match trailing_separator {
+                None => true,
+                Some(trailing) => &**trailing == separator,
             };
 
             if n != node || !separator_matches_trailing {
                 return None;
             }
 
-            comma
+            separator
         }
-        _ => return None,
+        _ => {
+            return None;
+        }
     };
 
-    let separator_name = match comma {
-        Rule::Token(token) => &grammar[*token].name,
+    let separator_token = match separator_rule {
+        Rule::Token(token) => AstListSeparatorToken::Single(String::from(&grammar[*token].name)),
+        Rule::Alt(rules) => match rules.as_slice() {
+            [Rule::Token(first), Rule::Token(second)] => AstListSeparatorToken::Either(
+                String::from(&grammar[*first].name),
+                String::from(&grammar[*second].name),
+            ),
+            _ => panic!("The separator can either be a single token, or a tuple of two tokens"),
+        },
         _ => panic!("The separator in rule {:?} must be a token", rules),
     };
 
     Some(CommaList {
         node_name: &grammar[*node].name,
         trailing_separator: trailing_separator.is_some(),
-        separator_name,
+        separator_token,
     })
 }
 

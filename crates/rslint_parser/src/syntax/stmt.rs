@@ -19,7 +19,7 @@ use crate::syntax::expr::{
 };
 use crate::syntax::function::{is_at_async_function, parse_function_statement, LineBreak};
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{expected_binding, expected_statement};
+use crate::syntax::js_parse_error::{expected_binding, expected_statement, ts_only_syntax_error};
 use crate::syntax::module::{parse_export, parse_import};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
@@ -234,6 +234,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
             }
         }
 
+        T![ident] if p.cur_src() == "type" && p.typescript() => parse_ts_type_alias(p),
         // TODO: handle `<T>() => {};` with less of a hack
         _ if is_at_identifier(p) && p.nth_at(1, T![:]) => parse_labeled_statement(p, context),
         _ if is_at_expression(p) => parse_expression_statement(p),
@@ -1115,7 +1116,7 @@ fn parse_variable_declaration(
             p.error(err);
         }
 
-        let type_annotation = maybe_ts_type_annotation(p);
+        let type_annotation = parse_ts_type_annotation(p).ok();
 
         let last_name_map = std::mem::take(&mut p.state.name_map);
         let duplicate_binding_parent = p.state.duplicate_binding_parent.take();
@@ -1141,7 +1142,7 @@ fn parse_variable_declaration(
                 if let Some(type_annotation) = type_annotation {
                     let err = p
                         .err_builder("`for` statement declarators cannot have a type annotation")
-                        .primary(type_annotation.start..type_annotation.end, "");
+                        .primary(type_annotation.range(p), "");
 
                     p.error(err);
                 }
@@ -1667,49 +1668,15 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
     let declaration_marker = p.start();
 
     p.bump_any(); // bump (
+    parse_binding_pattern(p, ExpressionContext::default()).or_add_diagnostic(p, expected_binding);
 
-    let pattern_marker = parse_binding_pattern(p, ExpressionContext::default())
-        .or_add_diagnostic(p, expected_binding);
-    let pattern_kind = pattern_marker.map(|x| x.kind());
+    let type_annotation = parse_ts_type_parameters(p);
+    JsSyntaxFeature::TypeScript
+        .exclusive_syntax(p, type_annotation, |p, annotation| {
+            ts_only_syntax_error(p, "type annotation", annotation.range(p).as_range())
+        })
+        .ok();
 
-    if p.at(T![:]) {
-        let error_marker = match pattern_marker {
-            Some(pattern_node) => pattern_node.precede(p),
-            _ => p.start(),
-        };
-        let start = p.cur_tok().start();
-        p.bump_any();
-        let ty = ts_type(p);
-        if !matches!(
-            ty.as_ref().map(|x| p.span_text(x.range(p))),
-            Some("unknown") | Some("any")
-        ) && p.typescript()
-            && ty.is_some()
-        {
-            let err = p.err_builder("type annotations for catch parameters can only be `unknown` or `any` if specified")
-                    .primary(ty.as_ref().unwrap().range(p), "");
-
-            p.error(err);
-        }
-
-        let end = ty
-            .map(|x| usize::from(x.range(p).end()))
-            .unwrap_or_else(|| p.cur_tok().start());
-        error_marker.complete(
-            p,
-            pattern_kind
-                .filter(|_| p.typescript())
-                .unwrap_or(JS_UNKNOWN),
-        );
-
-        if !p.typescript() {
-            let err = p
-                .err_builder("type annotations can only be used in TypeScript files")
-                .primary(start..end, "");
-
-            p.error(err);
-        }
-    }
     p.expect(T![')']);
 
     Present(declaration_marker.complete(p, JS_CATCH_DECLARATION))

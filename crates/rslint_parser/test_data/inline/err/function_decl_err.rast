@@ -165,10 +165,8 @@ JsModule {
                 JsUnknown {
                     items: [
                         COLON@148..150 ":" [] [Whitespace(" ")],
-                        JsUnknown {
-                            items: [
-                                IDENT@150..157 "number" [] [Whitespace(" ")],
-                            ],
+                        TsNumberType {
+                            number_token: NUMBER_KW@150..157 "number" [] [Whitespace(" ")],
                         },
                     ],
                 },
@@ -378,8 +376,8 @@ JsModule {
         2: R_PAREN@147..148 ")" [] []
       3: JS_UNKNOWN@148..157
         0: COLON@148..150 ":" [] [Whitespace(" ")]
-        1: JS_UNKNOWN@150..157
-          0: IDENT@150..157 "number" [] [Whitespace(" ")]
+        1: TS_NUMBER_TYPE@150..157
+          0: NUMBER_KW@150..157 "number" [] [Whitespace(" ")]
       4: JS_FUNCTION_BODY@157..159
         0: L_CURLY@157..158 "{" [] []
         1: JS_DIRECTIVE_LIST@158..158

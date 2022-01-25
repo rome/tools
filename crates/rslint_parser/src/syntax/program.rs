@@ -41,7 +41,7 @@ pub fn ts_import_equals_decl(p: &mut Parser, m: Marker) -> CompletedMarker {
     if p.cur_src() == "require" && p.nth_at(1, T!['(']) {
         ts_external_module_ref(p);
     } else {
-        ts_entity_name(p, None, false);
+        parse_ts_name(p).ok();
     }
     semi(p, start..p.cur_tok().start());
     m.complete(p, TS_IMPORT_EQUALS_DECL)

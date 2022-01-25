@@ -373,6 +373,18 @@ impl<'t> Parser<'t> {
         }
     }
 
+    #[inline]
+    pub fn lookahead<F, R>(&mut self, op: F) -> R
+    where
+        F: FnOnce(&mut Parser) -> R,
+    {
+        let checkpoint = self.checkpoint();
+        let result = op(self);
+        self.rewind(checkpoint);
+
+        result
+    }
+
     /// Get the current index of the last event
     fn cur_event_pos(&self) -> usize {
         self.events.len().saturating_sub(1)

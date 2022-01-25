@@ -1,19 +1,20 @@
 use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::state::{EnterFunction, EnterParameters, SignatureFlags};
-use crate::syntax::binding::{parse_binding, parse_binding_pattern};
+use crate::syntax::binding::{is_at_identifier_binding, parse_binding, parse_binding_pattern};
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{expected_binding, expected_parameter};
+use crate::syntax::js_parse_error::{expected_binding, expected_parameter, ts_only_syntax_error};
 use crate::syntax::stmt::{is_semi, parse_block_impl, StatementContext};
 use crate::syntax::typescript::{
-    maybe_eat_incorrect_modifier, maybe_ts_type_annotation, ts_type, ts_type_or_type_predicate_ann,
-    ts_type_params,
+    maybe_eat_incorrect_modifier, parse_ts_return_type_annotation, parse_ts_type_annotation,
+    parse_ts_type_parameters,
 };
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, JsSyntaxFeature, Marker, ParseRecovery, Parser, SyntaxFeature};
 use rome_rowan::SyntaxKind;
+use rslint_errors::Span;
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
 
@@ -181,7 +182,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
     }
 
     TypeScript
-        .parse_exclusive_syntax(p, parse_ts_parameter_types, |p, marker| {
+        .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, marker| {
             p.err_builder("type parameters can only be used in TypeScript files")
                 .primary(marker.range(p), "")
         })
@@ -190,7 +191,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
     parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_parameters);
 
     TypeScript
-        .parse_exclusive_syntax(p, parse_ts_type_annotation_or_error, |p, marker| {
+        .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, marker| {
             p.err_builder("return types can only be used in TypeScript files")
                 .primary(marker.range(p), "")
         })
@@ -283,32 +284,20 @@ pub(super) fn function_body_or_declaration(p: &mut Parser, flags: SignatureFlags
     }
 }
 
-pub(crate) fn parse_ts_parameter_types(p: &mut Parser) -> ParsedSyntax {
-    if p.at(T![<]) {
-        Present(ts_type_params(p).unwrap())
-    } else {
-        Absent
-    }
-}
-
 pub(crate) fn ts_parameter_types(p: &mut Parser) {
-    if p.at(T![<]) {
-        if let Some(ref mut ty) = ts_type_params(p) {
-            ty.err_if_not_ts(p, "type parameters can only be used in TypeScript files");
-        }
-    }
+    let parameters = parse_ts_type_parameters(p);
+    TypeScript
+        .exclusive_syntax(p, parameters, |p, marker| {
+            ts_only_syntax_error(p, "type parameters", marker.range(p).as_range())
+        })
+        .ok();
 }
 
 pub(crate) fn parse_ts_type_annotation_or_error(p: &mut Parser) -> ParsedSyntax {
-    if p.at(T![:]) {
-        let return_type = p.start();
-        if let Some(ref mut ty) = ts_type_or_type_predicate_ann(p, T![:]) {
-            ty.err_if_not_ts(p, "return types can only be used in TypeScript files");
-        }
-        Present(return_type.complete(p, TS_TYPE_ANNOTATION))
-    } else {
-        Absent
-    }
+    TypeScript.parse_exclusive_syntax(p, parse_ts_type_annotation, |p, annoation| {
+        p.err_builder("return types can only be used in TypeScript files")
+            .primary(annoation.range(p), "remove this type annotation")
+    })
 }
 
 /// Tells [is_at_async_function] if it needs to check line breaks
@@ -391,10 +380,36 @@ pub(super) fn parse_parameter(p: &mut Parser, context: ExpressionContext) -> Par
 
     parse_binding_pattern(p, context).map(|binding| {
         let m = binding.precede(p);
-        maybe_ts_type_annotation(p);
+
+        TypeScript
+            .parse_exclusive_syntax(p, parse_ts_type_annotation, |p, annotation| {
+                ts_only_syntax_error(p, "Type annotations", annotation.range(p).as_range())
+            })
+            .ok();
+
         parse_initializer_clause(p, context).ok();
         m.complete(p, JS_PARAMETER)
     })
+}
+
+pub(super) fn skip_parameter_start(p: &mut Parser) -> bool {
+    if is_at_identifier_binding(p) || p.at(T![this]) {
+        // a
+        p.bump_any();
+        return true;
+    }
+
+    if p.at(T!['[']) || p.at(T!['{']) {
+        // Array or object pattern. Try to parse it and return true if there were no parsing errors
+        let previous_error_count = p.errors.len();
+        let pattern = parse_binding_pattern(
+            p,
+            ExpressionContext::default().and_object_expression_allowed(true),
+        );
+        pattern.is_present() && p.errors.len() == previous_error_count
+    } else {
+        false
+    }
 }
 
 // test parameter_list
@@ -466,15 +481,12 @@ pub(super) fn parse_parameters_list(
                 }
 
                 // type annotation `...foo: number[]`
-                if p.eat(T![:]) {
-                    let complete = ts_type(p);
-                    if let Some(mut res) = complete {
-                        res.err_if_not_ts(
-                            p,
-                            "type annotations can only be used in TypeScript files",
-                        );
-                    }
-                }
+                let type_annotation = parse_ts_type_annotation(p);
+                TypeScript
+                    .exclusive_syntax(p, type_annotation, |p, annotation| {
+                        ts_only_syntax_error(p, "type annotation", annotation.range(p).as_range())
+                    })
+                    .ok();
 
                 if p.at(T![=]) {
                     let start = p.cur_tok().start();

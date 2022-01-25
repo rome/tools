@@ -114,8 +114,8 @@ JsModule {
                                 JsUnknown {
                                     items: [
                                         COLON@41..43 ":" [] [Whitespace(" ")],
-                                        TsString {
-                                            ident_token: IDENT@43..49 "string" [] [],
+                                        TsStringType {
+                                            string_token: STRING_KW@43..49 "string" [] [],
                                         },
                                     ],
                                 },
@@ -252,8 +252,8 @@ JsModule {
                 0: IDENT@40..41 "a" [] []
               1: JS_UNKNOWN@41..49
                 0: COLON@41..43 ":" [] [Whitespace(" ")]
-                1: TS_STRING@43..49
-                  0: IDENT@43..49 "string" [] []
+                1: TS_STRING_TYPE@43..49
+                  0: STRING_KW@43..49 "string" [] []
           2: (empty)
         3: (empty)
         4: (empty)
@@ -301,11 +301,11 @@ error[SyntaxError]: expected a function body, or an expression but instead found
   │          ^ Expected a function body, or an expression here
 
 --
-error[SyntaxError]: type annotations can only be used in TypeScript files
+error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   ┌─ paren_or_arrow_expr_invalid_params.js:4:3
   │
 4 │ (a: string;
-  │   ^^^^^^^^
+  │   ^^^^^^^^ TypeScript only syntax
 
 --
 error[SyntaxError]: expected `,` but instead found `;`
