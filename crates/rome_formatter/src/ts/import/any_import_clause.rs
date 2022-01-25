@@ -7,7 +7,7 @@ impl ToFormatElement for AnyJsImportClause {
             AnyJsImportClause::JsImportBareClause(bare_clause) => {
                 bare_clause.to_format_element(formatter)
             }
-            AnyJsImportClause::JsImportDefaultClause(_) => todo!(),
+            AnyJsImportClause::JsImportDefaultClause(e) => e.to_format_element(formatter),
             AnyJsImportClause::JsImportNamedClause(named_clause) => {
                 named_clause.to_format_element(formatter)
             }
