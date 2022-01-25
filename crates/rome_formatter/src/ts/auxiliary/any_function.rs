@@ -1,4 +1,4 @@
-use crate::format_element::soft_indent_or_space;
+use crate::format_element::soft_line_indent;
 use crate::{
     concat_elements, empty_element, format_elements, space_token, token, FormatElement,
     FormatResult, Formatter, ToFormatElement,
@@ -46,16 +46,20 @@ impl ToFormatElement for JsAnyFunction {
             tokens.push(space_token());
         }
 
-        if matches!(
-            self.body()?,
+        let body = self.body()?;
+        let body_has_soft_line_break = matches!(
+            body,
             JsAnyFunctionBody::JsFunctionBody(_)
                 | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsArrayExpression(_))
                 | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsArrowFunctionExpression(_))
                 | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsObjectExpression(_))
-        ) {
+        );
+
+        // If the body has a soft line break, we do not insert one.
+        if body_has_soft_line_break {
             tokens.push(formatter.format_node(&self.body()?)?);
         } else {
-            tokens.push(soft_indent_or_space(formatter.format_node(&self.body()?)?));
+            tokens.push(soft_line_indent(formatter.format_node(&self.body()?)?));
         }
 
         Ok(concat_elements(tokens))
