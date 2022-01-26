@@ -1,0 +1,23 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 57
+expression: named_clause.js
+
+---
+# Input
+export {
+    // the boo api
+    boo,
+    // the buzz api is now bar!!
+        buzz as bar,
+
+}
+---
+# Output
+export {
+	// the boo api
+	boo,
+	// the buzz api is now bar!!
+	buzz as bar,
+};
+

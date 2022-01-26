@@ -307,6 +307,34 @@ impl ToFormatElement for SyntaxNode {
                     .unwrap()
                     .to_format_element(formatter)
             }
+            JsSyntaxKind::JS_EXPORT_FROM_CLAUSE => JsExportFromClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+
+            JsSyntaxKind::JS_EXPORT_AS_CLAUSE => JsExportAsClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_NAMED_CLAUSE => JsExportNamedClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_NAMED_SPECIFIER => JsExportNamedSpecifier::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_NAMED_SHORTHAND_SPECIFIER => {
+                JsExportNamedShorthandSpecifier::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+            JsSyntaxKind::JS_EXPORT_NAMED_FROM_CLAUSE => {
+                JsExportNamedFromClause::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+            JsSyntaxKind::JS_EXPORT_NAMED_FROM_SPECIFIER => {
+                JsExportNamedFromSpecifier::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
 
             _ => todo!(
                 "Implement formatting for the {:?} syntax kind.",

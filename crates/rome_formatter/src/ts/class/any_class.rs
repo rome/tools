@@ -1,6 +1,6 @@
 use crate::{
-    block_indent, empty_element, format_elements, group_elements, hard_line_break, if_group_breaks,
-    join_elements_hard_line, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    block_indent, empty_element, format_elements, group_elements, join_elements_hard_line,
+    space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::JsAnyClass;
 
@@ -26,12 +26,6 @@ impl ToFormatElement for JsAnyClass {
             group_elements(formatter.format_delimited(
                 &self.l_curly_token()?,
                 |open_token_trailing, close_token_leading| {
-                    // leading comments should break before any other object member
-                    let leading = if !leading.is_empty() {
-                        format_elements![leading, hard_line_break()]
-                    } else {
-                        empty_element()
-                    };
                     Ok(block_indent(format_elements![
                         open_token_trailing,
                         join_elements_hard_line(

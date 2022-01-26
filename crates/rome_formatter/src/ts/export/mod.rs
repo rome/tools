@@ -1,9 +1,17 @@
 mod any_export_clause;
+mod any_export_name_specifier;
+mod as_clause;
 mod class_clause;
 mod default_class_clause;
 mod default_expression_clause;
 mod default_function_clause;
+mod from_clause;
 mod function_clause;
+mod named_clause;
+mod named_from_clause;
+mod named_from_specifier;
+mod named_shorthand_specifier;
+mod named_specifier;
 mod variable_clause;
 
 use crate::{

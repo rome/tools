@@ -14,10 +14,10 @@ impl ToFormatElement for JsAnyExportClause {
             JsAnyExportClause::JsExportDefaultFunctionClause(node) => {
                 node.to_format_element(formatter)
             }
-            JsAnyExportClause::JsExportFromClause(_) => todo!(),
+            JsAnyExportClause::JsExportFromClause(node) => node.to_format_element(formatter),
             JsAnyExportClause::JsExportFunctionClause(node) => node.to_format_element(formatter),
-            JsAnyExportClause::JsExportNamedClause(_) => todo!(),
-            JsAnyExportClause::JsExportNamedFromClause(_) => todo!(),
+            JsAnyExportClause::JsExportNamedClause(node) => node.to_format_element(formatter),
+            JsAnyExportClause::JsExportNamedFromClause(node) => node.to_format_element(formatter),
             JsAnyExportClause::JsExportVariableClause(node) => node.to_format_element(formatter),
         }
     }

@@ -1,0 +1,30 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 57
+expression: named_from_clause.js
+
+---
+# Input
+export {a,
+    b as c
+} from "fancy" assert { type: "json"}
+
+
+export {
+    lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem,
+    lorem_lorem_lorem_lorem_lorem_ as ipsum_ipsum_ipsum_ipsum_ipsum_ipsum_
+} from "fancy" assert { type: "json", "type2": "json", type23: "json", "type24": "json"}
+---
+# Output
+export { a, as c b } from "fancy" assert { type: "json" };
+
+export {
+	lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem,
+	as ipsum_ipsum_ipsum_ipsum_ipsum_ipsum_ lorem_lorem_lorem_lorem_lorem_,
+} from "fancy" assert {
+	type: "json",
+	"type2": "json",
+	type23: "json",
+	"type24": "json",
+};
+
