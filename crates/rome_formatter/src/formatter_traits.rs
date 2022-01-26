@@ -8,8 +8,19 @@ pub trait FormatOptionalToken {
     ///
     /// ## Panics
     ///
-    /// It panics if the formatting fails.
+    /// It panics if the formatting of the token fails.
     fn format_or_empty(&self, formatter: &Formatter) -> FormatElement;
+
+    /// This function tries to format an optional [token](SyntaxToken). If the token doesn't exist,
+    /// an [empty token](FormatElement::Empty) is created. If exists, the utility
+    /// formats the token and passes it to the closure.
+    ///
+    /// ## Panics
+    ///
+    /// It panics if the formatting of the token fails.
+    fn format_with_empty<With>(&self, formatter: &Formatter, with: With) -> FormatElement
+    where
+        With: FnOnce(FormatElement) -> FormatElement;
 
     /// This function tries to format an optional [token](SyntaxToken). If the token doesn't exist,
     /// it calls the passed closure, which has to return a [FormatElement]
@@ -39,6 +50,20 @@ impl FormatOptionalToken for Option<SyntaxToken> {
             Some(token) => formatter
                 .format_token(token)
                 .expect("Can't format the token"),
+        }
+    }
+
+    fn format_with_empty<With>(&self, formatter: &Formatter, with: With) -> FormatElement
+    where
+        With: FnOnce(FormatElement) -> FormatElement,
+    {
+        match self {
+            None => empty_element(),
+            Some(token) => with(
+                formatter
+                    .format_token(token)
+                    .expect("Can't format the token"),
+            ),
         }
     }
 
