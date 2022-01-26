@@ -175,7 +175,7 @@ impl IntersectionOrUnionType {
     fn parse_element(&self, p: &mut Parser) -> ParsedSyntax {
         match self {
             IntersectionOrUnionType::Union => parse_ts_intersection_type_or_higher(p),
-            IntersectionOrUnionType::Intersection => parse_ts_type_operator_or_higher(p),
+            IntersectionOrUnionType::Intersection => parse_ts_primary_type(p),
         }
     }
 }
@@ -216,7 +216,7 @@ fn parse_ts_union_or_intersection_type(
     }
 }
 
-fn parse_ts_type_operator_or_higher(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_primary_type(p: &mut Parser) -> ParsedSyntax {
     if p.at(T![ident]) {
         // test ts_inferred_type
         // // TYPESCRIPT
@@ -245,7 +245,7 @@ fn parse_ts_type_operator_or_higher(p: &mut Parser) -> ParsedSyntax {
         if let Some(type_operator_kind) = type_operator_kind {
             let m = p.start();
             p.bump_remap(type_operator_kind);
-            parse_ts_type_operator_or_higher(p).or_add_diagnostic(p, expected_ts_type);
+            parse_ts_primary_type(p).or_add_diagnostic(p, expected_ts_type);
             return Present(m.complete(p, TS_TYPE_OPERATOR_TYPE));
         }
     }
@@ -338,7 +338,7 @@ fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
                 "undefined" => (T![undefined], TS_UNDEFINED_TYPE),
                 "never" => (T![never], TS_NEVER_TYPE),
                 _ => {
-                    return parse_ts_type_reference(p);
+                    return parse_ts_reference_type(p);
                 }
             };
 
@@ -346,19 +346,19 @@ fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
             p.bump_remap(token_kind);
             Present(m.complete(p, node_kind))
         }
-        T![ident] => parse_ts_type_reference(p),
-        _ => parse_ts_type_reference(p),
+        T![ident] => parse_ts_reference_type(p),
+        _ => parse_ts_reference_type(p),
     }
 }
 
-// test ts_type_reference
+// test ts_reference_type
 // // TYPESCRIPT
 // type A = object;
 // type B = string;
 // type C = A;
 // type D = B.a;
 // type E = D.c.b.a;
-fn parse_ts_type_reference(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_reference_type(p: &mut Parser) -> ParsedSyntax {
     parse_ts_name(p).map(|name| {
         let m = name.precede(p);
 
@@ -366,7 +366,7 @@ fn parse_ts_type_reference(p: &mut Parser) -> ParsedSyntax {
             ts_type_args(p);
         }
 
-        m.complete(p, TS_TYPE_REFERENCE)
+        m.complete(p, TS_REFERENCE_TYPE)
     })
 }
 

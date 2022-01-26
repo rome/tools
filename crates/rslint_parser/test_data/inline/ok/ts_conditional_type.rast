@@ -48,7 +48,7 @@ JsModule {
             type_parameters: missing (required),
             eq_token: EQ@88..90 "=" [] [Whitespace(" ")],
             ty: TsConditionalType {
-                check_type: TsTypeReference {
+                check_type: TsReferenceType {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@90..92 "A" [] [Whitespace(" ")],
                     },
@@ -58,14 +58,14 @@ JsModule {
                 extends_type: TsParenthesizedType {
                     l_paren_token: L_PAREN@100..101 "(" [] [],
                     ty: TsConditionalType {
-                        check_type: TsTypeReference {
+                        check_type: TsReferenceType {
                             name: JsReferenceIdentifier {
                                 value_token: IDENT@101..103 "B" [] [Whitespace(" ")],
                             },
                             type_arguments: missing (optional),
                         },
                         extends_token: EXTENDS_KW@103..111 "extends" [] [Whitespace(" ")],
-                        extends_type: TsTypeReference {
+                        extends_type: TsReferenceType {
                             name: JsReferenceIdentifier {
                                 value_token: IDENT@111..113 "A" [] [Whitespace(" ")],
                             },
@@ -136,7 +136,7 @@ JsModule {
       2: (empty)
       3: EQ@88..90 "=" [] [Whitespace(" ")]
       4: TS_CONDITIONAL_TYPE@90..147
-        0: TS_TYPE_REFERENCE@90..92
+        0: TS_REFERENCE_TYPE@90..92
           0: JS_REFERENCE_IDENTIFIER@90..92
             0: IDENT@90..92 "A" [] [Whitespace(" ")]
           1: (empty)
@@ -144,12 +144,12 @@ JsModule {
         2: TS_PARENTHESIZED_TYPE@100..132
           0: L_PAREN@100..101 "(" [] []
           1: TS_CONDITIONAL_TYPE@101..130
-            0: TS_TYPE_REFERENCE@101..103
+            0: TS_REFERENCE_TYPE@101..103
               0: JS_REFERENCE_IDENTIFIER@101..103
                 0: IDENT@101..103 "B" [] [Whitespace(" ")]
               1: (empty)
             1: EXTENDS_KW@103..111 "extends" [] [Whitespace(" ")]
-            2: TS_TYPE_REFERENCE@111..113
+            2: TS_REFERENCE_TYPE@111..113
               0: JS_REFERENCE_IDENTIFIER@111..113
                 0: IDENT@111..113 "A" [] [Whitespace(" ")]
               1: (empty)

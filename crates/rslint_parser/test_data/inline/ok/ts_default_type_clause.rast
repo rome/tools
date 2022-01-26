@@ -26,7 +26,7 @@ JsModule {
                 r_angle_token: R_ANGLE@29..31 ">" [] [Whitespace(" ")],
             },
             eq_token: EQ@31..33 "=" [] [Whitespace(" ")],
-            ty: TsTypeReference {
+            ty: TsReferenceType {
                 name: JsReferenceIdentifier {
                     value_token: IDENT@33..34 "X" [] [],
                 },
@@ -83,7 +83,7 @@ JsModule {
                         optional_token_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@84..86 ":" [] [Whitespace(" ")],
-                            ty: TsTypeReference {
+                            ty: TsReferenceType {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@86..88 "X" [] [Whitespace(" ")],
                                 },
@@ -121,7 +121,7 @@ JsModule {
                 0: STRING_KW@23..29 "string" [] []
         2: R_ANGLE@29..31 ">" [] [Whitespace(" ")]
       3: EQ@31..33 "=" [] [Whitespace(" ")]
-      4: TS_TYPE_REFERENCE@33..34
+      4: TS_REFERENCE_TYPE@33..34
         0: JS_REFERENCE_IDENTIFIER@33..34
           0: IDENT@33..34 "X" [] []
         1: (empty)
@@ -162,7 +162,7 @@ JsModule {
             2: (empty)
             3: TS_TYPE_ANNOTATION@84..88
               0: COLON@84..86 ":" [] [Whitespace(" ")]
-              1: TS_TYPE_REFERENCE@86..88
+              1: TS_REFERENCE_TYPE@86..88
                 0: JS_REFERENCE_IDENTIFIER@86..88
                   0: IDENT@86..88 "X" [] [Whitespace(" ")]
                 1: (empty)

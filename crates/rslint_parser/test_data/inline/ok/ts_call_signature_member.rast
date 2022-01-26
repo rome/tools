@@ -126,7 +126,7 @@ JsModule {
                                     },
                                     type_annotation: TsTypeAnnotation {
                                         colon_token: COLON@89..91 ":" [] [Whitespace(" ")],
-                                        ty: TsTypeReference {
+                                        ty: TsReferenceType {
                                             name: JsReferenceIdentifier {
                                                 value_token: IDENT@91..92 "A" [] [],
                                             },
@@ -142,7 +142,7 @@ JsModule {
                                     },
                                     type_annotation: TsTypeAnnotation {
                                         colon_token: COLON@95..97 ":" [] [Whitespace(" ")],
-                                        ty: TsTypeReference {
+                                        ty: TsReferenceType {
                                             name: JsReferenceIdentifier {
                                                 value_token: IDENT@97..98 "B" [] [],
                                             },
@@ -267,7 +267,7 @@ JsModule {
                     0: IDENT@88..89 "a" [] []
                   1: TS_TYPE_ANNOTATION@89..92
                     0: COLON@89..91 ":" [] [Whitespace(" ")]
-                    1: TS_TYPE_REFERENCE@91..92
+                    1: TS_REFERENCE_TYPE@91..92
                       0: JS_REFERENCE_IDENTIFIER@91..92
                         0: IDENT@91..92 "A" [] []
                       1: (empty)
@@ -278,7 +278,7 @@ JsModule {
                     0: IDENT@94..95 "b" [] []
                   1: TS_TYPE_ANNOTATION@95..98
                     0: COLON@95..97 ":" [] [Whitespace(" ")]
-                    1: TS_TYPE_REFERENCE@97..98
+                    1: TS_REFERENCE_TYPE@97..98
                       0: JS_REFERENCE_IDENTIFIER@97..98
                         0: IDENT@97..98 "B" [] []
                       1: (empty)

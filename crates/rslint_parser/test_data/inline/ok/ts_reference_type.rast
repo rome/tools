@@ -33,7 +33,7 @@ JsModule {
             },
             type_parameters: missing (required),
             eq_token: EQ@55..57 "=" [] [Whitespace(" ")],
-            ty: TsTypeReference {
+            ty: TsReferenceType {
                 name: JsReferenceIdentifier {
                     value_token: IDENT@57..58 "A" [] [],
                 },
@@ -48,7 +48,7 @@ JsModule {
             },
             type_parameters: missing (required),
             eq_token: EQ@67..69 "=" [] [Whitespace(" ")],
-            ty: TsTypeReference {
+            ty: TsReferenceType {
                 name: TsQualifiedName {
                     left: JsReferenceIdentifier {
                         value_token: IDENT@69..70 "B" [] [],
@@ -69,7 +69,7 @@ JsModule {
             },
             type_parameters: missing (required),
             eq_token: EQ@81..83 "=" [] [Whitespace(" ")],
-            ty: TsTypeReference {
+            ty: TsReferenceType {
                 name: TsQualifiedName {
                     left: TsQualifiedName {
                         left: TsQualifiedName {
@@ -127,7 +127,7 @@ JsModule {
         0: IDENT@53..55 "C" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@55..57 "=" [] [Whitespace(" ")]
-      4: TS_TYPE_REFERENCE@57..58
+      4: TS_REFERENCE_TYPE@57..58
         0: JS_REFERENCE_IDENTIFIER@57..58
           0: IDENT@57..58 "A" [] []
         1: (empty)
@@ -138,7 +138,7 @@ JsModule {
         0: IDENT@65..67 "D" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@67..69 "=" [] [Whitespace(" ")]
-      4: TS_TYPE_REFERENCE@69..72
+      4: TS_REFERENCE_TYPE@69..72
         0: TS_QUALIFIED_NAME@69..72
           0: JS_REFERENCE_IDENTIFIER@69..70
             0: IDENT@69..70 "B" [] []
@@ -153,7 +153,7 @@ JsModule {
         0: IDENT@79..81 "E" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@81..83 "=" [] [Whitespace(" ")]
-      4: TS_TYPE_REFERENCE@83..90
+      4: TS_REFERENCE_TYPE@83..90
         0: TS_QUALIFIED_NAME@83..90
           0: TS_QUALIFIED_NAME@83..88
             0: TS_QUALIFIED_NAME@83..86

@@ -101,7 +101,7 @@ JsModule {
                     r_paren_token: R_PAREN@113..115 ")" [] [Whitespace(" ")],
                 },
                 fat_arrow_token: FAT_ARROW@115..118 "=>" [] [Whitespace(" ")],
-                return_type: TsTypeReference {
+                return_type: TsReferenceType {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@118..125 "asserts" [] [],
                     },
@@ -192,7 +192,7 @@ JsModule {
           1: JS_PARAMETER_LIST@113..113
           2: R_PAREN@113..115 ")" [] [Whitespace(" ")]
         2: FAT_ARROW@115..118 "=>" [] [Whitespace(" ")]
-        3: TS_TYPE_REFERENCE@118..125
+        3: TS_REFERENCE_TYPE@118..125
           0: JS_REFERENCE_IDENTIFIER@118..125
             0: IDENT@118..125 "asserts" [] []
           1: (empty)

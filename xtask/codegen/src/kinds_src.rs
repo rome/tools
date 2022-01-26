@@ -371,7 +371,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "TS_MAPPED_TYPE_AS_CLAUSE",
         "TS_TYPE_ALIAS",
         "TS_QUALIFIED_NAME",
-        "TS_TYPE_REFERENCE",
+        "TS_REFERENCE_TYPE",
         "TS_UNION_TYPE",
         "TS_UNION_TYPE_VARIANT_LIST",
         "TS_INTERSECTION_TYPE",

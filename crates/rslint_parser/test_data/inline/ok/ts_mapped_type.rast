@@ -31,7 +31,7 @@ JsModule {
                 in_token: IN_KW@54..57 "in" [] [Whitespace(" ")],
                 keys_type: TsTypeOperatorType {
                     operator_token: KEYOF_KW@57..63 "keyof" [] [Whitespace(" ")],
-                    ty: TsTypeReference {
+                    ty: TsReferenceType {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@63..67 "Type" [] [],
                         },
@@ -82,7 +82,7 @@ JsModule {
                 in_token: IN_KW@132..135 "in" [] [Whitespace(" ")],
                 keys_type: TsTypeOperatorType {
                     operator_token: KEYOF_KW@135..141 "keyof" [] [Whitespace(" ")],
-                    ty: TsTypeReference {
+                    ty: TsReferenceType {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@141..145 "Type" [] [],
                         },
@@ -94,14 +94,14 @@ JsModule {
                 optional_modifier: missing (optional),
                 colon_token: COLON@146..148 ":" [] [Whitespace(" ")],
                 mapped_type: TsIndexedAccessType {
-                    object_type: TsTypeReference {
+                    object_type: TsReferenceType {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@148..152 "Type" [] [],
                         },
                         type_arguments: missing (optional),
                     },
                     l_brack_token: L_BRACK@152..153 "[" [] [],
-                    index_type: TsTypeReference {
+                    index_type: TsReferenceType {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@153..161 "Property" [] [],
                         },
@@ -143,7 +143,7 @@ JsModule {
                 in_token: IN_KW@203..206 "in" [] [Whitespace(" ")],
                 keys_type: TsTypeOperatorType {
                     operator_token: KEYOF_KW@206..212 "keyof" [] [Whitespace(" ")],
-                    ty: TsTypeReference {
+                    ty: TsReferenceType {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@212..216 "Type" [] [],
                         },
@@ -158,14 +158,14 @@ JsModule {
                 },
                 colon_token: COLON@219..221 ":" [] [Whitespace(" ")],
                 mapped_type: TsIndexedAccessType {
-                    object_type: TsTypeReference {
+                    object_type: TsReferenceType {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@221..225 "Type" [] [],
                         },
                         type_arguments: missing (optional),
                     },
                     l_brack_token: L_BRACK@225..226 "[" [] [],
-                    index_type: TsTypeReference {
+                    index_type: TsReferenceType {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@226..234 "Property" [] [],
                         },
@@ -207,7 +207,7 @@ JsModule {
                 in_token: IN_KW@276..279 "in" [] [Whitespace(" ")],
                 keys_type: TsTypeOperatorType {
                     operator_token: KEYOF_KW@279..285 "keyof" [] [Whitespace(" ")],
-                    ty: TsTypeReference {
+                    ty: TsReferenceType {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@285..290 "Type" [] [Whitespace(" ")],
                         },
@@ -224,7 +224,7 @@ JsModule {
                             },
                             TsTemplateElement {
                                 dollar_curly_token: DOLLAR_CURLY@297..299 "${" [] [],
-                                ty: TsTypeReference {
+                                ty: TsReferenceType {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@299..309 "Capitalize" [] [],
                                     },
@@ -238,7 +238,7 @@ JsModule {
                                                         string_token: STRING_KW@310..317 "string" [] [Whitespace(" ")],
                                                     },
                                                     AMP@317..319 "&" [] [Whitespace(" ")],
-                                                    TsTypeReference {
+                                                    TsReferenceType {
                                                         name: JsReferenceIdentifier {
                                                             value_token: IDENT@319..327 "Property" [] [],
                                                         },
@@ -268,14 +268,14 @@ JsModule {
                     },
                     fat_arrow_token: FAT_ARROW@336..339 "=>" [] [Whitespace(" ")],
                     return_type: TsIndexedAccessType {
-                        object_type: TsTypeReference {
+                        object_type: TsReferenceType {
                             name: JsReferenceIdentifier {
                                 value_token: IDENT@339..343 "Type" [] [],
                             },
                             type_arguments: missing (optional),
                         },
                         l_brack_token: L_BRACK@343..344 "[" [] [],
-                        index_type: TsTypeReference {
+                        index_type: TsReferenceType {
                             name: JsReferenceIdentifier {
                                 value_token: IDENT@344..352 "Property" [] [],
                             },
@@ -320,7 +320,7 @@ JsModule {
         4: IN_KW@54..57 "in" [] [Whitespace(" ")]
         5: TS_TYPE_OPERATOR_TYPE@57..67
           0: KEYOF_KW@57..63 "keyof" [] [Whitespace(" ")]
-          1: TS_TYPE_REFERENCE@63..67
+          1: TS_REFERENCE_TYPE@63..67
             0: JS_REFERENCE_IDENTIFIER@63..67
               0: IDENT@63..67 "Type" [] []
             1: (empty)
@@ -358,7 +358,7 @@ JsModule {
         4: IN_KW@132..135 "in" [] [Whitespace(" ")]
         5: TS_TYPE_OPERATOR_TYPE@135..145
           0: KEYOF_KW@135..141 "keyof" [] [Whitespace(" ")]
-          1: TS_TYPE_REFERENCE@141..145
+          1: TS_REFERENCE_TYPE@141..145
             0: JS_REFERENCE_IDENTIFIER@141..145
               0: IDENT@141..145 "Type" [] []
             1: (empty)
@@ -367,12 +367,12 @@ JsModule {
         8: (empty)
         9: COLON@146..148 ":" [] [Whitespace(" ")]
         10: TS_INDEXED_ACCESS_TYPE@148..162
-          0: TS_TYPE_REFERENCE@148..152
+          0: TS_REFERENCE_TYPE@148..152
             0: JS_REFERENCE_IDENTIFIER@148..152
               0: IDENT@148..152 "Type" [] []
             1: (empty)
           1: L_BRACK@152..153 "[" [] []
-          2: TS_TYPE_REFERENCE@153..161
+          2: TS_REFERENCE_TYPE@153..161
             0: JS_REFERENCE_IDENTIFIER@153..161
               0: IDENT@153..161 "Property" [] []
             1: (empty)
@@ -403,7 +403,7 @@ JsModule {
         4: IN_KW@203..206 "in" [] [Whitespace(" ")]
         5: TS_TYPE_OPERATOR_TYPE@206..216
           0: KEYOF_KW@206..212 "keyof" [] [Whitespace(" ")]
-          1: TS_TYPE_REFERENCE@212..216
+          1: TS_REFERENCE_TYPE@212..216
             0: JS_REFERENCE_IDENTIFIER@212..216
               0: IDENT@212..216 "Type" [] []
             1: (empty)
@@ -414,12 +414,12 @@ JsModule {
           1: QUESTION@218..219 "?" [] []
         9: COLON@219..221 ":" [] [Whitespace(" ")]
         10: TS_INDEXED_ACCESS_TYPE@221..235
-          0: TS_TYPE_REFERENCE@221..225
+          0: TS_REFERENCE_TYPE@221..225
             0: JS_REFERENCE_IDENTIFIER@221..225
               0: IDENT@221..225 "Type" [] []
             1: (empty)
           1: L_BRACK@225..226 "[" [] []
-          2: TS_TYPE_REFERENCE@226..234
+          2: TS_REFERENCE_TYPE@226..234
             0: JS_REFERENCE_IDENTIFIER@226..234
               0: IDENT@226..234 "Property" [] []
             1: (empty)
@@ -450,7 +450,7 @@ JsModule {
         4: IN_KW@276..279 "in" [] [Whitespace(" ")]
         5: TS_TYPE_OPERATOR_TYPE@279..290
           0: KEYOF_KW@279..285 "keyof" [] [Whitespace(" ")]
-          1: TS_TYPE_REFERENCE@285..290
+          1: TS_REFERENCE_TYPE@285..290
             0: JS_REFERENCE_IDENTIFIER@285..290
               0: IDENT@285..290 "Type" [] [Whitespace(" ")]
             1: (empty)
@@ -463,7 +463,7 @@ JsModule {
                 0: TEMPLATE_CHUNK@294..297 "get" [] []
               1: TS_TEMPLATE_ELEMENT@297..329
                 0: DOLLAR_CURLY@297..299 "${" [] []
-                1: TS_TYPE_REFERENCE@299..328
+                1: TS_REFERENCE_TYPE@299..328
                   0: JS_REFERENCE_IDENTIFIER@299..309
                     0: IDENT@299..309 "Capitalize" [] []
                   1: TS_TYPE_ARGS@309..328
@@ -475,7 +475,7 @@ JsModule {
                           0: TS_STRING_TYPE@310..317
                             0: STRING_KW@310..317 "string" [] [Whitespace(" ")]
                           1: AMP@317..319 "&" [] [Whitespace(" ")]
-                          2: TS_TYPE_REFERENCE@319..327
+                          2: TS_REFERENCE_TYPE@319..327
                             0: JS_REFERENCE_IDENTIFIER@319..327
                               0: IDENT@319..327 "Property" [] []
                             1: (empty)
@@ -493,12 +493,12 @@ JsModule {
             2: R_PAREN@334..336 ")" [] [Whitespace(" ")]
           2: FAT_ARROW@336..339 "=>" [] [Whitespace(" ")]
           3: TS_INDEXED_ACCESS_TYPE@339..353
-            0: TS_TYPE_REFERENCE@339..343
+            0: TS_REFERENCE_TYPE@339..343
               0: JS_REFERENCE_IDENTIFIER@339..343
                 0: IDENT@339..343 "Type" [] []
               1: (empty)
             1: L_BRACK@343..344 "[" [] []
-            2: TS_TYPE_REFERENCE@344..352
+            2: TS_REFERENCE_TYPE@344..352
               0: JS_REFERENCE_IDENTIFIER@344..352
                 0: IDENT@344..352 "Property" [] []
               1: (empty)

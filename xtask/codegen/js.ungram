@@ -1396,7 +1396,6 @@ TsType =
 	TsAnyType
 	| TsUnknownType
 	| TsNumberType
-	| TsNonPrimitiveType
 	| TsBooleanType
 	| TsBigintType
 	| TsStringType
@@ -1405,29 +1404,31 @@ TsType =
 	| TsUndefinedType
 	| TsNeverType
 	// Primary types, without predefined types
-	| TsThisType
 	| TsParenthesizedType
-	| TsTypeofType
-	| TsTypeReference // TODO rename
-	| TsObjectType
+	| TsReferenceType
 	| TsArrayType
-	| TsIndexedAccessType
 	| TsTupleType
-	| TsUnionType
-	| TsIntersectionType
+	| TsTypeofType
+	| TsImportType
 	| TsTypeOperatorType
-	| TsInferredType
-	| TsFunctionType
-	| TsConditionalType
-	| TsConstructorType
+	| TsIndexedAccessType
+	| TsMappedType
+	| TsObjectType
+	| TsNonPrimitiveType
+	| TsThisType
 	| TsNumberLiteralType
 	| TsBigIntLiteralType
 	| TsStringLiteralType
 	| TsNullLiteralType
 	| TsBooleanLiteralType
 	| TsTemplateLiteralType
-	| TsMappedType
-	| TsImportType
+	| TsInferredType
+	// Intersection or higher types
+	| TsIntersectionType
+	| TsUnionType
+	| TsFunctionType
+	| TsConstructorType
+	| TsConditionalType
 
 // Predefined types
 TsAnyType = 'any'
@@ -1448,7 +1449,7 @@ TsParenthesizedType =
 	ty: TsType
 	')'
 
-TsTypeReference =
+TsReferenceType =
 	name: TsAnyName
 	type_arguments: TsTypeArgs?
 
@@ -1479,8 +1480,6 @@ TsIntersectionType =
 	types: TsIntersectionTypeElementList
 
 TsIntersectionTypeElementList = (TsType ('&' TsType)*)
-
-// TODO introduce TsPrimaryType?
 
 // keyof A;
 // ^^^^^^^

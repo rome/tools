@@ -140,7 +140,7 @@ JsModule {
                             },
                             type_annotation: TsTypeAnnotation {
                                 colon_token: COLON@135..137 ":" [] [Whitespace(" ")],
-                                ty: TsTypeReference {
+                                ty: TsReferenceType {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@137..138 "A" [] [],
                                     },
@@ -156,7 +156,7 @@ JsModule {
                             },
                             type_annotation: TsTypeAnnotation {
                                 colon_token: COLON@141..143 ":" [] [Whitespace(" ")],
-                                ty: TsTypeReference {
+                                ty: TsReferenceType {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@143..144 "B" [] [],
                                     },
@@ -215,7 +215,7 @@ JsModule {
                             },
                             type_annotation: TsTypeAnnotation {
                                 colon_token: COLON@186..188 ":" [] [Whitespace(" ")],
-                                ty: TsTypeReference {
+                                ty: TsReferenceType {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@188..189 "A" [] [],
                                     },
@@ -231,7 +231,7 @@ JsModule {
                             },
                             type_annotation: TsTypeAnnotation {
                                 colon_token: COLON@192..194 ":" [] [Whitespace(" ")],
-                                ty: TsTypeReference {
+                                ty: TsReferenceType {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@194..195 "B" [] [],
                                     },
@@ -360,7 +360,7 @@ JsModule {
                 0: IDENT@134..135 "a" [] []
               1: TS_TYPE_ANNOTATION@135..138
                 0: COLON@135..137 ":" [] [Whitespace(" ")]
-                1: TS_TYPE_REFERENCE@137..138
+                1: TS_REFERENCE_TYPE@137..138
                   0: JS_REFERENCE_IDENTIFIER@137..138
                     0: IDENT@137..138 "A" [] []
                   1: (empty)
@@ -371,7 +371,7 @@ JsModule {
                 0: IDENT@140..141 "b" [] []
               1: TS_TYPE_ANNOTATION@141..144
                 0: COLON@141..143 ":" [] [Whitespace(" ")]
-                1: TS_TYPE_REFERENCE@143..144
+                1: TS_REFERENCE_TYPE@143..144
                   0: JS_REFERENCE_IDENTIFIER@143..144
                     0: IDENT@143..144 "B" [] []
                   1: (empty)
@@ -413,7 +413,7 @@ JsModule {
                 0: IDENT@185..186 "a" [] []
               1: TS_TYPE_ANNOTATION@186..189
                 0: COLON@186..188 ":" [] [Whitespace(" ")]
-                1: TS_TYPE_REFERENCE@188..189
+                1: TS_REFERENCE_TYPE@188..189
                   0: JS_REFERENCE_IDENTIFIER@188..189
                     0: IDENT@188..189 "A" [] []
                   1: (empty)
@@ -424,7 +424,7 @@ JsModule {
                 0: IDENT@191..192 "b" [] []
               1: TS_TYPE_ANNOTATION@192..195
                 0: COLON@192..194 ":" [] [Whitespace(" ")]
-                1: TS_TYPE_REFERENCE@194..195
+                1: TS_REFERENCE_TYPE@194..195
                   0: JS_REFERENCE_IDENTIFIER@194..195
                     0: IDENT@194..195 "B" [] []
                   1: (empty)

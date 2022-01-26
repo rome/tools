@@ -33,7 +33,7 @@ JsModule {
             ty: TsIntersectionType {
                 leading_separator_token_token: AMP@49..51 "&" [] [Whitespace(" ")],
                 types: TsIntersectionTypeElementList [
-                    TsTypeReference {
+                    TsReferenceType {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@51..53 "A" [] [Whitespace(" ")],
                         },
@@ -83,7 +83,7 @@ JsModule {
       4: TS_INTERSECTION_TYPE@49..66
         0: AMP@49..51 "&" [] [Whitespace(" ")]
         1: TS_INTERSECTION_TYPE_ELEMENT_LIST@51..66
-          0: TS_TYPE_REFERENCE@51..53
+          0: TS_REFERENCE_TYPE@51..53
             0: JS_REFERENCE_IDENTIFIER@51..53
               0: IDENT@51..53 "A" [] [Whitespace(" ")]
             1: (empty)

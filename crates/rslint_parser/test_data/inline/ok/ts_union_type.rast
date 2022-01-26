@@ -33,7 +33,7 @@ JsModule {
             ty: TsUnionType {
                 leading_separator_token_token: PIPE@49..51 "|" [] [Whitespace(" ")],
                 types: TsUnionTypeVariantList [
-                    TsTypeReference {
+                    TsReferenceType {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@51..53 "A" [] [Whitespace(" ")],
                         },
@@ -64,14 +64,14 @@ JsModule {
                     TsIntersectionType {
                         leading_separator_token_token: missing (optional),
                         types: TsIntersectionTypeElementList [
-                            TsTypeReference {
+                            TsReferenceType {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@77..79 "A" [] [Whitespace(" ")],
                                 },
                                 type_arguments: missing (optional),
                             },
                             AMP@79..81 "&" [] [Whitespace(" ")],
-                            TsTypeReference {
+                            TsReferenceType {
                                 name: JsReferenceIdentifier {
                                     value_token: IDENT@81..83 "C" [] [Whitespace(" ")],
                                 },
@@ -80,7 +80,7 @@ JsModule {
                         ],
                     },
                     PIPE@83..85 "|" [] [Whitespace(" ")],
-                    TsTypeReference {
+                    TsReferenceType {
                         name: JsReferenceIdentifier {
                             value_token: IDENT@85..86 "C" [] [],
                         },
@@ -122,7 +122,7 @@ JsModule {
       4: TS_UNION_TYPE@49..66
         0: PIPE@49..51 "|" [] [Whitespace(" ")]
         1: TS_UNION_TYPE_VARIANT_LIST@51..66
-          0: TS_TYPE_REFERENCE@51..53
+          0: TS_REFERENCE_TYPE@51..53
             0: JS_REFERENCE_IDENTIFIER@51..53
               0: IDENT@51..53 "A" [] [Whitespace(" ")]
             1: (empty)
@@ -145,17 +145,17 @@ JsModule {
           0: TS_INTERSECTION_TYPE@77..83
             0: (empty)
             1: TS_INTERSECTION_TYPE_ELEMENT_LIST@77..83
-              0: TS_TYPE_REFERENCE@77..79
+              0: TS_REFERENCE_TYPE@77..79
                 0: JS_REFERENCE_IDENTIFIER@77..79
                   0: IDENT@77..79 "A" [] [Whitespace(" ")]
                 1: (empty)
               1: AMP@79..81 "&" [] [Whitespace(" ")]
-              2: TS_TYPE_REFERENCE@81..83
+              2: TS_REFERENCE_TYPE@81..83
                 0: JS_REFERENCE_IDENTIFIER@81..83
                   0: IDENT@81..83 "C" [] [Whitespace(" ")]
                 1: (empty)
           1: PIPE@83..85 "|" [] [Whitespace(" ")]
-          2: TS_TYPE_REFERENCE@85..86
+          2: TS_REFERENCE_TYPE@85..86
             0: JS_REFERENCE_IDENTIFIER@85..86
               0: IDENT@85..86 "C" [] []
             1: (empty)

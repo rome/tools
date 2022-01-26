@@ -35,7 +35,7 @@ JsModule {
                     },
                     TsTemplateElement {
                         dollar_curly_token: DOLLAR_CURLY@41..43 "${" [] [],
-                        ty: TsTypeReference {
+                        ty: TsReferenceType {
                             name: JsReferenceIdentifier {
                                 value_token: IDENT@43..44 "A" [] [],
                             },
@@ -80,7 +80,7 @@ JsModule {
                     },
                     TsTemplateElement {
                         dollar_curly_token: DOLLAR_CURLY@76..78 "${" [] [],
-                        ty: TsTypeReference {
+                        ty: TsReferenceType {
                             name: JsReferenceIdentifier {
                                 value_token: IDENT@78..79 "X" [] [],
                             },
@@ -127,7 +127,7 @@ JsModule {
             0: TEMPLATE_CHUNK@40..41 "a" [] []
           1: TS_TEMPLATE_ELEMENT@41..45
             0: DOLLAR_CURLY@41..43 "${" [] []
-            1: TS_TYPE_REFERENCE@43..44
+            1: TS_REFERENCE_TYPE@43..44
               0: JS_REFERENCE_IDENTIFIER@43..44
                 0: IDENT@43..44 "A" [] []
               1: (empty)
@@ -158,7 +158,7 @@ JsModule {
             0: TEMPLATE_CHUNK@75..76 "c" [] []
           1: TS_TEMPLATE_ELEMENT@76..80
             0: DOLLAR_CURLY@76..78 "${" [] []
-            1: TS_TYPE_REFERENCE@78..79
+            1: TS_REFERENCE_TYPE@78..79
               0: JS_REFERENCE_IDENTIFIER@78..79
                 0: IDENT@78..79 "X" [] []
               1: (empty)

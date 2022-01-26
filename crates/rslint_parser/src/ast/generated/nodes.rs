@@ -2837,6 +2837,14 @@ impl TsQualifiedName {
     pub fn right(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsReferenceType {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsReferenceType {
+    pub fn name(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
+    pub fn type_arguments(&self) -> Option<TsTypeArgs> { support::node(&self.syntax, 1usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsRestTupleTypeElement {
     pub(crate) syntax: SyntaxNode,
 }
@@ -3074,14 +3082,6 @@ impl TsTypePredicate {
         support::required_token(&self.syntax, 2usize)
     }
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 3usize) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsTypeReference {
-    pub(crate) syntax: SyntaxNode,
-}
-impl TsTypeReference {
-    pub fn name(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
-    pub fn type_arguments(&self) -> Option<TsTypeArgs> { support::node(&self.syntax, 1usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeofType {
@@ -3483,6 +3483,7 @@ pub enum TsType {
     TsNumberType(TsNumberType),
     TsObjectType(TsObjectType),
     TsParenthesizedType(TsParenthesizedType),
+    TsReferenceType(TsReferenceType),
     TsStringLiteralType(TsStringLiteralType),
     TsStringType(TsStringType),
     TsSymbolType(TsSymbolType),
@@ -3490,7 +3491,6 @@ pub enum TsType {
     TsThisType(TsThisType),
     TsTupleType(TsTupleType),
     TsTypeOperatorType(TsTypeOperatorType),
-    TsTypeReference(TsTypeReference),
     TsTypeofType(TsTypeofType),
     TsUndefinedType(TsUndefinedType),
     TsUnionType(TsUnionType),
@@ -9764,6 +9764,34 @@ impl From<TsQualifiedName> for SyntaxNode {
 impl From<TsQualifiedName> for SyntaxElement {
     fn from(n: TsQualifiedName) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsReferenceType {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_REFERENCE_TYPE }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsReferenceType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsReferenceType")
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "type_arguments",
+                &support::DebugOptionalElement(self.type_arguments()),
+            )
+            .finish()
+    }
+}
+impl From<TsReferenceType> for SyntaxNode {
+    fn from(n: TsReferenceType) -> SyntaxNode { n.syntax }
+}
+impl From<TsReferenceType> for SyntaxElement {
+    fn from(n: TsReferenceType) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsRestTupleTypeElement {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_REST_TUPLE_TYPE_ELEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -10356,34 +10384,6 @@ impl From<TsTypePredicate> for SyntaxNode {
 }
 impl From<TsTypePredicate> for SyntaxElement {
     fn from(n: TsTypePredicate) -> SyntaxElement { n.syntax.into() }
-}
-impl AstNode for TsTypeReference {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_REFERENCE }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsTypeReference {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsTypeReference")
-            .field("name", &support::DebugSyntaxResult(self.name()))
-            .field(
-                "type_arguments",
-                &support::DebugOptionalElement(self.type_arguments()),
-            )
-            .finish()
-    }
-}
-impl From<TsTypeReference> for SyntaxNode {
-    fn from(n: TsTypeReference) -> SyntaxNode { n.syntax }
-}
-impl From<TsTypeReference> for SyntaxElement {
-    fn from(n: TsTypeReference) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsTypeofType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPEOF_TYPE }
@@ -14281,6 +14281,9 @@ impl From<TsObjectType> for TsType {
 impl From<TsParenthesizedType> for TsType {
     fn from(node: TsParenthesizedType) -> TsType { TsType::TsParenthesizedType(node) }
 }
+impl From<TsReferenceType> for TsType {
+    fn from(node: TsReferenceType) -> TsType { TsType::TsReferenceType(node) }
+}
 impl From<TsStringLiteralType> for TsType {
     fn from(node: TsStringLiteralType) -> TsType { TsType::TsStringLiteralType(node) }
 }
@@ -14301,9 +14304,6 @@ impl From<TsTupleType> for TsType {
 }
 impl From<TsTypeOperatorType> for TsType {
     fn from(node: TsTypeOperatorType) -> TsType { TsType::TsTypeOperatorType(node) }
-}
-impl From<TsTypeReference> for TsType {
-    fn from(node: TsTypeReference) -> TsType { TsType::TsTypeReference(node) }
 }
 impl From<TsTypeofType> for TsType {
     fn from(node: TsTypeofType) -> TsType { TsType::TsTypeofType(node) }
@@ -14345,6 +14345,7 @@ impl AstNode for TsType {
                 | TS_NUMBER_TYPE
                 | TS_OBJECT_TYPE
                 | TS_PARENTHESIZED_TYPE
+                | TS_REFERENCE_TYPE
                 | TS_STRING_LITERAL_TYPE
                 | TS_STRING_TYPE
                 | TS_SYMBOL_TYPE
@@ -14352,7 +14353,6 @@ impl AstNode for TsType {
                 | TS_THIS_TYPE
                 | TS_TUPLE_TYPE
                 | TS_TYPE_OPERATOR_TYPE
-                | TS_TYPE_REFERENCE
                 | TS_TYPEOF_TYPE
                 | TS_UNDEFINED_TYPE
                 | TS_UNION_TYPE
@@ -14385,6 +14385,7 @@ impl AstNode for TsType {
             TS_NUMBER_TYPE => TsType::TsNumberType(TsNumberType { syntax }),
             TS_OBJECT_TYPE => TsType::TsObjectType(TsObjectType { syntax }),
             TS_PARENTHESIZED_TYPE => TsType::TsParenthesizedType(TsParenthesizedType { syntax }),
+            TS_REFERENCE_TYPE => TsType::TsReferenceType(TsReferenceType { syntax }),
             TS_STRING_LITERAL_TYPE => TsType::TsStringLiteralType(TsStringLiteralType { syntax }),
             TS_STRING_TYPE => TsType::TsStringType(TsStringType { syntax }),
             TS_SYMBOL_TYPE => TsType::TsSymbolType(TsSymbolType { syntax }),
@@ -14394,7 +14395,6 @@ impl AstNode for TsType {
             TS_THIS_TYPE => TsType::TsThisType(TsThisType { syntax }),
             TS_TUPLE_TYPE => TsType::TsTupleType(TsTupleType { syntax }),
             TS_TYPE_OPERATOR_TYPE => TsType::TsTypeOperatorType(TsTypeOperatorType { syntax }),
-            TS_TYPE_REFERENCE => TsType::TsTypeReference(TsTypeReference { syntax }),
             TS_TYPEOF_TYPE => TsType::TsTypeofType(TsTypeofType { syntax }),
             TS_UNDEFINED_TYPE => TsType::TsUndefinedType(TsUndefinedType { syntax }),
             TS_UNION_TYPE => TsType::TsUnionType(TsUnionType { syntax }),
@@ -14427,6 +14427,7 @@ impl AstNode for TsType {
             TsType::TsNumberType(it) => &it.syntax,
             TsType::TsObjectType(it) => &it.syntax,
             TsType::TsParenthesizedType(it) => &it.syntax,
+            TsType::TsReferenceType(it) => &it.syntax,
             TsType::TsStringLiteralType(it) => &it.syntax,
             TsType::TsStringType(it) => &it.syntax,
             TsType::TsSymbolType(it) => &it.syntax,
@@ -14434,7 +14435,6 @@ impl AstNode for TsType {
             TsType::TsThisType(it) => &it.syntax,
             TsType::TsTupleType(it) => &it.syntax,
             TsType::TsTypeOperatorType(it) => &it.syntax,
-            TsType::TsTypeReference(it) => &it.syntax,
             TsType::TsTypeofType(it) => &it.syntax,
             TsType::TsUndefinedType(it) => &it.syntax,
             TsType::TsUnionType(it) => &it.syntax,
@@ -14467,6 +14467,7 @@ impl std::fmt::Debug for TsType {
             TsType::TsNumberType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsObjectType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsParenthesizedType(it) => std::fmt::Debug::fmt(it, f),
+            TsType::TsReferenceType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsStringLiteralType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsStringType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsSymbolType(it) => std::fmt::Debug::fmt(it, f),
@@ -14474,7 +14475,6 @@ impl std::fmt::Debug for TsType {
             TsType::TsThisType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsTupleType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsTypeOperatorType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsTypeReference(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsTypeofType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsUndefinedType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsUnionType(it) => std::fmt::Debug::fmt(it, f),
@@ -14507,6 +14507,7 @@ impl From<TsType> for SyntaxNode {
             TsType::TsNumberType(it) => it.into(),
             TsType::TsObjectType(it) => it.into(),
             TsType::TsParenthesizedType(it) => it.into(),
+            TsType::TsReferenceType(it) => it.into(),
             TsType::TsStringLiteralType(it) => it.into(),
             TsType::TsStringType(it) => it.into(),
             TsType::TsSymbolType(it) => it.into(),
@@ -14514,7 +14515,6 @@ impl From<TsType> for SyntaxNode {
             TsType::TsThisType(it) => it.into(),
             TsType::TsTupleType(it) => it.into(),
             TsType::TsTypeOperatorType(it) => it.into(),
-            TsType::TsTypeReference(it) => it.into(),
             TsType::TsTypeofType(it) => it.into(),
             TsType::TsUndefinedType(it) => it.into(),
             TsType::TsUnionType(it) => it.into(),
@@ -15724,6 +15724,11 @@ impl std::fmt::Display for TsQualifiedName {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsReferenceType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsRestTupleTypeElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -15820,11 +15825,6 @@ impl std::fmt::Display for TsTypeParameters {
     }
 }
 impl std::fmt::Display for TsTypePredicate {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for TsTypeReference {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17867,6 +17867,9 @@ impl Debug for DebugSyntaxElement {
                 TS_QUALIFIED_NAME => {
                     std::fmt::Debug::fmt(&TsQualifiedName::cast(node.clone()).unwrap(), f)
                 }
+                TS_REFERENCE_TYPE => {
+                    std::fmt::Debug::fmt(&TsReferenceType::cast(node.clone()).unwrap(), f)
+                }
                 TS_REST_TUPLE_TYPE_ELEMENT => {
                     std::fmt::Debug::fmt(&TsRestTupleTypeElement::cast(node.clone()).unwrap(), f)
                 }
@@ -17932,9 +17935,6 @@ impl Debug for DebugSyntaxElement {
                 }
                 TS_TYPE_PREDICATE => {
                     std::fmt::Debug::fmt(&TsTypePredicate::cast(node.clone()).unwrap(), f)
-                }
-                TS_TYPE_REFERENCE => {
-                    std::fmt::Debug::fmt(&TsTypeReference::cast(node.clone()).unwrap(), f)
                 }
                 TS_TYPEOF_TYPE => {
                     std::fmt::Debug::fmt(&TsTypeofType::cast(node.clone()).unwrap(), f)
