@@ -25,15 +25,15 @@ impl ToFormatElement for JsAnyClass {
             space_token(),
             group_elements(formatter.format_delimited(
                 &self.l_curly_token()?,
-                |leading, trailing| {
+                |open_token_trailing, close_token_leading| {
                     Ok(block_indent(format_elements![
-                        leading,
+                        open_token_trailing,
                         join_elements_hard_line(
                             self.members()
                                 .into_iter()
                                 .zip(formatter.format_nodes(self.members())?)
                         ),
-                        trailing,
+                        close_token_leading,
                     ]))
                 },
                 &self.r_curly_token()?

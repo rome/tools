@@ -6,8 +6,8 @@ use std::collections::HashSet;
 use crate::printer::Printer;
 use crate::{
     concat_elements, empty_element, empty_line, format_elements, hard_line_break, if_group_breaks,
-    if_group_fits_on_single_line, line_suffix, space_token, token, FormatElement, FormatOptions,
-    FormatResult, Formatted, ToFormatElement,
+    if_group_fits_on_single_line, line_suffix, soft_line_break_or_space, space_token, token,
+    FormatElement, FormatOptions, FormatResult, Formatted, ToFormatElement,
 };
 use rome_rowan::api::SyntaxTriviaPieceComments;
 use rome_rowan::{Language, SyntaxElement};
@@ -93,14 +93,23 @@ impl Formatter {
                 drop(printed_tokens);
             }
         }
+        let open_token_trailing_trivia = self.print_trailing_trivia(open_token);
+        let close_token_leading_trivia = self.print_leading_trivia(close_token);
 
+        let open_token_trailing_trivia = if !open_token_trailing_trivia.is_empty() {
+            format_elements![open_token_trailing_trivia, soft_line_break_or_space()]
+        } else {
+            empty_element()
+        };
+        let close_token_leading_trivia = if !close_token_leading_trivia.is_empty() {
+            format_elements![soft_line_break_or_space(), close_token_leading_trivia]
+        } else {
+            empty_element()
+        };
         Ok(format_elements![
             self.print_leading_trivia(open_token),
             token(open_token.text_trimmed()),
-            content(
-                self.print_trailing_trivia(open_token),
-                self.print_leading_trivia(close_token),
-            )?,
+            content(open_token_trailing_trivia, close_token_leading_trivia,)?,
             token(close_token.text_trimmed()),
             self.print_trailing_trivia(close_token),
         ])

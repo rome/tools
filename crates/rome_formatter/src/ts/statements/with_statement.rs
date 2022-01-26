@@ -11,10 +11,10 @@ impl ToFormatElement for JsWithStatement {
             space_token(),
             group_elements(formatter.format_delimited(
                 &self.l_paren_token()?,
-                |leading, trailing| Ok(soft_indent(format_elements![
-                    leading,
+                |open_token_trailing, close_token_leading| Ok(soft_indent(format_elements![
+                    open_token_trailing,
                     formatter.format_node(self.object()?)?,
-                    trailing,
+                    close_token_leading,
                 ])),
                 &self.r_paren_token()?,
             )?),

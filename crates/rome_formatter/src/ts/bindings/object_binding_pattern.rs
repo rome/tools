@@ -14,13 +14,13 @@ impl ToFormatElement for JsObjectBindingPattern {
 
         Ok(group_elements(formatter.format_delimited(
             &self.l_curly_token()?,
-            |leading, trailing| {
+            |open_token_trailing, close_token_leading| {
                 Ok(format_elements![
                     space_token(),
                     soft_indent(format_elements![
-                        leading,
+                        open_token_trailing,
                         join_elements(soft_line_break_or_space(), properties),
-                        trailing,
+                        close_token_leading,
                     ]),
                     space_token(),
                 ])

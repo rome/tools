@@ -1,0 +1,24 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 57
+expression: class_comments.js
+
+---
+# Input
+class A extends B { // leading comment
+    constructor() {
+        super();
+    }
+
+    // trailing comment
+}
+---
+# Output
+class A extends B {
+	// leading comment
+	constructor() {
+		super();
+	}
+	// trailing comment
+}
+

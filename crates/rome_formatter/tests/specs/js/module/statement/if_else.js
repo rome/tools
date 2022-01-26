@@ -49,3 +49,10 @@ if (true) {
 
 }
 
+if (true) {
+	// trailing
+
+} else { // trailing
+
+}
+

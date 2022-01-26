@@ -976,6 +976,22 @@ impl<L: Language> SyntaxToken<L> {
             _p: PhantomData,
         }
     }
+
+    /// Checks if the current token has trailing comments
+    pub fn has_trailing_comments(&self) -> bool {
+        self.trailing_trivia()
+            .pieces()
+            .into_iter()
+            .any(|piece| piece.as_comments().is_some())
+    }
+
+    /// Checks if the current token has leading comments
+    pub fn has_leading_comments(&self) -> bool {
+        self.leading_trivia()
+            .pieces()
+            .into_iter()
+            .any(|piece| piece.as_comments().is_some())
+    }
 }
 
 impl<L: Language> SyntaxElement<L> {

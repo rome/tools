@@ -9,11 +9,11 @@ impl ToFormatElement for JsFunctionBody {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         formatter.format_delimited(
             &self.l_curly_token()?,
-            |leading, trailing| {
+            |open_token_trailing, close_token_leading| {
                 Ok(block_indent(format_elements![
-                    leading,
+                    open_token_trailing,
                     format_statements(self.statements(), formatter),
-                    trailing,
+                    close_token_leading,
                 ]))
             },
             &self.r_curly_token()?,

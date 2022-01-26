@@ -61,11 +61,11 @@ impl ToFormatElement for JsCatchDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(group_elements(formatter.format_delimited(
             &self.l_paren_token()?,
-            |leading, trailing| {
+            |open_token_trailing, close_token_leading| {
                 Ok(soft_indent(format_elements![
-                    leading,
+                    open_token_trailing,
                     formatter.format_node(self.binding()?)?,
-                    trailing,
+                    close_token_leading,
                 ]))
             },
             &self.r_paren_token()?,

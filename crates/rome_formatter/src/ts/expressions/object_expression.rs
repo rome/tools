@@ -18,13 +18,13 @@ impl ToFormatElement for JsObjectExpression {
 
         Ok(group_elements(formatter.format_delimited(
             &self.l_curly_token()?,
-            |leading, trailing| {
+            |open_token_trailing, close_token_leading| {
                 let members = formatter.format_separated(members, || token(","))?;
 
                 Ok(format_elements!(
                     space.clone(),
                     soft_indent(format_elements![
-                        leading,
+                        open_token_trailing,
                         join_elements_soft_line(
                             self.members()
                                 .elements()
@@ -32,7 +32,7 @@ impl ToFormatElement for JsObjectExpression {
                                 .map(|node| node.node().unwrap())
                                 .zip(members)
                         ),
-                        trailing
+                        close_token_leading
                     ]),
                     space,
                 ))
