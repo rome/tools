@@ -1,3 +1,4 @@
+use crate::formatter_traits::FormatOptionalToken;
 use crate::{
     concat_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
@@ -12,11 +13,7 @@ impl ToFormatElement for JsReturnStatement {
             tokens.push(formatter.format_node(&argument)?);
         }
 
-        tokens.push(
-            formatter
-                .format_token(&self.semicolon_token())?
-                .unwrap_or_else(|| token(";")),
-        );
+        tokens.push(self.semicolon_token().format_or(formatter, || token(";")));
 
         Ok(concat_elements(tokens))
     }

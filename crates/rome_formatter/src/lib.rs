@@ -51,6 +51,7 @@ mod cst;
 mod format_element;
 mod format_elements;
 mod formatter;
+mod formatter_traits;
 mod intersperse;
 mod printer;
 mod ts;
