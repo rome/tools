@@ -7,36 +7,36 @@ use super::{
     kinds_src::{AstSrc, Field},
     to_lower_snake_case, Mode,
 };
-use crate::codegen::generate_syntax_factory::generate_syntax_factory;
-use crate::codegen::kinds_src::{AstListSeparatorConfiguration, AstListSrc, TokenKind};
+use crate::generate_syntax_factory::generate_syntax_factory;
+use crate::kinds_src::{AstListSeparatorConfiguration, AstListSrc, TokenKind};
 use crate::{
-    codegen::{
-        self,
-        generate_nodes::generate_nodes,
-        generate_syntax_kinds::generate_syntax_kinds,
-        kinds_src::{AstEnumSrc, AstNodeSrc, KINDS_SRC},
-        update,
-    },
-    project_root, Result, SYNTAX_ELEMENT_TYPE,
+    generate_nodes::generate_nodes,
+    generate_syntax_kinds::generate_syntax_kinds,
+    kinds_src::{AstEnumSrc, AstNodeSrc, KINDS_SRC},
+    update,
 };
 use ungrammar::{Grammar, Rule, Token};
+use xtask::{project_root, Result};
+
+// these node won't generate any code
+pub const SYNTAX_ELEMENT_TYPE: &str = "SyntaxElement";
 
 pub fn generate_ast(mode: Mode) -> Result<()> {
-    let grammar_src = include_str!("../../js.ungram");
+    let grammar_src = include_str!("../js.ungram");
     let grammar: Grammar = grammar_src.parse().unwrap();
     let mut ast = make_ast(&grammar);
 
     ast.sort();
 
-    let ast_nodes_file = project_root().join(codegen::AST_NODES);
+    let ast_nodes_file = project_root().join(crate::AST_NODES);
     let contents = generate_nodes(&ast)?;
     update(ast_nodes_file.as_path(), &contents, mode)?;
 
-    let syntax_kinds_file = project_root().join(codegen::SYNTAX_KINDS);
+    let syntax_kinds_file = project_root().join(crate::SYNTAX_KINDS);
     let contents = generate_syntax_kinds(KINDS_SRC)?;
     update(syntax_kinds_file.as_path(), &contents, mode)?;
 
-    let syntax_factory_file = project_root().join(codegen::SYNTAX_FACTORY);
+    let syntax_factory_file = project_root().join(crate::SYNTAX_FACTORY);
     let contents = generate_syntax_factory(&ast)?;
     update(syntax_factory_file.as_path(), &contents, mode)?;
 

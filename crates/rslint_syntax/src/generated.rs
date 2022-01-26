@@ -1,4 +1,4 @@
-//! Generated file, do not edit by hand, see `xtask/src/codegen`
+//! Generated file, do not edit by hand, see `xtask/codegen`
 
 #![allow(clippy::all)]
 #![allow(bad_style, missing_docs, unreachable_pub)]

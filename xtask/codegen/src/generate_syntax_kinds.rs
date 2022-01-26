@@ -1,4 +1,4 @@
-use crate::codegen::{to_upper_snake_case, Result};
+use crate::{to_upper_snake_case, Result};
 use proc_macro2::{Punct, Spacing};
 use quote::{format_ident, quote};
 
@@ -157,5 +157,5 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
         }
     };
 
-    crate::reformat(ast)
+    xtask::reformat(ast)
 }

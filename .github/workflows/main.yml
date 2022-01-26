@@ -100,9 +100,9 @@ jobs:
       - name: Cache
         uses: Swatinem/rust-cache@v1
       - name: Compile
-        run: cargo build --release --locked -p xtask
+        run: cargo build --release --locked -p xtask_coverage
       - name: Run Test262 suite
         continue-on-error: true
-        run: cargo xtask coverage
+        run: cargo coverage js
       - name: Clean cache
         run: cargo install cargo-cache --no-default-features --features ci-autoclean && cargo-cache

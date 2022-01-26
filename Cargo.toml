@@ -2,7 +2,13 @@
 # Use the newer version of the cargo resolver
 # https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
 resolver = "2"
-members = ["xtask/", "crates/*"]
+members = [
+	"crates/*",
+	"xtask/",
+	"xtask/bench",
+	"xtask/codegen",
+	"xtask/coverage",
+]
 
 # TODO: Possibly setup profiles for dev to speed up tests/etc
 

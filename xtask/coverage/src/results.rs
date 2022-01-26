@@ -1,4 +1,3 @@
-use crate::coverage::{Outcome, TestResult, TestResults};
 use ascii_table::{AsciiTable, Column};
 use colored::Colorize;
 use std::char::decode_utf16;
@@ -6,6 +5,8 @@ use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::Read;
 use std::path::{Path, PathBuf};
+
+use crate::{Outcome, TestResult, TestResults};
 
 pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
     let base_results = read_test_results(base, "base");

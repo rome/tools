@@ -1,40 +1,28 @@
 //! Codegen tools mostly used to generate ast and syntax definitions. Adapted from rust analyzer's codegen
 
-pub mod codegen;
-pub mod compare;
-pub mod coverage;
-pub mod docgen;
 pub mod glue;
-pub mod libs;
-pub mod unicode;
 
 use std::{
     env,
     path::{Path, PathBuf},
 };
 
-use crate::{
-    codegen::Mode,
-    glue::{pushd, pushenv},
-};
+pub use crate::glue::{pushd, pushenv};
 
 pub use anyhow::{bail, Context as _, Result};
 
-// this is the filename of the results coming from `main` branch
-pub const BASE_RESULT_FILE: &str = "base_results.json";
-
-// this is the filename of the results coming from the current PR
-pub const NEW_RESULT_FILE: &str = "new_results.json";
-
-// these node won't generate any code
-pub const SYNTAX_ELEMENT_TYPE: &str = "SyntaxElement";
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+pub enum Mode {
+    Overwrite,
+    Verify,
+}
 
 pub fn project_root() -> PathBuf {
     Path::new(
         &env::var("CARGO_MANIFEST_DIR").unwrap_or_else(|_| env!("CARGO_MANIFEST_DIR").to_owned()),
     )
     .ancestors()
-    .nth(1)
+    .nth(2)
     .unwrap()
     .to_path_buf()
 }
@@ -50,18 +38,18 @@ pub fn run_rustfmt(mode: Mode) -> Result<()> {
     Ok(())
 }
 
-fn reformat(text: impl std::fmt::Display) -> Result<String> {
+pub fn reformat(text: impl std::fmt::Display) -> Result<String> {
     let _e = pushenv("RUSTUP_TOOLCHAIN", "stable");
     ensure_rustfmt()?;
     let stdout = run!(
         "rustfmt --config fn_single_line=true";
         <text.to_string().as_bytes()
     )?;
-    let preamble = "Generated file, do not edit by hand, see `xtask/src/codegen`";
+    let preamble = "Generated file, do not edit by hand, see `xtask/codegen`";
     Ok(format!("//! {}\n\n{}\n", preamble, stdout))
 }
 
-fn ensure_rustfmt() -> Result<()> {
+pub fn ensure_rustfmt() -> Result<()> {
     let out = run!("rustfmt --version")?;
     if !out.contains("stable") {
         bail!(

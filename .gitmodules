@@ -1,9 +1,9 @@
-[submodule "xtask/src/coverage/test262"]
-	path = xtask/src/coverage/test262
-	url = https://github.com/tc39/test262
+[submodule "xtask/coverage/test262"]
+	path = xtask/coverage/test262
+	url = https://github.com/tc39/test262.git
 	shallow = true
 
-[submodule "xtask/src/coverage/Typescript"]
-	path = xtask/src/coverage/Typescript
+[submodule "xtask/coverage/Typescript"]
+	path = xtask/coverage/Typescript
 	url = https://github.com/microsoft/Typescript
 	shallow = true

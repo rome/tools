@@ -43,21 +43,26 @@ npm start
 
 If you work on some parser and you create new nodes or modify existing ones, will need to run a command to update some files that are auto-generated.
 
-#### `cargo xtask syntax`
+#### `cargo codegen grammar`
 
 This command will update the syntax of the parsers.
 
-The source is generated from the [`ungram` files](https://github.com/rome/tools/blob/main/xtask/js.ungram).
+The source is generated from the [`ungram` files](https://github.com/rome/tools/blob/main/xtask/codegen/js.ungram).
 
-#### `cargo xtask codegen`
+#### `cargo codegen test`
 
 
 This command will create new tests for your parser. We currently have a neat infrastructure
 where tests for parser are generated com inline comments found inside
 the source code. Please read [the proper chapter for more information](#write-tests-for-a-parser)
 
-
 It's strongly advised to **run this command before committing new changes**.
+
+#### `cargo coverage`
+
+This command will check and report parser coverage against different test suites.
+We currently target the [Official ECMAScript Conformance Test Suite](https://github.com/tc39/test262) and
+the [Typescript Test Suite](https://github.com/microsoft/TypeScript/tree/main/tests)
 
 ## Commit messages
 
@@ -146,7 +151,7 @@ let b = { new_feature : "" }
 
 Basically, everything after the key comment will be the content of the new file.
 
-Now you need to run `cargo xtask codegen` and the task will actually generate this file for you.
+Now you need to run `cargo codegen test` and the task will actually generate this file for you.
 
 In case you want to create a **negative test** (*with* parsing errors), you will
 create a new comment like this:
@@ -165,7 +170,7 @@ fn parse_new_feature(p: &mut Parser) -> ParsedSyntax {}
 Mind the different comment **`test_err`**, which marks the error for the test suite
 as a test that has to fail.
 
-Run the command `cargo xtask codegen` and you will see a new file called
+Run the command `cargo codegen test` and you will see a new file called
 `feature_name.js` inside the `test_data/inline/err` folder.
 
 The content of this file will be:

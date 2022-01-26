@@ -1,4 +1,4 @@
-//! Generated file, do not edit by hand, see `xtask/src/codegen`
+//! Generated file, do not edit by hand, see `xtask/codegen`
 
 use crate::{ast::*, JsSyntaxKind::*, T};
 use rome_rowan::{ParsedChildren, RawNodeSlots, RawSyntaxNode, SyntaxFactory, SyntaxKind};

@@ -1,11 +1,12 @@
 use super::*;
-use crate::coverage::{FailReason, Outcome, TestResult};
 use colored::Colorize;
 use rslint_parser::{parse, Syntax};
 use walkdir::{DirEntry, WalkDir};
 use yastl::Pool;
 
-const BASE_PATH: &str = "xtask/src/coverage/Typescript/tests";
+use crate::{FailReason, Outcome, TestResult};
+
+const BASE_PATH: &str = "xtask/coverage/Typescript/tests";
 
 pub fn load_ts_files(query: Option<&str>) -> Vec<DirEntry> {
     WalkDir::new(BASE_PATH)

@@ -1,4 +1,6 @@
+pub mod compare;
 pub mod files;
+pub mod results;
 pub mod test262;
 pub mod typescript;
 

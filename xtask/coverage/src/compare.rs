@@ -1,7 +1,13 @@
-use crate::{project_root, BASE_RESULT_FILE, NEW_RESULT_FILE};
 use std::path::PathBuf;
+use xtask::project_root;
 
-mod results;
+use crate::results::emit_compare;
+
+// this is the filename of the results coming from `main` branch
+const BASE_RESULT_FILE: &str = "base_results.json";
+
+// this is the filename of the results coming from the current PR
+const NEW_RESULT_FILE: &str = "new_results.json";
 
 pub fn coverage_compare(
     base_result_path: Option<&str>,
@@ -36,7 +42,7 @@ pub fn coverage_compare(
         );
     }
 
-    results::emit_compare(
+    emit_compare(
         base_result_dir.as_path(),
         new_result_dir.as_path(),
         markdown,

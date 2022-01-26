@@ -7,10 +7,8 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use crate::{
-    codegen::{update, Mode},
-    project_root, Result,
-};
+use crate::{update, Mode};
+use xtask::{project_root, Result};
 
 fn extract_comment_blocks(
     text: &str,

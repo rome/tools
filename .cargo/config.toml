@@ -1,4 +1,6 @@
 [alias]
-xtask = "run --package xtask --bin xtask --"
 lint = "clippy --workspace --all-targets --verbose -- --deny warnings"
 format = "fmt --all --verbose"
+codegen = "run -p xtask_codegen --"
+benchmark = "run -p xtask_bench --release --"
+coverage = "run -p xtask_coverage --release --"

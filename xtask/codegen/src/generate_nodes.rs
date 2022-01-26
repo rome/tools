@@ -1,12 +1,9 @@
 use std::collections::HashMap;
 
-use super::kinds_src::AstSrc;
-use crate::codegen::kinds_src::{TokenKind, KINDS_SRC};
-use crate::{
-    codegen::{kinds_src::Field, to_lower_snake_case, to_upper_snake_case},
-    Result,
-};
+use crate::kinds_src::{AstSrc, Field, TokenKind, KINDS_SRC};
+use crate::{to_lower_snake_case, to_upper_snake_case};
 use quote::{format_ident, quote};
+use xtask::Result;
 
 pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
     let (node_defs, node_boilerplate_impls): (Vec<_>, Vec<_>) = ast
@@ -633,7 +630,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
         .replace("T ! [ ", "T![")
         .replace(" ] )", "])");
 
-    let pretty = crate::reformat(ast)?;
+    let pretty = xtask::reformat(ast)?;
     Ok(pretty)
 }
 

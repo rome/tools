@@ -1,4 +1,4 @@
-//! Generated file, do not edit by hand, see `xtask/src/codegen`
+//! Generated file, do not edit by hand, see `xtask/codegen`
 
 #![allow(clippy::enum_variant_names)]
 #![allow(clippy::match_like_matches_macro)]
