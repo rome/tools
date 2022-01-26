@@ -13,25 +13,25 @@ impl ToFormatElement for JsSwitchStatement {
             space_token(),
             group_elements(formatter.format_delimited(
                 &self.l_paren_token()?,
-                |leading, trailing| Ok(soft_indent(format_elements![
-                    leading,
+                |open_token_trailing, close_token_leading| Ok(soft_indent(format_elements![
+                    open_token_trailing,
                     formatter.format_node(self.discriminant()?)?,
-                    trailing,
+                    close_token_leading,
                 ])),
                 &self.r_paren_token()?,
             )?),
             space_token(),
             group_elements(formatter.format_delimited(
                 &self.l_curly_token()?,
-                |leading, trailing| {
+                |open_token_trailing, close_token_leading| {
                     Ok(block_indent(format_elements![
-                        leading,
+                        open_token_trailing,
                         join_elements_hard_line(
                             self.cases()
                                 .into_iter()
                                 .zip(formatter.format_nodes(self.cases())?)
                         ),
-                        trailing,
+                        close_token_leading,
                     ]))
                 },
                 &self.r_curly_token()?

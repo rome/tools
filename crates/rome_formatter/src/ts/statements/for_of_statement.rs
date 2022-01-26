@@ -18,15 +18,17 @@ impl ToFormatElement for JsForOfStatement {
             space_token(),
             formatter.format_delimited(
                 &self.l_paren_token()?,
-                |leading, trailing| Ok(group_elements(soft_indent(format_elements![
-                    leading,
-                    initializer,
-                    soft_line_break_or_space(),
-                    of_token,
-                    soft_line_break_or_space(),
-                    expression,
-                    trailing,
-                ]))),
+                |open_token_trailing, close_token_leading| Ok(group_elements(soft_indent(
+                    format_elements![
+                        open_token_trailing,
+                        initializer,
+                        soft_line_break_or_space(),
+                        of_token,
+                        soft_line_break_or_space(),
+                        expression,
+                        close_token_leading,
+                    ]
+                ))),
                 &self.r_paren_token()?
             )?,
             space_token(),

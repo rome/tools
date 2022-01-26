@@ -1,7 +1,7 @@
 use crate::format_element::join_elements_soft_line;
 use crate::{
-    empty_element, format_elements, group_elements, if_group_fits_on_single_line, soft_indent,
-    space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    empty_element, format_elements, group_elements, hard_line_break, if_group_fits_on_single_line,
+    soft_indent, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::JsObjectExpression;
 use rslint_parser::AstSeparatedList;
@@ -18,13 +18,13 @@ impl ToFormatElement for JsObjectExpression {
 
         Ok(group_elements(formatter.format_delimited(
             &self.l_curly_token()?,
-            |leading, trailing| {
+            |open_token_trailing, close_token_leading| {
                 let members = formatter.format_separated(members, || token(","))?;
 
                 Ok(format_elements!(
                     space.clone(),
                     soft_indent(format_elements![
-                        leading,
+                        open_token_trailing,
                         join_elements_soft_line(
                             self.members()
                                 .elements()
@@ -32,7 +32,7 @@ impl ToFormatElement for JsObjectExpression {
                                 .map(|node| node.node().unwrap())
                                 .zip(members)
                         ),
-                        trailing
+                        close_token_leading
                     ]),
                     space,
                 ))

@@ -1,0 +1,19 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 57
+expression: object_comments.js
+
+---
+# Input
+let a = { // leading comment
+    "type": "bar"
+    // trailing comment
+}
+---
+# Output
+let a = {
+	// leading comment
+	"type": "bar",
+	// trailing comment
+};
+

@@ -24,11 +24,11 @@ impl ToFormatElement for JsConstructorParameters {
 
         Ok(group_elements(formatter.format_delimited(
             &self.l_paren_token()?,
-            |leading, trailing| {
+            |open_token_trailing, close_token_leading| {
                 Ok(soft_indent(format_elements![
-                    leading,
+                    open_token_trailing,
                     join_elements(soft_line_break_or_space(), params),
-                    trailing,
+                    close_token_leading,
                 ]))
             },
             &self.r_paren_token()?,

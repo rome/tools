@@ -93,14 +93,23 @@ impl Formatter {
                 drop(printed_tokens);
             }
         }
+        let open_token_trailing_trivia = self.print_trailing_trivia(open_token);
+        let close_token_leading_trivia = self.print_leading_trivia(close_token);
 
+        let open_token_trailing_trivia = if !open_token_trailing_trivia.is_empty() {
+            format_elements![open_token_trailing_trivia, hard_line_break()]
+        } else {
+            empty_element()
+        };
+        let close_token_leading_trivia = if !close_token_leading_trivia.is_empty() {
+            format_elements![hard_line_break(), close_token_leading_trivia]
+        } else {
+            empty_element()
+        };
         Ok(format_elements![
             self.print_leading_trivia(open_token),
             token(open_token.text_trimmed()),
-            content(
-                self.print_trailing_trivia(open_token),
-                self.print_leading_trivia(close_token),
-            )?,
+            content(open_token_trailing_trivia, close_token_leading_trivia,)?,
             token(close_token.text_trimmed()),
             self.print_trailing_trivia(close_token),
         ])

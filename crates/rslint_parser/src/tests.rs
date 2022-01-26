@@ -16,7 +16,6 @@ let [a, b] = [1, 2];
     "#;
 
     let module = parse_module(src, 0);
-
     assert_errors_are_absent(
         module.errors(),
         Path::new("parser_smoke_test"),

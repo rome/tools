@@ -13,7 +13,7 @@ impl ToFormatElement for JsArrayExpression {
 
         Ok(group_elements(formatter.format_delimited(
             &self.l_brack_token()?,
-            |leading, trailing| {
+            |open_token_trailing, close_token_leading| {
                 // Specifically do not use format_separated as array expressions need
                 // separators inserted after empty expressions regardless of the
                 // formatting since this makes a semantic difference
@@ -44,9 +44,9 @@ impl ToFormatElement for JsArrayExpression {
                     .collect::<FormatResult<Vec<_>>>()?;
 
                 Ok(soft_indent(format_elements![
-                    leading,
+                    open_token_trailing,
                     join_elements_soft_line(results),
-                    trailing,
+                    close_token_leading,
                 ]))
             },
             &self.r_brack_token()?,

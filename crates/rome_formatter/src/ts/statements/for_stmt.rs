@@ -40,9 +40,9 @@ impl ToFormatElement for JsForStatement {
             space_token(),
             formatter.format_delimited(
                 &self.l_paren_token()?,
-                |leading, trailing| Ok(group_elements(soft_indent(format_elements![
-                    leading, inner, trailing
-                ]))),
+                |open_token_trailing, close_token_leading| Ok(group_elements(soft_indent(
+                    format_elements![open_token_trailing, inner, close_token_leading]
+                ))),
                 &self.r_paren_token()?,
             )?,
             space_token(),

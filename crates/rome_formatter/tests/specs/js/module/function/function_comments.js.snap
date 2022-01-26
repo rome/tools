@@ -1,0 +1,31 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 57
+expression: function_comments.js
+
+---
+# Input
+function a() { // trailing comment
+    let a = 2;
+
+
+ /** leading comment **/   }
+
+
+function a() // leading comment
+{ // trailing
+
+
+}
+---
+# Output
+function a() {
+	// trailing comment
+	let a = 2;
+	/** leading comment **/
+}
+
+function a() { // leading comment
+	// trailing
+}
+
