@@ -5,6 +5,7 @@ mod auxiliary;
 mod bindings;
 mod class;
 mod directives;
+mod export;
 mod expressions;
 mod ident;
 mod import;

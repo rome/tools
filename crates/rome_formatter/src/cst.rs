@@ -278,6 +278,18 @@ impl ToFormatElement for SyntaxNode {
             JsSyntaxKind::IMPORT_META => ImportMeta::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT => JsExport::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_CLASS_CLAUSE => JsExportClassClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_DEFAULT_CLASS_CLAUSE => {
+                JsExportDefaultClassClause::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+
             _ => todo!(
                 "Implement formatting for the {:?} syntax kind.",
                 self.kind()
