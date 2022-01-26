@@ -72,7 +72,7 @@ pub fn generate_syntax_factory(ast: &AstSrc) -> Result<String> {
             let allow_trailing = separator.allow_trailing;
 
 			let separator = match &separator.separator_token {
-				AstListSeparatorToken::Single(kind) => token_kind_to_code(&kind),
+				AstListSeparatorToken::Single(kind) => token_kind_to_code(kind),
 				AstListSeparatorToken::Either(a, b) => {
 					let a = token_kind_to_code(a);
 					let b = token_kind_to_code(b);
