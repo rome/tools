@@ -47,6 +47,26 @@ impl ToFormatElement for JsAnyFunction {
         }
 
         let body = self.body()?;
+        // With arrays, arrow functions and objects, they have a natural line breaking strategy:
+        // Arrays and objects become blocks:
+        //
+        //    [
+        //      100000,
+        //      200000,
+        //      300000
+        //    ]
+        //
+        // Arrow functions get line broken after the `=>`:
+        //
+        //  (foo) => (bar) =>
+        //     (foo + bar) * (foo + bar)
+        //
+        // Therefore if our body is an arrow function, array, or object, we
+        // do not have a soft line break after the arrow because the body is
+        // going to get broken anyways.
+        //
+        // TODO: Explore the concept of hierarchical line breaking
+        //   or vertical stacking for arrow functions
         let body_has_soft_line_break = matches!(
             body,
             JsAnyFunctionBody::JsFunctionBody(_)
