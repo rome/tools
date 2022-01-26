@@ -21,7 +21,7 @@ export function activate(_context: ExtensionContext) {
 
 	client = new LanguageClient(
 		'rome_lsp',
-		'Language Server Rome',
+		'Rome',
 		serverOptions,
 		clientOptions
 	);
