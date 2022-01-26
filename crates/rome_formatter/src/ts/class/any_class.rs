@@ -1,6 +1,6 @@
 use crate::{
-    block_indent, empty_element, format_elements, group_elements, hard_line_break,
-    join_elements_hard_line, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    block_indent, empty_element, format_elements, group_elements, join_elements_hard_line,
+    space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::JsAnyClass;
 

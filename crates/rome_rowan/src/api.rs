@@ -981,7 +981,7 @@ impl<L: Language> SyntaxToken<L> {
     pub fn has_trailing_comments(&self) -> bool {
         let mut has_comments = false;
         for piece in self.trailing_trivia().pieces() {
-            if let Some(_) = piece.as_comments() {
+            if piece.as_comments().is_some() {
                 has_comments = true;
                 break;
             }
@@ -994,7 +994,7 @@ impl<L: Language> SyntaxToken<L> {
     pub fn has_leading_comments(&self) -> bool {
         let mut has_comments = false;
         for piece in self.leading_trivia().pieces() {
-            if let Some(_) = piece.as_comments() {
+            if piece.as_comments().is_some() {
                 has_comments = true;
                 break;
             }

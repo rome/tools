@@ -5,8 +5,13 @@ function a() { // trailing comment
  /** leading comment **/   }
 
 
-function a() // leading comment
+function b() // leading comment
 { // trailing
 
 
 }
+
+
+function c( //some comment
+    foo, bar,
+) {}

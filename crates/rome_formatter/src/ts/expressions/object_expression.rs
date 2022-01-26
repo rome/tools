@@ -1,7 +1,7 @@
 use crate::format_element::join_elements_soft_line;
 use crate::{
-    empty_element, format_elements, group_elements, hard_line_break, if_group_fits_on_single_line,
-    soft_indent, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    empty_element, format_elements, group_elements, if_group_fits_on_single_line, soft_indent,
+    space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::JsObjectExpression;
 use rslint_parser::AstSeparatedList;
