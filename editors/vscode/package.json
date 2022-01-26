@@ -1,9 +1,9 @@
 {
-	"name": "rome-dev",
+	"name": "rome",
 	"publisher": "rome",
-	"displayName": "Rome Dev",
-	"description": "Rome LSP Dev Client",
-	"version": "0.0.1",
+	"displayName": "Rome",
+	"description": "Rome LSP VS Code Extension",
+	"version": "0.0.4",
 	"icon": "icon.png",
 	"activationEvents": [
 		"onLanguage:javascript",
@@ -22,7 +22,7 @@
 	},
 	"contributes": {
 		"configuration": {
-			"title": "Rome Dev",
+			"title": "Rome",
 			"properties": {
 				"rome.lspBin": {
 					"type": [

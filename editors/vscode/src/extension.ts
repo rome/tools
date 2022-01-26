@@ -29,7 +29,7 @@ export async function activate(context: ExtensionContext) {
 
 	client = new LanguageClient(
 		'rome_lsp',
-		'Language Server Rome',
+		'Rome',
 		serverOptions,
 		clientOptions
 	);
