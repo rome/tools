@@ -1,0 +1,12 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 57
+expression: expression_clause.js
+
+---
+# Input
+export default (1 - 43);
+---
+# Output
+export default (1 - 43);
+

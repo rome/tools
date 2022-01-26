@@ -12,6 +12,9 @@ export          class A { // small comment
 }
 
 
+export default  class
+B {}
+
 ---
 # Output
 // another comment
@@ -19,4 +22,6 @@ export class A {
 	// small comment
 	constructor() {}
 }
+
+export default class B {}
 

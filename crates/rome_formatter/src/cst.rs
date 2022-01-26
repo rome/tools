@@ -5,14 +5,16 @@ use rslint_parser::ast::{
     JsBlockStatement, JsBooleanLiteralExpression, JsCallArguments, JsCallExpression, JsCaseClause,
     JsCatchClause, JsClassStatement, JsConstructorParameters, JsContinueStatement,
     JsDebuggerStatement, JsDefaultClause, JsDefaultImportSpecifier, JsDoWhileStatement,
-    JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsForInStatement, JsForStatement,
-    JsFunctionStatement, JsGetterClassMember, JsIdentifierBinding, JsIdentifierExpression,
-    JsIfStatement, JsImport, JsImportAssertion, JsImportAssertionEntry, JsImportBareClause,
-    JsImportCallExpression, JsImportDefaultClause, JsImportNamedClause, JsImportNamespaceClause,
-    JsLabeledStatement, JsLiteralExportName, JsModule, JsModuleSource, JsNamedImportSpecifier,
-    JsNamedImportSpecifiers, JsNamespaceImportSpecifier, JsNullLiteralExpression,
-    JsNumberLiteralExpression, JsObjectExpression, JsParameters, JsPropertyClassMember,
-    JsPropertyObjectMember, JsReturnStatement, JsScript, JsSequenceExpression, JsSetterClassMember,
+    JsEmptyStatement, JsExportDefaultExpressionClause, JsExportDefaultFunctionClause,
+    JsExportFunctionClause, JsExportVariableClause, JsExpressionStatement, JsFinallyClause,
+    JsForInStatement, JsForStatement, JsFunctionStatement, JsGetterClassMember,
+    JsIdentifierBinding, JsIdentifierExpression, JsIfStatement, JsImport, JsImportAssertion,
+    JsImportAssertionEntry, JsImportBareClause, JsImportCallExpression, JsImportDefaultClause,
+    JsImportNamedClause, JsImportNamespaceClause, JsLabeledStatement, JsLiteralExportName,
+    JsModule, JsModuleSource, JsNamedImportSpecifier, JsNamedImportSpecifiers,
+    JsNamespaceImportSpecifier, JsNullLiteralExpression, JsNumberLiteralExpression,
+    JsObjectExpression, JsParameters, JsPropertyClassMember, JsPropertyObjectMember,
+    JsReturnStatement, JsScript, JsSequenceExpression, JsSetterClassMember,
     JsShorthandNamedImportSpecifier, JsShorthandPropertyObjectMember, JsSpread, JsStatementList,
     JsStaticInitializationBlockClassMember, JsStringLiteralExpression, JsSwitchStatement,
     JsTemplate, JsTemplateChunkElement, JsTemplateElement, JsTryStatement, JsUnknownAssignment,
@@ -286,6 +288,22 @@ impl ToFormatElement for SyntaxNode {
                 .to_format_element(formatter),
             JsSyntaxKind::JS_EXPORT_DEFAULT_CLASS_CLAUSE => {
                 JsExportDefaultClassClause::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+            JsSyntaxKind::JS_EXPORT_FUNCTION_CLAUSE => JsExportFunctionClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_DEFAULT_FUNCTION_CLAUSE => {
+                JsExportDefaultFunctionClause::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+            JsSyntaxKind::JS_EXPORT_VARIABLE_CLAUSE => JsExportVariableClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE => {
+                JsExportDefaultExpressionClause::cast(self.clone())
                     .unwrap()
                     .to_format_element(formatter)
             }

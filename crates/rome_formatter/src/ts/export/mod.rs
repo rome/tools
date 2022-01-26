@@ -1,6 +1,10 @@
 mod any_export_clause;
 mod class_clause;
 mod default_class_clause;
+mod default_expression_clause;
+mod default_function_clause;
+mod function_clause;
+mod variable_clause;
 
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,

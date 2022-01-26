@@ -4,3 +4,6 @@ export          class A { // small comment
     }
 }
 
+
+export default  class
+B {}

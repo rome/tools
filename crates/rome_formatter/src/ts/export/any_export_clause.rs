@@ -8,13 +8,17 @@ impl ToFormatElement for JsAnyExportClause {
             JsAnyExportClause::JsExportDefaultClassClause(node) => {
                 node.to_format_element(formatter)
             }
-            JsAnyExportClause::JsExportDefaultExpressionClause(_) => todo!(),
-            JsAnyExportClause::JsExportDefaultFunctionClause(_) => todo!(),
+            JsAnyExportClause::JsExportDefaultExpressionClause(node) => {
+                node.to_format_element(formatter)
+            }
+            JsAnyExportClause::JsExportDefaultFunctionClause(node) => {
+                node.to_format_element(formatter)
+            }
             JsAnyExportClause::JsExportFromClause(_) => todo!(),
-            JsAnyExportClause::JsExportFunctionClause(_) => todo!(),
+            JsAnyExportClause::JsExportFunctionClause(node) => node.to_format_element(formatter),
             JsAnyExportClause::JsExportNamedClause(_) => todo!(),
             JsAnyExportClause::JsExportNamedFromClause(_) => todo!(),
-            JsAnyExportClause::JsExportVariableClause(_) => todo!(),
+            JsAnyExportClause::JsExportVariableClause(node) => node.to_format_element(formatter),
         }
     }
 }
