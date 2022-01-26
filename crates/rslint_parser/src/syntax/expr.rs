@@ -1565,7 +1565,7 @@ pub(crate) fn is_nth_at_identifier(p: &Parser, n: usize) -> bool {
 }
 
 pub(crate) fn is_nth_at_identifier_or_keyword(p: &Parser, n: usize) -> bool {
-    return p.nth(n).is_keyword() || is_nth_at_identifier(p, n);
+    p.nth(n).is_keyword() || is_nth_at_identifier(p, n)
 }
 
 /// A template literal such as "`abcd ${efg}`"

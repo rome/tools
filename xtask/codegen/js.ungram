@@ -1659,8 +1659,7 @@ TsMappedType =
 	as_clause: TsMappedTypeAsClause?
 	']'
 	optional_modifier: TsMappedTypeOptionalModifierClause?
-	':'
-	mapped_type: TsType
+	mapped_type: TsTypeAnnotation?
 	';'?
 	'}'
 

@@ -458,6 +458,7 @@ fn is_at_start_of_mapped_type(p: &Parser) -> bool {
 
 // test ts_mapped_type
 // // TYPESCRIPT
+// type A = { [test in "a" | "b"] }
 // type OptionsFlags<Type> = {
 //   [Property in keyof Type]: boolean;
 // };
@@ -485,8 +486,7 @@ fn parse_ts_mapped_type(p: &mut Parser) -> ParsedSyntax {
     parse_ts_mapped_type_as_clause(p).ok();
     p.expect(T![']']);
     parse_ts_mapped_type_optional_modifier_clause(p).ok();
-    p.expect(T![:]);
-    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    parse_ts_type_annotation(p).ok();
     p.eat(T![;]);
     p.expect(T!['}']);
 

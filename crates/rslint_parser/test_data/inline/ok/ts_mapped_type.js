@@ -1,4 +1,5 @@
 // TYPESCRIPT
+type A = { [test in "a" | "b"] }
 type OptionsFlags<Type> = {
   [Property in keyof Type]: boolean;
 };

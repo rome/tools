@@ -2634,15 +2634,10 @@ impl TsMappedType {
     pub fn optional_modifier(&self) -> Option<TsMappedTypeOptionalModifierClause> {
         support::node(&self.syntax, 8usize)
     }
-    pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 9usize)
-    }
-    pub fn mapped_type(&self) -> SyntaxResult<TsType> {
-        support::required_node(&self.syntax, 10usize)
-    }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 11usize) }
+    pub fn mapped_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 9usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 10usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 12usize)
+        support::required_token(&self.syntax, 11usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -9258,12 +9253,8 @@ impl std::fmt::Debug for TsMappedType {
                 &support::DebugOptionalElement(self.optional_modifier()),
             )
             .field(
-                "colon_token",
-                &support::DebugSyntaxResult(self.colon_token()),
-            )
-            .field(
                 "mapped_type",
-                &support::DebugSyntaxResult(self.mapped_type()),
+                &support::DebugOptionalElement(self.mapped_type()),
             )
             .field(
                 "semicolon_token",
