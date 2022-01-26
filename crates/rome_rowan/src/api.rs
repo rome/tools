@@ -979,28 +979,18 @@ impl<L: Language> SyntaxToken<L> {
 
     /// Checks if the current token has trailing comments
     pub fn has_trailing_comments(&self) -> bool {
-        let mut has_comments = false;
-        for piece in self.trailing_trivia().pieces() {
-            if piece.as_comments().is_some() {
-                has_comments = true;
-                break;
-            }
-        }
-
-        has_comments
+        self.trailing_trivia()
+            .pieces()
+            .into_iter()
+            .any(|piece| piece.as_comments().is_some())
     }
 
     /// Checks if the current token has leading comments
     pub fn has_leading_comments(&self) -> bool {
-        let mut has_comments = false;
-        for piece in self.leading_trivia().pieces() {
-            if piece.as_comments().is_some() {
-                has_comments = true;
-                break;
-            }
-        }
-
-        has_comments
+        self.leading_trivia()
+            .pieces()
+            .into_iter()
+            .any(|piece| piece.as_comments().is_some())
     }
 }
 
