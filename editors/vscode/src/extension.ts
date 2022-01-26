@@ -1,4 +1,4 @@
-import { ExtensionContext, workspace } from 'vscode';
+import { ExtensionContext, workspace, Uri, window } from 'vscode';
 
 import {
 	LanguageClient,
@@ -9,8 +9,16 @@ import {
 
 let client: LanguageClient;
 
-export function activate(_context: ExtensionContext) {
-	const command = workspace.getConfiguration().get("rome.lspBin") as string;
+export async function activate(context: ExtensionContext) {
+	const command = await getServerPath(context);
+	if (!command) {
+		await window.showErrorMessage(
+			"The Rome extensions doesn't ship with prebuilt binaries for your platform yet. " +
+			"You can still use it by cloning the rome/tools repo from GitHub to build the LSP " +
+			"yourself and use it with this extension with the rome.lspBin setting"
+		);
+		return;
+	}
 
 	const serverOptions: ServerOptions =
 		{ command, transport: TransportKind.stdio };
@@ -27,6 +35,63 @@ export function activate(_context: ExtensionContext) {
 	);
 
 	client.start();
+}
+
+type Architecture = 'x64' | 'arm64';
+
+type PlatformTriplets = {
+	[P in NodeJS.Platform]?: {
+		[A in Architecture]: string;
+	};
+};
+
+const PLATFORM_TRIPLETS: PlatformTriplets = {
+	win32: {
+		x64: "x86_64-pc-windows-msvc",
+		arm64: "aarch64-pc-windows-msvc",
+	},
+	darwin: {
+		x64: "x86_64-apple-darwin",
+		arm64: "aarch64-apple-darwin",
+	},
+	linux: {
+		x64: "x86_64-unknown-linux-gnu",
+		arm64: "aarch64-unknown-linux-gnu",
+	}
+};
+
+async function getServerPath(context: ExtensionContext): Promise<string | undefined> {
+	const config = workspace.getConfiguration();
+	const explicitPath = config.get("rome.lspBin");
+	if (typeof explicitPath === 'string' && explicitPath !== '') {
+		return explicitPath;
+	}
+
+	const triplet = PLATFORM_TRIPLETS[process.platform]?.[process.arch];
+	if (!triplet) {
+		return undefined;
+	}
+
+	const binaryExt = triplet.includes('windows') ? '.exe' : '';
+	const binaryName = `rome_lsp${binaryExt}`;
+
+	const bundlePath = Uri.joinPath(context.extensionUri, 'server', binaryName);
+	const bundleExists = await fileExists(bundlePath);
+
+	return bundleExists ? bundlePath.fsPath : undefined;
+}
+
+async function fileExists(path: Uri) {
+	try {
+		await workspace.fs.stat(path);
+		return true;
+	} catch (err) {
+		if(err.code === 'ENOENT') {
+			return false;
+		} else {
+			throw err;
+		}
+	}
 }
 
 export function deactivate(): Thenable<void> | undefined {

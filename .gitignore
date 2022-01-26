@@ -9,7 +9,6 @@ Profile-*.json
 /test.*
 # Ignore lockfiles
 yarn.lock
-package-lock.json
 npm-shrinkwrap.json
 pnpm-lock.yaml
 **/node_modules
