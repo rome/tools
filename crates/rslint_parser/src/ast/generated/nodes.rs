@@ -2880,7 +2880,6 @@ pub enum AnyJsImportClause {
     JsImportDefaultClause(JsImportDefaultClause),
     JsImportNamedClause(JsImportNamedClause),
     JsImportNamespaceClause(JsImportNamespaceClause),
-    JsName(JsName),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum AnyTemplateElement {
@@ -9784,9 +9783,6 @@ impl From<JsImportNamespaceClause> for AnyJsImportClause {
         AnyJsImportClause::JsImportNamespaceClause(node)
     }
 }
-impl From<JsName> for AnyJsImportClause {
-    fn from(node: JsName) -> AnyJsImportClause { AnyJsImportClause::JsName(node) }
-}
 impl AstNode for AnyJsImportClause {
     fn can_cast(kind: JsSyntaxKind) -> bool {
         matches!(
@@ -9795,7 +9791,6 @@ impl AstNode for AnyJsImportClause {
                 | JS_IMPORT_DEFAULT_CLAUSE
                 | JS_IMPORT_NAMED_CLAUSE
                 | JS_IMPORT_NAMESPACE_CLAUSE
-                | JS_NAME
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -9812,7 +9807,6 @@ impl AstNode for AnyJsImportClause {
             JS_IMPORT_NAMESPACE_CLAUSE => {
                 AnyJsImportClause::JsImportNamespaceClause(JsImportNamespaceClause { syntax })
             }
-            JS_NAME => AnyJsImportClause::JsName(JsName { syntax }),
             _ => return None,
         };
         Some(res)
@@ -9823,7 +9817,6 @@ impl AstNode for AnyJsImportClause {
             AnyJsImportClause::JsImportDefaultClause(it) => &it.syntax,
             AnyJsImportClause::JsImportNamedClause(it) => &it.syntax,
             AnyJsImportClause::JsImportNamespaceClause(it) => &it.syntax,
-            AnyJsImportClause::JsName(it) => &it.syntax,
         }
     }
 }
@@ -9834,7 +9827,6 @@ impl std::fmt::Debug for AnyJsImportClause {
             AnyJsImportClause::JsImportDefaultClause(it) => std::fmt::Debug::fmt(it, f),
             AnyJsImportClause::JsImportNamedClause(it) => std::fmt::Debug::fmt(it, f),
             AnyJsImportClause::JsImportNamespaceClause(it) => std::fmt::Debug::fmt(it, f),
-            AnyJsImportClause::JsName(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
@@ -9845,7 +9837,6 @@ impl From<AnyJsImportClause> for SyntaxNode {
             AnyJsImportClause::JsImportDefaultClause(it) => it.into(),
             AnyJsImportClause::JsImportNamedClause(it) => it.into(),
             AnyJsImportClause::JsImportNamespaceClause(it) => it.into(),
-            AnyJsImportClause::JsName(it) => it.into(),
         }
     }
 }

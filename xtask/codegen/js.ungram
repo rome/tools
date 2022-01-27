@@ -983,7 +983,6 @@ JsImport = 'import'
 
 AnyJsImportClause =
     JsImportBareClause
-    | JsName
     | JsImportNamedClause
     | JsImportDefaultClause
     | JsImportNamespaceClause
