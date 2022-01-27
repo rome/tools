@@ -1,7 +1,7 @@
 use anyhow::Result;
 use lspower::lsp::*;
 use rome_analyze::FileId;
-use rome_formatter::{FormatOptions, Formatter, IndentStyle};
+use rome_formatter::{FormatOptions, IndentStyle};
 use rslint_parser::{parse_script, TextRange};
 
 use crate::line_index::{self, LineCol};
@@ -14,8 +14,7 @@ pub fn format(text: &str, file_id: FileId) -> Result<Vec<TextEdit>> {
         line_width: 80,
     };
 
-    let new_text = Formatter::new(options)
-        .format_root(&tree)
+    let new_text = rome_formatter::format(options, &tree)
         // TODO: impl Error for FormatError
         .unwrap()
         .code()

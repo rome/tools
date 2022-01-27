@@ -3,11 +3,10 @@ use std::cell::RefCell;
 #[cfg(debug_assertions)]
 use std::collections::HashSet;
 
-use crate::printer::Printer;
 use crate::{
     concat_elements, empty_element, empty_line, format_element::Token, format_elements,
     hard_line_break, if_group_breaks, if_group_fits_on_single_line, line_suffix,
-    soft_line_break_or_space, space_token, FormatElement, FormatOptions, FormatResult, Formatted,
+    soft_line_break_or_space, space_token, FormatElement, FormatOptions, FormatResult,
     ToFormatElement,
 };
 use rome_rowan::SyntaxElement;
@@ -44,7 +43,7 @@ impl Formatter {
     }
 
     /// Formats a CST
-    pub fn format_root(self, root: &SyntaxNode) -> FormatResult<Formatted> {
+    pub(crate) fn format_root(self, root: &SyntaxNode) -> FormatResult<FormatElement> {
         let element = self.format_syntax_node(root)?;
 
         cfg_if::cfg_if! {
@@ -60,8 +59,7 @@ impl Formatter {
             }
         }
 
-        let printer = Printer::new(self.options);
-        Ok(printer.print(&element))
+        Ok(element)
     }
 
     fn format_syntax_node(&self, node: &SyntaxNode) -> FormatResult<FormatElement> {

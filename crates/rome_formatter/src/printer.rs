@@ -99,10 +99,18 @@ impl<'a> Printer<'a> {
     }
 
     /// Prints the passed in element as well as all its content
-    pub fn print(mut self, element: &'a FormatElement) -> Formatted {
+    pub fn print(self, element: &'a FormatElement) -> Formatted {
+        self.print_with_indent(element, 0)
+    }
+
+    pub(crate) fn print_with_indent(
+        mut self,
+        element: &'a FormatElement,
+        indent: u16,
+    ) -> Formatted {
         let mut queue = ElementCallQueue::new();
 
-        queue.enqueue(PrintElementCall::new(element, PrintElementArgs::default()));
+        queue.enqueue(PrintElementCall::new(element, PrintElementArgs { indent }));
 
         while let Some(print_element_call) = queue.dequeue() {
             queue.extend(self.print_element(print_element_call.element, print_element_call.args));
