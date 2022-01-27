@@ -295,6 +295,8 @@ fn type_member_semi(p: &mut Parser) {
     }
 }
 
+// test ts typescript_enum
+// enum A {}
 pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
     let m = p.start();
     p.eat(T![const]);

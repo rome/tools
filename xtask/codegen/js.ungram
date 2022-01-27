@@ -1450,7 +1450,7 @@ TsTypeRef = name:TsEntityName type_args:TsTypeArgs
 
 
 // typescript enum
-TsEnum = 'const'? 'enum'  ident: Ident '{' members: TsEnumMemberList '}'
+TsEnum = 'enum'  ident: JsName '{' members: TsEnumMemberList '}'
 
 TsEnumMemberList = TsEnumMember*
 TsEnumMember = ident: Ident '=' value:JsAnyExpression
