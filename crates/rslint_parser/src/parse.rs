@@ -247,15 +247,6 @@ pub fn parse(text: &str, file_id: usize, syntax: Syntax) -> Parse<JsAnyRoot> {
     Parse::new(green, parse_errors, syntax.into())
 }
 
-pub fn parse_ts(text: &str, file_id: usize) -> Parse<JsModule> {
-    let syntax = Syntax::default().typescript();
-    let (events, errors, tokens) = parse_common(text, file_id, syntax);
-    let mut tree_sink = LosslessTreeSink::new(text, &tokens);
-    crate::process(&mut tree_sink, events, errors);
-    let (green, parse_errors) = tree_sink.finish();
-    Parse::new_module(green, parse_errors)
-}
-
 /// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).
 /// Or turned into a typed [`Expr`](Expr) with [`tree`](Parse::tree).
 pub fn parse_expression(text: &str, file_id: usize) -> Parse<JsExpressionSnipped> {

@@ -53,10 +53,10 @@ fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
     let res = catch_unwind(|| {
         // Files containing a // SCRIPT comment are parsed as script and not as module
         // This is needed to test features that are restricted in strict mode.
-        let parse = if path.contains(".ts") {
-            crate::parse_ts(text, 0).cast::<JsAnyRoot>().unwrap()
+        let syntax = if path.contains(".ts") {
+            Syntax::default().typescript()
         } else if text.contains("// SCRIPT") {
-            parse_text(text, 0).cast::<JsAnyRoot>().unwrap()
+            Syntax::default().script()
         } else {
             Syntax::default().module()
         };

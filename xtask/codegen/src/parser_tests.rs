@@ -112,7 +112,12 @@ fn collect_tests(s: &str) -> Vec<Test> {
             .collect::<Vec<_>>()
             .join("\n");
         assert!(!text.trim().is_empty() && text.ends_with('\n'));
-        res.push(Test { name, text, ok, language: language.to_string() })
+        res.push(Test {
+            name,
+            text,
+            ok,
+            language: language.to_string(),
+        })
     }
     res
 }
@@ -152,7 +157,11 @@ fn existing_tests(dir: &Path, ok: bool) -> Result<HashMap<String, (PathBuf, Test
         let file = file?;
         let path = file.path();
         let exts = ["js", "ts"];
-        let ext = path.extension().unwrap_or_default().to_str().unwrap_or_default();
+        let ext = path
+            .extension()
+            .unwrap_or_default()
+            .to_str()
+            .unwrap_or_default();
         if !exts.contains(&ext) {
             continue;
         }
@@ -165,7 +174,7 @@ fn existing_tests(dir: &Path, ok: bool) -> Result<HashMap<String, (PathBuf, Test
             name: name.clone(),
             text,
             ok,
-            language: ext.to_string()
+            language: ext.to_string(),
         };
         if let Some(old) = res.insert(name, (path, test)) {
             println!("Duplicate test: {:?}", old);

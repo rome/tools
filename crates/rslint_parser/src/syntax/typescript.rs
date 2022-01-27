@@ -312,7 +312,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
     let mut progress = ParserProgress::default();
     while !p.at(EOF) && !p.at(T!['}']) {
         progress.assert_progressing(p);
-        
+
         if p.at(JsSyntaxKind::IDENT) {
             let variant = p.start();
             parse_name(p);
