@@ -1229,6 +1229,7 @@ dependencies = [
  "rome_rowan",
  "rslint_parser",
  "tests_macros",
+ "thiserror",
 ]
 
 [[package]]
@@ -1308,6 +1309,7 @@ dependencies = [
  "rslint_lexer",
  "rslint_syntax",
  "tests_macros",
+ "thiserror",
 ]
 
 [[package]]
