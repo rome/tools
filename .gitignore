@@ -3,6 +3,7 @@ Profile-*.json
 # Editor configuration
 .vscode
 .idea
+.vs
 # Release artifacts
 **/target
 # Ignore test files that contributors could create locally
