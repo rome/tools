@@ -1,6 +1,5 @@
 //! TypeScript specific functions.
 
-use super::assignment::parse_assignment;
 use super::expr::{
     parse_assignment_expression_or_higher, parse_lhs_expr, parse_literal_expression, parse_name,
 };
@@ -306,7 +305,6 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
     p.expect(T![enum]);
     parse_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
     p.expect(T!['{']);
-    let mut first = true;
 
     let members_list = p.start();
     let mut progress = ParserProgress::default();
@@ -315,10 +313,10 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 
         if p.at(JsSyntaxKind::IDENT) {
             let variant = p.start();
-            parse_name(p);
+            let _ = parse_name(p);
 
             if p.eat(JsSyntaxKind::EQ) {
-                super::expr::parse_expression(p, ExpressionContext::default());
+                let _ = super::expr::parse_expression(p, ExpressionContext::default());
             }
 
             variant.complete(p, TS_ENUM_MEMBER);
