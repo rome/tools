@@ -1,42 +1,31 @@
 pub mod compare;
-pub mod files;
+mod reporters;
 pub mod results;
+mod runner;
 pub mod test262;
 pub mod typescript;
 
-use ascii_table::{AsciiTable, Column};
-use colored::Colorize;
+use crate::reporters::{
+    CliProgressReporter, CompositeTestReporter, DiagnosticsReporter, JsonReporter, RastReporter,
+    SummaryReporter,
+};
+use crate::runner::{run_test_suite, TestRunContext, TestSuite};
+use crate::test262::Test262TestSuite;
+use crate::typescript::TypeScriptTestSuite;
 use rslint_parser::ParserError;
 use serde::{Deserialize, Serialize};
 use std::any::Any;
 use std::path::PathBuf;
 
-enum ExecRes {
-    Errors(Vec<ParserError>),
-    ParseCorrectly,
-    ParserPanic(Box<dyn Any + Send + 'static>),
-}
-
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TestResult {
-    #[serde(skip)]
-    pub fail: Option<FailReason>,
     #[serde(rename = "o")]
     pub outcome: Outcome,
     #[serde(rename = "h")]
     pub path: PathBuf,
-    #[serde(skip)]
-    pub code: String,
 }
 
-#[derive(Debug)]
-pub enum FailReason {
-    IncorrectlyPassed,
-    IncorrectlyErrored(Vec<ParserError>),
-    ParserPanic(Box<dyn Any + Send + 'static>),
-}
-
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, Copy, Clone)]
 pub enum Outcome {
     Passed,
     Failed,
@@ -102,68 +91,23 @@ impl TestResults {
     pub fn panicked_tests(&self) -> usize {
         self.details
             .iter()
-            .filter(|res| matches!(res.fail, Some(FailReason::ParserPanic(_))))
+            .filter(|res| matches!(res.outcome, Outcome::Panicked))
             .count()
     }
 
     pub fn errored_tests(&self) -> usize {
         self.details
             .iter()
-            .filter(|res| {
-                matches!(
-                    res.fail,
-                    Some(FailReason::IncorrectlyErrored(_)) | Some(FailReason::IncorrectlyPassed)
-                )
-            })
+            .filter(|res| matches!(res.outcome, Outcome::Failed))
             .count()
     }
 
     pub fn passed_tests(&self) -> usize {
-        self.details.iter().filter(|res| res.fail.is_none()).count()
+        self.details
+            .iter()
+            .filter(|res| res.outcome == Outcome::Passed)
+            .count()
     }
-
-    /// Prints results of the coverage to STDOUT in JSON format
-    pub fn dump_to_json(&self) {
-        let json = serde_json::to_string(&self).unwrap();
-        println!("{}", json);
-    }
-}
-
-fn default_bar_style() -> indicatif::ProgressStyle {
-    indicatif::ProgressStyle::default_bar()
-        .template("{msg} [{bar:40}]")
-        .progress_chars("=> ")
-}
-
-fn draw_table(test_results: &TestResults) {
-    let panicked = test_results.summary.panics;
-    let errored = test_results.summary.failed;
-    let passed = test_results.summary.passed;
-    let coverage = format!("{:.2}", test_results.summary.coverage);
-
-    let total = panicked + errored + passed;
-
-    let mut table = AsciiTable::default();
-
-    let mut counter = 0usize;
-    let mut create_column = |name: colored::ColoredString| {
-        let column = Column {
-            header: name.to_string(),
-            align: ascii_table::Align::Center,
-            ..Column::default()
-        };
-        table.columns.insert(counter, column);
-        counter += 1;
-    };
-    create_column("Tests ran".into());
-    create_column("Passed".green());
-    create_column("Failed".red());
-    create_column("Panics".red());
-    create_column("Coverage".cyan());
-    let numbers: Vec<&dyn std::fmt::Display> =
-        vec![&total, &passed, &errored, &panicked, &coverage];
-
-    table.print(vec![numbers]);
 }
 
 pub fn run(
@@ -173,28 +117,41 @@ pub fn run(
     show_rast: bool,
     show_diagnostics: bool,
 ) {
-    let pool = yastl::ThreadConfig::new().stack_size(8 << 30);
-
     let language = language.to_lowercase();
-    match language.as_str() {
-        "javascript" | "js" => {
-            test262::run_js(
-                query,
-                yastl::Pool::with_config(num_cpus::get(), pool),
-                json,
-                show_rast,
-                show_diagnostics,
-            );
-        }
-        "typescript" | "ts" => {
-            typescript::run_ts(
-                query,
-                yastl::Pool::with_config(num_cpus::get(), pool),
-                json,
-                show_rast,
-                show_diagnostics,
-            );
-        }
-        other => panic!("Unkown language: {}", other),
+    let loader: Box<dyn TestSuite> = match language.as_str() {
+        "javascript" | "js" => Box::new(Test262TestSuite),
+        "typescript" | "ts" => Box::new(TypeScriptTestSuite),
+        other => panic!("Unknown language: {}", other),
+    };
+
+    let mut reporters = CompositeTestReporter::new(Box::new(CliProgressReporter::default()));
+
+    if json {
+        reporters.add(Box::new(JsonReporter));
+    } else {
+        reporters.add(Box::new(SummaryReporter::default()));
+    }
+
+    if show_rast {
+        reporters.add(Box::new(RastReporter));
+    }
+
+    if show_diagnostics {
+        reporters.add(Box::new(DiagnosticsReporter));
+    }
+
+    let context = TestRunContext {
+        query: query.map(|s| s.to_string()),
+        reporter: &mut reporters,
+        pool: &yastl::Pool::with_config(
+            num_cpus::get(),
+            yastl::ThreadConfig::new().stack_size(8 << 30),
+        ),
+    };
+
+    let results = run_test_suite(loader.as_ref(), context);
+
+    if results.passed_tests() == 0 {
+        std::process::exit(1);
     }
 }
