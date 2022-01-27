@@ -12,10 +12,10 @@ mod ts_ext;
 mod union_ext;
 
 use crate::{syntax_node::*, util::SyntaxNodeExt, JsSyntaxKind, SyntaxList, TextRange};
-use std::error::Error;
 use std::fmt::{Debug, Formatter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
+use thiserror::Error;
 
 pub use self::{expr_ext::*, generated::nodes::*, stmt_ext::*, ts_ext::*};
 
@@ -327,20 +327,11 @@ impl<N: AstNode> FusedIterator for AstSeparatedListNodesIterator<N> {}
 /// Specific result used when navigating nodes using AST APIs
 pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
 
-#[derive(Debug, Eq, PartialEq, Clone)]
+#[derive(Debug, Eq, PartialEq, Clone, Error)]
 pub enum SyntaxError {
     /// Error thrown when a mandatory node is not found
+    #[error("missing required child")]
     MissingRequiredChild(SyntaxNode),
-}
-
-impl Error for SyntaxError {}
-
-impl std::fmt::Display for SyntaxError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            SyntaxError::MissingRequiredChild(_) => write!(f, "missing required child"),
-        }
-    }
 }
 
 mod support {

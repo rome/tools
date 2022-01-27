@@ -11,6 +11,7 @@ rome_rowan = { path = "../rome_rowan" }
 rome_path = { version = "0.0.0", path = "../rome_path" }
 rome_core = { version = "0.0.0", path = "../rome_core" }
 cfg-if = "1.0.0"
+thiserror = "1.0.30"
 
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }

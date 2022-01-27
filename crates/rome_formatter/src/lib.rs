@@ -68,6 +68,7 @@ pub use printer::PrinterOptions;
 use rome_core::App;
 use rome_path::RomePath;
 use std::str::FromStr;
+use thiserror::Error;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
 pub trait ToFormatElement {
@@ -77,16 +78,19 @@ pub trait ToFormatElement {
 /// Public return type of the formatter
 pub type FormatResult<F> = Result<F, FormatError>;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Error)]
 /// Series of errors encountered during formatting
 pub enum FormatError {
     /// Node is missing and it should be required for a correct formatting
+    #[error("missing required child")]
     MissingRequiredChild,
 
     /// In case our formatter doesn't know how to format a certain language
+    #[error("language is not supported")]
     UnsupportedLanguage,
 
     /// When the ability to format the current file has been turned off on purpose
+    #[error("formatting capability is disabled")]
     CapabilityDisabled,
 }
 
