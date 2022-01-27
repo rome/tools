@@ -271,16 +271,10 @@ impl Formatter {
     }
 
     fn print_leading_trivia(&self, token: &SyntaxToken) -> FormatElement {
-        // False positive: the trivias need to be collected in a vector as they
-        // are iterated on in reverse order later, but SyntaxTriviaPiecesIterator
-        // doesn't implement DoubleEndedIterator (rust-lang/rust-clippy#8132)
-        #[allow(clippy::needless_collect)]
-        let pieces: Vec<_> = token.leading_trivia().pieces().collect();
-
         let mut line_count = 0;
         let mut elements = Vec::new();
 
-        for piece in pieces.into_iter().rev() {
+        for piece in token.leading_trivia().pieces().rev() {
             if let Some(comment) = piece.as_comments() {
                 let is_single_line = comment.text().trim_start().starts_with("//");
 

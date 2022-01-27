@@ -326,7 +326,7 @@ where
             .last_trailing_trivia()
             .and_then(|prev_token| {
                 // Newline pieces can only come last in trailing trivias, skip to it directly
-                prev_token.pieces().last()?.as_newline()
+                prev_token.pieces().next_back()?.as_newline()
             })
             .is_some() as usize;
 

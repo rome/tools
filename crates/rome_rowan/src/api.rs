@@ -438,6 +438,18 @@ impl<L: Language> Iterator for SyntaxTriviaPiecesIterator<L> {
     }
 }
 
+impl<L: Language> DoubleEndedIterator for SyntaxTriviaPiecesIterator<L> {
+    fn next_back(&mut self) -> Option<Self::Item> {
+        let (offset, trivia) = self.iter.next_back()?;
+        Some(SyntaxTriviaPiece {
+            raw: self.iter.raw.clone(),
+            offset,
+            trivia,
+            _p: PhantomData,
+        })
+    }
+}
+
 impl<L: Language> SyntaxTrivia<L> {
     /// Returns all [SyntaxTriviaPiece] of this trivia.
     ///
@@ -1691,6 +1703,7 @@ mod tests {
                 &[TriviaPiece::Whitespace(3)],
             );
         });
+
         let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
         assert_eq!(2, pieces.len());
 
@@ -1703,5 +1716,16 @@ mod tests {
         assert_eq!(TextSize::from(4), pieces[1].text_len());
         assert_eq!(TextRange::new(3.into(), 7.into()), pieces[1].text_range());
         assert!(pieces[1].as_comments().is_some());
+
+        let pieces_rev: Vec<_> = node
+            .first_leading_trivia()
+            .unwrap()
+            .pieces()
+            .rev()
+            .collect();
+
+        assert_eq!(2, pieces_rev.len());
+        assert_eq!("/**/", pieces_rev[0].text());
+        assert_eq!("\n\t ", pieces_rev[1].text());
     }
 }
