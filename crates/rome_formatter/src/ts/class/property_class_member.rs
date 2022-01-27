@@ -20,7 +20,7 @@ impl ToFormatElement for JsPropertyClassMember {
 
         let semicolon = formatter
             .format_token(&self.semicolon_token())?
-            .unwrap_or_else(|| token(';'));
+            .unwrap_or_else(|| token(";"));
 
         Ok(format_elements![
             static_token,

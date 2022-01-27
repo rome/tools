@@ -1,3 +1,5 @@
+use rome_rowan::api::SyntaxTriviaPieceComments;
+use rome_rowan::{Language, SyntaxToken, TextRange, TextSize};
 use rslint_parser::{AstNode, SyntaxNode};
 
 use crate::format_elements;
@@ -170,12 +172,11 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// assert_eq!(r#""Hello\tWorld""#, format_element(&elements, FormatOptions::default()).code());
 /// ```
 #[inline]
-pub fn token<S: Into<String>>(text: S) -> FormatElement {
-    let text = text.into();
+pub const fn token(text: &'static str) -> FormatElement {
     if text.is_empty() {
         FormatElement::Empty
     } else {
-        FormatElement::Token(Token(text))
+        FormatElement::Token(Token::new_static(text))
     }
 }
 
@@ -833,21 +834,102 @@ impl ConditionalGroupContent {
 }
 
 /// See [token] for documentation
-#[derive(Debug, PartialEq, Eq, Clone)]
-pub struct Token(String);
+#[derive(Debug, Eq, Clone)]
+pub enum Token {
+    Static { text: &'static str },
+    Dynamic { text: String, source: TextRange },
+}
 
 impl Token {
-    pub fn new(content: &str) -> Self {
-        debug_assert!(!content.contains('\r'), "The content '{}' contains a carriage return '\\r' character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", content);
-        Self(String::from(content))
+    pub(crate) const fn new_static(text: &'static str) -> Self {
+        Self::Static { text }
+    }
+
+    pub(crate) fn new_dynamic(text: &str, source: TextRange) -> Self {
+        Self::Dynamic {
+            text: text
+                .replace("\r\n", "\n")
+                .replace(&['\r', '\u{2028}', '\u{2029}'], "\n"),
+            source,
+        }
+    }
+
+    pub(crate) fn source(&self) -> Option<&TextRange> {
+        match self {
+            Token::Static { .. } => None,
+            Token::Dynamic { source, .. } => Some(source),
+        }
+    }
+
+    fn trim_start(&self) -> Self {
+        match self {
+            Token::Static { text } => Self::Static {
+                text: text.trim_start(),
+            },
+            Token::Dynamic { text, source } => {
+                let prev_len = TextSize::from(text.len() as u32);
+                let text = text.trim_start();
+                let next_len = TextSize::from(text.len() as u32);
+                let diff = prev_len - next_len;
+                Self::Dynamic {
+                    text: text.into(),
+                    source: TextRange::new(source.start() + diff, source.end()),
+                }
+            }
+        }
+    }
+
+    fn trim_end(&self) -> Self {
+        match self {
+            Token::Static { text } => Self::Static {
+                text: text.trim_end(),
+            },
+            Token::Dynamic { text, source } => {
+                let prev_len = TextSize::from(text.len() as u32);
+                let text = text.trim_end();
+                let next_len = TextSize::from(text.len() as u32);
+                let diff = prev_len - next_len;
+                Self::Dynamic {
+                    text: text.into(),
+                    source: TextRange::new(source.start(), source.end() - diff),
+                }
+            }
+        }
+    }
+}
+
+// Token equality only compares the text content
+impl PartialEq for Token {
+    fn eq(&self, other: &Self) -> bool {
+        **self == **other
+    }
+}
+
+impl<L: Language> From<SyntaxToken<L>> for Token {
+    fn from(token: SyntaxToken<L>) -> Self {
+        Self::from(&token)
+    }
+}
+
+impl<'a, L: Language> From<&'a SyntaxToken<L>> for Token {
+    fn from(token: &'a SyntaxToken<L>) -> Self {
+        Self::new_dynamic(token.text_trimmed(), token.text_trimmed_range())
+    }
+}
+
+impl<L: Language> From<SyntaxTriviaPieceComments<L>> for Token {
+    fn from(trivia: SyntaxTriviaPieceComments<L>) -> Self {
+        Self::new_dynamic(trivia.text().trim(), trivia.text_range())
     }
 }
 
 impl Deref for Token {
-    type Target = String;
-
+    type Target = str;
     fn deref(&self) -> &Self::Target {
-        &self.0
+        match self {
+            Token::Static { text } => text,
+            Token::Dynamic { text, .. } => text,
+        }
     }
 }
 
@@ -885,11 +967,11 @@ impl FormatElement {
                     .map(Clone::clone)
                     .collect();
                 if let Some(FormatElement::Token(s)) = content.get_mut(0) {
-                    s.0 = s.trim_start().to_string()
+                    *s = s.trim_start();
                 }
                 FormatElement::List(List::new(content))
             }
-            FormatElement::Token(s) => token(s.trim_start()),
+            FormatElement::Token(s) => FormatElement::Token(s.trim_start()),
             FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_start())),
         }
     }
@@ -927,16 +1009,22 @@ impl FormatElement {
                             .map(Clone::clone)
                             .collect();
                         if let Some(FormatElement::Token(s)) = content.last_mut() {
-                            s.0 = s.trim_end().to_string()
+                            *s = s.trim_end();
                         }
                         FormatElement::List(List::new(content))
                     }
                     None => FormatElement::List(List::new(vec![])),
                 }
             }
-            FormatElement::Token(s) => token(s.trim_end()),
+            FormatElement::Token(s) => FormatElement::Token(s.trim_end()),
             FormatElement::LineSuffix(s) => FormatElement::LineSuffix(Box::new(s.trim_end())),
         }
+    }
+}
+
+impl From<Token> for FormatElement {
+    fn from(token: Token) -> Self {
+        FormatElement::Token(token)
     }
 }
 
@@ -1096,7 +1184,7 @@ mod tests {
             FormatElement::Indent(Indent::new(FormatElement::Empty)),
             FormatElement::Line(Line::new(LineMode::Hard)),
             FormatElement::Space,
-            FormatElement::Token(Token::new(" \t \n")),
+            FormatElement::Token(Token::new_static(" \t \n")),
             FormatElement::List(List::new(vec![FormatElement::Empty])),
             FormatElement::Group(Group::new(FormatElement::Empty)),
             FormatElement::ConditionalGroupContent(ConditionalGroupContent::new(

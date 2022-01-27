@@ -11,8 +11,8 @@
 //!
 //! ```rust,no_test
 //! struct KeyValue {
-//!     key: String,
-//!     value: String
+//!     key: &'static str,
+//!     value: &'static str
 //! }
 //! ```
 //!
@@ -21,24 +21,24 @@
 //! use rome_formatter::{format_elements, format_element, Formatter, ToFormatElement, FormatElement, FormatResult, FormatOptions, space_token, token };
 //!
 //! struct KeyValue {
-//!     key: String,
-//!     value: String
+//!     key: &'static str,
+//!     value: &'static str
 //! }
 //!
 //! impl ToFormatElement for KeyValue {
 //!     fn to_format_element(&self, formatter: &Formatter)-> FormatResult<FormatElement>  {
 //!         Ok(format_elements![
-//!             token(self.key.as_str()),
+//!             token(self.key),
 //!             space_token(),
 //!             token("=>"),
 //!             space_token(),
-//!             token(self.value.as_str())
+//!             token(self.value)
 //!         ])
 //!     }
 //! }
 //!
 //! fn my_function() {
-//!     let key_value = KeyValue { key: String::from("lorem"), value: String::from("ipsum") };
+//!     let key_value = KeyValue { key: "lorem", value: "ipsum" };
 //!     let element = key_value.to_format_element(&Formatter::default()).unwrap();
 //!     let result = format_element(&element, FormatOptions::default());
 //!     assert_eq!(result.code(), "lorem => ipsum");
@@ -55,6 +55,8 @@ mod intersperse;
 mod printer;
 mod ts;
 pub use formatter::Formatter;
+use rome_rowan::TextRange;
+use rome_rowan::TextSize;
 use rslint_parser::{parse, Syntax, SyntaxError, SyntaxNode};
 
 pub use format_element::{
@@ -156,18 +158,47 @@ impl Default for FormatOptions {
     }
 }
 
+/// Lightweight sourcemap marker between source and output tokens
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub struct SourceMarker {
+    /// Position of the marker in the original source
+    pub source: TextSize,
+    /// Position of the marker in the output code
+    pub dest: TextSize,
+}
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Formatted {
     code: String,
+    range: Option<TextRange>,
+    sourcemap: Vec<SourceMarker>,
 }
 
 impl Formatted {
-    pub fn new(code: String) -> Self {
-        Self { code }
+    fn new(code: String, range: Option<TextRange>, sourcemap: Vec<SourceMarker>) -> Self {
+        Self {
+            code,
+            range,
+            sourcemap,
+        }
+    }
+
+    /// Range of the input source file covered by this formatted code,
+    /// or None if the entire file is covered in this instance
+    pub fn range(&self) -> Option<TextRange> {
+        self.range
+    }
+
+    pub fn sourcemap(&self) -> &[SourceMarker] {
+        &self.sourcemap
     }
 
     pub fn code(&self) -> &String {
         &self.code
+    }
+
+    pub fn into_code(self) -> String {
+        self.code
     }
 }
 
@@ -176,6 +207,80 @@ impl Formatted {
 /// It returns a [Formatted] result, which the user can use to override a file.
 pub fn format(options: FormatOptions, syntax: &SyntaxNode) -> FormatResult<Formatted> {
     Formatter::new(options).format_root(syntax)
+}
+
+/// Formats a range withing a JavaScript file
+///
+/// It returns a [Formatted] result with a range corresponding to the
+/// range of the input that was effectively overwritten by the formatter
+pub fn format_range(
+    options: FormatOptions,
+    root: &SyntaxNode,
+    range: TextRange,
+) -> FormatResult<Formatted> {
+    let formatted = format(options, root)?;
+
+    // This finds the closests marker to the beginning of the source
+    // starting before or at said starting point, and the closest
+    // marker to the end of the source range starting after or at
+    // said ending point respectively
+    let mut range_start = None;
+    let mut range_end = None;
+
+    for marker in &formatted.sourcemap {
+        if let Some(start_dist) = marker.source.checked_sub(range.start()) {
+            range_start = match range_start {
+                Some((prev_marker, prev_dist)) => {
+                    if start_dist < prev_dist {
+                        Some((marker, start_dist))
+                    } else {
+                        Some((prev_marker, prev_dist))
+                    }
+                }
+                None => Some((marker, start_dist)),
+            }
+        }
+
+        if let Some(end_dist) = range.end().checked_sub(marker.source) {
+            range_end = match range_end {
+                Some((prev_marker, prev_dist)) => {
+                    if end_dist < prev_dist {
+                        Some((marker, end_dist))
+                    } else {
+                        Some((prev_marker, prev_dist))
+                    }
+                }
+                None => Some((marker, end_dist)),
+            }
+        }
+    }
+
+    // If no start or end were found this means either the input was empty,
+    // or the edge of the formatting range was near the edge of the input
+    // and no marker was emitted before the start (or after the end) of the
+    // formatting range: in this case the start/end marker default to the
+    // start/end of the input
+    let (start_source, start_dest) = match range_start {
+        Some((start_marker, _)) => (start_marker.source, start_marker.dest),
+        None => (TextSize::from(0), TextSize::from(0)),
+    };
+    let (end_source, end_dest) = match range_end {
+        Some((end_marker, _)) => (end_marker.source, end_marker.dest),
+        None => {
+            let end = root.text().len();
+            (end, end)
+        }
+    };
+
+    let input_range = TextRange::new(start_source, end_source);
+    let output_range = TextRange::new(start_dest, end_dest);
+    let code = &formatted.code[output_range];
+
+    Ok(Formatted::new(
+        code.into(),
+        Some(input_range),
+        formatted.sourcemap,
+    ))
 }
 
 pub fn format_element(element: &FormatElement, options: FormatOptions) -> Formatted {
@@ -196,5 +301,43 @@ pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions, ap
         rome_path
             .save(result.code())
             .expect("Could not write the formatted code on file");
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{format_range, FormatOptions};
+
+    use rome_rowan::{TextRange, TextSize};
+    use rslint_parser::parse_script;
+
+    #[test]
+    fn test_range_formatting() {
+        let input = "
+        
+        func(     /* comment */
+        );
+        
+        let array =
+            [ 1
+        , 2];
+        
+        const no_format    =    () => {};
+
+        ";
+
+        let range_start = TextSize::try_from(input.find("let").unwrap()).unwrap();
+        let range_end = TextSize::try_from(input.find("const").unwrap()).unwrap();
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            FormatOptions::default(),
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+
+        let result = result.expect("range formatting failed");
+        assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
+        assert_eq!(result.code(), "let array = [1, 2];\n\n");
     }
 }

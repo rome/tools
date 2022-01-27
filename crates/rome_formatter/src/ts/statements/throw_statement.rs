@@ -10,7 +10,7 @@ impl ToFormatElement for JsThrowStatement {
 
         let semicolon = formatter
             .format_token(&self.semicolon_token())?
-            .unwrap_or_else(|| token(';'));
+            .unwrap_or_else(|| token(";"));
 
         Ok(format_elements![
             throw_token,

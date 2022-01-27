@@ -5,12 +5,12 @@ use std::collections::HashSet;
 
 use crate::printer::Printer;
 use crate::{
-    concat_elements, empty_element, empty_line, format_elements, hard_line_break, if_group_breaks,
-    if_group_fits_on_single_line, line_suffix, soft_line_break_or_space, space_token, token,
-    FormatElement, FormatOptions, FormatResult, Formatted, ToFormatElement,
+    concat_elements, empty_element, empty_line, format_element::Token, format_elements,
+    hard_line_break, if_group_breaks, if_group_fits_on_single_line, line_suffix,
+    soft_line_break_or_space, space_token, FormatElement, FormatOptions, FormatResult, Formatted,
+    ToFormatElement,
 };
-use rome_rowan::api::SyntaxTriviaPieceComments;
-use rome_rowan::{Language, SyntaxElement};
+use rome_rowan::SyntaxElement;
 #[cfg(debug_assertions)]
 use rslint_parser::SyntaxNodeExt;
 use rslint_parser::{AstNode, AstSeparatedList, SyntaxNode, SyntaxToken};
@@ -108,9 +108,9 @@ impl Formatter {
         };
         Ok(format_elements![
             self.print_leading_trivia(open_token),
-            token(open_token.text_trimmed()),
+            Token::from(open_token),
             content(open_token_trailing_trivia, close_token_leading_trivia,)?,
-            token(close_token.text_trimmed()),
+            Token::from(close_token),
             self.print_trailing_trivia(close_token),
         ])
     }
@@ -251,10 +251,7 @@ impl Formatter {
                     // Use format_replaced instead of wrapping the result of format_token
                     // in order to remove only the token itself when the group doesn't break
                     // but still print its associated trivias unconditionally
-                    self.format_replaced(
-                        &separator,
-                        if_group_breaks(token(separator.text_trimmed())),
-                    )?
+                    self.format_replaced(&separator, if_group_breaks(Token::from(&separator)))?
                 } else {
                     self.format_token(&separator)?
                 }
@@ -278,7 +275,7 @@ impl Formatter {
             if let Some(comment) = piece.as_comments() {
                 let is_single_line = comment.text().trim_start().starts_with("//");
 
-                let comment = self.format_comment(comment);
+                let comment = Token::from(comment);
 
                 let line_break = if is_single_line {
                     hard_line_break()
@@ -308,7 +305,7 @@ impl Formatter {
             if let Some(comment) = piece.as_comments() {
                 let is_single_line = comment.text().trim_start().starts_with("//");
 
-                let comment = self.format_comment(comment);
+                let comment = Token::from(comment);
 
                 elements.push(if !is_single_line {
                     format_elements![
@@ -332,10 +329,6 @@ impl Formatter {
         concat_elements(elements)
     }
 
-    fn format_comment<L: Language>(&self, trivia: SyntaxTriviaPieceComments<L>) -> FormatElement {
-        token(trivia.text().trim())
-    }
-
     /// "Formats" a node according to its original formatting in the source text. Being able to format
     /// a node "as is" is useful if a node contains syntax errors. Formatting a node with syntax errors
     /// has the risk that Rome misinterprets the structure of the code and formatting it could
@@ -357,7 +350,8 @@ impl Formatter {
                     }
                 }
 
-                token(syntax_token.text())
+                // Print the full (not trimmed) text of the token
+                Token::new_dynamic(syntax_token.text(), syntax_token.text_range()).into()
             }
         }))
     }
@@ -400,7 +394,7 @@ impl Formatter {
 mod token {
     use rslint_parser::SyntaxToken;
 
-    use crate::{format_elements, token, FormatElement, FormatResult, Formatter};
+    use crate::{format_element::Token, format_elements, FormatElement, FormatResult, Formatter};
 
     pub trait FormattableToken {
         type Output;
@@ -419,7 +413,7 @@ mod token {
 
             Ok(format_elements![
                 formatter.print_leading_trivia(self),
-                token(self.text_trimmed()),
+                Token::from(self),
                 formatter.print_trailing_trivia(self),
             ])
         }

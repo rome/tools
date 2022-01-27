@@ -7,7 +7,7 @@ impl ToFormatElement for JsDebuggerStatement {
             formatter.format_token(&self.debugger_token()?)?,
             formatter
                 .format_token(&self.semicolon_token())?
-                .unwrap_or_else(|| token(';'))
+                .unwrap_or_else(|| token(";"))
         ])
     }
 }
