@@ -1,5 +1,6 @@
 //! TypeScript specific functions.
 
+use super::assignment::parse_assignment;
 use super::expr::{
     parse_assignment_expression_or_higher, parse_lhs_expr, parse_literal_expression, parse_name,
 };
@@ -297,6 +298,8 @@ fn type_member_semi(p: &mut Parser) {
 
 // test ts typescript_enum
 // enum A {}
+// enum A { a, b, c, }
+// enum A { a = 1 + 1 }
 pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
     let m = p.start();
     p.eat(T![const]);
@@ -309,47 +312,20 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
     let mut progress = ParserProgress::default();
     while !p.at(EOF) && !p.at(T!['}']) {
         progress.assert_progressing(p);
-        if first {
-            first = false;
-        } else if p.at(T![,]) && p.nth_at(1, T!['}']) {
-            p.eat(T![,]);
-            break;
-        } else {
-            p.expect(T![,]);
+        
+        if p.at(JsSyntaxKind::IDENT) {
+            let variant = p.start();
+            parse_name(p);
+
+            if p.eat(JsSyntaxKind::EQ) {
+                super::expr::parse_expression(p, ExpressionContext::default());
+            }
+
+            variant.complete(p, TS_ENUM_MEMBER);
         }
 
-        let member = p.start();
-        let err_occured = if !p.at_ts(token_set![T![ident], T![yield], T![await]])
-            && !p.cur().is_keyword()
-            && !p.at(JS_STRING_LITERAL)
-        {
-            let err = p
-                .err_builder("expected an identifier or string for an enum variant, but found none")
-                .primary(p.cur_tok().range(), "");
-
-            #[allow(deprecated)]
-            SingleTokenParseRecovery::with_error(
-                token_set![T!['}'], T![ident], T![yield], T![await], T![=], T![,]],
-                JS_UNKNOWN,
-                err,
-            )
-            .recover(p);
-            true
-        } else {
-            if !p.eat(JS_STRING_LITERAL) {
-                parse_name(p).unwrap().undo_completion(p).abandon(p);
-            }
-            false
-        };
-
-        if p.eat(T![=]) {
-            parse_assignment_expression_or_higher(p, ExpressionContext::default())
-                .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
-            member.complete(p, TS_ENUM_MEMBER);
-        } else if err_occured {
-            member.abandon(p);
-        } else {
-            member.complete(p, TS_ENUM_MEMBER);
+        if p.at(JsSyntaxKind::COMMA) {
+            p.eat(T![,]);
         }
     }
 

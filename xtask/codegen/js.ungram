@@ -1451,9 +1451,8 @@ TsTypeRef = name:TsEntityName type_args:TsTypeArgs
 
 // typescript enum
 TsEnum = 'enum'  ident: JsName '{' members: TsEnumMemberList '}'
-
-TsEnumMemberList = TsEnumMember*
-TsEnumMember = ident: Ident '=' value:JsAnyExpression
+TsEnumMemberList = TsEnumMember (',' TsEnumMember)* ','?
+TsEnumMember = JsName ('=' JsAnyExpression)?
 
 // typescript template literal types
 TsTemplate = elements:TsTemplateElement

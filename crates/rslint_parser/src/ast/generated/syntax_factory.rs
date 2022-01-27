@@ -5914,7 +5914,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if Ident::can_cast(element.kind()) {
+                    if JsName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7410,9 +7410,13 @@ impl SyntaxFactory for JsSyntaxFactory {
             TEMPLATE_ELEMENT_LIST => {
                 Self::make_node_list_syntax(kind, children, AnyTemplateElement::can_cast)
             }
-            TS_ENUM_MEMBER_LIST => {
-                Self::make_node_list_syntax(kind, children, TsEnumMember::can_cast)
-            }
+            TS_ENUM_MEMBER_LIST => Self::make_separated_list_syntax(
+                kind,
+                children,
+                TsEnumMember::can_cast,
+                T ! [,],
+                true,
+            ),
             TS_OBJECT_MEMBER_LIST => {
                 Self::make_node_list_syntax(kind, children, TsTypeElement::can_cast)
             }
