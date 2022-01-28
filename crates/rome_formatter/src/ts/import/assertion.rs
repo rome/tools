@@ -11,7 +11,7 @@ impl ToFormatElement for JsImportAssertion {
         let assert_token = formatter.format_token(&self.assert_token()?)?;
         let assertions = self.assertions();
 
-        let space = if assertions.len() == 0 {
+        let space = if assertions.is_empty() {
             empty_element()
         } else {
             if_group_fits_on_single_line(space_token())

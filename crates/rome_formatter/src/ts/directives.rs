@@ -5,7 +5,7 @@ use crate::{
 use rslint_parser::ast::{AstNodeList, JsDirective, JsDirectiveList};
 
 pub fn format_directives_list(directives: JsDirectiveList, formatter: &Formatter) -> FormatElement {
-    if directives.len() > 0 {
+    if !directives.is_empty() {
         format_elements![formatter.format_list(directives), hard_line_break()]
     } else {
         empty_element()

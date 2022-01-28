@@ -13,3 +13,5 @@ import {
 
 import {loooooooooooooooooooong3,loooooooooooooooooooong5,loooooooooooooooooooong6 } from "boo"
 import { f as x, default as w, "a-b-c" as y } from "b";
+
+import loooooooooooooooooooong7, { loooooooooooooooooooong8, loooooooooooooooooooong9, loooooooooooooooooooong10} from "module"

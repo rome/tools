@@ -274,7 +274,7 @@ impl Formatter {
     where
         List: AstNodeList<Node>,
     {
-        join_elements_hard_line(list.iter().map(|module_item| {
+        let formatted_list = list.iter().map(|module_item| {
             let snapshot = self.snapshot();
             let elem = match self.format_node(module_item.clone()) {
                 Ok(result) => result,
@@ -287,7 +287,8 @@ impl Formatter {
             };
 
             (module_item, elem)
-        }))
+        });
+        join_elements_hard_line(formatted_list)
     }
 
     fn print_leading_trivia(&self, token: &SyntaxToken) -> FormatElement {
