@@ -297,7 +297,7 @@ pub(crate) struct RastReporter;
 impl TestReporter for RastReporter {
     fn test_completed(&mut self, result: &TestRunResult) {
         if let Some(syntax) = result.outcome.syntax() {
-            let program = parse(&result.code, 0, syntax.clone());
+            let program = parse(&result.code, 0, syntax);
             println!("{:#?}", program.syntax());
         }
     }
@@ -309,7 +309,7 @@ pub(crate) struct DiagnosticsReporter;
 impl TestReporter for DiagnosticsReporter {
     fn test_completed(&mut self, result: &TestRunResult) {
         if let Some(syntax) = result.outcome.syntax() {
-            let program = parse(&result.code, 0, syntax.clone());
+            let program = parse(&result.code, 0, syntax);
 
             let file = rslint_errors::file::SimpleFile::new(
                 result.path.display().to_string(),
