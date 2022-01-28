@@ -559,6 +559,8 @@ pub struct SyntaxTriviaPiecesIterator {
     pub(crate) raw: SyntaxTrivia,
     pub(crate) next_index: usize,
     pub(crate) next_offset: TextSize,
+    pub(crate) end_index: usize,
+    pub(crate) end_offset: TextSize,
 }
 
 impl Iterator for SyntaxTriviaPiecesIterator {
@@ -572,6 +574,21 @@ impl Iterator for SyntaxTriviaPiecesIterator {
         self.next_offset += trivia.text_len();
 
         Some(piece)
+    }
+}
+
+impl DoubleEndedIterator for SyntaxTriviaPiecesIterator {
+    fn next_back(&mut self) -> Option<Self::Item> {
+        if self.end_index == self.next_index {
+            return None;
+        }
+
+        self.end_index -= 1;
+
+        let trivia = self.raw.get_piece(self.end_index)?;
+        self.end_offset -= trivia.text_len();
+
+        Some((self.end_offset, trivia))
     }
 }
 
@@ -595,6 +612,16 @@ impl SyntaxTrivia {
         }
     }
 
+    /// Get the number of TriviaPiece inside this trivia
+    fn len(&self) -> usize {
+        let green_token = self.token.green();
+        if self.is_leading {
+            green_token.leading_trivia().len()
+        } else {
+            green_token.trailing_trivia().len()
+        }
+    }
+
     /// Gets index-th trivia piece when the token associated with this trivia was created.
     /// See [SyntaxTriviaPiece].
     pub(crate) fn get_piece(&self, index: usize) -> Option<TriviaPiece> {
@@ -614,6 +641,8 @@ impl SyntaxTrivia {
             raw: self.clone(),
             next_index: 0,
             next_offset: self.offset,
+            end_index: self.len(),
+            end_offset: self.text_range().end(),
         }
     }
 

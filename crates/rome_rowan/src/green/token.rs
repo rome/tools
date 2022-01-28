@@ -40,6 +40,15 @@ impl GreenTokenTrivia {
         }
     }
 
+    pub(crate) fn len(&self) -> usize {
+        match self {
+            GreenTokenTrivia::None => 0,
+            GreenTokenTrivia::Whitespace(_) => 1,
+            GreenTokenTrivia::Comment(..) => 1,
+            GreenTokenTrivia::Many(v) => v.len(),
+        }
+    }
+
     pub(crate) fn get_piece(&self, index: usize) -> Option<TriviaPiece> {
         match self {
             GreenTokenTrivia::Whitespace(l) if index == 0 => Some(TriviaPiece::Whitespace(*l)),
