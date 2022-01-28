@@ -297,7 +297,7 @@ pub(crate) struct RastReporter;
 impl TestReporter for RastReporter {
     fn test_completed(&mut self, result: &TestRunResult) {
         if let Some(syntax) = result.outcome.syntax() {
-            let program = parse(&result.code, 0, *syntax));
+            let program = parse(&result.code, 0, *syntax);
             println!("{:#?}", program.syntax());
         }
     }
