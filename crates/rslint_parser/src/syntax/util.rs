@@ -3,22 +3,74 @@
 use crate::Parser;
 use rslint_syntax::{JsSyntaxKind, T};
 
-/// Get the precedence of a token
-pub(crate) fn get_precedence(tok: JsSyntaxKind) -> Option<u8> {
-    Some(match tok {
-        T![||] | T![??] => 1,
-        T![&&] => 2,
-        T![|] => 3,
-        T![^] => 4,
-        T![&] => 5,
-        T![==] | T![!=] | T![===] | T![!==] => 6,
-        T![>] | T![>=] | T![<] | T![<=] => 7,
-        T![<<] | T![>>] | T![>>>] => 8,
-        T![+] | T![-] => 9,
-        T![*] | T![/] => 10,
-        T![%] | T![**] => 11,
-        _ => return None,
-    })
+#[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Copy, Clone)]
+pub(crate) enum OperatorPrecedence {
+    Comma = 0,
+    Yield = 1,
+    Assignment = 2,
+    Conditional = 3,
+    Coalesce = 4,
+    LogicalOr = 5,
+    LogicalAnd = 6,
+    BitwiseOr = 7,
+    BitwiseXor = 8,
+    BitwiseAnd = 9,
+    Equality = 10,
+    Relational = 11,
+    Shift = 12,
+    Additive = 13,
+    Multiplicative = 14,
+    Exponential = 15,
+    Unary = 16,
+    Update = 17,
+    LeftHandSide = 18,
+    Member = 19,
+    Primary = 20,
+}
+
+impl OperatorPrecedence {
+    pub fn lowest() -> Self {
+        OperatorPrecedence::Comma
+    }
+
+    pub fn highest() -> Self {
+        OperatorPrecedence::Primary
+    }
+
+    pub fn is_left_to_right(&self) -> bool {
+        !self.is_right_to_left()
+    }
+
+    pub fn is_right_to_left(&self) -> bool {
+        matches!(
+            self,
+            OperatorPrecedence::Yield
+                | OperatorPrecedence::Assignment
+                | OperatorPrecedence::Conditional
+                | OperatorPrecedence::Exponential
+                | OperatorPrecedence::Update
+        )
+    }
+
+    pub fn try_from_binary_operator(kind: JsSyntaxKind) -> Result<OperatorPrecedence, ()> {
+        Ok(match kind {
+            T![??] => OperatorPrecedence::Coalesce,
+            T![||] => OperatorPrecedence::LogicalOr,
+            T![&&] => OperatorPrecedence::LogicalAnd,
+            T![|] => OperatorPrecedence::BitwiseOr,
+            T![^] => OperatorPrecedence::BitwiseXor,
+            T![&] => OperatorPrecedence::BitwiseAnd,
+            T![==] | T![!=] | T![===] | T![!==] => OperatorPrecedence::Equality,
+            T![<] | T![>] | T![<=] | T![>=] | T![instanceof] | T![in] => {
+                OperatorPrecedence::Relational
+            }
+            T![<<] | T![>>] | T![>>>] => OperatorPrecedence::Shift,
+            T![+] | T![-] => OperatorPrecedence::Additive,
+            T![*] | T![/] | T![%] => OperatorPrecedence::Multiplicative,
+            T![**] => OperatorPrecedence::Exponential,
+            _ => return Err(()),
+        })
+    }
 }
 
 pub(crate) fn expect_keyword(p: &mut Parser, keyword_name: &str, kind: JsSyntaxKind) {
