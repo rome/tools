@@ -5,9 +5,9 @@ use super::expr::{
     parse_assignment_expression_or_higher, parse_lhs_expr, parse_literal_expression, parse_name,
 };
 use super::object::parse_object_member_name;
-use crate::parser::{ParserProgress, RecoveryResult, ToDiagnostic};
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
+use crate::parser::{ParserProgress, RecoveryResult, ToDiagnostic};
 use crate::state::SignatureFlags;
 use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::{is_at_name, parse_any_name, ExpressionContext};
@@ -297,7 +297,6 @@ fn type_member_semi(p: &mut Parser) {
     }
 }
 
-
 /// An individual enum member
 fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
     let member = p.start();
@@ -307,15 +306,7 @@ fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
 }
 
 fn expected_enum_member(p: &Parser, range: Range<usize>) -> Diagnostic {
-    parser::expected_any(
-        &[
-            "identifier",
-            "string literal",
-            "computed name",
-        ],
-        range,
-    )
-    .to_diagnostic(p)
+    parser::expected_any(&["identifier", "string literal", "computed name"], range).to_diagnostic(p)
 }
 
 struct EnumMembersList;
