@@ -543,6 +543,7 @@ impl ChangeParserState for WithLabel {
     }
 }
 
+/// Sets the state changes needed when parsing a TS type declaration (async and await are not reserved identifiers)
 pub(crate) struct EnterType;
 
 impl ChangeParserState for EnterType {

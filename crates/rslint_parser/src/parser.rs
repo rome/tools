@@ -373,6 +373,11 @@ impl<'t> Parser<'t> {
         }
     }
 
+    /// Stores the parser state and position before calling the function and restores the state
+    /// and position before returning.
+    ///
+    /// Useful in situation where the parser must advance a few tokens to determine whatever a syntax is
+    /// of one or the other kind.
     #[inline]
     pub fn lookahead<F, R>(&mut self, op: F) -> R
     where

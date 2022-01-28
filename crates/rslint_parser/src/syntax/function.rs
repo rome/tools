@@ -392,6 +392,10 @@ pub(super) fn parse_parameter(p: &mut Parser, context: ExpressionContext) -> Par
     })
 }
 
+/// Skips over the binding token of a parameter. Useful in the context of lookaheads to determine
+/// if any typescript specific syntax like `:` is present after the parameter name.
+/// Returns `true` if the function skipped over a valid binding, returns false if the parser
+/// is not positioned at a binding.
 pub(super) fn skip_parameter_start(p: &mut Parser) -> bool {
     if is_at_identifier_binding(p) || p.at(T![this]) {
         // a

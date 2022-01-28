@@ -49,13 +49,6 @@ impl ParsedSyntax {
         }
     }
 
-    pub fn marker(&self) -> Option<&CompletedMarker> {
-        match self {
-            Absent => None,
-            Present(marker) => Some(marker),
-        }
-    }
-
     /// Calls `op` if the syntax is present and otherwise returns [ParsedSyntax::Absent]
     pub fn and_then<F>(self, op: F) -> ParsedSyntax
     where
