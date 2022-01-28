@@ -12,7 +12,6 @@ impl ToFormatElement for AnyJsImportClause {
                 named_clause.to_format_element(formatter)
             }
             AnyJsImportClause::JsImportNamespaceClause(e) => e.to_format_element(formatter),
-            AnyJsImportClause::JsName(name) => name.to_format_element(formatter),
         }
     }
 }
