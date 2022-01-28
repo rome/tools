@@ -8,12 +8,12 @@ impl ToFormatElement for JsSetterClassMember {
         Ok(format_elements![
             formatter.format_token(&self.set_token()?)?,
             space_token(),
-            formatter.format_node(self.name()?)?,
+            formatter.format_node(&self.name()?)?,
             formatter.format_token(&self.l_paren_token()?)?,
-            formatter.format_node(self.parameter()?)?,
+            formatter.format_node(&self.parameter()?)?,
             formatter.format_token(&self.r_paren_token()?)?,
             space_token(),
-            formatter.format_node(self.body()?)?
+            formatter.format_node(&self.body()?)?
         ])
     }
 }

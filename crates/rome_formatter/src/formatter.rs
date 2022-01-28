@@ -121,7 +121,7 @@ impl Formatter {
     /// The parent may use [Self::format_verbatim] to insert the node content as is.
     pub fn format_node<T: AstNode + ToFormatElement>(
         &self,
-        node: T,
+        node: &T,
     ) -> FormatResult<FormatElement> {
         let leading = self.format_node_start(node.syntax());
         let trailing = self.format_node_end(node.syntax());
@@ -211,7 +211,7 @@ impl Formatter {
         let mut result = Vec::new();
 
         for node in nodes {
-            match self.format_node(node) {
+            match self.format_node(&node) {
                 Ok(formatted) => {
                     result.push(formatted);
                 }
@@ -242,7 +242,7 @@ impl Formatter {
         let last_index = list.len().saturating_sub(1);
 
         for (index, element) in list.elements().enumerate() {
-            let node = self.format_node(element.node()?)?;
+            let node = self.format_node(&element.node()?)?;
 
             // Reuse the existing trailing separator or create it if it wasn't in the
             // input source. Only print the last trailing token if the outer group breaks

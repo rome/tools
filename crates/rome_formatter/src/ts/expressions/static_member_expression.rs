@@ -5,9 +5,9 @@ use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatEle
 impl ToFormatElement for JsStaticMemberExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_node(self.object()?)?,
+            formatter.format_node(&self.object()?)?,
             formatter.format_token(&self.operator()?)?,
-            formatter.format_node(self.member()?)?
+            formatter.format_node(&self.member()?)?
         ])
     }
 }

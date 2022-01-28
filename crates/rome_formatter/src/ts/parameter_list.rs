@@ -39,7 +39,7 @@ impl ToFormatElement for JsRestParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
             formatter.format_token(&self.dotdotdot_token()?)?,
-            formatter.format_node(self.binding()?)?
+            formatter.format_node(&self.binding()?)?
         ])
     }
 }
@@ -47,13 +47,13 @@ impl ToFormatElement for JsRestParameter {
 impl ToFormatElement for JsParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let initializer = if let Some(initializer) = self.initializer() {
-            format_elements![space_token(), formatter.format_node(initializer)?]
+            format_elements![space_token(), formatter.format_node(&initializer)?]
         } else {
             empty_element()
         };
 
         Ok(format_elements![
-            formatter.format_node(self.binding()?)?,
+            formatter.format_node(&self.binding()?)?,
             initializer
         ])
     }

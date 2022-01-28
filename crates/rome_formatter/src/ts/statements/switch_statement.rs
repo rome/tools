@@ -15,7 +15,7 @@ impl ToFormatElement for JsSwitchStatement {
                 &self.l_paren_token()?,
                 |open_token_trailing, close_token_leading| Ok(soft_indent(format_elements![
                     open_token_trailing,
-                    formatter.format_node(self.discriminant()?)?,
+                    formatter.format_node(&self.discriminant()?)?,
                     close_token_leading,
                 ])),
                 &self.r_paren_token()?,
@@ -74,7 +74,7 @@ impl ToFormatElement for JsCaseClause {
         let case_word = formatter.format_token(&self.case_token()?)?;
         let colon = formatter.format_token(&self.colon_token()?)?;
 
-        let test = formatter.format_node(self.test()?)?;
+        let test = formatter.format_node(&self.test()?)?;
 
         let cons = format_statements(self.consequent(), formatter);
 

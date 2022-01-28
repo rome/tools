@@ -10,10 +10,10 @@ use rslint_parser::AstNode;
 impl ToFormatElement for JsConstructorClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_node(self.name()?)?,
-            formatter.format_node(self.parameters()?)?,
+            formatter.format_node(&self.name()?)?,
+            formatter.format_node(&self.parameters()?)?,
             space_token(),
-            formatter.format_node(self.body()?)?
+            formatter.format_node(&self.body()?)?
         ])
     }
 }

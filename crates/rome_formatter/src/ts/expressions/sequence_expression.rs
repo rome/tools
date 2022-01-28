@@ -7,10 +7,10 @@ use crate::{
 impl ToFormatElement for JsSequenceExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_node(self.left()?)?,
+            formatter.format_node(&self.left()?)?,
             formatter.format_token(&self.comma_token()?)?,
             space_token(),
-            formatter.format_node(self.right()?)?
+            formatter.format_node(&self.right()?)?
         ])
     }
 }

@@ -6,7 +6,7 @@ use rslint_parser::ast::JsThrowStatement;
 impl ToFormatElement for JsThrowStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let throw_token = formatter.format_token(&self.throw_token()?)?;
-        let exception = formatter.format_node(self.argument()?)?;
+        let exception = formatter.format_node(&self.argument()?)?;
 
         let semicolon = formatter
             .format_token(&self.semicolon_token())?

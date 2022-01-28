@@ -13,13 +13,13 @@ impl ToFormatElement for JsWithStatement {
                 &self.l_paren_token()?,
                 |open_token_trailing, close_token_leading| Ok(soft_indent(format_elements![
                     open_token_trailing,
-                    formatter.format_node(self.object()?)?,
+                    formatter.format_node(&self.object()?)?,
                     close_token_leading,
                 ])),
                 &self.r_paren_token()?,
             )?),
             space_token(),
-            formatter.format_node(self.body()?)?
+            formatter.format_node(&self.body()?)?
         ])
     }
 }

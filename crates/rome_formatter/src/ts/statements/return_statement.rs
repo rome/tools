@@ -9,7 +9,7 @@ impl ToFormatElement for JsReturnStatement {
 
         if let Some(argument) = self.argument() {
             tokens.push(space_token());
-            tokens.push(formatter.format_node(argument)?);
+            tokens.push(formatter.format_node(&argument)?);
         }
 
         tokens.push(

@@ -8,7 +8,7 @@ impl ToFormatElement for JsInitializerClause {
         Ok(format_elements![
             formatter.format_token(&self.eq_token()?)?,
             space_token(),
-            formatter.format_node(self.expression()?)?
+            formatter.format_node(&self.expression()?)?
         ])
     }
 }

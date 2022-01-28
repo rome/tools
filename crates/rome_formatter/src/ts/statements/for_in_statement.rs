@@ -8,10 +8,10 @@ use crate::{
 impl ToFormatElement for JsForInStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let for_token = formatter.format_token(&self.for_token()?)?;
-        let initializer = formatter.format_node(self.initializer()?)?;
+        let initializer = formatter.format_node(&self.initializer()?)?;
         let in_token = formatter.format_token(&self.in_token()?)?;
-        let expression = formatter.format_node(self.expression()?)?;
-        let body = formatter.format_node(self.body()?)?;
+        let expression = formatter.format_node(&self.expression()?)?;
+        let body = formatter.format_node(&self.body()?)?;
 
         Ok(format_elements![
             for_token,
@@ -55,7 +55,7 @@ impl ToFormatElement for JsForVariableDeclaration {
         Ok(format_elements![
             formatter.format_token(&self.kind_token()?)?,
             space_token(),
-            formatter.format_node(self.declaration()?)?
+            formatter.format_node(&self.declaration()?)?
         ])
     }
 }

@@ -28,7 +28,7 @@ mod with_statement;
 pub fn format_statements(stmts: JsStatementList, formatter: &Formatter) -> FormatElement {
     join_elements_hard_line(stmts.iter().map(|stmt| {
         let snapshot = formatter.snapshot();
-        let elem = match formatter.format_node(stmt.clone()) {
+        let elem = match formatter.format_node(&stmt) {
             Ok(result) => result,
             Err(_) => {
                 formatter.restore(snapshot);

@@ -10,21 +10,21 @@ impl ToFormatElement for JsForStatement {
             if self.initializer().is_some() || self.test().is_some() || self.update().is_some() {
                 let mut inner = vec![];
                 if let Some(init) = self.initializer() {
-                    inner.push(formatter.format_node(init)?);
+                    inner.push(formatter.format_node(&init)?);
                 }
 
                 inner.push(formatter.format_token(&self.first_semi_token()?)?);
                 inner.push(soft_line_break_or_space());
 
                 if let Some(test) = self.test() {
-                    inner.push(formatter.format_node(test)?);
+                    inner.push(formatter.format_node(&test)?);
                 }
 
                 inner.push(formatter.format_token(&self.second_semi_token()?)?);
                 inner.push(soft_line_break_or_space());
 
                 if let Some(update) = self.update() {
-                    inner.push(formatter.format_node(update)?);
+                    inner.push(formatter.format_node(&update)?);
                 }
 
                 concat_elements(inner)
@@ -46,7 +46,7 @@ impl ToFormatElement for JsForStatement {
                 &self.r_paren_token()?,
             )?,
             space_token(),
-            formatter.format_node(self.body()?)?
+            formatter.format_node(&self.body()?)?
         ]))
     }
 }

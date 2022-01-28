@@ -8,11 +8,11 @@ impl ToFormatElement for JsGetterClassMember {
         Ok(format_elements![
             formatter.format_token(&self.get_token()?)?,
             space_token(),
-            formatter.format_node(self.name()?)?,
+            formatter.format_node(&self.name()?)?,
             formatter.format_token(&self.l_paren_token()?)?,
             formatter.format_token(&self.r_paren_token()?)?,
             space_token(),
-            formatter.format_node(self.body()?)?
+            formatter.format_node(&self.body()?)?
         ])
     }
 }
