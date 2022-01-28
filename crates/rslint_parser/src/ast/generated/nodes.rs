@@ -2332,7 +2332,7 @@ impl TsEnum {
     pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn ident(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
+    pub fn name(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -2346,13 +2346,10 @@ pub struct TsEnumMember {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsEnumMember {
-    pub fn js_name(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 0usize) }
-    pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+    pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+        support::required_node(&self.syntax, 0usize)
     }
-    pub fn js_any_expression(&self) -> SyntaxResult<JsAnyExpression> {
-        support::required_node(&self.syntax, 2usize)
-    }
+    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExprWithTypeArgs {
@@ -8396,7 +8393,7 @@ impl std::fmt::Debug for TsEnum {
                 &support::DebugOptionalElement(self.const_token()),
             )
             .field("enum_token", &support::DebugSyntaxResult(self.enum_token()))
-            .field("ident", &support::DebugSyntaxResult(self.ident()))
+            .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
                 "l_curly_token",
                 &support::DebugSyntaxResult(self.l_curly_token()),
@@ -8429,11 +8426,10 @@ impl AstNode for TsEnumMember {
 impl std::fmt::Debug for TsEnumMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsEnumMember")
-            .field("js_name", &support::DebugSyntaxResult(self.js_name()))
-            .field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
+            .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
-                "js_any_expression",
-                &support::DebugSyntaxResult(self.js_any_expression()),
+                "initializer",
+                &support::DebugOptionalElement(self.initializer()),
             )
             .finish()
     }

@@ -1448,11 +1448,18 @@ TsParen = '(' ty:TsType ')'
 // typescript type reference
 TsTypeRef = name:TsEntityName type_args:TsTypeArgs
 
-
 // typescript enum
-TsEnum = 'const'? 'enum'  ident: JsName '{' members: TsEnumMemberList '}'
+TsEnum = 
+	'const'?
+	'enum'
+	name: JsName
+	'{' 
+	members: TsEnumMemberList 
+	'}'
 TsEnumMemberList = TsEnumMember (',' TsEnumMember)* ','?
-TsEnumMember = JsName ('=' JsAnyExpression)?
+TsEnumMember = 
+	name: JsAnyObjectMemberName
+	(initializer: JsInitializerClause)?
 
 // typescript template literal types
 TsTemplate = elements:TsTemplateElement

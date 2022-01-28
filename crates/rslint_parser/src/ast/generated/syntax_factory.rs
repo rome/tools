@@ -5918,24 +5918,17 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             TS_ENUM_MEMBER => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsName::can_cast(element.kind()) {
+                    if JsAnyObjectMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if element.kind() == T ! [=] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if JsInitializerClause::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
