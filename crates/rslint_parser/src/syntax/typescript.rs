@@ -4,7 +4,7 @@ use super::class::parse_initializer_clause;
 use super::expr::{
     parse_assignment_expression_or_higher, parse_lhs_expr, parse_literal_expression, parse_name,
 };
-use super::object::{parse_object_member_name, parse_computed_member_name};
+use super::object::{parse_computed_member_name};
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
 use crate::parser::{ParserProgress, RecoveryResult, ToDiagnostic};
@@ -301,7 +301,9 @@ fn type_member_semi(p: &mut Parser) {
 fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
     let member = p.start();
     match p.cur() {
-        T!['['] => { parse_computed_member_name(p); },
+        T!['['] => {
+            let _ = parse_computed_member_name(p);
+        }
         JS_STRING_LITERAL | T![ident] => {
             let m = p.start();
             p.bump_any();
