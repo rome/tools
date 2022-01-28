@@ -1,4 +1,4 @@
-use crate::formatter_traits::FormatToken;
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     empty_element, format_elements, group_elements, soft_indent, space_token, FormatElement,
     FormatResult, Formatter, ToFormatElement,
@@ -10,7 +10,7 @@ use rslint_parser::ast::{
 impl ToFormatElement for JsTryStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            self.try_token().format(formatter),
+            self.try_token().format(formatter)?,
             space_token(),
             formatter.format_node(&self.body()?)?,
             space_token(),
@@ -28,7 +28,7 @@ impl ToFormatElement for JsTryFinallyStatement {
         };
 
         Ok(format_elements![
-            self.try_token().format(formatter),
+            self.try_token().format(formatter)?,
             space_token(),
             formatter.format_node(&self.body()?)?,
             formatted_catch_clause,
@@ -42,7 +42,7 @@ impl ToFormatElement for JsCatchClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         if let Some(declaration) = self.declaration() {
             Ok(format_elements![
-                self.catch_token().format(formatter),
+                self.catch_token().format(formatter)?,
                 space_token(),
                 formatter.format_node(&declaration)?,
                 space_token(),
@@ -50,7 +50,7 @@ impl ToFormatElement for JsCatchClause {
             ])
         } else {
             Ok(format_elements![
-                self.catch_token().format(formatter),
+                self.catch_token().format(formatter)?,
                 space_token(),
                 formatter.format_node(&self.body()?)?
             ])
@@ -77,7 +77,7 @@ impl ToFormatElement for JsCatchDeclaration {
 impl ToFormatElement for JsFinallyClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            self.finally_token().format(formatter),
+            self.finally_token().format(formatter)?,
             space_token(),
             formatter.format_node(&self.body()?)?
         ])

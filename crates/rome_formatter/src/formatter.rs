@@ -153,7 +153,6 @@ impl Formatter {
     /// # Examples
     ///
     /// ```
-    ///
     /// use rome_formatter::{Formatter, token};
     /// use rslint_parser::{SyntaxNode, T, SyntaxToken, JsLanguage, JsSyntaxKind, SyntaxTreeBuilder};
     /// use rome_rowan::{NodeOrToken};
@@ -171,6 +170,7 @@ impl Formatter {
     ///
     /// assert_eq!(Ok(token("'abc'")), result)
     /// ```
+    // #[deprecated = "Please use the traits available in 'crate::formatter_traits' which allow better developer experience"]
     pub fn format_token<T>(&self, syntax_token: &T) -> FormatResult<T::Output>
     where
         T: token::FormattableToken,
@@ -203,6 +203,7 @@ impl Formatter {
     /// Formats each child and returns the result as a list.
     ///
     /// Returns [None] if a child couldn't be formatted.
+    // #[deprecated = "Please use the traits available in 'crate::formatter_traits' which allow better developer experience"]
     pub fn format_nodes<T: AstNode + ToFormatElement>(
         &self,
         nodes: impl IntoIterator<Item = T>,

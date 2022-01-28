@@ -51,7 +51,7 @@ mod cst;
 mod format_element;
 mod format_elements;
 mod formatter;
-mod formatter_traits;
+pub mod formatter_traits;
 mod intersperse;
 mod printer;
 mod ts;
@@ -100,6 +100,14 @@ pub enum FormatError {
 
 impl From<SyntaxError> for FormatError {
     fn from(syntax_error: SyntaxError) -> Self {
+        match syntax_error {
+            SyntaxError::MissingRequiredChild(_node) => FormatError::MissingRequiredChild,
+        }
+    }
+}
+
+impl From<&SyntaxError> for FormatError {
+    fn from(syntax_error: &SyntaxError) -> Self {
         match syntax_error {
             SyntaxError::MissingRequiredChild(_node) => FormatError::MissingRequiredChild,
         }
