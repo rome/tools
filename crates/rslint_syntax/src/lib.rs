@@ -110,7 +110,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_UNARY_EXPRESSION
             | JS_YIELD_EXPRESSION
             | NEW_TARGET
-            | TEMPLATE
+            | JS_TEMPLATE
             | JS_UNKNOWN_EXPRESSION => JS_UNKNOWN_EXPRESSION,
 
             JS_OBJECT_BINDING_PATTERN

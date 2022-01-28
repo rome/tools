@@ -1588,14 +1588,14 @@ pub fn parse_template_literal(p: &mut Parser, tag: ParsedSyntax) -> CompletedMar
             TEMPLATE_CHUNK => {
                 let m = p.start();
                 p.bump_any();
-                m.complete(p, TEMPLATE_CHUNK_ELEMENT);
+                m.complete(p, JS_TEMPLATE_CHUNK_ELEMENT);
             },
             DOLLAR_CURLY => {
                 let e = p.start();
                 p.bump_any();
 				parse_expression(p, ExpressionContext::default()).or_add_diagnostic(p, js_parse_error::expected_expression);
 				p.expect(T!['}']);
-                e.complete(p, TEMPLATE_ELEMENT);
+                e.complete(p, JS_TEMPLATE_ELEMENT);
             }
             ERROR_TOKEN => {
                 let err = p.err_builder("Invalid template literal")
@@ -1606,14 +1606,14 @@ pub fn parse_template_literal(p: &mut Parser, tag: ParsedSyntax) -> CompletedMar
         }
     }
 
-    elements_list.complete(p, TEMPLATE_ELEMENT_LIST);
+    elements_list.complete(p, JS_TEMPLATE_ELEMENT_LIST);
 
     // test_err template_literal_unterminated
     // let a = `${foo} bar
 
     // The lexer already should throw an error for unterminated template literal
     p.eat(BACKTICK);
-    m.complete(p, TEMPLATE)
+    m.complete(p, JS_TEMPLATE)
 }
 
 struct ArrayElementsList;

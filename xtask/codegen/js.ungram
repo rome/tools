@@ -298,27 +298,27 @@ JsAnyExpression =
 	| JsUnknownExpression
 	| JsYieldExpression
 	| NewTarget
-	| Template
+	| JsTemplate
 	| TsAssertion
 	| TsConstAssertion
 	| TsNonNull
 
 
-Template =
+JsTemplate =
 	tag: JsAnyExpression?
 	l_tick: '`'
-	elements: TemplateElementList
+	elements: JsTemplateElementList
 	r_tick: '`'
 
-TemplateElementList = AnyTemplateElement*
+JsTemplateElementList = JsAnyTemplateElement*
 
-AnyTemplateElement =
-	TemplateChunkElement
-	| TemplateElement
+JsAnyTemplateElement =
+	JsTemplateChunkElement
+	| JsTemplateElement
 
-TemplateChunkElement = 'template_chunk'
+JsTemplateChunkElement = 'template_chunk'
 
-TemplateElement =
+JsTemplateElement =
 	'dollar_curly'
 	expression: JsAnyExpression
 	'}'

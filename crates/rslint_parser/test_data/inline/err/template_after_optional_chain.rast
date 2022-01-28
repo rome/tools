@@ -23,8 +23,8 @@ JsModule {
                         },
                     },
                     BACKTICK@13..14 "`" [] [],
-                    TemplateElementList [
-                        TemplateChunkElement {
+                    JsTemplateElementList [
+                        JsTemplateChunkElement {
                             template_chunk_token: TEMPLATE_CHUNK@14..22 "template" [] [],
                         },
                     ],
@@ -58,8 +58,8 @@ JsModule {
                         r_brack_token: R_BRACK@38..39 "]" [] [],
                     },
                     BACKTICK@39..40 "`" [] [],
-                    TemplateElementList [
-                        TemplateChunkElement {
+                    JsTemplateElementList [
+                        JsTemplateChunkElement {
                             template_chunk_token: TEMPLATE_CHUNK@40..48 "template" [] [],
                         },
                     ],
@@ -98,8 +98,8 @@ JsModule {
                         },
                     },
                     BACKTICK@66..67 "`" [] [],
-                    TemplateElementList [
-                        TemplateChunkElement {
+                    JsTemplateElementList [
+                        JsTemplateChunkElement {
                             template_chunk_token: TEMPLATE_CHUNK@67..75 "template" [] [],
                         },
                     ],
@@ -130,8 +130,8 @@ JsModule {
           2: JS_NAME@9..13
             0: IDENT@9..13 "prop" [] []
         1: BACKTICK@13..14 "`" [] []
-        2: TEMPLATE_ELEMENT_LIST@14..22
-          0: TEMPLATE_CHUNK_ELEMENT@14..22
+        2: JS_TEMPLATE_ELEMENT_LIST@14..22
+          0: JS_TEMPLATE_CHUNK_ELEMENT@14..22
             0: TEMPLATE_CHUNK@14..22 "template" [] []
         3: BACKTICK@22..23 "`" [] []
       1: (empty)
@@ -152,8 +152,8 @@ JsModule {
               0: IDENT@34..38 "expr" [] []
           4: R_BRACK@38..39 "]" [] []
         1: BACKTICK@39..40 "`" [] []
-        2: TEMPLATE_ELEMENT_LIST@40..48
-          0: TEMPLATE_CHUNK_ELEMENT@40..48
+        2: JS_TEMPLATE_ELEMENT_LIST@40..48
+          0: JS_TEMPLATE_CHUNK_ELEMENT@40..48
             0: TEMPLATE_CHUNK@40..48 "template" [] []
         3: BACKTICK@48..49 "`" [] []
       1: (empty)
@@ -177,8 +177,8 @@ JsModule {
                   0: IDENT@61..65 "args" [] []
             2: R_PAREN@65..66 ")" [] []
         1: BACKTICK@66..67 "`" [] []
-        2: TEMPLATE_ELEMENT_LIST@67..75
-          0: TEMPLATE_CHUNK_ELEMENT@67..75
+        2: JS_TEMPLATE_ELEMENT_LIST@67..75
+          0: JS_TEMPLATE_CHUNK_ELEMENT@67..75
             0: TEMPLATE_CHUNK@67..75 "template" [] []
         3: BACKTICK@75..76 "`" [] []
       1: (empty)

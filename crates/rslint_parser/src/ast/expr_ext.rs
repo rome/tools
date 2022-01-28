@@ -307,7 +307,7 @@ impl JsStringLiteralExpression {
     }
 }
 
-impl Template {
+impl JsTemplate {
     /// The string chunks of the template. aka:
     /// `foo ${bar} foo` breaks down into:
     /// `QUASIS ELEMENT{EXPR} QUASIS`

@@ -3,15 +3,15 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: Template {
+            expression: JsTemplate {
                 tag: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
                         value_token: IDENT@0..3 "foo" [] [],
                     },
                 },
                 l_tick_token: BACKTICK@3..4 "`" [] [],
-                elements: TemplateElementList [
-                    TemplateChunkElement {
+                elements: JsTemplateElementList [
+                    JsTemplateChunkElement {
                         template_chunk_token: TEMPLATE_CHUNK@4..7 "bar" [] [],
                     },
                 ],
@@ -91,13 +91,13 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..32
     0: JS_EXPRESSION_STATEMENT@0..8
-      0: TEMPLATE@0..8
+      0: JS_TEMPLATE@0..8
         0: JS_IDENTIFIER_EXPRESSION@0..3
           0: JS_REFERENCE_IDENTIFIER@0..3
             0: IDENT@0..3 "foo" [] []
         1: BACKTICK@3..4 "`" [] []
-        2: TEMPLATE_ELEMENT_LIST@4..7
-          0: TEMPLATE_CHUNK_ELEMENT@4..7
+        2: JS_TEMPLATE_ELEMENT_LIST@4..7
+          0: JS_TEMPLATE_CHUNK_ELEMENT@4..7
             0: TEMPLATE_CHUNK@4..7 "bar" [] []
         3: BACKTICK@7..8 "`" [] []
       1: (empty)
