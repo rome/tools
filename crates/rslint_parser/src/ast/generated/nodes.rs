@@ -2474,6 +2474,15 @@ impl TsGetterSignatureObjectTypeMember {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsIdentifierBinding {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsIdentifierBinding {
+    pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsImplementsClause {
     pub(crate) syntax: SyntaxNode,
 }
@@ -2974,7 +2983,7 @@ impl TsTypeAlias {
     pub fn type_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn binding_identifier(&self) -> SyntaxResult<JsIdentifierBinding> {
+    pub fn binding_identifier(&self) -> SyntaxResult<TsIdentifierBinding> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn type_parameters(&self) -> SyntaxResult<TsTypeParameters> {
@@ -8906,6 +8915,30 @@ impl From<TsGetterSignatureObjectTypeMember> for SyntaxNode {
 }
 impl From<TsGetterSignatureObjectTypeMember> for SyntaxElement {
     fn from(n: TsGetterSignatureObjectTypeMember) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsIdentifierBinding {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_IDENTIFIER_BINDING }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsIdentifierBinding {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsIdentifierBinding")
+            .field("name_token", &support::DebugSyntaxResult(self.name_token()))
+            .finish()
+    }
+}
+impl From<TsIdentifierBinding> for SyntaxNode {
+    fn from(n: TsIdentifierBinding) -> SyntaxNode { n.syntax }
+}
+impl From<TsIdentifierBinding> for SyntaxElement {
+    fn from(n: TsIdentifierBinding) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsImplementsClause {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_IMPLEMENTS_CLAUSE }
@@ -15585,6 +15618,11 @@ impl std::fmt::Display for TsGetterSignatureObjectTypeMember {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsIdentifierBinding {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsImplementsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -17771,6 +17809,9 @@ impl Debug for DebugSyntaxElement {
                     &TsGetterSignatureObjectTypeMember::cast(node.clone()).unwrap(),
                     f,
                 ),
+                TS_IDENTIFIER_BINDING => {
+                    std::fmt::Debug::fmt(&TsIdentifierBinding::cast(node.clone()).unwrap(), f)
+                }
                 TS_IMPLEMENTS_CLAUSE => {
                     std::fmt::Debug::fmt(&TsImplementsClause::cast(node.clone()).unwrap(), f)
                 }

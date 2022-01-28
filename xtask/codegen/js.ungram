@@ -1455,11 +1455,14 @@ TsReferenceType =
 
 TsTypeAlias =
 	'type'
-	binding_identifier: JsIdentifierBinding
+	binding_identifier: TsIdentifierBinding
 	type_parameters: TsTypeParameters
 	'='
 	ty: TsType
 	';'?
+
+// Binds a type identifier
+TsIdentifierBinding = name: 'ident'
 
 // typescript enum
 TsEnum = 'const'? 'enum'  ident: Ident '{' members: TsEnumMemberList '}'

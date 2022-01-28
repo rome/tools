@@ -6145,6 +6145,25 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(TS_GETTER_SIGNATURE_OBJECT_TYPE_MEMBER, children)
             }
+            TS_IDENTIFIER_BINDING => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == IDENT {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(
+                        TS_IDENTIFIER_BINDING.to_unknown(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(TS_IDENTIFIER_BINDING, children)
+            }
             TS_IMPLEMENTS_CLAUSE => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
@@ -7362,7 +7381,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsIdentifierBinding::can_cast(element.kind()) {
+                    if TsIdentifierBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }

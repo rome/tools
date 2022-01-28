@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         TsTypeAlias {
             type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -23,7 +23,7 @@ JsModule {
         },
         TsTypeAlias {
             type_token: TYPE_KW@38..44 "type" [Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@44..46 "B" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -68,7 +68,7 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..81
     0: TS_TYPE_ALIAS@0..38
       0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@19..21
+      1: TS_IDENTIFIER_BINDING@19..21
         0: IDENT@19..21 "A" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@21..23 "=" [] [Whitespace(" ")]
@@ -82,7 +82,7 @@ JsModule {
       5: SEMICOLON@37..38 ";" [] []
     1: TS_TYPE_ALIAS@38..81
       0: TYPE_KW@38..44 "type" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@44..46
+      1: TS_IDENTIFIER_BINDING@44..46
         0: IDENT@44..46 "B" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@46..48 "=" [] [Whitespace(" ")]

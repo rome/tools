@@ -351,6 +351,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "JS_LITERAL_EXPORT_NAME",
         "JS_AWAIT_EXPRESSION",
         // TypeScript
+        "TS_IDENTIFIER_BINDING",
         "TS_ANY_TYPE",
         "TS_UNKNOWN_TYPE",
         "TS_NUMBER_TYPE",

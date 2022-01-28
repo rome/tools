@@ -33,7 +33,7 @@ JsModule {
                         statements: JsStatementList [
                             TsTypeAlias {
                                 type_token: TYPE_KW@38..52 "type" [Newline("\n"), Whitespace("        ")] [Whitespace(" ")],
-                                binding_identifier: JsIdentifierBinding {
+                                binding_identifier: TsIdentifierBinding {
                                     name_token: IDENT@52..54 "A" [] [Whitespace(" ")],
                                 },
                                 type_parameters: missing (required),
@@ -138,7 +138,7 @@ JsModule {
             2: JS_STATEMENT_LIST@38..61
               0: TS_TYPE_ALIAS@38..61
                 0: TYPE_KW@38..52 "type" [Newline("\n"), Whitespace("        ")] [Whitespace(" ")]
-                1: JS_IDENTIFIER_BINDING@52..54
+                1: TS_IDENTIFIER_BINDING@52..54
                   0: IDENT@52..54 "A" [] [Whitespace(" ")]
                 2: (empty)
                 3: EQ@54..56 "=" [] [Whitespace(" ")]

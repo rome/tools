@@ -16,8 +16,8 @@ use crate::syntax::object::{
 };
 use crate::syntax::stmt::{optional_semi, parse_statements, StatementContext};
 use crate::syntax::typescript::{
-    parse_ts_return_type_annotation, parse_ts_type_annotation, parse_ts_type_parameters,
-    ts_heritage_clause, ts_modifier, DISALLOWED_TYPE_NAMES,
+    is_reserved_type_name, parse_ts_return_type_annotation, parse_ts_type_annotation,
+    parse_ts_type_parameters, ts_heritage_clause, ts_modifier,
 };
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
@@ -151,7 +151,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     match id {
         Present(id) => {
             let text = p.span_text(id.range(p));
-            if p.typescript() && DISALLOWED_TYPE_NAMES.contains(&text) {
+            if p.typescript() && is_reserved_type_name(text) {
                 let err = p
                     .err_builder(&format!(
                             "`{}` cannot be used as a class name because it is already reserved as a type",

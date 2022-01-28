@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         TsTypeAlias {
             type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -25,7 +25,7 @@ JsModule {
         },
         TsTypeAlias {
             type_token: TYPE_KW@39..45 "type" [Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@45..47 "B" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -53,7 +53,7 @@ JsModule {
         },
         TsTypeAlias {
             type_token: TYPE_KW@67..73 "type" [Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@73..75 "C" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -100,7 +100,7 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..87
     0: TS_TYPE_ALIAS@0..39
       0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@19..21
+      1: TS_IDENTIFIER_BINDING@19..21
         0: IDENT@19..21 "A" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@21..23 "=" [] [Whitespace(" ")]
@@ -115,7 +115,7 @@ JsModule {
       5: SEMICOLON@38..39 ";" [] []
     1: TS_TYPE_ALIAS@39..67
       0: TYPE_KW@39..45 "type" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@45..47
+      1: TS_IDENTIFIER_BINDING@45..47
         0: IDENT@45..47 "B" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@47..49 "=" [] [Whitespace(" ")]
@@ -135,7 +135,7 @@ JsModule {
       5: SEMICOLON@66..67 ";" [] []
     2: TS_TYPE_ALIAS@67..87
       0: TYPE_KW@67..73 "type" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@73..75
+      1: TS_IDENTIFIER_BINDING@73..75
         0: IDENT@73..75 "C" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@75..77 "=" [] [Whitespace(" ")]

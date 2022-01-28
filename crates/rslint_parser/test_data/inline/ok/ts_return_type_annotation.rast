@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         TsTypeAlias {
             type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -40,7 +40,7 @@ JsModule {
         },
         TsTypeAlias {
             type_token: TYPE_KW@42..48 "type" [Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@48..50 "B" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -88,7 +88,7 @@ JsModule {
         },
         TsTypeAlias {
             type_token: TYPE_KW@76..82 "type" [Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@82..84 "C" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -297,7 +297,7 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..241
     0: TS_TYPE_ALIAS@0..42
       0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@19..21
+      1: TS_IDENTIFIER_BINDING@19..21
         0: IDENT@19..21 "A" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@21..23 "=" [] [Whitespace(" ")]
@@ -323,7 +323,7 @@ JsModule {
       5: SEMICOLON@41..42 ";" [] []
     1: TS_TYPE_ALIAS@42..76
       0: TYPE_KW@42..48 "type" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@48..50
+      1: TS_IDENTIFIER_BINDING@48..50
         0: IDENT@48..50 "B" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@50..52 "=" [] [Whitespace(" ")]
@@ -357,7 +357,7 @@ JsModule {
       5: (empty)
     2: TS_TYPE_ALIAS@76..106
       0: TYPE_KW@76..82 "type" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@82..84
+      1: TS_IDENTIFIER_BINDING@82..84
         0: IDENT@82..84 "C" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@84..86 "=" [] [Whitespace(" ")]

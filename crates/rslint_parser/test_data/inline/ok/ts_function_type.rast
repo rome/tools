@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         TsTypeAlias {
             type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -25,7 +25,7 @@ JsModule {
         },
         TsTypeAlias {
             type_token: TYPE_KW@36..42 "type" [Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@42..44 "B" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -59,7 +59,7 @@ JsModule {
         },
         TsTypeAlias {
             type_token: TYPE_KW@68..74 "type" [Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@74..76 "C" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -93,7 +93,7 @@ JsModule {
         },
         TsTypeAlias {
             type_token: TYPE_KW@101..107 "type" [Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@107..109 "D" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -130,7 +130,7 @@ JsModule {
         },
         TsTypeAlias {
             type_token: TYPE_KW@127..133 "type" [Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@133..135 "E" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -165,7 +165,7 @@ JsModule {
         },
         TsTypeAlias {
             type_token: TYPE_KW@152..158 "type" [Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@158..160 "F" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -203,7 +203,7 @@ JsModule {
         },
         TsTypeAlias {
             type_token: TYPE_KW@177..183 "type" [Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@183..185 "G" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -276,7 +276,7 @@ JsModule {
         },
         TsTypeAlias {
             type_token: TYPE_KW@215..221 "type" [Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@221..223 "H" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -325,7 +325,7 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..249
     0: TS_TYPE_ALIAS@0..36
       0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@19..21
+      1: TS_IDENTIFIER_BINDING@19..21
         0: IDENT@19..21 "A" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@21..23 "=" [] [Whitespace(" ")]
@@ -341,7 +341,7 @@ JsModule {
       5: SEMICOLON@35..36 ";" [] []
     1: TS_TYPE_ALIAS@36..68
       0: TYPE_KW@36..42 "type" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@42..44
+      1: TS_IDENTIFIER_BINDING@42..44
         0: IDENT@42..44 "B" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@44..46 "=" [] [Whitespace(" ")]
@@ -365,7 +365,7 @@ JsModule {
       5: SEMICOLON@67..68 ";" [] []
     2: TS_TYPE_ALIAS@68..101
       0: TYPE_KW@68..74 "type" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@74..76
+      1: TS_IDENTIFIER_BINDING@74..76
         0: IDENT@74..76 "C" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@76..78 "=" [] [Whitespace(" ")]
@@ -389,7 +389,7 @@ JsModule {
       5: SEMICOLON@100..101 ";" [] []
     3: TS_TYPE_ALIAS@101..127
       0: TYPE_KW@101..107 "type" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@107..109
+      1: TS_IDENTIFIER_BINDING@107..109
         0: IDENT@107..109 "D" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@109..111 "=" [] [Whitespace(" ")]
@@ -416,7 +416,7 @@ JsModule {
       5: (empty)
     4: TS_TYPE_ALIAS@127..152
       0: TYPE_KW@127..133 "type" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@133..135
+      1: TS_IDENTIFIER_BINDING@133..135
         0: IDENT@133..135 "E" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@135..137 "=" [] [Whitespace(" ")]
@@ -441,7 +441,7 @@ JsModule {
       5: (empty)
     5: TS_TYPE_ALIAS@152..177
       0: TYPE_KW@152..158 "type" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@158..160
+      1: TS_IDENTIFIER_BINDING@158..160
         0: IDENT@158..160 "F" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@160..162 "=" [] [Whitespace(" ")]
@@ -468,7 +468,7 @@ JsModule {
       5: (empty)
     6: TS_TYPE_ALIAS@177..215
       0: TYPE_KW@177..183 "type" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@183..185
+      1: TS_IDENTIFIER_BINDING@183..185
         0: IDENT@183..185 "G" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@185..187 "=" [] [Whitespace(" ")]
@@ -519,7 +519,7 @@ JsModule {
       5: (empty)
     7: TS_TYPE_ALIAS@215..249
       0: TYPE_KW@215..221 "type" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@221..223
+      1: TS_IDENTIFIER_BINDING@221..223
         0: IDENT@221..223 "H" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@223..225 "=" [] [Whitespace(" ")]

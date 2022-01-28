@@ -25,7 +25,7 @@ JsModule {
         },
         TsTypeAlias {
             type_token: TYPE_KW@29..35 "type" [Newline("\n")] [Whitespace(" ")],
-            binding_identifier: JsIdentifierBinding {
+            binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@35..37 "B" [] [Whitespace(" ")],
             },
             type_parameters: missing (required),
@@ -62,7 +62,7 @@ JsModule {
       1: SEMICOLON@28..29 ";" [] []
     1: TS_TYPE_ALIAS@29..48
       0: TYPE_KW@29..35 "type" [Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@35..37
+      1: TS_IDENTIFIER_BINDING@35..37
         0: IDENT@35..37 "B" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@37..39 "=" [] [Whitespace(" ")]
