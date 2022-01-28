@@ -185,7 +185,7 @@ impl Formatted {
     }
 
     /// Construct an empty formatter result
-    fn empty() -> Self {
+    fn new_empty() -> Self {
         Self {
             code: String::new(),
             range: None,
@@ -203,11 +203,6 @@ impl Formatted {
     /// in the output string to the input source code
     pub fn sourcemap(&self) -> &[SourceMarker] {
         &self.sourcemap
-    }
-
-    #[deprecated = "use `as_code` instead"]
-    pub fn code(&self) -> &String {
-        &self.code
     }
 
     /// Access the resulting code, borrowing the result
@@ -230,6 +225,13 @@ pub fn format(options: FormatOptions, syntax: &SyntaxNode) -> FormatResult<Forma
 }
 
 /// Formats a range within a file, supported by Rome
+///
+/// This runs a simple heuristic to determine the initial indentation
+/// level of the node based on the provided [FormatOptions], which
+/// must match currently the current initial of the file. Additionally,
+/// because the reformatting happens only locally the resulting code
+/// will be indented with the same level as the original selection,
+/// even if it's a mismatch from the rest of the block the selection is in
 ///
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
@@ -255,7 +257,7 @@ pub fn format_range(
         TokenAtOffset::None => match root.first_token() {
             Some(token) => token,
             // root node is empty
-            None => return Ok(Formatted::empty()),
+            None => return Ok(Formatted::new_empty()),
         },
     };
     let end_token = match end_token {
@@ -266,7 +268,7 @@ pub fn format_range(
         TokenAtOffset::None => match root.last_token() {
             Some(token) => token,
             // root node is empty
-            None => return Ok(Formatted::empty()),
+            None => return Ok(Formatted::new_empty()),
         },
     };
 
@@ -359,7 +361,10 @@ pub fn format_range(
 ///
 /// This runs a simple heuristic to determine the initial indentation
 /// level of the node based on the provided [FormatOptions], which
-/// must match currently the current initial of the file
+/// must match currently the current initial of the file. Additionally,
+/// because the reformatting happens only locally the resulting code
+/// will be indented with the same level as the original selection,
+/// even if it's a mismatch from the rest of the block the selection is in
 ///
 /// It returns a [Formatted] result
 pub fn format_node(options: FormatOptions, root: &SyntaxNode) -> FormatResult<Formatted> {
@@ -499,6 +504,37 @@ while(
         assert_eq!(
             result.as_code(),
             "let array = [1, 2];\n    }\n\n    function func2() {\n        "
+        );
+    }
+
+    #[test]
+    fn test_range_formatting_indentation() {
+        let input = "
+function() {
+         const veryLongIdentifierToCauseALineBreak = { veryLongKeyToCauseALineBreak: 'veryLongValueToCauseALineBreak' }
+}
+";
+
+        let range_start = TextSize::try_from(input.find("const").unwrap()).unwrap();
+        let range_end = TextSize::try_from(input.find('}').unwrap()).unwrap();
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            FormatOptions {
+                indent_style: IndentStyle::Space(4),
+                ..FormatOptions::default()
+            },
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+
+        let result = result.expect("range formatting failed");
+        assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
+        // As a result of the indentation normalization, the number of spaces within
+        // the object expression is currently rounded down from an odd indentation level
+        assert_eq!(
+            result.as_code(),
+            "const veryLongIdentifierToCauseALineBreak = {\n            veryLongKeyToCauseALineBreak: \"veryLongValueToCauseALineBreak\",\n        "
         );
     }
 }

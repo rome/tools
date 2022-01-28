@@ -14,11 +14,7 @@ pub fn format(text: &str, file_id: FileId) -> Result<Vec<TextEdit>> {
         line_width: 80,
     };
 
-    let new_text = rome_formatter::format(options, &tree)
-        // TODO: impl Error for FormatError
-        .unwrap()
-        .code()
-        .to_string();
+    let new_text = rome_formatter::format(options, &tree)?.into_code();
 
     let num_lines: u32 = line_index::LineIndex::new(text).newlines.len().try_into()?;
 

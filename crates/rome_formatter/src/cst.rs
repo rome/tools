@@ -12,7 +12,8 @@ use rslint_parser::ast::{
     JsStatementList, JsStringLiteralExpression, JsSwitchStatement, JsTryStatement,
     JsUnknownAssignment, JsUnknownBinding, JsUnknownExpression, JsUnknownImportAssertionEntry,
     JsUnknownMember, JsUnknownNamedImportSpecifier, JsUnknownParameter, JsUnknownStatement,
-    JsVariableDeclaration, JsVariableStatement, JsWhileStatement, JsWithStatement,
+    JsVariableDeclaration, JsVariableDeclarations, JsVariableStatement, JsWhileStatement,
+    JsWithStatement,
 };
 use rslint_parser::{AstNode, JsSyntaxKind, SyntaxNode};
 
@@ -202,6 +203,9 @@ impl ToFormatElement for SyntaxNode {
                 JsStatementList::cast(self.clone()).unwrap(),
                 formatter,
             )),
+            JsSyntaxKind::JS_VARIABLE_DECLARATIONS => JsVariableDeclarations::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
 
             _ => todo!(
                 "Implement formatting for the {:?} syntax kind.",
