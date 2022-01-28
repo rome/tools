@@ -117,7 +117,7 @@ pub fn run(
     show_rast: bool,
     show_diagnostics: bool,
 ) {
-    let mut reporters = CompositeTestReporter::new(Box::new(CliProgressReporter::default()));
+    let mut reporters = MulticastTestReporter::new(Box::new(CliProgressReporter::default()));
 
     if json {
         reporters.add(Box::new(JsonReporter::default()));

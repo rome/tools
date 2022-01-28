@@ -252,7 +252,7 @@ impl TestReporter for SummaryReporter {
             let total = panicked + errored + passed;
 
             let mut values = if has_multiple_test_suites {
-                vec![suite.to_string()]
+                vec![suite]
             } else {
                 Vec::default()
             };
