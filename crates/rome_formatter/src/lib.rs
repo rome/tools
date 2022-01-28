@@ -41,7 +41,7 @@
 //!     let key_value = KeyValue { key: "lorem", value: "ipsum" };
 //!     let element = key_value.to_format_element(&Formatter::default()).unwrap();
 //!     let result = format_element(&element, FormatOptions::default());
-//!     assert_eq!(result.code(), "lorem => ipsum");
+//!     assert_eq!(result.as_code(), "lorem => ipsum");
 //! }
 //!
 //! ```

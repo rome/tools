@@ -33,7 +33,7 @@ pub fn empty_element() -> FormatElement {
 ///   token("b"),
 /// ]);
 ///
-/// assert_eq!("a,b", format_element(&elements, FormatOptions::default()).code());
+/// assert_eq!("a,b", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 /// See [soft_line_break_or_space] if you want to insert a space between the elements if the enclosing
 /// [Group] fits on a single line.
@@ -53,7 +53,7 @@ pub fn empty_element() -> FormatElement {
 ///  ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("a long word,\nso that the group doesn't fit on a single line", format_element(&elements, options).code());
+/// assert_eq!("a long word,\nso that the group doesn't fit on a single line", format_element(&elements, options).as_code());
 /// ```
 #[inline]
 pub const fn soft_line_break() -> FormatElement {
@@ -76,7 +76,7 @@ pub const fn soft_line_break() -> FormatElement {
 ///   hard_line_break()
 /// ]);
 ///
-/// assert_eq!("a,\nb\n", format_element(&elements, FormatOptions::default()).code());
+/// assert_eq!("a,\nb\n", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub const fn hard_line_break() -> FormatElement {
@@ -98,7 +98,7 @@ pub const fn hard_line_break() -> FormatElement {
 ///   empty_line()
 /// ]);
 ///
-/// assert_eq!("a,\n\nb\n\n", format_element(&elements, FormatOptions::default()).code());
+/// assert_eq!("a,\n\nb\n\n", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub const fn empty_line() -> FormatElement {
@@ -119,7 +119,7 @@ pub const fn empty_line() -> FormatElement {
 ///   token("b"),
 /// ]);
 ///
-/// assert_eq!("a, b", format_element(&elements, FormatOptions::default()).code());
+/// assert_eq!("a, b", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
 /// The printer breaks the lines if the enclosing [Group] doesn't fit on a single line:
@@ -137,7 +137,7 @@ pub const fn empty_line() -> FormatElement {
 ///  ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("a long word,\nso that the group doesn't fit on a single line", format_element(&elements, options).code());
+/// assert_eq!("a long word,\nso that the group doesn't fit on a single line", format_element(&elements, options).as_code());
 /// ```
 #[inline]
 pub const fn soft_line_break_or_space() -> FormatElement {
@@ -157,7 +157,7 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// use rome_formatter::{token, format_element, FormatOptions};
 /// let elements = token("Hello World");
 ///
-/// assert_eq!("Hello World", format_element(&elements, FormatOptions::default()).code());
+/// assert_eq!("Hello World", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
 /// Printing a string literal as a literal requires that the string literal is properly escaped and
@@ -169,7 +169,7 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// // the tab must be encoded as \\t to not literally print a tab character ("Hello{tab}World" vs "Hello\tWorld")
 /// let elements = token("\"Hello\\tWorld\"");
 ///
-/// assert_eq!(r#""Hello\tWorld""#, format_element(&elements, FormatOptions::default()).code());
+/// assert_eq!(r#""Hello\tWorld""#, format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub const fn token(text: &'static str) -> FormatElement {
@@ -189,7 +189,7 @@ pub const fn token(text: &'static str) -> FormatElement {
 ///
 /// let elements = format_elements![token("a"), line_suffix(token("c")), token("b")];
 ///
-/// assert_eq!("abc", format_element(&elements, FormatOptions::default()).code());
+/// assert_eq!("abc", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
@@ -206,7 +206,7 @@ pub fn line_suffix(element: impl Into<FormatElement>) -> FormatElement {
 /// // the tab must be encoded as \\t to not literally print a tab character ("Hello{tab}World" vs "Hello\tWorld")
 /// let elements = format_elements![token("a"), space_token(), token("b")];
 ///
-/// assert_eq!("a b", format_element(&elements, FormatOptions::default()).code());
+/// assert_eq!("a b", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub const fn space_token() -> FormatElement {
@@ -221,7 +221,7 @@ pub const fn space_token() -> FormatElement {
 /// use rome_formatter::{concat_elements, FormatElement, space_token, token, format_element, FormatOptions};
 /// let expr = concat_elements(vec![token("a"), space_token(), token("+"), space_token(), token("b")]);
 ///
-/// assert_eq!("a + b", format_element(&expr, FormatOptions::default()).code())
+/// assert_eq!("a + b", format_element(&expr, FormatOptions::default()).as_code())
 /// ```
 pub fn concat_elements<I>(elements: I) -> FormatElement
 where
@@ -265,7 +265,7 @@ where
 /// let separator = concat_elements(vec![token(","), space_token()]);
 /// let elements = join_elements(separator, vec![token("1"), token("2"), token("3"), token("4")]);
 ///
-/// assert_eq!("1, 2, 3, 4", format_element(&elements, FormatOptions::default()).code());
+/// assert_eq!("1, 2, 3, 4", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 #[inline]
 pub fn join_elements<TSep, I>(separator: TSep, elements: I) -> FormatElement
@@ -385,7 +385,7 @@ where
 ///
 /// assert_eq!(
 ///   "switch {\n\tdefault:\n\t\tbreak;\n}",
-///   format_element(&block, FormatOptions::default()).code()
+///   format_element(&block, FormatOptions::default()).as_code()
 /// );
 /// ```
 #[inline]
@@ -420,7 +420,7 @@ pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// assert_eq!(
 ///   "{\n\tlet a = 10;\n\tlet c = a + 5;\n}",
-///   format_element(&block, FormatOptions::default()).code()
+///   format_element(&block, FormatOptions::default()).as_code()
 /// );
 /// ```
 #[inline]
@@ -463,7 +463,7 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///  ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("[\n\t'First string',\n\t'second string',\n]", format_element(&elements, options).code());
+/// assert_eq!("[\n\t'First string',\n\t'second string',\n]", format_element(&elements, options).as_code());
 /// ```
 ///
 /// Doesn't change the formatting if the enclosing [Group] fits on a single line
@@ -482,7 +482,7 @@ pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// assert_eq!(
 ///   "[5, 10]",
-///   format_element(&elements, FormatOptions::default()).code()
+///   format_element(&elements, FormatOptions::default()).as_code()
 /// );
 /// ```
 ///
@@ -528,7 +528,7 @@ pub fn soft_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///   token("]"),
 /// ]);
 ///
-/// assert_eq!("[1, 2, 3]", format_element(&elements, FormatOptions::default()).code());
+/// assert_eq!("[1, 2, 3]", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
 /// The printer breaks the [Group] over multiple lines if its content doesn't fit on a single line
@@ -552,7 +552,7 @@ pub fn soft_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///   ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("[\n\t'Good morning! How are you today?',\n\t2,\n\t3\n]", format_element(&elements, options).code());
+/// assert_eq!("[\n\t'Good morning! How are you today?',\n\t2,\n\t3\n]", format_element(&elements, options).as_code());
 /// ```
 #[inline]
 pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
@@ -591,7 +591,7 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///   ]),
 ///   token("]"),
 /// ]);
-/// assert_eq!("[1, 2, 3]", format_element(&elements, FormatOptions::default()).code());
+/// assert_eq!("[1, 2, 3]", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
 /// Prints the trailing comma for the last array element if the [Group] doesn't fit on a single line
@@ -614,7 +614,7 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// let options = FormatOptions { line_width: 20, ..FormatOptions::default() };
 /// assert_eq!(
 ///   "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3,\n]",
-///   format_element(&elements, options).code()
+///   format_element(&elements, options).as_code()
 /// );
 /// ```
 #[inline]
@@ -654,7 +654,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///   ]),
 ///   token("]"),
 /// ]);
-/// assert_eq!("[1, 2, 3,]", format_element(&elements, FormatOptions::default()).code());
+/// assert_eq!("[1, 2, 3,]", format_element(&elements, FormatOptions::default()).as_code());
 /// ```
 ///
 /// Omits the trailing comma for the last array element if the [Group] doesn't fit on a single line
@@ -677,7 +677,7 @@ pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// let options = FormatOptions { line_width: 20, ..FormatOptions::default() };
 /// assert_eq!(
 ///   "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3\n]",
-///   format_element(&elements, options).code()
+///   format_element(&elements, options).as_code()
 /// );
 /// ```
 #[inline]
@@ -850,17 +850,16 @@ impl Token {
     }
 
     /// Create a token from a dynamic string and a range of the input source
-    pub(crate) fn new_dynamic(text: &str, source: TextRange) -> Self {
-        const LINE_SEPARATOR: char = '\u{2028}';
-        const PARAGRAPH_SEPARATOR: char = '\u{2029}';
-        Self::Dynamic {
-            // Normalize all line terminators to "\n" since its
-            // the only line break type supported by the printer
-            text: text
-                .replace("\r\n", "\n")
-                .replace(&['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR], "\n"),
-            source,
+    pub(crate) fn new_dynamic(text: String, source: TextRange) -> Self {
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                for line_break in text.matches(&['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR]) {
+                    panic!("The content '{}' contains an unsupported {:?} line terminator character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", text, line_break);
+                }
+            }
         }
+
+        Self::Dynamic { text, source }
     }
 
     /// Get the range of the input source covered by this token,
@@ -924,13 +923,26 @@ impl<L: Language> From<SyntaxToken<L>> for Token {
 
 impl<'a, L: Language> From<&'a SyntaxToken<L>> for Token {
     fn from(token: &'a SyntaxToken<L>) -> Self {
-        Self::new_dynamic(token.text_trimmed(), token.text_trimmed_range())
+        Self::new_dynamic(token.text_trimmed().into(), token.text_trimmed_range())
     }
+}
+
+const LINE_SEPARATOR: char = '\u{2028}';
+const PARAGRAPH_SEPARATOR: char = '\u{2029}';
+
+/// Normalize all line terminators in the text to "\n" since
+/// its the only line break type supported by the printer
+pub(crate) fn normalize_newlines(text: &str) -> String {
+    text.replace("\r\n", "\n")
+        .replace(&['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR], "\n")
 }
 
 impl<L: Language> From<SyntaxTriviaPieceComments<L>> for Token {
     fn from(trivia: SyntaxTriviaPieceComments<L>) -> Self {
-        Self::new_dynamic(trivia.text().trim(), trivia.text_range())
+        Self::new_dynamic(
+            normalize_newlines(trivia.text().trim()),
+            trivia.text_range(),
+        )
     }
 }
 

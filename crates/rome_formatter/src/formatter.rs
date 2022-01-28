@@ -4,8 +4,9 @@ use std::cell::RefCell;
 use std::collections::HashSet;
 
 use crate::{
-    concat_elements, empty_element, empty_line, format_element::Token, format_elements,
-    hard_line_break, if_group_breaks, if_group_fits_on_single_line, line_suffix,
+    concat_elements, empty_element, empty_line,
+    format_element::{normalize_newlines, Token},
+    format_elements, hard_line_break, if_group_breaks, if_group_fits_on_single_line, line_suffix,
     soft_line_break_or_space, space_token, FormatElement, FormatOptions, FormatResult,
     ToFormatElement,
 };
@@ -349,7 +350,10 @@ impl Formatter {
                 }
 
                 // Print the full (not trimmed) text of the token
-                Token::new_dynamic(syntax_token.text(), syntax_token.text_range()).into()
+                FormatElement::from(Token::new_dynamic(
+                    normalize_newlines(syntax_token.text()),
+                    syntax_token.text_range(),
+                ))
             }
         }))
     }

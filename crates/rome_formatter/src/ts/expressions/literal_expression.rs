@@ -13,7 +13,7 @@ impl ToFormatElement for JsStringLiteralExpression {
         let content = if quoted.starts_with('\'') {
             let s = &quoted[1..quoted.len() - 1];
             let s = format!("\"{}\"", s);
-            Token::new_dynamic(&s, value_token.text_trimmed_range())
+            Token::new_dynamic(s, value_token.text_trimmed_range())
         } else {
             Token::from(&value_token)
         };
