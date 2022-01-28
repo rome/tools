@@ -1,7 +1,7 @@
 use pico_args::Arguments;
 use xtask::{project_root, pushd, Mode, Result};
 
-use xtask_codegen::{generate_ast, generate_parser_tests, generate_tables};
+use xtask_codegen::{generate_ast, generate_formatter, generate_parser_tests, generate_tables};
 
 fn main() -> Result<()> {
     let _d = pushd(project_root());
@@ -12,6 +12,10 @@ fn main() -> Result<()> {
     match command.as_str() {
         "grammar" => {
             generate_ast(Mode::Overwrite)?;
+            Ok(())
+        }
+        "formatter" => {
+            generate_formatter();
             Ok(())
         }
         "test" => {
