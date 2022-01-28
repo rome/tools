@@ -460,12 +460,8 @@ fn parse_binary_or_logical_expression_recursive(
                 m.complete(p, TS_ASSERTION)
             };
             res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
-            return parse_binary_or_logical_expression_recursive(
-                p,
-                Present(res),
-                left_precedence,
-                context,
-            );
+            left = Present(res);
+            continue;
         }
 
         let op = match p.cur() {
