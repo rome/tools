@@ -12,7 +12,7 @@ use tracing::{debug, error, trace, trace_span, Instrument};
 
 use crate::capabilities::server_capabilities;
 use crate::documents::{Document, DocumentStore};
-use crate::handlers::{self, FormatRangeParams};
+use crate::handlers::{self, FormatOnTypeParams, FormatRangeParams};
 use crate::line_index::LineIndex;
 use crate::url_interner::UrlInterner;
 use crate::utils::{self, text_action_to_lsp};
@@ -277,6 +277,52 @@ impl LanguageServer for LSPServer {
                     IndentStyle::Tab
                 },
                 range: params.range,
+            })
+        });
+
+        // TODO: Clean up this error handling
+        let opt = match handle.await {
+            Ok(res) => match res {
+                Ok(edits) => Some(edits),
+                Err(e) => {
+                    error!("Error while formatting: {}", e);
+                    None
+                }
+            },
+            Err(e) => {
+                error!("Error while joining thread: {}", e);
+                None
+            }
+        };
+
+        Ok(opt)
+    }
+
+    async fn on_type_formatting(
+        &self,
+        params: DocumentOnTypeFormattingParams,
+    ) -> Result<Option<Vec<TextEdit>>> {
+        let url = params.text_document_position.text_document.uri.clone();
+        trace!("Formatting: {:?}", url);
+
+        let file_id;
+        let text;
+        {
+            let mut state = self.state.lock().await;
+            file_id = state.url_interner.intern(url);
+            text = state.text_documents.get(&file_id).unwrap().text.clone();
+        }
+
+        let handle = tokio::spawn(async move {
+            handlers::format_on_type(FormatOnTypeParams {
+                text: text.as_ref(),
+                file_id,
+                indent_style: if params.options.insert_spaces {
+                    IndentStyle::Space(params.options.tab_size as u8)
+                } else {
+                    IndentStyle::Tab
+                },
+                position: params.text_document_position.position,
             })
         });
 

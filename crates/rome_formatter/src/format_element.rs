@@ -836,24 +836,35 @@ impl ConditionalGroupContent {
 /// See [token] for documentation
 #[derive(Debug, Eq, Clone)]
 pub enum Token {
+    /// Token constructed by the formatter from a static string
     Static { text: &'static str },
+    /// Token constructed from the input source as a dynamics
+    /// string and a range of the input source
     Dynamic { text: String, source: TextRange },
 }
 
 impl Token {
-    pub(crate) const fn new_static(text: &'static str) -> Self {
+    /// Create a token from a static string
+    const fn new_static(text: &'static str) -> Self {
         Self::Static { text }
     }
 
+    /// Create a token from a dynamic string and a range of the input source
     pub(crate) fn new_dynamic(text: &str, source: TextRange) -> Self {
+        const LINE_SEPARATOR: char = '\u{2028}';
+        const PARAGRAPH_SEPARATOR: char = '\u{2029}';
         Self::Dynamic {
+            // Normalize all line terminators to "\n" since its
+            // the only line break type supported by the printer
             text: text
                 .replace("\r\n", "\n")
-                .replace(&['\r', '\u{2028}', '\u{2029}'], "\n"),
+                .replace(&['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR], "\n"),
             source,
         }
     }
 
+    /// Get the range of the input source covered by this token,
+    /// or None if the token was synthesized by the formatter
     pub(crate) fn source(&self) -> Option<&TextRange> {
         match self {
             Token::Static { .. } => None,

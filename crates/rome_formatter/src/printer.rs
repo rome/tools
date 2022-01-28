@@ -103,6 +103,8 @@ impl<'a> Printer<'a> {
         self.print_with_indent(element, 0)
     }
 
+    /// Prints the passed in element as well as all its content,
+    /// starting at the specified indentation level
     pub(crate) fn print_with_indent(
         mut self,
         element: &'a FormatElement,
@@ -516,7 +518,7 @@ mod tests {
             token("\"d\""),
         ]));
 
-        assert_eq!(r#"["a", "b", "c", "d"]"#, result.code())
+        assert_eq!(r#"["a", "b", "c", "d"]"#, result.as_code())
     }
 
     #[test]
@@ -544,7 +546,7 @@ mod tests {
     c
   b
 a"#,
-            print_element(element).code()
+            print_element(element).as_code()
         )
     }
 
@@ -561,7 +563,7 @@ a"#,
 two lines`,
   "b",
 ]"#,
-            result.code()
+            result.as_code()
         )
     }
 
@@ -583,7 +585,7 @@ two lines`,
 
         assert_eq!(
             "function main() {\r\n\tlet x = `This is a multiline\r\nstring`;\r\n}\r\n",
-            result.code()
+            result.as_code()
         );
     }
 
@@ -611,7 +613,7 @@ two lines`,
   "d",
   ["0123456789", "0123456789", "0123456789", "0123456789", "0123456789"],
 ]"#,
-            result.code()
+            result.as_code()
         );
     }
 
@@ -631,7 +633,7 @@ two lines`,
             token("'d'"),
         ]));
 
-        assert_eq!("[\n\t'a',\n\t\'b',\n\t\'c',\n\t'd',\n]", result.code());
+        assert_eq!("[\n\t'a',\n\t\'b',\n\t\'c',\n\t'd',\n]", result.as_code());
     }
 
     fn create_array_element(items: Vec<FormatElement>) -> FormatElement {

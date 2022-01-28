@@ -57,6 +57,7 @@ mod ts;
 pub use formatter::Formatter;
 use rome_rowan::TextRange;
 use rome_rowan::TextSize;
+use rome_rowan::TokenAtOffset;
 use rslint_parser::{parse, Syntax, SyntaxError, SyntaxNode};
 
 pub use format_element::{
@@ -183,6 +184,7 @@ impl Formatted {
         }
     }
 
+    /// Construct an empty formatter result
     fn empty() -> Self {
         Self {
             code: String::new(),
@@ -197,14 +199,23 @@ impl Formatted {
         self.range
     }
 
+    /// Returns a list of [SourceMarker] mapping byte positions
+    /// in the output string to the input source code
     pub fn sourcemap(&self) -> &[SourceMarker] {
         &self.sourcemap
     }
 
+    #[deprecated = "use `as_code` instead"]
     pub fn code(&self) -> &String {
         &self.code
     }
 
+    /// Access the resulting code, borrowing the result
+    pub fn as_code(&self) -> &str {
+        &self.code
+    }
+
+    /// Access the resulting code, consuming the result
     pub fn into_code(self) -> String {
         self.code
     }
@@ -218,7 +229,7 @@ pub fn format(options: FormatOptions, syntax: &SyntaxNode) -> FormatResult<Forma
     Ok(Printer::new(options).print(&element))
 }
 
-/// Formats a range withing a JavaScript file
+/// Formats a range within a file, supported by Rome
 ///
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
@@ -228,40 +239,31 @@ pub fn format_range(
     range: TextRange,
 ) -> FormatResult<Formatted> {
     // Find the tokens corresponding to the start and end of the range
-    let mut start_token = None;
-    let mut end_token = None;
+    let start_token = root.token_at_offset(range.start());
+    let end_token = root.token_at_offset(range.end());
 
-    for token in root.descendants_tokens() {
-        let range = token.text_range();
-
-        if start_token.is_none() && range.contains_inclusive(range.start()) {
-            start_token = Some(token.clone());
-        }
-
-        if end_token.is_none() && range.contains_inclusive(range.end()) {
-            end_token = Some(token);
-        }
-
-        if start_token.is_some() && end_token.is_some() {
-            break;
-        }
-    }
-
-    // If not token were found, this means the input node was empty
-    // or the formatting function was not passed the root SyntaxNode
-    // for the file: default to the first and last token in the root
-    // node or exit early with an empty result if no such token exists
+    // If these tokens were not found this means either:
+    // 1. The input [SyntaxNode] was empty
+    // 2. The input node was not the root [SyntaxNode] of the file
+    // In the first case we can return an empty result immediately,
+    // otherwise default to the first and last tokens in the root node
     let start_token = match start_token {
-        Some(token) => token,
-        None => match root.first_token() {
+        // If the start of the range lies between two tokens,
+        // start at the rightmost one
+        TokenAtOffset::Between(_, token) => token,
+        TokenAtOffset::Single(token) => token,
+        TokenAtOffset::None => match root.first_token() {
             Some(token) => token,
             // root node is empty
             None => return Ok(Formatted::empty()),
         },
     };
     let end_token = match end_token {
-        Some(token) => token,
-        None => match root.last_token() {
+        // If the end of the range lies between two tokens,
+        // end at the leftmost one
+        TokenAtOffset::Between(token, _) => token,
+        TokenAtOffset::Single(token) => token,
+        TokenAtOffset::None => match root.last_token() {
             Some(token) => token,
             // root node is empty
             None => return Ok(Formatted::empty()),
@@ -271,82 +273,27 @@ pub fn format_range(
     // Find the lowest common ancestor node for the start and end token
     // by building the path to the root node from both tokens and
     // iterating along the two paths at once to find the first divergence
-    let mut start_to_root = Vec::new();
-    let mut end_to_root = Vec::new();
+    #[allow(clippy::needless_collect)]
+    let start_to_root: Vec<_> = start_token.ancestors().collect();
+    #[allow(clippy::needless_collect)]
+    let end_to_root: Vec<_> = end_token.ancestors().collect();
 
-    let mut cursor = start_token.parent();
-    while let Some(node) = cursor {
-        cursor = node.parent();
-        start_to_root.push(node);
-    }
-
-    let mut cursor = end_token.parent();
-    while let Some(node) = cursor {
-        cursor = node.parent();
-        end_to_root.push(node);
-    }
-
-    let mut iter = start_to_root
+    let common_root = start_to_root
         .into_iter()
         .rev()
         .zip(end_to_root.into_iter().rev())
-        .peekable();
-
-    let mut common_root = None;
-    while let Some((lhs, rhs)) = iter.peek() {
-        if lhs != rhs {
-            break;
-        }
-
-        common_root = iter.next().map(|(node, _)| node);
-    }
+        .map_while(|(lhs, rhs)| if lhs == rhs { Some(lhs) } else { None })
+        .last();
 
     // Logically this should always return at least the root node,
     // fallback to said node just in case
     let common_root = common_root.as_ref().unwrap_or(root);
 
-    // Determine the initial indentation level for the printer by inspecting the trivias
-    // of each token from the first token of the common root towards the start of the file
-    let tokens = std::iter::successors(common_root.first_token(), |token| token.prev_token());
+    // Perform the actual formatting of the root node with
+    // an appropriate indentation level
+    let formatted = format_node(options, common_root)?;
 
-    // From the iterator on tokens, build an iterator on trivia pieces (once again the iterator is
-    // reversed, starting from the last trailing trivia towards the first leading trivia)
-    let trivias = tokens.flat_map(|token| {
-        // We need to build up the trivia pieces into a vector as SyntaxTriviaPieceIterator does
-        // not support reverse iteration, but we're only interested in newline and whitespace
-        #[allow(clippy::needless_collect)]
-        let pieces: Vec<_> = token
-            .leading_trivia()
-            .pieces()
-            .chain(token.trailing_trivia().pieces())
-            .filter(|piece| piece.as_newline().is_some() || piece.as_whitespace().is_some())
-            .collect();
-        pieces.into_iter().rev()
-    });
-
-    // Finally run the iterator until a newline trivia is found, and get the last whitespace trivia before it
-    let last_whitespace = trivias.map_while(|piece| piece.as_whitespace()).last();
-    let initial_indent = match last_whitespace {
-        Some(trivia) => {
-            // This logic is based on the formatting options passed in
-            // the be user (or the editor) as we do not have any kind
-            // of identation type detection yet. Unfortunately this
-            // may not actually match the current content of the file
-            let length = trivia.text().len() as u16;
-            match options.indent_style {
-                IndentStyle::Tab => length,
-                IndentStyle::Space(width) => length / u16::from(width),
-            }
-        }
-        // No whitespace was found between the start of the range
-        // and the start of the file
-        None => 0,
-    };
-
-    let element = Formatter::new(options).format_root(common_root)?;
-    let formatted = Printer::new(options).print_with_indent(&element, initial_indent);
-
-    // This finds the closests marker to the beginning of the source
+    // This finds the closest marker to the beginning of the source
     // starting before or at said starting point, and the closest
     // marker to the end of the source range starting after or at
     // said ending point respectively
@@ -381,8 +328,8 @@ pub fn format_range(
         }
     }
 
-    // If no start or end were found this means the edge of the formatting
-    // range was near the edge of the input and no marker was emitted before
+    // If no start or end were found, this means that the edge of the formatting
+    // range was near the edge of the input, and no marker were emitted before
     // the start (or after the end) of the formatting range: in this case
     // the start/end marker default to the start/end of the input
     let (start_source, start_dest) = match range_start {
@@ -408,6 +355,72 @@ pub fn format_range(
     ))
 }
 
+/// Formats a single node within a file, supported by Rome
+///
+/// This runs a simple heuristic to determine the initial indentation
+/// level of the node based on the provided [FormatOptions], which
+/// must match currently the current initial of the file
+///
+/// It returns a [Formatted] result
+pub fn format_node(options: FormatOptions, root: &SyntaxNode) -> FormatResult<Formatted> {
+    // Determine the initial indentation level for the printer by inspecting the trivias
+    // of each token from the first token of the common root towards the start of the file
+    let mut tokens = std::iter::successors(root.first_token(), |token| token.prev_token());
+
+    // From the iterator of tokens, build an iterator of trivia pieces (once again the iterator is
+    // reversed, starting from the last trailing trivia towards the first leading trivia).
+    // The first token is handled specially as we only wan to consider its leading trivias
+    let first_token = tokens.next();
+    let first_token_trivias = first_token
+        .into_iter()
+        .flat_map(|token| token.leading_trivia().pieces().rev());
+
+    let next_tokens_trivias = tokens.flat_map(|token| {
+        token
+            .trailing_trivia()
+            .pieces()
+            .rev()
+            .chain(token.leading_trivia().pieces().rev())
+    });
+
+    let trivias = first_token_trivias
+        .chain(next_tokens_trivias)
+        .filter(|piece| {
+            // We're only interested in newline and whitespace trivias, skip over comments
+            let is_newline = piece.as_newline().is_some();
+            let is_whitespace = piece.as_whitespace().is_some();
+            is_newline || is_whitespace
+        });
+
+    // Finally run the iterator until a newline trivia is found, and get the last whitespace trivia before it
+    let last_whitespace = trivias.map_while(|piece| piece.as_whitespace()).last();
+    let initial_indent = match last_whitespace {
+        Some(trivia) => {
+            // This logic is based on the formatting options passed in
+            // the be user (or the editor) as we do not have any kind
+            // of identation type detection yet. Unfortunately this
+            // may not actually match the current content of the file
+            let length = trivia.text().len() as u16;
+            match options.indent_style {
+                IndentStyle::Tab => length,
+                IndentStyle::Space(width) => length / u16::from(width),
+            }
+        }
+        // No whitespace was found between the start of the range
+        // and the start of the file
+        None => 0,
+    };
+
+    let element = Formatter::new(options).format_root(root)?;
+    let formatted = Printer::new(options).print_with_indent(&element, initial_indent);
+
+    Ok(Formatted::new(
+        formatted.code,
+        Some(root.text_range()),
+        formatted.sourcemap,
+    ))
+}
+
 pub fn format_element(element: &FormatElement, options: FormatOptions) -> Formatted {
     let printer = Printer::new(options);
     printer.print(element)
@@ -424,7 +437,7 @@ pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions, ap
     };
     if let Some(Ok(result)) = result {
         rome_path
-            .save(result.code())
+            .save(result.as_code())
             .expect("Could not write the formatted code on file");
     }
 }
@@ -463,7 +476,9 @@ while(
 }
 ";
 
-        let range_start = TextSize::try_from(input.find("let").unwrap() - 1).unwrap();
+        // Start the formatting range two characters before the "let" keywords,
+        // in the middle of the indentation whitespace for the line
+        let range_start = TextSize::try_from(input.find("let").unwrap() - 2).unwrap();
         let range_end = TextSize::try_from(input.find("const").unwrap()).unwrap();
 
         let tree = parse_script(input, 0);
@@ -479,10 +494,10 @@ while(
         let result = result.expect("range formatting failed");
         assert_eq!(
             result.range(),
-            Some(TextRange::new(range_start + TextSize::from(1), range_end))
+            Some(TextRange::new(range_start + TextSize::from(2), range_end))
         );
         assert_eq!(
-            result.code(),
+            result.as_code(),
             "let array = [1, 2];\n    }\n\n    function func2() {\n        "
         );
     }

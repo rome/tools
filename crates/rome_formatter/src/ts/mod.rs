@@ -15,6 +15,8 @@ mod statements;
 mod template;
 mod unknown;
 
+pub(crate) use statements::format_statements;
+
 #[cfg(test)]
 mod test {
     use rslint_parser::parse_script;
@@ -27,7 +29,7 @@ mod test {
         let tree = parse_script(src, 0);
         let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
         assert_eq!(
-            result.code(),
+            result.as_code(),
             "let v = (value, second_value) => true;
 "
         );
@@ -40,7 +42,7 @@ mod test {
         let tree = parse_script(src, 0);
         let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
         assert_eq!(
-            result.code(),
+            result.as_code(),
             r#"function foo() {
 	return "something";
 }
@@ -54,7 +56,7 @@ mod test {
         let tree = parse_script(src, 0);
         let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
         assert_eq!(
-            result.code(),
+            result.as_code(),
             r#"let users = ["john", "chandler", true];
 "#
         );
@@ -67,7 +69,7 @@ mod test {
         let tree = parse_script(src, 0);
         let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
         assert_eq!(
-            result.code(),
+            result.as_code(),
             r#"let a1 = [{}, {}];
 "#
         );
