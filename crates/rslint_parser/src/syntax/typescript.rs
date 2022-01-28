@@ -380,7 +380,6 @@ impl ParseSeparatedList for EnumMembersList {
 // test_err ts invalid_typescript_enum
 // enum A { 1 }
 pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
-    println!("Try ts enum");
     let m = p.start();
 
     p.eat(T![const]);
