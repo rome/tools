@@ -1422,7 +1422,7 @@ TsType =
 	| TsNullLiteralType
 	| TsBooleanLiteralType
 	| TsTemplateLiteralType
-	| TsInferredType
+	| TsInferType
 	// Intersection or higher types
 	| TsIntersectionType
 	| TsUnionType
@@ -1498,7 +1498,7 @@ TsTypeOperatorType =
 // ^^^^^^^
 // { a: infer U; b: infer U }
 //      ^^^^^^^     ^^^^^^^
-TsInferredType =
+TsInferType =
 	'infer'
 	type_parameter: TsTypeParameterName
 

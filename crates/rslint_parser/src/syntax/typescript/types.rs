@@ -325,7 +325,7 @@ fn parse_ts_primary_type(p: &mut Parser) -> ParsedSyntax {
             let m = p.start();
             p.bump_remap(T![infer]);
             parse_ts_type_parameter_name(p).or_add_diagnostic(p, expected_identifier);
-            return Present(m.complete(p, TS_INFERRED_TYPE));
+            return Present(m.complete(p, TS_INFER_TYPE));
         }
 
         // test ts_type_operator

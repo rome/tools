@@ -9,7 +9,7 @@ JsModule {
             },
             type_parameters: missing (required),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
-            ty: TsInferredType {
+            ty: TsInferType {
                 infer_token: INFER_KW@23..29 "infer" [] [Whitespace(" ")],
                 type_parameter: TsTypeParameterName {
                     ident_token: IDENT@29..30 "B" [] [],
@@ -35,7 +35,7 @@ JsModule {
                         optional_token_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@44..46 ":" [] [Whitespace(" ")],
-                            ty: TsInferredType {
+                            ty: TsInferType {
                                 infer_token: INFER_KW@46..52 "infer" [] [Whitespace(" ")],
                                 type_parameter: TsTypeParameterName {
                                     ident_token: IDENT@52..53 "U" [] [],
@@ -52,7 +52,7 @@ JsModule {
                         optional_token_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@56..58 ":" [] [Whitespace(" ")],
-                            ty: TsInferredType {
+                            ty: TsInferType {
                                 infer_token: INFER_KW@58..64 "infer" [] [Whitespace(" ")],
                                 type_parameter: TsTypeParameterName {
                                     ident_token: IDENT@64..65 "U" [] [],
@@ -79,7 +79,7 @@ JsModule {
         0: IDENT@19..21 "A" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@21..23 "=" [] [Whitespace(" ")]
-      4: TS_INFERRED_TYPE@23..30
+      4: TS_INFER_TYPE@23..30
         0: INFER_KW@23..29 "infer" [] [Whitespace(" ")]
         1: TS_TYPE_PARAMETER_NAME@29..30
           0: IDENT@29..30 "B" [] []
@@ -100,7 +100,7 @@ JsModule {
             2: (empty)
             3: TS_TYPE_ANNOTATION@44..53
               0: COLON@44..46 ":" [] [Whitespace(" ")]
-              1: TS_INFERRED_TYPE@46..53
+              1: TS_INFER_TYPE@46..53
                 0: INFER_KW@46..52 "infer" [] [Whitespace(" ")]
                 1: TS_TYPE_PARAMETER_NAME@52..53
                   0: IDENT@52..53 "U" [] []
@@ -112,7 +112,7 @@ JsModule {
             2: (empty)
             3: TS_TYPE_ANNOTATION@56..65
               0: COLON@56..58 ":" [] [Whitespace(" ")]
-              1: TS_INFERRED_TYPE@58..65
+              1: TS_INFER_TYPE@58..65
                 0: INFER_KW@58..64 "infer" [] [Whitespace(" ")]
                 1: TS_TYPE_PARAMETER_NAME@64..65
                   0: IDENT@64..65 "U" [] []

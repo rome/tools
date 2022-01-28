@@ -397,7 +397,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "TS_OPTIONAL_TUPLE_TYPE_ELEMENT",
         "TS_NAMED_TUPLE_TYPE_ELEMENT",
         "TS_TYPE_OPERATOR_TYPE",
-        "TS_INFERRED_TYPE",
+        "TS_INFER_TYPE",
         "TS_CONSTRUCTOR_TYPE",
         "TS_FUNCTION_TYPE",
         "TS_TYPE_PREDICATE",

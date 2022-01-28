@@ -2594,10 +2594,10 @@ impl TsIndexedAccessType {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsInferredType {
+pub struct TsInferType {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsInferredType {
+impl TsInferType {
     pub fn infer_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
@@ -3477,7 +3477,7 @@ pub enum TsType {
     TsFunctionType(TsFunctionType),
     TsImportType(TsImportType),
     TsIndexedAccessType(TsIndexedAccessType),
-    TsInferredType(TsInferredType),
+    TsInferType(TsInferType),
     TsIntersectionType(TsIntersectionType),
     TsMappedType(TsMappedType),
     TsNeverType(TsNeverType),
@@ -9182,8 +9182,8 @@ impl From<TsIndexedAccessType> for SyntaxNode {
 impl From<TsIndexedAccessType> for SyntaxElement {
     fn from(n: TsIndexedAccessType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsInferredType {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INFERRED_TYPE }
+impl AstNode for TsInferType {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INFER_TYPE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -9193,9 +9193,9 @@ impl AstNode for TsInferredType {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsInferredType {
+impl std::fmt::Debug for TsInferType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsInferredType")
+        f.debug_struct("TsInferType")
             .field(
                 "infer_token",
                 &support::DebugSyntaxResult(self.infer_token()),
@@ -9207,11 +9207,11 @@ impl std::fmt::Debug for TsInferredType {
             .finish()
     }
 }
-impl From<TsInferredType> for SyntaxNode {
-    fn from(n: TsInferredType) -> SyntaxNode { n.syntax }
+impl From<TsInferType> for SyntaxNode {
+    fn from(n: TsInferType) -> SyntaxNode { n.syntax }
 }
-impl From<TsInferredType> for SyntaxElement {
-    fn from(n: TsInferredType) -> SyntaxElement { n.syntax.into() }
+impl From<TsInferType> for SyntaxElement {
+    fn from(n: TsInferType) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsIntersectionType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INTERSECTION_TYPE }
@@ -14275,8 +14275,8 @@ impl From<TsImportType> for TsType {
 impl From<TsIndexedAccessType> for TsType {
     fn from(node: TsIndexedAccessType) -> TsType { TsType::TsIndexedAccessType(node) }
 }
-impl From<TsInferredType> for TsType {
-    fn from(node: TsInferredType) -> TsType { TsType::TsInferredType(node) }
+impl From<TsInferType> for TsType {
+    fn from(node: TsInferType) -> TsType { TsType::TsInferType(node) }
 }
 impl From<TsIntersectionType> for TsType {
     fn from(node: TsIntersectionType) -> TsType { TsType::TsIntersectionType(node) }
@@ -14359,7 +14359,7 @@ impl AstNode for TsType {
                 | TS_FUNCTION_TYPE
                 | TS_IMPORT_TYPE
                 | TS_INDEXED_ACCESS_TYPE
-                | TS_INFERRED_TYPE
+                | TS_INFER_TYPE
                 | TS_INTERSECTION_TYPE
                 | TS_MAPPED_TYPE
                 | TS_NEVER_TYPE
@@ -14399,7 +14399,7 @@ impl AstNode for TsType {
             TS_FUNCTION_TYPE => TsType::TsFunctionType(TsFunctionType { syntax }),
             TS_IMPORT_TYPE => TsType::TsImportType(TsImportType { syntax }),
             TS_INDEXED_ACCESS_TYPE => TsType::TsIndexedAccessType(TsIndexedAccessType { syntax }),
-            TS_INFERRED_TYPE => TsType::TsInferredType(TsInferredType { syntax }),
+            TS_INFER_TYPE => TsType::TsInferType(TsInferType { syntax }),
             TS_INTERSECTION_TYPE => TsType::TsIntersectionType(TsIntersectionType { syntax }),
             TS_MAPPED_TYPE => TsType::TsMappedType(TsMappedType { syntax }),
             TS_NEVER_TYPE => TsType::TsNeverType(TsNeverType { syntax }),
@@ -14441,7 +14441,7 @@ impl AstNode for TsType {
             TsType::TsFunctionType(it) => &it.syntax,
             TsType::TsImportType(it) => &it.syntax,
             TsType::TsIndexedAccessType(it) => &it.syntax,
-            TsType::TsInferredType(it) => &it.syntax,
+            TsType::TsInferType(it) => &it.syntax,
             TsType::TsIntersectionType(it) => &it.syntax,
             TsType::TsMappedType(it) => &it.syntax,
             TsType::TsNeverType(it) => &it.syntax,
@@ -14481,7 +14481,7 @@ impl std::fmt::Debug for TsType {
             TsType::TsFunctionType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsImportType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsIndexedAccessType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsInferredType(it) => std::fmt::Debug::fmt(it, f),
+            TsType::TsInferType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsIntersectionType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsMappedType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsNeverType(it) => std::fmt::Debug::fmt(it, f),
@@ -14521,7 +14521,7 @@ impl From<TsType> for SyntaxNode {
             TsType::TsFunctionType(it) => it.into(),
             TsType::TsImportType(it) => it.into(),
             TsType::TsIndexedAccessType(it) => it.into(),
-            TsType::TsInferredType(it) => it.into(),
+            TsType::TsInferType(it) => it.into(),
             TsType::TsIntersectionType(it) => it.into(),
             TsType::TsMappedType(it) => it.into(),
             TsType::TsNeverType(it) => it.into(),
@@ -15658,7 +15658,7 @@ impl std::fmt::Display for TsIndexedAccessType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsInferredType {
+impl std::fmt::Display for TsInferType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17834,9 +17834,7 @@ impl Debug for DebugSyntaxElement {
                 TS_INDEXED_ACCESS_TYPE => {
                     std::fmt::Debug::fmt(&TsIndexedAccessType::cast(node.clone()).unwrap(), f)
                 }
-                TS_INFERRED_TYPE => {
-                    std::fmt::Debug::fmt(&TsInferredType::cast(node.clone()).unwrap(), f)
-                }
+                TS_INFER_TYPE => std::fmt::Debug::fmt(&TsInferType::cast(node.clone()).unwrap(), f),
                 TS_INTERSECTION_TYPE => {
                     std::fmt::Debug::fmt(&TsIntersectionType::cast(node.clone()).unwrap(), f)
                 }

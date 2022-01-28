@@ -6437,7 +6437,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(TS_INDEXED_ACCESS_TYPE, children)
             }
-            TS_INFERRED_TYPE => {
+            TS_INFER_TYPE => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
@@ -6457,11 +6457,11 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_INFERRED_TYPE.to_unknown(),
+                        TS_INFER_TYPE.to_unknown(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(TS_INFERRED_TYPE, children)
+                slots.into_node(TS_INFER_TYPE, children)
             }
             TS_INTERSECTION_TYPE => {
                 let mut elements = (&children).into_iter();
