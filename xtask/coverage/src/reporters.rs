@@ -1,11 +1,13 @@
 use crate::runner::{TestRunOutcome, TestRunResult, TestSuite, TestSuiteInstance};
-use crate::TestResults;
+use crate::{Summary, TestResults};
 use ascii_table::{AsciiTable, Column};
 use colored::Colorize;
 use indicatif::{ProgressBar, ProgressDrawTarget};
 use rslint_errors::file::SimpleFile;
 use rslint_errors::Emitter;
 use rslint_parser::parse;
+use serde_json::Value;
+use std::collections::HashMap;
 use std::time::Instant;
 
 pub(crate) trait TestReporter: Send + Sync {
@@ -21,6 +23,9 @@ pub(crate) trait TestReporter: Send + Sync {
     fn test_completed(&mut self, _result: &TestRunResult) {}
     /// A test suite completed
     fn test_suite_completed(&mut self, _suite: &TestSuiteInstance, _result: &TestResults) {}
+
+    /// Called when all test suites have completed
+    fn run_completed(&mut self) {}
 }
 
 pub(crate) struct CliProgressReporter {
@@ -166,12 +171,14 @@ fn print_detailed_test_result(pb: &ProgressBar, result: &TestRunResult) {
 /// Reporter that prints a summary for each phase (tests loaded, test suite completed) to the console output
 pub(crate) struct SummaryReporter {
     start: Instant,
+    results: HashMap<String, Summary>,
 }
 
 impl Default for SummaryReporter {
     fn default() -> Self {
         Self {
             start: Instant::now(),
+            results: HashMap::default(),
         }
     }
 }
@@ -201,43 +208,86 @@ impl TestReporter for SummaryReporter {
             self.start.elapsed().as_secs_f32()
         );
 
-        let panicked = results.summary.panics;
-        let errored = results.summary.failed;
-        let passed = results.summary.passed;
-        let coverage = format!("{:.2}", results.summary.coverage);
+        self.results
+            .insert(suite.name().to_string(), results.summary.clone());
+    }
 
-        let total = panicked + errored + passed;
-
+    fn run_completed(&mut self) {
         let mut table = AsciiTable::default();
+        let results = std::mem::take(&mut self.results);
+        let has_multiple_test_suites = results.len() > 1;
 
-        let mut counter = 0usize;
-        let mut create_column = |name: colored::ColoredString| {
+        if has_multiple_test_suites {
+            table.columns.insert(
+                0,
+                Column {
+                    header: "Test suite".into(),
+                    align: ascii_table::Align::Left,
+                    ..Column::default()
+                },
+            );
+        }
+
+        let mut create_number_column = |name: colored::ColoredString| {
             let column = Column {
                 header: name.to_string(),
-                align: ascii_table::Align::Center,
+                align: ascii_table::Align::Right,
                 ..Column::default()
             };
-            table.columns.insert(counter, column);
-            counter += 1;
+            table.columns.insert(table.columns.len(), column);
         };
-        create_column("Tests ran".into());
-        create_column("Passed".green());
-        create_column("Failed".red());
-        create_column("Panics".red());
-        create_column("Coverage".cyan());
-        let numbers: Vec<&dyn std::fmt::Display> =
-            vec![&total, &passed, &errored, &panicked, &coverage];
 
-        table.print(vec![numbers]);
+        create_number_column("Tests ran".into());
+        create_number_column("Passed".green());
+        create_number_column("Failed".red());
+        create_number_column("Panics".red());
+        create_number_column("Coverage".cyan());
+
+        let rows = results.into_iter().map(|(suite, summary)| {
+            let panicked = summary.panics;
+            let errored = summary.failed;
+            let passed = summary.passed;
+            let coverage = format!("{:.2}", summary.coverage);
+
+            let total = panicked + errored + passed;
+
+            let mut values = if has_multiple_test_suites {
+                vec![suite.to_string()]
+            } else {
+                Vec::default()
+            };
+
+            values.extend([
+                total.to_string(),
+                passed.to_string(),
+                errored.to_string(),
+                panicked.to_string(),
+                coverage,
+            ]);
+
+            values
+        });
+
+        table.print(rows);
     }
 }
 
-pub(crate) struct JsonReporter;
+#[derive(Default)]
+pub(crate) struct JsonReporter {
+    results: HashMap<String, Value>,
+}
 
 impl TestReporter for JsonReporter {
-    fn test_suite_completed(&mut self, _suite: &TestSuiteInstance, result: &TestResults) {
-        let json = serde_json::to_string(result).unwrap();
-        println!("{}", json);
+    fn test_suite_completed(&mut self, suite: &TestSuiteInstance, result: &TestResults) {
+        self.results.insert(
+            suite.name().to_string(),
+            serde_json::to_value(result).unwrap(),
+        );
+    }
+
+    fn run_completed(&mut self) {
+        let results = std::mem::take(&mut self.results);
+        println!("{}", serde_json::to_string(&results).unwrap());
     }
 }
 
@@ -289,6 +339,12 @@ impl TestReporter for MulticastTestReporter {
     fn test_suite_completed(&mut self, suite: &TestSuiteInstance, result: &TestResults) {
         for reporter in &mut self.0 {
             reporter.test_suite_completed(suite, result);
+        }
+    }
+
+    fn run_completed(&mut self) {
+        for reporter in &mut self.0 {
+            reporter.run_completed();
         }
     }
 }

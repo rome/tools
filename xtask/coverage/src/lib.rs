@@ -7,7 +7,7 @@ pub mod typescript;
 
 use crate::reporters::{
     CliProgressReporter, DiagnosticsReporter, JsonReporter, MulticastTestReporter, RastReporter,
-    SummaryReporter,
+    SummaryReporter, TestReporter,
 };
 use crate::runner::{run_test_suite, TestRunContext, TestSuite};
 use crate::test262::Test262TestSuite;
@@ -40,7 +40,7 @@ pub struct TestResults {
     pub details: Vec<TestResult>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Summary {
     #[serde(rename = "a")]
     pub tests_ran: u32,
@@ -111,23 +111,16 @@ impl TestResults {
 }
 
 pub fn run(
-    language: &str,
+    language: Option<&str>,
     query: Option<&str>,
     json: bool,
     show_rast: bool,
     show_diagnostics: bool,
 ) {
-    let language = language.to_lowercase();
-    let loader: Box<dyn TestSuite> = match language.as_str() {
-        "javascript" | "js" => Box::new(Test262TestSuite),
-        "typescript" | "ts" => Box::new(TypeScriptTestSuite),
-        other => panic!("Unknown language: {}", other),
-    };
-
-    let mut reporters = MulticastTestReporter::new(Box::new(CliProgressReporter::default()));
+    let mut reporters = CompositeTestReporter::new(Box::new(CliProgressReporter::default()));
 
     if json {
-        reporters.add(Box::new(JsonReporter));
+        reporters.add(Box::new(JsonReporter::default()));
     } else {
         reporters.add(Box::new(SummaryReporter::default()));
     }
@@ -140,7 +133,7 @@ pub fn run(
         reporters.add(Box::new(DiagnosticsReporter));
     }
 
-    let context = TestRunContext {
+    let mut context = TestRunContext {
         query: query.map(|s| s.to_string()),
         reporter: &mut reporters,
         pool: &yastl::Pool::with_config(
@@ -149,9 +142,29 @@ pub fn run(
         ),
     };
 
-    let results = run_test_suite(loader.as_ref(), context);
+    let mut ran_any_tests = false;
+    for test_suite in get_test_suites(language) {
+        let result = run_test_suite(test_suite.as_ref(), &mut context);
+        ran_any_tests = ran_any_tests || result.summary.tests_ran > 0
+    }
 
-    if results.passed_tests() == 0 {
+    reporters.run_completed();
+
+    if !ran_any_tests {
         std::process::exit(1);
     }
+}
+
+fn get_test_suites(language: Option<&str>) -> Vec<Box<dyn TestSuite>> {
+    language
+        .map(|language| {
+            let test_suite: Box<dyn TestSuite> = match language.to_lowercase().as_str() {
+                "js" | "javascript" => Box::new(Test262TestSuite),
+                "ts" | "typescript" => Box::new(TypeScriptTestSuite),
+                other => panic!("Unknown language: {}", other),
+            };
+
+            vec![test_suite]
+        })
+        .unwrap_or_else(|| vec![Box::new(Test262TestSuite), Box::new(TypeScriptTestSuite)])
 }
