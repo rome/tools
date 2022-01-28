@@ -99,10 +99,10 @@ pub(crate) struct TestRunContext<'a> {
 
 pub(crate) fn run_test_suite(
     test_suite: &dyn TestSuite,
-    mut context: TestRunContext,
+    context: &mut TestRunContext,
 ) -> TestResults {
     context.reporter.test_suite_started(test_suite);
-    let instance = load_tests(test_suite, &mut context);
+    let instance = load_tests(test_suite, context);
     context.reporter.test_suite_run_started(&instance);
 
     std::panic::set_hook(Box::new(|_| {}));

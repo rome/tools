@@ -1,17 +1,16 @@
 use ascii_table::{AsciiTable, Column};
 use colored::Colorize;
-use std::char::decode_utf16;
 use std::collections::{HashMap, HashSet};
-use std::fs::File;
-use std::io::Read;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use crate::{Outcome, TestResult, TestResults};
 
-pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
-    let base_results = read_test_results(base, "base");
-    let new_results = read_test_results(new, "new");
-
+pub fn emit_compare(
+    base_results: &TestResults,
+    new_results: &TestResults,
+    test_suite: &str,
+    markdown: bool,
+) {
     let base_total = base_results.summary.tests_ran as isize;
     let new_total = new_results.summary.tests_ran as isize;
     let total_diff = new_total - base_total;
@@ -32,7 +31,7 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
     let new_coverage = new_results.summary.coverage;
     let coverage_diff = new_coverage - base_coverage;
 
-    let report_diff = compare_diffs(&base_results, &new_results);
+    let report_diff = compare_diffs(base_results, new_results);
 
     if markdown {
         /// Generates a proper diff format, with some bold text if things change.
@@ -73,6 +72,8 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
                 if diff != 0 { "**" } else { "" }
             )
         }
+
+        println!("\n### {}\n", test_suite);
 
         println!("| Test result | `main` count | This PR count | Difference |");
         println!("| :---------: | :----------: | :-----------: | :--------: |");
@@ -174,7 +175,7 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
             counter += 1;
         };
 
-        println!("Test262 conformance changes:");
+        println!("{} conformance changes:", test_suite);
 
         create_column("Tests result".into());
         create_column("main branch".green());
@@ -192,74 +193,6 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
             vec![&"Panics", &base_panics, &new_panics, &panics_diff];
         table.print(vec![passed_row, failed_row, panics_row]);
     }
-}
-
-fn read_test_results(path: &Path, name: &'static str) -> TestResults {
-    let mut file = File::open(path)
-        .unwrap_or_else(|err| panic!("Can't read the file of the {} results: {:?}", name, err));
-
-    let mut buffer = Vec::new();
-    file.read_to_end(&mut buffer)
-        .unwrap_or_else(|err| panic!("Can't read the file of the {} results: {:?}", name, err));
-
-    enum FileEncoding {
-        Unknown,
-        Utf8,
-        Utf16Le,
-        Utf16Be,
-    }
-
-    let mut encoding = FileEncoding::Unknown;
-    let mut content: &[u8] = &buffer;
-
-    // Read the BOM if present and skip it
-    let bom = content.get(0..3);
-    if let Some(&[0xef, 0xbb, 0xbf]) = bom {
-        content = &content[3..];
-        encoding = FileEncoding::Utf8;
-    } else if let Some(&[0xfe, 0xff, _]) = bom {
-        content = &content[2..];
-        encoding = FileEncoding::Utf16Be;
-    } else if let Some(&[0xff, 0xfe, _]) = bom {
-        content = &content[2..];
-        encoding = FileEncoding::Utf16Le;
-    }
-
-    if matches!(encoding, FileEncoding::Unknown | FileEncoding::Utf8) {
-        // Attempt to parse as UTF-8
-        let result = serde_json::from_slice(content);
-
-        if let FileEncoding::Utf8 = encoding {
-            // If the file is known to be UTF-8 unwrap the result
-            return result.unwrap_or_else(|err| {
-                panic!(
-                    "Can't parse the JSON file of the {} results: {:?}",
-                    name, err
-                )
-            });
-        } else if let Ok(result) = result {
-            // Otherwise only return if the parsing was successful
-            return result;
-        }
-    }
-
-    // If a UTF-16 BOM was found or an error was encountered, attempt to parse as UTF-16
-    let content_str = decode_utf16(content.chunks(2).map(|bytes| match encoding {
-        FileEncoding::Utf16Be => u16::from_be_bytes([bytes[0], bytes[1]]),
-        FileEncoding::Utf16Le => u16::from_le_bytes([bytes[0], bytes[1]]),
-        // If the encoding is unknown attempt to decode in native endianness
-        FileEncoding::Unknown => u16::from_ne_bytes([bytes[0], bytes[1]]),
-        FileEncoding::Utf8 => unreachable!(),
-    }))
-    .collect::<Result<String, _>>()
-    .unwrap_or_else(|err| panic!("Can't read the file of the {} results: {:?}", name, err));
-
-    serde_json::from_str(&content_str).unwrap_or_else(|err| {
-        panic!(
-            "Can't parse the JSON file of the {} results: {:?}",
-            name, err
-        )
-    })
 }
 
 struct ReportDiff<'a> {

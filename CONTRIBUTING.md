@@ -60,7 +60,7 @@ It's strongly advised to **run this command before committing new changes**.
 
 #### `cargo coverage`
 
-This command will check and report parser coverage against different test suites.
+This command will check and report parser conformance against different test suites.
 We currently target the [Official ECMAScript Conformance Test Suite](https://github.com/tc39/test262) and
 the [Typescript Test Suite](https://github.com/microsoft/TypeScript/tree/main/tests)
 

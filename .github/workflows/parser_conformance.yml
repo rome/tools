@@ -1,5 +1,5 @@
 # Test coverage job. It is run on pull request because it prints the results via comment
-name: Test262 coverage and comparison
+name: Parser conformance and comparison
 on:
   pull_request:
     branches:
@@ -11,7 +11,7 @@ env:
 
 jobs:
   coverage:
-    name: Test262 coverage
+    name: Parser conformance
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -47,21 +47,21 @@ jobs:
 
       - name: Run Test262 suite
         continue-on-error: true
-        run: cargo coverage js --json > new_results.json
+        run: cargo coverage --json > new_results.json
 
       - name: Checkout Main Branch
         run: git checkout main
 
       - name: Run Test262 suite on main branch
         continue-on-error: true
-        run: cargo coverage js --json > base_results.json
+        run: cargo coverage --json > base_results.json
 
       - name: Compare results on ${{ matrix.os }}
         if: github.event_name == 'pull_request'
         id: comparison
         shell: bash
         run: |
-          echo "### Test262 comparison coverage results on ${{ matrix.os }}" > output
+          echo "## Parser conformance results on ${{ matrix.os }}" > output
           cargo coverage compare ./base_results.json ./new_results.json --markdown >> output
           cat output
           comment="$(cat output)"
@@ -81,7 +81,7 @@ jobs:
         id: previous-comment
         with:
           issue-number: ${{ steps.pr-number.outputs.pr }}
-          body-includes: Test262 comparison coverage results on ${{ matrix.os }}
+          body-includes: Parser conformance results on ${{ matrix.os }}
 
       - name: Update existing comment
         if: github.event_name == 'pull_request' && steps.previous-comment.outputs.comment-id
