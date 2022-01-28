@@ -96,6 +96,9 @@ fn collect_tests(s: &str) -> Vec<Test> {
         let (language, name, ok) = if let Some(first_line) = first_line.strip_prefix("test ts ") {
             let name = first_line.to_string();
             ("ts", name, true)
+        } else if let Some(first_line) = first_line.strip_prefix("test_err ts ") {
+            let name = first_line.to_string();
+            ("ts", name, false)
         } else if let Some(first_line) = first_line.strip_prefix("test ") {
             let name = first_line.to_string();
             ("js", name, true)

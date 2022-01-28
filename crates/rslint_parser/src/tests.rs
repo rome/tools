@@ -143,21 +143,6 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str) {
     expect_file![path].assert_eq(&actual)
 }
 
-#[cfg(test)]
-fn run_ts_and_expect_no_errors(path: &str, _: &str, _: &str) {
-    let path = PathBuf::from(path);
-    let text = std::fs::read_to_string(&path).unwrap();
-
-    let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text);
-    let errors = parse.errors();
-    assert_errors_are_absent(errors, &path, &parse.syntax());
-    let actual = format!("{}\n\n{:#?}", ast, parse.syntax());
-    println!("{}", actual);
-
-    let path = path.with_extension("rast");
-    expect_file![path].assert_eq(&actual)
-}
-
 mod parser {
     mod js {
         mod ok {
@@ -170,7 +155,11 @@ mod parser {
 
     mod ts {
         mod ok {
-            tests_macros::gen_tests! {"test_data/inline/ok/**/*.ts", crate::tests::run_ts_and_expect_no_errors, ""}
+            tests_macros::gen_tests! {"test_data/inline/ok/**/*.ts", crate::tests::run_and_expect_no_errors, ""}
+        }
+
+        mod err {
+            tests_macros::gen_tests! {"test_data/inline/err/**/*.ts", crate::tests::run_and_expect_errors, ""}
         }
     }
 }

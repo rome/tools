@@ -4,7 +4,7 @@ use super::class::parse_initializer_clause;
 use super::expr::{
     parse_assignment_expression_or_higher, parse_lhs_expr, parse_literal_expression, parse_name,
 };
-use super::object::parse_object_member_name;
+use super::object::{parse_object_member_name, parse_computed_member_name};
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
 use crate::parser::{ParserProgress, RecoveryResult, ToDiagnostic};
@@ -300,7 +300,35 @@ fn type_member_semi(p: &mut Parser) {
 /// An individual enum member
 fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
     let member = p.start();
-    let _ = parse_object_member_name(p);
+    match p.cur() {
+        T!['['] => { parse_computed_member_name(p); },
+        JS_STRING_LITERAL | T![ident] => {
+            let m = p.start();
+            p.bump_any();
+            m.complete(p, JS_LITERAL_MEMBER_NAME);
+        }
+        JS_NUMBER_LITERAL => {
+            let m = p.start();
+
+            let member_token = p.cur_tok();
+            let err = p
+                .err_builder("an enum member cannot be a numeric literal")
+                .primary(member_token.range(), "");
+            p.error(err);
+
+            p.bump_any();
+            m.complete(p, JS_LITERAL_MEMBER_NAME);
+        }
+        t if t.is_keyword() => {
+            let m = p.start();
+            p.bump_remap(T![ident]);
+            m.complete(p, JS_LITERAL_MEMBER_NAME);
+        }
+        _ => {
+            member.abandon(p);
+            return Absent;
+        }
+    }
     let _ = parse_initializer_clause(p, ExpressionContext::default());
     Present(member.complete(p, TS_ENUM_MEMBER))
 }
@@ -346,15 +374,19 @@ impl ParseSeparatedList for EnumMembersList {
 // enum A {}
 // enum B { a, b, c }
 // const enum C { A = 1, B = A * 2, ["A"] = 3, }
+
+// test_err ts invalid_typescript_enum
+// enum A { 1 }
 pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
+    println!("Try ts enum");
     let m = p.start();
 
     p.eat(T![const]);
     p.expect(T![enum]);
     parse_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
-    p.expect(T!['{']);
-
-    EnumMembersList.parse_list(p);
+    if p.expect(T!['{']) {
+        EnumMembersList.parse_list(p);
+    }
 
     p.expect(T!['}']);
     m.complete(p, TS_ENUM)
