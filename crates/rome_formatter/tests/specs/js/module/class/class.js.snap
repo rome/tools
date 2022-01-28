@@ -1,11 +1,14 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 43
+assertion_line: 57
 expression: class.js
 
 ---
 # Input
 class Foo extends Boar {
+	static { // some comment
+		this.a = "test";
+	}
 	constructor(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, c = d) {
 		super();
 	}
@@ -47,6 +50,10 @@ x = class aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa extends bbbbbbb
 ---
 # Output
 class Foo extends Boar {
+	static {
+		// some comment
+		this.a = "test";
+	}
 	constructor(
 		aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
 		bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,

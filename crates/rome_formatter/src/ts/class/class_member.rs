@@ -19,7 +19,9 @@ impl ToFormatElement for JsAnyClassMember {
             JsAnyClassMember::JsUnknownMember(unknown_member) => {
                 unknown_member.to_format_element(formatter)
             }
-            JsAnyClassMember::JsStaticInitializationBlockClassMember(_) => todo!(),
+            JsAnyClassMember::JsStaticInitializationBlockClassMember(node) => {
+                node.to_format_element(formatter)
+            }
         }
     }
 }

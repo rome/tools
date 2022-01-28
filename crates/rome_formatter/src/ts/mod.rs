@@ -12,7 +12,6 @@ mod object_members;
 mod parameter_list;
 mod root;
 mod statements;
-mod template;
 mod unknown;
 
 pub(crate) use statements::format_statements;

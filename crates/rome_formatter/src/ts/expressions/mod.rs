@@ -1,3 +1,4 @@
+mod any_template_element;
 mod array_expr;
 mod arrow_expr;
 mod call_expression;
@@ -9,4 +10,7 @@ mod object_expression;
 mod sequence_expression;
 mod static_member_expression;
 mod super_expression;
+mod template;
+mod template_chunk_element;
+mod template_element;
 mod update_expression;

@@ -1,4 +1,7 @@
 class Foo extends Boar {
+	static { // some comment
+		this.a = "test";
+	}
 	constructor(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, c = d) {
 		super();
 	}
