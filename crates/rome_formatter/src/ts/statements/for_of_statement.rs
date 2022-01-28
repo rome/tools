@@ -8,10 +8,10 @@ use crate::{
 impl ToFormatElement for JsForOfStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let for_token = formatter.format_token(&self.for_token()?)?;
-        let initializer = formatter.format_node(self.initializer()?)?;
+        let initializer = formatter.format_node(&self.initializer()?)?;
         let of_token = formatter.format_token(&self.of_token()?)?;
-        let expression = formatter.format_node(self.expression()?)?;
-        let body = formatter.format_node(self.body()?)?;
+        let expression = formatter.format_node(&self.expression()?)?;
+        let body = formatter.format_node(&self.body()?)?;
 
         Ok(format_elements![
             for_token,

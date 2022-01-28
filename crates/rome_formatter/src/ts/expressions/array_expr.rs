@@ -25,7 +25,7 @@ impl ToFormatElement for JsArrayExpression {
                         let node = element.node()?;
                         let is_hole = matches!(node, JsAnyArrayElement::JsArrayHole(_));
 
-                        let elem = formatter.format_node(node.clone())?;
+                        let elem = formatter.format_node(&node)?;
                         let separator = if is_hole || index != last_index {
                             // If the previous element was empty or this is not the last element, always print a separator
                             if let Some(separator) = element.trailing_separator()? {

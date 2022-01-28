@@ -11,9 +11,9 @@ impl ToFormatElement for JsTryStatement {
         Ok(format_elements![
             formatter.format_token(&self.try_token()?)?,
             space_token(),
-            formatter.format_node(self.body()?)?,
+            formatter.format_node(&self.body()?)?,
             space_token(),
-            formatter.format_node(self.catch_clause()?)?
+            formatter.format_node(&self.catch_clause()?)?
         ])
     }
 }
@@ -21,7 +21,7 @@ impl ToFormatElement for JsTryStatement {
 impl ToFormatElement for JsTryFinallyStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let formatted_catch_clause = if let Some(catch_clause) = self.catch_clause() {
-            format_elements![space_token(), formatter.format_node(catch_clause)?]
+            format_elements![space_token(), formatter.format_node(&catch_clause)?]
         } else {
             empty_element()
         };
@@ -29,10 +29,10 @@ impl ToFormatElement for JsTryFinallyStatement {
         Ok(format_elements![
             formatter.format_token(&self.try_token()?)?,
             space_token(),
-            formatter.format_node(self.body()?)?,
+            formatter.format_node(&self.body()?)?,
             formatted_catch_clause,
             space_token(),
-            formatter.format_node(self.finally_clause()?)?
+            formatter.format_node(&self.finally_clause()?)?
         ])
     }
 }
@@ -43,15 +43,15 @@ impl ToFormatElement for JsCatchClause {
             Ok(format_elements![
                 formatter.format_token(&self.catch_token()?)?,
                 space_token(),
-                formatter.format_node(declaration)?,
+                formatter.format_node(&declaration)?,
                 space_token(),
-                formatter.format_node(self.body()?)?
+                formatter.format_node(&self.body()?)?
             ])
         } else {
             Ok(format_elements![
                 formatter.format_token(&self.catch_token()?)?,
                 space_token(),
-                formatter.format_node(self.body()?)?
+                formatter.format_node(&self.body()?)?
             ])
         }
     }
@@ -64,7 +64,7 @@ impl ToFormatElement for JsCatchDeclaration {
             |open_token_trailing, close_token_leading| {
                 Ok(soft_indent(format_elements![
                     open_token_trailing,
-                    formatter.format_node(self.binding()?)?,
+                    formatter.format_node(&self.binding()?)?,
                     close_token_leading,
                 ]))
             },
@@ -78,7 +78,7 @@ impl ToFormatElement for JsFinallyClause {
         Ok(format_elements![
             formatter.format_token(&self.finally_token()?)?,
             space_token(),
-            formatter.format_node(self.body()?)?
+            formatter.format_node(&self.body()?)?
         ])
     }
 }

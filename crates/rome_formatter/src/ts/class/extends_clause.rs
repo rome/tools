@@ -8,7 +8,7 @@ impl ToFormatElement for JsExtendsClause {
         Ok(format_elements![
             formatter.format_token(&self.extends_token()?)?,
             space_token(),
-            formatter.format_node(self.super_class()?)?
+            formatter.format_node(&self.super_class()?)?
         ])
     }
 }

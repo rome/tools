@@ -10,7 +10,7 @@ mod script;
 pub fn format_module_item_list(list: JsModuleItemList, formatter: &Formatter) -> FormatElement {
     join_elements_hard_line(list.iter().map(|module_item| {
         let snapshot = formatter.snapshot();
-        let elem = match formatter.format_node(module_item.clone()) {
+        let elem = match formatter.format_node(&module_item) {
             Ok(result) => result,
             Err(_) => {
                 formatter.restore(snapshot);

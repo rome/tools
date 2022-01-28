@@ -20,12 +20,12 @@ impl ToFormatElement for JsMethodObjectMember {
         Ok(format_elements![
             async_token,
             star_token,
-            formatter.format_node(self.name()?)?,
+            formatter.format_node(&self.name()?)?,
             // TODO self.type_params()
-            formatter.format_node(self.parameters()?)?,
+            formatter.format_node(&self.parameters()?)?,
             // TODO self.return_type()
             space_token(),
-            formatter.format_node(self.body()?)?,
+            formatter.format_node(&self.body()?)?,
         ])
     }
 }

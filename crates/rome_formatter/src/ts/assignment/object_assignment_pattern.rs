@@ -52,12 +52,12 @@ impl ToFormatElement for JsAnyObjectAssignmentPatternMember {
 impl ToFormatElement for JsObjectAssignmentPatternShorthandProperty {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let init_node = if let Some(node) = self.init() {
-            format_elements![space_token(), formatter.format_node(node)?]
+            format_elements![space_token(), formatter.format_node(&node)?]
         } else {
             empty_element()
         };
         Ok(format_elements![
-            formatter.format_node(self.identifier()?)?,
+            formatter.format_node(&self.identifier()?)?,
             init_node
         ])
     }
@@ -66,15 +66,15 @@ impl ToFormatElement for JsObjectAssignmentPatternShorthandProperty {
 impl ToFormatElement for JsObjectAssignmentPatternProperty {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let init_node = if let Some(node) = self.init() {
-            format_elements![space_token(), formatter.format_node(node)?]
+            format_elements![space_token(), formatter.format_node(&node)?]
         } else {
             empty_element()
         };
         Ok(format_elements![
-            formatter.format_node(self.member()?)?,
+            formatter.format_node(&self.member()?)?,
             formatter.format_token(&self.colon_token()?)?,
             space_token(),
-            formatter.format_node(self.pattern()?)?,
+            formatter.format_node(&self.pattern()?)?,
             init_node,
         ])
     }
@@ -84,7 +84,7 @@ impl ToFormatElement for JsObjectAssignmentPatternRest {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
             formatter.format_token(&self.dotdotdot_token()?)?,
-            formatter.format_node(self.target()?)?,
+            formatter.format_node(&self.target()?)?,
         ])
     }
 }

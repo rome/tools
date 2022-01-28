@@ -9,7 +9,7 @@ impl ToFormatElement for JsDoWhileStatement {
         Ok(format_elements![
             formatter.format_token(&self.do_token()?)?,
             space_token(),
-            formatter.format_node(self.body()?)?,
+            formatter.format_node(&self.body()?)?,
             space_token(),
             formatter.format_token(&self.while_token()?)?,
             space_token(),
@@ -17,7 +17,7 @@ impl ToFormatElement for JsDoWhileStatement {
                 &self.l_paren_token()?,
                 |open_token_trailing, close_token_leading| Ok(soft_indent(format_elements![
                     open_token_trailing,
-                    formatter.format_node(self.test()?)?,
+                    formatter.format_node(&self.test()?)?,
                     close_token_leading,
                 ])),
                 &self.r_paren_token()?,
