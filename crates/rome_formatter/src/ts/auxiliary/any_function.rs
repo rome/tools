@@ -41,9 +41,22 @@ impl ToFormatElement for JsAnyFunction {
 
         tokens.push(space_token());
 
+        // We create a new group for everything after the parameters. That way if the parameters
+        // get broken, we don't line break the arrow and the body if they can fit on the same line.
+        // For instance:
+        //
+        //   (
+        //     a = [abcdefghijklmnopqrstuvwxyz123456789],
+        //     b = [abcdefghijklmnopqrstuvwxyz123456789],
+        //   ) =>
+        //     a + b
+        //
+        // The line break for `a + b` is not necessary
+        //
+        let mut body_group = vec![];
         if let JsAnyFunction::JsArrowFunctionExpression(arrow) = self {
-            tokens.push(formatter.format_token(&arrow.fat_arrow_token()?)?);
-            tokens.push(space_token());
+            body_group.push(formatter.format_token(&arrow.fat_arrow_token()?)?);
+            body_group.push(space_token());
         }
 
         let body = self.body()?;
@@ -75,7 +88,6 @@ impl ToFormatElement for JsAnyFunction {
                 | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsObjectExpression(_))
         );
 
-        // If the body has a soft line break, we do not insert one.
         if body_has_soft_line_break {
             tokens.push(formatter.format_node(&self.body()?)?);
         } else {
@@ -84,7 +96,9 @@ impl ToFormatElement for JsAnyFunction {
             ));
         }
 
-        Ok(group_elements(concat_elements(tokens)))
+        tokens.push(group_elements(concat_elements(body_group)));
+
+        Ok(concat_elements(tokens))
     }
 }
 

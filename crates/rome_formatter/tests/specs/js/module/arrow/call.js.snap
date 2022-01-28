@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 43
+assertion_line: 57
 expression: call.js
 
 ---
@@ -97,6 +97,7 @@ const composition = (ViewComponent, ContainerComponent) =>
 	class extends React.Component {
 		static propTypes = {};
 	};
+
 romise.then(
 	(result) =>
 		result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail",
