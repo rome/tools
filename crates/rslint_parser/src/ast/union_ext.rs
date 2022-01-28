@@ -149,13 +149,13 @@ impl JsAnyFunction {
         }
     }
 
-    pub fn return_type(&self) -> Option<TsReturnTypeAnnotation> {
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         match self {
-            JsAnyFunction::JsArrowFunctionExpression(expr) => expr.return_type(),
-            JsAnyFunction::JsFunctionExpression(expr) => expr.return_type(),
-            JsAnyFunction::JsFunctionStatement(statement) => statement.return_type(),
-            JsAnyFunction::JsExportFunctionClause(clause) => clause.return_type(),
-            JsAnyFunction::JsExportDefaultFunctionClause(clause) => clause.return_type(),
+            JsAnyFunction::JsArrowFunctionExpression(expr) => expr.return_type_annotation(),
+            JsAnyFunction::JsFunctionExpression(expr) => expr.return_type_annotation(),
+            JsAnyFunction::JsFunctionStatement(statement) => statement.return_type_annotation(),
+            JsAnyFunction::JsExportFunctionClause(clause) => clause.return_type_annotation(),
+            JsAnyFunction::JsExportDefaultFunctionClause(clause) => clause.return_type_annotation(),
         }
     }
 

@@ -67,7 +67,7 @@ JsModule {
                             ],
                             r_paren_token: R_PAREN@60..61 ")" [] [],
                         },
-                        type_annotation: TsReturnTypeAnnotation {
+                        return_type_annotation: TsReturnTypeAnnotation {
                             colon_token: COLON@61..63 ":" [] [Whitespace(" ")],
                             ty: TsTypePredicate {
                                 asserts_token: missing (optional),
@@ -111,7 +111,7 @@ JsModule {
                             ],
                             r_paren_token: R_PAREN@90..91 ")" [] [],
                         },
-                        type_annotation: TsReturnTypeAnnotation {
+                        return_type_annotation: TsReturnTypeAnnotation {
                             colon_token: COLON@91..93 ":" [] [Whitespace(" ")],
                             ty: TsTypePredicate {
                                 asserts_token: missing (optional),
@@ -165,7 +165,7 @@ JsModule {
                                             ],
                                             r_paren_token: R_PAREN@125..126 ")" [] [],
                                         },
-                                        return_type: TsReturnTypeAnnotation {
+                                        return_type_annotation: TsReturnTypeAnnotation {
                                             colon_token: COLON@126..128 ":" [] [Whitespace(" ")],
                                             ty: TsTypePredicate {
                                                 asserts_token: missing (optional),
@@ -245,7 +245,7 @@ JsModule {
                         ],
                         r_paren_token: R_PAREN@191..192 ")" [] [],
                     },
-                    return_type: TsReturnTypeAnnotation {
+                    return_type_annotation: TsReturnTypeAnnotation {
                         colon_token: COLON@192..194 ":" [] [Whitespace(" ")],
                         ty: TsTypePredicate {
                             asserts_token: missing (optional),

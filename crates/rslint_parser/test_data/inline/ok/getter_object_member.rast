@@ -143,7 +143,7 @@ JsModule {
                                             items: JsParameterList [],
                                             r_paren_token: R_PAREN@169..171 ")" [] [Whitespace(" ")],
                                         },
-                                        return_type: missing (optional),
+                                        return_type_annotation: missing (optional),
                                         body: JsFunctionBody {
                                             l_curly_token: L_CURLY@171..172 "{" [] [],
                                             directives: JsDirectiveList [],

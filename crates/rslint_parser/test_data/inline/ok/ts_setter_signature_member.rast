@@ -96,7 +96,7 @@ JsModule {
                             ],
                             r_paren_token: R_PAREN@135..137 ")" [] [Whitespace(" ")],
                         },
-                        type_annotation: missing (optional),
+                        return_type_annotation: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@137..138 "}" [] [],

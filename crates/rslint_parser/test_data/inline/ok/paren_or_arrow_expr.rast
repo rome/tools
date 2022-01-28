@@ -31,7 +31,7 @@ JsModule {
                     ],
                     r_paren_token: R_PAREN@11..13 ")" [] [Whitespace(" ")],
                 },
-                return_type: missing (optional),
+                return_type_annotation: missing (optional),
                 fat_arrow_token: FAT_ARROW@13..16 "=>" [] [Whitespace(" ")],
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@16..17 "{" [] [],
@@ -115,7 +115,7 @@ JsModule {
                     ],
                     r_paren_token: R_PAREN@56..58 ")" [] [Whitespace(" ")],
                 },
-                return_type: missing (optional),
+                return_type_annotation: missing (optional),
                 fat_arrow_token: FAT_ARROW@58..61 "=>" [] [Whitespace(" ")],
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@61..62 "{" [] [],
@@ -150,7 +150,7 @@ JsModule {
                     ],
                     r_paren_token: R_PAREN@77..79 ")" [] [Whitespace(" ")],
                 },
-                return_type: missing (optional),
+                return_type_annotation: missing (optional),
                 fat_arrow_token: FAT_ARROW@79..82 "=>" [] [Whitespace(" ")],
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@82..83 "{" [] [],

@@ -37,7 +37,7 @@ JsModule {
                             items: JsParameterList [],
                             r_paren_token: R_PAREN@40..41 ")" [] [],
                         },
-                        type_annotation: TsReturnTypeAnnotation {
+                        return_type_annotation: TsReturnTypeAnnotation {
                             colon_token: COLON@41..43 ":" [] [Whitespace(" ")],
                             ty: TsNumberType {
                                 number_token: NUMBER_KW@43..50 "number" [] [Whitespace(" ")],
@@ -84,7 +84,7 @@ JsModule {
                             items: JsParameterList [],
                             r_paren_token: R_PAREN@76..77 ")" [] [],
                         },
-                        type_annotation: TsReturnTypeAnnotation {
+                        return_type_annotation: TsReturnTypeAnnotation {
                             colon_token: COLON@77..79 ":" [] [Whitespace(" ")],
                             ty: TsNumberType {
                                 number_token: NUMBER_KW@79..86 "number" [] [Whitespace(" ")],
@@ -156,7 +156,7 @@ JsModule {
                             ],
                             r_paren_token: R_PAREN@132..133 ")" [] [],
                         },
-                        type_annotation: TsReturnTypeAnnotation {
+                        return_type_annotation: TsReturnTypeAnnotation {
                             colon_token: COLON@133..135 ":" [] [Whitespace(" ")],
                             ty: TsAnyType {
                                 any_token: ANY_KW@135..139 "any" [] [Whitespace(" ")],
@@ -283,7 +283,7 @@ JsModule {
                             ],
                             r_paren_token: R_PAREN@220..221 ")" [] [],
                         },
-                        type_annotation: TsReturnTypeAnnotation {
+                        return_type_annotation: TsReturnTypeAnnotation {
                             colon_token: COLON@221..223 ":" [] [Whitespace(" ")],
                             ty: TsNeverType {
                                 never_token: NEVER_KW@223..229 "never" [] [Whitespace(" ")],

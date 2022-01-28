@@ -33,7 +33,7 @@ JsModule {
                     ],
                     r_paren_token: R_PAREN@25..27 ")" [] [Whitespace(" ")],
                 },
-                return_type: missing (optional),
+                return_type_annotation: missing (optional),
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@27..28 "{" [] [],
                     directives: JsDirectiveList [],
@@ -73,7 +73,7 @@ JsModule {
                     ],
                     r_paren_token: R_PAREN@57..59 ")" [] [Whitespace(" ")],
                 },
-                return_type: missing (optional),
+                return_type_annotation: missing (optional),
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@59..60 "{" [] [],
                     directives: JsDirectiveList [],
@@ -114,7 +114,7 @@ JsModule {
                     ],
                     r_paren_token: R_PAREN@96..98 ")" [] [Whitespace(" ")],
                 },
-                return_type: missing (optional),
+                return_type_annotation: missing (optional),
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@98..99 "{" [] [],
                     directives: JsDirectiveList [],

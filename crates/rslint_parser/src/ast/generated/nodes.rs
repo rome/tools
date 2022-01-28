@@ -115,7 +115,7 @@ impl JsArrowFunctionExpression {
     pub fn parameters(&self) -> SyntaxResult<JsAnyArrowFunctionParameters> {
         support::required_node(&self.syntax, 2usize)
     }
-    pub fn return_type(&self) -> Option<TsReturnTypeAnnotation> {
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         support::node(&self.syntax, 3usize)
     }
     pub fn fat_arrow_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -674,7 +674,7 @@ impl JsExportDefaultFunctionClause {
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 6usize)
     }
-    pub fn return_type(&self) -> Option<TsReturnTypeAnnotation> {
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         support::node(&self.syntax, 7usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
@@ -716,7 +716,7 @@ impl JsExportFunctionClause {
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 5usize)
     }
-    pub fn return_type(&self) -> Option<TsReturnTypeAnnotation> {
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         support::node(&self.syntax, 6usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
@@ -978,7 +978,7 @@ impl JsFunctionExpression {
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 5usize)
     }
-    pub fn return_type(&self) -> Option<TsReturnTypeAnnotation> {
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         support::node(&self.syntax, 6usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
@@ -1002,7 +1002,7 @@ impl JsFunctionStatement {
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 5usize)
     }
-    pub fn return_type(&self) -> Option<TsReturnTypeAnnotation> {
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         support::node(&self.syntax, 6usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
@@ -1335,7 +1335,7 @@ impl JsMethodClassMember {
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 7usize)
     }
-    pub fn return_type(&self) -> Option<TsReturnTypeAnnotation> {
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         support::node(&self.syntax, 8usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
@@ -1356,7 +1356,7 @@ impl JsMethodObjectMember {
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 4usize)
     }
-    pub fn return_type(&self) -> Option<TsReturnTypeAnnotation> {
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         support::node(&self.syntax, 5usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
@@ -2264,7 +2264,7 @@ impl TsCallSignatureObjectTypeMember {
     pub fn parameter_list(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         support::node(&self.syntax, 2usize)
     }
 }
@@ -2700,7 +2700,7 @@ impl TsMethodSignatureObjectTypeMember {
     pub fn parameter_list(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 3usize)
     }
-    pub fn type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         support::node(&self.syntax, 4usize)
     }
 }
@@ -3755,8 +3755,8 @@ impl std::fmt::Debug for JsArrowFunctionExpression {
             )
             .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field(
-                "return_type",
-                &support::DebugOptionalElement(self.return_type()),
+                "return_type_annotation",
+                &support::DebugOptionalElement(self.return_type_annotation()),
             )
             .field(
                 "fat_arrow_token",
@@ -4979,8 +4979,8 @@ impl std::fmt::Debug for JsExportDefaultFunctionClause {
             )
             .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field(
-                "return_type",
-                &support::DebugOptionalElement(self.return_type()),
+                "return_type_annotation",
+                &support::DebugOptionalElement(self.return_type_annotation()),
             )
             .field("body", &support::DebugSyntaxResult(self.body()))
             .finish()
@@ -5063,8 +5063,8 @@ impl std::fmt::Debug for JsExportFunctionClause {
             )
             .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field(
-                "return_type",
-                &support::DebugOptionalElement(self.return_type()),
+                "return_type_annotation",
+                &support::DebugOptionalElement(self.return_type_annotation()),
             )
             .field("body", &support::DebugSyntaxResult(self.body()))
             .finish()
@@ -5616,8 +5616,8 @@ impl std::fmt::Debug for JsFunctionExpression {
             )
             .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field(
-                "return_type",
-                &support::DebugOptionalElement(self.return_type()),
+                "return_type_annotation",
+                &support::DebugOptionalElement(self.return_type_annotation()),
             )
             .field("body", &support::DebugSyntaxResult(self.body()))
             .finish()
@@ -5662,8 +5662,8 @@ impl std::fmt::Debug for JsFunctionStatement {
             )
             .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field(
-                "return_type",
-                &support::DebugOptionalElement(self.return_type()),
+                "return_type_annotation",
+                &support::DebugOptionalElement(self.return_type_annotation()),
             )
             .field("body", &support::DebugSyntaxResult(self.body()))
             .finish()
@@ -6358,8 +6358,8 @@ impl std::fmt::Debug for JsMethodClassMember {
             )
             .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field(
-                "return_type",
-                &support::DebugOptionalElement(self.return_type()),
+                "return_type_annotation",
+                &support::DebugOptionalElement(self.return_type_annotation()),
             )
             .field("body", &support::DebugSyntaxResult(self.body()))
             .finish()
@@ -6400,8 +6400,8 @@ impl std::fmt::Debug for JsMethodObjectMember {
             )
             .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field(
-                "return_type",
-                &support::DebugOptionalElement(self.return_type()),
+                "return_type_annotation",
+                &support::DebugOptionalElement(self.return_type_annotation()),
             )
             .field("body", &support::DebugSyntaxResult(self.body()))
             .finish()
@@ -8479,8 +8479,8 @@ impl std::fmt::Debug for TsCallSignatureObjectTypeMember {
                 &support::DebugSyntaxResult(self.parameter_list()),
             )
             .field(
-                "type_annotation",
-                &support::DebugOptionalElement(self.type_annotation()),
+                "return_type_annotation",
+                &support::DebugOptionalElement(self.return_type_annotation()),
             )
             .finish()
     }
@@ -9421,8 +9421,8 @@ impl std::fmt::Debug for TsMethodSignatureObjectTypeMember {
                 &support::DebugSyntaxResult(self.parameter_list()),
             )
             .field(
-                "type_annotation",
-                &support::DebugOptionalElement(self.type_annotation()),
+                "return_type_annotation",
+                &support::DebugOptionalElement(self.return_type_annotation()),
             )
             .finish()
     }

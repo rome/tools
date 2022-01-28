@@ -26,7 +26,7 @@ JsModule {
                         items: JsParameterList [],
                         r_paren_token: R_PAREN@35..37 ")" [] [Whitespace(" ")],
                     },
-                    return_type: missing (optional),
+                    return_type_annotation: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@37..38 "{" [] [],
                         directives: JsDirectiveList [],
@@ -62,7 +62,7 @@ JsModule {
                         items: JsParameterList [],
                         r_paren_token: R_PAREN@82..83 ")" [] [],
                     },
-                    return_type: TsReturnTypeAnnotation {
+                    return_type_annotation: TsReturnTypeAnnotation {
                         colon_token: COLON@83..85 ":" [] [Whitespace(" ")],
                         ty: TsTypePredicate {
                             asserts_token: missing (optional),

@@ -18,7 +18,7 @@ JsScript {
                     items: JsParameterList [],
                     r_paren_token: R_PAREN@29..31 ")" [] [Whitespace(" ")],
                 },
-                return_type: missing (optional),
+                return_type_annotation: missing (optional),
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@31..32 "{" [] [],
                     directives: JsDirectiveList [],
@@ -47,7 +47,7 @@ JsScript {
                     items: JsParameterList [],
                     r_paren_token: R_PAREN@55..57 ")" [] [Whitespace(" ")],
                 },
-                return_type: missing (optional),
+                return_type_annotation: missing (optional),
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@57..58 "{" [] [],
                     directives: JsDirectiveList [],
@@ -70,7 +70,7 @@ JsScript {
                         items: JsParameterList [],
                         r_paren_token: R_PAREN@76..78 ")" [] [Whitespace(" ")],
                     },
-                    return_type: missing (optional),
+                    return_type_annotation: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@78..79 "{" [] [],
                         directives: JsDirectiveList [],
@@ -100,7 +100,7 @@ JsScript {
                     items: JsParameterList [],
                     r_paren_token: R_PAREN@102..104 ")" [] [Whitespace(" ")],
                 },
-                return_type: missing (optional),
+                return_type_annotation: missing (optional),
                 body: JsFunctionBody {
                     l_curly_token: L_CURLY@104..105 "{" [] [],
                     directives: JsDirectiveList [],
@@ -138,7 +138,7 @@ JsScript {
                         items: JsParameterList [],
                         r_paren_token: R_PAREN@141..143 ")" [] [Whitespace(" ")],
                     },
-                    return_type: missing (optional),
+                    return_type_annotation: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@143..144 "{" [] [],
                         directives: JsDirectiveList [],

@@ -380,7 +380,7 @@ JsFunctionExpression =
 	id: JsAnyBinding?
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
-	return_type: TsReturnTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
 
@@ -388,7 +388,7 @@ JsArrowFunctionExpression =
 	'async'?
 	type_parameters: TsTypeParameters?
 	parameters: JsAnyArrowFunctionParameters
-	return_type: TsReturnTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	'=>'
 	body: JsAnyFunctionBody
 
@@ -547,7 +547,7 @@ JsMethodObjectMember =
 	name: JsAnyObjectMemberName
 	type_params: TsTypeParameters?
 	parameters: JsParameters
-	return_type: TsReturnTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
 // { a }
@@ -674,7 +674,7 @@ JsMethodClassMember =
 	name: JsAnyClassMemberName
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
-	return_type: TsReturnTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
 // class Test { get a() {} }
@@ -938,7 +938,7 @@ JsFunctionStatement =
 	id: JsAnyBinding
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
-	return_type: TsReturnTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
 TsTypeAnnotation =
@@ -1169,7 +1169,7 @@ JsExportFunctionClause =
 	id: JsAnyBinding
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
-	return_type: TsReturnTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
 // export class A {}
@@ -1212,7 +1212,7 @@ JsExportDefaultFunctionClause =
 	id: JsAnyBinding?
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
-	return_type: TsReturnTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
 // export { myFunction as default };
@@ -1585,12 +1585,12 @@ TsAnyObjectTypeMember =
 	| TsSetterSignatureObjectTypeMember
 	| TsIndexSignatureObjectTypeMember
 
-// { (): number }
-//   ^^^^^^^^^^
+// { <A>(a: A): number }
+//   ^^^^^^^^^^^^^^^^^
 TsCallSignatureObjectTypeMember =
 	type_parameters: TsTypeParameters?
 	parameter_list: JsParameters
-	type_annotation: TsReturnTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 
 // { a: string }
 //   ^^^^^^^^^
@@ -1615,7 +1615,7 @@ TsMethodSignatureObjectTypeMember =
 	optional_token: '?'?
 	type_parameters: TsTypeParameters?
 	parameter_list: JsParameters
-	type_annotation: TsReturnTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 
 // { get a(): number }
 //   ^^^^^^^^^^^^^^^

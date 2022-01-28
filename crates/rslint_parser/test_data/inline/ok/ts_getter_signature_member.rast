@@ -76,7 +76,7 @@ JsModule {
                             items: JsParameterList [],
                             r_paren_token: R_PAREN@132..133 ")" [] [],
                         },
-                        type_annotation: TsReturnTypeAnnotation {
+                        return_type_annotation: TsReturnTypeAnnotation {
                             colon_token: COLON@133..135 ":" [] [Whitespace(" ")],
                             ty: TsNumberType {
                                 number_token: NUMBER_KW@135..142 "number" [] [Whitespace(" ")],
