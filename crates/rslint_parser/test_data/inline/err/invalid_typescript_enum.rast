@@ -1,0 +1,102 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        TsEnum {
+            const_token: missing (optional),
+            enum_token: ENUM_KW@0..5 "enum" [] [Whitespace(" ")],
+            name: JsName {
+                value_token: IDENT@5..7 "A" [] [Whitespace(" ")],
+            },
+            l_curly_token: L_CURLY@7..9 "{" [] [Whitespace(" ")],
+            members: TsEnumMemberList [
+                TsEnumMember {
+                    name: JsLiteralMemberName {
+                        value: JS_NUMBER_LITERAL@9..11 "1" [] [Whitespace(" ")],
+                    },
+                    initializer: missing (optional),
+                },
+            ],
+            r_curly_token: R_CURLY@11..12 "}" [] [],
+        },
+        JsUnknownStatement {
+            items: [
+                ENUM_KW@12..18 "enum" [Newline("\n")] [Whitespace(" ")],
+            ],
+        },
+        JsBlockStatement {
+            l_curly_token: L_CURLY@18..20 "{" [] [Whitespace(" ")],
+            statements: JsStatementList [
+                JsExpressionStatement {
+                    expression: JsSequenceExpression {
+                        left: JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@20..21 "A" [] [],
+                            },
+                        },
+                        comma_token: COMMA@21..23 "," [] [Whitespace(" ")],
+                        right: JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@23..25 "B" [] [Whitespace(" ")],
+                            },
+                        },
+                    },
+                    semicolon_token: missing (optional),
+                },
+            ],
+            r_curly_token: R_CURLY@25..26 "}" [] [],
+        },
+    ],
+    eof_token: EOF@26..27 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..27
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..26
+    0: TS_ENUM@0..12
+      0: (empty)
+      1: ENUM_KW@0..5 "enum" [] [Whitespace(" ")]
+      2: JS_NAME@5..7
+        0: IDENT@5..7 "A" [] [Whitespace(" ")]
+      3: L_CURLY@7..9 "{" [] [Whitespace(" ")]
+      4: TS_ENUM_MEMBER_LIST@9..11
+        0: TS_ENUM_MEMBER@9..11
+          0: JS_LITERAL_MEMBER_NAME@9..11
+            0: JS_NUMBER_LITERAL@9..11 "1" [] [Whitespace(" ")]
+          1: (empty)
+      5: R_CURLY@11..12 "}" [] []
+    1: JS_UNKNOWN_STATEMENT@12..18
+      0: ENUM_KW@12..18 "enum" [Newline("\n")] [Whitespace(" ")]
+    2: JS_BLOCK_STATEMENT@18..26
+      0: L_CURLY@18..20 "{" [] [Whitespace(" ")]
+      1: JS_STATEMENT_LIST@20..25
+        0: JS_EXPRESSION_STATEMENT@20..25
+          0: JS_SEQUENCE_EXPRESSION@20..25
+            0: JS_IDENTIFIER_EXPRESSION@20..21
+              0: JS_REFERENCE_IDENTIFIER@20..21
+                0: IDENT@20..21 "A" [] []
+            1: COMMA@21..23 "," [] [Whitespace(" ")]
+            2: JS_IDENTIFIER_EXPRESSION@23..25
+              0: JS_REFERENCE_IDENTIFIER@23..25
+                0: IDENT@23..25 "B" [] [Whitespace(" ")]
+          1: (empty)
+      2: R_CURLY@25..26 "}" [] []
+  3: EOF@26..27 "" [Newline("\n")] []
+--
+error[SyntaxError]: an enum member cannot be a numeric literal
+  ┌─ invalid_typescript_enum.ts:1:10
+  │
+1 │ enum A { 1 }
+  │          ^
+
+--
+error[SyntaxError]: expected a statement but instead found 'enum'
+  ┌─ invalid_typescript_enum.ts:2:1
+  │
+2 │ enum { A, B }
+  │ ^^^^ Expected a statement here
+
+--
+enum A { 1 }
+enum { A, B }
