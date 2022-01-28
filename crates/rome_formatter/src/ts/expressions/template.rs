@@ -1,6 +1,6 @@
 use crate::{
-    empty_element, format_element::join_elements_hard_line, format_elements, join_elements,
-    space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    empty_element, format_elements, join_elements, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 use rslint_parser::ast::JsTemplate;
 
