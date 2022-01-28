@@ -3,8 +3,6 @@ use rslint_parser::ast::JsTemplateChunkElement;
 
 impl ToFormatElement for JsTemplateChunkElement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let chunk = formatter.format_token(&self.template_chunk_token()?)?;
-
-        Ok(chunk)
+        formatter.format_token(&self.template_chunk_token()?)
     }
 }

@@ -1,6 +1,5 @@
 use crate::{
-    empty_element, format_elements, join_elements, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    empty_element, format_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::JsTemplate;
 
@@ -17,7 +16,7 @@ impl ToFormatElement for JsTemplate {
         Ok(format_elements![
             tag,
             l_tick,
-            join_elements(empty_element(), formatter.format_nodes(self.elements())?),
+            concat_elements(formatter.format_nodes(self.elements())?),
             r_tick
         ])
     }
