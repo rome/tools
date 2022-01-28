@@ -299,6 +299,7 @@ fn type_member_semi(p: &mut Parser) {
 // enum A {}
 // enum A { a, b, c, }
 // enum A { a = 1 + 1 }
+// const enum A {}
 pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
     let m = p.start();
     p.eat(T![const]);

@@ -2328,16 +2328,17 @@ pub struct TsEnum {
     pub(crate) syntax: SyntaxNode,
 }
 impl TsEnum {
+    pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
+        support::required_token(&self.syntax, 1usize)
     }
-    pub fn ident(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 1usize) }
+    pub fn ident(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
+        support::required_token(&self.syntax, 3usize)
     }
-    pub fn members(&self) -> TsEnumMemberList { support::list(&self.syntax, 3usize) }
+    pub fn members(&self) -> TsEnumMemberList { support::list(&self.syntax, 4usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 4usize)
+        support::required_token(&self.syntax, 5usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -8390,6 +8391,10 @@ impl AstNode for TsEnum {
 impl std::fmt::Debug for TsEnum {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsEnum")
+            .field(
+                "const_token",
+                &support::DebugOptionalElement(self.const_token()),
+            )
             .field("enum_token", &support::DebugSyntaxResult(self.enum_token()))
             .field("ident", &support::DebugSyntaxResult(self.ident()))
             .field(
