@@ -6,7 +6,7 @@ pub mod test262;
 pub mod typescript;
 
 use crate::reporters::{
-    CliProgressReporter, CompositeTestReporter, DiagnosticsReporter, JsonReporter, RastReporter,
+    CliProgressReporter, DiagnosticsReporter, JsonReporter, MulticastTestReporter, RastReporter,
     SummaryReporter,
 };
 use crate::runner::{run_test_suite, TestRunContext, TestSuite};
@@ -124,7 +124,7 @@ pub fn run(
         other => panic!("Unknown language: {}", other),
     };
 
-    let mut reporters = CompositeTestReporter::new(Box::new(CliProgressReporter::default()));
+    let mut reporters = MulticastTestReporter::new(Box::new(CliProgressReporter::default()));
 
     if json {
         reporters.add(Box::new(JsonReporter));

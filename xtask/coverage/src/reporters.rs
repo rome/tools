@@ -241,9 +241,11 @@ impl TestReporter for JsonReporter {
     }
 }
 
-pub(crate) struct CompositeTestReporter(Vec<Box<dyn TestReporter>>);
+/// Test reporter that forwards the event to multiple reporters.
+/// Allows composing different reporters for a single test run
+pub(crate) struct MulticastTestReporter(Vec<Box<dyn TestReporter>>);
 
-impl CompositeTestReporter {
+impl MulticastTestReporter {
     pub fn new(reporter: Box<dyn TestReporter>) -> Self {
         Self(vec![reporter])
     }
@@ -253,7 +255,7 @@ impl CompositeTestReporter {
     }
 }
 
-impl TestReporter for CompositeTestReporter {
+impl TestReporter for MulticastTestReporter {
     fn test_suite_started(&mut self, test_suite: &dyn TestSuite) {
         for reporter in &mut self.0 {
             reporter.test_suite_started(test_suite);
