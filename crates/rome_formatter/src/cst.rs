@@ -9,7 +9,8 @@ use rslint_parser::ast::{
     JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression, JsParameters,
     JsPropertyClassMember, JsPropertyObjectMember, JsReturnStatement, JsScript,
     JsSequenceExpression, JsSetterClassMember, JsShorthandPropertyObjectMember, JsSpread,
-    JsStatementList, JsStringLiteralExpression, JsSwitchStatement, JsTryStatement,
+    JsStatementList, JsStaticInitializationBlockClassMember, JsStringLiteralExpression,
+    JsSwitchStatement, JsTemplate, JsTemplateChunkElement, JsTemplateElement, JsTryStatement,
     JsUnknownAssignment, JsUnknownBinding, JsUnknownExpression, JsUnknownImportAssertionEntry,
     JsUnknownMember, JsUnknownNamedImportSpecifier, JsUnknownParameter, JsUnknownStatement,
     JsVariableDeclaration, JsVariableDeclarations, JsVariableStatement, JsWhileStatement,
@@ -198,6 +199,21 @@ impl ToFormatElement for SyntaxNode {
                     .unwrap()
                     .to_format_element(formatter)
             }
+            JsSyntaxKind::JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER => {
+                JsStaticInitializationBlockClassMember::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+            JsSyntaxKind::JS_TEMPLATE => JsTemplate::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+
+            JsSyntaxKind::JS_TEMPLATE_ELEMENT => JsTemplateElement::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_TEMPLATE_CHUNK_ELEMENT => JsTemplateChunkElement::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
 
             JsSyntaxKind::JS_STATEMENT_LIST => Ok(format_statements(
                 JsStatementList::cast(self.clone()).unwrap(),

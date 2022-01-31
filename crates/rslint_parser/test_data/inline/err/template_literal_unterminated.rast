@@ -19,7 +19,7 @@ JsModule {
                                     BACKTICK@8..9 "`" [] [],
                                     JsUnknown {
                                         items: [
-                                            TemplateElement {
+                                            JsTemplateElement {
                                                 dollar_curly_token: DOLLAR_CURLY@9..11 "${" [] [],
                                                 expression: JsIdentifierExpression {
                                                     name: JsReferenceIdentifier {
@@ -65,7 +65,7 @@ JsModule {
               1: JS_UNKNOWN_EXPRESSION@8..20
                 0: BACKTICK@8..9 "`" [] []
                 1: JS_UNKNOWN@9..20
-                  0: TEMPLATE_ELEMENT@9..15
+                  0: JS_TEMPLATE_ELEMENT@9..15
                     0: DOLLAR_CURLY@9..11 "${" [] []
                     1: JS_IDENTIFIER_EXPRESSION@11..14
                       0: JS_REFERENCE_IDENTIFIER@11..14

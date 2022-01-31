@@ -1962,6 +1962,44 @@ impl JsSwitchStatement {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsTemplate {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsTemplate {
+    pub fn tag(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 0usize) }
+    pub fn l_tick_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn elements(&self) -> JsTemplateElementList { support::list(&self.syntax, 2usize) }
+    pub fn r_tick_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 3usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsTemplateChunkElement {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsTemplateChunkElement {
+    pub fn template_chunk_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsTemplateElement {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsTemplateElement {
+    pub fn dollar_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsThisExpression {
     pub(crate) syntax: SyntaxNode,
 }
@@ -2134,44 +2172,6 @@ impl NewTarget {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn target_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
-    }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct Template {
-    pub(crate) syntax: SyntaxNode,
-}
-impl Template {
-    pub fn tag(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 0usize) }
-    pub fn l_tick_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
-    }
-    pub fn elements(&self) -> TemplateElementList { support::list(&self.syntax, 2usize) }
-    pub fn r_tick_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
-    }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TemplateChunkElement {
-    pub(crate) syntax: SyntaxNode,
-}
-impl TemplateChunkElement {
-    pub fn template_chunk_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
-    }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TemplateElement {
-    pub(crate) syntax: SyntaxNode,
-}
-impl TemplateElement {
-    pub fn dollar_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
-    }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
-        support::required_node(&self.syntax, 1usize)
-    }
-    pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
 }
@@ -3151,11 +3151,6 @@ pub enum AnyJsImportClause {
     JsImportNamespaceClause(JsImportNamespaceClause),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub enum AnyTemplateElement {
-    TemplateChunkElement(TemplateChunkElement),
-    TemplateElement(TemplateElement),
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrayAssignmentPatternElement {
     JsAnyAssignmentPattern(JsAnyAssignmentPattern),
     JsArrayAssignmentPatternRestElement(JsArrayAssignmentPatternRestElement),
@@ -3280,12 +3275,12 @@ pub enum JsAnyExpression {
     JsSequenceExpression(JsSequenceExpression),
     JsStaticMemberExpression(JsStaticMemberExpression),
     JsSuperExpression(JsSuperExpression),
+    JsTemplate(JsTemplate),
     JsThisExpression(JsThisExpression),
     JsUnaryExpression(JsUnaryExpression),
     JsUnknownExpression(JsUnknownExpression),
     JsYieldExpression(JsYieldExpression),
     NewTarget(NewTarget),
-    Template(Template),
     TsAssertion(TsAssertion),
     TsConstAssertion(TsConstAssertion),
     TsNonNull(TsNonNull),
@@ -3428,6 +3423,11 @@ pub enum JsAnyStatement {
 pub enum JsAnySwitchClause {
     JsCaseClause(JsCaseClause),
     JsDefaultClause(JsDefaultClause),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyTemplateElement {
+    JsTemplateChunkElement(JsTemplateChunkElement),
+    JsTemplateElement(JsTemplateElement),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyName {
@@ -7778,6 +7778,98 @@ impl From<JsSwitchStatement> for SyntaxNode {
 impl From<JsSwitchStatement> for SyntaxElement {
     fn from(n: JsSwitchStatement) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for JsTemplate {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_TEMPLATE }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsTemplate {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsTemplate")
+            .field("tag", &support::DebugOptionalElement(self.tag()))
+            .field(
+                "l_tick_token",
+                &support::DebugSyntaxResult(self.l_tick_token()),
+            )
+            .field("elements", &self.elements())
+            .field(
+                "r_tick_token",
+                &support::DebugSyntaxResult(self.r_tick_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsTemplate> for SyntaxNode {
+    fn from(n: JsTemplate) -> SyntaxNode { n.syntax }
+}
+impl From<JsTemplate> for SyntaxElement {
+    fn from(n: JsTemplate) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsTemplateChunkElement {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_TEMPLATE_CHUNK_ELEMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsTemplateChunkElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsTemplateChunkElement")
+            .field(
+                "template_chunk_token",
+                &support::DebugSyntaxResult(self.template_chunk_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsTemplateChunkElement> for SyntaxNode {
+    fn from(n: JsTemplateChunkElement) -> SyntaxNode { n.syntax }
+}
+impl From<JsTemplateChunkElement> for SyntaxElement {
+    fn from(n: JsTemplateChunkElement) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsTemplateElement {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_TEMPLATE_ELEMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsTemplateElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsTemplateElement")
+            .field(
+                "dollar_curly_token",
+                &support::DebugSyntaxResult(self.dollar_curly_token()),
+            )
+            .field("expression", &support::DebugSyntaxResult(self.expression()))
+            .field(
+                "r_curly_token",
+                &support::DebugSyntaxResult(self.r_curly_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsTemplateElement> for SyntaxNode {
+    fn from(n: JsTemplateElement) -> SyntaxNode { n.syntax }
+}
+impl From<JsTemplateElement> for SyntaxElement {
+    fn from(n: JsTemplateElement) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for JsThisExpression {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_THIS_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -8168,98 +8260,6 @@ impl From<NewTarget> for SyntaxNode {
 }
 impl From<NewTarget> for SyntaxElement {
     fn from(n: NewTarget) -> SyntaxElement { n.syntax.into() }
-}
-impl AstNode for Template {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TEMPLATE }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for Template {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("Template")
-            .field("tag", &support::DebugOptionalElement(self.tag()))
-            .field(
-                "l_tick_token",
-                &support::DebugSyntaxResult(self.l_tick_token()),
-            )
-            .field("elements", &self.elements())
-            .field(
-                "r_tick_token",
-                &support::DebugSyntaxResult(self.r_tick_token()),
-            )
-            .finish()
-    }
-}
-impl From<Template> for SyntaxNode {
-    fn from(n: Template) -> SyntaxNode { n.syntax }
-}
-impl From<Template> for SyntaxElement {
-    fn from(n: Template) -> SyntaxElement { n.syntax.into() }
-}
-impl AstNode for TemplateChunkElement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TEMPLATE_CHUNK_ELEMENT }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TemplateChunkElement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TemplateChunkElement")
-            .field(
-                "template_chunk_token",
-                &support::DebugSyntaxResult(self.template_chunk_token()),
-            )
-            .finish()
-    }
-}
-impl From<TemplateChunkElement> for SyntaxNode {
-    fn from(n: TemplateChunkElement) -> SyntaxNode { n.syntax }
-}
-impl From<TemplateChunkElement> for SyntaxElement {
-    fn from(n: TemplateChunkElement) -> SyntaxElement { n.syntax.into() }
-}
-impl AstNode for TemplateElement {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TEMPLATE_ELEMENT }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TemplateElement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TemplateElement")
-            .field(
-                "dollar_curly_token",
-                &support::DebugSyntaxResult(self.dollar_curly_token()),
-            )
-            .field("expression", &support::DebugSyntaxResult(self.expression()))
-            .field(
-                "r_curly_token",
-                &support::DebugSyntaxResult(self.r_curly_token()),
-            )
-            .finish()
-    }
-}
-impl From<TemplateElement> for SyntaxNode {
-    fn from(n: TemplateElement) -> SyntaxNode { n.syntax }
-}
-impl From<TemplateElement> for SyntaxElement {
-    fn from(n: TemplateElement) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsAnyType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ANY_TYPE }
@@ -10664,59 +10664,6 @@ impl From<AnyJsImportClause> for SyntaxElement {
         node.into()
     }
 }
-impl From<TemplateChunkElement> for AnyTemplateElement {
-    fn from(node: TemplateChunkElement) -> AnyTemplateElement {
-        AnyTemplateElement::TemplateChunkElement(node)
-    }
-}
-impl From<TemplateElement> for AnyTemplateElement {
-    fn from(node: TemplateElement) -> AnyTemplateElement {
-        AnyTemplateElement::TemplateElement(node)
-    }
-}
-impl AstNode for AnyTemplateElement {
-    fn can_cast(kind: JsSyntaxKind) -> bool {
-        matches!(kind, TEMPLATE_CHUNK_ELEMENT | TEMPLATE_ELEMENT)
-    }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        let res = match syntax.kind() {
-            TEMPLATE_CHUNK_ELEMENT => {
-                AnyTemplateElement::TemplateChunkElement(TemplateChunkElement { syntax })
-            }
-            TEMPLATE_ELEMENT => AnyTemplateElement::TemplateElement(TemplateElement { syntax }),
-            _ => return None,
-        };
-        Some(res)
-    }
-    fn syntax(&self) -> &SyntaxNode {
-        match self {
-            AnyTemplateElement::TemplateChunkElement(it) => &it.syntax,
-            AnyTemplateElement::TemplateElement(it) => &it.syntax,
-        }
-    }
-}
-impl std::fmt::Debug for AnyTemplateElement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            AnyTemplateElement::TemplateChunkElement(it) => std::fmt::Debug::fmt(it, f),
-            AnyTemplateElement::TemplateElement(it) => std::fmt::Debug::fmt(it, f),
-        }
-    }
-}
-impl From<AnyTemplateElement> for SyntaxNode {
-    fn from(n: AnyTemplateElement) -> SyntaxNode {
-        match n {
-            AnyTemplateElement::TemplateChunkElement(it) => it.into(),
-            AnyTemplateElement::TemplateElement(it) => it.into(),
-        }
-    }
-}
-impl From<AnyTemplateElement> for SyntaxElement {
-    fn from(n: AnyTemplateElement) -> SyntaxElement {
-        let node: SyntaxNode = n.into();
-        node.into()
-    }
-}
 impl From<JsArrayAssignmentPatternRestElement> for JsAnyArrayAssignmentPatternElement {
     fn from(node: JsArrayAssignmentPatternRestElement) -> JsAnyArrayAssignmentPatternElement {
         JsAnyArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(node)
@@ -11965,6 +11912,9 @@ impl From<JsStaticMemberExpression> for JsAnyExpression {
 impl From<JsSuperExpression> for JsAnyExpression {
     fn from(node: JsSuperExpression) -> JsAnyExpression { JsAnyExpression::JsSuperExpression(node) }
 }
+impl From<JsTemplate> for JsAnyExpression {
+    fn from(node: JsTemplate) -> JsAnyExpression { JsAnyExpression::JsTemplate(node) }
+}
 impl From<JsThisExpression> for JsAnyExpression {
     fn from(node: JsThisExpression) -> JsAnyExpression { JsAnyExpression::JsThisExpression(node) }
 }
@@ -11981,9 +11931,6 @@ impl From<JsYieldExpression> for JsAnyExpression {
 }
 impl From<NewTarget> for JsAnyExpression {
     fn from(node: NewTarget) -> JsAnyExpression { JsAnyExpression::NewTarget(node) }
-}
-impl From<Template> for JsAnyExpression {
-    fn from(node: Template) -> JsAnyExpression { JsAnyExpression::Template(node) }
 }
 impl From<TsAssertion> for JsAnyExpression {
     fn from(node: TsAssertion) -> JsAnyExpression { JsAnyExpression::TsAssertion(node) }
@@ -12021,12 +11968,12 @@ impl AstNode for JsAnyExpression {
             | JS_SEQUENCE_EXPRESSION
             | JS_STATIC_MEMBER_EXPRESSION
             | JS_SUPER_EXPRESSION
+            | JS_TEMPLATE
             | JS_THIS_EXPRESSION
             | JS_UNARY_EXPRESSION
             | JS_UNKNOWN_EXPRESSION
             | JS_YIELD_EXPRESSION
             | NEW_TARGET
-            | TEMPLATE
             | TS_ASSERTION
             | TS_CONST_ASSERTION
             | TS_NON_NULL => true,
@@ -12092,6 +12039,7 @@ impl AstNode for JsAnyExpression {
                 JsAnyExpression::JsStaticMemberExpression(JsStaticMemberExpression { syntax })
             }
             JS_SUPER_EXPRESSION => JsAnyExpression::JsSuperExpression(JsSuperExpression { syntax }),
+            JS_TEMPLATE => JsAnyExpression::JsTemplate(JsTemplate { syntax }),
             JS_THIS_EXPRESSION => JsAnyExpression::JsThisExpression(JsThisExpression { syntax }),
             JS_UNARY_EXPRESSION => JsAnyExpression::JsUnaryExpression(JsUnaryExpression { syntax }),
             JS_UNKNOWN_EXPRESSION => {
@@ -12099,7 +12047,6 @@ impl AstNode for JsAnyExpression {
             }
             JS_YIELD_EXPRESSION => JsAnyExpression::JsYieldExpression(JsYieldExpression { syntax }),
             NEW_TARGET => JsAnyExpression::NewTarget(NewTarget { syntax }),
-            TEMPLATE => JsAnyExpression::Template(Template { syntax }),
             TS_ASSERTION => JsAnyExpression::TsAssertion(TsAssertion { syntax }),
             TS_CONST_ASSERTION => JsAnyExpression::TsConstAssertion(TsConstAssertion { syntax }),
             TS_NON_NULL => JsAnyExpression::TsNonNull(TsNonNull { syntax }),
@@ -12140,12 +12087,12 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsSequenceExpression(it) => &it.syntax,
             JsAnyExpression::JsStaticMemberExpression(it) => &it.syntax,
             JsAnyExpression::JsSuperExpression(it) => &it.syntax,
+            JsAnyExpression::JsTemplate(it) => &it.syntax,
             JsAnyExpression::JsThisExpression(it) => &it.syntax,
             JsAnyExpression::JsUnaryExpression(it) => &it.syntax,
             JsAnyExpression::JsUnknownExpression(it) => &it.syntax,
             JsAnyExpression::JsYieldExpression(it) => &it.syntax,
             JsAnyExpression::NewTarget(it) => &it.syntax,
-            JsAnyExpression::Template(it) => &it.syntax,
             JsAnyExpression::TsAssertion(it) => &it.syntax,
             JsAnyExpression::TsConstAssertion(it) => &it.syntax,
             JsAnyExpression::TsNonNull(it) => &it.syntax,
@@ -12181,12 +12128,12 @@ impl std::fmt::Debug for JsAnyExpression {
             JsAnyExpression::JsSequenceExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsStaticMemberExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsSuperExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExpression::JsTemplate(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsThisExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsUnaryExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsUnknownExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsYieldExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::NewTarget(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::Template(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsAssertion(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsConstAssertion(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsNonNull(it) => std::fmt::Debug::fmt(it, f),
@@ -12221,12 +12168,12 @@ impl From<JsAnyExpression> for SyntaxNode {
             JsAnyExpression::JsSequenceExpression(it) => it.into(),
             JsAnyExpression::JsStaticMemberExpression(it) => it.into(),
             JsAnyExpression::JsSuperExpression(it) => it.into(),
+            JsAnyExpression::JsTemplate(it) => it.into(),
             JsAnyExpression::JsThisExpression(it) => it.into(),
             JsAnyExpression::JsUnaryExpression(it) => it.into(),
             JsAnyExpression::JsUnknownExpression(it) => it.into(),
             JsAnyExpression::JsYieldExpression(it) => it.into(),
             JsAnyExpression::NewTarget(it) => it.into(),
-            JsAnyExpression::Template(it) => it.into(),
             JsAnyExpression::TsAssertion(it) => it.into(),
             JsAnyExpression::TsConstAssertion(it) => it.into(),
             JsAnyExpression::TsNonNull(it) => it.into(),
@@ -13781,6 +13728,61 @@ impl From<JsAnySwitchClause> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsTemplateChunkElement> for JsAnyTemplateElement {
+    fn from(node: JsTemplateChunkElement) -> JsAnyTemplateElement {
+        JsAnyTemplateElement::JsTemplateChunkElement(node)
+    }
+}
+impl From<JsTemplateElement> for JsAnyTemplateElement {
+    fn from(node: JsTemplateElement) -> JsAnyTemplateElement {
+        JsAnyTemplateElement::JsTemplateElement(node)
+    }
+}
+impl AstNode for JsAnyTemplateElement {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, JS_TEMPLATE_CHUNK_ELEMENT | JS_TEMPLATE_ELEMENT)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_TEMPLATE_CHUNK_ELEMENT => {
+                JsAnyTemplateElement::JsTemplateChunkElement(JsTemplateChunkElement { syntax })
+            }
+            JS_TEMPLATE_ELEMENT => {
+                JsAnyTemplateElement::JsTemplateElement(JsTemplateElement { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsAnyTemplateElement::JsTemplateChunkElement(it) => &it.syntax,
+            JsAnyTemplateElement::JsTemplateElement(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsAnyTemplateElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsAnyTemplateElement::JsTemplateChunkElement(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyTemplateElement::JsTemplateElement(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsAnyTemplateElement> for SyntaxNode {
+    fn from(n: JsAnyTemplateElement) -> SyntaxNode {
+        match n {
+            JsAnyTemplateElement::JsTemplateChunkElement(it) => it.into(),
+            JsAnyTemplateElement::JsTemplateElement(it) => it.into(),
+        }
+    }
+}
+impl From<JsAnyTemplateElement> for SyntaxElement {
+    fn from(n: JsAnyTemplateElement) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<JsReferenceIdentifier> for TsAnyName {
     fn from(node: JsReferenceIdentifier) -> TsAnyName { TsAnyName::JsReferenceIdentifier(node) }
 }
@@ -14593,11 +14595,6 @@ impl std::fmt::Display for AnyJsImportClause {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for AnyTemplateElement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
 impl std::fmt::Display for JsAnyArrayAssignmentPatternElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -14764,6 +14761,11 @@ impl std::fmt::Display for JsAnyStatement {
     }
 }
 impl std::fmt::Display for JsAnySwitchClause {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsAnyTemplateElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -15473,6 +15475,21 @@ impl std::fmt::Display for JsSwitchStatement {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsTemplate {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsTemplateChunkElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsTemplateElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for JsThisExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -15534,21 +15551,6 @@ impl std::fmt::Display for JsYieldExpression {
     }
 }
 impl std::fmt::Display for NewTarget {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for Template {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for TemplateChunkElement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for TemplateElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -16848,6 +16850,42 @@ impl IntoIterator for JsSwitchCaseList {
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
+pub struct JsTemplateElementList {
+    syntax_list: SyntaxList,
+}
+impl AstNode for JsTemplateElementList {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_TEMPLATE_ELEMENT_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<JsTemplateElementList> {
+        if Self::can_cast(syntax.kind()) {
+            Some(JsTemplateElementList {
+                syntax_list: syntax.into_list(),
+            })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
+}
+impl AstNodeList<JsAnyTemplateElement> for JsTemplateElementList {
+    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
+}
+impl Debug for JsTemplateElementList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.write_str("JsTemplateElementList ")?;
+        f.debug_list().entries(self.iter()).finish()
+    }
+}
+impl IntoIterator for &JsTemplateElementList {
+    type Item = JsAnyTemplateElement;
+    type IntoIter = AstNodeListIterator<JsAnyTemplateElement>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+impl IntoIterator for JsTemplateElementList {
+    type Item = JsAnyTemplateElement;
+    type IntoIter = AstNodeListIterator<JsAnyTemplateElement>;
+    fn into_iter(self) -> Self::IntoIter { self.iter() }
+}
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsVariableDeclarationList {
     syntax_list: SyntaxList,
 }
@@ -16881,42 +16919,6 @@ impl IntoIterator for JsVariableDeclarationList {
 impl IntoIterator for &JsVariableDeclarationList {
     type Item = SyntaxResult<JsVariableDeclaration>;
     type IntoIter = AstSeparatedListNodesIterator<JsVariableDeclaration>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
-}
-#[derive(Clone, Eq, PartialEq, Hash)]
-pub struct TemplateElementList {
-    syntax_list: SyntaxList,
-}
-impl AstNode for TemplateElementList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TEMPLATE_ELEMENT_LIST }
-    fn cast(syntax: SyntaxNode) -> Option<TemplateElementList> {
-        if Self::can_cast(syntax.kind()) {
-            Some(TemplateElementList {
-                syntax_list: syntax.into_list(),
-            })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
-}
-impl AstNodeList<AnyTemplateElement> for TemplateElementList {
-    fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
-}
-impl Debug for TemplateElementList {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.write_str("TemplateElementList ")?;
-        f.debug_list().entries(self.iter()).finish()
-    }
-}
-impl IntoIterator for &TemplateElementList {
-    type Item = AnyTemplateElement;
-    type IntoIter = AstNodeListIterator<AnyTemplateElement>;
-    fn into_iter(self) -> Self::IntoIter { self.iter() }
-}
-impl IntoIterator for TemplateElementList {
-    type Item = AnyTemplateElement;
-    type IntoIter = AstNodeListIterator<AnyTemplateElement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -17709,6 +17711,16 @@ impl Debug for DebugSyntaxElement {
                 JS_SWITCH_STATEMENT => {
                     std::fmt::Debug::fmt(&JsSwitchStatement::cast(node.clone()).unwrap(), f)
                 }
+                JS_TEMPLATE => std::fmt::Debug::fmt(&JsTemplate::cast(node.clone()).unwrap(), f),
+                JS_TEMPLATE_CHUNK_ELEMENT => {
+                    std::fmt::Debug::fmt(&JsTemplateChunkElement::cast(node.clone()).unwrap(), f)
+                }
+                JS_TEMPLATE_ELEMENT => {
+                    std::fmt::Debug::fmt(&JsTemplateElement::cast(node.clone()).unwrap(), f)
+                }
+                JS_TEMPLATE_ELEMENT_LIST => {
+                    std::fmt::Debug::fmt(&JsTemplateElementList::cast(node.clone()).unwrap(), f)
+                }
                 JS_THIS_EXPRESSION => {
                     std::fmt::Debug::fmt(&JsThisExpression::cast(node.clone()).unwrap(), f)
                 }
@@ -17776,16 +17788,6 @@ impl Debug for DebugSyntaxElement {
                     std::fmt::Debug::fmt(&JsYieldExpression::cast(node.clone()).unwrap(), f)
                 }
                 NEW_TARGET => std::fmt::Debug::fmt(&NewTarget::cast(node.clone()).unwrap(), f),
-                TEMPLATE => std::fmt::Debug::fmt(&Template::cast(node.clone()).unwrap(), f),
-                TEMPLATE_CHUNK_ELEMENT => {
-                    std::fmt::Debug::fmt(&TemplateChunkElement::cast(node.clone()).unwrap(), f)
-                }
-                TEMPLATE_ELEMENT => {
-                    std::fmt::Debug::fmt(&TemplateElement::cast(node.clone()).unwrap(), f)
-                }
-                TEMPLATE_ELEMENT_LIST => {
-                    std::fmt::Debug::fmt(&TemplateElementList::cast(node.clone()).unwrap(), f)
-                }
                 TS_ANY_TYPE => std::fmt::Debug::fmt(&TsAnyType::cast(node.clone()).unwrap(), f),
                 TS_ARRAY_TYPE => std::fmt::Debug::fmt(&TsArrayType::cast(node.clone()).unwrap(), f),
                 TS_ASSERTION => std::fmt::Debug::fmt(&TsAssertion::cast(node.clone()).unwrap(), f),
