@@ -925,6 +925,7 @@ fn parse_ts_index_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
         p.err_builder("An index signature must have a type annotation")
             .primary(range, "")
     });
+    parse_ts_object_type_member_semi(p);
 
     Present(m.complete(p, TS_INDEX_SIGNATURE_OBJECT_TYPE_MEMBER))
 }
