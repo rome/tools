@@ -119,6 +119,10 @@ impl ParseSeparatedList for TsTypeParameterList {
         )
     }
 
+    fn allow_trailing_separating_element(&self) -> bool {
+        true
+    }
+
     fn list_kind() -> JsSyntaxKind {
         TS_TYPE_PARAMETER_LIST
     }
@@ -1012,6 +1016,10 @@ impl ParseSeparatedList for TsTupleTypeElementList {
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
         T![,]
+    }
+
+    fn allow_trailing_separating_element(&self) -> bool {
+        true
     }
 }
 
