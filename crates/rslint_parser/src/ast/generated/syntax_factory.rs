@@ -5415,7 +5415,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(NEW_TARGET, children)
             }
-            TS_ANY => {
+            TS_ANY_TYPE => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
