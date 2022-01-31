@@ -5,6 +5,7 @@ use std::path::Path;
 use crate::runner::{TestCase, TestRunOutcome, TestSuite};
 
 const BASE_PATH: &str = "xtask/coverage/Typescript/tests";
+const REFERENCE_PATH: &str = "xtask/coverage/Typescript/tests/baselines/reference";
 
 #[derive(Debug)]
 struct TypeScriptTestCase {
@@ -25,9 +26,7 @@ impl TestCase for TypeScriptTestCase {
         let syntax = Syntax::default().typescript();
         let r = parse(self.code(), 0, syntax);
 
-        let error_reference_file = Path::new(BASE_PATH)
-            .join("baselines")
-            .join("reference")
+        let error_reference_file = Path::new(REFERENCE_PATH)
             .join(self.path.with_extension("errors.txt").file_name().unwrap());
 
         let expected_errors = error_reference_file.exists();
@@ -56,6 +55,10 @@ impl TestSuite for TypeScriptTestSuite {
     }
 
     fn is_test(&self, path: &Path) -> bool {
+        if path.starts_with(REFERENCE_PATH) {
+            return false;
+        }
+
         match path.extension() {
             None => false,
             Some(ext) => ext == "ts",
