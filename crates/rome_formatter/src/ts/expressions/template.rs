@@ -6,7 +6,7 @@ use rslint_parser::ast::JsTemplate;
 impl ToFormatElement for JsTemplate {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let tag = if let Some(tag) = self.tag() {
-            formatter.format_node(tag)?
+            formatter.format_node(&tag)?
         } else {
             empty_element()
         };
