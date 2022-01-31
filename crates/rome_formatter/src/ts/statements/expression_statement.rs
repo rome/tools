@@ -8,7 +8,7 @@ impl ToFormatElement for JsExpressionStatement {
             formatter.format_node(&self.expression()?)?,
             formatter
                 .format_token(&self.semicolon_token())?
-                .unwrap_or_else(|| token(';'))
+                .unwrap_or_else(|| token(";"))
         ])
     }
 }

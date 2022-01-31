@@ -14,7 +14,7 @@ impl ToFormatElement for JsVariableStatement {
             formatter.format_node(&self.declarations()?)?,
             formatter
                 .format_token(&self.semicolon_token())?
-                .unwrap_or_else(|| token(';')),
+                .unwrap_or_else(|| token(";")),
         ])
     }
 }

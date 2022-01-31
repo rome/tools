@@ -4,7 +4,8 @@ use std::path::Path;
 
 use crate::runner::{TestCase, TestRunOutcome, TestSuite};
 
-const BASE_PATH: &str = "xtask/coverage/Typescript/tests";
+const CASES_PATH: &str = "xtask/coverage/Typescript/tests/cases";
+const REFERENCE_PATH: &str = "xtask/coverage/Typescript/tests/baselines/reference";
 
 #[derive(Debug)]
 struct TypeScriptTestCase {
@@ -14,7 +15,7 @@ struct TypeScriptTestCase {
 
 impl TestCase for TypeScriptTestCase {
     fn path(&self) -> &Path {
-        self.path.strip_prefix(BASE_PATH).unwrap()
+        self.path.strip_prefix(CASES_PATH).unwrap()
     }
 
     fn code(&self) -> &str {
@@ -25,8 +26,17 @@ impl TestCase for TypeScriptTestCase {
         let syntax = Syntax::default().typescript();
         let r = parse(self.code(), 0, syntax);
 
+        let error_reference_file = Path::new(REFERENCE_PATH)
+            .join(self.path.with_extension("errors.txt").file_name().unwrap());
+
+        let expected_errors = error_reference_file.exists();
+
         match r.ok() {
-            Err(errors) => TestRunOutcome::IncorrectlyErrored { errors, syntax },
+            Err(errors) if !expected_errors => {
+                TestRunOutcome::IncorrectlyErrored { errors, syntax }
+            }
+            Err(_) => TestRunOutcome::Passed(syntax),
+            _ if expected_errors => TestRunOutcome::IncorrectlyPassed(syntax),
             _ => TestRunOutcome::Passed(syntax),
         }
     }
@@ -41,7 +51,7 @@ impl TestSuite for TypeScriptTestSuite {
     }
 
     fn base_path(&self) -> &str {
-        BASE_PATH
+        CASES_PATH
     }
 
     fn is_test(&self, path: &Path) -> bool {

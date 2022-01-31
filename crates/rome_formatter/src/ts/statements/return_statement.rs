@@ -15,7 +15,7 @@ impl ToFormatElement for JsReturnStatement {
         tokens.push(
             formatter
                 .format_token(&self.semicolon_token())?
-                .unwrap_or_else(|| token(';')),
+                .unwrap_or_else(|| token(";")),
         );
 
         Ok(concat_elements(tokens))
