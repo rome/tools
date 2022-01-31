@@ -45,14 +45,14 @@ jobs:
       - name: Compile
         run: cargo build --release --locked -p xtask_coverage
 
-      - name: Run Test262 suite
+      - name: Run Test suites
         continue-on-error: true
         run: cargo coverage --json > new_results.json
 
       - name: Checkout Main Branch
         run: git checkout main
 
-      - name: Run Test262 suite on main branch
+      - name: Run Test suites on main branch
         continue-on-error: true
         run: cargo coverage --json > base_results.json
 
