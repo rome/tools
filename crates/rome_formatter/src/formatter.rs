@@ -273,10 +273,7 @@ impl Formatter {
     /// end up separated by hard lines or empty lines.
     ///
     /// If the formatter fails to format an element, said element gets printed verbatim.
-    pub fn format_list<List, Node: Clone + AstNode + ToFormatElement>(
-        &self,
-        list: List,
-    ) -> FormatElement
+    pub fn format_list<List, Node: AstNode + ToFormatElement>(&self, list: List) -> FormatElement
     where
         List: AstNodeList<Node>,
     {
