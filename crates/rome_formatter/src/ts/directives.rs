@@ -7,7 +7,7 @@ use rslint_parser::ast::{AstNode, AstNodeList, JsDirective, JsDirectiveList};
 pub fn format_directives(directives: JsDirectiveList, formatter: &Formatter) -> FormatElement {
     join_elements_hard_line(directives.iter().map(|directive| {
         let snapshot = formatter.snapshot();
-        let elem = match formatter.format_node(directive.clone()) {
+        let elem = match formatter.format_node(&directive) {
             Ok(result) => result,
             Err(_) => {
                 formatter.restore(snapshot);

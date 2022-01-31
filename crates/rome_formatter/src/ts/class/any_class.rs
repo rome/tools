@@ -7,13 +7,13 @@ use rslint_parser::ast::JsAnyClass;
 impl ToFormatElement for JsAnyClass {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let id = match self.id()? {
-            Some(id) => format_elements![space_token(), formatter.format_node(id)?],
+            Some(id) => format_elements![space_token(), formatter.format_node(&id)?],
             None => empty_element(),
         };
 
         let extends = match self.extends_clause() {
             Some(extends_clause) => {
-                format_elements![space_token(), formatter.format_node(extends_clause)?]
+                format_elements![space_token(), formatter.format_node(&extends_clause)?]
             }
             None => empty_element(),
         };

@@ -24,16 +24,16 @@ impl ToFormatElement for JsAnyFunction {
         tokens.push(match self {
             JsAnyFunction::JsArrowFunctionExpression(_) => empty_element(),
             _ => match self.id()? {
-                Some(id) => format_elements![space_token(), formatter.format_node(id)?],
+                Some(id) => format_elements![space_token(), formatter.format_node(&id)?],
                 None => space_token(),
             },
         });
 
         tokens.push(match self.parameters()? {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => {
-                format_elements![token("("), formatter.format_node(binding)?, token(")")]
+                format_elements![token("("), formatter.format_node(&binding)?, token(")")]
             }
-            JsAnyArrowFunctionParameters::JsParameters(params) => formatter.format_node(params)?,
+            JsAnyArrowFunctionParameters::JsParameters(params) => formatter.format_node(&params)?,
         });
 
         tokens.push(space_token());
@@ -43,7 +43,7 @@ impl ToFormatElement for JsAnyFunction {
             tokens.push(space_token());
         }
 
-        tokens.push(formatter.format_node(self.body()?)?);
+        tokens.push(formatter.format_node(&self.body()?)?);
 
         Ok(concat_elements(tokens))
     }

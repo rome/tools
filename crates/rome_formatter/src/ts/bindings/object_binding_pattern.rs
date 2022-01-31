@@ -55,15 +55,15 @@ impl ToFormatElement for JsAnyObjectBindingPatternMember {
 impl ToFormatElement for JsObjectBindingPatternProperty {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let init_node = if let Some(node) = self.init() {
-            format_elements![space_token(), formatter.format_node(node)?]
+            format_elements![space_token(), formatter.format_node(&node)?]
         } else {
             empty_element()
         };
         Ok(format_elements![
-            formatter.format_node(self.member()?)?,
+            formatter.format_node(&self.member()?)?,
             formatter.format_token(&self.colon_token()?)?,
             space_token(),
-            formatter.format_node(self.pattern()?)?,
+            formatter.format_node(&self.pattern()?)?,
             init_node,
         ])
     }
@@ -73,7 +73,7 @@ impl ToFormatElement for JsObjectBindingPatternRest {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
             formatter.format_token(&self.dotdotdot_token()?)?,
-            formatter.format_node(self.binding()?)?,
+            formatter.format_node(&self.binding()?)?,
         ])
     }
 }
@@ -81,12 +81,12 @@ impl ToFormatElement for JsObjectBindingPatternRest {
 impl ToFormatElement for JsObjectBindingPatternShorthandProperty {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let init_node = if let Some(node) = self.init() {
-            format_elements![space_token(), formatter.format_node(node)?]
+            format_elements![space_token(), formatter.format_node(&node)?]
         } else {
             empty_element()
         };
         Ok(format_elements![
-            formatter.format_node(self.identifier()?)?,
+            formatter.format_node(&self.identifier()?)?,
             init_node
         ])
     }

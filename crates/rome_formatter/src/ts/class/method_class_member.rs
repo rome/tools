@@ -12,9 +12,9 @@ impl ToFormatElement for JsMethodClassMember {
             empty_element()
         };
         let star_token = formatter.format_token(&self.star_token())?;
-        let name = formatter.format_node(self.name()?)?;
-        let params = formatter.format_node(self.parameters()?)?;
-        let body = formatter.format_node(self.body()?)?;
+        let name = formatter.format_node(&self.name()?)?;
+        let params = formatter.format_node(&self.parameters()?)?;
+        let body = formatter.format_node(&self.body()?)?;
         Ok(format_elements![
             static_token,
             star_token,

@@ -13,7 +13,7 @@ impl ToFormatElement for JsPropertyClassMember {
         };
 
         let init = if let Some(init) = self.value() {
-            format_elements![space_token(), formatter.format_node(init)?]
+            format_elements![space_token(), formatter.format_node(&init)?]
         } else {
             empty_element()
         };
@@ -24,7 +24,7 @@ impl ToFormatElement for JsPropertyClassMember {
 
         Ok(format_elements![
             static_token,
-            formatter.format_node(self.name()?)?,
+            formatter.format_node(&self.name()?)?,
             init,
             semicolon
         ])

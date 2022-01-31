@@ -107,7 +107,7 @@ impl ToFormatElement for JsParenthesizedExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
             formatter.format_token(&self.l_paren_token()?)?,
-            formatter.format_node(self.expression()?)?,
+            formatter.format_node(&self.expression()?)?,
             formatter.format_token(&self.r_paren_token()?)?
         ])
     }
@@ -122,10 +122,10 @@ impl ToFormatElement for JsComputedMemberExpression {
         };
 
         Ok(format_elements![
-            formatter.format_node(self.object()?)?,
+            formatter.format_node(&self.object()?)?,
             optional_chain_token,
             formatter.format_token(&self.l_brack_token()?)?,
-            formatter.format_node(self.member()?)?,
+            formatter.format_node(&self.member()?)?,
             formatter.format_token(&self.r_brack_token()?)?
         ])
     }
@@ -134,7 +134,7 @@ impl ToFormatElement for JsComputedMemberExpression {
 impl ToFormatElement for JsNewExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let arguments = if let Some(arguments) = self.arguments() {
-            formatter.format_node(arguments)?
+            formatter.format_node(&arguments)?
         } else {
             format_elements![token("("), token(")")]
         };
@@ -143,7 +143,7 @@ impl ToFormatElement for JsNewExpression {
             formatter.format_token(&self.new_token()?)?,
             // TODO handle TsTypeArgs
             space_token(),
-            formatter.format_node(self.callee()?)?,
+            formatter.format_node(&self.callee()?)?,
             arguments,
         ])
     }
@@ -161,7 +161,7 @@ impl ToFormatElement for JsUnaryExpression {
         Ok(format_elements![
             formatter.format_token(&self.operator()?)?,
             space_or_empty,
-            formatter.format_node(self.argument()?)?,
+            formatter.format_node(&self.argument()?)?,
         ])
     }
 }
@@ -169,11 +169,11 @@ impl ToFormatElement for JsUnaryExpression {
 impl ToFormatElement for JsBinaryExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_node(self.left()?)?,
+            formatter.format_node(&self.left()?)?,
             space_token(),
             formatter.format_token(&self.operator()?)?,
             space_token(),
-            formatter.format_node(self.right()?)?
+            formatter.format_node(&self.right()?)?
         ])
     }
 }
@@ -181,15 +181,15 @@ impl ToFormatElement for JsBinaryExpression {
 impl ToFormatElement for JsConditionalExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_node(self.test()?)?,
+            formatter.format_node(&self.test()?)?,
             space_token(),
             formatter.format_token(&self.question_mark_token()?)?,
             space_token(),
-            formatter.format_node(self.consequent()?)?,
+            formatter.format_node(&self.consequent()?)?,
             space_token(),
             formatter.format_token(&self.colon_token()?)?,
             space_token(),
-            formatter.format_node(self.alternate()?)?,
+            formatter.format_node(&self.alternate()?)?,
         ])
     }
 }
@@ -197,11 +197,11 @@ impl ToFormatElement for JsConditionalExpression {
 impl ToFormatElement for JsAssignmentExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_node(self.left()?)?,
+            formatter.format_node(&self.left()?)?,
             space_token(),
             formatter.format_token(&self.operator_token()?)?,
             space_token(),
-            formatter.format_node(self.right()?)?,
+            formatter.format_node(&self.right()?)?,
         ])
     }
 }
@@ -219,7 +219,7 @@ impl ToFormatElement for NewTarget {
 impl ToFormatElement for JsYieldExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let argument = if let Some(node) = self.argument() {
-            formatter.format_node(node)?
+            formatter.format_node(&node)?
         } else {
             empty_element()
         };
@@ -242,7 +242,7 @@ impl ToFormatElement for JsYieldArgument {
         Ok(format_elements![
             star_token,
             space_token(),
-            formatter.format_node(self.expression()?)?
+            formatter.format_node(&self.expression()?)?
         ])
     }
 }
@@ -252,7 +252,7 @@ impl ToFormatElement for JsAwaitExpression {
         Ok(format_elements![
             formatter.format_token(&self.await_token()?)?,
             space_token(),
-            formatter.format_node(self.argument()?)?,
+            formatter.format_node(&self.argument()?)?,
         ])
     }
 }
@@ -260,11 +260,11 @@ impl ToFormatElement for JsAwaitExpression {
 impl ToFormatElement for JsLogicalExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_node(self.left()?)?,
+            formatter.format_node(&self.left()?)?,
             space_token(),
             formatter.format_token(&self.operator()?)?,
             space_token(),
-            formatter.format_node(self.right()?)?,
+            formatter.format_node(&self.right()?)?,
         ])
     }
 }
@@ -272,11 +272,11 @@ impl ToFormatElement for JsLogicalExpression {
 impl ToFormatElement for JsInstanceofExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_node(self.left()?)?,
+            formatter.format_node(&self.left()?)?,
             space_token(),
             formatter.format_token(&self.instanceof_token()?)?,
             space_token(),
-            formatter.format_node(self.right()?)?,
+            formatter.format_node(&self.right()?)?,
         ])
     }
 }
@@ -284,11 +284,11 @@ impl ToFormatElement for JsInstanceofExpression {
 impl ToFormatElement for JsInExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_node(self.property()?)?,
+            formatter.format_node(&self.property()?)?,
             space_token(),
             formatter.format_token(&self.in_token()?)?,
             space_token(),
-            formatter.format_node(self.object()?)?,
+            formatter.format_node(&self.object()?)?,
         ])
     }
 }
