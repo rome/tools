@@ -1,4 +1,4 @@
-use crate::utils::print_stats_diff;
+use crate::BenchSummary;
 use itertools::Itertools;
 use rslint_errors::Diagnostic;
 use std::fmt::{Display, Formatter};
@@ -14,7 +14,38 @@ pub struct BenchmarkParseResult {
     diagnostics: Vec<Diagnostic>,
 }
 
-pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchmarkParseResult {
+#[cfg(feature = "dhat-on")]
+fn print_diff(before: dhat::Stats, current: dhat::Stats) -> dhat::Stats {
+    use humansize::{file_size_opts as options, FileSize};
+
+    println!("\tMemory");
+    if let Some(heap) = &current.heap {
+        println!("\t\tCurrent Blocks: {}", heap.curr_blocks);
+        println!(
+            "\t\tCurrent Bytes: {}",
+            heap.curr_bytes.file_size(options::CONVENTIONAL).unwrap()
+        );
+        println!("\t\tMax Blocks: {}", heap.max_blocks);
+        println!(
+            "\t\tMax Bytes: {}",
+            heap.max_bytes.file_size(options::CONVENTIONAL).unwrap()
+        );
+    }
+
+    println!(
+        "\t\tTotal Blocks: {}",
+        current.total_blocks - before.total_blocks
+    );
+    println!(
+        "\t\tTotal Bytes: {}",
+        (current.total_bytes - before.total_bytes)
+            .file_size(options::CONVENTIONAL)
+            .unwrap()
+    );
+
+    current
+}
+pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchSummary {
     #[cfg(feature = "dhat-on")]
     println!("Start");
     #[cfg(feature = "dhat-on")]
@@ -28,7 +59,7 @@ pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchmarkParseResult {
     #[cfg(feature = "dhat-on")]
     println!("Tokenizer");
     #[cfg(feature = "dhat-on")]
-    let stats = print_stats_diff(stats, dhat::get_stats().unwrap());
+    let stats = print_diff(stats, dhat::get_stats().unwrap());
 
     let parser_timer = timing::start();
     let (events, parsing_diags, tokens) = {
@@ -43,7 +74,7 @@ pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchmarkParseResult {
     #[cfg(feature = "dhat-on")]
     println!("Parsed");
     #[cfg(feature = "dhat-on")]
-    let stats = print_stats_diff(stats, dhat::get_stats().unwrap());
+    let stats = print_diff(stats, dhat::get_stats().unwrap());
 
     let tree_sink_timer = timing::start();
     let mut tree_sink = rslint_parser::LosslessTreeSink::new(code, &tokens);
@@ -54,16 +85,16 @@ pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchmarkParseResult {
     #[cfg(feature = "dhat-on")]
     println!("Tree-Sink");
     #[cfg(feature = "dhat-on")]
-    print_stats_diff(stats, dhat::get_stats().unwrap());
+    print_diff(stats, dhat::get_stats().unwrap());
 
     diagnostics.extend(sink_diags);
-    BenchmarkParseResult {
+    BenchSummary::Parser(BenchmarkParseResult {
         id: id.to_string(),
         tokenization: tokenization_duration,
         parsing: parse_duration,
         tree_sink: tree_sink_duration,
         diagnostics,
-    }
+    })
 }
 
 impl BenchmarkParseResult {
@@ -73,7 +104,7 @@ impl BenchmarkParseResult {
 
     pub(crate) fn summary(&self) -> String {
         format!(
-            "{},Total Time,{:?},tokenization,{:?},parsing,{:?},tree_sink,{:?}",
+            "{}, Total Time: {:?}, tokenization: {:?}, parsing: {:?}, tree_sink: {:?}",
             self.id,
             self.total(),
             self.tokenization,

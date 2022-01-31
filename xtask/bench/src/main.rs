@@ -1,7 +1,7 @@
 use pico_args::Arguments;
+use std::str::FromStr;
 use xtask::{project_root, pushd, Result};
-
-use xtask_bench::run;
+use xtask_bench::{run, FeatureToBenchmark};
 
 #[cfg(feature = "dhat-on")]
 use dhat::DhatAlloc;
@@ -32,8 +32,15 @@ fn main() -> Result<()> {
         .unwrap()
         .unwrap_or(true);
     let baseline: Option<String> = args.opt_value_from_str("--save-baseline").unwrap();
+    let feature: Option<String> = args.opt_value_from_str("--feature").unwrap();
 
-    run(filter, criterion, baseline);
+    run(
+        filter,
+        criterion,
+        baseline,
+        FeatureToBenchmark::from_str(feature.unwrap_or_else(|| "parser".to_string()).as_str())
+            .unwrap(),
+    );
 
     Ok(())
 }

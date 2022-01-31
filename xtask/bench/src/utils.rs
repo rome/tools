@@ -1,31 +1,46 @@
-#[cfg(feature = "dhat-on")]
-pub fn print_stats_diff(before: dhat::Stats, current: dhat::Stats) -> dhat::Stats {
-    use humansize::{file_size_opts as options, FileSize};
+use crate::err_to_string;
+use ansi_rgb::{red, Foreground};
+use std::path::PathBuf;
+use std::str::FromStr;
 
-    println!("\tMemory");
-    if let Some(heap) = &current.heap {
-        println!("\t\tCurrent Blocks: {}", heap.curr_blocks);
-        println!(
-            "\t\tCurrent Bytes: {}",
-            heap.curr_bytes.file_size(options::CONVENTIONAL).unwrap()
-        );
-        println!("\t\tMax Blocks: {}", heap.max_blocks);
-        println!(
-            "\t\tMax Bytes: {}",
-            heap.max_bytes.file_size(options::CONVENTIONAL).unwrap()
-        );
+pub fn get_code(lib: &str) -> Result<(String, String), String> {
+    let url = url::Url::from_str(lib).map_err(err_to_string)?;
+    let segments = url
+        .path_segments()
+        .ok_or_else(|| "lib url has no segments".to_string())?;
+    let filename = segments
+        .last()
+        .ok_or_else(|| "lib url has no segments".to_string())?;
+
+    let mut file = PathBuf::from_str("target").map_err(err_to_string)?;
+    file.push(filename);
+
+    match std::fs::read_to_string(&file) {
+        Ok(code) => {
+            println!("[{}] - using [{}]", filename.fg(red()), file.display());
+            Ok((filename.to_string(), code))
+        }
+        Err(_) => {
+            println!(
+                "[{}] - Downloading [{}] to [{}]",
+                filename,
+                lib,
+                file.display()
+            );
+            match ureq::get(lib).call() {
+                Ok(response) => {
+                    let mut reader = response.into_reader();
+
+                    let _ = std::fs::remove_file(&file);
+                    let mut writer = std::fs::File::create(&file).map_err(err_to_string)?;
+                    let _ = std::io::copy(&mut reader, &mut writer);
+
+                    std::fs::read_to_string(&file)
+                        .map_err(err_to_string)
+                        .map(|code| (filename.to_string(), code))
+                }
+                Err(e) => Err(format!("{:?}", e)),
+            }
+        }
     }
-
-    println!(
-        "\t\tTotal Blocks: {}",
-        current.total_blocks - before.total_blocks
-    );
-    println!(
-        "\t\tTotal Bytes: {}",
-        (current.total_bytes - before.total_bytes)
-            .file_size(options::CONVENTIONAL)
-            .unwrap()
-    );
-
-    current
 }

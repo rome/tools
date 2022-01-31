@@ -2025,6 +2025,7 @@ dependencies = [
  "itertools",
  "pico-args",
  "regex",
+ "rome_formatter",
  "rslint_errors",
  "rslint_parser",
  "timing",

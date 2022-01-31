@@ -14,7 +14,7 @@ env:
 jobs:
   bench:
     name: Bench
-    if: github.event.issue.pull_request && contains(github.event.comment.body, '!bench')
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '!bench_parser')
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -62,7 +62,7 @@ jobs:
         id: bench_comparison
         shell: bash
         run: |
-          echo "### Bench results on ${{ matrix.os }}" > output
+          echo "### Bench results on ${{ matrix.os }} of the parser" > output
           echo "\`\`\`"  >> output
           critcmp main pr >> output
           echo "\`\`\`" >> output

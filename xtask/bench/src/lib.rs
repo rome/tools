@@ -1,58 +1,76 @@
-pub(crate) mod features;
-pub(crate) mod utils;
+mod features;
+mod utils;
 
-use crate::features::parser::benchmark_parse_lib;
-use ansi_rgb::{red, Foreground};
+use std::fmt::{Display, Formatter};
+use std::str::FromStr;
 use std::time::Duration;
-use std::{path::PathBuf, str::FromStr};
+
+pub use crate::features::formatter::benchmark_format_lib;
+use crate::features::formatter::BenchmarkFormatterResult;
+pub use crate::features::parser::benchmark_parse_lib;
+use crate::features::parser::BenchmarkParseResult;
+pub use utils::get_code;
+
+/// What feature to benchmark
+pub enum FeatureToBenchmark {
+    /// benchmark of the parser
+    Parser,
+    /// benchmark of the formatter
+    Formatter,
+}
+
+impl FromStr for FeatureToBenchmark {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "parser" => Ok(Self::Parser),
+            "formatter" => Ok(Self::Formatter),
+            _ => Ok(Self::Parser),
+        }
+    }
+}
+
+impl Display for FeatureToBenchmark {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let _ = match self {
+            FeatureToBenchmark::Parser => writeln!(f, "parser"),
+            FeatureToBenchmark::Formatter => writeln!(f, "formatter"),
+        };
+        Ok(())
+    }
+}
+
+/// If groups the summary by their category and creates a small interface
+/// where each bench result can create their summary
+pub enum BenchSummary {
+    Parser(BenchmarkParseResult),
+    Formatter(BenchmarkFormatterResult),
+}
+
+impl BenchSummary {
+    pub fn summary(&self) -> String {
+        match self {
+            BenchSummary::Parser(result) => result.summary(),
+            BenchSummary::Formatter(result) => result.summary(),
+        }
+    }
+}
+
+impl Display for BenchSummary {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            BenchSummary::Parser(result) => std::fmt::Display::fmt(&result, f),
+            BenchSummary::Formatter(result) => std::fmt::Display::fmt(&result, f),
+        }
+    }
+}
 
 fn err_to_string<E: std::fmt::Debug>(e: E) -> String {
     format!("{:?}", e)
 }
 
-pub fn get_code(lib: &str) -> Result<(String, String), String> {
-    let url = url::Url::from_str(lib).map_err(err_to_string)?;
-    let segments = url
-        .path_segments()
-        .ok_or_else(|| "lib url has no segments".to_string())?;
-    let filename = segments
-        .last()
-        .ok_or_else(|| "lib url has no segments".to_string())?;
-
-    let mut file = PathBuf::from_str("target").map_err(err_to_string)?;
-    file.push(filename);
-
-    match std::fs::read_to_string(&file) {
-        Ok(code) => {
-            println!("[{}] - using [{}]", filename.fg(red()), file.display());
-            Ok((filename.to_string(), code))
-        }
-        Err(_) => {
-            println!(
-                "[{}] - Downloading [{}] to [{}]",
-                filename,
-                lib,
-                file.display()
-            );
-            match ureq::get(lib).call() {
-                Ok(response) => {
-                    let mut reader = response.into_reader();
-
-                    let _ = std::fs::remove_file(&file);
-                    let mut writer = std::fs::File::create(&file).map_err(err_to_string)?;
-                    let _ = std::io::copy(&mut reader, &mut writer);
-
-                    std::fs::read_to_string(&file)
-                        .map_err(err_to_string)
-                        .map(|code| (filename.to_string(), code))
-                }
-                Err(e) => Err(format!("{:?}", e)),
-            }
-        }
-    }
-}
-
-pub fn run(filter: String, criterion: bool, baseline: Option<String>) {
+pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: FeatureToBenchmark) {
     let regex = regex::Regex::new(filter.as_str()).unwrap();
     let libs = include_str!("libs.txt").lines();
 
@@ -90,7 +108,11 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>) {
                     rslint_parser::parse_module(code, 0);
                 }
 
-                let result = benchmark_parse_lib(&id, code);
+                let result = match feature {
+                    FeatureToBenchmark::Parser => benchmark_parse_lib(&id, code),
+                    FeatureToBenchmark::Formatter => benchmark_format_lib(&id, code),
+                };
+
                 summary.push(result.summary());
 
                 println!("Benchmark: {}", lib);
