@@ -224,9 +224,6 @@ impl ToFormatElement for SyntaxNode {
             JsSyntaxKind::JS_TEMPLATE_CHUNK_ELEMENT => JsTemplateChunkElement::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
-            JsSyntaxKind::JS_MODULE => JsModule::cast(self.clone())
-                .unwrap()
-                .to_format_element(formatter),
             JsSyntaxKind::JS_IMPORT_BARE_CLAUSE => JsImportBareClause::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),

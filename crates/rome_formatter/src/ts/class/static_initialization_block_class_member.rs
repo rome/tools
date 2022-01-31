@@ -1,4 +1,3 @@
-use crate::ts::statements::format_statements;
 use crate::{
     block_indent, format_elements, space_token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
@@ -13,7 +12,7 @@ impl ToFormatElement for JsStaticInitializationBlockClassMember {
             |open_token_trailing, close_token_leading| {
                 Ok(block_indent(format_elements![
                     open_token_trailing,
-                    format_statements(self.statements(), formatter),
+                    formatter.format_list(self.statements()),
                     close_token_leading,
                 ]))
             },
