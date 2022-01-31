@@ -266,7 +266,13 @@ impl Formatter {
         Ok(result.into_iter())
     }
 
-    /// It formats a list of nodes that are not separated.
+    /// It formats a list of nodes that are not separated. It's a ad-hoc function to
+    /// format lists that implement [rslint_parser::AstNodeList].
+    ///
+    /// The elements of the list are joined together using [join_elements_hard_line], which will
+    /// end up separated by hard lines or empty lines.
+    ///
+    /// If the formatter fails to format an element, said element gets printed verbatim.
     pub fn format_list<List, Node: Clone + AstNode + ToFormatElement>(
         &self,
         list: List,
