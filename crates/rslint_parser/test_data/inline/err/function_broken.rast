@@ -15,7 +15,7 @@ JsModule {
                 items: JsParameterList [],
                 r_paren_token: R_PAREN@13..14 ")" [] [],
             },
-            return_type: missing (optional),
+            return_type_annotation: missing (optional),
             body: missing (required),
         },
         JsUnknownStatement {

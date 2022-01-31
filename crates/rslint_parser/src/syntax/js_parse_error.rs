@@ -179,3 +179,20 @@ pub(crate) fn expected_expression_assignment(p: &Parser, range: Range<usize>) ->
 pub(crate) fn expected_unary_expression(p: &Parser, range: Range<usize>) -> Diagnostic {
     expected_node("unary expression", range).to_diagnostic(p)
 }
+
+pub(crate) fn expected_ts_type(p: &Parser, range: Range<usize>) -> Diagnostic {
+    expected_node("type", range).to_diagnostic(p)
+}
+
+pub(crate) fn expected_ts_type_parameter(p: &Parser, range: Range<usize>) -> Diagnostic {
+    expected_node("type parameter", range).to_diagnostic(p)
+}
+
+pub(crate) fn expected_property_or_signature(p: &Parser, range: Range<usize>) -> Diagnostic {
+    expected_any(&["property", "signature"], range).to_diagnostic(p)
+}
+
+pub(crate) fn ts_only_syntax_error(p: &Parser, syntax: &str, range: Range<usize>) -> Diagnostic {
+    p.err_builder(&format!("{} are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.", syntax))
+		.primary(range, "TypeScript only syntax")
+}

@@ -1,0 +1,110 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        TsTypeAlias {
+            type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
+            ty: TsIndexedAccessType {
+                object_type: TsStringType {
+                    string_token: STRING_KW@23..29 "string" [] [],
+                },
+                l_brack_token: L_BRACK@29..30 "[" [] [],
+                index_type: TsNumberType {
+                    number_token: NUMBER_KW@30..36 "number" [] [],
+                },
+                r_brack_token: R_BRACK@36..37 "]" [] [],
+            },
+            semicolon_token: SEMICOLON@37..38 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@38..44 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@44..46 "B" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@46..48 "=" [] [Whitespace(" ")],
+            ty: TsArrayType {
+                element_type: TsIndexedAccessType {
+                    object_type: TsIndexedAccessType {
+                        object_type: TsIndexedAccessType {
+                            object_type: TsStringType {
+                                string_token: STRING_KW@48..54 "string" [] [],
+                            },
+                            l_brack_token: L_BRACK@54..55 "[" [] [],
+                            index_type: TsNumberType {
+                                number_token: NUMBER_KW@55..61 "number" [] [],
+                            },
+                            r_brack_token: R_BRACK@61..62 "]" [] [],
+                        },
+                        l_brack_token: L_BRACK@62..63 "[" [] [],
+                        index_type: TsNumberType {
+                            number_token: NUMBER_KW@63..69 "number" [] [],
+                        },
+                        r_brack_token: R_BRACK@69..70 "]" [] [],
+                    },
+                    l_brack_token: L_BRACK@70..71 "[" [] [],
+                    index_type: TsNumberType {
+                        number_token: NUMBER_KW@71..77 "number" [] [],
+                    },
+                    r_brack_token: R_BRACK@77..78 "]" [] [],
+                },
+                l_brack_token: L_BRACK@78..79 "[" [] [],
+                r_brack_token: R_BRACK@79..80 "]" [] [],
+            },
+            semicolon_token: SEMICOLON@80..81 ";" [] [],
+        },
+    ],
+    eof_token: EOF@81..82 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..82
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..81
+    0: TS_TYPE_ALIAS@0..38
+      0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@19..21
+        0: IDENT@19..21 "A" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@21..23 "=" [] [Whitespace(" ")]
+      4: TS_INDEXED_ACCESS_TYPE@23..37
+        0: TS_STRING_TYPE@23..29
+          0: STRING_KW@23..29 "string" [] []
+        1: L_BRACK@29..30 "[" [] []
+        2: TS_NUMBER_TYPE@30..36
+          0: NUMBER_KW@30..36 "number" [] []
+        3: R_BRACK@36..37 "]" [] []
+      5: SEMICOLON@37..38 ";" [] []
+    1: TS_TYPE_ALIAS@38..81
+      0: TYPE_KW@38..44 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@44..46
+        0: IDENT@44..46 "B" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@46..48 "=" [] [Whitespace(" ")]
+      4: TS_ARRAY_TYPE@48..80
+        0: TS_INDEXED_ACCESS_TYPE@48..78
+          0: TS_INDEXED_ACCESS_TYPE@48..70
+            0: TS_INDEXED_ACCESS_TYPE@48..62
+              0: TS_STRING_TYPE@48..54
+                0: STRING_KW@48..54 "string" [] []
+              1: L_BRACK@54..55 "[" [] []
+              2: TS_NUMBER_TYPE@55..61
+                0: NUMBER_KW@55..61 "number" [] []
+              3: R_BRACK@61..62 "]" [] []
+            1: L_BRACK@62..63 "[" [] []
+            2: TS_NUMBER_TYPE@63..69
+              0: NUMBER_KW@63..69 "number" [] []
+            3: R_BRACK@69..70 "]" [] []
+          1: L_BRACK@70..71 "[" [] []
+          2: TS_NUMBER_TYPE@71..77
+            0: NUMBER_KW@71..77 "number" [] []
+          3: R_BRACK@77..78 "]" [] []
+        1: L_BRACK@78..79 "[" [] []
+        2: R_BRACK@79..80 "]" [] []
+      5: SEMICOLON@80..81 ";" [] []
+  3: EOF@81..82 "" [Newline("\n")] []

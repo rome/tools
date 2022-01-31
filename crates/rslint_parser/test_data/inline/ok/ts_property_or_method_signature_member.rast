@@ -1,0 +1,523 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        TsTypeAlias {
+            type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
+            ty: TsObjectType {
+                l_curly_token: L_CURLY@23..25 "{" [] [Whitespace(" ")],
+                members: TsObjectTypeMemberList [
+                    TsPropertySignatureObjectTypeMember {
+                        readonly_token: missing (optional),
+                        name: JsLiteralMemberName {
+                            value: IDENT@25..26 "a" [] [],
+                        },
+                        optional_token_token: QUESTION@26..27 "?" [] [],
+                        type_annotation: TsTypeAnnotation {
+                            colon_token: COLON@27..29 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@29..35 "string" [] [],
+                            },
+                        },
+                        separator_token: SEMICOLON@35..37 ";" [] [Whitespace(" ")],
+                    },
+                    TsMethodSignatureObjectTypeMember {
+                        name: JsLiteralMemberName {
+                            value: IDENT@37..38 "b" [] [],
+                        },
+                        optional_token_token: QUESTION@38..39 "?" [] [],
+                        type_parameters: missing (optional),
+                        parameter_list: JsParameters {
+                            l_paren_token: L_PAREN@39..40 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@40..41 ")" [] [],
+                        },
+                        return_type_annotation: TsReturnTypeAnnotation {
+                            colon_token: COLON@41..43 ":" [] [Whitespace(" ")],
+                            ty: TsNumberType {
+                                number_token: NUMBER_KW@43..50 "number" [] [Whitespace(" ")],
+                            },
+                        },
+                        separator_token: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@50..51 "}" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@51..57 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@57..59 "B" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@59..61 "=" [] [Whitespace(" ")],
+            ty: TsObjectType {
+                l_curly_token: L_CURLY@61..63 "{" [] [Whitespace(" ")],
+                members: TsObjectTypeMemberList [
+                    TsPropertySignatureObjectTypeMember {
+                        readonly_token: missing (optional),
+                        name: JsLiteralMemberName {
+                            value: IDENT@63..64 "a" [] [],
+                        },
+                        optional_token_token: missing (optional),
+                        type_annotation: TsTypeAnnotation {
+                            colon_token: COLON@64..66 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@66..72 "string" [] [],
+                            },
+                        },
+                        separator_token: COMMA@72..74 "," [] [Whitespace(" ")],
+                    },
+                    TsMethodSignatureObjectTypeMember {
+                        name: JsLiteralMemberName {
+                            value: IDENT@74..75 "b" [] [],
+                        },
+                        optional_token_token: missing (optional),
+                        type_parameters: missing (optional),
+                        parameter_list: JsParameters {
+                            l_paren_token: L_PAREN@75..76 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@76..77 ")" [] [],
+                        },
+                        return_type_annotation: TsReturnTypeAnnotation {
+                            colon_token: COLON@77..79 ":" [] [Whitespace(" ")],
+                            ty: TsNumberType {
+                                number_token: NUMBER_KW@79..86 "number" [] [Whitespace(" ")],
+                            },
+                        },
+                        separator_token: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@86..87 "}" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@87..93 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@93..95 "C" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@95..97 "=" [] [Whitespace(" ")],
+            ty: TsObjectType {
+                l_curly_token: L_CURLY@97..99 "{" [] [Whitespace(" ")],
+                members: TsObjectTypeMemberList [
+                    TsMethodSignatureObjectTypeMember {
+                        name: JsLiteralMemberName {
+                            value: IDENT@99..100 "m" [] [],
+                        },
+                        optional_token_token: missing (optional),
+                        type_parameters: missing (optional),
+                        parameter_list: JsParameters {
+                            l_paren_token: L_PAREN@100..101 "(" [] [],
+                            items: JsParameterList [
+                                JsParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@101..102 "a" [] [],
+                                    },
+                                    type_annotation: TsTypeAnnotation {
+                                        colon_token: COLON@102..104 ":" [] [Whitespace(" ")],
+                                        ty: TsStringType {
+                                            string_token: STRING_KW@104..110 "string" [] [],
+                                        },
+                                    },
+                                    initializer: missing (optional),
+                                },
+                                COMMA@110..112 "," [] [Whitespace(" ")],
+                                JsParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@112..113 "b" [] [],
+                                    },
+                                    type_annotation: TsTypeAnnotation {
+                                        colon_token: COLON@113..115 ":" [] [Whitespace(" ")],
+                                        ty: TsNumberType {
+                                            number_token: NUMBER_KW@115..121 "number" [] [],
+                                        },
+                                    },
+                                    initializer: missing (optional),
+                                },
+                                COMMA@121..123 "," [] [Whitespace(" ")],
+                                JsParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@123..124 "c" [] [],
+                                    },
+                                    type_annotation: TsTypeAnnotation {
+                                        colon_token: COLON@124..126 ":" [] [Whitespace(" ")],
+                                        ty: TsStringType {
+                                            string_token: STRING_KW@126..132 "string" [] [],
+                                        },
+                                    },
+                                    initializer: missing (optional),
+                                },
+                            ],
+                            r_paren_token: R_PAREN@132..133 ")" [] [],
+                        },
+                        return_type_annotation: TsReturnTypeAnnotation {
+                            colon_token: COLON@133..135 ":" [] [Whitespace(" ")],
+                            ty: TsAnyType {
+                                any_token: ANY_KW@135..139 "any" [] [Whitespace(" ")],
+                            },
+                        },
+                        separator_token: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@139..140 "}" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@140..146 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@146..148 "D" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@148..150 "=" [] [Whitespace(" ")],
+            ty: TsObjectType {
+                l_curly_token: L_CURLY@150..152 "{" [] [Whitespace(" ")],
+                members: TsObjectTypeMemberList [
+                    TsPropertySignatureObjectTypeMember {
+                        readonly_token: missing (optional),
+                        name: JsLiteralMemberName {
+                            value: IDENT@152..160 "readonly" [] [],
+                        },
+                        optional_token_token: missing (optional),
+                        type_annotation: TsTypeAnnotation {
+                            colon_token: COLON@160..162 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@162..168 "string" [] [],
+                            },
+                        },
+                        separator_token: COMMA@168..170 "," [] [Whitespace(" ")],
+                    },
+                    TsPropertySignatureObjectTypeMember {
+                        readonly_token: READONLY_KW@170..179 "readonly" [] [Whitespace(" ")],
+                        name: JsLiteralMemberName {
+                            value: IDENT@179..180 "a" [] [],
+                        },
+                        optional_token_token: missing (optional),
+                        type_annotation: TsTypeAnnotation {
+                            colon_token: COLON@180..182 ":" [] [Whitespace(" ")],
+                            ty: TsNumberType {
+                                number_token: NUMBER_KW@182..189 "number" [] [Whitespace(" ")],
+                            },
+                        },
+                        separator_token: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@189..190 "}" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@190..196 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@196..198 "E" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@198..200 "=" [] [Whitespace(" ")],
+            ty: TsObjectType {
+                l_curly_token: L_CURLY@200..202 "{" [] [Whitespace(" ")],
+                members: TsObjectTypeMemberList [
+                    TsMethodSignatureObjectTypeMember {
+                        name: JsLiteralMemberName {
+                            value: IDENT@202..203 "m" [] [],
+                        },
+                        optional_token_token: missing (optional),
+                        type_parameters: TsTypeParameters {
+                            l_angle_token: L_ANGLE@203..204 "<" [] [],
+                            items: TsTypeParameterList [
+                                TsTypeParameter {
+                                    name: TsTypeParameterName {
+                                        ident_token: IDENT@204..205 "A" [] [],
+                                    },
+                                    constraint: missing (optional),
+                                    default: missing (optional),
+                                },
+                                COMMA@205..207 "," [] [Whitespace(" ")],
+                                TsTypeParameter {
+                                    name: TsTypeParameterName {
+                                        ident_token: IDENT@207..208 "B" [] [],
+                                    },
+                                    constraint: missing (optional),
+                                    default: missing (optional),
+                                },
+                            ],
+                            r_angle_token: R_ANGLE@208..209 ">" [] [],
+                        },
+                        parameter_list: JsParameters {
+                            l_paren_token: L_PAREN@209..210 "(" [] [],
+                            items: JsParameterList [
+                                JsParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@210..211 "a" [] [],
+                                    },
+                                    type_annotation: TsTypeAnnotation {
+                                        colon_token: COLON@211..213 ":" [] [Whitespace(" ")],
+                                        ty: TsReferenceType {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@213..214 "A" [] [],
+                                            },
+                                            type_arguments: missing (optional),
+                                        },
+                                    },
+                                    initializer: missing (optional),
+                                },
+                                COMMA@214..216 "," [] [Whitespace(" ")],
+                                JsParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@216..217 "b" [] [],
+                                    },
+                                    type_annotation: TsTypeAnnotation {
+                                        colon_token: COLON@217..219 ":" [] [Whitespace(" ")],
+                                        ty: TsReferenceType {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@219..220 "B" [] [],
+                                            },
+                                            type_arguments: missing (optional),
+                                        },
+                                    },
+                                    initializer: missing (optional),
+                                },
+                            ],
+                            r_paren_token: R_PAREN@220..221 ")" [] [],
+                        },
+                        return_type_annotation: TsReturnTypeAnnotation {
+                            colon_token: COLON@221..223 ":" [] [Whitespace(" ")],
+                            ty: TsNeverType {
+                                never_token: NEVER_KW@223..229 "never" [] [Whitespace(" ")],
+                            },
+                        },
+                        separator_token: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@229..230 "}" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@230..231 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..231
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..230
+    0: TS_TYPE_ALIAS@0..51
+      0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@19..21
+        0: IDENT@19..21 "A" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@21..23 "=" [] [Whitespace(" ")]
+      4: TS_OBJECT_TYPE@23..51
+        0: L_CURLY@23..25 "{" [] [Whitespace(" ")]
+        1: TS_OBJECT_TYPE_MEMBER_LIST@25..50
+          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@25..37
+            0: (empty)
+            1: JS_LITERAL_MEMBER_NAME@25..26
+              0: IDENT@25..26 "a" [] []
+            2: QUESTION@26..27 "?" [] []
+            3: TS_TYPE_ANNOTATION@27..35
+              0: COLON@27..29 ":" [] [Whitespace(" ")]
+              1: TS_STRING_TYPE@29..35
+                0: STRING_KW@29..35 "string" [] []
+            4: SEMICOLON@35..37 ";" [] [Whitespace(" ")]
+          1: TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER@37..50
+            0: JS_LITERAL_MEMBER_NAME@37..38
+              0: IDENT@37..38 "b" [] []
+            1: QUESTION@38..39 "?" [] []
+            2: (empty)
+            3: JS_PARAMETERS@39..41
+              0: L_PAREN@39..40 "(" [] []
+              1: JS_PARAMETER_LIST@40..40
+              2: R_PAREN@40..41 ")" [] []
+            4: TS_RETURN_TYPE_ANNOTATION@41..50
+              0: COLON@41..43 ":" [] [Whitespace(" ")]
+              1: TS_NUMBER_TYPE@43..50
+                0: NUMBER_KW@43..50 "number" [] [Whitespace(" ")]
+            5: (empty)
+        2: R_CURLY@50..51 "}" [] []
+      5: (empty)
+    1: TS_TYPE_ALIAS@51..87
+      0: TYPE_KW@51..57 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@57..59
+        0: IDENT@57..59 "B" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@59..61 "=" [] [Whitespace(" ")]
+      4: TS_OBJECT_TYPE@61..87
+        0: L_CURLY@61..63 "{" [] [Whitespace(" ")]
+        1: TS_OBJECT_TYPE_MEMBER_LIST@63..86
+          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@63..74
+            0: (empty)
+            1: JS_LITERAL_MEMBER_NAME@63..64
+              0: IDENT@63..64 "a" [] []
+            2: (empty)
+            3: TS_TYPE_ANNOTATION@64..72
+              0: COLON@64..66 ":" [] [Whitespace(" ")]
+              1: TS_STRING_TYPE@66..72
+                0: STRING_KW@66..72 "string" [] []
+            4: COMMA@72..74 "," [] [Whitespace(" ")]
+          1: TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER@74..86
+            0: JS_LITERAL_MEMBER_NAME@74..75
+              0: IDENT@74..75 "b" [] []
+            1: (empty)
+            2: (empty)
+            3: JS_PARAMETERS@75..77
+              0: L_PAREN@75..76 "(" [] []
+              1: JS_PARAMETER_LIST@76..76
+              2: R_PAREN@76..77 ")" [] []
+            4: TS_RETURN_TYPE_ANNOTATION@77..86
+              0: COLON@77..79 ":" [] [Whitespace(" ")]
+              1: TS_NUMBER_TYPE@79..86
+                0: NUMBER_KW@79..86 "number" [] [Whitespace(" ")]
+            5: (empty)
+        2: R_CURLY@86..87 "}" [] []
+      5: (empty)
+    2: TS_TYPE_ALIAS@87..140
+      0: TYPE_KW@87..93 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@93..95
+        0: IDENT@93..95 "C" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@95..97 "=" [] [Whitespace(" ")]
+      4: TS_OBJECT_TYPE@97..140
+        0: L_CURLY@97..99 "{" [] [Whitespace(" ")]
+        1: TS_OBJECT_TYPE_MEMBER_LIST@99..139
+          0: TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER@99..139
+            0: JS_LITERAL_MEMBER_NAME@99..100
+              0: IDENT@99..100 "m" [] []
+            1: (empty)
+            2: (empty)
+            3: JS_PARAMETERS@100..133
+              0: L_PAREN@100..101 "(" [] []
+              1: JS_PARAMETER_LIST@101..132
+                0: JS_PARAMETER@101..110
+                  0: JS_IDENTIFIER_BINDING@101..102
+                    0: IDENT@101..102 "a" [] []
+                  1: TS_TYPE_ANNOTATION@102..110
+                    0: COLON@102..104 ":" [] [Whitespace(" ")]
+                    1: TS_STRING_TYPE@104..110
+                      0: STRING_KW@104..110 "string" [] []
+                  2: (empty)
+                1: COMMA@110..112 "," [] [Whitespace(" ")]
+                2: JS_PARAMETER@112..121
+                  0: JS_IDENTIFIER_BINDING@112..113
+                    0: IDENT@112..113 "b" [] []
+                  1: TS_TYPE_ANNOTATION@113..121
+                    0: COLON@113..115 ":" [] [Whitespace(" ")]
+                    1: TS_NUMBER_TYPE@115..121
+                      0: NUMBER_KW@115..121 "number" [] []
+                  2: (empty)
+                3: COMMA@121..123 "," [] [Whitespace(" ")]
+                4: JS_PARAMETER@123..132
+                  0: JS_IDENTIFIER_BINDING@123..124
+                    0: IDENT@123..124 "c" [] []
+                  1: TS_TYPE_ANNOTATION@124..132
+                    0: COLON@124..126 ":" [] [Whitespace(" ")]
+                    1: TS_STRING_TYPE@126..132
+                      0: STRING_KW@126..132 "string" [] []
+                  2: (empty)
+              2: R_PAREN@132..133 ")" [] []
+            4: TS_RETURN_TYPE_ANNOTATION@133..139
+              0: COLON@133..135 ":" [] [Whitespace(" ")]
+              1: TS_ANY_TYPE@135..139
+                0: ANY_KW@135..139 "any" [] [Whitespace(" ")]
+            5: (empty)
+        2: R_CURLY@139..140 "}" [] []
+      5: (empty)
+    3: TS_TYPE_ALIAS@140..190
+      0: TYPE_KW@140..146 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@146..148
+        0: IDENT@146..148 "D" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@148..150 "=" [] [Whitespace(" ")]
+      4: TS_OBJECT_TYPE@150..190
+        0: L_CURLY@150..152 "{" [] [Whitespace(" ")]
+        1: TS_OBJECT_TYPE_MEMBER_LIST@152..189
+          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@152..170
+            0: (empty)
+            1: JS_LITERAL_MEMBER_NAME@152..160
+              0: IDENT@152..160 "readonly" [] []
+            2: (empty)
+            3: TS_TYPE_ANNOTATION@160..168
+              0: COLON@160..162 ":" [] [Whitespace(" ")]
+              1: TS_STRING_TYPE@162..168
+                0: STRING_KW@162..168 "string" [] []
+            4: COMMA@168..170 "," [] [Whitespace(" ")]
+          1: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@170..189
+            0: READONLY_KW@170..179 "readonly" [] [Whitespace(" ")]
+            1: JS_LITERAL_MEMBER_NAME@179..180
+              0: IDENT@179..180 "a" [] []
+            2: (empty)
+            3: TS_TYPE_ANNOTATION@180..189
+              0: COLON@180..182 ":" [] [Whitespace(" ")]
+              1: TS_NUMBER_TYPE@182..189
+                0: NUMBER_KW@182..189 "number" [] [Whitespace(" ")]
+            4: (empty)
+        2: R_CURLY@189..190 "}" [] []
+      5: (empty)
+    4: TS_TYPE_ALIAS@190..230
+      0: TYPE_KW@190..196 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@196..198
+        0: IDENT@196..198 "E" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@198..200 "=" [] [Whitespace(" ")]
+      4: TS_OBJECT_TYPE@200..230
+        0: L_CURLY@200..202 "{" [] [Whitespace(" ")]
+        1: TS_OBJECT_TYPE_MEMBER_LIST@202..229
+          0: TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER@202..229
+            0: JS_LITERAL_MEMBER_NAME@202..203
+              0: IDENT@202..203 "m" [] []
+            1: (empty)
+            2: TS_TYPE_PARAMETERS@203..209
+              0: L_ANGLE@203..204 "<" [] []
+              1: TS_TYPE_PARAMETER_LIST@204..208
+                0: TS_TYPE_PARAMETER@204..205
+                  0: TS_TYPE_PARAMETER_NAME@204..205
+                    0: IDENT@204..205 "A" [] []
+                  1: (empty)
+                  2: (empty)
+                1: COMMA@205..207 "," [] [Whitespace(" ")]
+                2: TS_TYPE_PARAMETER@207..208
+                  0: TS_TYPE_PARAMETER_NAME@207..208
+                    0: IDENT@207..208 "B" [] []
+                  1: (empty)
+                  2: (empty)
+              2: R_ANGLE@208..209 ">" [] []
+            3: JS_PARAMETERS@209..221
+              0: L_PAREN@209..210 "(" [] []
+              1: JS_PARAMETER_LIST@210..220
+                0: JS_PARAMETER@210..214
+                  0: JS_IDENTIFIER_BINDING@210..211
+                    0: IDENT@210..211 "a" [] []
+                  1: TS_TYPE_ANNOTATION@211..214
+                    0: COLON@211..213 ":" [] [Whitespace(" ")]
+                    1: TS_REFERENCE_TYPE@213..214
+                      0: JS_REFERENCE_IDENTIFIER@213..214
+                        0: IDENT@213..214 "A" [] []
+                      1: (empty)
+                  2: (empty)
+                1: COMMA@214..216 "," [] [Whitespace(" ")]
+                2: JS_PARAMETER@216..220
+                  0: JS_IDENTIFIER_BINDING@216..217
+                    0: IDENT@216..217 "b" [] []
+                  1: TS_TYPE_ANNOTATION@217..220
+                    0: COLON@217..219 ":" [] [Whitespace(" ")]
+                    1: TS_REFERENCE_TYPE@219..220
+                      0: JS_REFERENCE_IDENTIFIER@219..220
+                        0: IDENT@219..220 "B" [] []
+                      1: (empty)
+                  2: (empty)
+              2: R_PAREN@220..221 ")" [] []
+            4: TS_RETURN_TYPE_ANNOTATION@221..229
+              0: COLON@221..223 ":" [] [Whitespace(" ")]
+              1: TS_NEVER_TYPE@223..229
+                0: NEVER_KW@223..229 "never" [] [Whitespace(" ")]
+            5: (empty)
+        2: R_CURLY@229..230 "}" [] []
+      5: (empty)
+  3: EOF@230..231 "" [Newline("\n")] []

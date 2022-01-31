@@ -35,7 +35,7 @@ JsModule {
                                         items: JsParameterList [],
                                         r_paren_token: R_PAREN@33..35 ")" [] [Whitespace(" ")],
                                     },
-                                    return_type: missing (optional),
+                                    return_type_annotation: missing (optional),
                                     fat_arrow_token: FAT_ARROW@35..38 "=>" [] [Whitespace(" ")],
                                     body: JsFunctionBody {
                                         l_curly_token: L_CURLY@38..40 "{" [] [Whitespace(" ")],
@@ -71,7 +71,7 @@ JsModule {
                                         items: JsParameterList [],
                                         r_paren_token: R_PAREN@56..58 ")" [] [Whitespace(" ")],
                                     },
-                                    return_type: missing (optional),
+                                    return_type_annotation: missing (optional),
                                     fat_arrow_token: FAT_ARROW@58..61 "=>" [] [Whitespace(" ")],
                                     body: JsCallExpression {
                                         callee: JsSuperExpression {

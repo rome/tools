@@ -168,8 +168,9 @@ fn load_tests(suite: &dyn TestSuite, context: &mut TestRunContext) -> TestSuiteI
             }
 
             if let Some(query) = &context.query {
-                let normalized = path.to_string_lossy().replace("\\", "/");
-                normalized.contains(query.as_str())
+                let normalized_path = path.to_string_lossy().replace("\\", "/");
+                let normalized_query = query.replace("\\", "/");
+                normalized_path.contains(&normalized_query)
             } else {
                 true
             }

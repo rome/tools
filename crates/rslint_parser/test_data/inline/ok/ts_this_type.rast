@@ -1,0 +1,188 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsClassStatement {
+            class_token: CLASS_KW@0..20 "class" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@20..22 "A" [] [Whitespace(" ")],
+            },
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@22..23 "{" [] [],
+            members: JsClassMemberList [
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@23..34 "method" [Newline("\n"), Whitespace("    ")] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameters: JsParameters {
+                        l_paren_token: L_PAREN@34..35 "(" [] [],
+                        items: JsParameterList [],
+                        r_paren_token: R_PAREN@35..37 ")" [] [Whitespace(" ")],
+                    },
+                    return_type_annotation: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@37..38 "{" [] [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [
+                            TsTypeAlias {
+                                type_token: TYPE_KW@38..52 "type" [Newline("\n"), Whitespace("        ")] [Whitespace(" ")],
+                                binding_identifier: TsIdentifierBinding {
+                                    name_token: IDENT@52..54 "A" [] [Whitespace(" ")],
+                                },
+                                type_parameters: missing (required),
+                                eq_token: EQ@54..56 "=" [] [Whitespace(" ")],
+                                ty: TsThisType {
+                                    this_token: THIS_KW@56..60 "this" [] [],
+                                },
+                                semicolon_token: SEMICOLON@60..61 ";" [] [],
+                            },
+                        ],
+                        r_curly_token: R_CURLY@61..67 "}" [Newline("\n"), Whitespace("    ")] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@67..81 "predicate" [Newline("\n"), Whitespace("    ")] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameters: JsParameters {
+                        l_paren_token: L_PAREN@81..82 "(" [] [],
+                        items: JsParameterList [],
+                        r_paren_token: R_PAREN@82..83 ")" [] [],
+                    },
+                    return_type_annotation: TsReturnTypeAnnotation {
+                        colon_token: COLON@83..85 ":" [] [Whitespace(" ")],
+                        ty: TsTypePredicate {
+                            asserts_token: missing (optional),
+                            parameter_name: TsThisType {
+                                this_token: THIS_KW@85..90 "this" [] [Whitespace(" ")],
+                            },
+                            is_token: IS_KW@90..93 "is" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@93..100 "string" [] [Whitespace(" ")],
+                            },
+                        },
+                    },
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@100..101 "{" [] [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [
+                            JsReturnStatement {
+                                return_token: RETURN_KW@101..117 "return" [Newline("\n"), Whitespace("        ")] [Whitespace(" ")],
+                                argument: JsBinaryExpression {
+                                    left: JsUnaryExpression {
+                                        operator: TYPEOF_KW@117..124 "typeof" [] [Whitespace(" ")],
+                                        argument: JsThisExpression {
+                                            this_token: THIS_KW@124..129 "this" [] [Whitespace(" ")],
+                                        },
+                                    },
+                                    operator: EQ3@129..133 "===" [] [Whitespace(" ")],
+                                    right: JsStringLiteralExpression {
+                                        value_token: JS_STRING_LITERAL@133..141 "\"string\"" [] [],
+                                    },
+                                },
+                                semicolon_token: missing (optional),
+                            },
+                        ],
+                        r_curly_token: R_CURLY@141..147 "}" [Newline("\n"), Whitespace("    ")] [],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@147..149 "}" [Newline("\n")] [],
+        },
+    ],
+    eof_token: EOF@149..150 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..150
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..149
+    0: JS_CLASS_STATEMENT@0..149
+      0: CLASS_KW@0..20 "class" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@20..22
+        0: IDENT@20..22 "A" [] [Whitespace(" ")]
+      2: (empty)
+      3: (empty)
+      4: L_CURLY@22..23 "{" [] []
+      5: JS_CLASS_MEMBER_LIST@23..147
+        0: JS_METHOD_CLASS_MEMBER@23..67
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@23..34
+            0: IDENT@23..34 "method" [Newline("\n"), Whitespace("    ")] []
+          6: (empty)
+          7: JS_PARAMETERS@34..37
+            0: L_PAREN@34..35 "(" [] []
+            1: JS_PARAMETER_LIST@35..35
+            2: R_PAREN@35..37 ")" [] [Whitespace(" ")]
+          8: (empty)
+          9: JS_FUNCTION_BODY@37..67
+            0: L_CURLY@37..38 "{" [] []
+            1: JS_DIRECTIVE_LIST@38..38
+            2: JS_STATEMENT_LIST@38..61
+              0: TS_TYPE_ALIAS@38..61
+                0: TYPE_KW@38..52 "type" [Newline("\n"), Whitespace("        ")] [Whitespace(" ")]
+                1: TS_IDENTIFIER_BINDING@52..54
+                  0: IDENT@52..54 "A" [] [Whitespace(" ")]
+                2: (empty)
+                3: EQ@54..56 "=" [] [Whitespace(" ")]
+                4: TS_THIS_TYPE@56..60
+                  0: THIS_KW@56..60 "this" [] []
+                5: SEMICOLON@60..61 ";" [] []
+            3: R_CURLY@61..67 "}" [Newline("\n"), Whitespace("    ")] []
+        1: JS_METHOD_CLASS_MEMBER@67..147
+          0: (empty)
+          1: (empty)
+          2: (empty)
+          3: (empty)
+          4: (empty)
+          5: JS_LITERAL_MEMBER_NAME@67..81
+            0: IDENT@67..81 "predicate" [Newline("\n"), Whitespace("    ")] []
+          6: (empty)
+          7: JS_PARAMETERS@81..83
+            0: L_PAREN@81..82 "(" [] []
+            1: JS_PARAMETER_LIST@82..82
+            2: R_PAREN@82..83 ")" [] []
+          8: TS_RETURN_TYPE_ANNOTATION@83..100
+            0: COLON@83..85 ":" [] [Whitespace(" ")]
+            1: TS_TYPE_PREDICATE@85..100
+              0: (empty)
+              1: TS_THIS_TYPE@85..90
+                0: THIS_KW@85..90 "this" [] [Whitespace(" ")]
+              2: IS_KW@90..93 "is" [] [Whitespace(" ")]
+              3: TS_STRING_TYPE@93..100
+                0: STRING_KW@93..100 "string" [] [Whitespace(" ")]
+          9: JS_FUNCTION_BODY@100..147
+            0: L_CURLY@100..101 "{" [] []
+            1: JS_DIRECTIVE_LIST@101..101
+            2: JS_STATEMENT_LIST@101..141
+              0: JS_RETURN_STATEMENT@101..141
+                0: RETURN_KW@101..117 "return" [Newline("\n"), Whitespace("        ")] [Whitespace(" ")]
+                1: JS_BINARY_EXPRESSION@117..141
+                  0: JS_UNARY_EXPRESSION@117..129
+                    0: TYPEOF_KW@117..124 "typeof" [] [Whitespace(" ")]
+                    1: JS_THIS_EXPRESSION@124..129
+                      0: THIS_KW@124..129 "this" [] [Whitespace(" ")]
+                  1: EQ3@129..133 "===" [] [Whitespace(" ")]
+                  2: JS_STRING_LITERAL_EXPRESSION@133..141
+                    0: JS_STRING_LITERAL@133..141 "\"string\"" [] []
+                2: (empty)
+            3: R_CURLY@141..147 "}" [Newline("\n"), Whitespace("    ")] []
+      6: R_CURLY@147..149 "}" [Newline("\n")] []
+  3: EOF@149..150 "" [Newline("\n")] []

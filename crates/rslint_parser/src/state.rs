@@ -542,3 +542,21 @@ impl ChangeParserState for WithLabel {
         state.label_set.pop();
     }
 }
+
+/// Sets the state changes needed when parsing a TS type declaration (async and await are not reserved identifiers)
+pub(crate) struct EnterType;
+
+impl ChangeParserState for EnterType {
+    type Snapshot = ParsingContextFlagsSnapshot;
+
+    fn apply(self, state: &mut ParserState) -> Self::Snapshot {
+        let new_flags = state.parsing_context
+            - ParsingContextFlags::IN_ASYNC
+            - ParsingContextFlags::IN_GENERATOR;
+        ParsingContextFlagsSnapshot(std::mem::replace(&mut state.parsing_context, new_flags))
+    }
+
+    fn restore(state: &mut ParserState, value: Self::Snapshot) {
+        state.parsing_context = value.0;
+    }
+}

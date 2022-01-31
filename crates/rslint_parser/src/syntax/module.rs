@@ -20,7 +20,7 @@ use crate::syntax::stmt::{
     is_at_variable_declarations, parse_statement, parse_variable_declaration_list, semi,
     StatementContext, VariableDeclarationParent, STMT_RECOVERY_SET,
 };
-use crate::syntax::util::expect_keyword;
+use crate::syntax::util::expect_contextual_keyword;
 use crate::{
     Absent, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax, Parser,
     Present,
@@ -134,13 +134,13 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
                     let named_clause = default_specifier.precede(p);
 
                     parse_named_import(p).or_add_diagnostic(p, expected_named_import);
-                    expect_keyword(p, "from", T![from]);
+                    expect_contextual_keyword(p, "from", T![from]);
                     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
                     parse_import_assertion(p).ok();
 
                     Present(named_clause.complete(p, JS_IMPORT_NAMED_CLAUSE))
                 } else {
-                    expect_keyword(p, "from", T![from]);
+                    expect_contextual_keyword(p, "from", T![from]);
                     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
                     parse_import_assertion(p).ok();
 
@@ -172,9 +172,9 @@ fn parse_import_namespace_clause(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
 
     p.bump_any();
-    expect_keyword(p, "as", T![as]);
+    expect_contextual_keyword(p, "as", T![as]);
     parse_binding(p).or_add_diagnostic(p, expected_binding);
-    expect_keyword(p, "from", T![from]);
+    expect_contextual_keyword(p, "from", T![from]);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     parse_import_assertion(p).ok();
 
@@ -196,7 +196,7 @@ fn parse_import_named_clause(p: &mut Parser) -> ParsedSyntax {
 
     parse_default_import_specifier(p).ok();
     parse_named_import(p).or_add_diagnostic(p, expected_named_import);
-    expect_keyword(p, "from", T![from]);
+    expect_contextual_keyword(p, "from", T![from]);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     parse_import_assertion(p).ok();
 
@@ -225,7 +225,7 @@ fn parse_namespace_import_specifier(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     p.bump_any();
-    expect_keyword(p, "as", T![as]);
+    expect_contextual_keyword(p, "as", T![as]);
     parse_binding(p).or_add_diagnostic(p, expected_binding);
 
     Present(m.complete(p, JS_NAMESPACE_IMPORT_SPECIFIER))
@@ -300,7 +300,7 @@ fn parse_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
-    expect_keyword(p, "as", T![as]);
+    expect_contextual_keyword(p, "as", T![as]);
     parse_binding(p).or_add_diagnostic(p, expected_binding);
 
     Present(m.complete(p, JS_NAMED_IMPORT_SPECIFIER))
@@ -608,7 +608,7 @@ fn parse_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
         return Absent;
     }
 
-    expect_keyword(p, "as", T![as]);
+    expect_contextual_keyword(p, "as", T![as]);
     parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
 
     Present(m.complete(p, JS_EXPORT_NAMED_SPECIFIER))
@@ -646,7 +646,7 @@ fn parse_export_from_clause(p: &mut Parser) -> ParsedSyntax {
     p.expect(T![*]);
 
     parse_export_as_clause(p).ok();
-    expect_keyword(p, "from", T![from]);
+    expect_contextual_keyword(p, "from", T![from]);
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     parse_import_assertion(p).ok();
     semi(p, start..p.cur_tok().range().end);
@@ -679,7 +679,7 @@ fn parse_export_named_from_clause(p: &mut Parser) -> ParsedSyntax {
     ExportNamedFromSpecifierList.parse_list(p);
     p.expect(T!['}']);
 
-    expect_keyword(p, "from", T![from]);
+    expect_contextual_keyword(p, "from", T![from]);
 
     parse_module_source(p).or_add_diagnostic(p, expected_module_source);
     parse_import_assertion(p).ok();
@@ -804,7 +804,7 @@ fn parse_export_as_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
-    expect_keyword(p, "as", T![as]);
+    expect_contextual_keyword(p, "as", T![as]);
 
     parse_literal_export_name(p).or_add_diagnostic(p, expected_literal_export_name);
 

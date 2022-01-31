@@ -77,9 +77,43 @@ impl OperatorPrecedence {
     }
 }
 
-pub(crate) fn expect_keyword(p: &mut Parser, keyword_name: &str, kind: JsSyntaxKind) {
-    if p.at(T![ident]) && p.cur_src() == keyword_name {
+/// Tests whatever the parser is positioned at a contextual keyword with the passed name.
+#[inline]
+pub(crate) fn is_at_contextual_keyword(p: &Parser, name: &str) -> bool {
+    is_nth_at_contextual_keyword(p, 0, name)
+}
+
+/// Tests whatever the nth token is a contextual keyword with the passed name.
+#[inline]
+pub(crate) fn is_nth_at_contextual_keyword(p: &Parser, n: usize, name: &str) -> bool {
+    p.nth_at(n, T![ident]) && p.nth_src(n) == name
+}
+
+/// Eats over the contextual keyword with the given name and maps it to the given syntax kind if present.
+/// Returns whatever the contextual keyword is present in the source text.
+pub(crate) fn eat_contextual_keyword(
+    p: &mut Parser,
+    keyword_name: &str,
+    kind: JsSyntaxKind,
+) -> bool {
+    if is_at_contextual_keyword(p, keyword_name) {
         p.bump_remap(kind);
+        true
+    } else {
+        false
+    }
+}
+
+/// Eats over the contextual keyword with the given name and maps it to the given syntax kind if present.
+/// Creates a diagnostic that the contextual keyword is absent if it is not present at the current parser position.
+/// Returns `true` if the parser was at the contextual keyword and false otherwise.
+pub(crate) fn expect_contextual_keyword(
+    p: &mut Parser,
+    keyword_name: &str,
+    kind: JsSyntaxKind,
+) -> bool {
+    if eat_contextual_keyword(p, keyword_name, kind) {
+        true
     } else {
         let err = if p.cur() == JsSyntaxKind::EOF {
             p.err_builder(&format!(
@@ -97,5 +131,6 @@ pub(crate) fn expect_keyword(p: &mut Parser, keyword_name: &str, kind: JsSyntaxK
         };
 
         p.error(err);
+        false
     }
 }

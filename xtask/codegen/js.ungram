@@ -104,6 +104,7 @@ JsAnyStatement =
 	| JsWithStatement
 	| TsEnum
   | JsFunctionStatement
+  | TsTypeAlias
 
 
 JsBlockStatement =
@@ -377,17 +378,17 @@ JsFunctionExpression =
 	'function'
 	'*'?
 	id: JsAnyBinding?
-	type_parameters: TsTypeParams?
+	type_parameters: TsTypeParameters?
 	parameters: JsParameters
-	return_type: TsTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
 
 JsArrowFunctionExpression =
 	'async'?
-	type_parameters: TsTypeParams?
+	type_parameters: TsTypeParameters?
 	parameters: JsAnyArrowFunctionParameters
-	return_type: TsTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	'=>'
 	body: JsAnyFunctionBody
 
@@ -544,9 +545,9 @@ JsMethodObjectMember =
 	'async'?
 	'*'?
 	name: JsAnyObjectMemberName
-	type_params: TsTypeParams?
+	type_params: TsTypeParameters?
 	parameters: JsParameters
-	return_type: TsTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
 // { a }
@@ -614,7 +615,6 @@ JsAnyClassMember =
 	| JsGetterClassMember
 	| JsSetterClassMember
 	| JsEmptyClassMember
-	| TsIndexSignature
 	| JsUnknownMember
 
 JsStaticInitializationBlockClassMember =
@@ -632,7 +632,7 @@ JsStaticInitializationBlockClassMember =
 JsConstructorClassMember =
 	access_modifier: ('private' | 'protected' | 'public')?
 	name: JsLiteralMemberName
-	type_parameters: TsTypeParams?
+	type_parameters: TsTypeParameters?
 	parameters: JsConstructorParameters
 	body: JsFunctionBody
 
@@ -672,9 +672,9 @@ JsMethodClassMember =
 	'async'?
 	'*'?
 	name: JsAnyClassMemberName
-	type_parameters: TsTypeParams?
+	type_parameters: TsTypeParameters?
 	parameters: JsParameters
-	return_type: TsTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
 // class Test { get a() {} }
@@ -936,14 +936,18 @@ JsFunctionStatement =
 	'function'
 	'*'?
 	id: JsAnyBinding
-	type_parameters: TsTypeParams?
+	type_parameters: TsTypeParameters?
 	parameters: JsParameters
-	return_type: TsTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
 TsTypeAnnotation =
 	':'
 	type: TsType
+
+TsReturnTypeAnnotation =
+	':'
+	type: TsAnyReturnType
 
 // let a, b = c;
 JsVariableStatement =
@@ -1163,9 +1167,9 @@ JsExportFunctionClause =
 	'function'
 	'*'?
 	id: JsAnyBinding
-	type_parameters: TsTypeParams?
+	type_parameters: TsTypeParameters?
 	parameters: JsParameters
-	return_type: TsTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
 // export class A {}
@@ -1206,9 +1210,9 @@ JsExportDefaultFunctionClause =
 	'function'
 	'*'?
 	id: JsAnyBinding?
-	type_parameters: TsTypeParams?
+	type_parameters: TsTypeParameters?
 	parameters: JsParameters
-	return_type: TsTypeAnnotation?
+	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
 // export { myFunction as default };
@@ -1382,72 +1386,83 @@ TsImportEqualsDecl =
 
 TsModuleRef =
 	TsExternalModuleRef |
-	TsEntityName
+	TsAnyName
 
 
 TsExternalModuleRef = 'require' '(' module: 'js_string_literal' ')'
 
 TsType =
-	TsAny
-	| TsUnknown
-	| TsNumber
-	| TsObject
-	| TsBoolean
-	| TsBigint
-	| TsString
-	| TsSymbol
-	| TsVoid
-	| TsUndefined
-	| TsNull
-	| TsNever
-	| TsThis
-	| TsLiteral
-	| TsPredicate
-	| TsTuple
-	| TsParen
-	| TsTypeRef
-	| TsTemplate
+	// Predefined types
+	TsAnyType
+	| TsUnknownType
+	| TsNumberType
+	| TsBooleanType
+	| TsBigintType
+	| TsStringType
+	| TsSymbolType
+	| TsVoidType
+	| TsUndefinedType
+	| TsNeverType
+	// Primary types, without predefined types
+	| TsParenthesizedType
+	| TsReferenceType
+	| TsArrayType
+	| TsTupleType
+	| TsTypeofType
+	| TsImportType
+	| TsTypeOperatorType
+	| TsIndexedAccessType
 	| TsMappedType
-	| TsImport
-	| TsArray
-	| TsIndexedArray
-	| TsTypeOperator
-	| TsIntersection
-	| TsUnion
-	| TsFnType
+	| TsObjectType
+	| TsNonPrimitiveType
+	| TsThisType
+	| TsNumberLiteralType
+	| TsBigIntLiteralType
+	| TsStringLiteralType
+	| TsNullLiteralType
+	| TsBooleanLiteralType
+	| TsTemplateLiteralType
+	| TsInferType
+	// Intersection or higher types
+	| TsIntersectionType
+	| TsUnionType
+	| TsFunctionType
 	| TsConstructorType
 	| TsConditionalType
-	| TsObjectType
-	| TsInfer
 
+// Predefined types
+TsAnyType = 'any'
+TsUnknownType = 'unknown'
+TsNumberType = 'number'
+TsNonPrimitiveType = 'object'
+TsBooleanType = 'boolean'
+TsBigintType = 'bigint'
+TsStringType = 'string'
+TsSymbolType = 'symbol'
+TsVoidType = 'void'
+TsUndefinedType = 'undefined'
+TsNeverType = 'never'
+TsThisType = 'this'
 
-TsAny = 'any'
-TsUnknown = 'unknown'
-TsNumber = ident: Ident
-TsObject = ident: Ident
-TsBoolean = ident: Ident
-TsBigint = ident: Ident
-TsString = 'ident'
-TsSymbol = ident: Ident
-TsVoid = 'void'
-TsUndefined = 'undefined'
-TsNull= 'null'
-TsNever = 'never'
-TsThis = 'this'
-TsLiteral = ident: Ident
+TsParenthesizedType =
+	'('
+	ty: TsType
+	')'
 
+TsReferenceType =
+	name: TsAnyName
+	type_arguments: TsTypeArgs?
 
-// typescript tuples
-TsTuple = '[' elements:TsTupleElement ']'
-// @ematipico: this is ugly and it's here only to maintain compatibility
-// with the current parser API
-TsTupleElement = ident: Ident ':' '?' '...'? ty:TsType
+TsTypeAlias =
+	'type'
+	binding_identifier: TsIdentifierBinding
+	type_parameters: TsTypeParameters
+	'='
+	ty: TsType
+	';'?
 
-TsParen = '(' ty:TsType ')'
-
-// typescript type reference
-TsTypeRef = name:TsEntityName type_args:TsTypeArgs
-
+// Binds a type identifier
+TsIdentifierBinding = name: 'ident'
 
 // typescript enum
 TsEnum = 'const'? 'enum'  ident: Ident '{' members: TsEnumMemberList '}'
@@ -1455,145 +1470,309 @@ TsEnum = 'const'? 'enum'  ident: Ident '{' members: TsEnumMemberList '}'
 TsEnumMemberList = TsEnumMember*
 TsEnumMember = ident: Ident '=' value:JsAnyExpression
 
-// typescript template literal types
-TsTemplate = elements:TsTemplateElement
-// @ematipico: this is broken and it's here only for compatibility
-TsTemplateElement = ty:TsType '}'
+// | a | b
+TsUnionType =
+	leading_separator_token: '|'?
+	types: TsUnionTypeVariantList
+
+TsUnionTypeVariantList = (TsType ('|' TsType)*)
+
+// & a & b
+TsIntersectionType =
+	leading_separator_token: '&'?
+	types: TsIntersectionTypeElementList
+
+TsIntersectionTypeElementList = (TsType ('&' TsType)*)
+
+// keyof A;
+// ^^^^^^^
+// const a: unique symbol = symbol();
+//          ^^^^^^^^^^^^^
+// readonly string[];
+// ^^^^^^^^^^^^^^^^^
+TsTypeOperatorType =
+	operator_token: ('keyof' | 'unique' | 'readonly')
+	type: TsType
+
+// infer A;
+// ^^^^^^^
+// { a: infer U; b: infer U }
+//      ^^^^^^^     ^^^^^^^
+TsInferType =
+	'infer'
+	type_parameter: TsTypeParameterName
+
+TsFunctionType =
+	type_parameters: TsTypeParameters?
+	parameters: JsParameters
+	'=>'
+	return_type: TsAnyReturnType
+
+TsAnyReturnType =
+	TsType
+	| TsTypePredicate
+
+TsTypePredicate =
+	'asserts'?
+	parameter_name: TsAnyTypePredicateParameterName
+	'is'
+	type: TsType
+
+TsAnyTypePredicateParameterName =
+	JsReferenceIdentifier
+	| TsThisType
+
+TsTypeofType =
+	'typeof'
+	expression_name: TsAnyName
+
+TsConstructorType =
+	'abstract'?
+	'new'
+	type_parameters: TsTypeParameters?
+	parameters: JsParameters
+	'=>'
+	return_type: TsType
+
+TsConditionalType =
+	check_type: TsType
+	'extends'
+	extends_type: TsType
+	'?'
+	true_type: TsType
+	':'
+	false_type: TsType
 
 
-// typescript mappend type
-// plus and minus should be mutually exclusive
+// type A<X, Y> = { x: X, y: Y }
+//       ^^^^^^
+TsTypeParameters =
+	'<'
+	items: TsTypeParameterList
+	'>'
+
+TsTypeParameterList = (TsTypeParameter (',' TsTypeParameter)* ','?)
+
+
+// type A<B extends string = "1"> = { b: B }
+//        ^^^^^^^^^^^^^^^^^^^^^^
+TsTypeParameter =
+	name: TsTypeParameterName
+	constraint: TsTypeConstraintClause?
+	default: TsDefaultTypeClause?
+
+TsTypeParameterName = 'ident'
+
+TsTypeConstraintClause =
+	'extends'
+	type: TsType
+
+TsDefaultTypeClause =
+	'='
+	type: TsType
+
+// { a: string }
+TsObjectType = '{' members: TsObjectTypeMemberList '}'
+
+TsObjectTypeMemberList = TsAnyObjectTypeMember*
+
+TsAnyObjectTypeMember =
+	TsCallSignatureObjectTypeMember
+	| TsPropertySignatureObjectTypeMember
+	| TsConstructSignatureObjectTypeMember
+	| TsMethodSignatureObjectTypeMember
+	| TsGetterSignatureObjectTypeMember
+	| TsSetterSignatureObjectTypeMember
+	| TsIndexSignatureObjectTypeMember
+
+// { <A>(a: A): number }
+//   ^^^^^^^^^^^^^^^^^
+TsCallSignatureObjectTypeMember =
+	type_parameters: TsTypeParameters?
+	parameter_list: JsParameters
+	return_type_annotation: TsReturnTypeAnnotation?
+	separator_token: (',' | ';')?
+
+// { a: string }
+//   ^^^^^^^^^
+TsPropertySignatureObjectTypeMember =
+	'readonly'?
+	name: JsAnyObjectMemberName
+	optional_token: '?'?
+	type_annotation: TsTypeAnnotation?
+	separator_token: (',' | ';')?
+
+// { new(): number }
+//   ^^^^^^^^^^^^^
+TsConstructSignatureObjectTypeMember =
+	'new'
+	type_parameters: TsTypeParameters?
+	parameter_list: JsParameters
+	type_annotation: TsTypeAnnotation?
+	separator_token: (',' | ';')?
+
+// { a?(): number }
+//   ^^^^^^^^^^^^
+TsMethodSignatureObjectTypeMember =
+	name: JsAnyObjectMemberName
+	optional_token: '?'?
+	type_parameters: TsTypeParameters?
+	parameter_list: JsParameters
+	return_type_annotation: TsReturnTypeAnnotation?
+	separator_token: (',' | ';')?
+
+// { get a(): number }
+//   ^^^^^^^^^^^^^^^
+TsGetterSignatureObjectTypeMember =
+	'get'
+	name: JsAnyObjectMemberName
+	'('
+	')'
+	type_annotation: TsTypeAnnotation?
+	separator_token: (',' | ';')?
+
+// { set a(value: number) }
+//   ^^^^^^^^^^^^^^^^^^^^
+TsSetterSignatureObjectTypeMember =
+	'set'
+	name: JsAnyObjectMemberName
+	'('
+	parameter: JsParameter
+	')'
+	separator_token: (',' | ';')?
+
+//  { [a: string]: number }
+TsIndexSignatureObjectTypeMember =
+	'readonly'?
+	'['
+	parameter: TsIndexSignatureParameter
+	']'
+	type_annotation: TsTypeAnnotation
+	separator_token: (',' | ';')?
+
+// { [a: string]: number }
+//    ^^^^^^^^^
+TsIndexSignatureParameter =
+	binding: JsIdentifierBinding
+	type_annotation: TsTypeAnnotation
+
+// type OptionsFlags<Type> = {
+//   [Property in keyof Type]: boolean;
+// };
 TsMappedType =
 	'{'
-	readonly_modifier:TsMappedTypeReadonly?
-	'-'?
-	'+'?
-	'?'?
-	param:TsMappedTypeParam
-	':'
-	ty:TsType
-	'}'
+	readonly_modifier: TsMappedTypeReadonlyModifierClause?
+	'['
+	property_name: TsTypeParameterName
+	'in'
+	keys_type: TsType
+	as_clause: TsMappedTypeAsClause?
+	']'
+	optional_modifier: TsMappedTypeOptionalModifierClause?
+	mapped_type: TsTypeAnnotation?
 	';'?
+	'}'
 
-TsMappedTypeReadonly = '-'? '+'? 'readonly'?
+TsMappedTypeAsClause =
+	'as'
+	type: TsType
 
-// @ematipico: this type is correct and it's here only for compatibility
-TsMappedTypeParam = '['? name:TsTypeName? ']'? ident: Ident? ty:TsType
+TsMappedTypeOptionalModifierClause =
+	operator_token: ('+' | '-')
+	'?'
 
+TsMappedTypeReadonlyModifierClause =
+	operator_token: ('+' | '-')
+	'readonly'
 
-// typescript array
-TsArray = '[' ty:TsType ']'
+TsImportType =
+	'typeof'?
+	'import'
+	'('
+	argument: 'js_string_literal'
+	')'
+	qualifier_clause: TsImportTypeQualifier?
 
-// typescript indexed array
-TsIndexedArray = '[' ty:TsType ']'
-
-
-// typescript predicate
-TsPredicate = lhs:TsThisOrMore rhs:TsType
-TsThisOrMore = TsThis | TsTypeName
-
-// typescript type operator
-TsTypeOperator = ty:TsType
-
-// typescript intersection
-// @ematipico this one should contains the "|" operator
-TsIntersection = types: TsTypeList
-
-// typescript union
-// @ematipico this one should contains the "&" operator
-TsUnion = types: TsTypeList
+TsImportTypeQualifier =
+	'.'
+	right: TsAnyName
 
 
-// typescript function type
-// Example: (something: String) => bool
-TsFnType = params:JsParameters'=>' return_type:TsType?
+TsArrayType =
+	element_type: TsType
+	'['
+	']'
+
+TsIndexedAccessType =
+	object_type: TsType
+	'['
+	index_type: TsType
+	']'
+
+TsTupleType =
+	'['
+	elements: TsTupleTypeElementList
+	']'
+
+TsTupleTypeElementList = (TsAnyTupleTypeElement (',' TsAnyTupleTypeElement)* ','?)
+
+TsAnyTupleTypeElement =
+	TsNamedTupleTypeElement
+	| TsType
+	| TsRestTupleTypeElement
+	| TsOptionalTupleTypeElement
+
+TsNamedTupleTypeElement =
+	'...'?
+	name: JsName
+	'?'?
+	':'
+	type: TsType
+
+TsRestTupleTypeElement =
+	'...'
+	type: TsType
+
+TsOptionalTupleTypeElement =
+	type: TsType
+	'?'
+
+TsStringLiteralType = literal: 'js_string_literal'
+TsNumberLiteralType = '-'? literal: 'js_number_literal'
+TsBigIntLiteralType = '-'? literal: 'js_big_int_literal'
+TsBooleanLiteralType = literal: ('true' | 'false')
+TsNullLiteralType = literal: 'null'
+TsTemplateLiteralType =
+	l_tick: '`'
+	elements: TsTemplateElementList
+	r_tick: '`'
+
+TsTemplateElementList = TsAnyTemplateElement*
+
+TsAnyTemplateElement =
+	TsTemplateChunkElement
+	| TsTemplateElement
+
+TsTemplateChunkElement = 'template_chunk'
+TsTemplateElement =
+	'dollar_curly'
+	type: TsType
+	'}'
 
 
-// typescript constructor type
-// Exapmle: new (something: String): SomethingElse
-TsConstructorType = 'new' params:JsParameters ':' return_type:TsType?
+TsExprWithTypeArgs = item: TsAnyName type_params: TsTypeArgs?
 
+TsAnyName =
+	JsReferenceIdentifier
+	| TsQualifiedName
 
-// typescript conditional type
-// @ematipico example? can't understand what grammar it is
-TsConditionalType = ty:TsType '?' ':' extends:TsExtends
-TsExtends = 'extends' ty:TsType
-
-
-// typescript object type
-TsObjectType = '{' members: TsObjectMemberList '}'
-
-TsObjectMemberList = TsTypeElement*
-
-
-// typescript infer
-TsInfer = 'infer' ident: Ident
-
-// typescript import
-// @ematipico not sure where the dot token should be placed
-// @ematipico not sure where type_args should be placed
-// TsImport = 'import' '(' qualifier:TsEntityName '.' ')' type_args:TsTypeArgs
-
-
-// type alias declaration
-TsTypeParams = '<'? params:TsTypeParam '>'?
-TsTypeParamList = (TsTypeParam (',' TsTypeParam)*)
-TsTypeParam = ident: Ident constraint:TsConstraint default:TsDefault
-
-TsDefault = '=' ty:TsType
-TsConstraint = 'extends' ty:TsType
-
-
-
-
-TsExprWithTypeArgs = item: TsEntityName type_params: TsTypeArgs?
-TsTypeElement =
-	TsCallSignatureDecl
-	| TsConstructSignatureDecl
-	| TsPropertySignature
-	| TsMethodSignature
-	| TsIndexSignature
-
-TsEntityName =
-	TsTypeName
-	| TsQualifiedPath
-
-TsTypeName = ident: 'ident'
-TsQualifiedPath = lhs:TsEntityName '.' rhs:TsTypeName
-
+TsQualifiedName =
+	left: TsAnyName
+	'.'
+	right: JsName
 
 TsTypeArgs = '<' TsTypeArgList '>'
 TsTypeArgList = (TsType (',' TsType)* )
-
-
-// @ematipico we should make an example here
-TsCallSignatureDecl =  type_params:TsTypeParams parameters:JsParameters  ':' return_type:TsType
-TsConstructSignatureDecl =
-	'new'
-	type_params:TsTypeParams
-	parameters:JsParameters
-	// these two should be optional together
-	':'? return_type:TsType
-
-// typescript property signature
-TsPropertySignature = 'readonly'? prop:JsAnyExpression '?' ':' ty:TsType
-
-// typescript method signature
-TsMethodSignature =
-	'readonly'?
-	key:JsAnyExpression
-	type_params:TsTypeParams
-	parameters:JsParameters
-	'?'?
-	':'
-	return_type:TsType
-
-// @ematipico not sure where the dot goes here
-TsImport = 'import' type_args:TsTypeArgs '.'? '(' qualifier:TsEntityName ')'
-
-// typescript index signature
-TsIndexSignature = 'readonly'? '[' pat:JsAnyBinding ':' ty:TsType ']'
-
 
 TsConstructorParam =
 	accessibility: ('private' | 'protected' | 'public')?
