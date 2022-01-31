@@ -1,0 +1,12 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 63
+expression: namespace_import.js
+
+---
+# Input
+import * as all from "all"
+---
+# Output
+import * as all from "all";
+

@@ -1,20 +1,23 @@
-use crate::{ts::format_statements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
     JsArrayBindingPattern, JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement,
     JsBooleanLiteralExpression, JsCallArguments, JsCallExpression, JsCaseClause, JsCatchClause,
     JsClassStatement, JsConstructorParameters, JsContinueStatement, JsDebuggerStatement,
-    JsDefaultClause, JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause,
-    JsForInStatement, JsForStatement, JsFunctionStatement, JsGetterClassMember,
-    JsIdentifierBinding, JsIdentifierExpression, JsIfStatement, JsLabeledStatement, JsModule,
-    JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression, JsParameters,
-    JsPropertyClassMember, JsPropertyObjectMember, JsReturnStatement, JsScript,
-    JsSequenceExpression, JsSetterClassMember, JsShorthandPropertyObjectMember, JsSpread,
-    JsStatementList, JsStaticInitializationBlockClassMember, JsStringLiteralExpression,
-    JsSwitchStatement, JsTemplate, JsTemplateChunkElement, JsTemplateElement, JsTryStatement,
-    JsUnknownAssignment, JsUnknownBinding, JsUnknownExpression, JsUnknownImportAssertionEntry,
-    JsUnknownMember, JsUnknownNamedImportSpecifier, JsUnknownParameter, JsUnknownStatement,
-    JsVariableDeclaration, JsVariableDeclarations, JsVariableStatement, JsWhileStatement,
-    JsWithStatement,
+    JsDefaultClause, JsDefaultImportSpecifier, JsDoWhileStatement, JsEmptyStatement,
+    JsExpressionStatement, JsFinallyClause, JsForInStatement, JsForStatement, JsFunctionStatement,
+    JsGetterClassMember, JsIdentifierBinding, JsIdentifierExpression, JsIfStatement,
+    JsImportAssertion, JsImportAssertionEntry, JsImportBareClause, JsImportCallExpression,
+    JsImportDefaultClause, JsImportNamedClause, JsImportNamespaceClause, JsLabeledStatement,
+    JsLiteralExportName, JsModule, JsModuleSource, JsNamedImportSpecifier, JsNamedImportSpecifiers,
+    JsNamespaceImportSpecifier, JsNullLiteralExpression, JsNumberLiteralExpression,
+    JsObjectExpression, JsParameters, JsPropertyClassMember, JsPropertyObjectMember,
+    JsReturnStatement, JsScript, JsSequenceExpression, JsSetterClassMember,
+    JsShorthandNamedImportSpecifier, JsShorthandPropertyObjectMember, JsSpread, JsStatementList,
+    JsStaticInitializationBlockClassMember, JsStringLiteralExpression, JsSwitchStatement,
+    JsTemplate, JsTemplateChunkElement, JsTemplateElement, JsTryStatement, JsUnknownAssignment,
+    JsUnknownBinding, JsUnknownExpression, JsUnknownImportAssertionEntry, JsUnknownMember,
+    JsUnknownNamedImportSpecifier, JsUnknownParameter, JsUnknownStatement, JsVariableDeclaration,
+    JsVariableDeclarations, JsVariableStatement, JsWhileStatement, JsWithStatement,
 };
 use rslint_parser::{AstNode, JsSyntaxKind, SyntaxNode};
 
@@ -170,6 +173,13 @@ impl ToFormatElement for SyntaxNode {
             JsSyntaxKind::JS_PROPERTY_CLASS_MEMBER => JsPropertyClassMember::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
+
+            JsSyntaxKind::JS_DEFAULT_IMPORT_SPECIFIER => {
+                JsDefaultImportSpecifier::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+
             JsSyntaxKind::JS_UNKNOWN_BINDING => JsUnknownBinding::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
@@ -214,14 +224,57 @@ impl ToFormatElement for SyntaxNode {
             JsSyntaxKind::JS_TEMPLATE_CHUNK_ELEMENT => JsTemplateChunkElement::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
+            JsSyntaxKind::JS_IMPORT_BARE_CLAUSE => JsImportBareClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_MODULE_SOURCE => JsModuleSource::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_IMPORT_ASSERTION => JsImportAssertion::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_IMPORT_NAMED_CLAUSE => JsImportNamedClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
 
-            JsSyntaxKind::JS_STATEMENT_LIST => Ok(format_statements(
-                JsStatementList::cast(self.clone()).unwrap(),
-                formatter,
-            )),
+            JsSyntaxKind::JS_STATEMENT_LIST => {
+                Ok(formatter.format_list(JsStatementList::cast(self.clone()).unwrap()))
+            }
             JsSyntaxKind::JS_VARIABLE_DECLARATIONS => JsVariableDeclarations::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
+            JsSyntaxKind::JS_IMPORT_ASSERTION_ENTRY => JsImportAssertionEntry::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+
+            JsSyntaxKind::JS_IMPORT_CALL_EXPRESSION => JsImportCallExpression::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_IMPORT_DEFAULT_CLAUSE => JsImportDefaultClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_LITERAL_EXPORT_NAME => JsLiteralExportName::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_IMPORT_NAMESPACE_CLAUSE => JsImportNamespaceClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_NAMESPACE_IMPORT_SPECIFIER => {
+                JsNamespaceImportSpecifier::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+            JsSyntaxKind::JS_NAMED_IMPORT_SPECIFIER => JsNamedImportSpecifier::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_NAMED_IMPORT_SPECIFIERS => JsNamedImportSpecifiers::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_SHORTHAND_NAMED_IMPORT_SPECIFIER => {
+                JsShorthandNamedImportSpecifier::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
 
             _ => todo!(
                 "Implement formatting for the {:?} syntax kind.",

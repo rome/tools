@@ -1,15 +1,13 @@
-use rslint_parser::ast::JsBlockStatement;
-use rslint_parser::{AstNode, AstNodeList, JsSyntaxKind};
-
-use crate::ts::statements::format_statements;
 use crate::{
     block_indent, format_elements, hard_line_break, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
+use rslint_parser::ast::JsBlockStatement;
+use rslint_parser::{AstNode, AstNodeList, JsSyntaxKind};
 
 impl ToFormatElement for JsBlockStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let stmts = format_statements(self.statements(), formatter);
+        let stmts = formatter.format_list(self.statements());
 
         if is_non_collapsable_empty_block(self) {
             Ok(format_elements![

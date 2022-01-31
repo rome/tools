@@ -6,14 +6,14 @@ use std::collections::HashSet;
 use crate::{
     concat_elements, empty_element, empty_line,
     format_element::{normalize_newlines, Token},
-    format_elements, hard_line_break, if_group_breaks, if_group_fits_on_single_line, line_suffix,
-    soft_line_break_or_space, space_token, FormatElement, FormatOptions, FormatResult,
-    ToFormatElement,
+    format_elements, hard_line_break, if_group_breaks, if_group_fits_on_single_line,
+    join_elements_hard_line, line_suffix, soft_line_break_or_space, space_token, FormatElement,
+    FormatOptions, FormatResult, ToFormatElement,
 };
 use rome_rowan::SyntaxElement;
 #[cfg(debug_assertions)]
 use rslint_parser::SyntaxNodeExt;
-use rslint_parser::{AstNode, AstSeparatedList, SyntaxNode, SyntaxToken};
+use rslint_parser::{AstNode, AstNodeList, AstSeparatedList, SyntaxNode, SyntaxToken};
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
 /// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
@@ -264,6 +264,34 @@ impl Formatter {
         }
 
         Ok(result.into_iter())
+    }
+
+    /// It formats a list of nodes that are not separated. It's a ad-hoc function to
+    /// format lists that implement [rslint_parser::AstNodeList].
+    ///
+    /// The elements of the list are joined together using [join_elements_hard_line], which will
+    /// end up separated by hard lines or empty lines.
+    ///
+    /// If the formatter fails to format an element, said element gets printed verbatim.
+    pub fn format_list<List, Node: AstNode + ToFormatElement>(&self, list: List) -> FormatElement
+    where
+        List: AstNodeList<Node>,
+    {
+        let formatted_list = list.iter().map(|module_item| {
+            let snapshot = self.snapshot();
+            let elem = match self.format_node(&module_item) {
+                Ok(result) => result,
+                Err(_) => {
+                    self.restore(snapshot);
+                    self.format_verbatim(module_item.syntax())
+                        .trim_start()
+                        .trim_end()
+                }
+            };
+
+            (module_item, elem)
+        });
+        join_elements_hard_line(formatted_list)
     }
 
     fn print_leading_trivia(&self, token: &SyntaxToken) -> FormatElement {

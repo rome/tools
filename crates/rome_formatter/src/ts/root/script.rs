@@ -1,28 +1,16 @@
-use crate::ts::directives::format_directives;
-use crate::ts::statements::format_statements;
+use crate::ts::directives::format_directives_list;
+use crate::ts::root::format_interpreter;
 use crate::{
     format_elements, hard_line_break, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::JsScript;
-use rslint_parser::AstNodeList;
 
 impl ToFormatElement for JsScript {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let mut elements = vec![];
-
-        if let Some(interpreter) = self.interpreter_token() {
-            elements.push(formatter.format_token(&interpreter)?);
-            elements.push(hard_line_break());
-        }
-
-        let directives = self.directives();
-        if directives.len() > 0 {
-            elements.push(format_directives(directives, formatter));
-            elements.push(hard_line_break());
-        }
-
-        elements.push(format_statements(self.statements(), formatter));
-
+        elements.push(format_interpreter(self.interpreter_token(), formatter)?);
+        elements.push(format_directives_list(self.directives(), formatter));
+        elements.push(formatter.format_list(self.statements()));
         elements.push(formatter.format_token(&self.eof_token()?)?);
 
         Ok(format_elements![
