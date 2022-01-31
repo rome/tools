@@ -6,7 +6,7 @@ use rslint_parser::ast::{
     JsDebuggerStatement, JsDefaultClause, JsDefaultImportSpecifier, JsDoWhileStatement,
     JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsForInStatement, JsForStatement,
     JsFunctionStatement, JsGetterClassMember, JsIdentifierBinding, JsIdentifierExpression,
-    JsIfStatement, JsImportAssertion, JsImportAssertionEntry, JsImportBareClause,
+    JsIfStatement, JsImport, JsImportAssertion, JsImportAssertionEntry, JsImportBareClause,
     JsImportCallExpression, JsImportDefaultClause, JsImportNamedClause, JsImportNamespaceClause,
     JsLabeledStatement, JsLiteralExportName, JsModule, JsModuleSource, JsNamedImportSpecifier,
     JsNamedImportSpecifiers, JsNamespaceImportSpecifier, JsNullLiteralExpression,
@@ -65,7 +65,6 @@ impl ToFormatElement for SyntaxNode {
             JsSyntaxKind::JS_MODULE => JsModule::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
-
             JsSyntaxKind::JS_SPREAD => JsSpread::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
@@ -173,13 +172,11 @@ impl ToFormatElement for SyntaxNode {
             JsSyntaxKind::JS_PROPERTY_CLASS_MEMBER => JsPropertyClassMember::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
-
             JsSyntaxKind::JS_DEFAULT_IMPORT_SPECIFIER => {
                 JsDefaultImportSpecifier::cast(self.clone())
                     .unwrap()
                     .to_format_element(formatter)
             }
-
             JsSyntaxKind::JS_UNKNOWN_BINDING => JsUnknownBinding::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
@@ -224,6 +221,9 @@ impl ToFormatElement for SyntaxNode {
             JsSyntaxKind::JS_TEMPLATE_CHUNK_ELEMENT => JsTemplateChunkElement::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
+            JsSyntaxKind::JS_IMPORT => JsImport::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
             JsSyntaxKind::JS_IMPORT_BARE_CLAUSE => JsImportBareClause::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
@@ -236,7 +236,6 @@ impl ToFormatElement for SyntaxNode {
             JsSyntaxKind::JS_IMPORT_NAMED_CLAUSE => JsImportNamedClause::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
-
             JsSyntaxKind::JS_STATEMENT_LIST => {
                 Ok(formatter.format_list(JsStatementList::cast(self.clone()).unwrap()))
             }
