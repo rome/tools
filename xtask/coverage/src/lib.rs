@@ -136,10 +136,7 @@ pub fn run(
     let mut context = TestRunContext {
         query: query.map(|s| s.to_string()),
         reporter: &mut reporters,
-        pool: &yastl::Pool::with_config(
-            num_cpus::get(),
-            yastl::ThreadConfig::new().stack_size(8 << 30),
-        ),
+        pool: &yastl::Pool::new(num_cpus::get()),
     };
 
     let mut ran_any_tests = false;
