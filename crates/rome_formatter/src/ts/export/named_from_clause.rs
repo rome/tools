@@ -34,9 +34,9 @@ impl ToFormatElement for JsExportNamedFromClause {
         )?);
 
         let from = formatter.format_token(&self.from_token()?)?;
-        let source = formatter.format_node(self.source()?)?;
+        let source = formatter.format_node(&self.source()?)?;
         let assertion = if let Some(assertion) = self.assertion() {
-            formatter.format_node(assertion)?
+            formatter.format_node(&assertion)?
         } else {
             empty_element()
         };

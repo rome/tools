@@ -13,8 +13,8 @@ impl ToFormatElement for JsExportNamedSpecifier {
         };
 
         let as_token = formatter.format_token(&self.as_token()?)?;
-        let local_name = formatter.format_node(self.local_name()?)?;
-        let exported_name = formatter.format_node(self.exported_name()?)?;
+        let local_name = formatter.format_node(&self.local_name()?)?;
+        let exported_name = formatter.format_node(&self.exported_name()?)?;
 
         Ok(format_elements![
             type_token,

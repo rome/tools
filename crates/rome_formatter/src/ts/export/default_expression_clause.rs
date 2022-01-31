@@ -6,7 +6,7 @@ use rslint_parser::ast::JsExportDefaultExpressionClause;
 impl ToFormatElement for JsExportDefaultExpressionClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let default_token = formatter.format_token(&self.default_token()?)?;
-        let class = formatter.format_node(self.expression()?)?;
+        let class = formatter.format_node(&self.expression()?)?;
         let semicolon = if let Some(semicolon) = &self.semicolon_token() {
             formatter.format_token(semicolon)?
         } else {

@@ -12,7 +12,7 @@ impl ToFormatElement for JsExportNamedShorthandSpecifier {
             empty_element()
         };
 
-        let name = formatter.format_node(self.name()?)?;
+        let name = formatter.format_node(&self.name()?)?;
 
         Ok(format_elements![type_token, name])
     }
