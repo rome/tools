@@ -15,19 +15,21 @@ mod statements;
 mod template;
 mod unknown;
 
+pub(crate) use statements::format_statements;
+
 #[cfg(test)]
 mod test {
     use rslint_parser::parse_script;
 
-    use crate::Formatter;
+    use crate::{format, FormatOptions};
 
     #[test]
     fn arrow_function() {
         let src = "let v = (value  , second_value) =>    true";
         let tree = parse_script(src, 0);
-        let result = Formatter::default().format_root(&tree.syntax()).unwrap();
+        let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
         assert_eq!(
-            result.code(),
+            result.as_code(),
             "let v = (value, second_value) => true;
 "
         );
@@ -38,9 +40,9 @@ mod test {
         let src = r#"function foo() { return 'something' }"#;
 
         let tree = parse_script(src, 0);
-        let result = Formatter::default().format_root(&tree.syntax()).unwrap();
+        let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
         assert_eq!(
-            result.code(),
+            result.as_code(),
             r#"function foo() {
 	return "something";
 }
@@ -52,9 +54,9 @@ mod test {
     fn array() {
         let src = r#"let users = [   'john', 'chandler', true ]"#;
         let tree = parse_script(src, 0);
-        let result = Formatter::default().format_root(&tree.syntax()).unwrap();
+        let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
         assert_eq!(
-            result.code(),
+            result.as_code(),
             r#"let users = ["john", "chandler", true];
 "#
         );
@@ -65,9 +67,9 @@ mod test {
         let src = r#"let a1 = [{}, {}];
 "#;
         let tree = parse_script(src, 0);
-        let result = Formatter::default().format_root(&tree.syntax()).unwrap();
+        let result = format(FormatOptions::default(), &tree.syntax()).unwrap();
         assert_eq!(
-            result.code(),
+            result.as_code(),
             r#"let a1 = [{}, {}];
 "#
         );

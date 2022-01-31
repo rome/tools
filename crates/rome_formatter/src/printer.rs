@@ -1,7 +1,9 @@
 use std::iter::once;
 
+use rome_rowan::TextSize;
+
 use crate::format_element::{ConditionalGroupContent, Group, GroupPrintMode, LineMode};
-use crate::{FormatElement, FormatOptions, Formatted, IndentStyle};
+use crate::{FormatElement, FormatOptions, Formatted, IndentStyle, SourceMarker};
 
 /// Options that affect how the [Printer] prints the format tokens
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -97,10 +99,20 @@ impl<'a> Printer<'a> {
     }
 
     /// Prints the passed in element as well as all its content
-    pub fn print(mut self, element: &'a FormatElement) -> Formatted {
+    pub fn print(self, element: &'a FormatElement) -> Formatted {
+        self.print_with_indent(element, 0)
+    }
+
+    /// Prints the passed in element as well as all its content,
+    /// starting at the specified indentation level
+    pub(crate) fn print_with_indent(
+        mut self,
+        element: &'a FormatElement,
+        indent: u16,
+    ) -> Formatted {
         let mut queue = ElementCallQueue::new();
 
-        queue.enqueue(PrintElementCall::new(element, PrintElementArgs::default()));
+        queue.enqueue(PrintElementCall::new(element, PrintElementArgs { indent }));
 
         while let Some(print_element_call) = queue.dequeue() {
             queue.extend(self.print_element(print_element_call.element, print_element_call.args));
@@ -110,7 +122,7 @@ impl<'a> Printer<'a> {
             }
         }
 
-        Formatted::new(self.state.buffer)
+        Formatted::new(self.state.buffer, None, self.state.source_markers)
     }
 
     /// Prints a single element and returns the elements to queue (that should be printed next).
@@ -143,6 +155,13 @@ impl<'a> Printer<'a> {
                 if self.state.pending_space {
                     self.print_str(" ");
                     self.state.pending_space = false;
+                }
+
+                if let Some(range) = token.source() {
+                    self.state.source_markers.push(SourceMarker {
+                        source: range.start(),
+                        dest: TextSize::from(self.state.buffer.len() as u32),
+                    });
                 }
 
                 self.print_str(token);
@@ -342,6 +361,7 @@ impl<'a> Printer<'a> {
 #[derive(Default, Debug, Clone)]
 struct PrinterState<'a> {
     buffer: String,
+    source_markers: Vec<SourceMarker>,
     pending_indent: u16,
     pending_space: bool,
     generated_line: usize,
@@ -361,6 +381,7 @@ impl<'a> PrinterState<'a> {
             generated_column: self.generated_column,
             line_width: self.line_width,
             buffer_position: self.buffer.len(),
+            tokens_position: self.source_markers.len(),
         }
     }
 
@@ -372,6 +393,7 @@ impl<'a> PrinterState<'a> {
         self.generated_line = snapshot.generated_line;
         self.line_width = snapshot.line_width;
         self.buffer.truncate(snapshot.buffer_position);
+        self.source_markers.truncate(snapshot.tokens_position);
     }
 }
 
@@ -383,6 +405,7 @@ struct PrinterStateSnapshot {
     generated_line: usize,
     line_width: usize,
     buffer_position: usize,
+    tokens_position: usize,
 }
 
 /// Stores arguments passed to `print_element` call, holding the state specific to printing an element.
@@ -495,7 +518,7 @@ mod tests {
             token("\"d\""),
         ]));
 
-        assert_eq!(r#"["a", "b", "c", "d"]"#, result.code())
+        assert_eq!(r#"["a", "b", "c", "d"]"#, result.as_code())
     }
 
     #[test]
@@ -523,7 +546,7 @@ mod tests {
     c
   b
 a"#,
-            print_element(element).code()
+            print_element(element).as_code()
         )
     }
 
@@ -540,7 +563,7 @@ a"#,
 two lines`,
   "b",
 ]"#,
-            result.code()
+            result.as_code()
         )
     }
 
@@ -562,7 +585,7 @@ two lines`,
 
         assert_eq!(
             "function main() {\r\n\tlet x = `This is a multiline\r\nstring`;\r\n}\r\n",
-            result.code()
+            result.as_code()
         );
     }
 
@@ -590,7 +613,7 @@ two lines`,
   "d",
   ["0123456789", "0123456789", "0123456789", "0123456789", "0123456789"],
 ]"#,
-            result.code()
+            result.as_code()
         );
     }
 
@@ -610,7 +633,7 @@ two lines`,
             token("'d'"),
         ]));
 
-        assert_eq!("[\n\t'a',\n\t\'b',\n\t\'c',\n\t'd',\n]", result.code());
+        assert_eq!("[\n\t'a',\n\t\'b',\n\t\'c',\n\t'd',\n]", result.as_code());
     }
 
     fn create_array_element(items: Vec<FormatElement>) -> FormatElement {
