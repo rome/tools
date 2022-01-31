@@ -154,7 +154,7 @@ JsModule {
                     r_paren_token: R_PAREN@56..57 ")" [] [],
                 },
                 optional_chain_token_token: missing (optional),
-                type_args: missing (optional),
+                type_arguments: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@57..59 "(" [Newline("\n")] [],
                     args: JsCallArgumentList [

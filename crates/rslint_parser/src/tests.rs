@@ -105,7 +105,6 @@ fn run_and_expect_no_errors(path: &str, _: &str, _: &str) {
     let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text);
     assert_errors_are_absent(&parse, &path);
     let actual = format!("{}\n\n{:#?}", ast, parse.syntax());
-    println!("{}", actual);
 
     let path = path.with_extension("rast");
     expect_file![path].assert_eq(&actual)
@@ -136,7 +135,6 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str) {
         ));
     }
     actual.push_str(&format!("--\n{}", text));
-    println!("{}", actual);
 
     let path = path.with_extension("rast");
     expect_file![path].assert_eq(&actual)

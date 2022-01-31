@@ -30,7 +30,7 @@ JsModule {
                                     },
                                 },
                                 optional_chain_token_token: missing (optional),
-                                type_args: missing (optional),
+                                type_arguments: missing (optional),
                                 arguments: JsCallArguments {
                                     l_paren_token: L_PAREN@37..38 "(" [] [],
                                     args: JsCallArgumentList [],
@@ -53,7 +53,7 @@ JsModule {
                                             },
                                         },
                                         optional_chain_token_token: missing (optional),
-                                        type_args: missing (optional),
+                                        type_arguments: missing (optional),
                                         arguments: JsCallArguments {
                                             l_paren_token: L_PAREN@55..56 "(" [] [],
                                             args: JsCallArgumentList [],
@@ -73,7 +73,7 @@ JsModule {
                                         },
                                     },
                                     optional_chain_token_token: missing (optional),
-                                    type_args: missing (optional),
+                                    type_arguments: missing (optional),
                                     arguments: JsCallArguments {
                                         l_paren_token: L_PAREN@72..73 "(" [] [],
                                         args: JsCallArgumentList [],
@@ -127,7 +127,7 @@ JsModule {
                         },
                     },
                     optional_chain_token_token: missing (optional),
-                    type_args: missing (optional),
+                    type_arguments: missing (optional),
                     arguments: JsCallArguments {
                         l_paren_token: L_PAREN@127..128 "(" [] [],
                         args: JsCallArgumentList [],

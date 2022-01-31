@@ -17,6 +17,7 @@ JsModule {
                             expression: JsClassExpression {
                                 class_token: CLASS_KW@8..14 "class" [] [Whitespace(" ")],
                                 id: missing (optional),
+                                type_parameters: missing (optional),
                                 extends_clause: missing (optional),
                                 implements_clause: missing (optional),
                                 l_curly_token: L_CURLY@14..15 "{" [] [],
@@ -46,6 +47,7 @@ JsModule {
                                 id: JsIdentifierBinding {
                                     name_token: IDENT@32..36 "foo" [] [Whitespace(" ")],
                                 },
+                                type_parameters: missing (optional),
                                 extends_clause: missing (optional),
                                 implements_clause: missing (optional),
                                 l_curly_token: L_CURLY@36..37 "{" [] [],
@@ -89,6 +91,7 @@ JsModule {
                 member: JsClassExpression {
                     class_token: CLASS_KW@62..68 "class" [] [Whitespace(" ")],
                     id: missing (optional),
+                    type_parameters: missing (optional),
                     extends_clause: missing (optional),
                     implements_clause: missing (optional),
                     l_curly_token: L_CURLY@68..69 "{" [] [],
@@ -123,9 +126,10 @@ JsModule {
                 1: (empty)
                 2: (empty)
                 3: (empty)
-                4: L_CURLY@14..15 "{" [] []
-                5: JS_CLASS_MEMBER_LIST@15..15
-                6: R_CURLY@15..16 "}" [] []
+                4: (empty)
+                5: L_CURLY@14..15 "{" [] []
+                6: JS_CLASS_MEMBER_LIST@15..15
+                7: R_CURLY@15..16 "}" [] []
       1: SEMICOLON@16..17 ";" [] []
     1: JS_VARIABLE_STATEMENT@17..57
       0: JS_VARIABLE_DECLARATIONS@17..57
@@ -144,8 +148,9 @@ JsModule {
                   0: IDENT@32..36 "foo" [] [Whitespace(" ")]
                 2: (empty)
                 3: (empty)
-                4: L_CURLY@36..37 "{" [] []
-                5: JS_CLASS_MEMBER_LIST@37..55
+                4: (empty)
+                5: L_CURLY@36..37 "{" [] []
+                6: JS_CLASS_MEMBER_LIST@37..55
                   0: JS_CONSTRUCTOR_CLASS_MEMBER@37..55
                     0: (empty)
                     1: JS_LITERAL_MEMBER_NAME@37..50
@@ -160,7 +165,7 @@ JsModule {
                       1: JS_DIRECTIVE_LIST@54..54
                       2: JS_STATEMENT_LIST@54..54
                       3: R_CURLY@54..55 "}" [] []
-                6: R_CURLY@55..57 "}" [Newline("\n")] []
+                7: R_CURLY@55..57 "}" [Newline("\n")] []
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@57..71
       0: JS_COMPUTED_MEMBER_EXPRESSION@57..71
@@ -174,9 +179,10 @@ JsModule {
           1: (empty)
           2: (empty)
           3: (empty)
-          4: L_CURLY@68..69 "{" [] []
-          5: JS_CLASS_MEMBER_LIST@69..69
-          6: R_CURLY@69..70 "}" [] []
+          4: (empty)
+          5: L_CURLY@68..69 "{" [] []
+          6: JS_CLASS_MEMBER_LIST@69..69
+          7: R_CURLY@69..70 "}" [] []
         4: R_BRACK@70..71 "]" [] []
       1: (empty)
   3: EOF@71..72 "" [Newline("\n")] []

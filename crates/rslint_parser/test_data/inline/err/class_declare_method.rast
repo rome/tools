@@ -7,6 +7,7 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
             },
+            type_parameters: missing (optional),
             extends_clause: missing (optional),
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
@@ -47,8 +48,9 @@ JsModule {
         0: IDENT@6..8 "B" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      5: JS_CLASS_MEMBER_LIST@10..26
+      4: (empty)
+      5: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      6: JS_CLASS_MEMBER_LIST@10..26
         0: JS_UNKNOWN_MEMBER@10..26
           0: DECLARE_KW@10..18 "declare" [] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@18..20
@@ -62,7 +64,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@24..24
             2: JS_STATEMENT_LIST@24..24
             3: R_CURLY@24..26 "}" [] [Whitespace(" ")]
-      6: R_CURLY@26..27 "}" [] []
+      7: R_CURLY@26..27 "}" [] []
   3: EOF@27..28 "" [Newline("\n")] []
 --
 error[SyntaxError]: `declare` modifier can only be used in TypeScript files

@@ -15,11 +15,12 @@ use crate::syntax::object::{
     is_at_object_member_name, is_nth_at_object_member_name, parse_object_member_name,
 };
 use crate::syntax::stmt::{optional_semi, semi};
-use crate::syntax::typescript::{parse_ts_identifier_binding, ts_type_args};
+use crate::syntax::typescript::{parse_ts_identifier_binding, try_parse};
 use crate::syntax::util::{
     eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
     is_nth_at_contextual_keyword,
 };
+use crate::JsSyntaxFeature::TypeScript;
 use crate::{Absent, ParsedSyntax, Parser};
 use crate::{JsSyntaxKind::*, *};
 use rslint_syntax::T;
@@ -119,16 +120,16 @@ impl ParseSeparatedList for TsTypeParameterList {
         )
     }
 
-    fn allow_trailing_separating_element(&self) -> bool {
-        true
-    }
-
     fn list_kind() -> JsSyntaxKind {
         TS_TYPE_PARAMETER_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
         T![,]
+    }
+
+    fn allow_trailing_separating_element(&self) -> bool {
+        true
     }
 }
 
@@ -466,7 +467,7 @@ fn parse_ts_reference_type(p: &mut Parser) -> ParsedSyntax {
         let m = name.precede(p);
 
         if !p.has_linebreak_before_n(0) && p.at(T![<]) {
-            ts_type_args(p);
+            parse_ts_type_arguments(p).ok();
         }
 
         m.complete(p, TS_REFERENCE_TYPE)
@@ -1243,4 +1244,74 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
     eat_contextual_keyword(p, "is", T![is]);
     parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
     Present(m.complete(p, TS_TYPE_PREDICATE))
+}
+
+pub fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
+    // Don't parse type arguments in JS because the syntax is ambiguous
+    // https://github.com/microsoft/TypeScript/issues/36662
+
+    // test type_arguments_like_expression
+    // ((0)<5>(6))
+
+    if TypeScript.is_unsupported(p) || !p.at(T![<]) {
+        return Absent;
+    }
+
+    try_parse(p, |p| {
+        let arguments = parse_ts_type_arguments(p);
+
+        if p.tokens.last_tok().map(|t| t.kind) == Some(T![>]) {
+            arguments
+        } else {
+            Absent
+        }
+    })
+}
+
+pub(crate) fn parse_ts_type_arguments(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![<]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T![<]);
+    TypeArgumentsList.parse_list(p);
+    p.expect(T![>]);
+    Present(m.complete(p, TS_TYPE_ARGUMENTS))
+}
+
+struct TypeArgumentsList;
+
+impl ParseSeparatedList for TypeArgumentsList {
+    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+        parse_ts_type(p)
+    }
+
+    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+        p.at(T![>])
+    }
+
+    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+        parsed_element.or_recover(
+            p,
+            &ParseRecovery::new(
+                JS_UNKNOWN,
+                token_set![T![>], T![,], T![ident], T![yield], T![await]],
+            )
+            .enable_recovery_on_line_break(),
+            expected_ts_type_parameter,
+        )
+    }
+
+    fn list_kind() -> JsSyntaxKind {
+        TS_TYPE_ARGUMENT_LIST
+    }
+
+    fn separating_element_kind(&mut self) -> JsSyntaxKind {
+        T![,]
+    }
+
+    fn allow_trailing_separating_element(&self) -> bool {
+        false
+    }
 }

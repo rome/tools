@@ -1,7 +1,7 @@
 use crate::parser::parse_recovery::RecoveryResult;
 use crate::parser::ParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, Marker, Parser};
+use crate::{CompletedMarker, Marker, Parser, SyntaxFeature};
 use rslint_errors::{Diagnostic, Span};
 use rslint_syntax::JsSyntaxKind;
 use std::ops::Range;
@@ -93,6 +93,25 @@ impl ParsedSyntax {
             Absent => {
                 panic!("Called `unwrap` on an `Absent` syntax");
             }
+            Present(marker) => marker,
+        }
+    }
+
+    /// Returns the contained [ParsedSyntax::Present] value or passed default
+    pub fn unwrap_or(self, default: CompletedMarker) -> CompletedMarker {
+        match self {
+            Absent => default,
+            Present(marker) => marker,
+        }
+    }
+
+    /// Returns the contained [ParsedSyntax::Present] value or computes it from a clojure.
+    pub fn unwrap_or_else<F>(self, default: F) -> CompletedMarker
+    where
+        F: FnOnce() -> CompletedMarker,
+    {
+        match self {
+            Absent => default(),
             Present(marker) => marker,
         }
     }
@@ -200,6 +219,18 @@ impl ParsedSyntax {
         if let Present(marker) = self {
             marker.undo_completion(p).abandon(p)
         }
+    }
+
+    /// Adds a diagnostic and changes the kind of the node to [SyntaxKind::to_unknown] if the passed feature isn't
+    /// supported.
+    ///
+    /// Returns the parsed syntax.
+    pub fn exclusive_for<F, E>(self, p: &mut Parser, feature: F, error_builder: E) -> ParsedSyntax
+    where
+        F: SyntaxFeature,
+        E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+    {
+        feature.exclusive_syntax(p, self, error_builder)
     }
 }
 

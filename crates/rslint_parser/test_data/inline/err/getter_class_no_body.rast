@@ -7,6 +7,7 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..14 "Setters" [] [Whitespace(" ")],
             },
+            type_parameters: missing (optional),
             extends_clause: missing (optional),
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@14..15 "{" [] [],
@@ -41,8 +42,9 @@ JsModule {
         0: IDENT@6..14 "Setters" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: L_CURLY@14..15 "{" [] []
-      5: JS_CLASS_MEMBER_LIST@15..27
+      4: (empty)
+      5: L_CURLY@14..15 "{" [] []
+      6: JS_CLASS_MEMBER_LIST@15..27
         0: JS_GETTER_CLASS_MEMBER@15..27
           0: (empty)
           1: (empty)
@@ -54,7 +56,7 @@ JsModule {
           6: R_PAREN@26..27 ")" [] []
           7: (empty)
           8: (empty)
-      6: (empty)
+      7: (empty)
   3: EOF@27..28 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected a class method body but instead found ''

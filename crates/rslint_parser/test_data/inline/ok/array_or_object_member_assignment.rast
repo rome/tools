@@ -33,7 +33,7 @@ JsModule {
                                                                     value_token: IDENT@29..41 "Test262Error" [] [],
                                                                 },
                                                             },
-                                                            type_args: missing (optional),
+                                                            type_arguments: missing (optional),
                                                             arguments: JsCallArguments {
                                                                 l_paren_token: L_PAREN@41..42 "(" [] [],
                                                                 args: JsCallArgumentList [
@@ -153,7 +153,7 @@ JsModule {
                                                                         value_token: IDENT@179..191 "Test262Error" [] [],
                                                                     },
                                                                 },
-                                                                type_args: missing (optional),
+                                                                type_arguments: missing (optional),
                                                                 arguments: JsCallArguments {
                                                                     l_paren_token: L_PAREN@191..192 "(" [] [],
                                                                     args: JsCallArgumentList [

@@ -16,7 +16,7 @@ JsModule {
                                 item: JsReferenceIdentifier {
                                     value_token: IDENT@19..21 "C" [] [Whitespace(" ")],
                                 },
-                                type_params: missing (optional),
+                                type_arguments: missing (optional),
                             },
                         ],
                     ],

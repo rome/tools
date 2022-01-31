@@ -11,6 +11,7 @@ JsModule {
                     expression: JsClassExpression {
                         class_token: CLASS_KW@16..22 "class" [] [Whitespace(" ")],
                         id: missing (optional),
+                        type_parameters: missing (optional),
                         extends_clause: missing (optional),
                         implements_clause: missing (optional),
                         l_curly_token: L_CURLY@22..23 "{" [] [],
@@ -100,9 +101,10 @@ JsModule {
             1: (empty)
             2: (empty)
             3: (empty)
-            4: L_CURLY@22..23 "{" [] []
-            5: JS_CLASS_MEMBER_LIST@23..23
-            6: R_CURLY@23..24 "}" [] []
+            4: (empty)
+            5: L_CURLY@22..23 "{" [] []
+            6: JS_CLASS_MEMBER_LIST@23..23
+            7: R_CURLY@23..24 "}" [] []
           2: R_PAREN@24..25 ")" [] []
         2: (empty)
     1: JS_UNKNOWN_STATEMENT@25..47

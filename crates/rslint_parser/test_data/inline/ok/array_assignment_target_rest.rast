@@ -118,7 +118,7 @@ JsModule {
                                             },
                                         },
                                         optional_chain_token_token: missing (optional),
-                                        type_args: missing (optional),
+                                        type_arguments: missing (optional),
                                         arguments: JsCallArguments {
                                             l_paren_token: L_PAREN@73..74 "(" [] [],
                                             args: JsCallArgumentList [],
@@ -165,7 +165,7 @@ JsModule {
                                             },
                                         },
                                         optional_chain_token_token: missing (optional),
-                                        type_args: missing (optional),
+                                        type_arguments: missing (optional),
                                         arguments: JsCallArguments {
                                             l_paren_token: L_PAREN@105..106 "(" [] [],
                                             args: JsCallArgumentList [],

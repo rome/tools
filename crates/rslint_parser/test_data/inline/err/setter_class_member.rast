@@ -7,6 +7,7 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..14 "Setters" [] [Whitespace(" ")],
             },
+            type_parameters: missing (optional),
             extends_clause: missing (optional),
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@14..15 "{" [] [],
@@ -46,8 +47,9 @@ JsModule {
         0: IDENT@6..14 "Setters" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: L_CURLY@14..15 "{" [] []
-      5: JS_CLASS_MEMBER_LIST@15..30
+      4: (empty)
+      5: L_CURLY@14..15 "{" [] []
+      6: JS_CLASS_MEMBER_LIST@15..30
         0: JS_SETTER_CLASS_MEMBER@15..30
           0: (empty)
           1: (empty)
@@ -63,7 +65,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@29..29
             2: JS_STATEMENT_LIST@29..29
             3: R_CURLY@29..30 "}" [] []
-      6: R_CURLY@30..32 "}" [Newline("\n")] []
+      7: R_CURLY@30..32 "}" [Newline("\n")] []
   3: EOF@32..33 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected a parameter but instead found ')'

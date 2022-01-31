@@ -11,7 +11,7 @@ JsModule {
                         value_token: IDENT@10..15 "Error" [] [],
                     },
                 },
-                type_args: missing (optional),
+                type_arguments: missing (optional),
                 arguments: JsCallArguments {
                     l_paren_token: L_PAREN@15..16 "(" [] [],
                     args: JsCallArgumentList [

@@ -4,7 +4,9 @@ use crate::syntax::binding::{is_at_identifier_binding, parse_binding, parse_bind
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{expected_binding, expected_parameter, ts_only_syntax_error};
+use crate::syntax::js_parse_error::{
+    expected_binding, expected_parameter, expected_parameters, ts_only_syntax_error,
+};
 use crate::syntax::stmt::{is_semi, parse_block_impl, StatementContext};
 use crate::syntax::typescript::{
     maybe_eat_incorrect_modifier, parse_ts_return_type_annotation, parse_ts_type_annotation,
@@ -319,6 +321,29 @@ pub(super) fn is_at_async_function(p: &Parser, should_check_line_break: LineBrea
     } else {
         async_function_tokens
     }
+}
+
+pub(super) fn parse_arrow_function(
+    p: &mut Parser,
+    m: Marker,
+    flags: SignatureFlags,
+) -> CompletedMarker {
+    let parameters = parse_arrow_function_parameters(p, flags);
+
+    if parameters.kind() == Some(JS_PARAMETERS) {
+        TypeScript
+            .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
+                ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
+            })
+            .ok();
+    }
+    parameters.or_add_diagnostic(p, expected_parameters);
+
+    p.expect(T![=>]);
+
+    parse_arrow_body(p, SignatureFlags::empty())
+        .or_add_diagnostic(p, js_parse_error::expected_arrow_body);
+    m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 }
 
 pub(super) fn parse_arrow_function_parameters(
