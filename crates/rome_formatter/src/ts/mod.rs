@@ -14,8 +14,6 @@ mod root;
 mod statements;
 mod unknown;
 
-pub(crate) use statements::format_statements;
-
 #[cfg(test)]
 mod test {
     use rslint_parser::parse_script;

@@ -28,7 +28,7 @@ impl ToFormatElement for JsImport {
         let import_clause = formatter.format_node(&self.import_clause()?)?;
         let semicolon = formatter
             .format_token(&self.semicolon_token())?
-            .unwrap_or_else(|| token(';'));
+            .unwrap_or_else(|| token(";"));
 
         Ok(format_elements![
             import_token,

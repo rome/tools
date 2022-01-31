@@ -1,4 +1,4 @@
-use crate::{ts::format_statements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
     JsArrayBindingPattern, JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement,
     JsBooleanLiteralExpression, JsCallArguments, JsCallExpression, JsCaseClause, JsCatchClause,
@@ -240,10 +240,9 @@ impl ToFormatElement for SyntaxNode {
                 .unwrap()
                 .to_format_element(formatter),
 
-            JsSyntaxKind::JS_STATEMENT_LIST => Ok(format_statements(
-                JsStatementList::cast(self.clone()).unwrap(),
-                formatter,
-            )),
+            JsSyntaxKind::JS_STATEMENT_LIST => {
+                Ok(formatter.format_list(JsStatementList::cast(self.clone()).unwrap()))
+            }
             JsSyntaxKind::JS_VARIABLE_DECLARATIONS => JsVariableDeclarations::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
