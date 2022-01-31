@@ -11,8 +11,8 @@
 //!
 //! ```rust,no_test
 //! struct KeyValue {
-//!     key: String,
-//!     value: String
+//!     key: &'static str,
+//!     value: &'static str
 //! }
 //! ```
 //!
@@ -21,27 +21,27 @@
 //! use rome_formatter::{format_elements, format_element, Formatter, ToFormatElement, FormatElement, FormatResult, FormatOptions, space_token, token };
 //!
 //! struct KeyValue {
-//!     key: String,
-//!     value: String
+//!     key: &'static str,
+//!     value: &'static str
 //! }
 //!
 //! impl ToFormatElement for KeyValue {
 //!     fn to_format_element(&self, formatter: &Formatter)-> FormatResult<FormatElement>  {
 //!         Ok(format_elements![
-//!             token(self.key.as_str()),
+//!             token(self.key),
 //!             space_token(),
 //!             token("=>"),
 //!             space_token(),
-//!             token(self.value.as_str())
+//!             token(self.value)
 //!         ])
 //!     }
 //! }
 //!
 //! fn my_function() {
-//!     let key_value = KeyValue { key: String::from("lorem"), value: String::from("ipsum") };
+//!     let key_value = KeyValue { key: "lorem", value: "ipsum" };
 //!     let element = key_value.to_format_element(&Formatter::default()).unwrap();
 //!     let result = format_element(&element, FormatOptions::default());
-//!     assert_eq!(result.code(), "lorem => ipsum");
+//!     assert_eq!(result.as_code(), "lorem => ipsum");
 //! }
 //!
 //! ```
@@ -55,6 +55,9 @@ mod intersperse;
 mod printer;
 mod ts;
 pub use formatter::Formatter;
+use rome_rowan::TextRange;
+use rome_rowan::TextSize;
+use rome_rowan::TokenAtOffset;
 use rslint_parser::{parse, Syntax, SyntaxError, SyntaxNode};
 
 pub use format_element::{
@@ -102,7 +105,7 @@ impl From<SyntaxError> for FormatError {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Clone)]
+#[derive(Debug, Eq, PartialEq, Clone, Copy)]
 pub enum IndentStyle {
     /// Tab
     Tab,
@@ -129,7 +132,7 @@ impl FromStr for IndentStyle {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct FormatOptions {
     /// The indent style
     pub indent_style: IndentStyle,
@@ -156,18 +159,60 @@ impl Default for FormatOptions {
     }
 }
 
+/// Lightweight sourcemap marker between source and output tokens
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub struct SourceMarker {
+    /// Position of the marker in the original source
+    pub source: TextSize,
+    /// Position of the marker in the output code
+    pub dest: TextSize,
+}
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Formatted {
     code: String,
+    range: Option<TextRange>,
+    sourcemap: Vec<SourceMarker>,
 }
 
 impl Formatted {
-    pub fn new(code: String) -> Self {
-        Self { code }
+    fn new(code: String, range: Option<TextRange>, sourcemap: Vec<SourceMarker>) -> Self {
+        Self {
+            code,
+            range,
+            sourcemap,
+        }
     }
 
-    pub fn code(&self) -> &String {
+    /// Construct an empty formatter result
+    fn new_empty() -> Self {
+        Self {
+            code: String::new(),
+            range: None,
+            sourcemap: Vec::new(),
+        }
+    }
+
+    /// Range of the input source file covered by this formatted code,
+    /// or None if the entire file is covered in this instance
+    pub fn range(&self) -> Option<TextRange> {
+        self.range
+    }
+
+    /// Returns a list of [SourceMarker] mapping byte positions
+    /// in the output string to the input source code
+    pub fn sourcemap(&self) -> &[SourceMarker] {
+        &self.sourcemap
+    }
+
+    /// Access the resulting code, borrowing the result
+    pub fn as_code(&self) -> &str {
         &self.code
+    }
+
+    /// Access the resulting code, consuming the result
+    pub fn into_code(self) -> String {
+        self.code
     }
 }
 
@@ -175,7 +220,210 @@ impl Formatted {
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
 pub fn format(options: FormatOptions, syntax: &SyntaxNode) -> FormatResult<Formatted> {
-    Formatter::new(options).format_root(syntax)
+    let element = Formatter::new(options).format_root(syntax)?;
+    Ok(Printer::new(options).print(&element))
+}
+
+/// Formats a range within a file, supported by Rome
+///
+/// This runs a simple heuristic to determine the initial indentation
+/// level of the node based on the provided [FormatOptions], which
+/// must match currently the current initial of the file. Additionally,
+/// because the reformatting happens only locally the resulting code
+/// will be indented with the same level as the original selection,
+/// even if it's a mismatch from the rest of the block the selection is in
+///
+/// It returns a [Formatted] result with a range corresponding to the
+/// range of the input that was effectively overwritten by the formatter
+pub fn format_range(
+    options: FormatOptions,
+    root: &SyntaxNode,
+    range: TextRange,
+) -> FormatResult<Formatted> {
+    // Find the tokens corresponding to the start and end of the range
+    let start_token = root.token_at_offset(range.start());
+    let end_token = root.token_at_offset(range.end());
+
+    // If these tokens were not found this means either:
+    // 1. The input [SyntaxNode] was empty
+    // 2. The input node was not the root [SyntaxNode] of the file
+    // In the first case we can return an empty result immediately,
+    // otherwise default to the first and last tokens in the root node
+    let start_token = match start_token {
+        // If the start of the range lies between two tokens,
+        // start at the rightmost one
+        TokenAtOffset::Between(_, token) => token,
+        TokenAtOffset::Single(token) => token,
+        TokenAtOffset::None => match root.first_token() {
+            Some(token) => token,
+            // root node is empty
+            None => return Ok(Formatted::new_empty()),
+        },
+    };
+    let end_token = match end_token {
+        // If the end of the range lies between two tokens,
+        // end at the leftmost one
+        TokenAtOffset::Between(token, _) => token,
+        TokenAtOffset::Single(token) => token,
+        TokenAtOffset::None => match root.last_token() {
+            Some(token) => token,
+            // root node is empty
+            None => return Ok(Formatted::new_empty()),
+        },
+    };
+
+    // Find the lowest common ancestor node for the start and end token
+    // by building the path to the root node from both tokens and
+    // iterating along the two paths at once to find the first divergence
+    #[allow(clippy::needless_collect)]
+    let start_to_root: Vec<_> = start_token.ancestors().collect();
+    #[allow(clippy::needless_collect)]
+    let end_to_root: Vec<_> = end_token.ancestors().collect();
+
+    let common_root = start_to_root
+        .into_iter()
+        .rev()
+        .zip(end_to_root.into_iter().rev())
+        .map_while(|(lhs, rhs)| if lhs == rhs { Some(lhs) } else { None })
+        .last();
+
+    // Logically this should always return at least the root node,
+    // fallback to said node just in case
+    let common_root = common_root.as_ref().unwrap_or(root);
+
+    // Perform the actual formatting of the root node with
+    // an appropriate indentation level
+    let formatted = format_node(options, common_root)?;
+
+    // This finds the closest marker to the beginning of the source
+    // starting before or at said starting point, and the closest
+    // marker to the end of the source range starting after or at
+    // said ending point respectively
+    let mut range_start = None;
+    let mut range_end = None;
+
+    for marker in &formatted.sourcemap {
+        if let Some(start_dist) = marker.source.checked_sub(range.start()) {
+            range_start = match range_start {
+                Some((prev_marker, prev_dist)) => {
+                    if start_dist < prev_dist {
+                        Some((marker, start_dist))
+                    } else {
+                        Some((prev_marker, prev_dist))
+                    }
+                }
+                None => Some((marker, start_dist)),
+            }
+        }
+
+        if let Some(end_dist) = range.end().checked_sub(marker.source) {
+            range_end = match range_end {
+                Some((prev_marker, prev_dist)) => {
+                    if end_dist < prev_dist {
+                        Some((marker, end_dist))
+                    } else {
+                        Some((prev_marker, prev_dist))
+                    }
+                }
+                None => Some((marker, end_dist)),
+            }
+        }
+    }
+
+    // If no start or end were found, this means that the edge of the formatting
+    // range was near the edge of the input, and no marker were emitted before
+    // the start (or after the end) of the formatting range: in this case
+    // the start/end marker default to the start/end of the input
+    let (start_source, start_dest) = match range_start {
+        Some((start_marker, _)) => (start_marker.source, start_marker.dest),
+        None => (TextSize::from(0), TextSize::from(0)),
+    };
+    let (end_source, end_dest) = match range_end {
+        Some((end_marker, _)) => (end_marker.source, end_marker.dest),
+        None => {
+            let end = root.text().len();
+            (end, end)
+        }
+    };
+
+    let input_range = TextRange::new(start_source, end_source);
+    let output_range = TextRange::new(start_dest, end_dest);
+    let code = &formatted.code[output_range];
+
+    Ok(Formatted::new(
+        code.into(),
+        Some(input_range),
+        formatted.sourcemap,
+    ))
+}
+
+/// Formats a single node within a file, supported by Rome
+///
+/// This runs a simple heuristic to determine the initial indentation
+/// level of the node based on the provided [FormatOptions], which
+/// must match currently the current initial of the file. Additionally,
+/// because the reformatting happens only locally the resulting code
+/// will be indented with the same level as the original selection,
+/// even if it's a mismatch from the rest of the block the selection is in
+///
+/// It returns a [Formatted] result
+pub fn format_node(options: FormatOptions, root: &SyntaxNode) -> FormatResult<Formatted> {
+    // Determine the initial indentation level for the printer by inspecting the trivias
+    // of each token from the first token of the common root towards the start of the file
+    let mut tokens = std::iter::successors(root.first_token(), |token| token.prev_token());
+
+    // From the iterator of tokens, build an iterator of trivia pieces (once again the iterator is
+    // reversed, starting from the last trailing trivia towards the first leading trivia).
+    // The first token is handled specially as we only wan to consider its leading trivias
+    let first_token = tokens.next();
+    let first_token_trivias = first_token
+        .into_iter()
+        .flat_map(|token| token.leading_trivia().pieces().rev());
+
+    let next_tokens_trivias = tokens.flat_map(|token| {
+        token
+            .trailing_trivia()
+            .pieces()
+            .rev()
+            .chain(token.leading_trivia().pieces().rev())
+    });
+
+    let trivias = first_token_trivias
+        .chain(next_tokens_trivias)
+        .filter(|piece| {
+            // We're only interested in newline and whitespace trivias, skip over comments
+            let is_newline = piece.as_newline().is_some();
+            let is_whitespace = piece.as_whitespace().is_some();
+            is_newline || is_whitespace
+        });
+
+    // Finally run the iterator until a newline trivia is found, and get the last whitespace trivia before it
+    let last_whitespace = trivias.map_while(|piece| piece.as_whitespace()).last();
+    let initial_indent = match last_whitespace {
+        Some(trivia) => {
+            // This logic is based on the formatting options passed in
+            // the be user (or the editor) as we do not have any kind
+            // of identation type detection yet. Unfortunately this
+            // may not actually match the current content of the file
+            let length = trivia.text().len() as u16;
+            match options.indent_style {
+                IndentStyle::Tab => length,
+                IndentStyle::Space(width) => length / u16::from(width),
+            }
+        }
+        // No whitespace was found between the start of the range
+        // and the start of the file
+        None => 0,
+    };
+
+    let element = Formatter::new(options).format_root(root)?;
+    let formatted = Printer::new(options).print_with_indent(&element, initial_indent);
+
+    Ok(Formatted::new(
+        formatted.code,
+        Some(root.text_range()),
+        formatted.sourcemap,
+    ))
 }
 
 pub fn format_element(element: &FormatElement, options: FormatOptions) -> Formatted {
@@ -194,7 +442,99 @@ pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions, ap
     };
     if let Some(Ok(result)) = result {
         rome_path
-            .save(result.code())
+            .save(result.as_code())
             .expect("Could not write the formatted code on file");
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::IndentStyle;
+
+    use super::{format_range, FormatOptions};
+
+    use rome_rowan::{TextRange, TextSize};
+    use rslint_parser::parse_script;
+
+    #[test]
+    fn test_range_formatting() {
+        let input = "
+while(
+    true
+) {
+    function func() {
+    func(     /* comment */
+    );
+    
+    let array =
+        [ 1
+    , 2];
+
+    }
+
+    function func2()
+    {
+
+    const no_format    =    () => {};
+
+    }
+}
+";
+
+        // Start the formatting range two characters before the "let" keywords,
+        // in the middle of the indentation whitespace for the line
+        let range_start = TextSize::try_from(input.find("let").unwrap() - 2).unwrap();
+        let range_end = TextSize::try_from(input.find("const").unwrap()).unwrap();
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            FormatOptions {
+                indent_style: IndentStyle::Space(4),
+                ..FormatOptions::default()
+            },
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+
+        let result = result.expect("range formatting failed");
+        assert_eq!(
+            result.range(),
+            Some(TextRange::new(range_start + TextSize::from(2), range_end))
+        );
+        assert_eq!(
+            result.as_code(),
+            "let array = [1, 2];\n    }\n\n    function func2() {\n        "
+        );
+    }
+
+    #[test]
+    fn test_range_formatting_indentation() {
+        let input = "
+function() {
+         const veryLongIdentifierToCauseALineBreak = { veryLongKeyToCauseALineBreak: 'veryLongValueToCauseALineBreak' }
+}
+";
+
+        let range_start = TextSize::try_from(input.find("const").unwrap()).unwrap();
+        let range_end = TextSize::try_from(input.find('}').unwrap()).unwrap();
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            FormatOptions {
+                indent_style: IndentStyle::Space(4),
+                ..FormatOptions::default()
+            },
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+
+        let result = result.expect("range formatting failed");
+        assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
+        // As a result of the indentation normalization, the number of spaces within
+        // the object expression is currently rounded down from an odd indentation level
+        assert_eq!(
+            result.as_code(),
+            "const veryLongIdentifierToCauseALineBreak = {\n            veryLongKeyToCauseALineBreak: \"veryLongValueToCauseALineBreak\",\n        "
+        );
     }
 }
