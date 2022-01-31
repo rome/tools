@@ -1,5 +1,5 @@
 use crate::{
-    block_indent, format_elements, ts::directives::format_directives_list, FormatElement,
+    block_indent, format_elements, formatter_traits::FormatTokenAndNode, FormatElement,
     FormatResult, Formatter, ToFormatElement,
 };
 
@@ -12,7 +12,7 @@ impl ToFormatElement for JsFunctionBody {
             |open_token_trailing, close_token_leading| {
                 Ok(block_indent(format_elements![
                     open_token_trailing,
-                    format_directives_list(self.directives(), formatter),
+                    self.directives().format(formatter)?,
                     formatter.format_list(self.statements()),
                     close_token_leading,
                 ]))
