@@ -535,7 +535,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///  ..FormatOptions::default()
 /// };
 ///
-/// assert_eq!("name =\n\tfirstName + lastName", format_element(&elements, options).code());
+/// assert_eq!("name =\n\tfirstName + lastName", format_element(&elements, options).as_code());
 /// ```
 ///
 /// Only adds a space if the enclosing [Group] fits on a single line
@@ -553,7 +553,7 @@ pub fn soft_block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 /// assert_eq!(
 ///   "a = 10",
-///   format_element(&elements, FormatOptions::default()).code()
+///   format_element(&elements, FormatOptions::default()).as_code()
 /// );
 /// ```
 ///

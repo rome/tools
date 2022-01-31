@@ -89,9 +89,9 @@ impl ToFormatElement for JsAnyFunction {
         );
 
         if body_has_soft_line_break {
-            tokens.push(formatter.format_node(&self.body()?)?);
+            body_group.push(formatter.format_node(&self.body()?)?);
         } else {
-            tokens.push(soft_line_indent_or_space(
+            body_group.push(soft_line_indent_or_space(
                 formatter.format_node(&self.body()?)?,
             ));
         }
