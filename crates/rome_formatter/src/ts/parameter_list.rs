@@ -1,5 +1,5 @@
 use crate::{
-    empty_element, format_elements, group_elements, join_elements, soft_indent,
+    empty_element, format_elements, group_elements, join_elements, soft_block_indent,
     soft_line_break_or_space, space_token, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
@@ -12,7 +12,7 @@ impl ToFormatElement for JsParameters {
         Ok(group_elements(formatter.format_delimited(
             &self.l_paren_token()?,
             |open_token_trailing, close_token_leading| {
-                Ok(soft_indent(format_elements![
+                Ok(soft_block_indent(format_elements![
                     open_token_trailing,
                     join_elements(soft_line_break_or_space(), param_tokens),
                     close_token_leading,

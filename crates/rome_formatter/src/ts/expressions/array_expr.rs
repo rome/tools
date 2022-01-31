@@ -1,6 +1,7 @@
 use crate::{
     empty_element, format_element::join_elements_soft_line, format_elements, group_elements,
-    if_group_breaks, soft_indent, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    if_group_breaks, soft_block_indent, token, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 use rslint_parser::{
     ast::{JsAnyArrayElement, JsArrayExpression, JsArrayHole},
@@ -43,7 +44,7 @@ impl ToFormatElement for JsArrayExpression {
                     })
                     .collect::<FormatResult<Vec<_>>>()?;
 
-                Ok(soft_indent(format_elements![
+                Ok(soft_block_indent(format_elements![
                     open_token_trailing,
                     join_elements_soft_line(results),
                     close_token_leading,

@@ -1,6 +1,6 @@
 use crate::{
     empty_element, format_elements, group_elements, if_group_fits_on_single_line, join_elements,
-    soft_indent, soft_line_break_or_space, space_token, token, FormatElement, FormatResult,
+    soft_block_indent, soft_line_break_or_space, space_token, token, FormatElement, FormatResult,
     Formatter, ToFormatElement,
 };
 use rslint_parser::ast::JsImportAssertion;
@@ -22,7 +22,7 @@ impl ToFormatElement for JsImportAssertion {
             |leading, trailing| {
                 Ok(format_elements!(
                     space.clone(),
-                    soft_indent(format_elements![
+                    soft_block_indent(format_elements![
                         leading,
                         join_elements(
                             soft_line_break_or_space(),

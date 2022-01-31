@@ -1,5 +1,5 @@
 use crate::{
-    empty_element, format_elements, group_elements, join_elements, soft_indent,
+    empty_element, format_elements, group_elements, join_elements, soft_block_indent,
     soft_line_break_or_space, space_token, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
 };
@@ -17,7 +17,7 @@ impl ToFormatElement for JsObjectBindingPattern {
             |open_token_trailing, close_token_leading| {
                 Ok(format_elements![
                     space_token(),
-                    soft_indent(format_elements![
+                    soft_block_indent(format_elements![
                         open_token_trailing,
                         join_elements(soft_line_break_or_space(), properties),
                         close_token_leading,

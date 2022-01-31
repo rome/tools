@@ -496,7 +496,8 @@ mod tests {
     use crate::printer::{LineEnding, Printer, PrinterOptions};
     use crate::{
         block_indent, format_elements, group_elements, hard_line_break, if_group_breaks,
-        soft_indent, soft_line_break, soft_line_break_or_space, token, FormatElement, Formatted,
+        soft_block_indent, soft_line_break, soft_line_break_or_space, token, FormatElement,
+        Formatted,
     };
 
     /// Prints the given element with the default printer options
@@ -525,11 +526,11 @@ mod tests {
     fn it_tracks_the_indent_for_each_token() {
         let element = format_elements![
             token("a"),
-            soft_indent(format_elements![
+            soft_block_indent(format_elements![
                 token("b"),
-                soft_indent(format_elements![
+                soft_block_indent(format_elements![
                     token("c"),
-                    soft_indent(format_elements![token("d"), soft_line_break(), token("d"),],),
+                    soft_block_indent(format_elements![token("d"), soft_line_break(), token("d"),],),
                     token("c"),
                 ],),
                 token("b"),
@@ -644,7 +645,7 @@ two lines`,
 
         group_elements(format_elements![
             token("["),
-            soft_indent(elements),
+            soft_block_indent(elements),
             token("]"),
         ])
     }

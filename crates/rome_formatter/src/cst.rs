@@ -1,17 +1,17 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-    JsArrayBindingPattern, JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement,
-    JsBooleanLiteralExpression, JsCallArguments, JsCallExpression, JsCaseClause, JsCatchClause,
-    JsClassStatement, JsConstructorParameters, JsContinueStatement, JsDebuggerStatement,
-    JsDefaultClause, JsDefaultImportSpecifier, JsDoWhileStatement, JsEmptyStatement,
-    JsExpressionStatement, JsFinallyClause, JsForInStatement, JsForStatement, JsFunctionStatement,
-    JsGetterClassMember, JsIdentifierBinding, JsIdentifierExpression, JsIfStatement,
-    JsImportAssertion, JsImportAssertionEntry, JsImportBareClause, JsImportCallExpression,
-    JsImportDefaultClause, JsImportNamedClause, JsImportNamespaceClause, JsLabeledStatement,
-    JsLiteralExportName, JsModule, JsModuleSource, JsNamedImportSpecifier, JsNamedImportSpecifiers,
-    JsNamespaceImportSpecifier, JsNullLiteralExpression, JsNumberLiteralExpression,
-    JsObjectExpression, JsParameters, JsPropertyClassMember, JsPropertyObjectMember,
-    JsReturnStatement, JsScript, JsSequenceExpression, JsSetterClassMember,
+    ImportMeta, JsArrayBindingPattern, JsArrayExpression, JsArrowFunctionExpression,
+    JsBlockStatement, JsBooleanLiteralExpression, JsCallArguments, JsCallExpression, JsCaseClause,
+    JsCatchClause, JsClassStatement, JsConstructorParameters, JsContinueStatement,
+    JsDebuggerStatement, JsDefaultClause, JsDefaultImportSpecifier, JsDoWhileStatement,
+    JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsForInStatement, JsForStatement,
+    JsFunctionStatement, JsGetterClassMember, JsIdentifierBinding, JsIdentifierExpression,
+    JsIfStatement, JsImportAssertion, JsImportAssertionEntry, JsImportBareClause,
+    JsImportCallExpression, JsImportDefaultClause, JsImportNamedClause, JsImportNamespaceClause,
+    JsLabeledStatement, JsLiteralExportName, JsModule, JsModuleSource, JsNamedImportSpecifier,
+    JsNamedImportSpecifiers, JsNamespaceImportSpecifier, JsNullLiteralExpression,
+    JsNumberLiteralExpression, JsObjectExpression, JsParameters, JsPropertyClassMember,
+    JsPropertyObjectMember, JsReturnStatement, JsScript, JsSequenceExpression, JsSetterClassMember,
     JsShorthandNamedImportSpecifier, JsShorthandPropertyObjectMember, JsSpread, JsStatementList,
     JsStaticInitializationBlockClassMember, JsStringLiteralExpression, JsSwitchStatement,
     JsTemplate, JsTemplateChunkElement, JsTemplateElement, JsTryStatement, JsUnknownAssignment,
@@ -275,7 +275,9 @@ impl ToFormatElement for SyntaxNode {
                     .unwrap()
                     .to_format_element(formatter)
             }
-
+            JsSyntaxKind::IMPORT_META => ImportMeta::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
             _ => todo!(
                 "Implement formatting for the {:?} syntax kind.",
                 self.kind()

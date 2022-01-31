@@ -1,6 +1,6 @@
 use crate::{
-    empty_element, format_elements, space_token, token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    empty_element, format_elements, group_elements, soft_line_indent_or_space, space_token, token,
+    FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
     JsAnyExpression, JsAnyInProperty, JsAssignmentExpression, JsAwaitExpression,
@@ -63,7 +63,7 @@ impl ToFormatElement for JsAnyExpression {
                 class_expression.to_format_element(formatter)
             }
             JsAnyExpression::NewTarget(expr) => expr.to_format_element(formatter),
-            JsAnyExpression::ImportMeta(_) => todo!(),
+            JsAnyExpression::ImportMeta(import_meta) => import_meta.to_format_element(formatter),
             JsAnyExpression::JsImportCallExpression(import_call_expr) => {
                 import_call_expr.to_format_element(formatter)
             }
@@ -196,13 +196,14 @@ impl ToFormatElement for JsConditionalExpression {
 
 impl ToFormatElement for JsAssignmentExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(format_elements![
+        Ok(group_elements(format_elements![
             formatter.format_node(&self.left()?)?,
             space_token(),
             formatter.format_token(&self.operator_token()?)?,
-            space_token(),
-            formatter.format_node(&self.right()?)?,
-        ])
+            group_elements(soft_line_indent_or_space(
+                formatter.format_node(&self.right()?)?
+            )),
+        ]))
     }
 }
 

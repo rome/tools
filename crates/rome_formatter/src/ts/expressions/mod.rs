@@ -5,6 +5,7 @@ mod call_expression;
 mod expression;
 mod function_expression;
 mod identifier_expression;
+mod import_meta_expression;
 mod literal_expression;
 mod object_expression;
 mod sequence_expression;
