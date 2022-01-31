@@ -1,5 +1,5 @@
 use crate::ast::{JsAnyRoot, JsCallArguments};
-use crate::{parse, parse_module, AstNode, Parse, ParserError, Syntax, SyntaxNode, SyntaxToken};
+use crate::{parse, parse_module, AstNode, Parse, Syntax, SyntaxToken};
 use expect_test::expect_file;
 use rome_rowan::TextSize;
 use rslint_errors::file::SimpleFile;
@@ -12,15 +12,16 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-let [a, b] = [1, 2];
+function e() {
+    let x: string | number | boolean | RegExp;
+    for (x = "" || 0; typeof x !== "string"; x = "" || true) {
+        x; // number | boolean
+    }
+}
     "#;
 
-    let module = parse_module(src, 0);
-    assert_errors_are_absent(
-        module.errors(),
-        Path::new("parser_smoke_test"),
-        &module.syntax(),
-    );
+    let module = parse(src, 0, Syntax::default().typescript());
+    assert_errors_are_absent(&module, Path::new("parser_smoke_test"));
 }
 
 #[test]
@@ -102,8 +103,7 @@ fn run_and_expect_no_errors(path: &str, _: &str, _: &str) {
     let text = std::fs::read_to_string(&path).unwrap();
 
     let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text);
-    let errors = parse.errors();
-    assert_errors_are_absent(errors, &path, &parse.syntax());
+    assert_errors_are_absent(&parse, &path);
     let actual = format!("{}\n\n{:#?}", ast, parse.syntax());
     println!("{}", actual);
 
@@ -117,8 +117,7 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str) {
     let text = std::fs::read_to_string(&path).unwrap();
 
     let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text);
-    let errors = parse.errors();
-    assert_errors_are_present(errors, &path, &parse.syntax());
+    assert_errors_are_present(&parse, &path);
     let mut files = SimpleFiles::new();
     files.add(
         path.file_name().unwrap().to_string_lossy().to_string(),
@@ -152,33 +151,35 @@ mod parser {
     }
 }
 
-fn assert_errors_are_present(errors: &[ParserError], path: &Path, syntax: &SyntaxNode) {
+fn assert_errors_are_present(program: &Parse<JsAnyRoot>, path: &Path) {
     assert!(
-        !errors.is_empty(),
+        !program.errors().is_empty(),
         "There should be errors in the file {:?}\nSyntax Tree: {:#?}",
         path.display(),
-        syntax
+        program.syntax()
     );
 }
 
-fn assert_errors_are_absent(errors: &[ParserError], path: &Path, syntax: &SyntaxNode) {
-    if errors.is_empty() {
+fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path) {
+    if program.errors().is_empty() {
         return;
     }
+
+    let syntax = program.syntax();
 
     let file = SimpleFile::new(path.to_str().unwrap().to_string(), syntax.to_string());
     let mut emitter = Emitter::new(&file);
     let mut buffer = Buffer::no_color();
 
-    for diagnostic in errors {
+    for diagnostic in program.errors() {
         emitter.emit_with_writer(diagnostic, &mut buffer).unwrap();
     }
 
     panic!("There should be no errors in the file {:?} but the following errors where present:\n{}\n\nParsed tree:\n{:#?}",
         path.display(),
         std::str::from_utf8(buffer.as_slice()).unwrap(),
-        syntax
-    );
+        &syntax
+	);
 }
 
 #[test]

@@ -3,6 +3,7 @@
 use crate::Parser;
 use rslint_syntax::{JsSyntaxKind, T};
 
+#[allow(dead_code)]
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Copy, Clone)]
 pub(crate) enum OperatorPrecedence {
     Comma = 0,
@@ -35,10 +36,6 @@ impl OperatorPrecedence {
 
     pub fn highest() -> Self {
         OperatorPrecedence::Primary
-    }
-
-    pub fn is_left_to_right(&self) -> bool {
-        !self.is_right_to_left()
     }
 
     pub fn is_right_to_left(&self) -> bool {

@@ -467,12 +467,11 @@ fn parse_binary_or_logical_expression_recursive(
         let op = match p.cur() {
             T![>] if p.nth_at(1, T![>]) && p.nth_at(2, T![>]) => T![>>>],
             T![>] if p.nth_at(1, T![>]) => T![>>],
+            T![in] if !context.is_in_included() => {
+                break;
+            }
             k => k,
         };
-
-        if !context.is_in_included() {
-            break;
-        }
 
         let new_precedence = match OperatorPrecedence::try_from_binary_operator(op) {
             Ok(precedence) => precedence,
