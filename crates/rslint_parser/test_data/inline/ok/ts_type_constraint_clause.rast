@@ -85,6 +85,7 @@ JsModule {
                                 type_arguments: missing (optional),
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@87..88 "}" [] [],
@@ -158,6 +159,7 @@ JsModule {
                 0: JS_REFERENCE_IDENTIFIER@85..87
                   0: IDENT@85..87 "X" [] [Whitespace(" ")]
                 1: (empty)
+            4: (empty)
         2: R_CURLY@87..88 "}" [] []
       5: (empty)
   3: EOF@88..89 "" [Newline("\n")] []

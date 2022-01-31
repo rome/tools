@@ -490,15 +490,9 @@ pub struct AstListSrc {
 #[derive(Debug)]
 pub struct AstListSeparatorConfiguration {
     /// Name of the separator token
-    pub separator_token: AstListSeparatorToken,
+    pub separator_token: String,
     /// Whatever the list allows a trailing comma or not
     pub allow_trailing: bool,
-}
-
-#[derive(Debug)]
-pub enum AstListSeparatorToken {
-    Single(String),
-    Either(String, String),
 }
 
 #[derive(Debug)]

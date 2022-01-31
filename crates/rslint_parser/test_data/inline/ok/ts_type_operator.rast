@@ -24,8 +24,8 @@ JsModule {
                                 string_token: STRING_KW@28..34 "string" [] [],
                             },
                         },
+                        separator_token: COMMA@34..36 "," [] [Whitespace(" ")],
                     },
-                    COMMA@34..36 "," [] [Whitespace(" ")],
                     TsPropertySignatureObjectTypeMember {
                         readonly_token: missing (optional),
                         name: JsLiteralMemberName {
@@ -38,6 +38,7 @@ JsModule {
                                 number_token: NUMBER_KW@39..46 "number" [] [Whitespace(" ")],
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@46..47 "}" [] [],
@@ -138,7 +139,7 @@ JsModule {
       4: TS_OBJECT_TYPE@23..47
         0: L_CURLY@23..25 "{" [] [Whitespace(" ")]
         1: TS_OBJECT_TYPE_MEMBER_LIST@25..46
-          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@25..34
+          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@25..36
             0: (empty)
             1: JS_LITERAL_MEMBER_NAME@25..26
               0: IDENT@25..26 "x" [] []
@@ -147,8 +148,8 @@ JsModule {
               0: COLON@26..28 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@28..34
                 0: STRING_KW@28..34 "string" [] []
-          1: COMMA@34..36 "," [] [Whitespace(" ")]
-          2: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@36..46
+            4: COMMA@34..36 "," [] [Whitespace(" ")]
+          1: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@36..46
             0: (empty)
             1: JS_LITERAL_MEMBER_NAME@36..37
               0: IDENT@36..37 "y" [] []
@@ -157,6 +158,7 @@ JsModule {
               0: COLON@37..39 ":" [] [Whitespace(" ")]
               1: TS_NUMBER_TYPE@39..46
                 0: NUMBER_KW@39..46 "number" [] [Whitespace(" ")]
+            4: (empty)
         2: R_CURLY@46..47 "}" [] []
       5: SEMICOLON@47..48 ";" [] []
     1: TS_TYPE_ALIAS@48..66

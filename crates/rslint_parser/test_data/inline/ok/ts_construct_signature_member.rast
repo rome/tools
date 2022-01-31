@@ -26,8 +26,8 @@ JsModule {
                                 string_token: STRING_KW@33..39 "string" [] [],
                             },
                         },
+                        separator_token: SEMICOLON@39..41 ";" [] [Whitespace(" ")],
                     },
-                    SEMICOLON@39..41 ";" [] [Whitespace(" ")],
                 ],
                 r_curly_token: R_CURLY@41..42 "}" [] [],
             },
@@ -78,6 +78,7 @@ JsModule {
                             r_paren_token: R_PAREN@79..81 ")" [] [Whitespace(" ")],
                         },
                         type_annotation: missing (optional),
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@81..82 "}" [] [],
@@ -160,6 +161,7 @@ JsModule {
                                 string_token: STRING_KW@118..125 "string" [] [Whitespace(" ")],
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@125..126 "}" [] [],
@@ -183,7 +185,7 @@ JsModule {
       4: TS_OBJECT_TYPE@23..42
         0: L_CURLY@23..25 "{" [] [Whitespace(" ")]
         1: TS_OBJECT_TYPE_MEMBER_LIST@25..41
-          0: TS_CONSTRUCT_SIGNATURE_OBJECT_TYPE_MEMBER@25..39
+          0: TS_CONSTRUCT_SIGNATURE_OBJECT_TYPE_MEMBER@25..41
             0: NEW_KW@25..29 "new" [] [Whitespace(" ")]
             1: (empty)
             2: JS_PARAMETERS@29..31
@@ -194,7 +196,7 @@ JsModule {
               0: COLON@31..33 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@33..39
                 0: STRING_KW@33..39 "string" [] []
-          1: SEMICOLON@39..41 ";" [] [Whitespace(" ")]
+            4: SEMICOLON@39..41 ";" [] [Whitespace(" ")]
         2: R_CURLY@41..42 "}" [] []
       5: (empty)
     1: TS_TYPE_ALIAS@42..82
@@ -231,6 +233,7 @@ JsModule {
                   2: (empty)
               2: R_PAREN@79..81 ")" [] [Whitespace(" ")]
             3: (empty)
+            4: (empty)
         2: R_CURLY@81..82 "}" [] []
       5: (empty)
     2: TS_TYPE_ALIAS@82..126
@@ -288,6 +291,7 @@ JsModule {
               0: COLON@116..118 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@118..125
                 0: STRING_KW@118..125 "string" [] [Whitespace(" ")]
+            4: (empty)
         2: R_CURLY@125..126 "}" [] []
       5: (empty)
   3: EOF@126..127 "" [Newline("\n")] []

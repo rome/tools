@@ -1,4 +1,4 @@
-use crate::parser::{ParserProgress, RecoveryResult};
+use crate::parser::RecoveryResult;
 use crate::state::{EnterType, SignatureFlags};
 use crate::syntax::binding::parse_identifier_binding;
 use crate::syntax::expr::{
@@ -14,7 +14,7 @@ use crate::syntax::js_parse_error::{
 use crate::syntax::object::{
     is_at_object_member_name, is_nth_at_object_member_name, parse_object_member_name,
 };
-use crate::syntax::stmt::semi;
+use crate::syntax::stmt::{optional_semi, semi};
 use crate::syntax::typescript::{parse_ts_identifier_binding, ts_type_args};
 use crate::syntax::util::{
     eat_contextual_keyword, expect_contextual_keyword, is_at_contextual_keyword,
@@ -667,6 +667,10 @@ fn parse_ts_import_type(p: &mut Parser) -> ParsedSyntax {
 // type A = { a: string, b: number };
 // type B = { a: string; b: number };
 // type C = { a: string, b: number; c: string };
+// type D = {
+// 	a: string
+//  b: number
+// }
 fn parse_ts_object_type(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T!['{']) {
         return Absent;
@@ -674,46 +678,34 @@ fn parse_ts_object_type(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     p.bump(T!['{']);
-
-    let mut progress = ParserProgress::default();
-    let mut first = true;
-    let list = p.start();
-
-    while !p.at(T!['}']) && !p.at(EOF) {
-        if first {
-            first = false;
-        } else if !p.eat(T![,]) {
-            // , and ; are valid separators...
-            p.expect(T![;]);
-        }
-
-        if p.at(T!['}']) {
-            break;
-        }
-
-        progress.assert_progressing(p);
-
-        let member = parse_ts_object_type_member(p);
-
-        if member.is_absent() && (p.at(T![,]) || p.at(T![;])) {
-            // missing element
-            continue;
-        } else if member
-            .or_recover(
-                p,
-                &ParseRecovery::new(JS_UNKNOWN, token_set![T!['}'], T![,], T![,]])
-                    .enable_recovery_on_line_break(),
-                expected_property_or_signature,
-            )
-            .is_err()
-        {
-            break;
-        }
-    }
-    list.complete(p, TS_OBJECT_TYPE_MEMBER_LIST);
-
+    ObjectTypeMembers.parse_list(p);
     p.expect(T!['}']);
     Present(m.complete(p, TS_OBJECT_TYPE))
+}
+
+struct ObjectTypeMembers;
+
+impl ParseNodeList for ObjectTypeMembers {
+    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+        parse_ts_object_type_member(p)
+    }
+
+    fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
+        p.at(T!['}'])
+    }
+
+    fn recover(&mut self, p: &mut Parser, member: ParsedSyntax) -> RecoveryResult {
+        member.or_recover(
+            p,
+            &ParseRecovery::new(JS_UNKNOWN, token_set![T!['}'], T![,], T![;]])
+                .enable_recovery_on_line_break(),
+            expected_property_or_signature,
+        )
+    }
+
+    fn list_kind() -> JsSyntaxKind {
+        TS_OBJECT_TYPE_MEMBER_LIST
+    }
 }
 
 fn parse_ts_object_type_member(p: &mut Parser) -> ParsedSyntax {
@@ -733,6 +725,23 @@ fn parse_ts_object_type_member(p: &mut Parser) -> ParsedSyntax {
             parse_ts_setter_signature_object_type_member(p)
         }
         _ => parse_ts_property_or_method_signature_object_type_member(p),
+    }
+}
+
+fn parse_ts_object_type_member_semi(p: &mut Parser) {
+    // object type members can either be separated by a comma
+    if p.eat(T![,]) {
+        return;
+    }
+
+    // or a semicolon (possibly ASI)
+    if !optional_semi(p) {
+        let err = p.err_builder("';' expected'").primary(
+            p.cur_tok().range(),
+            "An explicit or implicit semicolon is expected here...",
+        );
+
+        p.error(err);
     }
 }
 
@@ -764,6 +773,7 @@ fn parse_ts_property_or_method_signature_object_type_member(p: &mut Parser) -> P
 
     if p.at(T!['(']) || p.at(T![<]) {
         parse_ts_call_signature(p);
+        parse_ts_object_type_member_semi(p);
         let method = m.complete(p, TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER);
 
         if let Some(readonly_range) = readonly_range {
@@ -778,6 +788,7 @@ fn parse_ts_property_or_method_signature_object_type_member(p: &mut Parser) -> P
         Present(method)
     } else {
         parse_ts_type_annotation(p).ok();
+        parse_ts_object_type_member_semi(p);
         Present(m.complete(p, TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER))
     }
 }
@@ -794,6 +805,7 @@ fn parse_ts_call_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     parse_ts_call_signature(p);
+    parse_ts_object_type_member_semi(p);
     Present(m.complete(p, TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER))
 }
 
@@ -812,6 +824,7 @@ fn parse_ts_construct_signature_object_type_member(p: &mut Parser) -> ParsedSynt
     parse_ts_type_parameters(p).ok();
     parse_parameter_list(p, SignatureFlags::empty()).or_add_diagnostic(p, expected_parameters);
     parse_ts_type_annotation(p).ok();
+    parse_ts_object_type_member_semi(p);
 
     Present(m.complete(p, TS_CONSTRUCT_SIGNATURE_OBJECT_TYPE_MEMBER))
 }
@@ -835,6 +848,7 @@ fn parse_ts_getter_signature_object_type_member(p: &mut Parser) -> ParsedSyntax 
     p.expect(T!['(']);
     p.expect(T![')']);
     parse_ts_type_annotation(p).ok();
+    parse_ts_object_type_member_semi(p);
     Present(m.complete(p, TS_GETTER_SIGNATURE_OBJECT_TYPE_MEMBER))
 }
 
@@ -857,6 +871,7 @@ fn parse_ts_setter_signature_object_type_member(p: &mut Parser) -> ParsedSyntax 
     p.expect(T!['(']);
     parse_parameter(p, ExpressionContext::default()).or_add_diagnostic(p, expected_parameter);
     p.expect(T![')']);
+    parse_ts_object_type_member_semi(p);
     Present(m.complete(p, TS_SETTER_SIGNATURE_OBJECT_TYPE_MEMBER))
 }
 

@@ -66,7 +66,7 @@ pub trait SyntaxFactory: fmt::Debug {
         kind: Self::Kind,
         children: ParsedChildren<Self::Kind>,
         can_cast: F,
-        separator: impl Separator<Self::Kind>,
+        separator: Self::Kind,
         allow_trailing: bool,
     ) -> RawSyntaxNode<Self::Kind>
     where
@@ -82,7 +82,7 @@ pub trait SyntaxFactory: fmt::Debug {
             if next_node {
                 if can_cast(kind) {
                     next_node = false;
-                } else if separator.matches(kind) {
+                } else if kind == separator {
                     // a missing element
                     missing_count += 1;
                 } else {
@@ -90,7 +90,7 @@ pub trait SyntaxFactory: fmt::Debug {
                     valid = false;
                     break;
                 }
-            } else if separator.matches(kind) {
+            } else if kind == separator {
                 next_node = true;
             } else if can_cast(kind) {
                 // a missing separator
@@ -126,23 +126,22 @@ pub trait SyntaxFactory: fmt::Debug {
 
 /// Iterator that "fixes up" a separated list by inserting empty slots for any missing
 /// separator or element.
-struct SeparatedListWithMissingNodesOrSeparatorSlotsIterator<'a, K: SyntaxKind, S: Separator<K>> {
+struct SeparatedListWithMissingNodesOrSeparatorSlotsIterator<'a, K: SyntaxKind> {
     inner: Peekable<ParsedChildrenIntoIterator<'a, K>>,
     missing_count: usize,
     next_node: bool,
-    separator: S,
+    separator: K,
 }
 
-impl<'a, K: SyntaxKind, S: Separator<K>> Iterator
-    for SeparatedListWithMissingNodesOrSeparatorSlotsIterator<'a, K, S>
-{
+impl<'a, K: SyntaxKind> Iterator for SeparatedListWithMissingNodesOrSeparatorSlotsIterator<'a, K> {
     type Item = Option<RawSyntaxElement<K>>;
 
+    #[cold]
     fn next(&mut self) -> Option<Self::Item> {
         let peeked = self.inner.peek();
 
         if let Some(peeked) = peeked {
-            let is_separator = self.separator.matches(peeked.kind());
+            let is_separator = self.separator == peeked.kind();
 
             if self.next_node {
                 self.next_node = false;
@@ -176,13 +175,13 @@ impl<'a, K: SyntaxKind, S: Separator<K>> Iterator
     }
 }
 
-impl<'a, K: SyntaxKind, S: Separator<K>> FusedIterator
-    for SeparatedListWithMissingNodesOrSeparatorSlotsIterator<'a, K, S>
+impl<'a, K: SyntaxKind> FusedIterator
+    for SeparatedListWithMissingNodesOrSeparatorSlotsIterator<'a, K>
 {
 }
 
-impl<'a, K: SyntaxKind, S: Separator<K>> ExactSizeIterator
-    for SeparatedListWithMissingNodesOrSeparatorSlotsIterator<'a, K, S>
+impl<'a, K: SyntaxKind> ExactSizeIterator
+    for SeparatedListWithMissingNodesOrSeparatorSlotsIterator<'a, K>
 {
     fn len(&self) -> usize {
         self.inner.len() + self.missing_count
@@ -274,22 +273,3 @@ impl<'a, K: SyntaxKind> Iterator for RawNodeSlotIterator<'a, K> {
 
 impl<'a, K: SyntaxKind> FusedIterator for RawNodeSlotIterator<'a, K> {}
 impl<'a, K: SyntaxKind> ExactSizeIterator for RawNodeSlotIterator<'a, K> {}
-
-pub trait Separator<K: SyntaxKind> {
-    /// Returns `true` if the passed kind is a valid separator
-    fn matches(&self, kind: K) -> bool;
-}
-
-impl<K: SyntaxKind> Separator<K> for K {
-    #[inline]
-    fn matches(&self, kind: K) -> bool {
-        &kind == self
-    }
-}
-
-impl<K: SyntaxKind> Separator<K> for (K, K) {
-    #[inline]
-    fn matches(&self, kind: K) -> bool {
-        self.0 == kind || self.1 == kind
-    }
-}

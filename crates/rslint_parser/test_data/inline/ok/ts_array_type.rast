@@ -41,6 +41,7 @@ JsModule {
                                     number_token: NUMBER_KW@47..54 "number" [] [Whitespace(" ")],
                                 },
                             },
+                            separator_token: missing (optional),
                         },
                     ],
                     r_curly_token: R_CURLY@54..56 "}" [] [Whitespace(" ")],
@@ -89,6 +90,7 @@ JsModule {
                 0: COLON@45..47 ":" [] [Whitespace(" ")]
                 1: TS_NUMBER_TYPE@47..54
                   0: NUMBER_KW@47..54 "number" [] [Whitespace(" ")]
+              4: (empty)
           2: R_CURLY@54..56 "}" [] [Whitespace(" ")]
         1: L_BRACK@56..57 "[" [] []
         2: R_BRACK@57..58 "]" [] []

@@ -80,6 +80,7 @@ JsModule {
                                 },
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@75..76 "}" [] [],
@@ -124,6 +125,7 @@ JsModule {
                                 },
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@105..106 "}" [] [],
@@ -353,6 +355,7 @@ JsModule {
                 2: IS_KW@65..68 "is" [] [Whitespace(" ")]
                 3: TS_STRING_TYPE@68..75
                   0: STRING_KW@68..75 "string" [] [Whitespace(" ")]
+            5: (empty)
         2: R_CURLY@75..76 "}" [] []
       5: (empty)
     2: TS_TYPE_ALIAS@76..106
@@ -384,6 +387,7 @@ JsModule {
                 2: IS_KW@95..98 "is" [] [Whitespace(" ")]
                 3: TS_STRING_TYPE@98..105
                   0: STRING_KW@98..105 "string" [] [Whitespace(" ")]
+            3: (empty)
         2: R_CURLY@105..106 "}" [] []
       5: (empty)
     3: JS_VARIABLE_STATEMENT@106..174

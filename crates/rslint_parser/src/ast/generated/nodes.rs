@@ -2267,6 +2267,7 @@ impl TsCallSignatureObjectTypeMember {
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         support::node(&self.syntax, 2usize)
     }
+    pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsConditionalType {
@@ -2329,6 +2330,7 @@ impl TsConstructSignatureObjectTypeMember {
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
         support::node(&self.syntax, 3usize)
     }
+    pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructorParam {
@@ -2472,6 +2474,7 @@ impl TsGetterSignatureObjectTypeMember {
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
         support::node(&self.syntax, 4usize)
     }
+    pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIdentifierBinding {
@@ -2562,6 +2565,7 @@ impl TsIndexSignatureObjectTypeMember {
     pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
         support::required_node(&self.syntax, 4usize)
     }
+    pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexSignatureParameter {
@@ -2703,6 +2707,7 @@ impl TsMethodSignatureObjectTypeMember {
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         support::node(&self.syntax, 4usize)
     }
+    pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNamedTupleTypeElement {
@@ -2828,6 +2833,7 @@ impl TsPropertySignatureObjectTypeMember {
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
         support::node(&self.syntax, 3usize)
     }
+    pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsQualifiedName {
@@ -2890,6 +2896,7 @@ impl TsSetterSignatureObjectTypeMember {
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
     }
+    pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsStringLiteralType {
@@ -8482,6 +8489,10 @@ impl std::fmt::Debug for TsCallSignatureObjectTypeMember {
                 "return_type_annotation",
                 &support::DebugOptionalElement(self.return_type_annotation()),
             )
+            .field(
+                "separator_token",
+                &support::DebugOptionalElement(self.separator_token()),
+            )
             .finish()
     }
 }
@@ -8596,6 +8607,10 @@ impl std::fmt::Debug for TsConstructSignatureObjectTypeMember {
             .field(
                 "type_annotation",
                 &support::DebugOptionalElement(self.type_annotation()),
+            )
+            .field(
+                "separator_token",
+                &support::DebugOptionalElement(self.separator_token()),
             )
             .finish()
     }
@@ -8907,6 +8922,10 @@ impl std::fmt::Debug for TsGetterSignatureObjectTypeMember {
                 "type_annotation",
                 &support::DebugOptionalElement(self.type_annotation()),
             )
+            .field(
+                "separator_token",
+                &support::DebugOptionalElement(self.separator_token()),
+            )
             .finish()
     }
 }
@@ -9108,6 +9127,10 @@ impl std::fmt::Debug for TsIndexSignatureObjectTypeMember {
             .field(
                 "type_annotation",
                 &support::DebugSyntaxResult(self.type_annotation()),
+            )
+            .field(
+                "separator_token",
+                &support::DebugOptionalElement(self.separator_token()),
             )
             .finish()
     }
@@ -9423,6 +9446,10 @@ impl std::fmt::Debug for TsMethodSignatureObjectTypeMember {
             .field(
                 "return_type_annotation",
                 &support::DebugOptionalElement(self.return_type_annotation()),
+            )
+            .field(
+                "separator_token",
+                &support::DebugOptionalElement(self.separator_token()),
             )
             .finish()
     }
@@ -9753,6 +9780,10 @@ impl std::fmt::Debug for TsPropertySignatureObjectTypeMember {
                 "type_annotation",
                 &support::DebugOptionalElement(self.type_annotation()),
             )
+            .field(
+                "separator_token",
+                &support::DebugOptionalElement(self.separator_token()),
+            )
             .finish()
     }
 }
@@ -9896,6 +9927,10 @@ impl std::fmt::Debug for TsSetterSignatureObjectTypeMember {
             .field(
                 "r_paren_token",
                 &support::DebugSyntaxResult(self.r_paren_token()),
+            )
+            .field(
+                "separator_token",
+                &support::DebugOptionalElement(self.separator_token()),
             )
             .finish()
     }
@@ -16973,23 +17008,23 @@ impl AstNode for TsObjectTypeMemberList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<TsAnyObjectTypeMember> for TsObjectTypeMemberList {
+impl AstNodeList<TsAnyObjectTypeMember> for TsObjectTypeMemberList {
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsObjectTypeMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.write_str("TsObjectTypeMemberList ")?;
-        f.debug_list().entries(self.elements()).finish()
+        f.debug_list().entries(self.iter()).finish()
     }
 }
-impl IntoIterator for TsObjectTypeMemberList {
-    type Item = SyntaxResult<TsAnyObjectTypeMember>;
-    type IntoIter = AstSeparatedListNodesIterator<TsAnyObjectTypeMember>;
+impl IntoIterator for &TsObjectTypeMemberList {
+    type Item = TsAnyObjectTypeMember;
+    type IntoIter = AstNodeListIterator<TsAnyObjectTypeMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-impl IntoIterator for &TsObjectTypeMemberList {
-    type Item = SyntaxResult<TsAnyObjectTypeMember>;
-    type IntoIter = AstSeparatedListNodesIterator<TsAnyObjectTypeMember>;
+impl IntoIterator for TsObjectTypeMemberList {
+    type Item = TsAnyObjectTypeMember;
+    type IntoIter = AstNodeListIterator<TsAnyObjectTypeMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]

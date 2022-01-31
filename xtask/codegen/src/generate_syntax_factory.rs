@@ -1,6 +1,6 @@
 use super::kinds_src::AstSrc;
 use crate::generate_nodes::token_kind_to_code;
-use crate::kinds_src::{AstListSeparatorToken, TokenKind};
+use crate::kinds_src::TokenKind;
 use crate::{kinds_src::Field, to_upper_snake_case};
 use quote::{format_ident, quote};
 use xtask::Result;
@@ -70,21 +70,9 @@ pub fn generate_syntax_factory(ast: &AstSrc) -> Result<String> {
         let kind = format_ident!("{}", to_upper_snake_case(name));
         if let Some(separator) = &data.separator {
             let allow_trailing = separator.allow_trailing;
-
-			let separator = match &separator.separator_token {
-				AstListSeparatorToken::Single(kind) => token_kind_to_code(kind),
-				AstListSeparatorToken::Either(a, b) => {
-					let a = token_kind_to_code(a);
-					let b = token_kind_to_code(b);
-
-					quote! {
-						(#a, #b)
-					}
-				}
-			};
-
+            let separator_kind = token_kind_to_code(&separator.separator_token);
             quote! {
-                #kind => Self::make_separated_list_syntax(kind, children, #element_type::can_cast, #separator, #allow_trailing)
+                #kind => Self::make_separated_list_syntax(kind, children, #element_type::can_cast, #separator_kind, #allow_trailing)
             }
         } else {
             quote! {

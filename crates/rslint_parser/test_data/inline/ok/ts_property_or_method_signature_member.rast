@@ -24,8 +24,8 @@ JsModule {
                                 string_token: STRING_KW@29..35 "string" [] [],
                             },
                         },
+                        separator_token: SEMICOLON@35..37 ";" [] [Whitespace(" ")],
                     },
-                    SEMICOLON@35..37 ";" [] [Whitespace(" ")],
                     TsMethodSignatureObjectTypeMember {
                         name: JsLiteralMemberName {
                             value: IDENT@37..38 "b" [] [],
@@ -43,6 +43,7 @@ JsModule {
                                 number_token: NUMBER_KW@43..50 "number" [] [Whitespace(" ")],
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@50..51 "}" [] [],
@@ -71,8 +72,8 @@ JsModule {
                                 string_token: STRING_KW@66..72 "string" [] [],
                             },
                         },
+                        separator_token: COMMA@72..74 "," [] [Whitespace(" ")],
                     },
-                    COMMA@72..74 "," [] [Whitespace(" ")],
                     TsMethodSignatureObjectTypeMember {
                         name: JsLiteralMemberName {
                             value: IDENT@74..75 "b" [] [],
@@ -90,6 +91,7 @@ JsModule {
                                 number_token: NUMBER_KW@79..86 "number" [] [Whitespace(" ")],
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@86..87 "}" [] [],
@@ -162,6 +164,7 @@ JsModule {
                                 any_token: ANY_KW@135..139 "any" [] [Whitespace(" ")],
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@139..140 "}" [] [],
@@ -190,8 +193,8 @@ JsModule {
                                 string_token: STRING_KW@162..168 "string" [] [],
                             },
                         },
+                        separator_token: COMMA@168..170 "," [] [Whitespace(" ")],
                     },
-                    COMMA@168..170 "," [] [Whitespace(" ")],
                     TsPropertySignatureObjectTypeMember {
                         readonly_token: READONLY_KW@170..179 "readonly" [] [Whitespace(" ")],
                         name: JsLiteralMemberName {
@@ -204,6 +207,7 @@ JsModule {
                                 number_token: NUMBER_KW@182..189 "number" [] [Whitespace(" ")],
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@189..190 "}" [] [],
@@ -289,6 +293,7 @@ JsModule {
                                 never_token: NEVER_KW@223..229 "never" [] [Whitespace(" ")],
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@229..230 "}" [] [],
@@ -312,7 +317,7 @@ JsModule {
       4: TS_OBJECT_TYPE@23..51
         0: L_CURLY@23..25 "{" [] [Whitespace(" ")]
         1: TS_OBJECT_TYPE_MEMBER_LIST@25..50
-          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@25..35
+          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@25..37
             0: (empty)
             1: JS_LITERAL_MEMBER_NAME@25..26
               0: IDENT@25..26 "a" [] []
@@ -321,8 +326,8 @@ JsModule {
               0: COLON@27..29 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@29..35
                 0: STRING_KW@29..35 "string" [] []
-          1: SEMICOLON@35..37 ";" [] [Whitespace(" ")]
-          2: TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER@37..50
+            4: SEMICOLON@35..37 ";" [] [Whitespace(" ")]
+          1: TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER@37..50
             0: JS_LITERAL_MEMBER_NAME@37..38
               0: IDENT@37..38 "b" [] []
             1: QUESTION@38..39 "?" [] []
@@ -335,6 +340,7 @@ JsModule {
               0: COLON@41..43 ":" [] [Whitespace(" ")]
               1: TS_NUMBER_TYPE@43..50
                 0: NUMBER_KW@43..50 "number" [] [Whitespace(" ")]
+            5: (empty)
         2: R_CURLY@50..51 "}" [] []
       5: (empty)
     1: TS_TYPE_ALIAS@51..87
@@ -346,7 +352,7 @@ JsModule {
       4: TS_OBJECT_TYPE@61..87
         0: L_CURLY@61..63 "{" [] [Whitespace(" ")]
         1: TS_OBJECT_TYPE_MEMBER_LIST@63..86
-          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@63..72
+          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@63..74
             0: (empty)
             1: JS_LITERAL_MEMBER_NAME@63..64
               0: IDENT@63..64 "a" [] []
@@ -355,8 +361,8 @@ JsModule {
               0: COLON@64..66 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@66..72
                 0: STRING_KW@66..72 "string" [] []
-          1: COMMA@72..74 "," [] [Whitespace(" ")]
-          2: TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER@74..86
+            4: COMMA@72..74 "," [] [Whitespace(" ")]
+          1: TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER@74..86
             0: JS_LITERAL_MEMBER_NAME@74..75
               0: IDENT@74..75 "b" [] []
             1: (empty)
@@ -369,6 +375,7 @@ JsModule {
               0: COLON@77..79 ":" [] [Whitespace(" ")]
               1: TS_NUMBER_TYPE@79..86
                 0: NUMBER_KW@79..86 "number" [] [Whitespace(" ")]
+            5: (empty)
         2: R_CURLY@86..87 "}" [] []
       5: (empty)
     2: TS_TYPE_ALIAS@87..140
@@ -419,6 +426,7 @@ JsModule {
               0: COLON@133..135 ":" [] [Whitespace(" ")]
               1: TS_ANY_TYPE@135..139
                 0: ANY_KW@135..139 "any" [] [Whitespace(" ")]
+            5: (empty)
         2: R_CURLY@139..140 "}" [] []
       5: (empty)
     3: TS_TYPE_ALIAS@140..190
@@ -430,7 +438,7 @@ JsModule {
       4: TS_OBJECT_TYPE@150..190
         0: L_CURLY@150..152 "{" [] [Whitespace(" ")]
         1: TS_OBJECT_TYPE_MEMBER_LIST@152..189
-          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@152..168
+          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@152..170
             0: (empty)
             1: JS_LITERAL_MEMBER_NAME@152..160
               0: IDENT@152..160 "readonly" [] []
@@ -439,8 +447,8 @@ JsModule {
               0: COLON@160..162 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@162..168
                 0: STRING_KW@162..168 "string" [] []
-          1: COMMA@168..170 "," [] [Whitespace(" ")]
-          2: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@170..189
+            4: COMMA@168..170 "," [] [Whitespace(" ")]
+          1: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@170..189
             0: READONLY_KW@170..179 "readonly" [] [Whitespace(" ")]
             1: JS_LITERAL_MEMBER_NAME@179..180
               0: IDENT@179..180 "a" [] []
@@ -449,6 +457,7 @@ JsModule {
               0: COLON@180..182 ":" [] [Whitespace(" ")]
               1: TS_NUMBER_TYPE@182..189
                 0: NUMBER_KW@182..189 "number" [] [Whitespace(" ")]
+            4: (empty)
         2: R_CURLY@189..190 "}" [] []
       5: (empty)
     4: TS_TYPE_ALIAS@190..230
@@ -508,6 +517,7 @@ JsModule {
               0: COLON@221..223 ":" [] [Whitespace(" ")]
               1: TS_NEVER_TYPE@223..229
                 0: NEVER_KW@223..229 "never" [] [Whitespace(" ")]
+            5: (empty)
         2: R_CURLY@229..230 "}" [] []
       5: (empty)
   3: EOF@230..231 "" [Newline("\n")] []

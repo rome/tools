@@ -84,8 +84,8 @@ JsModule {
                                 type_arguments: missing (optional),
                             },
                         },
+                        separator_token: COMMA@95..97 "," [] [Whitespace(" ")],
                     },
-                    COMMA@95..97 "," [] [Whitespace(" ")],
                     TsPropertySignatureObjectTypeMember {
                         readonly_token: missing (optional),
                         name: JsLiteralMemberName {
@@ -101,8 +101,8 @@ JsModule {
                                 type_arguments: missing (optional),
                             },
                         },
+                        separator_token: COMMA@101..103 "," [] [Whitespace(" ")],
                     },
-                    COMMA@101..103 "," [] [Whitespace(" ")],
                     TsPropertySignatureObjectTypeMember {
                         readonly_token: missing (optional),
                         name: JsLiteralMemberName {
@@ -118,6 +118,7 @@ JsModule {
                                 type_arguments: missing (optional),
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@108..109 "}" [] [],
@@ -179,7 +180,7 @@ JsModule {
       4: TS_OBJECT_TYPE@89..109
         0: L_CURLY@89..91 "{" [] [Whitespace(" ")]
         1: TS_OBJECT_TYPE_MEMBER_LIST@91..108
-          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@91..95
+          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@91..97
             0: (empty)
             1: JS_LITERAL_MEMBER_NAME@91..92
               0: IDENT@91..92 "x" [] []
@@ -190,8 +191,8 @@ JsModule {
                 0: JS_REFERENCE_IDENTIFIER@94..95
                   0: IDENT@94..95 "X" [] []
                 1: (empty)
-          1: COMMA@95..97 "," [] [Whitespace(" ")]
-          2: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@97..101
+            4: COMMA@95..97 "," [] [Whitespace(" ")]
+          1: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@97..103
             0: (empty)
             1: JS_LITERAL_MEMBER_NAME@97..98
               0: IDENT@97..98 "y" [] []
@@ -202,8 +203,8 @@ JsModule {
                 0: JS_REFERENCE_IDENTIFIER@100..101
                   0: IDENT@100..101 "Y" [] []
                 1: (empty)
-          3: COMMA@101..103 "," [] [Whitespace(" ")]
-          4: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@103..108
+            4: COMMA@101..103 "," [] [Whitespace(" ")]
+          2: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@103..108
             0: (empty)
             1: JS_LITERAL_MEMBER_NAME@103..104
               0: IDENT@103..104 "z" [] []
@@ -214,6 +215,7 @@ JsModule {
                 0: JS_REFERENCE_IDENTIFIER@106..108
                   0: IDENT@106..108 "Z" [] [Whitespace(" ")]
                 1: (empty)
+            4: (empty)
         2: R_CURLY@108..109 "}" [] []
       5: (empty)
   3: EOF@109..110 "" [Newline("\n")] []

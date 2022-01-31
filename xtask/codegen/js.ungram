@@ -1574,7 +1574,7 @@ TsDefaultTypeClause =
 // { a: string }
 TsObjectType = '{' members: TsObjectTypeMemberList '}'
 
-TsObjectTypeMemberList = (TsAnyObjectTypeMember ((',' | ';') TsAnyObjectTypeMember)* (',' | ';')?)
+TsObjectTypeMemberList = TsAnyObjectTypeMember*
 
 TsAnyObjectTypeMember =
 	TsCallSignatureObjectTypeMember
@@ -1591,6 +1591,7 @@ TsCallSignatureObjectTypeMember =
 	type_parameters: TsTypeParameters?
 	parameter_list: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
+	separator_token: (',' | ';')?
 
 // { a: string }
 //   ^^^^^^^^^
@@ -1599,6 +1600,7 @@ TsPropertySignatureObjectTypeMember =
 	name: JsAnyObjectMemberName
 	optional_token: '?'?
 	type_annotation: TsTypeAnnotation?
+	separator_token: (',' | ';')?
 
 // { new(): number }
 //   ^^^^^^^^^^^^^
@@ -1607,6 +1609,7 @@ TsConstructSignatureObjectTypeMember =
 	type_parameters: TsTypeParameters?
 	parameter_list: JsParameters
 	type_annotation: TsTypeAnnotation?
+	separator_token: (',' | ';')?
 
 // { a?(): number }
 //   ^^^^^^^^^^^^
@@ -1616,6 +1619,7 @@ TsMethodSignatureObjectTypeMember =
 	type_parameters: TsTypeParameters?
 	parameter_list: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
+	separator_token: (',' | ';')?
 
 // { get a(): number }
 //   ^^^^^^^^^^^^^^^
@@ -1625,6 +1629,7 @@ TsGetterSignatureObjectTypeMember =
 	'('
 	')'
 	type_annotation: TsTypeAnnotation?
+	separator_token: (',' | ';')?
 
 // { set a(value: number) }
 //   ^^^^^^^^^^^^^^^^^^^^
@@ -1634,6 +1639,7 @@ TsSetterSignatureObjectTypeMember =
 	'('
 	parameter: JsParameter
 	')'
+	separator_token: (',' | ';')?
 
 //  { [a: string]: number }
 TsIndexSignatureObjectTypeMember =
@@ -1642,6 +1648,7 @@ TsIndexSignatureObjectTypeMember =
 	parameter: TsIndexSignatureParameter
 	']'
 	type_annotation: TsTypeAnnotation
+	separator_token: (',' | ';')?
 
 // { [a: string]: number }
 //    ^^^^^^^^^

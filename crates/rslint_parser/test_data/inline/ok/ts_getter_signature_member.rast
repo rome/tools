@@ -25,6 +25,7 @@ JsModule {
                                 number_token: NUMBER_KW@34..41 "number" [] [Whitespace(" ")],
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@41..42 "}" [] [],
@@ -49,6 +50,7 @@ JsModule {
                         l_paren_token: L_PAREN@59..60 "(" [] [],
                         r_paren_token: R_PAREN@60..62 ")" [] [Whitespace(" ")],
                         type_annotation: missing (optional),
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@62..63 "}" [] [],
@@ -82,6 +84,7 @@ JsModule {
                                 number_token: NUMBER_KW@135..142 "number" [] [Whitespace(" ")],
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@142..143 "}" [] [],
@@ -110,6 +113,7 @@ JsModule {
                                 number_token: NUMBER_KW@160..167 "number" [] [Whitespace(" ")],
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@167..168 "}" [] [],
@@ -133,6 +137,7 @@ JsModule {
                         },
                         optional_token_token: missing (optional),
                         type_annotation: missing (optional),
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@184..185 "}" [] [],
@@ -166,6 +171,7 @@ JsModule {
               0: COLON@32..34 ":" [] [Whitespace(" ")]
               1: TS_NUMBER_TYPE@34..41
                 0: NUMBER_KW@34..41 "number" [] [Whitespace(" ")]
+            5: (empty)
         2: R_CURLY@41..42 "}" [] []
       5: (empty)
     1: TS_TYPE_ALIAS@42..63
@@ -184,6 +190,7 @@ JsModule {
             2: L_PAREN@59..60 "(" [] []
             3: R_PAREN@60..62 ")" [] [Whitespace(" ")]
             4: (empty)
+            5: (empty)
         2: R_CURLY@62..63 "}" [] []
       5: (empty)
     2: TS_TYPE_ALIAS@63..143
@@ -208,6 +215,7 @@ JsModule {
               0: COLON@133..135 ":" [] [Whitespace(" ")]
               1: TS_NUMBER_TYPE@135..142
                 0: NUMBER_KW@135..142 "number" [] [Whitespace(" ")]
+            5: (empty)
         2: R_CURLY@142..143 "}" [] []
       5: (empty)
     3: TS_TYPE_ALIAS@143..168
@@ -228,6 +236,7 @@ JsModule {
               0: COLON@158..160 ":" [] [Whitespace(" ")]
               1: TS_NUMBER_TYPE@160..167
                 0: NUMBER_KW@160..167 "number" [] [Whitespace(" ")]
+            4: (empty)
         2: R_CURLY@167..168 "}" [] []
       5: (empty)
     4: TS_TYPE_ALIAS@168..185
@@ -245,6 +254,7 @@ JsModule {
               0: IDENT@180..184 "get" [] [Whitespace(" ")]
             2: (empty)
             3: (empty)
+            4: (empty)
         2: R_CURLY@184..185 "}" [] []
       5: (empty)
   3: EOF@185..186 "" [Newline("\n")] []

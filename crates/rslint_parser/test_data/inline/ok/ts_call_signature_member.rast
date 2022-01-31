@@ -25,8 +25,8 @@ JsModule {
                                 string_token: STRING_KW@29..35 "string" [] [],
                             },
                         },
+                        separator_token: SEMICOLON@35..37 ";" [] [Whitespace(" ")],
                     },
-                    SEMICOLON@35..37 ";" [] [Whitespace(" ")],
                 ],
                 r_curly_token: R_CURLY@37..38 "}" [] [],
             },
@@ -79,6 +79,7 @@ JsModule {
                                 number_token: NUMBER_KW@61..68 "number" [] [Whitespace(" ")],
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@68..69 "}" [] [],
@@ -160,6 +161,7 @@ JsModule {
                                 number_token: NUMBER_KW@101..108 "number" [] [Whitespace(" ")],
                             },
                         },
+                        separator_token: missing (optional),
                     },
                 ],
                 r_curly_token: R_CURLY@108..109 "}" [] [],
@@ -183,7 +185,7 @@ JsModule {
       4: TS_OBJECT_TYPE@23..38
         0: L_CURLY@23..25 "{" [] [Whitespace(" ")]
         1: TS_OBJECT_TYPE_MEMBER_LIST@25..37
-          0: TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER@25..35
+          0: TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER@25..37
             0: (empty)
             1: JS_PARAMETERS@25..27
               0: L_PAREN@25..26 "(" [] []
@@ -193,7 +195,7 @@ JsModule {
               0: COLON@27..29 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@29..35
                 0: STRING_KW@29..35 "string" [] []
-          1: SEMICOLON@35..37 ";" [] [Whitespace(" ")]
+            3: SEMICOLON@35..37 ";" [] [Whitespace(" ")]
         2: R_CURLY@37..38 "}" [] []
       5: (empty)
     1: TS_TYPE_ALIAS@38..69
@@ -232,6 +234,7 @@ JsModule {
               0: COLON@59..61 ":" [] [Whitespace(" ")]
               1: TS_NUMBER_TYPE@61..68
                 0: NUMBER_KW@61..68 "number" [] [Whitespace(" ")]
+            3: (empty)
         2: R_CURLY@68..69 "}" [] []
       5: (empty)
     2: TS_TYPE_ALIAS@69..109
@@ -288,6 +291,7 @@ JsModule {
               0: COLON@99..101 ":" [] [Whitespace(" ")]
               1: TS_NUMBER_TYPE@101..108
                 0: NUMBER_KW@101..108 "number" [] [Whitespace(" ")]
+            3: (empty)
         2: R_CURLY@108..109 "}" [] []
       5: (empty)
   3: EOF@109..110 "" [Newline("\n")] []
