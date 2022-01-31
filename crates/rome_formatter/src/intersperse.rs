@@ -1,6 +1,5 @@
 //! Copied from Rust's unstable iter.intersperse().
 
-use rslint_parser::AstNode;
 use std::{fmt::Debug, iter::Peekable};
 
 use crate::FormatElement;
@@ -99,7 +98,6 @@ impl<I, F, N> IntersperseFn<I, F, N>
 where
     I: Iterator<Item = (N, FormatElement)>,
     F: FnMut(&N, &N) -> FormatElement,
-    N: AstNode,
 {
     pub fn new(iter: I, separator_factory: F) -> Self {
         Self {
@@ -114,7 +112,6 @@ impl<I, F, N> Iterator for IntersperseFn<I, F, N>
 where
     I: Iterator<Item = (N, FormatElement)>,
     F: FnMut(&N, &N) -> FormatElement,
-    N: AstNode,
 {
     type Item = FormatElement;
 
@@ -151,6 +148,5 @@ impl<I, F, N> ExactSizeIterator for IntersperseFn<I, F, N>
 where
     I: Iterator<Item = (N, FormatElement)>,
     F: FnMut(&N, &N) -> FormatElement,
-    N: AstNode,
 {
 }
