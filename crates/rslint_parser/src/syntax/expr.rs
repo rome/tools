@@ -446,6 +446,11 @@ fn parse_binary_or_logical_expression_recursive(
     left_precedence: OperatorPrecedence,
     context: ExpressionContext,
 ) -> ParsedSyntax {
+    // Use a loop to eat all binary expressions with the same precedence.
+    // At first, the algorithm makes the impression that it recurse for every right-hand side expression.
+    // This is true, but `parse_binary_or_logical_expression` immediately returns if the
+    // current operator has the same or a lower precedence than the left-hand side expression. Thus,
+    // the algorithm goes at most `count(OperatorPrecedence)` levels deep.
     loop {
         if OperatorPrecedence::Relational > left_precedence
             && !p.has_linebreak_before_n(0)

@@ -3,6 +3,7 @@
 use crate::Parser;
 use rslint_syntax::{JsSyntaxKind, T};
 
+/// See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#table
 #[allow(dead_code)]
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Copy, Clone)]
 pub(crate) enum OperatorPrecedence {
@@ -30,14 +31,18 @@ pub(crate) enum OperatorPrecedence {
 }
 
 impl OperatorPrecedence {
+    /// Returns the operator with the lowest precedence
     pub fn lowest() -> Self {
         OperatorPrecedence::Comma
     }
 
+    /// Returns the operator with the highest precedence
+    #[allow(dead_code)]
     pub fn highest() -> Self {
         OperatorPrecedence::Primary
     }
 
+    /// Returns `true` if this operator has right to left associativity
     pub fn is_right_to_left(&self) -> bool {
         matches!(
             self,
@@ -49,6 +54,7 @@ impl OperatorPrecedence {
         )
     }
 
+    /// Returns the precedence for a binary operator token or `Err` if the token isn't a binary operator
     pub fn try_from_binary_operator(kind: JsSyntaxKind) -> Result<OperatorPrecedence, ()> {
         Ok(match kind {
             T![??] => OperatorPrecedence::Coalesce,
