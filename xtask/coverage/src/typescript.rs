@@ -25,8 +25,19 @@ impl TestCase for TypeScriptTestCase {
         let syntax = Syntax::default().typescript();
         let r = parse(self.code(), 0, syntax);
 
+        let error_reference_file = Path::new(BASE_PATH)
+            .join("baselines")
+            .join("reference")
+            .join(self.path.with_extension("errors.txt").file_name().unwrap());
+
+        let expected_errors = error_reference_file.exists();
+
         match r.ok() {
-            Err(errors) => TestRunOutcome::IncorrectlyErrored { errors, syntax },
+            Err(errors) if !expected_errors => {
+                TestRunOutcome::IncorrectlyErrored { errors, syntax }
+            }
+            Err(_) => TestRunOutcome::Passed(syntax),
+            _ if expected_errors => TestRunOutcome::IncorrectlyPassed(syntax),
             _ => TestRunOutcome::Passed(syntax),
         }
     }
