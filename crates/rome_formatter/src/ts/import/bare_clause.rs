@@ -6,9 +6,9 @@ use rslint_parser::ast::JsImportBareClause;
 
 impl ToFormatElement for JsImportBareClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let source = formatter.format_node(self.source()?)?;
+        let source = formatter.format_node(&self.source()?)?;
         let assertion = if let Some(assertion) = self.assertion() {
-            format_elements![space_token(), formatter.format_node(assertion)?]
+            format_elements![space_token(), formatter.format_node(&assertion)?]
         } else {
             empty_element()
         };

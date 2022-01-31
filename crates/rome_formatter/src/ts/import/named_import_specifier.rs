@@ -6,9 +6,9 @@ use rslint_parser::ast::JsNamedImportSpecifier;
 
 impl ToFormatElement for JsNamedImportSpecifier {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let name = formatter.format_node(self.name()?)?;
+        let name = formatter.format_node(&self.name()?)?;
         let as_token = formatter.format_token(&self.as_token()?)?;
-        let local_name = formatter.format_node(self.local_name()?)?;
+        let local_name = formatter.format_node(&self.local_name()?)?;
 
         Ok(format_elements![
             name,

@@ -276,7 +276,7 @@ impl Formatter {
     {
         let formatted_list = list.iter().map(|module_item| {
             let snapshot = self.snapshot();
-            let elem = match self.format_node(module_item.clone()) {
+            let elem = match self.format_node(&module_item) {
                 Ok(result) => result,
                 Err(_) => {
                     self.restore(snapshot);
