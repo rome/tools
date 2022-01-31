@@ -1,0 +1,189 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        TsTypeAlias {
+            type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
+            ty: TsNumberLiteralType {
+                minus_token: missing (optional),
+                literal_token: JS_NUMBER_LITERAL@23..24 "5" [] [],
+            },
+            semicolon_token: SEMICOLON@24..25 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@25..31 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@31..33 "B" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@33..35 "=" [] [Whitespace(" ")],
+            ty: TsNumberLiteralType {
+                minus_token: MINUS@35..36 "-" [] [],
+                literal_token: JS_NUMBER_LITERAL@36..37 "5" [] [],
+            },
+            semicolon_token: SEMICOLON@37..38 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@38..44 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@44..46 "C" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@46..48 "=" [] [Whitespace(" ")],
+            ty: TsBigIntLiteralType {
+                minus_token: missing (optional),
+                literal_token: JS_BIG_INT_LITERAL@48..50 "5n" [] [],
+            },
+            semicolon_token: SEMICOLON@50..51 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@51..57 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@57..59 "D" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@59..61 "=" [] [Whitespace(" ")],
+            ty: TsBigIntLiteralType {
+                minus_token: MINUS@61..62 "-" [] [],
+                literal_token: JS_BIG_INT_LITERAL@62..64 "5n" [] [],
+            },
+            semicolon_token: SEMICOLON@64..65 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@65..71 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@71..73 "E" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@73..75 "=" [] [Whitespace(" ")],
+            ty: TsStringLiteralType {
+                literal_token: JS_STRING_LITERAL@75..82 "\"abvcd\"" [] [],
+            },
+            semicolon_token: SEMICOLON@82..83 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@83..89 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@89..91 "F" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@91..93 "=" [] [Whitespace(" ")],
+            ty: TsBooleanLiteralType {
+                literal: TRUE_KW@93..97 "true" [] [],
+            },
+            semicolon_token: SEMICOLON@97..98 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@98..104 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@104..106 "G" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@106..108 "=" [] [Whitespace(" ")],
+            ty: TsBooleanLiteralType {
+                literal: FALSE_KW@108..113 "false" [] [],
+            },
+            semicolon_token: SEMICOLON@113..114 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@114..120 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@120..122 "H" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@122..124 "=" [] [Whitespace(" ")],
+            ty: TsNullLiteralType {
+                literal_token: NULL_KW@124..128 "null" [] [],
+            },
+            semicolon_token: SEMICOLON@128..129 ";" [] [],
+        },
+    ],
+    eof_token: EOF@129..130 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..130
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..129
+    0: TS_TYPE_ALIAS@0..25
+      0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@19..21
+        0: IDENT@19..21 "A" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@21..23 "=" [] [Whitespace(" ")]
+      4: TS_NUMBER_LITERAL_TYPE@23..24
+        0: (empty)
+        1: JS_NUMBER_LITERAL@23..24 "5" [] []
+      5: SEMICOLON@24..25 ";" [] []
+    1: TS_TYPE_ALIAS@25..38
+      0: TYPE_KW@25..31 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@31..33
+        0: IDENT@31..33 "B" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@33..35 "=" [] [Whitespace(" ")]
+      4: TS_NUMBER_LITERAL_TYPE@35..37
+        0: MINUS@35..36 "-" [] []
+        1: JS_NUMBER_LITERAL@36..37 "5" [] []
+      5: SEMICOLON@37..38 ";" [] []
+    2: TS_TYPE_ALIAS@38..51
+      0: TYPE_KW@38..44 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@44..46
+        0: IDENT@44..46 "C" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@46..48 "=" [] [Whitespace(" ")]
+      4: TS_BIG_INT_LITERAL_TYPE@48..50
+        0: (empty)
+        1: JS_BIG_INT_LITERAL@48..50 "5n" [] []
+      5: SEMICOLON@50..51 ";" [] []
+    3: TS_TYPE_ALIAS@51..65
+      0: TYPE_KW@51..57 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@57..59
+        0: IDENT@57..59 "D" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@59..61 "=" [] [Whitespace(" ")]
+      4: TS_BIG_INT_LITERAL_TYPE@61..64
+        0: MINUS@61..62 "-" [] []
+        1: JS_BIG_INT_LITERAL@62..64 "5n" [] []
+      5: SEMICOLON@64..65 ";" [] []
+    4: TS_TYPE_ALIAS@65..83
+      0: TYPE_KW@65..71 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@71..73
+        0: IDENT@71..73 "E" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@73..75 "=" [] [Whitespace(" ")]
+      4: TS_STRING_LITERAL_TYPE@75..82
+        0: JS_STRING_LITERAL@75..82 "\"abvcd\"" [] []
+      5: SEMICOLON@82..83 ";" [] []
+    5: TS_TYPE_ALIAS@83..98
+      0: TYPE_KW@83..89 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@89..91
+        0: IDENT@89..91 "F" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@91..93 "=" [] [Whitespace(" ")]
+      4: TS_BOOLEAN_LITERAL_TYPE@93..97
+        0: TRUE_KW@93..97 "true" [] []
+      5: SEMICOLON@97..98 ";" [] []
+    6: TS_TYPE_ALIAS@98..114
+      0: TYPE_KW@98..104 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@104..106
+        0: IDENT@104..106 "G" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@106..108 "=" [] [Whitespace(" ")]
+      4: TS_BOOLEAN_LITERAL_TYPE@108..113
+        0: FALSE_KW@108..113 "false" [] []
+      5: SEMICOLON@113..114 ";" [] []
+    7: TS_TYPE_ALIAS@114..129
+      0: TYPE_KW@114..120 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@120..122
+        0: IDENT@120..122 "H" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@122..124 "=" [] [Whitespace(" ")]
+      4: TS_NULL_LITERAL_TYPE@124..128
+        0: NULL_KW@124..128 "null" [] []
+      5: SEMICOLON@128..129 ";" [] []
+  3: EOF@129..130 "" [Newline("\n")] []

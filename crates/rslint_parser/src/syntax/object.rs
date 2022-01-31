@@ -8,11 +8,14 @@ use crate::syntax::expr::{
     parse_reference_identifier, ExpressionContext,
 };
 use crate::syntax::function::{
-    parse_function_body, parse_parameter, parse_parameter_list, parse_ts_parameter_types,
-    parse_ts_type_annotation_or_error,
+    parse_function_body, parse_parameter, parse_parameter_list, parse_ts_type_annotation_or_error,
 };
 use crate::syntax::js_parse_error;
-use crate::{ParseRecovery, ParseSeparatedList, Parser};
+use crate::syntax::js_parse_error::ts_only_syntax_error;
+use crate::syntax::typescript::{parse_ts_return_type_annotation, parse_ts_type_parameters};
+use crate::JsSyntaxFeature::TypeScript;
+use crate::{ParseRecovery, ParseSeparatedList, Parser, SyntaxFeature};
+use rslint_errors::Span;
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
 
@@ -302,7 +305,7 @@ pub(crate) fn parse_object_member_name(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
-fn is_nth_at_object_member_name(p: &Parser, offset: usize) -> bool {
+pub(crate) fn is_nth_at_object_member_name(p: &Parser, offset: usize) -> bool {
     let nth = p.nth(offset);
 
     let start_names = token_set![
@@ -395,9 +398,13 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 
 /// Parses the body of a method object member starting right after the member name.
 fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
-    parse_ts_parameter_types(p).ok();
+    parse_ts_type_parameters(p).ok();
     parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_parameters);
-    parse_ts_type_annotation_or_error(p).ok();
+    TypeScript
+        .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
+            ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
+        })
+        .ok();
     parse_function_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_function_body);
 }
 

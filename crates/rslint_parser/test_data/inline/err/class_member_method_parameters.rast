@@ -50,7 +50,7 @@ JsModule {
                         ],
                         r_paren_token: missing (required),
                     },
-                    return_type: missing (optional),
+                    return_type_annotation: missing (optional),
                     body: missing (required),
                 },
             ],

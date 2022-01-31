@@ -26,7 +26,7 @@ JsModule {
                         items: JsParameterList [],
                         r_paren_token: R_PAREN@23..25 ")" [] [Whitespace(" ")],
                     },
-                    return_type: missing (optional),
+                    return_type_annotation: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@25..26 "{" [] [],
                         directives: JsDirectiveList [],
@@ -49,7 +49,7 @@ JsModule {
                         items: JsParameterList [],
                         r_paren_token: R_PAREN@40..42 ")" [] [Whitespace(" ")],
                     },
-                    return_type: missing (optional),
+                    return_type_annotation: missing (optional),
                     body: JsFunctionBody {
                         l_curly_token: L_CURLY@42..43 "{" [] [],
                         directives: JsDirectiveList [],

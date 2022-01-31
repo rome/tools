@@ -75,6 +75,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_VARIABLE_STATEMENT
             | JS_WHILE_STATEMENT
             | JS_WITH_STATEMENT
+            | TS_TYPE_ALIAS
             | JS_UNKNOWN_STATEMENT => JS_UNKNOWN_STATEMENT,
 
             IMPORT_META
@@ -133,7 +134,6 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_PROPERTY_OBJECT_MEMBER
             | JS_SETTER_CLASS_MEMBER
             | JS_SETTER_OBJECT_MEMBER
-            | TS_INDEX_SIGNATURE
             | JS_SHORTHAND_PROPERTY_OBJECT_MEMBER
             | JS_UNKNOWN_MEMBER => JS_UNKNOWN_MEMBER,
 

@@ -10,14 +10,14 @@ use crate::syntax::function::{
     parse_ts_type_annotation_or_error, ts_parameter_types,
 };
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::expected_binding;
+use crate::syntax::js_parse_error::{expected_binding, ts_only_syntax_error};
 use crate::syntax::object::{
     is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
 };
 use crate::syntax::stmt::{optional_semi, parse_statements, StatementContext};
 use crate::syntax::typescript::{
-    maybe_ts_type_annotation, ts_heritage_clause, ts_modifier, ts_type_params,
-    DISALLOWED_TYPE_NAMES,
+    is_reserved_type_name, parse_ts_return_type_annotation, parse_ts_type_annotation,
+    parse_ts_type_parameters, ts_heritage_clause, ts_modifier,
 };
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
@@ -25,6 +25,7 @@ use crate::{
     CompletedMarker, Event, Marker, ParseNodeList, ParseRecovery, Parser, StrictMode, SyntaxFeature,
 };
 use rome_rowan::SyntaxKind;
+use rslint_errors::Span;
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
 use std::ops::Range;
@@ -150,7 +151,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     match id {
         Present(id) => {
             let text = p.span_text(id.range(p));
-            if p.typescript() && DISALLOWED_TYPE_NAMES.contains(&text) {
+            if p.typescript() && is_reserved_type_name(text) {
                 let err = p
                     .err_builder(&format!(
                             "`{}` cannot be used as a class name because it is already reserved as a type",
@@ -173,7 +174,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     }
 
     if p.at(T![<]) {
-        if let Some(mut complete) = ts_type_params(p) {
+        if let Present(mut complete) = parse_ts_type_parameters(p) {
             complete.err_if_not_ts(
                 p,
                 "classes can only have type parameters in TypeScript files",
@@ -879,7 +880,11 @@ fn parse_method_class_member_body(
 
     ts_parameter_types(p);
     parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_class_parameters);
-    parse_ts_type_annotation_or_error(p).ok();
+    TypeScript
+        .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
+            ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
+        })
+        .ok();
 
     parse_function_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_class_method_body);
 
@@ -897,7 +902,7 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
 
     let mut constructor_is_valid = true;
     if p.at(T![<]) {
-        if let Some(ref mut ty) = ts_type_params(p) {
+        if let Present(ref mut ty) = parse_ts_type_parameters(p) {
             ty.err_if_not_ts(p, "type parameters can only be used in TypeScript files");
 
             let err = p
@@ -912,10 +917,10 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
     parse_constructor_parameter_list(p)
         .or_add_diagnostic(p, js_parse_error::expected_constructor_parameters);
 
-    if let Some(range) = maybe_ts_type_annotation(p) {
+    if let Present(marker) = parse_ts_type_annotation(p) {
         let err = p
             .err_builder("constructors cannot have type annotations")
-            .primary(range, "");
+            .primary(marker.range(p), "");
 
         p.error(err);
         constructor_is_valid = false;

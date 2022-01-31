@@ -1,0 +1,285 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        TsTypeAlias {
+            type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
+            ty: TsObjectType {
+                l_curly_token: L_CURLY@23..25 "{" [] [Whitespace(" ")],
+                members: TsObjectTypeMemberList [
+                    TsSetterSignatureObjectTypeMember {
+                        set_token: SET_KW@25..29 "set" [] [Whitespace(" ")],
+                        name: JsLiteralMemberName {
+                            value: IDENT@29..30 "a" [] [],
+                        },
+                        l_paren_token: L_PAREN@30..31 "(" [] [],
+                        parameter: JsParameter {
+                            binding: JsIdentifierBinding {
+                                name_token: IDENT@31..32 "b" [] [],
+                            },
+                            type_annotation: TsTypeAnnotation {
+                                colon_token: COLON@32..34 ":" [] [Whitespace(" ")],
+                                ty: TsNumberType {
+                                    number_token: NUMBER_KW@34..40 "number" [] [],
+                                },
+                            },
+                            initializer: missing (optional),
+                        },
+                        r_paren_token: R_PAREN@40..42 ")" [] [Whitespace(" ")],
+                        separator_token: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@42..43 "}" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@43..49 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@49..51 "B" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@51..53 "=" [] [Whitespace(" ")],
+            ty: TsObjectType {
+                l_curly_token: L_CURLY@53..55 "{" [] [Whitespace(" ")],
+                members: TsObjectTypeMemberList [
+                    TsSetterSignatureObjectTypeMember {
+                        set_token: SET_KW@55..59 "set" [] [Whitespace(" ")],
+                        name: JsLiteralMemberName {
+                            value: IDENT@59..60 "a" [] [],
+                        },
+                        l_paren_token: L_PAREN@60..61 "(" [] [],
+                        parameter: JsParameter {
+                            binding: JsIdentifierBinding {
+                                name_token: IDENT@61..62 "b" [] [],
+                            },
+                            type_annotation: missing (optional),
+                            initializer: missing (optional),
+                        },
+                        r_paren_token: R_PAREN@62..64 ")" [] [Whitespace(" ")],
+                        separator_token: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@64..65 "}" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@65..124 "type" [Newline("\n"), Comments("// members that look  ..."), Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@124..126 "C" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@126..128 "=" [] [Whitespace(" ")],
+            ty: TsObjectType {
+                l_curly_token: L_CURLY@128..130 "{" [] [Whitespace(" ")],
+                members: TsObjectTypeMemberList [
+                    TsMethodSignatureObjectTypeMember {
+                        name: JsLiteralMemberName {
+                            value: IDENT@130..133 "set" [] [],
+                        },
+                        optional_token_token: missing (optional),
+                        type_parameters: missing (optional),
+                        parameter_list: JsParameters {
+                            l_paren_token: L_PAREN@133..134 "(" [] [],
+                            items: JsParameterList [
+                                JsParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@134..135 "a" [] [],
+                                    },
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            ],
+                            r_paren_token: R_PAREN@135..137 ")" [] [Whitespace(" ")],
+                        },
+                        return_type_annotation: missing (optional),
+                        separator_token: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@137..138 "}" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@138..144 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@144..146 "D" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@146..148 "=" [] [Whitespace(" ")],
+            ty: TsObjectType {
+                l_curly_token: L_CURLY@148..150 "{" [] [Whitespace(" ")],
+                members: TsObjectTypeMemberList [
+                    TsPropertySignatureObjectTypeMember {
+                        readonly_token: missing (optional),
+                        name: JsLiteralMemberName {
+                            value: IDENT@150..153 "set" [] [],
+                        },
+                        optional_token_token: missing (optional),
+                        type_annotation: TsTypeAnnotation {
+                            colon_token: COLON@153..155 ":" [] [Whitespace(" ")],
+                            ty: TsNumberType {
+                                number_token: NUMBER_KW@155..162 "number" [] [Whitespace(" ")],
+                            },
+                        },
+                        separator_token: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@162..163 "}" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@163..169 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@169..171 "E" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@171..173 "=" [] [Whitespace(" ")],
+            ty: TsObjectType {
+                l_curly_token: L_CURLY@173..175 "{" [] [Whitespace(" ")],
+                members: TsObjectTypeMemberList [
+                    TsPropertySignatureObjectTypeMember {
+                        readonly_token: missing (optional),
+                        name: JsLiteralMemberName {
+                            value: IDENT@175..179 "set" [] [Whitespace(" ")],
+                        },
+                        optional_token_token: missing (optional),
+                        type_annotation: missing (optional),
+                        separator_token: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@179..180 "}" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@180..181 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..181
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..180
+    0: TS_TYPE_ALIAS@0..43
+      0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@19..21
+        0: IDENT@19..21 "A" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@21..23 "=" [] [Whitespace(" ")]
+      4: TS_OBJECT_TYPE@23..43
+        0: L_CURLY@23..25 "{" [] [Whitespace(" ")]
+        1: TS_OBJECT_TYPE_MEMBER_LIST@25..42
+          0: TS_SETTER_SIGNATURE_OBJECT_TYPE_MEMBER@25..42
+            0: SET_KW@25..29 "set" [] [Whitespace(" ")]
+            1: JS_LITERAL_MEMBER_NAME@29..30
+              0: IDENT@29..30 "a" [] []
+            2: L_PAREN@30..31 "(" [] []
+            3: JS_PARAMETER@31..40
+              0: JS_IDENTIFIER_BINDING@31..32
+                0: IDENT@31..32 "b" [] []
+              1: TS_TYPE_ANNOTATION@32..40
+                0: COLON@32..34 ":" [] [Whitespace(" ")]
+                1: TS_NUMBER_TYPE@34..40
+                  0: NUMBER_KW@34..40 "number" [] []
+              2: (empty)
+            4: R_PAREN@40..42 ")" [] [Whitespace(" ")]
+            5: (empty)
+        2: R_CURLY@42..43 "}" [] []
+      5: (empty)
+    1: TS_TYPE_ALIAS@43..65
+      0: TYPE_KW@43..49 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@49..51
+        0: IDENT@49..51 "B" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@51..53 "=" [] [Whitespace(" ")]
+      4: TS_OBJECT_TYPE@53..65
+        0: L_CURLY@53..55 "{" [] [Whitespace(" ")]
+        1: TS_OBJECT_TYPE_MEMBER_LIST@55..64
+          0: TS_SETTER_SIGNATURE_OBJECT_TYPE_MEMBER@55..64
+            0: SET_KW@55..59 "set" [] [Whitespace(" ")]
+            1: JS_LITERAL_MEMBER_NAME@59..60
+              0: IDENT@59..60 "a" [] []
+            2: L_PAREN@60..61 "(" [] []
+            3: JS_PARAMETER@61..62
+              0: JS_IDENTIFIER_BINDING@61..62
+                0: IDENT@61..62 "b" [] []
+              1: (empty)
+              2: (empty)
+            4: R_PAREN@62..64 ")" [] [Whitespace(" ")]
+            5: (empty)
+        2: R_CURLY@64..65 "}" [] []
+      5: (empty)
+    2: TS_TYPE_ALIAS@65..138
+      0: TYPE_KW@65..124 "type" [Newline("\n"), Comments("// members that look  ..."), Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@124..126
+        0: IDENT@124..126 "C" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@126..128 "=" [] [Whitespace(" ")]
+      4: TS_OBJECT_TYPE@128..138
+        0: L_CURLY@128..130 "{" [] [Whitespace(" ")]
+        1: TS_OBJECT_TYPE_MEMBER_LIST@130..137
+          0: TS_METHOD_SIGNATURE_OBJECT_TYPE_MEMBER@130..137
+            0: JS_LITERAL_MEMBER_NAME@130..133
+              0: IDENT@130..133 "set" [] []
+            1: (empty)
+            2: (empty)
+            3: JS_PARAMETERS@133..137
+              0: L_PAREN@133..134 "(" [] []
+              1: JS_PARAMETER_LIST@134..135
+                0: JS_PARAMETER@134..135
+                  0: JS_IDENTIFIER_BINDING@134..135
+                    0: IDENT@134..135 "a" [] []
+                  1: (empty)
+                  2: (empty)
+              2: R_PAREN@135..137 ")" [] [Whitespace(" ")]
+            4: (empty)
+            5: (empty)
+        2: R_CURLY@137..138 "}" [] []
+      5: (empty)
+    3: TS_TYPE_ALIAS@138..163
+      0: TYPE_KW@138..144 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@144..146
+        0: IDENT@144..146 "D" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@146..148 "=" [] [Whitespace(" ")]
+      4: TS_OBJECT_TYPE@148..163
+        0: L_CURLY@148..150 "{" [] [Whitespace(" ")]
+        1: TS_OBJECT_TYPE_MEMBER_LIST@150..162
+          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@150..162
+            0: (empty)
+            1: JS_LITERAL_MEMBER_NAME@150..153
+              0: IDENT@150..153 "set" [] []
+            2: (empty)
+            3: TS_TYPE_ANNOTATION@153..162
+              0: COLON@153..155 ":" [] [Whitespace(" ")]
+              1: TS_NUMBER_TYPE@155..162
+                0: NUMBER_KW@155..162 "number" [] [Whitespace(" ")]
+            4: (empty)
+        2: R_CURLY@162..163 "}" [] []
+      5: (empty)
+    4: TS_TYPE_ALIAS@163..180
+      0: TYPE_KW@163..169 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@169..171
+        0: IDENT@169..171 "E" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@171..173 "=" [] [Whitespace(" ")]
+      4: TS_OBJECT_TYPE@173..180
+        0: L_CURLY@173..175 "{" [] [Whitespace(" ")]
+        1: TS_OBJECT_TYPE_MEMBER_LIST@175..179
+          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@175..179
+            0: (empty)
+            1: JS_LITERAL_MEMBER_NAME@175..179
+              0: IDENT@175..179 "set" [] [Whitespace(" ")]
+            2: (empty)
+            3: (empty)
+            4: (empty)
+        2: R_CURLY@179..180 "}" [] []
+      5: (empty)
+  3: EOF@180..181 "" [Newline("\n")] []

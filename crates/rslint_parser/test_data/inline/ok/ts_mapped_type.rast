@@ -1,0 +1,585 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        TsTypeAlias {
+            type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
+            ty: TsMappedType {
+                l_curly_token: L_CURLY@23..25 "{" [] [Whitespace(" ")],
+                readonly_modifier: missing (optional),
+                l_brack_token: L_BRACK@25..26 "[" [] [],
+                property_name: TsTypeParameterName {
+                    ident_token: IDENT@26..31 "test" [] [Whitespace(" ")],
+                },
+                in_token: IN_KW@31..34 "in" [] [Whitespace(" ")],
+                keys_type: TsUnionType {
+                    leading_separator_token_token: missing (optional),
+                    types: TsUnionTypeVariantList [
+                        TsStringLiteralType {
+                            literal_token: JS_STRING_LITERAL@34..38 "\"a\"" [] [Whitespace(" ")],
+                        },
+                        PIPE@38..40 "|" [] [Whitespace(" ")],
+                        TsStringLiteralType {
+                            literal_token: JS_STRING_LITERAL@40..43 "\"b\"" [] [],
+                        },
+                    ],
+                },
+                as_clause: missing (optional),
+                r_brack_token: R_BRACK@43..45 "]" [] [Whitespace(" ")],
+                optional_modifier: missing (optional),
+                mapped_type: missing (optional),
+                semicolon_token: missing (optional),
+                r_curly_token: R_CURLY@45..46 "}" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@46..52 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@52..64 "OptionsFlags" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@64..65 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@65..69 "Type" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@69..71 ">" [] [Whitespace(" ")],
+            },
+            eq_token: EQ@71..73 "=" [] [Whitespace(" ")],
+            ty: TsMappedType {
+                l_curly_token: L_CURLY@73..74 "{" [] [],
+                readonly_modifier: missing (optional),
+                l_brack_token: L_BRACK@74..78 "[" [Newline("\n"), Whitespace("  ")] [],
+                property_name: TsTypeParameterName {
+                    ident_token: IDENT@78..87 "Property" [] [Whitespace(" ")],
+                },
+                in_token: IN_KW@87..90 "in" [] [Whitespace(" ")],
+                keys_type: TsTypeOperatorType {
+                    operator_token: KEYOF_KW@90..96 "keyof" [] [Whitespace(" ")],
+                    ty: TsReferenceType {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@96..100 "Type" [] [],
+                        },
+                        type_arguments: missing (optional),
+                    },
+                },
+                as_clause: missing (optional),
+                r_brack_token: R_BRACK@100..101 "]" [] [],
+                optional_modifier: missing (optional),
+                mapped_type: TsTypeAnnotation {
+                    colon_token: COLON@101..103 ":" [] [Whitespace(" ")],
+                    ty: TsBooleanType {
+                        boolean_token: BOOLEAN_KW@103..110 "boolean" [] [],
+                    },
+                },
+                semicolon_token: SEMICOLON@110..111 ";" [] [],
+                r_curly_token: R_CURLY@111..113 "}" [Newline("\n")] [],
+            },
+            semicolon_token: SEMICOLON@113..114 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@114..120 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@120..133 "CreateMutable" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@133..134 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@134..138 "Type" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@138..140 ">" [] [Whitespace(" ")],
+            },
+            eq_token: EQ@140..142 "=" [] [Whitespace(" ")],
+            ty: TsMappedType {
+                l_curly_token: L_CURLY@142..143 "{" [] [],
+                readonly_modifier: TsMappedTypeReadonlyModifierClause {
+                    operator_token: MINUS@143..146 "-" [Newline("\n"), Whitespace("\t")] [],
+                    readonly_token: READONLY_KW@146..155 "readonly" [] [Whitespace(" ")],
+                },
+                l_brack_token: L_BRACK@155..156 "[" [] [],
+                property_name: TsTypeParameterName {
+                    ident_token: IDENT@156..165 "Property" [] [Whitespace(" ")],
+                },
+                in_token: IN_KW@165..168 "in" [] [Whitespace(" ")],
+                keys_type: TsTypeOperatorType {
+                    operator_token: KEYOF_KW@168..174 "keyof" [] [Whitespace(" ")],
+                    ty: TsReferenceType {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@174..178 "Type" [] [],
+                        },
+                        type_arguments: missing (optional),
+                    },
+                },
+                as_clause: missing (optional),
+                r_brack_token: R_BRACK@178..179 "]" [] [],
+                optional_modifier: missing (optional),
+                mapped_type: TsTypeAnnotation {
+                    colon_token: COLON@179..181 ":" [] [Whitespace(" ")],
+                    ty: TsIndexedAccessType {
+                        object_type: TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@181..185 "Type" [] [],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                        l_brack_token: L_BRACK@185..186 "[" [] [],
+                        index_type: TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@186..194 "Property" [] [],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                        r_brack_token: R_BRACK@194..195 "]" [] [],
+                    },
+                },
+                semicolon_token: SEMICOLON@195..196 ";" [] [],
+                r_curly_token: R_CURLY@196..198 "}" [Newline("\n")] [],
+            },
+            semicolon_token: SEMICOLON@198..199 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@199..205 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@205..213 "Concrete" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@213..214 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@214..218 "Type" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@218..220 ">" [] [Whitespace(" ")],
+            },
+            eq_token: EQ@220..222 "=" [] [Whitespace(" ")],
+            ty: TsMappedType {
+                l_curly_token: L_CURLY@222..223 "{" [] [],
+                readonly_modifier: missing (optional),
+                l_brack_token: L_BRACK@223..227 "[" [Newline("\n"), Whitespace("  ")] [],
+                property_name: TsTypeParameterName {
+                    ident_token: IDENT@227..236 "Property" [] [Whitespace(" ")],
+                },
+                in_token: IN_KW@236..239 "in" [] [Whitespace(" ")],
+                keys_type: TsTypeOperatorType {
+                    operator_token: KEYOF_KW@239..245 "keyof" [] [Whitespace(" ")],
+                    ty: TsReferenceType {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@245..249 "Type" [] [],
+                        },
+                        type_arguments: missing (optional),
+                    },
+                },
+                as_clause: missing (optional),
+                r_brack_token: R_BRACK@249..250 "]" [] [],
+                optional_modifier: TsMappedTypeOptionalModifierClause {
+                    operator_token: MINUS@250..251 "-" [] [],
+                    question_mark_token: QUESTION@251..252 "?" [] [],
+                },
+                mapped_type: TsTypeAnnotation {
+                    colon_token: COLON@252..254 ":" [] [Whitespace(" ")],
+                    ty: TsIndexedAccessType {
+                        object_type: TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@254..258 "Type" [] [],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                        l_brack_token: L_BRACK@258..259 "[" [] [],
+                        index_type: TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@259..267 "Property" [] [],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                        r_brack_token: R_BRACK@267..268 "]" [] [],
+                    },
+                },
+                semicolon_token: missing (optional),
+                r_curly_token: R_CURLY@268..270 "}" [Newline("\n")] [],
+            },
+            semicolon_token: SEMICOLON@270..271 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@271..277 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@277..284 "Getters" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@284..285 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@285..289 "Type" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@289..291 ">" [] [Whitespace(" ")],
+            },
+            eq_token: EQ@291..293 "=" [] [Whitespace(" ")],
+            ty: TsMappedType {
+                l_curly_token: L_CURLY@293..294 "{" [] [],
+                readonly_modifier: missing (optional),
+                l_brack_token: L_BRACK@294..300 "[" [Newline("\n"), Whitespace("    ")] [],
+                property_name: TsTypeParameterName {
+                    ident_token: IDENT@300..309 "Property" [] [Whitespace(" ")],
+                },
+                in_token: IN_KW@309..312 "in" [] [Whitespace(" ")],
+                keys_type: TsTypeOperatorType {
+                    operator_token: KEYOF_KW@312..318 "keyof" [] [Whitespace(" ")],
+                    ty: TsReferenceType {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@318..323 "Type" [] [Whitespace(" ")],
+                        },
+                        type_arguments: missing (optional),
+                    },
+                },
+                as_clause: TsMappedTypeAsClause {
+                    as_token: AS_KW@323..326 "as" [] [Whitespace(" ")],
+                    ty: TsTemplateLiteralType {
+                        l_tick_token: BACKTICK@326..327 "`" [] [],
+                        elements: TsTemplateElementList [
+                            TsTemplateChunkElement {
+                                template_chunk_token: TEMPLATE_CHUNK@327..330 "get" [] [],
+                            },
+                            TsTemplateElement {
+                                dollar_curly_token: DOLLAR_CURLY@330..332 "${" [] [],
+                                ty: TsReferenceType {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@332..342 "Capitalize" [] [],
+                                    },
+                                    type_arguments: TsTypeArgs {
+                                        l_angle_token: L_ANGLE@342..343 "<" [] [],
+                                        ts_type_arg_list: TsTypeArgList [
+                                            TsIntersectionType {
+                                                leading_separator_token_token: missing (optional),
+                                                types: TsIntersectionTypeElementList [
+                                                    TsStringType {
+                                                        string_token: STRING_KW@343..350 "string" [] [Whitespace(" ")],
+                                                    },
+                                                    AMP@350..352 "&" [] [Whitespace(" ")],
+                                                    TsReferenceType {
+                                                        name: JsReferenceIdentifier {
+                                                            value_token: IDENT@352..360 "Property" [] [],
+                                                        },
+                                                        type_arguments: missing (optional),
+                                                    },
+                                                ],
+                                            },
+                                        ],
+                                        r_angle_token: R_ANGLE@360..361 ">" [] [],
+                                    },
+                                },
+                                r_curly_token: R_CURLY@361..362 "}" [] [],
+                            },
+                        ],
+                        r_tick_token: BACKTICK@362..363 "`" [] [],
+                    },
+                },
+                r_brack_token: R_BRACK@363..364 "]" [] [],
+                optional_modifier: missing (optional),
+                mapped_type: TsTypeAnnotation {
+                    colon_token: COLON@364..366 ":" [] [Whitespace(" ")],
+                    ty: TsFunctionType {
+                        type_parameters: missing (optional),
+                        parameters: JsParameters {
+                            l_paren_token: L_PAREN@366..367 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@367..369 ")" [] [Whitespace(" ")],
+                        },
+                        fat_arrow_token: FAT_ARROW@369..372 "=>" [] [Whitespace(" ")],
+                        return_type: TsIndexedAccessType {
+                            object_type: TsReferenceType {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@372..376 "Type" [] [],
+                                },
+                                type_arguments: missing (optional),
+                            },
+                            l_brack_token: L_BRACK@376..377 "[" [] [],
+                            index_type: TsReferenceType {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@377..385 "Property" [] [],
+                                },
+                                type_arguments: missing (optional),
+                            },
+                            r_brack_token: R_BRACK@385..386 "]" [] [],
+                        },
+                    },
+                },
+                semicolon_token: missing (optional),
+                r_curly_token: R_CURLY@386..388 "}" [Newline("\n")] [],
+            },
+            semicolon_token: SEMICOLON@388..389 ";" [] [],
+        },
+    ],
+    eof_token: EOF@389..390 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..390
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..389
+    0: TS_TYPE_ALIAS@0..46
+      0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@19..21
+        0: IDENT@19..21 "A" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@21..23 "=" [] [Whitespace(" ")]
+      4: TS_MAPPED_TYPE@23..46
+        0: L_CURLY@23..25 "{" [] [Whitespace(" ")]
+        1: (empty)
+        2: L_BRACK@25..26 "[" [] []
+        3: TS_TYPE_PARAMETER_NAME@26..31
+          0: IDENT@26..31 "test" [] [Whitespace(" ")]
+        4: IN_KW@31..34 "in" [] [Whitespace(" ")]
+        5: TS_UNION_TYPE@34..43
+          0: (empty)
+          1: TS_UNION_TYPE_VARIANT_LIST@34..43
+            0: TS_STRING_LITERAL_TYPE@34..38
+              0: JS_STRING_LITERAL@34..38 "\"a\"" [] [Whitespace(" ")]
+            1: PIPE@38..40 "|" [] [Whitespace(" ")]
+            2: TS_STRING_LITERAL_TYPE@40..43
+              0: JS_STRING_LITERAL@40..43 "\"b\"" [] []
+        6: (empty)
+        7: R_BRACK@43..45 "]" [] [Whitespace(" ")]
+        8: (empty)
+        9: (empty)
+        10: (empty)
+        11: R_CURLY@45..46 "}" [] []
+      5: (empty)
+    1: TS_TYPE_ALIAS@46..114
+      0: TYPE_KW@46..52 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@52..64
+        0: IDENT@52..64 "OptionsFlags" [] []
+      2: TS_TYPE_PARAMETERS@64..71
+        0: L_ANGLE@64..65 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@65..69
+          0: TS_TYPE_PARAMETER@65..69
+            0: TS_TYPE_PARAMETER_NAME@65..69
+              0: IDENT@65..69 "Type" [] []
+            1: (empty)
+            2: (empty)
+        2: R_ANGLE@69..71 ">" [] [Whitespace(" ")]
+      3: EQ@71..73 "=" [] [Whitespace(" ")]
+      4: TS_MAPPED_TYPE@73..113
+        0: L_CURLY@73..74 "{" [] []
+        1: (empty)
+        2: L_BRACK@74..78 "[" [Newline("\n"), Whitespace("  ")] []
+        3: TS_TYPE_PARAMETER_NAME@78..87
+          0: IDENT@78..87 "Property" [] [Whitespace(" ")]
+        4: IN_KW@87..90 "in" [] [Whitespace(" ")]
+        5: TS_TYPE_OPERATOR_TYPE@90..100
+          0: KEYOF_KW@90..96 "keyof" [] [Whitespace(" ")]
+          1: TS_REFERENCE_TYPE@96..100
+            0: JS_REFERENCE_IDENTIFIER@96..100
+              0: IDENT@96..100 "Type" [] []
+            1: (empty)
+        6: (empty)
+        7: R_BRACK@100..101 "]" [] []
+        8: (empty)
+        9: TS_TYPE_ANNOTATION@101..110
+          0: COLON@101..103 ":" [] [Whitespace(" ")]
+          1: TS_BOOLEAN_TYPE@103..110
+            0: BOOLEAN_KW@103..110 "boolean" [] []
+        10: SEMICOLON@110..111 ";" [] []
+        11: R_CURLY@111..113 "}" [Newline("\n")] []
+      5: SEMICOLON@113..114 ";" [] []
+    2: TS_TYPE_ALIAS@114..199
+      0: TYPE_KW@114..120 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@120..133
+        0: IDENT@120..133 "CreateMutable" [] []
+      2: TS_TYPE_PARAMETERS@133..140
+        0: L_ANGLE@133..134 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@134..138
+          0: TS_TYPE_PARAMETER@134..138
+            0: TS_TYPE_PARAMETER_NAME@134..138
+              0: IDENT@134..138 "Type" [] []
+            1: (empty)
+            2: (empty)
+        2: R_ANGLE@138..140 ">" [] [Whitespace(" ")]
+      3: EQ@140..142 "=" [] [Whitespace(" ")]
+      4: TS_MAPPED_TYPE@142..198
+        0: L_CURLY@142..143 "{" [] []
+        1: TS_MAPPED_TYPE_READONLY_MODIFIER_CLAUSE@143..155
+          0: MINUS@143..146 "-" [Newline("\n"), Whitespace("\t")] []
+          1: READONLY_KW@146..155 "readonly" [] [Whitespace(" ")]
+        2: L_BRACK@155..156 "[" [] []
+        3: TS_TYPE_PARAMETER_NAME@156..165
+          0: IDENT@156..165 "Property" [] [Whitespace(" ")]
+        4: IN_KW@165..168 "in" [] [Whitespace(" ")]
+        5: TS_TYPE_OPERATOR_TYPE@168..178
+          0: KEYOF_KW@168..174 "keyof" [] [Whitespace(" ")]
+          1: TS_REFERENCE_TYPE@174..178
+            0: JS_REFERENCE_IDENTIFIER@174..178
+              0: IDENT@174..178 "Type" [] []
+            1: (empty)
+        6: (empty)
+        7: R_BRACK@178..179 "]" [] []
+        8: (empty)
+        9: TS_TYPE_ANNOTATION@179..195
+          0: COLON@179..181 ":" [] [Whitespace(" ")]
+          1: TS_INDEXED_ACCESS_TYPE@181..195
+            0: TS_REFERENCE_TYPE@181..185
+              0: JS_REFERENCE_IDENTIFIER@181..185
+                0: IDENT@181..185 "Type" [] []
+              1: (empty)
+            1: L_BRACK@185..186 "[" [] []
+            2: TS_REFERENCE_TYPE@186..194
+              0: JS_REFERENCE_IDENTIFIER@186..194
+                0: IDENT@186..194 "Property" [] []
+              1: (empty)
+            3: R_BRACK@194..195 "]" [] []
+        10: SEMICOLON@195..196 ";" [] []
+        11: R_CURLY@196..198 "}" [Newline("\n")] []
+      5: SEMICOLON@198..199 ";" [] []
+    3: TS_TYPE_ALIAS@199..271
+      0: TYPE_KW@199..205 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@205..213
+        0: IDENT@205..213 "Concrete" [] []
+      2: TS_TYPE_PARAMETERS@213..220
+        0: L_ANGLE@213..214 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@214..218
+          0: TS_TYPE_PARAMETER@214..218
+            0: TS_TYPE_PARAMETER_NAME@214..218
+              0: IDENT@214..218 "Type" [] []
+            1: (empty)
+            2: (empty)
+        2: R_ANGLE@218..220 ">" [] [Whitespace(" ")]
+      3: EQ@220..222 "=" [] [Whitespace(" ")]
+      4: TS_MAPPED_TYPE@222..270
+        0: L_CURLY@222..223 "{" [] []
+        1: (empty)
+        2: L_BRACK@223..227 "[" [Newline("\n"), Whitespace("  ")] []
+        3: TS_TYPE_PARAMETER_NAME@227..236
+          0: IDENT@227..236 "Property" [] [Whitespace(" ")]
+        4: IN_KW@236..239 "in" [] [Whitespace(" ")]
+        5: TS_TYPE_OPERATOR_TYPE@239..249
+          0: KEYOF_KW@239..245 "keyof" [] [Whitespace(" ")]
+          1: TS_REFERENCE_TYPE@245..249
+            0: JS_REFERENCE_IDENTIFIER@245..249
+              0: IDENT@245..249 "Type" [] []
+            1: (empty)
+        6: (empty)
+        7: R_BRACK@249..250 "]" [] []
+        8: TS_MAPPED_TYPE_OPTIONAL_MODIFIER_CLAUSE@250..252
+          0: MINUS@250..251 "-" [] []
+          1: QUESTION@251..252 "?" [] []
+        9: TS_TYPE_ANNOTATION@252..268
+          0: COLON@252..254 ":" [] [Whitespace(" ")]
+          1: TS_INDEXED_ACCESS_TYPE@254..268
+            0: TS_REFERENCE_TYPE@254..258
+              0: JS_REFERENCE_IDENTIFIER@254..258
+                0: IDENT@254..258 "Type" [] []
+              1: (empty)
+            1: L_BRACK@258..259 "[" [] []
+            2: TS_REFERENCE_TYPE@259..267
+              0: JS_REFERENCE_IDENTIFIER@259..267
+                0: IDENT@259..267 "Property" [] []
+              1: (empty)
+            3: R_BRACK@267..268 "]" [] []
+        10: (empty)
+        11: R_CURLY@268..270 "}" [Newline("\n")] []
+      5: SEMICOLON@270..271 ";" [] []
+    4: TS_TYPE_ALIAS@271..389
+      0: TYPE_KW@271..277 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@277..284
+        0: IDENT@277..284 "Getters" [] []
+      2: TS_TYPE_PARAMETERS@284..291
+        0: L_ANGLE@284..285 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@285..289
+          0: TS_TYPE_PARAMETER@285..289
+            0: TS_TYPE_PARAMETER_NAME@285..289
+              0: IDENT@285..289 "Type" [] []
+            1: (empty)
+            2: (empty)
+        2: R_ANGLE@289..291 ">" [] [Whitespace(" ")]
+      3: EQ@291..293 "=" [] [Whitespace(" ")]
+      4: TS_MAPPED_TYPE@293..388
+        0: L_CURLY@293..294 "{" [] []
+        1: (empty)
+        2: L_BRACK@294..300 "[" [Newline("\n"), Whitespace("    ")] []
+        3: TS_TYPE_PARAMETER_NAME@300..309
+          0: IDENT@300..309 "Property" [] [Whitespace(" ")]
+        4: IN_KW@309..312 "in" [] [Whitespace(" ")]
+        5: TS_TYPE_OPERATOR_TYPE@312..323
+          0: KEYOF_KW@312..318 "keyof" [] [Whitespace(" ")]
+          1: TS_REFERENCE_TYPE@318..323
+            0: JS_REFERENCE_IDENTIFIER@318..323
+              0: IDENT@318..323 "Type" [] [Whitespace(" ")]
+            1: (empty)
+        6: TS_MAPPED_TYPE_AS_CLAUSE@323..363
+          0: AS_KW@323..326 "as" [] [Whitespace(" ")]
+          1: TS_TEMPLATE_LITERAL_TYPE@326..363
+            0: BACKTICK@326..327 "`" [] []
+            1: TS_TEMPLATE_ELEMENT_LIST@327..362
+              0: TS_TEMPLATE_CHUNK_ELEMENT@327..330
+                0: TEMPLATE_CHUNK@327..330 "get" [] []
+              1: TS_TEMPLATE_ELEMENT@330..362
+                0: DOLLAR_CURLY@330..332 "${" [] []
+                1: TS_REFERENCE_TYPE@332..361
+                  0: JS_REFERENCE_IDENTIFIER@332..342
+                    0: IDENT@332..342 "Capitalize" [] []
+                  1: TS_TYPE_ARGS@342..361
+                    0: L_ANGLE@342..343 "<" [] []
+                    1: TS_TYPE_ARG_LIST@343..360
+                      0: TS_INTERSECTION_TYPE@343..360
+                        0: (empty)
+                        1: TS_INTERSECTION_TYPE_ELEMENT_LIST@343..360
+                          0: TS_STRING_TYPE@343..350
+                            0: STRING_KW@343..350 "string" [] [Whitespace(" ")]
+                          1: AMP@350..352 "&" [] [Whitespace(" ")]
+                          2: TS_REFERENCE_TYPE@352..360
+                            0: JS_REFERENCE_IDENTIFIER@352..360
+                              0: IDENT@352..360 "Property" [] []
+                            1: (empty)
+                    2: R_ANGLE@360..361 ">" [] []
+                2: R_CURLY@361..362 "}" [] []
+            2: BACKTICK@362..363 "`" [] []
+        7: R_BRACK@363..364 "]" [] []
+        8: (empty)
+        9: TS_TYPE_ANNOTATION@364..386
+          0: COLON@364..366 ":" [] [Whitespace(" ")]
+          1: TS_FUNCTION_TYPE@366..386
+            0: (empty)
+            1: JS_PARAMETERS@366..369
+              0: L_PAREN@366..367 "(" [] []
+              1: JS_PARAMETER_LIST@367..367
+              2: R_PAREN@367..369 ")" [] [Whitespace(" ")]
+            2: FAT_ARROW@369..372 "=>" [] [Whitespace(" ")]
+            3: TS_INDEXED_ACCESS_TYPE@372..386
+              0: TS_REFERENCE_TYPE@372..376
+                0: JS_REFERENCE_IDENTIFIER@372..376
+                  0: IDENT@372..376 "Type" [] []
+                1: (empty)
+              1: L_BRACK@376..377 "[" [] []
+              2: TS_REFERENCE_TYPE@377..385
+                0: JS_REFERENCE_IDENTIFIER@377..385
+                  0: IDENT@377..385 "Property" [] []
+                1: (empty)
+              3: R_BRACK@385..386 "]" [] []
+        10: (empty)
+        11: R_CURLY@386..388 "}" [Newline("\n")] []
+      5: SEMICOLON@388..389 ";" [] []
+  3: EOF@389..390 "" [Newline("\n")] []

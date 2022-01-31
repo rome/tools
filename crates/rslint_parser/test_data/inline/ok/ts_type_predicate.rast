@@ -1,0 +1,200 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        TsTypeAlias {
+            type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
+            ty: TsFunctionType {
+                type_parameters: missing (optional),
+                parameters: JsParameters {
+                    l_paren_token: L_PAREN@23..24 "(" [] [],
+                    items: JsParameterList [
+                        JsParameter {
+                            binding: JsIdentifierBinding {
+                                name_token: IDENT@24..25 "a" [] [],
+                            },
+                            type_annotation: missing (optional),
+                            initializer: missing (optional),
+                        },
+                    ],
+                    r_paren_token: R_PAREN@25..27 ")" [] [Whitespace(" ")],
+                },
+                fat_arrow_token: FAT_ARROW@27..30 "=>" [] [Whitespace(" ")],
+                return_type: TsTypePredicate {
+                    asserts_token: missing (optional),
+                    parameter_name: JsReferenceIdentifier {
+                        value_token: IDENT@30..32 "a" [] [Whitespace(" ")],
+                    },
+                    is_token: IS_KW@32..35 "is" [] [Whitespace(" ")],
+                    ty: TsStringType {
+                        string_token: STRING_KW@35..41 "string" [] [],
+                    },
+                },
+            },
+            semicolon_token: SEMICOLON@41..42 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@42..48 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@48..50 "B" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@50..52 "=" [] [Whitespace(" ")],
+            ty: TsFunctionType {
+                type_parameters: missing (optional),
+                parameters: JsParameters {
+                    l_paren_token: L_PAREN@52..53 "(" [] [],
+                    items: JsParameterList [
+                        JsParameter {
+                            binding: JsIdentifierBinding {
+                                name_token: IDENT@53..54 "a" [] [],
+                            },
+                            type_annotation: missing (optional),
+                            initializer: missing (optional),
+                        },
+                    ],
+                    r_paren_token: R_PAREN@54..56 ")" [] [Whitespace(" ")],
+                },
+                fat_arrow_token: FAT_ARROW@56..59 "=>" [] [Whitespace(" ")],
+                return_type: TsTypePredicate {
+                    asserts_token: ASSERTS_KW@59..67 "asserts" [] [Whitespace(" ")],
+                    parameter_name: JsReferenceIdentifier {
+                        value_token: IDENT@67..69 "a" [] [Whitespace(" ")],
+                    },
+                    is_token: IS_KW@69..72 "is" [] [Whitespace(" ")],
+                    ty: TsStringType {
+                        string_token: STRING_KW@72..78 "string" [] [],
+                    },
+                },
+            },
+            semicolon_token: SEMICOLON@78..79 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@79..85 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@85..93 "asserts" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@93..95 "=" [] [Whitespace(" ")],
+            ty: TsStringType {
+                string_token: STRING_KW@95..101 "string" [] [],
+            },
+            semicolon_token: SEMICOLON@101..102 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@102..108 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@108..110 "C" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@110..112 "=" [] [Whitespace(" ")],
+            ty: TsFunctionType {
+                type_parameters: missing (optional),
+                parameters: JsParameters {
+                    l_paren_token: L_PAREN@112..113 "(" [] [],
+                    items: JsParameterList [],
+                    r_paren_token: R_PAREN@113..115 ")" [] [Whitespace(" ")],
+                },
+                fat_arrow_token: FAT_ARROW@115..118 "=>" [] [Whitespace(" ")],
+                return_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@118..125 "asserts" [] [],
+                    },
+                    type_arguments: missing (optional),
+                },
+            },
+            semicolon_token: SEMICOLON@125..126 ";" [] [],
+        },
+    ],
+    eof_token: EOF@126..127 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..127
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..126
+    0: TS_TYPE_ALIAS@0..42
+      0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@19..21
+        0: IDENT@19..21 "A" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@21..23 "=" [] [Whitespace(" ")]
+      4: TS_FUNCTION_TYPE@23..41
+        0: (empty)
+        1: JS_PARAMETERS@23..27
+          0: L_PAREN@23..24 "(" [] []
+          1: JS_PARAMETER_LIST@24..25
+            0: JS_PARAMETER@24..25
+              0: JS_IDENTIFIER_BINDING@24..25
+                0: IDENT@24..25 "a" [] []
+              1: (empty)
+              2: (empty)
+          2: R_PAREN@25..27 ")" [] [Whitespace(" ")]
+        2: FAT_ARROW@27..30 "=>" [] [Whitespace(" ")]
+        3: TS_TYPE_PREDICATE@30..41
+          0: (empty)
+          1: JS_REFERENCE_IDENTIFIER@30..32
+            0: IDENT@30..32 "a" [] [Whitespace(" ")]
+          2: IS_KW@32..35 "is" [] [Whitespace(" ")]
+          3: TS_STRING_TYPE@35..41
+            0: STRING_KW@35..41 "string" [] []
+      5: SEMICOLON@41..42 ";" [] []
+    1: TS_TYPE_ALIAS@42..79
+      0: TYPE_KW@42..48 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@48..50
+        0: IDENT@48..50 "B" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@50..52 "=" [] [Whitespace(" ")]
+      4: TS_FUNCTION_TYPE@52..78
+        0: (empty)
+        1: JS_PARAMETERS@52..56
+          0: L_PAREN@52..53 "(" [] []
+          1: JS_PARAMETER_LIST@53..54
+            0: JS_PARAMETER@53..54
+              0: JS_IDENTIFIER_BINDING@53..54
+                0: IDENT@53..54 "a" [] []
+              1: (empty)
+              2: (empty)
+          2: R_PAREN@54..56 ")" [] [Whitespace(" ")]
+        2: FAT_ARROW@56..59 "=>" [] [Whitespace(" ")]
+        3: TS_TYPE_PREDICATE@59..78
+          0: ASSERTS_KW@59..67 "asserts" [] [Whitespace(" ")]
+          1: JS_REFERENCE_IDENTIFIER@67..69
+            0: IDENT@67..69 "a" [] [Whitespace(" ")]
+          2: IS_KW@69..72 "is" [] [Whitespace(" ")]
+          3: TS_STRING_TYPE@72..78
+            0: STRING_KW@72..78 "string" [] []
+      5: SEMICOLON@78..79 ";" [] []
+    2: TS_TYPE_ALIAS@79..102
+      0: TYPE_KW@79..85 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@85..93
+        0: IDENT@85..93 "asserts" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@93..95 "=" [] [Whitespace(" ")]
+      4: TS_STRING_TYPE@95..101
+        0: STRING_KW@95..101 "string" [] []
+      5: SEMICOLON@101..102 ";" [] []
+    3: TS_TYPE_ALIAS@102..126
+      0: TYPE_KW@102..108 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@108..110
+        0: IDENT@108..110 "C" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@110..112 "=" [] [Whitespace(" ")]
+      4: TS_FUNCTION_TYPE@112..125
+        0: (empty)
+        1: JS_PARAMETERS@112..115
+          0: L_PAREN@112..113 "(" [] []
+          1: JS_PARAMETER_LIST@113..113
+          2: R_PAREN@113..115 ")" [] [Whitespace(" ")]
+        2: FAT_ARROW@115..118 "=>" [] [Whitespace(" ")]
+        3: TS_REFERENCE_TYPE@118..125
+          0: JS_REFERENCE_IDENTIFIER@118..125
+            0: IDENT@118..125 "asserts" [] []
+          1: (empty)
+      5: SEMICOLON@125..126 ";" [] []
+  3: EOF@126..127 "" [Newline("\n")] []

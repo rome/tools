@@ -1,0 +1,170 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        TsTypeAlias {
+            type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
+            ty: TsNumberType {
+                number_token: NUMBER_KW@23..29 "number" [] [],
+            },
+            semicolon_token: SEMICOLON@29..30 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@30..36 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@36..38 "B" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@38..40 "=" [] [Whitespace(" ")],
+            ty: TsConditionalType {
+                check_type: TsStringType {
+                    string_token: STRING_KW@40..47 "string" [] [Whitespace(" ")],
+                },
+                extends_token: EXTENDS_KW@47..55 "extends" [] [Whitespace(" ")],
+                extends_type: TsNumberType {
+                    number_token: NUMBER_KW@55..62 "number" [] [Whitespace(" ")],
+                },
+                question_mark_token: QUESTION@62..64 "?" [] [Whitespace(" ")],
+                true_type: TsStringType {
+                    string_token: STRING_KW@64..71 "string" [] [Whitespace(" ")],
+                },
+                colon_token: COLON@71..73 ":" [] [Whitespace(" ")],
+                false_type: TsNumberType {
+                    number_token: NUMBER_KW@73..79 "number" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@79..80 ";" [] [],
+        },
+        TsTypeAlias {
+            type_token: TYPE_KW@80..86 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@86..88 "C" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (required),
+            eq_token: EQ@88..90 "=" [] [Whitespace(" ")],
+            ty: TsConditionalType {
+                check_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@90..92 "A" [] [Whitespace(" ")],
+                    },
+                    type_arguments: missing (optional),
+                },
+                extends_token: EXTENDS_KW@92..100 "extends" [] [Whitespace(" ")],
+                extends_type: TsParenthesizedType {
+                    l_paren_token: L_PAREN@100..101 "(" [] [],
+                    ty: TsConditionalType {
+                        check_type: TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@101..103 "B" [] [Whitespace(" ")],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                        extends_token: EXTENDS_KW@103..111 "extends" [] [Whitespace(" ")],
+                        extends_type: TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@111..113 "A" [] [Whitespace(" ")],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                        question_mark_token: QUESTION@113..115 "?" [] [Whitespace(" ")],
+                        true_type: TsNumberType {
+                            number_token: NUMBER_KW@115..122 "number" [] [Whitespace(" ")],
+                        },
+                        colon_token: COLON@122..124 ":" [] [Whitespace(" ")],
+                        false_type: TsStringType {
+                            string_token: STRING_KW@124..130 "string" [] [],
+                        },
+                    },
+                    r_paren_token: R_PAREN@130..132 ")" [] [Whitespace(" ")],
+                },
+                question_mark_token: QUESTION@132..134 "?" [] [Whitespace(" ")],
+                true_type: TsVoidType {
+                    void_token: VOID_KW@134..139 "void" [] [Whitespace(" ")],
+                },
+                colon_token: COLON@139..141 ":" [] [Whitespace(" ")],
+                false_type: TsNumberType {
+                    number_token: NUMBER_KW@141..147 "number" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@147..148 ";" [] [],
+        },
+    ],
+    eof_token: EOF@148..149 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..149
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..148
+    0: TS_TYPE_ALIAS@0..30
+      0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@19..21
+        0: IDENT@19..21 "A" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@21..23 "=" [] [Whitespace(" ")]
+      4: TS_NUMBER_TYPE@23..29
+        0: NUMBER_KW@23..29 "number" [] []
+      5: SEMICOLON@29..30 ";" [] []
+    1: TS_TYPE_ALIAS@30..80
+      0: TYPE_KW@30..36 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@36..38
+        0: IDENT@36..38 "B" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@38..40 "=" [] [Whitespace(" ")]
+      4: TS_CONDITIONAL_TYPE@40..79
+        0: TS_STRING_TYPE@40..47
+          0: STRING_KW@40..47 "string" [] [Whitespace(" ")]
+        1: EXTENDS_KW@47..55 "extends" [] [Whitespace(" ")]
+        2: TS_NUMBER_TYPE@55..62
+          0: NUMBER_KW@55..62 "number" [] [Whitespace(" ")]
+        3: QUESTION@62..64 "?" [] [Whitespace(" ")]
+        4: TS_STRING_TYPE@64..71
+          0: STRING_KW@64..71 "string" [] [Whitespace(" ")]
+        5: COLON@71..73 ":" [] [Whitespace(" ")]
+        6: TS_NUMBER_TYPE@73..79
+          0: NUMBER_KW@73..79 "number" [] []
+      5: SEMICOLON@79..80 ";" [] []
+    2: TS_TYPE_ALIAS@80..148
+      0: TYPE_KW@80..86 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@86..88
+        0: IDENT@86..88 "C" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@88..90 "=" [] [Whitespace(" ")]
+      4: TS_CONDITIONAL_TYPE@90..147
+        0: TS_REFERENCE_TYPE@90..92
+          0: JS_REFERENCE_IDENTIFIER@90..92
+            0: IDENT@90..92 "A" [] [Whitespace(" ")]
+          1: (empty)
+        1: EXTENDS_KW@92..100 "extends" [] [Whitespace(" ")]
+        2: TS_PARENTHESIZED_TYPE@100..132
+          0: L_PAREN@100..101 "(" [] []
+          1: TS_CONDITIONAL_TYPE@101..130
+            0: TS_REFERENCE_TYPE@101..103
+              0: JS_REFERENCE_IDENTIFIER@101..103
+                0: IDENT@101..103 "B" [] [Whitespace(" ")]
+              1: (empty)
+            1: EXTENDS_KW@103..111 "extends" [] [Whitespace(" ")]
+            2: TS_REFERENCE_TYPE@111..113
+              0: JS_REFERENCE_IDENTIFIER@111..113
+                0: IDENT@111..113 "A" [] [Whitespace(" ")]
+              1: (empty)
+            3: QUESTION@113..115 "?" [] [Whitespace(" ")]
+            4: TS_NUMBER_TYPE@115..122
+              0: NUMBER_KW@115..122 "number" [] [Whitespace(" ")]
+            5: COLON@122..124 ":" [] [Whitespace(" ")]
+            6: TS_STRING_TYPE@124..130
+              0: STRING_KW@124..130 "string" [] []
+          2: R_PAREN@130..132 ")" [] [Whitespace(" ")]
+        3: QUESTION@132..134 "?" [] [Whitespace(" ")]
+        4: TS_VOID_TYPE@134..139
+          0: VOID_KW@134..139 "void" [] [Whitespace(" ")]
+        5: COLON@139..141 ":" [] [Whitespace(" ")]
+        6: TS_NUMBER_TYPE@141..147
+          0: NUMBER_KW@141..147 "number" [] []
+      5: SEMICOLON@147..148 ";" [] []
+  3: EOF@148..149 "" [Newline("\n")] []

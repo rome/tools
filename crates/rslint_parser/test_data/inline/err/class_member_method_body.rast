@@ -34,7 +34,7 @@ JsModule {
                         ],
                         r_paren_token: R_PAREN@15..16 ")" [] [],
                     },
-                    return_type: missing (optional),
+                    return_type_annotation: missing (optional),
                     body: missing (required),
                 },
             ],

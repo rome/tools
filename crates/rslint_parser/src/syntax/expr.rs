@@ -19,15 +19,17 @@ use crate::syntax::function::{
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
-    expected_expression, expected_identifier, expected_parameter, expected_simple_assignment_target,
+    expected_expression, expected_identifier, expected_parameter,
+    expected_simple_assignment_target, expected_ts_type, ts_only_syntax_error,
 };
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
-use crate::JsSyntaxFeature::StrictMode;
+use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{JsSyntaxKind::*, *};
 use bitflags::bitflags;
 use rome_rowan::SyntaxKind;
+use rslint_errors::Span;
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
 
@@ -206,27 +208,8 @@ pub(crate) fn parse_expression_or_recover_to_next_statement(
 pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
     let literal_kind = match p.cur_tok().kind {
         JsSyntaxKind::JS_NUMBER_LITERAL => {
-            let cur_src = p.cur_src();
-            if cur_src.ends_with('n') {
-                let m = p.start();
-                p.bump_remap(JsSyntaxKind::JS_BIG_INT_LITERAL);
-                return Present(m.complete(p, JS_BIG_INT_LITERAL_EXPRESSION));
-            };
-
-            // Forbid legacy octal number in strict mode
-            if p.state.strict().is_some()
-                && cur_src.starts_with('0')
-                && cur_src.chars().nth(1).filter(|c| c.is_digit(10)).is_some()
-            {
-                let err_msg = if cur_src.contains(['8', '9']) {
-                    "Decimals with leading zeros are not allowed in strict mode."
-                } else {
-                    "\"0\"-prefixed octal literals are deprecated; use the \"0o\" prefix instead."
-                };
-                p.error(p.err_builder(err_msg).primary(p.cur_tok().range(), ""));
-            }
-
-            JsSyntaxKind::JS_NUMBER_LITERAL_EXPRESSION
+            return parse_number_literal_expression(p)
+                .or_else(|| parse_big_int_literal_expression(p));
         }
         JsSyntaxKind::JS_STRING_LITERAL => JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION,
         JsSyntaxKind::NULL_KW => JsSyntaxKind::JS_NULL_LITERAL_EXPRESSION,
@@ -242,6 +225,40 @@ pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, literal_kind))
 }
 
+pub(crate) fn parse_big_int_literal_expression(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(JS_NUMBER_LITERAL) || !p.cur_src().ends_with('n') {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump_remap(JsSyntaxKind::JS_BIG_INT_LITERAL);
+    Present(m.complete(p, JS_BIG_INT_LITERAL_EXPRESSION))
+}
+
+pub(crate) fn parse_number_literal_expression(p: &mut Parser) -> ParsedSyntax {
+    let cur_src = p.cur_src();
+    if !p.at(JS_NUMBER_LITERAL) || cur_src.ends_with('n') {
+        return Absent;
+    }
+
+    // Forbid legacy octal number in strict mode
+    if p.state.strict().is_some()
+        && cur_src.starts_with('0')
+        && cur_src.chars().nth(1).filter(|c| c.is_digit(10)).is_some()
+    {
+        let err_msg = if cur_src.contains(['8', '9']) {
+            "Decimals with leading zeros are not allowed in strict mode."
+        } else {
+            "\"0\"-prefixed octal literals are deprecated; use the \"0o\" prefix instead."
+        };
+        p.error(p.err_builder(err_msg).primary(p.cur_tok().range(), ""));
+    }
+
+    let m = p.start();
+    p.bump_any();
+    Present(m.complete(p, JS_NUMBER_LITERAL_EXPRESSION))
+}
+
 /// Parses an assignment expression or any higher expression
 /// https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#prod-AssignmentExpression
 pub(crate) fn parse_assignment_expression_or_higher(
@@ -251,7 +268,7 @@ pub(crate) fn parse_assignment_expression_or_higher(
     if p.at(T![<]) && is_nth_at_name(p, 1) {
         let res = try_parse_ts(p, |p| {
             let m = p.start();
-            if ts_type_params(p).is_none() {
+            if parse_ts_type_parameters(p).is_absent() {
                 m.abandon(p);
                 return None;
             }
@@ -453,7 +470,7 @@ fn parse_binary_or_logical_expression_recursive(
         let mut res = if p.eat(T![const]) {
             m.complete(p, TS_CONST_ASSERTION)
         } else {
-            ts_type(p);
+            parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
             m.complete(p, TS_ASSERTION)
         };
         res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
@@ -1142,16 +1159,11 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> Pars
     {
         p.rewind(checkpoint);
         parse_arrow_function_parameters(p, SignatureFlags::empty()).unwrap();
-
-        if p.at(T![:]) {
-            let complete = ts_type_or_type_predicate_ann(p, T![:]);
-            if let Some(mut complete) = complete {
-                complete.err_if_not_ts(
-                    p,
-                    "arrow functions can only have return types in TypeScript files",
-                );
-            }
-        }
+        TypeScript
+            .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
+                ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
+            })
+            .ok();
 
         p.expect(T![=>]);
 
@@ -1275,15 +1287,19 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                     parse_arrow_function_parameters(p, SignatureFlags::ASYNC)
                         .or_add_diagnostic(p, expected_parameter);
 
-                    if p.at(T![:]) {
-                        let complete = ts_type_or_type_predicate_ann(p, T![:]);
-                        if let Some(mut complete) = complete {
-                            complete.err_if_not_ts(
-                                p,
-                                "arrow functions can only have return types in TypeScript files",
-                            );
-                        }
-                    }
+                    TypeScript
+                        .parse_exclusive_syntax(
+                            p,
+                            parse_ts_return_type_annotation,
+                            |p, annotation| {
+                                ts_only_syntax_error(
+                                    p,
+                                    "return type annotation",
+                                    annotation.range(p).as_range(),
+                                )
+                            },
+                        )
+                        .ok();
 
                     p.expect(T![=>]);
 
@@ -1548,6 +1564,10 @@ pub(crate) fn is_nth_at_identifier(p: &Parser, n: usize) -> bool {
     matches!(p.nth(n), T![ident] | T![await] | T![yield] | T![enum])
 }
 
+pub(crate) fn is_nth_at_identifier_or_keyword(p: &Parser, n: usize) -> bool {
+    p.nth(n).is_keyword() || is_nth_at_identifier(p, n)
+}
+
 /// A template literal such as "`abcd ${efg}`"
 // test template_literal
 // let a = `foo ${bar}`;
@@ -1580,7 +1600,7 @@ pub fn parse_template_literal(p: &mut Parser, tag: ParsedSyntax) -> CompletedMar
             ERROR_TOKEN => {
                 let err = p.err_builder("Invalid template literal")
                 .primary(p.cur_tok().range(), "");
-                p.err_and_bump(err, JsSyntaxKind::JS_UNKNOWN_EXPRESSION);
+                p.err_and_bump(err, JsSyntaxKind::JS_UNKNOWN);
             }
             t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
         }
@@ -1821,7 +1841,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
             res.err_if_not_ts(p, "const assertions can only be used in TypeScript files");
             Present(res)
         } else {
-            ts_type(p);
+            parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
             p.expect(T![>]);
             parse_unary_expr(p, context)
                 .or_add_diagnostic(p, js_parse_error::expected_unary_expression);

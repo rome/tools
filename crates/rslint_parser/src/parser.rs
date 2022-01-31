@@ -373,6 +373,23 @@ impl<'t> Parser<'t> {
         }
     }
 
+    /// Stores the parser state and position before calling the function and restores the state
+    /// and position before returning.
+    ///
+    /// Useful in situation where the parser must advance a few tokens to determine whatever a syntax is
+    /// of one or the other kind.
+    #[inline]
+    pub fn lookahead<F, R>(&mut self, op: F) -> R
+    where
+        F: FnOnce(&mut Parser) -> R,
+    {
+        let checkpoint = self.checkpoint();
+        let result = op(self);
+        self.rewind(checkpoint);
+
+        result
+    }
+
     /// Get the current index of the last event
     fn cur_event_pos(&self) -> usize {
         self.events.len().saturating_sub(1)
