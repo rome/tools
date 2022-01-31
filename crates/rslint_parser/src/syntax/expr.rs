@@ -396,7 +396,7 @@ pub(super) fn parse_conditional_expr(p: &mut Parser, context: ExpressionContext)
     // foo ? bar baz
     // foo ? bar baz ? foo : bar
     // foo ? bar :
-    let lhs = parse_binary_or_logical_expression(p, context);
+    let lhs = parse_binary_or_logical_expression(p, OperatorPrecedence::lowest(), context);
 
     if p.at(T![?]) {
         return lhs.map(|marker| {
@@ -422,7 +422,11 @@ pub(super) fn parse_conditional_expr(p: &mut Parser, context: ExpressionContext)
 }
 
 /// A binary expression such as `2 + 2` or `foo * bar + 2` or a logical expression 'a || b'
-fn parse_binary_or_logical_expression(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+fn parse_binary_or_logical_expression(
+    p: &mut Parser,
+    left_precedence: OperatorPrecedence,
+    context: ExpressionContext,
+) -> ParsedSyntax {
     // test private_name_presence_check
     // class A {
     // 	#prop;
@@ -432,7 +436,7 @@ fn parse_binary_or_logical_expression(p: &mut Parser, context: ExpressionContext
     // }
     let left = parse_unary_expr(p, context).or_else(|| parse_private_name(p));
 
-    parse_binary_or_logical_expression_recursive(p, left, 0, context, 0)
+    parse_binary_or_logical_expression_recursive(p, left, left_precedence, context)
 }
 
 // test binary_expressions
@@ -455,175 +459,166 @@ fn parse_binary_or_logical_expression(p: &mut Parser, context: ExpressionContext
 // !foo * bar;
 fn parse_binary_or_logical_expression_recursive(
     p: &mut Parser,
-    left: ParsedSyntax,
-    min_prec: u8,
+    mut left: ParsedSyntax,
+    left_precedence: OperatorPrecedence,
     context: ExpressionContext,
-    recursion_count: usize,
 ) -> ParsedSyntax {
-    // There is no logic behind 128 here. We need to fine tune this.
-    if recursion_count >= 128 {
-        panic!("Too much recursion at parse_binary_or_logical_expression_recursive");
-    }
-    if 7 > min_prec && !p.has_linebreak_before_n(0) && p.cur_src() == "as" {
-        let m = left.precede(p);
-        p.bump_any();
-        let mut res = if p.eat(T![const]) {
-            m.complete(p, TS_CONST_ASSERTION)
-        } else {
-            parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
-            m.complete(p, TS_ASSERTION)
-        };
-        res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
-        return parse_binary_or_logical_expression_recursive(
-            p,
-            Present(res),
-            min_prec,
-            context,
-            recursion_count + 1,
-        );
-    }
-    let kind = match p.cur() {
-        T![>] if p.nth_at(1, T![>]) && p.nth_at(2, T![>]) => T![>>>],
-        T![>] if p.nth_at(1, T![>]) => T![>>],
-        k => k,
-    };
-
-    let precedence = match kind {
-        T![in] if context.is_in_included() => 7,
-        T![instanceof] => 7,
-        _ => {
-            if let Some(prec) = get_precedence(kind) {
-                prec
+    // Use a loop to eat all binary expressions with the same precedence.
+    // At first, the algorithm makes the impression that it recurse for every right-hand side expression.
+    // This is true, but `parse_binary_or_logical_expression` immediately returns if the
+    // current operator has the same or a lower precedence than the left-hand side expression. Thus,
+    // the algorithm goes at most `count(OperatorPrecedence)` levels deep.
+    loop {
+        if OperatorPrecedence::Relational > left_precedence
+            && !p.has_linebreak_before_n(0)
+            && p.cur_src() == "as"
+        {
+            let m = left.precede(p);
+            p.bump_any();
+            let mut res = if p.eat(T![const]) {
+                m.complete(p, TS_CONST_ASSERTION)
             } else {
-                return left;
+                parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+                m.complete(p, TS_ASSERTION)
+            };
+            res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
+            left = Present(res);
+            continue;
+        }
+
+        let op = match p.cur() {
+            T![>] if p.nth_at(1, T![>]) && p.nth_at(2, T![>]) => T![>>>],
+            T![>] if p.nth_at(1, T![>]) => T![>>],
+            T![in] if !context.is_in_included() => {
+                break;
+            }
+            k => k,
+        };
+
+        let new_precedence = match OperatorPrecedence::try_from_binary_operator(op) {
+            Ok(precedence) => precedence,
+            // Not a binary operator
+            Err(_) => break,
+        };
+
+        let stop_at_current_operator = if new_precedence.is_right_to_left() {
+            new_precedence < left_precedence
+        } else {
+            new_precedence <= left_precedence
+        };
+
+        if stop_at_current_operator {
+            break;
+        }
+
+        let op_tok = p.cur_tok();
+
+        let mut is_unknown = false;
+        if let Present(left) = &left {
+            // test exponent_unary_parenthesized
+            // (delete a.b) ** 2;
+            // (void ident) ** 2;
+            // (typeof ident) ** 2;
+            // (-3) ** 2;
+            // (+3) ** 2;
+            // (~3) ** 2;
+            // (!true) ** 2;
+
+            // test_err exponent_unary_unparenthesized
+            // delete a.b ** 2;
+            // void ident ** 2;
+            // typeof ident ** 2;
+            // -3 ** 2;
+            // +3 ** 2;
+            // ~3 ** 2;
+            // !true ** 2;
+
+            if op == T![**] && left.kind() == JS_UNARY_EXPRESSION {
+                let err = p
+					.err_builder(
+						"unparenthesized unary expression can't appear on the left-hand side of '**'",
+					)
+					.secondary(op_tok.range(), "")
+					.primary(left.range(p), "");
+
+                p.error(err);
+                is_unknown = true;
             }
         }
-    };
 
-    if precedence <= min_prec {
-        return left;
-    }
+        let m = left.precede(p);
 
-    let op = kind;
-    let op_tok = p.cur_tok();
+        if op == T![>>] {
+            p.bump_multiple(2, T![>>]);
+        } else if op == T![>>>] {
+            p.bump_multiple(3, T![>>>]);
+        } else {
+            p.bump_any();
+        }
 
-    let mut is_unknown = false;
-    if let Present(left) = &left {
-        // test exponent_unary_parenthesized
-        // (delete a.b) ** 2;
-        // (void ident) ** 2;
-        // (typeof ident) ** 2;
-        // (-3) ** 2;
-        // (+3) ** 2;
-        // (~3) ** 2;
-        // (!true) ** 2;
+        // test logical_expressions
+        // foo ?? bar
+        // a || b
+        // a && b
+        //
+        // test_err logical_expressions_err
+        // foo ?? * 2;
+        // !foo && bar;
+        // foo(foo ||)
+        let expression_kind = if is_unknown {
+            JS_UNKNOWN_EXPRESSION
+        } else {
+            match op {
+                T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
+                T![instanceof] => JS_INSTANCEOF_EXPRESSION,
+                T![in] => JS_IN_EXPRESSION,
+                _ => JS_BINARY_EXPRESSION,
+            }
+        };
 
-        // test_err exponent_unary_unparenthesized
-        // delete a.b ** 2;
-        // void ident ** 2;
-        // typeof ident ** 2;
-        // -3 ** 2;
-        // +3 ** 2;
-        // ~3 ** 2;
-        // !true ** 2;
-
-        if op == T![**] && left.kind() == JS_UNARY_EXPRESSION {
-            let err = p
-                .err_builder(
-                    "unparenthesized unary expression can't appear on the left-hand side of '**'",
-                )
-                .secondary(op_tok.range(), "")
-                .primary(left.range(p), "");
+        // This is a hack to allow us to effectively recover from `foo + / bar`
+        let right = if OperatorPrecedence::try_from_binary_operator(p.cur()).is_ok()
+            && !p.at_ts(token_set![T![-], T![+], T![<]])
+        {
+            let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.token_src(op_tok)))
+				.secondary(op_tok.range(), "This operator requires a right hand side value")
+				.primary(p.cur_tok().range(), "But this operator was encountered instead");
 
             p.error(err);
-            is_unknown = true;
-        }
-    }
 
-    let m = left.precede(p);
-
-    if op == T![>>] {
-        p.bump_multiple(2, T![>>]);
-    } else if op == T![>>>] {
-        p.bump_multiple(3, T![>>>]);
-    } else {
-        p.bump_any();
-    }
-
-    // test logical_expressions
-    // foo ?? bar
-    // a || b
-    // a && b
-    //
-    // test_err logical_expressions_err
-    // foo ?? * 2;
-    // !foo && bar;
-    // foo(foo ||)
-    let expression_kind = if is_unknown {
-        JS_UNKNOWN_EXPRESSION
-    } else {
-        match op {
-            T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
-            T![instanceof] => JS_INSTANCEOF_EXPRESSION,
-            T![in] => JS_IN_EXPRESSION,
-            _ => JS_BINARY_EXPRESSION,
-        }
-    };
-
-    // This is a hack to allow us to effectively recover from `foo + / bar`
-    let right = if get_precedence(p.cur()).is_some() && !p.at_ts(token_set![T![-], T![+], T![<]]) {
-        let err = p.err_builder(&format!("Expected an expression for the right hand side of a `{}`, but found an operator instead", p.token_src(op_tok)))
-            .secondary(op_tok.range(), "This operator requires a right hand side value")
-            .primary(p.cur_tok().range(), "But this operator was encountered instead");
-
-        p.error(err);
-
-        parse_binary_or_logical_expression_recursive(p, Absent, 0, context, recursion_count + 1)
-    } else if p.at(T![#]) {
-        // test_err private_name_presence_check_recursive
-        // class A {
-        // 	#prop;
-        // 	test() {
-        //    #prop in #prop in this
-        //  }
-        // }
-        let mut private_name = parse_private_name(p).unwrap();
-        private_name.change_kind(p, JS_UNKNOWN_EXPRESSION);
-        p.error(
-            p.err_builder("Private names are only allowed on the left side of a binary expression")
+            parse_binary_or_logical_expression_recursive(
+                p,
+                Absent,
+                OperatorPrecedence::lowest(),
+                context,
+            )
+        } else if p.at(T![#]) {
+            // test_err private_name_presence_check_recursive
+            // class A {
+            // 	#prop;
+            // 	test() {
+            //    #prop in #prop in this
+            //  }
+            // }
+            let mut private_name = parse_private_name(p).unwrap();
+            private_name.change_kind(p, JS_UNKNOWN_EXPRESSION);
+            p.error(
+                p.err_builder(
+                    "Private names are only allowed on the left side of a binary expression",
+                )
                 .primary(private_name.range(p), ""),
-        );
-        Present(private_name)
-    } else {
-        parse_unary_expr(p, context)
-    };
-
-    parse_binary_or_logical_expression_recursive(
-        p,
-        right,
-        // ** is right recursive
-        if op == T![**] {
-            precedence - 1
+            );
+            Present(private_name)
         } else {
-            precedence
-        },
-        context,
-        recursion_count + 1,
-    )
-    .or_add_diagnostic(p, expected_expression);
+            parse_binary_or_logical_expression(p, new_precedence, context)
+        };
 
-    let complete = m.complete(p, expression_kind);
-    parse_binary_or_logical_expression_recursive(
-        p,
-        Present(complete),
-        min_prec,
-        context,
-        recursion_count + 1,
-    )
+        right.or_add_diagnostic(p, expected_expression);
 
-    // FIXME(RDambrosio016): We should check for nullish-coalescing and logical expr being used together,
-    // however, i can't figure out a way to do this efficiently without using parse_marker which is way too
-    // expensive to use since this is a hot path
+        left = Present(m.complete(p, expression_kind));
+    }
+
+    left
 }
 
 /// A member or new expression with subscripts. e.g. `new foo`, `new Foo()`, `foo`, or `foo().bar[5]`
