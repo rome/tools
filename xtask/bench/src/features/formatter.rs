@@ -10,17 +10,21 @@ pub struct FormatterMeasurement {
     formatting: Duration,
 }
 pub fn benchmark_format_lib(id: &str, code: &str) -> BenchmarkSummary {
-    let syntax = Syntax::default().module();
-    let root = parse(code, 0, syntax).syntax();
-
     let formatter_timer = timing::start();
-    let _ = format(FormatOptions::default(), &root);
+    run_format(code);
     let formatter_duration = formatter_timer.stop();
 
     BenchmarkSummary::Formatter(FormatterMeasurement {
         id: id.to_string(),
         formatting: formatter_duration,
     })
+}
+
+pub fn run_format(code: &str) {
+    let syntax = Syntax::default().module();
+    let root = parse(code, 0, syntax).syntax();
+
+    let _ = format(FormatOptions::default(), &root);
 }
 
 impl FormatterMeasurement {

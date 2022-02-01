@@ -6,9 +6,9 @@ use std::str::FromStr;
 use std::time::Duration;
 
 pub use crate::features::formatter::benchmark_format_lib;
-use crate::features::formatter::FormatterMeasurement;
+use crate::features::formatter::{run_format, FormatterMeasurement};
 pub use crate::features::parser::benchmark_parse_lib;
-use crate::features::parser::ParseMeasurement;
+use crate::features::parser::{run_parse, ParseMeasurement};
 pub use utils::get_code;
 
 /// What feature to benchmark
@@ -94,17 +94,31 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                     if let Some(ref baseline) = baseline {
                         criterion = criterion.save_baseline(baseline.to_string());
                     }
-                    let mut group = criterion.benchmark_group("parser");
+                    let mut group = criterion.benchmark_group(feature.to_string());
                     group.throughput(criterion::Throughput::Bytes(code.len() as u64));
                     group.bench_function(&id, |b| {
                         b.iter(|| {
-                            let _ = criterion::black_box(rslint_parser::parse_module(code, 0));
+                            let _ = criterion::black_box(match feature {
+                                FeatureToBenchmark::Parser => {
+                                    run_parse(code);
+                                }
+                                FeatureToBenchmark::Formatter => {
+                                    run_format(code);
+                                }
+                            });
                         })
                     });
                     group.finish();
                 } else {
                     //warmup
-                    rslint_parser::parse_module(code, 0);
+                    match feature {
+                        FeatureToBenchmark::Parser => {
+                            run_parse(code);
+                        }
+                        FeatureToBenchmark::Formatter => {
+                            run_format(code);
+                        }
+                    }
                 }
 
                 let result = match feature {
