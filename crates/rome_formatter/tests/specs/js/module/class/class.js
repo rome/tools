@@ -14,6 +14,8 @@ class Foo extends Boar {
 
 	}
 
+	* generator (){}
+
 	lorem() {
 		return "ipsum";
 	}

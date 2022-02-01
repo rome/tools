@@ -1,3 +1,4 @@
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, group_elements, join_elements, soft_block_indent, soft_line_break_or_space,
     space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
@@ -10,10 +11,10 @@ use rslint_parser::AstNode;
 impl ToFormatElement for JsConstructorClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_node(&self.name()?)?,
-            formatter.format_node(&self.parameters()?)?,
+            self.name().format(formatter)?,
+            self.parameters().format(formatter)?,
             space_token(),
-            formatter.format_node(&self.body()?)?
+            self.body().format(formatter)?
         ])
     }
 }
