@@ -74,8 +74,6 @@ impl ToFormatElement for JsAnyExpression {
                 await_expression.to_format_element(formatter)
             }
             JsAnyExpression::TsNonNull(_) => todo!(),
-            JsAnyExpression::TsAssertion(_) => todo!(),
-            JsAnyExpression::TsConstAssertion(_) => todo!(),
             JsAnyExpression::JsPreUpdateExpression(pre_update_expression) => {
                 pre_update_expression.to_format_element(formatter)
             }
@@ -93,6 +91,8 @@ impl ToFormatElement for JsAnyExpression {
             JsAnyExpression::JsInstanceofExpression(expression) => {
                 expression.to_format_element(formatter)
             }
+            JsAnyExpression::TsAsExpression(_) => todo!(),
+            JsAnyExpression::TsTypeAssertionExpression(_) => todo!(),
         }
     }
 }

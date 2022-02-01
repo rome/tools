@@ -111,7 +111,10 @@ fn print_detailed_test_result(pb: &ProgressBar, result: &TestRunResult) {
 
     match &result.outcome {
         TestRunOutcome::Panicked(panic) => {
-            let msg = panic.downcast_ref::<String>();
+            let msg = panic
+                .downcast_ref::<String>()
+                .map(|s| s.as_str())
+                .or_else(|| panic.downcast_ref::<&'static str>().copied());
 
             let header = format!(
                 "    This test caused a{} panic inside the parser{}",
@@ -126,13 +129,19 @@ fn print_detailed_test_result(pb: &ProgressBar, result: &TestRunResult) {
                     header, msg
                 )
             } else {
-                format!("\n{} '{}' {}\n", "Test".bold(), test_name, "failed".bold())
-                    .red()
-                    .underline()
-                    .to_string()
+                format!(
+                    "{}\n{} '{}' {}\n",
+                    header,
+                    "Test".bold(),
+                    test_name,
+                    "failed".bold()
+                )
+                .red()
+                .underline()
+                .to_string()
             };
 
-            pb.println(format!("{}{}", header, msg))
+            pb.println(msg)
         }
         TestRunOutcome::IncorrectlyErrored { errors, .. } => {
             let header = format!("\n{} '{}' {}\n", "Test".bold(), test_name, "failed".bold())

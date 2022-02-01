@@ -2213,21 +2213,17 @@ impl TsArrayType {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsAssertion {
+pub struct TsAsExpression {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsAssertion {
-    pub fn expr(&self) -> SyntaxResult<JsAnyExpression> {
+impl TsAsExpression {
+    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 1usize) }
-    pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
+    pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 3usize) }
-    pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 4usize)
-    }
+    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 2usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsBigIntLiteralType {
@@ -2305,25 +2301,6 @@ impl TsConditionalType {
     }
     pub fn false_type(&self) -> SyntaxResult<TsType> {
         support::required_node(&self.syntax, 6usize)
-    }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsConstAssertion {
-    pub(crate) syntax: SyntaxNode,
-}
-impl TsConstAssertion {
-    pub fn expr(&self) -> SyntaxResult<JsAnyExpression> {
-        support::required_node(&self.syntax, 0usize)
-    }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 1usize) }
-    pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
-    }
-    pub fn const_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
-    }
-    pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 4usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -3041,6 +3018,22 @@ impl TsTypeArguments {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsTypeAssertionExpression {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsTypeAssertionExpression {
+    pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+        support::required_node(&self.syntax, 3usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeConstraintClause {
     pub(crate) syntax: SyntaxNode,
 }
@@ -3296,9 +3289,9 @@ pub enum JsAnyExpression {
     JsUnknownExpression(JsUnknownExpression),
     JsYieldExpression(JsYieldExpression),
     NewTarget(NewTarget),
-    TsAssertion(TsAssertion),
-    TsConstAssertion(TsConstAssertion),
+    TsAsExpression(TsAsExpression),
     TsNonNull(TsNonNull),
+    TsTypeAssertionExpression(TsTypeAssertionExpression),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyForInOrOfInitializer {
@@ -8355,8 +8348,8 @@ impl From<TsArrayType> for SyntaxNode {
 impl From<TsArrayType> for SyntaxElement {
     fn from(n: TsArrayType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsAssertion {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ASSERTION }
+impl AstNode for TsAsExpression {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_AS_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -8366,28 +8359,20 @@ impl AstNode for TsAssertion {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsAssertion {
+impl std::fmt::Debug for TsAsExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsAssertion")
-            .field("expr", &support::DebugSyntaxResult(self.expr()))
-            .field("ident", &support::DebugSyntaxResult(self.ident()))
-            .field(
-                "l_angle_token",
-                &support::DebugSyntaxResult(self.l_angle_token()),
-            )
+        f.debug_struct("TsAsExpression")
+            .field("expression", &support::DebugSyntaxResult(self.expression()))
+            .field("as_token", &support::DebugSyntaxResult(self.as_token()))
             .field("ty", &support::DebugSyntaxResult(self.ty()))
-            .field(
-                "r_angle_token",
-                &support::DebugSyntaxResult(self.r_angle_token()),
-            )
             .finish()
     }
 }
-impl From<TsAssertion> for SyntaxNode {
-    fn from(n: TsAssertion) -> SyntaxNode { n.syntax }
+impl From<TsAsExpression> for SyntaxNode {
+    fn from(n: TsAsExpression) -> SyntaxNode { n.syntax }
 }
-impl From<TsAssertion> for SyntaxElement {
-    fn from(n: TsAssertion) -> SyntaxElement { n.syntax.into() }
+impl From<TsAsExpression> for SyntaxElement {
+    fn from(n: TsAsExpression) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsBigIntLiteralType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_BIG_INT_LITERAL_TYPE }
@@ -8578,43 +8563,6 @@ impl From<TsConditionalType> for SyntaxNode {
 }
 impl From<TsConditionalType> for SyntaxElement {
     fn from(n: TsConditionalType) -> SyntaxElement { n.syntax.into() }
-}
-impl AstNode for TsConstAssertion {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONST_ASSERTION }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsConstAssertion {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsConstAssertion")
-            .field("expr", &support::DebugSyntaxResult(self.expr()))
-            .field("ident", &support::DebugSyntaxResult(self.ident()))
-            .field(
-                "l_angle_token",
-                &support::DebugSyntaxResult(self.l_angle_token()),
-            )
-            .field(
-                "const_token",
-                &support::DebugSyntaxResult(self.const_token()),
-            )
-            .field(
-                "r_angle_token",
-                &support::DebugSyntaxResult(self.r_angle_token()),
-            )
-            .finish()
-    }
-}
-impl From<TsConstAssertion> for SyntaxNode {
-    fn from(n: TsConstAssertion) -> SyntaxNode { n.syntax }
-}
-impl From<TsConstAssertion> for SyntaxElement {
-    fn from(n: TsConstAssertion) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsConstructSignatureObjectTypeMember {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCT_SIGNATURE_OBJECT_TYPE_MEMBER }
@@ -10302,6 +10250,39 @@ impl From<TsTypeArguments> for SyntaxNode {
 impl From<TsTypeArguments> for SyntaxElement {
     fn from(n: TsTypeArguments) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsTypeAssertionExpression {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ASSERTION_EXPRESSION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsTypeAssertionExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsTypeAssertionExpression")
+            .field(
+                "l_angle_token",
+                &support::DebugSyntaxResult(self.l_angle_token()),
+            )
+            .field("ty", &support::DebugSyntaxResult(self.ty()))
+            .field(
+                "r_angle_token",
+                &support::DebugSyntaxResult(self.r_angle_token()),
+            )
+            .field("expression", &support::DebugSyntaxResult(self.expression()))
+            .finish()
+    }
+}
+impl From<TsTypeAssertionExpression> for SyntaxNode {
+    fn from(n: TsTypeAssertionExpression) -> SyntaxNode { n.syntax }
+}
+impl From<TsTypeAssertionExpression> for SyntaxElement {
+    fn from(n: TsTypeAssertionExpression) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsTypeConstraintClause {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_CONSTRAINT_CLAUSE }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -11967,14 +11948,16 @@ impl From<JsYieldExpression> for JsAnyExpression {
 impl From<NewTarget> for JsAnyExpression {
     fn from(node: NewTarget) -> JsAnyExpression { JsAnyExpression::NewTarget(node) }
 }
-impl From<TsAssertion> for JsAnyExpression {
-    fn from(node: TsAssertion) -> JsAnyExpression { JsAnyExpression::TsAssertion(node) }
-}
-impl From<TsConstAssertion> for JsAnyExpression {
-    fn from(node: TsConstAssertion) -> JsAnyExpression { JsAnyExpression::TsConstAssertion(node) }
+impl From<TsAsExpression> for JsAnyExpression {
+    fn from(node: TsAsExpression) -> JsAnyExpression { JsAnyExpression::TsAsExpression(node) }
 }
 impl From<TsNonNull> for JsAnyExpression {
     fn from(node: TsNonNull) -> JsAnyExpression { JsAnyExpression::TsNonNull(node) }
+}
+impl From<TsTypeAssertionExpression> for JsAnyExpression {
+    fn from(node: TsTypeAssertionExpression) -> JsAnyExpression {
+        JsAnyExpression::TsTypeAssertionExpression(node)
+    }
 }
 impl AstNode for JsAnyExpression {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -12009,9 +11992,9 @@ impl AstNode for JsAnyExpression {
             | JS_UNKNOWN_EXPRESSION
             | JS_YIELD_EXPRESSION
             | NEW_TARGET
-            | TS_ASSERTION
-            | TS_CONST_ASSERTION
-            | TS_NON_NULL => true,
+            | TS_AS_EXPRESSION
+            | TS_NON_NULL
+            | TS_TYPE_ASSERTION_EXPRESSION => true,
             k if JsAnyLiteralExpression::can_cast(k) => true,
             _ => false,
         }
@@ -12082,9 +12065,11 @@ impl AstNode for JsAnyExpression {
             }
             JS_YIELD_EXPRESSION => JsAnyExpression::JsYieldExpression(JsYieldExpression { syntax }),
             NEW_TARGET => JsAnyExpression::NewTarget(NewTarget { syntax }),
-            TS_ASSERTION => JsAnyExpression::TsAssertion(TsAssertion { syntax }),
-            TS_CONST_ASSERTION => JsAnyExpression::TsConstAssertion(TsConstAssertion { syntax }),
+            TS_AS_EXPRESSION => JsAnyExpression::TsAsExpression(TsAsExpression { syntax }),
             TS_NON_NULL => JsAnyExpression::TsNonNull(TsNonNull { syntax }),
+            TS_TYPE_ASSERTION_EXPRESSION => {
+                JsAnyExpression::TsTypeAssertionExpression(TsTypeAssertionExpression { syntax })
+            }
             _ => {
                 if let Some(js_any_literal_expression) = JsAnyLiteralExpression::cast(syntax) {
                     return Some(JsAnyExpression::JsAnyLiteralExpression(
@@ -12128,9 +12113,9 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsUnknownExpression(it) => &it.syntax,
             JsAnyExpression::JsYieldExpression(it) => &it.syntax,
             JsAnyExpression::NewTarget(it) => &it.syntax,
-            JsAnyExpression::TsAssertion(it) => &it.syntax,
-            JsAnyExpression::TsConstAssertion(it) => &it.syntax,
+            JsAnyExpression::TsAsExpression(it) => &it.syntax,
             JsAnyExpression::TsNonNull(it) => &it.syntax,
+            JsAnyExpression::TsTypeAssertionExpression(it) => &it.syntax,
             JsAnyExpression::JsAnyLiteralExpression(it) => it.syntax(),
         }
     }
@@ -12169,9 +12154,9 @@ impl std::fmt::Debug for JsAnyExpression {
             JsAnyExpression::JsUnknownExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsYieldExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::NewTarget(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::TsAssertion(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::TsConstAssertion(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExpression::TsAsExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsNonNull(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExpression::TsTypeAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
@@ -12209,9 +12194,9 @@ impl From<JsAnyExpression> for SyntaxNode {
             JsAnyExpression::JsUnknownExpression(it) => it.into(),
             JsAnyExpression::JsYieldExpression(it) => it.into(),
             JsAnyExpression::NewTarget(it) => it.into(),
-            JsAnyExpression::TsAssertion(it) => it.into(),
-            JsAnyExpression::TsConstAssertion(it) => it.into(),
+            JsAnyExpression::TsAsExpression(it) => it.into(),
             JsAnyExpression::TsNonNull(it) => it.into(),
+            JsAnyExpression::TsTypeAssertionExpression(it) => it.into(),
         }
     }
 }
@@ -15600,7 +15585,7 @@ impl std::fmt::Display for TsArrayType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAssertion {
+impl std::fmt::Display for TsAsExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -15631,11 +15616,6 @@ impl std::fmt::Display for TsCallSignatureObjectTypeMember {
     }
 }
 impl std::fmt::Display for TsConditionalType {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for TsConstAssertion {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -15896,6 +15876,11 @@ impl std::fmt::Display for TsTypeAnnotation {
     }
 }
 impl std::fmt::Display for TsTypeArguments {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsTypeAssertionExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17825,7 +17810,9 @@ impl Debug for DebugSyntaxElement {
                 NEW_TARGET => std::fmt::Debug::fmt(&NewTarget::cast(node.clone()).unwrap(), f),
                 TS_ANY_TYPE => std::fmt::Debug::fmt(&TsAnyType::cast(node.clone()).unwrap(), f),
                 TS_ARRAY_TYPE => std::fmt::Debug::fmt(&TsArrayType::cast(node.clone()).unwrap(), f),
-                TS_ASSERTION => std::fmt::Debug::fmt(&TsAssertion::cast(node.clone()).unwrap(), f),
+                TS_AS_EXPRESSION => {
+                    std::fmt::Debug::fmt(&TsAsExpression::cast(node.clone()).unwrap(), f)
+                }
                 TS_BIG_INT_LITERAL_TYPE => {
                     std::fmt::Debug::fmt(&TsBigIntLiteralType::cast(node.clone()).unwrap(), f)
                 }
@@ -17844,9 +17831,6 @@ impl Debug for DebugSyntaxElement {
                 ),
                 TS_CONDITIONAL_TYPE => {
                     std::fmt::Debug::fmt(&TsConditionalType::cast(node.clone()).unwrap(), f)
-                }
-                TS_CONST_ASSERTION => {
-                    std::fmt::Debug::fmt(&TsConstAssertion::cast(node.clone()).unwrap(), f)
                 }
                 TS_CONSTRUCT_SIGNATURE_OBJECT_TYPE_MEMBER => std::fmt::Debug::fmt(
                     &TsConstructSignatureObjectTypeMember::cast(node.clone()).unwrap(),
@@ -18017,6 +18001,9 @@ impl Debug for DebugSyntaxElement {
                 }
                 TS_TYPE_ARGUMENTS => {
                     std::fmt::Debug::fmt(&TsTypeArguments::cast(node.clone()).unwrap(), f)
+                }
+                TS_TYPE_ASSERTION_EXPRESSION => {
+                    std::fmt::Debug::fmt(&TsTypeAssertionExpression::cast(node.clone()).unwrap(), f)
                 }
                 TS_TYPE_CONSTRAINT_CLAUSE => {
                     std::fmt::Debug::fmt(&TsTypeConstraintClause::cast(node.clone()).unwrap(), f)

@@ -5502,9 +5502,9 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(TS_ARRAY_TYPE, children)
             }
-            TS_ASSERTION => {
+            TS_AS_EXPRESSION => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
                     if JsAnyExpression::can_cast(element.kind()) {
@@ -5514,14 +5514,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if Ident::can_cast(element.kind()) {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T ! [<] {
+                    if element.kind() == T![as] {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5534,20 +5527,13 @@ impl SyntaxFactory for JsSyntaxFactory {
                     }
                 }
                 slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T ! [>] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_ASSERTION.to_unknown(),
+                        TS_AS_EXPRESSION.to_unknown(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(TS_ASSERTION, children)
+                slots.into_node(TS_AS_EXPRESSION, children)
             }
             TS_BIG_INT_LITERAL_TYPE => {
                 let mut elements = (&children).into_iter();
@@ -5732,53 +5718,6 @@ impl SyntaxFactory for JsSyntaxFactory {
                     );
                 }
                 slots.into_node(TS_CONDITIONAL_TYPE, children)
-            }
-            TS_CONST_ASSERTION => {
-                let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
-                let mut current_element = elements.next();
-                if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if Ident::can_cast(element.kind()) {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T ! [<] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T![const] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T ! [>] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if current_element.is_some() {
-                    return RawSyntaxNode::new(
-                        TS_CONST_ASSERTION.to_unknown(),
-                        children.into_iter().map(Some),
-                    );
-                }
-                slots.into_node(TS_CONST_ASSERTION, children)
             }
             TS_CONSTRUCT_SIGNATURE_OBJECT_TYPE_MEMBER => {
                 let mut elements = (&children).into_iter();
@@ -7565,6 +7504,46 @@ impl SyntaxFactory for JsSyntaxFactory {
                     );
                 }
                 slots.into_node(TS_TYPE_ARGUMENTS, children)
+            }
+            TS_TYPE_ASSERTION_EXPRESSION => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T ! [<] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if TsType::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T ! [>] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if JsAnyExpression::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(
+                        TS_TYPE_ASSERTION_EXPRESSION.to_unknown(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(TS_TYPE_ASSERTION_EXPRESSION, children)
             }
             TS_TYPE_CONSTRAINT_CLAUSE => {
                 let mut elements = (&children).into_iter();

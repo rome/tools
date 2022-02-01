@@ -299,8 +299,8 @@ JsAnyExpression =
 	| JsYieldExpression
 	| NewTarget
 	| JsTemplate
-	| TsAssertion
-	| TsConstAssertion
+	| TsTypeAssertionExpression
+	| TsAsExpression
 	| TsNonNull
 
 
@@ -1764,6 +1764,16 @@ TsTemplateElement =
 	type: TsType
 	'}'
 
+TsTypeAssertionExpression =
+	'<'
+	type: TsType
+	'>'
+	expression: JsAnyExpression
+
+TsAsExpression =
+	expression: JsAnyExpression
+	'as'
+	type: TsType
 
 TsExprWithTypeArgs =
 	item: TsAnyName
@@ -1793,7 +1803,3 @@ TsConstructorParam =
 	initializer: JsInitializerClause?
 
 TsNonNull = expr:JsAnyExpression '!'
-
-TsAssertion = expr:JsAnyExpression ident: Ident '<' ty:TsType '>'
-
-TsConstAssertion = expr:JsAnyExpression ident: Ident '<' 'const' '>'
