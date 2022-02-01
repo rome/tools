@@ -380,7 +380,7 @@ impl Formatter {
 
                 // Print the full (not trimmed) text of the token
                 FormatElement::from(Token::new_dynamic(
-                    normalize_newlines(syntax_token.text()),
+                    normalize_newlines(syntax_token.text(), true),
                     syntax_token.text_range(),
                 ))
             }

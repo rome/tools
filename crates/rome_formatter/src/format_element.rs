@@ -922,14 +922,7 @@ impl Token {
 
     /// Create a token from a dynamic string and a range of the input source
     pub(crate) fn new_dynamic(text: String, source: TextRange) -> Self {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                for line_break in text.matches(&['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR]) {
-                    panic!("The content '{}' contains an unsupported {:?} line terminator character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", text, line_break);
-                }
-            }
-        }
-
+        debug_assert!(!text.contains('\r'), "The content '{}' contains an unsupported '\\r' line terminator character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", text);
         Self::Dynamic { text, source }
     }
 
@@ -1003,15 +996,19 @@ const PARAGRAPH_SEPARATOR: char = '\u{2029}';
 
 /// Normalize all line terminators in the text to "\n" since
 /// its the only line break type supported by the printer
-pub(crate) fn normalize_newlines(text: &str) -> String {
-    text.replace("\r\n", "\n")
-        .replace(&['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR], "\n")
+pub(crate) fn normalize_newlines(text: &str, separators: bool) -> String {
+    let text = text.replace("\r\n", "\n");
+    if separators {
+        text.replace(&['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR], "\n")
+    } else {
+        text.replace('\r', "\n")
+    }
 }
 
 impl<L: Language> From<SyntaxTriviaPieceComments<L>> for Token {
     fn from(trivia: SyntaxTriviaPieceComments<L>) -> Self {
         Self::new_dynamic(
-            normalize_newlines(trivia.text().trim()),
+            normalize_newlines(trivia.text().trim(), true),
             trivia.text_range(),
         )
     }
