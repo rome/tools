@@ -2,5 +2,6 @@
 lint = "clippy --workspace --all-targets --verbose -- --deny warnings"
 format = "fmt --all --verbose"
 codegen = "run -p xtask_codegen --"
-benchmark = "run -p xtask_bench --release --"
+bench_parser = "run -p xtask_bench --release -- --feature parser"
+bench_formatter = "run -p xtask_bench --release -- --feature formatter"
 coverage = "run -p xtask_coverage --release --"

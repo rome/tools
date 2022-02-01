@@ -31,7 +31,6 @@ pub fn get_code(lib: &str) -> Result<(String, String), String> {
                 Ok(response) => {
                     let mut reader = response.into_reader();
 
-                    let _ = std::fs::remove_file(&file);
                     let mut writer = std::fs::File::create(&file).map_err(err_to_string)?;
                     let _ = std::io::copy(&mut reader, &mut writer);
 

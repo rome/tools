@@ -1,4 +1,4 @@
-use crate::BenchSummary;
+use crate::BenchmarkSummary;
 use itertools::Itertools;
 use rslint_errors::Diagnostic;
 use std::fmt::{Display, Formatter};
@@ -6,7 +6,7 @@ use std::ops::Add;
 use std::time::Duration;
 
 #[derive(Debug, Clone)]
-pub struct BenchmarkParseResult {
+pub struct ParseMeasurement {
     id: String,
     tokenization: Duration,
     parsing: Duration,
@@ -45,7 +45,7 @@ fn print_diff(before: dhat::Stats, current: dhat::Stats) -> dhat::Stats {
 
     current
 }
-pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchSummary {
+pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchmarkSummary {
     #[cfg(feature = "dhat-on")]
     println!("Start");
     #[cfg(feature = "dhat-on")]
@@ -88,7 +88,7 @@ pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchSummary {
     print_diff(stats, dhat::get_stats().unwrap());
 
     diagnostics.extend(sink_diags);
-    BenchSummary::Parser(BenchmarkParseResult {
+    BenchmarkSummary::Parser(ParseMeasurement {
         id: id.to_string(),
         tokenization: tokenization_duration,
         parsing: parse_duration,
@@ -97,7 +97,7 @@ pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchSummary {
     })
 }
 
-impl BenchmarkParseResult {
+impl ParseMeasurement {
     fn total(&self) -> Duration {
         self.tokenization.add(self.parsing).add(self.tree_sink)
     }
@@ -114,7 +114,7 @@ impl BenchmarkParseResult {
     }
 }
 
-impl Display for BenchmarkParseResult {
+impl Display for ParseMeasurement {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         let _ = writeln!(f, "\tTokenization: {:>10?}", self.tokenization);
         let _ = writeln!(f, "\tParsing:      {:>10?}", self.parsing);

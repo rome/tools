@@ -6,9 +6,9 @@ use std::str::FromStr;
 use std::time::Duration;
 
 pub use crate::features::formatter::benchmark_format_lib;
-use crate::features::formatter::BenchmarkFormatterResult;
+use crate::features::formatter::FormatterMeasurement;
 pub use crate::features::parser::benchmark_parse_lib;
-use crate::features::parser::BenchmarkParseResult;
+use crate::features::parser::ParseMeasurement;
 pub use utils::get_code;
 
 /// What feature to benchmark
@@ -20,48 +20,47 @@ pub enum FeatureToBenchmark {
 }
 
 impl FromStr for FeatureToBenchmark {
-    type Err = ();
+    type Err = pico_args::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "parser" => Ok(Self::Parser),
             "formatter" => Ok(Self::Formatter),
-            _ => Ok(Self::Parser),
+            _ => Err(pico_args::Error::OptionWithoutAValue("feature")),
         }
     }
 }
 
 impl Display for FeatureToBenchmark {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        let _ = match self {
+        match self {
             FeatureToBenchmark::Parser => writeln!(f, "parser"),
             FeatureToBenchmark::Formatter => writeln!(f, "formatter"),
-        };
-        Ok(())
+        }
     }
 }
 
 /// If groups the summary by their category and creates a small interface
 /// where each bench result can create their summary
-pub enum BenchSummary {
-    Parser(BenchmarkParseResult),
-    Formatter(BenchmarkFormatterResult),
+pub enum BenchmarkSummary {
+    Parser(ParseMeasurement),
+    Formatter(FormatterMeasurement),
 }
 
-impl BenchSummary {
+impl BenchmarkSummary {
     pub fn summary(&self) -> String {
         match self {
-            BenchSummary::Parser(result) => result.summary(),
-            BenchSummary::Formatter(result) => result.summary(),
+            BenchmarkSummary::Parser(result) => result.summary(),
+            BenchmarkSummary::Formatter(result) => result.summary(),
         }
     }
 }
 
-impl Display for BenchSummary {
+impl Display for BenchmarkSummary {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            BenchSummary::Parser(result) => std::fmt::Display::fmt(&result, f),
-            BenchSummary::Formatter(result) => std::fmt::Display::fmt(&result, f),
+            BenchmarkSummary::Parser(result) => std::fmt::Display::fmt(&result, f),
+            BenchmarkSummary::Formatter(result) => std::fmt::Display::fmt(&result, f),
         }
     }
 }
