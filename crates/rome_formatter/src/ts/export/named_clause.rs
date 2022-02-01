@@ -9,7 +9,7 @@ use rslint_parser::AstSeparatedList;
 impl ToFormatElement for JsExportNamedClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let specifiers = self.specifiers();
-        let space = if specifiers.len() == 0 {
+        let space = if specifiers.is_empty() {
             empty_element()
         } else {
             if_group_fits_on_single_line(space_token())
