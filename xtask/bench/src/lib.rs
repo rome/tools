@@ -1,6 +1,8 @@
 mod features;
 mod utils;
 
+use criterion::BatchSize;
+use rslint_parser::{parse, Syntax};
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use std::time::Duration;
@@ -96,17 +98,22 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                     }
                     let mut group = criterion.benchmark_group(feature.to_string());
                     group.throughput(criterion::Throughput::Bytes(code.len() as u64));
-                    group.bench_function(&id, |b| {
-                        b.iter(|| {
-                            match feature {
-                                FeatureToBenchmark::Parser => {
-                                    let _ = criterion::black_box(run_parse(code));
-                                }
-                                FeatureToBenchmark::Formatter => {
-                                    let _ = criterion::black_box(run_format(code).unwrap());
-                                }
-                            };
-                        })
+                    group.bench_function(&id, |b| match feature {
+                        FeatureToBenchmark::Parser => b.iter(|| {
+                            #[allow(clippy::unit_arg)]
+                            criterion::black_box(run_parse(code));
+                        }),
+                        FeatureToBenchmark::Formatter => b.iter_batched(
+                            || {
+                                let syntax = Syntax::default().module();
+                                parse(code, 0, syntax).syntax()
+                            },
+                            |root| {
+                                #[allow(clippy::unit_arg)]
+                                criterion::black_box(run_format(root));
+                            },
+                            BatchSize::PerIteration,
+                        ),
                     });
                     group.finish();
                 } else {
@@ -116,14 +123,20 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                             run_parse(code);
                         }
                         FeatureToBenchmark::Formatter => {
-                            run_format(code).unwrap();
+                            let syntax = Syntax::default().module();
+                            let root = parse(code, 0, syntax).syntax();
+                            run_format(root);
                         }
                     }
                 }
 
                 let result = match feature {
                     FeatureToBenchmark::Parser => benchmark_parse_lib(&id, code),
-                    FeatureToBenchmark::Formatter => benchmark_format_lib(&id, code),
+                    FeatureToBenchmark::Formatter => {
+                        let syntax = Syntax::default().module();
+                        let root = parse(code, 0, syntax).syntax();
+                        benchmark_format_lib(&id, root)
+                    }
                 };
 
                 summary.push(result.summary());
