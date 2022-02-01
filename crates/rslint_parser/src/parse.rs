@@ -94,7 +94,13 @@ impl<T: AstNode> Parse<T> {
     /// # Panics
     /// Panics if the node represented by this parse result mismatches.
     pub fn tree(&self) -> T {
-        self.try_tree().unwrap()
+        self.try_tree().unwrap_or_else(|| {
+            panic!(
+                "Expected tree to be a {} but root is:\n{:#?}",
+                std::any::type_name::<T>(),
+                self.syntax()
+            )
+        })
     }
 
     /// Try to convert this parse's untyped syntax node into an AST node.

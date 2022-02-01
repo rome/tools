@@ -65,7 +65,7 @@ impl OperatorPrecedence {
             T![^] => OperatorPrecedence::BitwiseXor,
             T![&] => OperatorPrecedence::BitwiseAnd,
             T![==] | T![!=] | T![===] | T![!==] => OperatorPrecedence::Equality,
-            T![<] | T![>] | T![<=] | T![>=] | T![instanceof] | T![in] => {
+            T![<] | T![>] | T![<=] | T![>=] | T![instanceof] | T![in] | T![as] => {
                 OperatorPrecedence::Relational
             }
             T![<<] | T![>>] | T![>>>] => OperatorPrecedence::Shift,

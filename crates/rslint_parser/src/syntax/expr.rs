@@ -268,12 +268,16 @@ pub(crate) fn parse_assignment_expression_or_higher(
 ) -> ParsedSyntax {
     if p.at(T![<]) && is_nth_at_identifier(p, 1) {
         let res = try_parse(p, |p| {
-            let parameters =
+            let type_parameters =
                 parse_ts_type_parameters(p).exclusive_for(p, TypeScript, |p, parameters| {
                     ts_only_syntax_error(p, "type parameters", parameters.range(p).as_range())
                 });
 
-            parameters.map(|parameters| {
+            if !p.at(T!['(']) {
+                return Absent;
+            }
+
+            type_parameters.map(|parameters| {
                 let m = parameters.precede(p);
                 parse_arrow_function(p, m, SignatureFlags::empty())
             })
@@ -466,29 +470,13 @@ fn parse_binary_or_logical_expression_recursive(
     // current operator has the same or a lower precedence than the left-hand side expression. Thus,
     // the algorithm goes at most `count(OperatorPrecedence)` levels deep.
     loop {
-        if OperatorPrecedence::Relational > left_precedence
-            && !p.has_linebreak_before_n(0)
-            && p.cur_src() == "as"
-        {
-            let m = left.precede(p);
-            p.bump_any();
-            let mut res = if p.eat(T![const]) {
-                m.complete(p, TS_CONST_ASSERTION)
-            } else {
-                parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
-                m.complete(p, TS_ASSERTION)
-            };
-            res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
-            left = Present(res);
-            continue;
-        }
-
         let op = match p.cur() {
             T![>] if p.nth_at(1, T![>]) && p.nth_at(2, T![>]) => T![>>>],
             T![>] if p.nth_at(1, T![>]) => T![>>],
             T![in] if !context.is_in_included() => {
                 break;
             }
+            _ if is_at_contextual_keyword(p, "as") && !p.has_linebreak_before_n(0) => T![as],
             k => k,
         };
 
@@ -544,34 +532,37 @@ fn parse_binary_or_logical_expression_recursive(
         }
 
         let m = left.precede(p);
-
         if op == T![>>] {
             p.bump_multiple(2, T![>>]);
         } else if op == T![>>>] {
             p.bump_multiple(3, T![>>>]);
         } else {
-            p.bump_any();
+            p.bump_remap(op);
         }
 
-        // test logical_expressions
-        // foo ?? bar
-        // a || b
-        // a && b
-        //
-        // test_err logical_expressions_err
-        // foo ?? * 2;
-        // !foo && bar;
-        // foo(foo ||)
-        let expression_kind = if is_unknown {
-            JS_UNKNOWN_EXPRESSION
-        } else {
-            match op {
-                T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
-                T![instanceof] => JS_INSTANCEOF_EXPRESSION,
-                T![in] => JS_IN_EXPRESSION,
-                _ => JS_BINARY_EXPRESSION,
+        // test ts_as_expression
+        // // TYPESCRIPT
+        // let x: any = "string";
+        // let y = x as string;
+        // let z = x as const;
+        // let not_an_as_expression = x
+        // as;
+        // let precedence = "hello" as const + 3 as number as number;
+        if op == T![as] {
+            parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+            let mut as_expression = m.complete(p, TS_AS_EXPRESSION);
+
+            if TypeScript.is_unsupported(p) {
+                p.error(ts_only_syntax_error(
+                    p,
+                    "as expression",
+                    as_expression.range(p).as_range(),
+                ));
+                as_expression.change_to_unknown(p);
             }
-        };
+            left = Present(as_expression);
+            continue;
+        }
 
         // This is a hack to allow us to effectively recover from `foo + / bar`
         let right = if OperatorPrecedence::try_from_binary_operator(p.cur()).is_ok()
@@ -611,6 +602,26 @@ fn parse_binary_or_logical_expression_recursive(
         };
 
         right.or_add_diagnostic(p, expected_expression);
+
+        let expression_kind = if is_unknown {
+            JS_UNKNOWN_EXPRESSION
+        } else {
+            match op {
+                // test logical_expressions
+                // foo ?? bar
+                // a || b
+                // a && b
+                //
+                // test_err logical_expressions_err
+                // foo ?? * 2;
+                // !foo && bar;
+                // foo(foo ||)
+                T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
+                T![instanceof] => JS_INSTANCEOF_EXPRESSION,
+                T![in] => JS_IN_EXPRESSION,
+                _ => JS_BINARY_EXPRESSION,
+            }
+        };
 
         left = Present(m.complete(p, expression_kind));
     }
@@ -1791,24 +1802,11 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
     }
 
     if p.at(T![<]) {
-        let m = p.start();
-        p.bump_any();
-        return if p.eat(T![const]) {
-            p.expect(T![>]);
-            parse_unary_expr(p, context)
-                .or_add_diagnostic(p, js_parse_error::expected_unary_expression);
-            let mut res = m.complete(p, TS_CONST_ASSERTION);
-            res.err_if_not_ts(p, "const assertions can only be used in TypeScript files");
-            Present(res)
-        } else {
-            parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
-            p.expect(T![>]);
-            parse_unary_expr(p, context)
-                .or_add_diagnostic(p, js_parse_error::expected_unary_expression);
-            let mut res = m.complete(p, TS_ASSERTION);
-            res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
-            Present(res)
-        };
+        return parse_ts_type_assertion_expression(p, context).exclusive_for(
+            p,
+            TypeScript,
+            |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p).as_range()),
+        );
     }
 
     // test pre_update_expr

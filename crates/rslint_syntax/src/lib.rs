@@ -111,6 +111,8 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_YIELD_EXPRESSION
             | NEW_TARGET
             | JS_TEMPLATE
+            | TS_AS_EXPRESSION
+            | TS_TYPE_ASSERTION_EXPRESSION
             | JS_UNKNOWN_EXPRESSION => JS_UNKNOWN_EXPRESSION,
 
             JS_OBJECT_BINDING_PATTERN

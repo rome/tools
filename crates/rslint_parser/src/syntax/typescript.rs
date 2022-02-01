@@ -6,9 +6,9 @@ use super::expr::{parse_assignment_expression_or_higher, parse_lhs_expr, parse_n
 use crate::parser::ParserProgress;
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
-use crate::syntax::expr::{parse_identifier, ExpressionContext};
+use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::expected_identifier;
+use crate::syntax::js_parse_error::{expected_expression, expected_identifier, expected_ts_type};
 
 use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
@@ -33,6 +33,26 @@ fn parse_ts_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 
         ident
     })
+}
+
+// test ts_type_assertion_expression
+// // TYPESCRIPT
+// let x = <const>"hello";
+// let y = <string> x;
+pub(crate) fn parse_ts_type_assertion_expression(
+    p: &mut Parser,
+    context: ExpressionContext,
+) -> ParsedSyntax {
+    if !p.at(T![<]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T![<]);
+    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    p.expect(T![>]);
+    parse_unary_expr(p, context).or_add_diagnostic(p, expected_expression);
+    Present(m.complete(p, TS_TYPE_ASSERTION_EXPRESSION))
 }
 
 pub(crate) fn ts_modifier(p: &mut Parser, modifiers: &[&'static str]) -> Option<Range<usize>> {
