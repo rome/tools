@@ -230,7 +230,7 @@ impl FormatOptionalTokenAndNode for SyntaxResult<Option<SyntaxToken>> {
                 None => Ok(op()),
                 Some(token) => Ok(with(formatter.format_token(token)?)),
             },
-            Err(err) => Ok(op()),
+            Err(err) => Err(err.into()),
         }
     }
 }
