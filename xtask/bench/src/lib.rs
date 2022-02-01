@@ -98,14 +98,14 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                     group.throughput(criterion::Throughput::Bytes(code.len() as u64));
                     group.bench_function(&id, |b| {
                         b.iter(|| {
-                            let _ = criterion::black_box(match feature {
+                            match feature {
                                 FeatureToBenchmark::Parser => {
-                                    run_parse(code);
+                                    let _ = criterion::black_box(run_parse(code));
                                 }
                                 FeatureToBenchmark::Formatter => {
-                                    run_format(code);
+                                    let _ = criterion::black_box(run_format(code).unwrap());
                                 }
-                            });
+                            };
                         })
                     });
                     group.finish();
@@ -116,7 +116,7 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                             run_parse(code);
                         }
                         FeatureToBenchmark::Formatter => {
-                            run_format(code);
+                            run_format(code).unwrap();
                         }
                     }
                 }

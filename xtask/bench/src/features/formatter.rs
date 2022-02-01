@@ -1,5 +1,5 @@
 use crate::BenchmarkSummary;
-use rome_formatter::{format, FormatOptions};
+use rome_formatter::{format, FormatOptions, FormatResult, Formatted};
 use rslint_parser::{parse, Syntax};
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
@@ -11,7 +11,7 @@ pub struct FormatterMeasurement {
 }
 pub fn benchmark_format_lib(id: &str, code: &str) -> BenchmarkSummary {
     let formatter_timer = timing::start();
-    run_format(code);
+    run_format(code).unwrap();
     let formatter_duration = formatter_timer.stop();
 
     BenchmarkSummary::Formatter(FormatterMeasurement {
@@ -20,11 +20,11 @@ pub fn benchmark_format_lib(id: &str, code: &str) -> BenchmarkSummary {
     })
 }
 
-pub fn run_format(code: &str) {
+pub fn run_format(code: &str) -> FormatResult<Formatted> {
     let syntax = Syntax::default().module();
     let root = parse(code, 0, syntax).syntax();
 
-    let _ = format(FormatOptions::default(), &root);
+    format(FormatOptions::default(), &root)
 }
 
 impl FormatterMeasurement {
