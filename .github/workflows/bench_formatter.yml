@@ -1,7 +1,7 @@
 # Parser benchmark, compares main and PR branch with Criterion.
 # Comment with text containing `!bench`, a new result will be commented at the bottom of this PR.
 
-name: Parser Benchmark
+name: Formatter Benchmark
 
 on:
   issue_comment:
@@ -14,13 +14,13 @@ env:
 jobs:
   bench:
     name: Bench
-    if: github.event.issue.pull_request && contains(github.event.comment.body, '!bench')
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '!bench_formatter')
     runs-on: ${{ matrix.os }}
 
     strategy:
       fail-fast: false
       matrix:
-       os: [ubuntu-latest]
+        os: [ubuntu-latest]
 
     steps:
       - name: Checkout PR Branch
@@ -30,7 +30,7 @@ jobs:
 
       - name: Support longpaths
         run: git config core.longpaths true
-        
+
       - name: Checkout PR Branch
         uses: actions/checkout@v2
 
@@ -50,13 +50,13 @@ jobs:
         run: cargo build --release --locked -p xtask_bench
 
       - name: Run Bench on PR Branch
-        run: cargo benchmark --save-baseline pr
+        run: cargo bench_formatter --save-baseline pr
 
       - name: Checkout Main Branch
         run: git checkout main
 
       - name: Run Bench on Main Branch
-        run: cargo benchmark --save-baseline main
+        run: cargo bench_formatter --save-baseline main
 
       - name: Compare Bench Results on ${{ matrix.os }}
         id: bench_comparison

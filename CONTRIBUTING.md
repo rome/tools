@@ -99,7 +99,8 @@ Here are some other scripts that you might find useful.
 If you are a core contributor, and you have access to create new branches
 from the main repository (not a fork), use these comments to run specific workflows:
 
-- `!bench` benchmarks the parser's runtime performance and writes a comment with the results
+- `!bench_parser` benchmarks the parser's runtime performance and writes a comment with the results;
+- `!bench_formatter` benchmarks the formatter runtime performance and writes a comment with the results;
 
 #### Naming patterns
 

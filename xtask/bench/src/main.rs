@@ -1,7 +1,6 @@
 use pico_args::Arguments;
 use xtask::{project_root, pushd, Result};
-
-use xtask_bench::run;
+use xtask_bench::{run, FeatureToBenchmark};
 
 #[cfg(feature = "dhat-on")]
 use dhat::DhatAlloc;
@@ -10,7 +9,7 @@ use dhat::DhatAlloc;
 #[global_allocator]
 static ALLOCATOR: DhatAlloc = DhatAlloc;
 
-fn main() -> Result<()> {
+fn main() -> Result<(), pico_args::Error> {
     #[cfg(feature = "dhat-on")]
     let dhat = dhat::Dhat::start_heap_profiling();
 
@@ -32,8 +31,9 @@ fn main() -> Result<()> {
         .unwrap()
         .unwrap_or(true);
     let baseline: Option<String> = args.opt_value_from_str("--save-baseline").unwrap();
+    // "feature" is a mandatory option and will throw an error if it's missing or incorrect
+    let feature: FeatureToBenchmark = args.value_from_str("--feature")?;
 
-    run(filter, criterion, baseline);
-
+    run(filter, criterion, baseline, feature);
     Ok(())
 }

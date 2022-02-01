@@ -2,17 +2,18 @@
 
 This crate contains benchmark suites for the project.
 
+Criterion is used to generate benchmark results.
+
 ## Parser Benchmark
 
-Criterion is used to generate benchmark results,
-you can use the following instruction to get nice benchmark comparison.
+To get a benchmark comparison, you need to run the benchmark for `main` branch and your PR:
 
 ```bash
 # (commit your code on pr branch, run)
 git checkout main
-cargo benchmark --save-baseline main
+cargo bench_parser --save-baseline main
 git checkout -
-cargo benchmark --save-baseline pr
+cargo bench_parser --save-baseline pr
 critcmp main pr # (cargo install critcmp)
 ```
 
@@ -35,6 +36,19 @@ parser/vue.global.prod.js             1.09     28.7±6.39ms     4.2 MB/sec     1
 
 The 1.xx column is the percentage difference, larger means worse.
 For example jquery is 16% slower on main. And the pr branch performs better overall.
+
+## Formatter benchmark
+
+To get a benchmark comparison, you need to run the benchmark for `main` branch and your PR:
+
+```bash
+# (commit your code on pr branch, run)
+git checkout main
+cargo bench_formatter --save-baseline main
+git checkout -
+cargo bench_formatter --save-baseline pr
+critcmp main pr # (cargo install critcmp)
+```
 
 ## Heap Profiling using `dhat`
 

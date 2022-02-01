@@ -64,7 +64,9 @@ impl ToFormatElement for JsAnyLiteralExpression {
             JsAnyLiteralExpression::JsNullLiteralExpression(null_literal) => {
                 null_literal.to_format_element(formatter)
             }
-            JsAnyLiteralExpression::JsRegexLiteralExpression(_) => todo!(),
+            JsAnyLiteralExpression::JsRegexLiteralExpression(node) => {
+                node.to_format_element(formatter)
+            }
         }
     }
 }
