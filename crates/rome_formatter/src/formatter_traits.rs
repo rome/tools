@@ -1,4 +1,7 @@
-use crate::{empty_element, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::Token;
+use crate::{
+    empty_element, format_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
+};
 use rslint_parser::{AstNode, SyntaxResult, SyntaxToken};
 
 /// Utility trait used to simplify the formatting of optional tokens
@@ -209,7 +212,7 @@ impl FormatOptionalTokenAndNode for Option<SyntaxToken> {
     {
         match self {
             None => Ok(op()),
-            Some(token) => Ok(with(formatter.format_token(token)?)),
+            Some(token) => Ok(with(token.format(formatter)?)),
         }
     }
 }
@@ -228,29 +231,62 @@ impl FormatOptionalTokenAndNode for SyntaxResult<Option<SyntaxToken>> {
         match self {
             Ok(token) => match token {
                 None => Ok(op()),
-                Some(token) => Ok(with(formatter.format_token(token)?)),
+                Some(token) => Ok(with(token.format(formatter)?)),
             },
             Err(err) => Err(err.into()),
         }
     }
 }
 
-impl FormatTokenAndNode for SyntaxResult<SyntaxToken> {
+impl<F: FormatTokenAndNode> FormatTokenAndNode for SyntaxResult<F> {
     fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
     where
         With: FnOnce(FormatElement) -> FormatElement,
     {
         match self {
-            Ok(token) => {
-                let formatted_token = formatter.format_token(token)?;
-                Ok(with(formatted_token))
-            }
+            Ok(token) => Ok(with(token.format(formatter)?)),
             Err(err) => Err(err.into()),
         }
     }
 }
 
-impl<Node: AstNode + ToFormatElement> FormatOptionalTokenAndNode for Option<Node> {
+impl FormatTokenAndNode for SyntaxToken {
+    fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
+    where
+        With: FnOnce(FormatElement) -> FormatElement,
+    {
+        cfg_if::cfg_if! {
+            if #[cfg(debug_assertions)] {
+                assert!(formatter.printed_tokens.borrow_mut().insert(self.clone()));
+            }
+        }
+
+        Ok(with(format_elements![
+            formatter.print_leading_trivia(self),
+            Token::from(self),
+            formatter.print_trailing_trivia(self),
+        ]))
+    }
+}
+
+impl<T: AstNode + ToFormatElement> FormatTokenAndNode for T {
+    fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
+    where
+        With: FnOnce(FormatElement) -> FormatElement,
+    {
+        let leading = formatter.format_node_start(self.syntax());
+        let trailing = formatter.format_node_end(self.syntax());
+        Ok(with(format_elements![
+            leading,
+            self.to_format_element(formatter)?,
+            trailing,
+        ]))
+    }
+}
+
+impl<Node: AstNode + ToFormatElement + FormatTokenAndNode> FormatOptionalTokenAndNode
+    for Option<Node>
+{
     fn format_with_or<With, Or>(
         &self,
         formatter: &Formatter,
@@ -263,32 +299,7 @@ impl<Node: AstNode + ToFormatElement> FormatOptionalTokenAndNode for Option<Node
     {
         match self {
             None => Ok(op()),
-            Some(node) => Ok(with(formatter.format_node(node)?)),
-        }
-    }
-}
-
-impl<Node: AstNode + ToFormatElement> FormatTokenAndNode for Node {
-    fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> FormatElement,
-    {
-        let formatted_node = formatter.format_node(self)?;
-        Ok(with(formatted_node))
-    }
-}
-
-impl<Node: AstNode + ToFormatElement> FormatTokenAndNode for SyntaxResult<Node> {
-    fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> FormatElement,
-    {
-        match self {
-            Ok(node) => {
-                let formatted_node = formatter.format_node(node)?;
-                Ok(with(formatted_node))
-            }
-            Err(err) => Err(err.into()),
+            Some(node) => Ok(with(node.format(formatter)?)),
         }
     }
 }

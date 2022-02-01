@@ -3,7 +3,6 @@ use std::cell::RefCell;
 #[cfg(debug_assertions)]
 use std::collections::HashSet;
 
-use crate::formatter::token::FormattableToken;
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     concat_elements, empty_element, empty_line,
@@ -26,7 +25,7 @@ pub struct Formatter {
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
     #[cfg(debug_assertions)]
-    printed_tokens: RefCell<HashSet<SyntaxToken>>,
+    pub(super) printed_tokens: RefCell<HashSet<SyntaxToken>>,
 }
 
 impl Formatter {
@@ -135,14 +134,14 @@ impl Formatter {
 
     /// Helper function that returns what should be printed before the node that work on
     /// the non-generic [SyntaxNode] to avoid unrolling the logic for every [AstNode] type.
-    fn format_node_start(&self, _node: &SyntaxNode) -> FormatElement {
+    pub(super) fn format_node_start(&self, _node: &SyntaxNode) -> FormatElement {
         // TODO: Set the marker for the start source map location, ...
         empty_element()
     }
 
     /// Helper function that returns what should be printed after the node that work on
     /// the non-generic [SyntaxNode] to avoid unrolling the logic for every [AstNode] type.
-    fn format_node_end(&self, _node: &SyntaxNode) -> FormatElement {
+    pub(super) fn format_node_end(&self, _node: &SyntaxNode) -> FormatElement {
         // TODO: Sets the marker for the end source map location, ...
         empty_element()
     }
@@ -255,7 +254,7 @@ impl Formatter {
                     // but still print its associated trivias unconditionally
                     self.format_replaced(&separator, if_group_breaks(Token::from(&separator)))?
                 } else {
-                    separator.format(self)?
+                    FormatTokenAndNode::format(&separator, self)?
                 }
             } else if index == last_index {
                 if_group_breaks(separator_factory())
@@ -297,7 +296,7 @@ impl Formatter {
         join_elements_hard_line(formatted_list)
     }
 
-    fn print_leading_trivia(&self, token: &SyntaxToken) -> FormatElement {
+    pub(super) fn print_leading_trivia(&self, token: &SyntaxToken) -> FormatElement {
         let mut line_count = 0;
         let mut elements = Vec::new();
 
@@ -328,7 +327,7 @@ impl Formatter {
         concat_elements(elements.into_iter().rev())
     }
 
-    fn print_trailing_trivia(&self, token: &SyntaxToken) -> FormatElement {
+    pub(super) fn print_trailing_trivia(&self, token: &SyntaxToken) -> FormatElement {
         let mut elements = Vec::new();
 
         for piece in token.trailing_trivia().pieces() {
