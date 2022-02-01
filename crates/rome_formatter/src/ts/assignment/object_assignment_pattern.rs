@@ -1,3 +1,4 @@
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     empty_element, format_elements, group_elements, join_elements, soft_block_indent,
     soft_line_break_or_space, space_token, token, FormatElement, FormatResult, Formatter,
@@ -51,11 +52,9 @@ impl ToFormatElement for JsAnyObjectAssignmentPatternMember {
 
 impl ToFormatElement for JsObjectAssignmentPatternShorthandProperty {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let init_node = if let Some(node) = self.init() {
-            format_elements![space_token(), formatter.format_node(&node)?]
-        } else {
-            empty_element()
-        };
+        let init_node = self
+            .init()
+            .format_with_or_empty(formatter, |node| format_elements![space_token(), node])?;
         Ok(format_elements![
             formatter.format_node(&self.identifier()?)?,
             init_node
@@ -65,16 +64,14 @@ impl ToFormatElement for JsObjectAssignmentPatternShorthandProperty {
 
 impl ToFormatElement for JsObjectAssignmentPatternProperty {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let init_node = if let Some(node) = self.init() {
-            format_elements![space_token(), formatter.format_node(&node)?]
-        } else {
-            empty_element()
-        };
+        let init_node = self
+            .init()
+            .format_with_or_empty(formatter, |node| format_elements![space_token(), node])?;
         Ok(format_elements![
-            formatter.format_node(&self.member()?)?,
-            formatter.format_token(&self.colon_token()?)?,
+            self.member().format(formatter)?,
+            self.colon_token().format(formatter)?,
             space_token(),
-            formatter.format_node(&self.pattern()?)?,
+            self.pattern().format(formatter)?,
             init_node,
         ])
     }
@@ -83,8 +80,8 @@ impl ToFormatElement for JsObjectAssignmentPatternProperty {
 impl ToFormatElement for JsObjectAssignmentPatternRest {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_token(&self.dotdotdot_token()?)?,
-            formatter.format_node(&self.target()?)?,
+            self.dotdotdot_token().format(formatter)?,
+            self.target().format(formatter)?,
         ])
     }
 }

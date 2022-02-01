@@ -3,6 +3,8 @@ use std::cell::RefCell;
 #[cfg(debug_assertions)]
 use std::collections::HashSet;
 
+use crate::formatter::token::FormattableToken;
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     concat_elements, empty_element, empty_line,
     format_element::{normalize_newlines, Token},
@@ -211,7 +213,7 @@ impl Formatter {
         let mut result = Vec::new();
 
         for node in nodes {
-            match self.format_node(&node) {
+            match node.format(self) {
                 Ok(formatted) => {
                     result.push(formatted);
                 }
@@ -242,7 +244,7 @@ impl Formatter {
         let last_index = list.len().saturating_sub(1);
 
         for (index, element) in list.elements().enumerate() {
-            let node = self.format_node(&element.node()?)?;
+            let node = element.node()?.format(self)?;
 
             // Reuse the existing trailing separator or create it if it wasn't in the
             // input source. Only print the last trailing token if the outer group breaks
@@ -253,7 +255,7 @@ impl Formatter {
                     // but still print its associated trivias unconditionally
                     self.format_replaced(&separator, if_group_breaks(Token::from(&separator)))?
                 } else {
-                    self.format_token(&separator)?
+                    separator.format(self)?
                 }
             } else if index == last_index {
                 if_group_breaks(separator_factory())
@@ -280,7 +282,7 @@ impl Formatter {
     {
         let formatted_list = list.iter().map(|module_item| {
             let snapshot = self.snapshot();
-            let elem = match self.format_node(&module_item) {
+            let elem = match module_item.format(self) {
                 Ok(result) => result,
                 Err(_) => {
                     self.restore(snapshot);

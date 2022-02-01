@@ -214,6 +214,27 @@ impl FormatOptionalTokenAndNode for Option<SyntaxToken> {
     }
 }
 
+impl FormatOptionalTokenAndNode for SyntaxResult<Option<SyntaxToken>> {
+    fn format_with_or<With, Or>(
+        &self,
+        formatter: &Formatter,
+        with: With,
+        op: Or,
+    ) -> FormatResult<FormatElement>
+    where
+        With: FnOnce(FormatElement) -> FormatElement,
+        Or: FnOnce() -> FormatElement,
+    {
+        match self {
+            Ok(token) => match token {
+                None => Ok(op()),
+                Some(token) => Ok(with(formatter.format_token(token)?)),
+            },
+            Err(err) => Ok(op()),
+        }
+    }
+}
+
 impl FormatTokenAndNode for SyntaxResult<SyntaxToken> {
     fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
     where
@@ -254,5 +275,20 @@ impl<Node: AstNode + ToFormatElement> FormatTokenAndNode for Node {
     {
         let formatted_node = formatter.format_node(self)?;
         Ok(with(formatted_node))
+    }
+}
+
+impl<Node: AstNode + ToFormatElement> FormatTokenAndNode for SyntaxResult<Node> {
+    fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
+    where
+        With: FnOnce(FormatElement) -> FormatElement,
+    {
+        match self {
+            Ok(node) => {
+                let formatted_node = formatter.format_node(node)?;
+                Ok(with(formatted_node))
+            }
+            Err(err) => Err(err.into()),
+        }
     }
 }

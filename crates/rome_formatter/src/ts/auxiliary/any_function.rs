@@ -1,4 +1,5 @@
 use crate::format_element::soft_line_indent_or_space;
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     concat_elements, empty_element, format_elements, group_elements, space_token, token,
     FormatElement, FormatResult, Formatter, ToFormatElement,
@@ -11,32 +12,27 @@ impl ToFormatElement for JsAnyFunction {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let mut tokens = vec![];
 
-        if let Some(token) = self.async_token() {
-            tokens.push(formatter.format_token(&token)?);
-            tokens.push(space_token());
-        }
+        tokens.push(
+            self.async_token()
+                .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?,
+        );
 
-        if let Some(function) = self.function_token()? {
-            tokens.push(formatter.format_token(&function)?)
-        }
-
-        if let Some(token) = self.star_token() {
-            tokens.push(formatter.format_token(&token)?);
-        }
+        tokens.push(self.function_token().format_or_empty(formatter)?);
+        tokens.push(self.star_token().format_or_empty(formatter)?);
 
         tokens.push(match self {
             JsAnyFunction::JsArrowFunctionExpression(_) => empty_element(),
             _ => match self.id()? {
-                Some(id) => format_elements![space_token(), formatter.format_node(&id)?],
+                Some(id) => format_elements![space_token(), id.format(formatter)?],
                 None => space_token(),
             },
         });
 
         tokens.push(match self.parameters()? {
             JsAnyArrowFunctionParameters::JsAnyBinding(binding) => {
-                format_elements![token("("), formatter.format_node(&binding)?, token(")")]
+                format_elements![token("("), binding.format(formatter)?, token(")")]
             }
-            JsAnyArrowFunctionParameters::JsParameters(params) => formatter.format_node(&params)?,
+            JsAnyArrowFunctionParameters::JsParameters(params) => params.format(formatter)?,
         });
 
         tokens.push(space_token());
@@ -55,7 +51,7 @@ impl ToFormatElement for JsAnyFunction {
         //
         let mut body_group = vec![];
         if let JsAnyFunction::JsArrowFunctionExpression(arrow) = self {
-            body_group.push(formatter.format_token(&arrow.fat_arrow_token()?)?);
+            body_group.push(arrow.fat_arrow_token().format(formatter)?);
             body_group.push(space_token());
         }
 
@@ -89,11 +85,9 @@ impl ToFormatElement for JsAnyFunction {
         );
 
         if body_has_soft_line_break {
-            body_group.push(formatter.format_node(&self.body()?)?);
+            body_group.push(self.body().format(formatter)?);
         } else {
-            body_group.push(soft_line_indent_or_space(
-                formatter.format_node(&self.body()?)?,
-            ));
+            body_group.push(soft_line_indent_or_space(self.body().format(formatter)?));
         }
 
         tokens.push(group_elements(concat_elements(body_group)));
