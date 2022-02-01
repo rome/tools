@@ -1,0 +1,18 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 57
+expression: variable_declaration.js
+
+---
+# Input
+export let a, d, c;
+
+export const foofoofoofoofoofoofoo = "ahah", barbarbarbarbarbarbar = {}, loremloremloremloremlorem = []
+---
+# Output
+export let a, d, c;
+
+export const foofoofoofoofoofoofoo = "ahah",
+	barbarbarbarbarbarbar = {},
+	loremloremloremloremlorem = [];
+

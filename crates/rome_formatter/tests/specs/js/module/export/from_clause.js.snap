@@ -1,0 +1,23 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 57
+expression: from_clause.js
+
+---
+# Input
+export * from "hey"
+
+export * as something_bad_will_happen from "something_bad_might_not_happen"
+
+export * as something_bad_will_happen from "something_bad_might_not_happen" assert { "type": "json", "type2": "json3"}
+---
+# Output
+export * from "hey";
+
+export * as something_bad_will_happen from "something_bad_might_not_happen";
+
+export * as something_bad_will_happen from "something_bad_might_not_happen"assert {
+	"type": "json",
+	"type2": "json3",
+};
+

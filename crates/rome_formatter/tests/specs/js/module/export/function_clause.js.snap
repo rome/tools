@@ -1,0 +1,22 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 57
+expression: function_clause.js
+
+---
+# Input
+export function f() {
+
+    
+}
+
+
+export default function ff() {
+
+}
+---
+# Output
+export function f() {}
+
+export default function ff() {}
+

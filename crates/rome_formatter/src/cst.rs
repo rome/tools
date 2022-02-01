@@ -4,15 +4,20 @@ use rslint_parser::ast::{
     JsBlockStatement, JsBooleanLiteralExpression, JsCallArguments, JsCallExpression, JsCaseClause,
     JsCatchClause, JsClassStatement, JsConstructorParameters, JsContinueStatement,
     JsDebuggerStatement, JsDefaultClause, JsDefaultImportSpecifier, JsDoWhileStatement,
-    JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsForInStatement, JsForStatement,
-    JsFunctionStatement, JsGetterClassMember, JsIdentifierBinding, JsIdentifierExpression,
-    JsIfStatement, JsImport, JsImportAssertion, JsImportAssertionEntry, JsImportBareClause,
-    JsImportCallExpression, JsImportDefaultClause, JsImportNamedClause, JsImportNamespaceClause,
-    JsLabeledStatement, JsLiteralExportName, JsModule, JsModuleSource, JsNamedImportSpecifier,
-    JsNamedImportSpecifiers, JsNamespaceImportSpecifier, JsNullLiteralExpression,
-    JsNumberLiteralExpression, JsObjectExpression, JsParameters, JsPropertyClassMember,
-    JsPropertyObjectMember, JsReturnStatement, JsScript, JsSequenceExpression, JsSetterClassMember,
-    JsShorthandNamedImportSpecifier, JsShorthandPropertyObjectMember, JsSpread, JsStatementList,
+    JsEmptyStatement, JsExport, JsExportAsClause, JsExportClassClause, JsExportDefaultClassClause,
+    JsExportDefaultExpressionClause, JsExportDefaultFunctionClause, JsExportFromClause,
+    JsExportFunctionClause, JsExportNamedClause, JsExportNamedFromClause,
+    JsExportNamedFromSpecifier, JsExportNamedShorthandSpecifier, JsExportNamedSpecifier,
+    JsExportVariableClause, JsExpressionStatement, JsFinallyClause, JsForInStatement,
+    JsForStatement, JsFunctionStatement, JsGetterClassMember, JsIdentifierBinding,
+    JsIdentifierExpression, JsIfStatement, JsImport, JsImportAssertion, JsImportAssertionEntry,
+    JsImportBareClause, JsImportCallExpression, JsImportDefaultClause, JsImportNamedClause,
+    JsImportNamespaceClause, JsLabeledStatement, JsLiteralExportName, JsModule, JsModuleSource,
+    JsNamedImportSpecifier, JsNamedImportSpecifiers, JsNamespaceImportSpecifier,
+    JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression, JsParameters,
+    JsPropertyClassMember, JsPropertyObjectMember, JsReturnStatement, JsScript,
+    JsSequenceExpression, JsSetterClassMember, JsShorthandNamedImportSpecifier,
+    JsShorthandPropertyObjectMember, JsSpread, JsStatementList,
     JsStaticInitializationBlockClassMember, JsStringLiteralExpression, JsSwitchStatement,
     JsTemplate, JsTemplateChunkElement, JsTemplateElement, JsTryStatement, JsUnknownAssignment,
     JsUnknownBinding, JsUnknownExpression, JsUnknownImportAssertionEntry, JsUnknownMember,
@@ -277,6 +282,62 @@ impl ToFormatElement for SyntaxNode {
             JsSyntaxKind::IMPORT_META => ImportMeta::cast(self.clone())
                 .unwrap()
                 .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT => JsExport::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_CLASS_CLAUSE => JsExportClassClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_DEFAULT_CLASS_CLAUSE => {
+                JsExportDefaultClassClause::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+            JsSyntaxKind::JS_EXPORT_FUNCTION_CLAUSE => JsExportFunctionClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_DEFAULT_FUNCTION_CLAUSE => {
+                JsExportDefaultFunctionClause::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+            JsSyntaxKind::JS_EXPORT_VARIABLE_CLAUSE => JsExportVariableClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE => {
+                JsExportDefaultExpressionClause::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+            JsSyntaxKind::JS_EXPORT_FROM_CLAUSE => JsExportFromClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+
+            JsSyntaxKind::JS_EXPORT_AS_CLAUSE => JsExportAsClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_NAMED_CLAUSE => JsExportNamedClause::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_NAMED_SPECIFIER => JsExportNamedSpecifier::cast(self.clone())
+                .unwrap()
+                .to_format_element(formatter),
+            JsSyntaxKind::JS_EXPORT_NAMED_SHORTHAND_SPECIFIER => {
+                JsExportNamedShorthandSpecifier::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+            JsSyntaxKind::JS_EXPORT_NAMED_FROM_CLAUSE => {
+                JsExportNamedFromClause::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+            JsSyntaxKind::JS_EXPORT_NAMED_FROM_SPECIFIER => {
+                JsExportNamedFromSpecifier::cast(self.clone())
+                    .unwrap()
+                    .to_format_element(formatter)
+            }
+
             _ => todo!(
                 "Implement formatting for the {:?} syntax kind.",
                 self.kind()
