@@ -76,6 +76,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_WHILE_STATEMENT
             | JS_WITH_STATEMENT
             | TS_TYPE_ALIAS
+            | TS_ENUM
             | JS_UNKNOWN_STATEMENT => JS_UNKNOWN_STATEMENT,
 
             IMPORT_META
