@@ -199,45 +199,6 @@ pub trait FormatTokenAndNode {
         With: FnOnce(FormatElement) -> FormatElement;
 }
 
-impl FormatOptionalTokenAndNode for Option<SyntaxToken> {
-    fn format_with_or<With, Or>(
-        &self,
-        formatter: &Formatter,
-        with: With,
-        op: Or,
-    ) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> FormatElement,
-        Or: FnOnce() -> FormatElement,
-    {
-        match self {
-            None => Ok(op()),
-            Some(token) => Ok(with(token.format(formatter)?)),
-        }
-    }
-}
-
-impl FormatOptionalTokenAndNode for SyntaxResult<Option<SyntaxToken>> {
-    fn format_with_or<With, Or>(
-        &self,
-        formatter: &Formatter,
-        with: With,
-        op: Or,
-    ) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> FormatElement,
-        Or: FnOnce() -> FormatElement,
-    {
-        match self {
-            Ok(token) => match token {
-                None => Ok(op()),
-                Some(token) => Ok(with(token.format(formatter)?)),
-            },
-            Err(err) => Err(err.into()),
-        }
-    }
-}
-
 impl<F: FormatTokenAndNode> FormatTokenAndNode for SyntaxResult<F> {
     fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
     where
@@ -269,7 +230,7 @@ impl FormatTokenAndNode for SyntaxToken {
     }
 }
 
-impl<T: AstNode + ToFormatElement> FormatTokenAndNode for T {
+impl<N: AstNode + ToFormatElement> FormatTokenAndNode for N {
     fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
     where
         With: FnOnce(FormatElement) -> FormatElement,
@@ -284,9 +245,25 @@ impl<T: AstNode + ToFormatElement> FormatTokenAndNode for T {
     }
 }
 
-impl<Node: AstNode + ToFormatElement + FormatTokenAndNode> FormatOptionalTokenAndNode
-    for Option<Node>
-{
+impl<F: FormatOptionalTokenAndNode> FormatOptionalTokenAndNode for SyntaxResult<F> {
+    fn format_with_or<With, Or>(
+        &self,
+        formatter: &Formatter,
+        with: With,
+        op: Or,
+    ) -> FormatResult<FormatElement>
+    where
+        With: FnOnce(FormatElement) -> FormatElement,
+        Or: FnOnce() -> FormatElement,
+    {
+        match self {
+            Ok(token) => token.format_with_or(formatter, with, op),
+            Err(err) => Err(err.into()),
+        }
+    }
+}
+
+impl<F: FormatTokenAndNode> FormatOptionalTokenAndNode for Option<F> {
     fn format_with_or<With, Or>(
         &self,
         formatter: &Formatter,
@@ -299,7 +276,7 @@ impl<Node: AstNode + ToFormatElement + FormatTokenAndNode> FormatOptionalTokenAn
     {
         match self {
             None => Ok(op()),
-            Some(node) => Ok(with(node.format(formatter)?)),
+            Some(token) => token.format_with(formatter, with),
         }
     }
 }
