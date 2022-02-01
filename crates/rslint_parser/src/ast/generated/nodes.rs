@@ -263,7 +263,7 @@ impl JsCallExpression {
     pub fn optional_chain_token_token(&self) -> Option<SyntaxToken> {
         support::token(&self.syntax, 1usize)
     }
-    pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax, 2usize) }
+    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
     pub fn arguments(&self) -> SyntaxResult<JsCallArguments> {
         support::required_node(&self.syntax, 3usize)
     }
@@ -321,16 +321,19 @@ impl JsClassExpression {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 1usize) }
-    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 2usize) }
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
+        support::node(&self.syntax, 2usize)
+    }
+    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 3usize) }
     pub fn implements_clause(&self) -> Option<TsImplementsClause> {
-        support::node(&self.syntax, 3usize)
+        support::node(&self.syntax, 4usize)
     }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 4usize)
+        support::required_token(&self.syntax, 5usize)
     }
-    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 5usize) }
+    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 6usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 6usize)
+        support::required_token(&self.syntax, 7usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -342,16 +345,19 @@ impl JsClassStatement {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 1usize) }
-    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 2usize) }
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
+        support::node(&self.syntax, 2usize)
+    }
+    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 3usize) }
     pub fn implements_clause(&self) -> Option<TsImplementsClause> {
-        support::node(&self.syntax, 3usize)
+        support::node(&self.syntax, 4usize)
     }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 4usize)
+        support::required_token(&self.syntax, 5usize)
     }
-    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 5usize) }
+    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 6usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 6usize)
+        support::required_token(&self.syntax, 7usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -605,16 +611,19 @@ impl JsExportClassClause {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 1usize) }
-    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 2usize) }
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
+        support::node(&self.syntax, 2usize)
+    }
+    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 3usize) }
     pub fn implements_clause(&self) -> Option<TsImplementsClause> {
-        support::node(&self.syntax, 3usize)
+        support::node(&self.syntax, 4usize)
     }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 4usize)
+        support::required_token(&self.syntax, 5usize)
     }
-    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 5usize) }
+    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 6usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 6usize)
+        support::required_token(&self.syntax, 7usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -629,16 +638,19 @@ impl JsExportDefaultClassClause {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 2usize) }
-    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 3usize) }
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
+        support::node(&self.syntax, 3usize)
+    }
+    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 4usize) }
     pub fn implements_clause(&self) -> Option<TsImplementsClause> {
-        support::node(&self.syntax, 4usize)
+        support::node(&self.syntax, 5usize)
     }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 5usize)
+        support::required_token(&self.syntax, 6usize)
     }
-    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 6usize) }
+    pub fn members(&self) -> JsClassMemberList { support::list(&self.syntax, 7usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 7usize)
+        support::required_token(&self.syntax, 8usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1447,7 +1459,7 @@ impl JsNewExpression {
     pub fn callee(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax, 2usize) }
+    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
     pub fn arguments(&self) -> Option<JsCallArguments> { support::node(&self.syntax, 3usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1967,12 +1979,13 @@ pub struct JsTemplate {
 }
 impl JsTemplate {
     pub fn tag(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 0usize) }
+    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
     pub fn l_tick_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+        support::required_token(&self.syntax, 2usize)
     }
-    pub fn elements(&self) -> JsTemplateElementList { support::list(&self.syntax, 2usize) }
+    pub fn elements(&self) -> JsTemplateElementList { support::list(&self.syntax, 3usize) }
     pub fn r_tick_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
+        support::required_token(&self.syntax, 4usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2416,7 +2429,7 @@ pub struct TsExprWithTypeArgs {
 }
 impl TsExprWithTypeArgs {
     pub fn item(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
-    pub fn type_params(&self) -> Option<TsTypeArgs> { support::node(&self.syntax, 1usize) }
+    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExternalModuleRef {
@@ -2852,7 +2865,7 @@ pub struct TsReferenceType {
 }
 impl TsReferenceType {
     pub fn name(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
-    pub fn type_arguments(&self) -> Option<TsTypeArgs> { support::node(&self.syntax, 1usize) }
+    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsRestTupleTypeElement {
@@ -3013,14 +3026,16 @@ impl TsTypeAnnotation {
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsTypeArgs {
+pub struct TsTypeArguments {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsTypeArgs {
+impl TsTypeArguments {
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ts_type_arg_list(&self) -> TsTypeArgList { support::list(&self.syntax, 1usize) }
+    pub fn ts_type_argument_list(&self) -> TsTypeArgumentList {
+        support::list(&self.syntax, 1usize)
+    }
     pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -4087,8 +4102,8 @@ impl std::fmt::Debug for JsCallExpression {
                 &support::DebugOptionalElement(self.optional_chain_token_token()),
             )
             .field(
-                "type_args",
-                &support::DebugOptionalElement(self.type_args()),
+                "type_arguments",
+                &support::DebugOptionalElement(self.type_arguments()),
             )
             .field("arguments", &support::DebugSyntaxResult(self.arguments()))
             .finish()
@@ -4214,6 +4229,10 @@ impl std::fmt::Debug for JsClassExpression {
             )
             .field("id", &support::DebugOptionalElement(self.id()))
             .field(
+                "type_parameters",
+                &support::DebugOptionalElement(self.type_parameters()),
+            )
+            .field(
                 "extends_clause",
                 &support::DebugOptionalElement(self.extends_clause()),
             )
@@ -4258,6 +4277,10 @@ impl std::fmt::Debug for JsClassStatement {
                 &support::DebugSyntaxResult(self.class_token()),
             )
             .field("id", &support::DebugSyntaxResult(self.id()))
+            .field(
+                "type_parameters",
+                &support::DebugOptionalElement(self.type_parameters()),
+            )
             .field(
                 "extends_clause",
                 &support::DebugOptionalElement(self.extends_clause()),
@@ -4843,6 +4866,10 @@ impl std::fmt::Debug for JsExportClassClause {
             )
             .field("id", &support::DebugSyntaxResult(self.id()))
             .field(
+                "type_parameters",
+                &support::DebugOptionalElement(self.type_parameters()),
+            )
+            .field(
                 "extends_clause",
                 &support::DebugOptionalElement(self.extends_clause()),
             )
@@ -4891,6 +4918,10 @@ impl std::fmt::Debug for JsExportDefaultClassClause {
                 &support::DebugSyntaxResult(self.class_token()),
             )
             .field("id", &support::DebugOptionalElement(self.id()))
+            .field(
+                "type_parameters",
+                &support::DebugOptionalElement(self.type_parameters()),
+            )
             .field(
                 "extends_clause",
                 &support::DebugOptionalElement(self.extends_clause()),
@@ -6605,8 +6636,8 @@ impl std::fmt::Debug for JsNewExpression {
             .field("new_token", &support::DebugSyntaxResult(self.new_token()))
             .field("callee", &support::DebugSyntaxResult(self.callee()))
             .field(
-                "type_args",
-                &support::DebugOptionalElement(self.type_args()),
+                "type_arguments",
+                &support::DebugOptionalElement(self.type_arguments()),
             )
             .field(
                 "arguments",
@@ -7794,6 +7825,10 @@ impl std::fmt::Debug for JsTemplate {
         f.debug_struct("JsTemplate")
             .field("tag", &support::DebugOptionalElement(self.tag()))
             .field(
+                "type_arguments",
+                &support::DebugOptionalElement(self.type_arguments()),
+            )
+            .field(
                 "l_tick_token",
                 &support::DebugSyntaxResult(self.l_tick_token()),
             )
@@ -8807,8 +8842,8 @@ impl std::fmt::Debug for TsExprWithTypeArgs {
         f.debug_struct("TsExprWithTypeArgs")
             .field("item", &support::DebugSyntaxResult(self.item()))
             .field(
-                "type_params",
-                &support::DebugOptionalElement(self.type_params()),
+                "type_arguments",
+                &support::DebugOptionalElement(self.type_arguments()),
             )
             .finish()
     }
@@ -10235,8 +10270,8 @@ impl From<TsTypeAnnotation> for SyntaxNode {
 impl From<TsTypeAnnotation> for SyntaxElement {
     fn from(n: TsTypeAnnotation) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsTypeArgs {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ARGS }
+impl AstNode for TsTypeArguments {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ARGUMENTS }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -10246,14 +10281,14 @@ impl AstNode for TsTypeArgs {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsTypeArgs {
+impl std::fmt::Debug for TsTypeArguments {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsTypeArgs")
+        f.debug_struct("TsTypeArguments")
             .field(
                 "l_angle_token",
                 &support::DebugSyntaxResult(self.l_angle_token()),
             )
-            .field("ts_type_arg_list", &self.ts_type_arg_list())
+            .field("ts_type_argument_list", &self.ts_type_argument_list())
             .field(
                 "r_angle_token",
                 &support::DebugSyntaxResult(self.r_angle_token()),
@@ -10261,11 +10296,11 @@ impl std::fmt::Debug for TsTypeArgs {
             .finish()
     }
 }
-impl From<TsTypeArgs> for SyntaxNode {
-    fn from(n: TsTypeArgs) -> SyntaxNode { n.syntax }
+impl From<TsTypeArguments> for SyntaxNode {
+    fn from(n: TsTypeArguments) -> SyntaxNode { n.syntax }
 }
-impl From<TsTypeArgs> for SyntaxElement {
-    fn from(n: TsTypeArgs) -> SyntaxElement { n.syntax.into() }
+impl From<TsTypeArguments> for SyntaxElement {
+    fn from(n: TsTypeArguments) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsTypeConstraintClause {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_CONSTRAINT_CLAUSE }
@@ -15860,7 +15895,7 @@ impl std::fmt::Display for TsTypeAnnotation {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsTypeArgs {
+impl std::fmt::Display for TsTypeArguments {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17102,14 +17137,14 @@ impl IntoIterator for &TsTupleTypeElementList {
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
-pub struct TsTypeArgList {
+pub struct TsTypeArgumentList {
     syntax_list: SyntaxList,
 }
-impl AstNode for TsTypeArgList {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ARG_LIST }
-    fn cast(syntax: SyntaxNode) -> Option<TsTypeArgList> {
+impl AstNode for TsTypeArgumentList {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ARGUMENT_LIST }
+    fn cast(syntax: SyntaxNode) -> Option<TsTypeArgumentList> {
         if Self::can_cast(syntax.kind()) {
-            Some(TsTypeArgList {
+            Some(TsTypeArgumentList {
                 syntax_list: syntax.into_list(),
             })
         } else {
@@ -17118,21 +17153,21 @@ impl AstNode for TsTypeArgList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstSeparatedList<TsType> for TsTypeArgList {
+impl AstSeparatedList<TsType> for TsTypeArgumentList {
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
-impl Debug for TsTypeArgList {
+impl Debug for TsTypeArgumentList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.write_str("TsTypeArgList ")?;
+        f.write_str("TsTypeArgumentList ")?;
         f.debug_list().entries(self.elements()).finish()
     }
 }
-impl IntoIterator for TsTypeArgList {
+impl IntoIterator for TsTypeArgumentList {
     type Item = SyntaxResult<TsType>;
     type IntoIter = AstSeparatedListNodesIterator<TsType>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-impl IntoIterator for &TsTypeArgList {
+impl IntoIterator for &TsTypeArgumentList {
     type Item = SyntaxResult<TsType>;
     type IntoIter = AstSeparatedListNodesIterator<TsType>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
@@ -17977,10 +18012,12 @@ impl Debug for DebugSyntaxElement {
                 TS_TYPE_ANNOTATION => {
                     std::fmt::Debug::fmt(&TsTypeAnnotation::cast(node.clone()).unwrap(), f)
                 }
-                TS_TYPE_ARG_LIST => {
-                    std::fmt::Debug::fmt(&TsTypeArgList::cast(node.clone()).unwrap(), f)
+                TS_TYPE_ARGUMENT_LIST => {
+                    std::fmt::Debug::fmt(&TsTypeArgumentList::cast(node.clone()).unwrap(), f)
                 }
-                TS_TYPE_ARGS => std::fmt::Debug::fmt(&TsTypeArgs::cast(node.clone()).unwrap(), f),
+                TS_TYPE_ARGUMENTS => {
+                    std::fmt::Debug::fmt(&TsTypeArguments::cast(node.clone()).unwrap(), f)
+                }
                 TS_TYPE_CONSTRAINT_CLAUSE => {
                     std::fmt::Debug::fmt(&TsTypeConstraintClause::cast(node.clone()).unwrap(), f)
                 }

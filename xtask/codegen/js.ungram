@@ -306,6 +306,7 @@ JsAnyExpression =
 
 JsTemplate =
 	tag: JsAnyExpression?
+	type_arguments: TsTypeArguments?
 	l_tick: '`'
 	elements: JsTemplateElementList
 	r_tick: '`'
@@ -331,14 +332,14 @@ JsSuperExpression = 'super'
 JsNewExpression =
 	'new'
 	callee: JsAnyExpression
-	type_args: TsTypeArgs?
+	type_arguments: TsTypeArguments?
 	arguments: JsCallArguments?
 
 // call expression
 JsCallExpression =
 	callee: JsAnyExpression
 	optional_chain_token: '?.'?
-	type_args: TsTypeArgs?
+	type_arguments: TsTypeArguments?
 	arguments: JsCallArguments
 
 
@@ -561,6 +562,7 @@ JsShorthandPropertyObjectMember = name: JsReferenceIdentifier
 JsClassStatement =
 	'class'
 	id: JsAnyBinding
+	type_parameters: TsTypeParameters?
 	extends_clause: JsExtendsClause?
 	implements_clause: TsImplementsClause?
 	'{'
@@ -571,6 +573,7 @@ JsClassStatement =
 JsClassExpression =
 	'class'
 	id: JsAnyBinding?
+	type_parameters: TsTypeParameters?
 	extends_clause: JsExtendsClause?
 	implements_clause: TsImplementsClause?
 	'{'
@@ -1177,6 +1180,7 @@ JsExportFunctionClause =
 JsExportClassClause =
 	'class'
 	id: JsAnyBinding
+	type_parameters: TsTypeParameters?
 	extends_clause: JsExtendsClause?
 	implements_clause: TsImplementsClause?
 	'{'
@@ -1196,6 +1200,7 @@ JsExportDefaultClassClause =
 	'default'
 	'class'
 	id: JsAnyBinding?
+	type_parameters: TsTypeParameters?
 	extends_clause: JsExtendsClause?
 	implements_clause: TsImplementsClause?
 	'{'
@@ -1451,7 +1456,7 @@ TsParenthesizedType =
 
 TsReferenceType =
 	name: TsAnyName
-	type_arguments: TsTypeArgs?
+	type_arguments: TsTypeArguments?
 
 TsTypeAlias =
 	'type'
@@ -1760,7 +1765,9 @@ TsTemplateElement =
 	'}'
 
 
-TsExprWithTypeArgs = item: TsAnyName type_params: TsTypeArgs?
+TsExprWithTypeArgs =
+	item: TsAnyName
+	type_arguments: TsTypeArguments?
 
 TsAnyName =
 	JsReferenceIdentifier
@@ -1771,8 +1778,12 @@ TsQualifiedName =
 	'.'
 	right: JsName
 
-TsTypeArgs = '<' TsTypeArgList '>'
-TsTypeArgList = (TsType (',' TsType)* )
+TsTypeArguments =
+	'<'
+	TsTypeArgumentList
+	'>'
+
+TsTypeArgumentList = (TsType (',' TsType)* )
 
 TsConstructorParam =
 	accessibility: ('private' | 'protected' | 'public')?

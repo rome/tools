@@ -104,7 +104,7 @@ JsModule {
                                 },
                             },
                             optional_chain_token_token: missing (optional),
-                            type_args: missing (optional),
+                            type_arguments: missing (optional),
                             arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@95..96 "(" [] [],
                                 args: JsCallArgumentList [],
@@ -139,7 +139,7 @@ JsModule {
                                     },
                                 },
                                 optional_chain_token_token: missing (optional),
-                                type_args: missing (optional),
+                                type_arguments: missing (optional),
                                 arguments: JsCallArguments {
                                     l_paren_token: L_PAREN@123..124 "(" [] [],
                                     args: JsCallArgumentList [],
@@ -396,7 +396,7 @@ JsModule {
                                 },
                             },
                             optional_chain_token_token: missing (optional),
-                            type_args: missing (optional),
+                            type_arguments: missing (optional),
                             arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@355..356 "(" [] [],
                                 args: JsCallArgumentList [],
@@ -435,7 +435,7 @@ JsModule {
                                     },
                                 },
                                 optional_chain_token_token: missing (optional),
-                                type_args: missing (optional),
+                                type_arguments: missing (optional),
                                 arguments: JsCallArguments {
                                     l_paren_token: L_PAREN@384..385 "(" [] [],
                                     args: JsCallArgumentList [],

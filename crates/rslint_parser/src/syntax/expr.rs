@@ -15,11 +15,12 @@ use crate::syntax::assignment::{
 };
 use crate::syntax::class::parse_class_expression;
 use crate::syntax::function::{
-    parse_arrow_body, parse_arrow_function_parameters, parse_function_expression,
+    parse_arrow_body, parse_arrow_function, parse_arrow_function_parameters,
+    parse_function_expression,
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
-    expected_expression, expected_identifier, expected_parameter,
+    expected_expression, expected_identifier, expected_parameter, expected_parameters,
     expected_simple_assignment_target, expected_ts_type, ts_only_syntax_error,
 };
 use crate::syntax::object::parse_object_expression;
@@ -265,25 +266,21 @@ pub(crate) fn parse_assignment_expression_or_higher(
     p: &mut Parser,
     context: ExpressionContext,
 ) -> ParsedSyntax {
-    if p.at(T![<]) && is_nth_at_name(p, 1) {
-        let res = try_parse_ts(p, |p| {
-            let m = p.start();
-            if parse_ts_type_parameters(p).is_absent() {
-                m.abandon(p);
-                return None;
-            }
+    if p.at(T![<]) && is_nth_at_identifier(p, 1) {
+        let res = try_parse(p, |p| {
+            let parameters =
+                parse_ts_type_parameters(p).exclusive_for(p, TypeScript, |p, parameters| {
+                    ts_only_syntax_error(p, "type parameters", parameters.range(p).as_range())
+                });
 
-            let res = parse_assignment_expression_or_higher_base(p, context);
-            if res.kind() == Some(JS_ARROW_FUNCTION_EXPRESSION) {
-                m.abandon(p);
-                return None;
-            }
-            res.abandon(p);
-            Some(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION))
+            parameters.map(|parameters| {
+                let m = parameters.precede(p);
+                parse_arrow_function(p, m, SignatureFlags::empty())
+            })
         });
-        if let Some(mut res) = res {
-            res.err_if_not_ts(p, "type parameters can only be used in TypeScript files");
-            return Present(res);
+
+        if res.is_present() {
+            return res;
         }
     }
     parse_assignment_expression_or_higher_base(p, context)
@@ -631,88 +628,114 @@ fn parse_binary_or_logical_expression_recursive(
 
 // test_err new_exprs
 // new;
-fn parse_member_or_new_expr(
+fn parse_member_expression_or_higher(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+    parse_primary_expression(p, context)
+        .map(|lhs| parse_member_expression_rest(p, lhs, context, true, &mut false))
+}
+
+// test_err subscripts_err
+// foo()?.baz[].;
+// BAR`b
+fn parse_member_expression_rest(
     p: &mut Parser,
-    new_expr: bool,
+    lhs: CompletedMarker,
     context: ExpressionContext,
-) -> ParsedSyntax {
-    if p.at(T![new]) {
-        // We must start the marker here and not outside or else we make
-        // a needless node if the node ends up just being a primary expr
-        let m = p.start();
-        p.bump_any();
+    allow_optional_chain: bool,
+    in_optional_chain: &mut bool,
+) -> CompletedMarker {
+    let mut progress = ParserProgress::default();
+    let mut lhs = lhs;
 
-        // new.target
-        if p.at(T![.]) && p.token_src(p.nth_tok(1)) == "target" {
-            p.bump_any();
-            p.bump_remap(T![target]);
-            let complete = m.complete(p, NEW_TARGET);
-            return Present(subscripts(p, complete, true, context));
-        }
-
-        let complete = parse_member_or_new_expr(p, new_expr, context);
-        if complete.kind() == Some(JS_ARROW_FUNCTION_EXPRESSION) {
-            m.abandon(p);
-            return complete;
-        }
-
-        complete.or_add_diagnostic(p, expected_expression);
-
-        if p.at(T![<]) {
-            if let Some(mut complete) = try_parse_ts(p, |p| {
-                let compl = ts_type_args(p);
-                if !p.at(T!['(']) {
-                    return None;
-                }
-                compl
-            }) {
-                complete.err_if_not_ts(
-                    p,
-                    "`new` expressions can only have type arguments in TypeScript files",
-                );
+    while !p.at(EOF) {
+        progress.assert_progressing(p);
+        lhs = match p.cur() {
+            T![.] => parse_static_member_expression(p, lhs, T![.]).unwrap(),
+            T!['['] => parse_computed_member_expression(p, lhs, false, context).unwrap(),
+            T![?.] if allow_optional_chain => {
+                let completed = if p.nth_at(1, T!['[']) {
+                    parse_computed_member_expression(p, lhs, true, context).unwrap()
+                } else if is_nth_at_any_name(p, 1) {
+                    parse_static_member_expression(p, lhs, T![?.]).unwrap()
+                } else if p.nth_at(1, BACKTICK) {
+                    let m = lhs.precede(p);
+                    p.bump(T![?.]);
+                    let template_literal = p.start();
+                    parse_template_literal(p, template_literal, true);
+                    m.complete(p, JS_UNKNOWN_EXPRESSION)
+                } else {
+                    // '(' or any other unexpected character
+                    break;
+                };
+                *in_optional_chain = true;
+                completed
             }
-        }
-
-        if !new_expr || p.at(T!['(']) {
-            // it's safe to unwrap to because we check beforehand the existence of '('
-            // which is mandatory for `parse_arguments`
-            parse_arguments(p, context).unwrap();
-            let complete = m.complete(p, JS_NEW_EXPRESSION);
-            return Present(subscripts(p, complete, true, context));
-        }
-        return Present(m.complete(p, JS_NEW_EXPRESSION));
-    }
-
-    // super.foo and super[bar]
-    // test super_property_access
-    // super.foo
-    // super[bar]
-    // super[foo][bar]
-    if p.at(T![super]) && token_set!(T![.], T!['['], T![?.]).contains(p.nth(1)) {
-        let super_completed = parse_super_expression(p);
-
-        if let Present(mut super_marker) = super_completed {
-            let lhs = match p.cur() {
-                T![.] => parse_static_member_expression(p, super_marker, T![.]),
-                T!['['] => parse_computed_member_expression(p, super_marker, false, context),
-                T![?.] => {
-                    super_marker.change_kind(p, JS_UNKNOWN_EXPRESSION);
-                    p.error(
-                        p.err_builder(
-                            "Super doesn't support optional chaining as super can never be null",
-                        )
-                        .primary(super_marker.range(p), ""),
-                    );
-                    parse_static_member_expression(p, super_marker, T![?.])
-                }
-                _ => unreachable!(),
-            };
-
-            return lhs.map(|lhs| subscripts(p, lhs, true, context));
+            T![!] if !p.has_linebreak_before_n(0) => {
+                // FIXME(RDambrosio016): we need to tell the lexer that an expression is not
+                // allowed here, but we have no way of doing that currently because we get all of the
+                // tokens ahead of time, therefore we need to switch to using the lexer as an iterator
+                // which isn't as simple as it sounds :)
+                let m = lhs.precede(p);
+                p.bump_any();
+                let mut non_null = m.complete(p, TS_NON_NULL);
+                non_null.err_if_not_ts(
+                    p,
+                    "non-null assertions can only be used in TypeScript files",
+                );
+                non_null
+            }
+            BACKTICK => {
+                // test ts_optional_chain_call
+                // // TYPESCRIPT
+                // (<A, B>() => {})?.<A, B>();
+                let m = lhs.precede(p);
+                parse_template_literal(p, m, *in_optional_chain)
+            }
+            _ => break,
         }
     }
 
-    parse_primary_expression(p, context).map(|lhs| subscripts(p, lhs, true, context))
+    lhs
+}
+
+fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+    if !p.at(T![new]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump_any();
+
+    // new.target
+    if p.at(T![.]) && p.token_src(p.nth_tok(1)) == "target" {
+        p.bump_any();
+        p.bump_remap(T![target]);
+        return Present(m.complete(p, NEW_TARGET));
+    }
+
+    let expression = parse_primary_expression(p, context).or_add_diagnostic(p, expected_expression);
+
+    if let Some(lhs) = expression {
+        parse_member_expression_rest(p, lhs, context, false, &mut false);
+    }
+
+    // test ts_new_with_type_arguments
+    // // TYPESCRIPT
+    // class Test<A, B, C> {}
+    // new Test<A, B, C>();
+    let type_arguments = if TypeScript.is_supported(p) {
+        parse_ts_type_arguments_in_expression(p)
+    } else {
+        Absent
+    };
+
+    if p.at(T!['(']) {
+        parse_arguments(p, context).unwrap();
+    } else if let Present(type_arguments) = type_arguments {
+        let error = p.err_builder("A 'new' expression with type arguments must always be followed by a parenthesized argument list.").primary(type_arguments.range(p), "");
+        p.error(error);
+    }
+
+    Present(m.complete(p, JS_NEW_EXPRESSION))
 }
 
 // test super_expression
@@ -740,120 +763,31 @@ fn parse_super_expression(p: &mut Parser) -> ParsedSyntax {
     }
     let super_marker = p.start();
     p.expect(T![super]);
-    Present(super_marker.complete(p, JS_SUPER_EXPRESSION))
+    let mut super_expression = super_marker.complete(p, JS_SUPER_EXPRESSION);
+
+    if p.at(T![?.]) {
+        super_expression.change_kind(p, JS_UNKNOWN_EXPRESSION);
+        p.error(
+            p.err_builder("Super doesn't support optional chaining as super can never be null")
+                .primary(super_expression.range(p), ""),
+        );
+    } else if p.at(T!['(']) && !p.state.in_constructor() {
+        p.error(
+            p.err_builder("`super` is only valid inside of a class constructor of a subclass.")
+                .primary(super_expression.range(p), ""),
+        );
+        super_expression.change_kind(p, JS_UNKNOWN_EXPRESSION);
+    }
+
+    match p.cur() {
+        T![.] | T!['['] | T!['('] | T![?.] => Present(super_expression),
+        _ => parse_static_member_expression(p, super_expression, T![.]),
+    }
 }
 
-/// Dot, Array, or Call expr subscripts. Including optional chaining.
 // test subscripts
 // foo`bar`
 // foo(bar)(baz)(baz)[bar]
-fn subscripts(
-    p: &mut Parser,
-    mut lhs: CompletedMarker,
-    no_call: bool,
-    context: ExpressionContext,
-) -> CompletedMarker {
-    // test_err subscripts_err
-    // foo()?.baz[].;
-    // BAR`b
-    let mut should_try_parsing_ts = true;
-    let mut progress = ParserProgress::default();
-    let mut is_optional_chain = false;
-    while !p.at(EOF) {
-        progress.assert_progressing(p);
-
-        match p.cur() {
-            T![?.] if p.nth_at(1, T!['(']) => {
-                is_optional_chain = true;
-                lhs = {
-                    let m = lhs.precede(p);
-                    p.bump_any();
-                    // it's safe to unwrap to because we check beforehand the existence of '('
-                    // which is mandatory for `parse_arguments`
-                    parse_arguments(p, context).unwrap();
-                    m.complete(p, JS_CALL_EXPRESSION)
-                }
-            }
-            T!['('] if !no_call => {
-                lhs = {
-                    let m = lhs.precede(p);
-                    // it's safe to unwrap to because we check beforehand the existence of '('
-                    // which is mandatory for `parse_arguments`
-                    parse_arguments(p, context).unwrap();
-                    m.complete(p, JS_CALL_EXPRESSION)
-                }
-            }
-            T![?.] if p.nth_at(1, T!['[']) => {
-                is_optional_chain = true;
-                lhs = parse_computed_member_expression(p, lhs, true, context).unwrap()
-            }
-            T!['['] => lhs = parse_computed_member_expression(p, lhs, false, context).unwrap(),
-            T![?.] => {
-                is_optional_chain = true;
-                lhs = parse_static_member_expression(p, lhs, T![?.]).unwrap()
-            }
-            T![.] => lhs = parse_static_member_expression(p, lhs, T![.]).unwrap(),
-            T![!] if !p.has_linebreak_before_n(0) => {
-                lhs = {
-                    // FIXME(RDambrosio016): we need to tell the lexer that an expression is not
-                    // allowed here, but we have no way of doing that currently because we get all of the
-                    // tokens ahead of time, therefore we need to switch to using the lexer as an iterator
-                    // which isn't as simple as it sounds :)
-                    let m = lhs.precede(p);
-                    p.bump_any();
-                    let mut comp = m.complete(p, TS_NON_NULL);
-                    comp.err_if_not_ts(
-                        p,
-                        "non-null assertions can only be used in TypeScript files",
-                    );
-                    comp
-                }
-            }
-            T![<] if p.typescript() && should_try_parsing_ts => {
-                let res = try_parse_ts(p, |p| {
-                    let m = lhs.precede(p);
-                    // TODO: handle generic async arrow function expressions
-                    if ts_type_args(p).is_none() {
-                        m.abandon(p);
-                        return None;
-                    }
-
-                    if !no_call && p.at(T!['(']) {
-                        // we already to the check on '(', so it's safe to unwrap
-                        parse_arguments(p, context).unwrap();
-                        Some(m.complete(p, JS_CALL_EXPRESSION))
-                    } else if p.at(BACKTICK) {
-                        m.abandon(p);
-                        Some(parse_template_literal(p, Present(lhs)))
-                    } else {
-                        None
-                    }
-                });
-                if res.is_none() {
-                    should_try_parsing_ts = false;
-                }
-            }
-            BACKTICK => {
-                lhs = parse_template_literal(p, Present(lhs));
-                // test_err template_after_optional_chain
-                // obj.val?.prop`template`
-                // obj.val?.[expr]`template`
-                // obj.func?.(args)`template`
-                if is_optional_chain {
-                    p.error(
-                        p.err_builder(
-                            "Tagged template expressions are not permitted in an optional chain.",
-                        )
-                        .primary(lhs.range(p), ""),
-                    );
-                    lhs.change_kind(p, JS_UNKNOWN_EXPRESSION);
-                }
-            }
-            _ => return lhs,
-        }
-    }
-    lhs
-}
 
 /// A static member expression for accessing a property
 // test static_member_expression
@@ -1153,19 +1087,7 @@ fn parse_paren_or_arrow_expr(p: &mut Parser, context: ExpressionContext) -> Pars
     if is_parameters || has_return_type_annotation || (p.at(T![=>]) && !p.has_linebreak_before_n(0))
     {
         p.rewind(checkpoint);
-        parse_arrow_function_parameters(p, SignatureFlags::empty()).unwrap();
-        TypeScript
-            .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
-                ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
-            })
-            .ok();
-
-        p.expect(T![=>]);
-
-        parse_arrow_body(p, SignatureFlags::empty())
-            .or_add_diagnostic(p, js_parse_error::expected_arrow_body);
-
-        return Present(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION));
+        return Present(parse_arrow_function(p, m, SignatureFlags::empty()));
     }
 
     // test js_parenthesized_expression
@@ -1443,7 +1365,12 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                 return Absent;
             }
         }
-        BACKTICK => parse_template_literal(p, Absent),
+        T![new] => parse_new_expr(p, context).unwrap(),
+
+        BACKTICK => {
+            let m = p.start();
+            parse_template_literal(p, m, false)
+        }
         ERROR_TOKEN => {
             let m = p.start();
             p.bump_any();
@@ -1572,8 +1499,12 @@ pub(crate) fn is_nth_at_identifier_or_keyword(p: &Parser, n: usize) -> bool {
 
 // test_err template_literal
 // let a = `foo ${}`
-pub fn parse_template_literal(p: &mut Parser, tag: ParsedSyntax) -> CompletedMarker {
-    let m = tag.precede(p);
+pub fn parse_template_literal(
+    p: &mut Parser,
+    marker: Marker,
+    in_optional_chain: bool,
+) -> CompletedMarker {
+    debug_assert!(p.at(BACKTICK));
 
     p.expect(BACKTICK);
     let elements_list = p.start();
@@ -1608,7 +1539,21 @@ pub fn parse_template_literal(p: &mut Parser, tag: ParsedSyntax) -> CompletedMar
 
     // The lexer already should throw an error for unterminated template literal
     p.eat(BACKTICK);
-    m.complete(p, JS_TEMPLATE)
+    let mut completed = marker.complete(p, JS_TEMPLATE);
+
+    // test_err template_after_optional_chain
+    // obj.val?.prop`template`
+    // obj.val?.[expr]`template`
+    // obj.func?.(args)`template`
+    if in_optional_chain {
+        p.error(
+            p.err_builder("Tagged template expressions are not permitted in an optional chain.")
+                .primary(completed.range(p), ""),
+        );
+        completed.change_kind(p, JS_UNKNOWN_EXPRESSION);
+    }
+
+    completed
 }
 
 struct ArrayElementsList;
@@ -1689,57 +1634,77 @@ fn parse_spread_element(p: &mut Parser, context: ExpressionContext) -> ParsedSyn
 
 /// A left hand side expression, either a member expression or a call expression such as `foo()`.
 pub(super) fn parse_lhs_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
-    let lhs = if p.at(T![super]) && p.nth_at(1, T!['(']) {
-        let super_syntax = parse_super_expression(p);
-        if let Present(mut super_marker) = super_syntax {
-            if !p.state.in_constructor() {
-                p.error(
-                    p.err_builder(
-                        "`super` is only valid inside of a class constructor of a subclass.",
-                    )
-                    .primary(super_marker.range(p), ""),
-                );
-                super_marker.change_kind(p, JS_UNKNOWN_EXPRESSION);
-            }
-        }
-
-        super_syntax
+    // super.foo and super[bar]
+    // test super_property_access
+    // super.foo
+    // super[bar]
+    // super[foo][bar]
+    let lhs = if p.at(T![super]) {
+        parse_super_expression(p)
     } else {
-        parse_member_or_new_expr(p, true, context)
+        parse_member_expression_or_higher(p, context)
     };
 
     if lhs.kind() == Some(JS_ARROW_FUNCTION_EXPRESSION) {
         return lhs;
     }
 
-    lhs.map(|lhs_marker| {
-        let m = lhs_marker.precede(p);
-        let type_args = if p.at(T![<]) {
-            let checkpoint = p.checkpoint();
-            let mut complete = try_parse_ts(p, ts_type_args);
-            if !p.at(T!['(']) {
-                p.rewind(checkpoint);
-                None
-            } else {
-                if let Some(ref mut comp) = complete {
-                    comp.err_if_not_ts(p, "type arguments can only be used in TypeScript files");
-                }
-                complete
-            }
-        } else {
-            None
-        };
+    lhs.map(|lhs_marker| parse_call_expression_rest(p, lhs_marker, context))
+}
 
-        if p.at(T!['(']) || type_args.is_some() {
-            // it's safe to unwrap
-            parse_arguments(p, context).unwrap();
-            let lhs = m.complete(p, JS_CALL_EXPRESSION);
-            return subscripts(p, lhs, false, context);
+fn parse_call_expression_rest(
+    p: &mut Parser,
+    lhs: CompletedMarker,
+    context: ExpressionContext,
+) -> CompletedMarker {
+    let mut lhs = lhs;
+    let mut in_optional_chain = false;
+    loop {
+        lhs = parse_member_expression_rest(p, lhs, context, true, &mut in_optional_chain);
+
+        let m = lhs.precede(p);
+        let optional_chain_call = p.eat(T![?.]);
+        in_optional_chain = in_optional_chain || optional_chain_call;
+
+        // test ts_call_expr_with_type_arguments
+        // // TYPESCRIPT
+        // function a<A, B, C>() {}
+        // a<A, B, C>();
+        // (() => { a }).a<A, B, C>()
+        // (() => a)<A, B, C>();
+        if TypeScript.is_supported(p) && p.at(T![<]) {
+            // rewinds automatically if not a valid type arguments
+            let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
+
+            if type_arguments.is_some() {
+                if p.at(BACKTICK) {
+                    // test ts_tagged_template_literal
+                    // // TYPESCRIPT
+                    // html<A, B>`abcd`
+                    // html<A, B>`abcd`._string
+                    lhs = parse_template_literal(p, m, optional_chain_call);
+                    continue;
+                }
+
+                parse_arguments(p, context).or_add_diagnostic(p, expected_parameters);
+                lhs = m.complete(p, JS_CALL_EXPRESSION);
+                continue;
+            }
+        } else if p.at(T!['(']) {
+            parse_arguments(p, context).or_add_diagnostic(p, expected_parameters);
+            lhs = m.complete(p, JS_CALL_EXPRESSION);
+            continue;
+        }
+
+        if optional_chain_call {
+            p.error(expected_identifier(p, p.cur_tok().range()));
         }
 
         m.abandon(p);
-        lhs_marker
-    })
+        break;
+    }
+
+    lhs
 }
 
 /// A postifx expression, either `LHSExpr [no linebreak] ++` or `LHSExpr [no linebreak] --`.
@@ -2048,4 +2013,8 @@ pub(super) fn is_at_name(p: &Parser) -> bool {
 
 pub(super) fn is_nth_at_name(p: &Parser, offset: usize) -> bool {
     p.nth_at(offset, T![ident]) || p.nth(offset).is_keyword()
+}
+
+pub(super) fn is_nth_at_any_name(p: &Parser, n: usize) -> bool {
+    is_nth_at_name(p, n) || p.nth_at(n, T![#])
 }

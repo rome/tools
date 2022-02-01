@@ -1,0 +1,143 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsTemplate {
+                tag: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@0..18 "html" [Comments("// TYPESCRIPT"), Newline("\n")] [],
+                    },
+                },
+                type_arguments: TsTypeArguments {
+                    l_angle_token: L_ANGLE@18..19 "<" [] [],
+                    ts_type_argument_list: TsTypeArgumentList [
+                        TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@19..20 "A" [] [],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                        COMMA@20..22 "," [] [Whitespace(" ")],
+                        TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@22..23 "B" [] [],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                    ],
+                    r_angle_token: R_ANGLE@23..24 ">" [] [],
+                },
+                l_tick_token: BACKTICK@24..25 "`" [] [],
+                elements: JsTemplateElementList [
+                    JsTemplateChunkElement {
+                        template_chunk_token: TEMPLATE_CHUNK@25..29 "abcd" [] [],
+                    },
+                ],
+                r_tick_token: BACKTICK@29..30 "`" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsTemplate {
+                    tag: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@30..35 "html" [Newline("\n")] [],
+                        },
+                    },
+                    type_arguments: TsTypeArguments {
+                        l_angle_token: L_ANGLE@35..36 "<" [] [],
+                        ts_type_argument_list: TsTypeArgumentList [
+                            TsReferenceType {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@36..37 "A" [] [],
+                                },
+                                type_arguments: missing (optional),
+                            },
+                            COMMA@37..39 "," [] [Whitespace(" ")],
+                            TsReferenceType {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@39..40 "B" [] [],
+                                },
+                                type_arguments: missing (optional),
+                            },
+                        ],
+                        r_angle_token: R_ANGLE@40..41 ">" [] [],
+                    },
+                    l_tick_token: BACKTICK@41..42 "`" [] [],
+                    elements: JsTemplateElementList [
+                        JsTemplateChunkElement {
+                            template_chunk_token: TEMPLATE_CHUNK@42..46 "abcd" [] [],
+                        },
+                    ],
+                    r_tick_token: BACKTICK@46..47 "`" [] [],
+                },
+                operator: DOT@47..48 "." [] [],
+                member: JsName {
+                    value_token: IDENT@48..55 "_string" [] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@55..56 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..56
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..55
+    0: JS_EXPRESSION_STATEMENT@0..30
+      0: JS_TEMPLATE@0..30
+        0: JS_IDENTIFIER_EXPRESSION@0..18
+          0: JS_REFERENCE_IDENTIFIER@0..18
+            0: IDENT@0..18 "html" [Comments("// TYPESCRIPT"), Newline("\n")] []
+        1: TS_TYPE_ARGUMENTS@18..24
+          0: L_ANGLE@18..19 "<" [] []
+          1: TS_TYPE_ARGUMENT_LIST@19..23
+            0: TS_REFERENCE_TYPE@19..20
+              0: JS_REFERENCE_IDENTIFIER@19..20
+                0: IDENT@19..20 "A" [] []
+              1: (empty)
+            1: COMMA@20..22 "," [] [Whitespace(" ")]
+            2: TS_REFERENCE_TYPE@22..23
+              0: JS_REFERENCE_IDENTIFIER@22..23
+                0: IDENT@22..23 "B" [] []
+              1: (empty)
+          2: R_ANGLE@23..24 ">" [] []
+        2: BACKTICK@24..25 "`" [] []
+        3: JS_TEMPLATE_ELEMENT_LIST@25..29
+          0: JS_TEMPLATE_CHUNK_ELEMENT@25..29
+            0: TEMPLATE_CHUNK@25..29 "abcd" [] []
+        4: BACKTICK@29..30 "`" [] []
+      1: (empty)
+    1: JS_EXPRESSION_STATEMENT@30..55
+      0: JS_STATIC_MEMBER_EXPRESSION@30..55
+        0: JS_TEMPLATE@30..47
+          0: JS_IDENTIFIER_EXPRESSION@30..35
+            0: JS_REFERENCE_IDENTIFIER@30..35
+              0: IDENT@30..35 "html" [Newline("\n")] []
+          1: TS_TYPE_ARGUMENTS@35..41
+            0: L_ANGLE@35..36 "<" [] []
+            1: TS_TYPE_ARGUMENT_LIST@36..40
+              0: TS_REFERENCE_TYPE@36..37
+                0: JS_REFERENCE_IDENTIFIER@36..37
+                  0: IDENT@36..37 "A" [] []
+                1: (empty)
+              1: COMMA@37..39 "," [] [Whitespace(" ")]
+              2: TS_REFERENCE_TYPE@39..40
+                0: JS_REFERENCE_IDENTIFIER@39..40
+                  0: IDENT@39..40 "B" [] []
+                1: (empty)
+            2: R_ANGLE@40..41 ">" [] []
+          2: BACKTICK@41..42 "`" [] []
+          3: JS_TEMPLATE_ELEMENT_LIST@42..46
+            0: JS_TEMPLATE_CHUNK_ELEMENT@42..46
+              0: TEMPLATE_CHUNK@42..46 "abcd" [] []
+          4: BACKTICK@46..47 "`" [] []
+        1: DOT@47..48 "." [] []
+        2: JS_NAME@48..55
+          0: IDENT@48..55 "_string" [] []
+      1: (empty)
+  3: EOF@55..56 "" [Newline("\n")] []

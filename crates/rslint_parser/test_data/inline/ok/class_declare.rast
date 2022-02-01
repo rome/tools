@@ -7,6 +7,7 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
             },
+            type_parameters: missing (optional),
             extends_clause: missing (optional),
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
@@ -42,6 +43,7 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@31..33 "B" [] [Whitespace(" ")],
             },
+            type_parameters: missing (optional),
             extends_clause: missing (optional),
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@33..35 "{" [] [Whitespace(" ")],
@@ -85,8 +87,9 @@ JsModule {
         0: IDENT@6..8 "B" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      5: JS_CLASS_MEMBER_LIST@10..23
+      4: (empty)
+      5: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      6: JS_CLASS_MEMBER_LIST@10..23
         0: JS_METHOD_CLASS_MEMBER@10..23
           0: (empty)
           1: (empty)
@@ -106,15 +109,16 @@ JsModule {
             1: JS_DIRECTIVE_LIST@21..21
             2: JS_STATEMENT_LIST@21..21
             3: R_CURLY@21..23 "}" [] [Whitespace(" ")]
-      6: R_CURLY@23..24 "}" [] []
+      7: R_CURLY@23..24 "}" [] []
     1: JS_CLASS_STATEMENT@24..50
       0: CLASS_KW@24..31 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@31..33
         0: IDENT@31..33 "B" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: L_CURLY@33..35 "{" [] [Whitespace(" ")]
-      5: JS_CLASS_MEMBER_LIST@35..49
+      4: (empty)
+      5: L_CURLY@33..35 "{" [] [Whitespace(" ")]
+      6: JS_CLASS_MEMBER_LIST@35..49
         0: JS_PROPERTY_CLASS_MEMBER@35..49
           0: (empty)
           1: (empty)
@@ -132,5 +136,5 @@ JsModule {
               0: JS_REFERENCE_IDENTIFIER@45..49
                 0: IDENT@45..49 "foo" [] [Whitespace(" ")]
           10: (empty)
-      6: R_CURLY@49..50 "}" [] []
+      7: R_CURLY@49..50 "}" [] []
   3: EOF@50..51 "" [Newline("\n")] []

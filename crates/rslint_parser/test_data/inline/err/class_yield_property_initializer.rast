@@ -25,6 +25,7 @@ JsScript {
                         id: JsIdentifierBinding {
                             name_token: IDENT@43..45 "A" [] [Whitespace(" ")],
                         },
+                        type_parameters: missing (optional),
                         extends_clause: missing (optional),
                         implements_clause: missing (optional),
                         l_curly_token: L_CURLY@45..46 "{" [] [],
@@ -92,8 +93,9 @@ JsScript {
               0: IDENT@43..45 "A" [] [Whitespace(" ")]
             2: (empty)
             3: (empty)
-            4: L_CURLY@45..46 "{" [] []
-            5: JS_CLASS_MEMBER_LIST@46..64
+            4: (empty)
+            5: L_CURLY@45..46 "{" [] []
+            6: JS_CLASS_MEMBER_LIST@46..64
               0: JS_PROPERTY_CLASS_MEMBER@46..64
                 0: (empty)
                 1: (empty)
@@ -111,7 +113,7 @@ JsScript {
                     0: JS_UNKNOWN@58..63
                       0: IDENT@58..63 "yield" [] []
                 10: SEMICOLON@63..64 ";" [] []
-            6: R_CURLY@64..68 "}" [Newline("\n"), Whitespace("  ")] []
+            7: R_CURLY@64..68 "}" [Newline("\n"), Whitespace("  ")] []
         3: R_CURLY@68..70 "}" [Newline("\n")] []
   3: EOF@70..71 "" [Newline("\n")] []
 --

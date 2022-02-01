@@ -9,6 +9,7 @@ JsModule {
                         value_token: IDENT@0..3 "foo" [] [],
                     },
                 },
+                type_arguments: missing (optional),
                 l_tick_token: BACKTICK@3..4 "`" [] [],
                 elements: JsTemplateElementList [
                     JsTemplateChunkElement {
@@ -30,7 +31,7 @@ JsModule {
                                 },
                             },
                             optional_chain_token_token: missing (optional),
-                            type_args: missing (optional),
+                            type_arguments: missing (optional),
                             arguments: JsCallArguments {
                                 l_paren_token: L_PAREN@12..13 "(" [] [],
                                 args: JsCallArgumentList [
@@ -44,7 +45,7 @@ JsModule {
                             },
                         },
                         optional_chain_token_token: missing (optional),
-                        type_args: missing (optional),
+                        type_arguments: missing (optional),
                         arguments: JsCallArguments {
                             l_paren_token: L_PAREN@17..18 "(" [] [],
                             args: JsCallArgumentList [
@@ -58,7 +59,7 @@ JsModule {
                         },
                     },
                     optional_chain_token_token: missing (optional),
-                    type_args: missing (optional),
+                    type_arguments: missing (optional),
                     arguments: JsCallArguments {
                         l_paren_token: L_PAREN@22..23 "(" [] [],
                         args: JsCallArgumentList [
@@ -95,11 +96,12 @@ JsModule {
         0: JS_IDENTIFIER_EXPRESSION@0..3
           0: JS_REFERENCE_IDENTIFIER@0..3
             0: IDENT@0..3 "foo" [] []
-        1: BACKTICK@3..4 "`" [] []
-        2: JS_TEMPLATE_ELEMENT_LIST@4..7
+        1: (empty)
+        2: BACKTICK@3..4 "`" [] []
+        3: JS_TEMPLATE_ELEMENT_LIST@4..7
           0: JS_TEMPLATE_CHUNK_ELEMENT@4..7
             0: TEMPLATE_CHUNK@4..7 "bar" [] []
-        3: BACKTICK@7..8 "`" [] []
+        4: BACKTICK@7..8 "`" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@8..32
       0: JS_COMPUTED_MEMBER_EXPRESSION@8..32

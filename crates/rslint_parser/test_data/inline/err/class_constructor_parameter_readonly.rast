@@ -7,6 +7,7 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "B" [] [Whitespace(" ")],
             },
+            type_parameters: missing (optional),
             extends_clause: missing (optional),
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
@@ -56,8 +57,9 @@ JsModule {
         0: IDENT@6..8 "B" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      5: JS_CLASS_MEMBER_LIST@10..37
+      4: (empty)
+      5: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      6: JS_CLASS_MEMBER_LIST@10..37
         0: JS_CONSTRUCTOR_CLASS_MEMBER@10..37
           0: (empty)
           1: JS_LITERAL_MEMBER_NAME@10..21
@@ -79,7 +81,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@35..35
             2: JS_STATEMENT_LIST@35..35
             3: R_CURLY@35..37 "}" [] [Whitespace(" ")]
-      6: R_CURLY@37..38 "}" [] []
+      7: R_CURLY@37..38 "}" [] []
   3: EOF@38..39 "" [Newline("\n")] []
 --
 error[SyntaxError]: readonly modifiers for a parameter inside a constructor can only be used in TypeScript files

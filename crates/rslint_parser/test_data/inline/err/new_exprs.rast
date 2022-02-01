@@ -6,7 +6,7 @@ JsModule {
             expression: JsNewExpression {
                 new_token: NEW_KW@0..3 "new" [] [],
                 callee: missing (required),
-                type_args: missing (optional),
+                type_arguments: missing (optional),
                 arguments: missing (optional),
             },
             semicolon_token: SEMICOLON@3..4 ";" [] [],

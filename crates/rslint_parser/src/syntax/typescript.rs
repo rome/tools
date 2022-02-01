@@ -70,9 +70,7 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
         parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
     }
 
-    if p.at(T![<]) {
-        ts_type_args(p);
-    }
+    parse_ts_type_arguments(p).ok();
 
     // it doesnt matter if we complete as ts_expr_with_type_args even if its an lhs expr
     // because exprs: true will only be used with `class extends foo, bar`, in which case
@@ -89,9 +87,8 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
         } else {
             parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
         }
-        if p.at(T![<]) {
-            ts_type_args(p);
-        }
+
+        parse_ts_type_arguments(p).ok();
 
         elems.push(m.complete(p, TS_EXPR_WITH_TYPE_ARGS));
     }
@@ -160,10 +157,7 @@ pub(super) fn ts_enum(p: &mut Parser) -> CompletedMarker {
     m.complete(p, TS_ENUM)
 }
 
-pub fn try_parse_ts(
-    p: &mut Parser,
-    func: impl FnOnce(&mut Parser) -> Option<CompletedMarker>,
-) -> Option<CompletedMarker> {
+pub fn try_parse(p: &mut Parser, func: impl FnOnce(&mut Parser) -> ParsedSyntax) -> ParsedSyntax {
     let checkpoint = p.checkpoint();
 
     let res = if p.state.no_recovery {
@@ -175,58 +169,10 @@ pub fn try_parse_ts(
         res
     };
 
-    if res.is_none() {
+    if res.is_absent() {
         p.rewind(checkpoint);
     }
     res
-}
-
-pub(crate) fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
-    let m = p.start();
-    if p.expect_no_recover(T![<]).is_none() {
-        m.abandon(p);
-        return None;
-    }
-
-    let mut first = true;
-
-    let args_list = p.start();
-    let mut progress = ParserProgress::default();
-
-    while !p.at(EOF) && !p.at(T![>]) {
-        progress.assert_progressing(p);
-        if first {
-            first = false;
-        } else if p.at(T![,]) && p.nth_at(1, T![>]) {
-            let m = p.start();
-            let range = p.cur_tok().range();
-            p.bump_any();
-            m.complete(p, JS_UNKNOWN);
-            let err = p
-                .err_builder("type arguments may not contain trailing commas")
-                .primary(range, "help: remove this comma");
-
-            p.error(err);
-        } else if p.expect_no_recover(T![,]).is_none() {
-            args_list.abandon(p);
-            m.abandon(p);
-            return None;
-        }
-
-        if parse_ts_type(p).is_absent() && p.state.no_recovery {
-            args_list.abandon(p);
-            m.abandon(p);
-            return None;
-        }
-    }
-    args_list.complete(p, TS_TYPE_ARG_LIST);
-
-    if p.expect_no_recover(T![>]).is_none() {
-        m.abandon(p);
-        None
-    } else {
-        Some(m.complete(p, TS_TYPE_ARGS))
-    }
 }
 
 pub(crate) fn maybe_eat_incorrect_modifier(p: &mut Parser) -> Option<CompletedMarker> {

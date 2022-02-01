@@ -7,6 +7,7 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
             },
+            type_parameters: missing (optional),
             extends_clause: missing (optional),
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
@@ -37,14 +38,15 @@ JsModule {
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      5: JS_CLASS_MEMBER_LIST@10..24
+      4: (empty)
+      5: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      6: JS_CLASS_MEMBER_LIST@10..24
         0: JS_UNKNOWN_MEMBER@10..24
           0: ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@19..22
             0: IDENT@19..22 "foo" [] []
           2: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
-      6: R_CURLY@24..25 "}" [] []
+      7: R_CURLY@24..25 "}" [] []
   3: EOF@25..26 "" [Newline("\n")] []
 --
 error[SyntaxError]: `abstract` modifier can only be used in TypeScript files

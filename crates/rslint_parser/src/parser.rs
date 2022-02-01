@@ -451,14 +451,6 @@ impl<'t> Parser<'t> {
         res
     }
 
-    pub(crate) fn expect_no_recover(&mut self, kind: JsSyntaxKind) -> Option<bool> {
-        if self.state.no_recovery {
-            Some(true).filter(|_| self.eat(kind))
-        } else {
-            Some(self.expect(kind))
-        }
-    }
-
     pub fn span_text(&self, span: impl rslint_errors::Span) -> &str {
         &self.tokens.source()[span.as_range()]
     }

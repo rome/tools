@@ -1,0 +1,136 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsCallExpression {
+                callee: JsParenthesizedExpression {
+                    l_paren_token: L_PAREN@0..15 "(" [Comments("// TYPESCRIPT"), Newline("\n")] [],
+                    expression: JsArrowFunctionExpression {
+                        async_token: missing (optional),
+                        type_parameters: TsTypeParameters {
+                            l_angle_token: L_ANGLE@15..16 "<" [] [],
+                            items: TsTypeParameterList [
+                                TsTypeParameter {
+                                    name: TsTypeParameterName {
+                                        ident_token: IDENT@16..17 "A" [] [],
+                                    },
+                                    constraint: missing (optional),
+                                    default: missing (optional),
+                                },
+                                COMMA@17..19 "," [] [Whitespace(" ")],
+                                TsTypeParameter {
+                                    name: TsTypeParameterName {
+                                        ident_token: IDENT@19..20 "B" [] [],
+                                    },
+                                    constraint: missing (optional),
+                                    default: missing (optional),
+                                },
+                            ],
+                            r_angle_token: R_ANGLE@20..21 ">" [] [],
+                        },
+                        parameters: JsParameters {
+                            l_paren_token: L_PAREN@21..22 "(" [] [],
+                            items: JsParameterList [],
+                            r_paren_token: R_PAREN@22..24 ")" [] [Whitespace(" ")],
+                        },
+                        return_type_annotation: missing (optional),
+                        fat_arrow_token: FAT_ARROW@24..27 "=>" [] [Whitespace(" ")],
+                        body: JsFunctionBody {
+                            l_curly_token: L_CURLY@27..28 "{" [] [],
+                            directives: JsDirectiveList [],
+                            statements: JsStatementList [],
+                            r_curly_token: R_CURLY@28..29 "}" [] [],
+                        },
+                    },
+                    r_paren_token: R_PAREN@29..30 ")" [] [],
+                },
+                optional_chain_token_token: QUESTIONDOT@30..32 "?." [] [],
+                type_arguments: TsTypeArguments {
+                    l_angle_token: L_ANGLE@32..33 "<" [] [],
+                    ts_type_argument_list: TsTypeArgumentList [
+                        TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@33..34 "A" [] [],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                        COMMA@34..36 "," [] [Whitespace(" ")],
+                        TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@36..37 "B" [] [],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                    ],
+                    r_angle_token: R_ANGLE@37..38 ">" [] [],
+                },
+                arguments: JsCallArguments {
+                    l_paren_token: L_PAREN@38..39 "(" [] [],
+                    args: JsCallArgumentList [],
+                    r_paren_token: R_PAREN@39..40 ")" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@40..41 ";" [] [],
+        },
+    ],
+    eof_token: EOF@41..42 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..42
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..41
+    0: JS_EXPRESSION_STATEMENT@0..41
+      0: JS_CALL_EXPRESSION@0..40
+        0: JS_PARENTHESIZED_EXPRESSION@0..30
+          0: L_PAREN@0..15 "(" [Comments("// TYPESCRIPT"), Newline("\n")] []
+          1: JS_ARROW_FUNCTION_EXPRESSION@15..29
+            0: (empty)
+            1: TS_TYPE_PARAMETERS@15..21
+              0: L_ANGLE@15..16 "<" [] []
+              1: TS_TYPE_PARAMETER_LIST@16..20
+                0: TS_TYPE_PARAMETER@16..17
+                  0: TS_TYPE_PARAMETER_NAME@16..17
+                    0: IDENT@16..17 "A" [] []
+                  1: (empty)
+                  2: (empty)
+                1: COMMA@17..19 "," [] [Whitespace(" ")]
+                2: TS_TYPE_PARAMETER@19..20
+                  0: TS_TYPE_PARAMETER_NAME@19..20
+                    0: IDENT@19..20 "B" [] []
+                  1: (empty)
+                  2: (empty)
+              2: R_ANGLE@20..21 ">" [] []
+            2: JS_PARAMETERS@21..24
+              0: L_PAREN@21..22 "(" [] []
+              1: JS_PARAMETER_LIST@22..22
+              2: R_PAREN@22..24 ")" [] [Whitespace(" ")]
+            3: (empty)
+            4: FAT_ARROW@24..27 "=>" [] [Whitespace(" ")]
+            5: JS_FUNCTION_BODY@27..29
+              0: L_CURLY@27..28 "{" [] []
+              1: JS_DIRECTIVE_LIST@28..28
+              2: JS_STATEMENT_LIST@28..28
+              3: R_CURLY@28..29 "}" [] []
+          2: R_PAREN@29..30 ")" [] []
+        1: QUESTIONDOT@30..32 "?." [] []
+        2: TS_TYPE_ARGUMENTS@32..38
+          0: L_ANGLE@32..33 "<" [] []
+          1: TS_TYPE_ARGUMENT_LIST@33..37
+            0: TS_REFERENCE_TYPE@33..34
+              0: JS_REFERENCE_IDENTIFIER@33..34
+                0: IDENT@33..34 "A" [] []
+              1: (empty)
+            1: COMMA@34..36 "," [] [Whitespace(" ")]
+            2: TS_REFERENCE_TYPE@36..37
+              0: JS_REFERENCE_IDENTIFIER@36..37
+                0: IDENT@36..37 "B" [] []
+              1: (empty)
+          2: R_ANGLE@37..38 ">" [] []
+        3: JS_CALL_ARGUMENTS@38..40
+          0: L_PAREN@38..39 "(" [] []
+          1: JS_CALL_ARGUMENT_LIST@39..39
+          2: R_PAREN@39..40 ")" [] []
+      1: SEMICOLON@40..41 ";" [] []
+  3: EOF@41..42 "" [Newline("\n")] []

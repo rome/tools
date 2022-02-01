@@ -5,6 +5,7 @@ JsModule {
         JsClassStatement {
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: missing (required),
+            type_parameters: missing (optional),
             extends_clause: missing (optional),
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@6..7 "{" [] [],
@@ -92,8 +93,9 @@ JsModule {
       1: (empty)
       2: (empty)
       3: (empty)
-      4: L_CURLY@6..7 "{" [] []
-      5: JS_CLASS_MEMBER_LIST@7..44
+      4: (empty)
+      5: L_CURLY@6..7 "{" [] []
+      6: JS_CLASS_MEMBER_LIST@7..44
         0: JS_PROPERTY_CLASS_MEMBER@7..44
           0: (empty)
           1: (empty)
@@ -142,7 +144,7 @@ JsModule {
                     1: SEMICOLON@38..39 ";" [] []
                 3: R_CURLY@39..43 "}" [Newline("\n"), Whitespace("  ")] []
           10: SEMICOLON@43..44 ";" [] []
-      6: R_CURLY@44..46 "}" [Newline("\n")] []
+      7: R_CURLY@44..46 "}" [Newline("\n")] []
     1: JS_EMPTY_STATEMENT@46..47
       0: SEMICOLON@46..47 ";" [] []
   3: EOF@47..48 "" [Newline("\n")] []

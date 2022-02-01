@@ -7,6 +7,7 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..14 "Setters" [] [Whitespace(" ")],
             },
+            type_parameters: missing (optional),
             extends_clause: missing (optional),
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@14..15 "{" [] [],
@@ -198,6 +199,7 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@159..170 "NotSetters" [] [Whitespace(" ")],
             },
+            type_parameters: missing (optional),
             extends_clause: missing (optional),
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@170..171 "{" [] [],
@@ -312,8 +314,9 @@ JsModule {
         0: IDENT@6..14 "Setters" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: L_CURLY@14..15 "{" [] []
-      5: JS_CLASS_MEMBER_LIST@15..150
+      4: (empty)
+      5: L_CURLY@14..15 "{" [] []
+      6: JS_CLASS_MEMBER_LIST@15..150
         0: JS_SETTER_CLASS_MEMBER@15..31
           0: (empty)
           1: (empty)
@@ -455,15 +458,16 @@ JsModule {
             1: JS_DIRECTIVE_LIST@149..149
             2: JS_STATEMENT_LIST@149..149
             3: R_CURLY@149..150 "}" [] []
-      6: R_CURLY@150..152 "}" [Newline("\n")] []
+      7: R_CURLY@150..152 "}" [Newline("\n")] []
     1: JS_CLASS_STATEMENT@152..222
       0: CLASS_KW@152..159 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@159..170
         0: IDENT@159..170 "NotSetters" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: L_CURLY@170..171 "{" [] []
-      5: JS_CLASS_MEMBER_LIST@171..220
+      4: (empty)
+      5: L_CURLY@170..171 "{" [] []
+      6: JS_CLASS_MEMBER_LIST@171..220
         0: JS_METHOD_CLASS_MEMBER@171..183
           0: (empty)
           1: (empty)
@@ -536,5 +540,5 @@ JsModule {
             1: JS_DIRECTIVE_LIST@219..219
             2: JS_STATEMENT_LIST@219..219
             3: R_CURLY@219..220 "}" [] []
-      6: R_CURLY@220..222 "}" [Newline("\n")] []
+      7: R_CURLY@220..222 "}" [Newline("\n")] []
   3: EOF@222..223 "" [Newline("\n")] []

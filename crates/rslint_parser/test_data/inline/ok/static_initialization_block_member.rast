@@ -7,6 +7,7 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
             },
+            type_parameters: missing (optional),
             extends_clause: missing (optional),
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..9 "{" [] [],
@@ -68,8 +69,9 @@ JsModule {
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: L_CURLY@8..9 "{" [] []
-      5: JS_CLASS_MEMBER_LIST@9..57
+      4: (empty)
+      5: L_CURLY@8..9 "{" [] []
+      6: JS_CLASS_MEMBER_LIST@9..57
         0: JS_PROPERTY_CLASS_MEMBER@9..21
           0: (empty)
           1: (empty)
@@ -100,5 +102,5 @@ JsModule {
                   0: JS_STRING_LITERAL@46..52 "\"test\"" [] []
               1: SEMICOLON@52..53 ";" [] []
           3: R_CURLY@53..57 "}" [Newline("\n"), Whitespace("  ")] []
-      6: R_CURLY@57..59 "}" [Newline("\n")] []
+      7: R_CURLY@57..59 "}" [Newline("\n")] []
   3: EOF@59..60 "" [Newline("\n")] []

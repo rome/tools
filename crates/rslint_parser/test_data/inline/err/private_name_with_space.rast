@@ -7,6 +7,7 @@ JsModule {
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
             },
+            type_parameters: missing (optional),
             extends_clause: missing (optional),
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..9 "{" [] [],
@@ -52,8 +53,9 @@ JsModule {
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
-      4: L_CURLY@8..9 "{" [] []
-      5: JS_CLASS_MEMBER_LIST@9..18
+      4: (empty)
+      5: L_CURLY@8..9 "{" [] []
+      6: JS_CLASS_MEMBER_LIST@9..18
         0: JS_UNKNOWN_MEMBER@9..13
           0: JS_UNKNOWN@9..13
             0: HASH@9..13 "#" [Newline("\n"), Whitespace("\t")] [Whitespace(" ")]
@@ -70,7 +72,7 @@ JsModule {
           8: (empty)
           9: (empty)
           10: SEMICOLON@17..18 ";" [] []
-      6: R_CURLY@18..20 "}" [Newline("\n")] []
+      7: R_CURLY@18..20 "}" [Newline("\n")] []
   3: EOF@20..21 "" [Newline("\n")] []
 --
 error[SyntaxError]: Unexpected space or comment between `#` and identifier

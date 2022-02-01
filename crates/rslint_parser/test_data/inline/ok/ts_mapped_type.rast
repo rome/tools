@@ -270,9 +270,9 @@ JsModule {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@332..342 "Capitalize" [] [],
                                     },
-                                    type_arguments: TsTypeArgs {
+                                    type_arguments: TsTypeArguments {
                                         l_angle_token: L_ANGLE@342..343 "<" [] [],
-                                        ts_type_arg_list: TsTypeArgList [
+                                        ts_type_argument_list: TsTypeArgumentList [
                                             TsIntersectionType {
                                                 leading_separator_token_token: missing (optional),
                                                 types: TsIntersectionTypeElementList [
@@ -541,9 +541,9 @@ JsModule {
                 1: TS_REFERENCE_TYPE@332..361
                   0: JS_REFERENCE_IDENTIFIER@332..342
                     0: IDENT@332..342 "Capitalize" [] []
-                  1: TS_TYPE_ARGS@342..361
+                  1: TS_TYPE_ARGUMENTS@342..361
                     0: L_ANGLE@342..343 "<" [] []
-                    1: TS_TYPE_ARG_LIST@343..360
+                    1: TS_TYPE_ARGUMENT_LIST@343..360
                       0: TS_INTERSECTION_TYPE@343..360
                         0: (empty)
                         1: TS_INTERSECTION_TYPE_ELEMENT_LIST@343..360

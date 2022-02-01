@@ -173,14 +173,18 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
         }
     }
 
-    if p.at(T![<]) {
-        if let Present(mut complete) = parse_ts_type_parameters(p) {
-            complete.err_if_not_ts(
+    // test ts_class_type_parameters
+    // // TYPESCRIPT
+    // class BuildError<A, B, C> {}
+    parse_ts_type_parameters(p)
+        .exclusive_for(p, TypeScript, |p, type_parameters| {
+            ts_only_syntax_error(
                 p,
-                "classes can only have type parameters in TypeScript files",
-            );
-        }
-    }
+                "class type parameters",
+                type_parameters.range(p).as_range(),
+            )
+        })
+        .ok();
 
     extends_clause(p).ok();
 

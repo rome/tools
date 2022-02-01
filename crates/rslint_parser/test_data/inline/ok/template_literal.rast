@@ -16,6 +16,7 @@ JsModule {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsTemplate {
                                 tag: missing (optional),
+                                type_arguments: missing (optional),
                                 l_tick_token: BACKTICK@8..9 "`" [] [],
                                 elements: JsTemplateElementList [
                                     JsTemplateChunkElement {
@@ -53,6 +54,7 @@ JsModule {
                             eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
                             expression: JsTemplate {
                                 tag: missing (optional),
+                                type_arguments: missing (optional),
                                 l_tick_token: BACKTICK@30..31 "`" [] [],
                                 elements: JsTemplateElementList [],
                                 r_tick_token: BACKTICK@31..32 "`" [] [],
@@ -77,6 +79,7 @@ JsModule {
                             eq_token: EQ@40..42 "=" [] [Whitespace(" ")],
                             expression: JsTemplate {
                                 tag: missing (optional),
+                                type_arguments: missing (optional),
                                 l_tick_token: BACKTICK@42..43 "`" [] [],
                                 elements: JsTemplateElementList [
                                     JsTemplateElement {
@@ -111,6 +114,7 @@ JsModule {
                             eq_token: EQ@58..60 "=" [] [Whitespace(" ")],
                             expression: JsTemplate {
                                 tag: missing (optional),
+                                type_arguments: missing (optional),
                                 l_tick_token: BACKTICK@60..61 "`" [] [],
                                 elements: JsTemplateElementList [
                                     JsTemplateChunkElement {
@@ -146,8 +150,9 @@ JsModule {
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_TEMPLATE@8..20
                 0: (empty)
-                1: BACKTICK@8..9 "`" [] []
-                2: JS_TEMPLATE_ELEMENT_LIST@9..19
+                1: (empty)
+                2: BACKTICK@8..9 "`" [] []
+                3: JS_TEMPLATE_ELEMENT_LIST@9..19
                   0: JS_TEMPLATE_CHUNK_ELEMENT@9..13
                     0: TEMPLATE_CHUNK@9..13 "foo " [] []
                   1: JS_TEMPLATE_ELEMENT@13..19
@@ -156,7 +161,7 @@ JsModule {
                       0: JS_REFERENCE_IDENTIFIER@15..18
                         0: IDENT@15..18 "bar" [] []
                     2: R_CURLY@18..19 "}" [] []
-                3: BACKTICK@19..20 "`" [] []
+                4: BACKTICK@19..20 "`" [] []
       1: SEMICOLON@20..21 ";" [] []
     1: JS_VARIABLE_STATEMENT@21..33
       0: JS_VARIABLE_DECLARATIONS@21..32
@@ -171,9 +176,10 @@ JsModule {
               0: EQ@28..30 "=" [] [Whitespace(" ")]
               1: JS_TEMPLATE@30..32
                 0: (empty)
-                1: BACKTICK@30..31 "`" [] []
-                2: JS_TEMPLATE_ELEMENT_LIST@31..31
-                3: BACKTICK@31..32 "`" [] []
+                1: (empty)
+                2: BACKTICK@30..31 "`" [] []
+                3: JS_TEMPLATE_ELEMENT_LIST@31..31
+                4: BACKTICK@31..32 "`" [] []
       1: SEMICOLON@32..33 ";" [] []
     2: JS_VARIABLE_STATEMENT@33..51
       0: JS_VARIABLE_DECLARATIONS@33..50
@@ -188,15 +194,16 @@ JsModule {
               0: EQ@40..42 "=" [] [Whitespace(" ")]
               1: JS_TEMPLATE@42..50
                 0: (empty)
-                1: BACKTICK@42..43 "`" [] []
-                2: JS_TEMPLATE_ELEMENT_LIST@43..49
+                1: (empty)
+                2: BACKTICK@42..43 "`" [] []
+                3: JS_TEMPLATE_ELEMENT_LIST@43..49
                   0: JS_TEMPLATE_ELEMENT@43..49
                     0: DOLLAR_CURLY@43..45 "${" [] []
                     1: JS_IDENTIFIER_EXPRESSION@45..48
                       0: JS_REFERENCE_IDENTIFIER@45..48
                         0: IDENT@45..48 "foo" [] []
                     2: R_CURLY@48..49 "}" [] []
-                3: BACKTICK@49..50 "`" [] []
+                4: BACKTICK@49..50 "`" [] []
       1: SEMICOLON@50..51 ";" [] []
     3: JS_VARIABLE_STATEMENT@51..66
       0: JS_VARIABLE_DECLARATIONS@51..65
@@ -211,10 +218,11 @@ JsModule {
               0: EQ@58..60 "=" [] [Whitespace(" ")]
               1: JS_TEMPLATE@60..65
                 0: (empty)
-                1: BACKTICK@60..61 "`" [] []
-                2: JS_TEMPLATE_ELEMENT_LIST@61..64
+                1: (empty)
+                2: BACKTICK@60..61 "`" [] []
+                3: JS_TEMPLATE_ELEMENT_LIST@61..64
                   0: JS_TEMPLATE_CHUNK_ELEMENT@61..64
                     0: TEMPLATE_CHUNK@61..64 "foo" [] []
-                3: BACKTICK@64..65 "`" [] []
+                4: BACKTICK@64..65 "`" [] []
       1: SEMICOLON@65..66 ";" [] []
   3: EOF@66..67 "" [Newline("\n")] []
