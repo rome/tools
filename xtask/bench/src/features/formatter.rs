@@ -1,5 +1,5 @@
 use crate::BenchmarkSummary;
-use rome_formatter::{format, FormatOptions};
+use rome_formatter::{format, FormatOptions, Formatted};
 use rslint_parser::SyntaxNode;
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
@@ -9,7 +9,7 @@ pub struct FormatterMeasurement {
     id: String,
     formatting: Duration,
 }
-pub fn benchmark_format_lib(id: &str, root: SyntaxNode) -> BenchmarkSummary {
+pub fn benchmark_format_lib(id: &str, root: &SyntaxNode) -> BenchmarkSummary {
     let formatter_timer = timing::start();
     run_format(root);
     let formatter_duration = formatter_timer.stop();
@@ -20,8 +20,8 @@ pub fn benchmark_format_lib(id: &str, root: SyntaxNode) -> BenchmarkSummary {
     })
 }
 
-pub fn run_format(root: SyntaxNode) {
-    format(FormatOptions::default(), &root).unwrap();
+pub fn run_format(root: &SyntaxNode) -> Formatted {
+    format(FormatOptions::default(), root).unwrap()
 }
 
 impl FormatterMeasurement {

@@ -1,7 +1,6 @@
 mod features;
 mod utils;
 
-use criterion::BatchSize;
 use rslint_parser::{parse, Syntax};
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
@@ -100,20 +99,15 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                     group.throughput(criterion::Throughput::Bytes(code.len() as u64));
                     group.bench_function(&id, |b| match feature {
                         FeatureToBenchmark::Parser => b.iter(|| {
-                            #[allow(clippy::unit_arg)]
                             criterion::black_box(run_parse(code));
                         }),
-                        FeatureToBenchmark::Formatter => b.iter_batched(
-                            || {
-                                let syntax = Syntax::default().module();
-                                parse(code, 0, syntax).syntax()
-                            },
-                            |root| {
-                                #[allow(clippy::unit_arg)]
-                                criterion::black_box(run_format(root));
-                            },
-                            BatchSize::PerIteration,
-                        ),
+                        FeatureToBenchmark::Formatter => {
+                            let syntax = Syntax::default().module();
+                            let root = parse(code, 0, syntax).syntax();
+                            b.iter(|| {
+                                criterion::black_box(run_format(&root));
+                            })
+                        }
                     });
                     group.finish();
                 } else {
@@ -125,7 +119,7 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                         FeatureToBenchmark::Formatter => {
                             let syntax = Syntax::default().module();
                             let root = parse(code, 0, syntax).syntax();
-                            run_format(root);
+                            run_format(&root);
                         }
                     }
                 }
@@ -135,7 +129,7 @@ pub fn run(filter: String, criterion: bool, baseline: Option<String>, feature: F
                     FeatureToBenchmark::Formatter => {
                         let syntax = Syntax::default().module();
                         let root = parse(code, 0, syntax).syntax();
-                        benchmark_format_lib(&id, root)
+                        benchmark_format_lib(&id, &root)
                     }
                 };
 

@@ -1,7 +1,8 @@
 use crate::BenchmarkSummary;
 use itertools::Itertools;
 use rslint_errors::Diagnostic;
-use rslint_parser::Syntax;
+use rslint_parser::ast::JsAnyRoot;
+use rslint_parser::{Parse, Syntax};
 use std::fmt::{Display, Formatter};
 use std::ops::Add;
 use std::time::Duration;
@@ -98,9 +99,9 @@ pub fn benchmark_parse_lib(id: &str, code: &str) -> BenchmarkSummary {
     })
 }
 
-pub fn run_parse(code: &str) {
+pub fn run_parse(code: &str) -> Parse<JsAnyRoot> {
     let syntax = Syntax::default().module();
-    rslint_parser::parse(code, 0, syntax);
+    rslint_parser::parse(code, 0, syntax)
 }
 
 impl ParseMeasurement {
