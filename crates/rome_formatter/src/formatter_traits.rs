@@ -19,7 +19,9 @@ pub trait FormatOptionalTokenAndNode {
     /// let result = token.format_or_empty(&formatter);
     ///
     /// assert_eq!(Ok(empty_element()), result)
-    fn format_or_empty(&self, formatter: &Formatter) -> FormatResult<FormatElement>;
+    fn format_or_empty(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        self.format_or(formatter, empty_element)
+    }
 
     /// This function tries to format an optional [token](rslint_parser::SyntaxToken). If the token doesn't exist,
     /// an [empty token](crate::FormatElement::Empty) is created. If exists, the utility
@@ -58,13 +60,33 @@ pub trait FormatOptionalTokenAndNode {
         with: With,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement) -> FormatElement;
+        With: FnOnce(FormatElement) -> FormatElement,
+    {
+        self.format_with_or(formatter, with, empty_element)
+    }
 
     /// This function tries to format an optional [token](rslint_parser::SyntaxToken) as is. If the token doesn't exist,
     /// it calls the passed closure, which has to return a [create::FormatElement]
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_formatter::{Formatter, token};
+    /// use rslint_parser::{SyntaxToken};
+    /// use rome_formatter::formatter_traits::{FormatOptionalTokenAndNode};
+    ///
+    /// let formatter = Formatter::default();
+    /// let empty_token: Option<SyntaxToken> = None;
+    ///
+    /// let result = empty_token.format_or(&formatter, || token(" other result"));
+    ///
+    /// assert_eq!(Ok(token(" other result")), result);
     fn format_or<Or>(&self, formatter: &Formatter, op: Or) -> FormatResult<FormatElement>
     where
-        Or: FnOnce() -> FormatElement;
+        Or: FnOnce() -> FormatElement,
+    {
+        self.format_with_or(formatter, |token| token, op)
+    }
 
     /// If the token/node exists, it will call the first closure which will accept formatted element.
     ///
@@ -137,7 +159,9 @@ pub trait FormatTokenAndNode {
     /// let result = Ok(syntax_token).format(&formatter);
     ///
     /// assert_eq!(Ok(token("'abc'")), result)
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement>;
+    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        self.format_with(formatter, |token| token)
+    }
 
     /// Allows to chain a formatted token/node with another [elements](FormatElement)
     ///
@@ -173,37 +197,6 @@ pub trait FormatTokenAndNode {
 }
 
 impl FormatOptionalTokenAndNode for Option<SyntaxToken> {
-    fn format_or_empty(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            None => Ok(empty_element()),
-            Some(token) => formatter.format_token(token),
-        }
-    }
-
-    fn format_with_or_empty<With>(
-        &self,
-        formatter: &Formatter,
-        with: With,
-    ) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> FormatElement,
-    {
-        match self {
-            None => Ok(empty_element()),
-            Some(token) => Ok(with(formatter.format_token(token)?)),
-        }
-    }
-
-    fn format_or<Op>(&self, formatter: &Formatter, op: Op) -> FormatResult<FormatElement>
-    where
-        Op: FnOnce() -> FormatElement,
-    {
-        match self {
-            None => Ok(op()),
-            Some(token) => formatter.format_token(token),
-        }
-    }
-
     fn format_with_or<With, Or>(
         &self,
         formatter: &Formatter,
@@ -222,13 +215,6 @@ impl FormatOptionalTokenAndNode for Option<SyntaxToken> {
 }
 
 impl FormatTokenAndNode for SyntaxResult<SyntaxToken> {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            Ok(token) => formatter.format_token(token),
-            Err(err) => Err(err.into()),
-        }
-    }
-
     fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
     where
         With: FnOnce(FormatElement) -> FormatElement,
@@ -244,37 +230,6 @@ impl FormatTokenAndNode for SyntaxResult<SyntaxToken> {
 }
 
 impl<Node: AstNode + ToFormatElement> FormatOptionalTokenAndNode for Option<Node> {
-    fn format_or_empty(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        match self {
-            None => Ok(empty_element()),
-            Some(node) => formatter.format_node(node),
-        }
-    }
-
-    fn format_with_or_empty<With>(
-        &self,
-        formatter: &Formatter,
-        with: With,
-    ) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> FormatElement,
-    {
-        match self {
-            None => Ok(empty_element()),
-            Some(node) => Ok(with(formatter.format_node(node)?)),
-        }
-    }
-
-    fn format_or<Op>(&self, formatter: &Formatter, op: Op) -> FormatResult<FormatElement>
-    where
-        Op: FnOnce() -> FormatElement,
-    {
-        match self {
-            None => Ok(op()),
-            Some(node) => formatter.format_node(node),
-        }
-    }
-
     fn format_with_or<With, Or>(
         &self,
         formatter: &Formatter,
@@ -293,10 +248,6 @@ impl<Node: AstNode + ToFormatElement> FormatOptionalTokenAndNode for Option<Node
 }
 
 impl<Node: AstNode + ToFormatElement> FormatTokenAndNode for Node {
-    fn format(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        formatter.format_node(self)
-    }
-
     fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
     where
         With: FnOnce(FormatElement) -> FormatElement,
