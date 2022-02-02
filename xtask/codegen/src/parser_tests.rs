@@ -59,10 +59,10 @@ pub fn generate_parser_tests(mode: Mode) -> Result<()> {
             let path = match existing.get(name) {
                 Some((path, _test)) => path.clone(),
                 None => {
-                    let ext = match test.language.as_str() { 
+                    let ext = match test.language.as_str() {
                         "javascript" => "js",
                         "typescript" => "ts",
-                        ext => ext
+                        ext => ext,
                     };
                     let file_name = format!("{}.{}", name, ext);
                     tests_dir.join(file_name)
@@ -120,7 +120,12 @@ fn collect_tests(s: &str) -> Vec<Test> {
             .collect::<Vec<_>>()
             .join("\n");
         assert!(!text.trim().is_empty() && text.ends_with('\n'));
-        res.push(Test { name, text, ok, language: language.to_string() })
+        res.push(Test {
+            name,
+            text,
+            ok,
+            language: language.to_string(),
+        })
     }
     res
 }

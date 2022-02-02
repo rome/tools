@@ -1,17 +1,11 @@
-
+use crate::parser::{RecoveryResult, ToDiagnostic};
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::{parse_assignment_expression_or_higher, parse_lhs_expr, parse_name};
-use crate::parser::{ParserProgress, ToDiagnostic, RecoveryResult};
-#[allow(deprecated)]
-use crate::parser::SingleTokenParseRecovery;
-use crate::syntax::expr::{parse_identifier, ExpressionContext};
+use crate::syntax::expr::parse_name;
+use crate::syntax::expr::ExpressionContext;
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::expected_identifier;
 
 use crate::syntax::object::parse_object_member_name;
 use crate::{JsSyntaxKind::*, *};
-use rome_rowan::SyntaxKind;
-
 
 /// An individual enum member
 fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
@@ -22,15 +16,7 @@ fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
 }
 
 fn expected_enum_member(p: &Parser, range: Range<usize>) -> Diagnostic {
-    parser::expected_any(
-        &[
-            "identifier",
-            "string literal",
-            "computed name",
-        ],
-        range,
-    )
-    .to_diagnostic(p)
+    parser::expected_any(&["identifier", "string literal", "computed name"], range).to_diagnostic(p)
 }
 
 struct EnumMembersList;
