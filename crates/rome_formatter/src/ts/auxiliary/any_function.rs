@@ -25,7 +25,7 @@ impl ToFormatElement for JsAnyFunction {
             _ => self.id().format_with_or(
                 formatter,
                 |id| format_elements![space_token(), id],
-                || space_token(),
+                space_token,
             )?,
         });
 

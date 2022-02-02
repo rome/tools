@@ -8,7 +8,8 @@ use crate::syntax::expr::{
     parse_reference_identifier, ExpressionContext,
 };
 use crate::syntax::function::{
-    parse_function_body, parse_any_formal_parameter, parse_parameter_list, parse_ts_type_annotation_or_error,
+    parse_any_formal_parameter, parse_function_body, parse_parameter_list,
+    parse_ts_type_annotation_or_error,
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::ts_only_syntax_error;
