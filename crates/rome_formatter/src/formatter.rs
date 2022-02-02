@@ -172,7 +172,7 @@ impl Formatter {
     ///
     /// assert_eq!(Ok(token("'abc'")), result)
     /// ```
-    // #[deprecated = "Please use the traits available in 'crate::formatter_traits' which allow better developer experience"]
+    #[deprecated = "Please use the traits available in 'crate::formatter_traits' which allow better developer experience"]
     pub fn format_token<T>(&self, syntax_token: &T) -> FormatResult<T::Output>
     where
         T: token::FormattableToken,
