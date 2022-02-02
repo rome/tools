@@ -4,13 +4,41 @@ use crate::syntax::expr::parse_name;
 use crate::syntax::expr::ExpressionContext;
 use crate::syntax::js_parse_error;
 
-use crate::syntax::object::parse_object_member_name;
 use crate::{JsSyntaxKind::*, *};
+
+pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax {
+    let m = p.start();
+    match p.cur() {
+        JS_STRING_LITERAL | T![ident] => {
+            p.bump_any();
+        }
+        t if t.is_keyword() => {
+            p.bump_remap(T![ident]);
+        }
+        JS_NUMBER_LITERAL => {
+            let err = p
+                .err_builder("An enum member cannot have a numeric name")
+                .primary(p.cur_tok().range(), ""); 
+            p.error(err);
+            p.bump_any()
+        }
+        _ => {
+            m.abandon(p);
+            return Absent;
+        }
+    }
+    Present(m.complete(p, JS_LITERAL_MEMBER_NAME))
+}
 
 /// An individual enum member
 fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
     let member = p.start();
-    let _ = parse_object_member_name(p);
+    
+    let _ = match p.cur() {
+        T!['['] => syntax::object::parse_computed_member_name(p),
+        _ => parse_literal_member_name(p),
+    };
+
     let _ = parse_initializer_clause(p, ExpressionContext::default());
     Present(member.complete(p, TS_ENUM_MEMBER))
 }
