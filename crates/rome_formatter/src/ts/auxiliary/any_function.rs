@@ -22,10 +22,11 @@ impl ToFormatElement for JsAnyFunction {
 
         tokens.push(match self {
             JsAnyFunction::JsArrowFunctionExpression(_) => empty_element(),
-            _ => match self.id()? {
-                Some(id) => format_elements![space_token(), id.format(formatter)?],
-                None => space_token(),
-            },
+            _ => self.id().format_with_or(
+                formatter,
+                |id| format_elements![space_token(), id],
+                || space_token(),
+            )?,
         });
 
         tokens.push(match self.parameters()? {
