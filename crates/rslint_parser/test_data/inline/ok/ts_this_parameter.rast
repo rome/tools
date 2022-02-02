@@ -1,0 +1,113 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsFunctionStatement {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@0..23 "function" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@23..24 "a" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@24..25 "(" [] [],
+                items: JsParameterList [
+                    TsThisParameter {
+                        this_token: THIS_KW@25..29 "this" [] [],
+                        type_annotation: missing (optional),
+                    },
+                ],
+                r_paren_token: R_PAREN@29..31 ")" [] [Whitespace(" ")],
+            },
+            return_type_annotation: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@31..32 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@32..33 "}" [] [],
+            },
+        },
+        JsFunctionStatement {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@33..43 "function" [Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@43..44 "b" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@44..45 "(" [] [],
+                items: JsParameterList [
+                    TsThisParameter {
+                        this_token: THIS_KW@45..49 "this" [] [],
+                        type_annotation: TsTypeAnnotation {
+                            colon_token: COLON@49..51 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@51..57 "string" [] [],
+                            },
+                        },
+                    },
+                ],
+                r_paren_token: R_PAREN@57..59 ")" [] [Whitespace(" ")],
+            },
+            return_type_annotation: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@59..60 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@60..61 "}" [] [],
+            },
+        },
+    ],
+    eof_token: EOF@61..62 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..62
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..61
+    0: JS_FUNCTION_STATEMENT@0..33
+      0: (empty)
+      1: FUNCTION_KW@0..23 "function" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@23..24
+        0: IDENT@23..24 "a" [] []
+      4: (empty)
+      5: JS_PARAMETERS@24..31
+        0: L_PAREN@24..25 "(" [] []
+        1: JS_PARAMETER_LIST@25..29
+          0: TS_THIS_PARAMETER@25..29
+            0: THIS_KW@25..29 "this" [] []
+            1: (empty)
+        2: R_PAREN@29..31 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@31..33
+        0: L_CURLY@31..32 "{" [] []
+        1: JS_DIRECTIVE_LIST@32..32
+        2: JS_STATEMENT_LIST@32..32
+        3: R_CURLY@32..33 "}" [] []
+    1: JS_FUNCTION_STATEMENT@33..61
+      0: (empty)
+      1: FUNCTION_KW@33..43 "function" [Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@43..44
+        0: IDENT@43..44 "b" [] []
+      4: (empty)
+      5: JS_PARAMETERS@44..59
+        0: L_PAREN@44..45 "(" [] []
+        1: JS_PARAMETER_LIST@45..57
+          0: TS_THIS_PARAMETER@45..57
+            0: THIS_KW@45..49 "this" [] []
+            1: TS_TYPE_ANNOTATION@49..57
+              0: COLON@49..51 ":" [] [Whitespace(" ")]
+              1: TS_STRING_TYPE@51..57
+                0: STRING_KW@51..57 "string" [] []
+        2: R_PAREN@57..59 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@59..61
+        0: L_CURLY@59..60 "{" [] []
+        1: JS_DIRECTIVE_LIST@60..60
+        2: JS_STATEMENT_LIST@60..60
+        3: R_CURLY@60..61 "}" [] []
+  3: EOF@61..62 "" [Newline("\n")] []

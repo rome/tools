@@ -161,7 +161,13 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
                 JS_UNKNOWN_IMPORT_ASSERTION_ENTRY
             }
 
-            JS_PARAMETER | TS_CONSTRUCTOR_PARAM | JS_UNKNOWN_PARAMETER => JS_UNKNOWN_PARAMETER,
+            JS_FORMAL_PARAMETER
+            | JS_FORMAL_PARAMETER_WITH_DEFAULT
+            | JS_REST_PARAMETER
+            | TS_PROPERTY_PARAMETER
+            | TS_READONLY_PROPERTY_PARAMETER
+            | TS_THIS_PARAMETER
+            | JS_UNKNOWN_PARAMETER => JS_UNKNOWN_PARAMETER,
             _ => JS_UNKNOWN,
         }
     }

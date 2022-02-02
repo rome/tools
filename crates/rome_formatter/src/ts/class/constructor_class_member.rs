@@ -39,13 +39,18 @@ impl ToFormatElement for JsConstructorParameters {
 impl ToFormatElement for JsAnyConstructorParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
-            JsAnyConstructorParameter::TsConstructorParam(_) => todo!(),
-            JsAnyConstructorParameter::JsParameter(parameter) => {
+            JsAnyConstructorParameter::JsFormalParameter(parameter) => {
                 parameter.to_format_element(formatter)
             }
+            JsAnyConstructorParameter::JsFormalParameterWithDefault(parameter) => {
+                parameter.to_format_element(formatter)
+            }
+            JsAnyConstructorParameter::JsRestParameter(rest) => rest.to_format_element(formatter),
             JsAnyConstructorParameter::JsUnknownParameter(unknown_parameter) => {
                 Ok(formatter.format_verbatim(unknown_parameter.syntax()))
             }
+            JsAnyConstructorParameter::TsPropertyParameter(_) => todo!(),
+            JsAnyConstructorParameter::TsReadonlyPropertyParameter(_) => todo!(),
         }
     }
 }

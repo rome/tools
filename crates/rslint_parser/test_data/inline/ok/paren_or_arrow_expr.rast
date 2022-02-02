@@ -21,12 +21,12 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@6..8 "(" [Newline("\n")] [],
                     items: JsParameterList [
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@8..11 "foo" [] [],
                             },
+                            question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@11..13 ")" [] [Whitespace(" ")],
@@ -65,7 +65,7 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@28..30 "(" [Newline("\n")] [],
                     items: JsParameterList [
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsObjectBindingPattern {
                                 l_curly_token: L_CURLY@30..31 "{" [] [],
                                 properties: JsObjectBindingPatternPropertyList [
@@ -109,8 +109,8 @@ JsModule {
                                 ],
                                 r_curly_token: R_CURLY@55..56 "}" [] [],
                             },
+                            question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@56..58 ")" [] [Whitespace(" ")],
@@ -133,12 +133,12 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@64..66 "(" [Newline("\n")] [],
                     items: JsParameterList [
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@66..69 "foo" [] [],
                             },
+                            question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                         COMMA@69..71 "," [] [Whitespace(" ")],
                         JsRestParameter {
@@ -146,6 +146,7 @@ JsModule {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@74..77 "bar" [] [],
                             },
+                            type_annotation: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@77..79 ")" [] [Whitespace(" ")],
@@ -184,7 +185,7 @@ JsModule {
         2: JS_PARAMETERS@6..13
           0: L_PAREN@6..8 "(" [Newline("\n")] []
           1: JS_PARAMETER_LIST@8..11
-            0: JS_PARAMETER@8..11
+            0: JS_FORMAL_PARAMETER@8..11
               0: JS_IDENTIFIER_BINDING@8..11
                 0: IDENT@8..11 "foo" [] []
               1: (empty)
@@ -216,7 +217,7 @@ JsModule {
         2: JS_PARAMETERS@28..58
           0: L_PAREN@28..30 "(" [Newline("\n")] []
           1: JS_PARAMETER_LIST@30..56
-            0: JS_PARAMETER@30..56
+            0: JS_FORMAL_PARAMETER@30..56
               0: JS_OBJECT_BINDING_PATTERN@30..56
                 0: L_CURLY@30..31 "{" [] []
                 1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@31..55
@@ -265,7 +266,7 @@ JsModule {
         2: JS_PARAMETERS@64..79
           0: L_PAREN@64..66 "(" [Newline("\n")] []
           1: JS_PARAMETER_LIST@66..77
-            0: JS_PARAMETER@66..69
+            0: JS_FORMAL_PARAMETER@66..69
               0: JS_IDENTIFIER_BINDING@66..69
                 0: IDENT@66..69 "foo" [] []
               1: (empty)
@@ -275,6 +276,7 @@ JsModule {
               0: DOT2@71..74 "..." [] []
               1: JS_IDENTIFIER_BINDING@74..77
                 0: IDENT@74..77 "bar" [] []
+              2: (empty)
           2: R_PAREN@77..79 ")" [] [Whitespace(" ")]
         3: (empty)
         4: FAT_ARROW@79..82 "=>" [] [Whitespace(" ")]

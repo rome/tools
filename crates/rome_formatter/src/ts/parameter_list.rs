@@ -1,9 +1,11 @@
 use crate::{
-    empty_element, format_elements, group_elements, join_elements, soft_block_indent,
-    soft_line_break_or_space, space_token, token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    format_elements, group_elements, join_elements, soft_block_indent, soft_line_break_or_space,
+    space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{JsAnyParameter, JsParameter, JsParameters, JsRestParameter};
+use rslint_parser::ast::{
+    JsAnyFormalParameter, JsAnyParameter, JsFormalParameter, JsFormalParameterWithDefault,
+    JsParameters, JsRestParameter,
+};
 
 impl ToFormatElement for JsParameters {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -26,11 +28,31 @@ impl ToFormatElement for JsParameters {
 impl ToFormatElement for JsAnyParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
-            JsAnyParameter::JsParameter(parameter) => parameter.to_format_element(formatter),
+            JsAnyParameter::JsFormalParameter(parameter) => parameter.to_format_element(formatter),
+            JsAnyParameter::JsFormalParameterWithDefault(parameter) => {
+                parameter.to_format_element(formatter)
+            }
+            JsAnyParameter::TsThisParameter(_) => todo!(),
             JsAnyParameter::JsUnknownParameter(unknown_parameter) => {
                 unknown_parameter.to_format_element(formatter)
             }
             JsAnyParameter::JsRestParameter(binding) => binding.to_format_element(formatter),
+        }
+    }
+}
+
+impl ToFormatElement for JsAnyFormalParameter {
+    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+        match self {
+            JsAnyFormalParameter::JsFormalParameter(parameter) => {
+                parameter.to_format_element(formatter)
+            }
+            JsAnyFormalParameter::JsFormalParameterWithDefault(parameter) => {
+                parameter.to_format_element(formatter)
+            }
+            JsAnyFormalParameter::JsUnknownParameter(parameter) => {
+                parameter.to_format_element(formatter)
+            }
         }
     }
 }
@@ -44,17 +66,20 @@ impl ToFormatElement for JsRestParameter {
     }
 }
 
-impl ToFormatElement for JsParameter {
+impl ToFormatElement for JsFormalParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let initializer = if let Some(initializer) = self.initializer() {
-            format_elements![space_token(), formatter.format_node(&initializer)?]
-        } else {
-            empty_element()
-        };
+        Ok(format_elements![formatter.format_node(&self.binding()?)?,])
+    }
+}
 
+impl ToFormatElement for JsFormalParameterWithDefault {
+    fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
             formatter.format_node(&self.binding()?)?,
-            initializer
+            space_token(),
+            formatter.format_token(&self.eq_token()?)?,
+            space_token(),
+            formatter.format_node(&self.default()?)?
         ])
     }
 }

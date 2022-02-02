@@ -21,12 +21,12 @@ JsModule {
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@25..26 "(" [] [],
                         parameters: JsConstructorParameterList [
-                            JsParameter {
+                            JsFormalParameter {
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@26..27 "a" [] [],
                                 },
+                                question_mark_token: missing (optional),
                                 type_annotation: missing (optional),
-                                initializer: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@27..29 ")" [] [Whitespace(" ")],
@@ -81,12 +81,12 @@ JsModule {
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@80..81 "(" [] [],
                         parameters: JsConstructorParameterList [
-                            JsParameter {
+                            JsFormalParameter {
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@81..82 "b" [] [],
                                 },
+                                question_mark_token: missing (optional),
                                 type_annotation: missing (optional),
-                                initializer: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@82..84 ")" [] [Whitespace(" ")],
@@ -147,7 +147,7 @@ JsModule {
           3: JS_CONSTRUCTOR_PARAMETERS@25..29
             0: L_PAREN@25..26 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@26..27
-              0: JS_PARAMETER@26..27
+              0: JS_FORMAL_PARAMETER@26..27
                 0: JS_IDENTIFIER_BINDING@26..27
                   0: IDENT@26..27 "a" [] []
                 1: (empty)
@@ -189,7 +189,7 @@ JsModule {
           3: JS_CONSTRUCTOR_PARAMETERS@80..84
             0: L_PAREN@80..81 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@81..82
-              0: JS_PARAMETER@81..82
+              0: JS_FORMAL_PARAMETER@81..82
                 0: JS_IDENTIFIER_BINDING@81..82
                   0: IDENT@81..82 "b" [] []
                 1: (empty)

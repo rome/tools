@@ -1,0 +1,248 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsFunctionStatement {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@0..23 "function" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@23..24 "a" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@24..25 "(" [] [],
+                items: JsParameterList [
+                    JsUnknownParameter {
+                        items: [
+                            JsIdentifierBinding {
+                                name_token: IDENT@25..26 "x" [] [],
+                            },
+                            QUESTION@26..27 "?" [] [],
+                            TsTypeAnnotation {
+                                colon_token: COLON@27..29 ":" [] [Whitespace(" ")],
+                                ty: TsStringType {
+                                    string_token: STRING_KW@29..36 "string" [] [Whitespace(" ")],
+                                },
+                            },
+                            EQ@36..38 "=" [] [Whitespace(" ")],
+                            JsStringLiteralExpression {
+                                value_token: JS_STRING_LITERAL@38..44 "\"test\"" [] [],
+                            },
+                        ],
+                    },
+                ],
+                r_paren_token: R_PAREN@44..46 ")" [] [Whitespace(" ")],
+            },
+            return_type_annotation: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@46..47 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@47..48 "}" [] [],
+            },
+        },
+        JsFunctionStatement {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@48..58 "function" [Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@58..59 "b" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@59..60 "(" [] [],
+                items: JsParameterList [
+                    JsUnknownParameter {
+                        items: [
+                            DOT2@60..63 "..." [] [],
+                            JsIdentifierBinding {
+                                name_token: IDENT@63..67 "rest" [] [],
+                            },
+                            TsTypeAnnotation {
+                                colon_token: COLON@67..69 ":" [] [Whitespace(" ")],
+                                ty: TsArrayType {
+                                    element_type: TsStringType {
+                                        string_token: STRING_KW@69..75 "string" [] [],
+                                    },
+                                    l_brack_token: L_BRACK@75..76 "[" [] [],
+                                    r_brack_token: R_BRACK@76..78 "]" [] [Whitespace(" ")],
+                                },
+                            },
+                            EQ@78..80 "=" [] [Whitespace(" ")],
+                            JsStringLiteralExpression {
+                                value_token: JS_STRING_LITERAL@80..86 "\"init\"" [] [],
+                            },
+                        ],
+                    },
+                ],
+                r_paren_token: R_PAREN@86..88 ")" [] [Whitespace(" ")],
+            },
+            return_type_annotation: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@88..89 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@89..90 "}" [] [],
+            },
+        },
+        JsFunctionStatement {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@90..100 "function" [Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@100..101 "c" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@101..102 "(" [] [],
+                items: JsParameterList [
+                    JsUnknownParameter {
+                        items: [
+                            DOT2@102..105 "..." [] [],
+                            JsIdentifierBinding {
+                                name_token: IDENT@105..109 "rest" [] [],
+                            },
+                        ],
+                    },
+                    COMMA@109..111 "," [] [Whitespace(" ")],
+                    JsFormalParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@111..112 "b" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        type_annotation: TsTypeAnnotation {
+                            colon_token: COLON@112..114 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@114..120 "string" [] [],
+                            },
+                        },
+                    },
+                ],
+                r_paren_token: R_PAREN@120..122 ")" [] [Whitespace(" ")],
+            },
+            return_type_annotation: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@122..123 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@123..124 "}" [] [],
+            },
+        },
+    ],
+    eof_token: EOF@124..125 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..125
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..124
+    0: JS_FUNCTION_STATEMENT@0..48
+      0: (empty)
+      1: FUNCTION_KW@0..23 "function" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@23..24
+        0: IDENT@23..24 "a" [] []
+      4: (empty)
+      5: JS_PARAMETERS@24..46
+        0: L_PAREN@24..25 "(" [] []
+        1: JS_PARAMETER_LIST@25..44
+          0: JS_UNKNOWN_PARAMETER@25..44
+            0: JS_IDENTIFIER_BINDING@25..26
+              0: IDENT@25..26 "x" [] []
+            1: QUESTION@26..27 "?" [] []
+            2: TS_TYPE_ANNOTATION@27..36
+              0: COLON@27..29 ":" [] [Whitespace(" ")]
+              1: TS_STRING_TYPE@29..36
+                0: STRING_KW@29..36 "string" [] [Whitespace(" ")]
+            3: EQ@36..38 "=" [] [Whitespace(" ")]
+            4: JS_STRING_LITERAL_EXPRESSION@38..44
+              0: JS_STRING_LITERAL@38..44 "\"test\"" [] []
+        2: R_PAREN@44..46 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@46..48
+        0: L_CURLY@46..47 "{" [] []
+        1: JS_DIRECTIVE_LIST@47..47
+        2: JS_STATEMENT_LIST@47..47
+        3: R_CURLY@47..48 "}" [] []
+    1: JS_FUNCTION_STATEMENT@48..90
+      0: (empty)
+      1: FUNCTION_KW@48..58 "function" [Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@58..59
+        0: IDENT@58..59 "b" [] []
+      4: (empty)
+      5: JS_PARAMETERS@59..88
+        0: L_PAREN@59..60 "(" [] []
+        1: JS_PARAMETER_LIST@60..86
+          0: JS_UNKNOWN_PARAMETER@60..86
+            0: DOT2@60..63 "..." [] []
+            1: JS_IDENTIFIER_BINDING@63..67
+              0: IDENT@63..67 "rest" [] []
+            2: TS_TYPE_ANNOTATION@67..78
+              0: COLON@67..69 ":" [] [Whitespace(" ")]
+              1: TS_ARRAY_TYPE@69..78
+                0: TS_STRING_TYPE@69..75
+                  0: STRING_KW@69..75 "string" [] []
+                1: L_BRACK@75..76 "[" [] []
+                2: R_BRACK@76..78 "]" [] [Whitespace(" ")]
+            3: EQ@78..80 "=" [] [Whitespace(" ")]
+            4: JS_STRING_LITERAL_EXPRESSION@80..86
+              0: JS_STRING_LITERAL@80..86 "\"init\"" [] []
+        2: R_PAREN@86..88 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@88..90
+        0: L_CURLY@88..89 "{" [] []
+        1: JS_DIRECTIVE_LIST@89..89
+        2: JS_STATEMENT_LIST@89..89
+        3: R_CURLY@89..90 "}" [] []
+    2: JS_FUNCTION_STATEMENT@90..124
+      0: (empty)
+      1: FUNCTION_KW@90..100 "function" [Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@100..101
+        0: IDENT@100..101 "c" [] []
+      4: (empty)
+      5: JS_PARAMETERS@101..122
+        0: L_PAREN@101..102 "(" [] []
+        1: JS_PARAMETER_LIST@102..120
+          0: JS_UNKNOWN_PARAMETER@102..109
+            0: DOT2@102..105 "..." [] []
+            1: JS_IDENTIFIER_BINDING@105..109
+              0: IDENT@105..109 "rest" [] []
+          1: COMMA@109..111 "," [] [Whitespace(" ")]
+          2: JS_FORMAL_PARAMETER@111..120
+            0: JS_IDENTIFIER_BINDING@111..112
+              0: IDENT@111..112 "b" [] []
+            1: (empty)
+            2: TS_TYPE_ANNOTATION@112..120
+              0: COLON@112..114 ":" [] [Whitespace(" ")]
+              1: TS_STRING_TYPE@114..120
+                0: STRING_KW@114..120 "string" [] []
+        2: R_PAREN@120..122 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@122..124
+        0: L_CURLY@122..123 "{" [] []
+        1: JS_DIRECTIVE_LIST@123..123
+        2: JS_STATEMENT_LIST@123..123
+        3: R_CURLY@123..124 "}" [] []
+  3: EOF@124..125 "" [Newline("\n")] []
+--
+error[SyntaxError]: rest elements may not have default initializers
+  ┌─ ts_formal_parameter_error.js:3:32
+  │
+3 │ function b(...rest: string[] = "init") {}
+  │                                ^^^^^^
+
+--
+error[SyntaxError]: rest elements may not have trailing commas
+  ┌─ ts_formal_parameter_error.js:4:12
+  │
+4 │ function c(...rest, b: string) {}
+  │            ^^^^^^^
+
+--
+// TYPESCRIPT
+function a(x?: string = "test") {}
+function b(...rest: string[] = "init") {}
+function c(...rest, b: string) {}

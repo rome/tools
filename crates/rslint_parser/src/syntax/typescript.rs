@@ -55,29 +55,6 @@ pub(crate) fn parse_ts_type_assertion_expression(
     Present(m.complete(p, TS_TYPE_ASSERTION_EXPRESSION))
 }
 
-pub(crate) fn ts_modifier(p: &mut Parser, modifiers: &[&'static str]) -> Option<Range<usize>> {
-    if !modifiers.contains(&p.cur_src()) {
-        return None;
-    }
-
-    let range = p.cur_tok().range();
-
-    if p.has_linebreak_before_n(1)
-        || token_set![T!['('], T![')'], T![:], T![=], T![?]].contains(p.nth(1))
-    {
-        return None;
-    }
-
-    let kind = match p.cur_src() {
-        "abstract" => T![abstract],
-        "readonly" => T![readonly],
-        _ => unreachable!("unknown modifier"),
-    };
-    p.bump_remap(kind);
-
-    Some(range)
-}
-
 // FIXME: ts allows trailing commas but this doesnt, we need to figure out a way
 // to peek at the next token and see if its the end of the heritage clause
 pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMarker> {
@@ -193,18 +170,4 @@ pub fn try_parse(p: &mut Parser, func: impl FnOnce(&mut Parser) -> ParsedSyntax)
         p.rewind(checkpoint);
     }
     res
-}
-
-pub(crate) fn maybe_eat_incorrect_modifier(p: &mut Parser) -> Option<CompletedMarker> {
-    let maybe_err = p.start();
-    if matches!(p.cur_src(), "public" | "private" | "protected") {
-        let m = p.start();
-        p.bump_any();
-        Some(m.complete(p, JS_UNKNOWN))
-    } else if ts_modifier(p, &["readonly"]).is_some() {
-        Some(maybe_err.complete(p, JS_UNKNOWN))
-    } else {
-        maybe_err.abandon(p);
-        None
-    }
 }

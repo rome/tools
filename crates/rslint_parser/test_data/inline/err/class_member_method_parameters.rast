@@ -25,22 +25,22 @@ JsModule {
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@13..14 "(" [] [],
                         items: JsParameterList [
-                            JsParameter {
+                            JsFormalParameter {
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@14..16 "a" [] [Whitespace(" ")],
                                 },
+                                question_mark_token: missing (optional),
                                 type_annotation: missing (optional),
-                                initializer: missing (optional),
                             },
                             missing separator,
-                            JsParameter {
+                            JsFormalParameter {
                                 binding: JsObjectBindingPattern {
                                     l_curly_token: L_CURLY@16..17 "{" [] [],
                                     properties: JsObjectBindingPatternPropertyList [],
                                     r_curly_token: R_CURLY@17..19 "}" [] [Whitespace(" ")],
                                 },
+                                question_mark_token: missing (optional),
                                 type_annotation: missing (optional),
-                                initializer: missing (optional),
                             },
                             missing separator,
                             JsUnknownParameter {
@@ -86,13 +86,13 @@ JsModule {
           7: JS_PARAMETERS@13..20
             0: L_PAREN@13..14 "(" [] []
             1: JS_PARAMETER_LIST@14..20
-              0: JS_PARAMETER@14..16
+              0: JS_FORMAL_PARAMETER@14..16
                 0: JS_IDENTIFIER_BINDING@14..16
                   0: IDENT@14..16 "a" [] [Whitespace(" ")]
                 1: (empty)
                 2: (empty)
               1: (empty)
-              2: JS_PARAMETER@16..19
+              2: JS_FORMAL_PARAMETER@16..19
                 0: JS_OBJECT_BINDING_PATTERN@16..19
                   0: L_CURLY@16..17 "{" [] []
                   1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@17..17
