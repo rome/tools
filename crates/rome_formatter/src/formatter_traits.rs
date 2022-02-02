@@ -95,7 +95,7 @@ pub trait FormatOptionalTokenAndNode {
     where
         Or: FnOnce() -> FormatResult<FormatElement>,
     {
-        self.try_format_with_or(formatter, |token| Ok(token), op)
+        self.try_format_with_or(formatter, Ok, op)
     }
 
     /// If the token/node exists, it will call the first closure which will accept formatted element.
