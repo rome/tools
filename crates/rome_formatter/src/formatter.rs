@@ -119,7 +119,7 @@ impl Formatter {
     ///
     /// Returns `None` if the node couldn't be formatted because of syntax errors in its sub tree.
     /// The parent may use [Self::format_verbatim] to insert the node content as is.
-    // #[deprecated = "use the .format traits"]
+    #[deprecated = "use the .format traits"]
     pub fn format_node<T: AstNode + ToFormatElement>(
         &self,
         node: &T,
@@ -172,7 +172,7 @@ impl Formatter {
     ///
     /// assert_eq!(Ok(token("'abc'")), result)
     /// ```
-    // #[deprecated = "Please use the traits available in 'crate::formatter_traits' which allow better developer experience"]
+    #[deprecated = "Please use the traits available in 'crate::formatter_traits' which allow better developer experience"]
     pub fn format_token<T>(&self, syntax_token: &T) -> FormatResult<T::Output>
     where
         T: token::FormattableToken,
@@ -205,7 +205,6 @@ impl Formatter {
     /// Formats each child and returns the result as a list.
     ///
     /// Returns [None] if a child couldn't be formatted.
-    // #[deprecated = "Please use the traits available in 'crate::formatter_traits' which allow better developer experience"]
     pub fn format_nodes<T: AstNode + ToFormatElement>(
         &self,
         nodes: impl IntoIterator<Item = T>,

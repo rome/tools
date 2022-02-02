@@ -17,6 +17,7 @@ mod namespace_clause;
 mod namespace_import_specifier;
 mod shorthand_named_import_specifier;
 
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
@@ -24,11 +25,9 @@ use rslint_parser::ast::JsImport;
 
 impl ToFormatElement for JsImport {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let import_token = formatter.format_token(&self.import_token()?)?;
-        let import_clause = formatter.format_node(&self.import_clause()?)?;
-        let semicolon = formatter
-            .format_token(&self.semicolon_token())?
-            .unwrap_or_else(|| token(";"));
+        let import_token = self.import_token().format(formatter)?;
+        let import_clause = self.import_clause().format(formatter)?;
+        let semicolon = self.semicolon_token().format_or(formatter, || token(";"))?;
 
         Ok(format_elements![
             import_token,

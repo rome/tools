@@ -1,3 +1,4 @@
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     empty_element, format_elements, hard_line_break, token, FormatElement, FormatResult, Formatter,
     ToFormatElement,
@@ -15,10 +16,8 @@ pub fn format_directives_list(directives: JsDirectiveList, formatter: &Formatter
 impl ToFormatElement for JsDirective {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_token(&self.value_token()?)?,
-            formatter
-                .format_token(&self.semicolon_token())?
-                .unwrap_or_else(|| token(";")),
+            self.value_token().format(formatter)?,
+            self.semicolon_token().format_or(formatter, || token(";"))?,
         ])
     }
 }

@@ -1,3 +1,4 @@
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::ts::directives::format_directives_list;
 use crate::ts::root::format_interpreter;
 use crate::{
@@ -11,7 +12,7 @@ impl ToFormatElement for JsScript {
         elements.push(format_interpreter(self.interpreter_token(), formatter)?);
         elements.push(format_directives_list(self.directives(), formatter));
         elements.push(formatter.format_list(self.statements()));
-        elements.push(formatter.format_token(&self.eof_token()?)?);
+        elements.push(self.eof_token().format(formatter)?);
 
         Ok(format_elements![
             concat_elements(elements),

@@ -55,7 +55,7 @@ impl ToFormatElement for JsObjectAssignmentPatternShorthandProperty {
             .init()
             .format_with_or_empty(formatter, |node| format_elements![space_token(), node])?;
         Ok(format_elements![
-            formatter.format_node(&self.identifier()?)?,
+            self.identifier().format(formatter)?,
             init_node
         ])
     }
