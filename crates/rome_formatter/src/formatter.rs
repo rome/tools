@@ -3,6 +3,7 @@ use std::cell::RefCell;
 #[cfg(debug_assertions)]
 use std::collections::HashSet;
 
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     concat_elements, empty_element, empty_line,
     format_element::{normalize_newlines, Token},
@@ -24,7 +25,7 @@ pub struct Formatter {
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
     #[cfg(debug_assertions)]
-    printed_tokens: RefCell<HashSet<SyntaxToken>>,
+    pub(super) printed_tokens: RefCell<HashSet<SyntaxToken>>,
 }
 
 impl Formatter {
@@ -133,14 +134,14 @@ impl Formatter {
 
     /// Helper function that returns what should be printed before the node that work on
     /// the non-generic [SyntaxNode] to avoid unrolling the logic for every [AstNode] type.
-    fn format_node_start(&self, _node: &SyntaxNode) -> FormatElement {
+    pub(super) fn format_node_start(&self, _node: &SyntaxNode) -> FormatElement {
         // TODO: Set the marker for the start source map location, ...
         empty_element()
     }
 
     /// Helper function that returns what should be printed after the node that work on
     /// the non-generic [SyntaxNode] to avoid unrolling the logic for every [AstNode] type.
-    fn format_node_end(&self, _node: &SyntaxNode) -> FormatElement {
+    pub(super) fn format_node_end(&self, _node: &SyntaxNode) -> FormatElement {
         // TODO: Sets the marker for the end source map location, ...
         empty_element()
     }
@@ -211,7 +212,7 @@ impl Formatter {
         let mut result = Vec::new();
 
         for node in nodes {
-            match self.format_node(&node) {
+            match node.format(self) {
                 Ok(formatted) => {
                     result.push(formatted);
                 }
@@ -242,7 +243,7 @@ impl Formatter {
         let last_index = list.len().saturating_sub(1);
 
         for (index, element) in list.elements().enumerate() {
-            let node = self.format_node(&element.node()?)?;
+            let node = element.node()?.format(self)?;
 
             // Reuse the existing trailing separator or create it if it wasn't in the
             // input source. Only print the last trailing token if the outer group breaks
@@ -253,7 +254,7 @@ impl Formatter {
                     // but still print its associated trivias unconditionally
                     self.format_replaced(&separator, if_group_breaks(Token::from(&separator)))?
                 } else {
-                    self.format_token(&separator)?
+                    FormatTokenAndNode::format(&separator, self)?
                 }
             } else if index == last_index {
                 if_group_breaks(separator_factory())
@@ -280,7 +281,7 @@ impl Formatter {
     {
         let formatted_list = list.iter().map(|module_item| {
             let snapshot = self.snapshot();
-            let elem = match self.format_node(&module_item) {
+            let elem = match module_item.format(self) {
                 Ok(result) => result,
                 Err(_) => {
                     self.restore(snapshot);
@@ -295,7 +296,7 @@ impl Formatter {
         join_elements_hard_line(formatted_list)
     }
 
-    fn print_leading_trivia(&self, token: &SyntaxToken) -> FormatElement {
+    pub(super) fn print_leading_trivia(&self, token: &SyntaxToken) -> FormatElement {
         let mut line_count = 0;
         let mut elements = Vec::new();
 
@@ -326,7 +327,7 @@ impl Formatter {
         concat_elements(elements.into_iter().rev())
     }
 
-    fn print_trailing_trivia(&self, token: &SyntaxToken) -> FormatElement {
+    pub(super) fn print_trailing_trivia(&self, token: &SyntaxToken) -> FormatElement {
         let mut elements = Vec::new();
 
         for piece in token.trailing_trivia().pieces() {

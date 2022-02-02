@@ -1,7 +1,7 @@
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    empty_element, format_elements, group_elements, join_elements, soft_block_indent,
-    soft_line_break_or_space, space_token, token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    format_elements, group_elements, join_elements, soft_block_indent, soft_line_break_or_space,
+    space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
     JsAnyObjectBindingPatternMember, JsObjectBindingPattern, JsObjectBindingPatternProperty,
@@ -54,16 +54,14 @@ impl ToFormatElement for JsAnyObjectBindingPatternMember {
 
 impl ToFormatElement for JsObjectBindingPatternProperty {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let init_node = if let Some(node) = self.init() {
-            format_elements![space_token(), formatter.format_node(&node)?]
-        } else {
-            empty_element()
-        };
+        let init_node = self
+            .init()
+            .format_with_or_empty(formatter, |node| format_elements![space_token(), node])?;
         Ok(format_elements![
-            formatter.format_node(&self.member()?)?,
-            formatter.format_token(&self.colon_token()?)?,
+            self.member().format(formatter)?,
+            self.colon_token().format(formatter)?,
             space_token(),
-            formatter.format_node(&self.pattern()?)?,
+            self.pattern().format(formatter)?,
             init_node,
         ])
     }
@@ -72,21 +70,19 @@ impl ToFormatElement for JsObjectBindingPatternProperty {
 impl ToFormatElement for JsObjectBindingPatternRest {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_token(&self.dotdotdot_token()?)?,
-            formatter.format_node(&self.binding()?)?,
+            self.dotdotdot_token().format(formatter)?,
+            self.binding().format(formatter)?,
         ])
     }
 }
 
 impl ToFormatElement for JsObjectBindingPatternShorthandProperty {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let init_node = if let Some(node) = self.init() {
-            format_elements![space_token(), formatter.format_node(&node)?]
-        } else {
-            empty_element()
-        };
+        let init_node = self
+            .init()
+            .format_with_or_empty(formatter, |node| format_elements![space_token(), node])?;
         Ok(format_elements![
-            formatter.format_node(&self.identifier()?)?,
+            self.identifier().format(formatter)?,
             init_node
         ])
     }
