@@ -3504,7 +3504,7 @@ impl TsEnum {
     pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 2usize) }
+    pub fn name(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -3525,13 +3525,10 @@ impl TsEnumMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
-    pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+    pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+        support::required_node(&self.syntax, 0usize)
     }
-    pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
-        support::required_node(&self.syntax, 2usize)
-    }
+    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExprWithTypeArgs {
@@ -10299,7 +10296,7 @@ impl std::fmt::Debug for TsEnum {
                 &support::DebugOptionalElement(self.const_token()),
             )
             .field("enum_token", &support::DebugSyntaxResult(self.enum_token()))
-            .field("ident", &support::DebugSyntaxResult(self.ident()))
+            .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
                 "l_curly_token",
                 &support::DebugSyntaxResult(self.l_curly_token()),
@@ -10332,9 +10329,11 @@ impl AstNode for TsEnumMember {
 impl std::fmt::Debug for TsEnumMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsEnumMember")
-            .field("ident", &support::DebugSyntaxResult(self.ident()))
-            .field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
-            .field("value", &support::DebugSyntaxResult(self.value()))
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "initializer",
+                &support::DebugOptionalElement(self.initializer()),
+            )
             .finish()
     }
 }
@@ -19116,23 +19115,23 @@ impl AstNode for TsEnumMemberList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<TsEnumMember> for TsEnumMemberList {
+impl AstSeparatedList<TsEnumMember> for TsEnumMemberList {
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsEnumMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.write_str("TsEnumMemberList ")?;
-        f.debug_list().entries(self.iter()).finish()
+        f.debug_list().entries(self.elements()).finish()
     }
 }
-impl IntoIterator for &TsEnumMemberList {
-    type Item = TsEnumMember;
-    type IntoIter = AstNodeListIterator<TsEnumMember>;
+impl IntoIterator for TsEnumMemberList {
+    type Item = SyntaxResult<TsEnumMember>;
+    type IntoIter = AstSeparatedListNodesIterator<TsEnumMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-impl IntoIterator for TsEnumMemberList {
-    type Item = TsEnumMember;
-    type IntoIter = AstNodeListIterator<TsEnumMember>;
+impl IntoIterator for &TsEnumMemberList {
+    type Item = SyntaxResult<TsEnumMember>;
+    type IntoIter = AstSeparatedListNodesIterator<TsEnumMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]

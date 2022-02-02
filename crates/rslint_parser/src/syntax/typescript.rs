@@ -1,6 +1,7 @@
 //! TypeScript specific functions.
 
 mod types;
+mod enums;
 
 use super::expr::{parse_assignment_expression_or_higher, parse_lhs_expr, parse_name};
 use crate::parser::ParserProgress;
@@ -14,6 +15,7 @@ use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
 pub(crate) use self::types::*;
+pub(crate) use self::enums::*;
 
 fn parse_ts_identifier_binding(p: &mut Parser) -> ParsedSyntax {
     parse_identifier(p, TS_IDENTIFIER_BINDING).map(|mut ident| {
