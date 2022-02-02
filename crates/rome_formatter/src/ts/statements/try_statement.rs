@@ -40,7 +40,7 @@ impl ToFormatElement for JsTryFinallyStatement {
 
 impl ToFormatElement for JsCatchClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        self.declaration().try_format_with_or(
+        self.declaration().format_with_or(
             formatter,
             |declaration| {
                 Ok(format_elements![

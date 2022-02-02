@@ -130,11 +130,9 @@ impl ToFormatElement for JsComputedMemberExpression {
 
 impl ToFormatElement for JsNewExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let arguments = self.arguments().format_with_or(
-            formatter,
-            |arguments| arguments,
-            || format_elements![token("("), token(")")],
-        )?;
+        let arguments = self
+            .arguments()
+            .format_or(formatter, || format_elements![token("("), token(")")])?;
 
         Ok(format_elements![
             self.new_token().format(formatter)?,

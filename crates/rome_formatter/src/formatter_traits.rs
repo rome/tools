@@ -57,13 +57,14 @@ pub trait FormatOptionalTokenAndNode {
     ///
     /// assert_eq!(Ok(empty_element()), empty_result);
     /// assert_eq!(Ok(format_elements![space_token(), token("'abc'")]), with_result);
-    fn format_with_or_empty<With>(
+    fn format_with_or_empty<With, WithResult>(
         &self,
         formatter: &Formatter,
         with: With,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement) -> FormatElement,
+        With: FnOnce(FormatElement) -> WithResult,
+        WithResult: IntoFormatResult,
     {
         self.format_with_or(formatter, with, empty_element)
     }
@@ -84,18 +85,13 @@ pub trait FormatOptionalTokenAndNode {
     /// let result = empty_token.format_or(&formatter, || token(" other result"));
     ///
     /// assert_eq!(Ok(token(" other result")), result);
-    fn format_or<Or>(&self, formatter: &Formatter, op: Or) -> FormatResult<FormatElement>
+    fn format_or<Or, OrResult>(&self, formatter: &Formatter, op: Or) -> FormatResult<FormatElement>
     where
-        Or: FnOnce() -> FormatElement,
+        Or: FnOnce() -> OrResult,
+        OrResult: IntoFormatResult,
     {
         self.format_with_or(formatter, |token| token, op)
-    }
-
-    fn try_format_or<Or>(&self, formatter: &Formatter, op: Or) -> FormatResult<FormatElement>
-    where
-        Or: FnOnce() -> FormatResult<FormatElement>,
-    {
-        self.try_format_with_or(formatter, Ok, op)
+            .into_format_result()
     }
 
     /// If the token/node exists, it will call the first closure which will accept formatted element.
@@ -133,53 +129,17 @@ pub trait FormatOptionalTokenAndNode {
     ///
     /// assert_eq!(Ok(token("empty")), empty_result);
     /// assert_eq!(Ok(format_elements![space_token(), token("'abc'")]), with_result);
-    fn format_with_or<With, Or>(
+    fn format_with_or<With, Or, WithResult, OrResult>(
         &self,
         formatter: &Formatter,
         with: With,
         op: Or,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement) -> FormatElement,
-        Or: FnOnce() -> FormatElement;
-
-    /// A specialised version of [FormatOptionalTokenAndNode::format_with_or] where the users requires
-    /// to handle the possible errors.
-    ///
-    /// This function is useful in cases where inside the closures there's need to use other try operators.
-    ///
-    /// ## Examples
-    ///
-    /// ```rust,ignore
-    /// self.declaration().try_format_with_or(
-    ///    formatter,
-    ///    |declaration| {
-    ///        Ok(format_elements![
-    ///            self.catch_token().format(formatter)?,
-    ///            space_token(),
-    ///            declaration,
-    ///            space_token(),
-    ///            self.body().format(formatter)?
-    ///        ])
-    ///    },
-    ///    || {
-    ///        Ok(format_elements![
-    ///            self.catch_token().format(formatter)?,
-    ///            space_token(),
-    ///            self.body().format(formatter)?
-    ///        ])
-    ///    },
-    ///)
-    /// ```
-    fn try_format_with_or<With, Or>(
-        &self,
-        formatter: &Formatter,
-        with: With,
-        op: Or,
-    ) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> FormatResult<FormatElement>,
-        Or: FnOnce() -> FormatResult<FormatElement>;
+        With: FnOnce(FormatElement) -> WithResult,
+        WithResult: IntoFormatResult,
+        Or: FnOnce() -> OrResult,
+        OrResult: IntoFormatResult;
 }
 
 /// Utility trait to help to format nodes and tokens
@@ -239,76 +199,59 @@ pub trait FormatTokenAndNode {
     /// });
     ///
     /// assert_eq!(Ok(format_elements![token("'abc'"), space_token(), token("'abc'")]), result)
-    fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> FormatElement;
-
-    /// A specialised version of [FormatTokenAndNode::format_with] where the users requires
-    /// to handle the possible errors.
-    ///
-    /// This function is useful in cases where inside the closures there's need to use other try operators.
-    ///
-    /// The first closure will return the formatted node/token together with its unformatted version.
-    fn try_format_with<With>(
+    fn format_with<With, WithResult>(
         &self,
         formatter: &Formatter,
         with: With,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement) -> FormatResult<FormatElement>;
+        With: FnOnce(FormatElement) -> WithResult,
+        WithResult: IntoFormatResult;
+}
+
+/// Utility trait to convert [crate::FormatElement] to [FormatResult]
+pub trait IntoFormatResult {
+    fn into_format_result(self) -> FormatResult<FormatElement>;
+}
+
+impl IntoFormatResult for FormatElement {
+    fn into_format_result(self) -> FormatResult<FormatElement> {
+        Ok(self)
+    }
+}
+
+impl IntoFormatResult for FormatResult<FormatElement> {
+    fn into_format_result(self) -> FormatResult<FormatElement> {
+        self
+    }
 }
 
 impl<F: FormatTokenAndNode> FormatTokenAndNode for SyntaxResult<F> {
-    fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> FormatElement,
-    {
-        match self {
-            Ok(token) => Ok(with(token.format(formatter)?)),
-            Err(err) => Err(err.into()),
-        }
-    }
-
-    fn try_format_with<With>(
+    fn format_with<With, WithResult>(
         &self,
         formatter: &Formatter,
         with: With,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement) -> FormatResult<FormatElement>,
+        With: FnOnce(FormatElement) -> WithResult,
+        WithResult: IntoFormatResult,
     {
         match self {
-            Ok(token) => with(token.format(formatter)?),
+            Ok(token) => with(token.format(formatter)?).into_format_result(),
             Err(err) => Err(err.into()),
         }
     }
 }
 
 impl FormatTokenAndNode for SyntaxToken {
-    fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> FormatElement,
-    {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                assert!(formatter.printed_tokens.borrow_mut().insert(self.clone()));
-            }
-        }
-
-        Ok(with(format_elements![
-            formatter.print_leading_trivia(self),
-            Token::from(self),
-            formatter.print_trailing_trivia(self),
-        ]))
-    }
-
-    fn try_format_with<With>(
+    fn format_with<With, WithResult>(
         &self,
         formatter: &Formatter,
         with: With,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement) -> FormatResult<FormatElement>,
+        With: FnOnce(FormatElement) -> WithResult,
+        WithResult: IntoFormatResult,
     {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
@@ -321,30 +264,19 @@ impl FormatTokenAndNode for SyntaxToken {
             Token::from(self),
             formatter.print_trailing_trivia(self),
         ])
+        .into_format_result()
     }
 }
 
 impl<N: AstNode + ToFormatElement> FormatTokenAndNode for N {
-    fn format_with<With>(&self, formatter: &Formatter, with: With) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> FormatElement,
-    {
-        let leading = formatter.format_node_start(self.syntax());
-        let trailing = formatter.format_node_end(self.syntax());
-        Ok(with(format_elements![
-            leading,
-            self.to_format_element(formatter)?,
-            trailing,
-        ]))
-    }
-
-    fn try_format_with<With>(
+    fn format_with<With, WithResult>(
         &self,
         formatter: &Formatter,
         with: With,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement) -> FormatResult<FormatElement>,
+        With: FnOnce(FormatElement) -> WithResult,
+        WithResult: IntoFormatResult,
     {
         let leading = formatter.format_node_start(self.syntax());
         let trailing = formatter.format_node_end(self.syntax());
@@ -353,73 +285,46 @@ impl<N: AstNode + ToFormatElement> FormatTokenAndNode for N {
             self.to_format_element(formatter)?,
             trailing,
         ])
+        .into_format_result()
     }
 }
 
 impl<F: FormatOptionalTokenAndNode> FormatOptionalTokenAndNode for SyntaxResult<F> {
-    fn format_with_or<With, Or>(
+    fn format_with_or<With, Or, WithResult, OrResult>(
         &self,
         formatter: &Formatter,
         with: With,
         op: Or,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement) -> FormatElement,
-        Or: FnOnce() -> FormatElement,
+        With: FnOnce(FormatElement) -> WithResult,
+        WithResult: IntoFormatResult,
+        Or: FnOnce() -> OrResult,
+        OrResult: IntoFormatResult,
     {
         match self {
             Ok(token) => token.format_with_or(formatter, with, op),
             Err(err) => Err(err.into()),
         }
     }
-
-    fn try_format_with_or<With, Or>(
-        &self,
-        formatter: &Formatter,
-        with: With,
-        op: Or,
-    ) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> FormatResult<FormatElement>,
-        Or: FnOnce() -> FormatResult<FormatElement>,
-    {
-        match self {
-            Ok(token) => token.try_format_with_or(formatter, with, op),
-            Err(err) => Err(err.into()),
-        }
-    }
 }
 
 impl<F: FormatTokenAndNode> FormatOptionalTokenAndNode for Option<F> {
-    fn format_with_or<With, Or>(
+    fn format_with_or<With, Or, WithResult, OrResult>(
         &self,
         formatter: &Formatter,
         with: With,
         op: Or,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement) -> FormatElement,
-        Or: FnOnce() -> FormatElement,
+        With: FnOnce(FormatElement) -> WithResult,
+        WithResult: IntoFormatResult,
+        Or: FnOnce() -> OrResult,
+        OrResult: IntoFormatResult,
     {
         match self {
-            None => Ok(op()),
-            Some(token) => token.format_with(formatter, with),
-        }
-    }
-
-    fn try_format_with_or<With, Or>(
-        &self,
-        formatter: &Formatter,
-        with: With,
-        op: Or,
-    ) -> FormatResult<FormatElement>
-    where
-        With: FnOnce(FormatElement) -> FormatResult<FormatElement>,
-        Or: FnOnce() -> FormatResult<FormatElement>,
-    {
-        match self {
-            None => op(),
-            Some(token) => token.try_format_with(formatter, with),
+            None => op().into_format_result(),
+            Some(token) => token.format_with(formatter, with).into_format_result(),
         }
     }
 }
