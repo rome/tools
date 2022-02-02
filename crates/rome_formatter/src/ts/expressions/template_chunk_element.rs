@@ -12,7 +12,7 @@ impl ToFormatElement for JsTemplateChunkElement {
         formatter.format_replaced(
             &chunk,
             FormatElement::from(Token::new_dynamic(
-                normalize_newlines(chunk.text_trimmed(), false),
+                normalize_newlines(chunk.text_trimmed(), ['\r']).into_owned(),
                 chunk.text_trimmed_range(),
             )),
         )

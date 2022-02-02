@@ -4,6 +4,7 @@ use rslint_parser::{AstNode, SyntaxNode};
 
 use crate::format_elements;
 use crate::intersperse::{Intersperse, IntersperseFn};
+use std::borrow::Cow;
 use std::ops::Deref;
 
 type Content = Box<FormatElement>;
@@ -993,22 +994,40 @@ impl<'a, L: Language> From<&'a SyntaxToken<L>> for Token {
 
 const LINE_SEPARATOR: char = '\u{2028}';
 const PARAGRAPH_SEPARATOR: char = '\u{2029}';
+pub(crate) const LINE_TERMINATORS: [char; 3] = ['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR];
 
-/// Normalize all line terminators in the text to "\n" since
-/// its the only line break type supported by the printer
-pub(crate) fn normalize_newlines(text: &str, separators: bool) -> String {
-    let text = text.replace("\r\n", "\n");
-    if separators {
-        text.replace(&['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR], "\n")
+/// Replace the line terminators matching the provided list with "\n"
+/// since its the only line break type supported by the printer
+pub(crate) fn normalize_newlines<const N: usize>(text: &str, terminators: [char; N]) -> Cow<str> {
+    let mut result = String::new();
+    let mut last_end = 0;
+
+    for (start, part) in text.match_indices(terminators) {
+        result.push_str(&text[last_end..start]);
+        result.push('\n');
+
+        last_end = start + part.len();
+        // If the current character is \r and the
+        // next is \n, skip over the entire sequence
+        if part == "\r" && text[last_end..].starts_with('\n') {
+            last_end += 1;
+        }
+    }
+
+    // If the result is empty no line terminators were matched,
+    // return the entire input text without allocating a new String
+    if result.is_empty() {
+        Cow::Borrowed(text)
     } else {
-        text.replace('\r', "\n")
+        result.push_str(&text[last_end..text.len()]);
+        Cow::Owned(result)
     }
 }
 
 impl<L: Language> From<SyntaxTriviaPieceComments<L>> for Token {
     fn from(trivia: SyntaxTriviaPieceComments<L>) -> Self {
         Self::new_dynamic(
-            normalize_newlines(trivia.text().trim(), true),
+            normalize_newlines(trivia.text().trim(), LINE_TERMINATORS).into_owned(),
             trivia.text_range(),
         )
     }
