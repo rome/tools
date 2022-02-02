@@ -114,6 +114,16 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
                     }
 
                     impl #name {
+                        /// Create an AstNode from a SyntaxNode without checking its kind
+                        ///
+                        /// # Safety
+                        /// This function must be guarded with a call to [AstNode::can_cast]
+                        /// or a match on [SyntaxNode::kind]
+                        #[inline]
+                        pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+                            Self { syntax }
+                        }
+
                         #(#methods)*
                     }
 
@@ -415,6 +425,16 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
             }
 
             impl #name {
+                /// Create an AstNode from a SyntaxNode without checking its kind
+                ///
+                /// # Safety
+                /// This function must be guarded with a call to [AstNode::can_cast]
+                /// or a match on [SyntaxNode::kind]
+                #[inline]
+                pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+                    Self { syntax }
+                }
+
                 pub fn items(&self) -> SyntaxElementChildren {
                     support::elements(&self.syntax)
                 }
@@ -465,6 +485,18 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
         let element_type = format_ident!("{}", list.element_name);
 
         let node_impl = quote! {
+            impl #list_name {
+                /// Create an AstNode from a SyntaxNode without checking its kind
+                ///
+                /// # Safety
+                /// This function must be guarded with a call to [AstNode::can_cast]
+                /// or a match on [SyntaxNode::kind]
+                #[inline]
+                pub unsafe fn new_unchecked(syntax: SyntaxNode) -> Self {
+                    Self { syntax_list: syntax.into_list() }
+                }
+            }
+
             impl AstNode for #list_name {
                 fn can_cast(kind: JsSyntaxKind) -> bool {
                     kind == #list_kind
