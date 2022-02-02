@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        TsTypeAlias {
+        TsTypeAliasStatement {
             type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..20 "A" [] [],
@@ -34,7 +34,7 @@ JsModule {
             },
             semicolon_token: SEMICOLON@42..43 ";" [] [],
         },
-        TsTypeAlias {
+        TsTypeAliasStatement {
             type_token: TYPE_KW@43..49 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@49..50 "B" [] [],
@@ -100,7 +100,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..88
-    0: TS_TYPE_ALIAS@0..43
+    0: TS_TYPE_ALIAS_STATEMENT@0..43
       0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@19..20
         0: IDENT@19..20 "A" [] []
@@ -122,7 +122,7 @@ JsModule {
           0: IDENT@41..42 "X" [] []
         1: (empty)
       5: SEMICOLON@42..43 ";" [] []
-    1: TS_TYPE_ALIAS@43..88
+    1: TS_TYPE_ALIAS_STATEMENT@43..88
       0: TYPE_KW@43..49 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@49..50
         0: IDENT@49..50 "B" [] []

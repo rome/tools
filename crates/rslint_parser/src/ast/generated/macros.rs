@@ -869,8 +869,9 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsNeverType::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_NON_NULL => {
-                    let $pattern = unsafe { $crate::ast::TsNonNull::new_unchecked(node) };
+                $crate::JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsNonNullAssertionExpression::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_NON_PRIMITIVE_TYPE => {
@@ -966,8 +967,9 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsTupleType::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_TYPE_ALIAS => {
-                    let $pattern = unsafe { $crate::ast::TsTypeAlias::new_unchecked(node) };
+                $crate::JsSyntaxKind::TS_TYPE_ALIAS_STATEMENT => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsTypeAliasStatement::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_TYPE_ANNOTATION => {

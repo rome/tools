@@ -143,6 +143,54 @@ fn punctuators() {
 }
 
 #[test]
+fn bang() {
+    assert_lex!(
+        r#"!/a/"#,
+        BANG:1,
+        JS_REGEX_LITERAL:3
+    );
+
+    assert_lex!(
+        r#"a!/a/"#,
+        IDENT:1,
+        BANG:1,
+        SLASH:1,
+        IDENT:1,
+        SLASH:1
+    );
+
+    assert_lex!(
+        r#"function a() {}/regex/"#,
+        FUNCTION_KW:8,
+        WHITESPACE:1,
+        IDENT:1,
+        L_PAREN:1,
+        R_PAREN:1,
+        WHITESPACE:1,
+        L_CURLY:1,
+        R_CURLY:1,
+        JS_REGEX_LITERAL:7
+    );
+    assert_lex!(
+        "a!;/test/",
+        IDENT:1,
+        BANG:1,
+        SEMICOLON:1
+        JS_REGEX_LITERAL:6
+    );
+
+    assert_lex!(
+        "1 && !2",
+        JS_NUMBER_LITERAL:1,
+        WHITESPACE:1,
+        AMP2:2,
+        WHITESPACE:1,
+        BANG:1
+        JS_NUMBER_LITERAL:1
+    );
+}
+
+#[test]
 fn consecutive_punctuators() {
     assert_lex! {
         "&&&&^^^||",
@@ -913,7 +961,10 @@ fn shebang() {
         JS_NUMBER_LITERAL:1,
         HASH:1,
         BANG:1,
-        JS_REGEX_LITERAL:9
+        SLASH:1,
+        IDENT:3,
+        SLASH:1,
+        IDENT:4,
     }
 }
 

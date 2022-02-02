@@ -1,0 +1,243 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsVariableStatement {
+            declarations: JsVariableDeclarations {
+                kind: LET_KW@0..18 "let" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+                items: JsVariableDeclarationList [
+                    JsVariableDeclaration {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@18..20 "a" [] [Whitespace(" ")],
+                        },
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@20..22 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@22..24 "{" [] [Whitespace(" ")],
+                                members: JsObjectMemberList [
+                                    JsPropertyObjectMember {
+                                        name: JsLiteralMemberName {
+                                            value: IDENT@24..25 "b" [] [],
+                                        },
+                                        colon_token: COLON@25..27 ":" [] [Whitespace(" ")],
+                                        value: JsObjectExpression {
+                                            l_curly_token: L_CURLY@27..28 "{" [] [],
+                                            members: JsObjectMemberList [],
+                                            r_curly_token: R_CURLY@28..30 "}" [] [Whitespace(" ")],
+                                        },
+                                    },
+                                ],
+                                r_curly_token: R_CURLY@30..31 "}" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@31..32 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: TsNonNullAssertionExpression {
+                expression: JsIdentifierExpression {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@32..34 "a" [Newline("\n")] [],
+                    },
+                },
+                excl_token: BANG@34..35 "!" [] [],
+            },
+            semicolon_token: SEMICOLON@35..36 ";" [] [],
+        },
+        JsFunctionStatement {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@36..46 "function" [Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@46..50 "test" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@50..51 "(" [] [],
+                items: JsParameterList [],
+                r_paren_token: R_PAREN@51..53 ")" [] [Whitespace(" ")],
+            },
+            return_type_annotation: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@53..54 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@54..55 "}" [] [],
+            },
+        },
+        JsExpressionStatement {
+            expression: TsNonNullAssertionExpression {
+                expression: JsCallExpression {
+                    callee: JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@55..60 "test" [Newline("\n")] [],
+                        },
+                    },
+                    optional_chain_token_token: missing (optional),
+                    type_arguments: missing (optional),
+                    arguments: JsCallArguments {
+                        l_paren_token: L_PAREN@60..61 "(" [] [],
+                        args: JsCallArgumentList [],
+                        r_paren_token: R_PAREN@61..62 ")" [] [],
+                    },
+                },
+                excl_token: BANG@62..63 "!" [] [],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: TsNonNullAssertionExpression {
+                expression: JsStaticMemberExpression {
+                    object: JsStaticMemberExpression {
+                        object: JsIdentifierExpression {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@63..66 "a" [Newline("\n"), Whitespace("\t")] [],
+                            },
+                        },
+                        operator: DOT@66..67 "." [] [],
+                        member: JsName {
+                            value_token: IDENT@67..68 "b" [] [],
+                        },
+                    },
+                    operator: DOT@68..69 "." [] [],
+                    member: JsName {
+                        value_token: IDENT@69..70 "c" [] [],
+                    },
+                },
+                excl_token: BANG@70..71 "!" [] [],
+            },
+            semicolon_token: SEMICOLON@71..72 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: TsNonNullAssertionExpression {
+                expression: TsNonNullAssertionExpression {
+                    expression: TsNonNullAssertionExpression {
+                        expression: TsNonNullAssertionExpression {
+                            expression: TsNonNullAssertionExpression {
+                                expression: TsNonNullAssertionExpression {
+                                    expression: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@72..74 "a" [Newline("\n")] [],
+                                        },
+                                    },
+                                    excl_token: BANG@74..75 "!" [] [],
+                                },
+                                excl_token: BANG@75..76 "!" [] [],
+                            },
+                            excl_token: BANG@76..77 "!" [] [],
+                        },
+                        excl_token: BANG@77..78 "!" [] [],
+                    },
+                    excl_token: BANG@78..79 "!" [] [],
+                },
+                excl_token: BANG@79..80 "!" [] [],
+            },
+            semicolon_token: SEMICOLON@80..81 ";" [] [],
+        },
+    ],
+    eof_token: EOF@81..82 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..82
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..81
+    0: JS_VARIABLE_STATEMENT@0..32
+      0: JS_VARIABLE_DECLARATIONS@0..31
+        0: LET_KW@0..18 "let" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION_LIST@18..31
+          0: JS_VARIABLE_DECLARATION@18..31
+            0: JS_IDENTIFIER_BINDING@18..20
+              0: IDENT@18..20 "a" [] [Whitespace(" ")]
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@20..31
+              0: EQ@20..22 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@22..31
+                0: L_CURLY@22..24 "{" [] [Whitespace(" ")]
+                1: JS_OBJECT_MEMBER_LIST@24..30
+                  0: JS_PROPERTY_OBJECT_MEMBER@24..30
+                    0: JS_LITERAL_MEMBER_NAME@24..25
+                      0: IDENT@24..25 "b" [] []
+                    1: COLON@25..27 ":" [] [Whitespace(" ")]
+                    2: JS_OBJECT_EXPRESSION@27..30
+                      0: L_CURLY@27..28 "{" [] []
+                      1: JS_OBJECT_MEMBER_LIST@28..28
+                      2: R_CURLY@28..30 "}" [] [Whitespace(" ")]
+                2: R_CURLY@30..31 "}" [] []
+      1: SEMICOLON@31..32 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@32..36
+      0: TS_NON_NULL_ASSERTION_EXPRESSION@32..35
+        0: JS_IDENTIFIER_EXPRESSION@32..34
+          0: JS_REFERENCE_IDENTIFIER@32..34
+            0: IDENT@32..34 "a" [Newline("\n")] []
+        1: BANG@34..35 "!" [] []
+      1: SEMICOLON@35..36 ";" [] []
+    2: JS_FUNCTION_STATEMENT@36..55
+      0: (empty)
+      1: FUNCTION_KW@36..46 "function" [Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@46..50
+        0: IDENT@46..50 "test" [] []
+      4: (empty)
+      5: JS_PARAMETERS@50..53
+        0: L_PAREN@50..51 "(" [] []
+        1: JS_PARAMETER_LIST@51..51
+        2: R_PAREN@51..53 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@53..55
+        0: L_CURLY@53..54 "{" [] []
+        1: JS_DIRECTIVE_LIST@54..54
+        2: JS_STATEMENT_LIST@54..54
+        3: R_CURLY@54..55 "}" [] []
+    3: JS_EXPRESSION_STATEMENT@55..63
+      0: TS_NON_NULL_ASSERTION_EXPRESSION@55..63
+        0: JS_CALL_EXPRESSION@55..62
+          0: JS_IDENTIFIER_EXPRESSION@55..60
+            0: JS_REFERENCE_IDENTIFIER@55..60
+              0: IDENT@55..60 "test" [Newline("\n")] []
+          1: (empty)
+          2: (empty)
+          3: JS_CALL_ARGUMENTS@60..62
+            0: L_PAREN@60..61 "(" [] []
+            1: JS_CALL_ARGUMENT_LIST@61..61
+            2: R_PAREN@61..62 ")" [] []
+        1: BANG@62..63 "!" [] []
+      1: (empty)
+    4: JS_EXPRESSION_STATEMENT@63..72
+      0: TS_NON_NULL_ASSERTION_EXPRESSION@63..71
+        0: JS_STATIC_MEMBER_EXPRESSION@63..70
+          0: JS_STATIC_MEMBER_EXPRESSION@63..68
+            0: JS_IDENTIFIER_EXPRESSION@63..66
+              0: JS_REFERENCE_IDENTIFIER@63..66
+                0: IDENT@63..66 "a" [Newline("\n"), Whitespace("\t")] []
+            1: DOT@66..67 "." [] []
+            2: JS_NAME@67..68
+              0: IDENT@67..68 "b" [] []
+          1: DOT@68..69 "." [] []
+          2: JS_NAME@69..70
+            0: IDENT@69..70 "c" [] []
+        1: BANG@70..71 "!" [] []
+      1: SEMICOLON@71..72 ";" [] []
+    5: JS_EXPRESSION_STATEMENT@72..81
+      0: TS_NON_NULL_ASSERTION_EXPRESSION@72..80
+        0: TS_NON_NULL_ASSERTION_EXPRESSION@72..79
+          0: TS_NON_NULL_ASSERTION_EXPRESSION@72..78
+            0: TS_NON_NULL_ASSERTION_EXPRESSION@72..77
+              0: TS_NON_NULL_ASSERTION_EXPRESSION@72..76
+                0: TS_NON_NULL_ASSERTION_EXPRESSION@72..75
+                  0: JS_IDENTIFIER_EXPRESSION@72..74
+                    0: JS_REFERENCE_IDENTIFIER@72..74
+                      0: IDENT@72..74 "a" [Newline("\n")] []
+                  1: BANG@74..75 "!" [] []
+                1: BANG@75..76 "!" [] []
+              1: BANG@76..77 "!" [] []
+            1: BANG@77..78 "!" [] []
+          1: BANG@78..79 "!" [] []
+        1: BANG@79..80 "!" [] []
+      1: SEMICOLON@80..81 ";" [] []
+  3: EOF@81..82 "" [Newline("\n")] []

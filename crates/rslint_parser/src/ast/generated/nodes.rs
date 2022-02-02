@@ -4020,10 +4020,10 @@ impl TsNeverType {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsNonNull {
+pub struct TsNonNullAssertionExpression {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsNonNull {
+impl TsNonNullAssertionExpression {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -4031,7 +4031,7 @@ impl TsNonNull {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn expr(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -4423,10 +4423,10 @@ impl TsTupleType {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsTypeAlias {
+pub struct TsTypeAliasStatement {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsTypeAlias {
+impl TsTypeAliasStatement {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -4845,7 +4845,7 @@ pub enum JsAnyExpression {
     JsYieldExpression(JsYieldExpression),
     NewTarget(NewTarget),
     TsAsExpression(TsAsExpression),
-    TsNonNull(TsNonNull),
+    TsNonNullAssertionExpression(TsNonNullAssertionExpression),
     TsTypeAssertionExpression(TsTypeAssertionExpression),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4980,7 +4980,7 @@ pub enum JsAnyStatement {
     JsWhileStatement(JsWhileStatement),
     JsWithStatement(JsWithStatement),
     TsEnum(TsEnum),
-    TsTypeAlias(TsTypeAlias),
+    TsTypeAliasStatement(TsTypeAliasStatement),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnySwitchClause {
@@ -11062,8 +11062,8 @@ impl From<TsNeverType> for SyntaxNode {
 impl From<TsNeverType> for SyntaxElement {
     fn from(n: TsNeverType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsNonNull {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NON_NULL }
+impl AstNode for TsNonNullAssertionExpression {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NON_NULL_ASSERTION_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -11073,19 +11073,19 @@ impl AstNode for TsNonNull {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsNonNull {
+impl std::fmt::Debug for TsNonNullAssertionExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsNonNull")
-            .field("expr", &support::DebugSyntaxResult(self.expr()))
+        f.debug_struct("TsNonNullAssertionExpression")
+            .field("expression", &support::DebugSyntaxResult(self.expression()))
             .field("excl_token", &support::DebugSyntaxResult(self.excl_token()))
             .finish()
     }
 }
-impl From<TsNonNull> for SyntaxNode {
-    fn from(n: TsNonNull) -> SyntaxNode { n.syntax }
+impl From<TsNonNullAssertionExpression> for SyntaxNode {
+    fn from(n: TsNonNullAssertionExpression) -> SyntaxNode { n.syntax }
 }
-impl From<TsNonNull> for SyntaxElement {
-    fn from(n: TsNonNull) -> SyntaxElement { n.syntax.into() }
+impl From<TsNonNullAssertionExpression> for SyntaxElement {
+    fn from(n: TsNonNullAssertionExpression) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsNonPrimitiveType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_NON_PRIMITIVE_TYPE }
@@ -11707,8 +11707,8 @@ impl From<TsTupleType> for SyntaxNode {
 impl From<TsTupleType> for SyntaxElement {
     fn from(n: TsTupleType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsTypeAlias {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ALIAS }
+impl AstNode for TsTypeAliasStatement {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ALIAS_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -11718,9 +11718,9 @@ impl AstNode for TsTypeAlias {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsTypeAlias {
+impl std::fmt::Debug for TsTypeAliasStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsTypeAlias")
+        f.debug_struct("TsTypeAliasStatement")
             .field("type_token", &support::DebugSyntaxResult(self.type_token()))
             .field(
                 "binding_identifier",
@@ -11739,11 +11739,11 @@ impl std::fmt::Debug for TsTypeAlias {
             .finish()
     }
 }
-impl From<TsTypeAlias> for SyntaxNode {
-    fn from(n: TsTypeAlias) -> SyntaxNode { n.syntax }
+impl From<TsTypeAliasStatement> for SyntaxNode {
+    fn from(n: TsTypeAliasStatement) -> SyntaxNode { n.syntax }
 }
-impl From<TsTypeAlias> for SyntaxElement {
-    fn from(n: TsTypeAlias) -> SyntaxElement { n.syntax.into() }
+impl From<TsTypeAliasStatement> for SyntaxElement {
+    fn from(n: TsTypeAliasStatement) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsTypeAnnotation {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_TYPE_ANNOTATION }
@@ -13506,8 +13506,10 @@ impl From<NewTarget> for JsAnyExpression {
 impl From<TsAsExpression> for JsAnyExpression {
     fn from(node: TsAsExpression) -> JsAnyExpression { JsAnyExpression::TsAsExpression(node) }
 }
-impl From<TsNonNull> for JsAnyExpression {
-    fn from(node: TsNonNull) -> JsAnyExpression { JsAnyExpression::TsNonNull(node) }
+impl From<TsNonNullAssertionExpression> for JsAnyExpression {
+    fn from(node: TsNonNullAssertionExpression) -> JsAnyExpression {
+        JsAnyExpression::TsNonNullAssertionExpression(node)
+    }
 }
 impl From<TsTypeAssertionExpression> for JsAnyExpression {
     fn from(node: TsTypeAssertionExpression) -> JsAnyExpression {
@@ -13548,7 +13550,7 @@ impl AstNode for JsAnyExpression {
             | JS_YIELD_EXPRESSION
             | NEW_TARGET
             | TS_AS_EXPRESSION
-            | TS_NON_NULL
+            | TS_NON_NULL_ASSERTION_EXPRESSION
             | TS_TYPE_ASSERTION_EXPRESSION => true,
             k if JsAnyLiteralExpression::can_cast(k) => true,
             _ => false,
@@ -13621,7 +13623,11 @@ impl AstNode for JsAnyExpression {
             JS_YIELD_EXPRESSION => JsAnyExpression::JsYieldExpression(JsYieldExpression { syntax }),
             NEW_TARGET => JsAnyExpression::NewTarget(NewTarget { syntax }),
             TS_AS_EXPRESSION => JsAnyExpression::TsAsExpression(TsAsExpression { syntax }),
-            TS_NON_NULL => JsAnyExpression::TsNonNull(TsNonNull { syntax }),
+            TS_NON_NULL_ASSERTION_EXPRESSION => {
+                JsAnyExpression::TsNonNullAssertionExpression(TsNonNullAssertionExpression {
+                    syntax,
+                })
+            }
             TS_TYPE_ASSERTION_EXPRESSION => {
                 JsAnyExpression::TsTypeAssertionExpression(TsTypeAssertionExpression { syntax })
             }
@@ -13669,7 +13675,7 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsYieldExpression(it) => &it.syntax,
             JsAnyExpression::NewTarget(it) => &it.syntax,
             JsAnyExpression::TsAsExpression(it) => &it.syntax,
-            JsAnyExpression::TsNonNull(it) => &it.syntax,
+            JsAnyExpression::TsNonNullAssertionExpression(it) => &it.syntax,
             JsAnyExpression::TsTypeAssertionExpression(it) => &it.syntax,
             JsAnyExpression::JsAnyLiteralExpression(it) => it.syntax(),
         }
@@ -13710,7 +13716,7 @@ impl std::fmt::Debug for JsAnyExpression {
             JsAnyExpression::JsYieldExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::NewTarget(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsAsExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::TsNonNull(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExpression::TsNonNullAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsTypeAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
         }
     }
@@ -13750,7 +13756,7 @@ impl From<JsAnyExpression> for SyntaxNode {
             JsAnyExpression::JsYieldExpression(it) => it.into(),
             JsAnyExpression::NewTarget(it) => it.into(),
             JsAnyExpression::TsAsExpression(it) => it.into(),
-            JsAnyExpression::TsNonNull(it) => it.into(),
+            JsAnyExpression::TsNonNullAssertionExpression(it) => it.into(),
             JsAnyExpression::TsTypeAssertionExpression(it) => it.into(),
         }
     }
@@ -15077,8 +15083,10 @@ impl From<JsWithStatement> for JsAnyStatement {
 impl From<TsEnum> for JsAnyStatement {
     fn from(node: TsEnum) -> JsAnyStatement { JsAnyStatement::TsEnum(node) }
 }
-impl From<TsTypeAlias> for JsAnyStatement {
-    fn from(node: TsTypeAlias) -> JsAnyStatement { JsAnyStatement::TsTypeAlias(node) }
+impl From<TsTypeAliasStatement> for JsAnyStatement {
+    fn from(node: TsTypeAliasStatement) -> JsAnyStatement {
+        JsAnyStatement::TsTypeAliasStatement(node)
+    }
 }
 impl AstNode for JsAnyStatement {
     fn can_cast(kind: JsSyntaxKind) -> bool {
@@ -15108,7 +15116,7 @@ impl AstNode for JsAnyStatement {
                 | JS_WHILE_STATEMENT
                 | JS_WITH_STATEMENT
                 | TS_ENUM
-                | TS_TYPE_ALIAS
+                | TS_TYPE_ALIAS_STATEMENT
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -15155,7 +15163,9 @@ impl AstNode for JsAnyStatement {
             JS_WHILE_STATEMENT => JsAnyStatement::JsWhileStatement(JsWhileStatement { syntax }),
             JS_WITH_STATEMENT => JsAnyStatement::JsWithStatement(JsWithStatement { syntax }),
             TS_ENUM => JsAnyStatement::TsEnum(TsEnum { syntax }),
-            TS_TYPE_ALIAS => JsAnyStatement::TsTypeAlias(TsTypeAlias { syntax }),
+            TS_TYPE_ALIAS_STATEMENT => {
+                JsAnyStatement::TsTypeAliasStatement(TsTypeAliasStatement { syntax })
+            }
             _ => return None,
         };
         Some(res)
@@ -15186,7 +15196,7 @@ impl AstNode for JsAnyStatement {
             JsAnyStatement::JsWhileStatement(it) => &it.syntax,
             JsAnyStatement::JsWithStatement(it) => &it.syntax,
             JsAnyStatement::TsEnum(it) => &it.syntax,
-            JsAnyStatement::TsTypeAlias(it) => &it.syntax,
+            JsAnyStatement::TsTypeAliasStatement(it) => &it.syntax,
         }
     }
 }
@@ -15217,7 +15227,7 @@ impl std::fmt::Debug for JsAnyStatement {
             JsAnyStatement::JsWhileStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsWithStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsEnum(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::TsTypeAlias(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyStatement::TsTypeAliasStatement(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
@@ -15248,7 +15258,7 @@ impl From<JsAnyStatement> for SyntaxNode {
             JsAnyStatement::JsWhileStatement(it) => it.into(),
             JsAnyStatement::JsWithStatement(it) => it.into(),
             JsAnyStatement::TsEnum(it) => it.into(),
-            JsAnyStatement::TsTypeAlias(it) => it.into(),
+            JsAnyStatement::TsTypeAliasStatement(it) => it.into(),
         }
     }
 }
@@ -17310,7 +17320,7 @@ impl std::fmt::Display for TsNeverType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsNonNull {
+impl std::fmt::Display for TsNonNullAssertionExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17420,7 +17430,7 @@ impl std::fmt::Display for TsTupleType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsTypeAlias {
+impl std::fmt::Display for TsTypeAliasStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -19915,7 +19925,10 @@ impl Debug for DebugSyntaxElement {
                     std::fmt::Debug::fmt(&TsNamedTupleTypeElement::cast(node.clone()).unwrap(), f)
                 }
                 TS_NEVER_TYPE => std::fmt::Debug::fmt(&TsNeverType::cast(node.clone()).unwrap(), f),
-                TS_NON_NULL => std::fmt::Debug::fmt(&TsNonNull::cast(node.clone()).unwrap(), f),
+                TS_NON_NULL_ASSERTION_EXPRESSION => std::fmt::Debug::fmt(
+                    &TsNonNullAssertionExpression::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_NON_PRIMITIVE_TYPE => {
                     std::fmt::Debug::fmt(&TsNonPrimitiveType::cast(node.clone()).unwrap(), f)
                 }
@@ -19987,7 +20000,9 @@ impl Debug for DebugSyntaxElement {
                 TS_TUPLE_TYPE_ELEMENT_LIST => {
                     std::fmt::Debug::fmt(&TsTupleTypeElementList::cast(node.clone()).unwrap(), f)
                 }
-                TS_TYPE_ALIAS => std::fmt::Debug::fmt(&TsTypeAlias::cast(node.clone()).unwrap(), f),
+                TS_TYPE_ALIAS_STATEMENT => {
+                    std::fmt::Debug::fmt(&TsTypeAliasStatement::cast(node.clone()).unwrap(), f)
+                }
                 TS_TYPE_ANNOTATION => {
                     std::fmt::Debug::fmt(&TsTypeAnnotation::cast(node.clone()).unwrap(), f)
                 }

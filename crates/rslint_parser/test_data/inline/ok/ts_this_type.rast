@@ -32,7 +32,7 @@ JsModule {
                         l_curly_token: L_CURLY@37..38 "{" [] [],
                         directives: JsDirectiveList [],
                         statements: JsStatementList [
-                            TsTypeAlias {
+                            TsTypeAliasStatement {
                                 type_token: TYPE_KW@38..52 "type" [Newline("\n"), Whitespace("        ")] [Whitespace(" ")],
                                 binding_identifier: TsIdentifierBinding {
                                     name_token: IDENT@52..54 "A" [] [Whitespace(" ")],
@@ -138,7 +138,7 @@ JsModule {
             0: L_CURLY@37..38 "{" [] []
             1: JS_DIRECTIVE_LIST@38..38
             2: JS_STATEMENT_LIST@38..61
-              0: TS_TYPE_ALIAS@38..61
+              0: TS_TYPE_ALIAS_STATEMENT@38..61
                 0: TYPE_KW@38..52 "type" [Newline("\n"), Whitespace("        ")] [Whitespace(" ")]
                 1: TS_IDENTIFIER_BINDING@52..54
                   0: IDENT@52..54 "A" [] [Whitespace(" ")]

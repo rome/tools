@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        TsTypeAlias {
+        TsTypeAliasStatement {
             type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..20 "A" [] [],
@@ -133,7 +133,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..109
-    0: TS_TYPE_ALIAS@0..109
+    0: TS_TYPE_ALIAS_STATEMENT@0..109
       0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@19..20
         0: IDENT@19..20 "A" [] []

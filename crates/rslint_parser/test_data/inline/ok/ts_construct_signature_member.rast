@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        TsTypeAlias {
+        TsTypeAliasStatement {
             type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
@@ -33,7 +33,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAlias {
+        TsTypeAliasStatement {
             type_token: TYPE_KW@42..48 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@48..50 "B" [] [Whitespace(" ")],
@@ -85,7 +85,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAlias {
+        TsTypeAliasStatement {
             type_token: TYPE_KW@82..88 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@88..90 "C" [] [Whitespace(" ")],
@@ -176,7 +176,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..126
-    0: TS_TYPE_ALIAS@0..42
+    0: TS_TYPE_ALIAS_STATEMENT@0..42
       0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@19..21
         0: IDENT@19..21 "A" [] [Whitespace(" ")]
@@ -199,7 +199,7 @@ JsModule {
             4: SEMICOLON@39..41 ";" [] [Whitespace(" ")]
         2: R_CURLY@41..42 "}" [] []
       5: (empty)
-    1: TS_TYPE_ALIAS@42..82
+    1: TS_TYPE_ALIAS_STATEMENT@42..82
       0: TYPE_KW@42..48 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@48..50
         0: IDENT@48..50 "B" [] [Whitespace(" ")]
@@ -236,7 +236,7 @@ JsModule {
             4: (empty)
         2: R_CURLY@81..82 "}" [] []
       5: (empty)
-    2: TS_TYPE_ALIAS@82..126
+    2: TS_TYPE_ALIAS_STATEMENT@82..126
       0: TYPE_KW@82..88 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@88..90
         0: IDENT@88..90 "C" [] [Whitespace(" ")]

@@ -681,17 +681,28 @@ fn parse_member_expression_rest(
                 completed
             }
             T![!] if !p.has_linebreak_before_n(0) => {
-                // FIXME(RDambrosio016): we need to tell the lexer that an expression is not
-                // allowed here, but we have no way of doing that currently because we get all of the
-                // tokens ahead of time, therefore we need to switch to using the lexer as an iterator
-                // which isn't as simple as it sounds :)
+                // test ts_non_null_assertion_expression
+                // // TYPESCRIPT
+                // let a = { b: {} };
+                // a!;
+                // function test() {}
+                // test()!
+                // 	a.b.c!;
+                // a!!!!!!;
                 let m = lhs.precede(p);
-                p.bump_any();
-                let mut non_null = m.complete(p, TS_NON_NULL);
-                non_null.err_if_not_ts(
-                    p,
-                    "non-null assertions can only be used in TypeScript files",
-                );
+                p.bump(T![!]);
+
+                let mut non_null = m.complete(p, TS_NON_NULL_ASSERTION_EXPRESSION);
+
+                if TypeScript.is_unsupported(p) {
+                    non_null.change_to_unknown(p);
+                    p.error(ts_only_syntax_error(
+                        p,
+                        "non-null assertions",
+                        non_null.range(p).as_range(),
+                    ));
+                }
+
                 non_null
             }
             BACKTICK => {
