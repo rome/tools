@@ -3,14 +3,12 @@ use rslint_parser::{map_syntax_node, SyntaxNode};
 
 impl ToFormatElement for SyntaxNode {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        map_syntax_node!(
-            self.clone(),
-            node => node.to_format_element(formatter),
-            _ => Ok(formatter.format_verbatim(self))
-        )
+        map_syntax_node!(self.clone(), node => node.to_format_element(formatter))
     }
 }
 
+// Temporary macro providing a default implementation of ToFormatElement to
+// the node types currently missing one as part of #1997
 macro_rules! impl_format_verbatim {
     ( $( $node:ident, )* ) => {
         $( impl $crate::ToFormatElement for ::rslint_parser::ast::$node {

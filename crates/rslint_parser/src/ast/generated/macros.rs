@@ -1,7 +1,30 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+#[doc = r" Reconstruct an AstNode from a SyntaxNode"]
+#[doc = r""]
+#[doc = r" This macros performs a match over the [kind](SyntaxNode::kind)"]
+#[doc = r" of the provided [SyntaxNode] and constructs the appropriate"]
+#[doc = r" AstNode type for it, then execute the provided expression over it."]
+#[doc = r""]
+#[doc = r" The macro accepts an optional fallback branch wich defaults to"]
+#[doc = r" `unreachable!()` as the only SyntaxKind variants not covered by"]
+#[doc = r" this macro are token kinds that should not be used to construct"]
+#[doc = r" a SyntaxNode."]
+#[doc = r""]
+#[doc = r" # Examples"]
+#[doc = r""]
+#[doc = r" ```ignore"]
+#[doc = r" map_syntax_node!(syntax_node, node => node.format())"]
+#[doc = r" ```"]
+#[doc = r""]
+#[doc = r" ```ignore"]
+#[doc = r#" map_syntax_node!(syntax_node, node => Ok(node.format()), _ => Err("invalid node kind"))"#]
+#[doc = r" ```"]
 #[macro_export]
 macro_rules! map_syntax_node {
+    ($ node : expr , $ pattern : pat => $ body : expr) => {
+$crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
+    };
     ($ node : expr , $ pattern : pat => $ body : expr , $ fallback : pat => $ default : expr) => {
         match $node {
             node => match $crate::SyntaxNode::kind(&node) {

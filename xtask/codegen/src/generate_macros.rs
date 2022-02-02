@@ -33,8 +33,32 @@ pub fn generate_macros(ast: &AstSrc) -> Result<String> {
         .collect();
 
     let ast = quote! {
+        /// Reconstruct an AstNode from a SyntaxNode
+        ///
+        /// This macros performs a match over the [kind](SyntaxNode::kind)
+        /// of the provided [SyntaxNode] and constructs the appropriate
+        /// AstNode type for it, then execute the provided expression over it.
+        ///
+        /// The macro accepts an optional fallback branch wich defaults to
+        /// `unreachable!()` as the only SyntaxKind variants not covered by
+        /// this macro are token kinds that should not be used to construct
+        /// a SyntaxNode.
+        ///
+        /// # Examples
+        ///
+        /// ```ignore
+        /// map_syntax_node!(syntax_node, node => node.format())
+        /// ```
+        ///
+        /// ```ignore
+        /// map_syntax_node!(syntax_node, node => Ok(node.format()), _ => Err("invalid node kind"))
+        /// ```
         #[macro_export]
         macro_rules! map_syntax_node {
+            ($node:expr, $pattern:pat => $body:expr) => {
+                $crate::map_syntax_node!( $node, $pattern => $body, _ => unreachable!() )
+            };
+
             ($node:expr, $pattern:pat => $body:expr, $fallback:pat => $default:expr) => {
                 match $node {
                     node => match $crate::SyntaxNode::kind(&node) {
