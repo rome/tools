@@ -5879,7 +5879,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsName::can_cast(element.kind()) {
+                    if JsAnyBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }

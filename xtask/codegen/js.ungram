@@ -1509,7 +1509,7 @@ TsIdentifierBinding = name: 'ident'
 TsEnum = 
 	'const'?
 	'enum'
-	name: JsName
+	name: JsAnyBinding
 	'{' 
 	members: TsEnumMemberList 
 	'}'

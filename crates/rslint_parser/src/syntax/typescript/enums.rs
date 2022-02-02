@@ -1,10 +1,12 @@
 use crate::parser::{RecoveryResult, ToDiagnostic};
+use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::parse_name;
 use crate::syntax::expr::ExpressionContext;
 use crate::syntax::js_parse_error;
 
 use crate::{JsSyntaxKind::*, *};
+
+use super::is_reserved_type_name;
 
 pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
@@ -80,6 +82,54 @@ impl ParseSeparatedList for EnumMembersList {
     }
 }
 
+
+pub(crate) fn is_reserved_enum_name(name: &str) -> bool {
+    matches!(
+        name,
+        "string"
+            | "null"
+            | "number"
+            | "object"
+            | "any"
+            | "unknown"
+            | "boolean"
+            | "bigint"
+            | "symbol"
+            | "void"
+            | "never"
+    )
+}
+
+fn parse_name(p: &mut Parser, enum_token_range: Range<usize>) {
+    let id = if p.cur_src() == "{" {
+        Absent
+    } else {
+        parse_binding(p)
+    };
+
+    match id {
+        Present(id) => {
+            let text = p.span_text(id.range(p));
+            if is_reserved_enum_name(text) {
+                let err = p
+                    .err_builder(&format!(
+                            "`{}` cannot be used as a enum name because it is already reserved as a enum",
+                            text
+                        ))
+                    .primary(id.range(p), "");
+
+                p.error(err);
+            }
+        }
+        Absent => {
+            let err = p
+                .err_builder("enum declarations must have a name")
+                .primary(enum_token_range.start..p.cur_tok().start(), "");
+            p.error(err);
+        }
+    }
+}
+
 // test ts typescript_enum
 // enum A {}
 // enum B { a, b, c }
@@ -88,8 +138,11 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
     let m = p.start();
 
     p.eat(T![const]);
+
+    let enum_token_range = p.cur_tok().range();
     p.expect(T![enum]);
-    parse_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
+    parse_name(p, enum_token_range);
+
     p.expect(T!['{']);
 
     EnumMembersList.parse_list(p);

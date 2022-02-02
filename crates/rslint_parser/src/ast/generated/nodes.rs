@@ -3504,7 +3504,9 @@ impl TsEnum {
     pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn name(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
+    pub fn name(&self) -> SyntaxResult<JsAnyBinding> {
+        support::required_node(&self.syntax, 2usize)
+    }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
