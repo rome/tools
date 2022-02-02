@@ -1,3 +1,4 @@
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     block_indent, format_elements, hard_line_break, FormatElement, FormatResult, Formatter,
     ToFormatElement,
@@ -11,9 +12,9 @@ impl ToFormatElement for JsBlockStatement {
 
         if is_non_collapsable_empty_block(self) {
             Ok(format_elements![
-                formatter.format_token(&self.l_curly_token()?)?,
+                self.l_curly_token().format(formatter)?,
                 hard_line_break(),
-                formatter.format_token(&self.r_curly_token()?)?
+                self.r_curly_token().format(formatter)?
             ])
         } else {
             formatter.format_delimited(

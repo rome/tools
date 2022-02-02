@@ -1,5 +1,6 @@
 use rslint_parser::ast::{JsAnyForInOrOfInitializer, JsForInStatement, JsForVariableDeclaration};
 
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, group_elements, soft_block_indent, soft_line_break_or_space, space_token,
     FormatElement, FormatResult, Formatter, ToFormatElement,
@@ -7,11 +8,11 @@ use crate::{
 
 impl ToFormatElement for JsForInStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let for_token = formatter.format_token(&self.for_token()?)?;
-        let initializer = formatter.format_node(&self.initializer()?)?;
-        let in_token = formatter.format_token(&self.in_token()?)?;
-        let expression = formatter.format_node(&self.expression()?)?;
-        let body = formatter.format_node(&self.body()?)?;
+        let for_token = self.for_token().format(formatter)?;
+        let initializer = self.initializer().format(formatter)?;
+        let in_token = self.in_token().format(formatter)?;
+        let expression = self.expression().format(formatter)?;
+        let body = self.body().format(formatter)?;
 
         Ok(format_elements![
             for_token,
@@ -53,9 +54,9 @@ impl ToFormatElement for JsAnyForInOrOfInitializer {
 impl ToFormatElement for JsForVariableDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_token(&self.kind_token()?)?,
+            self.kind_token().format(formatter)?,
             space_token(),
-            formatter.format_node(&self.declaration()?)?
+            self.declaration().format(formatter)?,
         ])
     }
 }

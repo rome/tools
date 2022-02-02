@@ -1,6 +1,7 @@
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    concat_elements, format_elements, group_elements, soft_block_indent, soft_line_break_or_space,
-    space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, group_elements, soft_block_indent, soft_line_break_or_space, space_token,
+    FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{JsAnyForInitializer, JsForStatement};
 
@@ -8,35 +9,24 @@ impl ToFormatElement for JsForStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let inner =
             if self.initializer().is_some() || self.test().is_some() || self.update().is_some() {
-                let mut inner = vec![];
-                if let Some(init) = self.initializer() {
-                    inner.push(formatter.format_node(&init)?);
-                }
-
-                inner.push(formatter.format_token(&self.first_semi_token()?)?);
-                inner.push(soft_line_break_or_space());
-
-                if let Some(test) = self.test() {
-                    inner.push(formatter.format_node(&test)?);
-                }
-
-                inner.push(formatter.format_token(&self.second_semi_token()?)?);
-                inner.push(soft_line_break_or_space());
-
-                if let Some(update) = self.update() {
-                    inner.push(formatter.format_node(&update)?);
-                }
-
-                concat_elements(inner)
+                format_elements![
+                    self.initializer().format_or_empty(formatter)?,
+                    self.first_semi_token().format(formatter)?,
+                    soft_line_break_or_space(),
+                    self.test().format_or_empty(formatter)?,
+                    self.second_semi_token().format(formatter)?,
+                    soft_line_break_or_space(),
+                    self.update().format_or_empty(formatter)?,
+                ]
             } else {
                 format_elements![
-                    formatter.format_token(&self.first_semi_token()?)?,
-                    formatter.format_token(&self.second_semi_token()?)?
+                    self.first_semi_token().format(formatter)?,
+                    self.second_semi_token().format(formatter)?,
                 ]
             };
 
         Ok(group_elements(format_elements![
-            formatter.format_token(&self.for_token()?)?,
+            self.for_token().format(formatter)?,
             space_token(),
             formatter.format_delimited(
                 &self.l_paren_token()?,
@@ -46,7 +36,7 @@ impl ToFormatElement for JsForStatement {
                 &self.r_paren_token()?,
             )?,
             space_token(),
-            formatter.format_node(&self.body()?)?
+            self.body().format(formatter)?
         ]))
     }
 }

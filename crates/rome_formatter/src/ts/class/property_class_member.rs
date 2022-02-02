@@ -1,4 +1,4 @@
-use crate::formatter_traits::FormatOptionalTokenAndNode;
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
@@ -18,7 +18,7 @@ impl ToFormatElement for JsPropertyClassMember {
 
         Ok(format_elements![
             static_token,
-            formatter.format_node(&self.name()?)?,
+            self.name().format(formatter)?,
             init,
             semicolon
         ])
