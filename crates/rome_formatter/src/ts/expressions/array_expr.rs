@@ -1,3 +1,4 @@
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     empty_element, format_element::join_elements_soft_line, format_elements, group_elements,
     if_group_breaks, soft_block_indent, token, FormatElement, FormatResult, Formatter,
@@ -26,14 +27,12 @@ impl ToFormatElement for JsArrayExpression {
                         let node = element.node()?;
                         let is_hole = matches!(node, JsAnyArrayElement::JsArrayHole(_));
 
-                        let elem = formatter.format_node(&node)?;
+                        let elem = node.format(formatter)?;
                         let separator = if is_hole || index != last_index {
                             // If the previous element was empty or this is not the last element, always print a separator
-                            if let Some(separator) = element.trailing_separator()? {
-                                formatter.format_token(&separator)?
-                            } else {
-                                token(",")
-                            }
+                            element
+                                .trailing_separator()
+                                .format_or(formatter, || token(";"))?
                         } else if let Some(separator) = element.trailing_separator()? {
                             formatter.format_replaced(&separator, if_group_breaks(token(",")))?
                         } else {

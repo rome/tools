@@ -1,7 +1,7 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    empty_element, format_elements, group_elements, soft_block_indent, space_token, FormatElement,
-    FormatResult, Formatter, ToFormatElement,
+    format_elements, group_elements, soft_block_indent, space_token, FormatElement, FormatResult,
+    Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
     JsCatchClause, JsCatchDeclaration, JsFinallyClause, JsTryFinallyStatement, JsTryStatement,

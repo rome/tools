@@ -30,11 +30,12 @@ impl ToFormatElement for JsVariableDeclarations {
                 let node = element.node().format(formatter)?;
                 let separator = element.trailing_separator().try_format_with_or(
                     formatter,
-                    |separator, token| {
+                    |separator| {
+                        // SAFETY: it's fine to do a double unwrap because both checks on Result and Option
+                        // are already done inside the traits.
+                        let token = element.trailing_separator().unwrap().unwrap();
                         if index == last_index {
-                            // SAFETY: it's fine to do a double unwrap because both checks on Result and Option
-                            // are already done inside the traits.
-                            formatter.format_replaced(&token.unwrap().unwrap(), empty_element())
+                            formatter.format_replaced(&token, empty_element())
                         } else {
                             Ok(separator)
                         }

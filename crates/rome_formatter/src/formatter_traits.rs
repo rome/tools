@@ -150,7 +150,7 @@ pub trait FormatOptionalTokenAndNode {
     ///
     /// ## Examples
     ///
-    /// ```rust,no_test
+    /// ```rust,ignore
     /// self.declaration().try_format_with_or(
     ///    formatter,
     ///    |declaration| {
@@ -178,7 +178,7 @@ pub trait FormatOptionalTokenAndNode {
         op: Or,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement, &Self) -> FormatResult<FormatElement>,
+        With: FnOnce(FormatElement) -> FormatResult<FormatElement>,
         Or: FnOnce() -> FormatResult<FormatElement>;
 }
 
@@ -255,7 +255,7 @@ pub trait FormatTokenAndNode {
         with: With,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement, &Self) -> FormatResult<FormatElement>;
+        With: FnOnce(FormatElement) -> FormatResult<FormatElement>;
 }
 
 impl<F: FormatTokenAndNode> FormatTokenAndNode for SyntaxResult<F> {
@@ -275,10 +275,10 @@ impl<F: FormatTokenAndNode> FormatTokenAndNode for SyntaxResult<F> {
         with: With,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement, &Self) -> FormatResult<FormatElement>,
+        With: FnOnce(FormatElement) -> FormatResult<FormatElement>,
     {
         match self {
-            Ok(token) => with(token.format(formatter)?, self),
+            Ok(token) => with(token.format(formatter)?),
             Err(err) => Err(err.into()),
         }
     }
@@ -308,7 +308,7 @@ impl FormatTokenAndNode for SyntaxToken {
         with: With,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement, &Self) -> FormatResult<FormatElement>,
+        With: FnOnce(FormatElement) -> FormatResult<FormatElement>,
     {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
@@ -316,14 +316,11 @@ impl FormatTokenAndNode for SyntaxToken {
             }
         }
 
-        with(
-            format_elements![
-                formatter.print_leading_trivia(self),
-                Token::from(self),
-                formatter.print_trailing_trivia(self),
-            ],
-            self,
-        )
+        with(format_elements![
+            formatter.print_leading_trivia(self),
+            Token::from(self),
+            formatter.print_trailing_trivia(self),
+        ])
     }
 }
 
@@ -347,14 +344,15 @@ impl<N: AstNode + ToFormatElement> FormatTokenAndNode for N {
         with: With,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement, &Self) -> FormatResult<FormatElement>,
+        With: FnOnce(FormatElement) -> FormatResult<FormatElement>,
     {
         let leading = formatter.format_node_start(self.syntax());
         let trailing = formatter.format_node_end(self.syntax());
-        with(
-            format_elements![leading, self.to_format_element(formatter)?, trailing,],
-            self,
-        )
+        with(format_elements![
+            leading,
+            self.to_format_element(formatter)?,
+            trailing,
+        ])
     }
 }
 
@@ -382,7 +380,7 @@ impl<F: FormatOptionalTokenAndNode> FormatOptionalTokenAndNode for SyntaxResult<
         op: Or,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement, &Self) -> FormatResult<FormatElement>,
+        With: FnOnce(FormatElement) -> FormatResult<FormatElement>,
         Or: FnOnce() -> FormatResult<FormatElement>,
     {
         match self {
@@ -416,7 +414,7 @@ impl<F: FormatTokenAndNode> FormatOptionalTokenAndNode for Option<F> {
         op: Or,
     ) -> FormatResult<FormatElement>
     where
-        With: FnOnce(FormatElement, &Self) -> FormatResult<FormatElement>,
+        With: FnOnce(FormatElement) -> FormatResult<FormatElement>,
         Or: FnOnce() -> FormatResult<FormatElement>,
     {
         match self {
