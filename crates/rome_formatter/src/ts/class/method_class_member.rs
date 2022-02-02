@@ -1,20 +1,18 @@
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    empty_element, format_elements, space_token, FormatElement, FormatResult, Formatter,
-    ToFormatElement,
+    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::JsMethodClassMember;
 
 impl ToFormatElement for JsMethodClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let static_token = if let Some(token) = self.static_token() {
-            format_elements![formatter.format_token(&token)?, space_token()]
-        } else {
-            empty_element()
-        };
-        let star_token = formatter.format_token(&self.star_token())?;
-        let name = formatter.format_node(&self.name()?)?;
-        let params = formatter.format_node(&self.parameters()?)?;
-        let body = formatter.format_node(&self.body()?)?;
+        let static_token = self
+            .static_token()
+            .format_with_or_empty(formatter, |token| format_elements![token, space_token()])?;
+        let star_token = self.star_token().format_or_empty(formatter)?;
+        let name = self.name().format(formatter)?;
+        let params = self.parameters().format(formatter)?;
+        let body = self.body().format(formatter)?;
         Ok(format_elements![
             static_token,
             star_token,

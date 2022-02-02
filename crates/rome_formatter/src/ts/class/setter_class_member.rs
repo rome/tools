@@ -1,3 +1,4 @@
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
@@ -6,14 +7,14 @@ use rslint_parser::ast::JsSetterClassMember;
 impl ToFormatElement for JsSetterClassMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         Ok(format_elements![
-            formatter.format_token(&self.set_token()?)?,
+            self.set_token().format(formatter)?,
             space_token(),
-            formatter.format_node(&self.name()?)?,
-            formatter.format_token(&self.l_paren_token()?)?,
-            formatter.format_node(&self.parameter()?)?,
-            formatter.format_token(&self.r_paren_token()?)?,
+            self.name().format(formatter)?,
+            self.l_paren_token().format(formatter)?,
+            self.parameter().format(formatter)?,
+            self.r_paren_token().format(formatter)?,
             space_token(),
-            formatter.format_node(&self.body()?)?
+            self.body().format(formatter)?,
         ])
     }
 }

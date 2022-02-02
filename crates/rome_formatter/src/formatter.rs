@@ -119,6 +119,7 @@ impl Formatter {
     ///
     /// Returns `None` if the node couldn't be formatted because of syntax errors in its sub tree.
     /// The parent may use [Self::format_verbatim] to insert the node content as is.
+    // #[deprecated = "use the .format traits"]
     pub fn format_node<T: AstNode + ToFormatElement>(
         &self,
         node: &T,
@@ -179,10 +180,10 @@ impl Formatter {
         syntax_token.format(self)
     }
 
-    /// Print out a token from the original source with a different content
+    /// Print out a `token` from the original source with a different `content`.
     ///
-    /// This will print the associated trivias from the token as well as mark
-    /// it as having been consumed by the formatter
+    /// This will print the trivias that belong to `token` to `content`;
+    /// `token` is then marked as consumed by the formatter.
     pub fn format_replaced(
         &self,
         token: &SyntaxToken,

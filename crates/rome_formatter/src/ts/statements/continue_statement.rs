@@ -1,4 +1,4 @@
-use crate::formatter_traits::FormatOptionalTokenAndNode;
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
     format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
@@ -13,7 +13,7 @@ impl ToFormatElement for JsContinueStatement {
         let semicolon = self.semicolon_token().format_or(formatter, || token(";"))?;
 
         Ok(format_elements![
-            formatter.format_token(&self.continue_token()?)?,
+            self.continue_token().format(formatter)?,
             label,
             semicolon
         ])
