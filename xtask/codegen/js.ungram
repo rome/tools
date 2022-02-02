@@ -104,7 +104,7 @@ JsAnyStatement =
 	| JsWithStatement
 	| TsEnum
   | JsFunctionStatement
-  | TsTypeAlias
+  | TsTypeAliasStatement
 
 
 JsBlockStatement =
@@ -301,7 +301,7 @@ JsAnyExpression =
 	| JsTemplate
 	| TsTypeAssertionExpression
 	| TsAsExpression
-	| TsNonNull
+	| TsNonNullAssertionExpression
 
 
 JsTemplate =
@@ -1458,7 +1458,7 @@ TsReferenceType =
 	name: TsAnyName
 	type_arguments: TsTypeArguments?
 
-TsTypeAlias =
+TsTypeAliasStatement =
 	'type'
 	binding_identifier: TsIdentifierBinding
 	type_parameters: TsTypeParameters
@@ -1775,6 +1775,10 @@ TsAsExpression =
 	'as'
 	type: TsType
 
+TsNonNullAssertionExpression =
+	expression: JsAnyExpression
+	'!'
+
 TsExprWithTypeArgs =
 	item: TsAnyName
 	type_arguments: TsTypeArguments?
@@ -1801,5 +1805,3 @@ TsConstructorParam =
 	binding: JsAnyBindingPattern
 	type_annotation: TsTypeAnnotation?
 	initializer: JsInitializerClause?
-
-TsNonNull = expr:JsAnyExpression '!'

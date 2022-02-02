@@ -192,7 +192,7 @@ pub(crate) fn parse_ts_type_alias(p: &mut Parser) -> ParsedSyntax {
 
     semi(p, start..p.cur_tok().range().end);
 
-    Present(m.complete(p, TS_TYPE_ALIAS))
+    Present(m.complete(p, TS_TYPE_ALIAS_STATEMENT))
 }
 
 pub(crate) fn parse_ts_type(p: &mut Parser) -> ParsedSyntax {

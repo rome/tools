@@ -75,7 +75,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_VARIABLE_STATEMENT
             | JS_WHILE_STATEMENT
             | JS_WITH_STATEMENT
-            | TS_TYPE_ALIAS
+            | TS_TYPE_ALIAS_STATEMENT
             | TS_ENUM
             | JS_UNKNOWN_STATEMENT => JS_UNKNOWN_STATEMENT,
 
@@ -114,6 +114,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_TEMPLATE
             | TS_AS_EXPRESSION
             | TS_TYPE_ASSERTION_EXPRESSION
+            | TS_NON_NULL_ASSERTION_EXPRESSION
             | JS_UNKNOWN_EXPRESSION => JS_UNKNOWN_EXPRESSION,
 
             JS_OBJECT_BINDING_PATTERN

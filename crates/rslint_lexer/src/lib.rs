@@ -1577,15 +1577,14 @@ impl Iterator for Lexer<'_> {
         token.0.offset = self.cur as u32 - token.0.len;
         token.0.after_newline = std::mem::replace(&mut self.state.after_newline, after_newline);
 
-        if ![
-            JsSyntaxKind::COMMENT,
-            JsSyntaxKind::MULTILINE_COMMENT,
-            JsSyntaxKind::WHITESPACE,
-            JsSyntaxKind::NEWLINE,
-            JsSyntaxKind::TEMPLATE_CHUNK,
-        ]
-        .contains(&token.0.kind)
-        {
+        if !matches!(
+            &token.0.kind,
+            JsSyntaxKind::COMMENT
+                | JsSyntaxKind::MULTILINE_COMMENT
+                | JsSyntaxKind::WHITESPACE
+                | JsSyntaxKind::NEWLINE
+                | JsSyntaxKind::TEMPLATE_CHUNK,
+        ) {
             self.state.update(token.0.kind);
         }
         Some(token)

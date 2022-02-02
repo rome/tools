@@ -73,7 +73,7 @@ impl ToFormatElement for JsAnyExpression {
             JsAnyExpression::JsAwaitExpression(await_expression) => {
                 await_expression.to_format_element(formatter)
             }
-            JsAnyExpression::TsNonNull(_) => todo!(),
+            JsAnyExpression::TsNonNullAssertionExpression(_) => todo!(),
             JsAnyExpression::JsPreUpdateExpression(pre_update_expression) => {
                 pre_update_expression.to_format_element(formatter)
             }

@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        TsTypeAlias {
+        TsTypeAliasStatement {
             type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
@@ -40,7 +40,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAlias {
+        TsTypeAliasStatement {
             type_token: TYPE_KW@46..52 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@52..54 "B" [] [Whitespace(" ")],
@@ -78,7 +78,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAlias {
+        TsTypeAliasStatement {
             type_token: TYPE_KW@88..120 "type" [Newline("\n"), Comments("// not an index signa ..."), Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@120..122 "C" [] [Whitespace(" ")],
@@ -113,7 +113,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        TsTypeAlias {
+        TsTypeAliasStatement {
             type_token: TYPE_KW@139..145 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@145..147 "D" [] [Whitespace(" ")],
@@ -156,7 +156,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..173
-    0: TS_TYPE_ALIAS@0..46
+    0: TS_TYPE_ALIAS_STATEMENT@0..46
       0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@19..21
         0: IDENT@19..21 "A" [] [Whitespace(" ")]
@@ -183,7 +183,7 @@ JsModule {
             5: (empty)
         2: R_CURLY@45..46 "}" [] []
       5: (empty)
-    1: TS_TYPE_ALIAS@46..88
+    1: TS_TYPE_ALIAS_STATEMENT@46..88
       0: TYPE_KW@46..52 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@52..54
         0: IDENT@52..54 "B" [] [Whitespace(" ")]
@@ -210,7 +210,7 @@ JsModule {
             5: (empty)
         2: R_CURLY@87..88 "}" [] []
       5: (empty)
-    2: TS_TYPE_ALIAS@88..139
+    2: TS_TYPE_ALIAS_STATEMENT@88..139
       0: TYPE_KW@88..120 "type" [Newline("\n"), Comments("// not an index signa ..."), Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@120..122
         0: IDENT@120..122 "C" [] [Whitespace(" ")]
@@ -235,7 +235,7 @@ JsModule {
             4: (empty)
         2: R_CURLY@138..139 "}" [] []
       5: (empty)
-    3: TS_TYPE_ALIAS@139..173
+    3: TS_TYPE_ALIAS_STATEMENT@139..173
       0: TYPE_KW@139..145 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@145..147
         0: IDENT@145..147 "D" [] [Whitespace(" ")]

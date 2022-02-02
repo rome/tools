@@ -6785,7 +6785,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(TS_NEVER_TYPE, children)
             }
-            TS_NON_NULL => {
+            TS_NON_NULL_ASSERTION_EXPRESSION => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
@@ -6805,11 +6805,11 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_NON_NULL.to_unknown(),
+                        TS_NON_NULL_ASSERTION_EXPRESSION.to_unknown(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(TS_NON_NULL, children)
+                slots.into_node(TS_NON_NULL_ASSERTION_EXPRESSION, children)
             }
             TS_NON_PRIMITIVE_TYPE => {
                 let mut elements = (&children).into_iter();
@@ -7392,7 +7392,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(TS_TUPLE_TYPE, children)
             }
-            TS_TYPE_ALIAS => {
+            TS_TYPE_ALIAS_STATEMENT => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
@@ -7440,11 +7440,11 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TYPE_ALIAS.to_unknown(),
+                        TS_TYPE_ALIAS_STATEMENT.to_unknown(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(TS_TYPE_ALIAS, children)
+                slots.into_node(TS_TYPE_ALIAS_STATEMENT, children)
             }
             TS_TYPE_ANNOTATION => {
                 let mut elements = (&children).into_iter();

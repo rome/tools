@@ -30,12 +30,13 @@ impl LexerState {
         self.prev = Some(next);
     }
 
-    fn update_expr_allowed(&mut self, next: JsSyntaxKind) -> bool {
-        if next.is_keyword() && self.prev == Some(T![.]) {
+    /// Based on https://users.soe.ucsc.edu/~cormac/papers/dls14a.pdf
+    fn update_expr_allowed(&mut self, current: JsSyntaxKind) -> bool {
+        if current.is_keyword() && self.prev == Some(T![.]) {
             return false;
         }
 
-        match next {
+        match current {
             T![')'] | T!['}'] => {
                 if self.ctx.len() == 1 {
                     return true;
@@ -93,7 +94,7 @@ impl LexerState {
             }
 
             // TODO: es6 for of
-            T![ident] => self.prev == Some(T![var]) && self.had_linebreak,
+            T![ident] => matches!(self.prev, Some(T![var] | T![const])) && self.had_linebreak,
 
             T!['{'] => {
                 let next = if ctx_is_brace_block(
@@ -124,8 +125,8 @@ impl LexerState {
             }
 
             T![++] | T![--] => self.expr_allowed,
-
-            _ => next.is_before_expr(),
+            T![!] => self.prev.is_none() || self.expr_allowed,
+            _ => current.is_before_expr(),
         }
     }
 }
