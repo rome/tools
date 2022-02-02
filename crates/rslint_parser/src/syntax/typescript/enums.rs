@@ -2,11 +2,8 @@ use crate::parser::{RecoveryResult, ToDiagnostic};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::ExpressionContext;
-use crate::syntax::js_parse_error;
 
 use crate::{JsSyntaxKind::*, *};
-
-use super::is_reserved_type_name;
 
 pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
@@ -20,7 +17,7 @@ pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax {
         JS_NUMBER_LITERAL => {
             let err = p
                 .err_builder("An enum member cannot have a numeric name")
-                .primary(p.cur_tok().range(), ""); 
+                .primary(p.cur_tok().range(), "");
             p.error(err);
             p.bump_any()
         }
@@ -35,7 +32,7 @@ pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax {
 /// An individual enum member
 fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
     let member = p.start();
-    
+
     let _ = match p.cur() {
         T!['['] => syntax::object::parse_computed_member_name(p),
         _ => parse_literal_member_name(p),
@@ -81,7 +78,6 @@ impl ParseSeparatedList for EnumMembersList {
         true
     }
 }
-
 
 pub(crate) fn is_reserved_enum_name(name: &str) -> bool {
     matches!(
