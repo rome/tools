@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 43
+assertion_line: 157
 expression: try_catch_finally.js
 
 ---
@@ -32,8 +32,14 @@ try {
 	var foo = 4
 }
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+
+-----
 try {
 	var foo = 4;
 } catch {

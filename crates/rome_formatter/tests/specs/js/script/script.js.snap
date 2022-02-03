@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 157
 expression: script.js
 
 ---
@@ -9,8 +10,14 @@ expression: script.js
 'use asm'
 var express = require("express")
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+
+-----
 #!/usr/bin/env node
 "use strict";
 "use asm";

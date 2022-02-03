@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 57
+assertion_line: 157
 expression: call.js
 
 ---
@@ -50,8 +50,14 @@ const composition = (ViewComponent, ContainerComponent) =>
 
 romise.then(result => result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail");
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+
+-----
 const testResults = results.testResults.map(
 	(testResult) => formatResult(testResult, formatter, reporter),
 );

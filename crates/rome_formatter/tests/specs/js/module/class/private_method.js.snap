@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 43
+assertion_line: 157
 expression: private_method.js
 
 ---
@@ -22,8 +22,14 @@ class Foo {
   }
 }
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+
+-----
 class Foo {
 	a = 1;
 

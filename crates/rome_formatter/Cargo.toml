@@ -16,3 +16,5 @@ thiserror = "1.0.30"
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }
 insta = "1.10.0"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

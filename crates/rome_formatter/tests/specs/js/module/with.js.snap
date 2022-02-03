@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 68
+assertion_line: 157
 expression: with.js
 
 ---
@@ -11,8 +11,14 @@ with (   b)
 	5
 }
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+
+-----
 with (   b)
 
 {

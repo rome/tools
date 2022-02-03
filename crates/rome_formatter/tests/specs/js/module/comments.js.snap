@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 57
+assertion_line: 157
 expression: comments.js
 
 ---
@@ -52,8 +52,14 @@ statement(); /* block comment */
 statement();
 
 statement(); // inline
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+
+-----
 // import {
 //     func, // trailing comma removal
 // } from 'module';

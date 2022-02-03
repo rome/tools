@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 157
 expression: for_loop.js
 
 ---
@@ -22,8 +23,14 @@ for(a;b;c) {
 for(let aVeryLongVariableNameToEnforceLineBreaks = 0; aVeryLongVariableNameToEnforceLineBreaks; aVeryLongVariableNameToEnforceLineBreaks) {
 }
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+
+-----
 for (;;) {
 	let x = 10;
 }

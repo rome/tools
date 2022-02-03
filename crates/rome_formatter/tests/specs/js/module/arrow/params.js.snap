@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 43
+assertion_line: 157
 expression: params.js
 
 ---
@@ -327,8 +327,14 @@ foo(
   ) => {}
 );
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+
+-----
 fooooooooooooooooooooooooooooooooooooooooooooooooooo(
 	(action) => (next) => dispatch(action),
 );

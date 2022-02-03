@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 43
+assertion_line: 157
 expression: while_loop.js
 
 ---
@@ -32,8 +32,14 @@ tour: while (true) {
 	break tour;
 }
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+
+-----
 while (true) {
 	var foo = 4;
 }

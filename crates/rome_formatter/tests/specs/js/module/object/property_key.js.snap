@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 157
 expression: property_key.js
 
 ---
@@ -13,8 +14,14 @@ const foo = {
   },
 };
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+
+-----
 const foo = {
 	"foo-bar": true,
 	"bar": { "lorem_ispsum": { "lorem-ipsum": true } },

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 43
+assertion_line: 157
 expression: if_stmt_err.js
 
 ---
@@ -22,8 +22,14 @@ if (false) {
 	let x = 99;
 } else {
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+
+-----
 function test() {
 	let x = 10;
 	if test {

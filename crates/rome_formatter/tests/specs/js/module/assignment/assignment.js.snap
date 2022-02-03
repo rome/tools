@@ -1,5 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 157
 expression: assignment.js
 
 ---
@@ -28,8 +29,14 @@ a[ b ]  =  c[ d ]
 ;({a,b=c,d:e,f:g=h,...j} = x)
 ;({aaaaaaaaaa,bbbbbbbbbb=cccccccccc,dddddddddd:eeeeeeeeee,ffffffffff:gggggggggg=hhhhhhhhhh,...jjjjjjjjjj} = x)
 
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+
+-----
 a = b;
 a += b;
 a -= b;

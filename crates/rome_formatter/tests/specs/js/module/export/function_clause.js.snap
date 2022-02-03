@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 57
+assertion_line: 157
 expression: function_clause.js
 
 ---
@@ -14,8 +14,14 @@ export function f() {
 export default function ff() {
 
 }
----
-# Output
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+
+-----
 export function f() {}
 
 export default function ff() {}
