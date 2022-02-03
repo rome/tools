@@ -43,7 +43,7 @@ fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
         Absent
     };
 
-    let _ = match p.cur() {
+    let name = match p.cur() {
         T!['['] => syntax::object::parse_computed_member_name(p),
         T![#] => {
             let err = p
@@ -57,6 +57,11 @@ fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
         }
         _ => parse_literal_member_name(p),
     };
+
+    if name.is_absent() {
+        member.abandon(p);
+        return Absent;
+    }
 
     let _ = parse_initializer_clause(p, ExpressionContext::default());
 
@@ -88,8 +93,11 @@ impl ParseSeparatedList for EnumMembersList {
     fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
-            &ParseRecovery::new(JS_UNKNOWN_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
-                .enable_recovery_on_line_break(),
+            &ParseRecovery::new(
+                JS_UNKNOWN_MEMBER,
+                token_set![JsSyntaxKind::IDENT, T![,], T!['}']],
+            )
+            .enable_recovery_on_line_break(),
             expected_enum_member,
         )
     }
