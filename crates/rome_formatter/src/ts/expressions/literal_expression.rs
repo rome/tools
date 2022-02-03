@@ -1,3 +1,6 @@
+use std::borrow::Cow;
+
+use crate::format_element::normalize_newlines;
 use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_element::Token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
@@ -14,12 +17,18 @@ impl ToFormatElement for JsStringLiteralExpression {
         let content = if quoted.starts_with('\'') {
             let s = &quoted[1..quoted.len() - 1];
             let s = format!("\"{}\"", s);
-            Token::new_dynamic(s, value_token.text_trimmed_range())
+            match normalize_newlines(&s, ['\r']) {
+                Cow::Borrowed(_) => s,
+                Cow::Owned(s) => s,
+            }
         } else {
-            Token::from(&value_token)
+            normalize_newlines(quoted, ['\r']).into_owned()
         };
 
-        formatter.format_replaced(&value_token, content.into())
+        formatter.format_replaced(
+            &value_token,
+            Token::new_dynamic(content, value_token.text_trimmed_range()).into(),
+        )
     }
 }
 
