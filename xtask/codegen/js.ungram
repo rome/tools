@@ -647,12 +647,9 @@ JsConstructorParameters =
 JsConstructorParameterList = (JsAnyConstructorParameter (',' JsAnyConstructorParameter)* ','?)
 
 JsAnyConstructorParameter =
-	JsFormalParameter
-	| JsFormalParameterWithDefault
-	| JsRestParameter
+	JsAnyParameter
 	| TsPropertyParameter
 	| TsReadonlyPropertyParameter
-	| JsUnknownParameter
 
 // constructor(private a: string)
 //             ^^^^^^^^^^^^^^^^^
@@ -666,6 +663,10 @@ TsReadonlyPropertyParameter =
 	accessibility: ('private' | 'protected' | 'public')?
 	'readonly'
 	formal_parameter: JsAnyFormalParameter
+
+TsAnyPropertyParameter =
+	TsPropertyParameter
+	| TsReadonlyPropertyParameter
 
 
 // class Test { a; b = 1; static c; }
@@ -1363,11 +1364,9 @@ JsParameters =
 JsParameterList = (JsAnyParameter (',' JsAnyParameter)* ','?)
 
 JsAnyParameter =
-	JsFormalParameter
-	| JsFormalParameterWithDefault
+	JsAnyFormalParameter
 	| JsRestParameter
 	| TsThisParameter
-	| JsUnknownParameter
 
 // (a?: string) => {}
 //  ^^^^^^^^^^

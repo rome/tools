@@ -9,7 +9,7 @@ use crate::syntax::expr::{
 };
 use crate::syntax::function::{
     parse_any_formal_parameter, parse_function_body, parse_parameter_list,
-    parse_ts_type_annotation_or_error,
+    parse_ts_type_annotation_or_error, ParameterKind,
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::ts_only_syntax_error;
@@ -284,6 +284,7 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
     p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
         parse_any_formal_parameter(
             p,
+            ParameterKind::Parameter,
             ExpressionContext::default().and_object_expression_allowed(has_l_paren),
         )
         .or_add_diagnostic(p, js_parse_error::expected_parameter);

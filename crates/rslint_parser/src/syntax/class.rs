@@ -7,7 +7,7 @@ use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::function::{
     parse_any_formal_parameter, parse_any_parameter, parse_function_body, parse_parameter_list,
-    parse_parameters_list, parse_ts_type_annotation_or_error,
+    parse_parameters_list, parse_ts_type_annotation_or_error, ParameterKind,
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, ts_only_syntax_error};
@@ -630,6 +630,7 @@ fn parse_class_member_impl(
                         p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
                             parse_any_formal_parameter(
                                 p,
+                                ParameterKind::Parameter,
                                 ExpressionContext::default()
                                     .and_object_expression_allowed(has_l_paren),
                             )
@@ -973,6 +974,10 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
         // class A { constructor(private x, protected y, public z) {} }
         // class B { constructor(readonly w, private readonly x, protected readonly y, public readonly z) {} }
         // class C { constructor(private x: string, readonly y?, z = "default", ...rest) {} }
+        //
+        // test_err ts_property_parameter_pattern
+        // // TYPESCRIPT
+        // class A { constructor(private { x, y }, protected [a, b]) {} }
         let property_parameter = p.start();
 
         // test_err class_constructor_parameter_readonly
@@ -1008,7 +1013,8 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
             }
         }
 
-        parse_any_formal_parameter(p, context).or_add_diagnostic(p, expected_binding);
+        parse_any_formal_parameter(p, ParameterKind::ParameterProperty, context)
+            .or_add_diagnostic(p, expected_binding);
 
         let kind = if !valid {
             JS_UNKNOWN_PARAMETER
@@ -1090,7 +1096,7 @@ fn is_at_modifier(p: &Parser) -> bool {
         return false;
     }
 
-    p.nth_at(1, T![*]) || is_at_class_member_name(p, 1)
+    matches!(p.nth(1), T![*] | T!['{'] | T!['[']) | is_at_class_member_name(p, 1)
 }
 
 // test static_generator_constructor_method

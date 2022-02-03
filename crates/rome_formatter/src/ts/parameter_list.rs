@@ -28,14 +28,10 @@ impl ToFormatElement for JsParameters {
 impl ToFormatElement for JsAnyParameter {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         match self {
-            JsAnyParameter::JsFormalParameter(parameter) => parameter.to_format_element(formatter),
-            JsAnyParameter::JsFormalParameterWithDefault(parameter) => {
+            JsAnyParameter::JsAnyFormalParameter(parameter) => {
                 parameter.to_format_element(formatter)
             }
             JsAnyParameter::TsThisParameter(_) => todo!(),
-            JsAnyParameter::JsUnknownParameter(unknown_parameter) => {
-                unknown_parameter.to_format_element(formatter)
-            }
             JsAnyParameter::JsRestParameter(binding) => binding.to_format_element(formatter),
         }
     }

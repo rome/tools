@@ -386,7 +386,7 @@ pub(crate) fn parse_any_parameter(p: &mut Parser, context: ExpressionContext) ->
     match p.cur() {
         T![...] => parse_rest_parameter(p, context),
         T![this] => parse_ts_this_parameter(p),
-        _ => parse_any_formal_parameter(p, context),
+        _ => parse_any_formal_parameter(p, ParameterKind::Parameter, context),
     }
 }
 
@@ -467,6 +467,12 @@ fn parse_ts_this_parameter(p: &mut Parser) -> ParsedSyntax {
     Present(parameter.complete(p, TS_THIS_PARAMETER))
 }
 
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub(crate) enum ParameterKind {
+    Parameter,
+    ParameterProperty,
+}
+
 // test ts_formal_parameter
 // // TYPESCRIPT
 // function a(x) {}
@@ -484,11 +490,25 @@ fn parse_ts_this_parameter(p: &mut Parser) -> ParsedSyntax {
 // function b(x?) {}
 pub(crate) fn parse_any_formal_parameter(
     p: &mut Parser,
+    kind: ParameterKind,
     context: ExpressionContext,
 ) -> ParsedSyntax {
     parse_binding_pattern(p, context).map(|binding| {
         let m = binding.precede(p);
         let mut valid = true;
+
+        if kind == ParameterKind::ParameterProperty
+            && matches!(
+                binding.kind(),
+                JS_OBJECT_BINDING_PATTERN | JS_ARRAY_BINDING_PATTERN
+            )
+        {
+            valid = false;
+            p.error(
+                p.err_builder("A parameter property may not be declared using a binding pattern.")
+                    .primary(binding.range(p), ""),
+            );
+        }
 
         let is_optional = if p.at(T![?]) {
             if TypeScript.is_unsupported(p) {
