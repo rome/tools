@@ -35,7 +35,6 @@ a[ b ]  =  c[ d ]
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 a = b;
 a += b;

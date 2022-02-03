@@ -56,7 +56,6 @@ romise.then(result => result.veryLongVariable.veryLongPropertyName > someOtherVa
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 const testResults = results.testResults.map(
 	(testResult) => formatResult(testResult, formatter, reporter),

@@ -12,7 +12,6 @@ import * as all from "all"
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 import * as all from "all";
 

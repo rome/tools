@@ -58,7 +58,6 @@ statement(); // inline
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 // import {
 //     func, // trailing comma removal

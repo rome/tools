@@ -23,7 +23,6 @@ while (something)
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 do {
 	var foo = 4;

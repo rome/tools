@@ -15,7 +15,6 @@ x && y
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 x ?? y;
 x || y;

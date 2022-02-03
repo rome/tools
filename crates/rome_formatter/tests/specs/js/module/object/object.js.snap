@@ -33,7 +33,6 @@ let a = {
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 let a = {
 	...spread,

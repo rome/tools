@@ -20,7 +20,6 @@ c?.[ d ]
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 const foo = {};
 

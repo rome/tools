@@ -16,7 +16,6 @@ x = --y
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 ++y;
 --y;

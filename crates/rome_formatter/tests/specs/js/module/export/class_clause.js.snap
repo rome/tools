@@ -21,7 +21,6 @@ B {}
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 // another comment
 export class A {

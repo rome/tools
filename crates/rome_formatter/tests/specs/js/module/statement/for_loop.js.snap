@@ -29,7 +29,6 @@ for(let aVeryLongVariableNameToEnforceLineBreaks = 0; aVeryLongVariableNameToEnf
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 for (;;) {
 	let x = 10;

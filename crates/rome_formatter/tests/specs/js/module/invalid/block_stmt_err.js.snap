@@ -22,7 +22,6 @@ let recovered     = "no"
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 {
 	let x = 10;

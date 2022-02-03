@@ -17,7 +17,6 @@ let a = [...baaaaaaaaaaaaaaaaaaaaaaaaaaaaa,...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,...
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 let a = [...a, ...b];
 let b = [...a, ...b];

@@ -15,7 +15,6 @@ import(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 import(x);
 import("x");

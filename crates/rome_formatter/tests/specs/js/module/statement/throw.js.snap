@@ -15,7 +15,6 @@ throw false
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 throw "Something";
 

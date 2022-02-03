@@ -15,7 +15,6 @@ new c(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,cccccccccccc
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 new a();
 new b(x);

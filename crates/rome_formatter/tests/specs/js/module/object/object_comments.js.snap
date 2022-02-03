@@ -15,7 +15,6 @@ let a = { // leading comment
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 let a = {
 	// leading comment

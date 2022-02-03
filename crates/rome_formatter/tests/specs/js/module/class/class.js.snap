@@ -69,7 +69,6 @@ x = class aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa extends bbbbbbb
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 class Foo extends Boar {
 	static {

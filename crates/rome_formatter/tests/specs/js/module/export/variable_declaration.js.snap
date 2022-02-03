@@ -14,7 +14,6 @@ export const foofoofoofoofoofoofoo = "ahah", barbarbarbarbarbarbar = {}, loremlo
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 export let a, d, c;
 

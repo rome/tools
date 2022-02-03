@@ -29,7 +29,6 @@ const middleware = options => (req, res, next) => {
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 const fn = (b) => (c) => (d) => {
 	return 3;

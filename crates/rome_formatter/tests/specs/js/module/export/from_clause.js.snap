@@ -16,7 +16,6 @@ export * as something_bad_will_happen from "something_bad_might_not_happen" asse
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 export * from "hey";
 

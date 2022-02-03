@@ -23,7 +23,6 @@ const foo = class extends (Bar ?? Baz) {}
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 (foo++)?.();
 async () => {

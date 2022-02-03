@@ -16,7 +16,6 @@ var express = require("express")
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 #!/usr/bin/env node
 "use strict";

@@ -16,7 +16,6 @@ async () => {}
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 () => {};
 async () => {};

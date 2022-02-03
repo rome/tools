@@ -70,7 +70,6 @@ if (true) {
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 if (Math.random() > 0.5) {
 	console.log(1);

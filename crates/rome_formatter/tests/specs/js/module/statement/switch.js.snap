@@ -22,7 +22,6 @@ switch (key) {
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 switch (key) {
 	case value:

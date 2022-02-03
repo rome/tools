@@ -17,7 +17,6 @@ let e = [2,2,1,3];
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 let a = [,];
 let b = [, ,];

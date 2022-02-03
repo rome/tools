@@ -16,7 +16,6 @@ d
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 a ? b : c;
 d ? (e + f) : (g + h);

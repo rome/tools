@@ -20,7 +20,6 @@ export {
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 export { a, as c b } from "fancy" assert { type: "json" };
 

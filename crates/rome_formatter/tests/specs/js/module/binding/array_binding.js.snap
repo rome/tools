@@ -15,7 +15,6 @@ let [aaaaaaaaaaaaaaaaaaaa=bbbbbbbbbbbbbbbbbbbb,cccccccccccccccccccc=dddddddddddd
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 [a = "b"] = c;
 let [a = "b"] = c;

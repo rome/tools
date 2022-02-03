@@ -16,7 +16,6 @@ let {aaaaaaaaaaaaaaaaaaaa,bbbbbbbbbbbbbbbbbbbb=cccccccccccccccccccc,dddddddddddd
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 let { a } = b;
 let { d, b: c } = d;

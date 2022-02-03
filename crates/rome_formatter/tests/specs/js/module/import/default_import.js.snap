@@ -23,7 +23,6 @@ import a, * as b from "foo"
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 import hey from "hey";
 import hey from "hey";

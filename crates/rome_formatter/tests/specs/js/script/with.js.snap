@@ -17,7 +17,6 @@ with (   b)
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 with (b) {
 	5;

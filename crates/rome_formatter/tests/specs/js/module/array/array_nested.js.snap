@@ -53,7 +53,6 @@ let o1 = [{ a, b }, { a, b, c }];
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 let a = [[]];
 let b = [[], []];

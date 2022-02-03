@@ -28,7 +28,6 @@ if (false) {
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 function test() {
 	let x = 10;

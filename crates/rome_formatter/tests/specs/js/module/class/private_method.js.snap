@@ -28,7 +28,6 @@ class Foo {
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 class Foo {
 	a = 1;

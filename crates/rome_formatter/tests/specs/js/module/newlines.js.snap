@@ -90,7 +90,6 @@ const object = {
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 "directive";
 // comment

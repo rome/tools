@@ -14,7 +14,6 @@ function foo(someotherlongvariableshould1, someotherlongvariableshould2, someoth
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 function foo(
 	someotherlongvariableshould1,

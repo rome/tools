@@ -35,7 +35,6 @@ a  instanceof b
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 a + b;
 a < b;

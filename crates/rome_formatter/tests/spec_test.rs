@@ -77,7 +77,7 @@ impl SnapshotContent {
             let formal_index = index + 1;
             output.push_str(format!("## Output {formal_index}\n").as_str());
             output.push_str("-----\n");
-            output.push_str(format!("{}\n", options).as_str());
+            output.push_str(format!("{}", options).as_str());
             output.push_str("-----\n");
             output.push_str(content.as_str());
         }

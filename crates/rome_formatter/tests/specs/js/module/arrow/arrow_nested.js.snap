@@ -39,7 +39,6 @@ runtimeAgent.getProperties(
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 Seq(typeDef.interface.groups).forEach(
 	(group) =>

@@ -28,7 +28,6 @@ function c( //some comment
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 function a() {
 	// trailing comment

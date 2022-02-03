@@ -18,7 +18,6 @@ let b = {
 -----
 Indent style: Tab
 Line width: 80
-
 -----
 let a = { get foo() {} };
 let b = { set foo(a) {} };
