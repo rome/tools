@@ -1,6 +1,7 @@
 
 # This workflow run when something is pushed on main and it does:
   # - normal checks like in the normal PRs
+  # - expand the test suite to be run on multiple OS
   # - runs the coverage and prints in the command line
 name: CI on main
 on:
@@ -57,8 +58,15 @@ jobs:
           args: --workspace --all-targets --verbose -- --deny warnings
 
   test:
+    strategy:
+      matrix:
+        include:
+          - os: windows-2022
+          - os: ubuntu-20.04
+          - os: macos-11
+
     name: test
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -71,7 +79,7 @@ jobs:
         with:
           command: test
           args: --no-run --workspace --verbose
-      - name: Run tests
+      - name: Run tests on ${{ matrix.os }}
         uses: actions-rs/cargo@v1
         env:
           RUST_TEST_THREADS: 1

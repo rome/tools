@@ -57,6 +57,7 @@ jobs:
   test:
     name: test
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -76,4 +77,3 @@ jobs:
         with:
           command: test
           args: --workspace --verbose
-
