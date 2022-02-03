@@ -1,5 +1,3 @@
-use rome_rowan::SyntaxKind;
-
 use crate::parser::{RecoveryResult, ToDiagnostic};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_initializer_clause;
@@ -47,7 +45,7 @@ fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
 
     let _ = match p.cur() {
         T!['['] => syntax::object::parse_computed_member_name(p),
-        T![#] => { 
+        T![#] => {
             let err = p
                 .err_builder("An enum member cannot be private")
                 .primary(p.cur_tok().range(), "");
@@ -56,7 +54,7 @@ fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
                 x.change_to_unknown(p);
                 x
             })
-        },
+        }
         _ => parse_literal_member_name(p),
     };
 
@@ -68,7 +66,7 @@ fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
         Present(_) => {
             r#enum.change_to_unknown(p);
             Present(r#enum)
-        },
+        }
     }
 }
 
@@ -155,11 +153,9 @@ fn parse_name(p: &mut Parser, enum_token_range: Range<usize>) {
 
                 let m = p.start();
                 p.bump_remap(T![ident]);
-                let mut identifier = m.complete(p, JS_IDENTIFIER_BINDING);
+                let _ = m.complete(p, JS_IDENTIFIER_BINDING);
 
-                let err = p
-                    .err_builder("invalid enum name")
-                    .primary(range, "");
+                let err = p.err_builder("invalid enum name").primary(range, "");
                 p.error(err);
             } else {
                 let err = p
@@ -183,7 +179,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
     let enum_token_range = p.cur_tok().range();
     p.expect(T![enum]);
     parse_name(p, enum_token_range);
-    
+
     p.expect(T!['{']);
 
     EnumMembersList.parse_list(p);

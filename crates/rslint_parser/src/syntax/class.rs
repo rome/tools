@@ -144,7 +144,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
 
     let id = match p.cur_src() {
         "implements" | "extends" => Absent,
-        _ => parse_binding(p)
+        _ => parse_binding(p),
     };
 
     // parse class id

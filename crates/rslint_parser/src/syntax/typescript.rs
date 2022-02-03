@@ -118,14 +118,12 @@ fn parse_ts_decorator(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     p.bump(T![@]);
-    
+
     match p.cur() {
         JsSyntaxKind::IDENT => {
             p.bump(JsSyntaxKind::IDENT);
             Present(m.complete(p, TS_TYPE_ASSERTION_EXPRESSION))
         }
-        _ => {
-            Absent
-        }
+        _ => Absent,
     }
 }
