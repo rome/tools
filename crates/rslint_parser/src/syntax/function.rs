@@ -49,6 +49,14 @@ use rslint_syntax::{JsSyntaxKind, T};
 //
 // test_err function_broken
 // function foo())})}{{{  {}
+//
+// test ts_function_statement
+// // TYPESCRIPT
+// function test(a: string, b?: number, c="default") {}
+//
+// test_err ts_optional_pattern_parameter
+// // TYPESCRIPT
+// function test({a, b}?) {}
 pub(super) fn parse_function_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     if !is_at_function(p) {
         return Absent;
@@ -189,7 +197,8 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         })
         .ok();
 
-    parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_parameters);
+    parse_parameter_list(p, ParameterContext::Implementation, flags)
+        .or_add_diagnostic(p, js_parse_error::expected_parameters);
 
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, marker| {
@@ -352,7 +361,7 @@ pub(super) fn parse_arrow_function_parameters(
     }
 
     if p.at(T!['(']) {
-        parse_parameter_list(p, flags)
+        parse_parameter_list(p, ParameterContext::Implementation, flags)
     } else {
         // test_err async_arrow_expr_await_parameter
         // let a = async await => {}
@@ -382,11 +391,15 @@ pub(super) fn parse_arrow_body(p: &mut Parser, mut flags: SignatureFlags) -> Par
     }
 }
 
-pub(crate) fn parse_any_parameter(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+pub(crate) fn parse_any_parameter(
+    p: &mut Parser,
+    parameter_context: ParameterContext,
+    expression_context: ExpressionContext,
+) -> ParsedSyntax {
     match p.cur() {
-        T![...] => parse_rest_parameter(p, context),
+        T![...] => parse_rest_parameter(p, expression_context),
         T![this] => parse_ts_this_parameter(p),
-        _ => parse_any_formal_parameter(p, ParameterKind::Parameter, context),
+        _ => parse_any_formal_parameter(p, parameter_context, expression_context),
     }
 }
 
@@ -468,9 +481,32 @@ fn parse_ts_this_parameter(p: &mut Parser) -> ParsedSyntax {
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub(crate) enum ParameterKind {
-    Parameter,
+pub(crate) enum ParameterContext {
+    /// Regular parameter in a function / method implementation: `function x(a) {}`
+    Implementation,
+
+    /// Parameter of a function/method declaration: `declare function x(a);`
+    Declaration,
+
+    /// Parameter of a setter function: `set a(b: string)`
+    Setter,
+
+    /// Parameter inside a TS property parameter: `constructor(private a)`
     ParameterProperty,
+}
+
+impl ParameterContext {
+    pub fn is_setter(&self) -> bool {
+        self == &ParameterContext::Setter
+    }
+
+    pub fn is_implementation(&self) -> bool {
+        self == &ParameterContext::Implementation
+    }
+
+    pub fn is_parameter_property(&self) -> bool {
+        self == &ParameterContext::ParameterProperty
+    }
 }
 
 // test ts_formal_parameter
@@ -490,25 +526,12 @@ pub(crate) enum ParameterKind {
 // function b(x?) {}
 pub(crate) fn parse_any_formal_parameter(
     p: &mut Parser,
-    kind: ParameterKind,
-    context: ExpressionContext,
+    parameter_context: ParameterContext,
+    expression_context: ExpressionContext,
 ) -> ParsedSyntax {
-    parse_binding_pattern(p, context).map(|binding| {
+    parse_binding_pattern(p, expression_context).map(|binding| {
         let m = binding.precede(p);
         let mut valid = true;
-
-        if kind == ParameterKind::ParameterProperty
-            && matches!(
-                binding.kind(),
-                JS_OBJECT_BINDING_PATTERN | JS_ARRAY_BINDING_PATTERN
-            )
-        {
-            valid = false;
-            p.error(
-                p.err_builder("A parameter property may not be declared using a binding pattern.")
-                    .primary(binding.range(p), ""),
-            );
-        }
 
         let is_optional = if p.at(T![?]) {
             if TypeScript.is_unsupported(p) {
@@ -517,15 +540,45 @@ pub(crate) fn parse_any_formal_parameter(
                     "optional parameters",
                     p.cur_tok().range(),
                 ));
+                valid = false;
+            } else if parameter_context.is_setter() {
+                p.error(
+                    p.err_builder("A 'set' accessor cannot have an optional parameter.")
+                        .primary(p.cur_tok().range(), ""),
+                );
+                valid = false;
             }
 
             p.bump(T![?]);
-            valid = false;
-
             true
         } else {
             false
         };
+
+        if valid
+            && matches!(
+                binding.kind(),
+                JS_OBJECT_BINDING_PATTERN | JS_ARRAY_BINDING_PATTERN
+            )
+        {
+            if parameter_context.is_parameter_property() {
+                valid = false;
+                p.error(
+                    p.err_builder(
+                        "A parameter property may not be declared using a binding pattern.",
+                    )
+                    .primary(binding.range(p), ""),
+                );
+            } else if parameter_context.is_implementation() && is_optional {
+                valid = false;
+                p.error(
+					p.err_builder(
+						"A binding pattern parameter cannot be optional in an implementation signature.",
+					)
+						.primary(binding.range(p), ""),
+				);
+            }
+        }
 
         TypeScript
             .parse_exclusive_syntax(p, parse_ts_type_annotation, |p, annotation| {
@@ -534,17 +587,23 @@ pub(crate) fn parse_any_formal_parameter(
             .ok();
 
         let mut parameter = if p.eat(T![=]) {
-            parse_assignment_expression_or_higher(p, context)
+            parse_assignment_expression_or_higher(p, expression_context)
                 .or_add_diagnostic(p, expected_expression);
 
             let parameter = m.complete(p, JS_FORMAL_PARAMETER_WITH_DEFAULT);
 
-            if is_optional && valid {
+            if valid && parameter_context.is_setter() {
+                p.error(
+                    p.err_builder("A 'set' accessor parameter cannot have an initializer.")
+                        .primary(parameter.range(p), ""),
+                );
+            } else if is_optional && valid {
                 p.error(
                     p.err_builder("Parameter cannot have question mark and initializer")
                         .primary(parameter.range(p), ""),
                 );
             }
+
             parameter
         } else {
             m.complete(p, JS_FORMAL_PARAMETER)
@@ -585,12 +644,21 @@ pub(super) fn skip_parameter_start(p: &mut Parser) -> bool {
 // test parameter_list
 // function evalInComputedPropertyKey({ [computed]: ignored }) {}
 /// parse the whole list of parameters, brackets included
-pub(super) fn parse_parameter_list(p: &mut Parser, flags: SignatureFlags) -> ParsedSyntax {
+pub(super) fn parse_parameter_list(
+    p: &mut Parser,
+    parameter_context: ParameterContext,
+    flags: SignatureFlags,
+) -> ParsedSyntax {
     if !p.at(T!['(']) {
         return Absent;
     }
     let m = p.start();
-    parse_parameters_list(p, flags, parse_any_parameter, JS_PARAMETER_LIST);
+    parse_parameters_list(
+        p,
+        flags,
+        |p, expression_context| parse_any_parameter(p, parameter_context, expression_context),
+        JS_PARAMETER_LIST,
+    );
 
     Present(m.complete(p, JS_PARAMETERS))
 }

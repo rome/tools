@@ -9,7 +9,7 @@ use crate::syntax::expr::{
 };
 use crate::syntax::function::{
     parse_any_formal_parameter, parse_function_body, parse_parameter_list,
-    parse_ts_type_annotation_or_error, ParameterKind,
+    parse_ts_type_annotation_or_error, ParameterContext,
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::ts_only_syntax_error;
@@ -284,7 +284,7 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
     p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
         parse_any_formal_parameter(
             p,
-            ParameterKind::Parameter,
+            ParameterContext::Setter,
             ExpressionContext::default().and_object_expression_allowed(has_l_paren),
         )
         .or_add_diagnostic(p, js_parse_error::expected_parameter);
@@ -401,7 +401,8 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 /// Parses the body of a method object member starting right after the member name.
 fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
     parse_ts_type_parameters(p).ok();
-    parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_parameters);
+    parse_parameter_list(p, ParameterContext::Implementation, flags)
+        .or_add_diagnostic(p, js_parse_error::expected_parameters);
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
             ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())

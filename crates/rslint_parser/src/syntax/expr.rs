@@ -401,6 +401,10 @@ pub(super) fn parse_conditional_expr(p: &mut Parser, context: ExpressionContext)
 
     if p.at(T![?]) {
         return lhs.map(|marker| {
+            if marker.kind() == JS_ARROW_FUNCTION_EXPRESSION {
+                return marker;
+            }
+
             let m = marker.precede(p);
             p.bump_any();
 
@@ -640,8 +644,13 @@ fn parse_binary_or_logical_expression_recursive(
 // test_err new_exprs
 // new;
 fn parse_member_expression_or_higher(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
-    parse_primary_expression(p, context)
-        .map(|lhs| parse_member_expression_rest(p, lhs, context, true, &mut false))
+    parse_primary_expression(p, context).map(|lhs| {
+        if lhs.kind() == JS_ARROW_FUNCTION_EXPRESSION {
+            return lhs;
+        }
+
+        parse_member_expression_rest(p, lhs, context, true, &mut false)
+    })
 }
 
 // test_err subscripts_err
@@ -737,7 +746,9 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     let expression = parse_primary_expression(p, context).or_add_diagnostic(p, expected_expression);
 
     if let Some(lhs) = expression {
-        parse_member_expression_rest(p, lhs, context, false, &mut false);
+        if lhs.kind() != JS_ARROW_FUNCTION_EXPRESSION {
+            parse_member_expression_rest(p, lhs, context, false, &mut false);
+        }
     }
 
     // test ts_new_with_type_arguments

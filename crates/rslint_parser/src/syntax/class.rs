@@ -7,7 +7,7 @@ use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::function::{
     parse_any_formal_parameter, parse_any_parameter, parse_function_body, parse_parameter_list,
-    parse_parameters_list, parse_ts_type_annotation_or_error, ParameterKind,
+    parse_parameters_list, parse_ts_type_annotation_or_error, ParameterContext,
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, ts_only_syntax_error};
@@ -630,7 +630,7 @@ fn parse_class_member_impl(
                         p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
                             parse_any_formal_parameter(
                                 p,
-                                ParameterKind::Parameter,
+                                ParameterContext::Setter,
                                 ExpressionContext::default()
                                     .and_object_expression_allowed(has_l_paren),
                             )
@@ -889,7 +889,8 @@ fn parse_method_class_member_body(
             ts_only_syntax_error(p, "type parameters", marker.range(p).as_range())
         })
         .ok();
-    parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_class_parameters);
+    parse_parameter_list(p, ParameterContext::Implementation, flags)
+        .or_add_diagnostic(p, js_parse_error::expected_class_parameters);
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
             ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
@@ -1013,7 +1014,7 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
             }
         }
 
-        parse_any_formal_parameter(p, ParameterKind::ParameterProperty, context)
+        parse_any_formal_parameter(p, ParameterContext::ParameterProperty, context)
             .or_add_diagnostic(p, expected_binding);
 
         let kind = if !valid {
@@ -1026,7 +1027,7 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
 
         Present(property_parameter.complete(p, kind))
     } else {
-        parse_any_parameter(p, context)
+        parse_any_parameter(p, ParameterContext::Implementation, context)
     }
 }
 
