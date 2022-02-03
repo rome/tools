@@ -24,12 +24,13 @@ JsModule {
                             JsUnknownParameter {
                                 items: [
                                     READONLY_KW@22..31 "readonly" [] [Whitespace(" ")],
-                                    JsFormalParameter {
+                                    JsParameter {
                                         binding: JsIdentifierBinding {
                                             name_token: IDENT@31..32 "b" [] [],
                                         },
                                         question_mark_token: missing (optional),
                                         type_annotation: missing (optional),
+                                        initializer: missing (optional),
                                     },
                                 ],
                             },
@@ -73,11 +74,12 @@ JsModule {
             1: JS_CONSTRUCTOR_PARAMETER_LIST@22..32
               0: JS_UNKNOWN_PARAMETER@22..32
                 0: READONLY_KW@22..31 "readonly" [] [Whitespace(" ")]
-                1: JS_FORMAL_PARAMETER@31..32
+                1: JS_PARAMETER@31..32
                   0: JS_IDENTIFIER_BINDING@31..32
                     0: IDENT@31..32 "b" [] []
                   1: (empty)
                   2: (empty)
+                  3: (empty)
             2: R_PAREN@32..34 ")" [] [Whitespace(" ")]
           4: JS_FUNCTION_BODY@34..37
             0: L_CURLY@34..35 "{" [] []

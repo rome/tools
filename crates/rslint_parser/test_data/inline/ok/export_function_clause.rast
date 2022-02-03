@@ -15,20 +15,22 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@20..21 "(" [] [],
                     items: JsParameterList [
-                        JsFormalParameter {
+                        JsParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@21..22 "a" [] [],
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
+                            initializer: missing (optional),
                         },
                         COMMA@22..24 "," [] [Whitespace(" ")],
-                        JsFormalParameter {
+                        JsParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@24..25 "b" [] [],
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
+                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@25..27 ")" [] [Whitespace(" ")],
@@ -55,20 +57,22 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@52..53 "(" [] [],
                     items: JsParameterList [
-                        JsFormalParameter {
+                        JsParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@53..54 "a" [] [],
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
+                            initializer: missing (optional),
                         },
                         COMMA@54..56 "," [] [Whitespace(" ")],
-                        JsFormalParameter {
+                        JsParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@56..57 "b" [] [],
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
+                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@57..59 ")" [] [Whitespace(" ")],
@@ -95,20 +99,22 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@89..90 "(" [] [],
                     items: JsParameterList [
-                        JsFormalParameter {
+                        JsParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@90..91 "a" [] [],
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
+                            initializer: missing (optional),
                         },
                         COMMA@91..93 "," [] [Whitespace(" ")],
-                        JsFormalParameter {
+                        JsParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@93..94 "b" [] [],
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
+                            initializer: missing (optional),
                         },
                         COMMA@94..96 "," [] [Whitespace(" ")],
                     ],
@@ -143,17 +149,19 @@ JsModule {
         5: JS_PARAMETERS@20..27
           0: L_PAREN@20..21 "(" [] []
           1: JS_PARAMETER_LIST@21..25
-            0: JS_FORMAL_PARAMETER@21..22
+            0: JS_PARAMETER@21..22
               0: JS_IDENTIFIER_BINDING@21..22
                 0: IDENT@21..22 "a" [] []
               1: (empty)
               2: (empty)
+              3: (empty)
             1: COMMA@22..24 "," [] [Whitespace(" ")]
-            2: JS_FORMAL_PARAMETER@24..25
+            2: JS_PARAMETER@24..25
               0: JS_IDENTIFIER_BINDING@24..25
                 0: IDENT@24..25 "b" [] []
               1: (empty)
               2: (empty)
+              3: (empty)
           2: R_PAREN@25..27 ")" [] [Whitespace(" ")]
         6: (empty)
         7: JS_FUNCTION_BODY@27..29
@@ -173,17 +181,19 @@ JsModule {
         5: JS_PARAMETERS@52..59
           0: L_PAREN@52..53 "(" [] []
           1: JS_PARAMETER_LIST@53..57
-            0: JS_FORMAL_PARAMETER@53..54
+            0: JS_PARAMETER@53..54
               0: JS_IDENTIFIER_BINDING@53..54
                 0: IDENT@53..54 "a" [] []
               1: (empty)
               2: (empty)
+              3: (empty)
             1: COMMA@54..56 "," [] [Whitespace(" ")]
-            2: JS_FORMAL_PARAMETER@56..57
+            2: JS_PARAMETER@56..57
               0: JS_IDENTIFIER_BINDING@56..57
                 0: IDENT@56..57 "b" [] []
               1: (empty)
               2: (empty)
+              3: (empty)
           2: R_PAREN@57..59 ")" [] [Whitespace(" ")]
         6: (empty)
         7: JS_FUNCTION_BODY@59..61
@@ -203,17 +213,19 @@ JsModule {
         5: JS_PARAMETERS@89..98
           0: L_PAREN@89..90 "(" [] []
           1: JS_PARAMETER_LIST@90..96
-            0: JS_FORMAL_PARAMETER@90..91
+            0: JS_PARAMETER@90..91
               0: JS_IDENTIFIER_BINDING@90..91
                 0: IDENT@90..91 "a" [] []
               1: (empty)
               2: (empty)
+              3: (empty)
             1: COMMA@91..93 "," [] [Whitespace(" ")]
-            2: JS_FORMAL_PARAMETER@93..94
+            2: JS_PARAMETER@93..94
               0: JS_IDENTIFIER_BINDING@93..94
                 0: IDENT@93..94 "b" [] []
               1: (empty)
               2: (empty)
+              3: (empty)
             3: COMMA@94..96 "," [] [Whitespace(" ")]
           2: R_PAREN@96..98 ")" [] [Whitespace(" ")]
         6: (empty)

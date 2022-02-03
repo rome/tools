@@ -8,8 +8,8 @@ use crate::syntax::expr::{
     parse_reference_identifier, ExpressionContext,
 };
 use crate::syntax::function::{
-    parse_any_formal_parameter, parse_function_body, parse_parameter_list,
-    parse_ts_type_annotation_or_error, ParameterContext,
+    parse_function_body, parse_parameter, parse_parameter_list, parse_ts_type_annotation_or_error,
+    ParameterContext,
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::ts_only_syntax_error;
@@ -282,7 +282,7 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
     let has_l_paren = p.expect(T!['(']);
 
     p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
-        parse_any_formal_parameter(
+        parse_parameter(
             p,
             ParameterContext::Setter,
             ExpressionContext::default().and_object_expression_allowed(has_l_paren),

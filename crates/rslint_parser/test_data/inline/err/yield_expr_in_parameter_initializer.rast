@@ -13,22 +13,25 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@14..15 "(" [] [],
                 items: JsParameterList [
-                    JsFormalParameterWithDefault {
+                    JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@15..17 "a" [] [Whitespace(" ")],
                         },
+                        question_mark_token: missing (optional),
                         type_annotation: missing (optional),
-                        eq_token: EQ@17..19 "=" [] [Whitespace(" ")],
-                        default: JsUnknownExpression {
-                            items: [
-                                YIELD_KW@19..25 "yield" [] [Whitespace(" ")],
-                                JsYieldArgument {
-                                    star_token: missing (optional),
-                                    expression: JsStringLiteralExpression {
-                                        value_token: JS_STRING_LITERAL@25..31 "\"test\"" [] [],
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@17..19 "=" [] [Whitespace(" ")],
+                            expression: JsUnknownExpression {
+                                items: [
+                                    YIELD_KW@19..25 "yield" [] [Whitespace(" ")],
+                                    JsYieldArgument {
+                                        star_token: missing (optional),
+                                        expression: JsStringLiteralExpression {
+                                            value_token: JS_STRING_LITERAL@25..31 "\"test\"" [] [],
+                                        },
                                     },
-                                },
-                            ],
+                                ],
+                            },
                         },
                     },
                 ],
@@ -53,20 +56,23 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@50..51 "(" [] [],
                 items: JsParameterList [
-                    JsFormalParameterWithDefault {
+                    JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@51..53 "a" [] [Whitespace(" ")],
                         },
+                        question_mark_token: missing (optional),
                         type_annotation: missing (optional),
-                        eq_token: EQ@53..55 "=" [] [Whitespace(" ")],
-                        default: JsUnknownExpression {
-                            items: [
-                                JsUnknown {
-                                    items: [
-                                        IDENT@55..61 "yield" [] [Whitespace(" ")],
-                                    ],
-                                },
-                            ],
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@53..55 "=" [] [Whitespace(" ")],
+                            expression: JsUnknownExpression {
+                                items: [
+                                    JsUnknown {
+                                        items: [
+                                            IDENT@55..61 "yield" [] [Whitespace(" ")],
+                                        ],
+                                    },
+                                ],
+                            },
                         },
                     },
                     missing separator,
@@ -104,17 +110,19 @@ JsModule {
       5: JS_PARAMETERS@14..33
         0: L_PAREN@14..15 "(" [] []
         1: JS_PARAMETER_LIST@15..31
-          0: JS_FORMAL_PARAMETER_WITH_DEFAULT@15..31
+          0: JS_PARAMETER@15..31
             0: JS_IDENTIFIER_BINDING@15..17
               0: IDENT@15..17 "a" [] [Whitespace(" ")]
             1: (empty)
-            2: EQ@17..19 "=" [] [Whitespace(" ")]
-            3: JS_UNKNOWN_EXPRESSION@19..31
-              0: YIELD_KW@19..25 "yield" [] [Whitespace(" ")]
-              1: JS_YIELD_ARGUMENT@25..31
-                0: (empty)
-                1: JS_STRING_LITERAL_EXPRESSION@25..31
-                  0: JS_STRING_LITERAL@25..31 "\"test\"" [] []
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@17..31
+              0: EQ@17..19 "=" [] [Whitespace(" ")]
+              1: JS_UNKNOWN_EXPRESSION@19..31
+                0: YIELD_KW@19..25 "yield" [] [Whitespace(" ")]
+                1: JS_YIELD_ARGUMENT@25..31
+                  0: (empty)
+                  1: JS_STRING_LITERAL_EXPRESSION@25..31
+                    0: JS_STRING_LITERAL@25..31 "\"test\"" [] []
         2: R_PAREN@31..33 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@33..35
@@ -132,14 +140,16 @@ JsModule {
       5: JS_PARAMETERS@50..69
         0: L_PAREN@50..51 "(" [] []
         1: JS_PARAMETER_LIST@51..67
-          0: JS_FORMAL_PARAMETER_WITH_DEFAULT@51..61
+          0: JS_PARAMETER@51..61
             0: JS_IDENTIFIER_BINDING@51..53
               0: IDENT@51..53 "a" [] [Whitespace(" ")]
             1: (empty)
-            2: EQ@53..55 "=" [] [Whitespace(" ")]
-            3: JS_UNKNOWN_EXPRESSION@55..61
-              0: JS_UNKNOWN@55..61
-                0: IDENT@55..61 "yield" [] [Whitespace(" ")]
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@53..61
+              0: EQ@53..55 "=" [] [Whitespace(" ")]
+              1: JS_UNKNOWN_EXPRESSION@55..61
+                0: JS_UNKNOWN@55..61
+                  0: IDENT@55..61 "yield" [] [Whitespace(" ")]
           1: (empty)
           2: JS_UNKNOWN_PARAMETER@61..67
             0: JS_STRING_LITERAL@61..67 "\"test\"" [] []

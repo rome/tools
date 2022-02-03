@@ -1,11 +1,11 @@
 use crate::parser::{ParsedSyntax, ParserProgress};
 use crate::state::{EnterFunction, EnterParameters, SignatureFlags};
 use crate::syntax::binding::{is_at_identifier_binding, parse_binding, parse_binding_pattern};
+use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
-    expected_binding, expected_expression, expected_parameter, expected_parameters,
-    ts_only_syntax_error,
+    expected_binding, expected_parameter, expected_parameters, ts_only_syntax_error,
 };
 use crate::syntax::stmt::{is_semi, parse_block_impl, StatementContext};
 use crate::syntax::typescript::{
@@ -399,11 +399,11 @@ pub(crate) fn parse_any_parameter(
     match p.cur() {
         T![...] => parse_rest_parameter(p, expression_context),
         T![this] => parse_ts_this_parameter(p),
-        _ => parse_any_formal_parameter(p, parameter_context, expression_context),
+        _ => parse_parameter(p, parameter_context, expression_context),
     }
 }
 
-fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     if !p.at(T![...]) {
         return Absent;
     }
@@ -469,7 +469,7 @@ fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -> ParsedSyn
 // // TYPESCRIPT
 // function a(this) {}
 // function b(this: string) {}
-fn parse_ts_this_parameter(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_this_parameter(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![this]) {
         return Absent;
     }
@@ -477,7 +477,18 @@ fn parse_ts_this_parameter(p: &mut Parser) -> ParsedSyntax {
     let parameter = p.start();
     p.bump(T![this]);
     parse_ts_type_annotation(p).ok();
-    Present(parameter.complete(p, TS_THIS_PARAMETER))
+    let mut parameter = parameter.complete(p, TS_THIS_PARAMETER);
+
+    if TypeScript.is_unsupported(p) {
+        parameter.change_to_unknown(p);
+        p.error(ts_only_syntax_error(
+            p,
+            "this parameter",
+            parameter.range(p).as_range(),
+        ));
+    }
+
+    Present(parameter)
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
@@ -524,7 +535,7 @@ impl ParameterContext {
 // test_err js_formal_parameter_error
 // function a(x: string) {}
 // function b(x?) {}
-pub(crate) fn parse_any_formal_parameter(
+pub(crate) fn parse_parameter(
     p: &mut Parser,
     parameter_context: ParameterContext,
     expression_context: ExpressionContext,
@@ -586,28 +597,21 @@ pub(crate) fn parse_any_formal_parameter(
             })
             .ok();
 
-        let mut parameter = if p.eat(T![=]) {
-            parse_assignment_expression_or_higher(p, expression_context)
-                .or_add_diagnostic(p, expected_expression);
-
-            let parameter = m.complete(p, JS_FORMAL_PARAMETER_WITH_DEFAULT);
-
+        if let Present(initializer) = parse_initializer_clause(p, expression_context) {
             if valid && parameter_context.is_setter() && TypeScript.is_supported(p) {
                 p.error(
                     p.err_builder("A 'set' accessor parameter cannot have an initializer.")
-                        .primary(parameter.range(p), ""),
+                        .primary(initializer.range(p), ""),
                 );
             } else if is_optional && valid {
                 p.error(
                     p.err_builder("Parameter cannot have question mark and initializer")
-                        .primary(parameter.range(p), ""),
+                        .primary(initializer.range(p), ""),
                 );
             }
+        }
 
-            parameter
-        } else {
-            m.complete(p, JS_FORMAL_PARAMETER)
-        };
+        let mut parameter = m.complete(p, JS_PARAMETER);
 
         if !valid {
             parameter.change_to_unknown(p);

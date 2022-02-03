@@ -14,12 +14,13 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@23..24 "(" [] [],
                     items: JsParameterList [
-                        JsFormalParameter {
+                        JsParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@24..25 "a" [] [],
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
+                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@25..27 ")" [] [Whitespace(" ")],
@@ -50,12 +51,13 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@52..53 "(" [] [],
                     items: JsParameterList [
-                        JsFormalParameter {
+                        JsParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@53..54 "a" [] [],
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
+                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@54..56 ")" [] [Whitespace(" ")],
@@ -129,11 +131,12 @@ JsModule {
         1: JS_PARAMETERS@23..27
           0: L_PAREN@23..24 "(" [] []
           1: JS_PARAMETER_LIST@24..25
-            0: JS_FORMAL_PARAMETER@24..25
+            0: JS_PARAMETER@24..25
               0: JS_IDENTIFIER_BINDING@24..25
                 0: IDENT@24..25 "a" [] []
               1: (empty)
               2: (empty)
+              3: (empty)
           2: R_PAREN@25..27 ")" [] [Whitespace(" ")]
         2: FAT_ARROW@27..30 "=>" [] [Whitespace(" ")]
         3: TS_TYPE_PREDICATE@30..41
@@ -155,11 +158,12 @@ JsModule {
         1: JS_PARAMETERS@52..56
           0: L_PAREN@52..53 "(" [] []
           1: JS_PARAMETER_LIST@53..54
-            0: JS_FORMAL_PARAMETER@53..54
+            0: JS_PARAMETER@53..54
               0: JS_IDENTIFIER_BINDING@53..54
                 0: IDENT@53..54 "a" [] []
               1: (empty)
               2: (empty)
+              3: (empty)
           2: R_PAREN@54..56 ")" [] [Whitespace(" ")]
         2: FAT_ARROW@56..59 "=>" [] [Whitespace(" ")]
         3: TS_TYPE_PREDICATE@59..78

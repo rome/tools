@@ -308,15 +308,6 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::ast::JsForVariableDeclaration::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JS_FORMAL_PARAMETER => {
-                    let $pattern = unsafe { $crate::ast::JsFormalParameter::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::JS_FORMAL_PARAMETER_WITH_DEFAULT => {
-                    let $pattern =
-                        unsafe { $crate::ast::JsFormalParameterWithDefault::new_unchecked(node) };
-                    $body
-                }
                 $crate::JsSyntaxKind::JS_FUNCTION_BODY => {
                     let $pattern = unsafe { $crate::ast::JsFunctionBody::new_unchecked(node) };
                     $body
@@ -517,6 +508,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::JS_OBJECT_EXPRESSION => {
                     let $pattern = unsafe { $crate::ast::JsObjectExpression::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JS_PARAMETER => {
+                    let $pattern = unsafe { $crate::ast::JsParameter::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JS_PARAMETERS => {

@@ -647,7 +647,9 @@ JsConstructorParameters =
 JsConstructorParameterList = (JsAnyConstructorParameter (',' JsAnyConstructorParameter)* ','?)
 
 JsAnyConstructorParameter =
-	JsAnyParameter
+	JsParameter
+	| JsUnknownParameter
+	| JsRestParameter
 	| TsPropertyParameter
 	| TsReadonlyPropertyParameter
 
@@ -655,14 +657,14 @@ JsAnyConstructorParameter =
 //             ^^^^^^^^^^^^^^^^^
 TsPropertyParameter =
 	accessibility: ('private' | 'protected' | 'public')
-	formal_parameter: JsAnyFormalParameter
+	parameter: JsParameter
 
 // constructor(private readonly a: string, readonly b: number)
 //             ^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^
 TsReadonlyPropertyParameter =
 	accessibility: ('private' | 'protected' | 'public')?
 	'readonly'
-	formal_parameter: JsAnyFormalParameter
+	parameter: JsParameter
 
 TsAnyPropertyParameter =
 	TsPropertyParameter
@@ -1364,29 +1366,18 @@ JsParameters =
 JsParameterList = (JsAnyParameter (',' JsAnyParameter)* ','?)
 
 JsAnyParameter =
-	JsAnyFormalParameter
+	JsParameter
+	| JsUnknownParameter
 	| JsRestParameter
 	| TsThisParameter
 
 // (a?: string) => {}
 //  ^^^^^^^^^^
-JsFormalParameter =
+JsParameter =
 	binding: JsAnyBindingPattern
 	'?'?
 	type_annotation: TsTypeAnnotation?
-
-// (a = "test") => {}
-//  ^^^^^^^^^^
-JsFormalParameterWithDefault =
-	binding: JsAnyBindingPattern
-	type_annotation: TsTypeAnnotation?
-	'='
-	default: JsAnyExpression
-
-JsAnyFormalParameter =
-	JsFormalParameter
-	| JsFormalParameterWithDefault
-	| JsUnknownParameter
+	initializer: JsInitializerClause?
 
 // (...a) => {}
 //  ^^^^

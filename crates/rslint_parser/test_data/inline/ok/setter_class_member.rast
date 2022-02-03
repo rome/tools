@@ -21,12 +21,13 @@ JsModule {
                         value: IDENT@22..25 "foo" [] [],
                     },
                     l_paren_token: L_PAREN@25..26 "(" [] [],
-                    parameter: JsFormalParameter {
+                    parameter: JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@26..27 "a" [] [],
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@27..29 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -45,12 +46,13 @@ JsModule {
                         value: IDENT@38..44 "static" [] [],
                     },
                     l_paren_token: L_PAREN@44..45 "(" [] [],
-                    parameter: JsFormalParameter {
+                    parameter: JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@45..46 "a" [] [],
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@46..48 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -69,12 +71,13 @@ JsModule {
                         value: IDENT@64..67 "bar" [] [],
                     },
                     l_paren_token: L_PAREN@67..68 "(" [] [],
-                    parameter: JsFormalParameter {
+                    parameter: JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@68..69 "a" [] [],
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@69..71 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -93,12 +96,13 @@ JsModule {
                         value: JS_STRING_LITERAL@80..85 "\"baz\"" [] [],
                     },
                     l_paren_token: L_PAREN@85..86 "(" [] [],
-                    parameter: JsFormalParameter {
+                    parameter: JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@86..87 "a" [] [],
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@87..89 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -127,12 +131,13 @@ JsModule {
                         r_brack_token: R_BRACK@108..109 "]" [] [],
                     },
                     l_paren_token: L_PAREN@109..110 "(" [] [],
-                    parameter: JsFormalParameter {
+                    parameter: JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@110..111 "a" [] [],
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@111..113 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -151,12 +156,13 @@ JsModule {
                         value: JS_NUMBER_LITERAL@122..123 "5" [] [],
                     },
                     l_paren_token: L_PAREN@123..124 "(" [] [],
-                    parameter: JsFormalParameter {
+                    parameter: JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@124..125 "a" [] [],
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@125..127 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -176,12 +182,13 @@ JsModule {
                         id_token: IDENT@137..144 "private" [] [],
                     },
                     l_paren_token: L_PAREN@144..145 "(" [] [],
-                    parameter: JsFormalParameter {
+                    parameter: JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@145..146 "a" [] [],
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@146..148 ")" [] [Whitespace(" ")],
                     body: JsFunctionBody {
@@ -217,12 +224,13 @@ JsModule {
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@177..178 "(" [] [],
                         items: JsParameterList [
-                            JsFormalParameter {
+                            JsParameter {
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@178..179 "a" [] [],
                                 },
                                 question_mark_token: missing (optional),
                                 type_annotation: missing (optional),
+                                initializer: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@179..181 ")" [] [Whitespace(" ")],
@@ -248,12 +256,13 @@ JsModule {
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@195..196 "(" [] [],
                         items: JsParameterList [
-                            JsFormalParameter {
+                            JsParameter {
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@196..197 "a" [] [],
                                 },
                                 question_mark_token: missing (optional),
                                 type_annotation: missing (optional),
+                                initializer: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@197..199 ")" [] [Whitespace(" ")],
@@ -279,12 +288,13 @@ JsModule {
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@214..215 "(" [] [],
                         items: JsParameterList [
-                            JsFormalParameter {
+                            JsParameter {
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@215..216 "a" [] [],
                                 },
                                 question_mark_token: missing (optional),
                                 type_annotation: missing (optional),
+                                initializer: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@216..218 ")" [] [Whitespace(" ")],
@@ -325,11 +335,12 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@22..25
             0: IDENT@22..25 "foo" [] []
           5: L_PAREN@25..26 "(" [] []
-          6: JS_FORMAL_PARAMETER@26..27
+          6: JS_PARAMETER@26..27
             0: JS_IDENTIFIER_BINDING@26..27
               0: IDENT@26..27 "a" [] []
             1: (empty)
             2: (empty)
+            3: (empty)
           7: R_PAREN@27..29 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@29..31
             0: L_CURLY@29..30 "{" [] []
@@ -344,11 +355,12 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@38..44
             0: IDENT@38..44 "static" [] []
           5: L_PAREN@44..45 "(" [] []
-          6: JS_FORMAL_PARAMETER@45..46
+          6: JS_PARAMETER@45..46
             0: JS_IDENTIFIER_BINDING@45..46
               0: IDENT@45..46 "a" [] []
             1: (empty)
             2: (empty)
+            3: (empty)
           7: R_PAREN@46..48 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@48..50
             0: L_CURLY@48..49 "{" [] []
@@ -363,11 +375,12 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@64..67
             0: IDENT@64..67 "bar" [] []
           5: L_PAREN@67..68 "(" [] []
-          6: JS_FORMAL_PARAMETER@68..69
+          6: JS_PARAMETER@68..69
             0: JS_IDENTIFIER_BINDING@68..69
               0: IDENT@68..69 "a" [] []
             1: (empty)
             2: (empty)
+            3: (empty)
           7: R_PAREN@69..71 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@71..73
             0: L_CURLY@71..72 "{" [] []
@@ -382,11 +395,12 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@80..85
             0: JS_STRING_LITERAL@80..85 "\"baz\"" [] []
           5: L_PAREN@85..86 "(" [] []
-          6: JS_FORMAL_PARAMETER@86..87
+          6: JS_PARAMETER@86..87
             0: JS_IDENTIFIER_BINDING@86..87
               0: IDENT@86..87 "a" [] []
             1: (empty)
             2: (empty)
+            3: (empty)
           7: R_PAREN@87..89 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@89..91
             0: L_CURLY@89..90 "{" [] []
@@ -408,11 +422,12 @@ JsModule {
                 0: JS_STRING_LITERAL@105..108 "\"b\"" [] []
             2: R_BRACK@108..109 "]" [] []
           5: L_PAREN@109..110 "(" [] []
-          6: JS_FORMAL_PARAMETER@110..111
+          6: JS_PARAMETER@110..111
             0: JS_IDENTIFIER_BINDING@110..111
               0: IDENT@110..111 "a" [] []
             1: (empty)
             2: (empty)
+            3: (empty)
           7: R_PAREN@111..113 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@113..115
             0: L_CURLY@113..114 "{" [] []
@@ -427,11 +442,12 @@ JsModule {
           4: JS_LITERAL_MEMBER_NAME@122..123
             0: JS_NUMBER_LITERAL@122..123 "5" [] []
           5: L_PAREN@123..124 "(" [] []
-          6: JS_FORMAL_PARAMETER@124..125
+          6: JS_PARAMETER@124..125
             0: JS_IDENTIFIER_BINDING@124..125
               0: IDENT@124..125 "a" [] []
             1: (empty)
             2: (empty)
+            3: (empty)
           7: R_PAREN@125..127 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@127..129
             0: L_CURLY@127..128 "{" [] []
@@ -447,11 +463,12 @@ JsModule {
             0: HASH@136..137 "#" [] []
             1: IDENT@137..144 "private" [] []
           5: L_PAREN@144..145 "(" [] []
-          6: JS_FORMAL_PARAMETER@145..146
+          6: JS_PARAMETER@145..146
             0: JS_IDENTIFIER_BINDING@145..146
               0: IDENT@145..146 "a" [] []
             1: (empty)
             2: (empty)
+            3: (empty)
           7: R_PAREN@146..148 ")" [] [Whitespace(" ")]
           8: JS_FUNCTION_BODY@148..150
             0: L_CURLY@148..149 "{" [] []
@@ -480,11 +497,12 @@ JsModule {
           7: JS_PARAMETERS@177..181
             0: L_PAREN@177..178 "(" [] []
             1: JS_PARAMETER_LIST@178..179
-              0: JS_FORMAL_PARAMETER@178..179
+              0: JS_PARAMETER@178..179
                 0: JS_IDENTIFIER_BINDING@178..179
                   0: IDENT@178..179 "a" [] []
                 1: (empty)
                 2: (empty)
+                3: (empty)
             2: R_PAREN@179..181 ")" [] [Whitespace(" ")]
           8: (empty)
           9: JS_FUNCTION_BODY@181..183
@@ -504,11 +522,12 @@ JsModule {
           7: JS_PARAMETERS@195..199
             0: L_PAREN@195..196 "(" [] []
             1: JS_PARAMETER_LIST@196..197
-              0: JS_FORMAL_PARAMETER@196..197
+              0: JS_PARAMETER@196..197
                 0: JS_IDENTIFIER_BINDING@196..197
                   0: IDENT@196..197 "a" [] []
                 1: (empty)
                 2: (empty)
+                3: (empty)
             2: R_PAREN@197..199 ")" [] [Whitespace(" ")]
           8: (empty)
           9: JS_FUNCTION_BODY@199..201
@@ -528,11 +547,12 @@ JsModule {
           7: JS_PARAMETERS@214..218
             0: L_PAREN@214..215 "(" [] []
             1: JS_PARAMETER_LIST@215..216
-              0: JS_FORMAL_PARAMETER@215..216
+              0: JS_PARAMETER@215..216
                 0: JS_IDENTIFIER_BINDING@215..216
                   0: IDENT@215..216 "a" [] []
                 1: (empty)
                 2: (empty)
+                3: (empty)
             2: R_PAREN@216..218 ")" [] [Whitespace(" ")]
           8: (empty)
           9: JS_FUNCTION_BODY@218..220

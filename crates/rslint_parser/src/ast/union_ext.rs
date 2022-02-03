@@ -1,10 +1,9 @@
 use crate::ast::{
-    JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyBindingPattern, JsAnyClass,
-    JsAnyFormalParameter, JsAnyFunction, JsAnyFunctionBody, JsClassMemberList, JsExtendsClause,
-    TsAnyPropertyParameter, TsImplementsClause, TsReturnTypeAnnotation, TsTypeAnnotation,
-    TsTypeParameters,
+    JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyClass, JsAnyFunction, JsAnyFunctionBody,
+    JsClassMemberList, JsExtendsClause, JsParameter, TsAnyPropertyParameter, TsImplementsClause,
+    TsReturnTypeAnnotation, TsTypeParameters,
 };
-use crate::{AstNode, SyntaxError, SyntaxResult, SyntaxToken};
+use crate::{SyntaxResult, SyntaxToken};
 
 impl JsAnyClass {
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -179,42 +178,6 @@ impl JsAnyFunction {
     }
 }
 
-impl JsAnyFormalParameter {
-    pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
-        match self {
-            JsAnyFormalParameter::JsFormalParameter(parameter) => parameter.binding(),
-            JsAnyFormalParameter::JsFormalParameterWithDefault(parameter) => parameter.binding(),
-            JsAnyFormalParameter::JsUnknownParameter(parameter) => parameter
-                .items()
-                .find_map(|e| JsAnyBindingPattern::cast(e.into_node()?))
-                .ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone())),
-        }
-    }
-
-    pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
-        match self {
-            JsAnyFormalParameter::JsFormalParameterWithDefault(parameter) => {
-                parameter.type_annotation()
-            }
-            JsAnyFormalParameter::JsFormalParameter(parameter) => parameter.type_annotation(),
-            JsAnyFormalParameter::JsUnknownParameter(parameter) => parameter
-                .items()
-                .filter_map(|e| e.into_node())
-                .find_map(TsTypeAnnotation::cast),
-        }
-    }
-
-    pub fn is_optional(&self) -> Option<bool> {
-        match self {
-            JsAnyFormalParameter::JsFormalParameter(parameter) => {
-                Some(parameter.question_mark_token().is_some())
-            }
-            JsAnyFormalParameter::JsFormalParameterWithDefault(_) => Some(true),
-            _ => None,
-        }
-    }
-}
-
 impl TsAnyPropertyParameter {
     pub fn accessibility(&self) -> Option<SyntaxToken> {
         match self {
@@ -227,12 +190,10 @@ impl TsAnyPropertyParameter {
         }
     }
 
-    pub fn formal_parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+    pub fn parameter(&self) -> SyntaxResult<JsParameter> {
         match self {
-            TsAnyPropertyParameter::TsPropertyParameter(parameter) => parameter.formal_parameter(),
-            TsAnyPropertyParameter::TsReadonlyPropertyParameter(parameter) => {
-                parameter.formal_parameter()
-            }
+            TsAnyPropertyParameter::TsPropertyParameter(parameter) => parameter.parameter(),
+            TsAnyPropertyParameter::TsReadonlyPropertyParameter(parameter) => parameter.parameter(),
         }
     }
 }

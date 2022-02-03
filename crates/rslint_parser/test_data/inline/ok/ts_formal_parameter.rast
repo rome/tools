@@ -13,12 +13,13 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@24..25 "(" [] [],
                 items: JsParameterList [
-                    JsFormalParameter {
+                    JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@25..26 "x" [] [],
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
+                        initializer: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@26..28 ")" [] [Whitespace(" ")],
@@ -42,7 +43,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@41..42 "(" [] [],
                 items: JsParameterList [
-                    JsFormalParameterWithDefault {
+                    JsParameter {
                         binding: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@42..44 "{" [] [Whitespace(" ")],
                             properties: JsObjectBindingPatternPropertyList [
@@ -62,12 +63,15 @@ JsModule {
                             ],
                             r_curly_token: R_CURLY@49..51 "}" [] [Whitespace(" ")],
                         },
+                        question_mark_token: missing (optional),
                         type_annotation: missing (optional),
-                        eq_token: EQ@51..53 "=" [] [Whitespace(" ")],
-                        default: JsObjectExpression {
-                            l_curly_token: L_CURLY@53..54 "{" [] [],
-                            members: JsObjectMemberList [],
-                            r_curly_token: R_CURLY@54..55 "}" [] [],
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@51..53 "=" [] [Whitespace(" ")],
+                            expression: JsObjectExpression {
+                                l_curly_token: L_CURLY@53..54 "{" [] [],
+                                members: JsObjectMemberList [],
+                                r_curly_token: R_CURLY@54..55 "}" [] [],
+                            },
                         },
                     },
                 ],
@@ -92,7 +96,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@70..71 "(" [] [],
                 items: JsParameterList [
-                    JsFormalParameter {
+                    JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@71..72 "x" [] [],
                         },
@@ -103,9 +107,10 @@ JsModule {
                                 string_token: STRING_KW@74..80 "string" [] [],
                             },
                         },
+                        initializer: missing (optional),
                     },
                     COMMA@80..82 "," [] [Whitespace(" ")],
-                    JsFormalParameter {
+                    JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@82..83 "y" [] [],
                         },
@@ -116,21 +121,25 @@ JsModule {
                                 number_token: NUMBER_KW@86..92 "number" [] [],
                             },
                         },
+                        initializer: missing (optional),
                     },
                     COMMA@92..94 "," [] [Whitespace(" ")],
-                    JsFormalParameterWithDefault {
+                    JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@94..95 "z" [] [],
                         },
+                        question_mark_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
                             colon_token: COLON@95..97 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
                                 string_token: STRING_KW@97..104 "string" [] [Whitespace(" ")],
                             },
                         },
-                        eq_token: EQ@104..106 "=" [] [Whitespace(" ")],
-                        default: JsStringLiteralExpression {
-                            value_token: JS_STRING_LITERAL@106..112 "\"test\"" [] [],
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@104..106 "=" [] [Whitespace(" ")],
+                            expression: JsStringLiteralExpression {
+                                value_token: JS_STRING_LITERAL@106..112 "\"test\"" [] [],
+                            },
                         },
                     },
                 ],
@@ -162,11 +171,12 @@ JsModule {
       5: JS_PARAMETERS@24..28
         0: L_PAREN@24..25 "(" [] []
         1: JS_PARAMETER_LIST@25..26
-          0: JS_FORMAL_PARAMETER@25..26
+          0: JS_PARAMETER@25..26
             0: JS_IDENTIFIER_BINDING@25..26
               0: IDENT@25..26 "x" [] []
             1: (empty)
             2: (empty)
+            3: (empty)
         2: R_PAREN@26..28 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@28..30
@@ -184,7 +194,7 @@ JsModule {
       5: JS_PARAMETERS@41..57
         0: L_PAREN@41..42 "(" [] []
         1: JS_PARAMETER_LIST@42..55
-          0: JS_FORMAL_PARAMETER_WITH_DEFAULT@42..55
+          0: JS_PARAMETER@42..55
             0: JS_OBJECT_BINDING_PATTERN@42..51
               0: L_CURLY@42..44 "{" [] [Whitespace(" ")]
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@44..49
@@ -199,11 +209,13 @@ JsModule {
                   1: (empty)
               2: R_CURLY@49..51 "}" [] [Whitespace(" ")]
             1: (empty)
-            2: EQ@51..53 "=" [] [Whitespace(" ")]
-            3: JS_OBJECT_EXPRESSION@53..55
-              0: L_CURLY@53..54 "{" [] []
-              1: JS_OBJECT_MEMBER_LIST@54..54
-              2: R_CURLY@54..55 "}" [] []
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@51..55
+              0: EQ@51..53 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@53..55
+                0: L_CURLY@53..54 "{" [] []
+                1: JS_OBJECT_MEMBER_LIST@54..54
+                2: R_CURLY@54..55 "}" [] []
         2: R_PAREN@55..57 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@57..59
@@ -221,7 +233,7 @@ JsModule {
       5: JS_PARAMETERS@70..114
         0: L_PAREN@70..71 "(" [] []
         1: JS_PARAMETER_LIST@71..112
-          0: JS_FORMAL_PARAMETER@71..80
+          0: JS_PARAMETER@71..80
             0: JS_IDENTIFIER_BINDING@71..72
               0: IDENT@71..72 "x" [] []
             1: (empty)
@@ -229,8 +241,9 @@ JsModule {
               0: COLON@72..74 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@74..80
                 0: STRING_KW@74..80 "string" [] []
+            3: (empty)
           1: COMMA@80..82 "," [] [Whitespace(" ")]
-          2: JS_FORMAL_PARAMETER@82..92
+          2: JS_PARAMETER@82..92
             0: JS_IDENTIFIER_BINDING@82..83
               0: IDENT@82..83 "y" [] []
             1: QUESTION@83..84 "?" [] []
@@ -238,17 +251,20 @@ JsModule {
               0: COLON@84..86 ":" [] [Whitespace(" ")]
               1: TS_NUMBER_TYPE@86..92
                 0: NUMBER_KW@86..92 "number" [] []
+            3: (empty)
           3: COMMA@92..94 "," [] [Whitespace(" ")]
-          4: JS_FORMAL_PARAMETER_WITH_DEFAULT@94..112
+          4: JS_PARAMETER@94..112
             0: JS_IDENTIFIER_BINDING@94..95
               0: IDENT@94..95 "z" [] []
-            1: TS_TYPE_ANNOTATION@95..104
+            1: (empty)
+            2: TS_TYPE_ANNOTATION@95..104
               0: COLON@95..97 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@97..104
                 0: STRING_KW@97..104 "string" [] [Whitespace(" ")]
-            2: EQ@104..106 "=" [] [Whitespace(" ")]
-            3: JS_STRING_LITERAL_EXPRESSION@106..112
-              0: JS_STRING_LITERAL@106..112 "\"test\"" [] []
+            3: JS_INITIALIZER_CLAUSE@104..112
+              0: EQ@104..106 "=" [] [Whitespace(" ")]
+              1: JS_STRING_LITERAL_EXPRESSION@106..112
+                0: JS_STRING_LITERAL@106..112 "\"test\"" [] []
         2: R_PAREN@112..114 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@114..116

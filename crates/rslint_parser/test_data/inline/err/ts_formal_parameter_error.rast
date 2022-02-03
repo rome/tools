@@ -13,23 +13,23 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@24..25 "(" [] [],
                 items: JsParameterList [
-                    JsUnknownParameter {
-                        items: [
-                            JsIdentifierBinding {
-                                name_token: IDENT@25..26 "x" [] [],
+                    JsParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@25..26 "x" [] [],
+                        },
+                        question_mark_token: QUESTION@26..27 "?" [] [],
+                        type_annotation: TsTypeAnnotation {
+                            colon_token: COLON@27..29 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@29..36 "string" [] [Whitespace(" ")],
                             },
-                            QUESTION@26..27 "?" [] [],
-                            TsTypeAnnotation {
-                                colon_token: COLON@27..29 ":" [] [Whitespace(" ")],
-                                ty: TsStringType {
-                                    string_token: STRING_KW@29..36 "string" [] [Whitespace(" ")],
-                                },
-                            },
-                            EQ@36..38 "=" [] [Whitespace(" ")],
-                            JsStringLiteralExpression {
+                        },
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@36..38 "=" [] [Whitespace(" ")],
+                            expression: JsStringLiteralExpression {
                                 value_token: JS_STRING_LITERAL@38..44 "\"test\"" [] [],
                             },
-                        ],
+                        },
                     },
                 ],
                 r_paren_token: R_PAREN@44..46 ")" [] [Whitespace(" ")],
@@ -106,7 +106,7 @@ JsModule {
                         ],
                     },
                     COMMA@109..111 "," [] [Whitespace(" ")],
-                    JsFormalParameter {
+                    JsParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@111..112 "b" [] [],
                         },
@@ -117,6 +117,7 @@ JsModule {
                                 string_token: STRING_KW@114..120 "string" [] [],
                             },
                         },
+                        initializer: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@120..122 ")" [] [Whitespace(" ")],
@@ -147,7 +148,7 @@ JsModule {
       5: JS_PARAMETERS@24..46
         0: L_PAREN@24..25 "(" [] []
         1: JS_PARAMETER_LIST@25..44
-          0: JS_UNKNOWN_PARAMETER@25..44
+          0: JS_PARAMETER@25..44
             0: JS_IDENTIFIER_BINDING@25..26
               0: IDENT@25..26 "x" [] []
             1: QUESTION@26..27 "?" [] []
@@ -155,9 +156,10 @@ JsModule {
               0: COLON@27..29 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@29..36
                 0: STRING_KW@29..36 "string" [] [Whitespace(" ")]
-            3: EQ@36..38 "=" [] [Whitespace(" ")]
-            4: JS_STRING_LITERAL_EXPRESSION@38..44
-              0: JS_STRING_LITERAL@38..44 "\"test\"" [] []
+            3: JS_INITIALIZER_CLAUSE@36..44
+              0: EQ@36..38 "=" [] [Whitespace(" ")]
+              1: JS_STRING_LITERAL_EXPRESSION@38..44
+                0: JS_STRING_LITERAL@38..44 "\"test\"" [] []
         2: R_PAREN@44..46 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@46..48
@@ -211,7 +213,7 @@ JsModule {
             1: JS_IDENTIFIER_BINDING@105..109
               0: IDENT@105..109 "rest" [] []
           1: COMMA@109..111 "," [] [Whitespace(" ")]
-          2: JS_FORMAL_PARAMETER@111..120
+          2: JS_PARAMETER@111..120
             0: JS_IDENTIFIER_BINDING@111..112
               0: IDENT@111..112 "b" [] []
             1: (empty)
@@ -219,6 +221,7 @@ JsModule {
               0: COLON@112..114 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@114..120
                 0: STRING_KW@114..120 "string" [] []
+            3: (empty)
         2: R_PAREN@120..122 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@122..124
@@ -229,10 +232,10 @@ JsModule {
   3: EOF@124..125 "" [Newline("\n")] []
 --
 error[SyntaxError]: Parameter cannot have question mark and initializer
-  ┌─ ts_formal_parameter_error.js:2:12
+  ┌─ ts_formal_parameter_error.js:2:23
   │
 2 │ function a(x?: string = "test") {}
-  │            ^^^^^^^^^^^^^^^^^^^
+  │                       ^^^^^^^^
 
 --
 error[SyntaxError]: rest elements may not have default initializers

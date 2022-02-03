@@ -7,7 +7,7 @@ use crate::syntax::expr::{
     parse_number_literal_expression, parse_reference_identifier, ExpressionContext,
 };
 use crate::syntax::function::{
-    parse_any_formal_parameter, parse_parameter_list, skip_parameter_start, ParameterContext,
+    parse_parameter, parse_parameter_list, skip_parameter_start, ParameterContext,
 };
 use crate::syntax::js_parse_error::{
     expected_identifier, expected_object_member_name, expected_parameter, expected_parameters,
@@ -878,7 +878,7 @@ fn parse_ts_setter_signature_object_type_member(p: &mut Parser) -> ParsedSyntax 
     p.bump_remap(T![set]);
     parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
     p.expect(T!['(']);
-    parse_any_formal_parameter(p, ParameterContext::Setter, ExpressionContext::default())
+    parse_parameter(p, ParameterContext::Setter, ExpressionContext::default())
         .or_add_diagnostic(p, expected_parameter);
     p.expect(T![')']);
     parse_ts_object_type_member_semi(p);

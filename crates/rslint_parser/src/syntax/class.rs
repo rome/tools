@@ -6,7 +6,7 @@ use crate::state::{
 use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::function::{
-    parse_any_formal_parameter, parse_any_parameter, parse_function_body, parse_parameter_list,
+    parse_any_parameter, parse_function_body, parse_parameter, parse_parameter_list,
     parse_parameters_list, parse_ts_type_annotation_or_error, ParameterContext,
 };
 use crate::syntax::js_parse_error;
@@ -628,7 +628,7 @@ fn parse_class_member_impl(
                     } else {
                         let has_l_paren = p.expect(T!['(']);
                         p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
-                            parse_any_formal_parameter(
+                            parse_parameter(
                                 p,
                                 ParameterContext::Setter,
                                 ExpressionContext::default()
@@ -1014,7 +1014,7 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
             }
         }
 
-        parse_any_formal_parameter(p, ParameterContext::ParameterProperty, context)
+        parse_parameter(p, ParameterContext::ParameterProperty, context)
             .or_add_diagnostic(p, expected_binding);
 
         let kind = if !valid {
@@ -1027,7 +1027,19 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
 
         Present(property_parameter.complete(p, kind))
     } else {
-        parse_any_parameter(p, ParameterContext::Implementation, context)
+        parse_any_parameter(p, ParameterContext::Implementation, context).map(|mut parameter| {
+            // test_err ts_constructor_this_parameter
+            // // TYPESCRIPT
+            // class C { constructor(this) {} }
+            if parameter.kind() == TS_THIS_PARAMETER {
+                p.error(
+                    p.err_builder("A constructor cannot have a 'this' parameter.")
+                        .primary(parameter.range(p), ""),
+                );
+                parameter.change_to_unknown(p);
+            }
+            parameter
+        })
     }
 }
 
