@@ -103,6 +103,7 @@ fn parse_name(p: &mut Parser, enum_token_range: Range<usize>) {
         parse_binding(p)
     };
 
+
     match id {
         Present(id) => {
             let text = p.span_text(id.range(p));
@@ -138,7 +139,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
     let enum_token_range = p.cur_tok().range();
     p.expect(T![enum]);
     parse_name(p, enum_token_range);
-
+    
     p.expect(T!['{']);
 
     EnumMembersList.parse_list(p);
