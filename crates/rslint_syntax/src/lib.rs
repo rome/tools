@@ -167,6 +167,9 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | TS_READONLY_PROPERTY_PARAMETER
             | TS_THIS_PARAMETER
             | JS_UNKNOWN_PARAMETER => JS_UNKNOWN_PARAMETER,
+
+            TS_ENUM_MEMBER => JS_UNKNOWN_MEMBER,
+            
             _ => JS_UNKNOWN,
         }
     }

@@ -1,3 +1,5 @@
+use rome_rowan::SyntaxKind;
+
 use crate::parser::{RecoveryResult, ToDiagnostic};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_initializer_clause;
@@ -33,6 +35,16 @@ pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax {
 fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
     let member = p.start();
 
+    let decorator = if let T![@] = p.cur() {
+        let err = p
+            .err_builder("An enum member cannot have decorators")
+            .primary(p.cur_tok().range(), "");
+        p.error(err);
+        super::parse_ts_decorator(p)
+    } else {
+        Absent
+    };
+
     let _ = match p.cur() {
         T!['['] => syntax::object::parse_computed_member_name(p),
         T![#] => { 
@@ -49,7 +61,15 @@ fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
     };
 
     let _ = parse_initializer_clause(p, ExpressionContext::default());
-    Present(member.complete(p, TS_ENUM_MEMBER))
+
+    let mut r#enum = member.complete(p, TS_ENUM_MEMBER);
+    match decorator {
+        Absent => Present(r#enum),
+        Present(_) => {
+            r#enum.change_to_unknown(p);
+            Present(r#enum)
+        },
+    }
 }
 
 fn expected_enum_member(p: &Parser, range: Range<usize>) -> Diagnostic {

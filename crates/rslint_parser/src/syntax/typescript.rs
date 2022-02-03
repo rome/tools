@@ -110,3 +110,22 @@ pub fn try_parse(p: &mut Parser, func: impl FnOnce(&mut Parser) -> ParsedSyntax)
     }
     res
 }
+
+fn parse_ts_decorator(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![@]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T![@]);
+    
+    match p.cur() {
+        JsSyntaxKind::IDENT => {
+            p.bump(JsSyntaxKind::IDENT);
+            Present(m.complete(p, TS_TYPE_ASSERTION_EXPRESSION))
+        }
+        _ => {
+            Absent
+        }
+    }
+}
