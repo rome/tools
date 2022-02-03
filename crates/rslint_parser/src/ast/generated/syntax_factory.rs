@@ -4622,7 +4622,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyFormalParameter::can_cast(element.kind()) {
+                    if JsAnySetterParameter::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4676,7 +4676,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyFormalParameter::can_cast(element.kind()) {
+                    if JsAnySetterParameter::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7229,7 +7229,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyFormalParameter::can_cast(element.kind()) {
+                    if JsAnySetterParameter::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }

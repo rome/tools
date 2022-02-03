@@ -878,12 +878,8 @@ fn parse_ts_setter_signature_object_type_member(p: &mut Parser) -> ParsedSyntax 
     p.bump_remap(T![set]);
     parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
     p.expect(T!['(']);
-    parse_any_formal_parameter(
-        p,
-        ParameterContext::Implementation,
-        ExpressionContext::default(),
-    )
-    .or_add_diagnostic(p, expected_parameter);
+    parse_any_formal_parameter(p, ParameterContext::Setter, ExpressionContext::default())
+        .or_add_diagnostic(p, expected_parameter);
     p.expect(T![')']);
     parse_ts_object_type_member_semi(p);
     Present(m.complete(p, TS_SETTER_SIGNATURE_OBJECT_TYPE_MEMBER))

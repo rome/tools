@@ -2716,7 +2716,7 @@ impl JsSetterClassMember {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 5usize)
     }
-    pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+    pub fn parameter(&self) -> SyntaxResult<JsAnySetterParameter> {
         support::required_node(&self.syntax, 6usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -2747,7 +2747,7 @@ impl JsSetterObjectMember {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+    pub fn parameter(&self) -> SyntaxResult<JsAnySetterParameter> {
         support::required_node(&self.syntax, 3usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -4321,7 +4321,7 @@ impl TsSetterSignatureObjectTypeMember {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+    pub fn parameter(&self) -> SyntaxResult<JsAnySetterParameter> {
         support::required_node(&self.syntax, 3usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -5025,6 +5025,11 @@ pub enum JsAnyRoot {
     JsExpressionSnipped(JsExpressionSnipped),
     JsModule(JsModule),
     JsScript(JsScript),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsAnySetterParameter {
+    JsFormalParameter(JsFormalParameter),
+    JsUnknownParameter(JsUnknownParameter),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyStatement {
@@ -15241,6 +15246,61 @@ impl From<JsAnyRoot> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsFormalParameter> for JsAnySetterParameter {
+    fn from(node: JsFormalParameter) -> JsAnySetterParameter {
+        JsAnySetterParameter::JsFormalParameter(node)
+    }
+}
+impl From<JsUnknownParameter> for JsAnySetterParameter {
+    fn from(node: JsUnknownParameter) -> JsAnySetterParameter {
+        JsAnySetterParameter::JsUnknownParameter(node)
+    }
+}
+impl AstNode for JsAnySetterParameter {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, JS_FORMAL_PARAMETER | JS_UNKNOWN_PARAMETER)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_FORMAL_PARAMETER => {
+                JsAnySetterParameter::JsFormalParameter(JsFormalParameter { syntax })
+            }
+            JS_UNKNOWN_PARAMETER => {
+                JsAnySetterParameter::JsUnknownParameter(JsUnknownParameter { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsAnySetterParameter::JsFormalParameter(it) => &it.syntax,
+            JsAnySetterParameter::JsUnknownParameter(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsAnySetterParameter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsAnySetterParameter::JsFormalParameter(it) => std::fmt::Debug::fmt(it, f),
+            JsAnySetterParameter::JsUnknownParameter(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsAnySetterParameter> for SyntaxNode {
+    fn from(n: JsAnySetterParameter) -> SyntaxNode {
+        match n {
+            JsAnySetterParameter::JsFormalParameter(it) => it.into(),
+            JsAnySetterParameter::JsUnknownParameter(it) => it.into(),
+        }
+    }
+}
+impl From<JsAnySetterParameter> for SyntaxElement {
+    fn from(n: JsAnySetterParameter) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<JsBlockStatement> for JsAnyStatement {
     fn from(node: JsBlockStatement) -> JsAnyStatement { JsAnyStatement::JsBlockStatement(node) }
 }
@@ -16640,6 +16700,11 @@ impl std::fmt::Display for JsAnyParameter {
     }
 }
 impl std::fmt::Display for JsAnyRoot {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsAnySetterParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
