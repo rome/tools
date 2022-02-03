@@ -635,7 +635,6 @@ JsStaticInitializationBlockClassMember =
 JsConstructorClassMember =
 	access_modifier: ('private' | 'protected' | 'public')?
 	name: JsLiteralMemberName
-	type_parameters: TsTypeParameters?
 	parameters: JsConstructorParameters
 	body: JsFunctionBody
 

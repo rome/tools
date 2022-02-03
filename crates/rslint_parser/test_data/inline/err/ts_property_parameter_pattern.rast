@@ -17,7 +17,6 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@24..35 "constructor" [] [],
                     },
-                    type_parameters: missing (optional),
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@35..36 "(" [] [],
                         parameters: JsConstructorParameterList [
@@ -102,8 +101,7 @@ JsModule {
           0: (empty)
           1: JS_LITERAL_MEMBER_NAME@24..35
             0: IDENT@24..35 "constructor" [] []
-          2: (empty)
-          3: JS_CONSTRUCTOR_PARAMETERS@35..72
+          2: JS_CONSTRUCTOR_PARAMETERS@35..72
             0: L_PAREN@35..36 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@36..70
               0: TS_PROPERTY_PARAMETER@36..52
@@ -136,7 +134,7 @@ JsModule {
                         0: IDENT@68..69 "b" [] []
                     2: R_BRACK@69..70 "]" [] []
             2: R_PAREN@70..72 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@72..75
+          3: JS_FUNCTION_BODY@72..75
             0: L_CURLY@72..73 "{" [] []
             1: JS_DIRECTIVE_LIST@73..73
             2: JS_STATEMENT_LIST@73..73

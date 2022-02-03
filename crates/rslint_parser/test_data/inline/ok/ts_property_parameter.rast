@@ -17,7 +17,6 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@24..35 "constructor" [] [],
                     },
-                    type_parameters: missing (optional),
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@35..36 "(" [] [],
                         parameters: JsConstructorParameterList [
@@ -84,7 +83,6 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@85..96 "constructor" [] [],
                     },
-                    type_parameters: missing (optional),
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@96..97 "(" [] [],
                         parameters: JsConstructorParameterList [
@@ -167,7 +165,6 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@185..196 "constructor" [] [],
                     },
-                    type_parameters: missing (optional),
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@196..197 "(" [] [],
                         parameters: JsConstructorParameterList [
@@ -256,8 +253,7 @@ JsModule {
           0: (empty)
           1: JS_LITERAL_MEMBER_NAME@24..35
             0: IDENT@24..35 "constructor" [] []
-          2: (empty)
-          3: JS_CONSTRUCTOR_PARAMETERS@35..70
+          2: JS_CONSTRUCTOR_PARAMETERS@35..70
             0: L_PAREN@35..36 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@36..68
               0: TS_PROPERTY_PARAMETER@36..45
@@ -287,7 +283,7 @@ JsModule {
                   2: (empty)
                   3: (empty)
             2: R_PAREN@68..70 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@70..73
+          3: JS_FUNCTION_BODY@70..73
             0: L_CURLY@70..71 "{" [] []
             1: JS_DIRECTIVE_LIST@71..71
             2: JS_STATEMENT_LIST@71..71
@@ -306,8 +302,7 @@ JsModule {
           0: (empty)
           1: JS_LITERAL_MEMBER_NAME@85..96
             0: IDENT@85..96 "constructor" [] []
-          2: (empty)
-          3: JS_CONSTRUCTOR_PARAMETERS@96..170
+          2: JS_CONSTRUCTOR_PARAMETERS@96..170
             0: L_PAREN@96..97 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@97..168
               0: TS_READONLY_PROPERTY_PARAMETER@97..107
@@ -350,7 +345,7 @@ JsModule {
                   2: (empty)
                   3: (empty)
             2: R_PAREN@168..170 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@170..173
+          3: JS_FUNCTION_BODY@170..173
             0: L_CURLY@170..171 "{" [] []
             1: JS_DIRECTIVE_LIST@171..171
             2: JS_STATEMENT_LIST@171..171
@@ -369,8 +364,7 @@ JsModule {
           0: (empty)
           1: JS_LITERAL_MEMBER_NAME@185..196
             0: IDENT@185..196 "constructor" [] []
-          2: (empty)
-          3: JS_CONSTRUCTOR_PARAMETERS@196..253
+          2: JS_CONSTRUCTOR_PARAMETERS@196..253
             0: L_PAREN@196..197 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@197..251
               0: TS_PROPERTY_PARAMETER@197..214
@@ -411,7 +405,7 @@ JsModule {
                   0: IDENT@247..251 "rest" [] []
                 2: (empty)
             2: R_PAREN@251..253 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@253..256
+          3: JS_FUNCTION_BODY@253..256
             0: L_CURLY@253..254 "{" [] []
             1: JS_DIRECTIVE_LIST@254..254
             2: JS_STATEMENT_LIST@254..254

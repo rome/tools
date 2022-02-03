@@ -655,14 +655,11 @@ impl JsConstructorClassMember {
     pub fn name(&self) -> SyntaxResult<JsLiteralMemberName> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 2usize)
-    }
     pub fn parameters(&self) -> SyntaxResult<JsConstructorParameters> {
-        support::required_node(&self.syntax, 3usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
-        support::required_node(&self.syntax, 4usize)
+        support::required_node(&self.syntax, 3usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -6063,10 +6060,6 @@ impl std::fmt::Debug for JsConstructorClassMember {
                 &support::DebugOptionalElement(self.access_modifier()),
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
-            .field(
-                "type_parameters",
-                &support::DebugOptionalElement(self.type_parameters()),
-            )
             .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field("body", &support::DebugSyntaxResult(self.body()))
             .finish()

@@ -1,0 +1,109 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsParenthesizedExpression {
+                l_paren_token: L_PAREN@0..15 "(" [Comments("// TYPESCRIPT"), Newline("\n")] [],
+                expression: JsObjectExpression {
+                    l_curly_token: L_CURLY@15..17 "{" [] [Whitespace(" ")],
+                    members: JsObjectMemberList [
+                        JsUnknownMember {
+                            items: [
+                                GET_KW@17..21 "get" [] [Whitespace(" ")],
+                                JsLiteralMemberName {
+                                    value: IDENT@21..22 "a" [] [],
+                                },
+                                TsTypeParameters {
+                                    l_angle_token: L_ANGLE@22..23 "<" [] [],
+                                    items: TsTypeParameterList [
+                                        TsTypeParameter {
+                                            name: TsTypeParameterName {
+                                                ident_token: IDENT@23..24 "A" [] [],
+                                            },
+                                            constraint: missing (optional),
+                                            default: missing (optional),
+                                        },
+                                    ],
+                                    r_angle_token: R_ANGLE@24..25 ">" [] [],
+                                },
+                                L_PAREN@25..26 "(" [] [],
+                                R_PAREN@26..27 ")" [] [],
+                                TsReturnTypeAnnotation {
+                                    colon_token: COLON@27..29 ":" [] [Whitespace(" ")],
+                                    ty: TsReferenceType {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@29..31 "A" [] [Whitespace(" ")],
+                                        },
+                                        type_arguments: missing (optional),
+                                    },
+                                },
+                                JsFunctionBody {
+                                    l_curly_token: L_CURLY@31..32 "{" [] [],
+                                    directives: JsDirectiveList [],
+                                    statements: JsStatementList [],
+                                    r_curly_token: R_CURLY@32..34 "}" [] [Whitespace(" ")],
+                                },
+                            ],
+                        },
+                    ],
+                    r_curly_token: R_CURLY@34..35 "}" [] [],
+                },
+                r_paren_token: R_PAREN@35..36 ")" [] [],
+            },
+            semicolon_token: SEMICOLON@36..37 ";" [] [],
+        },
+    ],
+    eof_token: EOF@37..38 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..38
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..37
+    0: JS_EXPRESSION_STATEMENT@0..37
+      0: JS_PARENTHESIZED_EXPRESSION@0..36
+        0: L_PAREN@0..15 "(" [Comments("// TYPESCRIPT"), Newline("\n")] []
+        1: JS_OBJECT_EXPRESSION@15..35
+          0: L_CURLY@15..17 "{" [] [Whitespace(" ")]
+          1: JS_OBJECT_MEMBER_LIST@17..34
+            0: JS_UNKNOWN_MEMBER@17..34
+              0: GET_KW@17..21 "get" [] [Whitespace(" ")]
+              1: JS_LITERAL_MEMBER_NAME@21..22
+                0: IDENT@21..22 "a" [] []
+              2: TS_TYPE_PARAMETERS@22..25
+                0: L_ANGLE@22..23 "<" [] []
+                1: TS_TYPE_PARAMETER_LIST@23..24
+                  0: TS_TYPE_PARAMETER@23..24
+                    0: TS_TYPE_PARAMETER_NAME@23..24
+                      0: IDENT@23..24 "A" [] []
+                    1: (empty)
+                    2: (empty)
+                2: R_ANGLE@24..25 ">" [] []
+              3: L_PAREN@25..26 "(" [] []
+              4: R_PAREN@26..27 ")" [] []
+              5: TS_RETURN_TYPE_ANNOTATION@27..31
+                0: COLON@27..29 ":" [] [Whitespace(" ")]
+                1: TS_REFERENCE_TYPE@29..31
+                  0: JS_REFERENCE_IDENTIFIER@29..31
+                    0: IDENT@29..31 "A" [] [Whitespace(" ")]
+                  1: (empty)
+              6: JS_FUNCTION_BODY@31..34
+                0: L_CURLY@31..32 "{" [] []
+                1: JS_DIRECTIVE_LIST@32..32
+                2: JS_STATEMENT_LIST@32..32
+                3: R_CURLY@32..34 "}" [] [Whitespace(" ")]
+          2: R_CURLY@34..35 "}" [] []
+        2: R_PAREN@35..36 ")" [] []
+      1: SEMICOLON@36..37 ";" [] []
+  3: EOF@37..38 "" [Newline("\n")] []
+--
+error[SyntaxError]: An accessor can not have type parameters
+  ┌─ ts_object_getter_type_parameters.js:2:9
+  │
+2 │ ({ get a<A>(): A {} });
+  │         ^^^
+
+--
+// TYPESCRIPT
+({ get a<A>(): A {} });

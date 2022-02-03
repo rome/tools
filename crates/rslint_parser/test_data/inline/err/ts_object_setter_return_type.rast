@@ -1,0 +1,104 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsParenthesizedExpression {
+                l_paren_token: L_PAREN@0..15 "(" [Comments("// TYPESCRIPT"), Newline("\n")] [],
+                expression: JsObjectExpression {
+                    l_curly_token: L_CURLY@15..17 "{" [] [Whitespace(" ")],
+                    members: JsObjectMemberList [
+                        JsUnknownMember {
+                            items: [
+                                SET_KW@17..21 "set" [] [Whitespace(" ")],
+                                JsLiteralMemberName {
+                                    value: IDENT@21..22 "a" [] [],
+                                },
+                                L_PAREN@22..23 "(" [] [],
+                                JsFormalParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@23..28 "value" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    type_annotation: TsTypeAnnotation {
+                                        colon_token: COLON@28..30 ":" [] [Whitespace(" ")],
+                                        ty: TsStringType {
+                                            string_token: STRING_KW@30..36 "string" [] [],
+                                        },
+                                    },
+                                    initializer: missing (optional),
+                                },
+                                R_PAREN@36..37 ")" [] [],
+                                TsReturnTypeAnnotation {
+                                    colon_token: COLON@37..39 ":" [] [Whitespace(" ")],
+                                    ty: TsVoidType {
+                                        void_token: VOID_KW@39..44 "void" [] [Whitespace(" ")],
+                                    },
+                                },
+                                JsFunctionBody {
+                                    l_curly_token: L_CURLY@44..45 "{" [] [],
+                                    directives: JsDirectiveList [],
+                                    statements: JsStatementList [],
+                                    r_curly_token: R_CURLY@45..47 "}" [] [Whitespace(" ")],
+                                },
+                            ],
+                        },
+                    ],
+                    r_curly_token: R_CURLY@47..48 "}" [] [],
+                },
+                r_paren_token: R_PAREN@48..49 ")" [] [],
+            },
+            semicolon_token: SEMICOLON@49..50 ";" [] [],
+        },
+    ],
+    eof_token: EOF@50..51 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..51
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..50
+    0: JS_EXPRESSION_STATEMENT@0..50
+      0: JS_PARENTHESIZED_EXPRESSION@0..49
+        0: L_PAREN@0..15 "(" [Comments("// TYPESCRIPT"), Newline("\n")] []
+        1: JS_OBJECT_EXPRESSION@15..48
+          0: L_CURLY@15..17 "{" [] [Whitespace(" ")]
+          1: JS_OBJECT_MEMBER_LIST@17..47
+            0: JS_UNKNOWN_MEMBER@17..47
+              0: SET_KW@17..21 "set" [] [Whitespace(" ")]
+              1: JS_LITERAL_MEMBER_NAME@21..22
+                0: IDENT@21..22 "a" [] []
+              2: L_PAREN@22..23 "(" [] []
+              3: JS_FORMAL_PARAMETER@23..36
+                0: JS_IDENTIFIER_BINDING@23..28
+                  0: IDENT@23..28 "value" [] []
+                1: (empty)
+                2: TS_TYPE_ANNOTATION@28..36
+                  0: COLON@28..30 ":" [] [Whitespace(" ")]
+                  1: TS_STRING_TYPE@30..36
+                    0: STRING_KW@30..36 "string" [] []
+                3: (empty)
+              4: R_PAREN@36..37 ")" [] []
+              5: TS_RETURN_TYPE_ANNOTATION@37..44
+                0: COLON@37..39 ":" [] [Whitespace(" ")]
+                1: TS_VOID_TYPE@39..44
+                  0: VOID_KW@39..44 "void" [] [Whitespace(" ")]
+              6: JS_FUNCTION_BODY@44..47
+                0: L_CURLY@44..45 "{" [] []
+                1: JS_DIRECTIVE_LIST@45..45
+                2: JS_STATEMENT_LIST@45..45
+                3: R_CURLY@45..47 "}" [] [Whitespace(" ")]
+          2: R_CURLY@47..48 "}" [] []
+        2: R_PAREN@48..49 ")" [] []
+      1: SEMICOLON@49..50 ";" [] []
+  3: EOF@50..51 "" [Newline("\n")] []
+--
+error[SyntaxError]: A 'set' accessor cannot have a return type annotation.
+  ┌─ ts_object_setter_return_type.js:2:24
+  │
+2 │ ({ set a(value: string): void {} });
+  │                        ^^^^^^
+
+--
+// TYPESCRIPT
+({ set a(value: string): void {} });

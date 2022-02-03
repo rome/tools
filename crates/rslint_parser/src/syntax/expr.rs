@@ -268,6 +268,9 @@ pub(crate) fn parse_assignment_expression_or_higher(
 ) -> ParsedSyntax {
     if p.at(T![<]) && is_nth_at_identifier(p, 1) {
         let res = try_parse(p, |p| {
+            // test ts_arrow_function_type_parameters
+            // // TYPESCRIPT
+            // let a = <A, B extends A, C = string>(a: A, b: B, c: C) => "hello";
             let type_parameters =
                 parse_ts_type_parameters(p).exclusive_for(p, TypeScript, |p, parameters| {
                     ts_only_syntax_error(p, "type parameters", parameters.range(p).as_range())

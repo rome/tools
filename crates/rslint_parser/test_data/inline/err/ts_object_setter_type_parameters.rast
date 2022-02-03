@@ -1,0 +1,121 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsExpressionStatement {
+            expression: JsParenthesizedExpression {
+                l_paren_token: L_PAREN@0..15 "(" [Comments("// TYPESCRIPT"), Newline("\n")] [],
+                expression: JsObjectExpression {
+                    l_curly_token: L_CURLY@15..17 "{" [] [Whitespace(" ")],
+                    members: JsObjectMemberList [
+                        JsUnknownMember {
+                            items: [
+                                SET_KW@17..21 "set" [] [Whitespace(" ")],
+                                JsLiteralMemberName {
+                                    value: IDENT@21..22 "a" [] [],
+                                },
+                                TsTypeParameters {
+                                    l_angle_token: L_ANGLE@22..23 "<" [] [],
+                                    items: TsTypeParameterList [
+                                        TsTypeParameter {
+                                            name: TsTypeParameterName {
+                                                ident_token: IDENT@23..24 "A" [] [],
+                                            },
+                                            constraint: missing (optional),
+                                            default: missing (optional),
+                                        },
+                                    ],
+                                    r_angle_token: R_ANGLE@24..25 ">" [] [],
+                                },
+                                L_PAREN@25..26 "(" [] [],
+                                JsFormalParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@26..31 "value" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    type_annotation: TsTypeAnnotation {
+                                        colon_token: COLON@31..33 ":" [] [Whitespace(" ")],
+                                        ty: TsReferenceType {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@33..34 "A" [] [],
+                                            },
+                                            type_arguments: missing (optional),
+                                        },
+                                    },
+                                    initializer: missing (optional),
+                                },
+                                R_PAREN@34..36 ")" [] [Whitespace(" ")],
+                                JsFunctionBody {
+                                    l_curly_token: L_CURLY@36..37 "{" [] [],
+                                    directives: JsDirectiveList [],
+                                    statements: JsStatementList [],
+                                    r_curly_token: R_CURLY@37..39 "}" [] [Whitespace(" ")],
+                                },
+                            ],
+                        },
+                    ],
+                    r_curly_token: R_CURLY@39..40 "}" [] [],
+                },
+                r_paren_token: R_PAREN@40..41 ")" [] [],
+            },
+            semicolon_token: SEMICOLON@41..42 ";" [] [],
+        },
+    ],
+    eof_token: EOF@42..43 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..43
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..42
+    0: JS_EXPRESSION_STATEMENT@0..42
+      0: JS_PARENTHESIZED_EXPRESSION@0..41
+        0: L_PAREN@0..15 "(" [Comments("// TYPESCRIPT"), Newline("\n")] []
+        1: JS_OBJECT_EXPRESSION@15..40
+          0: L_CURLY@15..17 "{" [] [Whitespace(" ")]
+          1: JS_OBJECT_MEMBER_LIST@17..39
+            0: JS_UNKNOWN_MEMBER@17..39
+              0: SET_KW@17..21 "set" [] [Whitespace(" ")]
+              1: JS_LITERAL_MEMBER_NAME@21..22
+                0: IDENT@21..22 "a" [] []
+              2: TS_TYPE_PARAMETERS@22..25
+                0: L_ANGLE@22..23 "<" [] []
+                1: TS_TYPE_PARAMETER_LIST@23..24
+                  0: TS_TYPE_PARAMETER@23..24
+                    0: TS_TYPE_PARAMETER_NAME@23..24
+                      0: IDENT@23..24 "A" [] []
+                    1: (empty)
+                    2: (empty)
+                2: R_ANGLE@24..25 ">" [] []
+              3: L_PAREN@25..26 "(" [] []
+              4: JS_FORMAL_PARAMETER@26..34
+                0: JS_IDENTIFIER_BINDING@26..31
+                  0: IDENT@26..31 "value" [] []
+                1: (empty)
+                2: TS_TYPE_ANNOTATION@31..34
+                  0: COLON@31..33 ":" [] [Whitespace(" ")]
+                  1: TS_REFERENCE_TYPE@33..34
+                    0: JS_REFERENCE_IDENTIFIER@33..34
+                      0: IDENT@33..34 "A" [] []
+                    1: (empty)
+                3: (empty)
+              5: R_PAREN@34..36 ")" [] [Whitespace(" ")]
+              6: JS_FUNCTION_BODY@36..39
+                0: L_CURLY@36..37 "{" [] []
+                1: JS_DIRECTIVE_LIST@37..37
+                2: JS_STATEMENT_LIST@37..37
+                3: R_CURLY@37..39 "}" [] [Whitespace(" ")]
+          2: R_CURLY@39..40 "}" [] []
+        2: R_PAREN@40..41 ")" [] []
+      1: SEMICOLON@41..42 ";" [] []
+  3: EOF@42..43 "" [Newline("\n")] []
+--
+error[SyntaxError]: An accessor can not have type parameters
+  ┌─ ts_object_setter_type_parameters.js:2:9
+  │
+2 │ ({ set a<A>(value: A) {} });
+  │         ^^^
+
+--
+// TYPESCRIPT
+({ set a<A>(value: A) {} });
