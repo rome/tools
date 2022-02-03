@@ -97,12 +97,13 @@ pub(crate) fn is_reserved_enum_name(name: &str) -> bool {
 }
 
 fn parse_name(p: &mut Parser, enum_token_range: Range<usize>) {
-    let id = if p.cur_src() == "{" {
+    let name = p.cur_src();
+
+    let id = if name == "{" {
         Absent
     } else {
         parse_binding(p)
     };
-
 
     match id {
         Present(id) => {
@@ -119,10 +120,23 @@ fn parse_name(p: &mut Parser, enum_token_range: Range<usize>) {
             }
         }
         Absent => {
-            let err = p
-                .err_builder("enum declarations must have a name")
-                .primary(enum_token_range.start..p.cur_tok().start(), "");
-            p.error(err);
+            if p.nth_at(1, L_CURLY) {
+                let range = p.cur_tok().range();
+
+                let m = p.start();
+                p.bump_remap(T![ident]);
+                let mut identifier = m.complete(p, JS_IDENTIFIER_BINDING);
+
+                let err = p
+                    .err_builder("invalid enum name")
+                    .primary(range, "");
+                p.error(err);
+            } else {
+                let err = p
+                    .err_builder("enum declarations must have a name")
+                    .primary(enum_token_range.start..p.cur_tok().start(), "");
+                p.error(err);
+            }
         }
     }
 }
