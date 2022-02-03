@@ -69,9 +69,11 @@ JsModule {
                                     r_brack_token: R_BRACK@76..78 "]" [] [Whitespace(" ")],
                                 },
                             },
-                            EQ@78..80 "=" [] [Whitespace(" ")],
-                            JsStringLiteralExpression {
-                                value_token: JS_STRING_LITERAL@80..86 "\"init\"" [] [],
+                            JsInitializerClause {
+                                eq_token: EQ@78..80 "=" [] [Whitespace(" ")],
+                                expression: JsStringLiteralExpression {
+                                    value_token: JS_STRING_LITERAL@80..86 "\"init\"" [] [],
+                                },
                             },
                         ],
                     },
@@ -188,9 +190,10 @@ JsModule {
                   0: STRING_KW@69..75 "string" [] []
                 1: L_BRACK@75..76 "[" [] []
                 2: R_BRACK@76..78 "]" [] [Whitespace(" ")]
-            3: EQ@78..80 "=" [] [Whitespace(" ")]
-            4: JS_STRING_LITERAL_EXPRESSION@80..86
-              0: JS_STRING_LITERAL@80..86 "\"init\"" [] []
+            3: JS_INITIALIZER_CLAUSE@78..86
+              0: EQ@78..80 "=" [] [Whitespace(" ")]
+              1: JS_STRING_LITERAL_EXPRESSION@80..86
+                0: JS_STRING_LITERAL@80..86 "\"init\"" [] []
         2: R_PAREN@86..88 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@88..90
@@ -239,10 +242,10 @@ error[SyntaxError]: Parameter cannot have question mark and initializer
 
 --
 error[SyntaxError]: rest elements may not have default initializers
-  ┌─ ts_formal_parameter_error.js:3:32
+  ┌─ ts_formal_parameter_error.js:3:30
   │
 3 │ function b(...rest: string[] = "init") {}
-  │                                ^^^^^^
+  │                              ^^^^^^^^
 
 --
 error[SyntaxError]: rest elements may not have trailing commas

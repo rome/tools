@@ -17,16 +17,18 @@ JsModule {
                                 JsIdentifierBinding {
                                     name_token: IDENT@9..11 "a" [] [Whitespace(" ")],
                                 },
-                                EQ@11..13 "=" [] [Whitespace(" ")],
-                                JsInExpression {
-                                    property: JsStringLiteralExpression {
-                                        value_token: JS_STRING_LITERAL@13..17 "\"b\"" [] [Whitespace(" ")],
-                                    },
-                                    in_token: IN_KW@17..20 "in" [] [Whitespace(" ")],
-                                    object: JsObjectExpression {
-                                        l_curly_token: L_CURLY@20..21 "{" [] [],
-                                        members: JsObjectMemberList [],
-                                        r_curly_token: R_CURLY@21..22 "}" [] [],
+                                JsInitializerClause {
+                                    eq_token: EQ@11..13 "=" [] [Whitespace(" ")],
+                                    expression: JsInExpression {
+                                        property: JsStringLiteralExpression {
+                                            value_token: JS_STRING_LITERAL@13..17 "\"b\"" [] [Whitespace(" ")],
+                                        },
+                                        in_token: IN_KW@17..20 "in" [] [Whitespace(" ")],
+                                        object: JsObjectExpression {
+                                            l_curly_token: L_CURLY@20..21 "{" [] [],
+                                            members: JsObjectMemberList [],
+                                            r_curly_token: R_CURLY@21..22 "}" [] [],
+                                        },
                                     },
                                 },
                             ],
@@ -75,15 +77,16 @@ JsModule {
               0: DOT2@6..9 "..." [] []
               1: JS_IDENTIFIER_BINDING@9..11
                 0: IDENT@9..11 "a" [] [Whitespace(" ")]
-              2: EQ@11..13 "=" [] [Whitespace(" ")]
-              3: JS_IN_EXPRESSION@13..22
-                0: JS_STRING_LITERAL_EXPRESSION@13..17
-                  0: JS_STRING_LITERAL@13..17 "\"b\"" [] [Whitespace(" ")]
-                1: IN_KW@17..20 "in" [] [Whitespace(" ")]
-                2: JS_OBJECT_EXPRESSION@20..22
-                  0: L_CURLY@20..21 "{" [] []
-                  1: JS_OBJECT_MEMBER_LIST@21..21
-                  2: R_CURLY@21..22 "}" [] []
+              2: JS_INITIALIZER_CLAUSE@11..22
+                0: EQ@11..13 "=" [] [Whitespace(" ")]
+                1: JS_IN_EXPRESSION@13..22
+                  0: JS_STRING_LITERAL_EXPRESSION@13..17
+                    0: JS_STRING_LITERAL@13..17 "\"b\"" [] [Whitespace(" ")]
+                  1: IN_KW@17..20 "in" [] [Whitespace(" ")]
+                  2: JS_OBJECT_EXPRESSION@20..22
+                    0: L_CURLY@20..21 "{" [] []
+                    1: JS_OBJECT_MEMBER_LIST@21..21
+                    2: R_CURLY@21..22 "}" [] []
           2: R_PAREN@22..24 ")" [] [Whitespace(" ")]
         3: (empty)
         4: FAT_ARROW@24..27 "=>" [] [Whitespace(" ")]
@@ -104,10 +107,10 @@ JsModule {
   3: EOF@35..36 "" [Newline("\n")] []
 --
 error[SyntaxError]: rest elements may not have default initializers
-  ┌─ arrow_rest_in_expr_in_initializer.js:1:14
+  ┌─ arrow_rest_in_expr_in_initializer.js:1:12
   │
 1 │ for ((...a = "b" in {}) => {};;) {}
-  │              ^^^^^^^^^
+  │            ^^^^^^^^^^^
 
 --
 for ((...a = "b" in {}) => {};;) {}
