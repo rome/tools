@@ -325,29 +325,28 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@259..260 "(" [] [],
                     items: JsParameterList [
-                        JsUnknownParameter {
-                            items: [
-                                JsObjectBindingPattern {
-                                    l_curly_token: L_CURLY@260..262 "{" [] [Whitespace(" ")],
-                                    properties: JsObjectBindingPatternPropertyList [
-                                        JsObjectBindingPatternShorthandProperty {
-                                            identifier: JsIdentifierBinding {
-                                                name_token: IDENT@262..263 "a" [] [],
-                                            },
-                                            init: missing (optional),
+                        JsFormalParameter {
+                            binding: JsObjectBindingPattern {
+                                l_curly_token: L_CURLY@260..262 "{" [] [Whitespace(" ")],
+                                properties: JsObjectBindingPatternPropertyList [
+                                    JsObjectBindingPatternShorthandProperty {
+                                        identifier: JsIdentifierBinding {
+                                            name_token: IDENT@262..263 "a" [] [],
                                         },
-                                        COMMA@263..265 "," [] [Whitespace(" ")],
-                                        JsObjectBindingPatternShorthandProperty {
-                                            identifier: JsIdentifierBinding {
-                                                name_token: IDENT@265..267 "b" [] [Whitespace(" ")],
-                                            },
-                                            init: missing (optional),
+                                        init: missing (optional),
+                                    },
+                                    COMMA@263..265 "," [] [Whitespace(" ")],
+                                    JsObjectBindingPatternShorthandProperty {
+                                        identifier: JsIdentifierBinding {
+                                            name_token: IDENT@265..267 "b" [] [Whitespace(" ")],
                                         },
-                                    ],
-                                    r_curly_token: R_CURLY@267..268 "}" [] [],
-                                },
-                                QUESTION@268..269 "?" [] [],
-                            ],
+                                        init: missing (optional),
+                                    },
+                                ],
+                                r_curly_token: R_CURLY@267..268 "}" [] [],
+                            },
+                            question_mark_token: QUESTION@268..269 "?" [] [],
+                            type_annotation: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@269..271 ")" [] [Whitespace(" ")],
@@ -600,7 +599,7 @@ JsModule {
         1: JS_PARAMETERS@259..271
           0: L_PAREN@259..260 "(" [] []
           1: JS_PARAMETER_LIST@260..269
-            0: JS_UNKNOWN_PARAMETER@260..269
+            0: JS_FORMAL_PARAMETER@260..269
               0: JS_OBJECT_BINDING_PATTERN@260..268
                 0: L_CURLY@260..262 "{" [] [Whitespace(" ")]
                 1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@262..267
@@ -615,6 +614,7 @@ JsModule {
                     1: (empty)
                 2: R_CURLY@267..268 "}" [] []
               1: QUESTION@268..269 "?" [] []
+              2: (empty)
           2: R_PAREN@269..271 ")" [] [Whitespace(" ")]
         2: FAT_ARROW@271..274 "=>" [] [Whitespace(" ")]
         3: TS_STRING_TYPE@274..280

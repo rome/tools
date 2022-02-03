@@ -26,19 +26,17 @@ JsModule {
                         },
                     },
                     COMMA@37..39 "," [] [Whitespace(" ")],
-                    JsUnknownParameter {
-                        items: [
-                            JsIdentifierBinding {
-                                name_token: IDENT@39..40 "b" [] [],
+                    JsFormalParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@39..40 "b" [] [],
+                        },
+                        question_mark_token: QUESTION@40..41 "?" [] [],
+                        type_annotation: TsTypeAnnotation {
+                            colon_token: COLON@41..43 ":" [] [Whitespace(" ")],
+                            ty: TsNumberType {
+                                number_token: NUMBER_KW@43..49 "number" [] [],
                             },
-                            QUESTION@40..41 "?" [] [],
-                            TsTypeAnnotation {
-                                colon_token: COLON@41..43 ":" [] [Whitespace(" ")],
-                                ty: TsNumberType {
-                                    number_token: NUMBER_KW@43..49 "number" [] [],
-                                },
-                            },
-                        ],
+                        },
                     },
                     COMMA@49..51 "," [] [Whitespace(" ")],
                     JsFormalParameterWithDefault {
@@ -89,7 +87,7 @@ JsModule {
               1: TS_STRING_TYPE@31..37
                 0: STRING_KW@31..37 "string" [] []
           1: COMMA@37..39 "," [] [Whitespace(" ")]
-          2: JS_UNKNOWN_PARAMETER@39..49
+          2: JS_FORMAL_PARAMETER@39..49
             0: JS_IDENTIFIER_BINDING@39..40
               0: IDENT@39..40 "b" [] []
             1: QUESTION@40..41 "?" [] []

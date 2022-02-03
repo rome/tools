@@ -536,7 +536,7 @@ JsSetterObjectMember =
 	'set'
 	name: JsAnyObjectMemberName
 	'('
-	parameter: JsAnySetterParameter
+	parameter: JsAnyParameter
 	')'
 	body: JsFunctionBody
 
@@ -719,7 +719,7 @@ JsSetterClassMember =
 	'set'
 	name: JsAnyClassMemberName
 	'('
-	parameter: JsAnySetterParameter
+	parameter: JsAnyParameter
 	')'
 	body: JsFunctionBody
 
@@ -1388,10 +1388,6 @@ JsAnyFormalParameter =
 	| JsFormalParameterWithDefault
 	| JsUnknownParameter
 
-JsAnySetterParameter =
-	JsFormalParameter
-	| JsUnknownParameter
-
 // (...a) => {}
 //  ^^^^
 JsRestParameter =
@@ -1689,7 +1685,7 @@ TsSetterSignatureObjectTypeMember =
 	'set'
 	name: JsAnyObjectMemberName
 	'('
-	parameter: JsAnySetterParameter
+	parameter: JsAnyParameter
 	')'
 	separator_token: (',' | ';')?
 

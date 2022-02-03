@@ -592,7 +592,7 @@ pub(crate) fn parse_any_formal_parameter(
 
             let parameter = m.complete(p, JS_FORMAL_PARAMETER_WITH_DEFAULT);
 
-            if valid && parameter_context.is_setter() {
+            if valid && parameter_context.is_setter() && TypeScript.is_supported(p) {
                 p.error(
                     p.err_builder("A 'set' accessor parameter cannot have an initializer.")
                         .primary(parameter.range(p), ""),

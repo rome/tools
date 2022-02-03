@@ -183,13 +183,12 @@ JsModule {
                             TsReadonlyPropertyParameter {
                                 accessibility: missing (optional),
                                 readonly_token: READONLY_KW@216..225 "readonly" [] [Whitespace(" ")],
-                                formal_parameter: JsUnknownParameter {
-                                    items: [
-                                        JsIdentifierBinding {
-                                            name_token: IDENT@225..226 "y" [] [],
-                                        },
-                                        QUESTION@226..227 "?" [] [],
-                                    ],
+                                formal_parameter: JsFormalParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@225..226 "y" [] [],
+                                    },
+                                    question_mark_token: QUESTION@226..227 "?" [] [],
+                                    type_annotation: missing (optional),
                                 },
                             },
                             COMMA@227..229 "," [] [Whitespace(" ")],
@@ -369,10 +368,11 @@ JsModule {
               2: TS_READONLY_PROPERTY_PARAMETER@216..227
                 0: (empty)
                 1: READONLY_KW@216..225 "readonly" [] [Whitespace(" ")]
-                2: JS_UNKNOWN_PARAMETER@225..227
+                2: JS_FORMAL_PARAMETER@225..227
                   0: JS_IDENTIFIER_BINDING@225..226
                     0: IDENT@225..226 "y" [] []
                   1: QUESTION@226..227 "?" [] []
+                  2: (empty)
               3: COMMA@227..229 "," [] [Whitespace(" ")]
               4: JS_FORMAL_PARAMETER_WITH_DEFAULT@229..242
                 0: JS_IDENTIFIER_BINDING@229..231
