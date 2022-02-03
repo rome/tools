@@ -431,10 +431,8 @@ pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -
         .ok();
 
     if let Present(initializer) = parse_initializer_clause(p, ExpressionContext::default()) {
-        let start = p.cur_tok().start();
         // test_err arrow_rest_in_expr_in_initializer
         // for ((...a = "b" in {}) => {};;) {}
-
         let err = p
             .err_builder("rest elements may not have default initializers")
             .primary(initializer.range(p), "");
