@@ -1386,7 +1386,7 @@ JsRestParameter =
 	binding: JsAnyBindingPattern
 	type_annotation: TsTypeAnnotation?
 
-// (this) => {}
+// function a(this: string) => {}
 //  ^^^^
 TsThisParameter =
 	'this'

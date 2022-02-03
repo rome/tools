@@ -997,7 +997,6 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
                 ModifierKind::Readonly => {
                     read_only = true;
                 }
-                ModifierKind::Accessibility | ModifierKind::__LAST => {}
                 ModifierKind::Declare | ModifierKind::Static | ModifierKind::Abstract => {
                     let name = p.span_text(range);
                     let error = p.err_builder(
@@ -1008,6 +1007,7 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
                     p.error(error);
                     valid = false;
                 }
+                _ => {}
             }
             if matches!(kind, ModifierKind::Readonly | ModifierKind::Accessibility) {
                 continue; // valid
@@ -1255,6 +1255,9 @@ enum ModifierKind {
     Static = 2,
     Readonly = 3,
     Abstract = 4,
+
+    /// Marker to determine the variant count of this enum. Replace with `std::mem::variant_count`
+    /// when it becomes a stable feature.
     __LAST = 5,
 }
 

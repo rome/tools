@@ -361,7 +361,7 @@ pub(super) fn parse_arrow_function_parameters(
     }
 
     if p.at(T!['(']) {
-        parse_parameter_list(p, ParameterContext::Implementation, flags)
+        parse_parameter_list(p, ParameterContext::Arrow, flags)
     } else {
         // test_err async_arrow_expr_await_parameter
         // let a = async await => {}
@@ -396,11 +396,35 @@ pub(crate) fn parse_any_parameter(
     parameter_context: ParameterContext,
     expression_context: ExpressionContext,
 ) -> ParsedSyntax {
-    match p.cur() {
+    let parameter = match p.cur() {
         T![...] => parse_rest_parameter(p, expression_context),
         T![this] => parse_ts_this_parameter(p),
         _ => parse_parameter(p, parameter_context, expression_context),
-    }
+    };
+
+    parameter.map(|mut parameter| {
+        if parameter.kind() == TS_THIS_PARAMETER {
+            if TypeScript.is_unsupported(p) {
+                parameter.change_to_unknown(p);
+                p.error(ts_only_syntax_error(
+                    p,
+                    "this parameter",
+                    parameter.range(p).as_range(),
+                ));
+            } else if parameter_context.is_arrow_function() {
+                // test_err ts_arrow_function_this_parameter
+                // // TYPESCRIPT
+                // let a = (this: string) => {}
+                parameter.change_to_unknown(p);
+                p.error(
+                    p.err_builder("An arrow function cannot have a 'this' parameter.")
+                        .primary(parameter.range(p), ""),
+                );
+            }
+        }
+
+        parameter
+    })
 }
 
 pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
@@ -471,18 +495,7 @@ pub(crate) fn parse_ts_this_parameter(p: &mut Parser) -> ParsedSyntax {
     let parameter = p.start();
     p.bump(T![this]);
     parse_ts_type_annotation(p).ok();
-    let mut parameter = parameter.complete(p, TS_THIS_PARAMETER);
-
-    if TypeScript.is_unsupported(p) {
-        parameter.change_to_unknown(p);
-        p.error(ts_only_syntax_error(
-            p,
-            "this parameter",
-            parameter.range(p).as_range(),
-        ));
-    }
-
-    Present(parameter)
+    Present(parameter.complete(p, TS_THIS_PARAMETER))
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
@@ -495,6 +508,9 @@ pub(crate) enum ParameterContext {
 
     /// Parameter of a setter function: `set a(b: string)`
     Setter,
+
+    /// Paramter of an arrow function
+    Arrow,
 
     /// Parameter inside a TS property parameter: `constructor(private a)`
     ParameterProperty,
@@ -511,6 +527,10 @@ impl ParameterContext {
 
     pub fn is_parameter_property(&self) -> bool {
         self == &ParameterContext::ParameterProperty
+    }
+
+    pub fn is_arrow_function(&self) -> bool {
+        self == &ParameterContext::Arrow
     }
 }
 
