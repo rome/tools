@@ -117,6 +117,7 @@ impl From<&SyntaxError> for FormatError {
 }
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy)]
+#[cfg_attr(feature = "test", derive(serde::Serialize, serde::Deserialize))]
 pub enum IndentStyle {
     /// Tab
     Tab,
@@ -153,6 +154,7 @@ impl Display for IndentStyle {
 }
 
 #[derive(Debug, Clone, Copy)]
+#[cfg_attr(feature = "test", derive(serde::Serialize, serde::Deserialize))]
 pub struct FormatOptions {
     /// The indent style
     pub indent_style: IndentStyle,
