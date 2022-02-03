@@ -26,3 +26,7 @@ function foo() {
 
 	return ref;
 }
+
+function directives() {
+  "use strict";
+}

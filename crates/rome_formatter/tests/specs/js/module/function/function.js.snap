@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/spec_test.rs
-assertion_line: 43
+assertion_line: 57
 expression: function.js
 
 ---
@@ -34,6 +34,10 @@ function foo() {
 	return ref;
 }
 
+function directives() {
+  "use strict";
+}
+
 ---
 # Output
 function foo() {}
@@ -63,5 +67,9 @@ function foo() {
 	);
 
 	return ref;
+}
+
+function directives() {
+	"use strict";
 }
 

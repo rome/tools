@@ -349,9 +349,11 @@ where
     }
 
     concat_elements(IntersperseFn::new(
-        elements.into_iter().filter(|(_, e)| !e.is_empty()),
-        |prev_node, next_node| {
-            if get_lines_between_nodes(prev_node.syntax(), next_node.syntax()) > 1 {
+        elements.into_iter(),
+        |prev_node, next_node, next_elem| {
+            if next_elem.is_empty() {
+                empty_element()
+            } else if get_lines_between_nodes(prev_node.syntax(), next_node.syntax()) > 1 {
                 empty_line()
             } else {
                 separator()

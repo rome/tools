@@ -10,6 +10,7 @@ impl ToFormatElement for JsFunctionBody {
             |open_token_trailing, close_token_leading| {
                 Ok(block_indent(format_elements![
                     open_token_trailing,
+                    self.directives().to_format_element(formatter)?,
                     formatter.format_list(self.statements()),
                     close_token_leading,
                 ]))

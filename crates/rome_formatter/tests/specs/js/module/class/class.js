@@ -6,6 +6,10 @@ class Foo extends Boar {
 		super();
 	}
 
+	static get sg() {
+
+	}
+
 	get g() {
 
 	}
@@ -18,6 +22,10 @@ class Foo extends Boar {
 
 	lorem() {
 		return "ipsum";
+	}
+
+	async ipsum() {
+
 	}
 
 	static foo;
