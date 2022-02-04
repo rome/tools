@@ -582,8 +582,8 @@ fn parse_class_member_impl(
                     // test_err ts_getter_setter_type_parameters
                     // // TYPESCRIPT
                     // class Test {
-                    //   get a<A>(): A {}
-                    // 	 set a<A>(value: A) {}
+                    //  get a<A>(): A {}
+                    //  set a<A>(value: A) {}
                     // }
                     if let Present(type_parameters) = parse_ts_type_parameters(p) {
                         p.error(
