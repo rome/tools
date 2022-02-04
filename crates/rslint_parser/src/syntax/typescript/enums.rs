@@ -1,11 +1,12 @@
 use crate::parser::{RecoveryResult, ToDiagnostic};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::ExpressionContext;
+use crate::syntax::expr::{ExpressionContext, is_nth_at_name};
 
+use crate::syntax::stmt::STMT_RECOVERY_SET;
 use crate::{JsSyntaxKind::*, *};
 
-pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax {
+fn parse_literal_as_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     match p.cur() {
         JS_STRING_LITERAL | T![ident] => {
@@ -30,18 +31,8 @@ pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// An individual enum member
-fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
     let member = p.start();
-
-    let decorator = if let T![@] = p.cur() {
-        let err = p
-            .err_builder("An enum member cannot have decorators")
-            .primary(p.cur_tok().range(), "");
-        p.error(err);
-        super::parse_ts_decorator(p)
-    } else {
-        Absent
-    };
 
     let name = match p.cur() {
         T!['['] => syntax::object::parse_computed_member_name(p),
@@ -55,7 +46,7 @@ fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
                 x
             })
         }
-        _ => parse_literal_member_name(p),
+        _ => parse_literal_as_ts_enum_member(p),
     };
 
     if name.is_absent() {
@@ -65,25 +56,18 @@ fn parse_enum_member(p: &mut Parser) -> ParsedSyntax {
 
     let _ = parse_initializer_clause(p, ExpressionContext::default());
 
-    let mut r#enum = member.complete(p, TS_ENUM_MEMBER);
-    match decorator {
-        Absent => Present(r#enum),
-        Present(_) => {
-            r#enum.change_to_unknown(p);
-            Present(r#enum)
-        }
-    }
+    Present(member.complete(p, TS_ENUM_MEMBER))
 }
 
-fn expected_enum_member(p: &Parser, range: Range<usize>) -> Diagnostic {
+fn expected_ts_enum_member(p: &Parser, range: Range<usize>) -> Diagnostic {
     parser::expected_any(&["identifier", "string literal", "computed name"], range).to_diagnostic(p)
 }
 
-struct EnumMembersList;
+struct TsEnumMembersList;
 
-impl ParseSeparatedList for EnumMembersList {
+impl ParseSeparatedList for TsEnumMembersList {
     fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
-        parse_enum_member(p)
+        parse_ts_enum_member(p)
     }
 
     fn is_at_list_end(&mut self, p: &mut Parser) -> bool {
@@ -95,10 +79,10 @@ impl ParseSeparatedList for EnumMembersList {
             p,
             &ParseRecovery::new(
                 JS_UNKNOWN_MEMBER,
-                token_set![JsSyntaxKind::IDENT, T![,], T!['}']],
+                STMT_RECOVERY_SET.union(token_set![JsSyntaxKind::IDENT, T![,], T!['}']]),
             )
             .enable_recovery_on_line_break(),
-            expected_enum_member,
+            expected_ts_enum_member,
         )
     }
 
@@ -115,33 +99,13 @@ impl ParseSeparatedList for EnumMembersList {
     }
 }
 
-pub(crate) fn is_reserved_enum_name(name: &str) -> bool {
-    matches!(
-        name,
-        "string"
-            | "null"
-            | "number"
-            | "object"
-            | "any"
-            | "unknown"
-            | "boolean"
-            | "bigint"
-            | "symbol"
-            | "void"
-            | "never"
-    )
+#[inline(always)]
+fn is_reserved_enum_name(name: &str) -> bool {
+    super::is_reserved_type_name(name)
 }
 
-fn parse_name(p: &mut Parser, enum_token_range: Range<usize>) {
-    let name = p.cur_src();
-
-    let id = if name == "{" {
-        Absent
-    } else {
-        parse_binding(p)
-    };
-
-    match id {
+fn parse_ts_enum_id(p: &mut Parser, enum_token_range: Range<usize>) {
+    match parse_binding(p) {
         Present(id) => {
             let text = p.span_text(id.range(p));
             if is_reserved_enum_name(text) {
@@ -155,7 +119,11 @@ fn parse_name(p: &mut Parser, enum_token_range: Range<usize>) {
                 p.error(err);
             }
         }
+        // test_err ts enum_decl_no_id
+        // enum {}
+        // enum {A,B,C}
         Absent => {
+            
             if p.nth_at(1, L_CURLY) {
                 let range = p.cur_tok().range();
 
@@ -175,23 +143,37 @@ fn parse_name(p: &mut Parser, enum_token_range: Range<usize>) {
     }
 }
 
+pub(crate) fn is_at_ts_enum_statement(p: &Parser, t: &JsSyntaxKind) -> bool {
+    let is_ident1 = p.nth_at(1, JsSyntaxKind::IDENT);
+    let is_l_curly1 = p.nth_at(1, JsSyntaxKind::L_CURLY);
+
+    let is_ident2 = p.nth_at(2, JsSyntaxKind::IDENT);
+    let is_l_curly2 = p.nth_at(2, JsSyntaxKind::L_CURLY);
+
+    (*t == T![enum] && (is_ident1 || is_l_curly1)) 
+        || (*t == T![const] && p.nth_at(1, T![enum]) && (is_ident2 || is_l_curly2)) 
+}
+
 // test ts typescript_enum
 // enum A {}
 // enum B { a, b, c }
 // const enum C { A = 1, B = A * 2, ["A"] = 3, }
-pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
+pub(crate) fn parse_ts_enum_statement (p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
 
     p.eat(T![const]);
 
     let enum_token_range = p.cur_tok().range();
     p.expect(T![enum]);
-    parse_name(p, enum_token_range);
+    parse_ts_enum_id(p, enum_token_range);
 
     p.expect(T!['{']);
 
-    EnumMembersList.parse_list(p);
+    TsEnumMembersList.parse_list(p);
 
     p.expect(T!['}']);
-    m.complete(p, TS_ENUM)
+
+    let mut res = m.complete(p, TS_ENUM_STATEMENT);
+    res.err_if_not_ts(p, "enums can only be declared in TypeScript files");
+    Present(res)
 }

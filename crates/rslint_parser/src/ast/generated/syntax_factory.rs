@@ -5860,7 +5860,33 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.into_node(TS_DEFAULT_TYPE_CLAUSE, children)
             }
-            TS_ENUM => {
+            TS_ENUM_MEMBER => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if JsAnyObjectMemberName::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if JsInitializerClause::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(
+                        TS_ENUM_MEMBER.to_unknown(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(TS_ENUM_MEMBER, children)
+            }
+            TS_ENUM_STATEMENT => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
@@ -5908,37 +5934,11 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_ENUM.to_unknown(),
+                        TS_ENUM_STATEMENT.to_unknown(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(TS_ENUM, children)
-            }
-            TS_ENUM_MEMBER => {
-                let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
-                let mut current_element = elements.next();
-                if let Some(element) = &current_element {
-                    if JsAnyObjectMemberName::can_cast(element.kind()) {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if JsInitializerClause::can_cast(element.kind()) {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if current_element.is_some() {
-                    return RawSyntaxNode::new(
-                        TS_ENUM_MEMBER.to_unknown(),
-                        children.into_iter().map(Some),
-                    );
-                }
-                slots.into_node(TS_ENUM_MEMBER, children)
+                slots.into_node(TS_ENUM_STATEMENT, children)
             }
             TS_EXPR_WITH_TYPE_ARGS => {
                 let mut elements = (&children).into_iter();

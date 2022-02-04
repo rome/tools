@@ -102,7 +102,7 @@ JsAnyStatement =
 	| JsVariableStatement
 	| JsWhileStatement
 	| JsWithStatement
-	| TsEnum
+	| TsEnumStatement
   | JsFunctionStatement
   | TsTypeAliasStatement
 
@@ -1506,17 +1506,17 @@ TsTypeAliasStatement =
 TsIdentifierBinding = name: 'ident'
 
 // typescript enum
-TsEnum = 
+TsEnumStatement = 
 	'const'?
 	'enum'
-	name: JsAnyBinding
+	id: JsAnyBinding
 	'{' 
 	members: TsEnumMemberList 
 	'}'
 TsEnumMemberList = (TsEnumMember (',' TsEnumMember)* ','?)
 TsEnumMember = 
 	name: JsAnyObjectMemberName
-	(initializer: JsInitializerClause)?
+	initializer: JsInitializerClause?
 
 // | a | b
 TsUnionType =

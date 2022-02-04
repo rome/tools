@@ -76,7 +76,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_WHILE_STATEMENT
             | JS_WITH_STATEMENT
             | TS_TYPE_ALIAS_STATEMENT
-            | TS_ENUM
+            | TS_ENUM_STATEMENT
             | JS_UNKNOWN_STATEMENT => JS_UNKNOWN_STATEMENT,
 
             IMPORT_META
@@ -169,7 +169,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_UNKNOWN_PARAMETER => JS_UNKNOWN_PARAMETER,
 
             TS_ENUM_MEMBER => JS_UNKNOWN_MEMBER,
-            
+
             _ => JS_UNKNOWN,
         }
     }

@@ -428,7 +428,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "TS_NON_NULL_ASSERTION_EXPRESSION",
         "TS_TYPE_ASSERTION_EXPRESSION",
         "TS_AS_EXPRESSION",
-        "TS_ENUM",
+        "TS_ENUM_STATEMENT",
         "TS_ENUM_MEMBER_LIST",
         "TS_ENUM_MEMBER",
         "TS_EXPR_WITH_TYPE_ARGS",

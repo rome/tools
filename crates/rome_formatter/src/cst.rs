@@ -37,7 +37,7 @@ impl_format_verbatim! {
     TsThisParameter,
     TsConstructorType,
     TsDefaultTypeClause,
-    TsEnum,
+    TsEnumStatement,
     TsEnumMember,
     TsExprWithTypeArgs,
     TsExternalModuleRef,

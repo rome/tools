@@ -79,7 +79,6 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
                 separator,
                 element_name,
             } => {
-                dbg!(&name, &element_name, &separator);
                 ast.push_list(
                     name.as_str(),
                     AstListSrc {
@@ -150,7 +149,6 @@ fn classify_node_rule(grammar: &Grammar, rule: &Rule) -> NodeRuleClassification 
             // (T (',' T)* ','?)
             // (T (',' T)*)
             if let Some(comma_list) = handle_comma_list(grammar, rules.as_slice()) {
-                println!("{:?}", comma_list);
                 NodeRuleClassification::List {
                     separator: Some(AstListSeparatorConfiguration {
                         allow_trailing: comma_list.trailing_separator,
@@ -251,9 +249,6 @@ struct CommaList<'a> {
 // (T (',' T)*)
 fn handle_comma_list<'a>(grammar: &'a Grammar, rules: &[Rule]) -> Option<CommaList<'a>> {
     // Does it match (T * ',')?
-    // println!("{:?}", rules);
-    // println!("1: {}", matches!(rules, [Rule::Node(node), Rule::Rep(repeat), Rule::Opt(trailing_separator)]));
-    // println!("2: {}", matches!(rules, [Rule::Node(node), Rule::Rep(repeat)]));
     let (node, repeat, trailing_separator) = match rules {
         [Rule::Node(node), Rule::Rep(repeat), Rule::Opt(trailing_separator)] => {
             (node, repeat, Some(trailing_separator))

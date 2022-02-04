@@ -3489,33 +3489,6 @@ impl TsDefaultTypeClause {
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsEnum {
-    pub(crate) syntax: SyntaxNode,
-}
-impl TsEnum {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
-    }
-    pub fn name(&self) -> SyntaxResult<JsAnyBinding> {
-        support::required_node(&self.syntax, 2usize)
-    }
-    pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
-    }
-    pub fn members(&self) -> TsEnumMemberList { support::list(&self.syntax, 4usize) }
-    pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 5usize)
-    }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsEnumMember {
     pub(crate) syntax: SyntaxNode,
 }
@@ -3531,6 +3504,31 @@ impl TsEnumMember {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsEnumStatement {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsEnumStatement {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 2usize) }
+    pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 3usize)
+    }
+    pub fn members(&self) -> TsEnumMemberList { support::list(&self.syntax, 4usize) }
+    pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 5usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExprWithTypeArgs {
@@ -5026,7 +5024,7 @@ pub enum JsAnyStatement {
     JsVariableStatement(JsVariableStatement),
     JsWhileStatement(JsWhileStatement),
     JsWithStatement(JsWithStatement),
-    TsEnum(TsEnum),
+    TsEnumStatement(TsEnumStatement),
     TsTypeAliasStatement(TsTypeAliasStatement),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -10279,44 +10277,6 @@ impl From<TsDefaultTypeClause> for SyntaxNode {
 impl From<TsDefaultTypeClause> for SyntaxElement {
     fn from(n: TsDefaultTypeClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsEnum {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ENUM }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsEnum {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsEnum")
-            .field(
-                "const_token",
-                &support::DebugOptionalElement(self.const_token()),
-            )
-            .field("enum_token", &support::DebugSyntaxResult(self.enum_token()))
-            .field("name", &support::DebugSyntaxResult(self.name()))
-            .field(
-                "l_curly_token",
-                &support::DebugSyntaxResult(self.l_curly_token()),
-            )
-            .field("members", &self.members())
-            .field(
-                "r_curly_token",
-                &support::DebugSyntaxResult(self.r_curly_token()),
-            )
-            .finish()
-    }
-}
-impl From<TsEnum> for SyntaxNode {
-    fn from(n: TsEnum) -> SyntaxNode { n.syntax }
-}
-impl From<TsEnum> for SyntaxElement {
-    fn from(n: TsEnum) -> SyntaxElement { n.syntax.into() }
-}
 impl AstNode for TsEnumMember {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ENUM_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -10344,6 +10304,44 @@ impl From<TsEnumMember> for SyntaxNode {
 }
 impl From<TsEnumMember> for SyntaxElement {
     fn from(n: TsEnumMember) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsEnumStatement {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ENUM_STATEMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsEnumStatement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsEnumStatement")
+            .field(
+                "const_token",
+                &support::DebugOptionalElement(self.const_token()),
+            )
+            .field("enum_token", &support::DebugSyntaxResult(self.enum_token()))
+            .field("id", &support::DebugSyntaxResult(self.id()))
+            .field(
+                "l_curly_token",
+                &support::DebugSyntaxResult(self.l_curly_token()),
+            )
+            .field("members", &self.members())
+            .field(
+                "r_curly_token",
+                &support::DebugSyntaxResult(self.r_curly_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsEnumStatement> for SyntaxNode {
+    fn from(n: TsEnumStatement) -> SyntaxNode { n.syntax }
+}
+impl From<TsEnumStatement> for SyntaxElement {
+    fn from(n: TsEnumStatement) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsExprWithTypeArgs {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXPR_WITH_TYPE_ARGS }
@@ -15261,8 +15259,8 @@ impl From<JsWhileStatement> for JsAnyStatement {
 impl From<JsWithStatement> for JsAnyStatement {
     fn from(node: JsWithStatement) -> JsAnyStatement { JsAnyStatement::JsWithStatement(node) }
 }
-impl From<TsEnum> for JsAnyStatement {
-    fn from(node: TsEnum) -> JsAnyStatement { JsAnyStatement::TsEnum(node) }
+impl From<TsEnumStatement> for JsAnyStatement {
+    fn from(node: TsEnumStatement) -> JsAnyStatement { JsAnyStatement::TsEnumStatement(node) }
 }
 impl From<TsTypeAliasStatement> for JsAnyStatement {
     fn from(node: TsTypeAliasStatement) -> JsAnyStatement {
@@ -15296,7 +15294,7 @@ impl AstNode for JsAnyStatement {
                 | JS_VARIABLE_STATEMENT
                 | JS_WHILE_STATEMENT
                 | JS_WITH_STATEMENT
-                | TS_ENUM
+                | TS_ENUM_STATEMENT
                 | TS_TYPE_ALIAS_STATEMENT
         )
     }
@@ -15343,7 +15341,7 @@ impl AstNode for JsAnyStatement {
             }
             JS_WHILE_STATEMENT => JsAnyStatement::JsWhileStatement(JsWhileStatement { syntax }),
             JS_WITH_STATEMENT => JsAnyStatement::JsWithStatement(JsWithStatement { syntax }),
-            TS_ENUM => JsAnyStatement::TsEnum(TsEnum { syntax }),
+            TS_ENUM_STATEMENT => JsAnyStatement::TsEnumStatement(TsEnumStatement { syntax }),
             TS_TYPE_ALIAS_STATEMENT => {
                 JsAnyStatement::TsTypeAliasStatement(TsTypeAliasStatement { syntax })
             }
@@ -15376,7 +15374,7 @@ impl AstNode for JsAnyStatement {
             JsAnyStatement::JsVariableStatement(it) => &it.syntax,
             JsAnyStatement::JsWhileStatement(it) => &it.syntax,
             JsAnyStatement::JsWithStatement(it) => &it.syntax,
-            JsAnyStatement::TsEnum(it) => &it.syntax,
+            JsAnyStatement::TsEnumStatement(it) => &it.syntax,
             JsAnyStatement::TsTypeAliasStatement(it) => &it.syntax,
         }
     }
@@ -15407,7 +15405,7 @@ impl std::fmt::Debug for JsAnyStatement {
             JsAnyStatement::JsVariableStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsWhileStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsWithStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::TsEnum(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyStatement::TsEnumStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsTypeAliasStatement(it) => std::fmt::Debug::fmt(it, f),
         }
     }
@@ -15438,7 +15436,7 @@ impl From<JsAnyStatement> for SyntaxNode {
             JsAnyStatement::JsVariableStatement(it) => it.into(),
             JsAnyStatement::JsWhileStatement(it) => it.into(),
             JsAnyStatement::JsWithStatement(it) => it.into(),
-            JsAnyStatement::TsEnum(it) => it.into(),
+            JsAnyStatement::TsEnumStatement(it) => it.into(),
             JsAnyStatement::TsTypeAliasStatement(it) => it.into(),
         }
     }
@@ -17448,12 +17446,12 @@ impl std::fmt::Display for TsDefaultTypeClause {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsEnum {
+impl std::fmt::Display for TsEnumMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsEnumMember {
+impl std::fmt::Display for TsEnumStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -20107,12 +20105,14 @@ impl Debug for DebugSyntaxElement {
                 TS_DEFAULT_TYPE_CLAUSE => {
                     std::fmt::Debug::fmt(&TsDefaultTypeClause::cast(node.clone()).unwrap(), f)
                 }
-                TS_ENUM => std::fmt::Debug::fmt(&TsEnum::cast(node.clone()).unwrap(), f),
                 TS_ENUM_MEMBER => {
                     std::fmt::Debug::fmt(&TsEnumMember::cast(node.clone()).unwrap(), f)
                 }
                 TS_ENUM_MEMBER_LIST => {
                     std::fmt::Debug::fmt(&TsEnumMemberList::cast(node.clone()).unwrap(), f)
+                }
+                TS_ENUM_STATEMENT => {
+                    std::fmt::Debug::fmt(&TsEnumStatement::cast(node.clone()).unwrap(), f)
                 }
                 TS_EXPR_WITH_TYPE_ARGS => {
                     std::fmt::Debug::fmt(&TsExprWithTypeArgs::cast(node.clone()).unwrap(), f)
