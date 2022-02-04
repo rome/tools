@@ -8,6 +8,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Deserialize, Serialize)]
+#[serde(remote = "IndentStyle")]
 pub enum SerializableIndentStyle {
     /// Tab
     Tab,
@@ -15,38 +16,24 @@ pub enum SerializableIndentStyle {
     Space(u8),
 }
 
-impl From<SerializableIndentStyle> for IndentStyle {
-    fn from(test: SerializableIndentStyle) -> Self {
-        match test {
-            SerializableIndentStyle::Tab => IndentStyle::Tab,
-            SerializableIndentStyle::Space(s) => IndentStyle::Space(s),
-        }
-    }
-}
-
-#[derive(Debug, Deserialize, Serialize, Clone)]
+#[derive(Debug, Deserialize, Serialize, Clone, Copy)]
+#[serde(remote = "FormatOptions")]
 pub struct SerializableFormatOptions {
     /// The indent style
-    pub indent_style: Option<SerializableIndentStyle>,
+    #[serde(with = "SerializableIndentStyle")]
+    pub indent_style: IndentStyle,
 
     /// What's the max width of a line. Defaults to 80
-    pub line_width: Option<u16>,
+    pub line_width: u16,
 }
 
 impl From<SerializableFormatOptions> for FormatOptions {
     fn from(test: SerializableFormatOptions) -> Self {
         Self {
-            indent_style: test
-                .indent_style
-                .map_or_else(|| IndentStyle::Tab, |value| value.into()),
-            line_width: test.line_width.unwrap_or(80),
+            indent_style: test.indent_style,
+            line_width: test.line_width,
         }
     }
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-pub struct TestOptions {
-    cases: Vec<SerializableFormatOptions>,
 }
 
 #[derive(Debug, Default)]
@@ -141,14 +128,15 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
             {
                 let mut options_path = RomePath::new(options_path.display().to_string().as_str());
                 // SAFETY: we checked its existence already, we assume we have rights to read it
-                let options: TestOptions =
-                    serde_json::from_str(options_path.get_buffer_from_file().as_str()).unwrap();
+                let input = options_path.get_buffer_from_file();
+                let mut de = serde_json::Deserializer::from_str(input.as_str());
 
-                for test_case in options.cases {
-                    let options = test_case.clone();
-                    let formatted_result = format(test_case.into(), &root).unwrap();
-                    snapshot_content.add_output(formatted_result.as_code(), options.into());
-                }
+                let options: FormatOptions =
+                    SerializableFormatOptions::deserialize(&mut de).unwrap();
+
+                let copy_options = options;
+                let formatted_result = format(options, &root).unwrap();
+                snapshot_content.add_output(formatted_result.as_code(), copy_options);
             }
         }
 

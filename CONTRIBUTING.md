@@ -239,15 +239,10 @@ the cases you need to verify. If we needed to follow the previous example:
 3. The content would be something like:
     ```json
     {
-        "cases": [
-            {
-                "line_width": 120,
-                "indent_style": {"Space": 4}
-            }
-        ]
+        "line_width": 120,
+        "indent_style": {"Space": 4}
     }
     ````
-4. the `cases` keyword is mandatory;
-5. then each object of the array will contain the matrix of options you'd want to test. 
-In this case the test suite will run a **second test case** with `line_width` to 120 and `ident_style` with  4 spaces
-6. when the test suite is run, you will have two outputs in your snapshot: the default one and the custom one
+4. The file will contain the options to pass the formatter. 
+In this case, the test suite will run a **second test case** with `line_width` to 120 and `ident_style` with  4 spaces
+5. when the test suite is run, you will have two outputs in your snapshot: the default one and the custom one
