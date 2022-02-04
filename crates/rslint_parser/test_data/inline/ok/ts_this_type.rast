@@ -37,7 +37,7 @@ JsModule {
                                 binding_identifier: TsIdentifierBinding {
                                     name_token: IDENT@52..54 "A" [] [Whitespace(" ")],
                                 },
-                                type_parameters: missing (required),
+                                type_parameters: missing (optional),
                                 eq_token: EQ@54..56 "=" [] [Whitespace(" ")],
                                 ty: TsThisType {
                                     this_token: THIS_KW@56..60 "this" [] [],

@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@23..25 "{" [] [Whitespace(" ")],
@@ -45,7 +45,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@52..54 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@54..56 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@56..58 "{" [] [Whitespace(" ")],
@@ -83,7 +83,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@120..122 "C" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@122..124 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@124..126 "{" [] [Whitespace(" ")],
@@ -118,7 +118,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@145..147 "D" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@147..149 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@149..151 "{" [] [Whitespace(" ")],

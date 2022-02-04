@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@23..25 "{" [] [Whitespace(" ")],
@@ -55,7 +55,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@57..59 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@59..61 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@61..63 "{" [] [Whitespace(" ")],
@@ -103,7 +103,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@93..95 "C" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@95..97 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@97..99 "{" [] [Whitespace(" ")],
@@ -179,7 +179,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@146..148 "D" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@148..150 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@150..152 "{" [] [Whitespace(" ")],
@@ -222,7 +222,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@196..198 "E" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@198..200 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@200..202 "{" [] [Whitespace(" ")],

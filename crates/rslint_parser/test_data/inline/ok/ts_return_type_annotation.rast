@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsFunctionType {
                 type_parameters: missing (optional),
@@ -44,7 +44,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@48..50 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@50..52 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@52..54 "{" [] [Whitespace(" ")],
@@ -94,7 +94,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@82..84 "C" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@84..86 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@86..88 "{" [] [Whitespace(" ")],

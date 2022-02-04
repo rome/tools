@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsTemplateLiteralType {
                 l_tick_token: BACKTICK@23..24 "`" [] [],
@@ -25,7 +25,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@35..37 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@37..39 "=" [] [Whitespace(" ")],
             ty: TsTemplateLiteralType {
                 l_tick_token: BACKTICK@39..40 "`" [] [],

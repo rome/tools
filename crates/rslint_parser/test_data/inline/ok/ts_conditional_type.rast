@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsNumberType {
                 number_token: NUMBER_KW@23..29 "number" [] [],
@@ -19,7 +19,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@36..38 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@38..40 "=" [] [Whitespace(" ")],
             ty: TsConditionalType {
                 check_type: TsStringType {
@@ -45,7 +45,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@86..88 "C" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@88..90 "=" [] [Whitespace(" ")],
             ty: TsConditionalType {
                 check_type: TsReferenceType {
