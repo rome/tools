@@ -77,14 +77,14 @@ JsModule {
       5: R_CURLY@19..20 "}" [] []
   3: EOF@20..21 "" [Newline("\n")] []
 --
-error[SyntaxError]: enum declarations must have a name
+error[SyntaxError]: `enum` statements must have a name
   ┌─ enum_decl_no_id.ts:1:1
   │
 1 │ enum {}
   │ ^^^^^
 
 --
-error[SyntaxError]: enum declarations must have a name
+error[SyntaxError]: `enum` statements must have a name
   ┌─ enum_decl_no_id.ts:2:1
   │
 2 │ enum {A,B,C}
