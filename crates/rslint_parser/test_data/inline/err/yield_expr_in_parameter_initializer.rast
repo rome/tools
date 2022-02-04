@@ -13,7 +13,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@14..15 "(" [] [],
                 items: JsParameterList [
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@15..17 "a" [] [Whitespace(" ")],
                         },
@@ -56,7 +56,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@50..51 "(" [] [],
                 items: JsParameterList [
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@51..53 "a" [] [Whitespace(" ")],
                         },
@@ -110,7 +110,7 @@ JsModule {
       5: JS_PARAMETERS@14..33
         0: L_PAREN@14..15 "(" [] []
         1: JS_PARAMETER_LIST@15..31
-          0: JS_PARAMETER@15..31
+          0: JS_FORMAL_PARAMETER@15..31
             0: JS_IDENTIFIER_BINDING@15..17
               0: IDENT@15..17 "a" [] [Whitespace(" ")]
             1: (empty)
@@ -140,7 +140,7 @@ JsModule {
       5: JS_PARAMETERS@50..69
         0: L_PAREN@50..51 "(" [] []
         1: JS_PARAMETER_LIST@51..67
-          0: JS_PARAMETER@51..61
+          0: JS_FORMAL_PARAMETER@51..61
             0: JS_IDENTIFIER_BINDING@51..53
               0: IDENT@51..53 "a" [] [Whitespace(" ")]
             1: (empty)

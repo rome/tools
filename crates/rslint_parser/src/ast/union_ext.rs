@@ -1,7 +1,7 @@
 use crate::ast::{
-    JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyClass, JsAnyFunction, JsAnyFunctionBody,
-    JsClassMemberList, JsExtendsClause, JsParameter, TsAnyPropertyParameter, TsImplementsClause,
-    TsReturnTypeAnnotation, TsTypeParameters,
+    JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyClass, JsAnyFormalParameter, JsAnyFunction,
+    JsAnyFunctionBody, JsClassMemberList, JsExtendsClause, TsAnyPropertyParameter,
+    TsImplementsClause, TsReturnTypeAnnotation, TsTypeParameters,
 };
 use crate::{SyntaxResult, SyntaxToken};
 
@@ -190,10 +190,12 @@ impl TsAnyPropertyParameter {
         }
     }
 
-    pub fn parameter(&self) -> SyntaxResult<JsParameter> {
+    pub fn formal_parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
         match self {
-            TsAnyPropertyParameter::TsPropertyParameter(parameter) => parameter.parameter(),
-            TsAnyPropertyParameter::TsReadonlyPropertyParameter(parameter) => parameter.parameter(),
+            TsAnyPropertyParameter::TsPropertyParameter(parameter) => parameter.formal_parameter(),
+            TsAnyPropertyParameter::TsReadonlyPropertyParameter(parameter) => {
+                parameter.formal_parameter()
+            }
         }
     }
 }

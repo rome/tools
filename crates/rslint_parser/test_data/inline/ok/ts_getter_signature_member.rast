@@ -73,7 +73,7 @@ JsModule {
                         },
                         optional_token_token: missing (optional),
                         type_parameters: missing (optional),
-                        parameter_list: JsParameters {
+                        parameters: JsParameters {
                             l_paren_token: L_PAREN@131..132 "(" [] [],
                             items: JsParameterList [],
                             r_paren_token: R_PAREN@132..133 ")" [] [],

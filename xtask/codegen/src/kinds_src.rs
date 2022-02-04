@@ -222,7 +222,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "JS_FUNCTION_STATEMENT",
         "JS_PARAMETERS",
         "JS_PARAMETER_LIST",
-        "JS_PARAMETER",
+        "JS_FORMAL_PARAMETER",
         "JS_REST_PARAMETER",
         "TS_THIS_PARAMETER",
         "TS_PROPERTY_PARAMETER",

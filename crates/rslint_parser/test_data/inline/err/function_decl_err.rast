@@ -189,7 +189,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@173..174 "(" [] [],
                 items: JsParameterList [
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsUnknownBinding {
                             items: [
                                 IDENT@174..179 "await" [] [],
@@ -221,7 +221,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@197..198 "(" [] [],
                 items: JsParameterList [
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsUnknownBinding {
                             items: [
                                 IDENT@198..203 "yield" [] [],
@@ -395,7 +395,7 @@ JsModule {
       5: JS_PARAMETERS@173..181
         0: L_PAREN@173..174 "(" [] []
         1: JS_PARAMETER_LIST@174..179
-          0: JS_PARAMETER@174..179
+          0: JS_FORMAL_PARAMETER@174..179
             0: JS_UNKNOWN_BINDING@174..179
               0: IDENT@174..179 "await" [] []
             1: (empty)
@@ -418,7 +418,7 @@ JsModule {
       5: JS_PARAMETERS@197..205
         0: L_PAREN@197..198 "(" [] []
         1: JS_PARAMETER_LIST@198..203
-          0: JS_PARAMETER@198..203
+          0: JS_FORMAL_PARAMETER@198..203
             0: JS_UNKNOWN_BINDING@198..203
               0: IDENT@198..203 "yield" [] []
             1: (empty)

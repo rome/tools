@@ -48,7 +48,7 @@ JsModule {
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@29..30 "(" [] [],
                                             items: JsParameterList [
-                                                JsParameter {
+                                                JsFormalParameter {
                                                     binding: JsIdentifierBinding {
                                                         name_token: IDENT@30..31 "a" [] [],
                                                     },
@@ -57,7 +57,7 @@ JsModule {
                                                     initializer: missing (optional),
                                                 },
                                                 COMMA@31..33 "," [] [Whitespace(" ")],
-                                                JsParameter {
+                                                JsFormalParameter {
                                                     binding: JsIdentifierBinding {
                                                         name_token: IDENT@33..34 "b" [] [],
                                                     },
@@ -66,7 +66,7 @@ JsModule {
                                                     initializer: missing (optional),
                                                 },
                                                 COMMA@34..36 "," [] [Whitespace(" ")],
-                                                JsParameter {
+                                                JsFormalParameter {
                                                     binding: JsIdentifierBinding {
                                                         name_token: IDENT@36..37 "c" [] [],
                                                     },
@@ -106,7 +106,7 @@ JsModule {
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@60..61 "(" [] [],
                                             items: JsParameterList [
-                                                JsParameter {
+                                                JsFormalParameter {
                                                     binding: JsIdentifierBinding {
                                                         name_token: IDENT@61..62 "a" [] [],
                                                     },
@@ -211,21 +211,21 @@ JsModule {
                     4: JS_PARAMETERS@29..39
                       0: L_PAREN@29..30 "(" [] []
                       1: JS_PARAMETER_LIST@30..37
-                        0: JS_PARAMETER@30..31
+                        0: JS_FORMAL_PARAMETER@30..31
                           0: JS_IDENTIFIER_BINDING@30..31
                             0: IDENT@30..31 "a" [] []
                           1: (empty)
                           2: (empty)
                           3: (empty)
                         1: COMMA@31..33 "," [] [Whitespace(" ")]
-                        2: JS_PARAMETER@33..34
+                        2: JS_FORMAL_PARAMETER@33..34
                           0: JS_IDENTIFIER_BINDING@33..34
                             0: IDENT@33..34 "b" [] []
                           1: (empty)
                           2: (empty)
                           3: (empty)
                         3: COMMA@34..36 "," [] [Whitespace(" ")]
-                        4: JS_PARAMETER@36..37
+                        4: JS_FORMAL_PARAMETER@36..37
                           0: JS_IDENTIFIER_BINDING@36..37
                             0: IDENT@36..37 "c" [] []
                           1: (empty)
@@ -255,7 +255,7 @@ JsModule {
                     4: JS_PARAMETERS@60..64
                       0: L_PAREN@60..61 "(" [] []
                       1: JS_PARAMETER_LIST@61..62
-                        0: JS_PARAMETER@61..62
+                        0: JS_FORMAL_PARAMETER@61..62
                           0: JS_IDENTIFIER_BINDING@61..62
                             0: IDENT@61..62 "a" [] []
                           1: (empty)

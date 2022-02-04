@@ -399,7 +399,7 @@ pub(crate) fn parse_any_parameter(
     let parameter = match p.cur() {
         T![...] => parse_rest_parameter(p, expression_context),
         T![this] => parse_ts_this_parameter(p),
-        _ => parse_parameter(p, parameter_context, expression_context),
+        _ => parse_formal_parameter(p, parameter_context, expression_context),
     };
 
     parameter.map(|mut parameter| {
@@ -549,7 +549,7 @@ impl ParameterContext {
 // test_err js_formal_parameter_error
 // function a(x: string) {}
 // function b(x?) {}
-pub(crate) fn parse_parameter(
+pub(crate) fn parse_formal_parameter(
     p: &mut Parser,
     parameter_context: ParameterContext,
     expression_context: ExpressionContext,
@@ -625,7 +625,7 @@ pub(crate) fn parse_parameter(
             }
         }
 
-        let mut parameter = m.complete(p, JS_PARAMETER);
+        let mut parameter = m.complete(p, JS_FORMAL_PARAMETER);
 
         if !valid {
             parameter.change_to_unknown(p);

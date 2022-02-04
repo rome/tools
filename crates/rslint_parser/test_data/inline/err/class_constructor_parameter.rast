@@ -24,7 +24,7 @@ JsModule {
                             JsUnknownParameter {
                                 items: [
                                     PROTECTED_KW@22..32 "protected" [] [Whitespace(" ")],
-                                    JsParameter {
+                                    JsFormalParameter {
                                         binding: JsIdentifierBinding {
                                             name_token: IDENT@32..33 "b" [] [],
                                         },
@@ -74,7 +74,7 @@ JsModule {
             1: JS_CONSTRUCTOR_PARAMETER_LIST@22..33
               0: JS_UNKNOWN_PARAMETER@22..33
                 0: PROTECTED_KW@22..32 "protected" [] [Whitespace(" ")]
-                1: JS_PARAMETER@32..33
+                1: JS_FORMAL_PARAMETER@32..33
                   0: JS_IDENTIFIER_BINDING@32..33
                     0: IDENT@32..33 "b" [] []
                   1: (empty)

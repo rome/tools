@@ -130,7 +130,7 @@ JsModule {
                                     parameters: JsParameters {
                                         l_paren_token: L_PAREN@89..90 "(" [] [],
                                         items: JsParameterList [
-                                            JsParameter {
+                                            JsFormalParameter {
                                                 binding: JsIdentifierBinding {
                                                     name_token: IDENT@90..93 "foo" [] [],
                                                 },
@@ -273,7 +273,7 @@ JsModule {
                   2: JS_PARAMETERS@89..95
                     0: L_PAREN@89..90 "(" [] []
                     1: JS_PARAMETER_LIST@90..93
-                      0: JS_PARAMETER@90..93
+                      0: JS_FORMAL_PARAMETER@90..93
                         0: JS_IDENTIFIER_BINDING@90..93
                           0: IDENT@90..93 "foo" [] []
                         1: (empty)

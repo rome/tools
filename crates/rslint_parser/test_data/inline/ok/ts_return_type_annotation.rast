@@ -14,7 +14,7 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@23..24 "(" [] [],
                     items: JsParameterList [
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@24..25 "a" [] [],
                             },
@@ -55,10 +55,10 @@ JsModule {
                         },
                         optional_token_token: missing (optional),
                         type_parameters: missing (optional),
-                        parameter_list: JsParameters {
+                        parameters: JsParameters {
                             l_paren_token: L_PAREN@58..59 "(" [] [],
                             items: JsParameterList [
-                                JsParameter {
+                                JsFormalParameter {
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@59..60 "a" [] [],
                                     },
@@ -101,10 +101,10 @@ JsModule {
                 members: TsObjectTypeMemberList [
                     TsCallSignatureObjectTypeMember {
                         type_parameters: missing (optional),
-                        parameter_list: JsParameters {
+                        parameters: JsParameters {
                             l_paren_token: L_PAREN@88..89 "(" [] [],
                             items: JsParameterList [
-                                JsParameter {
+                                JsFormalParameter {
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@89..90 "a" [] [],
                                     },
@@ -160,7 +160,7 @@ JsModule {
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@123..124 "(" [] [],
                                             items: JsParameterList [
-                                                JsParameter {
+                                                JsFormalParameter {
                                                     binding: JsIdentifierBinding {
                                                         name_token: IDENT@124..125 "x" [] [],
                                                     },
@@ -242,7 +242,7 @@ JsModule {
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@189..190 "(" [] [],
                         items: JsParameterList [
-                            JsParameter {
+                            JsFormalParameter {
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@190..191 "x" [] [],
                                 },
@@ -314,7 +314,7 @@ JsModule {
         1: JS_PARAMETERS@23..27
           0: L_PAREN@23..24 "(" [] []
           1: JS_PARAMETER_LIST@24..25
-            0: JS_PARAMETER@24..25
+            0: JS_FORMAL_PARAMETER@24..25
               0: JS_IDENTIFIER_BINDING@24..25
                 0: IDENT@24..25 "a" [] []
               1: (empty)
@@ -347,7 +347,7 @@ JsModule {
             3: JS_PARAMETERS@58..61
               0: L_PAREN@58..59 "(" [] []
               1: JS_PARAMETER_LIST@59..60
-                0: JS_PARAMETER@59..60
+                0: JS_FORMAL_PARAMETER@59..60
                   0: JS_IDENTIFIER_BINDING@59..60
                     0: IDENT@59..60 "a" [] []
                   1: (empty)
@@ -380,7 +380,7 @@ JsModule {
             1: JS_PARAMETERS@88..91
               0: L_PAREN@88..89 "(" [] []
               1: JS_PARAMETER_LIST@89..90
-                0: JS_PARAMETER@89..90
+                0: JS_FORMAL_PARAMETER@89..90
                   0: JS_IDENTIFIER_BINDING@89..90
                     0: IDENT@89..90 "a" [] []
                   1: (empty)
@@ -422,7 +422,7 @@ JsModule {
                     4: JS_PARAMETERS@123..126
                       0: L_PAREN@123..124 "(" [] []
                       1: JS_PARAMETER_LIST@124..125
-                        0: JS_PARAMETER@124..125
+                        0: JS_FORMAL_PARAMETER@124..125
                           0: JS_IDENTIFIER_BINDING@124..125
                             0: IDENT@124..125 "x" [] []
                           1: (empty)
@@ -478,7 +478,7 @@ JsModule {
           7: JS_PARAMETERS@189..192
             0: L_PAREN@189..190 "(" [] []
             1: JS_PARAMETER_LIST@190..191
-              0: JS_PARAMETER@190..191
+              0: JS_FORMAL_PARAMETER@190..191
                 0: JS_IDENTIFIER_BINDING@190..191
                   0: IDENT@190..191 "x" [] []
                 1: (empty)

@@ -34,7 +34,7 @@ JsScript {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@43..44 "(" [] [],
                 items: JsParameterList [
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@44..48 "test" [] [],
                         },
@@ -64,7 +64,7 @@ JsScript {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@73..74 "(" [] [],
                 items: JsParameterList [
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@74..78 "test" [] [],
                         },
@@ -94,7 +94,7 @@ JsScript {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@97..98 "(" [] [],
                 items: JsParameterList [
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@98..102 "test" [] [],
                         },
@@ -124,7 +124,7 @@ JsScript {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@122..123 "(" [] [],
                 items: JsParameterList [
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@123..127 "test" [] [],
                         },
@@ -178,7 +178,7 @@ JsScript {
       5: JS_PARAMETERS@43..50
         0: L_PAREN@43..44 "(" [] []
         1: JS_PARAMETER_LIST@44..48
-          0: JS_PARAMETER@44..48
+          0: JS_FORMAL_PARAMETER@44..48
             0: JS_IDENTIFIER_BINDING@44..48
               0: IDENT@44..48 "test" [] []
             1: (empty)
@@ -201,7 +201,7 @@ JsScript {
       5: JS_PARAMETERS@73..80
         0: L_PAREN@73..74 "(" [] []
         1: JS_PARAMETER_LIST@74..78
-          0: JS_PARAMETER@74..78
+          0: JS_FORMAL_PARAMETER@74..78
             0: JS_IDENTIFIER_BINDING@74..78
               0: IDENT@74..78 "test" [] []
             1: (empty)
@@ -224,7 +224,7 @@ JsScript {
       5: JS_PARAMETERS@97..104
         0: L_PAREN@97..98 "(" [] []
         1: JS_PARAMETER_LIST@98..102
-          0: JS_PARAMETER@98..102
+          0: JS_FORMAL_PARAMETER@98..102
             0: JS_IDENTIFIER_BINDING@98..102
               0: IDENT@98..102 "test" [] []
             1: (empty)
@@ -247,7 +247,7 @@ JsScript {
       5: JS_PARAMETERS@122..129
         0: L_PAREN@122..123 "(" [] []
         1: JS_PARAMETER_LIST@123..127
-          0: JS_PARAMETER@123..127
+          0: JS_FORMAL_PARAMETER@123..127
             0: JS_IDENTIFIER_BINDING@123..127
               0: IDENT@123..127 "test" [] []
             1: (empty)

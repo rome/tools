@@ -16,7 +16,7 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@26..27 "(" [] [],
                     items: JsParameterList [
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@27..28 "a" [] [],
                             },
@@ -30,7 +30,7 @@ JsModule {
                             initializer: missing (optional),
                         },
                         COMMA@36..38 "," [] [Whitespace(" ")],
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@38..39 "b" [] [],
                             },
@@ -67,7 +67,7 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@81..82 "(" [] [],
                     items: JsParameterList [
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@82..83 "a" [] [],
                             },
@@ -81,7 +81,7 @@ JsModule {
                             initializer: missing (optional),
                         },
                         COMMA@91..93 "," [] [Whitespace(" ")],
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@93..94 "b" [] [],
                             },
@@ -138,7 +138,7 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@133..134 "(" [] [],
                     items: JsParameterList [
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@134..135 "a" [] [],
                             },
@@ -155,7 +155,7 @@ JsModule {
                             initializer: missing (optional),
                         },
                         COMMA@138..140 "," [] [Whitespace(" ")],
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@140..141 "b" [] [],
                             },
@@ -215,7 +215,7 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@184..185 "(" [] [],
                     items: JsParameterList [
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@185..186 "a" [] [],
                             },
@@ -232,7 +232,7 @@ JsModule {
                             initializer: missing (optional),
                         },
                         COMMA@189..191 "," [] [Whitespace(" ")],
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@191..192 "b" [] [],
                             },
@@ -279,7 +279,7 @@ JsModule {
         3: JS_PARAMETERS@26..49
           0: L_PAREN@26..27 "(" [] []
           1: JS_PARAMETER_LIST@27..47
-            0: JS_PARAMETER@27..36
+            0: JS_FORMAL_PARAMETER@27..36
               0: JS_IDENTIFIER_BINDING@27..28
                 0: IDENT@27..28 "a" [] []
               1: (empty)
@@ -289,7 +289,7 @@ JsModule {
                   0: STRING_KW@30..36 "string" [] []
               3: (empty)
             1: COMMA@36..38 "," [] [Whitespace(" ")]
-            2: JS_PARAMETER@38..47
+            2: JS_FORMAL_PARAMETER@38..47
               0: JS_IDENTIFIER_BINDING@38..39
                 0: IDENT@38..39 "b" [] []
               1: (empty)
@@ -316,7 +316,7 @@ JsModule {
         3: JS_PARAMETERS@81..104
           0: L_PAREN@81..82 "(" [] []
           1: JS_PARAMETER_LIST@82..102
-            0: JS_PARAMETER@82..91
+            0: JS_FORMAL_PARAMETER@82..91
               0: JS_IDENTIFIER_BINDING@82..83
                 0: IDENT@82..83 "a" [] []
               1: (empty)
@@ -326,7 +326,7 @@ JsModule {
                   0: STRING_KW@85..91 "string" [] []
               3: (empty)
             1: COMMA@91..93 "," [] [Whitespace(" ")]
-            2: JS_PARAMETER@93..102
+            2: JS_FORMAL_PARAMETER@93..102
               0: JS_IDENTIFIER_BINDING@93..94
                 0: IDENT@93..94 "b" [] []
               1: (empty)
@@ -367,7 +367,7 @@ JsModule {
         3: JS_PARAMETERS@133..146
           0: L_PAREN@133..134 "(" [] []
           1: JS_PARAMETER_LIST@134..144
-            0: JS_PARAMETER@134..138
+            0: JS_FORMAL_PARAMETER@134..138
               0: JS_IDENTIFIER_BINDING@134..135
                 0: IDENT@134..135 "a" [] []
               1: (empty)
@@ -379,7 +379,7 @@ JsModule {
                   1: (empty)
               3: (empty)
             1: COMMA@138..140 "," [] [Whitespace(" ")]
-            2: JS_PARAMETER@140..144
+            2: JS_FORMAL_PARAMETER@140..144
               0: JS_IDENTIFIER_BINDING@140..141
                 0: IDENT@140..141 "b" [] []
               1: (empty)
@@ -422,7 +422,7 @@ JsModule {
         3: JS_PARAMETERS@184..197
           0: L_PAREN@184..185 "(" [] []
           1: JS_PARAMETER_LIST@185..195
-            0: JS_PARAMETER@185..189
+            0: JS_FORMAL_PARAMETER@185..189
               0: JS_IDENTIFIER_BINDING@185..186
                 0: IDENT@185..186 "a" [] []
               1: (empty)
@@ -434,7 +434,7 @@ JsModule {
                   1: (empty)
               3: (empty)
             1: COMMA@189..191 "," [] [Whitespace(" ")]
-            2: JS_PARAMETER@191..195
+            2: JS_FORMAL_PARAMETER@191..195
               0: JS_IDENTIFIER_BINDING@191..192
                 0: IDENT@191..192 "b" [] []
               1: (empty)

@@ -21,56 +21,52 @@ JsModule {
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@35..36 "(" [] [],
                         parameters: JsConstructorParameterList [
-                            JsUnknownParameter {
-                                items: [
-                                    PRIVATE_KW@36..44 "private" [] [Whitespace(" ")],
-                                    JsUnknownParameter {
-                                        items: [
-                                            JsObjectBindingPattern {
-                                                l_curly_token: L_CURLY@44..46 "{" [] [Whitespace(" ")],
-                                                properties: JsObjectBindingPatternPropertyList [
-                                                    JsObjectBindingPatternShorthandProperty {
-                                                        identifier: JsIdentifierBinding {
-                                                            name_token: IDENT@46..47 "x" [] [],
-                                                        },
-                                                        init: missing (optional),
+                            TsPropertyParameter {
+                                accessibility: PRIVATE_KW@36..44 "private" [] [Whitespace(" ")],
+                                formal_parameter: JsUnknownParameter {
+                                    items: [
+                                        JsObjectBindingPattern {
+                                            l_curly_token: L_CURLY@44..46 "{" [] [Whitespace(" ")],
+                                            properties: JsObjectBindingPatternPropertyList [
+                                                JsObjectBindingPatternShorthandProperty {
+                                                    identifier: JsIdentifierBinding {
+                                                        name_token: IDENT@46..47 "x" [] [],
                                                     },
-                                                    COMMA@47..49 "," [] [Whitespace(" ")],
-                                                    JsObjectBindingPatternShorthandProperty {
-                                                        identifier: JsIdentifierBinding {
-                                                            name_token: IDENT@49..51 "y" [] [Whitespace(" ")],
-                                                        },
-                                                        init: missing (optional),
+                                                    init: missing (optional),
+                                                },
+                                                COMMA@47..49 "," [] [Whitespace(" ")],
+                                                JsObjectBindingPatternShorthandProperty {
+                                                    identifier: JsIdentifierBinding {
+                                                        name_token: IDENT@49..51 "y" [] [Whitespace(" ")],
                                                     },
-                                                ],
-                                                r_curly_token: R_CURLY@51..52 "}" [] [],
-                                            },
-                                        ],
-                                    },
-                                ],
+                                                    init: missing (optional),
+                                                },
+                                            ],
+                                            r_curly_token: R_CURLY@51..52 "}" [] [],
+                                        },
+                                    ],
+                                },
                             },
                             COMMA@52..54 "," [] [Whitespace(" ")],
-                            JsUnknownParameter {
-                                items: [
-                                    PROTECTED_KW@54..64 "protected" [] [Whitespace(" ")],
-                                    JsUnknownParameter {
-                                        items: [
-                                            JsArrayBindingPattern {
-                                                l_brack_token: L_BRACK@64..65 "[" [] [],
-                                                elements: JsArrayBindingPatternElementList [
-                                                    JsIdentifierBinding {
-                                                        name_token: IDENT@65..66 "a" [] [],
-                                                    },
-                                                    COMMA@66..68 "," [] [Whitespace(" ")],
-                                                    JsIdentifierBinding {
-                                                        name_token: IDENT@68..69 "b" [] [],
-                                                    },
-                                                ],
-                                                r_brack_token: R_BRACK@69..70 "]" [] [],
-                                            },
-                                        ],
-                                    },
-                                ],
+                            TsPropertyParameter {
+                                accessibility: PROTECTED_KW@54..64 "protected" [] [Whitespace(" ")],
+                                formal_parameter: JsUnknownParameter {
+                                    items: [
+                                        JsArrayBindingPattern {
+                                            l_brack_token: L_BRACK@64..65 "[" [] [],
+                                            elements: JsArrayBindingPatternElementList [
+                                                JsIdentifierBinding {
+                                                    name_token: IDENT@65..66 "a" [] [],
+                                                },
+                                                COMMA@66..68 "," [] [Whitespace(" ")],
+                                                JsIdentifierBinding {
+                                                    name_token: IDENT@68..69 "b" [] [],
+                                                },
+                                            ],
+                                            r_brack_token: R_BRACK@69..70 "]" [] [],
+                                        },
+                                    ],
+                                },
                             },
                         ],
                         r_paren_token: R_PAREN@70..72 ")" [] [Whitespace(" ")],
@@ -110,7 +106,7 @@ JsModule {
           3: JS_CONSTRUCTOR_PARAMETERS@35..72
             0: L_PAREN@35..36 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@36..70
-              0: JS_UNKNOWN_PARAMETER@36..52
+              0: TS_PROPERTY_PARAMETER@36..52
                 0: PRIVATE_KW@36..44 "private" [] [Whitespace(" ")]
                 1: JS_UNKNOWN_PARAMETER@44..52
                   0: JS_OBJECT_BINDING_PATTERN@44..52
@@ -127,7 +123,7 @@ JsModule {
                         1: (empty)
                     2: R_CURLY@51..52 "}" [] []
               1: COMMA@52..54 "," [] [Whitespace(" ")]
-              2: JS_UNKNOWN_PARAMETER@54..70
+              2: TS_PROPERTY_PARAMETER@54..70
                 0: PROTECTED_KW@54..64 "protected" [] [Whitespace(" ")]
                 1: JS_UNKNOWN_PARAMETER@64..70
                   0: JS_ARRAY_BINDING_PATTERN@64..70

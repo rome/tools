@@ -33,7 +33,7 @@ JsModule {
                         parameters: JsParameters {
                             l_paren_token: L_PAREN@35..36 "(" [] [],
                             items: JsParameterList [
-                                JsParameter {
+                                JsFormalParameter {
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@36..40 "test" [] [],
                                     },
@@ -90,7 +90,7 @@ JsModule {
             5: JS_PARAMETERS@35..42
               0: L_PAREN@35..36 "(" [] []
               1: JS_PARAMETER_LIST@36..40
-                0: JS_PARAMETER@36..40
+                0: JS_FORMAL_PARAMETER@36..40
                   0: JS_IDENTIFIER_BINDING@36..40
                     0: IDENT@36..40 "test" [] []
                   1: (empty)

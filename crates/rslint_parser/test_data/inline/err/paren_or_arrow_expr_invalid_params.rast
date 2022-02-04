@@ -37,7 +37,7 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@13..15 "(" [Newline("\n")] [],
                     items: JsParameterList [
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@15..16 "a" [] [],
                             },
@@ -48,7 +48,7 @@ JsModule {
                         COMMA@16..18 "," [] [Whitespace(" ")],
                         missing element,
                         COMMA@18..19 "," [] [],
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@19..20 "b" [] [],
                             },
@@ -77,7 +77,7 @@ JsModule {
                 parameters: JsParameters {
                     l_paren_token: L_PAREN@27..29 "(" [Newline("\n")] [],
                     items: JsParameterList [
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@29..30 "a" [] [],
                             },
@@ -86,7 +86,7 @@ JsModule {
                             initializer: missing (optional),
                         },
                         COMMA@30..32 "," [] [Whitespace(" ")],
-                        JsParameter {
+                        JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@32..33 "b" [] [],
                             },
@@ -199,7 +199,7 @@ JsModule {
         2: JS_PARAMETERS@13..22
           0: L_PAREN@13..15 "(" [Newline("\n")] []
           1: JS_PARAMETER_LIST@15..20
-            0: JS_PARAMETER@15..16
+            0: JS_FORMAL_PARAMETER@15..16
               0: JS_IDENTIFIER_BINDING@15..16
                 0: IDENT@15..16 "a" [] []
               1: (empty)
@@ -208,7 +208,7 @@ JsModule {
             1: COMMA@16..18 "," [] [Whitespace(" ")]
             2: (empty)
             3: COMMA@18..19 "," [] []
-            4: JS_PARAMETER@19..20
+            4: JS_FORMAL_PARAMETER@19..20
               0: JS_IDENTIFIER_BINDING@19..20
                 0: IDENT@19..20 "b" [] []
               1: (empty)
@@ -230,14 +230,14 @@ JsModule {
         2: JS_PARAMETERS@27..35
           0: L_PAREN@27..29 "(" [Newline("\n")] []
           1: JS_PARAMETER_LIST@29..33
-            0: JS_PARAMETER@29..30
+            0: JS_FORMAL_PARAMETER@29..30
               0: JS_IDENTIFIER_BINDING@29..30
                 0: IDENT@29..30 "a" [] []
               1: (empty)
               2: (empty)
               3: (empty)
             1: COMMA@30..32 "," [] [Whitespace(" ")]
-            2: JS_PARAMETER@32..33
+            2: JS_FORMAL_PARAMETER@32..33
               0: JS_IDENTIFIER_BINDING@32..33
                 0: IDENT@32..33 "b" [] []
               1: (empty)

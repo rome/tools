@@ -13,7 +13,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@24..25 "(" [] [],
                 items: JsParameterList [
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@25..26 "x" [] [],
                         },
@@ -43,7 +43,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@41..42 "(" [] [],
                 items: JsParameterList [
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsObjectBindingPattern {
                             l_curly_token: L_CURLY@42..44 "{" [] [Whitespace(" ")],
                             properties: JsObjectBindingPatternPropertyList [
@@ -96,7 +96,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@70..71 "(" [] [],
                 items: JsParameterList [
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@71..72 "x" [] [],
                         },
@@ -110,7 +110,7 @@ JsModule {
                         initializer: missing (optional),
                     },
                     COMMA@80..82 "," [] [Whitespace(" ")],
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@82..83 "y" [] [],
                         },
@@ -124,7 +124,7 @@ JsModule {
                         initializer: missing (optional),
                     },
                     COMMA@92..94 "," [] [Whitespace(" ")],
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@94..95 "z" [] [],
                         },
@@ -171,7 +171,7 @@ JsModule {
       5: JS_PARAMETERS@24..28
         0: L_PAREN@24..25 "(" [] []
         1: JS_PARAMETER_LIST@25..26
-          0: JS_PARAMETER@25..26
+          0: JS_FORMAL_PARAMETER@25..26
             0: JS_IDENTIFIER_BINDING@25..26
               0: IDENT@25..26 "x" [] []
             1: (empty)
@@ -194,7 +194,7 @@ JsModule {
       5: JS_PARAMETERS@41..57
         0: L_PAREN@41..42 "(" [] []
         1: JS_PARAMETER_LIST@42..55
-          0: JS_PARAMETER@42..55
+          0: JS_FORMAL_PARAMETER@42..55
             0: JS_OBJECT_BINDING_PATTERN@42..51
               0: L_CURLY@42..44 "{" [] [Whitespace(" ")]
               1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@44..49
@@ -233,7 +233,7 @@ JsModule {
       5: JS_PARAMETERS@70..114
         0: L_PAREN@70..71 "(" [] []
         1: JS_PARAMETER_LIST@71..112
-          0: JS_PARAMETER@71..80
+          0: JS_FORMAL_PARAMETER@71..80
             0: JS_IDENTIFIER_BINDING@71..72
               0: IDENT@71..72 "x" [] []
             1: (empty)
@@ -243,7 +243,7 @@ JsModule {
                 0: STRING_KW@74..80 "string" [] []
             3: (empty)
           1: COMMA@80..82 "," [] [Whitespace(" ")]
-          2: JS_PARAMETER@82..92
+          2: JS_FORMAL_PARAMETER@82..92
             0: JS_IDENTIFIER_BINDING@82..83
               0: IDENT@82..83 "y" [] []
             1: QUESTION@83..84 "?" [] []
@@ -253,7 +253,7 @@ JsModule {
                 0: NUMBER_KW@86..92 "number" [] []
             3: (empty)
           3: COMMA@92..94 "," [] [Whitespace(" ")]
-          4: JS_PARAMETER@94..112
+          4: JS_FORMAL_PARAMETER@94..112
             0: JS_IDENTIFIER_BINDING@94..95
               0: IDENT@94..95 "z" [] []
             1: (empty)

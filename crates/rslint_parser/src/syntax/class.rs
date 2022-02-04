@@ -6,7 +6,7 @@ use crate::state::{
 use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::function::{
-    parse_any_parameter, parse_function_body, parse_parameter, parse_parameter_list,
+    parse_any_parameter, parse_formal_parameter, parse_function_body, parse_parameter_list,
     parse_parameters_list, parse_ts_type_annotation_or_error, ParameterContext,
 };
 use crate::syntax::js_parse_error;
@@ -628,7 +628,7 @@ fn parse_class_member_impl(
                     } else {
                         let has_l_paren = p.expect(T!['(']);
                         p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
-                            parse_parameter(
+                            parse_formal_parameter(
                                 p,
                                 ParameterContext::Setter,
                                 ExpressionContext::default()
@@ -1014,7 +1014,7 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
             }
         }
 
-        parse_parameter(p, ParameterContext::ParameterProperty, context)
+        parse_formal_parameter(p, ParameterContext::ParameterProperty, context)
             .or_add_diagnostic(p, expected_binding);
 
         let kind = if !valid {

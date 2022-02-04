@@ -24,7 +24,7 @@ JsModule {
                             JsUnknownParameter {
                                 items: [
                                     READONLY_KW@22..31 "readonly" [] [Whitespace(" ")],
-                                    JsParameter {
+                                    JsFormalParameter {
                                         binding: JsIdentifierBinding {
                                             name_token: IDENT@31..32 "b" [] [],
                                         },
@@ -74,7 +74,7 @@ JsModule {
             1: JS_CONSTRUCTOR_PARAMETER_LIST@22..32
               0: JS_UNKNOWN_PARAMETER@22..32
                 0: READONLY_KW@22..31 "readonly" [] [Whitespace(" ")]
-                1: JS_PARAMETER@31..32
+                1: JS_FORMAL_PARAMETER@31..32
                   0: JS_IDENTIFIER_BINDING@31..32
                     0: IDENT@31..32 "b" [] []
                   1: (empty)

@@ -13,7 +13,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@27..28 "(" [] [],
                 items: JsParameterList [
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@28..29 "a" [] [],
                         },
@@ -27,7 +27,7 @@ JsModule {
                         initializer: missing (optional),
                     },
                     COMMA@37..39 "," [] [Whitespace(" ")],
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@39..40 "b" [] [],
                         },
@@ -41,7 +41,7 @@ JsModule {
                         initializer: missing (optional),
                     },
                     COMMA@49..51 "," [] [Whitespace(" ")],
-                    JsParameter {
+                    JsFormalParameter {
                         binding: JsIdentifierBinding {
                             name_token: IDENT@51..52 "c" [] [],
                         },
@@ -83,7 +83,7 @@ JsModule {
       5: JS_PARAMETERS@27..64
         0: L_PAREN@27..28 "(" [] []
         1: JS_PARAMETER_LIST@28..62
-          0: JS_PARAMETER@28..37
+          0: JS_FORMAL_PARAMETER@28..37
             0: JS_IDENTIFIER_BINDING@28..29
               0: IDENT@28..29 "a" [] []
             1: (empty)
@@ -93,7 +93,7 @@ JsModule {
                 0: STRING_KW@31..37 "string" [] []
             3: (empty)
           1: COMMA@37..39 "," [] [Whitespace(" ")]
-          2: JS_PARAMETER@39..49
+          2: JS_FORMAL_PARAMETER@39..49
             0: JS_IDENTIFIER_BINDING@39..40
               0: IDENT@39..40 "b" [] []
             1: QUESTION@40..41 "?" [] []
@@ -103,7 +103,7 @@ JsModule {
                 0: NUMBER_KW@43..49 "number" [] []
             3: (empty)
           3: COMMA@49..51 "," [] [Whitespace(" ")]
-          4: JS_PARAMETER@51..62
+          4: JS_FORMAL_PARAMETER@51..62
             0: JS_IDENTIFIER_BINDING@51..52
               0: IDENT@51..52 "c" [] []
             1: (empty)
