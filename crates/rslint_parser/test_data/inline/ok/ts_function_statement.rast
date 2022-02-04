@@ -1,0 +1,122 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsFunctionStatement {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@0..23 "function" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@23..27 "test" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@27..28 "(" [] [],
+                items: JsParameterList [
+                    JsFormalParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@28..29 "a" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        type_annotation: TsTypeAnnotation {
+                            colon_token: COLON@29..31 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@31..37 "string" [] [],
+                            },
+                        },
+                        initializer: missing (optional),
+                    },
+                    COMMA@37..39 "," [] [Whitespace(" ")],
+                    JsFormalParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@39..40 "b" [] [],
+                        },
+                        question_mark_token: QUESTION@40..41 "?" [] [],
+                        type_annotation: TsTypeAnnotation {
+                            colon_token: COLON@41..43 ":" [] [Whitespace(" ")],
+                            ty: TsNumberType {
+                                number_token: NUMBER_KW@43..49 "number" [] [],
+                            },
+                        },
+                        initializer: missing (optional),
+                    },
+                    COMMA@49..51 "," [] [Whitespace(" ")],
+                    JsFormalParameter {
+                        binding: JsIdentifierBinding {
+                            name_token: IDENT@51..52 "c" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@52..53 "=" [] [],
+                            expression: JsStringLiteralExpression {
+                                value_token: JS_STRING_LITERAL@53..62 "\"default\"" [] [],
+                            },
+                        },
+                    },
+                ],
+                r_paren_token: R_PAREN@62..64 ")" [] [Whitespace(" ")],
+            },
+            return_type_annotation: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@64..65 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@65..66 "}" [] [],
+            },
+        },
+    ],
+    eof_token: EOF@66..67 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..67
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..66
+    0: JS_FUNCTION_STATEMENT@0..66
+      0: (empty)
+      1: FUNCTION_KW@0..23 "function" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@23..27
+        0: IDENT@23..27 "test" [] []
+      4: (empty)
+      5: JS_PARAMETERS@27..64
+        0: L_PAREN@27..28 "(" [] []
+        1: JS_PARAMETER_LIST@28..62
+          0: JS_FORMAL_PARAMETER@28..37
+            0: JS_IDENTIFIER_BINDING@28..29
+              0: IDENT@28..29 "a" [] []
+            1: (empty)
+            2: TS_TYPE_ANNOTATION@29..37
+              0: COLON@29..31 ":" [] [Whitespace(" ")]
+              1: TS_STRING_TYPE@31..37
+                0: STRING_KW@31..37 "string" [] []
+            3: (empty)
+          1: COMMA@37..39 "," [] [Whitespace(" ")]
+          2: JS_FORMAL_PARAMETER@39..49
+            0: JS_IDENTIFIER_BINDING@39..40
+              0: IDENT@39..40 "b" [] []
+            1: QUESTION@40..41 "?" [] []
+            2: TS_TYPE_ANNOTATION@41..49
+              0: COLON@41..43 ":" [] [Whitespace(" ")]
+              1: TS_NUMBER_TYPE@43..49
+                0: NUMBER_KW@43..49 "number" [] []
+            3: (empty)
+          3: COMMA@49..51 "," [] [Whitespace(" ")]
+          4: JS_FORMAL_PARAMETER@51..62
+            0: JS_IDENTIFIER_BINDING@51..52
+              0: IDENT@51..52 "c" [] []
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@52..62
+              0: EQ@52..53 "=" [] []
+              1: JS_STRING_LITERAL_EXPRESSION@53..62
+                0: JS_STRING_LITERAL@53..62 "\"default\"" [] []
+        2: R_PAREN@62..64 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@64..66
+        0: L_CURLY@64..65 "{" [] []
+        1: JS_DIRECTIVE_LIST@65..65
+        2: JS_STATEMENT_LIST@65..65
+        3: R_CURLY@65..66 "}" [] []
+  3: EOF@66..67 "" [Newline("\n")] []

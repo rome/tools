@@ -1,0 +1,102 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsVariableStatement {
+            declarations: JsVariableDeclarations {
+                kind: LET_KW@0..18 "let" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+                items: JsVariableDeclarationList [
+                    JsVariableDeclaration {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@18..20 "a" [] [Whitespace(" ")],
+                        },
+                        excl_token: missing (optional),
+                        type_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@20..22 "=" [] [Whitespace(" ")],
+                            expression: JsArrowFunctionExpression {
+                                async_token: missing (optional),
+                                type_parameters: missing (optional),
+                                parameters: JsParameters {
+                                    l_paren_token: L_PAREN@22..23 "(" [] [],
+                                    items: JsParameterList [
+                                        JsUnknownParameter {
+                                            items: [
+                                                THIS_KW@23..27 "this" [] [],
+                                                TsTypeAnnotation {
+                                                    colon_token: COLON@27..29 ":" [] [Whitespace(" ")],
+                                                    ty: TsStringType {
+                                                        string_token: STRING_KW@29..35 "string" [] [],
+                                                    },
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                    r_paren_token: R_PAREN@35..37 ")" [] [Whitespace(" ")],
+                                },
+                                return_type_annotation: missing (optional),
+                                fat_arrow_token: FAT_ARROW@37..40 "=>" [] [Whitespace(" ")],
+                                body: JsFunctionBody {
+                                    l_curly_token: L_CURLY@40..41 "{" [] [],
+                                    directives: JsDirectiveList [],
+                                    statements: JsStatementList [],
+                                    r_curly_token: R_CURLY@41..42 "}" [] [],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+    ],
+    eof_token: EOF@42..43 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..43
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..42
+    0: JS_VARIABLE_STATEMENT@0..42
+      0: JS_VARIABLE_DECLARATIONS@0..42
+        0: LET_KW@0..18 "let" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION_LIST@18..42
+          0: JS_VARIABLE_DECLARATION@18..42
+            0: JS_IDENTIFIER_BINDING@18..20
+              0: IDENT@18..20 "a" [] [Whitespace(" ")]
+            1: (empty)
+            2: (empty)
+            3: JS_INITIALIZER_CLAUSE@20..42
+              0: EQ@20..22 "=" [] [Whitespace(" ")]
+              1: JS_ARROW_FUNCTION_EXPRESSION@22..42
+                0: (empty)
+                1: (empty)
+                2: JS_PARAMETERS@22..37
+                  0: L_PAREN@22..23 "(" [] []
+                  1: JS_PARAMETER_LIST@23..35
+                    0: JS_UNKNOWN_PARAMETER@23..35
+                      0: THIS_KW@23..27 "this" [] []
+                      1: TS_TYPE_ANNOTATION@27..35
+                        0: COLON@27..29 ":" [] [Whitespace(" ")]
+                        1: TS_STRING_TYPE@29..35
+                          0: STRING_KW@29..35 "string" [] []
+                  2: R_PAREN@35..37 ")" [] [Whitespace(" ")]
+                3: (empty)
+                4: FAT_ARROW@37..40 "=>" [] [Whitespace(" ")]
+                5: JS_FUNCTION_BODY@40..42
+                  0: L_CURLY@40..41 "{" [] []
+                  1: JS_DIRECTIVE_LIST@41..41
+                  2: JS_STATEMENT_LIST@41..41
+                  3: R_CURLY@41..42 "}" [] []
+      1: (empty)
+  3: EOF@42..43 "" [Newline("\n")] []
+--
+error[SyntaxError]: An arrow function cannot have a 'this' parameter.
+  ┌─ ts_arrow_function_this_parameter.js:2:10
+  │
+2 │ let a = (this: string) => {}
+  │          ^^^^^^^^^^^^
+
+--
+// TYPESCRIPT
+let a = (this: string) => {}

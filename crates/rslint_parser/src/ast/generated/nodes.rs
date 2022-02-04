@@ -1395,6 +1395,29 @@ impl JsForVariableDeclaration {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsFormalParameter {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsFormalParameter {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn question_mark_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 1usize)
+    }
+    pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 2usize)
+    }
+    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsFunctionBody {
     pub(crate) syntax: SyntaxNode,
 }
@@ -2343,26 +2366,6 @@ impl JsObjectExpression {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsParameter {
-    pub(crate) syntax: SyntaxNode,
-}
-impl JsParameter {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
-        support::required_node(&self.syntax, 0usize)
-    }
-    pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
-        support::node(&self.syntax, 1usize)
-    }
-    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 2usize) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsParameters {
     pub(crate) syntax: SyntaxNode,
 }
@@ -2602,6 +2605,9 @@ impl JsRestParameter {
     pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
         support::required_node(&self.syntax, 1usize)
     }
+    pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsReturnStatement {
@@ -2686,7 +2692,7 @@ impl JsSetterClassMember {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 5usize)
     }
-    pub fn parameter(&self) -> SyntaxResult<JsParameter> {
+    pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
         support::required_node(&self.syntax, 6usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -2717,7 +2723,7 @@ impl JsSetterObjectMember {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn parameter(&self) -> SyntaxResult<JsParameter> {
+    pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
         support::required_node(&self.syntax, 3usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -3370,7 +3376,7 @@ impl TsCallSignatureObjectTypeMember {
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 0usize)
     }
-    pub fn parameter_list(&self) -> SyntaxResult<JsParameters> {
+    pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
@@ -3428,35 +3434,13 @@ impl TsConstructSignatureObjectTypeMember {
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 1usize)
     }
-    pub fn parameter_list(&self) -> SyntaxResult<JsParameters> {
+    pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
         support::node(&self.syntax, 3usize)
     }
     pub fn separator_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsConstructorParam {
-    pub(crate) syntax: SyntaxNode,
-}
-impl TsConstructorParam {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn accessibility(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
-        support::required_node(&self.syntax, 2usize)
-    }
-    pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
-        support::node(&self.syntax, 3usize)
-    }
-    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 4usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructorType {
@@ -3973,7 +3957,7 @@ impl TsMethodSignatureObjectTypeMember {
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 2usize)
     }
-    pub fn parameter_list(&self) -> SyntaxResult<JsParameters> {
+    pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 3usize)
     }
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
@@ -4161,6 +4145,25 @@ impl TsParenthesizedType {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsPropertyParameter {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsPropertyParameter {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn accessibility(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn formal_parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+        support::required_node(&self.syntax, 1usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsPropertySignatureObjectTypeMember {
     pub(crate) syntax: SyntaxNode,
 }
@@ -4201,6 +4204,26 @@ impl TsQualifiedName {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn right(&self) -> SyntaxResult<JsName> { support::required_node(&self.syntax, 2usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsReadonlyPropertyParameter {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsReadonlyPropertyParameter {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn accessibility(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn readonly_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn formal_parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+        support::required_node(&self.syntax, 2usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsReferenceType {
@@ -4274,7 +4297,7 @@ impl TsSetterSignatureObjectTypeMember {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn parameter(&self) -> SyntaxResult<JsParameter> {
+    pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
         support::required_node(&self.syntax, 3usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -4384,6 +4407,25 @@ impl TsTemplateLiteralType {
     pub fn elements(&self) -> TsTemplateElementList { support::list(&self.syntax, 1usize) }
     pub fn r_tick_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsThisParameter {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsThisParameter {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn this_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 1usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4790,9 +4832,10 @@ pub enum JsAnyClassMemberName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyConstructorParameter {
-    JsParameter(JsParameter),
-    JsUnknownParameter(JsUnknownParameter),
-    TsConstructorParam(TsConstructorParam),
+    JsAnyFormalParameter(JsAnyFormalParameter),
+    JsRestParameter(JsRestParameter),
+    TsPropertyParameter(TsPropertyParameter),
+    TsReadonlyPropertyParameter(TsReadonlyPropertyParameter),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExportClause {
@@ -4857,6 +4900,11 @@ pub enum JsAnyForInOrOfInitializer {
 pub enum JsAnyForInitializer {
     JsAnyExpression(JsAnyExpression),
     JsVariableDeclarations(JsVariableDeclarations),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyFormalParameter {
+    JsFormalParameter(JsFormalParameter),
+    JsUnknownParameter(JsUnknownParameter),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyFunction {
@@ -4944,9 +4992,9 @@ pub enum JsAnyObjectMemberName {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyParameter {
-    JsParameter(JsParameter),
+    JsAnyFormalParameter(JsAnyFormalParameter),
     JsRestParameter(JsRestParameter),
-    JsUnknownParameter(JsUnknownParameter),
+    TsThisParameter(TsThisParameter),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyRoot {
@@ -5006,6 +5054,11 @@ pub enum TsAnyObjectTypeMember {
     TsMethodSignatureObjectTypeMember(TsMethodSignatureObjectTypeMember),
     TsPropertySignatureObjectTypeMember(TsPropertySignatureObjectTypeMember),
     TsSetterSignatureObjectTypeMember(TsSetterSignatureObjectTypeMember),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum TsAnyPropertyParameter {
+    TsPropertyParameter(TsPropertyParameter),
+    TsReadonlyPropertyParameter(TsReadonlyPropertyParameter),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyReturnType {
@@ -7136,6 +7189,42 @@ impl From<JsForVariableDeclaration> for SyntaxNode {
 impl From<JsForVariableDeclaration> for SyntaxElement {
     fn from(n: JsForVariableDeclaration) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for JsFormalParameter {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FORMAL_PARAMETER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsFormalParameter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsFormalParameter")
+            .field("binding", &support::DebugSyntaxResult(self.binding()))
+            .field(
+                "question_mark_token",
+                &support::DebugOptionalElement(self.question_mark_token()),
+            )
+            .field(
+                "type_annotation",
+                &support::DebugOptionalElement(self.type_annotation()),
+            )
+            .field(
+                "initializer",
+                &support::DebugOptionalElement(self.initializer()),
+            )
+            .finish()
+    }
+}
+impl From<JsFormalParameter> for SyntaxNode {
+    fn from(n: JsFormalParameter) -> SyntaxNode { n.syntax }
+}
+impl From<JsFormalParameter> for SyntaxElement {
+    fn from(n: JsFormalParameter) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for JsFunctionBody {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FUNCTION_BODY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -8518,38 +8607,6 @@ impl From<JsObjectExpression> for SyntaxNode {
 impl From<JsObjectExpression> for SyntaxElement {
     fn from(n: JsObjectExpression) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for JsParameter {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PARAMETER }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsParameter {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsParameter")
-            .field("binding", &support::DebugSyntaxResult(self.binding()))
-            .field(
-                "type_annotation",
-                &support::DebugOptionalElement(self.type_annotation()),
-            )
-            .field(
-                "initializer",
-                &support::DebugOptionalElement(self.initializer()),
-            )
-            .finish()
-    }
-}
-impl From<JsParameter> for SyntaxNode {
-    fn from(n: JsParameter) -> SyntaxNode { n.syntax }
-}
-impl From<JsParameter> for SyntaxElement {
-    fn from(n: JsParameter) -> SyntaxElement { n.syntax.into() }
-}
 impl AstNode for JsParameters {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_PARAMETERS }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -8909,6 +8966,10 @@ impl std::fmt::Debug for JsRestParameter {
                 &support::DebugSyntaxResult(self.dotdotdot_token()),
             )
             .field("binding", &support::DebugSyntaxResult(self.binding()))
+            .field(
+                "type_annotation",
+                &support::DebugOptionalElement(self.type_annotation()),
+            )
             .finish()
     }
 }
@@ -10056,10 +10117,7 @@ impl std::fmt::Debug for TsCallSignatureObjectTypeMember {
                 "type_parameters",
                 &support::DebugOptionalElement(self.type_parameters()),
             )
-            .field(
-                "parameter_list",
-                &support::DebugSyntaxResult(self.parameter_list()),
-            )
+            .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field(
                 "return_type_annotation",
                 &support::DebugOptionalElement(self.return_type_annotation()),
@@ -10138,10 +10196,7 @@ impl std::fmt::Debug for TsConstructSignatureObjectTypeMember {
                 "type_parameters",
                 &support::DebugOptionalElement(self.type_parameters()),
             )
-            .field(
-                "parameter_list",
-                &support::DebugSyntaxResult(self.parameter_list()),
-            )
+            .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field(
                 "type_annotation",
                 &support::DebugOptionalElement(self.type_annotation()),
@@ -10158,46 +10213,6 @@ impl From<TsConstructSignatureObjectTypeMember> for SyntaxNode {
 }
 impl From<TsConstructSignatureObjectTypeMember> for SyntaxElement {
     fn from(n: TsConstructSignatureObjectTypeMember) -> SyntaxElement { n.syntax.into() }
-}
-impl AstNode for TsConstructorParam {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCTOR_PARAM }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsConstructorParam {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsConstructorParam")
-            .field(
-                "accessibility",
-                &support::DebugOptionalElement(self.accessibility()),
-            )
-            .field(
-                "readonly_token",
-                &support::DebugOptionalElement(self.readonly_token()),
-            )
-            .field("binding", &support::DebugSyntaxResult(self.binding()))
-            .field(
-                "type_annotation",
-                &support::DebugOptionalElement(self.type_annotation()),
-            )
-            .field(
-                "initializer",
-                &support::DebugOptionalElement(self.initializer()),
-            )
-            .finish()
-    }
-}
-impl From<TsConstructorParam> for SyntaxNode {
-    fn from(n: TsConstructorParam) -> SyntaxNode { n.syntax }
-}
-impl From<TsConstructorParam> for SyntaxElement {
-    fn from(n: TsConstructorParam) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsConstructorType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_CONSTRUCTOR_TYPE }
@@ -10977,10 +10992,7 @@ impl std::fmt::Debug for TsMethodSignatureObjectTypeMember {
                 "type_parameters",
                 &support::DebugOptionalElement(self.type_parameters()),
             )
-            .field(
-                "parameter_list",
-                &support::DebugSyntaxResult(self.parameter_list()),
-            )
+            .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field(
                 "return_type_annotation",
                 &support::DebugOptionalElement(self.return_type_annotation()),
@@ -11291,6 +11303,37 @@ impl From<TsParenthesizedType> for SyntaxNode {
 impl From<TsParenthesizedType> for SyntaxElement {
     fn from(n: TsParenthesizedType) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsPropertyParameter {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PROPERTY_PARAMETER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsPropertyParameter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsPropertyParameter")
+            .field(
+                "accessibility",
+                &support::DebugSyntaxResult(self.accessibility()),
+            )
+            .field(
+                "formal_parameter",
+                &support::DebugSyntaxResult(self.formal_parameter()),
+            )
+            .finish()
+    }
+}
+impl From<TsPropertyParameter> for SyntaxNode {
+    fn from(n: TsPropertyParameter) -> SyntaxNode { n.syntax }
+}
+impl From<TsPropertyParameter> for SyntaxElement {
+    fn from(n: TsPropertyParameter) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsPropertySignatureObjectTypeMember {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -11356,6 +11399,41 @@ impl From<TsQualifiedName> for SyntaxNode {
 }
 impl From<TsQualifiedName> for SyntaxElement {
     fn from(n: TsQualifiedName) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsReadonlyPropertyParameter {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_READONLY_PROPERTY_PARAMETER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsReadonlyPropertyParameter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsReadonlyPropertyParameter")
+            .field(
+                "accessibility",
+                &support::DebugOptionalElement(self.accessibility()),
+            )
+            .field(
+                "readonly_token",
+                &support::DebugSyntaxResult(self.readonly_token()),
+            )
+            .field(
+                "formal_parameter",
+                &support::DebugSyntaxResult(self.formal_parameter()),
+            )
+            .finish()
+    }
+}
+impl From<TsReadonlyPropertyParameter> for SyntaxNode {
+    fn from(n: TsReadonlyPropertyParameter) -> SyntaxNode { n.syntax }
+}
+impl From<TsReadonlyPropertyParameter> for SyntaxElement {
+    fn from(n: TsReadonlyPropertyParameter) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsReferenceType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_REFERENCE_TYPE }
@@ -11650,6 +11728,34 @@ impl From<TsTemplateLiteralType> for SyntaxNode {
 }
 impl From<TsTemplateLiteralType> for SyntaxElement {
     fn from(n: TsTemplateLiteralType) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsThisParameter {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_THIS_PARAMETER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsThisParameter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsThisParameter")
+            .field("this_token", &support::DebugSyntaxResult(self.this_token()))
+            .field(
+                "type_annotation",
+                &support::DebugOptionalElement(self.type_annotation()),
+            )
+            .finish()
+    }
+}
+impl From<TsThisParameter> for SyntaxNode {
+    fn from(n: TsThisParameter) -> SyntaxNode { n.syntax }
+}
+impl From<TsThisParameter> for SyntaxElement {
+    fn from(n: TsThisParameter) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsThisType {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_THIS_TYPE }
@@ -13103,64 +13209,81 @@ impl From<JsAnyClassMemberName> for SyntaxElement {
         node.into()
     }
 }
-impl From<JsParameter> for JsAnyConstructorParameter {
-    fn from(node: JsParameter) -> JsAnyConstructorParameter {
-        JsAnyConstructorParameter::JsParameter(node)
+impl From<JsRestParameter> for JsAnyConstructorParameter {
+    fn from(node: JsRestParameter) -> JsAnyConstructorParameter {
+        JsAnyConstructorParameter::JsRestParameter(node)
     }
 }
-impl From<JsUnknownParameter> for JsAnyConstructorParameter {
-    fn from(node: JsUnknownParameter) -> JsAnyConstructorParameter {
-        JsAnyConstructorParameter::JsUnknownParameter(node)
+impl From<TsPropertyParameter> for JsAnyConstructorParameter {
+    fn from(node: TsPropertyParameter) -> JsAnyConstructorParameter {
+        JsAnyConstructorParameter::TsPropertyParameter(node)
     }
 }
-impl From<TsConstructorParam> for JsAnyConstructorParameter {
-    fn from(node: TsConstructorParam) -> JsAnyConstructorParameter {
-        JsAnyConstructorParameter::TsConstructorParam(node)
+impl From<TsReadonlyPropertyParameter> for JsAnyConstructorParameter {
+    fn from(node: TsReadonlyPropertyParameter) -> JsAnyConstructorParameter {
+        JsAnyConstructorParameter::TsReadonlyPropertyParameter(node)
     }
 }
 impl AstNode for JsAnyConstructorParameter {
     fn can_cast(kind: JsSyntaxKind) -> bool {
-        matches!(
-            kind,
-            JS_PARAMETER | JS_UNKNOWN_PARAMETER | TS_CONSTRUCTOR_PARAM
-        )
+        match kind {
+            JS_REST_PARAMETER | TS_PROPERTY_PARAMETER | TS_READONLY_PROPERTY_PARAMETER => true,
+            k if JsAnyFormalParameter::can_cast(k) => true,
+            _ => false,
+        }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_PARAMETER => JsAnyConstructorParameter::JsParameter(JsParameter { syntax }),
-            JS_UNKNOWN_PARAMETER => {
-                JsAnyConstructorParameter::JsUnknownParameter(JsUnknownParameter { syntax })
+            JS_REST_PARAMETER => {
+                JsAnyConstructorParameter::JsRestParameter(JsRestParameter { syntax })
             }
-            TS_CONSTRUCTOR_PARAM => {
-                JsAnyConstructorParameter::TsConstructorParam(TsConstructorParam { syntax })
+            TS_PROPERTY_PARAMETER => {
+                JsAnyConstructorParameter::TsPropertyParameter(TsPropertyParameter { syntax })
             }
-            _ => return None,
+            TS_READONLY_PROPERTY_PARAMETER => {
+                JsAnyConstructorParameter::TsReadonlyPropertyParameter(
+                    TsReadonlyPropertyParameter { syntax },
+                )
+            }
+            _ => {
+                if let Some(js_any_formal_parameter) = JsAnyFormalParameter::cast(syntax) {
+                    return Some(JsAnyConstructorParameter::JsAnyFormalParameter(
+                        js_any_formal_parameter,
+                    ));
+                }
+                return None;
+            }
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyConstructorParameter::JsParameter(it) => &it.syntax,
-            JsAnyConstructorParameter::JsUnknownParameter(it) => &it.syntax,
-            JsAnyConstructorParameter::TsConstructorParam(it) => &it.syntax,
+            JsAnyConstructorParameter::JsRestParameter(it) => &it.syntax,
+            JsAnyConstructorParameter::TsPropertyParameter(it) => &it.syntax,
+            JsAnyConstructorParameter::TsReadonlyPropertyParameter(it) => &it.syntax,
+            JsAnyConstructorParameter::JsAnyFormalParameter(it) => it.syntax(),
         }
     }
 }
 impl std::fmt::Debug for JsAnyConstructorParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyConstructorParameter::JsParameter(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyConstructorParameter::JsUnknownParameter(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyConstructorParameter::TsConstructorParam(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyConstructorParameter::JsAnyFormalParameter(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyConstructorParameter::JsRestParameter(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyConstructorParameter::TsPropertyParameter(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyConstructorParameter::TsReadonlyPropertyParameter(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
         }
     }
 }
 impl From<JsAnyConstructorParameter> for SyntaxNode {
     fn from(n: JsAnyConstructorParameter) -> SyntaxNode {
         match n {
-            JsAnyConstructorParameter::JsParameter(it) => it.into(),
-            JsAnyConstructorParameter::JsUnknownParameter(it) => it.into(),
-            JsAnyConstructorParameter::TsConstructorParam(it) => it.into(),
+            JsAnyConstructorParameter::JsAnyFormalParameter(it) => it.into(),
+            JsAnyConstructorParameter::JsRestParameter(it) => it.into(),
+            JsAnyConstructorParameter::TsPropertyParameter(it) => it.into(),
+            JsAnyConstructorParameter::TsReadonlyPropertyParameter(it) => it.into(),
         }
     }
 }
@@ -13879,6 +14002,61 @@ impl From<JsAnyForInitializer> for SyntaxNode {
 }
 impl From<JsAnyForInitializer> for SyntaxElement {
     fn from(n: JsAnyForInitializer) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<JsFormalParameter> for JsAnyFormalParameter {
+    fn from(node: JsFormalParameter) -> JsAnyFormalParameter {
+        JsAnyFormalParameter::JsFormalParameter(node)
+    }
+}
+impl From<JsUnknownParameter> for JsAnyFormalParameter {
+    fn from(node: JsUnknownParameter) -> JsAnyFormalParameter {
+        JsAnyFormalParameter::JsUnknownParameter(node)
+    }
+}
+impl AstNode for JsAnyFormalParameter {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, JS_FORMAL_PARAMETER | JS_UNKNOWN_PARAMETER)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_FORMAL_PARAMETER => {
+                JsAnyFormalParameter::JsFormalParameter(JsFormalParameter { syntax })
+            }
+            JS_UNKNOWN_PARAMETER => {
+                JsAnyFormalParameter::JsUnknownParameter(JsUnknownParameter { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsAnyFormalParameter::JsFormalParameter(it) => &it.syntax,
+            JsAnyFormalParameter::JsUnknownParameter(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsAnyFormalParameter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsAnyFormalParameter::JsFormalParameter(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyFormalParameter::JsUnknownParameter(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsAnyFormalParameter> for SyntaxNode {
+    fn from(n: JsAnyFormalParameter) -> SyntaxNode {
+        match n {
+            JsAnyFormalParameter::JsFormalParameter(it) => it.into(),
+            JsAnyFormalParameter::JsUnknownParameter(it) => it.into(),
+        }
+    }
+}
+impl From<JsAnyFormalParameter> for SyntaxElement {
+    fn from(n: JsAnyFormalParameter) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
@@ -14886,56 +15064,58 @@ impl From<JsAnyObjectMemberName> for SyntaxElement {
         node.into()
     }
 }
-impl From<JsParameter> for JsAnyParameter {
-    fn from(node: JsParameter) -> JsAnyParameter { JsAnyParameter::JsParameter(node) }
-}
 impl From<JsRestParameter> for JsAnyParameter {
     fn from(node: JsRestParameter) -> JsAnyParameter { JsAnyParameter::JsRestParameter(node) }
 }
-impl From<JsUnknownParameter> for JsAnyParameter {
-    fn from(node: JsUnknownParameter) -> JsAnyParameter { JsAnyParameter::JsUnknownParameter(node) }
+impl From<TsThisParameter> for JsAnyParameter {
+    fn from(node: TsThisParameter) -> JsAnyParameter { JsAnyParameter::TsThisParameter(node) }
 }
 impl AstNode for JsAnyParameter {
     fn can_cast(kind: JsSyntaxKind) -> bool {
-        matches!(
-            kind,
-            JS_PARAMETER | JS_REST_PARAMETER | JS_UNKNOWN_PARAMETER
-        )
+        match kind {
+            JS_REST_PARAMETER | TS_THIS_PARAMETER => true,
+            k if JsAnyFormalParameter::can_cast(k) => true,
+            _ => false,
+        }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_PARAMETER => JsAnyParameter::JsParameter(JsParameter { syntax }),
             JS_REST_PARAMETER => JsAnyParameter::JsRestParameter(JsRestParameter { syntax }),
-            JS_UNKNOWN_PARAMETER => {
-                JsAnyParameter::JsUnknownParameter(JsUnknownParameter { syntax })
+            TS_THIS_PARAMETER => JsAnyParameter::TsThisParameter(TsThisParameter { syntax }),
+            _ => {
+                if let Some(js_any_formal_parameter) = JsAnyFormalParameter::cast(syntax) {
+                    return Some(JsAnyParameter::JsAnyFormalParameter(
+                        js_any_formal_parameter,
+                    ));
+                }
+                return None;
             }
-            _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyParameter::JsParameter(it) => &it.syntax,
             JsAnyParameter::JsRestParameter(it) => &it.syntax,
-            JsAnyParameter::JsUnknownParameter(it) => &it.syntax,
+            JsAnyParameter::TsThisParameter(it) => &it.syntax,
+            JsAnyParameter::JsAnyFormalParameter(it) => it.syntax(),
         }
     }
 }
 impl std::fmt::Debug for JsAnyParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyParameter::JsParameter(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyParameter::JsAnyFormalParameter(it) => std::fmt::Debug::fmt(it, f),
             JsAnyParameter::JsRestParameter(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyParameter::JsUnknownParameter(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyParameter::TsThisParameter(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
 impl From<JsAnyParameter> for SyntaxNode {
     fn from(n: JsAnyParameter) -> SyntaxNode {
         match n {
-            JsAnyParameter::JsParameter(it) => it.into(),
+            JsAnyParameter::JsAnyFormalParameter(it) => it.into(),
             JsAnyParameter::JsRestParameter(it) => it.into(),
-            JsAnyParameter::JsUnknownParameter(it) => it.into(),
+            JsAnyParameter::TsThisParameter(it) => it.into(),
         }
     }
 }
@@ -15560,6 +15740,63 @@ impl From<TsAnyObjectTypeMember> for SyntaxNode {
 }
 impl From<TsAnyObjectTypeMember> for SyntaxElement {
     fn from(n: TsAnyObjectTypeMember) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<TsPropertyParameter> for TsAnyPropertyParameter {
+    fn from(node: TsPropertyParameter) -> TsAnyPropertyParameter {
+        TsAnyPropertyParameter::TsPropertyParameter(node)
+    }
+}
+impl From<TsReadonlyPropertyParameter> for TsAnyPropertyParameter {
+    fn from(node: TsReadonlyPropertyParameter) -> TsAnyPropertyParameter {
+        TsAnyPropertyParameter::TsReadonlyPropertyParameter(node)
+    }
+}
+impl AstNode for TsAnyPropertyParameter {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, TS_PROPERTY_PARAMETER | TS_READONLY_PROPERTY_PARAMETER)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            TS_PROPERTY_PARAMETER => {
+                TsAnyPropertyParameter::TsPropertyParameter(TsPropertyParameter { syntax })
+            }
+            TS_READONLY_PROPERTY_PARAMETER => {
+                TsAnyPropertyParameter::TsReadonlyPropertyParameter(TsReadonlyPropertyParameter {
+                    syntax,
+                })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            TsAnyPropertyParameter::TsPropertyParameter(it) => &it.syntax,
+            TsAnyPropertyParameter::TsReadonlyPropertyParameter(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for TsAnyPropertyParameter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TsAnyPropertyParameter::TsPropertyParameter(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyPropertyParameter::TsReadonlyPropertyParameter(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<TsAnyPropertyParameter> for SyntaxNode {
+    fn from(n: TsAnyPropertyParameter) -> SyntaxNode {
+        match n {
+            TsAnyPropertyParameter::TsPropertyParameter(it) => it.into(),
+            TsAnyPropertyParameter::TsReadonlyPropertyParameter(it) => it.into(),
+        }
+    }
+}
+impl From<TsAnyPropertyParameter> for SyntaxElement {
+    fn from(n: TsAnyPropertyParameter) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
@@ -16265,6 +16502,11 @@ impl std::fmt::Display for JsAnyForInitializer {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsAnyFormalParameter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for JsAnyFunction {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -16361,6 +16603,11 @@ impl std::fmt::Display for TsAnyName {
     }
 }
 impl std::fmt::Display for TsAnyObjectTypeMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsAnyPropertyParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -16705,6 +16952,11 @@ impl std::fmt::Display for JsForVariableDeclaration {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsFormalParameter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for JsFunctionBody {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -16921,11 +17173,6 @@ impl std::fmt::Display for JsObjectBindingPatternShorthandProperty {
     }
 }
 impl std::fmt::Display for JsObjectExpression {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for JsParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17190,11 +17437,6 @@ impl std::fmt::Display for TsConstructSignatureObjectTypeMember {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsConstructorParam {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
 impl std::fmt::Display for TsConstructorType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -17360,12 +17602,22 @@ impl std::fmt::Display for TsParenthesizedType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsPropertyParameter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsPropertySignatureObjectTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
 impl std::fmt::Display for TsQualifiedName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsReadonlyPropertyParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17416,6 +17668,11 @@ impl std::fmt::Display for TsTemplateElement {
     }
 }
 impl std::fmt::Display for TsTemplateLiteralType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsThisParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -19494,6 +19751,9 @@ impl Debug for DebugSyntaxElement {
                 JS_FOR_VARIABLE_DECLARATION => {
                     std::fmt::Debug::fmt(&JsForVariableDeclaration::cast(node.clone()).unwrap(), f)
                 }
+                JS_FORMAL_PARAMETER => {
+                    std::fmt::Debug::fmt(&JsFormalParameter::cast(node.clone()).unwrap(), f)
+                }
                 JS_FUNCTION_BODY => {
                     std::fmt::Debug::fmt(&JsFunctionBody::cast(node.clone()).unwrap(), f)
                 }
@@ -19649,7 +19909,6 @@ impl Debug for DebugSyntaxElement {
                 JS_OBJECT_MEMBER_LIST => {
                     std::fmt::Debug::fmt(&JsObjectMemberList::cast(node.clone()).unwrap(), f)
                 }
-                JS_PARAMETER => std::fmt::Debug::fmt(&JsParameter::cast(node.clone()).unwrap(), f),
                 JS_PARAMETER_LIST => {
                     std::fmt::Debug::fmt(&JsParameterList::cast(node.clone()).unwrap(), f)
                 }
@@ -19841,9 +20100,6 @@ impl Debug for DebugSyntaxElement {
                     &TsConstructSignatureObjectTypeMember::cast(node.clone()).unwrap(),
                     f,
                 ),
-                TS_CONSTRUCTOR_PARAM => {
-                    std::fmt::Debug::fmt(&TsConstructorParam::cast(node.clone()).unwrap(), f)
-                }
                 TS_CONSTRUCTOR_TYPE => {
                     std::fmt::Debug::fmt(&TsConstructorType::cast(node.clone()).unwrap(), f)
                 }
@@ -19954,6 +20210,9 @@ impl Debug for DebugSyntaxElement {
                 TS_PARENTHESIZED_TYPE => {
                     std::fmt::Debug::fmt(&TsParenthesizedType::cast(node.clone()).unwrap(), f)
                 }
+                TS_PROPERTY_PARAMETER => {
+                    std::fmt::Debug::fmt(&TsPropertyParameter::cast(node.clone()).unwrap(), f)
+                }
                 TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER => std::fmt::Debug::fmt(
                     &TsPropertySignatureObjectTypeMember::cast(node.clone()).unwrap(),
                     f,
@@ -19961,6 +20220,10 @@ impl Debug for DebugSyntaxElement {
                 TS_QUALIFIED_NAME => {
                     std::fmt::Debug::fmt(&TsQualifiedName::cast(node.clone()).unwrap(), f)
                 }
+                TS_READONLY_PROPERTY_PARAMETER => std::fmt::Debug::fmt(
+                    &TsReadonlyPropertyParameter::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_REFERENCE_TYPE => {
                     std::fmt::Debug::fmt(&TsReferenceType::cast(node.clone()).unwrap(), f)
                 }
@@ -19994,6 +20257,9 @@ impl Debug for DebugSyntaxElement {
                 }
                 TS_TEMPLATE_LITERAL_TYPE => {
                     std::fmt::Debug::fmt(&TsTemplateLiteralType::cast(node.clone()).unwrap(), f)
+                }
+                TS_THIS_PARAMETER => {
+                    std::fmt::Debug::fmt(&TsThisParameter::cast(node.clone()).unwrap(), f)
                 }
                 TS_THIS_TYPE => std::fmt::Debug::fmt(&TsThisType::cast(node.clone()).unwrap(), f),
                 TS_TUPLE_TYPE => std::fmt::Debug::fmt(&TsTupleType::cast(node.clone()).unwrap(), f),

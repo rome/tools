@@ -6,7 +6,9 @@ use crate::syntax::expr::{
     parse_big_int_literal_expression, parse_identifier, parse_literal_expression, parse_name,
     parse_number_literal_expression, parse_reference_identifier, ExpressionContext,
 };
-use crate::syntax::function::{parse_parameter, parse_parameter_list, skip_parameter_start};
+use crate::syntax::function::{
+    parse_formal_parameter, parse_parameter_list, skip_parameter_start, ParameterContext,
+};
 use crate::syntax::js_parse_error::{
     expected_identifier, expected_object_member_name, expected_parameter, expected_parameters,
     expected_property_or_signature, expected_ts_type, expected_ts_type_parameter,
@@ -73,7 +75,8 @@ pub(crate) fn parse_ts_return_type_annotation(p: &mut Parser) -> ParsedSyntax {
 
 fn parse_ts_call_signature(p: &mut Parser) {
     parse_ts_type_parameters(p).ok();
-    parse_parameter_list(p, SignatureFlags::empty()).or_add_diagnostic(p, expected_parameters);
+    parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
+        .or_add_diagnostic(p, expected_parameters);
     parse_ts_return_type_annotation(p).ok();
 }
 
@@ -827,7 +830,8 @@ fn parse_ts_construct_signature_object_type_member(p: &mut Parser) -> ParsedSynt
     let m = p.start();
     p.bump(T![new]);
     parse_ts_type_parameters(p).ok();
-    parse_parameter_list(p, SignatureFlags::empty()).or_add_diagnostic(p, expected_parameters);
+    parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
+        .or_add_diagnostic(p, expected_parameters);
     parse_ts_type_annotation(p).ok();
     parse_ts_object_type_member_semi(p);
 
@@ -874,7 +878,8 @@ fn parse_ts_setter_signature_object_type_member(p: &mut Parser) -> ParsedSyntax 
     p.bump_remap(T![set]);
     parse_object_member_name(p).or_add_diagnostic(p, expected_object_member_name);
     p.expect(T!['(']);
-    parse_parameter(p, ExpressionContext::default()).or_add_diagnostic(p, expected_parameter);
+    parse_formal_parameter(p, ParameterContext::Setter, ExpressionContext::default())
+        .or_add_diagnostic(p, expected_parameter);
     p.expect(T![')']);
     parse_ts_object_type_member_semi(p);
     Present(m.complete(p, TS_SETTER_SIGNATURE_OBJECT_TYPE_MEMBER))
@@ -1147,7 +1152,8 @@ fn parse_ts_constructor_type(p: &mut Parser) -> ParsedSyntax {
     p.expect(T![new]);
 
     parse_ts_type_parameters(p).ok();
-    parse_parameter_list(p, SignatureFlags::empty()).or_add_diagnostic(p, expected_parameters);
+    parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
+        .or_add_diagnostic(p, expected_parameters);
     p.expect(T![=>]);
     parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
     Present(m.complete(p, TS_CONSTRUCTOR_TYPE))
@@ -1202,6 +1208,7 @@ fn is_at_function_type(p: &mut Parser) -> bool {
 // type F = ({a}) => string
 // type G = <A, B>(a: A, b: B) => string
 // type H = (a: any) => a is string;
+// type I = ({ a, b }?) => string;
 fn parse_ts_function_type(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![<]) && !p.at(T!['(']) {
         return Absent;
@@ -1209,7 +1216,8 @@ fn parse_ts_function_type(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     parse_ts_type_parameters(p).ok();
-    parse_parameter_list(p, SignatureFlags::empty()).or_add_diagnostic(p, expected_parameters);
+    parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
+        .or_add_diagnostic(p, expected_parameters);
     p.expect(T![=>]);
     parse_ts_return_type(p).or_add_diagnostic(p, expected_ts_type);
 

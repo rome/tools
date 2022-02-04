@@ -1,0 +1,420 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsClassStatement {
+            class_token: CLASS_KW@0..20 "class" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@20..22 "A" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@22..24 "{" [] [Whitespace(" ")],
+            members: JsClassMemberList [
+                JsConstructorClassMember {
+                    access_modifier: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@24..35 "constructor" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameters: JsConstructorParameters {
+                        l_paren_token: L_PAREN@35..36 "(" [] [],
+                        parameters: JsConstructorParameterList [
+                            TsPropertyParameter {
+                                accessibility: PRIVATE_KW@36..44 "private" [] [Whitespace(" ")],
+                                formal_parameter: JsFormalParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@44..45 "x" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            },
+                            COMMA@45..47 "," [] [Whitespace(" ")],
+                            TsPropertyParameter {
+                                accessibility: PROTECTED_KW@47..57 "protected" [] [Whitespace(" ")],
+                                formal_parameter: JsFormalParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@57..58 "y" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            },
+                            COMMA@58..60 "," [] [Whitespace(" ")],
+                            TsPropertyParameter {
+                                accessibility: PUBLIC_KW@60..67 "public" [] [Whitespace(" ")],
+                                formal_parameter: JsFormalParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@67..68 "z" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            },
+                        ],
+                        r_paren_token: R_PAREN@68..70 ")" [] [Whitespace(" ")],
+                    },
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@70..71 "{" [] [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
+                        r_curly_token: R_CURLY@71..73 "}" [] [Whitespace(" ")],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@73..74 "}" [] [],
+        },
+        JsClassStatement {
+            class_token: CLASS_KW@74..81 "class" [Newline("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@81..83 "B" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@83..85 "{" [] [Whitespace(" ")],
+            members: JsClassMemberList [
+                JsConstructorClassMember {
+                    access_modifier: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@85..96 "constructor" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameters: JsConstructorParameters {
+                        l_paren_token: L_PAREN@96..97 "(" [] [],
+                        parameters: JsConstructorParameterList [
+                            TsReadonlyPropertyParameter {
+                                accessibility: missing (optional),
+                                readonly_token: READONLY_KW@97..106 "readonly" [] [Whitespace(" ")],
+                                formal_parameter: JsFormalParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@106..107 "w" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            },
+                            COMMA@107..109 "," [] [Whitespace(" ")],
+                            TsReadonlyPropertyParameter {
+                                accessibility: PRIVATE_KW@109..117 "private" [] [Whitespace(" ")],
+                                readonly_token: READONLY_KW@117..126 "readonly" [] [Whitespace(" ")],
+                                formal_parameter: JsFormalParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@126..127 "x" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            },
+                            COMMA@127..129 "," [] [Whitespace(" ")],
+                            TsReadonlyPropertyParameter {
+                                accessibility: PROTECTED_KW@129..139 "protected" [] [Whitespace(" ")],
+                                readonly_token: READONLY_KW@139..148 "readonly" [] [Whitespace(" ")],
+                                formal_parameter: JsFormalParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@148..149 "y" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            },
+                            COMMA@149..151 "," [] [Whitespace(" ")],
+                            TsReadonlyPropertyParameter {
+                                accessibility: PUBLIC_KW@151..158 "public" [] [Whitespace(" ")],
+                                readonly_token: READONLY_KW@158..167 "readonly" [] [Whitespace(" ")],
+                                formal_parameter: JsFormalParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@167..168 "z" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            },
+                        ],
+                        r_paren_token: R_PAREN@168..170 ")" [] [Whitespace(" ")],
+                    },
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@170..171 "{" [] [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
+                        r_curly_token: R_CURLY@171..173 "}" [] [Whitespace(" ")],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@173..174 "}" [] [],
+        },
+        JsClassStatement {
+            class_token: CLASS_KW@174..181 "class" [Newline("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@181..183 "C" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@183..185 "{" [] [Whitespace(" ")],
+            members: JsClassMemberList [
+                JsConstructorClassMember {
+                    access_modifier: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@185..196 "constructor" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameters: JsConstructorParameters {
+                        l_paren_token: L_PAREN@196..197 "(" [] [],
+                        parameters: JsConstructorParameterList [
+                            TsPropertyParameter {
+                                accessibility: PRIVATE_KW@197..205 "private" [] [Whitespace(" ")],
+                                formal_parameter: JsFormalParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@205..206 "x" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    type_annotation: TsTypeAnnotation {
+                                        colon_token: COLON@206..208 ":" [] [Whitespace(" ")],
+                                        ty: TsStringType {
+                                            string_token: STRING_KW@208..214 "string" [] [],
+                                        },
+                                    },
+                                    initializer: missing (optional),
+                                },
+                            },
+                            COMMA@214..216 "," [] [Whitespace(" ")],
+                            TsReadonlyPropertyParameter {
+                                accessibility: missing (optional),
+                                readonly_token: READONLY_KW@216..225 "readonly" [] [Whitespace(" ")],
+                                formal_parameter: JsFormalParameter {
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@225..226 "y" [] [],
+                                    },
+                                    question_mark_token: QUESTION@226..227 "?" [] [],
+                                    type_annotation: missing (optional),
+                                    initializer: missing (optional),
+                                },
+                            },
+                            COMMA@227..229 "," [] [Whitespace(" ")],
+                            JsFormalParameter {
+                                binding: JsIdentifierBinding {
+                                    name_token: IDENT@229..231 "z" [] [Whitespace(" ")],
+                                },
+                                question_mark_token: missing (optional),
+                                type_annotation: missing (optional),
+                                initializer: JsInitializerClause {
+                                    eq_token: EQ@231..233 "=" [] [Whitespace(" ")],
+                                    expression: JsStringLiteralExpression {
+                                        value_token: JS_STRING_LITERAL@233..242 "\"default\"" [] [],
+                                    },
+                                },
+                            },
+                            COMMA@242..244 "," [] [Whitespace(" ")],
+                            JsRestParameter {
+                                dotdotdot_token: DOT2@244..247 "..." [] [],
+                                binding: JsIdentifierBinding {
+                                    name_token: IDENT@247..251 "rest" [] [],
+                                },
+                                type_annotation: missing (optional),
+                            },
+                        ],
+                        r_paren_token: R_PAREN@251..253 ")" [] [Whitespace(" ")],
+                    },
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@253..254 "{" [] [],
+                        directives: JsDirectiveList [],
+                        statements: JsStatementList [],
+                        r_curly_token: R_CURLY@254..256 "}" [] [Whitespace(" ")],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@256..257 "}" [] [],
+        },
+    ],
+    eof_token: EOF@257..258 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..258
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..257
+    0: JS_CLASS_STATEMENT@0..74
+      0: CLASS_KW@0..20 "class" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@20..22
+        0: IDENT@20..22 "A" [] [Whitespace(" ")]
+      2: (empty)
+      3: (empty)
+      4: (empty)
+      5: L_CURLY@22..24 "{" [] [Whitespace(" ")]
+      6: JS_CLASS_MEMBER_LIST@24..73
+        0: JS_CONSTRUCTOR_CLASS_MEMBER@24..73
+          0: (empty)
+          1: JS_LITERAL_MEMBER_NAME@24..35
+            0: IDENT@24..35 "constructor" [] []
+          2: (empty)
+          3: JS_CONSTRUCTOR_PARAMETERS@35..70
+            0: L_PAREN@35..36 "(" [] []
+            1: JS_CONSTRUCTOR_PARAMETER_LIST@36..68
+              0: TS_PROPERTY_PARAMETER@36..45
+                0: PRIVATE_KW@36..44 "private" [] [Whitespace(" ")]
+                1: JS_FORMAL_PARAMETER@44..45
+                  0: JS_IDENTIFIER_BINDING@44..45
+                    0: IDENT@44..45 "x" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
+              1: COMMA@45..47 "," [] [Whitespace(" ")]
+              2: TS_PROPERTY_PARAMETER@47..58
+                0: PROTECTED_KW@47..57 "protected" [] [Whitespace(" ")]
+                1: JS_FORMAL_PARAMETER@57..58
+                  0: JS_IDENTIFIER_BINDING@57..58
+                    0: IDENT@57..58 "y" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
+              3: COMMA@58..60 "," [] [Whitespace(" ")]
+              4: TS_PROPERTY_PARAMETER@60..68
+                0: PUBLIC_KW@60..67 "public" [] [Whitespace(" ")]
+                1: JS_FORMAL_PARAMETER@67..68
+                  0: JS_IDENTIFIER_BINDING@67..68
+                    0: IDENT@67..68 "z" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
+            2: R_PAREN@68..70 ")" [] [Whitespace(" ")]
+          4: JS_FUNCTION_BODY@70..73
+            0: L_CURLY@70..71 "{" [] []
+            1: JS_DIRECTIVE_LIST@71..71
+            2: JS_STATEMENT_LIST@71..71
+            3: R_CURLY@71..73 "}" [] [Whitespace(" ")]
+      7: R_CURLY@73..74 "}" [] []
+    1: JS_CLASS_STATEMENT@74..174
+      0: CLASS_KW@74..81 "class" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@81..83
+        0: IDENT@81..83 "B" [] [Whitespace(" ")]
+      2: (empty)
+      3: (empty)
+      4: (empty)
+      5: L_CURLY@83..85 "{" [] [Whitespace(" ")]
+      6: JS_CLASS_MEMBER_LIST@85..173
+        0: JS_CONSTRUCTOR_CLASS_MEMBER@85..173
+          0: (empty)
+          1: JS_LITERAL_MEMBER_NAME@85..96
+            0: IDENT@85..96 "constructor" [] []
+          2: (empty)
+          3: JS_CONSTRUCTOR_PARAMETERS@96..170
+            0: L_PAREN@96..97 "(" [] []
+            1: JS_CONSTRUCTOR_PARAMETER_LIST@97..168
+              0: TS_READONLY_PROPERTY_PARAMETER@97..107
+                0: (empty)
+                1: READONLY_KW@97..106 "readonly" [] [Whitespace(" ")]
+                2: JS_FORMAL_PARAMETER@106..107
+                  0: JS_IDENTIFIER_BINDING@106..107
+                    0: IDENT@106..107 "w" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
+              1: COMMA@107..109 "," [] [Whitespace(" ")]
+              2: TS_READONLY_PROPERTY_PARAMETER@109..127
+                0: PRIVATE_KW@109..117 "private" [] [Whitespace(" ")]
+                1: READONLY_KW@117..126 "readonly" [] [Whitespace(" ")]
+                2: JS_FORMAL_PARAMETER@126..127
+                  0: JS_IDENTIFIER_BINDING@126..127
+                    0: IDENT@126..127 "x" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
+              3: COMMA@127..129 "," [] [Whitespace(" ")]
+              4: TS_READONLY_PROPERTY_PARAMETER@129..149
+                0: PROTECTED_KW@129..139 "protected" [] [Whitespace(" ")]
+                1: READONLY_KW@139..148 "readonly" [] [Whitespace(" ")]
+                2: JS_FORMAL_PARAMETER@148..149
+                  0: JS_IDENTIFIER_BINDING@148..149
+                    0: IDENT@148..149 "y" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
+              5: COMMA@149..151 "," [] [Whitespace(" ")]
+              6: TS_READONLY_PROPERTY_PARAMETER@151..168
+                0: PUBLIC_KW@151..158 "public" [] [Whitespace(" ")]
+                1: READONLY_KW@158..167 "readonly" [] [Whitespace(" ")]
+                2: JS_FORMAL_PARAMETER@167..168
+                  0: JS_IDENTIFIER_BINDING@167..168
+                    0: IDENT@167..168 "z" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: (empty)
+            2: R_PAREN@168..170 ")" [] [Whitespace(" ")]
+          4: JS_FUNCTION_BODY@170..173
+            0: L_CURLY@170..171 "{" [] []
+            1: JS_DIRECTIVE_LIST@171..171
+            2: JS_STATEMENT_LIST@171..171
+            3: R_CURLY@171..173 "}" [] [Whitespace(" ")]
+      7: R_CURLY@173..174 "}" [] []
+    2: JS_CLASS_STATEMENT@174..257
+      0: CLASS_KW@174..181 "class" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@181..183
+        0: IDENT@181..183 "C" [] [Whitespace(" ")]
+      2: (empty)
+      3: (empty)
+      4: (empty)
+      5: L_CURLY@183..185 "{" [] [Whitespace(" ")]
+      6: JS_CLASS_MEMBER_LIST@185..256
+        0: JS_CONSTRUCTOR_CLASS_MEMBER@185..256
+          0: (empty)
+          1: JS_LITERAL_MEMBER_NAME@185..196
+            0: IDENT@185..196 "constructor" [] []
+          2: (empty)
+          3: JS_CONSTRUCTOR_PARAMETERS@196..253
+            0: L_PAREN@196..197 "(" [] []
+            1: JS_CONSTRUCTOR_PARAMETER_LIST@197..251
+              0: TS_PROPERTY_PARAMETER@197..214
+                0: PRIVATE_KW@197..205 "private" [] [Whitespace(" ")]
+                1: JS_FORMAL_PARAMETER@205..214
+                  0: JS_IDENTIFIER_BINDING@205..206
+                    0: IDENT@205..206 "x" [] []
+                  1: (empty)
+                  2: TS_TYPE_ANNOTATION@206..214
+                    0: COLON@206..208 ":" [] [Whitespace(" ")]
+                    1: TS_STRING_TYPE@208..214
+                      0: STRING_KW@208..214 "string" [] []
+                  3: (empty)
+              1: COMMA@214..216 "," [] [Whitespace(" ")]
+              2: TS_READONLY_PROPERTY_PARAMETER@216..227
+                0: (empty)
+                1: READONLY_KW@216..225 "readonly" [] [Whitespace(" ")]
+                2: JS_FORMAL_PARAMETER@225..227
+                  0: JS_IDENTIFIER_BINDING@225..226
+                    0: IDENT@225..226 "y" [] []
+                  1: QUESTION@226..227 "?" [] []
+                  2: (empty)
+                  3: (empty)
+              3: COMMA@227..229 "," [] [Whitespace(" ")]
+              4: JS_FORMAL_PARAMETER@229..242
+                0: JS_IDENTIFIER_BINDING@229..231
+                  0: IDENT@229..231 "z" [] [Whitespace(" ")]
+                1: (empty)
+                2: (empty)
+                3: JS_INITIALIZER_CLAUSE@231..242
+                  0: EQ@231..233 "=" [] [Whitespace(" ")]
+                  1: JS_STRING_LITERAL_EXPRESSION@233..242
+                    0: JS_STRING_LITERAL@233..242 "\"default\"" [] []
+              5: COMMA@242..244 "," [] [Whitespace(" ")]
+              6: JS_REST_PARAMETER@244..251
+                0: DOT2@244..247 "..." [] []
+                1: JS_IDENTIFIER_BINDING@247..251
+                  0: IDENT@247..251 "rest" [] []
+                2: (empty)
+            2: R_PAREN@251..253 ")" [] [Whitespace(" ")]
+          4: JS_FUNCTION_BODY@253..256
+            0: L_CURLY@253..254 "{" [] []
+            1: JS_DIRECTIVE_LIST@254..254
+            2: JS_STATEMENT_LIST@254..254
+            3: R_CURLY@254..256 "}" [] [Whitespace(" ")]
+      7: R_CURLY@256..257 "}" [] []
+  3: EOF@257..258 "" [Newline("\n")] []

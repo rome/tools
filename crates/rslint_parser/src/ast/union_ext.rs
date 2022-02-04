@@ -1,7 +1,7 @@
 use crate::ast::{
-    JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyClass, JsAnyFunction, JsAnyFunctionBody,
-    JsClassMemberList, JsExtendsClause, TsImplementsClause, TsReturnTypeAnnotation,
-    TsTypeParameters,
+    JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyClass, JsAnyFormalParameter, JsAnyFunction,
+    JsAnyFunctionBody, JsClassMemberList, JsExtendsClause, TsAnyPropertyParameter,
+    TsImplementsClause, TsReturnTypeAnnotation, TsTypeParameters,
 };
 use crate::{SyntaxResult, SyntaxToken};
 
@@ -173,6 +173,28 @@ impl JsAnyFunction {
             }
             JsAnyFunction::JsExportDefaultFunctionClause(clause) => {
                 clause.body().map(JsAnyFunctionBody::JsFunctionBody)
+            }
+        }
+    }
+}
+
+impl TsAnyPropertyParameter {
+    pub fn accessibility(&self) -> Option<SyntaxToken> {
+        match self {
+            TsAnyPropertyParameter::TsPropertyParameter(parameter) => {
+                parameter.accessibility().ok()
+            }
+            TsAnyPropertyParameter::TsReadonlyPropertyParameter(parameter) => {
+                parameter.accessibility()
+            }
+        }
+    }
+
+    pub fn formal_parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+        match self {
+            TsAnyPropertyParameter::TsPropertyParameter(parameter) => parameter.formal_parameter(),
+            TsAnyPropertyParameter::TsReadonlyPropertyParameter(parameter) => {
+                parameter.formal_parameter()
             }
         }
     }

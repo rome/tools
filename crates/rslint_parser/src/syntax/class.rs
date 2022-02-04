@@ -6,8 +6,8 @@ use crate::state::{
 use crate::syntax::binding::parse_binding;
 use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::function::{
-    parse_function_body, parse_parameter, parse_parameter_list, parse_parameters_list,
-    parse_ts_type_annotation_or_error, ts_parameter_types,
+    parse_any_parameter, parse_formal_parameter, parse_function_body, parse_parameter_list,
+    parse_parameters_list, parse_ts_type_annotation_or_error, ParameterContext,
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, ts_only_syntax_error};
@@ -17,7 +17,7 @@ use crate::syntax::object::{
 use crate::syntax::stmt::{optional_semi, parse_statements, StatementContext};
 use crate::syntax::typescript::{
     is_reserved_type_name, parse_ts_return_type_annotation, parse_ts_type_annotation,
-    parse_ts_type_parameters, ts_heritage_clause, ts_modifier,
+    parse_ts_type_parameters, ts_heritage_clause,
 };
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
@@ -628,8 +628,9 @@ fn parse_class_member_impl(
                     } else {
                         let has_l_paren = p.expect(T!['(']);
                         p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
-                            parse_parameter(
+                            parse_formal_parameter(
                                 p,
+                                ParameterContext::Setter,
                                 ExpressionContext::default()
                                     .and_object_expression_allowed(has_l_paren),
                             )
@@ -882,8 +883,14 @@ fn parse_method_class_member_body(
         JS_UNKNOWN_MEMBER
     };
 
-    ts_parameter_types(p);
-    parse_parameter_list(p, flags).or_add_diagnostic(p, js_parse_error::expected_class_parameters);
+    let parameters = parse_ts_type_parameters(p);
+    TypeScript
+        .exclusive_syntax(p, parameters, |p, marker| {
+            ts_only_syntax_error(p, "type parameters", marker.range(p).as_range())
+        })
+        .ok();
+    parse_parameter_list(p, ParameterContext::Implementation, flags)
+        .or_add_diagnostic(p, js_parse_error::expected_class_parameters);
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
             ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
@@ -955,43 +962,84 @@ fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_CONSTRUCTOR_PARAMETERS))
 }
 
-fn parse_constructor_parameter(p: &mut Parser) -> ParsedSyntax {
+// test_err js_constructor_parameter_reserved_names
+// // SCRIPT
+// class A { constructor(readonly, private, protected, public) {} }
+fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     // test_err class_constructor_parameter
     // class B { constructor(protected b) {} }
 
-    if matches!(p.cur_src(), "public" | "protected" | "private" | "readonly") {
-        let ts_param = p.start();
-        if let Some(range) = parse_access_modifier(p) {
-            if !p.typescript() {
-                let err = p
-                    .err_builder("accessibility modifiers for a parameter inside a constructor can only be used in TypeScript files")
-                    .primary(range, "");
+    if is_at_modifier(p) {
+        // test ts_property_parameter
+        // // TYPESCRIPT
+        // class A { constructor(private x, protected y, public z) {} }
+        // class B { constructor(readonly w, private readonly x, protected readonly y, public readonly z) {} }
+        // class C { constructor(private x: string, readonly y?, z = "default", ...rest) {} }
+        //
+        // test_err ts_property_parameter_pattern
+        // // TYPESCRIPT
+        // class A { constructor(private { x, y }, protected [a, b]) {} }
+        let property_parameter = p.start();
 
-                p.error(err);
+        // test_err class_constructor_parameter_readonly
+        // class B { constructor(readonly b) {} }
+
+        // handles the TS unsupported case
+        let (mut valid, modifiers) = match parse_class_member_modifiers(p) {
+            Ok(modifiers) => (true, modifiers),
+            Err(modifiers) => (false, modifiers),
+        };
+
+        let mut read_only = false;
+
+        for (kind, range) in modifiers.iter() {
+            match kind {
+                ModifierKind::Readonly => {
+                    read_only = true;
+                }
+                ModifierKind::Declare | ModifierKind::Static | ModifierKind::Abstract => {
+                    let name = p.span_text(range);
+                    let error = p.err_builder(
+						&format!("'{}' modifier can only appear on a class, method, or property declaration.",
+								 name)
+					)
+						.primary(range, "");
+                    p.error(error);
+                    valid = false;
+                }
+                _ => {}
+            }
+            if matches!(kind, ModifierKind::Readonly | ModifierKind::Accessibility) {
+                continue; // valid
             }
         }
 
-        if let Some(range) = ts_modifier(p, &["readonly"]) {
-            // test_err class_constructor_parameter_readonly
-            // class B { constructor(readonly b) {} }
-            if !p.typescript() {
-                let err = p
-                    .err_builder("readonly modifiers for a parameter inside a constructor can only be used in TypeScript files")
-                    .primary(range, "");
+        parse_formal_parameter(p, ParameterContext::ParameterProperty, context)
+            .or_add_diagnostic(p, expected_binding);
 
-                p.error(err);
-            }
-        }
+        let kind = if !valid {
+            JS_UNKNOWN_PARAMETER
+        } else if read_only {
+            TS_READONLY_PROPERTY_PARAMETER
+        } else {
+            TS_PROPERTY_PARAMETER
+        };
 
-        if let Some(parameter) =
-            parse_parameter(p, ExpressionContext::default()).or_add_diagnostic(p, expected_binding)
-        {
-            parameter.undo_completion(p).abandon(p);
-        }
-
-        Present(ts_param.complete(p, TS_CONSTRUCTOR_PARAM))
+        Present(property_parameter.complete(p, kind))
     } else {
-        parse_parameter(p, ExpressionContext::default())
+        parse_any_parameter(p, ParameterContext::Implementation, context).map(|mut parameter| {
+            // test_err ts_constructor_this_parameter
+            // // TYPESCRIPT
+            // class C { constructor(this) {} }
+            if parameter.kind() == TS_THIS_PARAMETER {
+                p.error(
+                    p.err_builder("A constructor cannot have a 'this' parameter.")
+                        .primary(parameter.range(p), ""),
+                );
+                parameter.change_to_unknown(p);
+            }
+            parameter
+        })
     }
 }
 
@@ -1036,19 +1084,6 @@ pub(crate) fn parse_private_class_member_name(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
-fn parse_access_modifier(p: &mut Parser) -> Option<Range<usize>> {
-    let kind = match p.cur_src() {
-        "public" => PUBLIC_KW,
-        "private" => PRIVATE_KW,
-        "protected" => PROTECTED_KW,
-        _ => return None,
-    };
-
-    let range = p.cur_tok().range();
-    p.bump_remap(kind);
-    Some(range)
-}
-
 fn is_at_method_class_member(p: &Parser, mut offset: usize) -> bool {
     if p.nth_at(offset, T![?]) {
         offset += 1;
@@ -1057,11 +1092,24 @@ fn is_at_method_class_member(p: &Parser, mut offset: usize) -> bool {
     p.nth_at(offset, T!['(']) || p.nth_at(offset, T![<])
 }
 
-fn is_at_modifier(p: &Parser, offset: usize) -> bool {
-    matches!(
-        p.nth_src(offset),
+fn is_at_modifier(p: &Parser) -> bool {
+    // Test if this modifier is followed by another modifier, member name or any other token that
+    // starts a new member. If that's the case, then this is fairly likely a modifier. If not, then
+    // this is probably not a modifier, but the name of the member. For example, all these are valid
+    // members: `static() {}, private() {}, protected() {}`... but are modifiers if followed by another modifier or a name:
+    // `static x() {} private static() {}`...
+    if !matches!(
+        p.cur_src(),
         "public" | "private" | "protected" | "static" | "abstract" | "readonly" | "declare"
-    ) || is_at_class_member_name(p, offset)
+    ) {
+        return false;
+    }
+
+    if p.has_linebreak_before_n(1) {
+        return false;
+    }
+
+    matches!(p.nth(1), T![*] | T!['{'] | T!['[']) | is_at_class_member_name(p, 1)
 }
 
 // test static_generator_constructor_method
@@ -1168,16 +1216,7 @@ fn parse_class_member_modifiers(
 // test_err class_member_modifier
 // class A { abstract foo; }
 fn parse_modifier(p: &mut Parser) -> Option<Modifier> {
-    // Test if this modifier is followed by another modifier, member name or any other token that
-    // starts a new member. If that's the case, then this is fairly likely a modifier. If not, then
-    // this is probably not a modifier, but the name of the member. For example, all these are valid
-    // members: `static() {}, private() {}, protected() {}`... but are modifiers if followed by another modifier or a name:
-    // `static x() {} private static() {}`...
-    if !is_at_modifier(p, 1)
-        && !is_at_class_member_name(p, 1)
-        && !matches!(p.nth(1), T![*] | T![async])
-        || p.has_linebreak_before_n(1)
-    {
+    if !is_at_modifier(p) {
         // all modifiers can also be valid member names. That's why we shouldn't parse a modifier
         // if it isn't followed by a valid member name or another modifier
         return None;
@@ -1216,8 +1255,10 @@ enum ModifierKind {
     Static = 2,
     Readonly = 3,
     Abstract = 4,
-    // Update the array length in `ParsedModifiers` when adding/removing modifiers here or you'll
-    // have a bad time :D
+
+    /// Marker to determine the variant count of this enum. Replace with `std::mem::variant_count`
+    /// when it becomes a stable feature.
+    __LAST = 5,
 }
 
 /// Stores the range of a parsed modifier with its kind
@@ -1233,7 +1274,7 @@ struct Modifier {
 #[derive(Debug, Default)]
 struct ClassMemberModifiers {
     // replace length with std::mem::variant_count() when it becomes stable
-    modifiers: [Option<Range<usize>>; 5],
+    modifiers: [Option<Range<usize>>; ModifierKind::__LAST as usize],
 }
 
 impl ClassMemberModifiers {
@@ -1249,5 +1290,21 @@ impl ClassMemberModifiers {
 
     fn has(&self, kind: ModifierKind) -> bool {
         self.modifiers[kind as usize].is_some()
+    }
+
+    /// Iterates over the present modifiers
+    fn iter(&self) -> impl Iterator<Item = (ModifierKind, &Range<usize>)> {
+        self.modifiers
+            .iter()
+            .enumerate()
+            .filter_map(|(index, range)| {
+                if let Some(range) = range {
+                    assert!(index < ModifierKind::__LAST as usize);
+                    let kind = unsafe { std::mem::transmute::<u8, ModifierKind>(index as u8) };
+                    Some((kind, range))
+                } else {
+                    None
+                }
+            })
     }
 }

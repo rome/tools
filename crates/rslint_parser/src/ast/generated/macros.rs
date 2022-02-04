@@ -308,6 +308,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                         unsafe { $crate::ast::JsForVariableDeclaration::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::JS_FORMAL_PARAMETER => {
+                    let $pattern = unsafe { $crate::ast::JsFormalParameter::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::JS_FUNCTION_BODY => {
                     let $pattern = unsafe { $crate::ast::JsFunctionBody::new_unchecked(node) };
                     $body
@@ -508,10 +512,6 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::JS_OBJECT_EXPRESSION => {
                     let $pattern = unsafe { $crate::ast::JsObjectExpression::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::JS_PARAMETER => {
-                    let $pattern = unsafe { $crate::ast::JsParameter::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JS_PARAMETERS => {
@@ -751,10 +751,6 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_CONSTRUCTOR_PARAM => {
-                    let $pattern = unsafe { $crate::ast::TsConstructorParam::new_unchecked(node) };
-                    $body
-                }
                 $crate::JsSyntaxKind::TS_CONSTRUCTOR_TYPE => {
                     let $pattern = unsafe { $crate::ast::TsConstructorType::new_unchecked(node) };
                     $body
@@ -903,6 +899,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsParenthesizedType::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_PROPERTY_PARAMETER => {
+                    let $pattern = unsafe { $crate::ast::TsPropertyParameter::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER => {
                     let $pattern = unsafe {
                         $crate::ast::TsPropertySignatureObjectTypeMember::new_unchecked(node)
@@ -911,6 +911,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::TS_QUALIFIED_NAME => {
                     let $pattern = unsafe { $crate::ast::TsQualifiedName::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_READONLY_PROPERTY_PARAMETER => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsReadonlyPropertyParameter::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_REFERENCE_TYPE => {
@@ -957,6 +962,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 $crate::JsSyntaxKind::TS_TEMPLATE_LITERAL_TYPE => {
                     let $pattern =
                         unsafe { $crate::ast::TsTemplateLiteralType::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_THIS_PARAMETER => {
+                    let $pattern = unsafe { $crate::ast::TsThisParameter::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_THIS_TYPE => {

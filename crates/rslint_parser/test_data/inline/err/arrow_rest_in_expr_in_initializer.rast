@@ -5,50 +5,45 @@ JsModule {
         JsForStatement {
             for_token: FOR_KW@0..4 "for" [] [Whitespace(" ")],
             l_paren_token: L_PAREN@4..5 "(" [] [],
-            initializer: JsUnknownExpression {
-                items: [
-                    JsUnknown {
-                        items: [
-                            L_PAREN@5..6 "(" [] [],
-                            JsUnknown {
-                                items: [
-                                    JsUnknown {
-                                        items: [
-                                            DOT2@6..9 "..." [] [],
-                                            JsIdentifierBinding {
-                                                name_token: IDENT@9..11 "a" [] [Whitespace(" ")],
-                                            },
-                                            JsUnknownParameter {
-                                                items: [
-                                                    EQ@11..13 "=" [] [Whitespace(" ")],
-                                                    JsInExpression {
-                                                        property: JsStringLiteralExpression {
-                                                            value_token: JS_STRING_LITERAL@13..17 "\"b\"" [] [Whitespace(" ")],
-                                                        },
-                                                        in_token: IN_KW@17..20 "in" [] [Whitespace(" ")],
-                                                        object: JsObjectExpression {
-                                                            l_curly_token: L_CURLY@20..21 "{" [] [],
-                                                            members: JsObjectMemberList [],
-                                                            r_curly_token: R_CURLY@21..22 "}" [] [],
-                                                        },
-                                                    },
-                                                ],
-                                            },
-                                        ],
+            initializer: JsArrowFunctionExpression {
+                async_token: missing (optional),
+                type_parameters: missing (optional),
+                parameters: JsParameters {
+                    l_paren_token: L_PAREN@5..6 "(" [] [],
+                    items: JsParameterList [
+                        JsUnknownParameter {
+                            items: [
+                                DOT2@6..9 "..." [] [],
+                                JsIdentifierBinding {
+                                    name_token: IDENT@9..11 "a" [] [Whitespace(" ")],
+                                },
+                                JsInitializerClause {
+                                    eq_token: EQ@11..13 "=" [] [Whitespace(" ")],
+                                    expression: JsInExpression {
+                                        property: JsStringLiteralExpression {
+                                            value_token: JS_STRING_LITERAL@13..17 "\"b\"" [] [Whitespace(" ")],
+                                        },
+                                        in_token: IN_KW@17..20 "in" [] [Whitespace(" ")],
+                                        object: JsObjectExpression {
+                                            l_curly_token: L_CURLY@20..21 "{" [] [],
+                                            members: JsObjectMemberList [],
+                                            r_curly_token: R_CURLY@21..22 "}" [] [],
+                                        },
                                     },
-                                ],
-                            },
-                            R_PAREN@22..24 ")" [] [Whitespace(" ")],
-                        ],
-                    },
-                    FAT_ARROW@24..27 "=>" [] [Whitespace(" ")],
-                    JsFunctionBody {
-                        l_curly_token: L_CURLY@27..28 "{" [] [],
-                        directives: JsDirectiveList [],
-                        statements: JsStatementList [],
-                        r_curly_token: R_CURLY@28..29 "}" [] [],
-                    },
-                ],
+                                },
+                            ],
+                        },
+                    ],
+                    r_paren_token: R_PAREN@22..24 ")" [] [Whitespace(" ")],
+                },
+                return_type_annotation: missing (optional),
+                fat_arrow_token: FAT_ARROW@24..27 "=>" [] [Whitespace(" ")],
+                body: JsFunctionBody {
+                    l_curly_token: L_CURLY@27..28 "{" [] [],
+                    directives: JsDirectiveList [],
+                    statements: JsStatementList [],
+                    r_curly_token: R_CURLY@28..29 "}" [] [],
+                },
             },
             first_semi_token: SEMICOLON@29..30 ";" [] [],
             test: missing (optional),
@@ -72,15 +67,17 @@ JsModule {
     0: JS_FOR_STATEMENT@0..35
       0: FOR_KW@0..4 "for" [] [Whitespace(" ")]
       1: L_PAREN@4..5 "(" [] []
-      2: JS_UNKNOWN_EXPRESSION@5..29
-        0: JS_UNKNOWN@5..24
+      2: JS_ARROW_FUNCTION_EXPRESSION@5..29
+        0: (empty)
+        1: (empty)
+        2: JS_PARAMETERS@5..24
           0: L_PAREN@5..6 "(" [] []
-          1: JS_UNKNOWN@6..22
-            0: JS_UNKNOWN@6..22
+          1: JS_PARAMETER_LIST@6..22
+            0: JS_UNKNOWN_PARAMETER@6..22
               0: DOT2@6..9 "..." [] []
               1: JS_IDENTIFIER_BINDING@9..11
                 0: IDENT@9..11 "a" [] [Whitespace(" ")]
-              2: JS_UNKNOWN_PARAMETER@11..22
+              2: JS_INITIALIZER_CLAUSE@11..22
                 0: EQ@11..13 "=" [] [Whitespace(" ")]
                 1: JS_IN_EXPRESSION@13..22
                   0: JS_STRING_LITERAL_EXPRESSION@13..17
@@ -91,8 +88,9 @@ JsModule {
                     1: JS_OBJECT_MEMBER_LIST@21..21
                     2: R_CURLY@21..22 "}" [] []
           2: R_PAREN@22..24 ")" [] [Whitespace(" ")]
-        1: FAT_ARROW@24..27 "=>" [] [Whitespace(" ")]
-        2: JS_FUNCTION_BODY@27..29
+        3: (empty)
+        4: FAT_ARROW@24..27 "=>" [] [Whitespace(" ")]
+        5: JS_FUNCTION_BODY@27..29
           0: L_CURLY@27..28 "{" [] []
           1: JS_DIRECTIVE_LIST@28..28
           2: JS_STATEMENT_LIST@28..28

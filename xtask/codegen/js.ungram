@@ -536,7 +536,7 @@ JsSetterObjectMember =
 	'set'
 	name: JsAnyObjectMemberName
 	'('
-	parameter: JsParameter
+	parameter: JsAnyFormalParameter
 	')'
 	body: JsFunctionBody
 
@@ -647,9 +647,28 @@ JsConstructorParameters =
 JsConstructorParameterList = (JsAnyConstructorParameter (',' JsAnyConstructorParameter)* ','?)
 
 JsAnyConstructorParameter =
-	TsConstructorParam
-	| JsParameter
-	| JsUnknownParameter
+	JsAnyFormalParameter
+	| JsRestParameter
+	| TsPropertyParameter
+	| TsReadonlyPropertyParameter
+
+// constructor(private a: string)
+//             ^^^^^^^^^^^^^^^^^
+TsPropertyParameter =
+	accessibility: ('private' | 'protected' | 'public')
+	formal_parameter: JsAnyFormalParameter
+
+// constructor(private readonly a: string, readonly b: number)
+//             ^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^
+TsReadonlyPropertyParameter =
+	accessibility: ('private' | 'protected' | 'public')?
+	'readonly'
+	formal_parameter: JsAnyFormalParameter
+
+TsAnyPropertyParameter =
+	TsPropertyParameter
+	| TsReadonlyPropertyParameter
+
 
 // class Test { a; b = 1; static c; }
 //              ^^ ^^^^^^ ^^^^^^^^^
@@ -701,7 +720,7 @@ JsSetterClassMember =
 	'set'
 	name: JsAnyClassMemberName
 	'('
-	parameter: JsParameter
+	parameter: JsAnyFormalParameter
 	')'
 	body: JsFunctionBody
 
@@ -1345,18 +1364,35 @@ JsParameters =
 
 JsParameterList = (JsAnyParameter (',' JsAnyParameter)* ','?)
 
-JsAnyParameter = JsParameter
-	| JsRestParameter
+JsAnyFormalParameter =
+	JsFormalParameter
 	| JsUnknownParameter
 
-JsParameter =
+JsAnyParameter =
+	JsAnyFormalParameter
+	| JsRestParameter
+	| TsThisParameter
+
+// (a?: string) => {}
+//  ^^^^^^^^^^
+JsFormalParameter =
 	binding: JsAnyBindingPattern
+	'?'?
 	type_annotation: TsTypeAnnotation?
 	initializer: JsInitializerClause?
 
+// (...a) => {}
+//  ^^^^
 JsRestParameter =
 	'...'
 	binding: JsAnyBindingPattern
+	type_annotation: TsTypeAnnotation?
+
+// function a(this: string) => {}
+//  ^^^^
+TsThisParameter =
+	'this'
+	type_annotation: TsTypeAnnotation?
 
 JsCallArguments = '(' args: JsCallArgumentList ')'
 
@@ -1594,7 +1630,7 @@ TsAnyObjectTypeMember =
 //   ^^^^^^^^^^^^^^^^^
 TsCallSignatureObjectTypeMember =
 	type_parameters: TsTypeParameters?
-	parameter_list: JsParameters
+	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
 	separator_token: (',' | ';')?
 
@@ -1612,7 +1648,7 @@ TsPropertySignatureObjectTypeMember =
 TsConstructSignatureObjectTypeMember =
 	'new'
 	type_parameters: TsTypeParameters?
-	parameter_list: JsParameters
+	parameters: JsParameters
 	type_annotation: TsTypeAnnotation?
 	separator_token: (',' | ';')?
 
@@ -1622,7 +1658,7 @@ TsMethodSignatureObjectTypeMember =
 	name: JsAnyObjectMemberName
 	optional_token: '?'?
 	type_parameters: TsTypeParameters?
-	parameter_list: JsParameters
+	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
 	separator_token: (',' | ';')?
 
@@ -1642,7 +1678,7 @@ TsSetterSignatureObjectTypeMember =
 	'set'
 	name: JsAnyObjectMemberName
 	'('
-	parameter: JsParameter
+	parameter: JsAnyFormalParameter
 	')'
 	separator_token: (',' | ';')?
 
@@ -1799,9 +1835,3 @@ TsTypeArguments =
 
 TsTypeArgumentList = (TsType (',' TsType)* )
 
-TsConstructorParam =
-	accessibility: ('private' | 'protected' | 'public')?
-	'readonly'?
-	binding: JsAnyBindingPattern
-	type_annotation: TsTypeAnnotation?
-	initializer: JsInitializerClause?

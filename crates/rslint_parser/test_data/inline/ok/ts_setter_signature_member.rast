@@ -18,10 +18,11 @@ JsModule {
                             value: IDENT@29..30 "a" [] [],
                         },
                         l_paren_token: L_PAREN@30..31 "(" [] [],
-                        parameter: JsParameter {
+                        parameter: JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@31..32 "b" [] [],
                             },
+                            question_mark_token: missing (optional),
                             type_annotation: TsTypeAnnotation {
                                 colon_token: COLON@32..34 ":" [] [Whitespace(" ")],
                                 ty: TsNumberType {
@@ -54,10 +55,11 @@ JsModule {
                             value: IDENT@59..60 "a" [] [],
                         },
                         l_paren_token: L_PAREN@60..61 "(" [] [],
-                        parameter: JsParameter {
+                        parameter: JsFormalParameter {
                             binding: JsIdentifierBinding {
                                 name_token: IDENT@61..62 "b" [] [],
                             },
+                            question_mark_token: missing (optional),
                             type_annotation: missing (optional),
                             initializer: missing (optional),
                         },
@@ -85,13 +87,14 @@ JsModule {
                         },
                         optional_token_token: missing (optional),
                         type_parameters: missing (optional),
-                        parameter_list: JsParameters {
+                        parameters: JsParameters {
                             l_paren_token: L_PAREN@133..134 "(" [] [],
                             items: JsParameterList [
-                                JsParameter {
+                                JsFormalParameter {
                                     binding: JsIdentifierBinding {
                                         name_token: IDENT@134..135 "a" [] [],
                                     },
+                                    question_mark_token: missing (optional),
                                     type_annotation: missing (optional),
                                     initializer: missing (optional),
                                 },
@@ -181,14 +184,15 @@ JsModule {
             1: JS_LITERAL_MEMBER_NAME@29..30
               0: IDENT@29..30 "a" [] []
             2: L_PAREN@30..31 "(" [] []
-            3: JS_PARAMETER@31..40
+            3: JS_FORMAL_PARAMETER@31..40
               0: JS_IDENTIFIER_BINDING@31..32
                 0: IDENT@31..32 "b" [] []
-              1: TS_TYPE_ANNOTATION@32..40
+              1: (empty)
+              2: TS_TYPE_ANNOTATION@32..40
                 0: COLON@32..34 ":" [] [Whitespace(" ")]
                 1: TS_NUMBER_TYPE@34..40
                   0: NUMBER_KW@34..40 "number" [] []
-              2: (empty)
+              3: (empty)
             4: R_PAREN@40..42 ")" [] [Whitespace(" ")]
             5: (empty)
         2: R_CURLY@42..43 "}" [] []
@@ -207,11 +211,12 @@ JsModule {
             1: JS_LITERAL_MEMBER_NAME@59..60
               0: IDENT@59..60 "a" [] []
             2: L_PAREN@60..61 "(" [] []
-            3: JS_PARAMETER@61..62
+            3: JS_FORMAL_PARAMETER@61..62
               0: JS_IDENTIFIER_BINDING@61..62
                 0: IDENT@61..62 "b" [] []
               1: (empty)
               2: (empty)
+              3: (empty)
             4: R_PAREN@62..64 ")" [] [Whitespace(" ")]
             5: (empty)
         2: R_CURLY@64..65 "}" [] []
@@ -233,11 +238,12 @@ JsModule {
             3: JS_PARAMETERS@133..137
               0: L_PAREN@133..134 "(" [] []
               1: JS_PARAMETER_LIST@134..135
-                0: JS_PARAMETER@134..135
+                0: JS_FORMAL_PARAMETER@134..135
                   0: JS_IDENTIFIER_BINDING@134..135
                     0: IDENT@134..135 "a" [] []
                   1: (empty)
                   2: (empty)
+                  3: (empty)
               2: R_PAREN@135..137 ")" [] [Whitespace(" ")]
             4: (empty)
             5: (empty)

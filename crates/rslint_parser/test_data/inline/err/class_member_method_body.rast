@@ -25,10 +25,11 @@ JsModule {
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@13..14 "(" [] [],
                         items: JsParameterList [
-                            JsParameter {
+                            JsFormalParameter {
                                 binding: JsIdentifierBinding {
                                     name_token: IDENT@14..15 "a" [] [],
                                 },
+                                question_mark_token: missing (optional),
                                 type_annotation: missing (optional),
                                 initializer: missing (optional),
                             },
@@ -70,11 +71,12 @@ JsModule {
           7: JS_PARAMETERS@13..16
             0: L_PAREN@13..14 "(" [] []
             1: JS_PARAMETER_LIST@14..15
-              0: JS_PARAMETER@14..15
+              0: JS_FORMAL_PARAMETER@14..15
                 0: JS_IDENTIFIER_BINDING@14..15
                   0: IDENT@14..15 "a" [] []
                 1: (empty)
                 2: (empty)
+                3: (empty)
             2: R_PAREN@15..16 ")" [] []
           8: (empty)
           9: (empty)

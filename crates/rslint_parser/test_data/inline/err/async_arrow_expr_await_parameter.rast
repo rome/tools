@@ -59,10 +59,11 @@ JsModule {
                                 parameters: JsParameters {
                                     l_paren_token: L_PAREN@39..40 "(" [] [],
                                     items: JsParameterList [
-                                        JsParameter {
+                                        JsFormalParameter {
                                             binding: JsIdentifierBinding {
                                                 name_token: IDENT@40..42 "a" [] [Whitespace(" ")],
                                             },
+                                            question_mark_token: missing (optional),
                                             type_annotation: missing (optional),
                                             initializer: JsInitializerClause {
                                                 eq_token: EQ@42..44 "=" [] [Whitespace(" ")],
@@ -146,11 +147,12 @@ JsModule {
                 2: JS_PARAMETERS@39..51
                   0: L_PAREN@39..40 "(" [] []
                   1: JS_PARAMETER_LIST@40..49
-                    0: JS_PARAMETER@40..49
+                    0: JS_FORMAL_PARAMETER@40..49
                       0: JS_IDENTIFIER_BINDING@40..42
                         0: IDENT@40..42 "a" [] [Whitespace(" ")]
                       1: (empty)
-                      2: JS_INITIALIZER_CLAUSE@42..49
+                      2: (empty)
+                      3: JS_INITIALIZER_CLAUSE@42..49
                         0: EQ@42..44 "=" [] [Whitespace(" ")]
                         1: JS_UNKNOWN_EXPRESSION@44..49
                           0: AWAIT_KW@44..49 "await" [] []
