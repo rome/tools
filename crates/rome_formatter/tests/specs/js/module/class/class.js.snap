@@ -25,21 +25,27 @@ class Foo extends Boar {
 
 	}
 
-	* generator (){}
-
-	lorem() {
+	method() {
 		return "ipsum";
 	}
 
-	async ipsum() {
+	async asyncMethod() {}
 
-	}
+	* generatorMethod (){}
 
-	static foo;
-
-	static bar() {
+	static staticMethod() {
 		return "bar"
 	}
+
+	async * asyncGeneratorMethod (){}
+
+	static async staticAsyncMethod (){}
+
+	static * staticGeneratorMethod (){}
+
+	static async *staticAsyncGeneratorMethod() {}
+
+	static foo;
 
 	new_prop = 5
 
@@ -78,19 +84,27 @@ class Foo extends Boar {
 
 	set gg(a) {}
 
-	*generator() {}
-
-	lorem() {
+	method() {
 		return "ipsum";
 	}
 
-	async ipsum() {}
+	async asyncMethod() {}
 
-	static foo;
+	*generatorMethod() {}
 
-	static bar() {
+	static staticMethod() {
 		return "bar";
 	}
+
+	async *asyncGeneratorMethod() {}
+
+	static async staticAsyncMethod() {}
+
+	static *staticGeneratorMethod() {}
+
+	static async *staticAsyncGeneratorMethod() {}
+
+	static foo;
 
 	new_prop = 5;
 
