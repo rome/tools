@@ -12,12 +12,9 @@ rome_path = { version = "0.0.0", path = "../rome_path" }
 rome_core = { version = "0.0.0", path = "../rome_core" }
 cfg-if = "1.0.0"
 thiserror = "1.0.30"
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
 
 [dev-dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
 tests_macros = { path = "../tests_macros" }
 insta = "1.10.0"
-
-[features]
-test = ["serde_json/default", "serde/derive"]
