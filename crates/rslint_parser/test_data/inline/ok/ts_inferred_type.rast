@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsInferType {
                 infer_token: INFER_KW@23..29 "infer" [] [Whitespace(" ")],
@@ -22,7 +22,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@37..39 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@39..41 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@41..43 "{" [] [Whitespace(" ")],

@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsFunctionType {
                 type_parameters: missing (optional),
@@ -28,7 +28,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@42..44 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@44..46 "=" [] [Whitespace(" ")],
             ty: TsFunctionType {
                 type_parameters: missing (optional),
@@ -63,7 +63,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@74..76 "C" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@76..78 "=" [] [Whitespace(" ")],
             ty: TsFunctionType {
                 type_parameters: missing (optional),
@@ -98,7 +98,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@107..109 "D" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@109..111 "=" [] [Whitespace(" ")],
             ty: TsFunctionType {
                 type_parameters: missing (optional),
@@ -137,7 +137,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@133..135 "E" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@135..137 "=" [] [Whitespace(" ")],
             ty: TsFunctionType {
                 type_parameters: missing (optional),
@@ -173,7 +173,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@158..160 "F" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@160..162 "=" [] [Whitespace(" ")],
             ty: TsFunctionType {
                 type_parameters: missing (optional),
@@ -212,7 +212,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@183..185 "G" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@185..187 "=" [] [Whitespace(" ")],
             ty: TsFunctionType {
                 type_parameters: TsTypeParameters {
@@ -287,7 +287,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@221..223 "H" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@223..225 "=" [] [Whitespace(" ")],
             ty: TsFunctionType {
                 type_parameters: missing (optional),
@@ -329,7 +329,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@255..257 "I" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@257..259 "=" [] [Whitespace(" ")],
             ty: TsFunctionType {
                 type_parameters: missing (optional),

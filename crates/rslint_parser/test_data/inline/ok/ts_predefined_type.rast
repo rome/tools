@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsAnyType {
                 any_token: ANY_KW@23..26 "any" [] [],
@@ -19,7 +19,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@32..34 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@34..36 "=" [] [Whitespace(" ")],
             ty: TsNumberType {
                 number_token: NUMBER_KW@36..42 "number" [] [],
@@ -31,7 +31,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@49..51 "C" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@51..53 "=" [] [Whitespace(" ")],
             ty: TsNonPrimitiveType {
                 object_token: OBJECT_KW@53..59 "object" [] [],
@@ -43,7 +43,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@66..68 "D" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@68..70 "=" [] [Whitespace(" ")],
             ty: TsBooleanType {
                 boolean_token: BOOLEAN_KW@70..77 "boolean" [] [],
@@ -55,7 +55,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@84..86 "E" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@86..88 "=" [] [Whitespace(" ")],
             ty: TsBigintType {
                 bigint_token: BIGINT_KW@88..94 "bigint" [] [],
@@ -67,7 +67,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@101..103 "F" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@103..105 "=" [] [Whitespace(" ")],
             ty: TsStringType {
                 string_token: STRING_KW@105..111 "string" [] [],
@@ -79,7 +79,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@118..120 "G" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@120..122 "=" [] [Whitespace(" ")],
             ty: TsSymbolType {
                 symbol_token: SYMBOL_KW@122..128 "symbol" [] [],
@@ -91,7 +91,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@135..137 "H" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@137..139 "=" [] [Whitespace(" ")],
             ty: TsVoidType {
                 void_token: VOID_KW@139..143 "void" [] [],
@@ -103,7 +103,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@150..152 "I" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@152..154 "=" [] [Whitespace(" ")],
             ty: TsUndefinedType {
                 undefined_token: UNDEFINED_KW@154..163 "undefined" [] [],
@@ -115,7 +115,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@170..172 "J" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@172..174 "=" [] [Whitespace(" ")],
             ty: TsNullLiteralType {
                 literal_token: NULL_KW@174..178 "null" [] [],
@@ -127,7 +127,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@185..187 "K" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@187..189 "=" [] [Whitespace(" ")],
             ty: TsNeverType {
                 never_token: NEVER_KW@189..194 "never" [] [],

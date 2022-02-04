@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsImportType {
                 typeof_token: TYPEOF_KW@23..30 "typeof" [] [Whitespace(" ")],
@@ -24,7 +24,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@51..53 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@53..55 "=" [] [Whitespace(" ")],
             ty: TsImportType {
                 typeof_token: missing (optional),
@@ -41,7 +41,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@76..78 "C" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@78..80 "=" [] [Whitespace(" ")],
             ty: TsImportType {
                 typeof_token: TYPEOF_KW@80..87 "typeof" [] [Whitespace(" ")],

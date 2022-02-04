@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsNumberLiteralType {
                 minus_token: missing (optional),
@@ -20,7 +20,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@31..33 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@33..35 "=" [] [Whitespace(" ")],
             ty: TsNumberLiteralType {
                 minus_token: MINUS@35..36 "-" [] [],
@@ -33,7 +33,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@44..46 "C" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@46..48 "=" [] [Whitespace(" ")],
             ty: TsBigIntLiteralType {
                 minus_token: missing (optional),
@@ -46,7 +46,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@57..59 "D" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@59..61 "=" [] [Whitespace(" ")],
             ty: TsBigIntLiteralType {
                 minus_token: MINUS@61..62 "-" [] [],
@@ -59,7 +59,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@71..73 "E" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@73..75 "=" [] [Whitespace(" ")],
             ty: TsStringLiteralType {
                 literal_token: JS_STRING_LITERAL@75..82 "\"abvcd\"" [] [],
@@ -71,7 +71,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@89..91 "F" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@91..93 "=" [] [Whitespace(" ")],
             ty: TsBooleanLiteralType {
                 literal: TRUE_KW@93..97 "true" [] [],
@@ -83,7 +83,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@104..106 "G" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@106..108 "=" [] [Whitespace(" ")],
             ty: TsBooleanLiteralType {
                 literal: FALSE_KW@108..113 "false" [] [],
@@ -95,7 +95,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@120..122 "H" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@122..124 "=" [] [Whitespace(" ")],
             ty: TsNullLiteralType {
                 literal_token: NULL_KW@124..128 "null" [] [],

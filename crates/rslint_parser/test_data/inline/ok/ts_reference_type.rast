@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsNonPrimitiveType {
                 object_token: OBJECT_KW@23..29 "object" [] [],
@@ -19,7 +19,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@36..38 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@38..40 "=" [] [Whitespace(" ")],
             ty: TsStringType {
                 string_token: STRING_KW@40..46 "string" [] [],
@@ -31,7 +31,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@53..55 "C" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@55..57 "=" [] [Whitespace(" ")],
             ty: TsReferenceType {
                 name: JsReferenceIdentifier {
@@ -46,7 +46,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@65..67 "D" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@67..69 "=" [] [Whitespace(" ")],
             ty: TsReferenceType {
                 name: TsQualifiedName {
@@ -67,7 +67,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@79..81 "E" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@81..83 "=" [] [Whitespace(" ")],
             ty: TsReferenceType {
                 name: TsQualifiedName {

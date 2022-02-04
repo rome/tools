@@ -1497,7 +1497,7 @@ TsReferenceType =
 TsTypeAliasStatement =
 	'type'
 	binding_identifier: TsIdentifierBinding
-	type_parameters: TsTypeParameters
+	type_parameters: TsTypeParameters?
 	'='
 	ty: TsType
 	';'?

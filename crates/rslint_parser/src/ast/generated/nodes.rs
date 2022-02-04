@@ -4482,8 +4482,8 @@ impl TsTypeAliasStatement {
     pub fn binding_identifier(&self) -> SyntaxResult<TsIdentifierBinding> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn type_parameters(&self) -> SyntaxResult<TsTypeParameters> {
-        support::required_node(&self.syntax, 2usize)
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
+        support::node(&self.syntax, 2usize)
     }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
@@ -11834,7 +11834,7 @@ impl std::fmt::Debug for TsTypeAliasStatement {
             )
             .field(
                 "type_parameters",
-                &support::DebugSyntaxResult(self.type_parameters()),
+                &support::DebugOptionalElement(self.type_parameters()),
             )
             .field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
             .field("ty", &support::DebugSyntaxResult(self.ty()))

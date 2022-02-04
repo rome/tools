@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsTupleType {
                 l_brack_token: L_BRACK@23..24 "[" [] [],
@@ -33,7 +33,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@50..52 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@52..54 "=" [] [Whitespace(" ")],
             ty: TsTupleType {
                 l_brack_token: L_BRACK@54..55 "[" [] [],
@@ -83,7 +83,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@90..92 "C" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@92..94 "=" [] [Whitespace(" ")],
             ty: TsTupleType {
                 l_brack_token: L_BRACK@94..95 "[" [] [],
@@ -137,7 +137,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@135..137 "D" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@137..139 "=" [] [Whitespace(" ")],
             ty: TsTupleType {
                 l_brack_token: L_BRACK@139..140 "[" [] [],
@@ -163,7 +163,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@157..159 "E" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@159..161 "=" [] [Whitespace(" ")],
             ty: TsTupleType {
                 l_brack_token: L_BRACK@161..162 "[" [] [],
@@ -188,7 +188,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@180..182 "F" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@182..184 "=" [] [Whitespace(" ")],
             ty: TsTupleType {
                 l_brack_token: L_BRACK@184..185 "[" [] [],

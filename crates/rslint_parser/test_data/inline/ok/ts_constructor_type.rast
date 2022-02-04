@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsConstructorType {
                 abstract_token: missing (optional),
@@ -58,7 +58,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@65..67 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@67..69 "=" [] [Whitespace(" ")],
             ty: TsConstructorType {
                 abstract_token: ABSTRACT_KW@69..78 "abstract" [] [Whitespace(" ")],
@@ -109,7 +109,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@120..122 "C" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@122..124 "=" [] [Whitespace(" ")],
             ty: TsConstructorType {
                 abstract_token: missing (optional),
@@ -186,7 +186,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@162..164 "D" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@164..166 "=" [] [Whitespace(" ")],
             ty: TsConstructorType {
                 abstract_token: ABSTRACT_KW@166..175 "abstract" [] [Whitespace(" ")],

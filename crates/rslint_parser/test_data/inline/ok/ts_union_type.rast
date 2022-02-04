@@ -7,7 +7,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
             ty: TsUnionType {
                 leading_separator_token_token: missing (optional),
@@ -28,7 +28,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@45..47 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@47..49 "=" [] [Whitespace(" ")],
             ty: TsUnionType {
                 leading_separator_token_token: PIPE@49..51 "|" [] [Whitespace(" ")],
@@ -56,7 +56,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@73..75 "C" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@75..77 "=" [] [Whitespace(" ")],
             ty: TsUnionType {
                 leading_separator_token_token: missing (optional),

@@ -28,7 +28,7 @@ JsModule {
             binding_identifier: TsIdentifierBinding {
                 name_token: IDENT@35..37 "B" [] [Whitespace(" ")],
             },
-            type_parameters: missing (required),
+            type_parameters: missing (optional),
             eq_token: EQ@37..39 "=" [] [Whitespace(" ")],
             ty: TsTypeofType {
                 typeof_token: TYPEOF_KW@39..46 "typeof" [] [Whitespace(" ")],
