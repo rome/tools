@@ -1,5 +1,6 @@
 use crate::{
-    block_indent, format_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
+    block_indent, format_elements, formatter_traits::FormatTokenAndNode, FormatElement,
+    FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::JsFunctionBody;
 
@@ -10,7 +11,7 @@ impl ToFormatElement for JsFunctionBody {
             |open_token_trailing, close_token_leading| {
                 Ok(block_indent(format_elements![
                     open_token_trailing,
-                    self.directives().to_format_element(formatter)?,
+                    self.directives().format(formatter)?,
                     formatter.format_list(self.statements()),
                     close_token_leading,
                 ]))
