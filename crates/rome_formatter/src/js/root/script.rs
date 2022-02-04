@@ -1,6 +1,6 @@
 use crate::formatter_traits::FormatTokenAndNode;
-use crate::ts::directives::format_directives_list;
-use crate::ts::root::format_interpreter;
+use crate::js::directives::format_directives_list;
+use crate::js::root::format_interpreter;
 use crate::{
     format_elements, hard_line_break, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
