@@ -1,7 +1,7 @@
 use crate::parser::{RecoveryResult, ToDiagnostic};
 use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_initializer_clause;
-use crate::syntax::expr::{ExpressionContext, is_nth_at_name};
+use crate::syntax::expr::ExpressionContext;
 
 use crate::syntax::stmt::STMT_RECOVERY_SET;
 use crate::{JsSyntaxKind::*, *};
@@ -123,7 +123,6 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: Range<usize>) {
         // enum {}
         // enum {A,B,C}
         Absent => {
-            
             if p.nth_at(1, L_CURLY) {
                 let range = p.cur_tok().range();
 
@@ -150,15 +149,15 @@ pub(crate) fn is_at_ts_enum_statement(p: &Parser, t: &JsSyntaxKind) -> bool {
     let is_ident2 = p.nth_at(2, JsSyntaxKind::IDENT);
     let is_l_curly2 = p.nth_at(2, JsSyntaxKind::L_CURLY);
 
-    (*t == T![enum] && (is_ident1 || is_l_curly1)) 
-        || (*t == T![const] && p.nth_at(1, T![enum]) && (is_ident2 || is_l_curly2)) 
+    (*t == T![enum] && (is_ident1 || is_l_curly1))
+        || (*t == T![const] && p.nth_at(1, T![enum]) && (is_ident2 || is_l_curly2))
 }
 
 // test ts typescript_enum
 // enum A {}
 // enum B { a, b, c }
 // const enum C { A = 1, B = A * 2, ["A"] = 3, }
-pub(crate) fn parse_ts_enum_statement (p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_enum_statement(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
 
     p.eat(T![const]);
