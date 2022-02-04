@@ -97,7 +97,7 @@ where
 impl<I, F, N> IntersperseFn<I, F, N>
 where
     I: Iterator<Item = (N, FormatElement)>,
-    F: FnMut(&N, &N) -> FormatElement,
+    F: FnMut(&N, &N, &FormatElement) -> FormatElement,
 {
     pub fn new(iter: I, separator_factory: F) -> Self {
         Self {
@@ -111,15 +111,15 @@ where
 impl<I, F, N> Iterator for IntersperseFn<I, F, N>
 where
     I: Iterator<Item = (N, FormatElement)>,
-    F: FnMut(&N, &N) -> FormatElement,
+    F: FnMut(&N, &N, &FormatElement) -> FormatElement,
 {
     type Item = FormatElement;
 
     #[inline]
     fn next(&mut self) -> Option<FormatElement> {
         if let Some(prev_node) = self.prev_item.take() {
-            if let Some((next_node, _)) = self.iter.peek() {
-                return Some((self.separator_factory)(&prev_node, next_node));
+            if let Some((next_node, next_elem)) = self.iter.peek() {
+                return Some((self.separator_factory)(&prev_node, next_node, next_elem));
             }
         }
 
@@ -147,6 +147,6 @@ where
 impl<I, F, N> ExactSizeIterator for IntersperseFn<I, F, N>
 where
     I: Iterator<Item = (N, FormatElement)>,
-    F: FnMut(&N, &N) -> FormatElement,
+    F: FnMut(&N, &N, &FormatElement) -> FormatElement,
 {
 }

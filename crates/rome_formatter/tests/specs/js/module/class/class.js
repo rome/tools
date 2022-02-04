@@ -6,6 +6,10 @@ class Foo extends Boar {
 		super();
 	}
 
+	static get sg() {
+
+	}
+
 	get g() {
 
 	}
@@ -14,17 +18,27 @@ class Foo extends Boar {
 
 	}
 
-	* generator (){}
-
-	lorem() {
+	method() {
 		return "ipsum";
 	}
 
-	static foo;
+	async asyncMethod() {}
 
-	static bar() {
+	* generatorMethod (){}
+
+	static staticMethod() {
 		return "bar"
 	}
+
+	async * asyncGeneratorMethod (){}
+
+	static async staticAsyncMethod (){}
+
+	static * staticGeneratorMethod (){}
+
+	static async *staticAsyncGeneratorMethod() {}
+
+	static foo;
 
 	new_prop = 5
 
