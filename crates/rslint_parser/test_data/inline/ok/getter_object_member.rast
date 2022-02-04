@@ -137,7 +137,7 @@ JsModule {
                                         name: JsLiteralMemberName {
                                             value: IDENT@162..168 "get" [Newline("\n"), Whitespace("  ")] [],
                                         },
-                                        type_params: missing (optional),
+                                        type_parameters: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@168..169 "(" [] [],
                                             items: JsParameterList [],

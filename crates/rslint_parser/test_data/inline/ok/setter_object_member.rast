@@ -125,7 +125,7 @@ JsModule {
                                         name: JsLiteralMemberName {
                                             value: IDENT@105..110 "set" [Newline("\n"), Whitespace(" ")] [],
                                         },
-                                        type_params: missing (optional),
+                                        type_parameters: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@110..111 "(" [] [],
                                             items: JsParameterList [],

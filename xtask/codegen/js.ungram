@@ -546,7 +546,7 @@ JsMethodObjectMember =
 	'async'?
 	'*'?
 	name: JsAnyObjectMemberName
-	type_params: TsTypeParameters?
+	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody

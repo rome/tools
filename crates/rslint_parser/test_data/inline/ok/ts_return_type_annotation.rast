@@ -156,7 +156,7 @@ JsModule {
                                         name: JsLiteralMemberName {
                                             value: IDENT@119..123 "test" [] [],
                                         },
-                                        type_params: missing (optional),
+                                        type_parameters: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@123..124 "(" [] [],
                                             items: JsParameterList [

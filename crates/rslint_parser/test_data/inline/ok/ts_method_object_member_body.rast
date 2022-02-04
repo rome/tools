@@ -14,7 +14,7 @@ JsModule {
                             name: JsLiteralMemberName {
                                 value: IDENT@16..22 "x" [Newline("\n"), Whitespace("    ")] [],
                             },
-                            type_params: TsTypeParameters {
+                            type_parameters: TsTypeParameters {
                                 l_angle_token: L_ANGLE@22..23 "<" [] [],
                                 items: TsTypeParameterList [
                                     TsTypeParameter {
@@ -84,7 +84,7 @@ JsModule {
                             name: JsLiteralMemberName {
                                 value: IDENT@68..74 "y" [Newline("\n"), Whitespace("    ")] [],
                             },
-                            type_params: missing (optional),
+                            type_parameters: missing (optional),
                             parameters: JsParameters {
                                 l_paren_token: L_PAREN@74..75 "(" [] [],
                                 items: JsParameterList [
@@ -132,7 +132,7 @@ JsModule {
                             name: JsLiteralMemberName {
                                 value: IDENT@127..129 "id" [] [],
                             },
-                            type_params: TsTypeParameters {
+                            type_parameters: TsTypeParameters {
                                 l_angle_token: L_ANGLE@129..130 "<" [] [],
                                 items: TsTypeParameterList [
                                     TsTypeParameter {

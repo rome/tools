@@ -2001,7 +2001,9 @@ impl JsMethodObjectMember {
     pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
         support::required_node(&self.syntax, 2usize)
     }
-    pub fn type_params(&self) -> Option<TsTypeParameters> { support::node(&self.syntax, 3usize) }
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
+        support::node(&self.syntax, 3usize)
+    }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 4usize)
     }
@@ -8063,8 +8065,8 @@ impl std::fmt::Debug for JsMethodObjectMember {
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
-                "type_params",
-                &support::DebugOptionalElement(self.type_params()),
+                "type_parameters",
+                &support::DebugOptionalElement(self.type_parameters()),
             )
             .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field(
