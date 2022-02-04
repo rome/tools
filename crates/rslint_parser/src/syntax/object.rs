@@ -8,14 +8,13 @@ use crate::syntax::expr::{
     parse_reference_identifier, ExpressionContext,
 };
 use crate::syntax::function::{
-    parse_formal_parameter, parse_function_body, parse_parameter_list,
-    parse_ts_type_annotation_or_error, ParameterContext,
+    parse_formal_parameter, parse_function_body, parse_parameter_list, ParameterContext,
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::ts_only_syntax_error;
 use crate::syntax::typescript::{parse_ts_return_type_annotation, parse_ts_type_parameters};
 use crate::JsSyntaxFeature::TypeScript;
-use crate::{ParseRecovery, ParseSeparatedList, Parser, SyntaxFeature};
+use crate::{ParseRecovery, ParseSeparatedList, Parser};
 use rslint_errors::Span;
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
@@ -432,6 +431,14 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 
     Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 }
+
+// test ts_method_object_member_body
+// // TYPESCRIPT
+// ({
+//     x<A>(maybeA: any): maybeA is A { return true },
+//     y(a: string): string { return "string"; },
+//     async *id<R>(param: Promise<R>): AsyncIterableIterator<R> { yield await param },
+// })
 
 /// Parses the body of a method object member starting right after the member name.
 fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
