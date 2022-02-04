@@ -1,3 +1,4 @@
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{
     empty_element, format_elements, group_elements, if_group_fits_on_single_line, join_elements,
     soft_block_indent, soft_line_break_or_space, space_token, token, FormatElement, FormatResult,
@@ -8,7 +9,7 @@ use rslint_parser::AstSeparatedList;
 
 impl ToFormatElement for JsImportAssertion {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let assert_token = formatter.format_token(&self.assert_token()?)?;
+        let assert_token = self.assert_token().format(formatter)?;
         let assertions = self.assertions();
 
         let space = if assertions.is_empty() {

@@ -10,7 +10,7 @@ impl ToFormatElement for JsObjectExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
         let members = self.members();
 
-        let space = if members.len() == 0 {
+        let space = if members.is_empty() {
             empty_element()
         } else {
             if_group_fits_on_single_line(space_token())

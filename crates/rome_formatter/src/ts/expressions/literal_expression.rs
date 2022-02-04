@@ -1,3 +1,4 @@
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{format_element::Token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
     JsAnyLiteralExpression, JsBigIntLiteralExpression, JsBooleanLiteralExpression,
@@ -24,25 +25,25 @@ impl ToFormatElement for JsStringLiteralExpression {
 
 impl ToFormatElement for JsBooleanLiteralExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        formatter.format_token(&self.value_token()?)
+        self.value_token().format(formatter)
     }
 }
 
 impl ToFormatElement for JsNullLiteralExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        formatter.format_token(&self.value_token()?)
+        self.value_token().format(formatter)
     }
 }
 
 impl ToFormatElement for JsNumberLiteralExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        formatter.format_token(&self.value_token()?)
+        self.value_token().format(formatter)
     }
 }
 
 impl ToFormatElement for JsBigIntLiteralExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        formatter.format_token(&self.value_token()?)
+        self.value_token().format(formatter)
     }
 }
 

@@ -1,17 +1,12 @@
-use crate::{
-    empty_element, format_elements, FormatElement, FormatResult, Formatter, ToFormatElement,
-};
+use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::JsTemplate;
 
 impl ToFormatElement for JsTemplate {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let tag = if let Some(tag) = self.tag() {
-            formatter.format_node(&tag)?
-        } else {
-            empty_element()
-        };
-        let l_tick = formatter.format_token(&self.l_tick_token()?)?;
-        let r_tick = formatter.format_token(&self.r_tick_token()?)?;
+        let tag = self.tag().format_or_empty(formatter)?;
+        let l_tick = self.l_tick_token().format(formatter)?;
+        let r_tick = self.r_tick_token().format(formatter)?;
 
         Ok(format_elements![
             tag,

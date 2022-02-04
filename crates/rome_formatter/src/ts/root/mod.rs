@@ -1,6 +1,5 @@
-use crate::{
-    empty_element, format_elements, hard_line_break, FormatElement, FormatResult, Formatter,
-};
+use crate::formatter_traits::FormatOptionalTokenAndNode;
+use crate::{format_elements, hard_line_break, FormatElement, FormatResult, Formatter};
 use rslint_parser::SyntaxToken;
 
 mod any_module_item;
@@ -11,10 +10,7 @@ pub fn format_interpreter(
     interpreter: Option<SyntaxToken>,
     formatter: &Formatter,
 ) -> FormatResult<FormatElement> {
-    let result = if let Some(interpreter) = interpreter {
-        format_elements![formatter.format_token(&interpreter)?, hard_line_break()]
-    } else {
-        empty_element()
-    };
-    Ok(result)
+    interpreter.format_with_or_empty(formatter, |element| {
+        format_elements![element, hard_line_break()]
+    })
 }

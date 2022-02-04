@@ -1,3 +1,4 @@
+use crate::formatter_traits::FormatOptionalTokenAndNode;
 use crate::{
     empty_element, format_elements, group_elements, if_group_fits_on_single_line, join_elements,
     soft_block_indent, soft_line_break_or_space, space_token, token, FormatElement, FormatResult,
@@ -33,11 +34,7 @@ impl ToFormatElement for JsExportNamedClause {
             &self.r_curly_token()?,
         )?);
 
-        let semicolon = if let Some(semicolon) = self.semicolon_token() {
-            formatter.format_token(&semicolon)?
-        } else {
-            token(";")
-        };
+        let semicolon = self.semicolon_token().format_or(formatter, || token(";"))?;
 
         Ok(format_elements![list, semicolon])
     }

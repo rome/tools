@@ -115,24 +115,6 @@ impl Formatter {
         ])
     }
 
-    /// Recursively formats the ast node and all its children
-    ///
-    /// Returns `None` if the node couldn't be formatted because of syntax errors in its sub tree.
-    /// The parent may use [Self::format_verbatim] to insert the node content as is.
-    // #[deprecated = "use the .format traits"]
-    pub fn format_node<T: AstNode + ToFormatElement>(
-        &self,
-        node: &T,
-    ) -> FormatResult<FormatElement> {
-        let leading = self.format_node_start(node.syntax());
-        let trailing = self.format_node_end(node.syntax());
-        Ok(format_elements![
-            leading,
-            node.to_format_element(self)?,
-            trailing,
-        ])
-    }
-
     /// Helper function that returns what should be printed before the node that work on
     /// the non-generic [SyntaxNode] to avoid unrolling the logic for every [AstNode] type.
     pub(super) fn format_node_start(&self, _node: &SyntaxNode) -> FormatElement {
@@ -145,39 +127,6 @@ impl Formatter {
     pub(super) fn format_node_end(&self, _node: &SyntaxNode) -> FormatElement {
         // TODO: Sets the marker for the end source map location, ...
         empty_element()
-    }
-
-    /// Formats the passed in token.
-    ///
-    /// May return `None` if the token wasn't present in the original source but was inserted
-    /// by the parser to "fix" a syntax error and generate a valid tree.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rome_formatter::{Formatter, token};
-    /// use rslint_parser::{SyntaxNode, T, SyntaxToken, JsLanguage, JsSyntaxKind, SyntaxTreeBuilder};
-    /// use rome_rowan::{NodeOrToken};
-    ///
-    /// let mut builder = SyntaxTreeBuilder::new();
-    /// builder.start_node(JsSyntaxKind::JS_STRING_LITERAL_EXPRESSION);
-    /// builder.token(JsSyntaxKind::JS_STRING_LITERAL, "'abc'");
-    /// builder.finish_node();
-    /// let node = builder.finish();
-    ///
-    /// let syntax_token = node.first_token().unwrap();
-    ///
-    /// let formatter = Formatter::default();
-    /// let result = formatter.format_token(&syntax_token);
-    ///
-    /// assert_eq!(Ok(token("'abc'")), result)
-    /// ```
-    // #[deprecated = "Please use the traits available in 'crate::formatter_traits' which allow better developer experience"]
-    pub fn format_token<T>(&self, syntax_token: &T) -> FormatResult<T::Output>
-    where
-        T: token::FormattableToken,
-    {
-        syntax_token.format(self)
     }
 
     /// Print out a `token` from the original source with a different `content`.
@@ -205,7 +154,6 @@ impl Formatter {
     /// Formats each child and returns the result as a list.
     ///
     /// Returns [None] if a child couldn't be formatted.
-    // #[deprecated = "Please use the traits available in 'crate::formatter_traits' which allow better developer experience"]
     pub fn format_nodes<T: AstNode + ToFormatElement>(
         &self,
         nodes: impl IntoIterator<Item = T>,
@@ -419,47 +367,4 @@ impl Formatter {
     #[cfg(not(debug_assertions))]
     /// Restore the state of the formatter to a previous snapshot
     pub fn restore(&self, _: FormatterSnapshot) {}
-}
-
-// FormattableToken needs to be public as its used in the signature of format_token,
-// part of the public API, but it should not be exposed for implementation so
-// declare it in a private module inaccessible for external consumers
-mod token {
-    use rslint_parser::SyntaxToken;
-
-    use crate::{format_element::Token, format_elements, FormatElement, FormatResult, Formatter};
-
-    pub trait FormattableToken {
-        type Output;
-        fn format(&self, formatter: &Formatter) -> FormatResult<Self::Output>;
-    }
-
-    impl FormattableToken for SyntaxToken {
-        type Output = FormatElement;
-
-        fn format(&self, formatter: &Formatter) -> FormatResult<Self::Output> {
-            cfg_if::cfg_if! {
-                if #[cfg(debug_assertions)] {
-                    assert!(formatter.printed_tokens.borrow_mut().insert(self.clone()));
-                }
-            }
-
-            Ok(format_elements![
-                formatter.print_leading_trivia(self),
-                Token::from(self),
-                formatter.print_trailing_trivia(self),
-            ])
-        }
-    }
-
-    impl FormattableToken for Option<SyntaxToken> {
-        type Output = Option<FormatElement>;
-
-        fn format(&self, formatter: &Formatter) -> FormatResult<Self::Output> {
-            match self {
-                Some(token) => Ok(Some(token.format(formatter)?)),
-                None => Ok(None),
-            }
-        }
-    }
 }
