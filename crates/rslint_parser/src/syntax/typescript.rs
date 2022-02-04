@@ -2,6 +2,7 @@
 
 mod enums;
 mod types;
+mod ts_parse_error;
 
 use super::expr::parse_lhs_expr;
 use crate::parser::ParserProgress;

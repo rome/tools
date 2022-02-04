@@ -5,6 +5,7 @@ use crate::syntax::expr::ExpressionContext;
 
 use crate::syntax::stmt::STMT_RECOVERY_SET;
 use crate::{JsSyntaxKind::*, *};
+use super::ts_parse_error::expected_ts_enum_member;
 
 fn parse_literal_as_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
@@ -38,7 +39,7 @@ fn parse_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
         T!['['] => syntax::object::parse_computed_member_name(p),
         T![#] => {
             let err = p
-                .err_builder("An enum member cannot be private")
+                .err_builder("An `enum` member cannot be private")
                 .primary(p.cur_tok().range(), "");
             p.error(err);
             syntax::class::parse_private_class_member_name(p).map(|mut x| {
@@ -58,11 +59,6 @@ fn parse_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
 
     Present(member.complete(p, TS_ENUM_MEMBER))
 }
-
-fn expected_ts_enum_member(p: &Parser, range: Range<usize>) -> Diagnostic {
-    parser::expected_any(&["identifier", "string literal", "computed name"], range).to_diagnostic(p)
-}
-
 struct TsEnumMembersList;
 
 impl ParseSeparatedList for TsEnumMembersList {
@@ -130,11 +126,11 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: Range<usize>) {
                 p.bump_remap(T![ident]);
                 let _ = m.complete(p, JS_IDENTIFIER_BINDING);
 
-                let err = p.err_builder("invalid enum name").primary(range, "");
+                let err = p.err_builder("invalid `enum` name").primary(range, "");
                 p.error(err);
             } else {
                 let err = p
-                    .err_builder("enum declarations must have a name")
+                    .err_builder("`enum` statements must have a name")
                     .primary(enum_token_range.start..p.cur_tok().start(), "");
                 p.error(err);
             }
@@ -163,7 +159,11 @@ pub(crate) fn parse_ts_enum_statement(p: &mut Parser) -> ParsedSyntax {
     p.eat(T![const]);
 
     let enum_token_range = p.cur_tok().range();
-    p.expect(T![enum]);
+    if !p.expect(T![enum]) {
+        m.abandon(p);
+        return Absent;
+    }
+
     parse_ts_enum_id(p, enum_token_range);
 
     p.expect(T!['{']);
