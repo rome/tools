@@ -1,4 +1,4 @@
-use crate::parser::{RecoveryResult, ToDiagnostic};
+use crate::parser::RecoveryResult;
 use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::ExpressionContext;
