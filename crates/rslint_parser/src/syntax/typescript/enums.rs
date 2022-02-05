@@ -116,15 +116,15 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: Range<usize>) {
             }
         }
         // test_err ts enum_decl_no_id
-        // enum {}
         // enum {A,B,C}
+        // enum 1 {A,B,C}
         Absent => {
             if p.nth_at(1, L_CURLY) {
                 let range = p.cur_tok().range();
 
                 let m = p.start();
-                p.bump_remap(T![ident]);
-                let _ = m.complete(p, JS_IDENTIFIER_BINDING);
+                p.bump_any();
+                let _ = m.complete(p, JS_UNKNOWN_BINDING);
 
                 let err = p.err_builder("invalid `enum` name").primary(range, "");
                 p.error(err);
@@ -139,14 +139,12 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: Range<usize>) {
 }
 
 pub(crate) fn is_at_ts_enum_statement(p: &Parser, t: &JsSyntaxKind) -> bool {
-    let is_ident1 = p.nth_at(1, JsSyntaxKind::IDENT);
     let is_l_curly1 = p.nth_at(1, JsSyntaxKind::L_CURLY);
-
-    let is_ident2 = p.nth_at(2, JsSyntaxKind::IDENT);
     let is_l_curly2 = p.nth_at(2, JsSyntaxKind::L_CURLY);
+    let is_l_curly3 = p.nth_at(3, JsSyntaxKind::L_CURLY);
 
-    (*t == T![enum] && (is_ident1 || is_l_curly1))
-        || (*t == T![const] && p.nth_at(1, T![enum]) && (is_ident2 || is_l_curly2))
+    (*t == T![enum] && (is_l_curly1 || is_l_curly2))
+        || (*t == T![const] && p.nth_at(1, T![enum]) && (is_l_curly2 || is_l_curly3))
 }
 
 // test ts typescript_enum
