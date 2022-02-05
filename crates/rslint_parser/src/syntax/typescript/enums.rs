@@ -3,9 +3,9 @@ use crate::syntax::binding::parse_binding;
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::ExpressionContext;
 
+use super::ts_parse_error::expected_ts_enum_member;
 use crate::syntax::stmt::STMT_RECOVERY_SET;
 use crate::{JsSyntaxKind::*, *};
-use super::ts_parse_error::expected_ts_enum_member;
 
 fn parse_literal_as_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
@@ -107,9 +107,9 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: Range<usize>) {
             if is_reserved_enum_name(text) {
                 let err = p
                     .err_builder(&format!(
-                            "`{}` cannot be used as a enum name because it is already reserved",
-                            text
-                        ))
+                        "`{}` cannot be used as a enum name because it is already reserved",
+                        text
+                    ))
                     .primary(id.range(p), "");
 
                 p.error(err);

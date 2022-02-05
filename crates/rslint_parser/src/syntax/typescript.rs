@@ -1,8 +1,8 @@
 //! TypeScript specific functions.
 
 mod enums;
-mod types;
 mod ts_parse_error;
+mod types;
 
 use super::expr::parse_lhs_expr;
 use crate::parser::ParserProgress;
