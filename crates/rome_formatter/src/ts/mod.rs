@@ -7,7 +7,6 @@ mod class;
 mod directives;
 mod export;
 mod expressions;
-mod ident;
 mod import;
 mod object_members;
 mod parameter_list;

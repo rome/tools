@@ -17,8 +17,7 @@ JsModule {
                             ],
                             r_curly_token: R_CURLY@10..12 "}" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@12..14 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -53,8 +52,7 @@ JsModule {
                             ],
                             r_curly_token: R_CURLY@40..42 "}" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@42..44 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -96,8 +94,7 @@ JsModule {
                             ],
                             r_curly_token: R_CURLY@60..62 "}" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@62..64 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -137,8 +134,7 @@ JsModule {
                             ],
                             r_curly_token: R_CURLY@99..101 "}" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@101..103 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -172,8 +168,7 @@ JsModule {
                             ],
                             r_curly_token: R_CURLY@122..124 "}" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@124..126 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -224,8 +219,7 @@ JsModule {
                                         ],
                                         r_curly_token: R_CURLY@170..172 "}" [] [Whitespace(" ")],
                                     },
-                                    excl_token: missing (optional),
-                                    type_annotation: missing (optional),
+                                    variable_annotation: missing (optional),
                                     initializer: JsInitializerClause {
                                         eq_token: EQ@172..174 "=" [] [Whitespace(" ")],
                                         expression: JsIdentifierExpression {
@@ -264,8 +258,7 @@ JsModule {
                   1: (empty)
               2: R_CURLY@10..12 "}" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@12..15
+            2: JS_INITIALIZER_CLAUSE@12..15
               0: EQ@12..14 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@14..15
                 0: JS_REFERENCE_IDENTIFIER@14..15
@@ -287,8 +280,7 @@ JsModule {
                   3: JS_STRING_LITERAL@30..40 "\"default\"" [] [Whitespace(" ")]
               2: R_CURLY@40..42 "}" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@42..45
+            2: JS_INITIALIZER_CLAUSE@42..45
               0: EQ@42..44 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@44..45
                 0: JS_REFERENCE_IDENTIFIER@44..45
@@ -314,8 +306,7 @@ JsModule {
                     2: R_CURLY@58..60 "}" [] [Whitespace(" ")]
               2: R_CURLY@60..62 "}" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@62..65
+            2: JS_INITIALIZER_CLAUSE@62..65
               0: EQ@62..64 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@64..65
                 0: JS_REFERENCE_IDENTIFIER@64..65
@@ -340,8 +331,7 @@ JsModule {
                   1: (empty)
               2: R_CURLY@99..101 "}" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@101..104
+            2: JS_INITIALIZER_CLAUSE@101..104
               0: EQ@101..103 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@103..104
                 0: JS_REFERENCE_IDENTIFIER@103..104
@@ -362,8 +352,7 @@ JsModule {
                 1: COMMA@120..122 "," [] [Whitespace(" ")]
               2: R_CURLY@122..124 "}" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@124..127
+            2: JS_INITIALIZER_CLAUSE@124..127
               0: EQ@124..126 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@126..127
                 0: JS_REFERENCE_IDENTIFIER@126..127
@@ -399,8 +388,7 @@ JsModule {
                           0: IDENT@164..170 "await" [] [Whitespace(" ")]
                     2: R_CURLY@170..172 "}" [] [Whitespace(" ")]
                   1: (empty)
-                  2: (empty)
-                  3: JS_INITIALIZER_CLAUSE@172..175
+                  2: JS_INITIALIZER_CLAUSE@172..175
                     0: EQ@172..174 "=" [] [Whitespace(" ")]
                     1: JS_IDENTIFIER_EXPRESSION@174..175
                       0: JS_REFERENCE_IDENTIFIER@174..175

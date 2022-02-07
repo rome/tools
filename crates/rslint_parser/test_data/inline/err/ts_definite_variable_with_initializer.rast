@@ -1,0 +1,78 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsUnknownStatement {
+            items: [
+                JsUnknown {
+                    items: [
+                        LET_KW@0..4 "let" [] [Whitespace(" ")],
+                        JsUnknown {
+                            items: [
+                                JsUnknown {
+                                    items: [
+                                        JsIdentifierBinding {
+                                            name_token: IDENT@4..5 "a" [] [],
+                                        },
+                                        JsUnknown {
+                                            items: [
+                                                BANG@5..6 "!" [] [],
+                                                TsTypeAnnotation {
+                                                    colon_token: COLON@6..8 ":" [] [Whitespace(" ")],
+                                                    ty: TsStringType {
+                                                        string_token: STRING_KW@8..15 "string" [] [Whitespace(" ")],
+                                                    },
+                                                },
+                                            ],
+                                        },
+                                        JsInitializerClause {
+                                            eq_token: EQ@15..17 "=" [] [Whitespace(" ")],
+                                            expression: JsStringLiteralExpression {
+                                                value_token: JS_STRING_LITERAL@17..23 "\"test\"" [] [],
+                                            },
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    ],
+                },
+                SEMICOLON@23..24 ";" [] [],
+            ],
+        },
+    ],
+    eof_token: EOF@24..25 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..25
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..24
+    0: JS_UNKNOWN_STATEMENT@0..24
+      0: JS_UNKNOWN@0..23
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: JS_UNKNOWN@4..23
+          0: JS_UNKNOWN@4..23
+            0: JS_IDENTIFIER_BINDING@4..5
+              0: IDENT@4..5 "a" [] []
+            1: JS_UNKNOWN@5..15
+              0: BANG@5..6 "!" [] []
+              1: TS_TYPE_ANNOTATION@6..15
+                0: COLON@6..8 ":" [] [Whitespace(" ")]
+                1: TS_STRING_TYPE@8..15
+                  0: STRING_KW@8..15 "string" [] [Whitespace(" ")]
+            2: JS_INITIALIZER_CLAUSE@15..23
+              0: EQ@15..17 "=" [] [Whitespace(" ")]
+              1: JS_STRING_LITERAL_EXPRESSION@17..23
+                0: JS_STRING_LITERAL@17..23 "\"test\"" [] []
+      1: SEMICOLON@23..24 ";" [] []
+  3: EOF@24..25 "" [Newline("\n")] []
+--
+error[SyntaxError]: definite assertion assignments are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ ts_definite_variable_with_initializer.js:1:6
+  │
+1 │ let a!: string = "test";
+  │      ^^^^^^^^^ TypeScript only syntax
+
+--
+let a!: string = "test";

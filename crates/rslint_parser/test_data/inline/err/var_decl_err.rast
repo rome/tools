@@ -10,8 +10,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..7 "=" [] [],
                             expression: missing (required),
@@ -29,8 +28,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@15..17 "b" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@17..19 "=" [] [Whitespace(" ")],
                             expression: JsNumberLiteralExpression {
@@ -50,8 +48,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@25..27 "c" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@27..29 "=" [] [Whitespace(" ")],
                             expression: JsNumberLiteralExpression {
@@ -79,8 +76,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@6..7
+            2: JS_INITIALIZER_CLAUSE@6..7
               0: EQ@6..7 "=" [] []
               1: (empty)
       1: SEMICOLON@7..8 ";" [] []
@@ -92,8 +88,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@15..17
               0: IDENT@15..17 "b" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@17..21
+            2: JS_INITIALIZER_CLAUSE@17..21
               0: EQ@17..19 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@19..21
                 0: JS_NUMBER_LITERAL@19..21 "5" [] [Whitespace(" ")]
@@ -106,8 +101,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@25..27
               0: IDENT@25..27 "c" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@27..30
+            2: JS_INITIALIZER_CLAUSE@27..30
               0: EQ@27..29 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@29..30
                 0: JS_NUMBER_LITERAL@29..30 "5" [] []

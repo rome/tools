@@ -90,8 +90,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@101..102 "d" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: TsTypeAnnotation {
+                        variable_annotation: TsTypeAnnotation {
                             colon_token: COLON@102..104 ":" [] [Whitespace(" ")],
                             ty: TsTypeOperatorType {
                                 operator_token: UNIQUE_KW@104..111 "unique" [] [Whitespace(" ")],
@@ -195,14 +194,13 @@ JsModule {
           0: JS_VARIABLE_DECLARATION@101..128
             0: JS_IDENTIFIER_BINDING@101..102
               0: IDENT@101..102 "d" [] []
-            1: (empty)
-            2: TS_TYPE_ANNOTATION@102..118
+            1: TS_TYPE_ANNOTATION@102..118
               0: COLON@102..104 ":" [] [Whitespace(" ")]
               1: TS_TYPE_OPERATOR_TYPE@104..118
                 0: UNIQUE_KW@104..111 "unique" [] [Whitespace(" ")]
                 1: TS_SYMBOL_TYPE@111..118
                   0: SYMBOL_KW@111..118 "symbol" [] [Whitespace(" ")]
-            3: JS_INITIALIZER_CLAUSE@118..128
+            2: JS_INITIALIZER_CLAUSE@118..128
               0: EQ@118..120 "=" [] [Whitespace(" ")]
               1: JS_CALL_EXPRESSION@120..128
                 0: JS_IDENTIFIER_EXPRESSION@120..126

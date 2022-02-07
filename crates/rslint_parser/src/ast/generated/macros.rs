@@ -28,10 +28,6 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
     ($ node : expr , $ pattern : pat => $ body : expr , $ fallback : pat => $ default : expr) => {
         match $node {
             node => match $crate::SyntaxNode::kind(&node) {
-                $crate::JsSyntaxKind::IDENT => {
-                    let $pattern = unsafe { $crate::ast::Ident::new_unchecked(node) };
-                    $body
-                }
                 $crate::JsSyntaxKind::IMPORT_META => {
                     let $pattern = unsafe { $crate::ast::ImportMeta::new_unchecked(node) };
                     $body
@@ -759,6 +755,16 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsDefaultTypeClause::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_DEFINITE_PROPERTY_ANNOTATION => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsDefinitePropertyAnnotation::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_DEFINITE_VARIABLE_ANNOTATION => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsDefiniteVariableAnnotation::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_ENUM_MEMBER => {
                     let $pattern = unsafe { $crate::ast::TsEnumMember::new_unchecked(node) };
                     $body
@@ -888,6 +894,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::TS_OBJECT_TYPE => {
                     let $pattern = unsafe { $crate::ast::TsObjectType::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_OPTIONAL_PROPERTY_ANNOTATION => {
+                    let $pattern =
+                        unsafe { $crate::ast::TsOptionalPropertyAnnotation::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_OPTIONAL_TUPLE_TYPE_ELEMENT => {

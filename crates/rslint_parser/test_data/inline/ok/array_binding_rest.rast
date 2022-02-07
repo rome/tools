@@ -19,8 +19,7 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@14..16 "]" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@16..18 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -61,8 +60,7 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@37..39 "]" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@39..41 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -102,8 +100,7 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@62..64 "]" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@64..66 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -139,8 +136,7 @@ JsModule {
                     0: IDENT@9..14 "abcd" [] [Whitespace(" ")]
               2: R_BRACK@14..16 "]" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@16..19
+            2: JS_INITIALIZER_CLAUSE@16..19
               0: EQ@16..18 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@18..19
                 0: JS_REFERENCE_IDENTIFIER@18..19
@@ -167,8 +163,7 @@ JsModule {
                     2: R_BRACK@35..37 "]" [] [Whitespace(" ")]
               2: R_BRACK@37..39 "]" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@39..42
+            2: JS_INITIALIZER_CLAUSE@39..42
               0: EQ@39..41 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@41..42
                 0: JS_REFERENCE_IDENTIFIER@41..42
@@ -194,8 +189,7 @@ JsModule {
                     2: R_BRACK@60..62 "]" [] [Whitespace(" ")]
               2: R_BRACK@62..64 "]" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@64..67
+            2: JS_INITIALIZER_CLAUSE@64..67
               0: EQ@64..66 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@66..67
                 0: JS_REFERENCE_IDENTIFIER@66..67

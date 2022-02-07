@@ -21,9 +21,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@19..20 "a" [] [],
                     },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
+                    property_annotation: missing (optional),
                     value: missing (optional),
                     semicolon_token: SEMICOLON@20..21 ";" [] [],
                 },
@@ -82,9 +80,7 @@ JsModule {
             0: IDENT@19..20 "a" [] []
           6: (empty)
           7: (empty)
-          8: (empty)
-          9: (empty)
-          10: SEMICOLON@20..21 ";" [] []
+          8: SEMICOLON@20..21 ";" [] []
         1: JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER@21..57
           0: STATIC_KW@21..31 "static" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           1: L_CURLY@31..32 "{" [] []

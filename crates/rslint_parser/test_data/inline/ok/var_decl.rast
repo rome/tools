@@ -10,8 +10,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsNumberLiteralExpression {
@@ -47,8 +46,7 @@ JsModule {
                             ],
                             r_curly_token: R_CURLY@26..28 "}" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
                             expression: JsNumberLiteralExpression {
@@ -68,8 +66,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@37..41 "bar2" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                     COMMA@41..43 "," [] [Whitespace(" ")],
@@ -77,8 +74,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@43..47 "foo2" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                 ],
@@ -93,8 +89,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@55..57 "b" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@57..59 "=" [] [Whitespace(" ")],
                             expression: JsNumberLiteralExpression {
@@ -140,8 +135,7 @@ JsModule {
                             ],
                             r_curly_token: R_CURLY@90..92 "}" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@92..94 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
@@ -163,8 +157,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@102..107 "foo6" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@107..109 "=" [] [Whitespace(" ")],
                             expression: JsStringLiteralExpression {
@@ -177,8 +170,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@118..123 "bar7" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@123..125 "=" [] [Whitespace(" ")],
                             expression: JsStringLiteralExpression {
@@ -191,8 +183,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@134..141 "third8" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@141..143 "=" [] [Whitespace(" ")],
                             expression: JsStringLiteralExpression {
@@ -205,8 +196,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@152..159 "fourth" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@159..161 "=" [] [Whitespace(" ")],
                             expression: JsNumberLiteralExpression {
@@ -226,8 +216,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@168..169 "q" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                     COMMA@169..171 "," [] [Whitespace(" ")],
@@ -235,8 +224,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@171..172 "w" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                     COMMA@172..174 "," [] [Whitespace(" ")],
@@ -244,8 +232,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@174..175 "e" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                     COMMA@175..177 "," [] [Whitespace(" ")],
@@ -253,8 +240,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@177..178 "r" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                     COMMA@178..180 "," [] [Whitespace(" ")],
@@ -262,8 +248,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@180..181 "t" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                 ],
@@ -286,8 +271,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@6..9
+            2: JS_INITIALIZER_CLAUSE@6..9
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@8..9
                 0: JS_NUMBER_LITERAL@8..9 "5" [] []
@@ -311,8 +295,7 @@ JsModule {
                   1: (empty)
               2: R_CURLY@26..28 "}" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@28..31
+            2: JS_INITIALIZER_CLAUSE@28..31
               0: EQ@28..30 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@30..31
                 0: JS_NUMBER_LITERAL@30..31 "5" [] []
@@ -326,14 +309,12 @@ JsModule {
               0: IDENT@37..41 "bar2" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
           1: COMMA@41..43 "," [] [Whitespace(" ")]
           2: JS_VARIABLE_DECLARATION@43..47
             0: JS_IDENTIFIER_BINDING@43..47
               0: IDENT@43..47 "foo2" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
       1: SEMICOLON@47..48 ";" [] []
     3: JS_VARIABLE_STATEMENT@48..61
       0: JS_VARIABLE_DECLARATIONS@48..60
@@ -343,8 +324,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@55..57
               0: IDENT@55..57 "b" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@57..60
+            2: JS_INITIALIZER_CLAUSE@57..60
               0: EQ@57..59 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@59..60
                 0: JS_NUMBER_LITERAL@59..60 "5" [] []
@@ -375,8 +355,7 @@ JsModule {
                   1: (empty)
               2: R_CURLY@90..92 "}" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@92..96
+            2: JS_INITIALIZER_CLAUSE@92..96
               0: EQ@92..94 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@94..96
                 0: L_CURLY@94..95 "{" [] []
@@ -391,8 +370,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@102..107
               0: IDENT@102..107 "foo6" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@107..116
+            2: JS_INITIALIZER_CLAUSE@107..116
               0: EQ@107..109 "=" [] [Whitespace(" ")]
               1: JS_STRING_LITERAL_EXPRESSION@109..116
                 0: JS_STRING_LITERAL@109..116 "\"lorem\"" [] []
@@ -401,8 +379,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@118..123
               0: IDENT@118..123 "bar7" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@123..132
+            2: JS_INITIALIZER_CLAUSE@123..132
               0: EQ@123..125 "=" [] [Whitespace(" ")]
               1: JS_STRING_LITERAL_EXPRESSION@125..132
                 0: JS_STRING_LITERAL@125..132 "\"ipsum\"" [] []
@@ -411,8 +388,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@134..141
               0: IDENT@134..141 "third8" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@141..150
+            2: JS_INITIALIZER_CLAUSE@141..150
               0: EQ@141..143 "=" [] [Whitespace(" ")]
               1: JS_STRING_LITERAL_EXPRESSION@143..150
                 0: JS_STRING_LITERAL@143..150 "\"value\"" [] []
@@ -421,8 +397,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@152..159
               0: IDENT@152..159 "fourth" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@159..162
+            2: JS_INITIALIZER_CLAUSE@159..162
               0: EQ@159..161 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@161..162
                 0: JS_NUMBER_LITERAL@161..162 "6" [] []
@@ -436,34 +411,29 @@ JsModule {
               0: IDENT@168..169 "q" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
           1: COMMA@169..171 "," [] [Whitespace(" ")]
           2: JS_VARIABLE_DECLARATION@171..172
             0: JS_IDENTIFIER_BINDING@171..172
               0: IDENT@171..172 "w" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
           3: COMMA@172..174 "," [] [Whitespace(" ")]
           4: JS_VARIABLE_DECLARATION@174..175
             0: JS_IDENTIFIER_BINDING@174..175
               0: IDENT@174..175 "e" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
           5: COMMA@175..177 "," [] [Whitespace(" ")]
           6: JS_VARIABLE_DECLARATION@177..178
             0: JS_IDENTIFIER_BINDING@177..178
               0: IDENT@177..178 "r" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
           7: COMMA@178..180 "," [] [Whitespace(" ")]
           8: JS_VARIABLE_DECLARATION@180..181
             0: JS_IDENTIFIER_BINDING@180..181
               0: IDENT@180..181 "t" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
       1: SEMICOLON@181..182 ";" [] []
   3: EOF@182..183 "" [Newline("\n")] []

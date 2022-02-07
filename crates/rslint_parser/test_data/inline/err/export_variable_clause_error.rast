@@ -12,8 +12,7 @@ JsModule {
                             id: JsIdentifierBinding {
                                 name_token: IDENT@11..13 "a" [] [Whitespace(" ")],
                             },
-                            excl_token: missing (optional),
-                            type_annotation: missing (optional),
+                            variable_annotation: missing (optional),
                             initializer: JsInitializerClause {
                                 eq_token: EQ@13..15 "=" [] [Whitespace(" ")],
                                 expression: missing (required),
@@ -34,8 +33,7 @@ JsModule {
                             id: JsIdentifierBinding {
                                 name_token: IDENT@30..31 "b" [] [],
                             },
-                            excl_token: missing (optional),
-                            type_annotation: missing (optional),
+                            variable_annotation: missing (optional),
                             initializer: missing (optional),
                         },
                     ],
@@ -53,8 +51,7 @@ JsModule {
                             id: JsIdentifierBinding {
                                 name_token: IDENT@44..45 "d" [] [],
                             },
-                            excl_token: missing (optional),
-                            type_annotation: missing (optional),
+                            variable_annotation: missing (optional),
                             initializer: missing (optional),
                         },
                         COMMA@45..47 "," [] [Whitespace(" ")],
@@ -62,8 +59,7 @@ JsModule {
                             id: JsIdentifierBinding {
                                 name_token: IDENT@47..48 "c" [] [],
                             },
-                            excl_token: missing (optional),
-                            type_annotation: missing (optional),
+                            variable_annotation: missing (optional),
                             initializer: missing (optional),
                         },
                     ],
@@ -89,8 +85,7 @@ JsModule {
               0: JS_IDENTIFIER_BINDING@11..13
                 0: IDENT@11..13 "a" [] [Whitespace(" ")]
               1: (empty)
-              2: (empty)
-              3: JS_INITIALIZER_CLAUSE@13..15
+              2: JS_INITIALIZER_CLAUSE@13..15
                 0: EQ@13..15 "=" [] [Whitespace(" ")]
                 1: (empty)
         1: SEMICOLON@15..16 ";" [] []
@@ -105,7 +100,6 @@ JsModule {
                 0: IDENT@30..31 "b" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
         1: SEMICOLON@31..32 ";" [] []
     2: JS_EXPORT@32..49
       0: EXPORT_KW@32..40 "export" [Newline("\n")] [Whitespace(" ")]
@@ -118,14 +112,12 @@ JsModule {
                 0: IDENT@44..45 "d" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
             1: COMMA@45..47 "," [] [Whitespace(" ")]
             2: JS_VARIABLE_DECLARATION@47..48
               0: JS_IDENTIFIER_BINDING@47..48
                 0: IDENT@47..48 "c" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
         1: SEMICOLON@48..49 ";" [] []
   3: EOF@49..50 "" [Newline("\n")] []
 --

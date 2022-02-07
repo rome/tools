@@ -143,8 +143,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@113..115 "a" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@115..117 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
@@ -238,6 +237,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@185..189 "test" [] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@189..190 "(" [] [],
@@ -407,8 +407,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@113..115
               0: IDENT@113..115 "a" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@115..174
+            2: JS_INITIALIZER_CLAUSE@115..174
               0: EQ@115..117 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@117..174
                 0: L_CURLY@117..119 "{" [] [Whitespace(" ")]
@@ -475,7 +474,8 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@185..189
             0: IDENT@185..189 "test" [] []
           6: (empty)
-          7: JS_PARAMETERS@189..192
+          7: (empty)
+          8: JS_PARAMETERS@189..192
             0: L_PAREN@189..190 "(" [] []
             1: JS_PARAMETER_LIST@190..191
               0: JS_FORMAL_PARAMETER@190..191
@@ -485,7 +485,7 @@ JsModule {
                 2: (empty)
                 3: (empty)
             2: R_PAREN@191..192 ")" [] []
-          8: TS_RETURN_TYPE_ANNOTATION@192..206
+          9: TS_RETURN_TYPE_ANNOTATION@192..206
             0: COLON@192..194 ":" [] [Whitespace(" ")]
             1: TS_TYPE_PREDICATE@194..206
               0: (empty)
@@ -494,7 +494,7 @@ JsModule {
               2: IS_KW@196..199 "is" [] [Whitespace(" ")]
               3: TS_STRING_TYPE@199..206
                 0: STRING_KW@199..206 "string" [] [Whitespace(" ")]
-          9: JS_FUNCTION_BODY@206..240
+          10: JS_FUNCTION_BODY@206..240
             0: L_CURLY@206..208 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@208..208
             2: JS_STATEMENT_LIST@208..238

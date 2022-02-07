@@ -22,9 +22,7 @@ JsModule {
                         hash_token: HASH@9..12 "#" [Newline("\n"), Whitespace("\t")] [],
                         id_token: IDENT@12..16 "prop" [] [],
                     },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
+                    property_annotation: missing (optional),
                     value: missing (optional),
                     semicolon_token: SEMICOLON@16..17 ";" [] [],
                 },
@@ -37,6 +35,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@17..23 "test" [Newline("\n"), Whitespace("\t")] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@23..24 "(" [] [],
@@ -105,9 +104,7 @@ JsModule {
             1: IDENT@12..16 "prop" [] []
           6: (empty)
           7: (empty)
-          8: (empty)
-          9: (empty)
-          10: SEMICOLON@16..17 ";" [] []
+          8: SEMICOLON@16..17 ";" [] []
         1: JS_METHOD_CLASS_MEMBER@17..56
           0: (empty)
           1: (empty)
@@ -117,12 +114,13 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@17..23
             0: IDENT@17..23 "test" [Newline("\n"), Whitespace("\t")] []
           6: (empty)
-          7: JS_PARAMETERS@23..26
+          7: (empty)
+          8: JS_PARAMETERS@23..26
             0: L_PAREN@23..24 "(" [] []
             1: JS_PARAMETER_LIST@24..24
             2: R_PAREN@24..26 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@26..56
+          9: (empty)
+          10: JS_FUNCTION_BODY@26..56
             0: L_CURLY@26..27 "{" [] []
             1: JS_DIRECTIVE_LIST@27..27
             2: JS_STATEMENT_LIST@27..53

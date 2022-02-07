@@ -10,8 +10,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@18..19 "x" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: TsTypeAnnotation {
+                        variable_annotation: TsTypeAnnotation {
                             colon_token: COLON@19..21 ":" [] [Whitespace(" ")],
                             ty: TsAnyType {
                                 any_token: ANY_KW@21..25 "any" [] [Whitespace(" ")],
@@ -36,8 +35,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@41..43 "y" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@43..45 "=" [] [Whitespace(" ")],
                             expression: TsAsExpression {
@@ -65,8 +63,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@62..64 "z" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@64..66 "=" [] [Whitespace(" ")],
                             expression: TsAsExpression {
@@ -97,8 +94,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@82..103 "not_an_as_expression" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@103..105 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -128,8 +124,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@115..126 "precedence" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@126..128 "=" [] [Whitespace(" ")],
                             expression: TsAsExpression {
@@ -183,12 +178,11 @@ JsModule {
           0: JS_VARIABLE_DECLARATION@18..35
             0: JS_IDENTIFIER_BINDING@18..19
               0: IDENT@18..19 "x" [] []
-            1: (empty)
-            2: TS_TYPE_ANNOTATION@19..25
+            1: TS_TYPE_ANNOTATION@19..25
               0: COLON@19..21 ":" [] [Whitespace(" ")]
               1: TS_ANY_TYPE@21..25
                 0: ANY_KW@21..25 "any" [] [Whitespace(" ")]
-            3: JS_INITIALIZER_CLAUSE@25..35
+            2: JS_INITIALIZER_CLAUSE@25..35
               0: EQ@25..27 "=" [] [Whitespace(" ")]
               1: JS_STRING_LITERAL_EXPRESSION@27..35
                 0: JS_STRING_LITERAL@27..35 "\"string\"" [] []
@@ -201,8 +195,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@41..43
               0: IDENT@41..43 "y" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@43..56
+            2: JS_INITIALIZER_CLAUSE@43..56
               0: EQ@43..45 "=" [] [Whitespace(" ")]
               1: TS_AS_EXPRESSION@45..56
                 0: JS_IDENTIFIER_EXPRESSION@45..47
@@ -220,8 +213,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@62..64
               0: IDENT@62..64 "z" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@64..76
+            2: JS_INITIALIZER_CLAUSE@64..76
               0: EQ@64..66 "=" [] [Whitespace(" ")]
               1: TS_AS_EXPRESSION@66..76
                 0: JS_IDENTIFIER_EXPRESSION@66..68
@@ -241,8 +233,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@82..103
               0: IDENT@82..103 "not_an_as_expression" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@103..106
+            2: JS_INITIALIZER_CLAUSE@103..106
               0: EQ@103..105 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@105..106
                 0: JS_REFERENCE_IDENTIFIER@105..106
@@ -261,8 +252,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@115..126
               0: IDENT@115..126 "precedence" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@126..168
+            2: JS_INITIALIZER_CLAUSE@126..168
               0: EQ@126..128 "=" [] [Whitespace(" ")]
               1: TS_AS_EXPRESSION@128..168
                 0: TS_AS_EXPRESSION@128..159

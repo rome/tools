@@ -26,8 +26,7 @@ JsModule {
                             ],
                             r_curly_token: R_CURLY@10..12 "}" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@12..14 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -61,8 +60,7 @@ JsModule {
                             ],
                             r_curly_token: R_CURLY@31..33 "}" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@33..35 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -95,8 +93,7 @@ JsModule {
                             ],
                             r_curly_token: R_CURLY@47..49 "}" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@49..51 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -137,8 +134,7 @@ JsModule {
                   1: (empty)
               2: R_CURLY@10..12 "}" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@12..15
+            2: JS_INITIALIZER_CLAUSE@12..15
               0: EQ@12..14 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@14..15
                 0: JS_REFERENCE_IDENTIFIER@14..15
@@ -160,8 +156,7 @@ JsModule {
                       0: JS_STRING_LITERAL@24..31 "\"test\"" [] [Whitespace(" ")]
               2: R_CURLY@31..33 "}" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@33..36
+            2: JS_INITIALIZER_CLAUSE@33..36
               0: EQ@33..35 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@35..36
                 0: JS_REFERENCE_IDENTIFIER@35..36
@@ -183,8 +178,7 @@ JsModule {
                   1: (empty)
               2: R_CURLY@47..49 "}" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@49..52
+            2: JS_INITIALIZER_CLAUSE@49..52
               0: EQ@49..51 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@51..52
                 0: JS_REFERENCE_IDENTIFIER@51..52

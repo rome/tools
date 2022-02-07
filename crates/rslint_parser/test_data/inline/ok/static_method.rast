@@ -21,6 +21,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@20..23 "foo" [] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@23..24 "(" [] [],
@@ -53,6 +54,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@41..44 "foo" [] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@44..45 "(" [] [],
@@ -76,6 +78,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@64..67 "foo" [] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@67..68 "(" [] [],
@@ -99,6 +102,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@88..91 "foo" [] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@91..92 "(" [] [],
@@ -142,7 +146,8 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@20..23
             0: IDENT@20..23 "foo" [] []
           6: (empty)
-          7: JS_PARAMETERS@23..29
+          7: (empty)
+          8: JS_PARAMETERS@23..29
             0: L_PAREN@23..24 "(" [] []
             1: JS_PARAMETER_LIST@24..27
               0: JS_FORMAL_PARAMETER@24..27
@@ -152,8 +157,8 @@ JsModule {
                 2: (empty)
                 3: (empty)
             2: R_PAREN@27..29 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@29..31
+          9: (empty)
+          10: JS_FUNCTION_BODY@29..31
             0: L_CURLY@29..30 "{" [] []
             1: JS_DIRECTIVE_LIST@30..30
             2: JS_STATEMENT_LIST@30..30
@@ -167,12 +172,13 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@41..44
             0: IDENT@41..44 "foo" [] []
           6: (empty)
-          7: JS_PARAMETERS@44..47
+          7: (empty)
+          8: JS_PARAMETERS@44..47
             0: L_PAREN@44..45 "(" [] []
             1: JS_PARAMETER_LIST@45..45
             2: R_PAREN@45..47 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@47..49
+          9: (empty)
+          10: JS_FUNCTION_BODY@47..49
             0: L_CURLY@47..48 "{" [] []
             1: JS_DIRECTIVE_LIST@48..48
             2: JS_STATEMENT_LIST@48..48
@@ -186,12 +192,13 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@64..67
             0: IDENT@64..67 "foo" [] []
           6: (empty)
-          7: JS_PARAMETERS@67..70
+          7: (empty)
+          8: JS_PARAMETERS@67..70
             0: L_PAREN@67..68 "(" [] []
             1: JS_PARAMETER_LIST@68..68
             2: R_PAREN@68..70 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@70..72
+          9: (empty)
+          10: JS_FUNCTION_BODY@70..72
             0: L_CURLY@70..71 "{" [] []
             1: JS_DIRECTIVE_LIST@71..71
             2: JS_STATEMENT_LIST@71..71
@@ -205,12 +212,13 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@88..91
             0: IDENT@88..91 "foo" [] []
           6: (empty)
-          7: JS_PARAMETERS@91..94
+          7: (empty)
+          8: JS_PARAMETERS@91..94
             0: L_PAREN@91..92 "(" [] []
             1: JS_PARAMETER_LIST@92..92
             2: R_PAREN@92..94 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@94..96
+          9: (empty)
+          10: JS_FUNCTION_BODY@94..96
             0: L_CURLY@94..95 "{" [] []
             1: JS_DIRECTIVE_LIST@95..95
             2: JS_STATEMENT_LIST@95..95

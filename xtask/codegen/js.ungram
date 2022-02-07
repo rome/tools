@@ -47,8 +47,6 @@ JsUnknownParameter = SyntaxElement*
 JsUnknownImportAssertionEntry = SyntaxElement*
 JsUnknownNamedImportSpecifier = SyntaxElement*
 
-Ident = 'ident'
-
 JsAnyRoot =
 	JsScript | JsModule | JsExpressionSnipped
 
@@ -678,11 +676,22 @@ JsPropertyClassMember =
 	'readonly'?
 	'abstract'?
 	name: JsAnyClassMemberName
-	'?'?
-	'!'?
-	type: TsTypeAnnotation?
+	property_annotation: TsAnyPropertyAnnotation?
 	value: JsInitializerClause?
 	';'?
+
+TsAnyPropertyAnnotation =
+	TsTypeAnnotation
+	| TsOptionalPropertyAnnotation
+	| TsDefinitePropertyAnnotation
+
+TsOptionalPropertyAnnotation =
+	'?'
+	type_annotation: TsTypeAnnotation?
+
+TsDefinitePropertyAnnotation =
+	'!'
+	type_annotation: TsTypeAnnotation
 
 // class Test { a() {} }
 //              ^^^^^^
@@ -693,6 +702,7 @@ JsMethodClassMember =
 	'async'?
 	'*'?
 	name: JsAnyClassMemberName
+	'?'
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
@@ -987,9 +997,16 @@ JsVariableDeclarationList = (JsVariableDeclaration (',' JsVariableDeclaration)*)
 //     ^^^^^
 JsVariableDeclaration =
     id: JsAnyBindingPattern
-    '!'?
-    type_annotation: TsTypeAnnotation?
+    variable_annotation: TsAnyVariableAnnotation?
     initializer: JsInitializerClause?
+
+TsAnyVariableAnnotation =
+	TsTypeAnnotation
+	| TsDefiniteVariableAnnotation
+
+TsDefiniteVariableAnnotation =
+	'!'
+	type_annotation: TsTypeAnnotation
 
 
 ///////////////
@@ -1421,7 +1438,7 @@ JsFunctionBody =
 //
 
 TsImportEqualsDecl =
-	('import' | 'export') ident: Ident '=' module:TsModuleRef ';'?
+	('import' | 'export') 'ident' '=' module:TsModuleRef ';'?
 
 
 TsModuleRef =
@@ -1505,15 +1522,15 @@ TsTypeAliasStatement =
 TsIdentifierBinding = name: 'ident'
 
 // typescript enum
-TsEnumStatement = 
+TsEnumStatement =
 	'const'?
 	'enum'
 	id: JsAnyBinding
-	'{' 
-	members: TsEnumMemberList 
+	'{'
+	members: TsEnumMemberList
 	'}'
 TsEnumMemberList = (TsEnumMember (',' TsEnumMember)* ','?)
-TsEnumMember = 
+TsEnumMember =
 	name: JsAnyObjectMemberName
 	initializer: JsInitializerClause?
 

@@ -10,8 +10,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@18..20 "a" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@20..22 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
@@ -154,8 +153,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@18..20
               0: IDENT@18..20 "a" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@20..31
+            2: JS_INITIALIZER_CLAUSE@20..31
               0: EQ@20..22 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@22..31
                 0: L_CURLY@22..24 "{" [] [Whitespace(" ")]

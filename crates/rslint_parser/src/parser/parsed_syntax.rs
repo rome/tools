@@ -1,6 +1,6 @@
 use crate::parser::parse_recovery::RecoveryResult;
-use crate::parser::ParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
+use crate::parser::{ParseRecovery, ToDiagnostic};
 use crate::{CompletedMarker, Marker, Parser, SyntaxFeature};
 use rslint_errors::{Diagnostic, Span};
 use rslint_syntax::JsSyntaxKind;
@@ -139,9 +139,14 @@ impl ParsedSyntax {
     }
 
     /// It returns the syntax if present or adds a diagnostic at the current parser position.
-    pub fn or_add_diagnostic<E>(self, p: &mut Parser, error_builder: E) -> Option<CompletedMarker>
+    pub fn or_add_diagnostic<E, D>(
+        self,
+        p: &mut Parser,
+        error_builder: E,
+    ) -> Option<CompletedMarker>
     where
-        E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
+        E: FnOnce(&Parser, Range<usize>) -> D,
+        D: ToDiagnostic,
     {
         match self {
             Present(syntax) => Some(syntax),
@@ -156,9 +161,10 @@ impl ParsedSyntax {
     /// It creates and returns a marker preceding this parsed syntax if it is present or starts
     /// a new marker and adds an error to the current parser position.
     /// See [CompletedMarker.precede]
-    pub fn precede_or_add_diagnostic<E>(self, p: &mut Parser, error_builder: E) -> Marker
+    pub fn precede_or_add_diagnostic<E, D>(self, p: &mut Parser, error_builder: E) -> Marker
     where
-        E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
+        E: FnOnce(&Parser, Range<usize>) -> D,
+        D: ToDiagnostic,
     {
         match self {
             Present(completed) => completed.precede(p),
@@ -225,10 +231,16 @@ impl ParsedSyntax {
     /// supported.
     ///
     /// Returns the parsed syntax.
-    pub fn exclusive_for<F, E>(self, p: &mut Parser, feature: F, error_builder: E) -> ParsedSyntax
+    pub fn exclusive_for<F, E, D>(
+        self,
+        p: &mut Parser,
+        feature: F,
+        error_builder: E,
+    ) -> ParsedSyntax
     where
         F: SyntaxFeature,
-        E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+        E: FnOnce(&Parser, &CompletedMarker) -> D,
+        D: ToDiagnostic,
     {
         feature.exclusive_syntax(p, self, error_builder)
     }

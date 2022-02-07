@@ -734,35 +734,7 @@ fn property_declaration_class_member_body(
 
 /// Parses the body of a property class member (anything after the member name)
 fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> ParsedSyntax {
-    let optional_token = optional_member_token(p);
-    let mut property_is_valid = optional_token.is_ok();
-
-    let range = p.cur_tok().range();
-    if p.eat(T![!]) {
-        if let Ok(Some(optional_token)) = optional_token {
-            let range = p.cur_tok().range();
-
-            let error = p
-                .err_builder("class properties cannot be both optional and definite")
-                .primary(range, "")
-                .secondary(optional_token, "");
-
-            p.error(error);
-            p.bump_any(); // Bump ! token
-            property_is_valid = false;
-        } else if !p.typescript() {
-            // test_err class_member_bang
-            // class B { foo!; }
-            let error = p
-                .err_builder("definite assignment assertions can only be used in TypeScript files")
-                .primary(range, "");
-
-            p.error(error);
-            property_is_valid = false;
-        }
-    }
-
-    parse_ts_type_annotation_or_error(p).ok();
+    parse_ts_property_annotation(p).ok();
 
     // test class_await_property_initializer
     // // SCRIPT
@@ -799,19 +771,96 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Pa
         p.error(err);
     }
 
-    let mut property = member_marker.complete(p, JS_PROPERTY_CLASS_MEMBER);
-    if !property_is_valid {
-        property.change_to_unknown(p);
+    Present(member_marker.complete(p, JS_PROPERTY_CLASS_MEMBER))
+}
+
+// test_err js_class_property_with_ts_annotation
+// class A {
+//  a: string;
+//  b?: string;
+//  c!: string
+// }
+//
+// test ts_class_property_annotation
+// // TYPESCRIPT
+// class A {
+//   a: string;
+//   b?: string = "test";
+//   c!: string;
+// }
+fn parse_ts_property_annotation(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![?]) && !p.at(T![!]) {
+        return parse_ts_type_annotation_or_error(p);
     }
 
-    Present(property)
+    let m = p.start();
+    let mut valid = true;
+
+    let optional_range = match optional_member_token(p) {
+        Ok(optional_range) => optional_range,
+        Err(optional_range) => {
+            valid = false;
+            Some(optional_range)
+        }
+    };
+
+    let definite_range = if p.at(T![!]) {
+        let range = p.cur_tok().range();
+        p.bump(T![!]);
+
+        if TypeScript.is_unsupported(p) {
+            let error = p
+                .err_builder("`!` modifiers can only be used in TypeScript files")
+                .primary(range.clone(), "");
+
+            p.error(error);
+            valid = false;
+        }
+
+        Some(range)
+    } else {
+        None
+    };
+
+    let mut annotation = match (optional_range, definite_range) {
+        (Some(_), None) => {
+            parse_ts_type_annotation(p).ok();
+            m.complete(p, TS_OPTIONAL_PROPERTY_ANNOTATION)
+        }
+        (None, Some(_)) => {
+            parse_ts_type_annotation(p).or_add_diagnostic(p, |p, range| {
+                p.err_builder("Properties with definite assignment assertions must also have type annotations.").primary(range, "")
+            });
+            m.complete(p, TS_DEFINITE_PROPERTY_ANNOTATION)
+        }
+        (Some(optional_range), Some(definite_range)) => {
+            parse_ts_type_annotation(p).ok();
+            let error = p
+                .err_builder("class properties cannot be both optional and definite")
+                .primary(definite_range, "")
+                .secondary(optional_range, "");
+
+            p.error(error);
+
+            m.complete(p, JS_UNKNOWN)
+        }
+        // handled by the test at the beginning of the function that returns if the parser isn't at a
+        // ! or ? token.
+        (None, None) => unreachable!(),
+    };
+
+    if !valid {
+        annotation.change_to_unknown(p);
+    }
+
+    Present(annotation)
 }
 
 /// Eats the ? token for optional member. Emits an error if this isn't typescript
-fn optional_member_token(p: &mut Parser) -> Result<Option<Range<usize>>, ()> {
-    if p.eat(T![?]) {
+fn optional_member_token(p: &mut Parser) -> Result<Option<Range<usize>>, Range<usize>> {
+    if p.at(T![?]) {
         let range = p.cur_tok().range();
-        p.bump_any();
+        p.bump(T![?]);
 
         // test_err optional_member
         // class B { foo?; }
@@ -820,10 +869,10 @@ fn optional_member_token(p: &mut Parser) -> Result<Option<Range<usize>>, ()> {
         } else {
             let err = p
                 .err_builder("`?` modifiers can only be used in TypeScript files")
-                .primary(range, "");
+                .primary(range.clone(), "");
 
             p.error(err);
-            Err(())
+            Err(range)
         }
     } else {
         Ok(None)
@@ -883,6 +932,9 @@ fn parse_method_class_member_body(
         p.error(err);
     }
 
+    // test ts_optional_method_class_member
+    // // TYPESCRIPT
+    // class A { test?() {} }
     let member_kind = if optional_member_token(p).is_ok() {
         JS_METHOD_CLASS_MEMBER
     } else {

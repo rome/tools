@@ -22,9 +22,7 @@ JsModule {
                         hash_token: HASH@18..19 "#" [] [],
                         id_token: IDENT@19..26 "member" [] [Whitespace(" ")],
                     },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
+                    property_annotation: missing (optional),
                     value: JsInitializerClause {
                         eq_token: EQ@26..28 "=" [] [Whitespace(" ")],
                         expression: JsBooleanLiteralExpression {
@@ -42,6 +40,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@34..40 "method" [] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@40..41 "(" [] [],
@@ -111,9 +110,7 @@ JsModule {
                         hash_token: HASH@93..94 "#" [] [],
                         id_token: IDENT@94..101 "member" [] [Whitespace(" ")],
                     },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
+                    property_annotation: missing (optional),
                     value: JsInitializerClause {
                         eq_token: EQ@101..103 "=" [] [Whitespace(" ")],
                         expression: JsBooleanLiteralExpression {
@@ -131,6 +128,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@109..115 "method" [] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@115..116 "(" [] [],
@@ -191,9 +189,7 @@ JsModule {
                         hash_token: HASH@164..165 "#" [] [],
                         id_token: IDENT@165..172 "member" [] [Whitespace(" ")],
                     },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
+                    property_annotation: missing (optional),
                     value: JsInitializerClause {
                         eq_token: EQ@172..174 "=" [] [Whitespace(" ")],
                         expression: JsBooleanLiteralExpression {
@@ -211,6 +207,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@180..186 "method" [] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@186..187 "(" [] [],
@@ -277,9 +274,7 @@ JsModule {
                         hash_token: HASH@242..243 "#" [] [],
                         id_token: IDENT@243..250 "member" [] [Whitespace(" ")],
                     },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
+                    property_annotation: missing (optional),
                     value: JsInitializerClause {
                         eq_token: EQ@250..252 "=" [] [Whitespace(" ")],
                         expression: JsBooleanLiteralExpression {
@@ -297,6 +292,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@258..264 "method" [] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@264..265 "(" [] [],
@@ -376,9 +372,7 @@ JsModule {
                         hash_token: HASH@324..325 "#" [] [],
                         id_token: IDENT@325..332 "member" [] [Whitespace(" ")],
                     },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
+                    property_annotation: missing (optional),
                     value: JsInitializerClause {
                         eq_token: EQ@332..334 "=" [] [Whitespace(" ")],
                         expression: JsBooleanLiteralExpression {
@@ -396,6 +390,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@340..346 "method" [] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@346..347 "(" [] [],
@@ -473,9 +468,7 @@ JsModule {
                         hash_token: HASH@409..410 "#" [] [],
                         id_token: IDENT@410..417 "member" [] [Whitespace(" ")],
                     },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
+                    property_annotation: missing (optional),
                     value: JsInitializerClause {
                         eq_token: EQ@417..419 "=" [] [Whitespace(" ")],
                         expression: JsBooleanLiteralExpression {
@@ -493,6 +486,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@425..431 "method" [] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@431..432 "(" [] [],
@@ -579,13 +573,11 @@ JsModule {
             0: HASH@18..19 "#" [] []
             1: IDENT@19..26 "member" [] [Whitespace(" ")]
           6: (empty)
-          7: (empty)
-          8: (empty)
-          9: JS_INITIALIZER_CLAUSE@26..32
+          7: JS_INITIALIZER_CLAUSE@26..32
             0: EQ@26..28 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@28..32
               0: TRUE_KW@28..32 "true" [] []
-          10: SEMICOLON@32..34 ";" [] [Whitespace(" ")]
+          8: SEMICOLON@32..34 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@34..73
           0: (empty)
           1: (empty)
@@ -595,12 +587,13 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@34..40
             0: IDENT@34..40 "method" [] []
           6: (empty)
-          7: JS_PARAMETERS@40..43
+          7: (empty)
+          8: JS_PARAMETERS@40..43
             0: L_PAREN@40..41 "(" [] []
             1: JS_PARAMETER_LIST@41..41
             2: R_PAREN@41..43 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@43..73
+          9: (empty)
+          10: JS_FUNCTION_BODY@43..73
             0: L_CURLY@43..45 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@45..45
             2: JS_STATEMENT_LIST@45..71
@@ -646,13 +639,11 @@ JsModule {
             0: HASH@93..94 "#" [] []
             1: IDENT@94..101 "member" [] [Whitespace(" ")]
           6: (empty)
-          7: (empty)
-          8: (empty)
-          9: JS_INITIALIZER_CLAUSE@101..107
+          7: JS_INITIALIZER_CLAUSE@101..107
             0: EQ@101..103 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@103..107
               0: TRUE_KW@103..107 "true" [] []
-          10: SEMICOLON@107..109 ";" [] [Whitespace(" ")]
+          8: SEMICOLON@107..109 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@109..144
           0: (empty)
           1: (empty)
@@ -662,12 +653,13 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@109..115
             0: IDENT@109..115 "method" [] []
           6: (empty)
-          7: JS_PARAMETERS@115..118
+          7: (empty)
+          8: JS_PARAMETERS@115..118
             0: L_PAREN@115..116 "(" [] []
             1: JS_PARAMETER_LIST@116..116
             2: R_PAREN@116..118 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@118..144
+          9: (empty)
+          10: JS_FUNCTION_BODY@118..144
             0: L_CURLY@118..120 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@120..120
             2: JS_STATEMENT_LIST@120..142
@@ -707,13 +699,11 @@ JsModule {
             0: HASH@164..165 "#" [] []
             1: IDENT@165..172 "member" [] [Whitespace(" ")]
           6: (empty)
-          7: (empty)
-          8: (empty)
-          9: JS_INITIALIZER_CLAUSE@172..178
+          7: JS_INITIALIZER_CLAUSE@172..178
             0: EQ@172..174 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@174..178
               0: TRUE_KW@174..178 "true" [] []
-          10: SEMICOLON@178..180 ";" [] [Whitespace(" ")]
+          8: SEMICOLON@178..180 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@180..222
           0: (empty)
           1: (empty)
@@ -723,12 +713,13 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@180..186
             0: IDENT@180..186 "method" [] []
           6: (empty)
-          7: JS_PARAMETERS@186..189
+          7: (empty)
+          8: JS_PARAMETERS@186..189
             0: L_PAREN@186..187 "(" [] []
             1: JS_PARAMETER_LIST@187..187
             2: R_PAREN@187..189 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@189..222
+          9: (empty)
+          10: JS_FUNCTION_BODY@189..222
             0: L_CURLY@189..191 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@191..191
             2: JS_STATEMENT_LIST@191..220
@@ -772,13 +763,11 @@ JsModule {
             0: HASH@242..243 "#" [] []
             1: IDENT@243..250 "member" [] [Whitespace(" ")]
           6: (empty)
-          7: (empty)
-          8: (empty)
-          9: JS_INITIALIZER_CLAUSE@250..256
+          7: JS_INITIALIZER_CLAUSE@250..256
             0: EQ@250..252 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@252..256
               0: TRUE_KW@252..256 "true" [] []
-          10: SEMICOLON@256..258 ";" [] [Whitespace(" ")]
+          8: SEMICOLON@256..258 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@258..304
           0: (empty)
           1: (empty)
@@ -788,12 +777,13 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@258..264
             0: IDENT@258..264 "method" [] []
           6: (empty)
-          7: JS_PARAMETERS@264..267
+          7: (empty)
+          8: JS_PARAMETERS@264..267
             0: L_PAREN@264..265 "(" [] []
             1: JS_PARAMETER_LIST@265..265
             2: R_PAREN@265..267 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@267..304
+          9: (empty)
+          10: JS_FUNCTION_BODY@267..304
             0: L_CURLY@267..269 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@269..269
             2: JS_STATEMENT_LIST@269..302
@@ -848,13 +838,11 @@ JsModule {
             0: HASH@324..325 "#" [] []
             1: IDENT@325..332 "member" [] [Whitespace(" ")]
           6: (empty)
-          7: (empty)
-          8: (empty)
-          9: JS_INITIALIZER_CLAUSE@332..338
+          7: JS_INITIALIZER_CLAUSE@332..338
             0: EQ@332..334 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@334..338
               0: TRUE_KW@334..338 "true" [] []
-          10: SEMICOLON@338..340 ";" [] [Whitespace(" ")]
+          8: SEMICOLON@338..340 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@340..389
           0: (empty)
           1: (empty)
@@ -864,12 +852,13 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@340..346
             0: IDENT@340..346 "method" [] []
           6: (empty)
-          7: JS_PARAMETERS@346..349
+          7: (empty)
+          8: JS_PARAMETERS@346..349
             0: L_PAREN@346..347 "(" [] []
             1: JS_PARAMETER_LIST@347..347
             2: R_PAREN@347..349 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@349..389
+          9: (empty)
+          10: JS_FUNCTION_BODY@349..389
             0: L_CURLY@349..351 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@351..351
             2: JS_STATEMENT_LIST@351..387
@@ -922,13 +911,11 @@ JsModule {
             0: HASH@409..410 "#" [] []
             1: IDENT@410..417 "member" [] [Whitespace(" ")]
           6: (empty)
-          7: (empty)
-          8: (empty)
-          9: JS_INITIALIZER_CLAUSE@417..423
+          7: JS_INITIALIZER_CLAUSE@417..423
             0: EQ@417..419 "=" [] [Whitespace(" ")]
             1: JS_BOOLEAN_LITERAL_EXPRESSION@419..423
               0: TRUE_KW@419..423 "true" [] []
-          10: SEMICOLON@423..425 ";" [] [Whitespace(" ")]
+          8: SEMICOLON@423..425 ";" [] [Whitespace(" ")]
         1: JS_METHOD_CLASS_MEMBER@425..477
           0: (empty)
           1: (empty)
@@ -938,12 +925,13 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@425..431
             0: IDENT@425..431 "method" [] []
           6: (empty)
-          7: JS_PARAMETERS@431..434
+          7: (empty)
+          8: JS_PARAMETERS@431..434
             0: L_PAREN@431..432 "(" [] []
             1: JS_PARAMETER_LIST@432..432
             2: R_PAREN@432..434 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@434..477
+          9: (empty)
+          10: JS_FUNCTION_BODY@434..477
             0: L_CURLY@434..436 "{" [] [Whitespace(" ")]
             1: JS_DIRECTIVE_LIST@436..436
             2: JS_STATEMENT_LIST@436..475

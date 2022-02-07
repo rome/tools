@@ -21,6 +21,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@10..17 "declare" [] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@17..18 "(" [] [],
@@ -57,9 +58,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@35..43 "declare" [] [Whitespace(" ")],
                     },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
+                    property_annotation: missing (optional),
                     value: JsInitializerClause {
                         eq_token: EQ@43..45 "=" [] [Whitespace(" ")],
                         expression: JsIdentifierExpression {
@@ -99,12 +98,13 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@10..17
             0: IDENT@10..17 "declare" [] []
           6: (empty)
-          7: JS_PARAMETERS@17..20
+          7: (empty)
+          8: JS_PARAMETERS@17..20
             0: L_PAREN@17..18 "(" [] []
             1: JS_PARAMETER_LIST@18..18
             2: R_PAREN@18..20 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@20..23
+          9: (empty)
+          10: JS_FUNCTION_BODY@20..23
             0: L_CURLY@20..21 "{" [] []
             1: JS_DIRECTIVE_LIST@21..21
             2: JS_STATEMENT_LIST@21..21
@@ -128,13 +128,11 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@35..43
             0: IDENT@35..43 "declare" [] [Whitespace(" ")]
           6: (empty)
-          7: (empty)
-          8: (empty)
-          9: JS_INITIALIZER_CLAUSE@43..49
+          7: JS_INITIALIZER_CLAUSE@43..49
             0: EQ@43..45 "=" [] [Whitespace(" ")]
             1: JS_IDENTIFIER_EXPRESSION@45..49
               0: JS_REFERENCE_IDENTIFIER@45..49
                 0: IDENT@45..49 "foo" [] [Whitespace(" ")]
-          10: (empty)
+          8: (empty)
       7: R_CURLY@49..50 "}" [] []
   3: EOF@50..51 "" [Newline("\n")] []

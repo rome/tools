@@ -25,8 +25,7 @@ JsModule {
                             id: JsIdentifierBinding {
                                 name_token: IDENT@18..20 "i" [] [Whitespace(" ")],
                             },
-                            excl_token: missing (optional),
-                            type_annotation: missing (optional),
+                            variable_annotation: missing (optional),
                             initializer: JsInitializerClause {
                                 eq_token: EQ@20..22 "=" [] [Whitespace(" ")],
                                 expression: JsNumberLiteralExpression {
@@ -73,8 +72,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@48..50 "i" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@50..52 "=" [] [Whitespace(" ")],
                             expression: JsNumberLiteralExpression {
@@ -138,8 +136,7 @@ JsModule {
                             id: JsIdentifierBinding {
                                 name_token: IDENT@94..95 "i" [] [],
                             },
-                            excl_token: missing (optional),
-                            type_annotation: missing (optional),
+                            variable_annotation: missing (optional),
                             initializer: missing (optional),
                         },
                         COMMA@95..97 "," [] [Whitespace(" ")],
@@ -147,8 +144,7 @@ JsModule {
                             id: JsIdentifierBinding {
                                 name_token: IDENT@97..99 "j" [] [Whitespace(" ")],
                             },
-                            excl_token: missing (optional),
-                            type_annotation: missing (optional),
+                            variable_annotation: missing (optional),
                             initializer: JsInitializerClause {
                                 eq_token: EQ@99..101 "=" [] [Whitespace(" ")],
                                 expression: JsNumberLiteralExpression {
@@ -183,8 +179,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@128..130 "a" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                 },
@@ -214,8 +209,7 @@ JsModule {
                             id: JsIdentifierBinding {
                                 name_token: IDENT@155..157 "i" [] [Whitespace(" ")],
                             },
-                            excl_token: missing (optional),
-                            type_annotation: missing (optional),
+                            variable_annotation: missing (optional),
                             initializer: JsInitializerClause {
                                 eq_token: EQ@157..159 "=" [] [Whitespace(" ")],
                                 expression: JsNumberLiteralExpression {
@@ -268,8 +262,7 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@189..190 "]" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                 ],
@@ -315,8 +308,7 @@ JsModule {
               0: JS_IDENTIFIER_BINDING@18..20
                 0: IDENT@18..20 "i" [] [Whitespace(" ")]
               1: (empty)
-              2: (empty)
-              3: JS_INITIALIZER_CLAUSE@20..23
+              2: JS_INITIALIZER_CLAUSE@20..23
                 0: EQ@20..22 "=" [] [Whitespace(" ")]
                 1: JS_NUMBER_LITERAL_EXPRESSION@22..23
                   0: JS_NUMBER_LITERAL@22..23 "5" [] []
@@ -348,8 +340,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@48..50
               0: IDENT@48..50 "i" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@50..53
+            2: JS_INITIALIZER_CLAUSE@50..53
               0: EQ@50..52 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@52..53
                 0: JS_NUMBER_LITERAL@52..53 "5" [] []
@@ -395,14 +386,12 @@ JsModule {
             0: IDENT@94..95 "i" [] []
           1: (empty)
           2: (empty)
-          3: (empty)
         2: COMMA@95..97 "," [] [Whitespace(" ")]
         3: JS_VARIABLE_DECLARATION@97..103
           0: JS_IDENTIFIER_BINDING@97..99
             0: IDENT@97..99 "j" [] [Whitespace(" ")]
           1: (empty)
-          2: (empty)
-          3: JS_INITIALIZER_CLAUSE@99..103
+          2: JS_INITIALIZER_CLAUSE@99..103
             0: EQ@99..101 "=" [] [Whitespace(" ")]
             1: JS_NUMBER_LITERAL_EXPRESSION@101..103
               0: JS_NUMBER_LITERAL@101..103 "6" [] [Whitespace(" ")]
@@ -427,7 +416,6 @@ JsModule {
             0: IDENT@128..130 "a" [] [Whitespace(" ")]
           1: (empty)
           2: (empty)
-          3: (empty)
       4: IN_KW@130..133 "in" [] [Whitespace(" ")]
       5: JS_ARRAY_EXPRESSION@133..135
         0: L_BRACK@133..134 "[" [] []
@@ -449,8 +437,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@155..157
               0: IDENT@155..157 "i" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@157..160
+            2: JS_INITIALIZER_CLAUSE@157..160
               0: EQ@157..159 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@159..160
                 0: JS_NUMBER_LITERAL@159..160 "0" [] []
@@ -487,7 +474,6 @@ JsModule {
               2: R_BRACK@189..190 "]" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
       3: SEMICOLON@190..191 ";" [] []
       4: (empty)
       5: SEMICOLON@191..192 ";" [] []

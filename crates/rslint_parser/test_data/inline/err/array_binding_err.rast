@@ -20,8 +20,7 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@8..10 "]" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@10..12 "=" [] [Whitespace(" ")],
                             expression: JsArrayExpression {
@@ -61,8 +60,7 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@35..37 "]" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@37..39 "=" [] [Whitespace(" ")],
                             expression: JsArrayExpression {
@@ -100,8 +98,7 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@61..63 "]" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@63..65 "=" [] [Whitespace(" ")],
                             expression: JsArrayExpression {
@@ -151,8 +148,7 @@ JsModule {
                             ],
                             r_brack_token: missing (required),
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                 ],
@@ -182,8 +178,7 @@ JsModule {
                   0: IDENT@7..8 "b" [] []
               2: R_BRACK@8..10 "]" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@10..18
+            2: JS_INITIALIZER_CLAUSE@10..18
               0: EQ@10..12 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@12..18
                 0: L_BRACK@12..13 "[" [] []
@@ -210,8 +205,7 @@ JsModule {
                     0: JS_STRING_LITERAL@26..35 "\"default\"" [] []
               2: R_BRACK@35..37 "]" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@37..45
+            2: JS_INITIALIZER_CLAUSE@37..45
               0: EQ@37..39 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@39..45
                 0: L_BRACK@39..40 "[" [] []
@@ -235,8 +229,7 @@ JsModule {
                   0: JS_STRING_LITERAL@52..61 "\"default\"" [] []
               2: R_BRACK@61..63 "]" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@63..71
+            2: JS_INITIALIZER_CLAUSE@63..71
               0: EQ@63..65 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@65..71
                 0: L_BRACK@65..66 "[" [] []
@@ -271,7 +264,6 @@ JsModule {
               2: (empty)
             1: (empty)
             2: (empty)
-            3: (empty)
       1: SEMICOLON@87..88 ";" [] []
   3: EOF@88..89 "" [Newline("\n")] []
 --

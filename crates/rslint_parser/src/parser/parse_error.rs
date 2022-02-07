@@ -1,5 +1,6 @@
 use crate::Parser;
 use rslint_errors::{Diagnostic, Span};
+use rslint_syntax::JsSyntaxKind;
 use std::ops::Range;
 
 ///! Provides helper functions to build common diagnostic messages
@@ -14,13 +15,52 @@ pub(crate) fn expected_any(names: &[&str], range: Range<usize>) -> ExpectedNodeD
     ExpectedNodeDiagnosticBuilder::with_any(names, range)
 }
 
-pub trait ToDiagnostic {
-    fn to_diagnostic(&self, p: &Parser) -> Diagnostic;
+#[must_use]
+pub(crate) fn expected_token(token: JsSyntaxKind) -> ExpectedToken {
+    ExpectedToken(token)
 }
+
+pub trait ToDiagnostic {
+    fn to_diagnostic(self, p: &Parser) -> Diagnostic;
+}
+
+impl ToDiagnostic for Diagnostic {
+    fn to_diagnostic(self, _: &Parser) -> Diagnostic {
+        self
+    }
+}
+
+pub struct ExpectedToken(JsSyntaxKind);
 
 pub struct ExpectedNodeDiagnosticBuilder {
     names: String,
     range: Range<usize>,
+}
+
+impl ToDiagnostic for ExpectedToken {
+    fn to_diagnostic(self, p: &Parser) -> Diagnostic {
+        let kind = self.0;
+
+        match p.cur() {
+            JsSyntaxKind::EOF => p
+                .err_builder(&format!(
+                    "expected `{}` but instead the file ends",
+                    kind.to_string()
+                        .map(|x| x.to_string())
+                        .unwrap_or_else(|| format!("{:?}", kind))
+                ))
+                .primary(p.cur_tok().range(), "the file ends here"),
+            _ => p
+                .err_builder(&format!(
+                    "expected `{}` but instead found `{}`",
+                    kind.to_string()
+                        .map(|x| x.to_string())
+                        .unwrap_or_else(|| format!("{:?}", kind)),
+                    p.cur_src()
+                ))
+                .primary(p.cur_tok().range(), "unexpected"),
+        }
+    }
 }
 
 impl ExpectedNodeDiagnosticBuilder {
@@ -62,7 +102,7 @@ impl ExpectedNodeDiagnosticBuilder {
 }
 
 impl ToDiagnostic for ExpectedNodeDiagnosticBuilder {
-    fn to_diagnostic(&self, p: &Parser) -> Diagnostic {
+    fn to_diagnostic(self, p: &Parser) -> Diagnostic {
         let range = &self.range;
 
         let msg = if range.is_empty() && p.tokens.source().get(range.to_owned()) == None {

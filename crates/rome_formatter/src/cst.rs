@@ -97,6 +97,9 @@ impl_format_verbatim! {
     TsUnionType,
     TsUnknownType,
     TsVoidType,
+    TsDefinitePropertyAnnotation,
+    TsOptionalPropertyAnnotation,
+    TsDefiniteVariableAnnotation,
     // Unknown
     JsUnknown,
     // Separated Lists
