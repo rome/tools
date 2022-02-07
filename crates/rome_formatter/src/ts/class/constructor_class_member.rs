@@ -20,7 +20,7 @@ impl ToFormatElement for JsConstructorClassMember {
 
 impl ToFormatElement for JsConstructorParameters {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let params = formatter.format_separated(self.parameters(), || token(","))?;
+        let params = formatter.format_separated_list(self.parameters(), || token(","))?;
 
         Ok(group_elements(formatter.format_delimited(
             &self.l_paren_token()?,

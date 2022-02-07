@@ -19,7 +19,7 @@ impl ToFormatElement for JsObjectExpression {
         Ok(group_elements(formatter.format_delimited(
             &self.l_curly_token()?,
             |open_token_trailing, close_token_leading| {
-                let members = formatter.format_separated(members, || token(","))?;
+                let members = formatter.format_separated_list(members, || token(","))?;
 
                 Ok(format_elements!(
                     space.clone(),

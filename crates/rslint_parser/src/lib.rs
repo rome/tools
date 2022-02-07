@@ -77,7 +77,10 @@ pub mod syntax;
 pub mod util;
 
 pub use crate::{
-    ast::{AstNode, AstNodeList, AstSeparatedList, AstToken, SyntaxError, SyntaxResult},
+    ast::{
+        AstNode, AstNodeList, AstSeparatedList, AstSeparatedListElementsIterator, AstToken,
+        SyntaxError, SyntaxResult,
+    },
     event::{process, Event},
     lossless_tree_sink::LosslessTreeSink,
     lossy_tree_sink::LossyTreeSink,

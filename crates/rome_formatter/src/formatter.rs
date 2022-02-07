@@ -14,7 +14,10 @@ use crate::{
 use rome_rowan::SyntaxElement;
 #[cfg(debug_assertions)]
 use rslint_parser::SyntaxNodeExt;
-use rslint_parser::{AstNode, AstNodeList, AstSeparatedList, SyntaxNode, SyntaxToken};
+use rslint_parser::{
+    AstNode, AstNodeList, AstSeparatedList, AstSeparatedListElementsIterator, SyntaxNode,
+    SyntaxToken,
+};
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
 /// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
@@ -178,7 +181,7 @@ impl Formatter {
     /// created by calling the `separator_factory` function.
     /// The last trailing separator in the list will only be printed
     /// if the outer group breaks.
-    pub fn format_separated<T, L, F>(
+    pub fn format_separated_list<T, L, F>(
         &self,
         list: L,
         separator_factory: F,
@@ -188,10 +191,23 @@ impl Formatter {
         L: AstSeparatedList<T>,
         F: Fn() -> FormatElement,
     {
-        let mut result = Vec::with_capacity(list.len());
-        let last_index = list.len().saturating_sub(1);
+        self.format_separated_elements_iterator(list.elements(), list.len(), separator_factory)
+    }
 
-        for (index, element) in list.elements().enumerate() {
+    pub fn format_separated_elements_iterator<T, F>(
+        &self,
+        elements_iterator: AstSeparatedListElementsIterator<T>,
+        len: usize,
+        separator_factory: F,
+    ) -> FormatResult<impl Iterator<Item = FormatElement>>
+    where
+        T: AstNode + ToFormatElement + Clone,
+        F: Fn() -> FormatElement,
+    {
+        let mut result = Vec::with_capacity(len);
+        let last_index = len.saturating_sub(1);
+
+        for (index, element) in elements_iterator.enumerate() {
             let node = element.node()?.format(self)?;
 
             // Reuse the existing trailing separator or create it if it wasn't in the

@@ -27,7 +27,7 @@ impl ToFormatElement for JsImportAssertion {
                         leading,
                         join_elements(
                             soft_line_break_or_space(),
-                            formatter.format_separated(assertions, || token(","))?
+                            formatter.format_separated_list(assertions, || token(","))?
                         ),
                         trailing
                     ]),

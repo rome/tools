@@ -6,7 +6,7 @@ use rslint_parser::ast::{JsAnyArrayBindingPatternElement, JsArrayBindingPattern}
 
 impl ToFormatElement for JsArrayBindingPattern {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let elements = formatter.format_separated(self.elements(), || token(","))?;
+        let elements = formatter.format_separated_list(self.elements(), || token(","))?;
 
         Ok(group_elements(formatter.format_delimited(
             &self.l_brack_token()?,

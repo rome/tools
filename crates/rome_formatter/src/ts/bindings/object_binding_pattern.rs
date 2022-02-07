@@ -10,7 +10,7 @@ use rslint_parser::ast::{
 
 impl ToFormatElement for JsObjectBindingPattern {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let properties = formatter.format_separated(self.properties(), || token(","))?;
+        let properties = formatter.format_separated_list(self.properties(), || token(","))?;
 
         Ok(group_elements(formatter.format_delimited(
             &self.l_curly_token()?,

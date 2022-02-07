@@ -10,7 +10,7 @@ use rslint_parser::ast::{
 
 impl ToFormatElement for JsArrayAssignmentPattern {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let elements = formatter.format_separated(self.elements(), || token(","))?;
+        let elements = formatter.format_separated_list(self.elements(), || token(","))?;
         Ok(group_elements(formatter.format_delimited(
             &self.l_brack_token()?,
             |open_token_trailing, close_token_leading| {

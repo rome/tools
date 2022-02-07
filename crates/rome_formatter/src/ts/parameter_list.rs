@@ -9,7 +9,7 @@ use rslint_parser::ast::{
 
 impl ToFormatElement for JsParameters {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        let param_tokens = formatter.format_separated(self.items(), || token(","))?;
+        let param_tokens = formatter.format_separated_list(self.items(), || token(","))?;
 
         Ok(group_elements(formatter.format_delimited(
             &self.l_paren_token()?,
