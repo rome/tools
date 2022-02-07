@@ -9,6 +9,7 @@ use std::{
 };
 
 use rome_formatter::{FormatOptions, IndentStyle};
+use rslint_errors::{file::SimpleFiles, termcolor, Emitter};
 use rslint_parser::parse_module;
 
 static REPORTER: DiffReport = DiffReport::new();
@@ -49,6 +50,31 @@ fn test_snapshot(input: &'static str, _: &str, _: &str) {
     writeln!(snapshot).unwrap();
 
     let file_name = input_file.file_name().and_then(OsStr::to_str).unwrap();
+
+    if !parsed.errors().is_empty() {
+        let mut files = SimpleFiles::new();
+        files.add(file_name.into(), input_code);
+
+        let mut buffer = termcolor::Buffer::no_color();
+        let mut emitter = Emitter::new(&files);
+
+        for error in parsed.errors() {
+            emitter
+                .emit_with_writer(error, &mut buffer)
+                .expect("failed to emit diagnostic");
+        }
+
+        writeln!(snapshot, "# Errors").unwrap();
+        writeln!(snapshot, "```").unwrap();
+        writeln!(
+            snapshot,
+            "{}",
+            std::str::from_utf8(buffer.as_slice()).expect("non utf8 in error buffer")
+        )
+        .unwrap();
+        writeln!(snapshot, "```").unwrap();
+        writeln!(snapshot).unwrap();
+    }
 
     insta::with_settings!({
         prepend_module_to_snapshot => false,

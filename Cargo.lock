@@ -1264,6 +1264,7 @@ dependencies = [
  "rome_core",
  "rome_path",
  "rome_rowan",
+ "rslint_errors",
  "rslint_parser",
  "similar",
  "tests_macros",
