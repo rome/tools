@@ -145,9 +145,9 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                     serde_json::from_str(options_path.get_buffer_from_file().as_str()).unwrap();
 
                 for test_case in options.cases {
-                    let options = test_case.clone();
-                    let formatted_result = format(test_case.into(), &root).unwrap();
-                    snapshot_content.add_output(formatted_result.as_code(), options.into());
+                    let format_options: FormatOptions = test_case.into();
+                    let formatted_result = format(format_options, &root).unwrap();
+                    snapshot_content.add_output(formatted_result.as_code(), format_options);
                 }
             }
         }
