@@ -1100,8 +1100,8 @@ fn parse_variable_declaration(
     id.map(|id| {
         let m = id.precede(p);
 
-        let ts_annotation = parse_ts_variable_annotation(p)
-            .exclusive_for(p, TypeScript, |p, annotation| {
+        let ts_annotation = TypeScript.parse_exclusive_syntax(p, parse_ts_variable_annotation,
+            |p, annotation| {
                 let name = match annotation.kind() {
                     TS_TYPE_ANNOTATION => "type annotation",
                     TS_DEFINITE_VARIABLE_ANNOTATION => "definite assertion assignments",

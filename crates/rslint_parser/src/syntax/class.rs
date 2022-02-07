@@ -181,8 +181,8 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     // test ts_class_type_parameters
     // // TYPESCRIPT
     // class BuildError<A, B, C> {}
-    parse_ts_type_parameters(p)
-        .exclusive_for(p, TypeScript, |p, type_parameters| {
+    TypeScript
+        .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, type_parameters| {
             ts_only_syntax_error(
                 p,
                 "class type parameters",
@@ -941,15 +941,15 @@ fn parse_method_class_member_body(
         JS_UNKNOWN_MEMBER
     };
 
-    parse_ts_type_parameters(p)
-        .exclusive_for(p, TypeScript, |p, marker| {
+    TypeScript
+        .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, marker| {
             ts_only_syntax_error(p, "type parameters", marker.range(p).as_range())
         })
         .ok();
     parse_parameter_list(p, ParameterContext::Implementation, flags)
         .or_add_diagnostic(p, js_parse_error::expected_class_parameters);
-    parse_ts_return_type_annotation(p)
-        .exclusive_for(p, TypeScript, |p, annotation| {
+    TypeScript
+        .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
             ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
         })
         .ok();

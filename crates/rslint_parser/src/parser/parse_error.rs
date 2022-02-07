@@ -16,7 +16,7 @@ pub(crate) fn expected_any(names: &[&str], range: Range<usize>) -> ExpectedNodeD
 }
 
 #[must_use]
-pub(crate) fn expected_token(token: JsSyntaxKind) -> ExpectedToken {
+pub(crate) fn expected_token(token: JsSyntaxKind) -> impl ToDiagnostic {
     ExpectedToken(token)
 }
 
@@ -30,9 +30,9 @@ impl ToDiagnostic for Diagnostic {
     }
 }
 
-pub struct ExpectedToken(JsSyntaxKind);
+struct ExpectedToken(JsSyntaxKind);
 
-pub struct ExpectedNodeDiagnosticBuilder {
+pub(crate) struct ExpectedNodeDiagnosticBuilder {
     names: String,
     range: Range<usize>,
 }

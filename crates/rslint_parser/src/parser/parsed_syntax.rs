@@ -1,7 +1,7 @@
 use crate::parser::parse_recovery::RecoveryResult;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParseRecovery, ToDiagnostic};
-use crate::{CompletedMarker, Marker, Parser, SyntaxFeature};
+use crate::{CompletedMarker, Marker, Parser};
 use rslint_errors::{Diagnostic, Span};
 use rslint_syntax::JsSyntaxKind;
 use std::ops::Range;
@@ -225,24 +225,6 @@ impl ParsedSyntax {
         if let Present(marker) = self {
             marker.undo_completion(p).abandon(p)
         }
-    }
-
-    /// Adds a diagnostic and changes the kind of the node to [SyntaxKind::to_unknown] if the passed feature isn't
-    /// supported.
-    ///
-    /// Returns the parsed syntax.
-    pub fn exclusive_for<F, E, D>(
-        self,
-        p: &mut Parser,
-        feature: F,
-        error_builder: E,
-    ) -> ParsedSyntax
-    where
-        F: SyntaxFeature,
-        E: FnOnce(&Parser, &CompletedMarker) -> D,
-        D: ToDiagnostic,
-    {
-        feature.exclusive_syntax(p, self, error_builder)
     }
 }
 
