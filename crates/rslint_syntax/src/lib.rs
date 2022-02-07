@@ -162,6 +162,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             }
 
             JS_FORMAL_PARAMETER
+            | JS_FORMAL_PARAMETER_WITH_DEFAULT
             | JS_REST_PARAMETER
             | TS_PROPERTY_PARAMETER
             | TS_READONLY_PROPERTY_PARAMETER
