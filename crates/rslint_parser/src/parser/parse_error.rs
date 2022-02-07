@@ -1,6 +1,7 @@
 use crate::Parser;
 use rslint_errors::{Diagnostic, Span};
 use rslint_syntax::JsSyntaxKind;
+use std::fmt::{Display, Formatter};
 use std::ops::Range;
 
 ///! Provides helper functions to build common diagnostic messages
@@ -17,7 +18,12 @@ pub(crate) fn expected_any(names: &[&str], range: Range<usize>) -> ExpectedNodeD
 
 #[must_use]
 pub(crate) fn expected_token(token: JsSyntaxKind) -> impl ToDiagnostic {
-    ExpectedToken(token)
+    ExpectedToken(ExpectedTokenName::Kind(token))
+}
+
+#[must_use]
+pub(crate) fn expected_contextual_keyword(name: &'static str) -> impl ToDiagnostic {
+    ExpectedToken(ExpectedTokenName::Contextual(name))
 }
 
 pub trait ToDiagnostic {
@@ -30,7 +36,24 @@ impl ToDiagnostic for Diagnostic {
     }
 }
 
-struct ExpectedToken(JsSyntaxKind);
+struct ExpectedToken(ExpectedTokenName);
+
+enum ExpectedTokenName {
+    Kind(JsSyntaxKind),
+    Contextual(&'static str),
+}
+
+impl Display for ExpectedTokenName {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExpectedTokenName::Kind(kind) => match kind.to_string() {
+                Some(name) => f.write_str(name),
+                None => write!(f, "{:?}", kind),
+            },
+            ExpectedTokenName::Contextual(name) => f.write_str(name),
+        }
+    }
+}
 
 pub(crate) struct ExpectedNodeDiagnosticBuilder {
     names: String,
@@ -39,23 +62,14 @@ pub(crate) struct ExpectedNodeDiagnosticBuilder {
 
 impl ToDiagnostic for ExpectedToken {
     fn to_diagnostic(self, p: &Parser) -> Diagnostic {
-        let kind = self.0;
-
         match p.cur() {
             JsSyntaxKind::EOF => p
-                .err_builder(&format!(
-                    "expected `{}` but instead the file ends",
-                    kind.to_string()
-                        .map(|x| x.to_string())
-                        .unwrap_or_else(|| format!("{:?}", kind))
-                ))
+                .err_builder(&format!("expected `{}` but instead the file ends", self.0))
                 .primary(p.cur_tok().range(), "the file ends here"),
             _ => p
                 .err_builder(&format!(
                     "expected `{}` but instead found `{}`",
-                    kind.to_string()
-                        .map(|x| x.to_string())
-                        .unwrap_or_else(|| format!("{:?}", kind)),
+                    self.0,
                     p.cur_src()
                 ))
                 .primary(p.cur_tok().range(), "unexpected"),
