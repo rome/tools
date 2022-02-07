@@ -47,10 +47,14 @@ impl ToFormatElement for JsCallArguments {
                 &self.r_paren_token()?,
             )?))
         } else {
+            let l_paren = self.l_paren_token()?;
+            let r_paren = self.r_paren_token()?;
             // Arguments are empty
             Ok(format_elements![
-                self.l_paren_token()?.format(formatter)?,
-                self.r_paren_token()?.format(formatter)?
+                formatter.print_leading_trivia(&l_paren),
+                l_paren.format(formatter)?,
+                r_paren.format(formatter)?,
+                formatter.print_trailing_trivia(&r_paren),
             ])
         }
     }
