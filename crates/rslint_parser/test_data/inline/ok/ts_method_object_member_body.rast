@@ -41,7 +41,6 @@ JsModule {
                                                 any_token: ANY_KW@34..37 "any" [] [],
                                             },
                                         },
-                                        initializer: missing (optional),
                                     },
                                 ],
                                 r_paren_token: R_PAREN@37..38 ")" [] [],
@@ -99,7 +98,6 @@ JsModule {
                                                 string_token: STRING_KW@78..84 "string" [] [],
                                             },
                                         },
-                                        initializer: missing (optional),
                                     },
                                 ],
                                 r_paren_token: R_PAREN@84..85 ")" [] [],
@@ -173,7 +171,6 @@ JsModule {
                                                 },
                                             },
                                         },
-                                        initializer: missing (optional),
                                     },
                                 ],
                                 r_paren_token: R_PAREN@150..151 ")" [] [],
@@ -270,7 +267,6 @@ JsModule {
                       0: COLON@32..34 ":" [] [Whitespace(" ")]
                       1: TS_ANY_TYPE@34..37
                         0: ANY_KW@34..37 "any" [] []
-                    3: (empty)
                 2: R_PAREN@37..38 ")" [] []
               5: TS_RETURN_TYPE_ANNOTATION@38..52
                 0: COLON@38..40 ":" [] [Whitespace(" ")]
@@ -311,7 +307,6 @@ JsModule {
                       0: COLON@76..78 ":" [] [Whitespace(" ")]
                       1: TS_STRING_TYPE@78..84
                         0: STRING_KW@78..84 "string" [] []
-                    3: (empty)
                 2: R_PAREN@84..85 ")" [] []
               5: TS_RETURN_TYPE_ANNOTATION@85..94
                 0: COLON@85..87 ":" [] [Whitespace(" ")]
@@ -362,7 +357,6 @@ JsModule {
                                 0: IDENT@148..149 "R" [] []
                               1: (empty)
                           2: R_ANGLE@149..150 ">" [] []
-                    3: (empty)
                 2: R_PAREN@150..151 ")" [] []
               5: TS_RETURN_TYPE_ANNOTATION@151..178
                 0: COLON@151..153 ":" [] [Whitespace(" ")]

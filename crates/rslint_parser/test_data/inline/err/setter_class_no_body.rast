@@ -27,7 +27,6 @@ JsModule {
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
-                        initializer: missing (optional),
                     },
                     r_paren_token: R_PAREN@27..28 ")" [] [],
                     body: missing (required),
@@ -65,7 +64,6 @@ JsModule {
               0: IDENT@26..27 "a" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
           7: R_PAREN@27..28 ")" [] []
           8: (empty)
       7: (empty)

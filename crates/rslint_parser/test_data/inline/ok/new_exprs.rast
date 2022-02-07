@@ -136,7 +136,6 @@ JsModule {
                                                 },
                                                 question_mark_token: missing (optional),
                                                 type_annotation: missing (optional),
-                                                initializer: missing (optional),
                                             },
                                         ],
                                         r_paren_token: R_PAREN@93..95 ")" [] [Whitespace(" ")],
@@ -278,7 +277,6 @@ JsModule {
                           0: IDENT@90..93 "foo" [] []
                         1: (empty)
                         2: (empty)
-                        3: (empty)
                     2: R_PAREN@93..95 ")" [] [Whitespace(" ")]
                   3: (empty)
                   4: FAT_ARROW@95..98 "=>" [] [Whitespace(" ")]

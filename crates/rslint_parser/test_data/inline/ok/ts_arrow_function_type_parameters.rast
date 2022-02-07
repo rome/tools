@@ -75,7 +75,6 @@ JsModule {
                                                     type_arguments: missing (optional),
                                                 },
                                             },
-                                            initializer: missing (optional),
                                         },
                                         COMMA@55..57 "," [] [Whitespace(" ")],
                                         JsFormalParameter {
@@ -92,7 +91,6 @@ JsModule {
                                                     type_arguments: missing (optional),
                                                 },
                                             },
-                                            initializer: missing (optional),
                                         },
                                         COMMA@61..63 "," [] [Whitespace(" ")],
                                         JsFormalParameter {
@@ -109,7 +107,6 @@ JsModule {
                                                     type_arguments: missing (optional),
                                                 },
                                             },
-                                            initializer: missing (optional),
                                         },
                                     ],
                                     r_paren_token: R_PAREN@67..69 ")" [] [Whitespace(" ")],
@@ -189,7 +186,6 @@ JsModule {
                           0: JS_REFERENCE_IDENTIFIER@54..55
                             0: IDENT@54..55 "A" [] []
                           1: (empty)
-                      3: (empty)
                     1: COMMA@55..57 "," [] [Whitespace(" ")]
                     2: JS_FORMAL_PARAMETER@57..61
                       0: JS_IDENTIFIER_BINDING@57..58
@@ -201,7 +197,6 @@ JsModule {
                           0: JS_REFERENCE_IDENTIFIER@60..61
                             0: IDENT@60..61 "B" [] []
                           1: (empty)
-                      3: (empty)
                     3: COMMA@61..63 "," [] [Whitespace(" ")]
                     4: JS_FORMAL_PARAMETER@63..67
                       0: JS_IDENTIFIER_BINDING@63..64
@@ -213,7 +208,6 @@ JsModule {
                           0: JS_REFERENCE_IDENTIFIER@66..67
                             0: IDENT@66..67 "C" [] []
                           1: (empty)
-                      3: (empty)
                   2: R_PAREN@67..69 ")" [] [Whitespace(" ")]
                 3: (empty)
                 4: FAT_ARROW@69..72 "=>" [] [Whitespace(" ")]

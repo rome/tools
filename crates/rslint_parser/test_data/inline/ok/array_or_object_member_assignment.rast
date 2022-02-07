@@ -63,7 +63,6 @@ JsModule {
                                                 },
                                                 question_mark_token: missing (optional),
                                                 type_annotation: missing (optional),
-                                                initializer: missing (optional),
                                             },
                                             r_paren_token: R_PAREN@99..101 ")" [] [Whitespace(" ")],
                                             body: JsFunctionBody {
@@ -184,7 +183,6 @@ JsModule {
                                                     },
                                                     question_mark_token: missing (optional),
                                                     type_annotation: missing (optional),
-                                                    initializer: missing (optional),
                                                 },
                                                 r_paren_token: R_PAREN@249..251 ")" [] [Whitespace(" ")],
                                                 body: JsFunctionBody {
@@ -304,7 +302,6 @@ JsModule {
                           0: IDENT@96..99 "val" [] []
                         1: (empty)
                         2: (empty)
-                        3: (empty)
                       4: R_PAREN@99..101 ")" [] [Whitespace(" ")]
                       5: JS_FUNCTION_BODY@101..126
                         0: L_CURLY@101..102 "{" [] []
@@ -389,7 +386,6 @@ JsModule {
                             0: IDENT@246..249 "val" [] []
                           1: (empty)
                           2: (empty)
-                          3: (empty)
                         4: R_PAREN@249..251 ")" [] [Whitespace(" ")]
                         5: JS_FUNCTION_BODY@251..276
                           0: L_CURLY@251..252 "{" [] []

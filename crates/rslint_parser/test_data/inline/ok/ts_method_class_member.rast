@@ -75,7 +75,6 @@ JsModule {
                                         type_arguments: missing (optional),
                                     },
                                 },
-                                initializer: missing (optional),
                             },
                             COMMA@57..59 "," [] [Whitespace(" ")],
                             JsFormalParameter {
@@ -92,7 +91,6 @@ JsModule {
                                         type_arguments: missing (optional),
                                     },
                                 },
-                                initializer: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@63..64 ")" [] [],
@@ -180,7 +178,6 @@ JsModule {
                     0: JS_REFERENCE_IDENTIFIER@56..57
                       0: IDENT@56..57 "A" [] []
                     1: (empty)
-                3: (empty)
               1: COMMA@57..59 "," [] [Whitespace(" ")]
               2: JS_FORMAL_PARAMETER@59..63
                 0: JS_IDENTIFIER_BINDING@59..60
@@ -192,7 +189,6 @@ JsModule {
                     0: JS_REFERENCE_IDENTIFIER@62..63
                       0: IDENT@62..63 "B" [] []
                     1: (empty)
-                3: (empty)
             2: R_PAREN@63..64 ")" [] []
           8: TS_RETURN_TYPE_ANNOTATION@64..68
             0: COLON@64..66 ":" [] [Whitespace(" ")]

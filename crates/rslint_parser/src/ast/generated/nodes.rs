@@ -8,22 +8,6 @@ use crate::{
     SyntaxNode, SyntaxResult, SyntaxToken,
 };
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct Ident {
-    pub(crate) syntax: SyntaxNode,
-}
-impl Ident {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
-    }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct ImportMeta {
     pub(crate) syntax: SyntaxNode,
 }
@@ -1412,7 +1396,31 @@ impl JsFormalParameter {
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
         support::node(&self.syntax, 2usize)
     }
-    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsFormalParameterWithDefault {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsFormalParameterWithDefault {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 1usize)
+    }
+    pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+    pub fn default(&self) -> SyntaxResult<JsAnyExpression> {
+        support::required_node(&self.syntax, 3usize)
+    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsFunctionBody {
@@ -3503,7 +3511,9 @@ impl TsEnum {
     pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 2usize) }
+    pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -3524,7 +3534,9 @@ impl TsEnumMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
+    pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
@@ -3677,7 +3689,9 @@ impl TsImportEqualsDecl {
     pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 2usize) }
+    pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -4903,6 +4917,7 @@ pub enum JsAnyForInitializer {
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyFormalParameter {
     JsFormalParameter(JsFormalParameter),
+    JsFormalParameterWithDefault(JsFormalParameterWithDefault),
     JsUnknownParameter(JsUnknownParameter),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -5122,33 +5137,6 @@ pub enum TsType {
     TsUnionType(TsUnionType),
     TsUnknownType(TsUnknownType),
     TsVoidType(TsVoidType),
-}
-impl AstNode for Ident {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == IDENT }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for Ident {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("Ident")
-            .field(
-                "ident_token",
-                &support::DebugSyntaxResult(self.ident_token()),
-            )
-            .finish()
-    }
-}
-impl From<Ident> for SyntaxNode {
-    fn from(n: Ident) -> SyntaxNode { n.syntax }
-}
-impl From<Ident> for SyntaxElement {
-    fn from(n: Ident) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for ImportMeta {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == IMPORT_META }
@@ -7207,10 +7195,6 @@ impl std::fmt::Debug for JsFormalParameter {
                 "type_annotation",
                 &support::DebugOptionalElement(self.type_annotation()),
             )
-            .field(
-                "initializer",
-                &support::DebugOptionalElement(self.initializer()),
-            )
             .finish()
     }
 }
@@ -7219,6 +7203,36 @@ impl From<JsFormalParameter> for SyntaxNode {
 }
 impl From<JsFormalParameter> for SyntaxElement {
     fn from(n: JsFormalParameter) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsFormalParameterWithDefault {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FORMAL_PARAMETER_WITH_DEFAULT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsFormalParameterWithDefault {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsFormalParameterWithDefault")
+            .field("binding", &support::DebugSyntaxResult(self.binding()))
+            .field(
+                "type_annotation",
+                &support::DebugOptionalElement(self.type_annotation()),
+            )
+            .field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
+            .field("default", &support::DebugSyntaxResult(self.default()))
+            .finish()
+    }
+}
+impl From<JsFormalParameterWithDefault> for SyntaxNode {
+    fn from(n: JsFormalParameterWithDefault) -> SyntaxNode { n.syntax }
+}
+impl From<JsFormalParameterWithDefault> for SyntaxElement {
+    fn from(n: JsFormalParameterWithDefault) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for JsFunctionBody {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == JS_FUNCTION_BODY }
@@ -10294,7 +10308,10 @@ impl std::fmt::Debug for TsEnum {
                 &support::DebugOptionalElement(self.const_token()),
             )
             .field("enum_token", &support::DebugSyntaxResult(self.enum_token()))
-            .field("ident", &support::DebugSyntaxResult(self.ident()))
+            .field(
+                "ident_token",
+                &support::DebugSyntaxResult(self.ident_token()),
+            )
             .field(
                 "l_curly_token",
                 &support::DebugSyntaxResult(self.l_curly_token()),
@@ -10327,7 +10344,10 @@ impl AstNode for TsEnumMember {
 impl std::fmt::Debug for TsEnumMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsEnumMember")
-            .field("ident", &support::DebugSyntaxResult(self.ident()))
+            .field(
+                "ident_token",
+                &support::DebugSyntaxResult(self.ident_token()),
+            )
             .field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
             .field("value", &support::DebugSyntaxResult(self.value()))
             .finish()
@@ -10557,7 +10577,10 @@ impl std::fmt::Debug for TsImportEqualsDecl {
                 "export_token",
                 &support::DebugSyntaxResult(self.export_token()),
             )
-            .field("ident", &support::DebugSyntaxResult(self.ident()))
+            .field(
+                "ident_token",
+                &support::DebugSyntaxResult(self.ident_token()),
+            )
             .field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
             .field("module", &support::DebugSyntaxResult(self.module()))
             .field(
@@ -14006,6 +14029,11 @@ impl From<JsFormalParameter> for JsAnyFormalParameter {
         JsAnyFormalParameter::JsFormalParameter(node)
     }
 }
+impl From<JsFormalParameterWithDefault> for JsAnyFormalParameter {
+    fn from(node: JsFormalParameterWithDefault) -> JsAnyFormalParameter {
+        JsAnyFormalParameter::JsFormalParameterWithDefault(node)
+    }
+}
 impl From<JsUnknownParameter> for JsAnyFormalParameter {
     fn from(node: JsUnknownParameter) -> JsAnyFormalParameter {
         JsAnyFormalParameter::JsUnknownParameter(node)
@@ -14013,12 +14041,20 @@ impl From<JsUnknownParameter> for JsAnyFormalParameter {
 }
 impl AstNode for JsAnyFormalParameter {
     fn can_cast(kind: JsSyntaxKind) -> bool {
-        matches!(kind, JS_FORMAL_PARAMETER | JS_UNKNOWN_PARAMETER)
+        matches!(
+            kind,
+            JS_FORMAL_PARAMETER | JS_FORMAL_PARAMETER_WITH_DEFAULT | JS_UNKNOWN_PARAMETER
+        )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_FORMAL_PARAMETER => {
                 JsAnyFormalParameter::JsFormalParameter(JsFormalParameter { syntax })
+            }
+            JS_FORMAL_PARAMETER_WITH_DEFAULT => {
+                JsAnyFormalParameter::JsFormalParameterWithDefault(JsFormalParameterWithDefault {
+                    syntax,
+                })
             }
             JS_UNKNOWN_PARAMETER => {
                 JsAnyFormalParameter::JsUnknownParameter(JsUnknownParameter { syntax })
@@ -14030,6 +14066,7 @@ impl AstNode for JsAnyFormalParameter {
     fn syntax(&self) -> &SyntaxNode {
         match self {
             JsAnyFormalParameter::JsFormalParameter(it) => &it.syntax,
+            JsAnyFormalParameter::JsFormalParameterWithDefault(it) => &it.syntax,
             JsAnyFormalParameter::JsUnknownParameter(it) => &it.syntax,
         }
     }
@@ -14038,6 +14075,7 @@ impl std::fmt::Debug for JsAnyFormalParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             JsAnyFormalParameter::JsFormalParameter(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyFormalParameter::JsFormalParameterWithDefault(it) => std::fmt::Debug::fmt(it, f),
             JsAnyFormalParameter::JsUnknownParameter(it) => std::fmt::Debug::fmt(it, f),
         }
     }
@@ -14046,6 +14084,7 @@ impl From<JsAnyFormalParameter> for SyntaxNode {
     fn from(n: JsAnyFormalParameter) -> SyntaxNode {
         match n {
             JsAnyFormalParameter::JsFormalParameter(it) => it.into(),
+            JsAnyFormalParameter::JsFormalParameterWithDefault(it) => it.into(),
             JsAnyFormalParameter::JsUnknownParameter(it) => it.into(),
         }
     }
@@ -16637,11 +16676,6 @@ impl std::fmt::Display for TsType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for Ident {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
 impl std::fmt::Display for ImportMeta {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -16948,6 +16982,11 @@ impl std::fmt::Display for JsForVariableDeclaration {
     }
 }
 impl std::fmt::Display for JsFormalParameter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsFormalParameterWithDefault {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -19527,7 +19566,6 @@ impl Debug for DebugSyntaxElement {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match &self.0 {
             NodeOrToken::Node(node) => match node.kind() {
-                IDENT => std::fmt::Debug::fmt(&Ident::cast(node.clone()).unwrap(), f),
                 IMPORT_META => std::fmt::Debug::fmt(&ImportMeta::cast(node.clone()).unwrap(), f),
                 JS_ARRAY_ASSIGNMENT_PATTERN => {
                     std::fmt::Debug::fmt(&JsArrayAssignmentPattern::cast(node.clone()).unwrap(), f)
@@ -19749,6 +19787,10 @@ impl Debug for DebugSyntaxElement {
                 JS_FORMAL_PARAMETER => {
                     std::fmt::Debug::fmt(&JsFormalParameter::cast(node.clone()).unwrap(), f)
                 }
+                JS_FORMAL_PARAMETER_WITH_DEFAULT => std::fmt::Debug::fmt(
+                    &JsFormalParameterWithDefault::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 JS_FUNCTION_BODY => {
                     std::fmt::Debug::fmt(&JsFunctionBody::cast(node.clone()).unwrap(), f)
                 }

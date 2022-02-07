@@ -42,7 +42,6 @@ JsModule {
                                             type_arguments: missing (optional),
                                         },
                                     },
-                                    initializer: missing (optional),
                                 },
                                 R_PAREN@34..36 ")" [] [Whitespace(" ")],
                                 JsFunctionBody {
@@ -98,7 +97,6 @@ JsModule {
                     0: JS_REFERENCE_IDENTIFIER@33..34
                       0: IDENT@33..34 "A" [] []
                     1: (empty)
-                3: (empty)
               5: R_PAREN@34..36 ")" [] [Whitespace(" ")]
               6: JS_FUNCTION_BODY@36..39
                 0: L_CURLY@36..37 "{" [] []

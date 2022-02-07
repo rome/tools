@@ -29,7 +29,6 @@ JsModule {
                                     number_token: NUMBER_KW@34..40 "number" [] [],
                                 },
                             },
-                            initializer: missing (optional),
                         },
                         r_paren_token: R_PAREN@40..42 ")" [] [Whitespace(" ")],
                         separator_token: missing (optional),
@@ -61,7 +60,6 @@ JsModule {
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                         r_paren_token: R_PAREN@62..64 ")" [] [Whitespace(" ")],
                         separator_token: missing (optional),
@@ -96,7 +94,6 @@ JsModule {
                                     },
                                     question_mark_token: missing (optional),
                                     type_annotation: missing (optional),
-                                    initializer: missing (optional),
                                 },
                             ],
                             r_paren_token: R_PAREN@135..137 ")" [] [Whitespace(" ")],
@@ -192,7 +189,6 @@ JsModule {
                 0: COLON@32..34 ":" [] [Whitespace(" ")]
                 1: TS_NUMBER_TYPE@34..40
                   0: NUMBER_KW@34..40 "number" [] []
-              3: (empty)
             4: R_PAREN@40..42 ")" [] [Whitespace(" ")]
             5: (empty)
         2: R_CURLY@42..43 "}" [] []
@@ -216,7 +212,6 @@ JsModule {
                 0: IDENT@61..62 "b" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
             4: R_PAREN@62..64 ")" [] [Whitespace(" ")]
             5: (empty)
         2: R_CURLY@64..65 "}" [] []
@@ -243,7 +238,6 @@ JsModule {
                     0: IDENT@134..135 "a" [] []
                   1: (empty)
                   2: (empty)
-                  3: (empty)
               2: R_PAREN@135..137 ")" [] [Whitespace(" ")]
             4: (empty)
             5: (empty)

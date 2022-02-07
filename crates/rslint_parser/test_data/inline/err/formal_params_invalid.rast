@@ -17,7 +17,6 @@ JsModule {
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
-                        initializer: missing (optional),
                     },
                     missing separator,
                     JsUnknownParameter {
@@ -32,7 +31,6 @@ JsModule {
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
-                        initializer: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@16..18 ")" [] [Whitespace(" ")],
@@ -67,7 +65,6 @@ JsModule {
               0: IDENT@10..11 "a" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
           1: (empty)
           2: JS_UNKNOWN_PARAMETER@11..13
             0: PLUS2@11..13 "++" [] []
@@ -77,7 +74,6 @@ JsModule {
               0: IDENT@15..16 "c" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
         2: R_PAREN@16..18 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@18..20

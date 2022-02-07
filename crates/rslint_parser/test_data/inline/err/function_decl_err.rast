@@ -197,7 +197,6 @@ JsModule {
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
-                        initializer: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@179..181 ")" [] [Whitespace(" ")],
@@ -229,7 +228,6 @@ JsModule {
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
-                        initializer: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@203..205 ")" [] [Whitespace(" ")],
@@ -400,7 +398,6 @@ JsModule {
               0: IDENT@174..179 "await" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
         2: R_PAREN@179..181 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@181..183
@@ -423,7 +420,6 @@ JsModule {
               0: IDENT@198..203 "yield" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
         2: R_PAREN@203..205 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@205..207

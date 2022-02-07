@@ -21,7 +21,6 @@ JsModule {
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                         COMMA@22..24 "," [] [Whitespace(" ")],
                         JsFormalParameter {
@@ -30,7 +29,6 @@ JsModule {
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@25..27 ")" [] [Whitespace(" ")],
@@ -63,7 +61,6 @@ JsModule {
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                         COMMA@54..56 "," [] [Whitespace(" ")],
                         JsFormalParameter {
@@ -72,7 +69,6 @@ JsModule {
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@57..59 ")" [] [Whitespace(" ")],
@@ -105,7 +101,6 @@ JsModule {
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                         COMMA@91..93 "," [] [Whitespace(" ")],
                         JsFormalParameter {
@@ -114,7 +109,6 @@ JsModule {
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                         COMMA@94..96 "," [] [Whitespace(" ")],
                     ],
@@ -154,14 +148,12 @@ JsModule {
                 0: IDENT@21..22 "a" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
             1: COMMA@22..24 "," [] [Whitespace(" ")]
             2: JS_FORMAL_PARAMETER@24..25
               0: JS_IDENTIFIER_BINDING@24..25
                 0: IDENT@24..25 "b" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
           2: R_PAREN@25..27 ")" [] [Whitespace(" ")]
         6: (empty)
         7: JS_FUNCTION_BODY@27..29
@@ -186,14 +178,12 @@ JsModule {
                 0: IDENT@53..54 "a" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
             1: COMMA@54..56 "," [] [Whitespace(" ")]
             2: JS_FORMAL_PARAMETER@56..57
               0: JS_IDENTIFIER_BINDING@56..57
                 0: IDENT@56..57 "b" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
           2: R_PAREN@57..59 ")" [] [Whitespace(" ")]
         6: (empty)
         7: JS_FUNCTION_BODY@59..61
@@ -218,14 +208,12 @@ JsModule {
                 0: IDENT@90..91 "a" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
             1: COMMA@91..93 "," [] [Whitespace(" ")]
             2: JS_FORMAL_PARAMETER@93..94
               0: JS_IDENTIFIER_BINDING@93..94
                 0: IDENT@93..94 "b" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
             3: COMMA@94..96 "," [] [Whitespace(" ")]
           2: R_PAREN@96..98 ")" [] [Whitespace(" ")]
         6: (empty)

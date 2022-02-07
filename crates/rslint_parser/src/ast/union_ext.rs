@@ -1,9 +1,10 @@
 use crate::ast::{
-    JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyClass, JsAnyFormalParameter, JsAnyFunction,
-    JsAnyFunctionBody, JsClassMemberList, JsExtendsClause, TsAnyPropertyParameter,
-    TsImplementsClause, TsReturnTypeAnnotation, TsTypeParameters,
+    JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyBindingPattern, JsAnyClass,
+    JsAnyFormalParameter, JsAnyFunction, JsAnyFunctionBody, JsClassMemberList, JsExtendsClause,
+    TsAnyPropertyParameter, TsImplementsClause, TsReturnTypeAnnotation, TsTypeAnnotation,
+    TsTypeParameters,
 };
-use crate::{SyntaxResult, SyntaxToken};
+use crate::{AstNode, SyntaxError, SyntaxResult, SyntaxToken};
 
 impl JsAnyClass {
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -174,6 +175,31 @@ impl JsAnyFunction {
             JsAnyFunction::JsExportDefaultFunctionClause(clause) => {
                 clause.body().map(JsAnyFunctionBody::JsFunctionBody)
             }
+        }
+    }
+}
+
+impl JsAnyFormalParameter {
+    pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
+        match self {
+            JsAnyFormalParameter::JsFormalParameter(parameter) => parameter.binding(),
+            JsAnyFormalParameter::JsFormalParameterWithDefault(parameter) => parameter.binding(),
+            JsAnyFormalParameter::JsUnknownParameter(parameter) => parameter
+                .items()
+                .find_map(|e| JsAnyBindingPattern::cast(e.into_node()?))
+                .ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone())),
+        }
+    }
+
+    pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
+        match self {
+            JsAnyFormalParameter::JsFormalParameter(parameter) => parameter.type_annotation(),
+            JsAnyFormalParameter::JsFormalParameterWithDefault(parameter) => {
+                parameter.type_annotation()
+            }
+            JsAnyFormalParameter::JsUnknownParameter(parameter) => parameter
+                .items()
+                .find_map(|e| TsTypeAnnotation::cast(e.into_node()?)),
         }
     }
 }

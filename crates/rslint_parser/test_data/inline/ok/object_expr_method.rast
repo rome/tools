@@ -54,7 +54,6 @@ JsModule {
                                                     },
                                                     question_mark_token: missing (optional),
                                                     type_annotation: missing (optional),
-                                                    initializer: missing (optional),
                                                 },
                                                 COMMA@31..33 "," [] [Whitespace(" ")],
                                                 JsFormalParameter {
@@ -63,7 +62,6 @@ JsModule {
                                                     },
                                                     question_mark_token: missing (optional),
                                                     type_annotation: missing (optional),
-                                                    initializer: missing (optional),
                                                 },
                                                 COMMA@34..36 "," [] [Whitespace(" ")],
                                                 JsFormalParameter {
@@ -72,7 +70,6 @@ JsModule {
                                                     },
                                                     question_mark_token: missing (optional),
                                                     type_annotation: missing (optional),
-                                                    initializer: missing (optional),
                                                 },
                                             ],
                                             r_paren_token: R_PAREN@37..39 ")" [] [Whitespace(" ")],
@@ -112,7 +109,6 @@ JsModule {
                                                     },
                                                     question_mark_token: missing (optional),
                                                     type_annotation: missing (optional),
-                                                    initializer: missing (optional),
                                                 },
                                             ],
                                             r_paren_token: R_PAREN@62..64 ")" [] [Whitespace(" ")],
@@ -216,21 +212,18 @@ JsModule {
                             0: IDENT@30..31 "a" [] []
                           1: (empty)
                           2: (empty)
-                          3: (empty)
                         1: COMMA@31..33 "," [] [Whitespace(" ")]
                         2: JS_FORMAL_PARAMETER@33..34
                           0: JS_IDENTIFIER_BINDING@33..34
                             0: IDENT@33..34 "b" [] []
                           1: (empty)
                           2: (empty)
-                          3: (empty)
                         3: COMMA@34..36 "," [] [Whitespace(" ")]
                         4: JS_FORMAL_PARAMETER@36..37
                           0: JS_IDENTIFIER_BINDING@36..37
                             0: IDENT@36..37 "c" [] []
                           1: (empty)
                           2: (empty)
-                          3: (empty)
                       2: R_PAREN@37..39 ")" [] [Whitespace(" ")]
                     5: (empty)
                     6: JS_FUNCTION_BODY@39..41
@@ -260,7 +253,6 @@ JsModule {
                             0: IDENT@61..62 "a" [] []
                           1: (empty)
                           2: (empty)
-                          3: (empty)
                       2: R_PAREN@62..64 ")" [] [Whitespace(" ")]
                     5: (empty)
                     6: JS_FUNCTION_BODY@64..66

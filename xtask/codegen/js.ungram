@@ -47,8 +47,6 @@ JsUnknownParameter = SyntaxElement*
 JsUnknownImportAssertionEntry = SyntaxElement*
 JsUnknownNamedImportSpecifier = SyntaxElement*
 
-Ident = 'ident'
-
 JsAnyRoot =
 	JsScript | JsModule | JsExpressionSnipped
 
@@ -1365,6 +1363,7 @@ JsParameterList = (JsAnyParameter (',' JsAnyParameter)* ','?)
 
 JsAnyFormalParameter =
 	JsFormalParameter
+	| JsFormalParameterWithDefault
 	| JsUnknownParameter
 
 JsAnyParameter =
@@ -1378,7 +1377,13 @@ JsFormalParameter =
 	binding: JsAnyBindingPattern
 	'?'?
 	type_annotation: TsTypeAnnotation?
-	initializer: JsInitializerClause?
+
+// (a: string = "test") => {}
+JsFormalParameterWithDefault =
+	binding: JsAnyBindingPattern
+	type_annotation: TsTypeAnnotation?
+	'='
+	default: JsAnyExpression
 
 // (...a) => {}
 //  ^^^^
@@ -1421,7 +1426,7 @@ JsFunctionBody =
 //
 
 TsImportEqualsDecl =
-	('import' | 'export') ident: Ident '=' module:TsModuleRef ';'?
+	('import' | 'export') 'ident' '=' module:TsModuleRef ';'?
 
 
 TsModuleRef =
@@ -1505,10 +1510,10 @@ TsTypeAliasStatement =
 TsIdentifierBinding = name: 'ident'
 
 // typescript enum
-TsEnum = 'const'? 'enum'  ident: Ident '{' members: TsEnumMemberList '}'
+TsEnum = 'const'? 'enum'  'ident' '{' members: TsEnumMemberList '}'
 
 TsEnumMemberList = TsEnumMember*
-TsEnumMember = ident: Ident '=' value:JsAnyExpression
+TsEnumMember = 'ident' '=' value:JsAnyExpression
 
 // | a | b
 TsUnionType =

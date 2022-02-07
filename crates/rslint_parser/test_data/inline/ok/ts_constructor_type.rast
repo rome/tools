@@ -27,7 +27,6 @@ JsModule {
                                     string_token: STRING_KW@30..36 "string" [] [],
                                 },
                             },
-                            initializer: missing (optional),
                         },
                         COMMA@36..38 "," [] [Whitespace(" ")],
                         JsFormalParameter {
@@ -41,7 +40,6 @@ JsModule {
                                     number_token: NUMBER_KW@41..47 "number" [] [],
                                 },
                             },
-                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@47..49 ")" [] [Whitespace(" ")],
@@ -78,7 +76,6 @@ JsModule {
                                     string_token: STRING_KW@85..91 "string" [] [],
                                 },
                             },
-                            initializer: missing (optional),
                         },
                         COMMA@91..93 "," [] [Whitespace(" ")],
                         JsFormalParameter {
@@ -92,7 +89,6 @@ JsModule {
                                     number_token: NUMBER_KW@96..102 "number" [] [],
                                 },
                             },
-                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@102..104 ")" [] [Whitespace(" ")],
@@ -152,7 +148,6 @@ JsModule {
                                     type_arguments: missing (optional),
                                 },
                             },
-                            initializer: missing (optional),
                         },
                         COMMA@138..140 "," [] [Whitespace(" ")],
                         JsFormalParameter {
@@ -169,7 +164,6 @@ JsModule {
                                     type_arguments: missing (optional),
                                 },
                             },
-                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@144..146 ")" [] [Whitespace(" ")],
@@ -229,7 +223,6 @@ JsModule {
                                     type_arguments: missing (optional),
                                 },
                             },
-                            initializer: missing (optional),
                         },
                         COMMA@189..191 "," [] [Whitespace(" ")],
                         JsFormalParameter {
@@ -246,7 +239,6 @@ JsModule {
                                     type_arguments: missing (optional),
                                 },
                             },
-                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@195..197 ")" [] [Whitespace(" ")],
@@ -287,7 +279,6 @@ JsModule {
                 0: COLON@28..30 ":" [] [Whitespace(" ")]
                 1: TS_STRING_TYPE@30..36
                   0: STRING_KW@30..36 "string" [] []
-              3: (empty)
             1: COMMA@36..38 "," [] [Whitespace(" ")]
             2: JS_FORMAL_PARAMETER@38..47
               0: JS_IDENTIFIER_BINDING@38..39
@@ -297,7 +288,6 @@ JsModule {
                 0: COLON@39..41 ":" [] [Whitespace(" ")]
                 1: TS_NUMBER_TYPE@41..47
                   0: NUMBER_KW@41..47 "number" [] []
-              3: (empty)
           2: R_PAREN@47..49 ")" [] [Whitespace(" ")]
         4: FAT_ARROW@49..52 "=>" [] [Whitespace(" ")]
         5: TS_STRING_TYPE@52..58
@@ -324,7 +314,6 @@ JsModule {
                 0: COLON@83..85 ":" [] [Whitespace(" ")]
                 1: TS_STRING_TYPE@85..91
                   0: STRING_KW@85..91 "string" [] []
-              3: (empty)
             1: COMMA@91..93 "," [] [Whitespace(" ")]
             2: JS_FORMAL_PARAMETER@93..102
               0: JS_IDENTIFIER_BINDING@93..94
@@ -334,7 +323,6 @@ JsModule {
                 0: COLON@94..96 ":" [] [Whitespace(" ")]
                 1: TS_NUMBER_TYPE@96..102
                   0: NUMBER_KW@96..102 "number" [] []
-              3: (empty)
           2: R_PAREN@102..104 ")" [] [Whitespace(" ")]
         4: FAT_ARROW@104..107 "=>" [] [Whitespace(" ")]
         5: TS_STRING_TYPE@107..113
@@ -377,7 +365,6 @@ JsModule {
                   0: JS_REFERENCE_IDENTIFIER@137..138
                     0: IDENT@137..138 "A" [] []
                   1: (empty)
-              3: (empty)
             1: COMMA@138..140 "," [] [Whitespace(" ")]
             2: JS_FORMAL_PARAMETER@140..144
               0: JS_IDENTIFIER_BINDING@140..141
@@ -389,7 +376,6 @@ JsModule {
                   0: JS_REFERENCE_IDENTIFIER@143..144
                     0: IDENT@143..144 "B" [] []
                   1: (empty)
-              3: (empty)
           2: R_PAREN@144..146 ")" [] [Whitespace(" ")]
         4: FAT_ARROW@146..149 "=>" [] [Whitespace(" ")]
         5: TS_STRING_TYPE@149..155
@@ -432,7 +418,6 @@ JsModule {
                   0: JS_REFERENCE_IDENTIFIER@188..189
                     0: IDENT@188..189 "A" [] []
                   1: (empty)
-              3: (empty)
             1: COMMA@189..191 "," [] [Whitespace(" ")]
             2: JS_FORMAL_PARAMETER@191..195
               0: JS_IDENTIFIER_BINDING@191..192
@@ -444,7 +429,6 @@ JsModule {
                   0: JS_REFERENCE_IDENTIFIER@194..195
                     0: IDENT@194..195 "B" [] []
                   1: (empty)
-              3: (empty)
           2: R_PAREN@195..197 ")" [] [Whitespace(" ")]
         4: FAT_ARROW@197..200 "=>" [] [Whitespace(" ")]
         5: TS_STRING_TYPE@200..206

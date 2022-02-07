@@ -43,7 +43,6 @@ JsModule {
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                         COMMA@16..18 "," [] [Whitespace(" ")],
                         missing element,
@@ -54,7 +53,6 @@ JsModule {
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@20..22 ")" [] [Whitespace(" ")],
@@ -83,7 +81,6 @@ JsModule {
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                         COMMA@30..32 "," [] [Whitespace(" ")],
                         JsFormalParameter {
@@ -92,7 +89,6 @@ JsModule {
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@33..35 ")" [] [Whitespace(" ")],
@@ -204,7 +200,6 @@ JsModule {
                 0: IDENT@15..16 "a" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
             1: COMMA@16..18 "," [] [Whitespace(" ")]
             2: (empty)
             3: COMMA@18..19 "," [] []
@@ -213,7 +208,6 @@ JsModule {
                 0: IDENT@19..20 "b" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
           2: R_PAREN@20..22 ")" [] [Whitespace(" ")]
         3: (empty)
         4: FAT_ARROW@22..25 "=>" [] [Whitespace(" ")]
@@ -235,14 +229,12 @@ JsModule {
                 0: IDENT@29..30 "a" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
             1: COMMA@30..32 "," [] [Whitespace(" ")]
             2: JS_FORMAL_PARAMETER@32..33
               0: JS_IDENTIFIER_BINDING@32..33
                 0: IDENT@32..33 "b" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
           2: R_PAREN@33..35 ")" [] [Whitespace(" ")]
         3: (empty)
         4: FAT_ARROW@35..37 "=>" [] []

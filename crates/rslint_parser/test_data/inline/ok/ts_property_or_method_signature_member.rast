@@ -128,7 +128,6 @@ JsModule {
                                             string_token: STRING_KW@104..110 "string" [] [],
                                         },
                                     },
-                                    initializer: missing (optional),
                                 },
                                 COMMA@110..112 "," [] [Whitespace(" ")],
                                 JsFormalParameter {
@@ -142,7 +141,6 @@ JsModule {
                                             number_token: NUMBER_KW@115..121 "number" [] [],
                                         },
                                     },
-                                    initializer: missing (optional),
                                 },
                                 COMMA@121..123 "," [] [Whitespace(" ")],
                                 JsFormalParameter {
@@ -156,7 +154,6 @@ JsModule {
                                             string_token: STRING_KW@126..132 "string" [] [],
                                         },
                                     },
-                                    initializer: missing (optional),
                                 },
                             ],
                             r_paren_token: R_PAREN@132..133 ")" [] [],
@@ -270,7 +267,6 @@ JsModule {
                                             type_arguments: missing (optional),
                                         },
                                     },
-                                    initializer: missing (optional),
                                 },
                                 COMMA@214..216 "," [] [Whitespace(" ")],
                                 JsFormalParameter {
@@ -287,7 +283,6 @@ JsModule {
                                             type_arguments: missing (optional),
                                         },
                                     },
-                                    initializer: missing (optional),
                                 },
                             ],
                             r_paren_token: R_PAREN@220..221 ")" [] [],
@@ -408,7 +403,6 @@ JsModule {
                     0: COLON@102..104 ":" [] [Whitespace(" ")]
                     1: TS_STRING_TYPE@104..110
                       0: STRING_KW@104..110 "string" [] []
-                  3: (empty)
                 1: COMMA@110..112 "," [] [Whitespace(" ")]
                 2: JS_FORMAL_PARAMETER@112..121
                   0: JS_IDENTIFIER_BINDING@112..113
@@ -418,7 +412,6 @@ JsModule {
                     0: COLON@113..115 ":" [] [Whitespace(" ")]
                     1: TS_NUMBER_TYPE@115..121
                       0: NUMBER_KW@115..121 "number" [] []
-                  3: (empty)
                 3: COMMA@121..123 "," [] [Whitespace(" ")]
                 4: JS_FORMAL_PARAMETER@123..132
                   0: JS_IDENTIFIER_BINDING@123..124
@@ -428,7 +421,6 @@ JsModule {
                     0: COLON@124..126 ":" [] [Whitespace(" ")]
                     1: TS_STRING_TYPE@126..132
                       0: STRING_KW@126..132 "string" [] []
-                  3: (empty)
               2: R_PAREN@132..133 ")" [] []
             4: TS_RETURN_TYPE_ANNOTATION@133..139
               0: COLON@133..135 ":" [] [Whitespace(" ")]
@@ -509,7 +501,6 @@ JsModule {
                       0: JS_REFERENCE_IDENTIFIER@213..214
                         0: IDENT@213..214 "A" [] []
                       1: (empty)
-                  3: (empty)
                 1: COMMA@214..216 "," [] [Whitespace(" ")]
                 2: JS_FORMAL_PARAMETER@216..220
                   0: JS_IDENTIFIER_BINDING@216..217
@@ -521,7 +512,6 @@ JsModule {
                       0: JS_REFERENCE_IDENTIFIER@219..220
                         0: IDENT@219..220 "B" [] []
                       1: (empty)
-                  3: (empty)
               2: R_PAREN@220..221 ")" [] []
             4: TS_RETURN_TYPE_ANNOTATION@221..229
               0: COLON@221..223 ":" [] [Whitespace(" ")]

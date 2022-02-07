@@ -40,7 +40,6 @@ JsScript {
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
-                        initializer: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@48..50 ")" [] [Whitespace(" ")],
@@ -70,7 +69,6 @@ JsScript {
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
-                        initializer: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@78..80 ")" [] [Whitespace(" ")],
@@ -100,7 +98,6 @@ JsScript {
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
-                        initializer: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@102..104 ")" [] [Whitespace(" ")],
@@ -130,7 +127,6 @@ JsScript {
                         },
                         question_mark_token: missing (optional),
                         type_annotation: missing (optional),
-                        initializer: missing (optional),
                     },
                 ],
                 r_paren_token: R_PAREN@127..129 ")" [] [Whitespace(" ")],
@@ -183,7 +179,6 @@ JsScript {
               0: IDENT@44..48 "test" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
         2: R_PAREN@48..50 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@50..52
@@ -206,7 +201,6 @@ JsScript {
               0: IDENT@74..78 "test" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
         2: R_PAREN@78..80 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@80..82
@@ -229,7 +223,6 @@ JsScript {
               0: IDENT@98..102 "test" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
         2: R_PAREN@102..104 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@104..106
@@ -252,7 +245,6 @@ JsScript {
               0: IDENT@123..127 "test" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
         2: R_PAREN@127..129 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@129..131

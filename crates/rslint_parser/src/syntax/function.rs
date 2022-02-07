@@ -612,21 +612,29 @@ pub(crate) fn parse_formal_parameter(
             })
             .ok();
 
-        if let Present(initializer) = parse_initializer_clause(p, expression_context) {
+        let initializer_start = p.cur_tok().start();
+        let mut parameter = if p.eat(T![=]) {
+            parse_assignment_expression_or_higher(p, expression_context)
+                .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
+
+            let initializer_range = initializer_start..p.cur_tok().end();
+
             if valid && parameter_context.is_setter() && TypeScript.is_supported(p) {
                 p.error(
                     p.err_builder("A 'set' accessor parameter cannot have an initializer.")
-                        .primary(initializer.range(p), ""),
+                        .primary(initializer_range, ""),
                 );
             } else if is_optional && valid {
                 p.error(
                     p.err_builder("Parameter cannot have question mark and initializer")
-                        .primary(initializer.range(p), ""),
+                        .primary(initializer_range, ""),
                 );
             }
-        }
 
-        let mut parameter = m.complete(p, JS_FORMAL_PARAMETER);
+            m.complete(p, JS_FORMAL_PARAMETER_WITH_DEFAULT)
+        } else {
+            m.complete(p, JS_FORMAL_PARAMETER)
+        };
 
         if !valid {
             parameter.change_to_unknown(p);

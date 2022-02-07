@@ -20,7 +20,6 @@ JsModule {
                             },
                             question_mark_token: missing (optional),
                             type_annotation: missing (optional),
-                            initializer: missing (optional),
                         },
                     ],
                     r_paren_token: R_PAREN@25..27 ")" [] [Whitespace(" ")],
@@ -64,7 +63,6 @@ JsModule {
                                     },
                                     question_mark_token: missing (optional),
                                     type_annotation: missing (optional),
-                                    initializer: missing (optional),
                                 },
                             ],
                             r_paren_token: R_PAREN@60..61 ")" [] [],
@@ -110,7 +108,6 @@ JsModule {
                                     },
                                     question_mark_token: missing (optional),
                                     type_annotation: missing (optional),
-                                    initializer: missing (optional),
                                 },
                             ],
                             r_paren_token: R_PAREN@90..91 ")" [] [],
@@ -166,7 +163,6 @@ JsModule {
                                                     },
                                                     question_mark_token: missing (optional),
                                                     type_annotation: missing (optional),
-                                                    initializer: missing (optional),
                                                 },
                                             ],
                                             r_paren_token: R_PAREN@125..126 ")" [] [],
@@ -248,7 +244,6 @@ JsModule {
                                 },
                                 question_mark_token: missing (optional),
                                 type_annotation: missing (optional),
-                                initializer: missing (optional),
                             },
                         ],
                         r_paren_token: R_PAREN@191..192 ")" [] [],
@@ -319,7 +314,6 @@ JsModule {
                 0: IDENT@24..25 "a" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
           2: R_PAREN@25..27 ")" [] [Whitespace(" ")]
         2: FAT_ARROW@27..30 "=>" [] [Whitespace(" ")]
         3: TS_TYPE_PREDICATE@30..41
@@ -352,7 +346,6 @@ JsModule {
                     0: IDENT@59..60 "a" [] []
                   1: (empty)
                   2: (empty)
-                  3: (empty)
               2: R_PAREN@60..61 ")" [] []
             4: TS_RETURN_TYPE_ANNOTATION@61..75
               0: COLON@61..63 ":" [] [Whitespace(" ")]
@@ -385,7 +378,6 @@ JsModule {
                     0: IDENT@89..90 "a" [] []
                   1: (empty)
                   2: (empty)
-                  3: (empty)
               2: R_PAREN@90..91 ")" [] []
             2: TS_RETURN_TYPE_ANNOTATION@91..105
               0: COLON@91..93 ":" [] [Whitespace(" ")]
@@ -427,7 +419,6 @@ JsModule {
                             0: IDENT@124..125 "x" [] []
                           1: (empty)
                           2: (empty)
-                          3: (empty)
                       2: R_PAREN@125..126 ")" [] []
                     5: TS_RETURN_TYPE_ANNOTATION@126..140
                       0: COLON@126..128 ":" [] [Whitespace(" ")]
@@ -483,7 +474,6 @@ JsModule {
                   0: IDENT@190..191 "x" [] []
                 1: (empty)
                 2: (empty)
-                3: (empty)
             2: R_PAREN@191..192 ")" [] []
           8: TS_RETURN_TYPE_ANNOTATION@192..206
             0: COLON@192..194 ":" [] [Whitespace(" ")]

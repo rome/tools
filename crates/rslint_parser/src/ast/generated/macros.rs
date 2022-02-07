@@ -28,10 +28,6 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
     ($ node : expr , $ pattern : pat => $ body : expr , $ fallback : pat => $ default : expr) => {
         match $node {
             node => match $crate::SyntaxNode::kind(&node) {
-                $crate::JsSyntaxKind::IDENT => {
-                    let $pattern = unsafe { $crate::ast::Ident::new_unchecked(node) };
-                    $body
-                }
                 $crate::JsSyntaxKind::IMPORT_META => {
                     let $pattern = unsafe { $crate::ast::ImportMeta::new_unchecked(node) };
                     $body
@@ -310,6 +306,11 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::JS_FORMAL_PARAMETER => {
                     let $pattern = unsafe { $crate::ast::JsFormalParameter::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JS_FORMAL_PARAMETER_WITH_DEFAULT => {
+                    let $pattern =
+                        unsafe { $crate::ast::JsFormalParameterWithDefault::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JS_FUNCTION_BODY => {

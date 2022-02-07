@@ -26,7 +26,6 @@ JsModule {
                                             string_token: STRING_KW@30..36 "string" [] [],
                                         },
                                     },
-                                    initializer: missing (optional),
                                 },
                                 R_PAREN@36..37 ")" [] [],
                                 TsReturnTypeAnnotation {
@@ -77,7 +76,6 @@ JsModule {
                   0: COLON@28..30 ":" [] [Whitespace(" ")]
                   1: TS_STRING_TYPE@30..36
                     0: STRING_KW@30..36 "string" [] []
-                3: (empty)
               4: R_PAREN@36..37 ")" [] []
               5: TS_RETURN_TYPE_ANNOTATION@37..44
                 0: COLON@37..39 ":" [] [Whitespace(" ")]
