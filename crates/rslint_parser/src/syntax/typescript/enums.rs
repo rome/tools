@@ -155,6 +155,7 @@ pub(crate) fn parse_ts_enum_statement(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
+    p.eat(T![const]);
 
     let enum_token_range = p.cur_tok().range();
     p.expect(T![enum]);
