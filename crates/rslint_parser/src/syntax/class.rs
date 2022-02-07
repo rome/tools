@@ -10,7 +10,10 @@ use crate::syntax::function::{
     parse_parameters_list, parse_ts_type_annotation_or_error, ParameterContext,
 };
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{expected_binding, ts_only_syntax_error};
+use crate::syntax::js_parse_error::{
+    accessor_readonly_error, expected_binding, ts_accessor_type_parameters_error,
+    ts_constructor_type_parameters_error, ts_only_syntax_error, ts_set_accessor_return_type_error,
+};
 use crate::syntax::object::{
     is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
 };
@@ -568,11 +571,7 @@ fn parse_class_member_impl(
                     member_name.undo_completion(p).abandon(p);
 
                     if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
-                        let err = p
-                            .err_builder("getters and setters cannot be readonly")
-                            .primary(range, "");
-
-                        p.error(err);
+                        p.error(accessor_readonly_error(p, range));
                     }
 
                     // So we've seen a get that now must be followed by a getter/setter name
@@ -586,10 +585,7 @@ fn parse_class_member_impl(
                     //  set a<A>(value: A) {}
                     // }
                     if let Present(type_parameters) = parse_ts_type_parameters(p) {
-                        p.error(
-                            p.err_builder("An accessor can not have type parameters")
-                                .primary(type_parameters.range(p), ""),
-                        )
+                        p.error(ts_accessor_type_parameters_error(p, &type_parameters))
                     }
 
                     let completed = if is_getter {
@@ -620,12 +616,10 @@ fn parse_class_member_impl(
                         // }
                         if let Present(return_type_annotation) = parse_ts_return_type_annotation(p)
                         {
-                            p.error(
-                                p.err_builder(
-                                    "A 'set' accessor cannot have a return type annotation.",
-                                )
-                                .primary(return_type_annotation.range(p), ""),
-                            );
+                            p.error(ts_set_accessor_return_type_error(
+                                p,
+                                &return_type_annotation,
+                            ));
                         }
 
                         parse_function_body(p, SignatureFlags::empty())
@@ -945,11 +939,7 @@ fn parse_constructor_class_member_body(
     // // TYPESCRIPT
     // class A { constructor<A>(b) {} }
     if let Present(type_parameters) = parse_ts_type_parameters(p) {
-        let err = p
-            .err_builder("constructors cannot have type parameters")
-            .primary(type_parameters.range(p), "");
-
-        p.error(err);
+        p.error(ts_constructor_type_parameters_error(p, &type_parameters));
     }
 
     parse_constructor_parameter_list(p)

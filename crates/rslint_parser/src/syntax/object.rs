@@ -11,7 +11,9 @@ use crate::syntax::function::{
     parse_formal_parameter, parse_function_body, parse_parameter_list, ParameterContext,
 };
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::ts_only_syntax_error;
+use crate::syntax::js_parse_error::{
+    ts_accessor_type_parameters_error, ts_only_syntax_error, ts_set_accessor_return_type_error,
+};
 use crate::syntax::typescript::{parse_ts_return_type_annotation, parse_ts_type_parameters};
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{ParseRecovery, ParseSeparatedList, Parser};
@@ -261,10 +263,7 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
     // // TYPESCRIPT
     // ({ get a<A>(): A {} });
     if let Present(type_parameters) = parse_ts_type_parameters(p) {
-        p.error(
-            p.err_builder("An accessor can not have type parameters")
-                .primary(type_parameters.range(p), ""),
-        )
+        p.error(ts_accessor_type_parameters_error(p, &type_parameters))
     }
 
     p.expect(T!['(']);
@@ -297,10 +296,7 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
     // // TYPESCRIPT
     // ({ set a<A>(value: A) {} });
     if let Present(type_parameters) = parse_ts_type_parameters(p) {
-        p.error(
-            p.err_builder("An accessor can not have type parameters")
-                .primary(type_parameters.range(p), ""),
-        )
+        p.error(ts_accessor_type_parameters_error(p, &type_parameters))
     }
 
     let has_l_paren = p.expect(T!['(']);
@@ -319,10 +315,10 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
     // // TYPESCRIPT
     // ({ set a(value: string): void {} });
     if let Present(return_type_annotation) = parse_ts_return_type_annotation(p) {
-        p.error(
-            p.err_builder("A 'set' accessor cannot have a return type annotation.")
-                .primary(return_type_annotation.range(p), ""),
-        );
+        p.error(ts_set_accessor_return_type_error(
+            p,
+            &return_type_annotation,
+        ));
     }
 
     parse_function_body(p, SignatureFlags::empty())
