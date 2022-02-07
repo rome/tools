@@ -23,7 +23,7 @@ JsModule {
                                         name: JsLiteralMemberName {
                                             value: IDENT@11..14 "foo" [] [],
                                         },
-                                        type_params: missing (optional),
+                                        type_parameters: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@14..15 "(" [] [],
                                             items: JsParameterList [],

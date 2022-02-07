@@ -23,7 +23,7 @@ JsModule {
                                         name: JsLiteralMemberName {
                                             value: IDENT@9..15 "foo" [Newline("\n"), Whitespace("  ")] [],
                                         },
-                                        type_params: missing (optional),
+                                        type_parameters: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@15..16 "(" [] [],
                                             items: JsParameterList [],
@@ -44,7 +44,7 @@ JsModule {
                                         name: JsLiteralMemberName {
                                             value: JS_STRING_LITERAL@21..29 "\"bar\"" [Newline("\n"), Whitespace("  ")] [],
                                         },
-                                        type_params: missing (optional),
+                                        type_parameters: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@29..30 "(" [] [],
                                             items: JsParameterList [
@@ -102,7 +102,7 @@ JsModule {
                                             },
                                             r_brack_token: R_BRACK@59..60 "]" [] [],
                                         },
-                                        type_params: missing (optional),
+                                        type_parameters: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@60..61 "(" [] [],
                                             items: JsParameterList [
@@ -132,7 +132,7 @@ JsModule {
                                         name: JsLiteralMemberName {
                                             value: JS_NUMBER_LITERAL@67..71 "5" [Newline("\n"), Whitespace("  ")] [],
                                         },
-                                        type_params: missing (optional),
+                                        type_parameters: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@71..72 "(" [] [],
                                             items: JsParameterList [

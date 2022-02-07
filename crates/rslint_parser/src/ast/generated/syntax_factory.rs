@@ -1073,7 +1073,7 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_CONSTRUCTOR_CLASS_MEMBER => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
                     if matches!(element.kind(), T![private] | T![protected] | T![public]) {
@@ -1084,13 +1084,6 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if let Some(element) = &current_element {
                     if JsLiteralMemberName::can_cast(element.kind()) {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if TsTypeParameters::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }

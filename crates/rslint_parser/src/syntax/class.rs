@@ -10,7 +10,10 @@ use crate::syntax::function::{
     parse_parameters_list, parse_ts_type_annotation_or_error, ParameterContext,
 };
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{expected_binding, ts_only_syntax_error};
+use crate::syntax::js_parse_error::{
+    accessor_readonly_error, expected_binding, ts_accessor_type_parameters_error,
+    ts_constructor_type_parameters_error, ts_only_syntax_error, ts_set_accessor_return_type_error,
+};
 use crate::syntax::object::{
     is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
 };
@@ -19,6 +22,7 @@ use crate::syntax::typescript::{
     is_reserved_type_name, parse_ts_return_type_annotation, parse_ts_type_annotation,
     parse_ts_type_parameters, ts_heritage_clause,
 };
+use crate::syntax::util::is_at_contextual_keyword;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
@@ -346,7 +350,6 @@ impl ParseNodeList for ClassMembersList {
 //  static async foo() {}
 //  static async *foo() {}
 // }
-
 fn parse_class_member(p: &mut Parser) -> ParsedSyntax {
     if is_at_static_initialization_block_class_member(p) {
         return parse_static_initialization_block_class_member(p);
@@ -387,15 +390,6 @@ fn parse_class_member_impl(
     // Seems like we're at a generator method
     if p.at(T![*]) {
         p.bump_any(); // bump * token
-
-        if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
-            let err = p
-                .err_builder("class methods cannot be readonly")
-                .primary(range, "");
-
-            p.error(err);
-        }
-
         if is_at_constructor(p, &modifiers) {
             let err = p
                 .err_builder("constructors can't be generators")
@@ -407,12 +401,13 @@ fn parse_class_member_impl(
         return Present(parse_method_class_member(
             p,
             member_marker,
+            modifiers,
             SignatureFlags::GENERATOR,
         ));
     };
 
     // Seems like we're at an async method
-    if p.cur_src() == "async"
+    if is_at_contextual_keyword(p, "async")
         && !p.nth_at(1, T![?])
         && !is_at_method_class_member(p, 1)
         && !p.has_linebreak_before_n(1)
@@ -426,23 +421,17 @@ fn parse_class_member_impl(
             flags |= SignatureFlags::GENERATOR;
         }
 
-        if is_at_constructor(p, &modifiers) {
+        return Present(if is_at_constructor(p, &modifiers) {
             let err = p
                 .err_builder("constructors cannot be async")
                 .primary(async_range, "");
 
             p.error(err);
-        }
-
-        if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
-            let err = p
-                .err_builder("methods cannot be readonly")
-                .primary(range, "");
-
-            p.error(err);
-        }
-
-        return Present(parse_method_class_member(p, member_marker, flags));
+            parse_class_member_name(p).unwrap();
+            parse_constructor_class_member_body(p, member_marker, modifiers)
+        } else {
+            parse_method_class_member(p, member_marker, modifiers, flags)
+        });
     }
 
     let is_constructor = is_at_constructor(p, &modifiers);
@@ -465,28 +454,11 @@ fn parse_class_member_impl(
         //   }
         // }
         return if is_constructor {
-            let constructor = parse_constructor_class_member_body(p, member_marker);
-
-            return constructor.map(|constructor| {
-                if constructor.kind().is_unknown() {
-                    return constructor;
-                }
-
-                if let Some(readonly_range) = modifiers.get_range(ModifierKind::Readonly) {
-                    p.error(
-                        p.err_builder("constructors cannot be `readonly`")
-                            .primary(readonly_range, ""),
-                    );
-                }
-                if let Some(abstract_range) = modifiers.get_range(ModifierKind::Abstract) {
-                    p.error(
-                        p.err_builder("constructors cannot be `abstract`")
-                            .primary(abstract_range, ""),
-                    );
-                }
-
-                constructor
-            });
+            Present(parse_constructor_class_member_body(
+                p,
+                member_marker,
+                modifiers,
+            ))
         } else {
             // test method_class_member
             // class Test {
@@ -519,17 +491,10 @@ fn parse_class_member_impl(
             //   static async* static() {}
             //   static * static() {}
             // }
-            if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
-                let err = p
-                    .err_builder("class methods cannot be readonly")
-                    .primary(range, "");
-
-                p.error(err);
-            }
-
             Present(parse_method_class_member_body(
                 p,
                 member_marker,
+                modifiers,
                 SignatureFlags::empty(),
             ))
         };
@@ -606,16 +571,22 @@ fn parse_class_member_impl(
                     member_name.undo_completion(p).abandon(p);
 
                     if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
-                        let err = p
-                            .err_builder("getters and setters cannot be readonly")
-                            .primary(range, "");
-
-                        p.error(err);
+                        p.error(accessor_readonly_error(p, range));
                     }
 
                     // So we've seen a get that now must be followed by a getter/setter name
                     parse_class_member_name(p)
                         .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
+
+                    // test_err ts_getter_setter_type_parameters
+                    // // TYPESCRIPT
+                    // class Test {
+                    //  get a<A>(): A {}
+                    //  set a<A>(value: A) {}
+                    // }
+                    if let Present(type_parameters) = parse_ts_type_parameters(p) {
+                        p.error(ts_accessor_type_parameters_error(p, &type_parameters))
+                    }
 
                     let completed = if is_getter {
                         p.expect(T!['(']);
@@ -637,6 +608,20 @@ fn parse_class_member_impl(
                         })
                         .or_add_diagnostic(p, js_parse_error::expected_parameter);
                         p.expect(T![')']);
+
+                        // test_err ts_setter_return_type_annotation
+                        // // TYPESCRIPT
+                        // class Test {
+                        //     set a(value: string): void {}
+                        // }
+                        if let Present(return_type_annotation) = parse_ts_return_type_annotation(p)
+                        {
+                            p.error(ts_set_accessor_return_type_error(
+                                p,
+                                &return_type_annotation,
+                            ));
+                        }
+
                         parse_function_body(p, SignatureFlags::empty())
                             .or_add_diagnostic(p, js_parse_error::expected_class_method_body);
 
@@ -860,9 +845,14 @@ pub(crate) fn parse_initializer_clause(p: &mut Parser, context: ExpressionContex
     }
 }
 
-fn parse_method_class_member(p: &mut Parser, m: Marker, flags: SignatureFlags) -> CompletedMarker {
+fn parse_method_class_member(
+    p: &mut Parser,
+    m: Marker,
+    modifiers: ClassMemberModifiers,
+    flags: SignatureFlags,
+) -> CompletedMarker {
     parse_class_member_name(p).or_add_diagnostic(p, js_parse_error::expected_class_member_name);
-    parse_method_class_member_body(p, m, flags)
+    parse_method_class_member_body(p, m, modifiers, flags)
 }
 
 // test_err class_member_method_parameters
@@ -871,28 +861,42 @@ fn parse_method_class_member(p: &mut Parser, m: Marker, flags: SignatureFlags) -
 // test_err class_member_method_body
 // class B { foo(a)
 
+// test ts_method_class_member
+// // TYPESCRIPT
+// class Test {
+//   test<A, B extends A, R>(a: A, b: B): R {}
+// }
+
 /// Parses the body (everything after the identifier name) of a method class member
 fn parse_method_class_member_body(
     p: &mut Parser,
     m: Marker,
+    modifiers: ClassMemberModifiers,
     flags: SignatureFlags,
 ) -> CompletedMarker {
+    if let Some(range) = modifiers.get_range(ModifierKind::Readonly) {
+        let err = p
+            .err_builder("class methods cannot be readonly")
+            .primary(range, "");
+
+        p.error(err);
+    }
+
     let member_kind = if optional_member_token(p).is_ok() {
         JS_METHOD_CLASS_MEMBER
     } else {
         JS_UNKNOWN_MEMBER
     };
 
-    let parameters = parse_ts_type_parameters(p);
-    TypeScript
-        .exclusive_syntax(p, parameters, |p, marker| {
+    parse_ts_type_parameters(p)
+        .exclusive_for(p, TypeScript, |p, marker| {
             ts_only_syntax_error(p, "type parameters", marker.range(p).as_range())
         })
         .ok();
     parse_parameter_list(p, ParameterContext::Implementation, flags)
         .or_add_diagnostic(p, js_parse_error::expected_class_parameters);
-    TypeScript
-        .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
+    parse_ts_return_type_annotation(p)
+        .exclusive_for(p, TypeScript, |p, annotation| {
             ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
         })
         .ok();
@@ -902,7 +906,25 @@ fn parse_method_class_member_body(
     m.complete(p, member_kind)
 }
 
-fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> ParsedSyntax {
+fn parse_constructor_class_member_body(
+    p: &mut Parser,
+    member_marker: Marker,
+    modifiers: ClassMemberModifiers,
+) -> CompletedMarker {
+    if let Some(readonly_range) = modifiers.get_range(ModifierKind::Readonly) {
+        p.error(
+            p.err_builder("constructors cannot be `readonly`")
+                .primary(readonly_range, ""),
+        );
+    }
+
+    if let Some(abstract_range) = modifiers.get_range(ModifierKind::Abstract) {
+        p.error(
+            p.err_builder("constructors cannot be `abstract`")
+                .primary(abstract_range, ""),
+        );
+    }
+
     if let Ok(Some(range)) = optional_member_token(p) {
         let err = p
             .err_builder("constructors cannot be optional")
@@ -912,17 +934,12 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
     }
 
     let mut constructor_is_valid = true;
-    if p.at(T![<]) {
-        if let Present(ref mut ty) = parse_ts_type_parameters(p) {
-            ty.err_if_not_ts(p, "type parameters can only be used in TypeScript files");
 
-            let err = p
-                .err_builder("constructors cannot have type parameters")
-                .primary(ty.range(p), "");
-
-            p.error(err);
-            constructor_is_valid = false;
-        }
+    // test_err ts_constructor_type_parameters
+    // // TYPESCRIPT
+    // class A { constructor<A>(b) {} }
+    if let Present(type_parameters) = parse_ts_type_parameters(p) {
+        p.error(ts_constructor_type_parameters_error(p, &type_parameters));
     }
 
     parse_constructor_parameter_list(p)
@@ -948,7 +965,7 @@ fn parse_constructor_class_member_body(p: &mut Parser, member_marker: Marker) ->
         completed_marker.change_to_unknown(p);
     }
 
-    Present(completed_marker)
+    completed_marker
 }
 
 fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax {

@@ -23,7 +23,7 @@ JsModule {
                                         name: JsLiteralMemberName {
                                             value: IDENT@9..16 "test" [Newline("\n"), Whitespace("  ")] [],
                                         },
-                                        type_params: missing (optional),
+                                        type_parameters: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@16..17 "(" [] [],
                                             items: JsParameterList [],

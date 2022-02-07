@@ -53,6 +53,7 @@ use rslint_syntax::{JsSyntaxKind, T};
 // test ts_function_statement
 // // TYPESCRIPT
 // function test(a: string, b?: number, c="default") {}
+// function test2<A, B extends A, C = A>(a: A, b: B, c: C) {}
 //
 // test_err ts_optional_pattern_parameter
 // // TYPESCRIPT
@@ -330,8 +331,8 @@ pub(super) fn parse_arrow_function(
     let parameters = parse_arrow_function_parameters(p, flags);
 
     if parameters.kind() == Some(JS_PARAMETERS) {
-        TypeScript
-            .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
+        parse_ts_return_type_annotation(p)
+            .exclusive_for(p, TypeScript, |p, annotation| {
                 ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
             })
             .ok();
