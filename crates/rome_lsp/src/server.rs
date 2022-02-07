@@ -1,18 +1,16 @@
-use std::sync::Arc;
-
 use lspower::jsonrpc::Result;
 use lspower::lsp::*;
 use lspower::{Client, LanguageServer, LspService, Server};
 use rome_analyze::{AnalysisServer, FileId, Signal, TextAction};
-use rome_formatter::IndentStyle;
 use rslint_parser::TextRange;
+use std::sync::Arc;
 use tokio::io::{Stdin, Stdout};
 use tokio::sync::Mutex;
 use tracing::{debug, error, trace, trace_span, Instrument};
 
 use crate::capabilities::server_capabilities;
 use crate::documents::{Document, DocumentStore};
-use crate::handlers::{self, FormatOnTypeParams, FormatRangeParams};
+use crate::handlers::{self, to_format_options, FormatOnTypeParams, FormatRangeParams};
 use crate::line_index::LineIndex;
 use crate::url_interner::UrlInterner;
 use crate::utils::{self, text_action_to_lsp};
@@ -233,7 +231,7 @@ impl LanguageServer for LSPServer {
             file_id = state.url_interner.intern(url);
             text = state.text_documents.get(&file_id).unwrap().text.clone();
         }
-        let handle = tokio::spawn(async move { handlers::format(&text, file_id) });
+        let handle = tokio::spawn(async move { handlers::format(&text, file_id, &params.options) });
 
         // TODO: Clean up this error handling
         let opt = match handle.await {
@@ -271,11 +269,7 @@ impl LanguageServer for LSPServer {
             handlers::format_range(FormatRangeParams {
                 text: text.as_ref(),
                 file_id,
-                indent_style: if params.options.insert_spaces {
-                    IndentStyle::Space(params.options.tab_size as u8)
-                } else {
-                    IndentStyle::Tab
-                },
+                format_options: to_format_options(&params.options),
                 range: params.range,
             })
         });
@@ -317,11 +311,7 @@ impl LanguageServer for LSPServer {
             handlers::format_on_type(FormatOnTypeParams {
                 text: text.as_ref(),
                 file_id,
-                indent_style: if params.options.insert_spaces {
-                    IndentStyle::Space(params.options.tab_size as u8)
-                } else {
-                    IndentStyle::Tab
-                },
+                format_options: to_format_options(&params.options),
                 position: params.text_document_position.position,
             })
         });
