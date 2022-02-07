@@ -8,7 +8,6 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Deserialize, Serialize)]
-#[serde(remote = "IndentStyle")]
 pub enum SerializableIndentStyle {
     /// Tab
     Tab,
@@ -16,24 +15,38 @@ pub enum SerializableIndentStyle {
     Space(u8),
 }
 
+impl From<SerializableIndentStyle> for IndentStyle {
+    fn from(test: SerializableIndentStyle) -> Self {
+        match test {
+            SerializableIndentStyle::Tab => IndentStyle::Tab,
+            SerializableIndentStyle::Space(spaces) => IndentStyle::Space(spaces),
+        }
+    }
+}
+
 #[derive(Debug, Deserialize, Serialize, Clone, Copy)]
-#[serde(remote = "FormatOptions")]
 pub struct SerializableFormatOptions {
     /// The indent style
-    #[serde(with = "SerializableIndentStyle")]
-    pub indent_style: IndentStyle,
+    pub indent_style: Option<SerializableIndentStyle>,
 
     /// What's the max width of a line. Defaults to 80
-    pub line_width: u16,
+    pub line_width: Option<u16>,
 }
 
 impl From<SerializableFormatOptions> for FormatOptions {
     fn from(test: SerializableFormatOptions) -> Self {
         Self {
-            indent_style: test.indent_style,
-            line_width: test.line_width,
+            indent_style: test
+                .indent_style
+                .map_or_else(|| IndentStyle::Tab, |value| value.into()),
+            line_width: test.line_width.unwrap_or(80),
         }
     }
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct TestOptions {
+    cases: Vec<SerializableFormatOptions>,
 }
 
 #[derive(Debug, Default)]
@@ -43,12 +56,12 @@ struct SnapshotContent {
 }
 
 impl SnapshotContent {
-    pub fn add_output(&mut self, content: &str, options: FormatOptions) {
-        self.output.push((String::from(content), options))
+    pub fn add_output(&mut self, content: impl Into<String>, options: FormatOptions) {
+        self.output.push((content.into(), options))
     }
 
-    pub fn set_input(&mut self, content: &str) {
-        self.input = String::from(content);
+    pub fn set_input(&mut self, content: impl Into<String>) {
+        self.input = content.into();
     }
 
     pub fn snap_content(&mut self) -> String {
@@ -128,15 +141,14 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
             {
                 let mut options_path = RomePath::new(options_path.display().to_string().as_str());
                 // SAFETY: we checked its existence already, we assume we have rights to read it
-                let input = options_path.get_buffer_from_file();
-                let mut de = serde_json::Deserializer::from_str(input.as_str());
+                let options: TestOptions =
+                    serde_json::from_str(options_path.get_buffer_from_file().as_str()).unwrap();
 
-                let options: FormatOptions =
-                    SerializableFormatOptions::deserialize(&mut de).unwrap();
-
-                let copy_options = options;
-                let formatted_result = format(options, &root).unwrap();
-                snapshot_content.add_output(formatted_result.as_code(), copy_options);
+                for test_case in options.cases {
+                    let options = test_case.clone();
+                    let formatted_result = format(test_case.into(), &root).unwrap();
+                    snapshot_content.add_output(formatted_result.as_code(), options.into());
+                }
             }
         }
 
