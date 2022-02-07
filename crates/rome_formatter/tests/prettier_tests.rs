@@ -1,10 +1,12 @@
 use parking_lot::{const_mutex, Mutex};
+use rome_rowan::{TextRange, TextSize};
 use similar::{utils::diff_lines, Algorithm};
 use std::{
     env,
     ffi::OsStr,
     fmt::Write,
     fs::{read_to_string, write},
+    ops::Range,
     path::Path,
 };
 
@@ -26,14 +28,50 @@ fn test_snapshot(input: &'static str, _: &str, _: &str) {
     }
 
     let input_file = Path::new(input);
-    let input_code = read_to_string(input_file)
+    let mut input_code = read_to_string(input_file)
         .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
+
+    let (_, range_start_index, range_end_index) = strip_placeholders(&mut input_code);
 
     let parsed = parse_module(&input_code, 0);
     let syntax = parsed.syntax();
 
     let options = FormatOptions::new(IndentStyle::Space(2));
-    let formatted = rome_formatter::format(options, &syntax).unwrap();
+
+    let result = match (range_start_index, range_end_index) {
+        (Some(start), Some(end)) => {
+            // Skip the reversed range tests as its impossible
+            // to create a reversed TextRange anyway
+            if end < start {
+                return;
+            }
+
+            rome_formatter::format_range(
+                options,
+                &syntax,
+                TextRange::new(
+                    TextSize::try_from(start).unwrap(),
+                    TextSize::try_from(end).unwrap(),
+                ),
+            )
+        }
+        _ => rome_formatter::format(options, &syntax),
+    };
+
+    let formatted = result.expect("formatting failed");
+    let formatted = match (range_start_index, range_end_index) {
+        (Some(_), Some(_)) => {
+            let range = formatted
+                .range()
+                .expect("the result of format_range should have a range");
+
+            let formatted = formatted.as_code();
+            let mut output_code = input_code.clone();
+            output_code.replace_range(Range::<usize>::from(range), formatted);
+            output_code
+        }
+        _ => formatted.into_code(),
+    };
 
     let mut snapshot = String::new();
 
@@ -45,7 +83,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str) {
 
     writeln!(snapshot, "# Output").unwrap();
     writeln!(snapshot, "```js").unwrap();
-    writeln!(snapshot, "{}", formatted.as_code()).unwrap();
+    writeln!(snapshot, "{}", formatted).unwrap();
     writeln!(snapshot, "```").unwrap();
     writeln!(snapshot).unwrap();
 
@@ -90,8 +128,11 @@ fn test_snapshot(input: &'static str, _: &str, _: &str) {
         .filter(|path| path.exists());
 
     if let Some(snapshot_file) = snapshot_file {
-        let content = read_to_string(snapshot_file).unwrap();
-        if formatted.as_code() != content {
+        let mut content = read_to_string(snapshot_file).unwrap();
+
+        strip_placeholders(&mut content);
+
+        if formatted != content {
             let root_path = Path::new(concat!(
                 env!("CARGO_MANIFEST_DIR"),
                 "/tests/specs/prettier/"
@@ -105,9 +146,56 @@ fn test_snapshot(input: &'static str, _: &str, _: &str) {
             });
 
             let input_file = input_file.to_str().unwrap();
-            REPORTER.report(input_file, formatted.into_code(), content);
+            REPORTER.report(input_file, formatted, content);
         }
     }
+}
+
+/// Find and replace the cursor, range start and range end placeholders in a
+/// Prettier snapshot tests and return their indices in the resulting string
+fn strip_placeholders(input_code: &mut String) -> (Option<usize>, Option<usize>, Option<usize>) {
+    const CURSOR_PLACEHOLDER: &str = "<|>";
+    const RANGE_START_PLACEHOLDER: &str = "<<<PRETTIER_RANGE_START>>>";
+    const RANGE_END_PLACEHOLDER: &str = "<<<PRETTIER_RANGE_END>>>";
+
+    let mut cursor_index = None;
+    let mut range_start_index = None;
+    let mut range_end_index = None;
+
+    if let Some(index) = input_code.find(CURSOR_PLACEHOLDER) {
+        input_code.replace_range(index..index + CURSOR_PLACEHOLDER.len(), "");
+        cursor_index = Some(index);
+    }
+
+    if let Some(index) = input_code.find(RANGE_START_PLACEHOLDER) {
+        input_code.replace_range(index..index + RANGE_START_PLACEHOLDER.len(), "");
+        range_start_index = Some(index);
+
+        if let Some(cursor) = &mut cursor_index {
+            if *cursor > index {
+                *cursor -= RANGE_START_PLACEHOLDER.len();
+            }
+        }
+    }
+
+    if let Some(index) = input_code.find(RANGE_END_PLACEHOLDER) {
+        input_code.replace_range(index..index + RANGE_END_PLACEHOLDER.len(), "");
+        range_end_index = Some(index);
+
+        if let Some(cursor) = &mut cursor_index {
+            if *cursor > index {
+                *cursor -= RANGE_END_PLACEHOLDER.len();
+            }
+        }
+        if let Some(cursor) = &mut range_start_index {
+            // Prettier has tests for reversed ranges
+            if *cursor > index {
+                *cursor -= RANGE_END_PLACEHOLDER.len();
+            }
+        }
+    }
+
+    (cursor_index, range_start_index, range_end_index)
 }
 
 struct DiffReport {
