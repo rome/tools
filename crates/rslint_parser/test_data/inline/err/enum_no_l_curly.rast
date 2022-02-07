@@ -1,0 +1,66 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsUnknownStatement {
+            items: [
+                ENUM_KW@0..4 "enum" [] [],
+            ],
+        },
+        JsEmptyStatement {
+            semicolon_token: SEMICOLON@4..5 ";" [] [],
+        },
+        JsUnknownStatement {
+            items: [
+                ENUM_KW@5..11 "enum" [Newline("\n")] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@11..12 "A" [] [],
+                },
+            ],
+        },
+        JsEmptyStatement {
+            semicolon_token: SEMICOLON@12..13 ";" [] [],
+        },
+    ],
+    eof_token: EOF@13..14 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..14
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..13
+    0: JS_UNKNOWN_STATEMENT@0..4
+      0: ENUM_KW@0..4 "enum" [] []
+    1: JS_EMPTY_STATEMENT@4..5
+      0: SEMICOLON@4..5 ";" [] []
+    2: JS_UNKNOWN_STATEMENT@5..12
+      0: ENUM_KW@5..11 "enum" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@11..12
+        0: IDENT@11..12 "A" [] []
+    3: JS_EMPTY_STATEMENT@12..13
+      0: SEMICOLON@12..13 ";" [] []
+  3: EOF@13..14 "" [Newline("\n")] []
+--
+error[SyntaxError]: `enum` statements must have a name
+  ┌─ enum_no_l_curly.ts:1:1
+  │
+1 │ enum;
+  │ ^^^^
+
+--
+error[SyntaxError]: expected `'{'` but instead found `;`
+  ┌─ enum_no_l_curly.ts:1:5
+  │
+1 │ enum;
+  │     ^ unexpected
+
+--
+error[SyntaxError]: expected `'{'` but instead found `;`
+  ┌─ enum_no_l_curly.ts:2:7
+  │
+2 │ enum A;
+  │       ^ unexpected
+
+--
+enum;
+enum A;

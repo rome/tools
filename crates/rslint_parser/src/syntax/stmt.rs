@@ -186,7 +186,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![if] => parse_if_statement(p),
         T![with] => parse_with_statement(p),
         T![while] => parse_while_statement(p),
-        t if is_at_ts_enum_statement(p, &t) => parse_ts_enum_statement(p),
+        t if is_at_ts_enum_statement(p) => parse_ts_enum_statement(p),
         T![var] => parse_variable_statement(p, context),
         T![const] => parse_variable_statement(p, context),
         T![for] => parse_for_statement(p),

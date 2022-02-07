@@ -138,13 +138,11 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: Range<usize>) {
     }
 }
 
-pub(crate) fn is_at_ts_enum_statement(p: &Parser, t: &JsSyntaxKind) -> bool {
-    let is_l_curly1 = p.nth_at(1, JsSyntaxKind::L_CURLY);
-    let is_l_curly2 = p.nth_at(2, JsSyntaxKind::L_CURLY);
-    let is_l_curly3 = p.nth_at(3, JsSyntaxKind::L_CURLY);
-
-    (*t == T![enum] && (is_l_curly1 || is_l_curly2))
-        || (*t == T![const] && p.nth_at(1, T![enum]) && (is_l_curly2 || is_l_curly3))
+pub(crate) fn is_at_ts_enum_statement(p: &Parser) -> bool {
+    let t = p.cur();
+    let is_at_enum = t == T![enum];
+    let is_at_const = t == T![const];
+    is_at_enum || (is_at_const && p.nth_at(1, T![enum]))
 }
 
 // test ts typescript_enum
@@ -152,25 +150,35 @@ pub(crate) fn is_at_ts_enum_statement(p: &Parser, t: &JsSyntaxKind) -> bool {
 // enum B { a, b, c }
 // const enum C { A = 1, B = A * 2, ["A"] = 3, }
 pub(crate) fn parse_ts_enum_statement(p: &mut Parser) -> ParsedSyntax {
-    let m = p.start();
-
-    p.eat(T![const]);
-
-    let enum_token_range = p.cur_tok().range();
-    if !p.expect(T![enum]) {
-        m.abandon(p);
+    if !is_at_ts_enum_statement(p) {
         return Absent;
     }
 
+    let m = p.start();
+
+    let enum_token_range = p.cur_tok().range();
+    p.expect(T![enum]);
     parse_ts_enum_id(p, enum_token_range);
 
-    p.expect(T!['{']);
+    // test_err ts enum_no_l_curly
+    // enum;
+    // enum A;
+    if !p.expect(T!['{']) {
+        let mut m = m.complete(p, TS_ENUM_STATEMENT);
+        m.change_to_unknown(p);
+        return Present(m);
+    }
 
     TsEnumMembersList.parse_list(p);
 
+    // test_err ts enum_no_r_curly
+    // enum {;
+    // enum A {;
     p.expect(T!['}']);
 
     let mut res = m.complete(p, TS_ENUM_STATEMENT);
-    res.err_if_not_ts(p, "enums can only be declared in TypeScript files");
+    // test_err enum_in_js
+    // enum A {}
+    res.err_if_not_ts(p, "`enums` can only be declared in TypeScript files");
     Present(res)
 }

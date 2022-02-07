@@ -86,15 +86,16 @@ fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<JsAnyRoot>, Stri
         let formatted = format!("{:#?}", &parse.tree());
         (parse, formatted)
     })
-    .unwrap_or_else(|_| {
+    .unwrap_or_else(|err| {
         // Re-parsing the source here seems silly. But the problem is, that `SyntaxNode`s aren't
         // unwind safe. That's why the same `ParseResult` can't be reused here.
         // This should be fine because this code is only executed for local tests. No checked-in
         // test should ever hit this line.
         let re_parsed = try_parse(path, text);
         panic!(
-            "Printing the AST for `{}` panicked. That means it is malformed.\n{:#?}",
+            "Printing the AST for `{}` panicked. That means it is malformed. Err: {:?}\n{:#?}",
             path,
+            err,
             re_parsed.syntax()
         );
     })
