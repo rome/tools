@@ -21,9 +21,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@10..16 "lorem" [] [Whitespace(" ")],
                     },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
+                    property_annotation: missing (optional),
                     value: JsInitializerClause {
                         eq_token: EQ@16..18 "=" [] [Whitespace(" ")],
                         expression: missing (required),
@@ -59,12 +57,10 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@10..16
             0: IDENT@10..16 "lorem" [] [Whitespace(" ")]
           6: (empty)
-          7: (empty)
-          8: (empty)
-          9: JS_INITIALIZER_CLAUSE@16..18
+          7: JS_INITIALIZER_CLAUSE@16..18
             0: EQ@16..18 "=" [] [Whitespace(" ")]
             1: (empty)
-          10: SEMICOLON@18..20 ";" [] [Whitespace(" ")]
+          8: SEMICOLON@18..20 ";" [] [Whitespace(" ")]
       7: R_CURLY@20..21 "}" [] []
   3: EOF@21..22 "" [Newline("\n")] []
 --

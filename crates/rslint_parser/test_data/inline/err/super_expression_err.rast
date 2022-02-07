@@ -28,6 +28,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@22..29 "test" [Newline("\n"), Whitespace("  ")] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: missing (optional),
                     parameters: JsParameters {
                         l_paren_token: L_PAREN@29..30 "(" [] [],
@@ -133,12 +134,13 @@ JsModule {
           5: JS_LITERAL_MEMBER_NAME@22..29
             0: IDENT@22..29 "test" [Newline("\n"), Whitespace("  ")] []
           6: (empty)
-          7: JS_PARAMETERS@29..32
+          7: (empty)
+          8: JS_PARAMETERS@29..32
             0: L_PAREN@29..30 "(" [] []
             1: JS_PARAMETER_LIST@30..30
             2: R_PAREN@30..32 ")" [] [Whitespace(" ")]
-          8: (empty)
-          9: JS_FUNCTION_BODY@32..69
+          9: (empty)
+          10: JS_FUNCTION_BODY@32..69
             0: L_CURLY@32..33 "{" [] []
             1: JS_DIRECTIVE_LIST@33..33
             2: JS_STATEMENT_LIST@33..65

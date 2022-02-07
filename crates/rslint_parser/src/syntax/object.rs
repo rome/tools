@@ -16,7 +16,7 @@ use crate::syntax::js_parse_error::{
 };
 use crate::syntax::typescript::{parse_ts_return_type_annotation, parse_ts_type_parameters};
 use crate::JsSyntaxFeature::TypeScript;
-use crate::{ParseRecovery, ParseSeparatedList, Parser};
+use crate::{ParseRecovery, ParseSeparatedList, Parser, SyntaxFeature};
 use rslint_errors::Span;
 use rslint_syntax::JsSyntaxKind::*;
 use rslint_syntax::{JsSyntaxKind, T};
@@ -269,8 +269,8 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
     p.expect(T!['(']);
     p.expect(T![')']);
 
-    parse_ts_return_type_annotation(p)
-        .exclusive_for(p, TypeScript, |p, annotation| {
+    TypeScript
+        .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
             ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
         })
         .ok();
@@ -438,8 +438,8 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 
 /// Parses the body of a method object member starting right after the member name.
 fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
-    parse_ts_type_parameters(p)
-        .exclusive_for(p, TypeScript, |p, type_parameters| {
+    TypeScript
+        .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, type_parameters| {
             ts_only_syntax_error(p, "type parameters", type_parameters.range(p).as_range())
         })
         .ok();
@@ -447,8 +447,8 @@ fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
     parse_parameter_list(p, ParameterContext::Implementation, flags)
         .or_add_diagnostic(p, js_parse_error::expected_parameters);
 
-    parse_ts_return_type_annotation(p)
-        .exclusive_for(p, TypeScript, |p, annotation| {
+    TypeScript
+        .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
             ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
         })
         .ok();

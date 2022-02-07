@@ -17,7 +17,11 @@ JsModule {
                         JsLiteralMemberName {
                             value: IDENT@10..13 "foo" [] [],
                         },
-                        QUESTION@13..14 "?" [] [],
+                        JsUnknown {
+                            items: [
+                                QUESTION@13..14 "?" [] [],
+                            ],
+                        },
                         SEMICOLON@14..16 ";" [] [Whitespace(" ")],
                     ],
                 },
@@ -44,16 +48,17 @@ JsModule {
         0: JS_UNKNOWN_MEMBER@10..16
           0: JS_LITERAL_MEMBER_NAME@10..13
             0: IDENT@10..13 "foo" [] []
-          1: QUESTION@13..14 "?" [] []
+          1: JS_UNKNOWN@13..14
+            0: QUESTION@13..14 "?" [] []
           2: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
       7: R_CURLY@16..17 "}" [] []
   3: EOF@17..18 "" [Newline("\n")] []
 --
 error[SyntaxError]: `?` modifiers can only be used in TypeScript files
-  ┌─ optional_member.js:1:15
+  ┌─ optional_member.js:1:14
   │
 1 │ class B { foo?; }
-  │               ^
+  │              ^
 
 --
 class B { foo?; }

@@ -1,0 +1,2 @@
+// TYPESCRIPT
+let a!;

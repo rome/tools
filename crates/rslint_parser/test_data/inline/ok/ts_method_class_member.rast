@@ -21,6 +21,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@26..33 "test" [Newline("\n"), Whitespace("  ")] [],
                     },
+                    question_mark_token: missing (required),
                     type_parameters: TsTypeParameters {
                         l_angle_token: L_ANGLE@33..34 "<" [] [],
                         items: TsTypeParameterList [
@@ -141,7 +142,8 @@ JsModule {
           4: (empty)
           5: JS_LITERAL_MEMBER_NAME@26..33
             0: IDENT@26..33 "test" [Newline("\n"), Whitespace("  ")] []
-          6: TS_TYPE_PARAMETERS@33..52
+          6: (empty)
+          7: TS_TYPE_PARAMETERS@33..52
             0: L_ANGLE@33..34 "<" [] []
             1: TS_TYPE_PARAMETER_LIST@34..51
               0: TS_TYPE_PARAMETER@34..35
@@ -167,7 +169,7 @@ JsModule {
                 1: (empty)
                 2: (empty)
             2: R_ANGLE@51..52 ">" [] []
-          7: JS_PARAMETERS@52..64
+          8: JS_PARAMETERS@52..64
             0: L_PAREN@52..53 "(" [] []
             1: JS_PARAMETER_LIST@53..63
               0: JS_FORMAL_PARAMETER@53..57
@@ -194,13 +196,13 @@ JsModule {
                     1: (empty)
                 3: (empty)
             2: R_PAREN@63..64 ")" [] []
-          8: TS_RETURN_TYPE_ANNOTATION@64..68
+          9: TS_RETURN_TYPE_ANNOTATION@64..68
             0: COLON@64..66 ":" [] [Whitespace(" ")]
             1: TS_REFERENCE_TYPE@66..68
               0: JS_REFERENCE_IDENTIFIER@66..68
                 0: IDENT@66..68 "R" [] [Whitespace(" ")]
               1: (empty)
-          9: JS_FUNCTION_BODY@68..70
+          10: JS_FUNCTION_BODY@68..70
             0: L_CURLY@68..69 "{" [] []
             1: JS_DIRECTIVE_LIST@69..69
             2: JS_STATEMENT_LIST@69..69

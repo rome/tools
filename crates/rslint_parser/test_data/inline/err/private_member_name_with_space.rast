@@ -30,9 +30,7 @@ JsModule {
                     name: JsLiteralMemberName {
                         value: IDENT@13..17 "test" [] [],
                     },
-                    question_mark_token: missing (optional),
-                    excl_token: missing (optional),
-                    ty: missing (optional),
+                    property_annotation: missing (optional),
                     value: missing (optional),
                     semicolon_token: SEMICOLON@17..18 ";" [] [],
                 },
@@ -69,9 +67,7 @@ JsModule {
             0: IDENT@13..17 "test" [] []
           6: (empty)
           7: (empty)
-          8: (empty)
-          9: (empty)
-          10: SEMICOLON@17..18 ";" [] []
+          8: SEMICOLON@17..18 ";" [] []
       7: R_CURLY@18..20 "}" [Newline("\n")] []
   3: EOF@20..21 "" [Newline("\n")] []
 --

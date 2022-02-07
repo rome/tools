@@ -272,7 +272,7 @@ pub(crate) fn parse_assignment_expression_or_higher(
             // // TYPESCRIPT
             // let a = <A, B extends A, C = string>(a: A, b: B, c: C) => "hello";
             let type_parameters =
-                parse_ts_type_parameters(p).exclusive_for(p, TypeScript, |p, parameters| {
+                TypeScript.parse_exclusive_syntax(p, parse_ts_type_parameters, |p, parameters| {
                     ts_only_syntax_error(p, "type parameters", parameters.range(p).as_range())
                 });
 
@@ -1827,9 +1827,9 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
     }
 
     if p.at(T![<]) {
-        return parse_ts_type_assertion_expression(p, context).exclusive_for(
+        return TypeScript.parse_exclusive_syntax(
             p,
-            TypeScript,
+            |p| parse_ts_type_assertion_expression(p, context),
             |p, assertion| ts_only_syntax_error(p, "type assertion", assertion.range(p).as_range()),
         );
     }

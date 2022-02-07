@@ -1,5 +1,6 @@
 //! General utility functions for parsing and error checking.
 
+use crate::parser::expected_contextual_keyword;
 use crate::Parser;
 use rslint_syntax::{JsSyntaxKind, T};
 
@@ -109,28 +110,13 @@ pub(crate) fn eat_contextual_keyword(
 /// Returns `true` if the parser was at the contextual keyword and false otherwise.
 pub(crate) fn expect_contextual_keyword(
     p: &mut Parser,
-    keyword_name: &str,
+    keyword_name: &'static str,
     kind: JsSyntaxKind,
 ) -> bool {
     if eat_contextual_keyword(p, keyword_name, kind) {
         true
     } else {
-        let err = if p.cur() == JsSyntaxKind::EOF {
-            p.err_builder(&format!(
-                "expected `{}` but instead the file ends",
-                keyword_name
-            ))
-            .primary(p.cur_tok().range(), "the file ends here")
-        } else {
-            p.err_builder(&format!(
-                "expected `{}` but instead found `{}`",
-                keyword_name,
-                p.cur_src()
-            ))
-            .primary(p.cur_tok().range(), "unexpected")
-        };
-
-        p.error(err);
+        p.error(expected_contextual_keyword(keyword_name));
         false
     }
 }

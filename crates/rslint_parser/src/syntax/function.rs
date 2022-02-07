@@ -331,8 +331,8 @@ pub(super) fn parse_arrow_function(
     let parameters = parse_arrow_function_parameters(p, flags);
 
     if parameters.kind() == Some(JS_PARAMETERS) {
-        parse_ts_return_type_annotation(p)
-            .exclusive_for(p, TypeScript, |p, annotation| {
+        TypeScript
+            .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
                 ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
             })
             .ok();
@@ -449,8 +449,8 @@ pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -
     }
 
     // type annotation `...foo: number[]`
-    parse_ts_type_annotation(p)
-        .exclusive_for(p, TypeScript, |p, annotation| {
+    TypeScript
+        .parse_exclusive_syntax(p, parse_ts_type_annotation, |p, annotation| {
             ts_only_syntax_error(p, "type annotation", annotation.range(p).as_range())
         })
         .ok();

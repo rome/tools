@@ -1,5 +1,7 @@
 use crate::Parser;
 use rslint_errors::{Diagnostic, Span};
+use rslint_syntax::JsSyntaxKind;
+use std::fmt::{Display, Formatter};
 use std::ops::Range;
 
 ///! Provides helper functions to build common diagnostic messages
@@ -14,13 +16,65 @@ pub(crate) fn expected_any(names: &[&str], range: Range<usize>) -> ExpectedNodeD
     ExpectedNodeDiagnosticBuilder::with_any(names, range)
 }
 
-pub trait ToDiagnostic {
-    fn to_diagnostic(&self, p: &Parser) -> Diagnostic;
+#[must_use]
+pub(crate) fn expected_token(token: JsSyntaxKind) -> impl ToDiagnostic {
+    ExpectedToken(ExpectedTokenName::Kind(token))
 }
 
-pub struct ExpectedNodeDiagnosticBuilder {
+#[must_use]
+pub(crate) fn expected_contextual_keyword(name: &'static str) -> impl ToDiagnostic {
+    ExpectedToken(ExpectedTokenName::Contextual(name))
+}
+
+pub trait ToDiagnostic {
+    fn to_diagnostic(self, p: &Parser) -> Diagnostic;
+}
+
+impl ToDiagnostic for Diagnostic {
+    fn to_diagnostic(self, _: &Parser) -> Diagnostic {
+        self
+    }
+}
+
+struct ExpectedToken(ExpectedTokenName);
+
+enum ExpectedTokenName {
+    Kind(JsSyntaxKind),
+    Contextual(&'static str),
+}
+
+impl Display for ExpectedTokenName {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExpectedTokenName::Kind(kind) => match kind.to_string() {
+                Some(name) => f.write_str(name),
+                None => write!(f, "{:?}", kind),
+            },
+            ExpectedTokenName::Contextual(name) => f.write_str(name),
+        }
+    }
+}
+
+pub(crate) struct ExpectedNodeDiagnosticBuilder {
     names: String,
     range: Range<usize>,
+}
+
+impl ToDiagnostic for ExpectedToken {
+    fn to_diagnostic(self, p: &Parser) -> Diagnostic {
+        match p.cur() {
+            JsSyntaxKind::EOF => p
+                .err_builder(&format!("expected `{}` but instead the file ends", self.0))
+                .primary(p.cur_tok().range(), "the file ends here"),
+            _ => p
+                .err_builder(&format!(
+                    "expected `{}` but instead found `{}`",
+                    self.0,
+                    p.cur_src()
+                ))
+                .primary(p.cur_tok().range(), "unexpected"),
+        }
+    }
 }
 
 impl ExpectedNodeDiagnosticBuilder {
@@ -62,7 +116,7 @@ impl ExpectedNodeDiagnosticBuilder {
 }
 
 impl ToDiagnostic for ExpectedNodeDiagnosticBuilder {
-    fn to_diagnostic(&self, p: &Parser) -> Diagnostic {
+    fn to_diagnostic(self, p: &Parser) -> Diagnostic {
         let range = &self.range;
 
         let msg = if range.is_empty() && p.tokens.source().get(range.to_owned()) == None {

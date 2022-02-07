@@ -1,7 +1,8 @@
 use crate::ast::{
     JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyClass, JsAnyFormalParameter, JsAnyFunction,
-    JsAnyFunctionBody, JsClassMemberList, JsExtendsClause, TsAnyPropertyParameter,
-    TsImplementsClause, TsReturnTypeAnnotation, TsTypeParameters,
+    JsAnyFunctionBody, JsClassMemberList, JsExtendsClause, TsAnyPropertyAnnotation,
+    TsAnyPropertyParameter, TsAnyVariableAnnotation, TsImplementsClause, TsReturnTypeAnnotation,
+    TsTypeAnnotation, TsTypeParameters,
 };
 use crate::{SyntaxResult, SyntaxToken};
 
@@ -195,6 +196,35 @@ impl TsAnyPropertyParameter {
             TsAnyPropertyParameter::TsPropertyParameter(parameter) => parameter.formal_parameter(),
             TsAnyPropertyParameter::TsReadonlyPropertyParameter(parameter) => {
                 parameter.formal_parameter()
+            }
+        }
+    }
+}
+
+impl TsAnyVariableAnnotation {
+    pub fn type_annotation(&self) -> SyntaxResult<Option<TsTypeAnnotation>> {
+        match self {
+            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(definite) => {
+                definite.type_annotation().map(Some)
+            }
+            TsAnyVariableAnnotation::TsTypeAnnotation(type_annotation) => {
+                Ok(Some(type_annotation.clone()))
+            }
+        }
+    }
+}
+
+impl TsAnyPropertyAnnotation {
+    pub fn type_annotation(&self) -> SyntaxResult<Option<TsTypeAnnotation>> {
+        match self {
+            TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(definite) => {
+                definite.type_annotation().map(Some)
+            }
+            TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(optional) => {
+                Ok(optional.type_annotation())
+            }
+            TsAnyPropertyAnnotation::TsTypeAnnotation(type_annotation) => {
+                Ok(Some(type_annotation.clone()))
             }
         }
     }

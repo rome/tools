@@ -10,8 +10,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..9 "async" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                 ],
@@ -59,7 +58,6 @@ JsModule {
               0: IDENT@4..9 "async" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
       1: SEMICOLON@9..10 ";" [] []
     1: JS_FOR_OF_STATEMENT@10..31
       0: FOR_KW@10..15 "for" [Newline("\n")] [Whitespace(" ")]

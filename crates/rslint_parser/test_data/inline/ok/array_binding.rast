@@ -10,8 +10,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsStringLiteralExpression {
@@ -41,8 +40,7 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@22..24 "]" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@24..26 "=" [] [Whitespace(" ")],
                             expression: JsArrayExpression {
@@ -85,8 +83,7 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@49..51 "]" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@51..53 "=" [] [Whitespace(" ")],
                             expression: JsArrayExpression {
@@ -128,8 +125,7 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@79..81 "]" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@81..83 "=" [] [Whitespace(" ")],
                             expression: JsArrayExpression {
@@ -166,8 +162,7 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@103..105 "]" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@105..107 "=" [] [Whitespace(" ")],
                             expression: JsArrayExpression {
@@ -217,8 +212,7 @@ JsModule {
                             ],
                             r_brack_token: R_BRACK@132..134 "]" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@134..136 "=" [] [Whitespace(" ")],
                             expression: JsArrayExpression {
@@ -248,8 +242,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@6..11
+            2: JS_INITIALIZER_CLAUSE@6..11
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_STRING_LITERAL_EXPRESSION@8..11
                 0: JS_STRING_LITERAL@8..11 "\"b\"" [] []
@@ -269,8 +262,7 @@ JsModule {
                   0: IDENT@21..22 "b" [] []
               2: R_BRACK@22..24 "]" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@24..32
+            2: JS_INITIALIZER_CLAUSE@24..32
               0: EQ@24..26 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@26..32
                 0: L_BRACK@26..27 "[" [] []
@@ -299,8 +291,7 @@ JsModule {
                     0: IDENT@45..49 "abcd" [] []
               2: R_BRACK@49..51 "]" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@51..56
+            2: JS_INITIALIZER_CLAUSE@51..56
               0: EQ@51..53 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@53..56
                 0: L_BRACK@53..54 "[" [] []
@@ -328,8 +319,7 @@ JsModule {
                   0: IDENT@78..79 "x" [] []
               2: R_BRACK@79..81 "]" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@81..85
+            2: JS_INITIALIZER_CLAUSE@81..85
               0: EQ@81..83 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@83..85
                 0: L_BRACK@83..84 "[" [] []
@@ -355,8 +345,7 @@ JsModule {
                     0: IDENT@99..103 "rest" [] []
               2: R_BRACK@103..105 "]" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@105..109
+            2: JS_INITIALIZER_CLAUSE@105..109
               0: EQ@105..107 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@107..109
                 0: L_BRACK@107..108 "[" [] []
@@ -390,8 +379,7 @@ JsModule {
                   2: R_CURLY@131..132 "}" [] []
               2: R_BRACK@132..134 "]" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@134..138
+            2: JS_INITIALIZER_CLAUSE@134..138
               0: EQ@134..136 "=" [] [Whitespace(" ")]
               1: JS_ARRAY_EXPRESSION@136..138
                 0: L_BRACK@136..137 "[" [] []

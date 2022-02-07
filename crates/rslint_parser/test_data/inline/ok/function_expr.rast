@@ -10,8 +10,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsFunctionExpression {
@@ -47,8 +46,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@26..28 "b" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
                             expression: JsFunctionExpression {
@@ -94,8 +92,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@6..21
+            2: JS_INITIALIZER_CLAUSE@6..21
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_FUNCTION_EXPRESSION@8..21
                 0: (empty)
@@ -122,8 +119,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@26..28
               0: IDENT@26..28 "b" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@28..47
+            2: JS_INITIALIZER_CLAUSE@28..47
               0: EQ@28..30 "=" [] [Whitespace(" ")]
               1: JS_FUNCTION_EXPRESSION@30..47
                 0: (empty)

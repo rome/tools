@@ -10,8 +10,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsTemplate {
@@ -48,8 +47,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@26..28 "b" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
                             expression: JsTemplate {
@@ -73,8 +71,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@38..40 "c" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@40..42 "=" [] [Whitespace(" ")],
                             expression: JsTemplate {
@@ -108,8 +105,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@56..58 "d" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@58..60 "=" [] [Whitespace(" ")],
                             expression: JsTemplate {
@@ -145,8 +141,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@6..20
+            2: JS_INITIALIZER_CLAUSE@6..20
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_TEMPLATE@8..20
                 0: (empty)
@@ -171,8 +166,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@26..28
               0: IDENT@26..28 "b" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@28..32
+            2: JS_INITIALIZER_CLAUSE@28..32
               0: EQ@28..30 "=" [] [Whitespace(" ")]
               1: JS_TEMPLATE@30..32
                 0: (empty)
@@ -189,8 +183,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@38..40
               0: IDENT@38..40 "c" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@40..50
+            2: JS_INITIALIZER_CLAUSE@40..50
               0: EQ@40..42 "=" [] [Whitespace(" ")]
               1: JS_TEMPLATE@42..50
                 0: (empty)
@@ -213,8 +206,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@56..58
               0: IDENT@56..58 "d" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@58..65
+            2: JS_INITIALIZER_CLAUSE@58..65
               0: EQ@58..60 "=" [] [Whitespace(" ")]
               1: JS_TEMPLATE@60..65
                 0: (empty)

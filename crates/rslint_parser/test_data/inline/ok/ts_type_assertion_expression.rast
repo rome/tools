@@ -10,8 +10,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@18..20 "x" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@20..22 "=" [] [Whitespace(" ")],
                             expression: TsTypeAssertionExpression {
@@ -41,8 +40,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@42..44 "y" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@44..46 "=" [] [Whitespace(" ")],
                             expression: TsTypeAssertionExpression {
@@ -79,8 +77,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@18..20
               0: IDENT@18..20 "x" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@20..36
+            2: JS_INITIALIZER_CLAUSE@20..36
               0: EQ@20..22 "=" [] [Whitespace(" ")]
               1: TS_TYPE_ASSERTION_EXPRESSION@22..36
                 0: L_ANGLE@22..23 "<" [] []
@@ -100,8 +97,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@42..44
               0: IDENT@42..44 "y" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@44..56
+            2: JS_INITIALIZER_CLAUSE@44..56
               0: EQ@44..46 "=" [] [Whitespace(" ")]
               1: TS_TYPE_ASSERTION_EXPRESSION@46..56
                 0: L_ANGLE@46..47 "<" [] []

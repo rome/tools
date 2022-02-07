@@ -30,8 +30,7 @@ JsModule {
                                             IDENT@26..35 "await" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                                         ],
                                     },
-                                    excl_token: missing (optional),
-                                    type_annotation: missing (optional),
+                                    variable_annotation: missing (optional),
                                     initializer: missing (optional),
                                 },
                             ],
@@ -81,7 +80,6 @@ JsModule {
                     0: IDENT@26..35 "await" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
                   1: (empty)
                   2: (empty)
-                  3: (empty)
             1: (empty)
           1: JS_EXPRESSION_STATEMENT@35..37
             0: JS_NUMBER_LITERAL_EXPRESSION@35..36

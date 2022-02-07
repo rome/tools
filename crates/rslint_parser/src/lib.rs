@@ -100,6 +100,7 @@ pub use rslint_syntax::*;
 /// It also includes labels and possibly notes
 pub type ParserError = rslint_errors::Diagnostic;
 
+use crate::parser::ToDiagnostic;
 pub use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 pub use crate::ParsedSyntax::{Absent, Present};
 use rslint_errors::Diagnostic;
@@ -231,10 +232,11 @@ pub trait SyntaxFeature: Sized {
     /// supported.
     ///
     /// Returns the parsed syntax.
-    fn exclusive_syntax<S, E>(&self, p: &mut Parser, syntax: S, error_builder: E) -> ParsedSyntax
+    fn exclusive_syntax<S, E, D>(&self, p: &mut Parser, syntax: S, error_builder: E) -> ParsedSyntax
     where
         S: Into<ParsedSyntax>,
-        E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+        E: FnOnce(&Parser, &CompletedMarker) -> D,
+        D: ToDiagnostic,
     {
         syntax.into().map(|mut syntax| {
             if self.is_unsupported(p) {
