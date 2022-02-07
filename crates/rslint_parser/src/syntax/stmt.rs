@@ -14,7 +14,7 @@ use crate::state::{
 use crate::syntax::assignment::expression_to_assignment_pattern;
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
 use crate::syntax::expr::{
-    is_at_expression, is_at_identifier, is_nth_at_name, parse_assignment_expression_or_higher,
+    is_at_expression, is_at_identifier, parse_assignment_expression_or_higher,
     parse_expression_or_recover_to_next_statement, parse_identifier, ExpressionContext,
 };
 use crate::syntax::function::{is_at_async_function, parse_function_statement, LineBreak};
@@ -186,13 +186,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![if] => parse_if_statement(p),
         T![with] => parse_with_statement(p),
         T![while] => parse_while_statement(p),
-        t if (t == T![enum] && is_nth_at_name(p, 1))
-            || (t == T![const] && p.nth_at(1, T![enum]) && is_nth_at_name(p, 2)) =>
-        {
-            let mut res = ts_enum(p);
-            res.err_if_not_ts(p, "enums can only be declared in TypeScript files");
-            Present(res)
-        }
+        _ if is_at_ts_enum_statement(p) => parse_ts_enum_statement(p),
         T![var] => parse_variable_statement(p, context),
         T![const] => parse_variable_statement(p, context),
         T![for] => parse_for_statement(p),

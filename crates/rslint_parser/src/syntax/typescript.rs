@@ -1,11 +1,12 @@
 //! TypeScript specific functions.
 
+mod enums;
+mod ts_parse_error;
 mod types;
 
-use super::expr::{parse_assignment_expression_or_higher, parse_lhs_expr, parse_name};
+use super::expr::parse_lhs_expr;
 use crate::parser::ParserProgress;
 #[allow(deprecated)]
-use crate::parser::SingleTokenParseRecovery;
 use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_expression, expected_identifier, expected_ts_type};
@@ -13,6 +14,7 @@ use crate::syntax::js_parse_error::{expected_expression, expected_identifier, ex
 use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
+pub(crate) use self::enums::*;
 pub(crate) use self::types::*;
 
 fn parse_ts_identifier_binding(p: &mut Parser) -> ParsedSyntax {
@@ -90,68 +92,6 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
         elems.push(m.complete(p, TS_EXPR_WITH_TYPE_ARGS));
     }
     elems
-}
-
-pub(super) fn ts_enum(p: &mut Parser) -> CompletedMarker {
-    let m = p.start();
-    p.eat(T![const]);
-    p.expect(T![enum]);
-    parse_name(p).or_add_diagnostic(p, js_parse_error::expected_identifier);
-    p.expect(T!['{']);
-    let mut first = true;
-
-    let members_list = p.start();
-    let mut progress = ParserProgress::default();
-    while !p.at(EOF) && !p.at(T!['}']) {
-        progress.assert_progressing(p);
-        if first {
-            first = false;
-        } else if p.at(T![,]) && p.nth_at(1, T!['}']) {
-            p.eat(T![,]);
-            break;
-        } else {
-            p.expect(T![,]);
-        }
-
-        let member = p.start();
-        let err_occured = if !p.at_ts(token_set![T![ident], T![yield], T![await]])
-            && !p.cur().is_keyword()
-            && !p.at(JS_STRING_LITERAL)
-        {
-            let err = p
-                .err_builder("expected an identifier or string for an enum variant, but found none")
-                .primary(p.cur_tok().range(), "");
-
-            #[allow(deprecated)]
-            SingleTokenParseRecovery::with_error(
-                token_set![T!['}'], T![ident], T![yield], T![await], T![=], T![,]],
-                JS_UNKNOWN,
-                err,
-            )
-            .recover(p);
-            true
-        } else {
-            if !p.eat(JS_STRING_LITERAL) {
-                parse_name(p).unwrap().undo_completion(p).abandon(p);
-            }
-            false
-        };
-
-        if p.eat(T![=]) {
-            parse_assignment_expression_or_higher(p, ExpressionContext::default())
-                .or_add_diagnostic(p, js_parse_error::expected_expression_assignment);
-            member.complete(p, TS_ENUM_MEMBER);
-        } else if err_occured {
-            member.abandon(p);
-        } else {
-            member.complete(p, TS_ENUM_MEMBER);
-        }
-    }
-
-    members_list.complete(p, TS_ENUM_MEMBER_LIST);
-
-    p.expect(T!['}']);
-    m.complete(p, TS_ENUM)
 }
 
 pub fn try_parse(p: &mut Parser, func: impl FnOnce(&mut Parser) -> ParsedSyntax) -> ParsedSyntax {

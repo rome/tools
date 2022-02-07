@@ -238,6 +238,7 @@ fn handle_rule(
     };
 }
 
+#[derive(Debug)]
 struct CommaList<'a> {
     node_name: &'a str,
     separator_name: &'a str,

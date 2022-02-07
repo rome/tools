@@ -1,0 +1,2 @@
+enum;
+enum A;

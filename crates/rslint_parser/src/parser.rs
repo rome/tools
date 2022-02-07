@@ -691,7 +691,8 @@ impl CompletedMarker {
     }
 
     pub fn err_if_not_ts(&mut self, p: &mut Parser, err: &str) {
-        p.err_if_not_ts(self, err, JsSyntaxKind::JS_UNKNOWN);
+        let unknown = self.kind.to_unknown();
+        p.err_if_not_ts(self, err, unknown);
     }
 }
 

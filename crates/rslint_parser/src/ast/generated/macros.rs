@@ -759,12 +759,12 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsDefaultTypeClause::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_ENUM => {
-                    let $pattern = unsafe { $crate::ast::TsEnum::new_unchecked(node) };
-                    $body
-                }
                 $crate::JsSyntaxKind::TS_ENUM_MEMBER => {
                     let $pattern = unsafe { $crate::ast::TsEnumMember::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_ENUM_STATEMENT => {
+                    let $pattern = unsafe { $crate::ast::TsEnumStatement::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_EXPR_WITH_TYPE_ARGS => {

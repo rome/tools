@@ -145,10 +145,11 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     // class {}
     // class implements B {}
 
-    let id = if p.cur_src() == "implements" {
-        Absent
-    } else {
-        parse_binding(p)
+    //TODO what about extends?
+    // class extends B {}
+    let id = match p.cur_src() {
+        "implements" => Absent,
+        _ => parse_binding(p),
     };
 
     // parse class id
