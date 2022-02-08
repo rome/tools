@@ -6,11 +6,18 @@ mod types;
 
 use super::expr::parse_lhs_expr;
 use crate::parser::ParserProgress;
-#[allow(deprecated)]
 use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::{expected_expression, expected_identifier, expected_ts_type};
+use crate::syntax::js_parse_error::{
+    expected_binding, expected_expression, expected_identifier, expected_parameters,
+    expected_ts_type,
+};
 
+use crate::state::SignatureFlags;
+use crate::syntax::binding::parse_binding;
+use crate::syntax::function::{parse_function_body, parse_parameter_list, ParameterContext};
+use crate::syntax::stmt::semi;
+use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
 use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
@@ -93,7 +100,67 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
     elems
 }
 
-pub fn try_parse(p: &mut Parser, func: impl FnOnce(&mut Parser) -> ParsedSyntax) -> ParsedSyntax {
+pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_ts_declare_statement(p) {
+        return Absent;
+    }
+
+    let m = p.start();
+    expect_contextual_keyword(p, "declare", T![declare]);
+
+    match p.cur() {
+        T![function] => {
+            parse_ts_declare_function(p);
+        }
+        _ => unreachable!(
+            "is_at_ts_declare_statement guarantees that the parser is at a declare statement"
+        ),
+    }
+
+    Present(m.complete(p, TS_DECLARE_STATEMENT))
+}
+
+pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
+    if !is_at_contextual_keyword(p, "declare") || p.has_linebreak_before_n(1) {
+        return false;
+    }
+
+    matches!(p.nth(1), T![function])
+}
+
+// test ts ts_declare_function
+// declare function test<A, B, R>(a: A, b: B): R;
+// declare function test2({ a }?: { a: "string" })
+// declare
+// function not_a_declaration() {}
+//
+// test_err ts ts_declare_function_with_body
+// declare function test<A>(a: A): string { return "ambient function with a body"; }
+fn parse_ts_declare_function(p: &mut Parser) -> CompletedMarker {
+    let m = p.start();
+    let start_range = p.cur_tok().start();
+    p.expect(T![function]);
+    parse_binding(p).or_add_diagnostic(p, expected_binding);
+    parse_ts_type_parameters(p).ok();
+    parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
+        .or_add_diagnostic(p, expected_parameters);
+    parse_ts_return_type_annotation(p).ok();
+
+    if let Present(body) = parse_function_body(p, SignatureFlags::empty()) {
+        p.error(
+            p.err_builder("A 'declare' function cannot have a function body")
+                .primary(body.range(p), "remove this body"),
+        );
+    }
+
+    semi(p, start_range..p.cur_tok().start());
+    m.complete(p, TS_DECLARE_FUNCTION)
+}
+
+pub(crate) fn try_parse(
+    p: &mut Parser,
+    func: impl FnOnce(&mut Parser) -> ParsedSyntax,
+) -> ParsedSyntax {
     let checkpoint = p.checkpoint();
 
     let res = if p.state.no_recovery {

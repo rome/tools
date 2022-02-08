@@ -231,6 +231,13 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![ident] if p.cur_src() == "type" && p.typescript() => parse_ts_type_alias(p),
         // TODO: handle `<T>() => {};` with less of a hack
         _ if is_at_identifier(p) && p.nth_at(1, T![:]) => parse_labeled_statement(p, context),
+        _ if is_at_ts_declare_statement(p) => {
+            let declare_range = p.cur_tok().range();
+            TypeScript.parse_exclusive_syntax(p, parse_ts_declare_statement, |p, _| {
+                p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
+                    .primary(declare_range, "")
+            })
+        }
         _ if is_at_expression(p) => parse_expression_statement(p),
         _ => Absent,
     }
