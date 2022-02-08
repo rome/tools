@@ -1,0 +1,34 @@
+//! Generated file, do not edit by hand, see `xtask/codegen`
+
+mod any_type;
+mod array_type;
+mod big_int_literal_type;
+mod bigint_type;
+mod boolean_literal_type;
+mod boolean_type;
+mod conditional_type;
+mod constructor_type;
+mod function_type;
+mod indexed_access_type;
+mod infer_type;
+mod intersection_type;
+mod mapped_type;
+mod never_type;
+mod non_primitive_type;
+mod null_literal_type;
+mod number_literal_type;
+mod number_type;
+mod object_type;
+mod parenthesized_type;
+mod reference_type;
+mod string_literal_type;
+mod string_type;
+mod symbol_type;
+mod this_type;
+mod tuple_type;
+mod type_operator_type;
+mod typeof_type;
+mod undefined_type;
+mod union_type;
+mod unknown_type;
+mod void_type;

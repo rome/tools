@@ -456,7 +456,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 pub struct AstSrc {
     pub nodes: Vec<AstNodeSrc>,
     pub unions: Vec<AstEnumSrc>,
-    lists: BTreeMap<String, AstListSrc>,
+    pub lists: BTreeMap<String, AstListSrc>,
     pub unknowns: Vec<String>,
 }
 

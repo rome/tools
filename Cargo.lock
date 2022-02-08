@@ -2124,6 +2124,7 @@ dependencies = [
  "pico-args",
  "proc-macro2",
  "quote",
+ "syn",
  "ungrammar",
  "ureq",
  "walkdir",

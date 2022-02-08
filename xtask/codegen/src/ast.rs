@@ -23,10 +23,7 @@ use xtask::{project_root, Result};
 pub const SYNTAX_ELEMENT_TYPE: &str = "SyntaxElement";
 
 pub fn generate_ast(mode: Mode) -> Result<()> {
-    let grammar_src = include_str!("../js.ungram");
-    let grammar: Grammar = grammar_src.parse().unwrap();
-    let mut ast = make_ast(&grammar);
-
+    let mut ast = load_ast();
     ast.sort();
 
     let ast_nodes_file = project_root().join(crate::AST_NODES);
@@ -46,6 +43,12 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
     update(ast_macros_file.as_path(), &contents, mode)?;
 
     Ok(())
+}
+
+pub(crate) fn load_ast() -> AstSrc {
+    let grammar_src = include_str!("../js.ungram");
+    let grammar: Grammar = grammar_src.parse().unwrap();
+    make_ast(&grammar)
 }
 
 fn make_ast(grammar: &Grammar) -> AstSrc {
