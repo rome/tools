@@ -186,7 +186,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![if] => parse_if_statement(p),
         T![with] => parse_with_statement(p),
         T![while] => parse_while_statement(p),
-        _ if is_at_ts_enum_statement(p) => parse_ts_enum_statement(p),
+        T![const] | T![enum] if is_at_ts_enum_statement(p) => parse_ts_enum_statement(p),
         T![var] => parse_variable_statement(p, context),
         T![const] => parse_variable_statement(p, context),
         T![for] => parse_for_statement(p),
@@ -231,6 +231,13 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![ident] if p.cur_src() == "type" && p.typescript() => parse_ts_type_alias(p),
         // TODO: handle `<T>() => {};` with less of a hack
         _ if is_at_identifier(p) && p.nth_at(1, T![:]) => parse_labeled_statement(p, context),
+        _ if is_at_ts_declare_statement(p) => {
+            let declare_range = p.cur_tok().range();
+            TypeScript.parse_exclusive_syntax(p, parse_ts_declare_statement, |p, _| {
+                p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
+                    .primary(declare_range, "")
+            })
+        }
         _ if is_at_expression(p) => parse_expression_statement(p),
         _ => Absent,
     }

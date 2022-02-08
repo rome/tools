@@ -161,8 +161,6 @@ fn is_at_function(p: &Parser) -> bool {
 }
 
 fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMarker {
-    let mut uses_invalid_syntax =
-        kind.is_statement() && p.eat(T![declare]) && TypeScript.is_unsupported(p);
     let mut flags = SignatureFlags::empty();
 
     let in_async = is_at_async_function(p, LineBreak::DoNotCheck);
@@ -219,10 +217,6 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
     // if (true) function* t() {}
     if kind == (FunctionKind::Statement { declaration: true }) && (in_async || in_generator) {
         p.error(p.err_builder("`async` and generator functions can only be declared at top level or inside a block").primary(function.range(p), ""));
-        uses_invalid_syntax = true;
-    }
-
-    if uses_invalid_syntax {
         function.change_to_unknown(p);
     }
 
@@ -278,7 +272,7 @@ fn parse_function_id(p: &mut Parser, kind: FunctionKind, flags: SignatureFlags) 
     }
 }
 
-// TODO 1725 This is probably not ideal (same with the `declare` keyword). We should
+// TODO #2058 This is probably not ideal (same with the `declare` keyword). We should
 // use a different AST type for function declarations. For example, a function declaration should
 // never have a body but that would be allowed with this approach. Same for interfaces, interface
 // methods should never have a body

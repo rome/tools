@@ -2,6 +2,7 @@
 
 mod call_signature_object_type_member;
 mod construct_signature_object_type_member;
+mod declare_function;
 mod default_type_clause;
 mod definite_property_annotation;
 mod definite_variable_annotation;

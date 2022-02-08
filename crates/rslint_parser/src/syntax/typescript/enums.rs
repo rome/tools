@@ -139,10 +139,15 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: Range<usize>) {
 }
 
 pub(crate) fn is_at_ts_enum_statement(p: &Parser) -> bool {
-    let t = p.cur();
-    let is_at_enum = t == T![enum];
-    let is_at_const = t == T![const];
-    is_at_enum || (is_at_const && p.nth_at(1, T![enum]))
+    is_nth_at_ts_enum_statement(p, 0)
+}
+
+pub(crate) fn is_nth_at_ts_enum_statement(p: &Parser, n: usize) -> bool {
+    match p.nth(n) {
+        T![enum] => true,
+        T![const] => p.nth_at(n + 1, T![enum]),
+        _ => false,
+    }
 }
 
 // test ts typescript_enum
