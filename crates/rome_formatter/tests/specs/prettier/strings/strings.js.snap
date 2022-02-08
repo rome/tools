@@ -1,0 +1,80 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: strings.js
+
+---
+# Input
+```js
+[
+  "abc",
+  'abc',
+
+  '\'',
+
+  '"',
+  '\"',
+  '\\"',
+
+  "'",
+  "\'",
+  "\\'",
+
+  "'\"",
+  '\'"',
+
+  '\\',
+  "\\",
+
+  '\0',
+  '🐶',
+
+  '\uD801\uDC28',
+];
+
+```
+
+# Output
+```js
+[
+  "abc",
+  'abc',
+
+  '\'',
+
+  '"',
+  '\"',
+  '\\"',
+
+  "'",
+  "\'",
+  "\\'",
+
+  "'\"",
+  '\'"',
+
+  '\\',
+  "\\",
+
+  '\0',
+  '🐶',
+
+  '\uD801\uDC28',
+];
+
+```
+
+# Errors
+```
+warning: invalid digits after unicode escape sequence
+   ┌─ strings.js:24:4
+   │
+24 │   '\uD801\uDC28',
+   │    ------------ expected valid unicode escape sequence
+   │    │      
+   │    expected valid unicode escape sequence
+
+
+```
+
+

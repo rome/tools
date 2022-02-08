@@ -1,5 +1,5 @@
 use crate::parser::{expected_any, expected_node, ToDiagnostic};
-use crate::Parser;
+use crate::{CompletedMarker, Parser};
 use rslint_errors::Diagnostic;
 use std::ops::Range;
 
@@ -195,4 +195,33 @@ pub(crate) fn expected_property_or_signature(p: &Parser, range: Range<usize>) ->
 pub(crate) fn ts_only_syntax_error(p: &Parser, syntax: &str, range: Range<usize>) -> Diagnostic {
     p.err_builder(&format!("{} are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.", syntax))
 		.primary(range, "TypeScript only syntax")
+}
+
+pub(crate) fn ts_accessor_type_parameters_error(
+    p: &Parser,
+    type_parameters: &CompletedMarker,
+) -> Diagnostic {
+    p.err_builder("An accessor cannot have type parameters")
+        .primary(type_parameters.range(p), "")
+}
+
+pub(crate) fn ts_constructor_type_parameters_error(
+    p: &Parser,
+    type_parameters: &CompletedMarker,
+) -> Diagnostic {
+    p.err_builder("constructors cannot have type parameters")
+        .primary(type_parameters.range(p), "")
+}
+
+pub(crate) fn accessor_readonly_error(p: &Parser, readonly_range: &Range<usize>) -> Diagnostic {
+    p.err_builder("getters and setters cannot be readonly")
+        .primary(readonly_range, "")
+}
+
+pub(crate) fn ts_set_accessor_return_type_error(
+    p: &Parser,
+    type_annotation: &CompletedMarker,
+) -> Diagnostic {
+    p.err_builder("A 'set' accessor cannot have a return type annotation.")
+        .primary(type_annotation.range(p), "")
 }

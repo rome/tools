@@ -62,8 +62,8 @@ impl ToFormatElement for JsAnyStatement {
             JsAnyStatement::JsTryFinallyStatement(try_finally) => {
                 try_finally.to_format_element(formatter)
             }
-            JsAnyStatement::TsEnum(_) => todo!(),
             JsAnyStatement::TsTypeAliasStatement(_) => todo!(),
+            JsAnyStatement::TsEnumStatement(_) => todo!(),
         }
     }
 }

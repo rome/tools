@@ -1,0 +1,74 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: block-comments.js
+
+---
+# Input
+```js
+bifornCringerMoshedPerplexSawder
+|> foo1
+|> foo2 /* comment1 */
+|> foo3 /* comment2 */
+|> kochabCooieGameOnOboleUnweave
+|> glimseGlyphsHazardNoopsTieTie;
+
+```
+
+# Output
+```js
+bifornCringerMoshedPerplexSawder
+|> foo1
+|> foo2 /* comment1 */
+|> foo3 /* comment2 */
+|> kochabCooieGameOnOboleUnweave
+|> glimseGlyphsHazardNoopsTieTie;
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ block-comments.js:2:2
+  │
+2 │ |> foo1
+  │ -^ But this operator was encountered instead
+  │ │ 
+  │ This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ block-comments.js:3:2
+  │
+3 │ |> foo2 /* comment1 */
+  │ -^ But this operator was encountered instead
+  │ │ 
+  │ This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ block-comments.js:4:2
+  │
+4 │ |> foo3 /* comment2 */
+  │ -^ But this operator was encountered instead
+  │ │ 
+  │ This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ block-comments.js:5:2
+  │
+5 │ |> kochabCooieGameOnOboleUnweave
+  │ -^ But this operator was encountered instead
+  │ │ 
+  │ This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ block-comments.js:6:2
+  │
+6 │ |> glimseGlyphsHazardNoopsTieTie;
+  │ -^ But this operator was encountered instead
+  │ │ 
+  │ This operator requires a right hand side value
+
+
+```
+
+

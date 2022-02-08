@@ -1,0 +1,223 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: edge_case.js
+
+---
+# Input
+```js
+
+
+a(
+  SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong,
+  [
+    {
+      SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong: 1
+    }
+  ]
+);
+
+exports.examples = [
+  {
+    render: withGraphQLQuery(
+      'node(1234567890){image{uri}}',
+      function(container, data) {
+        return (
+          <div>
+            <InlineBlock>
+              <img
+                src={data[1234567890].image.uri}
+                style={{position: 'absolute', top: '0', left: '0', zIndex:'-1'}}
+              />
+            </InlineBlock>
+          </div>
+        );
+      }
+    )
+  }
+];
+
+someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a([
+  [],
+  // comment
+  [],
+]);
+
+(function webpackUniversalModuleDefinition() {})(this, function(__WEBPACK_EXTERNAL_MODULE_85__, __WEBPACK_EXTERNAL_MODULE_115__) {
+return /******/ (function(modules) { // webpackBootstrap
+
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+/***/ }
+/******/ ])
+});
+
+```
+
+# Output
+```js
+a(
+  SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong,
+  [
+    {
+      SomethingVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong: 1,
+    },
+  ],
+);
+
+exports.examples = [
+  {
+    render: withGraphQLQuery(
+      'node(1234567890){image{uri}}',
+      function(container, data) {
+        return (
+          <div>
+            <InlineBlock>
+              <img
+                src={data[1234567890].image.uri}
+                style={{position: 'absolute', top: '0', left: '0', zIndex:'-1'}}
+              />
+            </InlineBlock>
+          </div>
+        );
+      }
+
+    )
+  }
+]
+
+someReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReally.a(
+  [
+    [],
+    // comment
+    [],
+  ],
+);
+
+(function webpackUniversalModuleDefinition() {})(
+  this,
+  function (__WEBPACK_EXTERNAL_MODULE_85__, __WEBPACK_EXTERNAL_MODULE_115__) {
+    return (function (modules) { /******/
+      // webpackBootstrap
+      /******/
+    })/************************************************************************/
+    /******/ (
+      [
+        /* 0 */
+        /***/ function (module, exports, __webpack_require__) {
+          /***/
+        },
+        /* 1 */
+        /***/ function (module, exports, __webpack_require__) {
+          /***/
+        },
+        /* 2 */
+        /***/ function (module, exports, __webpack_require__) {
+          /***/
+        },
+        /******/
+      ],
+    );
+  },
+);
+
+```
+
+# Errors
+```
+error[SyntaxError]: Invalid assignment to `<div>
+            <InlineBlock>
+              <img
+                src`
+   ┌─ edge_case.js:18:11
+   │  
+18 │ ┌           <div>
+19 │ │             <InlineBlock>
+20 │ │               <img
+21 │ │                 src={data[1234567890].image.uri}
+   │ └───────────────────^ This expression cannot be assigned to
+
+error[SyntaxError]: expected `,` but instead found `[`
+   ┌─ edge_case.js:21:26
+   │
+21 │                 src={data[1234567890].image.uri}
+   │                          ^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `.`
+   ┌─ edge_case.js:21:38
+   │
+21 │                 src={data[1234567890].image.uri}
+   │                                      ^ unexpected
+
+error[SyntaxError]: expected `')'` but instead found `style`
+   ┌─ edge_case.js:22:17
+   │
+22 │                 style={{position: 'absolute', top: '0', left: '0', zIndex:'-1'}}
+   │                 ^^^^^ unexpected
+
+error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '{position'
+   ┌─ edge_case.js:22:24
+   │
+22 │                 style={{position: 'absolute', top: '0', left: '0', zIndex:'-1'}}
+   │                        ^^^^^^^^^ Expected a property, a shorthand property, a getter, a setter, or a method here
+
+error[SyntaxError]: expected `,` but instead found `:`
+   ┌─ edge_case.js:22:33
+   │
+22 │                 style={{position: 'absolute', top: '0', left: '0', zIndex:'-1'}}
+   │                                 ^ unexpected
+
+error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+   ┌─ edge_case.js:23:16
+   │
+23 │               />
+   │               -^ But this operator was encountered instead
+   │               │ 
+   │               This operator requires a right hand side value
+
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ edge_case.js:24:13
+   │
+24 │             </InlineBlock>
+   │             ^ TypeScript only syntax
+
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ edge_case.js:25:11
+   │
+25 │           </div>
+   │           ^ TypeScript only syntax
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ edge_case.js:26:9
+   │
+26 │         );
+   │         ^ Expected an expression here
+
+error[SyntaxError]: expected `,` but instead found `;`
+   ┌─ edge_case.js:26:10
+   │
+26 │         );
+   │          ^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `)`
+   ┌─ edge_case.js:28:5
+   │
+28 │     )
+   │     ^ unexpected
+
+
+```
+
+

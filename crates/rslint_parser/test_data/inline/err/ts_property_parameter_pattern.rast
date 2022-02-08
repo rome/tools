@@ -3,160 +3,157 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsClassStatement {
-            class_token: CLASS_KW@0..20 "class" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
-                name_token: IDENT@20..22 "A" [] [Whitespace(" ")],
+                name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
             },
             type_parameters: missing (optional),
             extends_clause: missing (optional),
             implements_clause: missing (optional),
-            l_curly_token: L_CURLY@22..24 "{" [] [Whitespace(" ")],
+            l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
                 JsConstructorClassMember {
                     access_modifier: missing (optional),
                     name: JsLiteralMemberName {
-                        value: IDENT@24..35 "constructor" [] [],
+                        value: IDENT@10..21 "constructor" [] [],
                     },
-                    type_parameters: missing (optional),
                     parameters: JsConstructorParameters {
-                        l_paren_token: L_PAREN@35..36 "(" [] [],
+                        l_paren_token: L_PAREN@21..22 "(" [] [],
                         parameters: JsConstructorParameterList [
                             TsPropertyParameter {
-                                accessibility: PRIVATE_KW@36..44 "private" [] [Whitespace(" ")],
+                                accessibility: PRIVATE_KW@22..30 "private" [] [Whitespace(" ")],
                                 formal_parameter: JsUnknownParameter {
                                     items: [
                                         JsObjectBindingPattern {
-                                            l_curly_token: L_CURLY@44..46 "{" [] [Whitespace(" ")],
+                                            l_curly_token: L_CURLY@30..32 "{" [] [Whitespace(" ")],
                                             properties: JsObjectBindingPatternPropertyList [
                                                 JsObjectBindingPatternShorthandProperty {
                                                     identifier: JsIdentifierBinding {
-                                                        name_token: IDENT@46..47 "x" [] [],
+                                                        name_token: IDENT@32..33 "x" [] [],
                                                     },
                                                     init: missing (optional),
                                                 },
-                                                COMMA@47..49 "," [] [Whitespace(" ")],
+                                                COMMA@33..35 "," [] [Whitespace(" ")],
                                                 JsObjectBindingPatternShorthandProperty {
                                                     identifier: JsIdentifierBinding {
-                                                        name_token: IDENT@49..51 "y" [] [Whitespace(" ")],
+                                                        name_token: IDENT@35..37 "y" [] [Whitespace(" ")],
                                                     },
                                                     init: missing (optional),
                                                 },
                                             ],
-                                            r_curly_token: R_CURLY@51..52 "}" [] [],
+                                            r_curly_token: R_CURLY@37..38 "}" [] [],
                                         },
                                     ],
                                 },
                             },
-                            COMMA@52..54 "," [] [Whitespace(" ")],
+                            COMMA@38..40 "," [] [Whitespace(" ")],
                             TsPropertyParameter {
-                                accessibility: PROTECTED_KW@54..64 "protected" [] [Whitespace(" ")],
+                                accessibility: PROTECTED_KW@40..50 "protected" [] [Whitespace(" ")],
                                 formal_parameter: JsUnknownParameter {
                                     items: [
                                         JsArrayBindingPattern {
-                                            l_brack_token: L_BRACK@64..65 "[" [] [],
+                                            l_brack_token: L_BRACK@50..51 "[" [] [],
                                             elements: JsArrayBindingPatternElementList [
                                                 JsIdentifierBinding {
-                                                    name_token: IDENT@65..66 "a" [] [],
+                                                    name_token: IDENT@51..52 "a" [] [],
                                                 },
-                                                COMMA@66..68 "," [] [Whitespace(" ")],
+                                                COMMA@52..54 "," [] [Whitespace(" ")],
                                                 JsIdentifierBinding {
-                                                    name_token: IDENT@68..69 "b" [] [],
+                                                    name_token: IDENT@54..55 "b" [] [],
                                                 },
                                             ],
-                                            r_brack_token: R_BRACK@69..70 "]" [] [],
+                                            r_brack_token: R_BRACK@55..56 "]" [] [],
                                         },
                                     ],
                                 },
                             },
                         ],
-                        r_paren_token: R_PAREN@70..72 ")" [] [Whitespace(" ")],
+                        r_paren_token: R_PAREN@56..58 ")" [] [Whitespace(" ")],
                     },
                     body: JsFunctionBody {
-                        l_curly_token: L_CURLY@72..73 "{" [] [],
+                        l_curly_token: L_CURLY@58..59 "{" [] [],
                         directives: JsDirectiveList [],
                         statements: JsStatementList [],
-                        r_curly_token: R_CURLY@73..75 "}" [] [Whitespace(" ")],
+                        r_curly_token: R_CURLY@59..61 "}" [] [Whitespace(" ")],
                     },
                 },
             ],
-            r_curly_token: R_CURLY@75..76 "}" [] [],
+            r_curly_token: R_CURLY@61..62 "}" [] [],
         },
     ],
-    eof_token: EOF@76..77 "" [Newline("\n")] [],
+    eof_token: EOF@62..63 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..77
+0: JS_MODULE@0..63
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..76
-    0: JS_CLASS_STATEMENT@0..76
-      0: CLASS_KW@0..20 "class" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
-      1: JS_IDENTIFIER_BINDING@20..22
-        0: IDENT@20..22 "A" [] [Whitespace(" ")]
+  2: JS_MODULE_ITEM_LIST@0..62
+    0: JS_CLASS_STATEMENT@0..62
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..8
+        0: IDENT@6..8 "A" [] [Whitespace(" ")]
       2: (empty)
       3: (empty)
       4: (empty)
-      5: L_CURLY@22..24 "{" [] [Whitespace(" ")]
-      6: JS_CLASS_MEMBER_LIST@24..75
-        0: JS_CONSTRUCTOR_CLASS_MEMBER@24..75
+      5: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      6: JS_CLASS_MEMBER_LIST@10..61
+        0: JS_CONSTRUCTOR_CLASS_MEMBER@10..61
           0: (empty)
-          1: JS_LITERAL_MEMBER_NAME@24..35
-            0: IDENT@24..35 "constructor" [] []
-          2: (empty)
-          3: JS_CONSTRUCTOR_PARAMETERS@35..72
-            0: L_PAREN@35..36 "(" [] []
-            1: JS_CONSTRUCTOR_PARAMETER_LIST@36..70
-              0: TS_PROPERTY_PARAMETER@36..52
-                0: PRIVATE_KW@36..44 "private" [] [Whitespace(" ")]
-                1: JS_UNKNOWN_PARAMETER@44..52
-                  0: JS_OBJECT_BINDING_PATTERN@44..52
-                    0: L_CURLY@44..46 "{" [] [Whitespace(" ")]
-                    1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@46..51
-                      0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@46..47
-                        0: JS_IDENTIFIER_BINDING@46..47
-                          0: IDENT@46..47 "x" [] []
+          1: JS_LITERAL_MEMBER_NAME@10..21
+            0: IDENT@10..21 "constructor" [] []
+          2: JS_CONSTRUCTOR_PARAMETERS@21..58
+            0: L_PAREN@21..22 "(" [] []
+            1: JS_CONSTRUCTOR_PARAMETER_LIST@22..56
+              0: TS_PROPERTY_PARAMETER@22..38
+                0: PRIVATE_KW@22..30 "private" [] [Whitespace(" ")]
+                1: JS_UNKNOWN_PARAMETER@30..38
+                  0: JS_OBJECT_BINDING_PATTERN@30..38
+                    0: L_CURLY@30..32 "{" [] [Whitespace(" ")]
+                    1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@32..37
+                      0: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@32..33
+                        0: JS_IDENTIFIER_BINDING@32..33
+                          0: IDENT@32..33 "x" [] []
                         1: (empty)
-                      1: COMMA@47..49 "," [] [Whitespace(" ")]
-                      2: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@49..51
-                        0: JS_IDENTIFIER_BINDING@49..51
-                          0: IDENT@49..51 "y" [] [Whitespace(" ")]
+                      1: COMMA@33..35 "," [] [Whitespace(" ")]
+                      2: JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY@35..37
+                        0: JS_IDENTIFIER_BINDING@35..37
+                          0: IDENT@35..37 "y" [] [Whitespace(" ")]
                         1: (empty)
-                    2: R_CURLY@51..52 "}" [] []
-              1: COMMA@52..54 "," [] [Whitespace(" ")]
-              2: TS_PROPERTY_PARAMETER@54..70
-                0: PROTECTED_KW@54..64 "protected" [] [Whitespace(" ")]
-                1: JS_UNKNOWN_PARAMETER@64..70
-                  0: JS_ARRAY_BINDING_PATTERN@64..70
-                    0: L_BRACK@64..65 "[" [] []
-                    1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@65..69
-                      0: JS_IDENTIFIER_BINDING@65..66
-                        0: IDENT@65..66 "a" [] []
-                      1: COMMA@66..68 "," [] [Whitespace(" ")]
-                      2: JS_IDENTIFIER_BINDING@68..69
-                        0: IDENT@68..69 "b" [] []
-                    2: R_BRACK@69..70 "]" [] []
-            2: R_PAREN@70..72 ")" [] [Whitespace(" ")]
-          4: JS_FUNCTION_BODY@72..75
-            0: L_CURLY@72..73 "{" [] []
-            1: JS_DIRECTIVE_LIST@73..73
-            2: JS_STATEMENT_LIST@73..73
-            3: R_CURLY@73..75 "}" [] [Whitespace(" ")]
-      7: R_CURLY@75..76 "}" [] []
-  3: EOF@76..77 "" [Newline("\n")] []
+                    2: R_CURLY@37..38 "}" [] []
+              1: COMMA@38..40 "," [] [Whitespace(" ")]
+              2: TS_PROPERTY_PARAMETER@40..56
+                0: PROTECTED_KW@40..50 "protected" [] [Whitespace(" ")]
+                1: JS_UNKNOWN_PARAMETER@50..56
+                  0: JS_ARRAY_BINDING_PATTERN@50..56
+                    0: L_BRACK@50..51 "[" [] []
+                    1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@51..55
+                      0: JS_IDENTIFIER_BINDING@51..52
+                        0: IDENT@51..52 "a" [] []
+                      1: COMMA@52..54 "," [] [Whitespace(" ")]
+                      2: JS_IDENTIFIER_BINDING@54..55
+                        0: IDENT@54..55 "b" [] []
+                    2: R_BRACK@55..56 "]" [] []
+            2: R_PAREN@56..58 ")" [] [Whitespace(" ")]
+          3: JS_FUNCTION_BODY@58..61
+            0: L_CURLY@58..59 "{" [] []
+            1: JS_DIRECTIVE_LIST@59..59
+            2: JS_STATEMENT_LIST@59..59
+            3: R_CURLY@59..61 "}" [] [Whitespace(" ")]
+      7: R_CURLY@61..62 "}" [] []
+  3: EOF@62..63 "" [Newline("\n")] []
 --
 error[SyntaxError]: A parameter property may not be declared using a binding pattern.
-  ┌─ ts_property_parameter_pattern.js:2:31
+  ┌─ ts_property_parameter_pattern.ts:1:31
   │
-2 │ class A { constructor(private { x, y }, protected [a, b]) {} }
+1 │ class A { constructor(private { x, y }, protected [a, b]) {} }
   │                               ^^^^^^^^
 
 --
 error[SyntaxError]: A parameter property may not be declared using a binding pattern.
-  ┌─ ts_property_parameter_pattern.js:2:51
+  ┌─ ts_property_parameter_pattern.ts:1:51
   │
-2 │ class A { constructor(private { x, y }, protected [a, b]) {} }
+1 │ class A { constructor(private { x, y }, protected [a, b]) {} }
   │                                                   ^^^^^^
 
 --
-// TYPESCRIPT
 class A { constructor(private { x, y }, protected [a, b]) {} }

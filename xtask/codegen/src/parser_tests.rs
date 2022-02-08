@@ -59,7 +59,12 @@ pub fn generate_parser_tests(mode: Mode) -> Result<()> {
             let path = match existing.get(name) {
                 Some((path, _test)) => path.clone(),
                 None => {
-                    let file_name = format!("{}.js", name);
+                    let ext = match test.language.as_str() {
+                        "javascript" => "js",
+                        "typescript" => "ts",
+                        ext => ext,
+                    };
+                    let file_name = format!("{}.{}", name, ext);
                     tests_dir.join(file_name)
                 }
             };
@@ -80,6 +85,7 @@ struct Test {
     pub name: String,
     pub text: String,
     pub ok: bool,
+    pub language: String,
 }
 
 #[derive(Default, Debug)]
@@ -92,12 +98,18 @@ fn collect_tests(s: &str) -> Vec<Test> {
     let mut res = Vec::new();
     for comment_block in extract_comment_blocks(s, false).into_iter().map(|(_, x)| x) {
         let first_line = &comment_block[0];
-        let (name, ok) = if let Some(first_line) = first_line.strip_prefix("test ") {
+        let (language, name, ok) = if let Some(first_line) = first_line.strip_prefix("test ts ") {
             let name = first_line.to_string();
-            (name, true)
+            ("typescript", name, true)
+        } else if let Some(first_line) = first_line.strip_prefix("test_err ts ") {
+            let name = first_line.to_string();
+            ("typescript", name, false)
+        } else if let Some(first_line) = first_line.strip_prefix("test ") {
+            let name = first_line.to_string();
+            ("javascript", name, true)
         } else if let Some(first_line) = first_line.strip_prefix("test_err ") {
             let name = first_line.to_string();
-            (name, false)
+            ("javascript", name, false)
         } else {
             continue;
         };
@@ -108,7 +120,12 @@ fn collect_tests(s: &str) -> Vec<Test> {
             .collect::<Vec<_>>()
             .join("\n");
         assert!(!text.trim().is_empty() && text.ends_with('\n'));
-        res.push(Test { name, text, ok })
+        res.push(Test {
+            name,
+            text,
+            ok,
+            language: language.to_string(),
+        })
     }
     res
 }
@@ -147,7 +164,13 @@ fn existing_tests(dir: &Path, ok: bool) -> Result<HashMap<String, (PathBuf, Test
     for file in fs::read_dir(dir)? {
         let file = file?;
         let path = file.path();
-        if path.extension().unwrap_or_default() != "js" {
+        let exts = ["js", "ts"];
+        let ext = path
+            .extension()
+            .unwrap_or_default()
+            .to_str()
+            .unwrap_or_default();
+        if !exts.contains(&ext) {
             continue;
         }
         let name = {
@@ -159,6 +182,7 @@ fn existing_tests(dir: &Path, ok: bool) -> Result<HashMap<String, (PathBuf, Test
             name: name.clone(),
             text,
             ok,
+            language: ext.to_string(),
         };
         if let Some(old) = res.insert(name, (path, test)) {
             println!("Duplicate test: {:?}", old);

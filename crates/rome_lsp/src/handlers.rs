@@ -1,18 +1,28 @@
+use crate::line_index::{self, LineCol};
 use anyhow::{bail, Result};
 use lspower::lsp::*;
 use rome_analyze::FileId;
 use rome_formatter::{FormatOptions, IndentStyle};
 use rslint_parser::{parse_script, TextRange, TokenAtOffset};
 
-use crate::line_index::{self, LineCol};
+/// Utility function that takes formatting options from [LSP](lspower::lsp::FormattingOptions)
+/// and transforms that to [options](rome_formatter::FormatOptions) that the rome formatter can understand
+pub(crate) fn to_format_options(params: &FormattingOptions) -> FormatOptions {
+    let indent_style = if params.insert_spaces {
+        IndentStyle::Space(params.tab_size as u8)
+    } else {
+        IndentStyle::Tab
+    };
+    FormatOptions {
+        indent_style,
+        ..FormatOptions::default()
+    }
+}
 
-pub fn format(text: &str, file_id: FileId) -> Result<Vec<TextEdit>> {
+pub fn format(text: &str, file_id: FileId, params: &FormattingOptions) -> Result<Vec<TextEdit>> {
     let tree = parse_script(text, file_id).syntax();
 
-    let options = FormatOptions {
-        indent_style: IndentStyle::Tab,
-        line_width: 80,
-    };
+    let options = to_format_options(params);
 
     let new_text = rome_formatter::format(options, &tree)?.into_code();
 
@@ -33,8 +43,9 @@ pub fn format(text: &str, file_id: FileId) -> Result<Vec<TextEdit>> {
 pub(crate) struct FormatRangeParams<'input> {
     pub(crate) text: &'input str,
     pub(crate) file_id: FileId,
-    pub(crate) indent_style: IndentStyle,
     pub(crate) range: Range,
+    /// Options to pass to [rome_formatter]
+    pub(crate) format_options: FormatOptions,
 }
 
 pub(crate) fn format_range(params: FormatRangeParams) -> Result<Vec<TextEdit>> {
@@ -50,13 +61,8 @@ pub(crate) fn format_range(params: FormatRangeParams) -> Result<Vec<TextEdit>> {
         col: params.range.end.character,
     });
 
-    let options = FormatOptions {
-        indent_style: params.indent_style,
-        line_width: 80,
-    };
-
     let format_range = TextRange::new(start_index, end_index);
-    let formatted = rome_formatter::format_range(options, &tree, format_range)?;
+    let formatted = rome_formatter::format_range(params.format_options, &tree, format_range)?;
 
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {
@@ -92,8 +98,9 @@ pub(crate) fn format_range(params: FormatRangeParams) -> Result<Vec<TextEdit>> {
 pub(crate) struct FormatOnTypeParams<'input> {
     pub(crate) text: &'input str,
     pub(crate) file_id: FileId,
-    pub(crate) indent_style: IndentStyle,
     pub(crate) position: Position,
+    /// Options to pass to [rome_formatter]
+    pub(crate) format_options: FormatOptions,
 }
 
 pub(crate) fn format_on_type(params: FormatOnTypeParams) -> Result<Vec<TextEdit>> {
@@ -119,12 +126,7 @@ pub(crate) fn format_on_type(params: FormatOnTypeParams) -> Result<Vec<TextEdit>
         None => bail!("found a token with no parent"),
     };
 
-    let options = FormatOptions {
-        indent_style: params.indent_style,
-        line_width: 80,
-    };
-
-    let formatted = rome_formatter::format_node(options, &root_node)?;
+    let formatted = rome_formatter::format_node(params.format_options, &root_node)?;
 
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {

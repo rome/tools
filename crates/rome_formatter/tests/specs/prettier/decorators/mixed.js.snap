@@ -1,0 +1,50 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: mixed.js
+
+---
+# Input
+```js
+// https://github.com/prettier/prettier/issues/6747
+
+@foo
+export default class MyComponent {
+  @task
+  *foo() {
+  }
+}
+```
+
+# Output
+```js
+// https://github.com/prettier/prettier/issues/6747
+
+@foo
+export default class MyComponent {
+  
+  @
+  task;
+  *foo() {}
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a statement but instead found '@foo'
+  ┌─ mixed.js:3:1
+  │
+3 │ @foo
+  │ ^^^^ Expected a statement here
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '@'
+  ┌─ mixed.js:5:3
+  │
+5 │   @task
+  │   ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+
+```
+
+

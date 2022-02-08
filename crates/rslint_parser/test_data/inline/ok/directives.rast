@@ -15,8 +15,7 @@ JsScript {
                         id: JsIdentifierBinding {
                             name_token: IDENT@24..26 "a" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@26..28 "=" [] [Whitespace(" ")],
                             expression: JsNumberLiteralExpression {
@@ -65,8 +64,7 @@ JsScript {
                                     id: JsIdentifierBinding {
                                         name_token: IDENT@105..107 "b" [] [Whitespace(" ")],
                                     },
-                                    excl_token: missing (optional),
-                                    type_annotation: missing (optional),
+                                    variable_annotation: missing (optional),
                                     initializer: JsInitializerClause {
                                         eq_token: EQ@107..109 "=" [] [Whitespace(" ")],
                                         expression: JsNumberLiteralExpression {
@@ -120,8 +118,7 @@ JsScript {
                                             id: JsIdentifierBinding {
                                                 name_token: IDENT@187..189 "c" [] [Whitespace(" ")],
                                             },
-                                            excl_token: missing (optional),
-                                            type_annotation: missing (optional),
+                                            variable_annotation: missing (optional),
                                             initializer: JsInitializerClause {
                                                 eq_token: EQ@189..191 "=" [] [Whitespace(" ")],
                                                 expression: JsNumberLiteralExpression {
@@ -155,8 +152,7 @@ JsScript {
                         id: JsIdentifierBinding {
                             name_token: IDENT@238..240 "b" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@240..242 "=" [] [Whitespace(" ")],
                             expression: JsArrowFunctionExpression {
@@ -186,8 +182,7 @@ JsScript {
                                                         id: JsIdentifierBinding {
                                                             name_token: IDENT@272..274 "e" [] [Whitespace(" ")],
                                                         },
-                                                        excl_token: missing (optional),
-                                                        type_annotation: missing (optional),
+                                                        variable_annotation: missing (optional),
                                                         initializer: JsInitializerClause {
                                                             eq_token: EQ@274..276 "=" [] [Whitespace(" ")],
                                                             expression: JsNumberLiteralExpression {
@@ -246,8 +241,7 @@ JsScript {
             0: JS_IDENTIFIER_BINDING@24..26
               0: IDENT@24..26 "a" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@26..30
+            2: JS_INITIALIZER_CLAUSE@26..30
               0: EQ@26..28 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@28..30
                 0: JS_NUMBER_LITERAL@28..30 "10" [] []
@@ -283,8 +277,7 @@ JsScript {
                   0: JS_IDENTIFIER_BINDING@105..107
                     0: IDENT@105..107 "b" [] [Whitespace(" ")]
                   1: (empty)
-                  2: (empty)
-                  3: JS_INITIALIZER_CLAUSE@107..111
+                  2: JS_INITIALIZER_CLAUSE@107..111
                     0: EQ@107..109 "=" [] [Whitespace(" ")]
                     1: JS_NUMBER_LITERAL_EXPRESSION@109..111
                       0: JS_NUMBER_LITERAL@109..111 "10" [] []
@@ -323,8 +316,7 @@ JsScript {
                       0: JS_IDENTIFIER_BINDING@187..189
                         0: IDENT@187..189 "c" [] [Whitespace(" ")]
                       1: (empty)
-                      2: (empty)
-                      3: JS_INITIALIZER_CLAUSE@189..193
+                      2: JS_INITIALIZER_CLAUSE@189..193
                         0: EQ@189..191 "=" [] [Whitespace(" ")]
                         1: JS_NUMBER_LITERAL_EXPRESSION@191..193
                           0: JS_NUMBER_LITERAL@191..193 "10" [] []
@@ -344,8 +336,7 @@ JsScript {
             0: JS_IDENTIFIER_BINDING@238..240
               0: IDENT@238..240 "b" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@240..317
+            2: JS_INITIALIZER_CLAUSE@240..317
               0: EQ@240..242 "=" [] [Whitespace(" ")]
               1: JS_ARROW_FUNCTION_EXPRESSION@242..317
                 0: (empty)
@@ -371,8 +362,7 @@ JsScript {
                             0: JS_IDENTIFIER_BINDING@272..274
                               0: IDENT@272..274 "e" [] [Whitespace(" ")]
                             1: (empty)
-                            2: (empty)
-                            3: JS_INITIALIZER_CLAUSE@274..278
+                            2: JS_INITIALIZER_CLAUSE@274..278
                               0: EQ@274..276 "=" [] [Whitespace(" ")]
                               1: JS_NUMBER_LITERAL_EXPRESSION@276..278
                                 0: JS_NUMBER_LITERAL@276..278 "10" [] []

@@ -30,19 +30,6 @@ impl SingleTokenParseRecovery {
         }
     }
 
-    pub fn with_error<Err: Into<ParserError>>(
-        recovery: TokenSet,
-        unknown_node_kind: JsSyntaxKind,
-        error: Err,
-    ) -> Self {
-        Self {
-            error: Some(error.into()),
-            recovery,
-            include_braces: false,
-            unknown_node_kind,
-        }
-    }
-
     /// The main function that tells to the parser how to recover itself.
     ///
     /// Recover from an error with a [recovery set](TokenSet) or by using a `{` or `}`.

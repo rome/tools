@@ -20,8 +20,7 @@ JsModule {
                                 id: JsIdentifierBinding {
                                     name_token: IDENT@22..24 "a" [] [Whitespace(" ")],
                                 },
-                                excl_token: missing (optional),
-                                type_annotation: missing (optional),
+                                variable_annotation: missing (optional),
                                 initializer: JsInitializerClause {
                                     eq_token: EQ@24..26 "=" [] [Whitespace(" ")],
                                     expression: JsNumberLiteralExpression {
@@ -61,8 +60,7 @@ JsModule {
                 0: JS_IDENTIFIER_BINDING@22..24
                   0: IDENT@22..24 "a" [] [Whitespace(" ")]
                 1: (empty)
-                2: (empty)
-                3: JS_INITIALIZER_CLAUSE@24..28
+                2: JS_INITIALIZER_CLAUSE@24..28
                   0: EQ@24..26 "=" [] [Whitespace(" ")]
                   1: JS_NUMBER_LITERAL_EXPRESSION@26..28
                     0: JS_NUMBER_LITERAL@26..28 "10" [] []

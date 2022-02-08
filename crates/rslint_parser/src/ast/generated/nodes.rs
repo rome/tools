@@ -8,22 +8,6 @@ use crate::{
     SyntaxNode, SyntaxResult, SyntaxToken,
 };
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct Ident {
-    pub(crate) syntax: SyntaxNode,
-}
-impl Ident {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
-    }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct ImportMeta {
     pub(crate) syntax: SyntaxNode,
 }
@@ -655,14 +639,11 @@ impl JsConstructorClassMember {
     pub fn name(&self) -> SyntaxResult<JsLiteralMemberName> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 2usize)
-    }
     pub fn parameters(&self) -> SyntaxResult<JsConstructorParameters> {
-        support::required_node(&self.syntax, 3usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
-        support::required_node(&self.syntax, 4usize)
+        support::required_node(&self.syntax, 3usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1974,17 +1955,20 @@ impl JsMethodClassMember {
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
         support::required_node(&self.syntax, 5usize)
     }
+    pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 6usize)
+    }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
-        support::node(&self.syntax, 6usize)
+        support::node(&self.syntax, 7usize)
     }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
-        support::required_node(&self.syntax, 7usize)
+        support::required_node(&self.syntax, 8usize)
     }
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
-        support::node(&self.syntax, 8usize)
+        support::node(&self.syntax, 9usize)
     }
     pub fn body(&self) -> SyntaxResult<JsFunctionBody> {
-        support::required_node(&self.syntax, 9usize)
+        support::required_node(&self.syntax, 10usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2004,7 +1988,9 @@ impl JsMethodObjectMember {
     pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
         support::required_node(&self.syntax, 2usize)
     }
-    pub fn type_params(&self) -> Option<TsTypeParameters> { support::node(&self.syntax, 3usize) }
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
+        support::node(&self.syntax, 3usize)
+    }
     pub fn parameters(&self) -> SyntaxResult<JsParameters> {
         support::required_node(&self.syntax, 4usize)
     }
@@ -2525,13 +2511,11 @@ impl JsPropertyClassMember {
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
         support::required_node(&self.syntax, 5usize)
     }
-    pub fn question_mark_token(&self) -> Option<SyntaxToken> {
-        support::token(&self.syntax, 6usize)
+    pub fn property_annotation(&self) -> Option<TsAnyPropertyAnnotation> {
+        support::node(&self.syntax, 6usize)
     }
-    pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 7usize) }
-    pub fn ty(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax, 8usize) }
-    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 9usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 10usize) }
+    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 7usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 8usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsPropertyObjectMember {
@@ -3086,11 +3070,10 @@ impl JsVariableDeclaration {
     pub fn id(&self) -> SyntaxResult<JsAnyBindingPattern> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
-        support::node(&self.syntax, 2usize)
+    pub fn variable_annotation(&self) -> Option<TsAnyVariableAnnotation> {
+        support::node(&self.syntax, 1usize)
     }
-    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
+    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 2usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclarations {
@@ -3489,10 +3472,10 @@ impl TsDefaultTypeClause {
     pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsEnum {
+pub struct TsDefinitePropertyAnnotation {
     pub(crate) syntax: SyntaxNode,
 }
-impl TsEnum {
+impl TsDefinitePropertyAnnotation {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -3500,17 +3483,30 @@ impl TsEnum {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+    pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
     }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 2usize) }
-    pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
+    pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
+        support::required_node(&self.syntax, 1usize)
     }
-    pub fn members(&self) -> TsEnumMemberList { support::list(&self.syntax, 4usize) }
-    pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 5usize)
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsDefiniteVariableAnnotation {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsDefiniteVariableAnnotation {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn type_annotation(&self) -> SyntaxResult<TsTypeAnnotation> {
+        support::required_node(&self.syntax, 1usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -3525,12 +3521,34 @@ impl TsEnumMember {
     #[doc = r" or a match on [SyntaxNode::kind]"]
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 0usize) }
-    pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsEnumStatement {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsEnumStatement {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
-        support::required_node(&self.syntax, 2usize)
+    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 2usize) }
+    pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 3usize)
+    }
+    pub fn members(&self) -> TsEnumMemberList { support::list(&self.syntax, 4usize) }
+    pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 5usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -3678,7 +3696,9 @@ impl TsImportEqualsDecl {
     pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax, 2usize) }
+    pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -4105,6 +4125,25 @@ impl TsObjectType {
     pub fn members(&self) -> TsObjectTypeMemberList { support::list(&self.syntax, 1usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsOptionalPropertyAnnotation {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsOptionalPropertyAnnotation {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
+        support::node(&self.syntax, 1usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -5027,7 +5066,7 @@ pub enum JsAnyStatement {
     JsVariableStatement(JsVariableStatement),
     JsWhileStatement(JsWhileStatement),
     JsWithStatement(JsWithStatement),
-    TsEnum(TsEnum),
+    TsEnumStatement(TsEnumStatement),
     TsTypeAliasStatement(TsTypeAliasStatement),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -5056,6 +5095,12 @@ pub enum TsAnyObjectTypeMember {
     TsSetterSignatureObjectTypeMember(TsSetterSignatureObjectTypeMember),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub enum TsAnyPropertyAnnotation {
+    TsDefinitePropertyAnnotation(TsDefinitePropertyAnnotation),
+    TsOptionalPropertyAnnotation(TsOptionalPropertyAnnotation),
+    TsTypeAnnotation(TsTypeAnnotation),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsAnyPropertyParameter {
     TsPropertyParameter(TsPropertyParameter),
     TsReadonlyPropertyParameter(TsReadonlyPropertyParameter),
@@ -5081,6 +5126,11 @@ pub enum TsAnyTupleTypeElement {
 pub enum TsAnyTypePredicateParameterName {
     JsReferenceIdentifier(JsReferenceIdentifier),
     TsThisType(TsThisType),
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub enum TsAnyVariableAnnotation {
+    TsDefiniteVariableAnnotation(TsDefiniteVariableAnnotation),
+    TsTypeAnnotation(TsTypeAnnotation),
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum TsModuleRef {
@@ -5123,33 +5173,6 @@ pub enum TsType {
     TsUnionType(TsUnionType),
     TsUnknownType(TsUnknownType),
     TsVoidType(TsVoidType),
-}
-impl AstNode for Ident {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == IDENT }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for Ident {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("Ident")
-            .field(
-                "ident_token",
-                &support::DebugSyntaxResult(self.ident_token()),
-            )
-            .finish()
-    }
-}
-impl From<Ident> for SyntaxNode {
-    fn from(n: Ident) -> SyntaxNode { n.syntax }
-}
-impl From<Ident> for SyntaxElement {
-    fn from(n: Ident) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for ImportMeta {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == IMPORT_META }
@@ -6063,10 +6086,6 @@ impl std::fmt::Debug for JsConstructorClassMember {
                 &support::DebugOptionalElement(self.access_modifier()),
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
-            .field(
-                "type_parameters",
-                &support::DebugOptionalElement(self.type_parameters()),
-            )
             .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field("body", &support::DebugSyntaxResult(self.body()))
             .finish()
@@ -8028,6 +8047,10 @@ impl std::fmt::Debug for JsMethodClassMember {
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
+                "question_mark_token",
+                &support::DebugSyntaxResult(self.question_mark_token()),
+            )
+            .field(
                 "type_parameters",
                 &support::DebugOptionalElement(self.type_parameters()),
             )
@@ -8070,8 +8093,8 @@ impl std::fmt::Debug for JsMethodObjectMember {
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
-                "type_params",
-                &support::DebugOptionalElement(self.type_params()),
+                "type_parameters",
+                &support::DebugOptionalElement(self.type_parameters()),
             )
             .field("parameters", &support::DebugSyntaxResult(self.parameters()))
             .field(
@@ -8842,14 +8865,9 @@ impl std::fmt::Debug for JsPropertyClassMember {
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
-                "question_mark_token",
-                &support::DebugOptionalElement(self.question_mark_token()),
+                "property_annotation",
+                &support::DebugOptionalElement(self.property_annotation()),
             )
-            .field(
-                "excl_token",
-                &support::DebugOptionalElement(self.excl_token()),
-            )
-            .field("ty", &support::DebugOptionalElement(self.ty()))
             .field("value", &support::DebugOptionalElement(self.value()))
             .field(
                 "semicolon_token",
@@ -9673,12 +9691,8 @@ impl std::fmt::Debug for JsVariableDeclaration {
         f.debug_struct("JsVariableDeclaration")
             .field("id", &support::DebugSyntaxResult(self.id()))
             .field(
-                "excl_token",
-                &support::DebugOptionalElement(self.excl_token()),
-            )
-            .field(
-                "type_annotation",
-                &support::DebugOptionalElement(self.type_annotation()),
+                "variable_annotation",
+                &support::DebugOptionalElement(self.variable_annotation()),
             )
             .field(
                 "initializer",
@@ -10280,8 +10294,8 @@ impl From<TsDefaultTypeClause> for SyntaxNode {
 impl From<TsDefaultTypeClause> for SyntaxElement {
     fn from(n: TsDefaultTypeClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsEnum {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ENUM }
+impl AstNode for TsDefinitePropertyAnnotation {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_DEFINITE_PROPERTY_ANNOTATION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -10291,32 +10305,50 @@ impl AstNode for TsEnum {
     }
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsEnum {
+impl std::fmt::Debug for TsDefinitePropertyAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsEnum")
+        f.debug_struct("TsDefinitePropertyAnnotation")
+            .field("excl_token", &support::DebugSyntaxResult(self.excl_token()))
             .field(
-                "const_token",
-                &support::DebugOptionalElement(self.const_token()),
-            )
-            .field("enum_token", &support::DebugSyntaxResult(self.enum_token()))
-            .field("ident", &support::DebugSyntaxResult(self.ident()))
-            .field(
-                "l_curly_token",
-                &support::DebugSyntaxResult(self.l_curly_token()),
-            )
-            .field("members", &self.members())
-            .field(
-                "r_curly_token",
-                &support::DebugSyntaxResult(self.r_curly_token()),
+                "type_annotation",
+                &support::DebugSyntaxResult(self.type_annotation()),
             )
             .finish()
     }
 }
-impl From<TsEnum> for SyntaxNode {
-    fn from(n: TsEnum) -> SyntaxNode { n.syntax }
+impl From<TsDefinitePropertyAnnotation> for SyntaxNode {
+    fn from(n: TsDefinitePropertyAnnotation) -> SyntaxNode { n.syntax }
 }
-impl From<TsEnum> for SyntaxElement {
-    fn from(n: TsEnum) -> SyntaxElement { n.syntax.into() }
+impl From<TsDefinitePropertyAnnotation> for SyntaxElement {
+    fn from(n: TsDefinitePropertyAnnotation) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsDefiniteVariableAnnotation {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_DEFINITE_VARIABLE_ANNOTATION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsDefiniteVariableAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsDefiniteVariableAnnotation")
+            .field("excl_token", &support::DebugSyntaxResult(self.excl_token()))
+            .field(
+                "type_annotation",
+                &support::DebugSyntaxResult(self.type_annotation()),
+            )
+            .finish()
+    }
+}
+impl From<TsDefiniteVariableAnnotation> for SyntaxNode {
+    fn from(n: TsDefiniteVariableAnnotation) -> SyntaxNode { n.syntax }
+}
+impl From<TsDefiniteVariableAnnotation> for SyntaxElement {
+    fn from(n: TsDefiniteVariableAnnotation) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsEnumMember {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ENUM_MEMBER }
@@ -10332,9 +10364,11 @@ impl AstNode for TsEnumMember {
 impl std::fmt::Debug for TsEnumMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsEnumMember")
-            .field("ident", &support::DebugSyntaxResult(self.ident()))
-            .field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
-            .field("value", &support::DebugSyntaxResult(self.value()))
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "initializer",
+                &support::DebugOptionalElement(self.initializer()),
+            )
             .finish()
     }
 }
@@ -10343,6 +10377,44 @@ impl From<TsEnumMember> for SyntaxNode {
 }
 impl From<TsEnumMember> for SyntaxElement {
     fn from(n: TsEnumMember) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsEnumStatement {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_ENUM_STATEMENT }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsEnumStatement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsEnumStatement")
+            .field(
+                "const_token",
+                &support::DebugOptionalElement(self.const_token()),
+            )
+            .field("enum_token", &support::DebugSyntaxResult(self.enum_token()))
+            .field("id", &support::DebugSyntaxResult(self.id()))
+            .field(
+                "l_curly_token",
+                &support::DebugSyntaxResult(self.l_curly_token()),
+            )
+            .field("members", &self.members())
+            .field(
+                "r_curly_token",
+                &support::DebugSyntaxResult(self.r_curly_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsEnumStatement> for SyntaxNode {
+    fn from(n: TsEnumStatement) -> SyntaxNode { n.syntax }
+}
+impl From<TsEnumStatement> for SyntaxElement {
+    fn from(n: TsEnumStatement) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsExprWithTypeArgs {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXPR_WITH_TYPE_ARGS }
@@ -10562,7 +10634,10 @@ impl std::fmt::Debug for TsImportEqualsDecl {
                 "export_token",
                 &support::DebugSyntaxResult(self.export_token()),
             )
-            .field("ident", &support::DebugSyntaxResult(self.ident()))
+            .field(
+                "ident_token",
+                &support::DebugSyntaxResult(self.ident_token()),
+            )
             .field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
             .field("module", &support::DebugSyntaxResult(self.module()))
             .field(
@@ -11242,6 +11317,37 @@ impl From<TsObjectType> for SyntaxNode {
 }
 impl From<TsObjectType> for SyntaxElement {
     fn from(n: TsObjectType) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsOptionalPropertyAnnotation {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_OPTIONAL_PROPERTY_ANNOTATION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsOptionalPropertyAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsOptionalPropertyAnnotation")
+            .field(
+                "question_mark_token",
+                &support::DebugSyntaxResult(self.question_mark_token()),
+            )
+            .field(
+                "type_annotation",
+                &support::DebugOptionalElement(self.type_annotation()),
+            )
+            .finish()
+    }
+}
+impl From<TsOptionalPropertyAnnotation> for SyntaxNode {
+    fn from(n: TsOptionalPropertyAnnotation) -> SyntaxNode { n.syntax }
+}
+impl From<TsOptionalPropertyAnnotation> for SyntaxElement {
+    fn from(n: TsOptionalPropertyAnnotation) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsOptionalTupleTypeElement {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_OPTIONAL_TUPLE_TYPE_ELEMENT }
@@ -15260,8 +15366,8 @@ impl From<JsWhileStatement> for JsAnyStatement {
 impl From<JsWithStatement> for JsAnyStatement {
     fn from(node: JsWithStatement) -> JsAnyStatement { JsAnyStatement::JsWithStatement(node) }
 }
-impl From<TsEnum> for JsAnyStatement {
-    fn from(node: TsEnum) -> JsAnyStatement { JsAnyStatement::TsEnum(node) }
+impl From<TsEnumStatement> for JsAnyStatement {
+    fn from(node: TsEnumStatement) -> JsAnyStatement { JsAnyStatement::TsEnumStatement(node) }
 }
 impl From<TsTypeAliasStatement> for JsAnyStatement {
     fn from(node: TsTypeAliasStatement) -> JsAnyStatement {
@@ -15295,7 +15401,7 @@ impl AstNode for JsAnyStatement {
                 | JS_VARIABLE_STATEMENT
                 | JS_WHILE_STATEMENT
                 | JS_WITH_STATEMENT
-                | TS_ENUM
+                | TS_ENUM_STATEMENT
                 | TS_TYPE_ALIAS_STATEMENT
         )
     }
@@ -15342,7 +15448,7 @@ impl AstNode for JsAnyStatement {
             }
             JS_WHILE_STATEMENT => JsAnyStatement::JsWhileStatement(JsWhileStatement { syntax }),
             JS_WITH_STATEMENT => JsAnyStatement::JsWithStatement(JsWithStatement { syntax }),
-            TS_ENUM => JsAnyStatement::TsEnum(TsEnum { syntax }),
+            TS_ENUM_STATEMENT => JsAnyStatement::TsEnumStatement(TsEnumStatement { syntax }),
             TS_TYPE_ALIAS_STATEMENT => {
                 JsAnyStatement::TsTypeAliasStatement(TsTypeAliasStatement { syntax })
             }
@@ -15375,7 +15481,7 @@ impl AstNode for JsAnyStatement {
             JsAnyStatement::JsVariableStatement(it) => &it.syntax,
             JsAnyStatement::JsWhileStatement(it) => &it.syntax,
             JsAnyStatement::JsWithStatement(it) => &it.syntax,
-            JsAnyStatement::TsEnum(it) => &it.syntax,
+            JsAnyStatement::TsEnumStatement(it) => &it.syntax,
             JsAnyStatement::TsTypeAliasStatement(it) => &it.syntax,
         }
     }
@@ -15406,7 +15512,7 @@ impl std::fmt::Debug for JsAnyStatement {
             JsAnyStatement::JsVariableStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsWhileStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsWithStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::TsEnum(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyStatement::TsEnumStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::TsTypeAliasStatement(it) => std::fmt::Debug::fmt(it, f),
         }
     }
@@ -15437,7 +15543,7 @@ impl From<JsAnyStatement> for SyntaxNode {
             JsAnyStatement::JsVariableStatement(it) => it.into(),
             JsAnyStatement::JsWhileStatement(it) => it.into(),
             JsAnyStatement::JsWithStatement(it) => it.into(),
-            JsAnyStatement::TsEnum(it) => it.into(),
+            JsAnyStatement::TsEnumStatement(it) => it.into(),
             JsAnyStatement::TsTypeAliasStatement(it) => it.into(),
         }
     }
@@ -15744,6 +15850,83 @@ impl From<TsAnyObjectTypeMember> for SyntaxElement {
         node.into()
     }
 }
+impl From<TsDefinitePropertyAnnotation> for TsAnyPropertyAnnotation {
+    fn from(node: TsDefinitePropertyAnnotation) -> TsAnyPropertyAnnotation {
+        TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(node)
+    }
+}
+impl From<TsOptionalPropertyAnnotation> for TsAnyPropertyAnnotation {
+    fn from(node: TsOptionalPropertyAnnotation) -> TsAnyPropertyAnnotation {
+        TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(node)
+    }
+}
+impl From<TsTypeAnnotation> for TsAnyPropertyAnnotation {
+    fn from(node: TsTypeAnnotation) -> TsAnyPropertyAnnotation {
+        TsAnyPropertyAnnotation::TsTypeAnnotation(node)
+    }
+}
+impl AstNode for TsAnyPropertyAnnotation {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(
+            kind,
+            TS_DEFINITE_PROPERTY_ANNOTATION | TS_OPTIONAL_PROPERTY_ANNOTATION | TS_TYPE_ANNOTATION
+        )
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            TS_DEFINITE_PROPERTY_ANNOTATION => {
+                TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(
+                    TsDefinitePropertyAnnotation { syntax },
+                )
+            }
+            TS_OPTIONAL_PROPERTY_ANNOTATION => {
+                TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(
+                    TsOptionalPropertyAnnotation { syntax },
+                )
+            }
+            TS_TYPE_ANNOTATION => {
+                TsAnyPropertyAnnotation::TsTypeAnnotation(TsTypeAnnotation { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(it) => &it.syntax,
+            TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(it) => &it.syntax,
+            TsAnyPropertyAnnotation::TsTypeAnnotation(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for TsAnyPropertyAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
+            TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
+            TsAnyPropertyAnnotation::TsTypeAnnotation(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<TsAnyPropertyAnnotation> for SyntaxNode {
+    fn from(n: TsAnyPropertyAnnotation) -> SyntaxNode {
+        match n {
+            TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(it) => it.into(),
+            TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(it) => it.into(),
+            TsAnyPropertyAnnotation::TsTypeAnnotation(it) => it.into(),
+        }
+    }
+}
+impl From<TsAnyPropertyAnnotation> for SyntaxElement {
+    fn from(n: TsAnyPropertyAnnotation) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<TsPropertyParameter> for TsAnyPropertyParameter {
     fn from(node: TsPropertyParameter) -> TsAnyPropertyParameter {
         TsAnyPropertyParameter::TsPropertyParameter(node)
@@ -16043,6 +16226,65 @@ impl From<TsAnyTypePredicateParameterName> for SyntaxNode {
 }
 impl From<TsAnyTypePredicateParameterName> for SyntaxElement {
     fn from(n: TsAnyTypePredicateParameterName) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<TsDefiniteVariableAnnotation> for TsAnyVariableAnnotation {
+    fn from(node: TsDefiniteVariableAnnotation) -> TsAnyVariableAnnotation {
+        TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(node)
+    }
+}
+impl From<TsTypeAnnotation> for TsAnyVariableAnnotation {
+    fn from(node: TsTypeAnnotation) -> TsAnyVariableAnnotation {
+        TsAnyVariableAnnotation::TsTypeAnnotation(node)
+    }
+}
+impl AstNode for TsAnyVariableAnnotation {
+    fn can_cast(kind: JsSyntaxKind) -> bool {
+        matches!(kind, TS_DEFINITE_VARIABLE_ANNOTATION | TS_TYPE_ANNOTATION)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            TS_DEFINITE_VARIABLE_ANNOTATION => {
+                TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(
+                    TsDefiniteVariableAnnotation { syntax },
+                )
+            }
+            TS_TYPE_ANNOTATION => {
+                TsAnyVariableAnnotation::TsTypeAnnotation(TsTypeAnnotation { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(it) => &it.syntax,
+            TsAnyVariableAnnotation::TsTypeAnnotation(it) => &it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for TsAnyVariableAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
+            TsAnyVariableAnnotation::TsTypeAnnotation(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<TsAnyVariableAnnotation> for SyntaxNode {
+    fn from(n: TsAnyVariableAnnotation) -> SyntaxNode {
+        match n {
+            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(it) => it.into(),
+            TsAnyVariableAnnotation::TsTypeAnnotation(it) => it.into(),
+        }
+    }
+}
+impl From<TsAnyVariableAnnotation> for SyntaxElement {
+    fn from(n: TsAnyVariableAnnotation) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
@@ -16607,6 +16849,11 @@ impl std::fmt::Display for TsAnyObjectTypeMember {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsAnyPropertyAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsAnyPropertyParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -16632,17 +16879,17 @@ impl std::fmt::Display for TsAnyTypePredicateParameterName {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsAnyVariableAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsModuleRef {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
 impl std::fmt::Display for TsType {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for Ident {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17447,12 +17694,22 @@ impl std::fmt::Display for TsDefaultTypeClause {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsEnum {
+impl std::fmt::Display for TsDefinitePropertyAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsDefiniteVariableAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
 impl std::fmt::Display for TsEnumMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsEnumStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -17588,6 +17845,11 @@ impl std::fmt::Display for TsNumberType {
     }
 }
 impl std::fmt::Display for TsObjectType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsOptionalPropertyAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -19116,23 +19378,23 @@ impl AstNode for TsEnumMemberList {
     }
     fn syntax(&self) -> &SyntaxNode { self.syntax_list.node() }
 }
-impl AstNodeList<TsEnumMember> for TsEnumMemberList {
+impl AstSeparatedList<TsEnumMember> for TsEnumMemberList {
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
 }
 impl Debug for TsEnumMemberList {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.write_str("TsEnumMemberList ")?;
-        f.debug_list().entries(self.iter()).finish()
+        f.debug_list().entries(self.elements()).finish()
     }
 }
-impl IntoIterator for &TsEnumMemberList {
-    type Item = TsEnumMember;
-    type IntoIter = AstNodeListIterator<TsEnumMember>;
+impl IntoIterator for TsEnumMemberList {
+    type Item = SyntaxResult<TsEnumMember>;
+    type IntoIter = AstSeparatedListNodesIterator<TsEnumMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
-impl IntoIterator for TsEnumMemberList {
-    type Item = TsEnumMember;
-    type IntoIter = AstNodeListIterator<TsEnumMember>;
+impl IntoIterator for &TsEnumMemberList {
+    type Item = SyntaxResult<TsEnumMember>;
+    type IntoIter = AstSeparatedListNodesIterator<TsEnumMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -19532,7 +19794,6 @@ impl Debug for DebugSyntaxElement {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match &self.0 {
             NodeOrToken::Node(node) => match node.kind() {
-                IDENT => std::fmt::Debug::fmt(&Ident::cast(node.clone()).unwrap(), f),
                 IMPORT_META => std::fmt::Debug::fmt(&ImportMeta::cast(node.clone()).unwrap(), f),
                 JS_ARRAY_ASSIGNMENT_PATTERN => {
                     std::fmt::Debug::fmt(&JsArrayAssignmentPattern::cast(node.clone()).unwrap(), f)
@@ -20106,12 +20367,22 @@ impl Debug for DebugSyntaxElement {
                 TS_DEFAULT_TYPE_CLAUSE => {
                     std::fmt::Debug::fmt(&TsDefaultTypeClause::cast(node.clone()).unwrap(), f)
                 }
-                TS_ENUM => std::fmt::Debug::fmt(&TsEnum::cast(node.clone()).unwrap(), f),
+                TS_DEFINITE_PROPERTY_ANNOTATION => std::fmt::Debug::fmt(
+                    &TsDefinitePropertyAnnotation::cast(node.clone()).unwrap(),
+                    f,
+                ),
+                TS_DEFINITE_VARIABLE_ANNOTATION => std::fmt::Debug::fmt(
+                    &TsDefiniteVariableAnnotation::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_ENUM_MEMBER => {
                     std::fmt::Debug::fmt(&TsEnumMember::cast(node.clone()).unwrap(), f)
                 }
                 TS_ENUM_MEMBER_LIST => {
                     std::fmt::Debug::fmt(&TsEnumMemberList::cast(node.clone()).unwrap(), f)
+                }
+                TS_ENUM_STATEMENT => {
+                    std::fmt::Debug::fmt(&TsEnumStatement::cast(node.clone()).unwrap(), f)
                 }
                 TS_EXPR_WITH_TYPE_ARGS => {
                     std::fmt::Debug::fmt(&TsExprWithTypeArgs::cast(node.clone()).unwrap(), f)
@@ -20203,6 +20474,10 @@ impl Debug for DebugSyntaxElement {
                 TS_OBJECT_TYPE_MEMBER_LIST => {
                     std::fmt::Debug::fmt(&TsObjectTypeMemberList::cast(node.clone()).unwrap(), f)
                 }
+                TS_OPTIONAL_PROPERTY_ANNOTATION => std::fmt::Debug::fmt(
+                    &TsOptionalPropertyAnnotation::cast(node.clone()).unwrap(),
+                    f,
+                ),
                 TS_OPTIONAL_TUPLE_TYPE_ELEMENT => std::fmt::Debug::fmt(
                     &TsOptionalTupleTypeElement::cast(node.clone()).unwrap(),
                     f,

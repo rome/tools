@@ -8,11 +8,12 @@ use crate::syntax::expr::{
     parse_reference_identifier, ExpressionContext,
 };
 use crate::syntax::function::{
-    parse_formal_parameter, parse_function_body, parse_parameter_list,
-    parse_ts_type_annotation_or_error, ParameterContext,
+    parse_formal_parameter, parse_function_body, parse_parameter_list, ParameterContext,
 };
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::ts_only_syntax_error;
+use crate::syntax::js_parse_error::{
+    ts_accessor_type_parameters_error, ts_only_syntax_error, ts_set_accessor_return_type_error,
+};
 use crate::syntax::typescript::{parse_ts_return_type_annotation, parse_ts_type_parameters};
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{ParseRecovery, ParseSeparatedList, Parser, SyntaxFeature};
@@ -258,10 +259,20 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 
     parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
+    // test_err ts ts_object_getter_type_parameters
+    // ({ get a<A>(): A {} });
+    if let Present(type_parameters) = parse_ts_type_parameters(p) {
+        p.error(ts_accessor_type_parameters_error(p, &type_parameters))
+    }
+
     p.expect(T!['(']);
     p.expect(T![')']);
 
-    parse_ts_type_annotation_or_error(p).ok();
+    TypeScript
+        .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
+            ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
+        })
+        .ok();
 
     parse_function_body(p, SignatureFlags::empty())
         .or_add_diagnostic(p, js_parse_error::expected_function_body);
@@ -279,6 +290,13 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
     p.bump_remap(T![set]);
 
     parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
+
+    // test_err ts ts_object_setter_type_parameters
+    // ({ set a<A>(value: A) {} });
+    if let Present(type_parameters) = parse_ts_type_parameters(p) {
+        p.error(ts_accessor_type_parameters_error(p, &type_parameters))
+    }
+
     let has_l_paren = p.expect(T!['(']);
 
     p.with_state(EnterParameters(SignatureFlags::empty()), |p| {
@@ -290,6 +308,15 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
         .or_add_diagnostic(p, js_parse_error::expected_parameter);
         p.expect(T![')']);
     });
+
+    // test_err ts ts_object_setter_return_type
+    // ({ set a(value: string): void {} });
+    if let Present(return_type_annotation) = parse_ts_return_type_annotation(p) {
+        p.error(ts_set_accessor_return_type_error(
+            p,
+            &return_type_annotation,
+        ));
+    }
 
     parse_function_body(p, SignatureFlags::empty())
         .or_add_diagnostic(p, js_parse_error::expected_function_body);
@@ -398,16 +425,30 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 }
 
+// test ts ts_method_object_member_body
+// ({
+//     x<A>(maybeA: any): maybeA is A { return true },
+//     y(a: string): string { return "string"; },
+//     async *id<R>(param: Promise<R>): AsyncIterableIterator<R> { yield await param },
+// })
+
 /// Parses the body of a method object member starting right after the member name.
 fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
-    parse_ts_type_parameters(p).ok();
+    TypeScript
+        .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, type_parameters| {
+            ts_only_syntax_error(p, "type parameters", type_parameters.range(p).as_range())
+        })
+        .ok();
+
     parse_parameter_list(p, ParameterContext::Implementation, flags)
         .or_add_diagnostic(p, js_parse_error::expected_parameters);
+
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, annotation| {
             ts_only_syntax_error(p, "return type annotation", annotation.range(p).as_range())
         })
         .ok();
+
     parse_function_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_function_body);
 }
 

@@ -1,0 +1,40 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsUnknownStatement {
+            items: [
+                ENUM_KW@0..5 "enum" [] [Whitespace(" ")],
+                JsIdentifierBinding {
+                    name_token: IDENT@5..7 "A" [] [Whitespace(" ")],
+                },
+                L_CURLY@7..8 "{" [] [],
+                TsEnumMemberList [],
+                R_CURLY@8..9 "}" [] [],
+            ],
+        },
+    ],
+    eof_token: EOF@9..10 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..10
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..9
+    0: JS_UNKNOWN_STATEMENT@0..9
+      0: ENUM_KW@0..5 "enum" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@5..7
+        0: IDENT@5..7 "A" [] [Whitespace(" ")]
+      2: L_CURLY@7..8 "{" [] []
+      3: TS_ENUM_MEMBER_LIST@8..8
+      4: R_CURLY@8..9 "}" [] []
+  3: EOF@9..10 "" [Newline("\n")] []
+--
+error[SyntaxError]: `enums` can only be declared in TypeScript files
+  ┌─ enum_in_js.js:1:1
+  │
+1 │ enum A {}
+  │ ^^^^^^^^^
+
+--
+enum A {}

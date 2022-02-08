@@ -53,12 +53,14 @@ fn parser_missing_smoke_test() {
 
 fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
     let res = catch_unwind(|| {
+        let path = PathBuf::from(path);
+        let ext = path.extension().and_then(|x| x.to_str());
         // Files containing a // SCRIPT comment are parsed as script and not as module
         // This is needed to test features that are restricted in strict mode.
-        let syntax = if text.contains("// SCRIPT") {
-            Syntax::default()
-        } else if text.contains("// TYPESCRIPT") {
+        let syntax = if ext == Some("ts") {
             Syntax::default().typescript()
+        } else if text.contains("// SCRIPT") {
+            Syntax::default()
         } else {
             Syntax::default().module()
         };
@@ -84,15 +86,16 @@ fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<JsAnyRoot>, Stri
         let formatted = format!("{:#?}", &parse.tree());
         (parse, formatted)
     })
-    .unwrap_or_else(|_| {
+    .unwrap_or_else(|err| {
         // Re-parsing the source here seems silly. But the problem is, that `SyntaxNode`s aren't
         // unwind safe. That's why the same `ParseResult` can't be reused here.
         // This should be fine because this code is only executed for local tests. No checked-in
         // test should ever hit this line.
         let re_parsed = try_parse(path, text);
         panic!(
-            "Printing the AST for `{}` panicked. That means it is malformed.\n{:#?}",
+            "Printing the AST for `{}` panicked. That means it is malformed. Err: {:?}\n{:#?}",
             path,
+            err,
             re_parsed.syntax()
         );
     })
@@ -144,9 +147,11 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
 mod parser {
     mod ok {
         tests_macros::gen_tests! {"test_data/inline/ok/**/*.js", crate::tests::run_and_expect_no_errors, ""}
+        tests_macros::gen_tests! {"test_data/inline/ok/**/*.ts", crate::tests::run_and_expect_no_errors, ""}
     }
     mod err {
         tests_macros::gen_tests! {"test_data/inline/err/**/*.js", crate::tests::run_and_expect_errors, ""}
+        tests_macros::gen_tests! {"test_data/inline/err/**/*.ts", crate::tests::run_and_expect_errors, ""}
     }
 }
 

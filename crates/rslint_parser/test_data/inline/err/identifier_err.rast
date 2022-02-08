@@ -225,11 +225,18 @@ error[SyntaxError]: Illegal use of `yield` as an identifier in generator functio
   │                ^^^^^
 
 --
-error[SyntaxError]: expected a statement but instead found 'enum'
+error[SyntaxError]: `enum` statements must have a name
   ┌─ identifier_err.js:5:1
   │
 5 │ enum;
-  │ ^^^^ Expected a statement here
+  │ ^^^^
+
+--
+error[SyntaxError]: expected `'{'` but instead found `;`
+  ┌─ identifier_err.js:5:5
+  │
+5 │ enum;
+  │     ^ unexpected
 
 --
 error[SyntaxError]: Illegal use of reserved keyword `implements` as an identifier in strict mode

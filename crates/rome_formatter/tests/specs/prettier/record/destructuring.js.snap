@@ -1,0 +1,77 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: destructuring.js
+
+---
+# Input
+```js
+const { a, b } = #{ a: 1, b: 2 };
+assert(a === 1);
+assert(b === 2);
+
+const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+assert(a === 1);
+assert(typeof rest === "object");
+assert(rest.b === 2);
+assert(rest.c === 3);
+
+```
+
+# Output
+```js
+const { a, b } = #
+{ a: 1, b: 2 };
+assert(a === 1);
+assert(b === 2);
+
+const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+assert(a === 1);
+assert(typeof rest === "object");
+assert(rest.b === 2);
+assert(rest.c === 3);
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `IDENT` but instead found `{`
+  ┌─ destructuring.js:1:19
+  │
+1 │ const { a, b } = #{ a: 1, b: 2 };
+  │                   ^ unexpected
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ destructuring.js:1:28
+  │
+1 │ const { a, b } = #{ a: 1, b: 2 };
+  │                        ----^
+  │                        │   │
+  │                        │   An explicit or implicit semicolon is expected here...
+  │                        ...Which is required to end this statement
+
+error[SyntaxError]: expected `IDENT` but instead found `{`
+  ┌─ destructuring.js:5:25
+  │
+5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+  │                         ^ unexpected
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ destructuring.js:5:34
+  │
+5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+  │                              ----^
+  │                              │   │
+  │                              │   An explicit or implicit semicolon is expected here...
+  │                              ...Which is required to end this statement
+
+error[SyntaxError]: expected `'}'` but instead the file ends
+   ┌─ destructuring.js:10:1
+   │
+10 │ 
+   │ ^ the file ends here
+
+
+```
+
+

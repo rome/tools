@@ -248,8 +248,8 @@ impl<'t> Parser<'t> {
 
     /// Add an error
     #[cold]
-    pub fn error(&mut self, err: impl Into<ParserError>) {
-        let err = err.into();
+    pub fn error(&mut self, err: impl ToDiagnostic) {
+        let err = err.to_diagnostic(self);
 
         // Don't report another error if it would just be at the same position as the last error.
         if let Some(previous) = self.errors.last() {
@@ -308,26 +308,7 @@ impl<'t> Parser<'t> {
         if self.eat(kind) {
             true
         } else {
-            let err = if self.cur() == JsSyntaxKind::EOF {
-                self.err_builder(&format!(
-                    "expected `{}` but instead the file ends",
-                    kind.to_string()
-                        .map(|x| x.to_string())
-                        .unwrap_or_else(|| format!("{:?}", kind))
-                ))
-                .primary(self.cur_tok().range(), "the file ends here")
-            } else {
-                self.err_builder(&format!(
-                    "expected `{}` but instead found `{}`",
-                    kind.to_string()
-                        .map(|x| x.to_string())
-                        .unwrap_or_else(|| format!("{:?}", kind)),
-                    self.cur_src()
-                ))
-                .primary(self.cur_tok().range(), "unexpected")
-            };
-
-            self.error(err);
+            self.error(expected_token(kind));
             false
         }
     }
@@ -411,7 +392,7 @@ impl<'t> Parser<'t> {
     }
 
     /// Bump and add an error event
-    pub fn err_and_bump(&mut self, err: impl Into<ParserError>, unknown_syntax_kind: JsSyntaxKind) {
+    pub fn err_and_bump(&mut self, err: impl ToDiagnostic, unknown_syntax_kind: JsSyntaxKind) {
         let m = self.start();
         self.bump_any();
         m.complete(self, unknown_syntax_kind);
@@ -691,7 +672,8 @@ impl CompletedMarker {
     }
 
     pub fn err_if_not_ts(&mut self, p: &mut Parser, err: &str) {
-        p.err_if_not_ts(self, err, JsSyntaxKind::JS_UNKNOWN);
+        let unknown = self.kind.to_unknown();
+        p.err_if_not_ts(self, err, unknown);
     }
 }
 

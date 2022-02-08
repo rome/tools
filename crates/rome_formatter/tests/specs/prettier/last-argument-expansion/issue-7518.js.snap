@@ -1,0 +1,66 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: issue-7518.js
+
+---
+# Input
+```js
+const Broken = React.forwardRef(({
+	children,
+	// 1
+	// 2
+	title,
+	hidden,
+	// 3
+}, ref) => (
+	<div ref={ref}>
+		{children}
+	</div>
+))
+
+```
+
+# Output
+```js
+const Broken = React.forwardRef(({
+	children,
+	// 1
+	// 2
+	title,
+	hidden,
+	// 3
+}, ref) => (
+	<div ref={ref}>
+		{children}
+	</div>
+))
+
+```
+
+# Errors
+```
+error[SyntaxError]: Invalid assignment to `<div ref`
+  ┌─ issue-7518.js:9:2
+  │
+9 │     <div ref={ref}>
+  │     ^^^^^^^^ This expression cannot be assigned to
+
+error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
+   ┌─ issue-7518.js:11:3
+   │
+11 │     </div>
+   │     -^ But this operator was encountered instead
+   │     │ 
+   │     This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ issue-7518.js:12:1
+   │
+12 │ ))
+   │ ^ Expected an expression here
+
+
+```
+
+

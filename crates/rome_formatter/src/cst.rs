@@ -37,7 +37,7 @@ impl_format_verbatim! {
     TsThisParameter,
     TsConstructorType,
     TsDefaultTypeClause,
-    TsEnum,
+    TsEnumStatement,
     TsEnumMember,
     TsExprWithTypeArgs,
     TsExternalModuleRef,
@@ -97,6 +97,9 @@ impl_format_verbatim! {
     TsUnionType,
     TsUnknownType,
     TsVoidType,
+    TsDefinitePropertyAnnotation,
+    TsOptionalPropertyAnnotation,
+    TsDefiniteVariableAnnotation,
     // Unknown
     JsUnknown,
     // Separated Lists
@@ -122,6 +125,7 @@ impl_format_verbatim! {
     TsTypeList,
     TsTypeParameterList,
     TsUnionTypeVariantList,
+    TsEnumMemberList,
 }
 
 // Non-separated lists
@@ -142,7 +146,6 @@ impl_format_list! {
     JsStatementList,
     JsSwitchCaseList,
     JsTemplateElementList,
-    TsEnumMemberList,
     TsObjectTypeMemberList,
     TsTemplateElementList,
 }

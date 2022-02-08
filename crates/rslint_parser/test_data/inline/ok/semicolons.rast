@@ -10,8 +10,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..8 "foo" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@8..10 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -33,8 +32,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@19..24 "foo2" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@24..26 "=" [] [Whitespace(" ")],
                             expression: JsIdentifierExpression {
@@ -56,8 +54,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@33..37 "foo3" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                 ],
@@ -72,8 +69,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@43..47 "foo4" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                 ],
@@ -88,8 +84,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@52..56 "foo5" [] [],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: missing (optional),
                     },
                 ],
@@ -141,8 +136,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@4..8
               0: IDENT@4..8 "foo" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@8..13
+            2: JS_INITIALIZER_CLAUSE@8..13
               0: EQ@8..10 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@10..13
                 0: JS_REFERENCE_IDENTIFIER@10..13
@@ -156,8 +150,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@19..24
               0: IDENT@19..24 "foo2" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@24..27
+            2: JS_INITIALIZER_CLAUSE@24..27
               0: EQ@24..26 "=" [] [Whitespace(" ")]
               1: JS_IDENTIFIER_EXPRESSION@26..27
                 0: JS_REFERENCE_IDENTIFIER@26..27
@@ -172,7 +165,6 @@ JsModule {
               0: IDENT@33..37 "foo3" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
       1: SEMICOLON@37..38 ";" [] []
     3: JS_VARIABLE_STATEMENT@38..47
       0: JS_VARIABLE_DECLARATIONS@38..47
@@ -183,7 +175,6 @@ JsModule {
               0: IDENT@43..47 "foo4" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
       1: (empty)
     4: JS_VARIABLE_STATEMENT@47..56
       0: JS_VARIABLE_DECLARATIONS@47..56
@@ -194,7 +185,6 @@ JsModule {
               0: IDENT@52..56 "foo5" [] []
             1: (empty)
             2: (empty)
-            3: (empty)
       1: (empty)
     5: JS_FUNCTION_STATEMENT@56..88
       0: (empty)

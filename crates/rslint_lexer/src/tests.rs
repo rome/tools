@@ -46,17 +46,17 @@ macro_rules! assert_lex {
             idx += 1;
         )*
 
-		if idx < tokens.len() {
-			dbg!(&tokens);
-			panic!(
-				"expected {} tokens but lexer returned {}, first unexpected token is '{:?}'",
-				idx,
-				tokens.len(),
-				tokens[idx].0.kind
-			);
-		} else {
-			assert_eq!(idx, tokens.len());
-		}
+        if idx < tokens.len() {
+            dbg!(&tokens);
+            panic!(
+                "expected {} tokens but lexer returned {}, first unexpected token is '{:?}'",
+                idx,
+                tokens.len(),
+                tokens[idx].0.kind
+            );
+        } else {
+            assert_eq!(idx, tokens.len());
+        }
 
         assert_eq!($src, new_str, "Failed to reconstruct input");
     }};

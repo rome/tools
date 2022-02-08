@@ -17,8 +17,7 @@ JsModule {
                             id: JsIdentifierBinding {
                                 name_token: IDENT@14..15 "a" [] [],
                             },
-                            excl_token: missing (optional),
-                            type_annotation: missing (optional),
+                            variable_annotation: missing (optional),
                             initializer: missing (optional),
                         },
                     ],
@@ -50,7 +49,6 @@ JsModule {
                 0: IDENT@14..15 "a" [] []
               1: (empty)
               2: (empty)
-              3: (empty)
         1: SEMICOLON@15..16 ";" [] []
       5: (empty)
   3: EOF@16..17 "" [Newline("\n")] []

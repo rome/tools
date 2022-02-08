@@ -1,0 +1,81 @@
+JsModule {
+    interpreter_token: missing (optional),
+    directives: JsDirectiveList [],
+    items: JsModuleItemList [
+        JsVariableStatement {
+            declarations: JsVariableDeclarations {
+                kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                items: JsVariableDeclarationList [
+                    JsVariableDeclaration {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@4..5 "a" [] [],
+                        },
+                        variable_annotation: TsTypeAnnotation {
+                            colon_token: COLON@5..7 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@7..14 "string" [] [Whitespace(" ")],
+                            },
+                        },
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@14..16 "=" [] [Whitespace(" ")],
+                            expression: JsStringLiteralExpression {
+                                value_token: JS_STRING_LITERAL@16..22 "\"test\"" [] [],
+                            },
+                        },
+                    },
+                    COMMA@22..24 "," [] [Whitespace(" ")],
+                    JsVariableDeclaration {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@24..25 "b" [] [],
+                        },
+                        variable_annotation: TsDefiniteVariableAnnotation {
+                            excl_token: BANG@25..26 "!" [] [],
+                            type_annotation: TsTypeAnnotation {
+                                colon_token: COLON@26..28 ":" [] [Whitespace(" ")],
+                                ty: TsNumberType {
+                                    number_token: NUMBER_KW@28..34 "number" [] [],
+                                },
+                            },
+                        },
+                        initializer: missing (optional),
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@34..35 ";" [] [],
+        },
+    ],
+    eof_token: EOF@35..36 "" [Newline("\n")] [],
+}
+
+0: JS_MODULE@0..36
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..35
+    0: JS_VARIABLE_STATEMENT@0..35
+      0: JS_VARIABLE_DECLARATIONS@0..34
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION_LIST@4..34
+          0: JS_VARIABLE_DECLARATION@4..22
+            0: JS_IDENTIFIER_BINDING@4..5
+              0: IDENT@4..5 "a" [] []
+            1: TS_TYPE_ANNOTATION@5..14
+              0: COLON@5..7 ":" [] [Whitespace(" ")]
+              1: TS_STRING_TYPE@7..14
+                0: STRING_KW@7..14 "string" [] [Whitespace(" ")]
+            2: JS_INITIALIZER_CLAUSE@14..22
+              0: EQ@14..16 "=" [] [Whitespace(" ")]
+              1: JS_STRING_LITERAL_EXPRESSION@16..22
+                0: JS_STRING_LITERAL@16..22 "\"test\"" [] []
+          1: COMMA@22..24 "," [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATION@24..34
+            0: JS_IDENTIFIER_BINDING@24..25
+              0: IDENT@24..25 "b" [] []
+            1: TS_DEFINITE_VARIABLE_ANNOTATION@25..34
+              0: BANG@25..26 "!" [] []
+              1: TS_TYPE_ANNOTATION@26..34
+                0: COLON@26..28 ":" [] [Whitespace(" ")]
+                1: TS_NUMBER_TYPE@28..34
+                  0: NUMBER_KW@28..34 "number" [] []
+            2: (empty)
+      1: SEMICOLON@34..35 ";" [] []
+  3: EOF@35..36 "" [Newline("\n")] []

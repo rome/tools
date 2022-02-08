@@ -10,8 +10,7 @@ JsModule {
                         id: JsIdentifierBinding {
                             name_token: IDENT@4..6 "b" [] [Whitespace(" ")],
                         },
-                        excl_token: missing (optional),
-                        type_annotation: missing (optional),
+                        variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
                             expression: JsObjectExpression {
@@ -23,7 +22,7 @@ JsModule {
                                         name: JsLiteralMemberName {
                                             value: IDENT@9..15 "foo" [Newline("\n"), Whitespace("  ")] [],
                                         },
-                                        type_params: missing (optional),
+                                        type_parameters: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@15..16 "(" [] [],
                                             items: JsParameterList [],
@@ -44,7 +43,7 @@ JsModule {
                                         name: JsLiteralMemberName {
                                             value: JS_STRING_LITERAL@21..29 "\"bar\"" [Newline("\n"), Whitespace("  ")] [],
                                         },
-                                        type_params: missing (optional),
+                                        type_parameters: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@29..30 "(" [] [],
                                             items: JsParameterList [
@@ -102,7 +101,7 @@ JsModule {
                                             },
                                             r_brack_token: R_BRACK@59..60 "]" [] [],
                                         },
-                                        type_params: missing (optional),
+                                        type_parameters: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@60..61 "(" [] [],
                                             items: JsParameterList [
@@ -132,7 +131,7 @@ JsModule {
                                         name: JsLiteralMemberName {
                                             value: JS_NUMBER_LITERAL@67..71 "5" [Newline("\n"), Whitespace("  ")] [],
                                         },
-                                        type_params: missing (optional),
+                                        type_parameters: missing (optional),
                                         parameters: JsParameters {
                                             l_paren_token: L_PAREN@71..72 "(" [] [],
                                             items: JsParameterList [
@@ -179,8 +178,7 @@ JsModule {
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "b" [] [Whitespace(" ")]
             1: (empty)
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@6..85
+            2: JS_INITIALIZER_CLAUSE@6..85
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@8..85
                 0: L_CURLY@8..9 "{" [] []

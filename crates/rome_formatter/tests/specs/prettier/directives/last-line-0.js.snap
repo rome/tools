@@ -1,0 +1,31 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: last-line-0.js
+
+---
+# Input
+```js
+'use strict';
+```
+
+# Output
+```js
+'use strict';
+
+```
+
+# Errors
+```
+warning[SyntaxError]: Redundant strict mode declaration
+  ┌─ last-line-0.js:1:1
+  │
+1 │ 'use strict';
+  │ ------------ this declaration is redundant
+  │
+  ╧ note: modules are always strict mode
+
+
+```
+
+

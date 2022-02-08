@@ -3,7 +3,11 @@ use globwalk::{GlobWalker, GlobWalkerBuilder};
 use proc_macro::TokenStream;
 use proc_macro_error::*;
 use quote::*;
-use std::path::{Path, PathBuf};
+use std::{
+    collections::HashSet,
+    ffi::OsStr,
+    path::{Component, Path, PathBuf},
+};
 use syn::parse::ParseStream;
 
 struct Arguments {
@@ -97,6 +101,7 @@ impl Arguments {
 
     pub fn gen(&self) -> Result<TokenStream, &str> {
         let files = self.get_all_files()?;
+        let mut duplicates = HashSet::new();
 
         let mut q = quote! {};
         for file in files.flatten() {
@@ -107,7 +112,45 @@ impl Arguments {
                 test_directory,
             } = Arguments::get_variables(&file).ok_or("Cannot generate variables for this file")?;
 
-            let test_name = test_name.replace("-", "_");
+            let mut test_name = test_name.replace(['-', '.'], "_");
+
+            let mut path = Path::new(&test_full_path)
+                .components()
+                .rev()
+                .skip(1)
+                .map(Component::as_os_str)
+                .filter_map(OsStr::to_str);
+
+            while duplicates.contains(&test_name) {
+                match path.next() {
+                    Some(item) => {
+                        let item = item.replace(['-', '.'], "_");
+                        test_name = format!("{}_{}", item, test_name);
+                    }
+                    None => break,
+                }
+            }
+
+            duplicates.insert(test_name.clone());
+
+            let is_keyword = matches!(
+                test_name.as_str(),
+                "await"
+                    | "break"
+                    | "try"
+                    | "do"
+                    | "for"
+                    | "return"
+                    | "if"
+                    | "while"
+                    | "in"
+                    | "async"
+                    | "else"
+            );
+
+            if is_keyword {
+                test_name = format!("{}_", test_name)
+            }
 
             let span = self.pattern.lit.span();
             let test_name = syn::Ident::new(&test_name, span);

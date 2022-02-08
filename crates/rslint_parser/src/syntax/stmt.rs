@@ -5,7 +5,7 @@
 use super::binding::*;
 use super::expr::parse_expression;
 use super::typescript::*;
-use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
+use crate::parser::{expected_token, ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::state::{
     BreakableKind, ChangeParserState, EnableStrictMode, EnableStrictModeSnapshot, EnterBreakable,
@@ -14,14 +14,14 @@ use crate::state::{
 use crate::syntax::assignment::expression_to_assignment_pattern;
 use crate::syntax::class::{parse_class_statement, parse_initializer_clause};
 use crate::syntax::expr::{
-    is_at_expression, is_at_identifier, is_nth_at_name, parse_assignment_expression_or_higher,
+    is_at_expression, is_at_identifier, parse_assignment_expression_or_higher,
     parse_expression_or_recover_to_next_statement, parse_identifier, ExpressionContext,
 };
 use crate::syntax::function::{is_at_async_function, parse_function_statement, LineBreak};
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement, ts_only_syntax_error};
 use crate::syntax::module::{parse_export, parse_import};
-use crate::JsSyntaxFeature::StrictMode;
+use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
 use crate::{JsSyntaxKind::*, *};
@@ -186,13 +186,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![if] => parse_if_statement(p),
         T![with] => parse_with_statement(p),
         T![while] => parse_while_statement(p),
-        t if (t == T![enum] && is_nth_at_name(p, 1))
-            || (t == T![const] && p.nth_at(1, T![enum]) && is_nth_at_name(p, 2)) =>
-        {
-            let mut res = ts_enum(p);
-            res.err_if_not_ts(p, "enums can only be declared in TypeScript files");
-            Present(res)
-        }
+        _ if is_at_ts_enum_statement(p) => parse_ts_enum_statement(p),
         T![var] => parse_variable_statement(p, context),
         T![const] => parse_variable_statement(p, context),
         T![for] => parse_for_statement(p),
@@ -1106,27 +1100,43 @@ fn parse_variable_declaration(
     id.map(|id| {
         let m = id.precede(p);
 
-        let cur = p.cur_tok().range();
-        let opt = p.eat(T![!]);
-        if opt && !p.typescript() {
-            let err = p
-                .err_builder("definite assignment assertions can only be used in TypeScript files")
-                .primary(cur, "");
+        let ts_annotation = TypeScript.parse_exclusive_syntax(p, parse_ts_variable_annotation,
+            |p, annotation| {
+                let name = match annotation.kind() {
+                    TS_TYPE_ANNOTATION => "type annotation",
+                    TS_DEFINITE_VARIABLE_ANNOTATION => "definite assertion assignments",
+                    _ => unreachable!(),
+                };
 
-            p.error(err);
-        }
-
-        let type_annotation = parse_ts_type_annotation(p).ok();
+                ts_only_syntax_error(p, name, annotation.range(p).as_range())
+            })
+            .ok();
 
         let last_name_map = std::mem::take(&mut p.state.name_map);
         let duplicate_binding_parent = p.state.duplicate_binding_parent.take();
 
-        let initializer = parse_initializer_clause(
+        let mut initializer = parse_initializer_clause(
             p,
             ExpressionContext::default()
                 .and_include_in(context.parent != VariableDeclarationParent::For),
         )
         .ok();
+
+        if let (Some(initializer), Some(ts_annotation)) =
+            (initializer.as_mut(), ts_annotation.as_ref())
+        {
+            if ts_annotation.kind() == TS_DEFINITE_VARIABLE_ANNOTATION {
+                // test_err ts_definite_variable_with_initializer
+                // let a!: string = "test";
+                p.error(
+                    p
+                        .err_builder("Declarations with initializers cannot also have definite assignment assertions.")
+                        .primary(initializer.range(p), "")
+                        .secondary(ts_annotation.range(p), "")
+                );
+                initializer.change_to_unknown(p);
+            }
+        }
 
         p.state.name_map = last_name_map;
         p.state.duplicate_binding_parent = duplicate_binding_parent;
@@ -1139,12 +1149,13 @@ fn parse_variable_declaration(
 
         if is_in_for_of || is_in_for_in {
             if p.typescript() {
-                if let Some(type_annotation) = type_annotation {
+                if let Some(mut ts_annotation) = ts_annotation {
                     let err = p
                         .err_builder("`for` statement declarators cannot have a type annotation")
-                        .primary(type_annotation.range(p), "");
+                        .primary(ts_annotation.range(p), "");
 
                     p.error(err);
+                    ts_annotation.change_to_unknown(p);
                 }
             }
             if let Some(initializer) = initializer {
@@ -1210,6 +1221,27 @@ fn parse_variable_declaration(
 
         m.complete(p, JS_VARIABLE_DECLARATION)
     })
+}
+
+// test_err js_type_variable_annotation
+// let a: string, b!: number;
+//
+// test_err ts ts_variable_annotation_err
+// let a!;
+//
+// test ts ts_type_variable_annotation
+// let a: string = "test", b!: number;
+fn parse_ts_variable_annotation(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![!]) {
+        return parse_ts_type_annotation(p);
+    }
+
+    let m = p.start();
+    p.bump(T![!]);
+
+    parse_ts_type_annotation(p).or_add_diagnostic(p, |_, _| expected_token(T![:]));
+
+    Present(m.complete(p, TS_DEFINITE_VARIABLE_ANNOTATION))
 }
 
 // A do.. while statement, such as `do {} while (true)`

@@ -50,12 +50,11 @@ use rslint_syntax::{JsSyntaxKind, T};
 // test_err function_broken
 // function foo())})}{{{  {}
 //
-// test ts_function_statement
-// // TYPESCRIPT
+// test ts ts_function_statement
 // function test(a: string, b?: number, c="default") {}
+// function test2<A, B extends A, C = A>(a: A, b: B, c: C) {}
 //
-// test_err ts_optional_pattern_parameter
-// // TYPESCRIPT
+// test_err ts ts_optional_pattern_parameter
 // function test({a, b}?) {}
 pub(super) fn parse_function_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
     if !is_at_function(p) {
@@ -412,8 +411,7 @@ pub(crate) fn parse_any_parameter(
                     parameter.range(p).as_range(),
                 ));
             } else if parameter_context.is_arrow_function() {
-                // test_err ts_arrow_function_this_parameter
-                // // TYPESCRIPT
+                // test_err ts ts_arrow_function_this_parameter
                 // let a = (this: string) => {}
                 parameter.change_to_unknown(p);
                 p.error(
@@ -448,8 +446,8 @@ pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -
     }
 
     // type annotation `...foo: number[]`
-    parse_ts_type_annotation(p)
-        .exclusive_for(p, TypeScript, |p, annotation| {
+    TypeScript
+        .parse_exclusive_syntax(p, parse_ts_type_annotation, |p, annotation| {
             ts_only_syntax_error(p, "type annotation", annotation.range(p).as_range())
         })
         .ok();
@@ -483,8 +481,7 @@ pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -
     Present(rest_parameter)
 }
 
-// test ts_this_parameter
-// // TYPESCRIPT
+// test ts ts_this_parameter
 // function a(this) {}
 // function b(this: string) {}
 pub(crate) fn parse_ts_this_parameter(p: &mut Parser) -> ParsedSyntax {
@@ -534,14 +531,12 @@ impl ParameterContext {
     }
 }
 
-// test ts_formal_parameter
-// // TYPESCRIPT
+// test ts ts_formal_parameter
 // function a(x) {}
 // function b({ x, y } = {}) {}
 // function c(x: string, y?: number, z: string = "test") {}
 //
-// test_err ts_formal_parameter_error
-// // TYPESCRIPT
+// test_err ts ts_formal_parameter_error
 // function a(x?: string = "test") {}
 // function b(...rest: string[] = "init") {}
 // function c(...rest, b: string) {}

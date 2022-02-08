@@ -1,0 +1,21 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: empty_label.js
+
+---
+# Input
+```js
+a:;
+b
+
+```
+
+# Output
+```js
+a:
+b;
+
+```
+
+

@@ -55,8 +55,7 @@ pub(crate) fn parse_ts_type_annotation(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_TYPE_ANNOTATION))
 }
 
-// test ts_return_type_annotation
-// // TYPESCRIPT
+// test ts ts_return_type_annotation
 // type A = (a) => a is string;
 // type B = { test(a): a is string }
 // type C = { (a): a is string }
@@ -84,8 +83,7 @@ fn parse_ts_type_parameter_name(p: &mut Parser) -> ParsedSyntax {
     parse_identifier(p, TS_TYPE_PARAMETER_NAME)
 }
 
-// test ts_type_parameters
-// // TYPESCRIPT
+// test ts ts_type_parameters
 // type A<X extends string, Y = number, Z extends string | number = number> = { x: X, y: Y, z: Z }
 pub(crate) fn parse_ts_type_parameters(p: &mut Parser) -> ParsedSyntax {
     if !is_nth_at_ts_type_parameters(p, 0) {
@@ -145,8 +143,7 @@ fn parse_ts_type_parameter(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-// test ts_type_constraint_clause
-// // TYPESCRIPT
+// test ts ts_type_constraint_clause
 // type A<X extends number> = X;
 // type B<X extends number | string> = { a: X }
 fn parse_ts_type_constraint_clause(p: &mut Parser) -> ParsedSyntax {
@@ -161,8 +158,7 @@ fn parse_ts_type_constraint_clause(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_TYPE_CONSTRAINT_CLAUSE))
 }
 
-// test ts_default_type_clause
-// // TYPESCRIPT
+// test ts ts_default_type_clause
 // type A<X=string> = X;
 // type B<X extends number | string = string> = { a: X }
 fn parse_ts_default_type_clause(p: &mut Parser) -> ParsedSyntax {
@@ -209,8 +205,7 @@ pub(crate) fn parse_ts_type(p: &mut Parser) -> ParsedSyntax {
         }
 
         parse_ts_union_type_or_higher(p).map(|left| {
-            // test ts_conditional_type
-            // // TYPESCRIPT
+            // test ts ts_conditional_type
             // type A = number;
             // type B = string extends number ? string : number;
             // type C = A extends (B extends A ? number : string) ? void : number;
@@ -230,8 +225,7 @@ pub(crate) fn parse_ts_type(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-// test ts_union_type
-// // TYPESCRIPT
+// test ts ts_union_type
 // type A = string | number;
 // type B = | A | void | null;
 // type C = A & C | C;
@@ -239,8 +233,7 @@ fn parse_ts_union_type_or_higher(p: &mut Parser) -> ParsedSyntax {
     parse_ts_union_or_intersection_type(p, IntersectionOrUnionType::Union)
 }
 
-// test ts_intersection_type
-// // TYPESCRIPT
+// test ts ts_intersection_type
 // type A = string & number;
 // type B = & A & void & null;
 fn parse_ts_intersection_type_or_higher(p: &mut Parser) -> ParsedSyntax {
@@ -325,8 +318,7 @@ fn parse_ts_union_or_intersection_type(
 
 fn parse_ts_primary_type(p: &mut Parser) -> ParsedSyntax {
     if p.at(T![ident]) {
-        // test ts_inferred_type
-        // // TYPESCRIPT
+        // test ts ts_inferred_type
         // type A = infer B;
         // type B = { a: infer U; b: infer U};
         if p.cur_src() == "infer" {
@@ -336,8 +328,7 @@ fn parse_ts_primary_type(p: &mut Parser) -> ParsedSyntax {
             return Present(m.complete(p, TS_INFER_TYPE));
         }
 
-        // test ts_type_operator
-        // // TYPESCRIPT
+        // test ts ts_type_operator
         // type A = { x: string, y: number };
         // type B = keyof A;
         // type C = readonly string[];
@@ -369,15 +360,13 @@ fn parse_postfix_type_or_higher(p: &mut Parser) -> ParsedSyntax {
             p.bump(T!['[']);
 
             left = if parse_ts_type(p).is_present() {
-                // test ts_indexed_access_type
-                // // TYPESCRIPT
+                // test ts ts_indexed_access_type
                 // type A = string[number];
                 // type B = string[number][number][number][];
                 p.expect(T![']']);
                 m.complete(p, TS_INDEXED_ACCESS_TYPE)
             } else {
-                // test ts_array_type
-                // // TYPESCRIPT
+                // test ts ts_array_type
                 // type A = string[];
                 // type B = { a: number } [];
                 p.expect(T![']']);
@@ -390,8 +379,7 @@ fn parse_postfix_type_or_higher(p: &mut Parser) -> ParsedSyntax {
 }
 
 fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
-    // test ts_predefined_type
-    // // TYPESCRIPT
+    // test ts ts_predefined_type
     // type A = any
     // type B = number;
     // type C = object;
@@ -458,8 +446,7 @@ fn parse_ts_non_array_type(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
-// test ts_reference_type
-// // TYPESCRIPT
+// test ts ts_reference_type
 // type A = object;
 // type B = string;
 // type C = A;
@@ -496,8 +483,7 @@ pub(crate) fn parse_ts_name(p: &mut Parser) -> ParsedSyntax {
     left
 }
 
-// test ts_typeof_type
-// // TYPESCRIPT
+// test ts ts_typeof_type
 // let a = "test";
 // type B = typeof a;
 fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
@@ -512,8 +498,7 @@ fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_TYPEOF_TYPE))
 }
 
-// test ts_this_type
-// // TYPESCRIPT
+// test ts ts_this_type
 // class A {
 //     method() {
 //         type A = this;
@@ -528,8 +513,7 @@ fn parse_ts_this_type(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_THIS_TYPE))
 }
 
-// test ts_parenthesized_type
-// // TYPESCRIPT
+// test ts ts_parenthesized_type
 // type A = (string)
 fn parse_ts_parenthesized_type(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T!['(']) {
@@ -563,8 +547,7 @@ fn is_at_start_of_mapped_type(p: &Parser) -> bool {
         && p.nth_at(offset + 2, T![in])
 }
 
-// test ts_mapped_type
-// // TYPESCRIPT
+// test ts ts_mapped_type
 // type A = { [test in "a" | "b"] }
 // type OptionsFlags<Type> = {
 //   [Property in keyof Type]: boolean;
@@ -643,8 +626,7 @@ fn parse_ts_mapped_type_optional_modifier_clause(p: &mut Parser) -> ParsedSyntax
     }
 }
 
-// test ts_import_type
-// // TYPESCRIPT
+// test ts ts_import_type
 // type A = typeof import("test");
 // type B = import("test");
 // type C = typeof import("test").a.b.c.d.e.f;
@@ -670,8 +652,7 @@ fn parse_ts_import_type(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_IMPORT_TYPE))
 }
 
-// test ts_object_type
-// // TYPESCRIPT
+// test ts ts_object_type
 // type A = { a: string, b: number };
 // type B = { a: string; b: number };
 // type C = { a: string, b: number; c: string };
@@ -753,8 +734,7 @@ fn parse_ts_object_type_member_semi(p: &mut Parser) {
     }
 }
 
-// test ts_property_or_method_signature_member
-// // TYPESCRIPT
+// test ts ts_property_or_method_signature_member
 // type A = { a?: string; b?(): number }
 // type B = { a: string, b(): number }
 // type C = { m(a: string, b: number, c: string): any }
@@ -801,8 +781,7 @@ fn parse_ts_property_or_method_signature_object_type_member(p: &mut Parser) -> P
     }
 }
 
-// test ts_call_signature_member
-// // TYPESCRIPT
+// test ts ts_call_signature_member
 // type A = { (): string; }
 // type B = { (a, b, c): number }
 // type C = { <A, B>(a: A, b: B): number }
@@ -817,8 +796,7 @@ fn parse_ts_call_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER))
 }
 
-// test ts_construct_signature_member
-// // TYPESCRIPT
+// test ts ts_construct_signature_member
 // type A = { new (): string; }
 // type B = { new (a: string, b: number) }
 // type C = { new <A, B>(a: A, b: B): string }
@@ -838,8 +816,7 @@ fn parse_ts_construct_signature_object_type_member(p: &mut Parser) -> ParsedSynt
     Present(m.complete(p, TS_CONSTRUCT_SIGNATURE_OBJECT_TYPE_MEMBER))
 }
 
-// test ts_getter_signature_member
-// // TYPESCRIPT
+// test ts ts_getter_signature_member
 // type A = { get a(): number }
 // type B = { get a() }
 // // members that look like getters but aren't getters
@@ -861,8 +838,7 @@ fn parse_ts_getter_signature_object_type_member(p: &mut Parser) -> ParsedSyntax 
     Present(m.complete(p, TS_GETTER_SIGNATURE_OBJECT_TYPE_MEMBER))
 }
 
-// test ts_setter_signature_member
-// // TYPESCRIPT
+// test ts ts_setter_signature_member
 // type A = { set a(b: number) }
 // type B = { set a(b) }
 // // members that look like setters but aren't setters
@@ -904,8 +880,7 @@ fn is_at_ts_index_signature_object_type_member(p: &Parser) -> bool {
     p.nth_at(offset + 2, T![:])
 }
 
-// test ts_index_signature_member
-// // TYPESCRIPT
+// test ts ts_index_signature_member
 // type A = { [a: number]: string }
 // type B = { readonly [a: number]: string }
 // // not an index signature
@@ -940,8 +915,7 @@ fn parse_ts_index_signature_object_type_member(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_INDEX_SIGNATURE_OBJECT_TYPE_MEMBER))
 }
 
-// test ts_tuple_type
-// // TYPESCRIPT
+// test ts ts_tuple_type
 // type A = [string, number, any]
 // type B = [a: string, b: number, c: any]
 // type C = [a: string, b: number, ...c: any[]]
@@ -1040,8 +1014,7 @@ fn is_at_named_tuple_type_element(p: &Parser) -> bool {
     is_nth_at_identifier_or_keyword(p, offset) && (is_colon || is_question_colon)
 }
 
-// test ts_literal_type
-// // TYPESCRIPT
+// test ts ts_literal_type
 // type A = 5;
 // type B = -5;
 // type C = 5n;
@@ -1090,8 +1063,7 @@ fn parse_ts_literal_type(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-// test ts_template_literal_type
-// // TYPESCRIPT
+// test ts ts_template_literal_type
 // type A = `abcd`
 // type B = `a${A}`
 // type C<X extends string> = `c${X}`
@@ -1136,8 +1108,7 @@ fn is_at_ts_construct_signature_object_type_member(p: &Parser) -> bool {
     p.at(T![new]) && (p.nth_at(1, T!['(']) || is_nth_at_ts_type_parameters(p, 1))
 }
 
-// test ts_constructor_type
-// // TYPESCRIPT
+// test ts ts_constructor_type
 // type A = new(a: string, b: number) => string;
 // type B = abstract new(a: string, b: number) => string;
 // type C = new<A, B>(a: A, b: B) => string;
@@ -1198,8 +1169,7 @@ fn is_at_function_type(p: &mut Parser) -> bool {
     })
 }
 
-// test ts_function_type
-// // TYPESCRIPT
+// test ts ts_function_type
 // type A = () => string;
 // type B = (a: string) => string;
 // type C = (b = "test") => string;
@@ -1237,8 +1207,7 @@ fn parse_ts_return_type(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
-// test ts_type_predicate
-// // TYPESCRIPT
+// test ts ts_type_predicate
 // type A = (a) => a is string;
 // type B = (a) => asserts a is string;
 // type asserts = string;
