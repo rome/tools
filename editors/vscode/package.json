@@ -35,6 +35,12 @@
 			}
 		}
 	},
+	"categories": [
+		"Formatters"
+	],
+	"keywords": [
+		"Formatter"
+	],
 	"scripts": {
 		"compile": "tsc -b",
 		"package": "vsce package -o rome_lsp.vsix",
