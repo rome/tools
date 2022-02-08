@@ -1,1 +1,4 @@
 * text=auto eol=lf
+crates/rslint_parser/src/ast/generated/* linguist-generated=true text=auto eol=lf
+crates/rslint_lexer/src/tables.rs linguist-generated=true text=auto eol=lf
+crates/rslint_syntax/src/generated.rs linguist-generated=true text=auto eol=lf
