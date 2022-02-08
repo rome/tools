@@ -226,3 +226,27 @@ cargo watch -i '*.new' -x 'test -p rome_formatter formatter'
 After test execution, you will get a new `arrow.js.snap.new` file.
 
 To actually update the snapshot, run `cargo insta review` to interactively review and accept the pending snapshot. `arrow.js.snap.new` will be replaced with `arrow.js.snap`
+
+## VS Code Extension Development
+
+To build the VS Code extension from source, navigate to the `editors/vscode` directory and run:
+
+```bash
+npm install
+npm run build
+```
+
+This will create a `rome_lsp.vsix` which you can install into VS Code by running:
+
+```bash
+npm run install-extension
+```
+
+The Rome language server is the binary crate `rome_lsp` which can be built using `cargo build`.
+
+Use the `"rome.lspBin"` VS Code setting to set the path to the executable:
+```json
+	"rome.lspBin": "/path/to/rome/target/debug/rome_lsp"
+```
+
+When performing any benchmarks for the language server, be sure to use a release build.
