@@ -6,7 +6,7 @@ layout: layouts/page.liquid
 
 # Credits
 
-## Team
+## Alumni (past core contributors)
 
 <ul class="team-list">
 	<li>
