@@ -39,6 +39,8 @@ impl_format_verbatim! {
     TsDefaultTypeClause,
     TsEnumStatement,
     TsEnumMember,
+    TsDeclareStatement,
+    TsDeclareFunction,
     TsExprWithTypeArgs,
     TsExternalModuleRef,
     TsFunctionType,

@@ -434,6 +434,8 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
         "TS_ENUM_STATEMENT",
         "TS_ENUM_MEMBER_LIST",
         "TS_ENUM_MEMBER",
+        "TS_DECLARE_STATEMENT",
+        "TS_DECLARE_FUNCTION",
         "TS_EXPR_WITH_TYPE_ARGS",
         "TS_IMPORT_EQUALS_DECL",
         "TS_MODULE_REF",

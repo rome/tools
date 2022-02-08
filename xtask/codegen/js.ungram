@@ -103,6 +103,7 @@ JsAnyStatement =
 	| TsEnumStatement
   | JsFunctionStatement
   | TsTypeAliasStatement
+  | TsDeclareStatement
 
 
 JsBlockStatement =
@@ -1533,6 +1534,24 @@ TsEnumMemberList = (TsEnumMember (',' TsEnumMember)* ','?)
 TsEnumMember =
 	name: JsAnyObjectMemberName
 	initializer: JsInitializerClause?
+
+
+TsDeclareStatement =
+	'declare'
+	declaration: TsAnyDeclaration
+
+TsAnyDeclaration =
+	TsEnumStatement
+	| TsTypeAliasStatement
+	| TsDeclareFunction
+
+TsDeclareFunction =
+	'function'
+	id: JsAnyBinding
+	type_parameters: TsTypeParameters?
+	parameters: JsParameters
+	return_type_annotation: TsReturnTypeAnnotation?
+	';'?
 
 // | a | b
 TsUnionType =
