@@ -1,6 +1,6 @@
 use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
 use crate::{
-    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::TsTypeAliasStatement;
 
@@ -11,15 +11,16 @@ impl ToFormatElement for TsTypeAliasStatement {
         let type_parameters = self.type_parameters().format_or_empty(formatter)?;
         let equal_token = self.eq_token().format(formatter)?;
         let r#type = self.ty().format(formatter)?;
+        let semicolon = self.semicolon_token().format_or(formatter, || token(";"))?;
         Ok(format_elements![
             type_token,
             space_token(),
             binding_identifier,
             type_parameters,
-            space_token(),
             equal_token,
             space_token(),
-            r#type
+            r#type,
+            semicolon
         ])
     }
 }
