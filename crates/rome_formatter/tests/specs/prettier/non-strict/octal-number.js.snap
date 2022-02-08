@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: octal-number.js
 
 ---
@@ -13,6 +13,17 @@ expression: octal-number.js
 # Output
 ```js
 0777;
+
+```
+
+# Errors
+```
+error[SyntaxError]: "0"-prefixed octal literals are deprecated; use the "0o" prefix instead.
+  ┌─ octal-number.js:1:1
+  │
+1 │ 0777
+  │ ^^^^
+
 
 ```
 

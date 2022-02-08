@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: text.js
 
 ---
@@ -73,6 +73,107 @@ foo = markdown`pr\u{0065}ttier${foo}\u{prettier}${bar}pr\u{0065}ttier`;
 foo = css`pr\u{0065}ttier${foo}\u{prettier}${bar}pr\u{0065}ttier`;
 foo = /* HTML */ `pr\u{0065}ttier${foo}\u{prettier}${bar}pr\u{0065}ttier`;
 foo = /* GraphQL */ `pr\u{0065}ttier${foo}\u{prettier}${bar}pr\u{0065}ttier`;
+
+```
+
+# Errors
+```
+error: expected hex digits for a unicode code point escape, but encountered an invalid character
+  ┌─ text.js:6:21
+  │
+6 │ foo = /* HTML */`\u{prettier}\u{0065}`;
+  │                     ^
+
+error: expected hex digits for a unicode code point escape, but encountered an invalid character
+  ┌─ text.js:7:24
+  │
+7 │ foo = /* GraphQL */`\u{prettier}\u{0065}`;
+  │                        ^
+
+error: expected hex digits for a unicode code point escape, but encountered an invalid character
+   ┌─ text.js:14:21
+   │
+14 │ foo = /* HTML */`\u{prettier}${foo}pr\u{0065}ttier`;
+   │                     ^
+
+error: expected hex digits for a unicode code point escape, but encountered an invalid character
+   ┌─ text.js:15:24
+   │
+15 │ foo = /* GraphQL */`\u{prettier}${foo}pr\u{0065}ttier`;
+   │                        ^
+
+error: expected hex digits for a unicode code point escape, but encountered an invalid character
+   ┌─ text.js:22:42
+   │
+22 │ foo = /* HTML */`pr\u{0065}ttier${foo}\u{prettier}`;
+   │                                          ^
+
+error: expected hex digits for a unicode code point escape, but encountered an invalid character
+   ┌─ text.js:23:45
+   │
+23 │ foo = /* GraphQL */`pr\u{0065}ttier${foo}\u{prettier}`;
+   │                                             ^
+
+error: expected hex digits for a unicode code point escape, but encountered an invalid character
+   ┌─ text.js:30:42
+   │
+30 │ foo = /* HTML */`pr\u{0065}ttier${foo}\u{prettier}${bar}pr\u{0065}ttier`;
+   │                                          ^
+
+error: expected hex digits for a unicode code point escape, but encountered an invalid character
+   ┌─ text.js:31:45
+   │
+31 │ foo = /* GraphQL */`pr\u{0065}ttier${foo}\u{prettier}${bar}pr\u{0065}ttier`;
+   │                                             ^
+
+error[SyntaxError]: Invalid template literal
+  ┌─ text.js:6:18
+  │
+6 │ foo = /* HTML */`\u{prettier}\u{0065}`;
+  │                  ^^^^^^^^^^^^^^^^^^^^
+
+error[SyntaxError]: Invalid template literal
+  ┌─ text.js:7:21
+  │
+7 │ foo = /* GraphQL */`\u{prettier}\u{0065}`;
+  │                     ^^^^^^^^^^^^^^^^^^^^
+
+error[SyntaxError]: Invalid template literal
+   ┌─ text.js:14:18
+   │
+14 │ foo = /* HTML */`\u{prettier}${foo}pr\u{0065}ttier`;
+   │                  ^^^^^^^^^^^^
+
+error[SyntaxError]: Invalid template literal
+   ┌─ text.js:15:21
+   │
+15 │ foo = /* GraphQL */`\u{prettier}${foo}pr\u{0065}ttier`;
+   │                     ^^^^^^^^^^^^
+
+error[SyntaxError]: Invalid template literal
+   ┌─ text.js:22:39
+   │
+22 │ foo = /* HTML */`pr\u{0065}ttier${foo}\u{prettier}`;
+   │                                       ^^^^^^^^^^^^
+
+error[SyntaxError]: Invalid template literal
+   ┌─ text.js:23:42
+   │
+23 │ foo = /* GraphQL */`pr\u{0065}ttier${foo}\u{prettier}`;
+   │                                          ^^^^^^^^^^^^
+
+error[SyntaxError]: Invalid template literal
+   ┌─ text.js:30:39
+   │
+30 │ foo = /* HTML */`pr\u{0065}ttier${foo}\u{prettier}${bar}pr\u{0065}ttier`;
+   │                                       ^^^^^^^^^^^^
+
+error[SyntaxError]: Invalid template literal
+   ┌─ text.js:31:42
+   │
+31 │ foo = /* GraphQL */`pr\u{0065}ttier${foo}\u{prettier}${bar}pr\u{0065}ttier`;
+   │                                          ^^^^^^^^^^^^
+
 
 ```
 

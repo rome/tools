@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: cursor-4.js
 
 ---
@@ -23,6 +23,33 @@ const y = 5
   <|>
 
 const z = 9;
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
+  ┌─ cursor-4.js:5:4
+  │
+5 │   <|>
+  │   -^ But this operator was encountered instead
+  │   │ 
+  │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ cursor-4.js:5:5
+  │
+5 │   <|>
+  │    -^ But this operator was encountered instead
+  │    │ 
+  │    This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found 'const'
+  ┌─ cursor-4.js:7:3
+  │
+7 │   const z = 9
+  │   ^^^^^ Expected an expression here
+
 
 ```
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: different-levels.js
 
 ---
@@ -21,6 +21,23 @@ call(1,<<<PRETTIER_RANGE_START>>>2,3)
 function f() {
   call(1,<<<PRETTIER_RANGE_END>>>2,3)
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ different-levels.js:2:10
+  │
+2 │ call(1,<<<PRETTIER_RANGE_START>>>2,3)
+  │          ^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
+
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ different-levels.js:4:12
+  │
+4 │   call(1,<<<PRETTIER_RANGE_END>>>2,3)
+  │            ^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
+
 
 ```
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: example.js
 
 ---
@@ -13,6 +13,17 @@ super();
 # Output
 ```js
 super();
+
+```
+
+# Errors
+```
+error[SyntaxError]: `super` is only valid inside of a class constructor of a subclass.
+  ┌─ example.js:1:1
+  │
+1 │ super();
+  │ ^^^^^
+
 
 ```
 

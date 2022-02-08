@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: no-semi.js
 
 ---
@@ -33,6 +33,17 @@ class A {
   a = b;
   instanceof() {}
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a statement but instead found '::b.c'
+  ┌─ no-semi.js:2:2
+  │
+2 │ ;::b.c
+  │  ^^^^^ Expected a statement here
+
 
 ```
 

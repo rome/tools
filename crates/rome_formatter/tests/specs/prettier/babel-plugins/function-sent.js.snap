@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: function-sent.js
 
 ---
@@ -30,6 +30,17 @@ function* generator() {
 const iterator = generator();
 iterator.next(1); // Logs "Sent 1"
 iterator.next(2); // Logs "Yield 2"
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a parenthesis '(' but instead found '.'
+  ┌─ function-sent.js:4:33
+  │
+4 │     console.log("Sent", function.sent);
+  │                                 ^ Expected a parenthesis '(' here
+
 
 ```
 

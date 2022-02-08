@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: interfaces.js
 
 ---
@@ -26,6 +26,41 @@ new interface();
 (interface, "foo");
 void interface;
 const interface  = "foo";
+
+```
+
+# Errors
+```
+error[SyntaxError]: Illegal use of reserved keyword `interface` as an identifier in strict mode
+  ┌─ interfaces.js:2:1
+  │
+2 │ interface.foo;
+  │ ^^^^^^^^^
+
+error[SyntaxError]: Illegal use of reserved keyword `interface` as an identifier in strict mode
+  ┌─ interfaces.js:3:5
+  │
+3 │ new interface();
+  │     ^^^^^^^^^
+
+error[SyntaxError]: Illegal use of reserved keyword `interface` as an identifier in strict mode
+  ┌─ interfaces.js:5:2
+  │
+5 │ (interface, "foo");
+  │  ^^^^^^^^^
+
+error[SyntaxError]: Illegal use of reserved keyword `interface` as an identifier in strict mode
+  ┌─ interfaces.js:6:6
+  │
+6 │ void interface;
+  │      ^^^^^^^^^
+
+error[SyntaxError]: Illegal use of reserved keyword `interface` as an identifier in strict mode
+  ┌─ interfaces.js:7:7
+  │
+7 │ const interface = "foo";
+  │       ^^^^^^^^^
+
 
 ```
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: record-tuple-tuple.js
 
 ---
@@ -14,6 +14,17 @@ const tuple1 = #[1, 2, 3];
 ```js
 const tuple1 = #
 [1, 2, 3];
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `IDENT` but instead found `[`
+  ┌─ record-tuple-tuple.js:1:17
+  │
+1 │ const tuple1 = #[1, 2, 3];
+  │                 ^ unexpected
+
 
 ```
 

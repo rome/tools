@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: range-start.js
 
 ---
@@ -30,6 +30,37 @@ call(
 call(
   1, 2,3
 )
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_START>>>call(
+  1, 2,3
+)'
+  ┌─ range-start.js:1:1
+  │  
+1 │ ┌ <<<PRETTIER_RANGE_START>>>call(
+2 │ │   1, 2,3
+3 │ │ );
+  │ └─^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_END>>>
+
+// Unchanged
+call(
+  1, 2,3
+)'
+  ┌─ range-start.js:4:1
+  │  
+4 │ ┌ <<<PRETTIER_RANGE_END>>>
+5 │ │ 
+6 │ │ // Unchanged
+7 │ │ call(
+8 │ │   1, 2,3
+9 │ │ );
+  │ └─^ Expected a statement here
+
 
 ```
 

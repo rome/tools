@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: cursor-8.js
 
 ---
@@ -14,6 +14,45 @@ expression: cursor-8.js
 func<|>tion
 banana();
 {}
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
+  ┌─ cursor-8.js:1:8
+  │
+1 │   func<|>tion banana(){}
+  │       -^ But this operator was encountered instead
+  │       │ 
+  │       This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ cursor-8.js:1:9
+  │
+1 │   func<|>tion banana(){}
+  │        -^ But this operator was encountered instead
+  │        │ 
+  │        This operator requires a right hand side value
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ cursor-8.js:1:15
+  │
+1 │   func<|>tion banana(){}
+  │   ------------^^^^^^
+  │   │           │
+  │   │           An explicit or implicit semicolon is expected here...
+  │   ...Which is required to end this statement
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ cursor-8.js:1:23
+  │
+1 │   func<|>tion banana(){}
+  │               --------^
+  │               │       │
+  │               │       An explicit or implicit semicolon is expected here...
+  │               ...Which is required to end this statement
+
 
 ```
 

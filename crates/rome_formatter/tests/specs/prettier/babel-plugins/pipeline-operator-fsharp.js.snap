@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: pipeline-operator-fsharp.js
 
 ---
@@ -80,6 +80,126 @@ newScore; //=> 57
 
 // As opposed to:
 let newScore = boundScore(0, 100, add(7, double(person.score)));
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ pipeline-operator-fsharp.js:5:4
+  │
+5 │   |> await
+  │   -^ But this operator was encountered instead
+  │   │ 
+  │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an unary expression but instead found '|'
+  ┌─ pipeline-operator-fsharp.js:6:3
+  │
+6 │   |> x => doubleSay(x, ', ')
+  │   ^ Expected an unary expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ pipeline-operator-fsharp.js:6:4
+  │
+6 │   |> x => doubleSay(x, ', ')
+  │   -^ But this operator was encountered instead
+  │   │ 
+  │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ pipeline-operator-fsharp.js:7:4
+  │
+7 │   |> capitalize
+  │   -^ But this operator was encountered instead
+  │   │ 
+  │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ pipeline-operator-fsharp.js:8:4
+  │
+8 │   |> x => x + '!'
+  │   -^ But this operator was encountered instead
+  │   │ 
+  │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ pipeline-operator-fsharp.js:9:4
+  │
+9 │   |> x => new User.Message(x)
+  │   -^ But this operator was encountered instead
+  │   │ 
+  │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ pipeline-operator-fsharp.js:10:4
+   │
+10 │   |> x => stream.write(x)
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ pipeline-operator-fsharp.js:10:8
+   │  
+ 4 │ ┌ promise
+ 5 │ │   |> await
+ 6 │ │   |> x => doubleSay(x, ', ')
+ 7 │ │   |> capitalize
+ 8 │ │   |> x => x + '!'
+ 9 │ │   |> x => new User.Message(x)
+10 │ │   |> x => stream.write(x)
+   │ │        ^^ An explicit or implicit semicolon is expected here...
+   │ └─────────' ...Which is required to end this statement
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ pipeline-operator-fsharp.js:18:4
+   │
+18 │   |> doubleSay
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ pipeline-operator-fsharp.js:19:4
+   │
+19 │   |> capitalize
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ pipeline-operator-fsharp.js:20:4
+   │
+20 │   |> exclaim;
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ pipeline-operator-fsharp.js:27:4
+   │
+27 │   |> double
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ pipeline-operator-fsharp.js:28:4
+   │
+28 │   |> n => add(7, n)
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ pipeline-operator-fsharp.js:29:4
+   │
+29 │   |> n => boundScore(0, 100, n);
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
 
 ```
 

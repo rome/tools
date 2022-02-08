@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: cursor-3.js
 
 ---
@@ -21,6 +21,17 @@ expression: cursor-3.js
   <|>;
 
 const y = 5;
+
+```
+
+# Errors
+```
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ cursor-3.js:3:3
+  │
+3 │   <|>
+  │   ^^^ TypeScript only syntax
+
 
 ```
 

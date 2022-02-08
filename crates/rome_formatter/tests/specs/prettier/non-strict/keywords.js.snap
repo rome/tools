@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: keywords.js
 
 ---
@@ -27,6 +27,17 @@ var package  = require("../package");
 function myFunction() {
   return "StringGainz";
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: Illegal use of reserved keyword `package` as an identifier in strict mode
+  ┌─ keywords.js:1:5
+  │
+1 │ var package = require('../package');
+  │     ^^^^^^^
+
 
 ```
 

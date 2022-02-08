@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: directive.js
 
 ---
@@ -15,6 +15,17 @@ expression: directive.js
 ```js
 <<<PRETTIER_RANGE_START>>>'<<<PRETTIER_RANGE_END>>>aaa'
 "bbb";
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_START>>>'<<<PRETTIER_RANGE_END>>>aaa''
+  ┌─ directive.js:1:1
+  │
+1 │ <<<PRETTIER_RANGE_START>>>'<<<PRETTIER_RANGE_END>>>aaa';
+  │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a statement here
+
 
 ```
 

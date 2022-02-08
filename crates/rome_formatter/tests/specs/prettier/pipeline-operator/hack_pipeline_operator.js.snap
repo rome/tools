@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: hack_pipeline_operator.js
 
 ---
@@ -119,6 +119,343 @@ async function* f() {
     |> (a.b?.(%))
     |> a.b?.(%)
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:1:4
+  │
+1 │ a |> await % |> % * 3;
+  │   -^ But this operator was encountered instead
+  │   │ 
+  │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an unary expression but instead found '%'
+  ┌─ hack_pipeline_operator.js:1:12
+  │
+1 │ a |> await % |> % * 3;
+  │            ^ Expected an unary expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `%`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:1:14
+  │
+1 │ a |> await % |> % * 3;
+  │            - ^ But this operator was encountered instead
+  │            │  
+  │            This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:1:15
+  │
+1 │ a |> await % |> % * 3;
+  │              -^ But this operator was encountered instead
+  │              │ 
+  │              This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `>`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:1:17
+  │
+1 │ a |> await % |> % * 3;
+  │               - ^ But this operator was encountered instead
+  │               │  
+  │               This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `%`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:1:19
+  │
+1 │ a |> await % |> % * 3;
+  │                 - ^ But this operator was encountered instead
+  │                 │  
+  │                 This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:4:4
+  │
+4 │   |> await %
+  │   -^ But this operator was encountered instead
+  │   │ 
+  │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an unary expression but instead found '%'
+  ┌─ hack_pipeline_operator.js:4:12
+  │
+4 │   |> await %
+  │            ^ Expected an unary expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `%`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:5:3
+  │
+4 │   |> await %
+  │            - This operator requires a right hand side value
+5 │   |> % || throw new Error(`foo ${bar1}`)
+  │   ^ But this operator was encountered instead
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:5:4
+  │
+5 │   |> % || throw new Error(`foo ${bar1}`)
+  │   -^ But this operator was encountered instead
+  │   │ 
+  │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `>`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:5:6
+  │
+5 │   |> % || throw new Error(`foo ${bar1}`)
+  │    - ^ But this operator was encountered instead
+  │    │  
+  │    This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `%`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:5:8
+  │
+5 │   |> % || throw new Error(`foo ${bar1}`)
+  │      - ^^ But this operator was encountered instead
+  │      │  
+  │      This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found 'throw'
+  ┌─ hack_pipeline_operator.js:5:11
+  │
+5 │   |> % || throw new Error(`foo ${bar1}`)
+  │           ^^^^^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:6:4
+  │
+6 │   |> bar2(%, ", ")
+  │   -^ But this operator was encountered instead
+  │   │ 
+  │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ','
+  ┌─ hack_pipeline_operator.js:6:12
+  │
+6 │   |> bar2(%, ", ")
+  │            ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:7:4
+  │
+7 │   |> bar3(%)
+  │   -^ But this operator was encountered instead
+  │   │ 
+  │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+  ┌─ hack_pipeline_operator.js:7:12
+  │
+7 │   |> bar3(%)
+  │            ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:8:4
+  │
+8 │   |> % + "!"
+  │   -^ But this operator was encountered instead
+  │   │ 
+  │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `>`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:8:6
+  │
+8 │   |> % + "!"
+  │    - ^ But this operator was encountered instead
+  │    │  
+  │    This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ hack_pipeline_operator.js:9:4
+  │
+9 │   |> new Bar.Foo(%)
+  │   -^ But this operator was encountered instead
+  │   │ 
+  │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+  ┌─ hack_pipeline_operator.js:9:19
+  │
+9 │   |> new Bar.Foo(%)
+  │                   ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:10:4
+   │
+10 │   |> await bar.bar(%)
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ hack_pipeline_operator.js:10:21
+   │
+10 │   |> await bar.bar(%)
+   │                     ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:11:4
+   │
+11 │   |> console.log(%);
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ hack_pipeline_operator.js:11:19
+   │
+11 │   |> console.log(%);
+   │                   ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:14:4
+   │
+14 │   |> doubleSay(%)
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ hack_pipeline_operator.js:14:17
+   │
+14 │   |> doubleSay(%)
+   │                 ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:15:4
+   │
+15 │   |> capitalize(%, "foo")
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ','
+   ┌─ hack_pipeline_operator.js:15:18
+   │
+15 │   |> capitalize(%, "foo")
+   │                  ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:16:4
+   │
+16 │   |> exclaim(%);
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ hack_pipeline_operator.js:16:15
+   │
+16 │   |> exclaim(%);
+   │               ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:20:6
+   │
+20 │     |> foo(%)
+   │     -^ But this operator was encountered instead
+   │     │ 
+   │     This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ hack_pipeline_operator.js:20:13
+   │
+20 │     |> foo(%)
+   │             ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:21:6
+   │
+21 │     |> foo(%)
+   │     -^ But this operator was encountered instead
+   │     │ 
+   │     This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ hack_pipeline_operator.js:21:13
+   │
+21 │     |> foo(%)
+   │             ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:22:6
+   │
+22 │     |> Person.insertIntoDatabase(%);
+   │     -^ But this operator was encountered instead
+   │     │ 
+   │     This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ hack_pipeline_operator.js:22:35
+   │
+22 │     |> Person.insertIntoDatabase(%);
+   │                                   ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:26:3
+   │
+26 │  |> %.map(a => a * 2 )
+   │  -^ But this operator was encountered instead
+   │  │ 
+   │  This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `>`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:26:5
+   │
+26 │  |> %.map(a => a * 2 )
+   │   - ^ But this operator was encountered instead
+   │   │  
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found '.'
+   ┌─ hack_pipeline_operator.js:26:6
+   │
+26 │  |> %.map(a => a * 2 )
+   │      ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:40:4
+   │
+40 │ v |> %.method() |> f(%);
+   │   -^ But this operator was encountered instead
+   │   │ 
+   │   This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `>`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:40:6
+   │
+40 │ v |> %.method() |> f(%);
+   │    - ^ But this operator was encountered instead
+   │    │  
+   │    This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found '.'
+   ┌─ hack_pipeline_operator.js:40:7
+   │
+40 │ v |> %.method() |> f(%);
+   │       ^ Expected an expression here
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+   ┌─ hack_pipeline_operator.js:44:6
+   │
+44 │     |> (yield %)
+   │     -^ But this operator was encountered instead
+   │     │ 
+   │     This operator requires a right hand side value
+
+error[SyntaxError]: expected `')'` but instead found `%`
+   ┌─ hack_pipeline_operator.js:44:15
+   │
+44 │     |> (yield %)
+   │               ^ unexpected
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ hack_pipeline_operator.js:44:16
+   │
+44 │     |> (yield %)
+   │                ^ Expected an expression here
+
 
 ```
 

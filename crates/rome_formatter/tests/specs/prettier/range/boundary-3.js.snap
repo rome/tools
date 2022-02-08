@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: boundary-3.js
 
 ---
@@ -22,6 +22,20 @@ b();
 <<<PRETTIER_RANGE_START>>>                 <<<PRETTIER_RANGE_END>>>c (
 )
 d();
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_START>>>                 <<<PRETTIER_RANGE_END>>>c (
+)'
+  ┌─ boundary-3.js:4:3
+  │  
+4 │   );<<<PRETTIER_RANGE_START>>>                 <<<PRETTIER_RANGE_END>>>c (
+  │ ┌───^
+5 │ │ ); d(
+  │ └─^ Expected a statement here
+
 
 ```
 

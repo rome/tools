@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: intrinsic_call.js
 
 ---
@@ -59,6 +59,29 @@ function doSmth()     {
         GetFunctioName(f)
         );
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a statement but instead found '%DebugPrint
+        (
+                foo )
+  }'
+  ┌─ intrinsic_call.js:2:13
+  │  
+2 │ ┌             %DebugPrint
+3 │ │         (
+4 │ │                 foo )
+5 │ │   }
+  │ └───^ Expected a statement here
+
+error[SyntaxError]: expected `'}'` but instead the file ends
+   ┌─ intrinsic_call.js:25:1
+   │
+25 │ 
+   │ ^ the file ends here
+
 
 ```
 

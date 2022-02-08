@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: spread.js
 
 ---
@@ -28,6 +28,62 @@ const taskLater = #{ ...taskNow, status: "DONE" }
 
 // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
 assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected `IDENT` but instead found `{`
+  ┌─ spread.js:1:19
+  │
+1 │ const formData = #{ title: "Implement all the things" }
+  │                   ^ unexpected
+
+error[SyntaxError]: expected `IDENT` but instead found `{`
+  ┌─ spread.js:2:18
+  │
+2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  │                  ^ unexpected
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ spread.js:2:34
+  │
+2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  │                        ----------^
+  │                        │         │
+  │                        │         An explicit or implicit semicolon is expected here...
+  │                        ...Which is required to end this statement
+
+error[SyntaxError]: expected an expression but instead found '...taskNow, status: "DONE"'
+  ┌─ spread.js:3:22
+  │
+3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+  │                      ^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected an expression here
+
+error[SyntaxError]: expected `IDENT` but instead found `{`
+  ┌─ spread.js:6:23
+  │
+6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+  │                       ^ unexpected
+
+error[SyntaxError]: Private names are only allowed on the left side of a binary expression
+  ┌─ spread.js:6:22
+  │
+6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+  │                      ^
+
+error[SyntaxError]: expected `,` but instead found `{`
+  ┌─ spread.js:6:23
+  │
+6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+  │                       ^ unexpected
+
+error[SyntaxError]: expected `'}'` but instead the file ends
+  ┌─ spread.js:7:1
+  │
+7 │ 
+  │ ^ the file ends here
+
 
 ```
 

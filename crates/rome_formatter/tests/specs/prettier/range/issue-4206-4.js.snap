@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: issue-4206-4.js
 
 ---
@@ -21,6 +21,35 @@ expression: issue-4206-4.js
   >>>/**/
 }
 <<<PRETTIER_RANGE_END>>>
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '<<'
+  ┌─ issue-4206-4.js:2:1
+  │
+2 │ <<<PRETTIER_RANGE_START>>>/**/
+  │ ^^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected a semicolon for a class property, but found none
+  ┌─ issue-4206-4.js:2:4
+  │
+2 │ <<<PRETTIER_RANGE_START>>>/**/
+  │    ^^^^^^^^^^^^^^^^^^^^
+
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '>'
+  ┌─ issue-4206-4.js:2:24
+  │
+2 │ <<<PRETTIER_RANGE_START>>>/**/
+  │                        ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+
+error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_END>>>'
+  ┌─ issue-4206-4.js:3:2
+  │
+3 │ }<<<PRETTIER_RANGE_END>>>
+  │  ^^^^^^^^^^^^^^^^^^^^^^^^ Expected a statement here
+
 
 ```
 

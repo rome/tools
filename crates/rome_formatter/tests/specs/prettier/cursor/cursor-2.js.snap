@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: cursor-2.js
 
 ---
@@ -14,6 +14,27 @@ foo  <|>  (bar);
 # Output
 ```js
 foo  <|>  (bar);
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
+  ┌─ cursor-2.js:2:7
+  │
+2 │ foo  <|>  (bar);
+  │      -^ But this operator was encountered instead
+  │      │ 
+  │      This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ cursor-2.js:2:8
+  │
+2 │ foo  <|>  (bar);
+  │       -^ But this operator was encountered instead
+  │       │ 
+  │       This operator requires a right hand side value
+
 
 ```
 

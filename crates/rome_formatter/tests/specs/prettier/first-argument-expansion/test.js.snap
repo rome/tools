@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: test.js
 
 ---
@@ -316,6 +316,71 @@ func(
   },
   (result) => result && console.log("success"),
 );
+
+```
+
+# Errors
+```
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ test.js:96:3
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │   ^^^^^^^^^^^^^^^^ TypeScript only syntax
+
+error[SyntaxError]: expected `,` but instead found `much`
+   ┌─ test.js:96:20
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                    ^^^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `to`
+   ┌─ test.js:96:25
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                         ^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `say`
+   ┌─ test.js:96:28
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                            ^^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `my`
+   ┌─ test.js:96:36
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                                    ^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `we`
+   ┌─ test.js:96:44
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                                            ^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `done`
+   ┌─ test.js:96:47
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                                               ^^^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `yet`
+   ┌─ test.js:96:52
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                                                    ^^^ unexpected
+
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ test.js:96:56
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                                                        ^ TypeScript only syntax
+
+error[SyntaxError]: expected an expression but instead found ','
+   ┌─ test.js:97:1
+   │
+97 │ ,args);
+   │ ^ Expected an expression here
+
 
 ```
 

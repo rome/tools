@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: range-7.js
 
 ---
@@ -14,6 +14,45 @@ const myVar = <<<PRETTIER_RANGE_START>>>aFunction<|>;<<<PRETTIER_RANGE_END>>>
 ```js
 const myVar = <<<PRETTIER_RANGE_START>>>aFunction<|>;
 <<<PRETTIER_RANGE_END>>>
+
+```
+
+# Errors
+```
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ range-7.js:1:17
+  │
+1 │ const myVar = <<<PRETTIER_RANGE_START>>>aFunction<|>;<<<PRETTIER_RANGE_END>>>
+  │                 ^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
+
+error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
+  ┌─ range-7.js:1:51
+  │
+1 │ const myVar = <<<PRETTIER_RANGE_START>>>aFunction<|>;<<<PRETTIER_RANGE_END>>>
+  │                                                  -^ But this operator was encountered instead
+  │                                                  │ 
+  │                                                  This operator requires a right hand side value
+
+error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
+  ┌─ range-7.js:1:52
+  │
+1 │ const myVar = <<<PRETTIER_RANGE_START>>>aFunction<|>;<<<PRETTIER_RANGE_END>>>
+  │                                                   -^ But this operator was encountered instead
+  │                                                   │ 
+  │                                                   This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ';'
+  ┌─ range-7.js:1:53
+  │
+1 │ const myVar = <<<PRETTIER_RANGE_START>>>aFunction<|>;<<<PRETTIER_RANGE_END>>>
+  │                                                     ^ Expected an expression here
+
+error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_END>>>'
+  ┌─ range-7.js:1:54
+  │
+1 │ const myVar = <<<PRETTIER_RANGE_START>>>aFunction<|>;<<<PRETTIER_RANGE_END>>>
+  │                                                      ^^^^^^^^^^^^^^^^^^^^^^^^ Expected a statement here
+
 
 ```
 

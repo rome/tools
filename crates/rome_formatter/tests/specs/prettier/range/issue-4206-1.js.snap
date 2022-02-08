@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: issue-4206-1.js
 
 ---
@@ -19,6 +19,49 @@ Foo;
 {
 /**/<<<PRETTIER_RANGE_END>>>
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ issue-4206-1.js:1:19
+  │
+1 │ export default c<<<PRETTIER_RANGE_START>>>lass Foo{
+  │                   ^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ issue-4206-1.js:1:48
+  │
+1 │ export default c<<<PRETTIER_RANGE_START>>>lass Foo{
+  │        ----------------------------------------^^^ An explicit or implicit semicolon is expected here...
+  │        │                                        
+  │        ...Which is required to end this statement
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ issue-4206-1.js:1:51
+  │
+1 │ export default c<<<PRETTIER_RANGE_START>>>lass Foo{
+  │                                                ---^
+  │                                                │  │
+  │                                                │  An explicit or implicit semicolon is expected here...
+  │                                                ...Which is required to end this statement
+
+error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_END>>>
+}'
+  ┌─ issue-4206-1.js:2:5
+  │  
+2 │   /**/<<<PRETTIER_RANGE_END>>>
+  │ ┌─────^
+3 │ │ }
+  │ └─^ Expected a statement here
+
+error[SyntaxError]: expected `'}'` but instead the file ends
+  ┌─ issue-4206-1.js:4:1
+  │
+4 │ 
+  │ ^ the file ends here
+
 
 ```
 

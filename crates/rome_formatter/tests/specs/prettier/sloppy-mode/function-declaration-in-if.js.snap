@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: function-declaration-in-if.js
 
 ---
@@ -13,6 +13,17 @@ if (false) function foo(){}
 # Output
 ```js
 if (false) function foo(){}
+
+```
+
+# Errors
+```
+error[SyntaxError]: In strict mode code, functions can only be declared at top level or inside a block
+  ┌─ function-declaration-in-if.js:1:12
+  │
+1 │ if (false) function foo(){}
+  │            ^^^^^^^^^^^^^^^^ wrap the function in a block statement
+
 
 ```
 

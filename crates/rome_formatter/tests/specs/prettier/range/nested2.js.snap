@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: nested2.js
 
 ---
@@ -23,6 +23,43 @@ try {
   }<<<PRETTIER_RANGE_END>>>
 }
 catch (err) {}
+
+```
+
+# Errors
+```
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ nested2.js:2:6
+  │
+2 │   i<<<PRETTIER_RANGE_START>>>f (condition) {
+  │      ^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ nested2.js:2:44
+  │
+2 │   i<<<PRETTIER_RANGE_START>>>f (condition) {
+  │   -----------------------------------------^
+  │   │                                        │
+  │   │                                        An explicit or implicit semicolon is expected here...
+  │   ...Which is required to end this statement
+
+error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_END>>>
+}
+catch (err)'
+  ┌─ nested2.js:4:4
+  │  
+4 │     }<<<PRETTIER_RANGE_END>>>
+  │ ┌────^
+5 │ │ }
+6 │ │ catch (err) {}
+  │ └───────────^ Expected a statement here
+
+error[SyntaxError]: expected `'}'` but instead the file ends
+  ┌─ nested2.js:7:1
+  │
+7 │ 
+  │ ^ the file ends here
+
 
 ```
 

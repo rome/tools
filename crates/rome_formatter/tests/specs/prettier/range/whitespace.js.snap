@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: whitespace.js
 
 ---
@@ -13,6 +13,17 @@ expression: whitespace.js
 # Output
 ```js
 <<<PRETTIER_RANGE_START>>> <<<PRETTIER_RANGE_END>>>
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_START>>> <<<PRETTIER_RANGE_END>>>'
+  ┌─ whitespace.js:1:1
+  │
+1 │ <<<PRETTIER_RANGE_START>>> <<<PRETTIER_RANGE_END>>>
+  │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a statement here
+
 
 ```
 

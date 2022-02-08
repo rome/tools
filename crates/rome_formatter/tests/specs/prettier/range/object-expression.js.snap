@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: object-expression.js
 
 ---
@@ -13,6 +13,35 @@ const y = {<<<PRETTIER_RANGE_START>>>a:1<<<PRETTIER_RANGE_END>>>, b:2}
 # Output
 ```js
 const y = {<<<PRETTIER_RANGE_START>>>a:1<<<PRETTIER_RANGE_END>>>, b:2}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '<<<PRETTIER_RANGE_START>>>a'
+  ┌─ object-expression.js:1:12
+  │
+1 │ const y = {<<<PRETTIER_RANGE_START>>>a:1<<<PRETTIER_RANGE_END>>>, b:2}
+  │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a property, a shorthand property, a getter, a setter, or a method here
+
+error[SyntaxError]: expected `,` but instead found `:`
+  ┌─ object-expression.js:1:39
+  │
+1 │ const y = {<<<PRETTIER_RANGE_START>>>a:1<<<PRETTIER_RANGE_END>>>, b:2}
+  │                                       ^ unexpected
+
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ object-expression.js:1:43
+  │
+1 │ const y = {<<<PRETTIER_RANGE_START>>>a:1<<<PRETTIER_RANGE_END>>>, b:2}
+  │                                           ^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
+
+error[SyntaxError]: expected an expression but instead found ','
+  ┌─ object-expression.js:1:65
+  │
+1 │ const y = {<<<PRETTIER_RANGE_START>>>a:1<<<PRETTIER_RANGE_END>>>, b:2}
+  │                                                                 ^ Expected an expression here
+
 
 ```
 

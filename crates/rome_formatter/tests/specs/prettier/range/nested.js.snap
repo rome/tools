@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: nested.js
 
 ---
@@ -24,6 +24,34 @@ try {
   }<<<PRETTIER_RANGE_END>>>
 }
 catch (err) {}
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_START>>>'
+  ┌─ nested.js:1:1
+  │
+1 │ <<<PRETTIER_RANGE_START>>>try {
+  │ ^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a statement here
+
+error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_END>>>
+}
+catch (err)'
+  ┌─ nested.js:4:4
+  │  
+4 │     }<<<PRETTIER_RANGE_END>>>
+  │ ┌────^
+5 │ │ }
+6 │ │ catch (err) {}
+  │ └───────────^ Expected a statement here
+
+error[SyntaxError]: expected `'}'` but instead the file ends
+  ┌─ nested.js:7:1
+  │
+7 │ 
+  │ ^ the file ends here
+
 
 ```
 

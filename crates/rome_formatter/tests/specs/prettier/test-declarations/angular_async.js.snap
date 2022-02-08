@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: angular_async.js
 
 ---
@@ -85,6 +85,92 @@ it(
 * no errors are thrown when calling isTestCall(parent)
 */
 function x() { async(() => {}) }
+
+```
+
+# Errors
+```
+error[SyntaxError]: expected a parameter but instead found '('
+  ┌─ angular_async.js:1:18
+  │
+1 │ beforeEach(async(() => {
+  │                  ^ Expected a parameter here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ angular_async.js:3:3
+  │  
+1 │ ┌ beforeEach(async(() => {
+2 │ │   // code
+3 │ │ }));
+  │ │   ^ An explicit or implicit semicolon is expected here...
+  │ └───' ...Which is required to end this statement
+
+error[SyntaxError]: expected a parameter but instead found '('
+   ┌─ angular_async.js:11:16
+   │
+11 │ afterAll(async(() => {
+   │                ^ Expected a parameter here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ angular_async.js:13:3
+   │  
+11 │ ┌ afterAll(async(() => {
+12 │ │   console.log('Hello');
+13 │ │ }));
+   │ │   ^ An explicit or implicit semicolon is expected here...
+   │ └───' ...Which is required to end this statement
+
+error[SyntaxError]: expected a parameter but instead found '('
+   ┌─ angular_async.js:21:35
+   │
+21 │ it('should create the app', async(() => {
+   │                                   ^ Expected a parameter here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ angular_async.js:23:3
+   │  
+21 │ ┌ it('should create the app', async(() => {
+22 │ │   //code
+23 │ │ }));
+   │ │   ^ An explicit or implicit semicolon is expected here...
+   │ └───' ...Which is required to end this statement
+
+error[SyntaxError]: expected a parameter but instead found '('
+   ┌─ angular_async.js:25:105
+   │
+25 │ it("does something really long and complicated so I have to write a very long name for the test", async(() => {
+   │                                                                                                         ^ Expected a parameter here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ angular_async.js:27:3
+   │  
+25 │ ┌ it("does something really long and complicated so I have to write a very long name for the test", async(() => {
+26 │ │   // code
+27 │ │ }));
+   │ │   ^ An explicit or implicit semicolon is expected here...
+   │ └───' ...Which is required to end this statement
+
+error[SyntaxError]: expected a parameter but instead found '('
+   ┌─ angular_async.js:34:22
+   │
+34 │ function x() { async(() => {}) }
+   │                      ^ Expected a parameter here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+   ┌─ angular_async.js:34:30
+   │
+34 │ function x() { async(() => {}) }
+   │                --------------^
+   │                │             │
+   │                │             An explicit or implicit semicolon is expected here...
+   │                ...Which is required to end this statement
+
+error[SyntaxError]: expected `'}'` but instead the file ends
+   ┌─ angular_async.js:35:1
+   │
+35 │ 
+   │ ^ the file ends here
+
 
 ```
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: function-declaration.js
 
 ---
@@ -132,6 +132,31 @@ function foo4() {
   // this is a function
   return 42;
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ function-declaration.js:6:3
+  │
+6 │   <div />
+  │   ^^^^ TypeScript only syntax
+
+error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+  ┌─ function-declaration.js:6:9
+  │
+6 │   <div />
+  │        -^ But this operator was encountered instead
+  │        │ 
+  │        This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+  ┌─ function-declaration.js:7:1
+  │
+7 │ ));
+  │ ^ Expected an expression here
+
 
 ```
 

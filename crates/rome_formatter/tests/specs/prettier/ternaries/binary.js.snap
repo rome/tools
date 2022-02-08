@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: binary.js
 
 ---
@@ -38,6 +38,31 @@ room =
           ((rowIndex === 0 || colIndex === 0 || rowIndex === height || colIndex === width) ? 1 : 0),
       )),
   );
+
+```
+
+# Errors
+```
+error[SyntaxError]: Invalid assignment to `<ReportMetricsFunnelSnapshotCard metrics`
+  ┌─ binary.js:5:5
+  │
+5 │   ? <ReportMetricsFunnelSnapshotCard metrics={metrics} />
+  │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ This expression cannot be assigned to
+
+error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+  ┌─ binary.js:5:57
+  │
+5 │   ? <ReportMetricsFunnelSnapshotCard metrics={metrics} />
+  │                                                        -^ But this operator was encountered instead
+  │                                                        │ 
+  │                                                        This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ':'
+  ┌─ binary.js:6:3
+  │
+6 │   : null;
+  │   ^ Expected an expression here
+
 
 ```
 

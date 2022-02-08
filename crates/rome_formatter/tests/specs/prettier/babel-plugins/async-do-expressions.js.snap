@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: async-do-expressions.js
 
 ---
@@ -14,6 +14,26 @@ async do { await requestAPI().json() };
 ```js
 async;
 do { await requestAPI().json() };
+
+```
+
+# Errors
+```
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ async-do-expressions.js:1:7
+  │
+1 │ async do { await requestAPI().json() };
+  │ ------^^
+  │ │     │
+  │ │     An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: expected `WHILE_KW` but instead found `;`
+  ┌─ async-do-expressions.js:1:39
+  │
+1 │ async do { await requestAPI().json() };
+  │                                       ^ unexpected
+
 
 ```
 

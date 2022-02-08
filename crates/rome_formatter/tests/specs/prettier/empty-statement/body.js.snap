@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: body.js
 
 ---
@@ -25,6 +25,17 @@ while (1)
 for (var i in o)
 for (var i of o)
 do while (1);
+
+```
+
+# Errors
+```
+error[SyntaxError]: `with` statements are not allowed in strict mode
+  ┌─ body.js:1:1
+  │
+1 │ with (a);
+  │ ^^^^^^^^^
+
 
 ```
 

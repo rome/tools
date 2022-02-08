@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: strings.js
 
 ---
@@ -61,6 +61,19 @@ expression: strings.js
 
   '\uD801\uDC28',
 ];
+
+```
+
+# Errors
+```
+warning: invalid digits after unicode escape sequence
+   ┌─ strings.js:24:4
+   │
+24 │   '\uD801\uDC28',
+   │    ------------ expected valid unicode escape sequence
+   │    │      
+   │    expected valid unicode escape sequence
+
 
 ```
 

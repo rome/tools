@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: array.js
 
 ---
@@ -28,6 +28,35 @@ a = [
 ,
 a,
 ]
+
+```
+
+# Errors
+```
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ array.js:3:3
+  │
+3 │ <<<PRETTIER_RANGE_START>>>,,,,
+  │   ^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
+
+error[SyntaxError]: expected an expression but instead found ','
+  ┌─ array.js:3:27
+  │
+3 │ <<<PRETTIER_RANGE_START>>>,,,,
+  │                           ^ Expected an expression here
+
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ array.js:6:3
+  │
+6 │ <<<PRETTIER_RANGE_END>>>
+  │   ^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
+
+error[SyntaxError]: expected an expression but instead found ','
+  ┌─ array.js:7:1
+  │
+7 │ ,
+  │ ^ Expected an expression here
+
 
 ```
 

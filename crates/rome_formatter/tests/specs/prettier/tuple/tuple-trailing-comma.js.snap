@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: tuple-trailing-comma.js
 
 ---
@@ -13,6 +13,23 @@ expression: tuple-trailing-comma.js
 # Output
 ```js
 #[1,]
+
+```
+
+# Errors
+```
+error: expected `!` following a `#`, but found none
+  ┌─ tuple-trailing-comma.js:1:1
+  │
+1 │ #[1,]
+  │ ^
+
+error[SyntaxError]: expected a statement but instead found '#[1,]'
+  ┌─ tuple-trailing-comma.js:1:1
+  │
+1 │ #[1,]
+  │ ^^^^^ Expected a statement here
+
 
 ```
 

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 83
 expression: delete-variable.js
 
 ---
@@ -19,6 +19,17 @@ function foo() {
   
   delete bar;
 }
+
+```
+
+# Errors
+```
+error[SyntaxError]: the target for a delete operator cannot be a single identifier
+  ┌─ delete-variable.js:3:10
+  │
+3 │   delete bar;}
+  │          ^^^
+
 
 ```
 
