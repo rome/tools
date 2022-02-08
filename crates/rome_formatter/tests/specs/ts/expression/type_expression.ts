@@ -23,3 +23,7 @@ type U = 15;
 type V = infer U;
 type W = { a: string; b: symbol; c: symbol;d: symbol;e: symbol;f: symbol;g: symbol; };
 type X = { a: string; b: symbol; }
+type Z = {
+    a: string
+    b: symbol
+}
