@@ -1226,12 +1226,10 @@ fn parse_variable_declaration(
 // test_err js_type_variable_annotation
 // let a: string, b!: number;
 //
-// test_err ts_variable_annotation_err
-// // TYPESCRIPT
+// test_err ts ts_variable_annotation_err
 // let a!;
 //
-// test ts_type_variable_annotation
-// // TYPESCRIPT
+// test ts ts_type_variable_annotation
 // let a: string = "test", b!: number;
 fn parse_ts_variable_annotation(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![!]) {

@@ -4,258 +4,257 @@ JsModule {
     items: JsModuleItemList [
         JsFunctionStatement {
             async_token: missing (optional),
-            function_token: FUNCTION_KW@0..23 "function" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            function_token: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")],
             star_token: missing (optional),
             id: JsIdentifierBinding {
-                name_token: IDENT@23..24 "a" [] [],
+                name_token: IDENT@9..10 "a" [] [],
             },
             type_parameters: missing (optional),
             parameters: JsParameters {
-                l_paren_token: L_PAREN@24..25 "(" [] [],
+                l_paren_token: L_PAREN@10..11 "(" [] [],
                 items: JsParameterList [
                     JsFormalParameter {
                         binding: JsIdentifierBinding {
-                            name_token: IDENT@25..26 "x" [] [],
+                            name_token: IDENT@11..12 "x" [] [],
                         },
-                        question_mark_token: QUESTION@26..27 "?" [] [],
+                        question_mark_token: QUESTION@12..13 "?" [] [],
                         type_annotation: TsTypeAnnotation {
-                            colon_token: COLON@27..29 ":" [] [Whitespace(" ")],
+                            colon_token: COLON@13..15 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
-                                string_token: STRING_KW@29..36 "string" [] [Whitespace(" ")],
+                                string_token: STRING_KW@15..22 "string" [] [Whitespace(" ")],
                             },
                         },
                         initializer: JsInitializerClause {
-                            eq_token: EQ@36..38 "=" [] [Whitespace(" ")],
+                            eq_token: EQ@22..24 "=" [] [Whitespace(" ")],
                             expression: JsStringLiteralExpression {
-                                value_token: JS_STRING_LITERAL@38..44 "\"test\"" [] [],
+                                value_token: JS_STRING_LITERAL@24..30 "\"test\"" [] [],
                             },
                         },
                     },
                 ],
-                r_paren_token: R_PAREN@44..46 ")" [] [Whitespace(" ")],
+                r_paren_token: R_PAREN@30..32 ")" [] [Whitespace(" ")],
             },
             return_type_annotation: missing (optional),
             body: JsFunctionBody {
-                l_curly_token: L_CURLY@46..47 "{" [] [],
+                l_curly_token: L_CURLY@32..33 "{" [] [],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [],
-                r_curly_token: R_CURLY@47..48 "}" [] [],
+                r_curly_token: R_CURLY@33..34 "}" [] [],
             },
         },
         JsFunctionStatement {
             async_token: missing (optional),
-            function_token: FUNCTION_KW@48..58 "function" [Newline("\n")] [Whitespace(" ")],
+            function_token: FUNCTION_KW@34..44 "function" [Newline("\n")] [Whitespace(" ")],
             star_token: missing (optional),
             id: JsIdentifierBinding {
-                name_token: IDENT@58..59 "b" [] [],
+                name_token: IDENT@44..45 "b" [] [],
             },
             type_parameters: missing (optional),
             parameters: JsParameters {
-                l_paren_token: L_PAREN@59..60 "(" [] [],
+                l_paren_token: L_PAREN@45..46 "(" [] [],
                 items: JsParameterList [
                     JsUnknownParameter {
                         items: [
-                            DOT2@60..63 "..." [] [],
+                            DOT2@46..49 "..." [] [],
                             JsIdentifierBinding {
-                                name_token: IDENT@63..67 "rest" [] [],
+                                name_token: IDENT@49..53 "rest" [] [],
                             },
                             TsTypeAnnotation {
-                                colon_token: COLON@67..69 ":" [] [Whitespace(" ")],
+                                colon_token: COLON@53..55 ":" [] [Whitespace(" ")],
                                 ty: TsArrayType {
                                     element_type: TsStringType {
-                                        string_token: STRING_KW@69..75 "string" [] [],
+                                        string_token: STRING_KW@55..61 "string" [] [],
                                     },
-                                    l_brack_token: L_BRACK@75..76 "[" [] [],
-                                    r_brack_token: R_BRACK@76..78 "]" [] [Whitespace(" ")],
+                                    l_brack_token: L_BRACK@61..62 "[" [] [],
+                                    r_brack_token: R_BRACK@62..64 "]" [] [Whitespace(" ")],
                                 },
                             },
                             JsInitializerClause {
-                                eq_token: EQ@78..80 "=" [] [Whitespace(" ")],
+                                eq_token: EQ@64..66 "=" [] [Whitespace(" ")],
                                 expression: JsStringLiteralExpression {
-                                    value_token: JS_STRING_LITERAL@80..86 "\"init\"" [] [],
+                                    value_token: JS_STRING_LITERAL@66..72 "\"init\"" [] [],
                                 },
                             },
                         ],
                     },
                 ],
-                r_paren_token: R_PAREN@86..88 ")" [] [Whitespace(" ")],
+                r_paren_token: R_PAREN@72..74 ")" [] [Whitespace(" ")],
             },
             return_type_annotation: missing (optional),
             body: JsFunctionBody {
-                l_curly_token: L_CURLY@88..89 "{" [] [],
+                l_curly_token: L_CURLY@74..75 "{" [] [],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [],
-                r_curly_token: R_CURLY@89..90 "}" [] [],
+                r_curly_token: R_CURLY@75..76 "}" [] [],
             },
         },
         JsFunctionStatement {
             async_token: missing (optional),
-            function_token: FUNCTION_KW@90..100 "function" [Newline("\n")] [Whitespace(" ")],
+            function_token: FUNCTION_KW@76..86 "function" [Newline("\n")] [Whitespace(" ")],
             star_token: missing (optional),
             id: JsIdentifierBinding {
-                name_token: IDENT@100..101 "c" [] [],
+                name_token: IDENT@86..87 "c" [] [],
             },
             type_parameters: missing (optional),
             parameters: JsParameters {
-                l_paren_token: L_PAREN@101..102 "(" [] [],
+                l_paren_token: L_PAREN@87..88 "(" [] [],
                 items: JsParameterList [
                     JsUnknownParameter {
                         items: [
-                            DOT2@102..105 "..." [] [],
+                            DOT2@88..91 "..." [] [],
                             JsIdentifierBinding {
-                                name_token: IDENT@105..109 "rest" [] [],
+                                name_token: IDENT@91..95 "rest" [] [],
                             },
                         ],
                     },
-                    COMMA@109..111 "," [] [Whitespace(" ")],
+                    COMMA@95..97 "," [] [Whitespace(" ")],
                     JsFormalParameter {
                         binding: JsIdentifierBinding {
-                            name_token: IDENT@111..112 "b" [] [],
+                            name_token: IDENT@97..98 "b" [] [],
                         },
                         question_mark_token: missing (optional),
                         type_annotation: TsTypeAnnotation {
-                            colon_token: COLON@112..114 ":" [] [Whitespace(" ")],
+                            colon_token: COLON@98..100 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
-                                string_token: STRING_KW@114..120 "string" [] [],
+                                string_token: STRING_KW@100..106 "string" [] [],
                             },
                         },
                         initializer: missing (optional),
                     },
                 ],
-                r_paren_token: R_PAREN@120..122 ")" [] [Whitespace(" ")],
+                r_paren_token: R_PAREN@106..108 ")" [] [Whitespace(" ")],
             },
             return_type_annotation: missing (optional),
             body: JsFunctionBody {
-                l_curly_token: L_CURLY@122..123 "{" [] [],
+                l_curly_token: L_CURLY@108..109 "{" [] [],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [],
-                r_curly_token: R_CURLY@123..124 "}" [] [],
+                r_curly_token: R_CURLY@109..110 "}" [] [],
             },
         },
     ],
-    eof_token: EOF@124..125 "" [Newline("\n")] [],
+    eof_token: EOF@110..111 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..125
+0: JS_MODULE@0..111
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..124
-    0: JS_FUNCTION_STATEMENT@0..48
+  2: JS_MODULE_ITEM_LIST@0..110
+    0: JS_FUNCTION_STATEMENT@0..34
       0: (empty)
-      1: FUNCTION_KW@0..23 "function" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
+      1: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
       2: (empty)
-      3: JS_IDENTIFIER_BINDING@23..24
-        0: IDENT@23..24 "a" [] []
+      3: JS_IDENTIFIER_BINDING@9..10
+        0: IDENT@9..10 "a" [] []
       4: (empty)
-      5: JS_PARAMETERS@24..46
-        0: L_PAREN@24..25 "(" [] []
-        1: JS_PARAMETER_LIST@25..44
-          0: JS_FORMAL_PARAMETER@25..44
-            0: JS_IDENTIFIER_BINDING@25..26
-              0: IDENT@25..26 "x" [] []
-            1: QUESTION@26..27 "?" [] []
-            2: TS_TYPE_ANNOTATION@27..36
-              0: COLON@27..29 ":" [] [Whitespace(" ")]
-              1: TS_STRING_TYPE@29..36
-                0: STRING_KW@29..36 "string" [] [Whitespace(" ")]
-            3: JS_INITIALIZER_CLAUSE@36..44
-              0: EQ@36..38 "=" [] [Whitespace(" ")]
-              1: JS_STRING_LITERAL_EXPRESSION@38..44
-                0: JS_STRING_LITERAL@38..44 "\"test\"" [] []
-        2: R_PAREN@44..46 ")" [] [Whitespace(" ")]
+      5: JS_PARAMETERS@10..32
+        0: L_PAREN@10..11 "(" [] []
+        1: JS_PARAMETER_LIST@11..30
+          0: JS_FORMAL_PARAMETER@11..30
+            0: JS_IDENTIFIER_BINDING@11..12
+              0: IDENT@11..12 "x" [] []
+            1: QUESTION@12..13 "?" [] []
+            2: TS_TYPE_ANNOTATION@13..22
+              0: COLON@13..15 ":" [] [Whitespace(" ")]
+              1: TS_STRING_TYPE@15..22
+                0: STRING_KW@15..22 "string" [] [Whitespace(" ")]
+            3: JS_INITIALIZER_CLAUSE@22..30
+              0: EQ@22..24 "=" [] [Whitespace(" ")]
+              1: JS_STRING_LITERAL_EXPRESSION@24..30
+                0: JS_STRING_LITERAL@24..30 "\"test\"" [] []
+        2: R_PAREN@30..32 ")" [] [Whitespace(" ")]
       6: (empty)
-      7: JS_FUNCTION_BODY@46..48
-        0: L_CURLY@46..47 "{" [] []
-        1: JS_DIRECTIVE_LIST@47..47
-        2: JS_STATEMENT_LIST@47..47
-        3: R_CURLY@47..48 "}" [] []
-    1: JS_FUNCTION_STATEMENT@48..90
+      7: JS_FUNCTION_BODY@32..34
+        0: L_CURLY@32..33 "{" [] []
+        1: JS_DIRECTIVE_LIST@33..33
+        2: JS_STATEMENT_LIST@33..33
+        3: R_CURLY@33..34 "}" [] []
+    1: JS_FUNCTION_STATEMENT@34..76
       0: (empty)
-      1: FUNCTION_KW@48..58 "function" [Newline("\n")] [Whitespace(" ")]
+      1: FUNCTION_KW@34..44 "function" [Newline("\n")] [Whitespace(" ")]
       2: (empty)
-      3: JS_IDENTIFIER_BINDING@58..59
-        0: IDENT@58..59 "b" [] []
+      3: JS_IDENTIFIER_BINDING@44..45
+        0: IDENT@44..45 "b" [] []
       4: (empty)
-      5: JS_PARAMETERS@59..88
-        0: L_PAREN@59..60 "(" [] []
-        1: JS_PARAMETER_LIST@60..86
-          0: JS_UNKNOWN_PARAMETER@60..86
-            0: DOT2@60..63 "..." [] []
-            1: JS_IDENTIFIER_BINDING@63..67
-              0: IDENT@63..67 "rest" [] []
-            2: TS_TYPE_ANNOTATION@67..78
-              0: COLON@67..69 ":" [] [Whitespace(" ")]
-              1: TS_ARRAY_TYPE@69..78
-                0: TS_STRING_TYPE@69..75
-                  0: STRING_KW@69..75 "string" [] []
-                1: L_BRACK@75..76 "[" [] []
-                2: R_BRACK@76..78 "]" [] [Whitespace(" ")]
-            3: JS_INITIALIZER_CLAUSE@78..86
-              0: EQ@78..80 "=" [] [Whitespace(" ")]
-              1: JS_STRING_LITERAL_EXPRESSION@80..86
-                0: JS_STRING_LITERAL@80..86 "\"init\"" [] []
-        2: R_PAREN@86..88 ")" [] [Whitespace(" ")]
+      5: JS_PARAMETERS@45..74
+        0: L_PAREN@45..46 "(" [] []
+        1: JS_PARAMETER_LIST@46..72
+          0: JS_UNKNOWN_PARAMETER@46..72
+            0: DOT2@46..49 "..." [] []
+            1: JS_IDENTIFIER_BINDING@49..53
+              0: IDENT@49..53 "rest" [] []
+            2: TS_TYPE_ANNOTATION@53..64
+              0: COLON@53..55 ":" [] [Whitespace(" ")]
+              1: TS_ARRAY_TYPE@55..64
+                0: TS_STRING_TYPE@55..61
+                  0: STRING_KW@55..61 "string" [] []
+                1: L_BRACK@61..62 "[" [] []
+                2: R_BRACK@62..64 "]" [] [Whitespace(" ")]
+            3: JS_INITIALIZER_CLAUSE@64..72
+              0: EQ@64..66 "=" [] [Whitespace(" ")]
+              1: JS_STRING_LITERAL_EXPRESSION@66..72
+                0: JS_STRING_LITERAL@66..72 "\"init\"" [] []
+        2: R_PAREN@72..74 ")" [] [Whitespace(" ")]
       6: (empty)
-      7: JS_FUNCTION_BODY@88..90
-        0: L_CURLY@88..89 "{" [] []
-        1: JS_DIRECTIVE_LIST@89..89
-        2: JS_STATEMENT_LIST@89..89
-        3: R_CURLY@89..90 "}" [] []
-    2: JS_FUNCTION_STATEMENT@90..124
+      7: JS_FUNCTION_BODY@74..76
+        0: L_CURLY@74..75 "{" [] []
+        1: JS_DIRECTIVE_LIST@75..75
+        2: JS_STATEMENT_LIST@75..75
+        3: R_CURLY@75..76 "}" [] []
+    2: JS_FUNCTION_STATEMENT@76..110
       0: (empty)
-      1: FUNCTION_KW@90..100 "function" [Newline("\n")] [Whitespace(" ")]
+      1: FUNCTION_KW@76..86 "function" [Newline("\n")] [Whitespace(" ")]
       2: (empty)
-      3: JS_IDENTIFIER_BINDING@100..101
-        0: IDENT@100..101 "c" [] []
+      3: JS_IDENTIFIER_BINDING@86..87
+        0: IDENT@86..87 "c" [] []
       4: (empty)
-      5: JS_PARAMETERS@101..122
-        0: L_PAREN@101..102 "(" [] []
-        1: JS_PARAMETER_LIST@102..120
-          0: JS_UNKNOWN_PARAMETER@102..109
-            0: DOT2@102..105 "..." [] []
-            1: JS_IDENTIFIER_BINDING@105..109
-              0: IDENT@105..109 "rest" [] []
-          1: COMMA@109..111 "," [] [Whitespace(" ")]
-          2: JS_FORMAL_PARAMETER@111..120
-            0: JS_IDENTIFIER_BINDING@111..112
-              0: IDENT@111..112 "b" [] []
+      5: JS_PARAMETERS@87..108
+        0: L_PAREN@87..88 "(" [] []
+        1: JS_PARAMETER_LIST@88..106
+          0: JS_UNKNOWN_PARAMETER@88..95
+            0: DOT2@88..91 "..." [] []
+            1: JS_IDENTIFIER_BINDING@91..95
+              0: IDENT@91..95 "rest" [] []
+          1: COMMA@95..97 "," [] [Whitespace(" ")]
+          2: JS_FORMAL_PARAMETER@97..106
+            0: JS_IDENTIFIER_BINDING@97..98
+              0: IDENT@97..98 "b" [] []
             1: (empty)
-            2: TS_TYPE_ANNOTATION@112..120
-              0: COLON@112..114 ":" [] [Whitespace(" ")]
-              1: TS_STRING_TYPE@114..120
-                0: STRING_KW@114..120 "string" [] []
+            2: TS_TYPE_ANNOTATION@98..106
+              0: COLON@98..100 ":" [] [Whitespace(" ")]
+              1: TS_STRING_TYPE@100..106
+                0: STRING_KW@100..106 "string" [] []
             3: (empty)
-        2: R_PAREN@120..122 ")" [] [Whitespace(" ")]
+        2: R_PAREN@106..108 ")" [] [Whitespace(" ")]
       6: (empty)
-      7: JS_FUNCTION_BODY@122..124
-        0: L_CURLY@122..123 "{" [] []
-        1: JS_DIRECTIVE_LIST@123..123
-        2: JS_STATEMENT_LIST@123..123
-        3: R_CURLY@123..124 "}" [] []
-  3: EOF@124..125 "" [Newline("\n")] []
+      7: JS_FUNCTION_BODY@108..110
+        0: L_CURLY@108..109 "{" [] []
+        1: JS_DIRECTIVE_LIST@109..109
+        2: JS_STATEMENT_LIST@109..109
+        3: R_CURLY@109..110 "}" [] []
+  3: EOF@110..111 "" [Newline("\n")] []
 --
 error[SyntaxError]: Parameter cannot have question mark and initializer
-  ┌─ ts_formal_parameter_error.js:2:23
+  ┌─ ts_formal_parameter_error.ts:1:23
   │
-2 │ function a(x?: string = "test") {}
+1 │ function a(x?: string = "test") {}
   │                       ^^^^^^^^
 
 --
 error[SyntaxError]: rest elements may not have default initializers
-  ┌─ ts_formal_parameter_error.js:3:30
+  ┌─ ts_formal_parameter_error.ts:2:30
   │
-3 │ function b(...rest: string[] = "init") {}
+2 │ function b(...rest: string[] = "init") {}
   │                              ^^^^^^^^
 
 --
 error[SyntaxError]: rest elements may not have trailing commas
-  ┌─ ts_formal_parameter_error.js:4:12
+  ┌─ ts_formal_parameter_error.ts:3:12
   │
-4 │ function c(...rest, b: string) {}
+3 │ function c(...rest, b: string) {}
   │            ^^^^^^^
 
 --
-// TYPESCRIPT
 function a(x?: string = "test") {}
 function b(...rest: string[] = "init") {}
 function c(...rest, b: string) {}

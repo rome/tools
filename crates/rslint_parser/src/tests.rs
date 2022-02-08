@@ -57,7 +57,7 @@ fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
         let ext = path.extension().and_then(|x| x.to_str());
         // Files containing a // SCRIPT comment are parsed as script and not as module
         // This is needed to test features that are restricted in strict mode.
-        let syntax = if ext == Some("ts") || text.contains("// TYPESCRIPT") {
+        let syntax = if ext == Some("ts") {
             Syntax::default().typescript()
         } else if text.contains("// SCRIPT") {
             Syntax::default()

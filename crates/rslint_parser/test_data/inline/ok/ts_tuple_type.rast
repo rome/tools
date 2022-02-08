@@ -3,361 +3,361 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         TsTypeAliasStatement {
-            type_token: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+            type_token: TYPE_KW@0..5 "type" [] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
-                name_token: IDENT@19..21 "A" [] [Whitespace(" ")],
+                name_token: IDENT@5..7 "A" [] [Whitespace(" ")],
             },
             type_parameters: missing (optional),
-            eq_token: EQ@21..23 "=" [] [Whitespace(" ")],
+            eq_token: EQ@7..9 "=" [] [Whitespace(" ")],
             ty: TsTupleType {
-                l_brack_token: L_BRACK@23..24 "[" [] [],
+                l_brack_token: L_BRACK@9..10 "[" [] [],
                 elements: TsTupleTypeElementList [
                     TsStringType {
-                        string_token: STRING_KW@24..30 "string" [] [],
+                        string_token: STRING_KW@10..16 "string" [] [],
                     },
-                    COMMA@30..32 "," [] [Whitespace(" ")],
+                    COMMA@16..18 "," [] [Whitespace(" ")],
                     TsNumberType {
-                        number_token: NUMBER_KW@32..38 "number" [] [],
+                        number_token: NUMBER_KW@18..24 "number" [] [],
                     },
-                    COMMA@38..40 "," [] [Whitespace(" ")],
+                    COMMA@24..26 "," [] [Whitespace(" ")],
                     TsAnyType {
-                        any_token: ANY_KW@40..43 "any" [] [],
+                        any_token: ANY_KW@26..29 "any" [] [],
                     },
                 ],
-                r_brack_token: R_BRACK@43..44 "]" [] [],
+                r_brack_token: R_BRACK@29..30 "]" [] [],
             },
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
-            type_token: TYPE_KW@44..50 "type" [Newline("\n")] [Whitespace(" ")],
+            type_token: TYPE_KW@30..36 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
-                name_token: IDENT@50..52 "B" [] [Whitespace(" ")],
+                name_token: IDENT@36..38 "B" [] [Whitespace(" ")],
             },
             type_parameters: missing (optional),
-            eq_token: EQ@52..54 "=" [] [Whitespace(" ")],
+            eq_token: EQ@38..40 "=" [] [Whitespace(" ")],
             ty: TsTupleType {
-                l_brack_token: L_BRACK@54..55 "[" [] [],
+                l_brack_token: L_BRACK@40..41 "[" [] [],
                 elements: TsTupleTypeElementList [
                     TsNamedTupleTypeElement {
                         dotdotdot_token: missing (optional),
                         name: JsName {
-                            value_token: IDENT@55..56 "a" [] [],
+                            value_token: IDENT@41..42 "a" [] [],
                         },
                         question_mark_token: missing (optional),
-                        colon_token: COLON@56..58 ":" [] [Whitespace(" ")],
+                        colon_token: COLON@42..44 ":" [] [Whitespace(" ")],
                         ty: TsStringType {
-                            string_token: STRING_KW@58..64 "string" [] [],
+                            string_token: STRING_KW@44..50 "string" [] [],
                         },
                     },
-                    COMMA@64..66 "," [] [Whitespace(" ")],
+                    COMMA@50..52 "," [] [Whitespace(" ")],
                     TsNamedTupleTypeElement {
                         dotdotdot_token: missing (optional),
                         name: JsName {
-                            value_token: IDENT@66..67 "b" [] [],
+                            value_token: IDENT@52..53 "b" [] [],
                         },
                         question_mark_token: missing (optional),
-                        colon_token: COLON@67..69 ":" [] [Whitespace(" ")],
+                        colon_token: COLON@53..55 ":" [] [Whitespace(" ")],
                         ty: TsNumberType {
-                            number_token: NUMBER_KW@69..75 "number" [] [],
+                            number_token: NUMBER_KW@55..61 "number" [] [],
                         },
                     },
-                    COMMA@75..77 "," [] [Whitespace(" ")],
+                    COMMA@61..63 "," [] [Whitespace(" ")],
                     TsNamedTupleTypeElement {
                         dotdotdot_token: missing (optional),
                         name: JsName {
-                            value_token: IDENT@77..78 "c" [] [],
+                            value_token: IDENT@63..64 "c" [] [],
                         },
                         question_mark_token: missing (optional),
-                        colon_token: COLON@78..80 ":" [] [Whitespace(" ")],
+                        colon_token: COLON@64..66 ":" [] [Whitespace(" ")],
                         ty: TsAnyType {
-                            any_token: ANY_KW@80..83 "any" [] [],
+                            any_token: ANY_KW@66..69 "any" [] [],
                         },
                     },
                 ],
-                r_brack_token: R_BRACK@83..84 "]" [] [],
+                r_brack_token: R_BRACK@69..70 "]" [] [],
             },
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
-            type_token: TYPE_KW@84..90 "type" [Newline("\n")] [Whitespace(" ")],
+            type_token: TYPE_KW@70..76 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
-                name_token: IDENT@90..92 "C" [] [Whitespace(" ")],
+                name_token: IDENT@76..78 "C" [] [Whitespace(" ")],
             },
             type_parameters: missing (optional),
-            eq_token: EQ@92..94 "=" [] [Whitespace(" ")],
+            eq_token: EQ@78..80 "=" [] [Whitespace(" ")],
             ty: TsTupleType {
-                l_brack_token: L_BRACK@94..95 "[" [] [],
+                l_brack_token: L_BRACK@80..81 "[" [] [],
                 elements: TsTupleTypeElementList [
                     TsNamedTupleTypeElement {
                         dotdotdot_token: missing (optional),
                         name: JsName {
-                            value_token: IDENT@95..96 "a" [] [],
+                            value_token: IDENT@81..82 "a" [] [],
                         },
                         question_mark_token: missing (optional),
-                        colon_token: COLON@96..98 ":" [] [Whitespace(" ")],
+                        colon_token: COLON@82..84 ":" [] [Whitespace(" ")],
                         ty: TsStringType {
-                            string_token: STRING_KW@98..104 "string" [] [],
+                            string_token: STRING_KW@84..90 "string" [] [],
                         },
                     },
-                    COMMA@104..106 "," [] [Whitespace(" ")],
+                    COMMA@90..92 "," [] [Whitespace(" ")],
                     TsNamedTupleTypeElement {
                         dotdotdot_token: missing (optional),
                         name: JsName {
-                            value_token: IDENT@106..107 "b" [] [],
+                            value_token: IDENT@92..93 "b" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        colon_token: COLON@93..95 ":" [] [Whitespace(" ")],
+                        ty: TsNumberType {
+                            number_token: NUMBER_KW@95..101 "number" [] [],
+                        },
+                    },
+                    COMMA@101..103 "," [] [Whitespace(" ")],
+                    TsNamedTupleTypeElement {
+                        dotdotdot_token: DOT2@103..106 "..." [] [],
+                        name: JsName {
+                            value_token: IDENT@106..107 "c" [] [],
                         },
                         question_mark_token: missing (optional),
                         colon_token: COLON@107..109 ":" [] [Whitespace(" ")],
-                        ty: TsNumberType {
-                            number_token: NUMBER_KW@109..115 "number" [] [],
-                        },
-                    },
-                    COMMA@115..117 "," [] [Whitespace(" ")],
-                    TsNamedTupleTypeElement {
-                        dotdotdot_token: DOT2@117..120 "..." [] [],
-                        name: JsName {
-                            value_token: IDENT@120..121 "c" [] [],
-                        },
-                        question_mark_token: missing (optional),
-                        colon_token: COLON@121..123 ":" [] [Whitespace(" ")],
                         ty: TsArrayType {
                             element_type: TsAnyType {
-                                any_token: ANY_KW@123..126 "any" [] [],
+                                any_token: ANY_KW@109..112 "any" [] [],
                             },
-                            l_brack_token: L_BRACK@126..127 "[" [] [],
-                            r_brack_token: R_BRACK@127..128 "]" [] [],
+                            l_brack_token: L_BRACK@112..113 "[" [] [],
+                            r_brack_token: R_BRACK@113..114 "]" [] [],
                         },
                     },
                 ],
-                r_brack_token: R_BRACK@128..129 "]" [] [],
+                r_brack_token: R_BRACK@114..115 "]" [] [],
             },
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
-            type_token: TYPE_KW@129..135 "type" [Newline("\n")] [Whitespace(" ")],
+            type_token: TYPE_KW@115..121 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
-                name_token: IDENT@135..137 "D" [] [Whitespace(" ")],
+                name_token: IDENT@121..123 "D" [] [Whitespace(" ")],
             },
             type_parameters: missing (optional),
-            eq_token: EQ@137..139 "=" [] [Whitespace(" ")],
+            eq_token: EQ@123..125 "=" [] [Whitespace(" ")],
             ty: TsTupleType {
-                l_brack_token: L_BRACK@139..140 "[" [] [],
+                l_brack_token: L_BRACK@125..126 "[" [] [],
                 elements: TsTupleTypeElementList [
                     TsNamedTupleTypeElement {
                         dotdotdot_token: missing (optional),
                         name: JsName {
-                            value_token: IDENT@140..141 "a" [] [],
+                            value_token: IDENT@126..127 "a" [] [],
                         },
-                        question_mark_token: QUESTION@141..142 "?" [] [],
-                        colon_token: COLON@142..144 ":" [] [Whitespace(" ")],
+                        question_mark_token: QUESTION@127..128 "?" [] [],
+                        colon_token: COLON@128..130 ":" [] [Whitespace(" ")],
                         ty: TsStringType {
-                            string_token: STRING_KW@144..150 "string" [] [],
+                            string_token: STRING_KW@130..136 "string" [] [],
                         },
                     },
                 ],
-                r_brack_token: R_BRACK@150..151 "]" [] [],
+                r_brack_token: R_BRACK@136..137 "]" [] [],
             },
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
-            type_token: TYPE_KW@151..157 "type" [Newline("\n")] [Whitespace(" ")],
+            type_token: TYPE_KW@137..143 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
-                name_token: IDENT@157..159 "E" [] [Whitespace(" ")],
+                name_token: IDENT@143..145 "E" [] [Whitespace(" ")],
             },
             type_parameters: missing (optional),
-            eq_token: EQ@159..161 "=" [] [Whitespace(" ")],
+            eq_token: EQ@145..147 "=" [] [Whitespace(" ")],
             ty: TsTupleType {
-                l_brack_token: L_BRACK@161..162 "[" [] [],
+                l_brack_token: L_BRACK@147..148 "[" [] [],
                 elements: TsTupleTypeElementList [
                     TsRestTupleTypeElement {
-                        dotdotdot_token: DOT2@162..165 "..." [] [],
+                        dotdotdot_token: DOT2@148..151 "..." [] [],
                         ty: TsArrayType {
                             element_type: TsStringType {
-                                string_token: STRING_KW@165..171 "string" [] [],
+                                string_token: STRING_KW@151..157 "string" [] [],
                             },
-                            l_brack_token: L_BRACK@171..172 "[" [] [],
-                            r_brack_token: R_BRACK@172..173 "]" [] [],
+                            l_brack_token: L_BRACK@157..158 "[" [] [],
+                            r_brack_token: R_BRACK@158..159 "]" [] [],
                         },
                     },
                 ],
-                r_brack_token: R_BRACK@173..174 "]" [] [],
+                r_brack_token: R_BRACK@159..160 "]" [] [],
             },
             semicolon_token: missing (optional),
         },
         TsTypeAliasStatement {
-            type_token: TYPE_KW@174..180 "type" [Newline("\n")] [Whitespace(" ")],
+            type_token: TYPE_KW@160..166 "type" [Newline("\n")] [Whitespace(" ")],
             binding_identifier: TsIdentifierBinding {
-                name_token: IDENT@180..182 "F" [] [Whitespace(" ")],
+                name_token: IDENT@166..168 "F" [] [Whitespace(" ")],
             },
             type_parameters: missing (optional),
-            eq_token: EQ@182..184 "=" [] [Whitespace(" ")],
+            eq_token: EQ@168..170 "=" [] [Whitespace(" ")],
             ty: TsTupleType {
-                l_brack_token: L_BRACK@184..185 "[" [] [],
+                l_brack_token: L_BRACK@170..171 "[" [] [],
                 elements: TsTupleTypeElementList [
                     TsOptionalTupleTypeElement {
                         ty: TsStringType {
-                            string_token: STRING_KW@185..191 "string" [] [],
+                            string_token: STRING_KW@171..177 "string" [] [],
                         },
-                        question_mark_token: QUESTION@191..192 "?" [] [],
+                        question_mark_token: QUESTION@177..178 "?" [] [],
                     },
                 ],
-                r_brack_token: R_BRACK@192..193 "]" [] [],
+                r_brack_token: R_BRACK@178..179 "]" [] [],
             },
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@193..194 "" [Newline("\n")] [],
+    eof_token: EOF@179..180 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..194
+0: JS_MODULE@0..180
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..193
-    0: TS_TYPE_ALIAS_STATEMENT@0..44
-      0: TYPE_KW@0..19 "type" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@19..21
-        0: IDENT@19..21 "A" [] [Whitespace(" ")]
+  2: JS_MODULE_ITEM_LIST@0..179
+    0: TS_TYPE_ALIAS_STATEMENT@0..30
+      0: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@5..7
+        0: IDENT@5..7 "A" [] [Whitespace(" ")]
       2: (empty)
-      3: EQ@21..23 "=" [] [Whitespace(" ")]
-      4: TS_TUPLE_TYPE@23..44
-        0: L_BRACK@23..24 "[" [] []
-        1: TS_TUPLE_TYPE_ELEMENT_LIST@24..43
-          0: TS_STRING_TYPE@24..30
-            0: STRING_KW@24..30 "string" [] []
-          1: COMMA@30..32 "," [] [Whitespace(" ")]
-          2: TS_NUMBER_TYPE@32..38
-            0: NUMBER_KW@32..38 "number" [] []
-          3: COMMA@38..40 "," [] [Whitespace(" ")]
-          4: TS_ANY_TYPE@40..43
-            0: ANY_KW@40..43 "any" [] []
-        2: R_BRACK@43..44 "]" [] []
+      3: EQ@7..9 "=" [] [Whitespace(" ")]
+      4: TS_TUPLE_TYPE@9..30
+        0: L_BRACK@9..10 "[" [] []
+        1: TS_TUPLE_TYPE_ELEMENT_LIST@10..29
+          0: TS_STRING_TYPE@10..16
+            0: STRING_KW@10..16 "string" [] []
+          1: COMMA@16..18 "," [] [Whitespace(" ")]
+          2: TS_NUMBER_TYPE@18..24
+            0: NUMBER_KW@18..24 "number" [] []
+          3: COMMA@24..26 "," [] [Whitespace(" ")]
+          4: TS_ANY_TYPE@26..29
+            0: ANY_KW@26..29 "any" [] []
+        2: R_BRACK@29..30 "]" [] []
       5: (empty)
-    1: TS_TYPE_ALIAS_STATEMENT@44..84
-      0: TYPE_KW@44..50 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@50..52
-        0: IDENT@50..52 "B" [] [Whitespace(" ")]
+    1: TS_TYPE_ALIAS_STATEMENT@30..70
+      0: TYPE_KW@30..36 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@36..38
+        0: IDENT@36..38 "B" [] [Whitespace(" ")]
       2: (empty)
-      3: EQ@52..54 "=" [] [Whitespace(" ")]
-      4: TS_TUPLE_TYPE@54..84
-        0: L_BRACK@54..55 "[" [] []
-        1: TS_TUPLE_TYPE_ELEMENT_LIST@55..83
-          0: TS_NAMED_TUPLE_TYPE_ELEMENT@55..64
+      3: EQ@38..40 "=" [] [Whitespace(" ")]
+      4: TS_TUPLE_TYPE@40..70
+        0: L_BRACK@40..41 "[" [] []
+        1: TS_TUPLE_TYPE_ELEMENT_LIST@41..69
+          0: TS_NAMED_TUPLE_TYPE_ELEMENT@41..50
             0: (empty)
-            1: JS_NAME@55..56
-              0: IDENT@55..56 "a" [] []
+            1: JS_NAME@41..42
+              0: IDENT@41..42 "a" [] []
             2: (empty)
-            3: COLON@56..58 ":" [] [Whitespace(" ")]
-            4: TS_STRING_TYPE@58..64
-              0: STRING_KW@58..64 "string" [] []
-          1: COMMA@64..66 "," [] [Whitespace(" ")]
-          2: TS_NAMED_TUPLE_TYPE_ELEMENT@66..75
+            3: COLON@42..44 ":" [] [Whitespace(" ")]
+            4: TS_STRING_TYPE@44..50
+              0: STRING_KW@44..50 "string" [] []
+          1: COMMA@50..52 "," [] [Whitespace(" ")]
+          2: TS_NAMED_TUPLE_TYPE_ELEMENT@52..61
             0: (empty)
-            1: JS_NAME@66..67
-              0: IDENT@66..67 "b" [] []
+            1: JS_NAME@52..53
+              0: IDENT@52..53 "b" [] []
             2: (empty)
-            3: COLON@67..69 ":" [] [Whitespace(" ")]
-            4: TS_NUMBER_TYPE@69..75
-              0: NUMBER_KW@69..75 "number" [] []
-          3: COMMA@75..77 "," [] [Whitespace(" ")]
-          4: TS_NAMED_TUPLE_TYPE_ELEMENT@77..83
+            3: COLON@53..55 ":" [] [Whitespace(" ")]
+            4: TS_NUMBER_TYPE@55..61
+              0: NUMBER_KW@55..61 "number" [] []
+          3: COMMA@61..63 "," [] [Whitespace(" ")]
+          4: TS_NAMED_TUPLE_TYPE_ELEMENT@63..69
             0: (empty)
-            1: JS_NAME@77..78
-              0: IDENT@77..78 "c" [] []
+            1: JS_NAME@63..64
+              0: IDENT@63..64 "c" [] []
             2: (empty)
-            3: COLON@78..80 ":" [] [Whitespace(" ")]
-            4: TS_ANY_TYPE@80..83
-              0: ANY_KW@80..83 "any" [] []
-        2: R_BRACK@83..84 "]" [] []
+            3: COLON@64..66 ":" [] [Whitespace(" ")]
+            4: TS_ANY_TYPE@66..69
+              0: ANY_KW@66..69 "any" [] []
+        2: R_BRACK@69..70 "]" [] []
       5: (empty)
-    2: TS_TYPE_ALIAS_STATEMENT@84..129
-      0: TYPE_KW@84..90 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@90..92
-        0: IDENT@90..92 "C" [] [Whitespace(" ")]
+    2: TS_TYPE_ALIAS_STATEMENT@70..115
+      0: TYPE_KW@70..76 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@76..78
+        0: IDENT@76..78 "C" [] [Whitespace(" ")]
       2: (empty)
-      3: EQ@92..94 "=" [] [Whitespace(" ")]
-      4: TS_TUPLE_TYPE@94..129
-        0: L_BRACK@94..95 "[" [] []
-        1: TS_TUPLE_TYPE_ELEMENT_LIST@95..128
-          0: TS_NAMED_TUPLE_TYPE_ELEMENT@95..104
+      3: EQ@78..80 "=" [] [Whitespace(" ")]
+      4: TS_TUPLE_TYPE@80..115
+        0: L_BRACK@80..81 "[" [] []
+        1: TS_TUPLE_TYPE_ELEMENT_LIST@81..114
+          0: TS_NAMED_TUPLE_TYPE_ELEMENT@81..90
             0: (empty)
-            1: JS_NAME@95..96
-              0: IDENT@95..96 "a" [] []
+            1: JS_NAME@81..82
+              0: IDENT@81..82 "a" [] []
             2: (empty)
-            3: COLON@96..98 ":" [] [Whitespace(" ")]
-            4: TS_STRING_TYPE@98..104
-              0: STRING_KW@98..104 "string" [] []
-          1: COMMA@104..106 "," [] [Whitespace(" ")]
-          2: TS_NAMED_TUPLE_TYPE_ELEMENT@106..115
+            3: COLON@82..84 ":" [] [Whitespace(" ")]
+            4: TS_STRING_TYPE@84..90
+              0: STRING_KW@84..90 "string" [] []
+          1: COMMA@90..92 "," [] [Whitespace(" ")]
+          2: TS_NAMED_TUPLE_TYPE_ELEMENT@92..101
             0: (empty)
+            1: JS_NAME@92..93
+              0: IDENT@92..93 "b" [] []
+            2: (empty)
+            3: COLON@93..95 ":" [] [Whitespace(" ")]
+            4: TS_NUMBER_TYPE@95..101
+              0: NUMBER_KW@95..101 "number" [] []
+          3: COMMA@101..103 "," [] [Whitespace(" ")]
+          4: TS_NAMED_TUPLE_TYPE_ELEMENT@103..114
+            0: DOT2@103..106 "..." [] []
             1: JS_NAME@106..107
-              0: IDENT@106..107 "b" [] []
+              0: IDENT@106..107 "c" [] []
             2: (empty)
             3: COLON@107..109 ":" [] [Whitespace(" ")]
-            4: TS_NUMBER_TYPE@109..115
-              0: NUMBER_KW@109..115 "number" [] []
-          3: COMMA@115..117 "," [] [Whitespace(" ")]
-          4: TS_NAMED_TUPLE_TYPE_ELEMENT@117..128
-            0: DOT2@117..120 "..." [] []
-            1: JS_NAME@120..121
-              0: IDENT@120..121 "c" [] []
-            2: (empty)
-            3: COLON@121..123 ":" [] [Whitespace(" ")]
-            4: TS_ARRAY_TYPE@123..128
-              0: TS_ANY_TYPE@123..126
-                0: ANY_KW@123..126 "any" [] []
-              1: L_BRACK@126..127 "[" [] []
-              2: R_BRACK@127..128 "]" [] []
-        2: R_BRACK@128..129 "]" [] []
+            4: TS_ARRAY_TYPE@109..114
+              0: TS_ANY_TYPE@109..112
+                0: ANY_KW@109..112 "any" [] []
+              1: L_BRACK@112..113 "[" [] []
+              2: R_BRACK@113..114 "]" [] []
+        2: R_BRACK@114..115 "]" [] []
       5: (empty)
-    3: TS_TYPE_ALIAS_STATEMENT@129..151
-      0: TYPE_KW@129..135 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@135..137
-        0: IDENT@135..137 "D" [] [Whitespace(" ")]
+    3: TS_TYPE_ALIAS_STATEMENT@115..137
+      0: TYPE_KW@115..121 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@121..123
+        0: IDENT@121..123 "D" [] [Whitespace(" ")]
       2: (empty)
-      3: EQ@137..139 "=" [] [Whitespace(" ")]
-      4: TS_TUPLE_TYPE@139..151
-        0: L_BRACK@139..140 "[" [] []
-        1: TS_TUPLE_TYPE_ELEMENT_LIST@140..150
-          0: TS_NAMED_TUPLE_TYPE_ELEMENT@140..150
+      3: EQ@123..125 "=" [] [Whitespace(" ")]
+      4: TS_TUPLE_TYPE@125..137
+        0: L_BRACK@125..126 "[" [] []
+        1: TS_TUPLE_TYPE_ELEMENT_LIST@126..136
+          0: TS_NAMED_TUPLE_TYPE_ELEMENT@126..136
             0: (empty)
-            1: JS_NAME@140..141
-              0: IDENT@140..141 "a" [] []
-            2: QUESTION@141..142 "?" [] []
-            3: COLON@142..144 ":" [] [Whitespace(" ")]
-            4: TS_STRING_TYPE@144..150
-              0: STRING_KW@144..150 "string" [] []
-        2: R_BRACK@150..151 "]" [] []
+            1: JS_NAME@126..127
+              0: IDENT@126..127 "a" [] []
+            2: QUESTION@127..128 "?" [] []
+            3: COLON@128..130 ":" [] [Whitespace(" ")]
+            4: TS_STRING_TYPE@130..136
+              0: STRING_KW@130..136 "string" [] []
+        2: R_BRACK@136..137 "]" [] []
       5: (empty)
-    4: TS_TYPE_ALIAS_STATEMENT@151..174
-      0: TYPE_KW@151..157 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@157..159
-        0: IDENT@157..159 "E" [] [Whitespace(" ")]
+    4: TS_TYPE_ALIAS_STATEMENT@137..160
+      0: TYPE_KW@137..143 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@143..145
+        0: IDENT@143..145 "E" [] [Whitespace(" ")]
       2: (empty)
-      3: EQ@159..161 "=" [] [Whitespace(" ")]
-      4: TS_TUPLE_TYPE@161..174
-        0: L_BRACK@161..162 "[" [] []
-        1: TS_TUPLE_TYPE_ELEMENT_LIST@162..173
-          0: TS_REST_TUPLE_TYPE_ELEMENT@162..173
-            0: DOT2@162..165 "..." [] []
-            1: TS_ARRAY_TYPE@165..173
-              0: TS_STRING_TYPE@165..171
-                0: STRING_KW@165..171 "string" [] []
-              1: L_BRACK@171..172 "[" [] []
-              2: R_BRACK@172..173 "]" [] []
-        2: R_BRACK@173..174 "]" [] []
+      3: EQ@145..147 "=" [] [Whitespace(" ")]
+      4: TS_TUPLE_TYPE@147..160
+        0: L_BRACK@147..148 "[" [] []
+        1: TS_TUPLE_TYPE_ELEMENT_LIST@148..159
+          0: TS_REST_TUPLE_TYPE_ELEMENT@148..159
+            0: DOT2@148..151 "..." [] []
+            1: TS_ARRAY_TYPE@151..159
+              0: TS_STRING_TYPE@151..157
+                0: STRING_KW@151..157 "string" [] []
+              1: L_BRACK@157..158 "[" [] []
+              2: R_BRACK@158..159 "]" [] []
+        2: R_BRACK@159..160 "]" [] []
       5: (empty)
-    5: TS_TYPE_ALIAS_STATEMENT@174..193
-      0: TYPE_KW@174..180 "type" [Newline("\n")] [Whitespace(" ")]
-      1: TS_IDENTIFIER_BINDING@180..182
-        0: IDENT@180..182 "F" [] [Whitespace(" ")]
+    5: TS_TYPE_ALIAS_STATEMENT@160..179
+      0: TYPE_KW@160..166 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@166..168
+        0: IDENT@166..168 "F" [] [Whitespace(" ")]
       2: (empty)
-      3: EQ@182..184 "=" [] [Whitespace(" ")]
-      4: TS_TUPLE_TYPE@184..193
-        0: L_BRACK@184..185 "[" [] []
-        1: TS_TUPLE_TYPE_ELEMENT_LIST@185..192
-          0: TS_OPTIONAL_TUPLE_TYPE_ELEMENT@185..192
-            0: TS_STRING_TYPE@185..191
-              0: STRING_KW@185..191 "string" [] []
-            1: QUESTION@191..192 "?" [] []
-        2: R_BRACK@192..193 "]" [] []
+      3: EQ@168..170 "=" [] [Whitespace(" ")]
+      4: TS_TUPLE_TYPE@170..179
+        0: L_BRACK@170..171 "[" [] []
+        1: TS_TUPLE_TYPE_ELEMENT_LIST@171..178
+          0: TS_OPTIONAL_TUPLE_TYPE_ELEMENT@171..178
+            0: TS_STRING_TYPE@171..177
+              0: STRING_KW@171..177 "string" [] []
+            1: QUESTION@177..178 "?" [] []
+        2: R_BRACK@178..179 "]" [] []
       5: (empty)
-  3: EOF@193..194 "" [Newline("\n")] []
+  3: EOF@179..180 "" [Newline("\n")] []

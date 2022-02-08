@@ -1,2 +1,0 @@
-// TYPESCRIPT
-class A { test?() {} }

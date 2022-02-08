@@ -37,8 +37,7 @@ fn parse_ts_identifier_binding(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-// test ts_type_assertion_expression
-// // TYPESCRIPT
+// test ts ts_type_assertion_expression
 // let x = <const>"hello";
 // let y = <string> x;
 pub(crate) fn parse_ts_type_assertion_expression(

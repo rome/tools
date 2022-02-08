@@ -259,8 +259,7 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 
     parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
-    // test_err ts_object_getter_type_parameters
-    // // TYPESCRIPT
+    // test_err ts ts_object_getter_type_parameters
     // ({ get a<A>(): A {} });
     if let Present(type_parameters) = parse_ts_type_parameters(p) {
         p.error(ts_accessor_type_parameters_error(p, &type_parameters))
@@ -292,8 +291,7 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
 
     parse_object_member_name(p).or_add_diagnostic(p, js_parse_error::expected_object_member_name);
 
-    // test_err ts_object_setter_type_parameters
-    // // TYPESCRIPT
+    // test_err ts ts_object_setter_type_parameters
     // ({ set a<A>(value: A) {} });
     if let Present(type_parameters) = parse_ts_type_parameters(p) {
         p.error(ts_accessor_type_parameters_error(p, &type_parameters))
@@ -311,8 +309,7 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
         p.expect(T![')']);
     });
 
-    // test_err ts_object_setter_return_type
-    // // TYPESCRIPT
+    // test_err ts ts_object_setter_return_type
     // ({ set a(value: string): void {} });
     if let Present(return_type_annotation) = parse_ts_return_type_annotation(p) {
         p.error(ts_set_accessor_return_type_error(
@@ -428,8 +425,7 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 }
 
-// test ts_method_object_member_body
-// // TYPESCRIPT
+// test ts ts_method_object_member_body
 // ({
 //     x<A>(maybeA: any): maybeA is A { return true },
 //     y(a: string): string { return "string"; },

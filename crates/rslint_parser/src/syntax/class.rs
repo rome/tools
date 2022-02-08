@@ -178,8 +178,7 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
         }
     }
 
-    // test ts_class_type_parameters
-    // // TYPESCRIPT
+    // test ts ts_class_type_parameters
     // class BuildError<A, B, C> {}
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, type_parameters| {
@@ -579,8 +578,7 @@ fn parse_class_member_impl(
                     parse_class_member_name(p)
                         .or_add_diagnostic(p, js_parse_error::expected_class_member_name);
 
-                    // test_err ts_getter_setter_type_parameters
-                    // // TYPESCRIPT
+                    // test_err ts ts_getter_setter_type_parameters
                     // class Test {
                     //  get a<A>(): A {}
                     //  set a<A>(value: A) {}
@@ -610,8 +608,7 @@ fn parse_class_member_impl(
                         .or_add_diagnostic(p, js_parse_error::expected_parameter);
                         p.expect(T![')']);
 
-                        // test_err ts_setter_return_type_annotation
-                        // // TYPESCRIPT
+                        // test_err ts ts_setter_return_type_annotation
                         // class Test {
                         //     set a(value: string): void {}
                         // }
@@ -781,8 +778,7 @@ fn parse_property_class_member_body(p: &mut Parser, member_marker: Marker) -> Pa
 //  c!: string
 // }
 //
-// test ts_class_property_annotation
-// // TYPESCRIPT
+// test ts ts_class_property_annotation
 // class A {
 //   a: string;
 //   b?: string = "test";
@@ -911,8 +907,7 @@ fn parse_method_class_member(
 // test_err class_member_method_body
 // class B { foo(a)
 
-// test ts_method_class_member
-// // TYPESCRIPT
+// test ts ts_method_class_member
 // class Test {
 //   test<A, B extends A, R>(a: A, b: B): R {}
 // }
@@ -932,8 +927,7 @@ fn parse_method_class_member_body(
         p.error(err);
     }
 
-    // test ts_optional_method_class_member
-    // // TYPESCRIPT
+    // test ts ts_optional_method_class_member
     // class A { test?() {} }
     let member_kind = if optional_member_token(p).is_ok() {
         JS_METHOD_CLASS_MEMBER
@@ -988,8 +982,7 @@ fn parse_constructor_class_member_body(
 
     let mut constructor_is_valid = true;
 
-    // test_err ts_constructor_type_parameters
-    // // TYPESCRIPT
+    // test_err ts ts_constructor_type_parameters
     // class A { constructor<A>(b) {} }
     if let Present(type_parameters) = parse_ts_type_parameters(p) {
         p.error(ts_constructor_type_parameters_error(p, &type_parameters));
@@ -1040,14 +1033,12 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
     // class B { constructor(protected b) {} }
 
     if is_at_modifier(p) {
-        // test ts_property_parameter
-        // // TYPESCRIPT
+        // test ts ts_property_parameter
         // class A { constructor(private x, protected y, public z) {} }
         // class B { constructor(readonly w, private readonly x, protected readonly y, public readonly z) {} }
         // class C { constructor(private x: string, readonly y?, z = "default", ...rest) {} }
         //
-        // test_err ts_property_parameter_pattern
-        // // TYPESCRIPT
+        // test_err ts ts_property_parameter_pattern
         // class A { constructor(private { x, y }, protected [a, b]) {} }
         let property_parameter = p.start();
 
@@ -1098,8 +1089,7 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
         Present(property_parameter.complete(p, kind))
     } else {
         parse_any_parameter(p, ParameterContext::Implementation, context).map(|mut parameter| {
-            // test_err ts_constructor_this_parameter
-            // // TYPESCRIPT
+            // test_err ts ts_constructor_this_parameter
             // class C { constructor(this) {} }
             if parameter.kind() == TS_THIS_PARAMETER {
                 p.error(

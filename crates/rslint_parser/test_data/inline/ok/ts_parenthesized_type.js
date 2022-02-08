@@ -1,2 +1,0 @@
-// TYPESCRIPT
-type A = (string)
