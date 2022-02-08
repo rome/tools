@@ -18,7 +18,7 @@ static REPORTER: DiffReport = DiffReport::new();
 
 tests_macros::gen_tests! {"tests/specs/prettier/**/*.js", test_snapshot, "script"}
 
-fn test_snapshot(input: &'static str, _: &str, _: &str) {
+fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     if input.contains("typescript")
         || input.contains("jsx")
         || input.contains("flow")
