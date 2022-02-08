@@ -146,14 +146,43 @@ JsModule {
                 semicolon_token: missing (optional),
             },
         },
+        JsExpressionStatement {
+            expression: JsIdentifierExpression {
+                name: JsReferenceIdentifier {
+                    value_token: IDENT@94..102 "declare" [Newline("\n")] [],
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        JsFunctionStatement {
+            async_token: missing (optional),
+            function_token: FUNCTION_KW@102..112 "function" [Newline("\n")] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@112..129 "not_a_declaration" [] [],
+            },
+            type_parameters: missing (optional),
+            parameters: JsParameters {
+                l_paren_token: L_PAREN@129..130 "(" [] [],
+                items: JsParameterList [],
+                r_paren_token: R_PAREN@130..132 ")" [] [Whitespace(" ")],
+            },
+            return_type_annotation: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@132..133 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@133..134 "}" [] [],
+            },
+        },
     ],
-    eof_token: EOF@94..95 "" [Newline("\n")] [],
+    eof_token: EOF@134..135 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..95
+0: JS_MODULE@0..135
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..94
+  2: JS_MODULE_ITEM_LIST@0..134
     0: TS_DECLARE_STATEMENT@0..46
       0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
       1: TS_DECLARE_FUNCTION@8..46
@@ -255,4 +284,26 @@ JsModule {
           2: R_PAREN@93..94 ")" [] []
         4: (empty)
         5: (empty)
-  3: EOF@94..95 "" [Newline("\n")] []
+    2: JS_EXPRESSION_STATEMENT@94..102
+      0: JS_IDENTIFIER_EXPRESSION@94..102
+        0: JS_REFERENCE_IDENTIFIER@94..102
+          0: IDENT@94..102 "declare" [Newline("\n")] []
+      1: (empty)
+    3: JS_FUNCTION_STATEMENT@102..134
+      0: (empty)
+      1: FUNCTION_KW@102..112 "function" [Newline("\n")] [Whitespace(" ")]
+      2: (empty)
+      3: JS_IDENTIFIER_BINDING@112..129
+        0: IDENT@112..129 "not_a_declaration" [] []
+      4: (empty)
+      5: JS_PARAMETERS@129..132
+        0: L_PAREN@129..130 "(" [] []
+        1: JS_PARAMETER_LIST@130..130
+        2: R_PAREN@130..132 ")" [] [Whitespace(" ")]
+      6: (empty)
+      7: JS_FUNCTION_BODY@132..134
+        0: L_CURLY@132..133 "{" [] []
+        1: JS_DIRECTIVE_LIST@133..133
+        2: JS_STATEMENT_LIST@133..133
+        3: R_CURLY@133..134 "}" [] []
+  3: EOF@134..135 "" [Newline("\n")] []

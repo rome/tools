@@ -121,7 +121,7 @@ pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
-    if !is_at_contextual_keyword(p, "declare") {
+    if !is_at_contextual_keyword(p, "declare") || p.has_linebreak_before_n(1) {
         return false;
     }
 
@@ -131,6 +131,8 @@ pub(crate) fn is_at_ts_declare_statement(p: &Parser) -> bool {
 // test ts ts_declare_function
 // declare function test<A, B, R>(a: A, b: B): R;
 // declare function test2({ a }?: { a: "string" })
+// declare
+// function not_a_declaration() {}
 //
 // test_err ts ts_declare_function_with_body
 // declare function test<A>(a: A): string { return "ambient function with a body"; }
