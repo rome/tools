@@ -4,6 +4,7 @@ pub mod glue;
 
 use std::{
     env,
+    fmt::Display,
     path::{Path, PathBuf},
 };
 
@@ -38,15 +39,22 @@ pub fn run_rustfmt(mode: Mode) -> Result<()> {
     Ok(())
 }
 
-pub fn reformat(text: impl std::fmt::Display) -> Result<String> {
+pub fn reformat(text: impl Display) -> Result<String> {
+    reformat_without_preamble(text).map(prepend_generated_preamble)
+}
+
+const PREAMBLE: &str = "Generated file, do not edit by hand, see `xtask/codegen`";
+pub fn prepend_generated_preamble(content: impl Display) -> String {
+    format!("//! {}\n\n{}\n", PREAMBLE, content)
+}
+
+pub fn reformat_without_preamble(text: impl Display) -> Result<String> {
     let _e = pushenv("RUSTUP_TOOLCHAIN", "stable");
     ensure_rustfmt()?;
-    let stdout = run!(
+    run!(
         "rustfmt --config fn_single_line=true";
         <text.to_string().as_bytes()
-    )?;
-    let preamble = "Generated file, do not edit by hand, see `xtask/codegen`";
-    Ok(format!("//! {}\n\n{}\n", preamble, stdout))
+    )
 }
 
 pub fn ensure_rustfmt() -> Result<()> {

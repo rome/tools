@@ -1,18 +1,10 @@
-mod any_template_element;
-mod array_expr;
-mod arrow_expr;
-mod call_expression;
-mod expression;
-mod function_expression;
-mod identifier_expression;
-mod import_meta_expression;
-mod literal_expression;
-mod object_expression;
-mod regex_literal;
-mod sequence_expression;
-mod static_member_expression;
-mod super_expression;
-mod template;
+//! Generated file, do not edit by hand, see `xtask/codegen`
+
+mod as_expression;
+mod expr_with_type_args;
+mod non_null_assertion_expression;
 mod template_chunk_element;
 mod template_element;
-mod update_expression;
+mod template_literal_type;
+mod type_arguments;
+mod type_assertion_expression;

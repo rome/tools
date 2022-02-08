@@ -2,6 +2,7 @@
 //!
 //!
 mod ast;
+mod formatter;
 mod generate_macros;
 mod generate_nodes;
 mod generate_syntax_factory;
@@ -15,6 +16,7 @@ use std::path::Path;
 use xtask::{glue::fs2, Mode, Result};
 
 pub use self::ast::generate_ast;
+pub use self::formatter::generate_formatter;
 pub use self::parser_tests::generate_parser_tests;
 pub use self::unicode::generate_tables;
 
