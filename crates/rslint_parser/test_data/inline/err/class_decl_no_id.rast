@@ -2,7 +2,12 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
+<<<<<<< HEAD
         JsClassDeclaration {
+=======
+        JsClassStatement {
+            abstract_token: missing (optional),
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: missing (required),
             type_parameters: missing (optional),
@@ -41,15 +46,22 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..30
+<<<<<<< HEAD
     0: JS_CLASS_DECLARATION@0..8
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: (empty)
+=======
+    0: JS_CLASS_STATEMENT@0..8
+      0: (empty)
+      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
       2: (empty)
       3: (empty)
       4: (empty)
-      5: L_CURLY@6..7 "{" [] []
-      6: JS_CLASS_MEMBER_LIST@7..7
-      7: R_CURLY@7..8 "}" [] []
+      5: (empty)
+      6: L_CURLY@6..7 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@7..7
+      8: R_CURLY@7..8 "}" [] []
     1: JS_UNKNOWN_STATEMENT@8..30
       0: CLASS_KW@8..15 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_UNKNOWN@15..28

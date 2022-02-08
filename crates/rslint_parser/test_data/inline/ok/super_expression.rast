@@ -2,7 +2,12 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
+<<<<<<< HEAD
         JsClassDeclaration {
+=======
+        JsClassStatement {
+            abstract_token: missing (optional),
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..11 "Test" [] [Whitespace(" ")],
@@ -136,20 +141,33 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..110
+<<<<<<< HEAD
     0: JS_CLASS_DECLARATION@0..110
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..11
+=======
+    0: JS_CLASS_STATEMENT@0..110
+      0: (empty)
+      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@6..11
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
         0: IDENT@6..11 "Test" [] [Whitespace(" ")]
-      2: (empty)
-      3: JS_EXTENDS_CLAUSE@11..21
+      3: (empty)
+      4: JS_EXTENDS_CLAUSE@11..21
         0: EXTENDS_KW@11..19 "extends" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@19..21
           0: JS_REFERENCE_IDENTIFIER@19..21
             0: IDENT@19..21 "B" [] [Whitespace(" ")]
+<<<<<<< HEAD
         2: (empty)
       4: (empty)
       5: L_CURLY@21..22 "{" [] []
       6: JS_CLASS_MEMBER_LIST@22..108
+=======
+      5: (empty)
+      6: L_CURLY@21..22 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@22..108
+>>>>>>> a9eb9c87a (update rast files with the optional abstract for classes)
         0: JS_CONSTRUCTOR_CLASS_MEMBER@22..57
           0: (empty)
           1: JS_LITERAL_MEMBER_NAME@22..36
@@ -226,5 +244,5 @@ JsModule {
                   4: R_BRACK@102..103 "]" [] []
                 1: SEMICOLON@103..104 ";" [] []
             3: R_CURLY@104..108 "}" [Newline("\n"), Whitespace("  ")] []
-      7: R_CURLY@108..110 "}" [Newline("\n")] []
+      8: R_CURLY@108..110 "}" [Newline("\n")] []
   3: EOF@110..111 "" [Newline("\n")] []

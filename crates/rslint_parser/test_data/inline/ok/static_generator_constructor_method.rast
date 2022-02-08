@@ -2,7 +2,12 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
+<<<<<<< HEAD
         JsClassDeclaration {
+=======
+        JsClassStatement {
+            abstract_token: missing (optional),
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
@@ -71,15 +76,22 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..71
+<<<<<<< HEAD
     0: JS_CLASS_DECLARATION@0..71
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
+=======
+    0: JS_CLASS_STATEMENT@0..71
+      0: (empty)
+      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@6..8
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
-      2: (empty)
       3: (empty)
       4: (empty)
-      5: L_CURLY@8..9 "{" [] []
-      6: JS_CLASS_MEMBER_LIST@9..69
+      5: (empty)
+      6: L_CURLY@8..9 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@9..69
         0: JS_METHOD_CLASS_MEMBER@9..42
           0: (empty)
           1: STATIC_KW@9..18 "static" [Newline("\n"), Whitespace("\t")] [Whitespace(" ")]
@@ -120,5 +132,5 @@ JsModule {
             1: JS_DIRECTIVE_LIST@68..68
             2: JS_STATEMENT_LIST@68..68
             3: R_CURLY@68..69 "}" [] []
-      7: R_CURLY@69..71 "}" [Newline("\n")] []
+      8: R_CURLY@69..71 "}" [Newline("\n")] []
   3: EOF@71..72 "" [Newline("\n")] []

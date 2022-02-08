@@ -133,7 +133,7 @@ impl StatementContext {
 ///
 /// If not passed, [STMT_RECOVERY_SET] will be used as recovery set
 pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
-    match dbg!(p.cur()) {
+    match p.cur() {
         // test_err import_decl_not_top_level
         // {
         //  import foo from "bar";

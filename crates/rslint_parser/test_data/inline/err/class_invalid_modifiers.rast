@@ -2,7 +2,12 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
+<<<<<<< HEAD
         JsClassDeclaration {
+=======
+        JsClassStatement {
+            abstract_token: missing (optional),
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..8 "A" [] [Whitespace(" ")],
@@ -34,7 +39,12 @@ JsModule {
             ],
             r_curly_token: R_CURLY@26..27 "}" [] [],
         },
+<<<<<<< HEAD
         JsClassDeclaration {
+=======
+        JsClassStatement {
+            abstract_token: missing (optional),
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@27..34 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@34..36 "B" [] [Whitespace(" ")],
@@ -75,15 +85,22 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..62
+<<<<<<< HEAD
     0: JS_CLASS_DECLARATION@0..27
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
+=======
+    0: JS_CLASS_STATEMENT@0..27
+      0: (empty)
+      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@6..8
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
-      2: (empty)
       3: (empty)
       4: (empty)
-      5: L_CURLY@8..10 "{" [] [Whitespace(" ")]
-      6: JS_CLASS_MEMBER_LIST@10..26
+      5: (empty)
+      6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+      7: JS_CLASS_MEMBER_LIST@10..26
         0: JS_UNKNOWN_MEMBER@10..26
           0: PUBLIC_KW@10..17 "public" [] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@17..20
@@ -97,16 +114,24 @@ JsModule {
             1: JS_DIRECTIVE_LIST@24..24
             2: JS_STATEMENT_LIST@24..24
             3: R_CURLY@24..26 "}" [] [Whitespace(" ")]
+<<<<<<< HEAD
       7: R_CURLY@26..27 "}" [] []
     1: JS_CLASS_DECLARATION@27..62
       0: CLASS_KW@27..34 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@34..36
+=======
+      8: R_CURLY@26..27 "}" [] []
+    1: JS_CLASS_STATEMENT@27..62
+      0: (empty)
+      1: CLASS_KW@27..34 "class" [Newline("\n")] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@34..36
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
         0: IDENT@34..36 "B" [] [Whitespace(" ")]
-      2: (empty)
       3: (empty)
       4: (empty)
-      5: L_CURLY@36..38 "{" [] [Whitespace(" ")]
-      6: JS_CLASS_MEMBER_LIST@38..61
+      5: (empty)
+      6: L_CURLY@36..38 "{" [] [Whitespace(" ")]
+      7: JS_CLASS_MEMBER_LIST@38..61
         0: JS_UNKNOWN_MEMBER@38..61
           0: STATIC_KW@38..45 "static" [] [Whitespace(" ")]
           1: STATIC_KW@45..52 "static" [] [Whitespace(" ")]
@@ -121,7 +146,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@59..59
             2: JS_STATEMENT_LIST@59..59
             3: R_CURLY@59..61 "}" [] [Whitespace(" ")]
-      7: R_CURLY@61..62 "}" [] []
+      8: R_CURLY@61..62 "}" [] []
   3: EOF@62..63 "" [Newline("\n")] []
 --
 error[SyntaxError]: `public` modifier can only be used in TypeScript files

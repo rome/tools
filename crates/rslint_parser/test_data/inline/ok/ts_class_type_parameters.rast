@@ -2,7 +2,12 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
+<<<<<<< HEAD
         JsClassDeclaration {
+=======
+        JsClassStatement {
+            abstract_token: missing (optional),
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@6..16 "BuildError" [] [],
@@ -50,11 +55,18 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..28
+<<<<<<< HEAD
     0: JS_CLASS_DECLARATION@0..28
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..16
+=======
+    0: JS_CLASS_STATEMENT@0..28
+      0: (empty)
+      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@6..16
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
         0: IDENT@6..16 "BuildError" [] []
-      2: TS_TYPE_PARAMETERS@16..26
+      3: TS_TYPE_PARAMETERS@16..26
         0: L_ANGLE@16..17 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@17..24
           0: TS_TYPE_PARAMETER@17..18
@@ -75,9 +87,9 @@ JsModule {
             1: (empty)
             2: (empty)
         2: R_ANGLE@24..26 ">" [] [Whitespace(" ")]
-      3: (empty)
       4: (empty)
-      5: L_CURLY@26..27 "{" [] []
-      6: JS_CLASS_MEMBER_LIST@27..27
-      7: R_CURLY@27..28 "}" [] []
+      5: (empty)
+      6: L_CURLY@26..27 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@27..27
+      8: R_CURLY@27..28 "}" [] []
   3: EOF@28..29 "" [Newline("\n")] []

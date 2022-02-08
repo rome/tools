@@ -2,7 +2,12 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
+<<<<<<< HEAD
         JsClassDeclaration {
+=======
+        JsClassStatement {
+            abstract_token: missing (optional),
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
             id: missing (required),
             type_parameters: missing (optional),
@@ -12,7 +17,12 @@ JsModule {
             members: JsClassMemberList [],
             r_curly_token: R_CURLY@7..8 "}" [] [],
         },
+<<<<<<< HEAD
         JsClassDeclaration {
+=======
+        JsClassStatement {
+            abstract_token: missing (optional),
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@8..15 "class" [Newline("\n")] [Whitespace(" ")],
             id: missing (required),
             type_parameters: missing (optional),
@@ -30,7 +40,12 @@ JsModule {
             members: JsClassMemberList [],
             r_curly_token: R_CURLY@28..29 "}" [] [],
         },
+<<<<<<< HEAD
         JsClassDeclaration {
+=======
+        JsClassStatement {
+            abstract_token: missing (optional),
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@29..36 "class" [Newline("\n")] [Whitespace(" ")],
             id: JsIdentifierBinding {
                 name_token: IDENT@36..40 "foo" [] [Whitespace(" ")],
@@ -59,7 +74,12 @@ JsModule {
             ],
             r_curly_token: R_CURLY@49..50 "}" [] [],
         },
+<<<<<<< HEAD
         JsClassDeclaration {
+=======
+        JsClassStatement {
+            abstract_token: missing (optional),
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
             class_token: CLASS_KW@50..57 "class" [Newline("\n")] [Whitespace(" ")],
             id: missing (required),
             type_parameters: missing (optional),
@@ -81,6 +101,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..67
+<<<<<<< HEAD
     0: JS_CLASS_DECLARATION@0..8
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: (empty)
@@ -93,12 +114,29 @@ JsModule {
     1: JS_CLASS_DECLARATION@8..29
       0: CLASS_KW@8..15 "class" [Newline("\n")] [Whitespace(" ")]
       1: (empty)
+=======
+    0: JS_CLASS_STATEMENT@0..8
+      0: (empty)
+      1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       2: (empty)
-      3: JS_EXTENDS_CLAUSE@15..27
+      3: (empty)
+      4: (empty)
+      5: (empty)
+      6: L_CURLY@6..7 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@7..7
+      8: R_CURLY@7..8 "}" [] []
+    1: JS_CLASS_STATEMENT@8..29
+      0: (empty)
+      1: CLASS_KW@8..15 "class" [Newline("\n")] [Whitespace(" ")]
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
+      2: (empty)
+      3: (empty)
+      4: JS_EXTENDS_CLAUSE@15..27
         0: EXTENDS_KW@15..23 "extends" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@23..27
           0: JS_REFERENCE_IDENTIFIER@23..27
             0: IDENT@23..27 "bar" [] [Whitespace(" ")]
+<<<<<<< HEAD
         2: (empty)
       4: (empty)
       5: L_CURLY@27..28 "{" [] []
@@ -107,12 +145,22 @@ JsModule {
     2: JS_CLASS_DECLARATION@29..50
       0: CLASS_KW@29..36 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@36..40
+=======
+      5: (empty)
+      6: L_CURLY@27..28 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@28..28
+      8: R_CURLY@28..29 "}" [] []
+    2: JS_CLASS_STATEMENT@29..50
+      0: (empty)
+      1: CLASS_KW@29..36 "class" [Newline("\n")] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@36..40
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
         0: IDENT@36..40 "foo" [] [Whitespace(" ")]
-      2: (empty)
       3: (empty)
       4: (empty)
-      5: L_CURLY@40..42 "{" [] [Whitespace(" ")]
-      6: JS_CLASS_MEMBER_LIST@42..49
+      5: (empty)
+      6: L_CURLY@40..42 "{" [] [Whitespace(" ")]
+      7: JS_CLASS_MEMBER_LIST@42..49
         0: JS_SETTER_CLASS_MEMBER@42..49
           0: (empty)
           1: (empty)
@@ -127,19 +175,29 @@ JsModule {
             1: JS_DIRECTIVE_LIST@47..47
             2: JS_STATEMENT_LIST@47..47
             3: R_CURLY@47..49 "}" [] [Whitespace(" ")]
+<<<<<<< HEAD
       7: R_CURLY@49..50 "}" [] []
     3: JS_CLASS_DECLARATION@50..67
       0: CLASS_KW@50..57 "class" [Newline("\n")] [Whitespace(" ")]
       1: (empty)
+=======
+      8: R_CURLY@49..50 "}" [] []
+    3: JS_CLASS_STATEMENT@50..67
+      0: (empty)
+      1: CLASS_KW@50..57 "class" [Newline("\n")] [Whitespace(" ")]
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
       2: (empty)
-      3: JS_EXTENDS_CLAUSE@57..65
+      3: (empty)
+      4: JS_EXTENDS_CLAUSE@57..67
         0: EXTENDS_KW@57..65 "extends" [] [Whitespace(" ")]
-        1: (empty)
-        2: (empty)
-      4: (empty)
-      5: L_CURLY@65..66 "{" [] []
-      6: JS_CLASS_MEMBER_LIST@66..66
-      7: R_CURLY@66..67 "}" [] []
+        1: JS_OBJECT_EXPRESSION@65..67
+          0: L_CURLY@65..66 "{" [] []
+          1: JS_OBJECT_MEMBER_LIST@66..66
+          2: R_CURLY@66..67 "}" [] []
+      5: (empty)
+      6: (empty)
+      7: JS_CLASS_MEMBER_LIST@67..67
+      8: (empty)
   3: EOF@67..68 "" [Newline("\n")] []
 --
 error[SyntaxError]: class declarations must have a name

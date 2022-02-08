@@ -20,7 +20,12 @@ JsScript {
                 l_curly_token: L_CURLY@33..34 "{" [] [],
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
+<<<<<<< HEAD
                     JsClassDeclaration {
+=======
+                    JsClassStatement {
+                        abstract_token: missing (optional),
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
                         class_token: CLASS_KW@34..43 "class" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                         id: JsIdentifierBinding {
                             name_token: IDENT@43..45 "A" [] [Whitespace(" ")],
@@ -81,15 +86,22 @@ JsScript {
         0: L_CURLY@33..34 "{" [] []
         1: JS_DIRECTIVE_LIST@34..34
         2: JS_STATEMENT_LIST@34..68
+<<<<<<< HEAD
           0: JS_CLASS_DECLARATION@34..68
             0: CLASS_KW@34..43 "class" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
             1: JS_IDENTIFIER_BINDING@43..45
+=======
+          0: JS_CLASS_STATEMENT@34..68
+            0: (empty)
+            1: CLASS_KW@34..43 "class" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
+            2: JS_IDENTIFIER_BINDING@43..45
+>>>>>>> 92840060b (update rast files with the optional abstract for classes)
               0: IDENT@43..45 "A" [] [Whitespace(" ")]
-            2: (empty)
             3: (empty)
             4: (empty)
-            5: L_CURLY@45..46 "{" [] []
-            6: JS_CLASS_MEMBER_LIST@46..64
+            5: (empty)
+            6: L_CURLY@45..46 "{" [] []
+            7: JS_CLASS_MEMBER_LIST@46..64
               0: JS_PROPERTY_CLASS_MEMBER@46..64
                 0: (empty)
                 1: (empty)
@@ -105,6 +117,6 @@ JsScript {
                     0: JS_REFERENCE_IDENTIFIER@58..63
                       0: IDENT@58..63 "await" [] []
                 8: SEMICOLON@63..64 ";" [] []
-            7: R_CURLY@64..68 "}" [Newline("\n"), Whitespace("  ")] []
+            8: R_CURLY@64..68 "}" [Newline("\n"), Whitespace("  ")] []
         3: R_CURLY@68..70 "}" [Newline("\n")] []
   3: EOF@70..71 "" [Newline("\n")] []

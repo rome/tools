@@ -2,6 +2,7 @@ use rslint_lexer::T;
 
 use crate::syntax::function::LineBreak;
 use crate::syntax::stmt::StatementContext;
+use crate::syntax::util::is_at_contextual_keyword;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{ParsedSyntax, Parser};
 
@@ -9,7 +10,7 @@ pub(crate) fn is_at_ts_abstract_class_statement(
     p: &Parser,
     should_check_line_break: LineBreak,
 ) -> bool {
-    let tokens = p.cur_src() == "abstract" && p.nth_at(1, T![class]);
+    let tokens = is_at_contextual_keyword(p, "abstract") && p.nth_at(1, T![class]);
     if should_check_line_break == LineBreak::DoCheck {
         tokens && !p.has_linebreak_before_n(1)
     } else {
