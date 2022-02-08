@@ -1,13 +1,11 @@
-use crate::formatter_traits::{FormatOptionalTokenAndNode, FormatTokenAndNode};
+use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{
-    format_elements, group_elements, soft_block_indent, space_token, FormatElement, FormatResult,
-    Formatter, ToFormatElement,
+    format_elements, group_elements, soft_block_indent, FormatElement, FormatResult, Formatter,
+    ToFormatElement,
 };
 
-use rslint_parser::ast::{
-    JsCatchClause, JsCatchDeclaration, JsFinallyClause, JsTryFinallyStatement, JsTryStatement,
-};
+use rslint_parser::ast::JsCatchDeclaration;
 
 impl ToFormatElement for JsCatchDeclaration {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

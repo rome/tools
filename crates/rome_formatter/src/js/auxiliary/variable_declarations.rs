@@ -6,10 +6,7 @@ use crate::{
     ToFormatElement,
 };
 
-use rslint_parser::{
-    ast::{JsVariableDeclaration, JsVariableDeclarations, JsVariableStatement},
-    AstSeparatedList,
-};
+use rslint_parser::{ast::JsVariableDeclarations, AstSeparatedList};
 
 impl ToFormatElement for JsVariableDeclarations {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

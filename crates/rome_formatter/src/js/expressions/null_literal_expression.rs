@@ -1,15 +1,8 @@
-use std::borrow::Cow;
-
-use crate::format_element::normalize_newlines;
-
 use crate::formatter_traits::FormatTokenAndNode;
 
-use crate::{format_element::Token, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
-use rslint_parser::ast::{
-    JsAnyLiteralExpression, JsBigIntLiteralExpression, JsBooleanLiteralExpression,
-    JsNullLiteralExpression, JsNumberLiteralExpression, JsStringLiteralExpression,
-};
+use rslint_parser::ast::JsNullLiteralExpression;
 
 impl ToFormatElement for JsNullLiteralExpression {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

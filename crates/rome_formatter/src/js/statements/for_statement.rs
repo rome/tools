@@ -5,7 +5,7 @@ use crate::{
     FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::{JsAnyForInitializer, JsForStatement};
+use rslint_parser::ast::JsForStatement;
 
 impl ToFormatElement for JsForStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

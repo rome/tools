@@ -5,7 +5,7 @@ use crate::{
     Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::{JsElseClause, JsIfStatement};
+use rslint_parser::ast::JsIfStatement;
 
 impl ToFormatElement for JsIfStatement {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

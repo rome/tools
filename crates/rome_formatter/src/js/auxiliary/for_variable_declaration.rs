@@ -1,10 +1,9 @@
-use rslint_parser::ast::{JsAnyForInOrOfInitializer, JsForInStatement, JsForVariableDeclaration};
+use rslint_parser::ast::JsForVariableDeclaration;
 
 use crate::formatter_traits::FormatTokenAndNode;
 
 use crate::{
-    format_elements, group_elements, soft_block_indent, soft_line_break_or_space, space_token,
-    FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
 impl ToFormatElement for JsForVariableDeclaration {

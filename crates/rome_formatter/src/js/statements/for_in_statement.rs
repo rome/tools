@@ -1,4 +1,4 @@
-use rslint_parser::ast::{JsAnyForInOrOfInitializer, JsForInStatement, JsForVariableDeclaration};
+use rslint_parser::ast::JsForInStatement;
 
 use crate::formatter_traits::FormatTokenAndNode;
 

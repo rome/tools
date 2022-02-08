@@ -3,7 +3,7 @@ use crate::{
     token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::{JsAnyArrayBindingPatternElement, JsArrayBindingPattern};
+use rslint_parser::ast::JsArrayBindingPattern;
 
 impl ToFormatElement for JsArrayBindingPattern {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

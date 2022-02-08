@@ -1,14 +1,13 @@
 use crate::formatter_traits::FormatTokenAndNode;
 
-use crate::{block_indent, FormatResult};
+use crate::FormatResult;
 
 use crate::{
-    format_element::indent, format_elements, group_elements, hard_line_break,
-    join_elements_hard_line, soft_block_indent, space_token, FormatElement, Formatter,
-    ToFormatElement,
+    format_element::indent, format_elements, hard_line_break, space_token, FormatElement,
+    Formatter, ToFormatElement,
 };
 
-use rslint_parser::ast::{JsAnySwitchClause, JsCaseClause, JsDefaultClause, JsSwitchStatement};
+use rslint_parser::ast::JsCaseClause;
 
 impl ToFormatElement for JsCaseClause {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
