@@ -4,36 +4,36 @@ JsModule {
     items: JsModuleItemList [
         JsVariableStatement {
             declarations: JsVariableDeclarations {
-                kind: LET_KW@0..18 "let" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")],
+                kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 items: JsVariableDeclarationList [
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
-                            name_token: IDENT@18..19 "a" [] [],
+                            name_token: IDENT@4..5 "a" [] [],
                         },
                         variable_annotation: TsTypeAnnotation {
-                            colon_token: COLON@19..21 ":" [] [Whitespace(" ")],
+                            colon_token: COLON@5..7 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
-                                string_token: STRING_KW@21..28 "string" [] [Whitespace(" ")],
+                                string_token: STRING_KW@7..14 "string" [] [Whitespace(" ")],
                             },
                         },
                         initializer: JsInitializerClause {
-                            eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
+                            eq_token: EQ@14..16 "=" [] [Whitespace(" ")],
                             expression: JsStringLiteralExpression {
-                                value_token: JS_STRING_LITERAL@30..36 "\"test\"" [] [],
+                                value_token: JS_STRING_LITERAL@16..22 "\"test\"" [] [],
                             },
                         },
                     },
-                    COMMA@36..38 "," [] [Whitespace(" ")],
+                    COMMA@22..24 "," [] [Whitespace(" ")],
                     JsVariableDeclaration {
                         id: JsIdentifierBinding {
-                            name_token: IDENT@38..39 "b" [] [],
+                            name_token: IDENT@24..25 "b" [] [],
                         },
                         variable_annotation: TsDefiniteVariableAnnotation {
-                            excl_token: BANG@39..40 "!" [] [],
+                            excl_token: BANG@25..26 "!" [] [],
                             type_annotation: TsTypeAnnotation {
-                                colon_token: COLON@40..42 ":" [] [Whitespace(" ")],
+                                colon_token: COLON@26..28 ":" [] [Whitespace(" ")],
                                 ty: TsNumberType {
-                                    number_token: NUMBER_KW@42..48 "number" [] [],
+                                    number_token: NUMBER_KW@28..34 "number" [] [],
                                 },
                             },
                         },
@@ -41,41 +41,41 @@ JsModule {
                     },
                 ],
             },
-            semicolon_token: SEMICOLON@48..49 ";" [] [],
+            semicolon_token: SEMICOLON@34..35 ";" [] [],
         },
     ],
-    eof_token: EOF@49..50 "" [Newline("\n")] [],
+    eof_token: EOF@35..36 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..50
+0: JS_MODULE@0..36
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..49
-    0: JS_VARIABLE_STATEMENT@0..49
-      0: JS_VARIABLE_DECLARATIONS@0..48
-        0: LET_KW@0..18 "let" [Comments("// TYPESCRIPT"), Newline("\n")] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATION_LIST@18..48
-          0: JS_VARIABLE_DECLARATION@18..36
-            0: JS_IDENTIFIER_BINDING@18..19
-              0: IDENT@18..19 "a" [] []
-            1: TS_TYPE_ANNOTATION@19..28
-              0: COLON@19..21 ":" [] [Whitespace(" ")]
-              1: TS_STRING_TYPE@21..28
-                0: STRING_KW@21..28 "string" [] [Whitespace(" ")]
-            2: JS_INITIALIZER_CLAUSE@28..36
-              0: EQ@28..30 "=" [] [Whitespace(" ")]
-              1: JS_STRING_LITERAL_EXPRESSION@30..36
-                0: JS_STRING_LITERAL@30..36 "\"test\"" [] []
-          1: COMMA@36..38 "," [] [Whitespace(" ")]
-          2: JS_VARIABLE_DECLARATION@38..48
-            0: JS_IDENTIFIER_BINDING@38..39
-              0: IDENT@38..39 "b" [] []
-            1: TS_DEFINITE_VARIABLE_ANNOTATION@39..48
-              0: BANG@39..40 "!" [] []
-              1: TS_TYPE_ANNOTATION@40..48
-                0: COLON@40..42 ":" [] [Whitespace(" ")]
-                1: TS_NUMBER_TYPE@42..48
-                  0: NUMBER_KW@42..48 "number" [] []
+  2: JS_MODULE_ITEM_LIST@0..35
+    0: JS_VARIABLE_STATEMENT@0..35
+      0: JS_VARIABLE_DECLARATIONS@0..34
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION_LIST@4..34
+          0: JS_VARIABLE_DECLARATION@4..22
+            0: JS_IDENTIFIER_BINDING@4..5
+              0: IDENT@4..5 "a" [] []
+            1: TS_TYPE_ANNOTATION@5..14
+              0: COLON@5..7 ":" [] [Whitespace(" ")]
+              1: TS_STRING_TYPE@7..14
+                0: STRING_KW@7..14 "string" [] [Whitespace(" ")]
+            2: JS_INITIALIZER_CLAUSE@14..22
+              0: EQ@14..16 "=" [] [Whitespace(" ")]
+              1: JS_STRING_LITERAL_EXPRESSION@16..22
+                0: JS_STRING_LITERAL@16..22 "\"test\"" [] []
+          1: COMMA@22..24 "," [] [Whitespace(" ")]
+          2: JS_VARIABLE_DECLARATION@24..34
+            0: JS_IDENTIFIER_BINDING@24..25
+              0: IDENT@24..25 "b" [] []
+            1: TS_DEFINITE_VARIABLE_ANNOTATION@25..34
+              0: BANG@25..26 "!" [] []
+              1: TS_TYPE_ANNOTATION@26..34
+                0: COLON@26..28 ":" [] [Whitespace(" ")]
+                1: TS_NUMBER_TYPE@28..34
+                  0: NUMBER_KW@28..34 "number" [] []
             2: (empty)
-      1: SEMICOLON@48..49 ";" [] []
-  3: EOF@49..50 "" [Newline("\n")] []
+      1: SEMICOLON@34..35 ";" [] []
+  3: EOF@35..36 "" [Newline("\n")] []

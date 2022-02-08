@@ -6,35 +6,35 @@ JsModule {
             expression: JsTemplate {
                 tag: JsIdentifierExpression {
                     name: JsReferenceIdentifier {
-                        value_token: IDENT@0..18 "html" [Comments("// TYPESCRIPT"), Newline("\n")] [],
+                        value_token: IDENT@0..4 "html" [] [],
                     },
                 },
                 type_arguments: TsTypeArguments {
-                    l_angle_token: L_ANGLE@18..19 "<" [] [],
+                    l_angle_token: L_ANGLE@4..5 "<" [] [],
                     ts_type_argument_list: TsTypeArgumentList [
                         TsReferenceType {
                             name: JsReferenceIdentifier {
-                                value_token: IDENT@19..20 "A" [] [],
+                                value_token: IDENT@5..6 "A" [] [],
                             },
                             type_arguments: missing (optional),
                         },
-                        COMMA@20..22 "," [] [Whitespace(" ")],
+                        COMMA@6..8 "," [] [Whitespace(" ")],
                         TsReferenceType {
                             name: JsReferenceIdentifier {
-                                value_token: IDENT@22..23 "B" [] [],
+                                value_token: IDENT@8..9 "B" [] [],
                             },
                             type_arguments: missing (optional),
                         },
                     ],
-                    r_angle_token: R_ANGLE@23..24 ">" [] [],
+                    r_angle_token: R_ANGLE@9..10 ">" [] [],
                 },
-                l_tick_token: BACKTICK@24..25 "`" [] [],
+                l_tick_token: BACKTICK@10..11 "`" [] [],
                 elements: JsTemplateElementList [
                     JsTemplateChunkElement {
-                        template_chunk_token: TEMPLATE_CHUNK@25..29 "abcd" [] [],
+                        template_chunk_token: TEMPLATE_CHUNK@11..15 "abcd" [] [],
                     },
                 ],
-                r_tick_token: BACKTICK@29..30 "`" [] [],
+                r_tick_token: BACKTICK@15..16 "`" [] [],
             },
             semicolon_token: missing (optional),
         },
@@ -43,101 +43,101 @@ JsModule {
                 object: JsTemplate {
                     tag: JsIdentifierExpression {
                         name: JsReferenceIdentifier {
-                            value_token: IDENT@30..35 "html" [Newline("\n")] [],
+                            value_token: IDENT@16..21 "html" [Newline("\n")] [],
                         },
                     },
                     type_arguments: TsTypeArguments {
-                        l_angle_token: L_ANGLE@35..36 "<" [] [],
+                        l_angle_token: L_ANGLE@21..22 "<" [] [],
                         ts_type_argument_list: TsTypeArgumentList [
                             TsReferenceType {
                                 name: JsReferenceIdentifier {
-                                    value_token: IDENT@36..37 "A" [] [],
+                                    value_token: IDENT@22..23 "A" [] [],
                                 },
                                 type_arguments: missing (optional),
                             },
-                            COMMA@37..39 "," [] [Whitespace(" ")],
+                            COMMA@23..25 "," [] [Whitespace(" ")],
                             TsReferenceType {
                                 name: JsReferenceIdentifier {
-                                    value_token: IDENT@39..40 "B" [] [],
+                                    value_token: IDENT@25..26 "B" [] [],
                                 },
                                 type_arguments: missing (optional),
                             },
                         ],
-                        r_angle_token: R_ANGLE@40..41 ">" [] [],
+                        r_angle_token: R_ANGLE@26..27 ">" [] [],
                     },
-                    l_tick_token: BACKTICK@41..42 "`" [] [],
+                    l_tick_token: BACKTICK@27..28 "`" [] [],
                     elements: JsTemplateElementList [
                         JsTemplateChunkElement {
-                            template_chunk_token: TEMPLATE_CHUNK@42..46 "abcd" [] [],
+                            template_chunk_token: TEMPLATE_CHUNK@28..32 "abcd" [] [],
                         },
                     ],
-                    r_tick_token: BACKTICK@46..47 "`" [] [],
+                    r_tick_token: BACKTICK@32..33 "`" [] [],
                 },
-                operator: DOT@47..48 "." [] [],
+                operator: DOT@33..34 "." [] [],
                 member: JsName {
-                    value_token: IDENT@48..55 "_string" [] [],
+                    value_token: IDENT@34..41 "_string" [] [],
                 },
             },
             semicolon_token: missing (optional),
         },
     ],
-    eof_token: EOF@55..56 "" [Newline("\n")] [],
+    eof_token: EOF@41..42 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..56
+0: JS_MODULE@0..42
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..55
-    0: JS_EXPRESSION_STATEMENT@0..30
-      0: JS_TEMPLATE@0..30
-        0: JS_IDENTIFIER_EXPRESSION@0..18
-          0: JS_REFERENCE_IDENTIFIER@0..18
-            0: IDENT@0..18 "html" [Comments("// TYPESCRIPT"), Newline("\n")] []
-        1: TS_TYPE_ARGUMENTS@18..24
-          0: L_ANGLE@18..19 "<" [] []
-          1: TS_TYPE_ARGUMENT_LIST@19..23
-            0: TS_REFERENCE_TYPE@19..20
-              0: JS_REFERENCE_IDENTIFIER@19..20
-                0: IDENT@19..20 "A" [] []
+  2: JS_MODULE_ITEM_LIST@0..41
+    0: JS_EXPRESSION_STATEMENT@0..16
+      0: JS_TEMPLATE@0..16
+        0: JS_IDENTIFIER_EXPRESSION@0..4
+          0: JS_REFERENCE_IDENTIFIER@0..4
+            0: IDENT@0..4 "html" [] []
+        1: TS_TYPE_ARGUMENTS@4..10
+          0: L_ANGLE@4..5 "<" [] []
+          1: TS_TYPE_ARGUMENT_LIST@5..9
+            0: TS_REFERENCE_TYPE@5..6
+              0: JS_REFERENCE_IDENTIFIER@5..6
+                0: IDENT@5..6 "A" [] []
               1: (empty)
-            1: COMMA@20..22 "," [] [Whitespace(" ")]
-            2: TS_REFERENCE_TYPE@22..23
-              0: JS_REFERENCE_IDENTIFIER@22..23
-                0: IDENT@22..23 "B" [] []
+            1: COMMA@6..8 "," [] [Whitespace(" ")]
+            2: TS_REFERENCE_TYPE@8..9
+              0: JS_REFERENCE_IDENTIFIER@8..9
+                0: IDENT@8..9 "B" [] []
               1: (empty)
-          2: R_ANGLE@23..24 ">" [] []
-        2: BACKTICK@24..25 "`" [] []
-        3: JS_TEMPLATE_ELEMENT_LIST@25..29
-          0: JS_TEMPLATE_CHUNK_ELEMENT@25..29
-            0: TEMPLATE_CHUNK@25..29 "abcd" [] []
-        4: BACKTICK@29..30 "`" [] []
+          2: R_ANGLE@9..10 ">" [] []
+        2: BACKTICK@10..11 "`" [] []
+        3: JS_TEMPLATE_ELEMENT_LIST@11..15
+          0: JS_TEMPLATE_CHUNK_ELEMENT@11..15
+            0: TEMPLATE_CHUNK@11..15 "abcd" [] []
+        4: BACKTICK@15..16 "`" [] []
       1: (empty)
-    1: JS_EXPRESSION_STATEMENT@30..55
-      0: JS_STATIC_MEMBER_EXPRESSION@30..55
-        0: JS_TEMPLATE@30..47
-          0: JS_IDENTIFIER_EXPRESSION@30..35
-            0: JS_REFERENCE_IDENTIFIER@30..35
-              0: IDENT@30..35 "html" [Newline("\n")] []
-          1: TS_TYPE_ARGUMENTS@35..41
-            0: L_ANGLE@35..36 "<" [] []
-            1: TS_TYPE_ARGUMENT_LIST@36..40
-              0: TS_REFERENCE_TYPE@36..37
-                0: JS_REFERENCE_IDENTIFIER@36..37
-                  0: IDENT@36..37 "A" [] []
+    1: JS_EXPRESSION_STATEMENT@16..41
+      0: JS_STATIC_MEMBER_EXPRESSION@16..41
+        0: JS_TEMPLATE@16..33
+          0: JS_IDENTIFIER_EXPRESSION@16..21
+            0: JS_REFERENCE_IDENTIFIER@16..21
+              0: IDENT@16..21 "html" [Newline("\n")] []
+          1: TS_TYPE_ARGUMENTS@21..27
+            0: L_ANGLE@21..22 "<" [] []
+            1: TS_TYPE_ARGUMENT_LIST@22..26
+              0: TS_REFERENCE_TYPE@22..23
+                0: JS_REFERENCE_IDENTIFIER@22..23
+                  0: IDENT@22..23 "A" [] []
                 1: (empty)
-              1: COMMA@37..39 "," [] [Whitespace(" ")]
-              2: TS_REFERENCE_TYPE@39..40
-                0: JS_REFERENCE_IDENTIFIER@39..40
-                  0: IDENT@39..40 "B" [] []
+              1: COMMA@23..25 "," [] [Whitespace(" ")]
+              2: TS_REFERENCE_TYPE@25..26
+                0: JS_REFERENCE_IDENTIFIER@25..26
+                  0: IDENT@25..26 "B" [] []
                 1: (empty)
-            2: R_ANGLE@40..41 ">" [] []
-          2: BACKTICK@41..42 "`" [] []
-          3: JS_TEMPLATE_ELEMENT_LIST@42..46
-            0: JS_TEMPLATE_CHUNK_ELEMENT@42..46
-              0: TEMPLATE_CHUNK@42..46 "abcd" [] []
-          4: BACKTICK@46..47 "`" [] []
-        1: DOT@47..48 "." [] []
-        2: JS_NAME@48..55
-          0: IDENT@48..55 "_string" [] []
+            2: R_ANGLE@26..27 ">" [] []
+          2: BACKTICK@27..28 "`" [] []
+          3: JS_TEMPLATE_ELEMENT_LIST@28..32
+            0: JS_TEMPLATE_CHUNK_ELEMENT@28..32
+              0: TEMPLATE_CHUNK@28..32 "abcd" [] []
+          4: BACKTICK@32..33 "`" [] []
+        1: DOT@33..34 "." [] []
+        2: JS_NAME@34..41
+          0: IDENT@34..41 "_string" [] []
       1: (empty)
-  3: EOF@55..56 "" [Newline("\n")] []
+  3: EOF@41..42 "" [Newline("\n")] []

@@ -268,8 +268,7 @@ pub(crate) fn parse_assignment_expression_or_higher(
 ) -> ParsedSyntax {
     if p.at(T![<]) && is_nth_at_identifier(p, 1) {
         let res = try_parse(p, |p| {
-            // test ts_arrow_function_type_parameters
-            // // TYPESCRIPT
+            // test ts ts_arrow_function_type_parameters
             // let a = <A, B extends A, C = string>(a: A, b: B, c: C) => "hello";
             let type_parameters =
                 TypeScript.parse_exclusive_syntax(p, parse_ts_type_parameters, |p, parameters| {
@@ -547,8 +546,7 @@ fn parse_binary_or_logical_expression_recursive(
             p.bump_remap(op);
         }
 
-        // test ts_as_expression
-        // // TYPESCRIPT
+        // test ts ts_as_expression
         // let x: any = "string";
         // let y = x as string;
         // let z = x as const;
@@ -693,8 +691,7 @@ fn parse_member_expression_rest(
                 completed
             }
             T![!] if !p.has_linebreak_before_n(0) => {
-                // test ts_non_null_assertion_expression
-                // // TYPESCRIPT
+                // test ts ts_non_null_assertion_expression
                 // let a = { b: {} };
                 // a!;
                 // function test() {}
@@ -718,8 +715,7 @@ fn parse_member_expression_rest(
                 non_null
             }
             BACKTICK => {
-                // test ts_optional_chain_call
-                // // TYPESCRIPT
+                // test ts ts_optional_chain_call
                 // (<A, B>() => {})?.<A, B>();
                 let m = lhs.precede(p);
                 parse_template_literal(p, m, *in_optional_chain)
@@ -754,8 +750,7 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
         }
     }
 
-    // test ts_new_with_type_arguments
-    // // TYPESCRIPT
+    // test ts ts_new_with_type_arguments
     // class Test<A, B, C> {}
     // new Test<A, B, C>();
     let type_arguments = if TypeScript.is_supported(p) {
@@ -1702,8 +1697,7 @@ fn parse_call_expression_rest(
         let optional_chain_call = p.eat(T![?.]);
         in_optional_chain = in_optional_chain || optional_chain_call;
 
-        // test ts_call_expr_with_type_arguments
-        // // TYPESCRIPT
+        // test ts ts_call_expr_with_type_arguments
         // function a<A, B, C>() {}
         // a<A, B, C>();
         // (() => { a }).a<A, B, C>()
@@ -1714,8 +1708,7 @@ fn parse_call_expression_rest(
 
             if type_arguments.is_some() {
                 if p.at(BACKTICK) {
-                    // test ts_tagged_template_literal
-                    // // TYPESCRIPT
+                    // test ts ts_tagged_template_literal
                     // html<A, B>`abcd`
                     // html<A, B>`abcd`._string
                     lhs = parse_template_literal(p, m, optional_chain_call);
