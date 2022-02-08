@@ -96,7 +96,7 @@ pub(super) fn parse_export_default_class_case(p: &mut Parser) -> ParsedSyntax {
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
-enum ClassKind {
+pub enum ClassKind {
     Declaration,
     Expression,
     ExportDefault,
@@ -118,7 +118,7 @@ impl From<ClassKind> for JsSyntaxKind {
     }
 }
 
-fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
+pub(crate) fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
     let class_token_range = p.cur_tok().range();
 
     p.expect(T![class]);
