@@ -1,12 +1,12 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: comments-3.js
 
 ---
 # Input
 ```js
-/<|>/ howdy
+// howdy
 // hi lol
 const y = 5
 
@@ -14,24 +14,9 @@ const y = 5
 
 # Output
 ```js
-/<|>/;
-howdy;
+// howdy
 // hi lol
 const y = 5;
-
-```
-
-# Errors
-```
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ comments-3.js:1:7
-  │
-1 │ /<|>/ howdy
-  │ ------^^^^^
-  │ │     │
-  │ │     An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
-
 
 ```
 

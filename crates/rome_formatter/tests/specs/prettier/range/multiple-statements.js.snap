@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: multiple-statements.js
 
 ---
@@ -11,11 +11,11 @@ call(
 );
 
 call(
-  1, <<<PRETTIER_RANGE_START>>>2,3
+  1, 2,3
 );
 
 call(
-  1, <<<PRETTIER_RANGE_END>>>2,3
+  1, 2,3
 );
 
 call(
@@ -26,34 +26,19 @@ call(
 
 # Output
 ```js
-call(1, 2, 3);
-
 call(
-  1, <<<PRETTIER_RANGE_START>>>2,3
+  1, 2,3
 );
 
 call(
-  1, <<<PRETTIER_RANGE_END>>>2,3
+  1, 2, 3);
+
+call(1, 2,3
 );
 
-call(1, 2, 3);
-
-```
-
-# Errors
-```
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ multiple-statements.js:6:8
-  │
-6 │   1, <<<PRETTIER_RANGE_START>>>2,3
-  │        ^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ multiple-statements.js:10:8
-   │
-10 │   1, <<<PRETTIER_RANGE_END>>>2,3
-   │        ^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
-
+call(
+  1, 2,3
+);
 
 ```
 

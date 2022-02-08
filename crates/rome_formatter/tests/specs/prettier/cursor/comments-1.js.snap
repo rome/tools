@@ -1,12 +1,12 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 57
+assertion_line: 121
 expression: comments-1.js
 
 ---
 # Input
 ```js
-// hi l<|>ol
+// hi lol
 function ehllooo () {
   const hi = "hi"
 }
@@ -15,7 +15,7 @@ function ehllooo () {
 
 # Output
 ```js
-// hi l<|>ol
+// hi lol
 function ehllooo() {
   const hi = "hi";
 }

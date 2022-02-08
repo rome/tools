@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: multiple-statements2.js
 
 ---
@@ -9,7 +9,7 @@ expression: multiple-statements2.js
 call(
   1, 2,3
 );
-<<<PRETTIER_RANGE_START>>>
+
 call(
   1, 2,3
 );
@@ -17,7 +17,7 @@ call(
 call(
   1, 2,3
 );
-<<<PRETTIER_RANGE_END>>>
+
 call(
   1, 2,3
 );
@@ -26,48 +26,17 @@ call(
 
 # Output
 ```js
-call(1, 2, 3);
-
-<<<PRETTIER_RANGE_START>>>
 call(
   1, 2,3
-)
+);
 
 call(1, 2, 3);
 
-<<<PRETTIER_RANGE_END>>>
+call(1, 2, 3);
+
 call(
   1, 2,3
-)
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_START>>>
-call(
-  1, 2,3
-)'
-  ┌─ multiple-statements2.js:4:1
-  │  
-4 │ ┌ <<<PRETTIER_RANGE_START>>>
-5 │ │ call(
-6 │ │   1, 2,3
-7 │ │ );
-  │ └─^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_END>>>
-call(
-  1, 2,3
-)'
-   ┌─ multiple-statements2.js:12:1
-   │  
-12 │ ┌ <<<PRETTIER_RANGE_END>>>
-13 │ │ call(
-14 │ │   1, 2,3
-15 │ │ );
-   │ └─^ Expected a statement here
-
+);
 
 ```
 

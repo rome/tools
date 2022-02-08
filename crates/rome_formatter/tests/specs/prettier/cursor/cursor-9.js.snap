@@ -1,44 +1,17 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: cursor-9.js
 
 ---
 # Input
 ```js
-     thisWillBeFormatted  <|>  (2  ,3,   )
+     thisWillBeFormatted    (2  ,3,   )
 ```
 
 # Output
 ```js
-thisWillBeFormatted  <|>  (2  ,3,   )
-
-```
-
-# Errors
-```
-error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
-  ┌─ cursor-9.js:1:28
-  │
-1 │      thisWillBeFormatted  <|>  (2  ,3,   )
-  │                           -^ But this operator was encountered instead
-  │                           │ 
-  │                           This operator requires a right hand side value
-
-error[SyntaxError]: Expected an expression for the right hand side of a `|`, but found an operator instead
-  ┌─ cursor-9.js:1:29
-  │
-1 │      thisWillBeFormatted  <|>  (2  ,3,   )
-  │                            -^ But this operator was encountered instead
-  │                            │ 
-  │                            This operator requires a right hand side value
-
-error[SyntaxError]: expected an expression but instead found ')'
-  ┌─ cursor-9.js:1:42
-  │
-1 │      thisWillBeFormatted  <|>  (2  ,3,   )
-  │                                          ^ Expected an expression here
-
+thisWillBeFormatted(2, 3);
 
 ```
 

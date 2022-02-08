@@ -1,12 +1,12 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: module-import.js
 
 ---
 # Input
 ```js
-import <<<PRETTIER_RANGE_START>>> def , {named} <<<PRETTIER_RANGE_END>>> from    'x'
+import  def , {named}  from    'x'
 
 export *  from   'd'
 
@@ -20,34 +20,14 @@ export   default    42
 
 # Output
 ```js
-import
-<<<PRETTIER_RANGE_START>>> def , 
-{
-  named;
-}
-<<<PRETTIER_RANGE_END>>> from    'x'
+import  def, { named }  from    'x'
 
-export * from 'd';
+export *  from   'd'
 
-export const x = 42;
+export    const  x
+  =  42
 
-export default 42;
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a default import, a namespace import, or a named import but instead found '<<'
-  ┌─ module-import.js:1:8
-  │
-1 │ import <<<PRETTIER_RANGE_START>>> def , {named} <<<PRETTIER_RANGE_END>>> from    'x'
-  │        ^^ Expected a default import, a namespace import, or a named import here
-
-error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_END>>> from    'x''
-  ┌─ module-import.js:1:49
-  │
-1 │ import <<<PRETTIER_RANGE_START>>> def , {named} <<<PRETTIER_RANGE_END>>> from    'x'
-  │                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a statement here
+export   default    42
 
 
 ```

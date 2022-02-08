@@ -1,33 +1,20 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: try-catch.js
 
 ---
 # Input
 ```js
 try {}
-<<<PRETTIER_RANGE_START>>>c<<<PRETTIER_RANGE_END>>>atch (err) {}
+catch (err) {}
 
 ```
 
 # Output
 ```js
 try {}
-
-<<<PRETTIER_RANGE_START>>>c<<<PRETTIER_RANGE_END>>>atch (err) 
-{}
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a catch clause but instead found '<<'
-  ┌─ try-catch.js:2:1
-  │
-2 │ <<<PRETTIER_RANGE_START>>>c<<<PRETTIER_RANGE_END>>>atch (err) {}
-  │ ^^ Expected a catch clause here
-
+catch (err) {}
 
 ```
 

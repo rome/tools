@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: object-expression2.js
 
 ---
@@ -10,49 +10,27 @@ expression: object-expression2.js
 const y =       [
     {
                 a: 1,
-    },<<<PRETTIER_RANGE_START>>>
+    },
     {
               a: 1,
               b:2
-    },<<<PRETTIER_RANGE_END>>>
+    },
 ]
 
 ```
 
 # Output
 ```js
+
 const y =       [
     {
                 a: 1,
-    },<<<PRETTIER_RANGE_START>>>
+    },
     {
               a: 1,
               b:2
-    },<<<PRETTIER_RANGE_END>>>
+    },
 ]
-
-```
-
-# Errors
-```
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ object-expression2.js:5:9
-  │
-5 │     },<<<PRETTIER_RANGE_START>>>
-  │         ^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ object-expression2.js:9:9
-  │
-9 │     },<<<PRETTIER_RANGE_END>>>
-  │         ^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
-
-error[SyntaxError]: expected an expression but instead found ']'
-   ┌─ object-expression2.js:10:1
-   │
-10 │ ]
-   │ ^ Expected an expression here
-
 
 ```
 

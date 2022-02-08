@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: module-export2.js
 
 ---
@@ -9,9 +9,9 @@ expression: module-export2.js
 import  def , {named}  from    'x'
 
 export *  from   'd'
-<<<PRETTIER_RANGE_START>>>
+
 export    const  x
-  <<<PRETTIER_RANGE_END>>>=  42
+  =  42
 
 export   default    42
 
@@ -20,38 +20,13 @@ export   default    42
 
 # Output
 ```js
-import def, { named } from 'x';
+import  def , {named}  from    'x'
 
-export * from 'd';
+export *  from   'd'
 
-<<<PRETTIER_RANGE_START>>>
-export const x;
+export const x =  42
 
-  <<<PRETTIER_RANGE_END>>>=  42
-
-export default 42;
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_START>>>'
-  ┌─ module-export2.js:4:1
-  │
-4 │ <<<PRETTIER_RANGE_START>>>
-  │ ^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a statement here
-
-error[SyntaxError]: Const var declarations must have an initialized value
-  ┌─ module-export2.js:5:18
-  │
-5 │ export    const  x
-  │                  ^ this variable needs to be initialized
-
-error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_END>>>=  42'
-  ┌─ module-export2.js:6:3
-  │
-6 │   <<<PRETTIER_RANGE_END>>>=  42
-  │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a statement here
+export   default    42
 
 
 ```

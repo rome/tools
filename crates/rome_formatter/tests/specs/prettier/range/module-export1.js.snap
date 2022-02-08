@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: module-export1.js
 
 ---
@@ -8,7 +8,7 @@ expression: module-export1.js
 ```js
 import  def , {named}  from    'x'
 
-export * <<<PRETTIER_RANGE_START>>> from   'd'<<<PRETTIER_RANGE_END>>>
+export *  from   'd'
 
 export    const  x
   =  42
@@ -20,24 +20,14 @@ export   default    42
 
 # Output
 ```js
-import def, { named } from 'x';
+import  def , {named}  from    'x'
 
-export *
-<<<PRETTIER_RANGE_START>>> from   'd'<<<PRETTIER_RANGE_END>>>
+export *  from 'd'
 
-export const x = 42;
+export    const  x
+  =  42
 
-export default 42;
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected `from` but instead found `<<`
-  ┌─ module-export1.js:3:10
-  │
-3 │ export * <<<PRETTIER_RANGE_START>>> from   'd'<<<PRETTIER_RANGE_END>>>
-  │          ^^ unexpected
+export   default    42
 
 
 ```

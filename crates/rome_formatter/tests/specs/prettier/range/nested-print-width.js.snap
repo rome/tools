@@ -1,15 +1,15 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: nested-print-width.js
 
 ---
 # Input
 ```js
 function f() {
-  if (true) {<<<PRETTIER_RANGE_START>>>
+  if (true) {
     call("this line is 79 chars", "long", "it should", "stay as single line");
-  <<<PRETTIER_RANGE_END>>>}
+  }
 }
 
 ```
@@ -17,38 +17,10 @@ function f() {
 # Output
 ```js
 function f() {
-  if (true) {<<<PRETTIER_RANGE_START>>>
+  if (true) {
     call("this line is 79 chars", "long", "it should", "stay as single line");
-  <<<PRETTIER_RANGE_END>>>}
+  }
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_START>>>
-    call("this line is 79 chars", "long", "it should", "stay as single line")'
-  ┌─ nested-print-width.js:2:14
-  │  
-2 │     if (true) {<<<PRETTIER_RANGE_START>>>
-  │ ┌──────────────^
-3 │ │     call("this line is 79 chars", "long", "it should", "stay as single line");
-  │ └─────────────────────────────────────────────────────────────────────────────^ Expected a statement here
-
-error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_END>>>}
-}'
-  ┌─ nested-print-width.js:4:3
-  │  
-4 │ ┌   <<<PRETTIER_RANGE_END>>>}
-5 │ │ }
-  │ └─^ Expected a statement here
-
-error[SyntaxError]: expected `'}'` but instead the file ends
-  ┌─ nested-print-width.js:6:1
-  │
-6 │ 
-  │ ^ the file ends here
-
 
 ```
 

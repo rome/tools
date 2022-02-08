@@ -1,12 +1,12 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: comments-2.js
 
 ---
 # Input
 ```js
-<|>
+
 // howdy
 // hi lol
 const y = 5
@@ -15,21 +15,9 @@ const y = 5
 
 # Output
 ```js
-<|>;
 // howdy
 // hi lol
 const y = 5;
-
-```
-
-# Errors
-```
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ comments-2.js:1:1
-  │
-1 │ <|>
-  │ ^^^ TypeScript only syntax
-
 
 ```
 

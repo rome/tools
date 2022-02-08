@@ -1,13 +1,13 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: issue-3789-1.js
 
 ---
 # Input
 ```js
 export class F {
-<<<PRETTIER_RANGE_START>>>  reformatThis<<<PRETTIER_RANGE_END>>>() {
+  reformatThis() {
     return 1;
   }
 
@@ -21,92 +21,14 @@ export class F {
 # Output
 ```js
 export class F {
-  
-<<<
-  PRETTIER_RANGE_START;
-  >>>  
-  reformatThis;
-  <<<
-  PRETTIER_RANGE_END;
-  >>>() {
-    return 1
-}
+  reformatThis() {
+    return 1;
+  }
 
-dontTouchThis();
-{
-  
+  dontTouchThis(){
     return 2    ;
+  }
 }
-
-}
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '<<'
-  ┌─ issue-3789-1.js:2:1
-  │
-2 │ <<<PRETTIER_RANGE_START>>>  reformatThis<<<PRETTIER_RANGE_END>>>() {
-  │ ^^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon for a class property, but found none
-  ┌─ issue-3789-1.js:2:4
-  │
-2 │ <<<PRETTIER_RANGE_START>>>  reformatThis<<<PRETTIER_RANGE_END>>>() {
-  │    ^^^^^^^^^^^^^^^^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '>'
-  ┌─ issue-3789-1.js:2:24
-  │
-2 │ <<<PRETTIER_RANGE_START>>>  reformatThis<<<PRETTIER_RANGE_END>>>() {
-  │                        ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon for a class property, but found none
-  ┌─ issue-3789-1.js:2:29
-  │
-2 │ <<<PRETTIER_RANGE_START>>>  reformatThis<<<PRETTIER_RANGE_END>>>() {
-  │                             ^^^^^^^^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '<<'
-  ┌─ issue-3789-1.js:2:41
-  │
-2 │ <<<PRETTIER_RANGE_START>>>  reformatThis<<<PRETTIER_RANGE_END>>>() {
-  │                                         ^^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon for a class property, but found none
-  ┌─ issue-3789-1.js:2:44
-  │
-2 │ <<<PRETTIER_RANGE_START>>>  reformatThis<<<PRETTIER_RANGE_END>>>() {
-  │                                            ^^^^^^^^^^^^^^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '>'
-  ┌─ issue-3789-1.js:2:62
-  │
-2 │ <<<PRETTIER_RANGE_START>>>  reformatThis<<<PRETTIER_RANGE_END>>>() {
-  │                                                              ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ issue-3789-1.js:6:18
-  │
-6 │   dontTouchThis(){
-  │   ---------------^
-  │   │              │
-  │   │              An explicit or implicit semicolon is expected here...
-  │   ...Which is required to end this statement
-
-error[SyntaxError]: Illegal return statement outside of a function
-  ┌─ issue-3789-1.js:7:5
-  │
-7 │     return 2    ;
-  │     ^^^^^^^^^^^^^
-
-error[SyntaxError]: expected a statement but instead found '}'
-  ┌─ issue-3789-1.js:9:1
-  │
-9 │ }
-  │ ^ Expected a statement here
-
 
 ```
 

@@ -1,65 +1,18 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: function-declaration.js
 
 ---
 # Input
 ```js
-function ugly ( <<<PRETTIER_RANGE_START>>>{a=1,     b     =   2     }<<<PRETTIER_RANGE_END>>>      ) {}
+function ugly ( {a=1,     b     =   2     }      ) {}
 
 ```
 
 # Output
 ```js
-function ugly ( <<<PRETTIER_RANGE_START>>>{a=1,     b     =   2     }<<<PRETTIER_RANGE_END>>>      ) {}
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a parameter but instead found '<<<'
-  ┌─ function-declaration.js:1:17
-  │
-1 │ function ugly ( <<<PRETTIER_RANGE_START>>>{a=1,     b     =   2     }<<<PRETTIER_RANGE_END>>>      ) {}
-  │                 ^^^ Expected a parameter here
-
-error[SyntaxError]: expected `,` but instead found `PRETTIER_RANGE_START`
-  ┌─ function-declaration.js:1:20
-  │
-1 │ function ugly ( <<<PRETTIER_RANGE_START>>>{a=1,     b     =   2     }<<<PRETTIER_RANGE_END>>>      ) {}
-  │                    ^^^^^^^^^^^^^^^^^^^^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `>`
-  ┌─ function-declaration.js:1:40
-  │
-1 │ function ugly ( <<<PRETTIER_RANGE_START>>>{a=1,     b     =   2     }<<<PRETTIER_RANGE_END>>>      ) {}
-  │                                        ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ function-declaration.js:1:43
-  │
-1 │ function ugly ( <<<PRETTIER_RANGE_START>>>{a=1,     b     =   2     }<<<PRETTIER_RANGE_END>>>      ) {}
-  │                                           ^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `<<`
-  ┌─ function-declaration.js:1:70
-  │
-1 │ function ugly ( <<<PRETTIER_RANGE_START>>>{a=1,     b     =   2     }<<<PRETTIER_RANGE_END>>>      ) {}
-  │                                                                      ^^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `PRETTIER_RANGE_END`
-  ┌─ function-declaration.js:1:73
-  │
-1 │ function ugly ( <<<PRETTIER_RANGE_START>>>{a=1,     b     =   2     }<<<PRETTIER_RANGE_END>>>      ) {}
-  │                                                                         ^^^^^^^^^^^^^^^^^^ unexpected
-
-error[SyntaxError]: expected `,` but instead found `>`
-  ┌─ function-declaration.js:1:91
-  │
-1 │ function ugly ( <<<PRETTIER_RANGE_START>>>{a=1,     b     =   2     }<<<PRETTIER_RANGE_END>>>      ) {}
-  │                                                                                           ^ unexpected
-
+function ugly ( { a = 1, b = 2 }      ) {}
 
 ```
 

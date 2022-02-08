@@ -1,28 +1,24 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: range.js
 
 ---
 # Input
 ```js
-let moduleBlock = module {  <<<PRETTIER_RANGE_START>>>export let y = 1;
+let moduleBlock = module {  export let y = 1;
 };
 
-fo<<<PRETTIER_RANGE_END>>>o(module { export let foo = "foo"; })
+foo(module { export let foo = "foo"; })
 
 ```
 
 # Output
 ```js
-let moduleBlock = module;
-{
-  <<<PRETTIER_RANGE_START>>>
-  export let y = 1;
+let moduleBlock = module {  export let y = 1;
 }
 
-fo<<<PRETTIER_RANGE_END>>>o(module { export let foo = "foo";
-})
+foo(module { export let foo = "foo"; })
 
 ```
 
@@ -31,64 +27,52 @@ fo<<<PRETTIER_RANGE_END>>>o(module { export let foo = "foo";
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ range.js:1:26
   │
-1 │ let moduleBlock = module {  <<<PRETTIER_RANGE_START>>>export let y = 1;
+1 │ let moduleBlock = module {  export let y = 1;
   │ -------------------------^ An explicit or implicit semicolon is expected here...
   │ │                         
   │ ...Which is required to end this statement
 
-error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_START>>>'
+error[SyntaxError]: Illegal use of an import declaration not at the top level
   ┌─ range.js:1:29
   │
-1 │ let moduleBlock = module {  <<<PRETTIER_RANGE_START>>>export let y = 1;
-  │                             ^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected a statement here
-
-error[SyntaxError]: Illegal use of an import declaration not at the top level
-  ┌─ range.js:1:55
-  │
-1 │ let moduleBlock = module {  <<<PRETTIER_RANGE_START>>>export let y = 1;
-  │                                                       ^^^^^^^^^^^^^^^^^ move this declaration to the top level
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ range.js:4:5
-  │
-4 │ fo<<<PRETTIER_RANGE_END>>>o(module { export let foo = "foo"; })
-  │     ^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
+1 │ let moduleBlock = module {  export let y = 1;
+  │                             ^^^^^^^^^^^^^^^^^ move this declaration to the top level
 
 error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ range.js:4:36
+  ┌─ range.js:4:12
   │
-4 │ fo<<<PRETTIER_RANGE_END>>>o(module { export let foo = "foo"; })
-  │                                    ^ unexpected
+4 │ foo(module { export let foo = "foo"; })
+  │            ^ unexpected
 
 error[SyntaxError]: expected `:` but instead found `let`
-  ┌─ range.js:4:45
+  ┌─ range.js:4:21
   │
-4 │ fo<<<PRETTIER_RANGE_END>>>o(module { export let foo = "foo"; })
-  │                                             ^^^ unexpected
+4 │ foo(module { export let foo = "foo"; })
+  │                     ^^^ unexpected
 
 error[SyntaxError]: expected `,` but instead found `foo`
-  ┌─ range.js:4:49
+  ┌─ range.js:4:25
   │
-4 │ fo<<<PRETTIER_RANGE_END>>>o(module { export let foo = "foo"; })
-  │                                                 ^^^ unexpected
+4 │ foo(module { export let foo = "foo"; })
+  │                         ^^^ unexpected
 
 error[SyntaxError]: Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.
-  ┌─ range.js:4:53
+  ┌─ range.js:4:29
   │
-4 │ fo<<<PRETTIER_RANGE_END>>>o(module { export let foo = "foo"; })
-  │                                                     ^
+4 │ foo(module { export let foo = "foo"; })
+  │                             ^
 
 error[SyntaxError]: expected `,` but instead found `;`
-  ┌─ range.js:4:60
+  ┌─ range.js:4:36
   │
-4 │ fo<<<PRETTIER_RANGE_END>>>o(module { export let foo = "foo"; })
-  │                                                            ^ unexpected
+4 │ foo(module { export let foo = "foo"; })
+  │                                    ^ unexpected
 
 error[SyntaxError]: expected a statement but instead found '})'
-  ┌─ range.js:4:62
+  ┌─ range.js:4:38
   │
-4 │ fo<<<PRETTIER_RANGE_END>>>o(module { export let foo = "foo"; })
-  │                                                              ^^ Expected a statement here
+4 │ foo(module { export let foo = "foo"; })
+  │                                      ^^ Expected a statement here
 
 
 ```

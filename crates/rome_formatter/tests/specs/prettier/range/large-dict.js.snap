@@ -1,6 +1,6 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: large-dict.js
 
 ---
@@ -9,9 +9,9 @@ expression: large-dict.js
 function ugly() {
   const dictWithSeveralEntries = {
     key:          "value",
-<<<PRETTIER_RANGE_START>>>    anotherKey:   "another value",
+    anotherKey:   "another value",
     firstNumber:  1,
-    secondNumber: 2<<<PRETTIER_RANGE_END>>>
+    secondNumber: 2
   };
 }
 
@@ -22,38 +22,11 @@ function ugly() {
 function ugly() {
   const dictWithSeveralEntries = {
     key:          "value",
-<<<PRETTIER_RANGE_START>>>    anotherKey
-  :   "another value",
+    anotherKey:   "another value",
     firstNumber:  1,
-    secondNumber: 2<<<PRETTIER_RANGE_END>>>
-  }
+    secondNumber: 2
+  };
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '<<'
-  ┌─ large-dict.js:4:1
-  │
-4 │ <<<PRETTIER_RANGE_START>>>    anotherKey:   "another value",
-  │ ^^ Expected a property, a shorthand property, a getter, a setter, or a method here
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ large-dict.js:4:3
-  │
-4 │ <<<PRETTIER_RANGE_START>>>    anotherKey:   "another value",
-  │   ^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ large-dict.js:4:41
-  │  
-2 │ ┌   const dictWithSeveralEntries = {
-3 │ │     key:          "value",
-4 │ │ <<<PRETTIER_RANGE_START>>>    anotherKey:   "another value",
-  │ │                                         ^ An explicit or implicit semicolon is expected here...
-  │ └────────────────────────────────────────' ...Which is required to end this statement
-
 
 ```
 

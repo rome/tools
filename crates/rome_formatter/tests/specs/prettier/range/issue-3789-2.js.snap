@@ -1,13 +1,13 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: issue-3789-2.js
 
 ---
 # Input
 ```js
 export class F {
-<<<PRETTIER_RANGE_START>>> <<<PRETTIER_RANGE_END>>> reformatThis() {
+  reformatThis() {
     return 1;
   }
 
@@ -21,55 +21,14 @@ export class F {
 # Output
 ```js
 export class F {
-  
-<<<
-  PRETTIER_RANGE_START;
-  >>> <<<
-  PRETTIER_RANGE_END;
-  >>> 
   reformatThis() {
     return 1;
   }
 
-  dontTouchThis() {
-    return 2;
+  dontTouchThis(){
+    return 2    ;
   }
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '<<'
-  ┌─ issue-3789-2.js:2:1
-  │
-2 │ <<<PRETTIER_RANGE_START>>> <<<PRETTIER_RANGE_END>>> reformatThis() {
-  │ ^^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon for a class property, but found none
-  ┌─ issue-3789-2.js:2:4
-  │
-2 │ <<<PRETTIER_RANGE_START>>> <<<PRETTIER_RANGE_END>>> reformatThis() {
-  │    ^^^^^^^^^^^^^^^^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '>'
-  ┌─ issue-3789-2.js:2:24
-  │
-2 │ <<<PRETTIER_RANGE_START>>> <<<PRETTIER_RANGE_END>>> reformatThis() {
-  │                        ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
-error[SyntaxError]: expected a semicolon for a class property, but found none
-  ┌─ issue-3789-2.js:2:31
-  │
-2 │ <<<PRETTIER_RANGE_START>>> <<<PRETTIER_RANGE_END>>> reformatThis() {
-  │                               ^^^^^^^^^^^^^^^^^^
-
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '>'
-  ┌─ issue-3789-2.js:2:49
-  │
-2 │ <<<PRETTIER_RANGE_START>>> <<<PRETTIER_RANGE_END>>> reformatThis() {
-  │                                                 ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-
 
 ```
 

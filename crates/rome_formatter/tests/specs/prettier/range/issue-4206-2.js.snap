@@ -1,12 +1,12 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: issue-4206-2.js
 
 ---
 # Input
 ```js
-export default f<<<PRETTIER_RANGE_START>>>unction Foo(){<<<PRETTIER_RANGE_END>>>
+export default function Foo(){
 /**/
 }
 
@@ -14,56 +14,9 @@ export default f<<<PRETTIER_RANGE_START>>>unction Foo(){<<<PRETTIER_RANGE_END>>>
 
 # Output
 ```js
-export default f << <PRETTIER_RANGE_START> >> unction;
-Foo();
-{<<<PRETTIER_RANGE_END>>>
+export default function Foo() {
 /**/
 }
-
-```
-
-# Errors
-```
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ issue-4206-2.js:1:19
-  │
-1 │ export default f<<<PRETTIER_RANGE_START>>>unction Foo(){<<<PRETTIER_RANGE_END>>>
-  │                   ^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ issue-4206-2.js:1:51
-  │
-1 │ export default f<<<PRETTIER_RANGE_START>>>unction Foo(){<<<PRETTIER_RANGE_END>>>
-  │        -------------------------------------------^^^ An explicit or implicit semicolon is expected here...
-  │        │                                           
-  │        ...Which is required to end this statement
-
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ issue-4206-2.js:1:56
-  │
-1 │ export default f<<<PRETTIER_RANGE_START>>>unction Foo(){<<<PRETTIER_RANGE_END>>>
-  │                                                   -----^
-  │                                                   │    │
-  │                                                   │    An explicit or implicit semicolon is expected here...
-  │                                                   ...Which is required to end this statement
-
-error[SyntaxError]: expected a statement but instead found '<<<PRETTIER_RANGE_END>>>
-/**/
-}'
-  ┌─ issue-4206-2.js:1:57
-  │  
-1 │   export default f<<<PRETTIER_RANGE_START>>>unction Foo(){<<<PRETTIER_RANGE_END>>>
-  │ ┌─────────────────────────────────────────────────────────^
-2 │ │ /**/
-3 │ │ }
-  │ └─^ Expected a statement here
-
-error[SyntaxError]: expected `'}'` but instead the file ends
-  ┌─ issue-4206-2.js:4:1
-  │
-4 │ 
-  │ ^ the file ends here
-
 
 ```
 

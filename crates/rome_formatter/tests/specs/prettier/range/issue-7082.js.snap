@@ -1,39 +1,22 @@
 ---
 source: crates/rome_formatter/tests/prettier_tests.rs
-assertion_line: 83
+assertion_line: 121
 expression: issue-7082.js
 
 ---
 # Input
 ```js
-export const Button = styled.<<<PRETTIER_RANGE_START>>>button`
-color<<<PRETTIER_RANGE_END>>>: blue;
+export const Button = styled.button`
+color: blue;
 `;
 
 ```
 
 # Output
 ```js
-export const Button = styled.<<<PRETTIER_RANGE_START>>>button`
-color<<<PRETTIER_RANGE_END>>>: blue;
+export const Button = styled.button`
+color: blue;
 `;
-
-```
-
-# Errors
-```
-error[SyntaxError]: expected an identifier but instead found '<<'
-  ┌─ issue-7082.js:1:30
-  │
-1 │ export const Button = styled.<<<PRETTIER_RANGE_START>>>button`
-  │                              ^^ Expected an identifier here
-
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ issue-7082.js:1:32
-  │
-1 │ export const Button = styled.<<<PRETTIER_RANGE_START>>>button`
-  │                                ^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
-
 
 ```
 
