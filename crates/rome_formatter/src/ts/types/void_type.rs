@@ -1,7 +1,9 @@
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::TsVoidType, AstNode};
+use rslint_parser::ast::TsVoidType;
+
 impl ToFormatElement for TsVoidType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        self.void_token().format(formatter)
     }
 }
