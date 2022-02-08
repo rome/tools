@@ -1,0 +1,55 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: await.js
+
+---
+# Input
+```js
+const doBothThings = async () => {
+    const request = doAsyncThing();
+    return (await request)::doSyncThing();
+};
+
+```
+
+# Output
+```js
+const doBothThings = async () => {
+  const request = doAsyncThing();
+  return (await request):;
+  :doSyncThing()
+};
+
+```
+
+# Errors
+```
+error[SyntaxError]: Illegal use of `await` as an identifier in an async context
+  ┌─ await.js:3:13
+  │
+3 │     return (await request)::doSyncThing();
+  │             ^^^^^
+
+error[SyntaxError]: expected `,` but instead found `request`
+  ┌─ await.js:3:19
+  │
+3 │     return (await request)::doSyncThing();
+  │                   ^^^^^^^ unexpected
+
+error[SyntaxError]: return type annotation are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ await.js:3:27
+  │
+3 │     return (await request)::doSyncThing();
+  │                           ^ TypeScript only syntax
+
+error[SyntaxError]: expected `=>` but instead found `:`
+  ┌─ await.js:3:28
+  │
+3 │     return (await request)::doSyncThing();
+  │                            ^ unexpected
+
+
+```
+
+

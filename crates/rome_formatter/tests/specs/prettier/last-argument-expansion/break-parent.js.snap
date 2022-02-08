@@ -1,0 +1,140 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: break-parent.js
+
+---
+# Input
+```js
+({
+  processors: [
+    require("autoprefixer", {
+      browsers: ["> 1%", "last 2 versions", "ie >= 11", "Firefox ESR"]
+    }),
+    require("postcss-url")({
+      url: url =>
+        url.startsWith("/") || /^[a-z]+:/.test(url) ? url : `/static/${url}`
+    })
+  ]
+});
+
+true
+  ? test({
+      a: 1
+    })
+  : <div
+      a={123412342314}
+      b={123412341234}
+      c={123412341234}
+      d={123412341234}
+      e={123412341234}
+      f={123412341234}
+      g={123412341234}
+    />;
+
+```
+
+# Output
+```js
+({
+  processors: [
+    require(
+      "autoprefixer",
+      { browsers: ["> 1%", "last 2 versions", "ie >= 11", "Firefox ESR"] },
+    ),
+    require("postcss-url")(
+      {
+        url: (url) =>
+          url.startsWith("/") || /^[a-z]+:/.test(url) ? url : `/static/${url}`,
+      },
+    ),
+  ],
+});
+
+true
+  ? test({
+      a: 1
+    })
+  : <div
+      a={123412342314}
+b={123412341234}
+c={123412341234}
+d={123412341234}
+e={123412341234}
+f={123412341234}
+g={123412341234}
+    />;
+
+```
+
+# Errors
+```
+error[SyntaxError]: Invalid assignment to `<div
+      a`
+   ┌─ break-parent.js:17:5
+   │  
+17 │     : <div
+   │ ┌─────^
+18 │ │       a={123412342314}
+   │ └───────^ This expression cannot be assigned to
+
+error[SyntaxError]: expected `:` but instead found `}`
+   ┌─ break-parent.js:18:22
+   │
+18 │       a={123412342314}
+   │                      ^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `}`
+   ┌─ break-parent.js:19:22
+   │
+19 │       b={123412341234}
+   │                      ^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `}`
+   ┌─ break-parent.js:20:22
+   │
+20 │       c={123412341234}
+   │                      ^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `}`
+   ┌─ break-parent.js:21:22
+   │
+21 │       d={123412341234}
+   │                      ^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `}`
+   ┌─ break-parent.js:22:22
+   │
+22 │       e={123412341234}
+   │                      ^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `}`
+   ┌─ break-parent.js:23:22
+   │
+23 │       f={123412341234}
+   │                      ^ unexpected
+
+error[SyntaxError]: expected `:` but instead found `}`
+   ┌─ break-parent.js:24:22
+   │
+24 │       g={123412341234}
+   │                      ^ unexpected
+
+error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+   ┌─ break-parent.js:25:6
+   │
+25 │     />;
+   │     -^ But this operator was encountered instead
+   │     │ 
+   │     This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ';'
+   ┌─ break-parent.js:25:7
+   │
+25 │     />;
+   │       ^ Expected an expression here
+
+
+```
+
+

@@ -1,0 +1,43 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: like-regexp.js
+
+---
+# Input
+```js
+0 ? a : { b : 1 }/2;
+
+```
+
+# Output
+```js
+0 ? a : { b: 1 };
+/2;
+;
+
+```
+
+# Errors
+```
+error: unterminated regex literal
+  ┌─ like-regexp.js:2:1
+  │
+1 │ 0 ? a : { b : 1 }/2;
+  │                  - a regex literal starts there...
+2 │ 
+  │ ^ ...but the file ends here
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ like-regexp.js:1:18
+  │    
+1 │ ┌   0 ? a : { b : 1 }/2;
+  │ │ ┌──────────────────^
+2 │ │ │ 
+  │ └─│' ...Which is required to end this statement
+  │   └^ An explicit or implicit semicolon is expected here...
+
+
+```
+
+

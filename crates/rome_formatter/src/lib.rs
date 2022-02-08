@@ -345,14 +345,14 @@ pub fn format_range(
     // the start/end marker default to the start/end of the input
     let (start_source, start_dest) = match range_start {
         Some((start_marker, _)) => (start_marker.source, start_marker.dest),
-        None => (TextSize::from(0), TextSize::from(0)),
+        None => (common_root.text_range().start(), TextSize::from(0)),
     };
     let (end_source, end_dest) = match range_end {
         Some((end_marker, _)) => (end_marker.source, end_marker.dest),
-        None => {
-            let end = root.text().len();
-            (end, end)
-        }
+        None => (
+            common_root.text_range().end(),
+            TextSize::try_from(formatted.code.len()).expect("code length out of bounds"),
+        ),
     };
 
     let input_range = TextRange::new(start_source, end_source);

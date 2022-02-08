@@ -1,0 +1,387 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: test.js
+
+---
+# Input
+```js
+setTimeout(function() {
+  thing();
+}, 500);
+
+["a","b","c"].reduce(function(item, thing) {
+  return thing + " " + item;
+}, "letters:")
+
+func(() => {
+  thing();
+}, identifier);
+
+func(function() {
+  thing();
+}, this.props.timeout * 1000);
+
+func((that) => {
+  thing();
+}, this.props.getTimeout());
+
+func(() => {
+  thing();
+}, true);
+
+func(() => {
+  thing();
+}, null);
+
+func(() => {
+  thing();
+}, undefined);
+
+func(() => {
+  thing();
+}, /regex.*?/);
+
+func(() => {
+  thing();
+}, 1 ? 2 : 3);
+
+func(function() {
+  return thing()
+}, 1 ? 2 : 3);
+
+func(() => {
+  thing();
+}, something() ? someOtherThing() : somethingElse(true, 0));
+
+
+func(() => {
+  thing();
+}, something(longArgumentName, anotherLongArgumentName) ? someOtherThing() : somethingElse(true, 0));
+
+
+func(() => {
+  thing();
+}, something(longArgumentName, anotherLongArgumentName, anotherLongArgumentName, anotherLongArgumentName) ? someOtherThing() : somethingElse(true, 0));
+
+compose((a) => {
+  return a.thing;
+}, b => b * b);
+
+somthing.reduce(function(item, thing) {
+  return thing.blah =  item;
+}, {})
+
+somthing.reduce(function(item, thing) {
+  return thing.push(item);
+}, [])
+
+reallyLongLongLongLongLongLongLongLongLongLongLongLongLongLongMethod((f, g, h) => {
+  return f.pop();
+}, true);
+
+// Don't do the rest of these
+
+func(function() {
+  thing();
+}, true, false);
+
+func(() => {
+  thing();
+}, {yes: true, cats: 5});
+
+compose((a) => {
+  return a.thing;
+}, b => {
+  return b + "";
+});
+
+compose((a) => {
+  return a.thing;
+}, b => [1, 2, 3, 4, 5]);
+
+renderThing(a =>
+  <div>Content. So much to say. Oh my. Are we done yet?</div>
+,args);
+
+setTimeout(
+  // Something
+  function() {
+    thing();
+  },
+  500
+);
+
+setTimeout(/* blip */ function() {
+  thing();
+}, 500);
+
+func((args) => {
+  execute(args);
+}, result => result && console.log("success"))
+
+```
+
+# Output
+```js
+setTimeout(
+  function () {
+    thing();
+  },
+  500,
+);
+
+["a", "b", "c"].reduce(
+  function (item, thing) {
+    return thing + " " + item;
+  },
+  "letters:",
+);
+
+func(
+  () => {
+    thing();
+  },
+  identifier,
+);
+
+func(
+  function () {
+    thing();
+  },
+  this.props.timeout * 1000,
+);
+
+func(
+  (that) => {
+    thing();
+  },
+  this.props.getTimeout(),
+);
+
+func(
+  () => {
+    thing();
+  },
+  true,
+);
+
+func(
+  () => {
+    thing();
+  },
+  null,
+);
+
+func(
+  () => {
+    thing();
+  },
+  undefined,
+);
+
+func(
+  () => {
+    thing();
+  },
+  /regex.*?/,
+);
+
+func(
+  () => {
+    thing();
+  },
+  1 ? 2 : 3,
+);
+
+func(
+  function () {
+    return thing();
+  },
+  1 ? 2 : 3,
+);
+
+func(
+  () => {
+    thing();
+  },
+  something() ? someOtherThing() : somethingElse(true, 0),
+);
+
+func(
+  () => {
+    thing();
+  },
+  something(longArgumentName, anotherLongArgumentName) ? someOtherThing() : somethingElse(
+    true,
+    0,
+  ),
+);
+
+func(
+  () => {
+    thing();
+  },
+  something(
+    longArgumentName,
+    anotherLongArgumentName,
+    anotherLongArgumentName,
+    anotherLongArgumentName,
+  ) ? someOtherThing() : somethingElse(true, 0),
+);
+
+compose(
+  (a) => {
+    return a.thing;
+  },
+  (b) => b * b,
+);
+
+somthing.reduce(
+  function (item, thing) {
+    return thing.blah = item;
+  },
+  {},
+);
+
+somthing.reduce(
+  function (item, thing) {
+    return thing.push(item);
+  },
+  [],
+);
+
+reallyLongLongLongLongLongLongLongLongLongLongLongLongLongLongMethod(
+  (f, g, h) => {
+    return f.pop();
+  },
+  true,
+);
+
+// Don't do the rest of these
+func(
+  function () {
+    thing();
+  },
+  true,
+  false,
+);
+
+func(
+  () => {
+    thing();
+  },
+  { yes: true, cats: 5 },
+);
+
+compose(
+  (a) => {
+    return a.thing;
+  },
+  (b) => {
+    return b + "";
+  },
+);
+
+compose(
+  (a) => {
+    return a.thing;
+  },
+  (b) => [1, 2, 3, 4, 5],
+);
+
+renderThing(a =>
+  <div>Content. So much to say. Oh my. Are we done yet?</div>
+,args);
+
+setTimeout(
+  // Something
+  function () {
+    thing();
+  },
+  500,
+);
+
+setTimeout(
+  /* blip */
+  function () {
+    thing();
+  },
+  500,
+);
+
+func(
+  (args) => {
+    execute(args);
+  },
+  (result) => result && console.log("success"),
+);
+
+```
+
+# Errors
+```
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ test.js:96:3
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │   ^^^^^^^^^^^^^^^^ TypeScript only syntax
+
+error[SyntaxError]: expected `,` but instead found `much`
+   ┌─ test.js:96:20
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                    ^^^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `to`
+   ┌─ test.js:96:25
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                         ^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `say`
+   ┌─ test.js:96:28
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                            ^^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `my`
+   ┌─ test.js:96:36
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                                    ^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `we`
+   ┌─ test.js:96:44
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                                            ^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `done`
+   ┌─ test.js:96:47
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                                               ^^^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `yet`
+   ┌─ test.js:96:52
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                                                    ^^^ unexpected
+
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ test.js:96:56
+   │
+96 │   <div>Content. So much to say. Oh my. Are we done yet?</div>
+   │                                                        ^ TypeScript only syntax
+
+error[SyntaxError]: expected an expression but instead found ','
+   ┌─ test.js:97:1
+   │
+97 │ ,args);
+   │ ^ Expected an expression here
+
+
+```
+
+

@@ -1,0 +1,163 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: function-declaration.js
+
+---
+# Input
+```js
+function a(/* comment */) {} // comment
+function b() {} // comment
+function c(/* comment */ argA, argB, argC) {} // comment
+call((/*object*/ row) => {});
+KEYPAD_NUMBERS.map(num => ( // Buttons 0-9
+  <div />
+));
+
+function f1 /* f */() {}
+function f2 (/* args */) {}
+function f3 () /* returns */ {}
+function f4 /* f */(/* args */) /* returns */ {}
+
+function f5 /* f */(/* a */ a) {}
+function f6 /* f */(a /* a */) {}
+function f7 /* f */(/* a */ a) /* returns */ {}
+
+const obj = {
+  f1 /* f */() {},
+  f2 (/* args */) {},
+  f3 () /* returns */ {},
+  f4 /* f */(/* args */) /* returns */ {},
+};
+
+(function f /* f */() {})();
+(function f (/* args */) {})();
+(function f () /* returns */ {})();
+(function f /* f */(/* args */) /* returns */ {})();
+
+class C1 {
+  f/* f */() {}
+}
+class C2 {
+  f(/* args */) {}
+}
+class C3 {
+  f() /* returns */ {}
+}
+class C4 {
+  f/* f */(/* args */) /* returns */ {}
+}
+
+function foo1() 
+// this is a function
+{
+  return 42
+}
+
+function foo2() // this is a function
+{
+  return 42
+}
+
+function foo3() { // this is a function
+  return 42
+}
+
+function foo4() {
+  // this is a function
+  return 42;
+}
+
+```
+
+# Output
+```js
+function a( /* comment */ ) {} // comment
+function b() {} // comment
+function c( /* comment */ argA, argB, argC) {} // comment
+call(( /*object*/ row) => {});
+KEYPAD_NUMBERS.map(num => ( // Buttons 0-9
+  <div />
+));
+
+function f1() {} /* f */
+function f2( /* args */ ) {}
+function f3() /* returns */ {}
+function f4( /* args */ ) /* returns */ {} /* f */
+
+function f5( /* a */ a) {} /* f */
+function f6(a /* a */ ) {} /* f */
+function f7( /* a */ a) /* returns */ {} /* f */
+
+const obj = {
+  f1() {}, /* f */
+  f2( /* args */ ) {},
+  f3() /* returns */ {},
+  f4( /* args */ ) /* returns */ {}, /* f */
+};
+
+(function f() {})(); /* f */
+(function f( /* args */ ) {})();
+(function f() /* returns */ {})();
+(function f( /* args */ ) /* returns */ {})(); /* f */
+
+class C1 {
+  f() {} /* f */
+}
+class C2 {
+  f( /* args */ ) {}
+}
+class C3 {
+  f() /* returns */ {}
+}
+class C4 {
+  f( /* args */ ) /* returns */ {} /* f */
+}
+
+function foo1() // this is a function
+{
+  return 42;
+}
+
+function foo2() { // this is a function
+  return 42;
+}
+
+function foo3() {
+  // this is a function
+  return 42;
+}
+
+function foo4() {
+  // this is a function
+  return 42;
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ function-declaration.js:6:3
+  │
+6 │   <div />
+  │   ^^^^ TypeScript only syntax
+
+error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+  ┌─ function-declaration.js:6:9
+  │
+6 │   <div />
+  │        -^ But this operator was encountered instead
+  │        │ 
+  │        This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+  ┌─ function-declaration.js:7:1
+  │
+7 │ ));
+  │ ^ Expected an expression here
+
+
+```
+
+

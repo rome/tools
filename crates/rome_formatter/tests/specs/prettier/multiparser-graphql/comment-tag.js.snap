@@ -1,0 +1,35 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: comment-tag.js
+
+---
+# Input
+```js
+const query = /* GraphQL */`
+      {
+    user(   id :   5  )  {
+      firstName
+
+      lastName
+    }
+  }
+`;
+
+```
+
+# Output
+```js
+const query = `
+      {
+    user(   id :   5  )  {
+      firstName
+
+      lastName
+    }
+  }
+`; /* GraphQL */
+
+```
+
+

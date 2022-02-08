@@ -1,0 +1,8 @@
+{
+  // goto emulation
+  inf_leave: for (;;) {}
+}
+{
+  // goto emulation
+  inf_leave: for (;;) {}
+}

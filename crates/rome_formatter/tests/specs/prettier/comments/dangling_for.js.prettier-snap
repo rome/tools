@@ -1,0 +1,5 @@
+// comment
+for (;;);
+
+/* comment */
+for (;;);

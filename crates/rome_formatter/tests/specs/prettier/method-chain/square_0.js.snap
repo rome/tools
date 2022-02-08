@@ -1,0 +1,31 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: square_0.js
+
+---
+# Input
+```js
+const version = someLongString
+  .split('jest version =')
+  .pop()
+  .split(EOL)[0]
+  .trim();
+
+const component = find('.org-lclp-edit-copy-url-banner__link')[0]
+  .getAttribute('href')
+  .indexOf(this.landingPageLink);
+
+```
+
+# Output
+```js
+const version = someLongString.split("jest version =").pop().split(EOL)[0].trim();
+
+const component = find(".org-lclp-edit-copy-url-banner__link")[0].getAttribute(
+  "href",
+).indexOf(this.landingPageLink);
+
+```
+
+

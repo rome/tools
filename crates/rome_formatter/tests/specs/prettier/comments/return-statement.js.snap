@@ -1,0 +1,253 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: return-statement.js
+
+---
+# Input
+```js
+function jsx() {
+  return (
+    // Comment
+    <div />
+  );
+}
+
+function unary() {
+  return (
+    // Comment
+    !!x
+  );
+}
+
+function numericLiteralNoParen() {
+  return 1337; // Comment
+}
+
+function logical() {
+  return (
+    // Reason for 42
+    42
+  ) && 84
+}
+
+function binary() {
+  return (
+    // Reason for 42
+    42
+  ) * 84
+}
+
+function binaryInBinaryLeft() {
+  return (
+    // Reason for 42
+    42
+  ) * 84 + 2
+}
+
+function binaryInBinaryRight() {
+  return (
+    // Reason for 42
+    42
+  ) + 84 * 2
+}
+
+function conditional() {
+  return (
+    // Reason for 42
+    42
+  ) ? 1 : 2
+}
+
+function binaryInConditional() {
+  return (
+    // Reason for 42
+    42
+  ) * 3 ? 1 : 2
+}
+
+function call() {
+  return (
+    // Reason for a
+    a
+  )()
+}
+
+function memberInside() {
+  return (
+    // Reason for a.b
+    a.b
+  ).c
+}
+
+function memberOutside() {
+  return (
+    // Reason for a
+    a
+  ).b.c
+}
+
+function memberInAndOutWithCalls() {
+  return (
+    // Reason for a
+    aFunction.b()
+  ).c.d()
+}
+
+function excessiveEverything() {
+  return (
+    // Reason for stuff
+    a.b() * 3 + 4 ? (a`hi`, 1) ? 1 : 1 : 1
+  )
+}
+
+// See https://github.com/prettier/prettier/issues/2392
+// function sequenceExpression() {
+//   return (
+//     // Reason for a
+//     a
+//   ), b
+// }
+
+function sequenceExpressionInside() {
+  return ( // Reason for a
+    a, b
+  );
+}
+
+function taggedTemplate() {
+  return (
+    // Reason for a
+    a
+  )`b`
+}
+
+function inlineComment() {
+  return (
+    /* hi */ 42
+  ) || 42
+}
+
+```
+
+# Output
+```js
+function jsx() {
+  return (
+    // Comment
+    <div />
+  );
+}
+
+function unary() {
+  return (// Comment
+  !!x);
+}
+
+function numericLiteralNoParen() {
+  return 1337; // Comment
+}
+
+function logical() {
+  return (// Reason for 42
+  42) && 84;
+}
+
+function binary() {
+  return (// Reason for 42
+  42) * 84;
+}
+
+function binaryInBinaryLeft() {
+  return (// Reason for 42
+  42) * 84 + 2;
+}
+
+function binaryInBinaryRight() {
+  return (// Reason for 42
+  42) + 84 * 2;
+}
+
+function conditional() {
+  return (// Reason for 42
+  42) ? 1 : 2;
+}
+
+function binaryInConditional() {
+  return (// Reason for 42
+  42) * 3 ? 1 : 2;
+}
+
+function call() {
+  return (// Reason for a
+  a)();
+}
+
+function memberInside() {
+  return (// Reason for a.b
+  a.b).c;
+}
+
+function memberOutside() {
+  return (// Reason for a
+  a).b.c;
+}
+
+function memberInAndOutWithCalls() {
+  return (// Reason for a
+  aFunction.b()).c.d();
+}
+
+function excessiveEverything() {
+  return (// Reason for stuff
+  a.b() * 3 + 4 ? (a`hi`, 1) ? 1 : 1 : 1);
+}
+
+// See https://github.com/prettier/prettier/issues/2392
+// function sequenceExpression() {
+//   return (
+//     // Reason for a
+//     a
+//   ), b
+// }
+function sequenceExpressionInside() {
+  return (a, b); // Reason for a
+}
+
+function taggedTemplate() {
+  return (// Reason for a
+  a)`b`;
+}
+
+function inlineComment() {
+  return (/* hi */ 42) || 42;
+}
+
+```
+
+# Errors
+```
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ return-statement.js:4:5
+  │
+4 │     <div />
+  │     ^^^^ TypeScript only syntax
+
+error[SyntaxError]: Expected an expression for the right hand side of a `/`, but found an operator instead
+  ┌─ return-statement.js:4:11
+  │
+4 │     <div />
+  │          -^ But this operator was encountered instead
+  │          │ 
+  │          This operator requires a right hand side value
+
+error[SyntaxError]: expected an expression but instead found ')'
+  ┌─ return-statement.js:5:3
+  │
+5 │   );
+  │   ^ Expected an expression here
+
+
+```
+
+

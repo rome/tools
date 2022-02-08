@@ -15,4 +15,8 @@ thiserror = "1.0.30"
 
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }
-insta = "1.10.0"
+insta = { version = "1.10.0", features = ["glob"] }
+rslint_errors = { path = "../rslint_errors" }
+parking_lot = "0.12.0"
+similar = "2.1.0"
+ctor = "0.1.21"

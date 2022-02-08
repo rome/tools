@@ -1,0 +1,56 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: directive.js
+
+---
+# Input
+```js
+// prettier-ignore
+'use strict';
+[].forEach();
+
+function foo() {
+// prettier-ignore
+'use strict';
+[].forEach();
+}
+
+```
+
+# Output
+```js
+// prettier-ignore
+'use strict';
+[].forEach();
+
+function foo() {
+  // prettier-ignore
+  'use strict';
+  [].forEach();
+}
+
+```
+
+# Errors
+```
+warning[SyntaxError]: Redundant strict mode declaration
+  ┌─ directive.js:2:1
+  │
+2 │ 'use strict';
+  │ ------------ this declaration is redundant
+  │
+  ╧ note: modules are always strict mode
+
+warning[SyntaxError]: Redundant strict mode declaration
+  ┌─ directive.js:7:1
+  │
+7 │ 'use strict';
+  │ ------------ this declaration is redundant
+  │
+  ╧ note: modules are always strict mode
+
+
+```
+
+

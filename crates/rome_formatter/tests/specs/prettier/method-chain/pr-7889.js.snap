@@ -1,0 +1,110 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: pr-7889.js
+
+---
+# Input
+```js
+const Profile = view.with({ name: (state) => state.name }).as((props) => (
+  <div>
+    <h1>Hello, {props.name}</h1>
+  </div>
+))
+
+const Profile2 = view.with({ name }).as((props) => (
+  <div>
+    <h1>Hello, {props.name}</h1>
+  </div>
+))
+
+```
+
+# Output
+```js
+const Profile = view.with({ name: (state) => state.name }).as((props) => (
+  <div>
+    <h1>Hello, {props.name}</h1>
+  </div>
+))
+
+const Profile2 = view.with({ name }).as((props) => (
+  <div>
+    <h1>Hello, {props.name}</h1>
+  </div>
+))
+
+```
+
+# Errors
+```
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ pr-7889.js:2:3
+  │  
+2 │ ┌   <div>
+3 │ │     <h1>Hello, {props.name}</h1>
+  │ └─────────────^ TypeScript only syntax
+
+error[SyntaxError]: expected `,` but instead found `.`
+  ┌─ pr-7889.js:3:22
+  │
+3 │     <h1>Hello, {props.name}</h1>
+  │                      ^ unexpected
+
+error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
+  ┌─ pr-7889.js:3:29
+  │
+3 │     <h1>Hello, {props.name}</h1>
+  │                            -^ But this operator was encountered instead
+  │                            │ 
+  │                            This operator requires a right hand side value
+
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ pr-7889.js:4:3
+  │
+4 │   </div>
+  │   ^ TypeScript only syntax
+
+error[SyntaxError]: expected an expression but instead found ')'
+  ┌─ pr-7889.js:5:1
+  │
+5 │ ))
+  │ ^ Expected an expression here
+
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ pr-7889.js:8:3
+  │  
+8 │ ┌   <div>
+9 │ │     <h1>Hello, {props.name}</h1>
+  │ └─────────────^ TypeScript only syntax
+
+error[SyntaxError]: expected `,` but instead found `.`
+  ┌─ pr-7889.js:9:22
+  │
+9 │     <h1>Hello, {props.name}</h1>
+  │                      ^ unexpected
+
+error[SyntaxError]: Expected an expression for the right hand side of a `<`, but found an operator instead
+  ┌─ pr-7889.js:9:29
+  │
+9 │     <h1>Hello, {props.name}</h1>
+  │                            -^ But this operator was encountered instead
+  │                            │ 
+  │                            This operator requires a right hand side value
+
+error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+   ┌─ pr-7889.js:10:3
+   │
+10 │   </div>
+   │   ^ TypeScript only syntax
+
+error[SyntaxError]: expected an expression but instead found ')'
+   ┌─ pr-7889.js:11:1
+   │
+11 │ ))
+   │ ^ Expected an expression here
+
+
+```
+
+

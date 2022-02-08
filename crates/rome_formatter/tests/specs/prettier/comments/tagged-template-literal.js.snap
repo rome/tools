@@ -1,0 +1,44 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: tagged-template-literal.js
+
+---
+# Input
+```js
+foo``; // comment
+
+foo // comment
+``;
+
+foo // comment
+`
+`;
+
+foo /* comment */`
+`;
+
+foo /* comment */
+`
+`;
+
+```
+
+# Output
+```js
+foo``; // comment
+
+foo``; // comment
+
+foo`
+`; // comment
+
+foo`
+`; /* comment */
+
+foo`
+`; /* comment */
+
+```
+
+

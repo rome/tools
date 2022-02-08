@@ -1,0 +1,101 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: arrows-bind.js
+
+---
+# Input
+```js
+a => ({}::b()``[''].c++ && 0 ? 0 : 0);
+(a => b)::c;
+a::(b => c);
+
+```
+
+# Output
+```js
+a => ({}::b()``[''].c++ && 0 ? 0 : 0
+)
+
+(a => b):;
+:c
+a:
+:(b => c)
+
+```
+
+# Errors
+```
+error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ arrows-bind.js:1:9
+  │
+1 │ a => ({}::b()``[''].c++ && 0 ? 0 : 0);
+  │         ^ TypeScript only syntax
+
+error[SyntaxError]: expected `,` but instead found `:`
+  ┌─ arrows-bind.js:1:10
+  │
+1 │ a => ({}::b()``[''].c++ && 0 ? 0 : 0);
+  │          ^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `b`
+  ┌─ arrows-bind.js:1:11
+  │
+1 │ a => ({}::b()``[''].c++ && 0 ? 0 : 0);
+  │           ^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `(`
+  ┌─ arrows-bind.js:1:12
+  │
+1 │ a => ({}::b()``[''].c++ && 0 ? 0 : 0);
+  │            ^ unexpected
+
+error[SyntaxError]: expected `=>` but instead found ```
+  ┌─ arrows-bind.js:1:14
+  │
+1 │ a => ({}::b()``[''].c++ && 0 ? 0 : 0);
+  │              ^ unexpected
+
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ arrows-bind.js:1:37
+  │
+1 │ a => ({}::b()``[''].c++ && 0 ? 0 : 0);
+  │ ------------------------------------^
+  │ │                                   │
+  │ │                                   An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
+
+error[SyntaxError]: expected `,` but instead found `=>`
+  ┌─ arrows-bind.js:2:4
+  │
+2 │ (a => b)::c;
+  │    ^^ unexpected
+
+error[SyntaxError]: expected `,` but instead found `b`
+  ┌─ arrows-bind.js:2:7
+  │
+2 │ (a => b)::c;
+  │       ^ unexpected
+
+error[SyntaxError]: return type annotation are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  ┌─ arrows-bind.js:2:9
+  │
+2 │ (a => b)::c;
+  │         ^ TypeScript only syntax
+
+error[SyntaxError]: expected `=>` but instead found `:`
+  ┌─ arrows-bind.js:2:10
+  │
+2 │ (a => b)::c;
+  │          ^ unexpected
+
+error[SyntaxError]: expected a statement but instead found ':'
+  ┌─ arrows-bind.js:3:3
+  │
+3 │ a::(b => c);
+  │   ^ Expected a statement here
+
+
+```
+
+

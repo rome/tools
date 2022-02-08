@@ -1,0 +1,5 @@
+function f() {
+  if (true) {
+    call("this line is 79 chars", "long", "it should", "stay as single line");
+  }
+}

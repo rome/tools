@@ -1,0 +1,55 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: issue-8045.js
+
+---
+# Input
+```js
+const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (fooBarBaz);
+
+function jsdocCastInReturn() {
+  return /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (fooBarBaz);
+}
+
+const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+      (fooBarBaz);
+
+function jsdocCastInReturn() {
+  return (/** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+    (fooBarBaz));
+}
+
+const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+      (fooBarBaz);
+
+function jsdocCastInReturn() {
+  return (/** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+    (fooBarBaz));
+}
+
+```
+
+# Output
+```js
+const myLongVariableName = (fooBarBaz); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+
+function jsdocCastInReturn() {
+  return (fooBarBaz); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+}
+
+const myLongVariableName = (fooBarBaz); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+
+function jsdocCastInReturn() {
+  return ((fooBarBaz)); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+}
+
+const myLongVariableName = (fooBarBaz); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+
+function jsdocCastInReturn() {
+  return ((fooBarBaz)); /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+}
+
+```
+
+

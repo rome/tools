@@ -622,6 +622,16 @@ impl SyntaxTrivia {
         }
     }
 
+    /// Get the total length of text of the TriviaPieces inside this trivia
+    fn text_len(&self) -> TextSize {
+        let green_token = self.token.green();
+        if self.is_leading {
+            green_token.leading_trivia().text_len()
+        } else {
+            green_token.trailing_trivia().text_len()
+        }
+    }
+
     /// Gets index-th trivia piece when the token associated with this trivia was created.
     /// See [SyntaxTriviaPiece].
     pub(crate) fn get_piece(&self, index: usize) -> Option<TriviaPiece> {
@@ -642,7 +652,7 @@ impl SyntaxTrivia {
             next_index: 0,
             next_offset: self.offset,
             end_index: self.len(),
-            end_offset: self.text_range().end(),
+            end_offset: self.offset + self.text_len(),
         }
     }
 

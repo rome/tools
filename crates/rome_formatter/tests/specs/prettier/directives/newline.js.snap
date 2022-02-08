@@ -1,0 +1,43 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 83
+expression: newline.js
+
+---
+# Input
+```js
+/* @flow */
+
+"use strict";
+
+import a from "a";
+
+a();
+
+```
+
+# Output
+```js
+/* @flow */
+
+"use strict";
+import a from "a";
+
+a();
+
+```
+
+# Errors
+```
+warning[SyntaxError]: Redundant strict mode declaration
+  ┌─ newline.js:3:1
+  │
+3 │ "use strict";
+  │ ------------ this declaration is redundant
+  │
+  ╧ note: modules are always strict mode
+
+
+```
+
+

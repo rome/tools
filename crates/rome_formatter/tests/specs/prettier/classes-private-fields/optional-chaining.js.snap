@@ -1,0 +1,22 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: optional-chaining.js
+
+---
+# Input
+```js
+// https://github.com/babel/babel/pull/11669
+
+delete obj?.#x.a
+
+```
+
+# Output
+```js
+// https://github.com/babel/babel/pull/11669
+delete obj?.#x.a;
+
+```
+
+
