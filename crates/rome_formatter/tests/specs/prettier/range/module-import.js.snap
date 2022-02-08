@@ -1,0 +1,38 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: module-import.js
+
+---
+# Input
+```js
+import <<<PRETTIER_RANGE_START>>> def , {named} <<<PRETTIER_RANGE_END>>> from    'x'
+
+export *  from   'd'
+
+export    const  x
+  =  42
+
+export   default    42
+
+
+```
+
+# Output
+```js
+import
+<<<PRETTIER_RANGE_START>>> def , 
+{
+  named;
+}
+<<<PRETTIER_RANGE_END>>> from    'x'
+
+export * from 'd';
+
+export const x = 42;
+
+export default 42;
+
+```
+
+

@@ -1,0 +1,19 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: return-outside-function.js
+
+---
+# Input
+```js
+return someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD
+
+```
+
+# Output
+```js
+return someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD
+
+```
+
+

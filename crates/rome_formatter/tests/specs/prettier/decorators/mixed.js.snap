@@ -1,0 +1,33 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: mixed.js
+
+---
+# Input
+```js
+// https://github.com/prettier/prettier/issues/6747
+
+@foo
+export default class MyComponent {
+  @task
+  *foo() {
+  }
+}
+```
+
+# Output
+```js
+// https://github.com/prettier/prettier/issues/6747
+
+@foo
+export default class MyComponent {
+  
+  @
+  task;
+  *foo() {}
+}
+
+```
+
+

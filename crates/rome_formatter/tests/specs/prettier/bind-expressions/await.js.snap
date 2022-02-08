@@ -1,0 +1,26 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: await.js
+
+---
+# Input
+```js
+const doBothThings = async () => {
+    const request = doAsyncThing();
+    return (await request)::doSyncThing();
+};
+
+```
+
+# Output
+```js
+const doBothThings = async () => {
+  const request = doAsyncThing();
+  return (await request):;
+  :doSyncThing()
+};
+
+```
+
+

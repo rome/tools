@@ -1,0 +1,50 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: test.js
+
+---
+# Input
+```js
+export { value1, value2 as value2_renamed, value3, value4 as value4_renamed, value5 } from "exports";
+
+export a,{b} from "./baz";
+
+export * as ns from "mod";
+
+export * as foo,{bar} from "./baz";
+
+export { undefinedExport };
+
+```
+
+# Output
+```js
+export {
+  value1,
+  as value2_renamed value2,
+  value3,
+  as value4_renamed value4,
+  value5,
+} from "exports" ;
+
+export
+a, { b };
+from;
+"./baz";
+
+export * as ns from "mod";
+
+export * as foo
+,
+{
+  bar;
+}
+from;
+"./baz";
+
+export { undefinedExport };
+
+```
+
+

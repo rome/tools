@@ -1,0 +1,19 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: labeled-function-declaration.js
+
+---
+# Input
+```js
+foo: function bar() {}
+
+```
+
+# Output
+```js
+foo: function bar() {}
+
+```
+
+

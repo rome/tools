@@ -1,0 +1,36 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: object-expression2.js
+
+---
+# Input
+```js
+
+const y =       [
+    {
+                a: 1,
+    },<<<PRETTIER_RANGE_START>>>
+    {
+              a: 1,
+              b:2
+    },<<<PRETTIER_RANGE_END>>>
+]
+
+```
+
+# Output
+```js
+const y =       [
+    {
+                a: 1,
+    },<<<PRETTIER_RANGE_START>>>
+    {
+              a: 1,
+              b:2
+    },<<<PRETTIER_RANGE_END>>>
+]
+
+```
+
+

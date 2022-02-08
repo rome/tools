@@ -1,0 +1,39 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: redux_compose.js
+
+---
+# Input
+```js
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import DevTools from './containers/DevTools';
+import reducer from '../reducers';
+
+const store = createStore(
+  reducer,
+  compose(
+    applyMiddleware(thunk),
+    DevTools.instrument()
+  )
+)
+
+
+```
+
+# Output
+```js
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import DevTools from './containers/DevTools';
+import reducer from '../reducers';
+
+const store = createStore(
+  reducer,
+  compose(applyMiddleware(thunk), DevTools.instrument()),
+);
+
+```
+
+

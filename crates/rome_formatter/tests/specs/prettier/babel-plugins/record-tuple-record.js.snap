@@ -1,0 +1,32 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: record-tuple-record.js
+
+---
+# Input
+```js
+const record1 = #{
+    a: 1,
+    b: 2,
+    c: 3,
+};
+
+const record2 = #{...record1, b: 5};
+
+```
+
+# Output
+```js
+const record1 = #
+{
+    a: 1,
+    b: 2,
+    c: 3,
+};
+
+const record2 = #{...record1, b: 5};
+
+```
+
+

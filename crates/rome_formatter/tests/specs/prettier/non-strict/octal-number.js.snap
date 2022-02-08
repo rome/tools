@@ -1,0 +1,19 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: octal-number.js
+
+---
+# Input
+```js
+0777
+
+```
+
+# Output
+```js
+0777;
+
+```
+
+

@@ -1,0 +1,21 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: directive.js
+
+---
+# Input
+```js
+<<<PRETTIER_RANGE_START>>>'<<<PRETTIER_RANGE_END>>>aaa';
+'bbb';
+
+```
+
+# Output
+```js
+<<<PRETTIER_RANGE_START>>>'<<<PRETTIER_RANGE_END>>>aaa'
+"bbb";
+
+```
+
+

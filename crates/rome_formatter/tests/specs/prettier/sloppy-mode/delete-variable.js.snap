@@ -1,0 +1,25 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: delete-variable.js
+
+---
+# Input
+```js
+function foo() {
+  var bar = 1;
+  delete bar;}
+
+```
+
+# Output
+```js
+function foo() {
+  var bar = 1;
+  
+  delete bar;
+}
+
+```
+
+

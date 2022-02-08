@@ -1,0 +1,32 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: interfaces.js
+
+---
+# Input
+```js
+foo.interface;
+interface.foo;
+new interface();
+({ interface: "foo" });
+(interface, "foo");
+void interface;
+const interface = "foo";
+
+```
+
+# Output
+```js
+foo.interface;
+
+interface.foo;
+new interface();
+({ interface: "foo" });
+(interface, "foo");
+void interface;
+const interface  = "foo";
+
+```
+
+

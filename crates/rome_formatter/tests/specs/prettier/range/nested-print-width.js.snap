@@ -1,0 +1,27 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: nested-print-width.js
+
+---
+# Input
+```js
+function f() {
+  if (true) {<<<PRETTIER_RANGE_START>>>
+    call("this line is 79 chars", "long", "it should", "stay as single line");
+  <<<PRETTIER_RANGE_END>>>}
+}
+
+```
+
+# Output
+```js
+function f() {
+  if (true) {<<<PRETTIER_RANGE_START>>>
+    call("this line is 79 chars", "long", "it should", "stay as single line");
+  <<<PRETTIER_RANGE_END>>>}
+}
+
+```
+
+

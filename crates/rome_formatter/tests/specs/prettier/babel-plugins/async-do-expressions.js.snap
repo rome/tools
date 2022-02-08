@@ -1,0 +1,20 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: async-do-expressions.js
+
+---
+# Input
+```js
+async do { await requestAPI().json() };
+
+```
+
+# Output
+```js
+async;
+do { await requestAPI().json() };
+
+```
+
+

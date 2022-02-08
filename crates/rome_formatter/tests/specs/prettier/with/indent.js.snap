@@ -1,0 +1,25 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: indent.js
+
+---
+# Input
+```js
+with (0) {}
+
+with (0) 1;
+
+```
+
+# Output
+```js
+with (0) {}
+
+
+
+with (0) 1;
+
+```
+
+

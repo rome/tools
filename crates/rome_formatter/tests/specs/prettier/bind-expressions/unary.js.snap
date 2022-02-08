@@ -1,0 +1,51 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: unary.js
+
+---
+# Input
+```js
+!x::y;
+!(x::y /* foo */);
+!(/* foo */ x::y);
+!(
+  /* foo */
+  x::y
+);
+!(
+  x::y
+  /* foo */
+);
+!(
+  x::y // foo
+);
+
+```
+
+# Output
+```js
+!x;
+::y
+!(x
+::y /* foo */)
+!(/* foo */ x
+::y)
+!(
+  /* foo */
+  x
+::y
+)
+!(
+  x
+::y
+  /* foo */
+)
+!(
+  x
+::y // foo
+)
+
+```
+
+

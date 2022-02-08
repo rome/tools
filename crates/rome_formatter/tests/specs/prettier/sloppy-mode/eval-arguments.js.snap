@@ -1,0 +1,25 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: eval-arguments.js
+
+---
+# Input
+```js
+function myfunc() {
+  eval = 1
+  arguments = arguments;
+}
+
+```
+
+# Output
+```js
+function myfunc() {
+  eval = 1;
+  arguments = arguments;
+}
+
+```
+
+

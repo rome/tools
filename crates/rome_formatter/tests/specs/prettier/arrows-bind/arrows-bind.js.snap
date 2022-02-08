@@ -1,0 +1,27 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: arrows-bind.js
+
+---
+# Input
+```js
+a => ({}::b()``[''].c++ && 0 ? 0 : 0);
+(a => b)::c;
+a::(b => c);
+
+```
+
+# Output
+```js
+a => ({}::b()``[''].c++ && 0 ? 0 : 0
+)
+
+(a => b):;
+:c
+a:
+:(b => c)
+
+```
+
+

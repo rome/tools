@@ -1,0 +1,33 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: keywords.js
+
+---
+# Input
+```js
+var package = require('../package');
+
+/**
+ * My amazing comment
+ */
+function myFunction() {
+	return 'StringGainz';
+}
+
+```
+
+# Output
+```js
+var package  = require("../package");
+
+/**
+ * My amazing comment
+ */
+function myFunction() {
+  return "StringGainz";
+}
+
+```
+
+

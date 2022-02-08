@@ -1,0 +1,30 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: binaryish.js
+
+---
+# Input
+```js
+const computedDescriptionLines = (showConfirm &&
+  descriptionLinesConfirming) ||
+  (focused && !loading && descriptionLinesFocused) ||
+  descriptionLines;
+
+computedDescriptionLines = (focused &&
+  !loading &&
+  descriptionLinesFocused) ||
+  descriptionLines;
+
+```
+
+# Output
+```js
+const computedDescriptionLines = (showConfirm && descriptionLinesConfirming) || (focused && !loading && descriptionLinesFocused) || descriptionLines;
+
+computedDescriptionLines =
+  (focused && !loading && descriptionLinesFocused) || descriptionLines;
+
+```
+
+

@@ -1,0 +1,25 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: comments-2.js
+
+---
+# Input
+```js
+<|>
+// howdy
+// hi lol
+const y = 5
+
+```
+
+# Output
+```js
+<|>;
+// howdy
+// hi lol
+const y = 5;
+
+```
+
+

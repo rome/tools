@@ -1,0 +1,39 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: no-semi.js
+
+---
+# Input
+```js
+a
+;::b.c
+
+class A {
+  a = b;
+  in
+  c
+
+  a = b;
+  instanceof(){}
+}
+
+```
+
+# Output
+```js
+a;
+::b.c
+
+class A {
+  a = b;
+  in;
+  c;
+
+  a = b;
+  instanceof() {}
+}
+
+```
+
+

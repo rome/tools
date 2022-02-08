@@ -1,0 +1,35 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: long_name_method.js
+
+---
+# Input
+```js
+class X {
+  constructor() {
+    this.testLongNameMethodAndSomethingElseLallala = ::this.testLongNameMethodAndSomethingElseLallala;
+  }
+  
+  testLongNameMethodAndSomethingElseLallala() {
+    return true;
+  }
+}
+```
+
+# Output
+```js
+class X {
+  constructor() {
+    this.testLongNameMethodAndSomethingElseLallala =
+    ::this.testLongNameMethodAndSomethingElseLallala
+  }
+
+  testLongNameMethodAndSomethingElseLallala() {
+    return true;
+  }
+}
+
+```
+
+

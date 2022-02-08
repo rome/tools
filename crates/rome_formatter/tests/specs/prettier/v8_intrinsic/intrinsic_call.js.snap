@@ -1,0 +1,65 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: intrinsic_call.js
+
+---
+# Input
+```js
+function doSmth()     {
+            %DebugPrint
+        (
+                foo )
+  }
+
+    function printFunc  (
+        f
+) {
+    if(%
+    IsAsmWasmCode(f))              console.log("asm.js");
+        if(
+
+        % IsWasmCode(
+        f))
+            console.log (
+                "wasm"
+            );
+
+    console.log
+    (%
+        GetFunctioName(f)
+        );
+}
+
+```
+
+# Output
+```js
+function doSmth()     {
+            %DebugPrint
+        (
+                foo )
+  }
+
+    function printFunc  (
+        f
+) {
+    if(%
+    IsAsmWasmCode(f))              console.log("asm.js");
+        if(
+
+        % IsWasmCode(
+        f))
+            console.log (
+                "wasm"
+            );
+
+    console.log
+    (%
+        GetFunctioName(f)
+        );
+}
+
+```
+
+

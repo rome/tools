@@ -1,0 +1,99 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: call.js
+
+---
+# Input
+```js
+(
+  aaaaaaaaaaaaaaaaaaaaaaaaa &&
+  bbbbbbbbbbbbbbbbbbbbbbbbb &&
+  ccccccccccccccccccccccccc &&
+  ddddddddddddddddddddddddd &&
+  eeeeeeeeeeeeeeeeeeeeeeeee
+)();
+
+(
+  aa &&
+  bb &&
+  cc &&
+  dd &&
+  ee
+)();
+
+(
+  aaaaaaaaaaaaaaaaaaaaaaaaa +
+  bbbbbbbbbbbbbbbbbbbbbbbbb +
+  ccccccccccccccccccccccccc +
+  ddddddddddddddddddddddddd +
+  eeeeeeeeeeeeeeeeeeeeeeeee
+)();
+
+(
+  aa +
+  bb +
+  cc +
+  dd +
+  ee
+)();
+
+(
+  aaaaaaaaaaaaaaaaaaaaaaaaa &&
+  bbbbbbbbbbbbbbbbbbbbbbbbb &&
+  ccccccccccccccccccccccccc &&
+  ddddddddddddddddddddddddd &&
+  eeeeeeeeeeeeeeeeeeeeeeeee
+)()()();
+
+(
+  aaaaaaaaaaaaaaaaaaaaaaaaa &&
+  bbbbbbbbbbbbbbbbbbbbbbbbb &&
+  ccccccccccccccccccccccccc &&
+  ddddddddddddddddddddddddd &&
+  eeeeeeeeeeeeeeeeeeeeeeeee
+)(
+  aaaaaaaaaaaaaaaaaaaaaaaaa &&
+    bbbbbbbbbbbbbbbbbbbbbbbbb &&
+    ccccccccccccccccccccccccc &&
+    ddddddddddddddddddddddddd &&
+    eeeeeeeeeeeeeeeeeeeeeeeee
+)(
+  aaaaaaaaaaaaaaaaaaaaaaaaa &&
+    bbbbbbbbbbbbbbbbbbbbbbbbb &&
+    ccccccccccccccccccccccccc &&
+    ddddddddddddddddddddddddd &&
+    eeeeeeeeeeeeeeeeeeeeeeeee
+)(
+  aaaaaaaaaaaaaaaaaaaaaaaaa &&
+    bbbbbbbbbbbbbbbbbbbbbbbbb &&
+    ccccccccccccccccccccccccc &&
+    ddddddddddddddddddddddddd &&
+    eeeeeeeeeeeeeeeeeeeeeeeee
+);
+
+```
+
+# Output
+```js
+(aaaaaaaaaaaaaaaaaaaaaaaaa && bbbbbbbbbbbbbbbbbbbbbbbbb && ccccccccccccccccccccccccc && ddddddddddddddddddddddddd && eeeeeeeeeeeeeeeeeeeeeeeee)();
+
+(aa && bb && cc && dd && ee)();
+
+(aaaaaaaaaaaaaaaaaaaaaaaaa + bbbbbbbbbbbbbbbbbbbbbbbbb + ccccccccccccccccccccccccc + ddddddddddddddddddddddddd + eeeeeeeeeeeeeeeeeeeeeeeee)();
+
+(aa + bb + cc + dd + ee)();
+
+(aaaaaaaaaaaaaaaaaaaaaaaaa && bbbbbbbbbbbbbbbbbbbbbbbbb && ccccccccccccccccccccccccc && ddddddddddddddddddddddddd && eeeeeeeeeeeeeeeeeeeeeeeee)()()();
+
+(aaaaaaaaaaaaaaaaaaaaaaaaa && bbbbbbbbbbbbbbbbbbbbbbbbb && ccccccccccccccccccccccccc && ddddddddddddddddddddddddd && eeeeeeeeeeeeeeeeeeeeeeeee)(
+  aaaaaaaaaaaaaaaaaaaaaaaaa && bbbbbbbbbbbbbbbbbbbbbbbbb && ccccccccccccccccccccccccc && ddddddddddddddddddddddddd && eeeeeeeeeeeeeeeeeeeeeeeee,
+)(
+  aaaaaaaaaaaaaaaaaaaaaaaaa && bbbbbbbbbbbbbbbbbbbbbbbbb && ccccccccccccccccccccccccc && ddddddddddddddddddddddddd && eeeeeeeeeeeeeeeeeeeeeeeee,
+)(
+  aaaaaaaaaaaaaaaaaaaaaaaaa && bbbbbbbbbbbbbbbbbbbbbbbbb && ccccccccccccccccccccccccc && ddddddddddddddddddddddddd && eeeeeeeeeeeeeeeeeeeeeeeee,
+);
+
+```
+
+

@@ -1,0 +1,25 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: issue-4206-1.js
+
+---
+# Input
+```js
+export default c<<<PRETTIER_RANGE_START>>>lass Foo{
+/**/<<<PRETTIER_RANGE_END>>>
+}
+
+```
+
+# Output
+```js
+export default c << <PRETTIER_RANGE_START> >> lass;
+Foo;
+{
+/**/<<<PRETTIER_RANGE_END>>>
+}
+
+```
+
+

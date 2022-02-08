@@ -1,0 +1,31 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: pipeline-operator-hack.js
+
+---
+# Input
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-pipeline-operator
+// https://github.com/js-choi/proposal-hack-pipes
+
+return list
+ |> take(prefix.length, %)
+ |> equals(%, prefix);
+
+// (The % token isn't final; it might instead be @ or ? or #.)
+
+```
+
+# Output
+```js
+// https://babeljs.io/docs/en/babel-plugin-proposal-pipeline-operator
+// https://github.com/js-choi/proposal-hack-pipes
+
+return list
+ |> take(prefix.length, %)
+ |> equals(%, prefix);// (The % token isn't final; it might instead be @ or ? or #.)
+
+```
+
+

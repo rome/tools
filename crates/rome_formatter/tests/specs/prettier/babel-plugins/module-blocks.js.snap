@@ -1,0 +1,28 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: module-blocks.js
+
+---
+# Input
+```js
+let m = module {
+  export let m = 2;
+  export let n = 3;
+};
+
+```
+
+# Output
+```js
+let m = module;
+{
+  
+  export let m = 2;
+  
+  export let n = 3;
+}
+
+```
+
+

@@ -1,0 +1,28 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: class-declaration.js
+
+---
+# Input
+```js
+
+
+class   <<<PRETTIER_RANGE_START>>> a {
+  b(   ) {}<<<PRETTIER_RANGE_END>>>
+}
+
+let    x
+```
+
+# Output
+```js
+class   <<<PRETTIER_RANGE_START>>> a {
+  b(   ) {}<<<PRETTIER_RANGE_END>>>
+}
+
+let x;
+
+```
+
+

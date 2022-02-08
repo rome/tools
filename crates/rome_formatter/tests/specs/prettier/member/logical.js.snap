@@ -1,0 +1,23 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: logical.js
+
+---
+# Input
+```js
+(veryLongVeryLongVeryLong || e).prop;
+
+(veryLongVeryLongVeryLong || anotherVeryLongVeryLongVeryLong || veryVeryVeryLongError).prop;
+
+```
+
+# Output
+```js
+(veryLongVeryLongVeryLong || e).prop;
+
+(veryLongVeryLongVeryLong || anotherVeryLongVeryLongVeryLong || veryVeryVeryLongError).prop;
+
+```
+
+

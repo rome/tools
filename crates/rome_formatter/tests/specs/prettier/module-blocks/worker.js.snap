@@ -1,0 +1,47 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: worker.js
+
+---
+# Input
+```js
+let worker = new Worker(module {
+  onmessage = function({data}) {
+    let mod = import(data);
+    postMessage(mod.fn());
+  }
+}, {type: "module"});
+
+let worker = new Worker(module {
+  onmessage = function({data}) {
+    let mod = import(data);
+    postMessage(mod.fn());
+  }
+}, {type: "module", foo: "bar" });
+
+worker.postMessage(module { export function fn() { return "hello!" } });
+
+```
+
+# Output
+```js
+let worker = new Worker(module {
+  onmessage = function({data}) {
+    let mod = import(data);
+    postMessage(mod.fn());
+  }
+}, {type: "module"});
+
+let worker = new Worker(module {
+  onmessage = function({data}) {
+    let mod = import(data);
+    postMessage(mod.fn());
+  }
+}, {type: "module", foo: "bar" });
+
+worker.postMessage(module { export function fn() { return "hello!" } });
+
+```
+
+

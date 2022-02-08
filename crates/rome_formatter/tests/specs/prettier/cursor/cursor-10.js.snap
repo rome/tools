@@ -1,0 +1,29 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: cursor-10.js
+
+---
+# Input
+```js
+const y = 5
+
+
+
+
+<|>
+  
+```
+
+# Output
+```js
+const y = 5
+
+
+
+
+<|>
+
+```
+
+

@@ -1,0 +1,20 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: range-7.js
+
+---
+# Input
+```js
+const myVar = <<<PRETTIER_RANGE_START>>>aFunction<|>;<<<PRETTIER_RANGE_END>>>
+
+```
+
+# Output
+```js
+const myVar = <<<PRETTIER_RANGE_START>>>aFunction<|>;
+<<<PRETTIER_RANGE_END>>>
+
+```
+
+

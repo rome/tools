@@ -1,0 +1,20 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: record-tuple-tuple.js
+
+---
+# Input
+```js
+const tuple1 = #[1, 2, 3];
+
+```
+
+# Output
+```js
+const tuple1 = #
+[1, 2, 3];
+
+```
+
+

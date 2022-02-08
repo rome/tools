@@ -1,0 +1,21 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: file-start-with-comment-2.js
+
+---
+# Input
+```js
+// hi lol
+haha()<|>
+
+```
+
+# Output
+```js
+// hi lol
+haha()<|>
+
+```
+
+

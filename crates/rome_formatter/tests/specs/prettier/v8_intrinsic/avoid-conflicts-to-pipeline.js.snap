@@ -1,0 +1,21 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: avoid-conflicts-to-pipeline.js
+
+---
+# Input
+```js
+// |>
+const status = %GetOptimizationStatus(fn);
+
+```
+
+# Output
+```js
+// |>
+const status = %GetOptimizationStatus(fn);
+
+```
+
+

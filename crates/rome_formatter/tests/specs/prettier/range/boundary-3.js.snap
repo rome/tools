@@ -1,0 +1,28 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: boundary-3.js
+
+---
+# Input
+```js
+a (
+);
+b (
+);<<<PRETTIER_RANGE_START>>>                 <<<PRETTIER_RANGE_END>>>c (
+); d(
+);
+
+```
+
+# Output
+```js
+a();
+b();
+<<<PRETTIER_RANGE_START>>>                 <<<PRETTIER_RANGE_END>>>c (
+)
+d();
+
+```
+
+

@@ -1,0 +1,22 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: comment.js
+
+---
+# Input
+```js
+<!--
+alert(1)
+-->
+```
+
+# Output
+```js
+<!--
+alert(1);
+-->
+
+```
+
+

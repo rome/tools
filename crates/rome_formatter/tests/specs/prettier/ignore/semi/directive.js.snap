@@ -1,0 +1,35 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: directive.js
+
+---
+# Input
+```js
+// prettier-ignore
+'use strict';
+[].forEach();
+
+function foo() {
+// prettier-ignore
+'use strict';
+[].forEach();
+}
+
+```
+
+# Output
+```js
+// prettier-ignore
+'use strict';
+[].forEach();
+
+function foo() {
+  // prettier-ignore
+  'use strict';
+  [].forEach();
+}
+
+```
+
+

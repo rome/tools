@@ -1,0 +1,23 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: same-local-and-imported.js
+
+---
+# Input
+```js
+import {a} from 'a';
+import {b as b} from 'b';
+import {c as /* comment */c} from 'c';
+
+```
+
+# Output
+```js
+import { a } from 'a';
+import { b as b } from 'b';
+import { c as /* comment */ c } from 'c';
+
+```
+
+

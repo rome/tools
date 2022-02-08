@@ -1,0 +1,19 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: function-declaration.js
+
+---
+# Input
+```js
+function ugly ( <<<PRETTIER_RANGE_START>>>{a=1,     b     =   2     }<<<PRETTIER_RANGE_END>>>      ) {}
+
+```
+
+# Output
+```js
+function ugly ( <<<PRETTIER_RANGE_START>>>{a=1,     b     =   2     }<<<PRETTIER_RANGE_END>>>      ) {}
+
+```
+
+

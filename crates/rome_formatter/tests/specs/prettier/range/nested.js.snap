@@ -1,0 +1,30 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: nested.js
+
+---
+# Input
+```js
+<<<PRETTIER_RANGE_START>>>try {
+  if (condition) {
+    body
+  }<<<PRETTIER_RANGE_END>>>
+}
+catch (err) {}
+
+```
+
+# Output
+```js
+<<<PRETTIER_RANGE_START>>>
+try {
+  if (condition) {
+    body
+  }<<<PRETTIER_RANGE_END>>>
+}
+catch (err) {}
+
+```
+
+

@@ -1,0 +1,34 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: large-dict.js
+
+---
+# Input
+```js
+function ugly() {
+  const dictWithSeveralEntries = {
+    key:          "value",
+<<<PRETTIER_RANGE_START>>>    anotherKey:   "another value",
+    firstNumber:  1,
+    secondNumber: 2<<<PRETTIER_RANGE_END>>>
+  };
+}
+
+```
+
+# Output
+```js
+function ugly() {
+  const dictWithSeveralEntries = {
+    key:          "value",
+<<<PRETTIER_RANGE_START>>>    anotherKey
+  :   "another value",
+    firstNumber:  1,
+    secondNumber: 2<<<PRETTIER_RANGE_END>>>
+  }
+}
+
+```
+
+

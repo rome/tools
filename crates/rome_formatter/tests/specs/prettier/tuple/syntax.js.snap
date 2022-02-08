@@ -1,0 +1,27 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: syntax.js
+
+---
+# Input
+```js
+#[]
+#[1, 2]
+#[1, 2, #{ a: 3 }]
+
+```
+
+# Output
+```js
+#[]
+#[1, 2]
+#[1, 2, #
+{
+  a: 3;
+}
+]
+
+```
+
+

@@ -1,0 +1,57 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: classes.js
+
+---
+# Input
+```js
+@deco class Foo {}
+
+@deco export class Bar {}
+
+@deco export default class Baz {}
+
+const foo = @deco class {
+  //
+};
+
+const bar =
+  @deco
+  class {
+    //
+  };
+
+```
+
+# Output
+```js
+@deco 
+class Foo {}
+
+
+
+@deco 
+export class Bar {}
+
+
+
+@deco 
+export default class Baz {}
+
+const foo =
+@deco 
+class {
+  //
+}
+
+const bar =
+
+  @deco
+class {
+    //
+  }
+
+```
+
+

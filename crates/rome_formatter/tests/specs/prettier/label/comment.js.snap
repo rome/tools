@@ -1,0 +1,33 @@
+---
+source: crates/rome_formatter/tests/prettier_tests.rs
+assertion_line: 57
+expression: comment.js
+
+---
+# Input
+```js
+{
+  inf_leave: // goto emulation
+  for (;;) {}
+}
+{
+  inf_leave:
+  // goto emulation
+  for (; ;) { }
+}
+
+```
+
+# Output
+```js
+{
+  inf_leave: for (;;) {} // goto emulation
+}
+{
+  inf_leave: // goto emulation
+  for (;;) {}
+}
+
+```
+
+
