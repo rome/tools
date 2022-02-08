@@ -11,6 +11,7 @@ impl ToFormatElement for TsObjectType {
             |open_token_trailing, close_token_leading| {
                 let list = self.members().to_format_element(formatter)?;
                 Ok(format_elements![
+                    soft_line_break_or_space(),
                     soft_block_indent(format_elements![
                         open_token_trailing,
                         list,

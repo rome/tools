@@ -10,7 +10,7 @@ impl ToFormatElement for TsTypeAliasStatement {
         let binding_identifier = self.binding_identifier().format(formatter)?;
         let type_parameters = self.type_parameters().format_or_empty(formatter)?;
         let equal_token = self.eq_token().format(formatter)?;
-        let r#type = self.ty().format(formatter)?;
+        let ty = self.ty().format(formatter)?;
         let semicolon = self.semicolon_token().format_or(formatter, || token(";"))?;
         Ok(format_elements![
             type_token,
@@ -19,7 +19,7 @@ impl ToFormatElement for TsTypeAliasStatement {
             type_parameters,
             equal_token,
             space_token(),
-            r#type,
+            ty,
             semicolon
         ])
     }
