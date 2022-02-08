@@ -6,9 +6,7 @@ layout: layouts/page.liquid
 
 # Credits
 
-## Team
-
-Rome has a loose governance model that values core contributor autonomy. See [Governance](https://github.com/rome/tools/blob/main/GOVERNANCE.md) for the full governance document.
+## Alumni (past core contributors)
 
 <ul class="team-list">
 	<li>
