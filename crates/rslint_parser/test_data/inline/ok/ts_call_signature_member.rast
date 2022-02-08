@@ -11,8 +11,8 @@ JsModule {
             eq_token: EQ@7..9 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@9..11 "{" [] [Whitespace(" ")],
-                members: TsObjectTypeMemberList [
-                    TsCallSignatureObjectTypeMember {
+                members: TsTypeMemberList [
+                    TsCallSignatureTypeMember {
                         type_parameters: missing (optional),
                         parameters: JsParameters {
                             l_paren_token: L_PAREN@11..12 "(" [] [],
@@ -41,8 +41,8 @@ JsModule {
             eq_token: EQ@32..34 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@34..36 "{" [] [Whitespace(" ")],
-                members: TsObjectTypeMemberList [
-                    TsCallSignatureObjectTypeMember {
+                members: TsTypeMemberList [
+                    TsCallSignatureTypeMember {
                         type_parameters: missing (optional),
                         parameters: JsParameters {
                             l_paren_token: L_PAREN@36..37 "(" [] [],
@@ -98,8 +98,8 @@ JsModule {
             eq_token: EQ@63..65 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@65..67 "{" [] [Whitespace(" ")],
-                members: TsObjectTypeMemberList [
-                    TsCallSignatureObjectTypeMember {
+                members: TsTypeMemberList [
+                    TsCallSignatureTypeMember {
                         type_parameters: TsTypeParameters {
                             l_angle_token: L_ANGLE@67..68 "<" [] [],
                             items: TsTypeParameterList [
@@ -189,8 +189,8 @@ JsModule {
       3: EQ@7..9 "=" [] [Whitespace(" ")]
       4: TS_OBJECT_TYPE@9..24
         0: L_CURLY@9..11 "{" [] [Whitespace(" ")]
-        1: TS_OBJECT_TYPE_MEMBER_LIST@11..23
-          0: TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER@11..23
+        1: TS_TYPE_MEMBER_LIST@11..23
+          0: TS_CALL_SIGNATURE_TYPE_MEMBER@11..23
             0: (empty)
             1: JS_PARAMETERS@11..13
               0: L_PAREN@11..12 "(" [] []
@@ -211,8 +211,8 @@ JsModule {
       3: EQ@32..34 "=" [] [Whitespace(" ")]
       4: TS_OBJECT_TYPE@34..55
         0: L_CURLY@34..36 "{" [] [Whitespace(" ")]
-        1: TS_OBJECT_TYPE_MEMBER_LIST@36..54
-          0: TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER@36..54
+        1: TS_TYPE_MEMBER_LIST@36..54
+          0: TS_CALL_SIGNATURE_TYPE_MEMBER@36..54
             0: (empty)
             1: JS_PARAMETERS@36..45
               0: L_PAREN@36..37 "(" [] []
@@ -253,8 +253,8 @@ JsModule {
       3: EQ@63..65 "=" [] [Whitespace(" ")]
       4: TS_OBJECT_TYPE@65..95
         0: L_CURLY@65..67 "{" [] [Whitespace(" ")]
-        1: TS_OBJECT_TYPE_MEMBER_LIST@67..94
-          0: TS_CALL_SIGNATURE_OBJECT_TYPE_MEMBER@67..94
+        1: TS_TYPE_MEMBER_LIST@67..94
+          0: TS_CALL_SIGNATURE_TYPE_MEMBER@67..94
             0: TS_TYPE_PARAMETERS@67..73
               0: L_ANGLE@67..68 "<" [] []
               1: TS_TYPE_PARAMETER_LIST@68..72

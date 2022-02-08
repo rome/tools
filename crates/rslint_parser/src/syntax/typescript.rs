@@ -1,6 +1,6 @@
 //! TypeScript specific functions.
 
-mod enums;
+mod statement;
 mod ts_parse_error;
 mod types;
 
@@ -14,7 +14,7 @@ use crate::syntax::js_parse_error::{expected_expression, expected_identifier, ex
 use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
-pub(crate) use self::enums::*;
+pub(crate) use self::statement::*;
 pub(crate) use self::types::*;
 
 fn parse_ts_identifier_binding(p: &mut Parser) -> ParsedSyntax {
@@ -92,6 +92,8 @@ pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMa
     }
     elems
 }
+
+// pub(crate) fn parse_ts_
 
 pub fn try_parse(p: &mut Parser, func: impl FnOnce(&mut Parser) -> ParsedSyntax) -> ParsedSyntax {
     let checkpoint = p.checkpoint();

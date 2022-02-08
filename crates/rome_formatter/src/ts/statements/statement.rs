@@ -64,6 +64,7 @@ impl ToFormatElement for JsAnyStatement {
             }
             JsAnyStatement::TsTypeAliasStatement(_) => todo!(),
             JsAnyStatement::TsEnumStatement(_) => todo!(),
+            JsAnyStatement::TsInterfaceStatement(_) => todo!(),
         }
     }
 }

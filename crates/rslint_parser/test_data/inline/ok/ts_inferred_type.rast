@@ -26,8 +26,8 @@ JsModule {
             eq_token: EQ@25..27 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@27..29 "{" [] [Whitespace(" ")],
-                members: TsObjectTypeMemberList [
-                    TsPropertySignatureObjectTypeMember {
+                members: TsTypeMemberList [
+                    TsPropertySignatureTypeMember {
                         readonly_token: missing (optional),
                         name: JsLiteralMemberName {
                             value: IDENT@29..30 "a" [] [],
@@ -44,7 +44,7 @@ JsModule {
                         },
                         separator_token: SEMICOLON@39..41 ";" [] [Whitespace(" ")],
                     },
-                    TsPropertySignatureObjectTypeMember {
+                    TsPropertySignatureTypeMember {
                         readonly_token: missing (optional),
                         name: JsLiteralMemberName {
                             value: IDENT@41..42 "b" [] [],
@@ -93,8 +93,8 @@ JsModule {
       3: EQ@25..27 "=" [] [Whitespace(" ")]
       4: TS_OBJECT_TYPE@27..52
         0: L_CURLY@27..29 "{" [] [Whitespace(" ")]
-        1: TS_OBJECT_TYPE_MEMBER_LIST@29..51
-          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@29..41
+        1: TS_TYPE_MEMBER_LIST@29..51
+          0: TS_PROPERTY_SIGNATURE_TYPE_MEMBER@29..41
             0: (empty)
             1: JS_LITERAL_MEMBER_NAME@29..30
               0: IDENT@29..30 "a" [] []
@@ -106,7 +106,7 @@ JsModule {
                 1: TS_TYPE_PARAMETER_NAME@38..39
                   0: IDENT@38..39 "U" [] []
             4: SEMICOLON@39..41 ";" [] [Whitespace(" ")]
-          1: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@41..51
+          1: TS_PROPERTY_SIGNATURE_TYPE_MEMBER@41..51
             0: (empty)
             1: JS_LITERAL_MEMBER_NAME@41..42
               0: IDENT@41..42 "b" [] []

@@ -22,7 +22,7 @@ use crate::syntax::typescript::{
     is_reserved_type_name, parse_ts_return_type_annotation, parse_ts_type_annotation,
     parse_ts_type_parameters, ts_heritage_clause,
 };
-use crate::syntax::util::is_at_contextual_keyword;
+use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
@@ -258,14 +258,14 @@ fn implements_clause(p: &mut Parser) -> ParsedSyntax {
     Present(implements_clause.complete(p, kind))
 }
 
-fn extends_clause(p: &mut Parser) -> ParsedSyntax {
-    if p.cur_src() != "extends" {
+pub(crate) fn extends_clause(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_contextual_keyword(p, "extends") {
         return Absent;
     }
 
     let mut is_valid = true;
     let m = p.start();
-    p.bump_any();
+    expect_contextual_keyword(p, "extends", T![extends]);
 
     let mut elems = ts_heritage_clause(p, true);
     if !elems.is_empty() {

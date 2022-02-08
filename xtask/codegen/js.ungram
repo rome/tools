@@ -100,9 +100,10 @@ JsAnyStatement =
 	| JsVariableStatement
 	| JsWhileStatement
 	| JsWithStatement
-	| TsEnumStatement
   | JsFunctionStatement
+	| TsEnumStatement
   | TsTypeAliasStatement
+  | TsInterfaceStatement
 
 
 JsBlockStatement =
@@ -589,9 +590,8 @@ JsAnyClass =
 
 TsImplementsClause =
 	'implements'
-	interfaces: TsTypeList
+	types: TsTypeList
 
-TsTypeList = (TsExprWithTypeArgs (',' TsExprWithTypeArgs)*)
 
 // class Test extends A {}
 //            ^^^^^^^^^
@@ -1636,22 +1636,36 @@ TsDefaultTypeClause =
 	type: TsType
 
 // { a: string }
-TsObjectType = '{' members: TsObjectTypeMemberList '}'
+TsObjectType = '{' members: TsTypeMemberList '}'
 
-TsObjectTypeMemberList = TsAnyObjectTypeMember*
+TsInterfaceStatement =
+	'interface'
+	extends_clause: JsExtendsClause?
+	id: TsIdentifierBinding
+	'{'
+	members: TsTypeMemberList
+	'}'
 
-TsAnyObjectTypeMember =
-	TsCallSignatureObjectTypeMember
-	| TsPropertySignatureObjectTypeMember
-	| TsConstructSignatureObjectTypeMember
-	| TsMethodSignatureObjectTypeMember
-	| TsGetterSignatureObjectTypeMember
-	| TsSetterSignatureObjectTypeMember
-	| TsIndexSignatureObjectTypeMember
+TsInterfaceExtendsClause =
+	'extends'
+	types: TsTypeList
+
+TsTypeList = (TsNameWithTypeArguments (',' TsNameWithTypeArguments)*)
+
+TsTypeMemberList = TsAnyTypeMember*
+
+TsAnyTypeMember =
+	TsCallSignatureTypeMember
+	| TsPropertySignatureTypeMember
+	| TsConstructSignatureTypeMember
+	| TsMethodSignatureTypeMember
+	| TsGetterSignatureTypeMember
+	| TsSetterSignatureTypeMember
+	| TsIndexSignatureTypeMember
 
 // { <A>(a: A): number }
 //   ^^^^^^^^^^^^^^^^^
-TsCallSignatureObjectTypeMember =
+TsCallSignatureTypeMember =
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
@@ -1659,7 +1673,7 @@ TsCallSignatureObjectTypeMember =
 
 // { a: string }
 //   ^^^^^^^^^
-TsPropertySignatureObjectTypeMember =
+TsPropertySignatureTypeMember =
 	'readonly'?
 	name: JsAnyObjectMemberName
 	optional_token: '?'?
@@ -1668,7 +1682,7 @@ TsPropertySignatureObjectTypeMember =
 
 // { new(): number }
 //   ^^^^^^^^^^^^^
-TsConstructSignatureObjectTypeMember =
+TsConstructSignatureTypeMember =
 	'new'
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
@@ -1677,7 +1691,7 @@ TsConstructSignatureObjectTypeMember =
 
 // { a?(): number }
 //   ^^^^^^^^^^^^
-TsMethodSignatureObjectTypeMember =
+TsMethodSignatureTypeMember =
 	name: JsAnyObjectMemberName
 	optional_token: '?'?
 	type_parameters: TsTypeParameters?
@@ -1687,7 +1701,7 @@ TsMethodSignatureObjectTypeMember =
 
 // { get a(): number }
 //   ^^^^^^^^^^^^^^^
-TsGetterSignatureObjectTypeMember =
+TsGetterSignatureTypeMember =
 	'get'
 	name: JsAnyObjectMemberName
 	'('
@@ -1697,7 +1711,7 @@ TsGetterSignatureObjectTypeMember =
 
 // { set a(value: number) }
 //   ^^^^^^^^^^^^^^^^^^^^
-TsSetterSignatureObjectTypeMember =
+TsSetterSignatureTypeMember =
 	'set'
 	name: JsAnyObjectMemberName
 	'('
@@ -1706,7 +1720,7 @@ TsSetterSignatureObjectTypeMember =
 	separator_token: (',' | ';')?
 
 //  { [a: string]: number }
-TsIndexSignatureObjectTypeMember =
+TsIndexSignatureTypeMember =
 	'readonly'?
 	'['
 	parameter: TsIndexSignatureParameter
@@ -1838,8 +1852,8 @@ TsNonNullAssertionExpression =
 	expression: JsAnyExpression
 	'!'
 
-TsExprWithTypeArgs =
-	item: TsAnyName
+TsNameWithTypeArguments =
+	name: TsAnyName
 	type_arguments: TsTypeArguments?
 
 TsAnyName =

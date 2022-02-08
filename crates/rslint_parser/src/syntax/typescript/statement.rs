@@ -1,10 +1,15 @@
 use crate::parser::RecoveryResult;
-use crate::syntax::binding::parse_binding;
-use crate::syntax::class::parse_initializer_clause;
+use crate::syntax::binding::{is_nth_at_identifier_binding, parse_binding};
+use crate::syntax::class::{extends_clause, parse_initializer_clause};
 use crate::syntax::expr::ExpressionContext;
 
 use super::ts_parse_error::expected_ts_enum_member;
-use crate::syntax::stmt::STMT_RECOVERY_SET;
+use crate::syntax::js_parse_error::{expected_identifier, expected_ts_type};
+use crate::syntax::stmt::{semi, STMT_RECOVERY_SET};
+use crate::syntax::typescript::{
+    parse_ts_identifier_binding, parse_ts_type, parse_ts_type_parameters, TypeMembers,
+};
+use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
 use crate::{JsSyntaxKind::*, *};
 
 fn parse_literal_as_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
@@ -182,4 +187,49 @@ pub(crate) fn parse_ts_enum_statement(p: &mut Parser) -> ParsedSyntax {
     // enum A {}
     res.err_if_not_ts(p, "`enums` can only be declared in TypeScript files");
     Present(res)
+}
+
+pub(crate) fn parse_ts_type_alias_statement(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_contextual_keyword(p, "type") {
+        return Absent;
+    }
+
+    let start = p.cur_tok().range().start;
+    let m = p.start();
+    expect_contextual_keyword(p, "type", T![type]);
+    parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
+    parse_ts_type_parameters(p).ok();
+    p.expect(T![=]);
+    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+
+    semi(p, start..p.cur_tok().range().end);
+
+    Present(m.complete(p, TS_TYPE_ALIAS_STATEMENT))
+}
+
+pub(crate) fn is_at_ts_interface_statement(p: &Parser) -> bool {
+    if !is_at_contextual_keyword(p, "interface") || p.has_linebreak_before_n(1) {
+        return false;
+    }
+
+    is_nth_at_identifier_binding(p, 1) || p.nth_at(1, T!['{'])
+}
+
+// test ts ts_interface
+// interface A {}
+// interface B { prop: string, method(): string, [index: number]: string, new(): B }
+pub(crate) fn parse_ts_interface_statement(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_ts_interface_statement(p) {
+        return Absent;
+    }
+
+    let m = p.start();
+    expect_contextual_keyword(p, "interface", T![interface]);
+    parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
+    extends_clause(p).ok();
+    p.expect(T!['{']);
+    TypeMembers.parse_list(p);
+    p.expect(T!['}']);
+
+    Present(m.complete(p, TS_INTERFACE_STATEMENT))
 }

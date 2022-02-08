@@ -228,8 +228,12 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
             }
         }
 
-        T![ident] if p.cur_src() == "type" && p.typescript() => parse_ts_type_alias(p),
-        // TODO: handle `<T>() => {};` with less of a hack
+        T![ident] if p.cur_src() == "type" && p.typescript() => parse_ts_type_alias_statement(p),
+        T![ident] if is_at_ts_interface_statement(p) => {
+            TypeScript.parse_exclusive_syntax(p, parse_ts_interface_statement, |p, interface| {
+                ts_only_syntax_error(p, "interface", interface.range(p).as_range())
+            })
+        }
         _ if is_at_identifier(p) && p.nth_at(1, T![:]) => parse_labeled_statement(p, context),
         _ if is_at_expression(p) => parse_expression_statement(p),
         _ => Absent,

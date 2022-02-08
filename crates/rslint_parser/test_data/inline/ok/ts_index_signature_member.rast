@@ -11,8 +11,8 @@ JsModule {
             eq_token: EQ@7..9 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@9..11 "{" [] [Whitespace(" ")],
-                members: TsObjectTypeMemberList [
-                    TsIndexSignatureObjectTypeMember {
+                members: TsTypeMemberList [
+                    TsIndexSignatureTypeMember {
                         readonly_token: missing (optional),
                         l_brack_token: L_BRACK@11..12 "[" [] [],
                         parameter: TsIndexSignatureParameter {
@@ -49,8 +49,8 @@ JsModule {
             eq_token: EQ@40..42 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@42..44 "{" [] [Whitespace(" ")],
-                members: TsObjectTypeMemberList [
-                    TsIndexSignatureObjectTypeMember {
+                members: TsTypeMemberList [
+                    TsIndexSignatureTypeMember {
                         readonly_token: READONLY_KW@44..53 "readonly" [] [Whitespace(" ")],
                         l_brack_token: L_BRACK@53..54 "[" [] [],
                         parameter: TsIndexSignatureParameter {
@@ -87,8 +87,8 @@ JsModule {
             eq_token: EQ@108..110 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@110..112 "{" [] [Whitespace(" ")],
-                members: TsObjectTypeMemberList [
-                    TsPropertySignatureObjectTypeMember {
+                members: TsTypeMemberList [
+                    TsPropertySignatureTypeMember {
                         readonly_token: missing (optional),
                         name: JsComputedMemberName {
                             l_brack_token: L_BRACK@112..113 "[" [] [],
@@ -122,8 +122,8 @@ JsModule {
             eq_token: EQ@133..135 "=" [] [Whitespace(" ")],
             ty: TsObjectType {
                 l_curly_token: L_CURLY@135..137 "{" [] [Whitespace(" ")],
-                members: TsObjectTypeMemberList [
-                    TsPropertySignatureObjectTypeMember {
+                members: TsTypeMemberList [
+                    TsPropertySignatureTypeMember {
                         readonly_token: READONLY_KW@137..146 "readonly" [] [Whitespace(" ")],
                         name: JsComputedMemberName {
                             l_brack_token: L_BRACK@146..147 "[" [] [],
@@ -164,8 +164,8 @@ JsModule {
       3: EQ@7..9 "=" [] [Whitespace(" ")]
       4: TS_OBJECT_TYPE@9..32
         0: L_CURLY@9..11 "{" [] [Whitespace(" ")]
-        1: TS_OBJECT_TYPE_MEMBER_LIST@11..31
-          0: TS_INDEX_SIGNATURE_OBJECT_TYPE_MEMBER@11..31
+        1: TS_TYPE_MEMBER_LIST@11..31
+          0: TS_INDEX_SIGNATURE_TYPE_MEMBER@11..31
             0: (empty)
             1: L_BRACK@11..12 "[" [] []
             2: TS_INDEX_SIGNATURE_PARAMETER@12..21
@@ -191,8 +191,8 @@ JsModule {
       3: EQ@40..42 "=" [] [Whitespace(" ")]
       4: TS_OBJECT_TYPE@42..74
         0: L_CURLY@42..44 "{" [] [Whitespace(" ")]
-        1: TS_OBJECT_TYPE_MEMBER_LIST@44..73
-          0: TS_INDEX_SIGNATURE_OBJECT_TYPE_MEMBER@44..73
+        1: TS_TYPE_MEMBER_LIST@44..73
+          0: TS_INDEX_SIGNATURE_TYPE_MEMBER@44..73
             0: READONLY_KW@44..53 "readonly" [] [Whitespace(" ")]
             1: L_BRACK@53..54 "[" [] []
             2: TS_INDEX_SIGNATURE_PARAMETER@54..63
@@ -218,8 +218,8 @@ JsModule {
       3: EQ@108..110 "=" [] [Whitespace(" ")]
       4: TS_OBJECT_TYPE@110..125
         0: L_CURLY@110..112 "{" [] [Whitespace(" ")]
-        1: TS_OBJECT_TYPE_MEMBER_LIST@112..124
-          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@112..124
+        1: TS_TYPE_MEMBER_LIST@112..124
+          0: TS_PROPERTY_SIGNATURE_TYPE_MEMBER@112..124
             0: (empty)
             1: JS_COMPUTED_MEMBER_NAME@112..115
               0: L_BRACK@112..113 "[" [] []
@@ -243,8 +243,8 @@ JsModule {
       3: EQ@133..135 "=" [] [Whitespace(" ")]
       4: TS_OBJECT_TYPE@135..159
         0: L_CURLY@135..137 "{" [] [Whitespace(" ")]
-        1: TS_OBJECT_TYPE_MEMBER_LIST@137..158
-          0: TS_PROPERTY_SIGNATURE_OBJECT_TYPE_MEMBER@137..158
+        1: TS_TYPE_MEMBER_LIST@137..158
+          0: TS_PROPERTY_SIGNATURE_TYPE_MEMBER@137..158
             0: READONLY_KW@137..146 "readonly" [] [Whitespace(" ")]
             1: JS_COMPUTED_MEMBER_NAME@146..149
               0: L_BRACK@146..147 "[" [] []
