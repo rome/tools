@@ -251,3 +251,27 @@ the cases you need to verify. If we needed to follow the previous example:
 5. then each object of the array will contain the matrix of options you'd want to test.
    In this case the test suite will run a **second test case** with `line_width` to 120 and `ident_style` with  4 spaces
 6. when the test suite is run, you will have two outputs in your snapshot: the default one and the custom one
+
+## VS Code Extension Development
+
+To build the VS Code extension from source, navigate to the `editors/vscode` directory and run:
+
+```bash
+npm install
+npm run build
+```
+
+This will create a `rome_lsp.vsix` which you can install into VS Code by running:
+
+```bash
+npm run install-extension
+```
+
+The Rome language server is the binary crate `rome_lsp` which can be built using `cargo build`.
+
+Use the `"rome.lspBin"` VS Code setting to set the path to the executable:
+```json
+	"rome.lspBin": "/path/to/rome/target/debug/rome_lsp"
+```
+
+When performing any benchmarks for the language server, be sure to use a release build.
