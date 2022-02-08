@@ -4229,7 +4229,7 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_PROPERTY_CLASS_MEMBER => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<9usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
                     if element.kind() == T![declare] {
@@ -4240,27 +4240,6 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if let Some(element) = &current_element {
                     if matches!(element.kind(), T![private] | T![protected] | T![public]) {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T![static] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T![readonly] {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == T![abstract] {
                         slots.mark_present();
                         current_element = elements.next();
                     }

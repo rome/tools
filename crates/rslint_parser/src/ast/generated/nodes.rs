@@ -2505,17 +2505,14 @@ impl JsPropertyClassMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn access_modifier(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
-    pub fn abstract_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
     pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
-        support::required_node(&self.syntax, 5usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn property_annotation(&self) -> Option<TsAnyPropertyAnnotation> {
-        support::node(&self.syntax, 6usize)
+        support::node(&self.syntax, 3usize)
     }
-    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 7usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 8usize) }
+    pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 4usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsPropertyObjectMember {
@@ -8850,18 +8847,6 @@ impl std::fmt::Debug for JsPropertyClassMember {
             .field(
                 "access_modifier",
                 &support::DebugOptionalElement(self.access_modifier()),
-            )
-            .field(
-                "static_token",
-                &support::DebugOptionalElement(self.static_token()),
-            )
-            .field(
-                "readonly_token",
-                &support::DebugOptionalElement(self.readonly_token()),
-            )
-            .field(
-                "abstract_token",
-                &support::DebugOptionalElement(self.abstract_token()),
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
