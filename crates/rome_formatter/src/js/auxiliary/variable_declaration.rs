@@ -1,8 +1,6 @@
 use crate::formatter_traits::FormatTokenAndNode;
-
-use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
-
 use crate::utils::format_initializer_clause;
+use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::JsVariableDeclaration;
 
 impl ToFormatElement for JsVariableDeclaration {
