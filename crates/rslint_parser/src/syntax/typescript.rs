@@ -4,12 +4,10 @@ mod statement;
 mod ts_parse_error;
 mod types;
 
-use super::expr::parse_lhs_expr;
-use crate::parser::ParserProgress;
 use crate::syntax::expr::{parse_identifier, parse_unary_expr, ExpressionContext};
-use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_expression, expected_identifier, expected_ts_type};
 
+use crate::syntax::util::{expect_contextual_keyword, is_at_contextual_keyword};
 use crate::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
@@ -54,42 +52,39 @@ pub(crate) fn parse_ts_type_assertion_expression(
     parse_unary_expr(p, context).or_add_diagnostic(p, expected_expression);
     Present(m.complete(p, TS_TYPE_ASSERTION_EXPRESSION))
 }
-
-// FIXME: ts allows trailing commas but this doesnt, we need to figure out a way
-// to peek at the next token and see if its the end of the heritage clause
-pub(crate) fn ts_heritage_clause(p: &mut Parser, exprs: bool) -> Vec<CompletedMarker> {
-    let mut elems = Vec::with_capacity(1);
-    let m = p.start();
-    if exprs {
-        parse_lhs_expr(p, ExpressionContext::default())
-            .or_add_diagnostic(p, js_parse_error::expected_expression);
-    } else {
-        parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
+pub(crate) fn parse_ts_implements_clause(p: &mut Parser) -> ParsedSyntax {
+    if !is_at_contextual_keyword(p, "implements") {
+        return Absent;
     }
 
-    parse_ts_type_arguments(p).ok();
+    // test_err class_implements
+    // class B implements C {}
 
-    // it doesnt matter if we complete as ts_expr_with_type_args even if its an lhs expr
-    // because exprs: true will only be used with `class extends foo, bar`, in which case
-    // the first expr will be "unwrapped" to go to the class' node and the rest are errors
-    elems.push(m.complete(p, TS_NAME_WITH_TYPE_ARGUMENTS));
+    let m = p.start();
+    expect_contextual_keyword(p, "implements", T![implements]);
+    parse_ts_type_list(p).or_add_diagnostic(p, expected_identifier);
 
-    let mut progress = ParserProgress::default();
-    while p.eat(T![,]) {
-        progress.assert_progressing(p);
-        let m = p.start();
-        if exprs {
-            parse_lhs_expr(p, ExpressionContext::default())
-                .or_add_diagnostic(p, js_parse_error::expected_expression);
-        } else {
-            parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
+    Present(m.complete(p, TS_IMPLEMENTS_CLAUSE))
+}
+
+fn parse_ts_type_list(p: &mut Parser) -> ParsedSyntax {
+    parse_ts_name_with_type_arguments(p).map(|element| {
+        let list = element.precede(p);
+
+        while p.eat(T![,]) {
+            parse_ts_name_with_type_arguments(p).or_add_diagnostic(p, expected_identifier);
         }
 
-        parse_ts_type_arguments(p).ok();
+        list.complete(p, TS_TYPE_LIST)
+    })
+}
 
-        elems.push(m.complete(p, TS_NAME_WITH_TYPE_ARGUMENTS));
-    }
-    elems
+fn parse_ts_name_with_type_arguments(p: &mut Parser) -> ParsedSyntax {
+    parse_ts_name(p).map(|name| {
+        let m = name.precede(p);
+        parse_ts_type_arguments(p).ok();
+        m.complete(p, TS_NAME_WITH_TYPE_ARGUMENTS)
+    })
 }
 
 pub(crate) fn try_parse(

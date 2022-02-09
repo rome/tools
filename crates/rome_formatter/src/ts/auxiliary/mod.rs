@@ -10,7 +10,6 @@ mod enum_member;
 mod getter_signature_type_member;
 mod implements_clause;
 mod index_signature_type_member;
-mod interface_extends_clause;
 mod mapped_type_as_clause;
 mod mapped_type_optional_modifier_clause;
 mod mapped_type_readonly_modifier_clause;

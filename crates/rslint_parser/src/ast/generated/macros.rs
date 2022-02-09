@@ -779,6 +779,10 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                     let $pattern = unsafe { $crate::ast::TsEnumStatement::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_EXTENDS_CLAUSE => {
+                    let $pattern = unsafe { $crate::ast::TsExtendsClause::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_EXTERNAL_MODULE_REF => {
                     let $pattern = unsafe { $crate::ast::TsExternalModuleRef::new_unchecked(node) };
                     $body
@@ -829,11 +833,6 @@ $crate :: map_syntax_node ! ($node , $pattern => $body , _ => unreachable ! ())
                 }
                 $crate::JsSyntaxKind::TS_INFER_TYPE => {
                     let $pattern = unsafe { $crate::ast::TsInferType::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::TS_INTERFACE_EXTENDS_CLAUSE => {
-                    let $pattern =
-                        unsafe { $crate::ast::TsInterfaceExtendsClause::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_INTERFACE_STATEMENT => {

@@ -23,6 +23,7 @@ JsModule {
                         value_token: IDENT@23..27 "bar" [] [Whitespace(" ")],
                     },
                 },
+                type_arguments: missing (optional),
             },
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@27..28 "{" [] [],
@@ -69,6 +70,7 @@ JsModule {
                     members: JsObjectMemberList [],
                     r_curly_token: R_CURLY@66..67 "}" [] [],
                 },
+                type_arguments: missing (optional),
             },
             implements_clause: missing (optional),
             l_curly_token: missing (required),
@@ -101,6 +103,7 @@ JsModule {
         1: JS_IDENTIFIER_EXPRESSION@23..27
           0: JS_REFERENCE_IDENTIFIER@23..27
             0: IDENT@23..27 "bar" [] [Whitespace(" ")]
+        2: (empty)
       4: (empty)
       5: L_CURLY@27..28 "{" [] []
       6: JS_CLASS_MEMBER_LIST@28..28
@@ -139,6 +142,7 @@ JsModule {
           0: L_CURLY@65..66 "{" [] []
           1: JS_OBJECT_MEMBER_LIST@66..66
           2: R_CURLY@66..67 "}" [] []
+        2: (empty)
       4: (empty)
       5: (empty)
       6: JS_CLASS_MEMBER_LIST@67..67

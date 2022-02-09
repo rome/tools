@@ -588,18 +588,16 @@ JsAnyClass =
 	| JsExportClassClause
 	| JsExportDefaultClassClause
 
-
-TsImplementsClause =
-	'implements'
-	types: TsTypeList
-
-
 // class Test extends A {}
 //            ^^^^^^^^^
 JsExtendsClause =
 	'extends'
 	super_class: JsAnyExpression
 	type_arguments: TsTypeArguments?
+
+TsImplementsClause =
+	'implements'
+	types: TsTypeList
 
 // class Test { #test; }
 //              ^^^^^
@@ -1660,13 +1658,14 @@ TsObjectType = '{' members: TsTypeMemberList '}'
 
 TsInterfaceStatement =
 	'interface'
-	extends_clause: JsExtendsClause?
 	id: TsIdentifierBinding
+	type_parameters: TsTypeParameters?
+	extends_clause: TsExtendsClause?
 	'{'
 	members: TsTypeMemberList
 	'}'
 
-TsInterfaceExtendsClause =
+TsExtendsClause =
 	'extends'
 	types: TsTypeList
 

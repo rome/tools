@@ -3,6 +3,7 @@
 mod any;
 mod auxiliary;
 mod bindings;
+mod classes;
 mod expressions;
 mod lists;
 mod module;

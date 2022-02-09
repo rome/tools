@@ -1,6 +1,6 @@
 use crate::parser::RecoveryResult;
 use crate::syntax::binding::{is_nth_at_identifier_binding, parse_binding};
-use crate::syntax::class::{extends_clause, parse_initializer_clause};
+use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::ExpressionContext;
 
 use super::ts_parse_error::expected_ts_enum_member;
@@ -11,8 +11,8 @@ use crate::syntax::js_parse_error::{
 };
 use crate::syntax::stmt::{semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::{
-    parse_ts_identifier_binding, parse_ts_return_type_annotation, parse_ts_type,
-    parse_ts_type_parameters, TypeMembers,
+    parse_ts_identifier_binding, parse_ts_implements_clause, parse_ts_return_type_annotation,
+    parse_ts_type, parse_ts_type_list, parse_ts_type_parameters, TypeMembers,
 };
 use crate::syntax::util::{
     expect_contextual_keyword, is_at_contextual_keyword, is_nth_at_contextual_keyword,
@@ -323,10 +323,60 @@ pub(crate) fn parse_ts_interface_statement(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     expect_contextual_keyword(p, "interface", T![interface]);
     parse_ts_identifier_binding(p).or_add_diagnostic(p, expected_identifier);
-    extends_clause(p).ok();
+    parse_ts_type_parameters(p).ok();
+    parse_interface_heritage_clause(p);
     p.expect(T!['{']);
     TypeMembers.parse_list(p);
     p.expect(T!['}']);
 
     Present(m.complete(p, TS_INTERFACE_STATEMENT))
+}
+
+// test_err ts ts_interface_heritage_clause_error
+// interface A {}
+// interface B implements A {}
+// interface C extends A extends B {}
+fn parse_interface_heritage_clause(p: &mut Parser) {
+    let mut first_extends: Option<CompletedMarker> = None;
+    loop {
+        if p.at(T![extends]) {
+            let extends = parse_ts_extends_clause(p).expect(
+                "expected an extends clause because parser is positioned at the extends keyword",
+            );
+
+            if let Some(first_extends) = first_extends.as_ref() {
+                p.error(
+                    p.err_builder("'extends' clause already seen.")
+                        .primary(extends.range(p), "")
+                        .secondary(first_extends.range(p), "first 'extends' clause"),
+                )
+            } else {
+                first_extends = Some(extends);
+            }
+        } else if is_at_contextual_keyword(p, "implements") {
+            let implements =
+                parse_ts_implements_clause(p).expect("positioned at the implements keyword");
+            p.error(
+                p.err_builder("Interface declaration cannot have 'implements' clause.")
+                    .primary(implements.range(p), ""),
+            );
+        } else {
+            break;
+        }
+    }
+}
+
+// test ts ts_interface_extends_clause
+// interface A<Prop> { prop: Prop }
+// interface B extends A<string> {}
+// interface C extends A<number>, B {}
+fn parse_ts_extends_clause(p: &mut Parser) -> ParsedSyntax {
+    if !p.at(T![extends]) {
+        return Absent;
+    }
+
+    let m = p.start();
+    p.bump(T![extends]);
+    parse_ts_type_list(p).or_add_diagnostic(p, expected_identifier);
+    Present(m.complete(p, TS_EXTENDS_CLAUSE))
 }

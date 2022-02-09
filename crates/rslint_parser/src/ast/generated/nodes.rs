@@ -3599,6 +3599,23 @@ impl TsEnumStatement {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsExtendsClause {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsExtendsClause {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn types(&self) -> TsTypeList { support::list(&self.syntax, 1usize) }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExternalModuleRef {
     pub(crate) syntax: SyntaxNode,
 }
@@ -3876,23 +3893,6 @@ impl TsInferType {
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsInterfaceExtendsClause {
-    pub(crate) syntax: SyntaxNode,
-}
-impl TsInterfaceExtendsClause {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
-    }
-    pub fn types(&self) -> TsTypeList { support::list(&self.syntax, 1usize) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsInterfaceStatement {
     pub(crate) syntax: SyntaxNode,
 }
@@ -3907,16 +3907,19 @@ impl TsInterfaceStatement {
     pub fn interface_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn extends_clause(&self) -> Option<JsExtendsClause> { support::node(&self.syntax, 1usize) }
     pub fn id(&self) -> SyntaxResult<TsIdentifierBinding> {
-        support::required_node(&self.syntax, 2usize)
+        support::required_node(&self.syntax, 1usize)
     }
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
+        support::node(&self.syntax, 2usize)
+    }
+    pub fn extends_clause(&self) -> Option<TsExtendsClause> { support::node(&self.syntax, 3usize) }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 3usize)
+        support::required_token(&self.syntax, 4usize)
     }
-    pub fn members(&self) -> TsTypeMemberList { support::list(&self.syntax, 4usize) }
+    pub fn members(&self) -> TsTypeMemberList { support::list(&self.syntax, 5usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 5usize)
+        support::required_token(&self.syntax, 6usize)
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -10591,6 +10594,34 @@ impl From<TsEnumStatement> for SyntaxNode {
 impl From<TsEnumStatement> for SyntaxElement {
     fn from(n: TsEnumStatement) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsExtendsClause {
+    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXTENDS_CLAUSE }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for TsExtendsClause {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsExtendsClause")
+            .field(
+                "extends_token",
+                &support::DebugSyntaxResult(self.extends_token()),
+            )
+            .field("types", &self.types())
+            .finish()
+    }
+}
+impl From<TsExtendsClause> for SyntaxNode {
+    fn from(n: TsExtendsClause) -> SyntaxNode { n.syntax }
+}
+impl From<TsExtendsClause> for SyntaxElement {
+    fn from(n: TsExtendsClause) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsExternalModuleRef {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_EXTERNAL_MODULE_REF }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -11011,34 +11042,6 @@ impl From<TsInferType> for SyntaxNode {
 impl From<TsInferType> for SyntaxElement {
     fn from(n: TsInferType) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsInterfaceExtendsClause {
-    fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INTERFACE_EXTENDS_CLAUSE }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsInterfaceExtendsClause {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsInterfaceExtendsClause")
-            .field(
-                "extends_token",
-                &support::DebugSyntaxResult(self.extends_token()),
-            )
-            .field("types", &self.types())
-            .finish()
-    }
-}
-impl From<TsInterfaceExtendsClause> for SyntaxNode {
-    fn from(n: TsInterfaceExtendsClause) -> SyntaxNode { n.syntax }
-}
-impl From<TsInterfaceExtendsClause> for SyntaxElement {
-    fn from(n: TsInterfaceExtendsClause) -> SyntaxElement { n.syntax.into() }
-}
 impl AstNode for TsInterfaceStatement {
     fn can_cast(kind: JsSyntaxKind) -> bool { kind == TS_INTERFACE_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -11057,11 +11060,15 @@ impl std::fmt::Debug for TsInterfaceStatement {
                 "interface_token",
                 &support::DebugSyntaxResult(self.interface_token()),
             )
+            .field("id", &support::DebugSyntaxResult(self.id()))
+            .field(
+                "type_parameters",
+                &support::DebugOptionalElement(self.type_parameters()),
+            )
             .field(
                 "extends_clause",
                 &support::DebugOptionalElement(self.extends_clause()),
             )
-            .field("id", &support::DebugSyntaxResult(self.id()))
             .field(
                 "l_curly_token",
                 &support::DebugSyntaxResult(self.l_curly_token()),
@@ -18036,6 +18043,11 @@ impl std::fmt::Display for TsEnumStatement {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for TsExtendsClause {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for TsExternalModuleRef {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -18092,11 +18104,6 @@ impl std::fmt::Display for TsIndexedAccessType {
     }
 }
 impl std::fmt::Display for TsInferType {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for TsInterfaceExtendsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -20721,6 +20728,9 @@ impl Debug for DebugSyntaxElement {
                 TS_ENUM_STATEMENT => {
                     std::fmt::Debug::fmt(&TsEnumStatement::cast(node.clone()).unwrap(), f)
                 }
+                TS_EXTENDS_CLAUSE => {
+                    std::fmt::Debug::fmt(&TsExtendsClause::cast(node.clone()).unwrap(), f)
+                }
                 TS_EXTERNAL_MODULE_REF => {
                     std::fmt::Debug::fmt(&TsExternalModuleRef::cast(node.clone()).unwrap(), f)
                 }
@@ -20757,9 +20767,6 @@ impl Debug for DebugSyntaxElement {
                     std::fmt::Debug::fmt(&TsIndexedAccessType::cast(node.clone()).unwrap(), f)
                 }
                 TS_INFER_TYPE => std::fmt::Debug::fmt(&TsInferType::cast(node.clone()).unwrap(), f),
-                TS_INTERFACE_EXTENDS_CLAUSE => {
-                    std::fmt::Debug::fmt(&TsInterfaceExtendsClause::cast(node.clone()).unwrap(), f)
-                }
                 TS_INTERFACE_STATEMENT => {
                     std::fmt::Debug::fmt(&TsInterfaceStatement::cast(node.clone()).unwrap(), f)
                 }

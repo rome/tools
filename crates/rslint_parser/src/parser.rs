@@ -242,6 +242,7 @@ impl<'t> Parser<'t> {
     }
 
     /// Make a new error builder with `error` severity
+    #[must_use]
     pub fn err_builder(&self, message: &str) -> Diagnostic {
         Diagnostic::error(self.file_id, "SyntaxError", message)
     }
