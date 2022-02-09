@@ -57,6 +57,7 @@ mod intersperse;
 mod js;
 mod printer;
 mod ts;
+mod utils;
 
 pub use formatter::Formatter;
 use rome_rowan::TextRange;
