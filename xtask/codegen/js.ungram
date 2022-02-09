@@ -100,7 +100,7 @@ JsAnyStatement =
 	| JsVariableStatement
 	| JsWhileStatement
 	| JsWithStatement
-  | JsFunctionStatement
+	| JsFunctionStatement
 	| TsEnumStatement
   | TsTypeAliasStatement
   | TsInterfaceStatement

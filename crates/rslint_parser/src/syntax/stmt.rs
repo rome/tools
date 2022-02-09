@@ -21,6 +21,7 @@ use crate::syntax::function::{is_at_async_function, parse_function_statement, Li
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{expected_binding, expected_statement, ts_only_syntax_error};
 use crate::syntax::module::{parse_export, parse_import};
+use crate::syntax::util::is_at_contextual_keyword;
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
@@ -203,7 +204,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![ident] if is_at_async_function(p, LineBreak::DoCheck) => {
             parse_function_statement(p, context)
         }
-        T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
+        T![ident] if is_at_contextual_keyword(p, "let") && FOLLOWS_LET.contains(p.nth(1)) => {
             // test_err let_newline_in_async_function
             // async function f() {
             //   let
@@ -228,22 +229,30 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
             }
         }
 
-        T![ident] if p.cur_src() == "type" && p.typescript() => parse_ts_type_alias_statement(p),
+        T![ident] if is_at_contextual_keyword(p, "type") && p.typescript() => {
+            parse_ts_type_alias_statement(p)
+        }
         T![ident] if is_at_ts_interface_statement(p) => {
             TypeScript.parse_exclusive_syntax(p, parse_ts_interface_statement, |p, interface| {
                 ts_only_syntax_error(p, "interface", interface.range(p).as_range())
             })
         }
-        _ if is_at_identifier(p) && p.nth_at(1, T![:]) => parse_labeled_statement(p, context),
-        _ if is_at_ts_declare_statement(p) => {
+        T![ident] if is_at_ts_declare_statement(p) => {
             let declare_range = p.cur_tok().range();
             TypeScript.parse_exclusive_syntax(p, parse_ts_declare_statement, |p, _| {
                 p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
                     .primary(declare_range, "")
             })
         }
-        _ if is_at_expression(p) => parse_expression_statement(p),
-        _ => Absent,
+        _ => {
+            if is_at_identifier(p) && p.nth_at(1, T![:]) {
+                parse_labeled_statement(p, context)
+            } else if is_at_expression(p) {
+                parse_expression_statement(p)
+            } else {
+                Absent
+            }
+        }
     }
 }
 
