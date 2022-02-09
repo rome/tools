@@ -125,14 +125,58 @@ JsModule {
             },
             semicolon_token: SEMICOLON@65..66 ";" [] [],
         },
+        JsVariableStatement {
+            declarations: JsVariableDeclarations {
+                kind: LET_KW@66..71 "let" [Newline("\n")] [Whitespace(" ")],
+                items: JsVariableDeclarationList [
+                    JsVariableDeclaration {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@71..73 "e" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@73..75 "=" [] [Whitespace(" ")],
+                            expression: JsTemplate {
+                                tag: missing (optional),
+                                type_arguments: missing (optional),
+                                l_tick_token: BACKTICK@75..76 "`" [] [],
+                                elements: JsTemplateElementList [
+                                    JsTemplateElement {
+                                        dollar_curly_token: DOLLAR_CURLY@76..78 "${" [] [],
+                                        expression: JsObjectExpression {
+                                            l_curly_token: L_CURLY@78..80 "{" [] [Whitespace(" ")],
+                                            members: JsObjectMemberList [
+                                                JsPropertyObjectMember {
+                                                    name: JsLiteralMemberName {
+                                                        value: IDENT@80..81 "a" [] [],
+                                                    },
+                                                    colon_token: COLON@81..83 ":" [] [Whitespace(" ")],
+                                                    value: JsStringLiteralExpression {
+                                                        value_token: JS_STRING_LITERAL@83..92 "\"string\"" [] [Whitespace(" ")],
+                                                    },
+                                                },
+                                            ],
+                                            r_curly_token: R_CURLY@92..93 "}" [] [],
+                                        },
+                                        r_curly_token: R_CURLY@93..94 "}" [] [],
+                                    },
+                                ],
+                                r_tick_token: BACKTICK@94..95 "`" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@95..96 ";" [] [],
+        },
     ],
-    eof_token: EOF@66..67 "" [Newline("\n")] [],
+    eof_token: EOF@96..97 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..67
+0: JS_MODULE@0..97
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..66
+  2: JS_MODULE_ITEM_LIST@0..96
     0: JS_VARIABLE_STATEMENT@0..21
       0: JS_VARIABLE_DECLARATIONS@0..20
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -217,4 +261,34 @@ JsModule {
                     0: TEMPLATE_CHUNK@61..64 "foo" [] []
                 4: BACKTICK@64..65 "`" [] []
       1: SEMICOLON@65..66 ";" [] []
-  3: EOF@66..67 "" [Newline("\n")] []
+    4: JS_VARIABLE_STATEMENT@66..96
+      0: JS_VARIABLE_DECLARATIONS@66..95
+        0: LET_KW@66..71 "let" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATION_LIST@71..95
+          0: JS_VARIABLE_DECLARATION@71..95
+            0: JS_IDENTIFIER_BINDING@71..73
+              0: IDENT@71..73 "e" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@73..95
+              0: EQ@73..75 "=" [] [Whitespace(" ")]
+              1: JS_TEMPLATE@75..95
+                0: (empty)
+                1: (empty)
+                2: BACKTICK@75..76 "`" [] []
+                3: JS_TEMPLATE_ELEMENT_LIST@76..94
+                  0: JS_TEMPLATE_ELEMENT@76..94
+                    0: DOLLAR_CURLY@76..78 "${" [] []
+                    1: JS_OBJECT_EXPRESSION@78..93
+                      0: L_CURLY@78..80 "{" [] [Whitespace(" ")]
+                      1: JS_OBJECT_MEMBER_LIST@80..92
+                        0: JS_PROPERTY_OBJECT_MEMBER@80..92
+                          0: JS_LITERAL_MEMBER_NAME@80..81
+                            0: IDENT@80..81 "a" [] []
+                          1: COLON@81..83 ":" [] [Whitespace(" ")]
+                          2: JS_STRING_LITERAL_EXPRESSION@83..92
+                            0: JS_STRING_LITERAL@83..92 "\"string\"" [] [Whitespace(" ")]
+                      2: R_CURLY@92..93 "}" [] []
+                    2: R_CURLY@93..94 "}" [] []
+                4: BACKTICK@94..95 "`" [] []
+      1: SEMICOLON@95..96 ";" [] []
+  3: EOF@96..97 "" [Newline("\n")] []

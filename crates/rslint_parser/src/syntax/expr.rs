@@ -1527,10 +1527,12 @@ pub(crate) fn is_nth_at_identifier_or_keyword(p: &Parser, n: usize) -> bool {
 // let b = ``;
 // let c = `${foo}`;
 // let d = `foo`;
+// let e = `${{ a: "string" }}`;
 
 // test_err template_literal
 // let a = `foo ${}`
-pub fn parse_template_literal(
+// let b = `${a a}`
+fn parse_template_literal(
     p: &mut Parser,
     marker: Marker,
     in_optional_chain: bool,
@@ -1539,29 +1541,13 @@ pub fn parse_template_literal(
 
     p.expect(BACKTICK);
     let elements_list = p.start();
-
-    while !p.at(EOF) && !p.at(BACKTICK) {
-        match p.cur() {
-            TEMPLATE_CHUNK => {
-                let m = p.start();
-                p.bump_any();
-                m.complete(p, JS_TEMPLATE_CHUNK_ELEMENT);
-            },
-            DOLLAR_CURLY => {
-                let e = p.start();
-                p.bump_any();
-				parse_expression(p, ExpressionContext::default()).or_add_diagnostic(p, js_parse_error::expected_expression);
-				p.expect(T!['}']);
-                e.complete(p, JS_TEMPLATE_ELEMENT);
-            }
-            ERROR_TOKEN => {
-                let err = p.err_builder("Invalid template literal")
-                .primary(p.cur_tok().range(), "");
-                p.err_and_bump(err, JsSyntaxKind::JS_UNKNOWN);
-            }
-            t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
-        }
-    }
+    parse_template_elements(p, JS_TEMPLATE_CHUNK_ELEMENT, JS_TEMPLATE_ELEMENT, |p| {
+        parse_expression(
+            p,
+            ExpressionContext::default().and_object_expression_allowed(true),
+        )
+        .or_add_diagnostic(p, js_parse_error::expected_expression)
+    });
 
     elements_list.complete(p, JS_TEMPLATE_ELEMENT_LIST);
 
@@ -1585,6 +1571,46 @@ pub fn parse_template_literal(
     }
 
     completed
+}
+
+#[inline]
+pub(crate) fn parse_template_elements<P>(
+    p: &mut Parser,
+    chunk_kind: JsSyntaxKind,
+    element_kind: JsSyntaxKind,
+    parse_expression: P,
+) where
+    P: Fn(&mut Parser) -> Option<CompletedMarker>,
+{
+    while !p.at(EOF) && !p.at(BACKTICK) {
+        match p.cur() {
+            TEMPLATE_CHUNK => {
+                let m = p.start();
+                p.bump_any();
+                m.complete(p, chunk_kind);
+            },
+            DOLLAR_CURLY => {
+                let e = p.start();
+                p.bump_any();
+
+                parse_expression(p);
+
+                if !p.expect(T!['}']) {
+                    // Seems there's more. For example a `${a a}`. We must eat all tokens away to avoid a panic because of an unexpected token
+                    if ParseRecovery::new(JS_UNKNOWN, token_set![T!['}'], TEMPLATE_CHUNK, DOLLAR_CURLY, ERROR_TOKEN, BACKTICK]).recover(p).is_ok() {
+                        p.eat(T!['}']); // eat the closing paren if we successfully recovered
+                    }
+                }
+                e.complete(p, element_kind);
+            }
+            ERROR_TOKEN => {
+                let err = p.err_builder("Invalid template literal")
+                    .primary(p.cur_tok().range(), "");
+                p.err_and_bump(err, JsSyntaxKind::JS_UNKNOWN);
+            }
+            t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
+        }
+    }
 }
 
 struct ArrayElementsList;
