@@ -60,7 +60,7 @@ JsModule {
             items: [
                 CLASS_KW@63..70 "class" [Newline("\n")] [Whitespace(" ")],
                 JsIdentifierBinding {
-                    name_token: IDENT@70..72 "B" [] [Whitespace(" ")],
+                    name_token: IDENT@70..72 "C" [] [Whitespace(" ")],
                 },
                 TsImplementsClause {
                     implements_token: IMPLEMENTS_KW@72..83 "implements" [] [Whitespace(" ")],
@@ -89,14 +89,45 @@ JsModule {
                 R_CURLY@103..104 "}" [] [],
             ],
         },
+        JsClassStatement {
+            class_token: CLASS_KW@104..111 "class" [Newline("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@111..113 "D" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            implements_clause: TsImplementsClause {
+                implements_token: IMPLEMENTS_KW@113..124 "implements" [] [Whitespace(" ")],
+                types: TsTypeList [],
+            },
+            l_curly_token: L_CURLY@124..125 "{" [] [],
+            members: JsClassMemberList [],
+            r_curly_token: R_CURLY@125..126 "}" [] [],
+        },
+        JsClassStatement {
+            class_token: CLASS_KW@126..133 "class" [Newline("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@133..135 "E" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: JsExtendsClause {
+                extends_token: EXTENDS_KW@135..143 "extends" [] [Whitespace(" ")],
+                super_class: missing (required),
+                type_arguments: missing (optional),
+            },
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@143..144 "{" [] [],
+            members: JsClassMemberList [],
+            r_curly_token: R_CURLY@144..145 "}" [] [],
+        },
     ],
-    eof_token: EOF@104..105 "" [Newline("\n")] [],
+    eof_token: EOF@145..146 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..105
+0: JS_MODULE@0..146
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..104
+  2: JS_MODULE_ITEM_LIST@0..145
     0: JS_CLASS_STATEMENT@0..10
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
@@ -139,7 +170,7 @@ JsModule {
     3: JS_UNKNOWN_STATEMENT@63..104
       0: CLASS_KW@63..70 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@70..72
-        0: IDENT@70..72 "B" [] [Whitespace(" ")]
+        0: IDENT@70..72 "C" [] [Whitespace(" ")]
       2: TS_IMPLEMENTS_CLAUSE@72..87
         0: IMPLEMENTS_KW@72..83 "implements" [] [Whitespace(" ")]
         1: TS_TYPE_LIST@83..87
@@ -157,7 +188,32 @@ JsModule {
       4: L_CURLY@102..103 "{" [] []
       5: JS_CLASS_MEMBER_LIST@103..103
       6: R_CURLY@103..104 "}" [] []
-  3: EOF@104..105 "" [Newline("\n")] []
+    4: JS_CLASS_STATEMENT@104..126
+      0: CLASS_KW@104..111 "class" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@111..113
+        0: IDENT@111..113 "D" [] [Whitespace(" ")]
+      2: (empty)
+      3: (empty)
+      4: TS_IMPLEMENTS_CLAUSE@113..124
+        0: IMPLEMENTS_KW@113..124 "implements" [] [Whitespace(" ")]
+        1: TS_TYPE_LIST@124..124
+      5: L_CURLY@124..125 "{" [] []
+      6: JS_CLASS_MEMBER_LIST@125..125
+      7: R_CURLY@125..126 "}" [] []
+    5: JS_CLASS_STATEMENT@126..145
+      0: CLASS_KW@126..133 "class" [Newline("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@133..135
+        0: IDENT@133..135 "E" [] [Whitespace(" ")]
+      2: (empty)
+      3: JS_EXTENDS_CLAUSE@135..143
+        0: EXTENDS_KW@135..143 "extends" [] [Whitespace(" ")]
+        1: (empty)
+        2: (empty)
+      4: (empty)
+      5: L_CURLY@143..144 "{" [] []
+      6: JS_CLASS_MEMBER_LIST@144..144
+      7: R_CURLY@144..145 "}" [] []
+  3: EOF@145..146 "" [Newline("\n")] []
 --
 error[SyntaxError]: 'extends' clause must precede 'implements' clause.
   ┌─ ts_class_heritage_clause_errors.ts:3:24
@@ -169,13 +225,29 @@ error[SyntaxError]: 'extends' clause must precede 'implements' clause.
 error[SyntaxError]: 'implements' clause already seen.
   ┌─ ts_class_heritage_clause_errors.ts:4:24
   │
-4 │ class B implements Int implements Int {}
+4 │ class C implements Int implements Int {}
   │         -------------- ^^^^^^^^^^^^^^
   │         │               
   │         first 'implements' clause
 
 --
+error[SyntaxError]: 'implements' list cannot be empty.
+  ┌─ ts_class_heritage_clause_errors.ts:5:20
+  │
+5 │ class D implements {}
+  │                    ^
+
+--
+error[SyntaxError]: 'extends' list cannot be empty.
+  ┌─ ts_class_heritage_clause_errors.ts:6:16
+  │
+6 │ class E extends {}
+  │                ^
+
+--
 class A {}
 interface Int {}
 class B implements Int extends A {}
-class B implements Int implements Int {}
+class C implements Int implements Int {}
+class D implements {}
+class E extends {}

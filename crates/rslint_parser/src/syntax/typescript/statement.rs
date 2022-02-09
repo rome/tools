@@ -11,8 +11,8 @@ use crate::syntax::js_parse_error::{
 };
 use crate::syntax::stmt::{semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::{
-    parse_ts_identifier_binding, parse_ts_implements_clause, parse_ts_return_type_annotation,
-    parse_ts_type, parse_ts_type_list, parse_ts_type_parameters, TypeMembers,
+    expect_ts_type_list, parse_ts_identifier_binding, parse_ts_implements_clause,
+    parse_ts_return_type_annotation, parse_ts_type, parse_ts_type_parameters, TypeMembers,
 };
 use crate::syntax::util::{
     expect_contextual_keyword, is_at_contextual_keyword, is_nth_at_contextual_keyword,
@@ -336,6 +336,7 @@ pub(crate) fn parse_ts_interface_statement(p: &mut Parser) -> ParsedSyntax {
 // interface A {}
 // interface B implements A {}
 // interface C extends A extends B {}
+// interface D extends {}
 /// Eats an interface's `extends` or an `extends` (not allowed but for better recovery) clauses
 /// Attaches the clauses to the currently active node
 fn eat_interface_heritage_clause(p: &mut Parser) {
@@ -379,6 +380,6 @@ fn parse_ts_extends_clause(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     p.bump(T![extends]);
-    parse_ts_type_list(p).or_add_diagnostic(p, expected_identifier);
+    expect_ts_type_list(p, "extends");
     Present(m.complete(p, TS_EXTENDS_CLAUSE))
 }

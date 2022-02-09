@@ -52,6 +52,7 @@ pub(crate) fn parse_ts_type_assertion_expression(
     parse_unary_expr(p, context).or_add_diagnostic(p, expected_expression);
     Present(m.complete(p, TS_TYPE_ASSERTION_EXPRESSION))
 }
+
 pub(crate) fn parse_ts_implements_clause(p: &mut Parser) -> ParsedSyntax {
     if !is_at_contextual_keyword(p, "implements") {
         return Absent;
@@ -62,21 +63,26 @@ pub(crate) fn parse_ts_implements_clause(p: &mut Parser) -> ParsedSyntax {
 
     let m = p.start();
     expect_contextual_keyword(p, "implements", T![implements]);
-    parse_ts_type_list(p).or_add_diagnostic(p, expected_identifier);
+    expect_ts_type_list(p, "implements");
 
     Present(m.complete(p, TS_IMPLEMENTS_CLAUSE))
 }
 
-fn parse_ts_type_list(p: &mut Parser) -> ParsedSyntax {
-    parse_ts_name_with_type_arguments(p).map(|element| {
-        let list = element.precede(p);
+fn expect_ts_type_list(p: &mut Parser, clause_name: &str) -> CompletedMarker {
+    let list = p.start();
 
-        while p.eat(T![,]) {
-            parse_ts_name_with_type_arguments(p).or_add_diagnostic(p, expected_identifier);
-        }
+    if parse_ts_name_with_type_arguments(p).is_absent() {
+        p.error(
+            p.err_builder(&format!("'{}' list cannot be empty.", clause_name))
+                .primary(p.cur_tok().start()..p.cur_tok().start(), ""),
+        )
+    }
 
-        list.complete(p, TS_TYPE_LIST)
-    })
+    while p.eat(T![,]) {
+        parse_ts_name_with_type_arguments(p).or_add_diagnostic(p, expected_identifier);
+    }
+
+    list.complete(p, TS_TYPE_LIST)
 }
 
 fn parse_ts_name_with_type_arguments(p: &mut Parser) -> ParsedSyntax {

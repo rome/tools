@@ -13,9 +13,8 @@ use crate::syntax::function::{
 };
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::{
-    accessor_readonly_error, expected_binding, expected_expression,
-    ts_accessor_type_parameters_error, ts_constructor_type_parameters_error, ts_only_syntax_error,
-    ts_set_accessor_return_type_error,
+    accessor_readonly_error, expected_binding, ts_accessor_type_parameters_error,
+    ts_constructor_type_parameters_error, ts_only_syntax_error, ts_set_accessor_return_type_error,
 };
 use crate::syntax::object::{
     is_at_literal_member_name, parse_computed_member_name, parse_literal_member_name,
@@ -207,7 +206,9 @@ fn parse_class(p: &mut Parser, m: Marker, kind: ClassKind) -> CompletedMarker {
 // class A {}
 // interface Int {}
 // class B implements Int extends A {}
-// class B implements Int implements Int {}
+// class C implements Int implements Int {}
+// class D implements {}
+// class E extends {}
 /// Eats a class's 'implements' and 'extends' clauses, attaching them to the current active node.
 /// Implements error recovery in case a class has multiple extends/implements clauses or if they appear
 /// out of order
@@ -278,18 +279,25 @@ fn parse_extends_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     let m = p.start();
+    let extends_end = p.cur_tok().end();
     p.bump(T![extends]);
-    parse_lhs_expr(p, ExpressionContext::default()).or_add_diagnostic(p, expected_expression);
 
-    TypeScript
-        .parse_exclusive_syntax(p, parse_ts_type_arguments, |p, arguments| {
-            ts_only_syntax_error(p, "type arguments", arguments.range(p).as_range())
-        })
-        .ok();
+    if parse_extends_expression(p).is_absent() {
+        p.error(
+            p.err_builder("'extends' list cannot be empty.")
+                .primary(extends_end..extends_end, ""),
+        )
+    } else {
+        TypeScript
+            .parse_exclusive_syntax(p, parse_ts_type_arguments, |p, arguments| {
+                ts_only_syntax_error(p, "type arguments", arguments.range(p).as_range())
+            })
+            .ok();
+    }
 
     while p.eat(T![,]) {
         let extra = p.start();
-        parse_lhs_expr(p, ExpressionContext::default()).ok();
+        parse_extends_expression(p).ok();
         parse_ts_type_arguments(p).ok();
 
         let extra_class = extra.complete(p, JS_UNKNOWN);
@@ -301,6 +309,20 @@ fn parse_extends_clause(p: &mut Parser) -> ParsedSyntax {
     }
 
     Present(m.complete(p, JS_EXTENDS_CLAUSE))
+}
+
+fn parse_extends_expression(p: &mut Parser) -> ParsedSyntax {
+    if p.at(T!['{']) && p.nth_at(1, T!['}']) {
+        // Don't eat the body of the class as an object expression except if we have
+        // * extends {} {
+        // * extends {} implements
+        // * extends {},
+        if !matches!(p.nth(2), T![extends] | T![ident] | T!['{'] | T![,]) {
+            return Absent;
+        }
+    }
+
+    parse_lhs_expr(p, ExpressionContext::default())
 }
 
 struct ClassMembersList;

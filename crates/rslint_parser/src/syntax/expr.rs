@@ -1542,11 +1542,8 @@ fn parse_template_literal(
     p.expect(BACKTICK);
     let elements_list = p.start();
     parse_template_elements(p, JS_TEMPLATE_CHUNK_ELEMENT, JS_TEMPLATE_ELEMENT, |p| {
-        parse_expression(
-            p,
-            ExpressionContext::default().and_object_expression_allowed(true),
-        )
-        .or_add_diagnostic(p, js_parse_error::expected_expression)
+        parse_expression(p, ExpressionContext::default())
+            .or_add_diagnostic(p, js_parse_error::expected_expression)
     });
 
     elements_list.complete(p, JS_TEMPLATE_ELEMENT_LIST);

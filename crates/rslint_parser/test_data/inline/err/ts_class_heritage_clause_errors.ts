@@ -1,4 +1,6 @@
 class A {}
 interface Int {}
 class B implements Int extends A {}
-class B implements Int implements Int {}
+class C implements Int implements Int {}
+class D implements {}
+class E extends {}
