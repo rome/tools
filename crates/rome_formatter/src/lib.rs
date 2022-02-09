@@ -52,11 +52,11 @@ mod format_element;
 mod format_elements;
 mod formatter;
 pub mod formatter_traits;
-pub(crate) mod interpreter;
 mod intersperse;
 mod js;
 mod printer;
 mod ts;
+mod utils;
 
 pub use formatter::Formatter;
 use rome_rowan::TextRange;

@@ -1,6 +1,7 @@
+use crate::utils::format_interpreter;
 use crate::{
-    format_elements, formatter_traits::FormatTokenAndNode, hard_line_break,
-    interpreter::format_interpreter, FormatElement, FormatResult, Formatter, ToFormatElement,
+    format_elements, formatter_traits::FormatTokenAndNode, hard_line_break, FormatElement,
+    FormatResult, Formatter, ToFormatElement,
 };
 
 use rslint_parser::ast::JsScript;
