@@ -35,8 +35,8 @@ impl FromStr for FeatureToBenchmark {
 impl Display for FeatureToBenchmark {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            FeatureToBenchmark::Parser => writeln!(f, "parser"),
-            FeatureToBenchmark::Formatter => writeln!(f, "formatter"),
+            FeatureToBenchmark::Parser => write!(f, "parser"),
+            FeatureToBenchmark::Formatter => write!(f, "formatter"),
         }
     }
 }

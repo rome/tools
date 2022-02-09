@@ -1,7 +1,13 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::TsEnumMember, AstNode};
+use crate::formatter_traits::FormatTokenAndNode;
+use crate::utils::format_initializer_clause;
+use crate::{format_elements, FormatElement, FormatResult, Formatter, ToFormatElement};
+use rslint_parser::ast::TsEnumMember;
+
 impl ToFormatElement for TsEnumMember {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        let name = self.name().format(formatter)?;
+        let initializer = format_initializer_clause(formatter, self.initializer())?;
+
+        Ok(format_elements![name, initializer])
     }
 }

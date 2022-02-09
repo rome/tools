@@ -39,12 +39,8 @@ impl SingleTokenParseRecovery {
         let error = self.get_error();
         if let Some(error) = error {
             p.error(error);
-        } else {
-            // the check on state should be done only when there's no error
-            if p.state.no_recovery {
-                return;
-            }
         }
+
         if !self.parsing_is_recoverable(p) {
             let m = p.start();
             p.bump_any();
