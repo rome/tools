@@ -1,7 +1,9 @@
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::TsNeverType, AstNode};
+use rslint_parser::ast::TsNeverType;
+
 impl ToFormatElement for TsNeverType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        self.never_token().format(formatter)
     }
 }

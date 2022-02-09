@@ -11,4 +11,9 @@ mod formatter {
         use crate::spec_test;
         tests_macros::gen_tests! {"tests/specs/js/script/**/*.js", spec_test::run, "script"}
     }
+
+    mod ts_module {
+        use crate::spec_test;
+        tests_macros::gen_tests! {"tests/specs/ts/**/*.ts", spec_test::run, "module"}
+    }
 }

@@ -119,7 +119,11 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let mut snapshot_content = SnapshotContent::default();
         let buffer = rome_path.get_buffer_from_file();
         let syntax = if file_type == "module" {
-            Syntax::default().module()
+            if rome_path.extension().unwrap().to_str().unwrap().eq("ts") {
+                Syntax::default().typescript()
+            } else {
+                Syntax::default().module()
+            }
         } else {
             Syntax::default()
         };

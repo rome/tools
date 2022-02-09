@@ -1,7 +1,9 @@
+use crate::formatter_traits::FormatTokenAndNode;
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::{ast::TsThisType, AstNode};
+use rslint_parser::ast::TsThisType;
+
 impl ToFormatElement for TsThisType {
     fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-        Ok(formatter.format_verbatim(self.syntax()))
+        self.this_token().format(formatter)
     }
 }
