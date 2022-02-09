@@ -24,13 +24,13 @@ impl ToFormatElement for TsEnumStatement {
             &self.l_curly_token()?,
             |open_token_trailing, close_token_leading| {
                 Ok(format_elements![
-                    space_token(),
+                    soft_line_break_or_space(),
                     soft_block_indent(format_elements![
                         open_token_trailing,
                         join_elements(soft_line_break_or_space(), members),
                         close_token_leading,
                     ]),
-                    space_token(),
+                    soft_line_break_or_space(),
                 ])
             },
             &self.r_curly_token()?,
