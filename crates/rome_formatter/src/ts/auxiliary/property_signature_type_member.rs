@@ -10,7 +10,7 @@ impl ToFormatElement for TsPropertySignatureTypeMember {
         let readonly = self.readonly_token().format_or_empty(formatter)?;
         let name = self.name().format(formatter)?;
         let type_annotation = self.type_annotation().format_or_empty(formatter)?;
-        let optional = self.optional_token_token().format_or_empty(formatter)?;
+        let optional = self.optional_token().format_or_empty(formatter)?;
         let separator = format_object_type_member_separator(self.separator_token(), formatter)?;
 
         Ok(format_elements![

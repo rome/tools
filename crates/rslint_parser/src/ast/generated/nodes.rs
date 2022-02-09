@@ -4050,9 +4050,7 @@ impl TsMethodSignatureTypeMember {
     pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn optional_token_token(&self) -> Option<SyntaxToken> {
-        support::token(&self.syntax, 1usize)
-    }
+    pub fn optional_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 2usize)
     }
@@ -4312,9 +4310,7 @@ impl TsPropertySignatureTypeMember {
     pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn optional_token_token(&self) -> Option<SyntaxToken> {
-        support::token(&self.syntax, 2usize)
-    }
+    pub fn optional_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
         support::node(&self.syntax, 3usize)
     }
@@ -11283,8 +11279,8 @@ impl std::fmt::Debug for TsMethodSignatureTypeMember {
         f.debug_struct("TsMethodSignatureTypeMember")
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
-                "optional_token_token",
-                &support::DebugOptionalElement(self.optional_token_token()),
+                "optional_token",
+                &support::DebugOptionalElement(self.optional_token()),
             )
             .field(
                 "type_parameters",
@@ -11711,8 +11707,8 @@ impl std::fmt::Debug for TsPropertySignatureTypeMember {
             )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
-                "optional_token_token",
-                &support::DebugOptionalElement(self.optional_token_token()),
+                "optional_token",
+                &support::DebugOptionalElement(self.optional_token()),
             )
             .field(
                 "type_annotation",

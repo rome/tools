@@ -1,0 +1,124 @@
+---
+source: crates/rome_formatter/tests/spec_test.rs
+assertion_line: 163
+expression: type_member.ts
+
+---
+# Input
+type AA =
+    {    [   a: string   ] :       number      }
+
+type BB = {
+    (a: string, b: symbol, c: symbol, d: symbol )
+}
+
+type CC = {
+    (loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol, consequence: symbol, something_with_long_name: symbol, some_other_time: symbol )
+}
+type DD = {
+    <Aaaaaaaaaaaaaaaaaaaaa,bvvvvvvvvvvvvvvvvvvvvvv,ceeeeeee,deeeeeeeeeeeeee,deeeeeeeeeeeeeee,deeeeeeeeeeeeeeee,deeeeeeeewweeeeee,>
+    (loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol, consequence: symbol, something_with_long_name: symbol, some_other_time: symbol )
+}
+
+type EE = {
+    <Aaaaaaaaaaaaaaaaaaaaa>
+    (loreum: string )
+}
+
+
+type FF = {
+    <Aaaaaaaaaaaaaaaaaaaaa,bvvvvvvvvvvvvvvvvvvvvvv,ceeeeeee,deeeeeeeeeeeeee,deeeeeeeeeeeeeee,deeeeeeeeeeeeeeee,deeeeeeeewweeeeee,>
+    (loreum: string )
+}
+
+type GG = {
+    <Aaaaaaaaaaaaaaaaaaaaa>
+    (loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol, consequence: symbol, something_with_long_name: symbol, some_other_time: symbol )
+}
+
+type H = {
+    a?(): number; b?(): number, c?(): number
+    d(): string
+    bvvvvvvvvvvvvvvvvvvvvvv?(loreum: string, ipsum: symbol, lapis: symbol, emerald: symbol,): GG
+}
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+-----
+type AA = { [a: string]: number };
+
+type BB = { (a: string, b: symbol, c: symbol, d: symbol) };
+
+type CC = {
+	(
+		loreum: string,
+		ipsum: symbol,
+		lapis: symbol,
+		emerald: symbol,
+		consequence: symbol,
+		something_with_long_name: symbol,
+		some_other_time: symbol,
+	),
+};
+type DD = {
+	<
+		Aaaaaaaaaaaaaaaaaaaaa,
+		bvvvvvvvvvvvvvvvvvvvvvv,
+		ceeeeeee,
+		deeeeeeeeeeeeee,
+		deeeeeeeeeeeeeee,
+		deeeeeeeeeeeeeeee,
+		deeeeeeeewweeeeee,
+	>(
+		loreum: string,
+		ipsum: symbol,
+		lapis: symbol,
+		emerald: symbol,
+		consequence: symbol,
+		something_with_long_name: symbol,
+		some_other_time: symbol,
+	),
+};
+
+type EE = { <Aaaaaaaaaaaaaaaaaaaaa>(loreum: string) };
+
+type FF = {
+	<
+		Aaaaaaaaaaaaaaaaaaaaa,
+		bvvvvvvvvvvvvvvvvvvvvvv,
+		ceeeeeee,
+		deeeeeeeeeeeeee,
+		deeeeeeeeeeeeeee,
+		deeeeeeeeeeeeeeee,
+		deeeeeeeewweeeeee,
+	>(loreum: string),
+};
+
+type GG = {
+	<Aaaaaaaaaaaaaaaaaaaaa>(
+		loreum: string,
+		ipsum: symbol,
+		lapis: symbol,
+		emerald: symbol,
+		consequence: symbol,
+		something_with_long_name: symbol,
+		some_other_time: symbol,
+	),
+};
+
+type H = {
+	a?(): number,
+	b?(): number,
+	c?(): number,
+	d(): string,
+	bvvvvvvvvvvvvvvvvvvvvvv?(
+		loreum: string,
+		ipsum: symbol,
+		lapis: symbol,
+		emerald: symbol,
+	): GG,
+};
+
